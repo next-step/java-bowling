@@ -16,11 +16,11 @@ import org.junit.Test;
  * - 두번째 투구 객체의 결과로 SPARE, MISS, GUTTER를 반환한다.
  *     - 두번째 프레임 결과 객체는 무조건 다음 프레임의 객체를 만들어 돌려준다.
  * - SPARE
- *     - 두 번쨰 투구에서 10점이 되었을 때 반환.
+ *     - 두번째 투구에서 10점이 되었을 때 반환.
  * - MISS
  *     - 합쳐서 10점이 안되었을 때 반환.
  * - GUTTER
- *     - 합쳐서 0점일 때 반환.
+ *     - 0점일 때 반환.
  */
 public class SecondBowlFrameTest {
 
