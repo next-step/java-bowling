@@ -16,7 +16,7 @@ public class Bowling {
 	public void bowlFirst(Score score) {
 		frameResults.clear();
 		Frame frame = Frame.first();
-		fitch(score, frame);
+		bowl(score, frame);
 	}
 
 	public void bowl(Score score) {
@@ -25,10 +25,10 @@ public class Bowling {
 			return;
 		}
 		Frame frame = getLastFrameResult().next();
-		fitch(score, frame);
+		bowl(score, frame);
 	}
 
-	private void fitch(Score score, Frame frame) {
+	private void bowl(Score score, Frame frame) {
 		FrameResult result = frame.pitch(score);
 		frameResults.add(result);
 	}
