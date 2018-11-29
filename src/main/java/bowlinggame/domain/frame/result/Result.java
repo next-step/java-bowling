@@ -1,22 +1,20 @@
-package bowlinggame.domain.result;
+package bowlinggame.domain.frame.result;
 
 import bowlinggame.domain.frame.Pin;
 
 public interface Result {
 
 	static Result first(Pin pin) {
-		if (pin.isKnockedDownAll()) {
+		if (pin.isAllKnockedDown()) {
 			return Strike.getInstance();
 		}
-		if (pin.isStandAll()) {
+		if (pin.isAllStanding()) {
 			return Gutter.getInstance();
 		}
-		return Miss.getInstance(pin.getPinCount());
+		return Miss.getInstance(pin.getKnockedPinCount());
 	}
 
 	Result next(Pin pin);
-
-	int getKnockDownPinCount();
-
+	int getKnockedDownPinCount();
 	String getResult();
 }

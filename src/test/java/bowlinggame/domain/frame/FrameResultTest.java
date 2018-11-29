@@ -2,10 +2,8 @@ package bowlinggame.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowlinggame.domain.result.Gutter;
-import bowlinggame.domain.result.Miss;
-import bowlinggame.domain.result.Spare;
-import bowlinggame.domain.result.Strike;
+import bowlinggame.domain.frame.result.Miss;
+import bowlinggame.domain.frame.result.Spare;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,52 +12,20 @@ public class FrameResultTest {
 	private FrameResult frameResult;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		frameResult = new FrameResult();
 	}
 
 	@Test
-	public void 첫_투구_미스() {
-		final int pinCount = 9;
-		Pin pin = Pin.from(pinCount);
-
-		assertThat(frameResult.record(pin)).isEqualTo(Miss.getInstance(pinCount));
+	public void 쓰러진_핀_개수로_첫투구_결과기록() {
+		assertThat(frameResult.record(Pin.fromKnockedPinCount(5))).isInstanceOf(Miss.class);
+		assertThat(frameResult.isAllKnockedDown()).isFalse();
 	}
 
 	@Test
-	public void 첫_투구_스트라이크() {
-		final int pinCount = 10;
-		Pin pin = Pin.from(pinCount);
-
-		assertThat(frameResult.record(pin)).isEqualTo(Strike.getInstance());
-	}
-
-	@Test
-	public void 첫_투구_거터() {
-		final int pinCount = 0;
-		Pin pin = Pin.from(pinCount);
-
-		assertThat(frameResult.record(pin)).isEqualTo(Gutter.getInstance());
-	}
-
-	@Test
-	public void 다음_투구_미스_미스() {
-		frameResult.record(Pin.from(5));
-
-		assertThat(frameResult.record(Pin.from(3))).isEqualTo(Miss.getInstance(3));
-	}
-
-	@Test
-	public void 다음_투구_미스_스페어() {
-		frameResult.record(Pin.from(5));
-
-		assertThat(frameResult.record(Pin.from(5))).isEqualTo(Spare.getInstance());
-	}
-
-	@Test
-	public void 다음_투구_미스_거터() {
-		frameResult.record(Pin.from(5));
-
-		assertThat(frameResult.record(Pin.from(0))).isEqualTo(Gutter.getInstance());
+	public void 쓰러진_핀_개수로_두번째투구_결과기록() {
+		frameResult.record(Pin.fromKnockedPinCount(3));
+		assertThat(frameResult.record(Pin.fromKnockedPinCount(10))).isInstanceOf(Spare.class);
+		assertThat(frameResult.isAllKnockedDown()).isTrue();
 	}
 }

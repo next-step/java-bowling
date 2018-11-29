@@ -1,40 +1,59 @@
 package bowlinggame.domain.frame;
 
-import bowlinggame.domain.result.Spare;
-import bowlinggame.domain.result.Strike;
-
-public class FinalFrame extends Frame {
+public class FinalFrame implements Frame {
 
 	private static final int MAX_ROLL_OPPORTUNITY = 3;
 
-	public FinalFrame(int number) {
-		super(number);
+	private FrameResult frameResult;
+
+	public FinalFrame() {
+		this.frameResult = new FrameResult();
 	}
 
 	@Override
-	public Frame roll(Pin pin) {
+	public Frame next() {
+		throw new IllegalStateException("마지막 프레임입니다.");
+	}
+
+	@Override
+	public Frame roll(int pinCount) {
 		if (isCompleted()) {
-			throw new IllegalStateException("마지막 프레임입니다.");
+			return this;
 		}
-		if (!pin.canRecord(getRemainingPin()) && !getRemainingPin().isStandAll()) {
-			throw new IllegalArgumentException("남은 핀보다 많은 개수를 던질 수 없습니다.");
-		}
-		record(pin);
+
+		int knockedDownPinCount = changeToMinCount(frameResult.getTotalKnockedDownPinCount());
+		Pin pin = Pin.fromKnockedPinCount(knockedDownPinCount);
+		frameResult.record(pin.knockDown(pinCount));
 		return this;
+	}
+
+	private int changeToMinCount(int totalKnockedDownPinCount) {
+		return totalKnockedDownPinCount % Pin.MAX_COUNT;
 	}
 
 	@Override
 	public boolean isCompleted() {
-		if (isSameRollOpportunity(MAX_ROLL_OPPORTUNITY)) {
+		if (isFinishedRolling(FinalFrame.MAX_ROLL_OPPORTUNITY)) {
 			return true;
 		}
-		if (isSameRollOpportunity(NormalFrame.MAX_ROLL_OPPORTUNITY) && !isStrikeOrSpare()) {
+		if (isFinishedRolling(NormalFrame.MAX_ROLL_OPPORTUNITY)
+				&& !frameResult.isAllKnockedDown()) {
 			return true;
 		}
 		return false;
 	}
 
-	private boolean isStrikeOrSpare() {
-		return isSameLastResult(Strike.getInstance()) || isSameLastResult(Spare.getInstance());
+	private boolean isFinishedRolling(int maxRollOpportunity) {
+		return frameResult.isSameRollOpportunity(maxRollOpportunity);
+	}
+
+	@Override
+	public boolean isSameNumber(FrameNumber frameNumber) {
+		return FrameNumber.last() == frameNumber;
+	}
+
+	@Override
+	public FrameResult result() {
+		return frameResult;
 	}
 }

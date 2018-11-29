@@ -1,6 +1,7 @@
 package bowlinggame;
 
 import bowlinggame.domain.BowlingGame;
+import bowlinggame.domain.frame.FrameNumber;
 import bowlinggame.view.InputView;
 import bowlinggame.view.ResultView;
 
@@ -10,11 +11,11 @@ public class BowlingGameConsole {
 		String playerName = InputView.inputPlayerName();
 		BowlingGame bowlingGame = new BowlingGame(playerName);
 
-		int frameNumber = bowlingGame.getCurrentFrame();
+		FrameNumber frameNumber = bowlingGame.getCurrentFrameNumber();
 		while (!bowlingGame.isGameOver()) {
 			ResultView.printResult(bowlingGame.result());
 			bowlingGame.play(InputView.inputKnockDownPickCount(frameNumber));
-			frameNumber = bowlingGame.getCurrentFrame();
+			frameNumber = bowlingGame.getCurrentFrameNumber();
 		}
 		ResultView.printResult(bowlingGame.result());
 	}

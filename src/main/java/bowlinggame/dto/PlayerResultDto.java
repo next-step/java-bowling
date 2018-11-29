@@ -1,14 +1,15 @@
 package bowlinggame.dto;
 
+import bowlinggame.domain.frame.FrameResult;
 import java.util.Collections;
 import java.util.List;
 
 public class PlayerResultDto {
 
 	private String name;
-	private List<FrameResultDto> totalResult;
+	private List<FrameResult> totalResult;
 
-	public PlayerResultDto(String name, List<FrameResultDto> totalResult) {
+	public PlayerResultDto(String name, List<FrameResult> totalResult) {
 		this.name = name;
 		this.totalResult = totalResult;
 	}
@@ -17,10 +18,10 @@ public class PlayerResultDto {
 		return name;
 	}
 
-	public FrameResultDto getFrameResult(int index) {
+	public List<String> getFrameResult(int index) {
 		if (index >= totalResult.size()) {
-			return new FrameResultDto(Collections.emptyList());
+			return Collections.emptyList();
 		}
-		return totalResult.get(index);
+		return totalResult.get(index).getDisplayResults();
 	}
 }

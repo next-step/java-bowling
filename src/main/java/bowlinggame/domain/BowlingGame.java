@@ -1,23 +1,23 @@
 package bowlinggame.domain;
 
-import bowlinggame.domain.frame.Frame;
+import bowlinggame.domain.frame.FrameNumber;
 import bowlinggame.dto.PlayerResultDto;
 
 public class BowlingGame {
 
-	private int currentFrame;
+	private FrameNumber currentFrameNumber;
 	private Player player;
 
 	public BowlingGame(String player) {
-		this.currentFrame = Frame.FIRST_FRAME;
-		this.player = new Player(player);
+		this.currentFrameNumber = FrameNumber.first();
+		this.player = Player.of(player);
 	}
 
 	public PlayerResultDto play(int pinCount) {
 		try {
 			return player.roll(pinCount);
 		} catch (IllegalStateException e) {
-			return player.getPlayerResult();
+			return result();
 		}
 	}
 
@@ -26,13 +26,13 @@ public class BowlingGame {
 	}
 
 	public boolean isGameOver() {
-		return player.isFrameOver(Frame.LAST_FRAME);
+		return player.isFrameOver(currentFrameNumber);
 	}
 
-	public int getCurrentFrame() {
-		if (player.isFrameOver(currentFrame)) {
-			++currentFrame;
+	public FrameNumber getCurrentFrameNumber() {
+		if (player.isFrameOver(currentFrameNumber)) {
+			currentFrameNumber = currentFrameNumber.next();
 		}
-		return currentFrame;
+		return currentFrameNumber;
 	}
 }

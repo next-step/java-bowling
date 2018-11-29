@@ -1,58 +1,52 @@
 package bowlinggame.domain.frame;
 
-import bowlinggame.domain.result.Result;
+import bowlinggame.domain.frame.result.Result;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class FrameResult {
 
 	private List<Result> results = new ArrayList<>();
 
+	public FrameResult() {}
+
+	public FrameResult(List<Result> results) {
+		this.results = results;
+	}
+
 	public Result record(Pin pin) {
-		Result result = getPinResult(pin);
+		Result result = getNextResult(pin);
 		results.add(result);
 		return result;
 	}
 
-	private Result getPinResult(Pin pin) {
-		Optional<Result> lastResult = getLastResult();
-		if (lastResult.isPresent()) {
-			return lastResult.get().next(pin);
+	private Result getNextResult(Pin pin) {
+		if (results.isEmpty()) {
+			return Result.first(pin);
 		}
-		return Result.first(pin);
+
+		int lastIndex = results.size() - 1;
+		return results.get(lastIndex).next(pin);
 	}
 
-	public Pin getRemainingPin() {
-		int remainingPinCount = Pin.MAX_PIN_COUNT;
-		if (getLastResult().isPresent()) {
-			Result result = getLastResult().get();
-			remainingPinCount -= result.getKnockDownPinCount();
-		}
-		return Pin.from(remainingPinCount);
+	public int getTotalKnockedDownPinCount() {
+		return results.stream()
+				.mapToInt(Result::getKnockedDownPinCount)
+				.sum();
 	}
 
 	public boolean isSameRollOpportunity(int rollOpportunity) {
 		return results.size() == rollOpportunity;
 	}
 
-	public boolean isSameLastResult(Result result) {
-		Optional<Result> lastResult = getLastResult();
-		if (!lastResult.isPresent()) {
-			return false;
-		}
-		return lastResult.get().equals(result);
+	public boolean isAllKnockedDown() {
+		return getTotalKnockedDownPinCount() >= Pin.MAX_COUNT;
 	}
 
-	private Optional<Result> getLastResult() {
-		if (results.isEmpty()) {
-			return Optional.empty();
-		}
-		return Optional.of(results.get(results.size() - 1));
-	}
-
-	public List<Result> getTotalResult() {
-		return Collections.unmodifiableList(results);
+	public List<String> getDisplayResults() {
+		return results.stream()
+				.map(Result::getResult)
+				.collect(Collectors.toList());
 	}
 }

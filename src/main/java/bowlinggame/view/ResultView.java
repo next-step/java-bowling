@@ -1,7 +1,7 @@
 package bowlinggame.view;
 
 import bowlinggame.domain.Player;
-import bowlinggame.domain.frame.Frame;
+import bowlinggame.domain.frame.FrameNumber;
 import bowlinggame.dto.PlayerResultDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +22,7 @@ public class ResultView {
 
 	private static void printHeader() {
 		String name = "NAME";
-		List<String> frameNumbers = IntStream.rangeClosed(Frame.FIRST_FRAME, Frame.LAST_FRAME)
+		List<String> frameNumbers = IntStream.rangeClosed(FrameNumber.FIRST, FrameNumber.LAST)
 				.boxed()
 				.map(frameNumber -> String.format("%02d", frameNumber))
 				.collect(Collectors.toList());
@@ -31,9 +31,9 @@ public class ResultView {
 
 	private static void printPlayerResult(PlayerResultDto playerResultDto) {
 		String playerName = StringUtils.rightAlign(playerResultDto.getName(), VALUE_MAX_LENGTH);
-		List<String> frameResults = IntStream.rangeClosed(Frame.FIRST_FRAME, Frame.LAST_FRAME)
+		List<String> frameResults = IntStream.rangeClosed(FrameNumber.FIRST, FrameNumber.LAST)
 				.mapToObj(frameNumber -> {
-					List<String> results = playerResultDto.getFrameResult(frameNumber - 1).getResults();
+					List<String> results = playerResultDto.getFrameResult(frameNumber - 1);
 					String frameResult = StringUtils.join(results, SEPARATOR);
 					return StringUtils.centerAlign(frameResult, COLUMN_MAX_LENGTH);
 				})

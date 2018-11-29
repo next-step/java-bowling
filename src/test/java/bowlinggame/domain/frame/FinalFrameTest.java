@@ -1,6 +1,5 @@
 package bowlinggame.domain.frame;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Before;
@@ -12,7 +11,7 @@ public class FinalFrameTest {
 
 	@Before
 	public void setUp() {
-		frame = new FinalFrame(10);
+		frame = Frame.of(FrameNumber.last());
 	}
 
 	@Test
