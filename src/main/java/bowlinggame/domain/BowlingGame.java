@@ -1,7 +1,6 @@
 package bowlinggame.domain;
 
 import bowlinggame.domain.frame.FrameNumber;
-import bowlinggame.dto.PlayerResultDto;
 
 public class BowlingGame {
 
@@ -13,7 +12,7 @@ public class BowlingGame {
 		this.player = Player.of(player);
 	}
 
-	public PlayerResultDto play(int pinCount) {
+	public PlayerResult play(int pinCount) {
 		try {
 			return player.roll(pinCount);
 		} catch (IllegalStateException e) {
@@ -21,7 +20,7 @@ public class BowlingGame {
 		}
 	}
 
-	public PlayerResultDto result() {
+	public PlayerResult result() {
 		return player.getPlayerResult();
 	}
 

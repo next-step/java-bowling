@@ -33,6 +33,11 @@ public class Strike implements Result {
 	}
 
 	@Override
+	public int getBonusCount() {
+		return 2;
+	}
+
+	@Override
 	public String getResult() {
 		return RESULT_CHARACTER;
 	}

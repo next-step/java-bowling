@@ -33,6 +33,11 @@ public class Gutter implements Result {
 	}
 
 	@Override
+	public int getBonusCount() {
+		return 0;
+	}
+
+	@Override
 	public String getResult() {
 		return RESULT_CHARACTER;
 	}

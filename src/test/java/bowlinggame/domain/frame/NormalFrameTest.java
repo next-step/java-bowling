@@ -2,6 +2,8 @@ package bowlinggame.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowlinggame.domain.frame.result.Score;
+import bowlinggame.domain.frame.result.ScoreTest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,5 +40,38 @@ public class NormalFrameTest {
 		frame.roll(3); // first rolling
 		frame.roll(0);
 		assertThat(frame.isCompleted()).isTrue();
+	}
+
+	@Test
+	public void 스트라이크_점수_계산() {
+		frame.roll(10);
+		frame.roll(8);
+		frame.roll(2);
+
+		assertThat(frame.getScore()).isEqualTo(Score.of(20));
+	}
+
+	@Test
+	public void 스페어_점수_계산() {
+		frame.roll(2);
+		frame.roll(8);
+		frame.roll(5);
+
+		assertThat(frame.getScore()).isEqualTo(Score.of(15));
+	}
+
+	@Test
+	public void 보너스_없는_점수_계산() {
+		frame.roll(3);
+		frame.roll(5);
+
+		assertThat(frame.getScore()).isEqualTo(Score.of(8));
+	}
+
+	@Test
+	public void 보너스_점수가_남았을때() {
+		frame.roll(10);
+
+		assertThat(frame.getScore()).isEqualTo(ScoreTest.STRIKE);
 	}
 }

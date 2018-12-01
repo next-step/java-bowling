@@ -1,13 +1,16 @@
 package bowlinggame.domain.frame;
 
+import bowlinggame.domain.frame.result.Results;
+import bowlinggame.domain.frame.result.Score;
+
 public class FinalFrame implements Frame {
 
 	private static final int MAX_ROLL_OPPORTUNITY = 3;
 
-	private FrameResult frameResult;
+	private Results results;
 
 	public FinalFrame() {
-		this.frameResult = new FrameResult();
+		this.results = new Results();
 	}
 
 	@Override
@@ -21,10 +24,20 @@ public class FinalFrame implements Frame {
 			return this;
 		}
 
-		int knockedDownPinCount = changeToMinCount(frameResult.getTotalKnockedDownPinCount());
+		int knockedDownPinCount = changeToMinCount(results.getTotalKnockedDownPinCount());
 		Pin pin = Pin.fromKnockedPinCount(knockedDownPinCount);
-		frameResult.record(pin.knockDown(pinCount));
+		results.record(pin.knockDown(pinCount));
 		return this;
+	}
+
+	@Override
+	public Score getScore() {
+		return Score.of(results.getTotalKnockedDownPinCount(), 0);
+	}
+
+	@Override
+	public Score calculateBonus(Score score) {
+		return results.addScore(score);
 	}
 
 	private int changeToMinCount(int totalKnockedDownPinCount) {
@@ -37,14 +50,14 @@ public class FinalFrame implements Frame {
 			return true;
 		}
 		if (isFinishedRolling(NormalFrame.MAX_ROLL_OPPORTUNITY)
-				&& !frameResult.isAllKnockedDown()) {
+				&& !results.isAllKnockedDown()) {
 			return true;
 		}
 		return false;
 	}
 
 	private boolean isFinishedRolling(int maxRollOpportunity) {
-		return frameResult.isSameRollOpportunity(maxRollOpportunity);
+		return results.isSameRollOpportunity(maxRollOpportunity);
 	}
 
 	@Override
@@ -53,7 +66,10 @@ public class FinalFrame implements Frame {
 	}
 
 	@Override
-	public FrameResult result() {
-		return frameResult;
+	public FrameResult getFrameResult() {
+		if (isCompleted()) {
+			return new FrameResult(results.getDisplayResults(), getScore());
+		}
+		return new FrameResult(results.getDisplayResults());
 	}
 }

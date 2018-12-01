@@ -38,6 +38,11 @@ public class Miss implements Result {
 	}
 
 	@Override
+	public int getBonusCount() {
+		return 0;
+	}
+
+	@Override
 	public String getResult() {
 		return pinCount.toString();
 	}

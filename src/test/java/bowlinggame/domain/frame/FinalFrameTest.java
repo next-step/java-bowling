@@ -2,6 +2,7 @@ package bowlinggame.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowlinggame.domain.frame.result.Score;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,4 +63,12 @@ public class FinalFrameTest {
 		assertThat(frame.isCompleted()).isTrue();
 	}
 
+	@Test
+	public void 점수_계산() {
+		frame.roll(5);
+		frame.roll(5);
+		frame.roll(3);
+
+		assertThat(frame.getScore()).isEqualTo(Score.of(13));
+	}
 }

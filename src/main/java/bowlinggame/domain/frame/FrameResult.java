@@ -1,52 +1,38 @@
 package bowlinggame.domain.frame;
 
-import bowlinggame.domain.frame.result.Result;
-import java.util.ArrayList;
+import bowlinggame.domain.frame.result.Score;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FrameResult {
 
-	private List<Result> results = new ArrayList<>();
+	private List<String> results;
+	private Score score;
 
-	public FrameResult() {}
-
-	public FrameResult(List<Result> results) {
+	public FrameResult(List<String> results) {
 		this.results = results;
 	}
 
-	public Result record(Pin pin) {
-		Result result = getNextResult(pin);
-		results.add(result);
-		return result;
+	public FrameResult(List<String> results, Score score) {
+		this.results = results;
+		this.score = score;
 	}
 
-	private Result getNextResult(Pin pin) {
-		if (results.isEmpty()) {
-			return Result.first(pin);
+	public Score calculateScore(Score totalScore) {
+		if (score == null) {
+			return totalScore;
 		}
-
-		int lastIndex = results.size() - 1;
-		return results.get(lastIndex).next(pin);
+		score = score.sum(totalScore);
+		return score;
 	}
 
-	public int getTotalKnockedDownPinCount() {
-		return results.stream()
-				.mapToInt(Result::getKnockedDownPinCount)
-				.sum();
+	public List<String> getRollResults() {
+		return results;
 	}
 
-	public boolean isSameRollOpportunity(int rollOpportunity) {
-		return results.size() == rollOpportunity;
-	}
-
-	public boolean isAllKnockedDown() {
-		return getTotalKnockedDownPinCount() >= Pin.MAX_COUNT;
-	}
-
-	public List<String> getDisplayResults() {
-		return results.stream()
-				.map(Result::getResult)
-				.collect(Collectors.toList());
+	public String getScore() {
+		if (score == null) {
+			return Score.EMPTY_SCORE_CHARACTER;
+		}
+		return score.getScoreCharacter();
 	}
 }

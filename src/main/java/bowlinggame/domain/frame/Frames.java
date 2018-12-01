@@ -1,19 +1,20 @@
 package bowlinggame.domain.frame;
 
-import bowlinggame.dto.PlayerResultDto;
+import bowlinggame.domain.PlayerResult;
+import bowlinggame.domain.frame.result.Score;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Game {
+public class Frames {
 
 	private List<Frame> frames = new ArrayList<>();
 
-	public Game() {
+	public Frames() {
 		frames.add(Frame.first());
 	}
 
-	public Game(List<Frame> frames) {
+	public Frames(List<Frame> frames) {
 		this.frames = frames;
 	}
 
@@ -43,10 +44,22 @@ public class Game {
 				.orElseThrow(() -> new IllegalArgumentException("프레임이 존재하지 않습니다."));
 	}
 
-	public PlayerResultDto result(String playerName) {
-		List<FrameResult> totalResult = frames.stream()
-				.map(Frame::result)
+	public PlayerResult result(String playerName) {
+		List<FrameResult> frameResults = getFrameResults();
+		return new PlayerResult(playerName, calculateScore(frameResults));
+	}
+
+	private List<FrameResult> getFrameResults() {
+		return frames.stream()
+				.map(Frame::getFrameResult)
 				.collect(Collectors.toList());
-		return new PlayerResultDto(playerName, totalResult);
+	}
+
+	private List<FrameResult> calculateScore(List<FrameResult> frameResults) {
+		Score totalScore = Score.init();
+		for (FrameResult frameResult : frameResults) {
+			totalScore = frameResult.calculateScore(totalScore);
+		}
+		return frameResults;
 	}
 }

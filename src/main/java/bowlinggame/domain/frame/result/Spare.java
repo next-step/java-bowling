@@ -37,6 +37,11 @@ public class Spare implements Result {
 	}
 
 	@Override
+	public int getBonusCount() {
+		return 1;
+	}
+
+	@Override
 	public String getResult() {
 		return RESULT_CHARACTER;
 	}

@@ -16,5 +16,6 @@ public interface Result {
 
 	Result next(Pin pin);
 	int getKnockedDownPinCount();
+	int getBonusCount();
 	String getResult();
 }

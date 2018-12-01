@@ -1,5 +1,7 @@
 package bowlinggame.domain.frame;
 
+import bowlinggame.domain.frame.result.Score;
+
 public interface Frame {
 
 	static Frame first() {
@@ -15,7 +17,9 @@ public interface Frame {
 
 	Frame next();
 	Frame roll(int pinCount);
+	Score getScore();
+	Score calculateBonus(Score score);
 	boolean isCompleted();
 	boolean isSameNumber(FrameNumber frameNumber);
-	FrameResult result();
+	FrameResult getFrameResult();
 }
