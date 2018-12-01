@@ -1,58 +1,38 @@
 package bowlinggame.domain.frame;
 
-import bowlinggame.domain.result.Result;
-import java.util.ArrayList;
-import java.util.Collections;
+import bowlinggame.domain.frame.result.Score;
 import java.util.List;
-import java.util.Optional;
 
 public class FrameResult {
 
-	private List<Result> results = new ArrayList<>();
+	private List<String> results;
+	private Score score;
 
-	public Result record(Pin pin) {
-		Result result = getPinResult(pin);
-		results.add(result);
-		return result;
+	public FrameResult(List<String> results) {
+		this.results = results;
 	}
 
-	private Result getPinResult(Pin pin) {
-		Optional<Result> lastResult = getLastResult();
-		if (lastResult.isPresent()) {
-			return lastResult.get().next(pin);
+	public FrameResult(List<String> results, Score score) {
+		this.results = results;
+		this.score = score;
+	}
+
+	public Score calculateScore(Score totalScore) {
+		if (score == null) {
+			return totalScore;
 		}
-		return Result.first(pin);
+		score = score.sum(totalScore);
+		return score;
 	}
 
-	public Pin getRemainingPin() {
-		int remainingPinCount = Pin.MAX_PIN_COUNT;
-		if (getLastResult().isPresent()) {
-			Result result = getLastResult().get();
-			remainingPinCount -= result.getKnockDownPinCount();
+	public List<String> getRollResults() {
+		return results;
+	}
+
+	public String getScore() {
+		if (score == null) {
+			return Score.EMPTY_SCORE_CHARACTER;
 		}
-		return Pin.from(remainingPinCount);
-	}
-
-	public boolean isSameRollOpportunity(int rollOpportunity) {
-		return results.size() == rollOpportunity;
-	}
-
-	public boolean isSameLastResult(Result result) {
-		Optional<Result> lastResult = getLastResult();
-		if (!lastResult.isPresent()) {
-			return false;
-		}
-		return lastResult.get().equals(result);
-	}
-
-	private Optional<Result> getLastResult() {
-		if (results.isEmpty()) {
-			return Optional.empty();
-		}
-		return Optional.of(results.get(results.size() - 1));
-	}
-
-	public List<Result> getTotalResult() {
-		return Collections.unmodifiableList(results);
+		return score.getScoreCharacter();
 	}
 }

@@ -5,41 +5,54 @@ import java.util.Map;
 
 public class Pin {
 
-	public static final int MIN_PIN_COUNT = 0;
-	public static final int MAX_PIN_COUNT = 10;
-	private static Map<Integer, Pin> cache = new HashMap<>();
+	private static final Map<Integer, Pin> CACHE = new HashMap<>();
 
-	private Integer pinCount;
+	public static final int MIN_COUNT = 0;
+	public static final int MAX_COUNT = 10;
 
-	private Pin(Integer pinCount) {
-		this.pinCount = pinCount;
+	private int count;
+
+	private Pin(int count) {
+		this.count = count;
 	}
 
-	public static Pin from(Integer pinCount) {
-		if (pinCount > MAX_PIN_COUNT|| pinCount < MIN_PIN_COUNT) {
-			throw new IllegalArgumentException("잘못된 투구입니다.");
+	public static Pin ready() {
+		return Pin.of(MAX_COUNT);
+	}
+
+	public static Pin fromKnockedPinCount(int knockedDownPinCount) {
+		int remainingPinCount = MAX_COUNT - knockedDownPinCount;
+		return Pin.of(remainingPinCount);
+	}
+
+	public static Pin of(int pinCount) {
+		if (pinCount < MIN_COUNT || pinCount > MAX_COUNT) {
+			throw new IllegalArgumentException("잘못된 핀개수입니다.");
 		}
 
-		return cache.computeIfAbsent(pinCount, key -> new Pin(key));
+		return CACHE.computeIfAbsent(Integer.valueOf(pinCount), key -> new Pin(key));
 	}
 
-	public int sum(int pinCount) {
-		return Integer.sum(this.pinCount, pinCount);
+	public Pin knockDown(int pinCount) {
+		if (count < pinCount) {
+			throw new IllegalArgumentException("넘어뜨린 핀이 남은 핀보다 많습니다.");
+		}
+		return Pin.of(count - pinCount);
 	}
 
-	public boolean canRecord(Pin remainingPin) {
-		return this.pinCount <= remainingPin.pinCount;
+	public boolean isAllKnockedDown() {
+		return count == MIN_COUNT;
 	}
 
-	public boolean isKnockedDownAll() {
-		return pinCount == MAX_PIN_COUNT;
+	public boolean isAllStanding() {
+		return count == MAX_COUNT;
 	}
 
-	public boolean isStandAll() {
-		return pinCount == MIN_PIN_COUNT;
+	public int getKnockedPinCount() {
+		return MAX_COUNT - count;
 	}
 
-	public int getPinCount() {
-		return pinCount;
+	public boolean isSameKnockedPinCount(int pinCount) {
+		return getKnockedPinCount() == pinCount;
 	}
 }

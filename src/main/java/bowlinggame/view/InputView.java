@@ -1,5 +1,6 @@
 package bowlinggame.view;
 
+import bowlinggame.domain.frame.FrameNumber;
 import java.util.Scanner;
 
 public class InputView {
@@ -11,8 +12,8 @@ public class InputView {
 		return scanner.nextLine();
 	}
 
-	public static int inputKnockDownPickCount(int currentFrame) {
-		System.out.print(String.format("%d 프레임 투구 : ", currentFrame));
+	public static int inputKnockDownPickCount(FrameNumber frameNumber) {
+		System.out.print(String.format("%d 프레임 투구 : ", frameNumber.getNumber()));
 		return scanner.nextInt();
 	}
 }
