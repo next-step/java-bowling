@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import bowling.domain.record.Record;
 import bowling.domain.record.Strike;
 
@@ -16,12 +17,12 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame rollBowlingBall(int pinCount) {
-        if(pinCount < MIN_HIT || pinCount > MAX_HIT) {
+    public Frame rollBowlingBall(Pin pin) {
+        if(pin.belowMinHit() || pin.exceedMaxHit()) {
             throw new IllegalArgumentException("볼링핀은 0 ~ 10 사이의 값만 가질 수 있음");
         }
 
-        recordFrameResult(pinCount);
+        recordFrameResult(pin);
 
         if(isCompleted()) {
             return Frame.generateNextFrame(this.currFrame + ONE);
@@ -31,8 +32,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Record recordFrameResult(int pinCount) {
-        return records.addToRecords(pinCount);
+    public Record recordFrameResult(Pin pin) {
+        return records.addToRecords(pin);
     }
 
     @Override

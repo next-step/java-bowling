@@ -18,10 +18,10 @@ public class Player {
         this.frames = new Frames();
     }
 
-    public Frame rollBall(int pinCount, Frame frame) {
+    public Frame rollBall(Pin pin, Frame frame) {
         int frameNumber = frame.getCurrFrame();
         this.frames.addToFrames(frameNumber, frame);
-        frame = frame.rollBowlingBall(pinCount);
+        frame = frame.rollBowlingBall(pin);
 
         return frame;
     }

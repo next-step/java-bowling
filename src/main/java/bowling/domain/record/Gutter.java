@@ -1,5 +1,7 @@
 package bowling.domain.record;
 
+import bowling.domain.Pin;
+
 import static bowling.utils.BowlingConstants.MIN_HIT;
 
 public class Gutter implements Record {
@@ -15,13 +17,13 @@ public class Gutter implements Record {
         return gutter;
     }
 
-    public static boolean isGutter(int pinCount) {
-        return pinCount == MIN_HIT;
+    public static boolean isGutter(Pin pin) {
+        return pin.isMinHit();
     }
 
     @Override
-    public int hitPinCount() {
-        return MIN_HIT;
+    public Pin hitPinCount() {
+        return Pin.getInstance(MIN_HIT);
     }
 
     @Override
@@ -30,17 +32,18 @@ public class Gutter implements Record {
     }
 
     @Override
-    public Record nextRecord(int nextPinCount) {
-        int totalHitCount = this.hitPinCount() + nextPinCount;
+    public Record nextRecord(Pin nextPin) {
 
-        if(Gutter.isGutter(nextPinCount)) {
+        Pin total = nextPin.add(this.hitPinCount());
+
+        if(Gutter.isGutter(nextPin)) {
             return Gutter.getInstance();
         }
 
-        if(Spare.isSpare(totalHitCount)) {
+        if(Spare.isSpare(total)) {
             return Spare.getInstance();
         }
 
-        return Miss.getInstance(nextPinCount);
+        return Miss.getInstance(nextPin);
     }
 }

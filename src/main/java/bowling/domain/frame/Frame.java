@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import bowling.domain.record.Record;
 
 import static bowling.utils.BowlingConstants.*;
@@ -19,11 +20,11 @@ public interface Frame {
         return new NormalFrame(currFrame);
     }
 
-    Frame rollBowlingBall(int pinCount);
+    Frame rollBowlingBall(Pin pin);
 
     boolean isCompleted();
 
-    Record recordFrameResult(int pinCount) ;
+    Record recordFrameResult(Pin pin) ;
 
     int getCurrFrame();
 

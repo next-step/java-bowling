@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import bowling.domain.record.Record;
 
 import java.util.ArrayList;
@@ -17,12 +18,12 @@ public class Records {
     // 마지막 프레임인 경우 최대 : 3
     private List<Record> frameRecord = new ArrayList<>();
 
-    public Record addToRecords(int pinCount) {
-        Record record = Record.ofPinCount(pinCount);
+    public Record addToRecords(Pin pin) {
+        Record record = Record.ofPinCount(pin);
 
         if(this.frameRecord.size() > ZERO) {
             Record prevRecord = this.frameRecord.get(this.frameRecord.size() - ONE);
-            record = prevRecord.nextRecord(pinCount);
+            record = prevRecord.nextRecord(pin);
         }
 
         this.frameRecord.add(record);

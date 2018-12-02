@@ -1,5 +1,7 @@
 package bowling.domain.record;
 
+import bowling.domain.Pin;
+
 import static bowling.utils.BowlingConstants.MAX_HIT;
 
 public class Strike implements Record {
@@ -15,13 +17,13 @@ public class Strike implements Record {
         return strike;
     }
 
-    public static boolean isStrike(int pinCount) {
-        return pinCount == MAX_HIT;
+    public static boolean isStrike(Pin pin) {
+        return pin.isMaxHit();
     }
 
     @Override
-    public int hitPinCount() {
-        return MAX_HIT;
+    public Pin hitPinCount() {
+        return Pin.getInstance(MAX_HIT);
     }
 
     @Override
@@ -30,7 +32,7 @@ public class Strike implements Record {
     }
 
     @Override
-    public Record nextRecord(int nextPinCount) {
-        return Record.ofPinCount(nextPinCount);
+    public Record nextRecord(Pin nextPin) {
+        return Record.ofPinCount(nextPin);
     }
 }

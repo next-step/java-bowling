@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.Pin;
 import bowling.domain.PlayBowling;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
@@ -19,7 +20,8 @@ public class Main {
 
         while(!playBowling.isFinished()) {
             int frameNumber = playBowling.playingFrameNumber();
-            ResultView.record(playBowling.playBowling(InputView.inputPitch(frameNumber)), frameNumber);
+            ResultView.record(playBowling.playBowling(Pin.getInstance(InputView.inputPitch(frameNumber))), frameNumber);
+            System.out.println();
         }
     }
 }

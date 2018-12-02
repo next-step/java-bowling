@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import bowling.domain.record.Record;
 import bowling.domain.record.Spare;
 import bowling.domain.record.Strike;
@@ -17,12 +18,12 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame rollBowlingBall(int pinCount) {
-        if(pinCount < MIN_HIT || pinCount > MAX_HIT) {
+    public Frame rollBowlingBall(Pin pin) {
+        if(pin.belowMinHit() || pin.exceedMaxHit()) {
             throw new IllegalArgumentException("볼링핀은 0 ~ 10 사이의 값만 가질 수 있음");
         }
 
-        recordFrameResult(pinCount);
+        recordFrameResult(pin);
 
         if(isCompleted()) {
             return this;
@@ -31,8 +32,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Record recordFrameResult(int pinCount) {
-        return records.addToRecords(pinCount);
+    public Record recordFrameResult(Pin pin) {
+        return records.addToRecords(pin);
     }
 
     @Override
@@ -41,10 +42,7 @@ public class FinalFrame implements Frame {
             return true;
         }
 
-        if(records.isLastChance(FINAL_FRAME_CHANCE)) {
-            return true;
-        }
-        return false;
+        return records.isLastChance(FINAL_FRAME_CHANCE);
     }
 
     @Override

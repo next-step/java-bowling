@@ -15,9 +15,9 @@ public class PlayBowling {
         this.frame = Frame.generateNextFrame(ONE);
     }
 
-    public Records playBowling(int pinCount) {
+    public Records playBowling(Pin pin) {
         int frameNum = this.frame.getCurrFrame();
-        this.frame = player.rollBall(pinCount, this.frame);
+        this.frame = player.rollBall(pin, this.frame);
         return player.findFrameByFrameNumber(frameNum).getRecords();
     }
 

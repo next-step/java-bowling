@@ -1,20 +1,22 @@
 package bowling.domain.record;
 
+import bowling.domain.Pin;
+
 public interface Record {
 
-    static Record ofPinCount(int pinCount) {
-        if(Strike.isStrike(pinCount)) {
+    static Record ofPinCount(Pin pin) {
+        if(Strike.isStrike(pin)) {
             return Strike.getInstance();
         }
 
-        if(Gutter.isGutter(pinCount)) {
+        if(Gutter.isGutter(pin)) {
             return Gutter.getInstance();
         }
 
-        return Miss.getInstance(pinCount);
+        return Miss.getInstance(pin);
     }
 
-    int hitPinCount();
+    Pin hitPinCount();
     String recordToString();
-    Record nextRecord(int nextPinCount);
+    Record nextRecord(Pin pin);
 }
