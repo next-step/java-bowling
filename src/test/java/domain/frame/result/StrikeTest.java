@@ -1,13 +1,11 @@
 package domain.frame.result;
 
-import domain.frame.FinalFrame;
-import domain.frame.Frame;
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
-
 /**
  * Created by hspark on 22/11/2018.
  */
+
+import org.assertj.core.api.Assertions;
+import org.junit.Test;
 
 /**
  * - STRIKE (한번에 다 쳤을경우)
@@ -17,10 +15,9 @@ import org.junit.Test;
 public class StrikeTest {
 
 	@Test
-	public void test_다음프레임_생성() {
+	public void test_스트라이크_생성() {
 		FrameResult strike = new Strike(10);
-		Frame frame = strike.next();
-		Assertions.assertThat(frame).isInstanceOf(FinalFrame.class);
-		Assertions.assertThat(frame.getFrameNumber()).isEqualTo(10);
+		Assertions.assertThat(strike.getFrameNumber()).isEqualTo(10);
+		Assertions.assertThat(strike.toString()).isEqualTo("X");
 	}
 }

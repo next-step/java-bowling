@@ -1,7 +1,7 @@
 package view;
 
+import domain.Pin;
 import domain.Player;
-import domain.Score;
 
 import java.util.Scanner;
 
@@ -16,9 +16,9 @@ public class InputView {
 		return new Player(name);
 	}
 
-	public static Score inputScore(int frameNumber) {
+	public static Pin inputScore(int frameNumber) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println(String.format("%d프레임 투구", frameNumber));
-		return Score.of(scanner.nextInt());
+		return Pin.of(scanner.nextInt());
 	}
 }

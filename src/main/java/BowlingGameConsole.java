@@ -11,12 +11,10 @@ public class BowlingGameConsole {
 		Player player = InputView.inputName();
 		Bowling bowling = new Bowling();
 
-		int nextFrameNumber = Bowling.FIRST_FRAME_NUMBER;
-		OutputView.printBoard(player, bowling.getScoreBoard());
 		while (bowling.hasNext()) {
-			nextFrameNumber = bowling.getNextFrameNumber();
+			int nextFrameNumber = bowling.getNextFrameNumber();
 			bowling.bowl(InputView.inputScore(nextFrameNumber));
-			OutputView.printBoard(player, bowling.getScoreBoard());
+			OutputView.printBoard(player, bowling.getBowlingScoreBoard());
 		}
 	}
 }

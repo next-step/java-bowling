@@ -7,22 +7,19 @@ import domain.Score;
 /**
  * Created by hspark on 22/11/2018.
  */
-public class Spare implements FrameResult {
-	public static final String SPARE_STR = "/";
-
+public class None implements FrameResult {
 	private FrameNumber frameNumber;
-	private Pin firstPin;
-	private Pin secondPin;
 
-	public Spare(int frameNumber, Pin firstPin) {
+	public None(int frameNumber) {
 		this.frameNumber = new FrameNumber(frameNumber);
-		this.firstPin = firstPin;
-		this.secondPin = Pin.TEN.sub(firstPin);
 	}
 
 	@Override
 	public FrameResult tryBowl(Pin pin) {
-		throw new IllegalArgumentException();
+		if (pin.equals(Pin.TEN)) {
+			return new Strike(getFrameNumber());
+		}
+		return new Hit(getFrameNumber(), pin);
 	}
 
 	@Override
@@ -32,25 +29,21 @@ public class Spare implements FrameResult {
 
 	@Override
 	public boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public Score getScore() {
-		return Score.SPARE;
+		return Score.of(0);
 	}
 
 	@Override
 	public Score calculateScore(Score previousScore) {
-		Score score = previousScore.calculate(firstPin);
-		if (!score.isScoreCalculateComplete()) {
-			score = score.calculate(secondPin);
-		}
-		return score;
+		return previousScore;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%s|%s", firstPin, SPARE_STR);
+		return String.valueOf("");
 	}
 }

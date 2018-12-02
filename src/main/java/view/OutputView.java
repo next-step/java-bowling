@@ -25,8 +25,16 @@ public class OutputView {
 		stringJoiner.add("\n");
 		stringJoiner.add(center(player.toString(), PADDING_SIZE));
 
-		for (String score : scoreBoard.scores()) {
+		for (String score : scoreBoard.gameResult()) {
 			String str = center(score, PADDING_SIZE);
+			stringJoiner.add(str);
+		}
+
+		stringJoiner.add("\n");
+		stringJoiner.add(center(EMPTY_STR, PADDING_SIZE));
+
+		for (Integer score : scoreBoard.scores()) {
+			String str = center(score.toString(), PADDING_SIZE);
 			stringJoiner.add(str);
 		}
 		System.out.println(stringJoiner.toString());
