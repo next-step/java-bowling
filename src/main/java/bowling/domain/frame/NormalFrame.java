@@ -2,9 +2,10 @@ package bowling.domain.frame;
 
 import bowling.domain.Pin;
 import bowling.domain.record.Record;
-import bowling.domain.record.Strike;
 
-import static bowling.utils.BowlingConstants.*;
+import static bowling.utils.BowlingConstants.MAX_FRAME_COUNT;
+import static bowling.utils.BowlingConstants.NORMAL_FRAME_CHANCE;
+import static bowling.utils.BowlingConstants.ONE;
 
 public class NormalFrame implements Frame {
 
@@ -24,7 +25,7 @@ public class NormalFrame implements Frame {
 
         recordFrameResult(pin);
 
-        if(isCompleted()) {
+        if(isFinished()) {
             return Frame.generateNextFrame(this.currFrame + ONE);
         }
 
@@ -37,8 +38,13 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean isCompleted() {
-        return this.records.findLastRecord().equals(Strike.getInstance()) || this.records.isLastChance(NORMAL_FRAME_CHANCE);
+    public boolean isFinished() {
+        return this.records.isLastRecordStrike() || this.records.isLastChance(NORMAL_FRAME_CHANCE);
+    }
+
+    @Override
+    public boolean isLastFrame() {
+        return this.currFrame == MAX_FRAME_COUNT;
     }
 
     @Override

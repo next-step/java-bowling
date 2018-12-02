@@ -17,7 +17,7 @@ public class Strike implements Record {
         return strike;
     }
 
-    public static boolean isStrike(Pin pin) {
+    static boolean isStrike(Pin pin) {
         return pin.isMaxHit();
     }
 

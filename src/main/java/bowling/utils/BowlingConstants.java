@@ -11,7 +11,6 @@ public class BowlingConstants {
     public static final int FINAL_FRAME_CHANCE = 3;
 
     public static final int ONE = 1;
-    public static final int ZERO = 0;
 
     public static final int MAX_PLAYER_LENGTH = 3;
 }

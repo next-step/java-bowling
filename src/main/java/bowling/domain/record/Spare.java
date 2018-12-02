@@ -17,7 +17,7 @@ public class Spare implements Record {
        return spare;
     }
 
-    public static boolean isSpare(Pin pin) {
+    static boolean isSpare(Pin pin) {
         if(pin.exceedMaxHit()) {
             throw new IllegalArgumentException("볼링핀의 합계는 1~10 사이의 값임");
         }

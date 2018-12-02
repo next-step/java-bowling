@@ -3,12 +3,8 @@ package bowling;
 import bowling.domain.Pin;
 import bowling.domain.PlayBowling;
 import bowling.domain.Player;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 import bowling.view.InputView;
 import bowling.view.ResultView;
-
-import static bowling.utils.BowlingConstants.ONE;
 
 public class Main {
 

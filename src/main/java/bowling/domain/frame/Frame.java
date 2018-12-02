@@ -22,7 +22,9 @@ public interface Frame {
 
     Frame rollBowlingBall(Pin pin);
 
-    boolean isCompleted();
+    boolean isFinished();
+
+    boolean isLastFrame();
 
     Record recordFrameResult(Pin pin) ;
 

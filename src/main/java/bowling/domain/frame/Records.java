@@ -2,13 +2,14 @@ package bowling.domain.frame;
 
 import bowling.domain.Pin;
 import bowling.domain.record.Record;
+import bowling.domain.record.Spare;
+import bowling.domain.record.Strike;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static bowling.utils.BowlingConstants.ONE;
-import static bowling.utils.BowlingConstants.ZERO;
 
 public class Records {
 
@@ -21,7 +22,7 @@ public class Records {
     public Record addToRecords(Pin pin) {
         Record record = Record.ofPinCount(pin);
 
-        if(this.frameRecord.size() > ZERO) {
+        if(!frameRecord.isEmpty()) {
             Record prevRecord = this.frameRecord.get(this.frameRecord.size() - ONE);
             record = prevRecord.nextRecord(pin);
         }
@@ -41,11 +42,19 @@ public class Records {
         return this.frameRecord.size() == chance;
     }
 
-    Record findLastRecord() {
-        return this.frameRecord.get(this.frameRecord.size() - ONE);
+    public boolean isLastRecordStrike() {
+        if(!frameRecord.isEmpty()) {
+            Record record = frameRecord.get(this.frameRecord.size() - ONE);
+            return record.equals(Strike.getInstance());
+        }
+        return false;
     }
 
-    Record findFirstRecord() {
-        return this.frameRecord.get(ZERO);
+    public boolean isLastRecordSpare() {
+        if(!frameRecord.isEmpty()) {
+            Record record = frameRecord.get(this.frameRecord.size() - ONE);
+            return record.equals(Spare.getInstance());
+        }
+        return false;
     }
 }

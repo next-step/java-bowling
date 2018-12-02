@@ -16,13 +16,13 @@ public class PlayBowling {
     }
 
     public Records playBowling(Pin pin) {
-        int frameNum = this.frame.getCurrFrame();
+        Records records = this.frame.getRecords();
         this.frame = player.rollBall(pin, this.frame);
-        return player.findFrameByFrameNumber(frameNum).getRecords();
+        return records;
     }
 
     public boolean isFinished() {
-        return player.isPlayerFinished();
+        return player.isPlayerFinished(this.frame);
     }
 
     public int playingFrameNumber() {

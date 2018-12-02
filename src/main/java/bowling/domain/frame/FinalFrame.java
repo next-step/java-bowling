@@ -2,10 +2,10 @@ package bowling.domain.frame;
 
 import bowling.domain.Pin;
 import bowling.domain.record.Record;
-import bowling.domain.record.Spare;
-import bowling.domain.record.Strike;
 
-import static bowling.utils.BowlingConstants.*;
+import static bowling.utils.BowlingConstants.FINAL_FRAME_CHANCE;
+import static bowling.utils.BowlingConstants.MAX_FRAME_COUNT;
+import static bowling.utils.BowlingConstants.NORMAL_FRAME_CHANCE;
 
 public class FinalFrame implements Frame {
 
@@ -14,7 +14,7 @@ public class FinalFrame implements Frame {
 
     public FinalFrame(int currFrame) {
         this.currFrame = currFrame;
-        records = new Records();
+        this.records = new Records();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class FinalFrame implements Frame {
 
         recordFrameResult(pin);
 
-        if(isCompleted()) {
+        if(isFinished()) {
             return this;
         }
         return this;
@@ -37,12 +37,16 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isCompleted() {
-        if(!isFirstRecordStrike(records) && !isLastRecordSpare(records) && this.records.isLastChance(NORMAL_FRAME_CHANCE)) {
+    public boolean isFinished() {
+        if(!this.records.isLastRecordSpare() && !this.records.isLastRecordStrike() && this.records.isLastChance(NORMAL_FRAME_CHANCE)) {
             return true;
         }
-
         return records.isLastChance(FINAL_FRAME_CHANCE);
+    }
+
+    @Override
+    public boolean isLastFrame() {
+        return this.currFrame == MAX_FRAME_COUNT;
     }
 
     @Override
@@ -53,13 +57,5 @@ public class FinalFrame implements Frame {
     @Override
     public Records getRecords() {
         return this.records;
-    }
-
-    boolean isLastRecordSpare(Records records) {
-        return records.findLastRecord().equals(Spare.getInstance());
-    }
-
-    boolean isFirstRecordStrike(Records records) {
-        return records.findFirstRecord().equals(Strike.getInstance());
     }
 }

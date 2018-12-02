@@ -17,7 +17,7 @@ public class Gutter implements Record {
         return gutter;
     }
 
-    public static boolean isGutter(Pin pin) {
+    static boolean isGutter(Pin pin) {
         return pin.isMinHit();
     }
 

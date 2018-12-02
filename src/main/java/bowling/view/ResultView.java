@@ -30,10 +30,7 @@ public class ResultView {
         System.out.println("|" + basicForm.stream()
                 .collect(Collectors.joining("|")));
 
-
         System.out.println("|" + resultForm.stream()
                 .collect(Collectors.joining(" |")));
-
     }
-
 }

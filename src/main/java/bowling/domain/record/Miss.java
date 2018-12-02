@@ -5,7 +5,7 @@ import bowling.domain.Pin;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Miss implements Record{
+public class Miss implements Record {
 
     private static final Map<Pin, Miss> reusableMiss = new HashMap<>();
 
