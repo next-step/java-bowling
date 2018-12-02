@@ -36,7 +36,7 @@ public class Miss implements FrameResult {
 	@Override
 	public Score calculateScore(Score previousScore) {
 		Score score = previousScore.calculate(firstPin);
-		if (!previousScore.isScoreCalculateComplete()) {
+		if (!score.isScoreCalculateComplete()) {
 			score = score.calculate(secondPin);
 		}
 		return score;
