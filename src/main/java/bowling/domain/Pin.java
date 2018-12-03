@@ -17,6 +17,10 @@ public class Pin {
     }
 
     public static Pin getInstance(int pinNum) {
+        if(pinNum > MAX_HIT || pinNum < MIN_HIT) {
+            throw new IllegalArgumentException("볼링핀은 1~10 사이의 값을 가짐");
+        }
+
         if(reusablePin.get(pinNum) != null) {
             return reusablePin.get(pinNum);
         }
@@ -28,14 +32,6 @@ public class Pin {
 
     public Pin add(Pin pin) {
         return getInstance(this.pinNum + pin.pinNum);
-    }
-
-    public boolean exceedMaxHit() {
-        return this.pinNum > MAX_HIT;
-    }
-
-    public boolean belowMinHit() {
-        return this.pinNum < MIN_HIT;
     }
 
     public boolean isMinHit() {

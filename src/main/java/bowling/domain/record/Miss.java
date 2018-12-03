@@ -37,7 +37,6 @@ public class Miss implements Record {
 
     @Override
     public Record nextRecord(Pin nextPin) {
-
         Pin total = nextPin.add(this.hitPinCount());
 
         if(Gutter.isGutter(nextPin)) {

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static bowling.utils.BowlingConstants.ONE;
+import static bowling.utils.BowlingConstants.ZERO;
 
 public class Records {
 
@@ -55,6 +56,15 @@ public class Records {
             Record record = frameRecord.get(this.frameRecord.size() - ONE);
             return record.equals(Spare.getInstance());
         }
+        return false;
+    }
+
+    public boolean isFirstRecordStrike() {
+        if(!frameRecord.isEmpty()) {
+            Record record = frameRecord.get(ZERO);
+            return record.equals(Strike.getInstance());
+        }
+
         return false;
     }
 }

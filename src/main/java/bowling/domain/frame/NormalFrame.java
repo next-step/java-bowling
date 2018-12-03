@@ -19,10 +19,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame rollBowlingBall(Pin pin) {
-        if(pin.belowMinHit() || pin.exceedMaxHit()) {
-            throw new IllegalArgumentException("볼링핀은 0 ~ 10 사이의 값만 가질 수 있음");
-        }
-
         recordFrameResult(pin);
 
         if(isFinished()) {
