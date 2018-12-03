@@ -14,7 +14,7 @@ public class NormalFrame extends AbstractFrame {
 
 	public NormalFrame(int frameNumber) {
 		super(frameNumber);
-		this.state = new None(frameNumber);
+		this.state = new None();
 	}
 
 	@Override

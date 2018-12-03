@@ -9,13 +9,7 @@ import domain.Score;
 public interface State {
 	State tryBowl(Pin pin);
 
-	int getFrameNumber();
-
 	boolean isFinished();
-
-	default boolean isSameFrameNumber(int frameNumber) {
-		return getFrameNumber() == frameNumber;
-	}
 
 	Score getScore();
 

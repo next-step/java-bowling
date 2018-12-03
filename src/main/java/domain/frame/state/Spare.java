@@ -1,6 +1,5 @@
 package domain.frame.state;
 
-import domain.FrameNumber;
 import domain.Pin;
 import domain.Score;
 
@@ -9,13 +8,10 @@ import domain.Score;
  */
 public class Spare implements State {
 	public static final String SPARE_STR = "/";
-
-	private FrameNumber frameNumber;
 	private Pin firstPin;
 	private Pin secondPin;
 
-	public Spare(int frameNumber, Pin firstPin) {
-		this.frameNumber = new FrameNumber(frameNumber);
+	public Spare(Pin firstPin) {
 		this.firstPin = firstPin;
 		this.secondPin = Pin.TEN.sub(firstPin);
 	}
@@ -23,11 +19,6 @@ public class Spare implements State {
 	@Override
 	public State tryBowl(Pin pin) {
 		throw new IllegalArgumentException();
-	}
-
-	@Override
-	public int getFrameNumber() {
-		return this.frameNumber.toInteger();
 	}
 
 	@Override

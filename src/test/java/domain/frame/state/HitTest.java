@@ -16,7 +16,7 @@ public class HitTest {
 
 	@Test
 	public void test_스페어_생성() {
-		State state = new Hit(1, Pin.of(8));
+		State state = new Hit(Pin.of(8));
 
 		State spare = state.tryBowl(Pin.of(2));
 		Assertions.assertThat(spare).isInstanceOf(Spare.class);
@@ -25,7 +25,7 @@ public class HitTest {
 
 	@Test
 	public void test_미스_생성() {
-		State state = new Hit(1, Pin.of(8));
+		State state = new Hit(Pin.of(8));
 		State spare = state.tryBowl(Pin.of(1));
 
 		Assertions.assertThat(spare).isInstanceOf(Miss.class);
@@ -34,7 +34,7 @@ public class HitTest {
 
 	@Test
 	public void test_거터_생성() {
-		State state = new Hit(1, Pin.of(8));
+		State state = new Hit(Pin.of(8));
 
 		State spare = state.tryBowl(Pin.ZERO);
 

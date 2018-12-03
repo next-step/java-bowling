@@ -16,9 +16,9 @@ public class BowlingPinBoardTest {
 
 	@Test
 	public void test_게임보드생성() {
-		State state = new Strike(1);
-		State state2 = new Miss(2, Pin.of(5), Pin.of(2));
-		State state3 = new Spare(3, Pin.of(5));
+		State state = new Strike();
+		State state2 = new Miss(Pin.of(5), Pin.of(2));
+		State state3 = new Spare(Pin.of(5));
 		FrameResults frameResults = new FrameResults(Arrays.asList(
 			new FrameResult(state, 17),
 			new FrameResult(state2, 7),

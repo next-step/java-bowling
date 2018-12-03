@@ -16,8 +16,7 @@ public class StrikeTest {
 
 	@Test
 	public void test_스트라이크_생성() {
-		State strike = new Strike(10);
-		Assertions.assertThat(strike.getFrameNumber()).isEqualTo(10);
+		State strike = new Strike();
 		Assertions.assertThat(strike.toString()).isEqualTo("X");
 	}
 }

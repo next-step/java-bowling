@@ -1,6 +1,5 @@
 package domain.frame.state;
 
-import domain.FrameNumber;
 import domain.Pin;
 import domain.Score;
 import domain.frame.FrameResult;
@@ -9,23 +8,13 @@ import domain.frame.FrameResult;
  * Created by hspark on 22/11/2018.
  */
 public class None implements State {
-	private FrameNumber frameNumber;
-
-	public None(int frameNumber) {
-		this.frameNumber = new FrameNumber(frameNumber);
-	}
 
 	@Override
 	public State tryBowl(Pin pin) {
 		if (pin.equals(Pin.TEN)) {
-			return new Strike(getFrameNumber());
+			return new Strike();
 		}
-		return new Hit(getFrameNumber(), pin);
-	}
-
-	@Override
-	public int getFrameNumber() {
-		return this.frameNumber.toInteger();
+		return new Hit(pin);
 	}
 
 	@Override

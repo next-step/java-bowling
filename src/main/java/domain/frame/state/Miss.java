@@ -1,6 +1,5 @@
 package domain.frame.state;
 
-import domain.FrameNumber;
 import domain.Pin;
 import domain.Score;
 
@@ -8,19 +7,12 @@ import domain.Score;
  * Created by hspark on 22/11/2018.
  */
 public class Miss implements State {
-	private FrameNumber frameNumber;
 	private Pin firstPin;
 	private Pin secondPin;
 
-	public Miss(int frameNumber, Pin firstPin, Pin secondPin) {
+	public Miss(Pin firstPin, Pin secondPin) {
 		this.firstPin = firstPin;
 		this.secondPin = secondPin;
-		this.frameNumber = new FrameNumber(frameNumber);
-	}
-
-	@Override
-	public int getFrameNumber() {
-		return this.frameNumber.toInteger();
 	}
 
 	@Override

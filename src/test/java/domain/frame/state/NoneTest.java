@@ -10,7 +10,7 @@ import org.junit.Test;
 public class NoneTest {
 	@Test
 	public void test_스트라이크_생성() {
-		State state = new None(1);
+		State state = new None();
 		State spare = state.tryBowl(Pin.TEN);
 
 		Assertions.assertThat(spare).isInstanceOf(Strike.class);
@@ -19,7 +19,7 @@ public class NoneTest {
 
 	@Test
 	public void test_히트_생성() {
-		State state = new None(1);
+		State state = new None();
 
 		State spare = state.tryBowl(Pin.of(2));
 

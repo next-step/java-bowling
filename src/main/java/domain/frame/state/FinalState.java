@@ -3,7 +3,6 @@ package domain.frame.state;
 import com.google.common.base.Preconditions;
 import domain.Pin;
 import domain.Score;
-import domain.frame.Frame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +17,7 @@ public class FinalState implements State {
 	private List<State> states = new ArrayList<>();
 
 	public FinalState() {
-		states.add(new None(Frame.MAX_FRAME));
-	}
-
-	@Override
-	public int getFrameNumber() {
-		return Frame.MAX_FRAME;
+		states.add(new None());
 	}
 
 	@Override
@@ -86,7 +80,7 @@ public class FinalState implements State {
 	}
 
 	private State bowlNext(Pin pin) {
-		State state = new None(Frame.MAX_FRAME);
+		State state = new None();
 		state = state.tryBowl(pin);
 		states.add(state);
 		lastIndex++;
