@@ -32,7 +32,10 @@ public class FrameResults {
 	public List<Integer> toScoreList() {
 		List<Integer> scores = frameResults.stream().filter(FrameResult::isCalculatedScore)
 			.map(FrameResult::getScore).collect(Collectors.toList());
+		return createSummaryScores(scores);
+	}
 
+	private List<Integer> createSummaryScores(List<Integer> scores) {
 		List<Integer> sumScores = new ArrayList<>();
 		int totalScore = 0;
 		for (Integer score : scores) {
