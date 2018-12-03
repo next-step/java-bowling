@@ -1,48 +1,54 @@
 package domain.frame.result;
 
+import domain.FrameNumber;
+import domain.Pin;
 import domain.Score;
-import domain.frame.FirstBowlFrame;
-import domain.frame.Frame;
 
 /**
  * Created by hspark on 22/11/2018.
  */
 public class Miss implements FrameResult {
-	private int frameNumber;
-	private Score secondScore;
+	private FrameNumber frameNumber;
+	private Pin firstPin;
+	private Pin secondPin;
 
-	public Miss(int frameNumber, Score score) {
-		this.frameNumber = frameNumber;
-		this.secondScore = score;
-	}
-
-	@Override
-	public Frame nextGeneralFrame() {
-		return new FirstBowlFrame(getNextNumber());
-	}
-
-	@Override
-	public Score getScore() {
-		return secondScore;
+	public Miss(int frameNumber, Pin firstPin, Pin secondPin) {
+		this.firstPin = firstPin;
+		this.secondPin = secondPin;
+		this.frameNumber = new FrameNumber(frameNumber);
 	}
 
 	@Override
 	public int getFrameNumber() {
-		return frameNumber;
+		return this.frameNumber.toInteger();
 	}
 
 	@Override
-	public int getNextNumber() {
-		return getFrameNumber() + 1;
+	public boolean isFinished() {
+		return true;
 	}
 
 	@Override
-	public FrameResult self() {
-		return this;
+	public Score getScore() {
+		return Score.of(firstPin.add(secondPin).toInteger());
+	}
+
+	@Override
+	public Score calculateScore(Score previousScore) {
+		Score score = previousScore.calculate(firstPin);
+		if (!score.isScoreCalculateComplete()) {
+			score = score.calculate(secondPin);
+		}
+		return score;
+	}
+
+	@Override
+	public FrameResult tryBowl(Pin pin) {
+		throw new IllegalArgumentException();
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(getScore());
+		return String.format("%s|%s", firstPin, secondPin);
 	}
 }

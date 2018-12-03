@@ -1,52 +1,30 @@
 package domain;
 
 import domain.frame.Frame;
-import domain.frame.result.FrameResult;
-
-import java.util.ArrayList;
-import java.util.List;
+import domain.frame.result.FrameResults;
 
 /**
  * Created by hspark on 22/11/2018.
  */
 public class Bowling {
-	public static final int FIRST_FRAME_NUMBER = 1;
-	private List<FrameResult> frameResults = new ArrayList<>();
+	private Frame frame = Frame.first();
 
-	public void bowlFirst(Score score) {
-		frameResults.clear();
-		Frame frame = Frame.first();
-		bowl(score, frame);
-	}
-
-	public void bowl(Score score) {
-		if (frameResults.isEmpty()) {
-			bowlFirst(score);
-			return;
-		}
-		Frame frame = getLastFrameResult().next();
-		bowl(score, frame);
-	}
-
-	private void bowl(Score score, Frame frame) {
-		FrameResult result = frame.pitch(score);
-		frameResults.add(result);
+	public void bowl(Pin pin) {
+		Frame lastFrame = frame.getLastFrame();
+		lastFrame.pitch(pin);
 	}
 
 	public boolean hasNext() {
-		return frameResults.isEmpty() || getLastFrameResult().hasNext();
+		return frame.getLastFrame().isLeftFrame();
 	}
 
-	public FrameResult getLastFrameResult() {
-		int lastIndex = frameResults.size() - 1;
-		return frameResults.get(lastIndex);
+	public int getNextFrameNumber() {
+		return frame.getLastFrame().getFrameNumber();
 	}
 
-	public int getNextFrameNumber(){
-		return getLastFrameResult().getNextNumber();
-	}
-
-	public BowlingScoreBoard getScoreBoard() {
-		return new BowlingScoreBoard(frameResults);
+	public BowlingScoreBoard getBowlingScoreBoard() {
+		FrameResults frameResults = frame.getFrameResults();
+		FrameScores frameScores = frame.getScores();
+		return new BowlingScoreBoard(frameResults, frameScores);
 	}
 }

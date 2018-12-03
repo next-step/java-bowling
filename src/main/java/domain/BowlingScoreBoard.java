@@ -1,28 +1,27 @@
 package domain;
 
-import domain.frame.result.FrameResult;
+import domain.frame.result.FrameResults;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by hspark on 22/11/2018.
  */
 public class BowlingScoreBoard {
-	private Map<Integer, String> board = new HashMap<>();
+	private FrameResults frameResults;
+	private FrameScores frameScores;
 
-	public BowlingScoreBoard(List<FrameResult> frameResults) {
-		for (FrameResult frameResult : frameResults) {
-			String scoreStr = this.board.get(frameResult.getFrameNumber());
-			if (Objects.nonNull(scoreStr)) {
-				String newScoreStr = String.join("|", scoreStr, frameResult.toString());
-				board.put(frameResult.getFrameNumber(), newScoreStr);
-				continue;
-			}
-			board.put(frameResult.getFrameNumber(), frameResult.toString());
-		}
+	public BowlingScoreBoard(FrameResults frameResults, FrameScores frameScores) {
+		this.frameResults = frameResults;
+		this.frameScores = frameScores;
 	}
 
-	public List<String> scores() {
-		return Collections.unmodifiableList(new ArrayList<>(board.values()));
+	public List<String> gameResult() {
+		return frameResults.toList();
 	}
+
+	public List<Integer> scores() {
+		return frameScores.toList();
+	}
+
 }

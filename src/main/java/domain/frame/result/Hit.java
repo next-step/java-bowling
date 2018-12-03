@@ -1,48 +1,54 @@
 package domain.frame.result;
 
+import domain.FrameNumber;
+import domain.Pin;
 import domain.Score;
-import domain.frame.Frame;
-import domain.frame.SecondBowlFrame;
 
 /**
  * Created by hspark on 22/11/2018.
  */
 public class Hit implements FrameResult {
-	private int frameNumber;
-	private Score firstScore;
+	private FrameNumber frameNumber;
+	private Pin firstPin;
 
-	public Hit(int frameNumber, Score firstScore) {
-		this.frameNumber = frameNumber;
-		this.firstScore = firstScore;
+	public Hit(int frameNumber, Pin firstPin) {
+		this.frameNumber = new FrameNumber(frameNumber);
+		this.firstPin = firstPin;
 	}
 
 	@Override
-	public Frame nextGeneralFrame() {
-		return new SecondBowlFrame(frameNumber, firstScore);
-	}
-
-	@Override
-	public Score getScore() {
-		return firstScore;
+	public FrameResult tryBowl(Pin pin) {
+		if (firstPin.add(pin).equals(Pin.TEN)) {
+			return new Spare(getFrameNumber(), firstPin);
+		}
+		return new Miss(getFrameNumber(), firstPin, pin);
 	}
 
 	@Override
 	public int getFrameNumber() {
-		return frameNumber;
+		return frameNumber.toInteger();
 	}
 
 	@Override
-	public int getNextNumber() {
-		return getFrameNumber();
+	public boolean isFinished() {
+		return false;
 	}
 
 	@Override
-	public FrameResult self() {
-		return this;
+	public Score getScore() {
+		return Score.of(firstPin.toInteger());
+	}
+
+	@Override
+	public Score calculateScore(Score previousScore) {
+		if(previousScore.isScoreCalculateComplete()){
+			return previousScore;
+		}
+		return previousScore.calculate(firstPin);
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(getScore());
+		return firstPin.toString();
 	}
 }

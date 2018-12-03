@@ -1,8 +1,5 @@
 package domain;
 
-import domain.frame.result.FrameResult;
-import domain.frame.result.Hit;
-import domain.frame.result.Strike;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
@@ -11,23 +8,32 @@ import org.junit.Test;
  */
 public class BowlingTest {
 	@Test
-	public void test_시작_스트라이크() {
+	public void test_시작_다음프레임() {
 		Bowling bowling = new Bowling();
-		bowling.bowl(Score.of(10));
-		FrameResult frameResult = bowling.getLastFrameResult();
+
+		// 1 Frame
+		bowling.bowl(Pin.of(8));
+		bowling.bowl(Pin.of(2));
+
+		// 2 Frame
+		bowling.bowl(Pin.of(2));
 		int nextFrameNumber = bowling.getNextFrameNumber();
 		Assertions.assertThat(nextFrameNumber).isEqualTo(2);
-		Assertions.assertThat(frameResult).isInstanceOf(Strike.class);
 	}
 
 	@Test
-	public void test_시작_히트() {
+	public void test_게임_결과() {
 		Bowling bowling = new Bowling();
-		bowling.bowl(Score.of(5));
-		FrameResult frameResult = bowling.getLastFrameResult();
-		int nextFrameNumber = bowling.getNextFrameNumber();
-		Assertions.assertThat(nextFrameNumber).isEqualTo(1);
-		Assertions.assertThat(frameResult).isInstanceOf(Hit.class);
+
+		// 1 Frame
+		bowling.bowl(Pin.of(8));
+		bowling.bowl(Pin.of(2));
+
+		// 2 Frame
+		bowling.bowl(Pin.of(2));
+
+		Assertions.assertThat(bowling.getBowlingScoreBoard().gameResult()).hasSize(2);
+		Assertions.assertThat(bowling.getBowlingScoreBoard().scores()).hasSize(1);
 
 	}
 }

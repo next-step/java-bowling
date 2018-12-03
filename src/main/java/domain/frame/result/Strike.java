@@ -1,44 +1,47 @@
 package domain.frame.result;
 
+import domain.FrameNumber;
+import domain.Pin;
 import domain.Score;
-import domain.frame.FirstBowlFrame;
-import domain.frame.Frame;
 
 /**
  * Created by hspark on 22/11/2018.
  */
 public class Strike implements FrameResult {
 	public static final String STRIKE_STR = "X";
-	private int frameNumber;
+
+	private FrameNumber frameNumber;
 
 	public Strike(int frameNumber) {
-		this.frameNumber = frameNumber;
+		this.frameNumber = new FrameNumber(frameNumber);
 	}
 
 	@Override
-	public Frame nextGeneralFrame() {
-		return new FirstBowlFrame(getNextNumber());
-	}
-
-	@Override
-	public Score getScore() {
-		return Score.TEN;
+	public FrameResult tryBowl(Pin pin) {
+		throw new IllegalArgumentException();
 	}
 
 	@Override
 	public int getFrameNumber() {
-		return frameNumber;
+		return this.frameNumber.toInteger();
 	}
 
 	@Override
-	public int getNextNumber() {
-		int nextNumber = getFrameNumber() + 1;
-		return nextNumber > MAX_FRAME ? MAX_FRAME : nextNumber;
+	public boolean isFinished() {
+		return true;
 	}
 
 	@Override
-	public FrameResult self() {
-		return this;
+	public Score getScore() {
+		return Score.STRIKE;
+	}
+
+	@Override
+	public Score calculateScore(Score previousScore) {
+		if (previousScore.isScoreCalculateComplete()) {
+			return previousScore;
+		}
+		return previousScore.calculate(Pin.TEN);
 	}
 
 	@Override
