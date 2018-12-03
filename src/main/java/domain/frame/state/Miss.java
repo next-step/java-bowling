@@ -1,4 +1,4 @@
-package domain.frame.result;
+package domain.frame.state;
 
 import domain.FrameNumber;
 import domain.Pin;
@@ -7,22 +7,15 @@ import domain.Score;
 /**
  * Created by hspark on 22/11/2018.
  */
-public class Spare implements FrameResult {
-	public static final String SPARE_STR = "/";
-
+public class Miss implements State {
 	private FrameNumber frameNumber;
 	private Pin firstPin;
 	private Pin secondPin;
 
-	public Spare(int frameNumber, Pin firstPin) {
-		this.frameNumber = new FrameNumber(frameNumber);
+	public Miss(int frameNumber, Pin firstPin, Pin secondPin) {
 		this.firstPin = firstPin;
-		this.secondPin = Pin.TEN.sub(firstPin);
-	}
-
-	@Override
-	public FrameResult tryBowl(Pin pin) {
-		throw new IllegalArgumentException();
+		this.secondPin = secondPin;
+		this.frameNumber = new FrameNumber(frameNumber);
 	}
 
 	@Override
@@ -37,7 +30,7 @@ public class Spare implements FrameResult {
 
 	@Override
 	public Score getScore() {
-		return Score.SPARE;
+		return Score.of(firstPin.add(secondPin).toInteger());
 	}
 
 	@Override
@@ -50,7 +43,12 @@ public class Spare implements FrameResult {
 	}
 
 	@Override
+	public State tryBowl(Pin pin) {
+		throw new IllegalArgumentException();
+	}
+
+	@Override
 	public String toString() {
-		return String.format("%s|%s", firstPin, SPARE_STR);
+		return String.format("%s|%s", firstPin, secondPin);
 	}
 }

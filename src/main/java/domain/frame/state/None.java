@@ -1,24 +1,26 @@
-package domain.frame.result;
+package domain.frame.state;
 
 import domain.FrameNumber;
 import domain.Pin;
 import domain.Score;
+import domain.frame.FrameResult;
 
 /**
  * Created by hspark on 22/11/2018.
  */
-public class Strike implements FrameResult {
-	public static final String STRIKE_STR = "X";
-
+public class None implements State {
 	private FrameNumber frameNumber;
 
-	public Strike(int frameNumber) {
+	public None(int frameNumber) {
 		this.frameNumber = new FrameNumber(frameNumber);
 	}
 
 	@Override
-	public FrameResult tryBowl(Pin pin) {
-		throw new IllegalArgumentException();
+	public State tryBowl(Pin pin) {
+		if (pin.equals(Pin.TEN)) {
+			return new Strike(getFrameNumber());
+		}
+		return new Hit(getFrameNumber(), pin);
 	}
 
 	@Override
@@ -28,24 +30,21 @@ public class Strike implements FrameResult {
 
 	@Override
 	public boolean isFinished() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public Score getScore() {
-		return Score.STRIKE;
+		return Score.of(FrameResult.NON_CALCULATE_SCORE);
 	}
 
 	@Override
 	public Score calculateScore(Score previousScore) {
-		if (previousScore.isScoreCalculateComplete()) {
-			return previousScore;
-		}
-		return previousScore.calculate(Pin.TEN);
+		return previousScore;
 	}
 
 	@Override
 	public String toString() {
-		return STRIKE_STR;
+		return String.valueOf("");
 	}
 }

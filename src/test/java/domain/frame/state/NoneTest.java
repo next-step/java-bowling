@@ -1,4 +1,4 @@
-package domain.frame.result;
+package domain.frame.state;
 
 import domain.Pin;
 import org.assertj.core.api.Assertions;
@@ -10,8 +10,8 @@ import org.junit.Test;
 public class NoneTest {
 	@Test
 	public void test_스트라이크_생성() {
-		FrameResult frameResult = new None(1);
-		FrameResult spare = frameResult.tryBowl(Pin.TEN);
+		State state = new None(1);
+		State spare = state.tryBowl(Pin.TEN);
 
 		Assertions.assertThat(spare).isInstanceOf(Strike.class);
 		Assertions.assertThat(spare.toString()).isEqualTo("X");
@@ -19,9 +19,9 @@ public class NoneTest {
 
 	@Test
 	public void test_히트_생성() {
-		FrameResult frameResult = new None(1);
+		State state = new None(1);
 
-		FrameResult spare = frameResult.tryBowl(Pin.of(2));
+		State spare = state.tryBowl(Pin.of(2));
 
 		Assertions.assertThat(spare).isInstanceOf(Hit.class);
 		Assertions.assertThat(spare.toString()).isEqualTo("2");

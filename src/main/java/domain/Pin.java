@@ -18,12 +18,12 @@ public final class Pin {
 	private final int score;
 
 	private Pin(int score) {
+		checkArgument(score <= 10);
+		checkArgument(score >= 0);
 		this.score = score;
 	}
 
 	public static Pin of(int scoreValue) {
-		checkArgument(scoreValue <= 10);
-		checkArgument(scoreValue >= 0);
 		Pin cachePin = CACHE.get(scoreValue);
 		if (Objects.nonNull(cachePin)) {
 			return cachePin;

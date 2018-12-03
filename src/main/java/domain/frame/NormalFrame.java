@@ -3,35 +3,35 @@ package domain.frame;
 import domain.FrameScores;
 import domain.Pin;
 import domain.Score;
-import domain.frame.result.FrameResult;
-import domain.frame.result.None;
+import domain.frame.state.State;
+import domain.frame.state.None;
 
 /**
  * Created by hspark on 30/11/2018.
  */
-public class NormalFrame extends Frame {
-	private FrameResult frameResult;
+public class NormalFrame extends AbstractFrame {
+	private State state;
 
 	public NormalFrame(int frameNumber) {
 		super(frameNumber);
-		this.frameResult = new None(frameNumber);
+		this.state = new None(frameNumber);
 	}
 
 	@Override
 	public Frame pitch(Pin pin) {
-		if (frameResult.isFinished()) {
+		if (state.isFinished()) {
 			return getNextFrame().pitch(pin);
 		}
-		this.frameResult = frameResult.tryBowl(pin);
+		this.state = state.tryBowl(pin);
 		return next();
 	}
 
 	public Frame next() {
-		if (frameResult.isFinished() && !isLastNormalFrame()) {
+		if (state.isFinished() && !isLastNormalFrame()) {
 			setNextFrame(new NormalFrame(getFrameNumber() + 1));
 			return getNextFrame();
 		}
-		if (frameResult.isFinished() && isLastNormalFrame()) {
+		if (state.isFinished() && isLastNormalFrame()) {
 			setNextFrame(new FinalFrame());
 			return getNextFrame();
 		}
@@ -43,24 +43,24 @@ public class NormalFrame extends Frame {
 	}
 
 	@Override
-	public FrameResult getFrameResult() {
-		return this.frameResult;
+	public State getState() {
+		return this.state;
 	}
 
 	@Override
 	public boolean isFinished() {
-		return frameResult.isFinished();
+		return state.isFinished();
 	}
 
 	@Override
-	Frame self() {
+	public Frame self() {
 		return this;
 	}
 
 	@Override
 	public int getScore() {
-		Score score = frameResult.getScore();
-		if (frameResult.getScore().isScoreCalculateComplete()) {
+		Score score = state.getScore();
+		if (state.getScore().isScoreCalculateComplete()) {
 			return score.getScore();
 		}
 		try {

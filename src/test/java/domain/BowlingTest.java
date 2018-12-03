@@ -32,8 +32,8 @@ public class BowlingTest {
 		// 2 Frame
 		bowling.bowl(Pin.of(2));
 
-		Assertions.assertThat(bowling.getBowlingScoreBoard().gameResult()).hasSize(2);
-		Assertions.assertThat(bowling.getBowlingScoreBoard().scores()).hasSize(1);
+		Assertions.assertThat(bowling.getFrameResults().toResultList()).hasSize(2);
+		Assertions.assertThat(bowling.getFrameResults().toScoreList()).hasSize(2);
 
 	}
 }

@@ -14,7 +14,7 @@ public class BowlingGameConsole {
 		while (bowling.hasNext()) {
 			int nextFrameNumber = bowling.getNextFrameNumber();
 			bowling.bowl(InputView.inputScore(nextFrameNumber));
-			OutputView.printBoard(player, bowling.getBowlingScoreBoard());
+			OutputView.printBoard(player, bowling.getFrameResults());
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package domain.frame.result;
+package domain.frame.state;
 
 import domain.FrameNumber;
 import domain.Pin;
@@ -7,7 +7,7 @@ import domain.Score;
 /**
  * Created by hspark on 22/11/2018.
  */
-public class Hit implements FrameResult {
+public class Hit implements State {
 	private FrameNumber frameNumber;
 	private Pin firstPin;
 
@@ -17,7 +17,7 @@ public class Hit implements FrameResult {
 	}
 
 	@Override
-	public FrameResult tryBowl(Pin pin) {
+	public State tryBowl(Pin pin) {
 		if (firstPin.add(pin).equals(Pin.TEN)) {
 			return new Spare(getFrameNumber(), firstPin);
 		}

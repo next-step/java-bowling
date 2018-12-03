@@ -1,4 +1,4 @@
-package domain.frame.result;
+package domain.frame.state;
 
 /**
  * Created by hspark on 22/11/2018.
@@ -15,13 +15,13 @@ import org.junit.Test;
 public class SpareTest {
 	@Test
 	public void test_스페어_생성() {
-		FrameResult spare = new Spare(1, Pin.of(8));
+		State spare = new Spare(1, Pin.of(8));
 		Assertions.assertThat(spare.toString()).isEqualTo("8|/");
 	}
 
 	@Test
 	public void test_스트라이크_점수계산() {
-		FrameResult spare = new Spare(1, Pin.of(8));
+		State spare = new Spare(1, Pin.of(8));
 		Score score = Score.STRIKE;
 		score = spare.calculateScore(score);
 

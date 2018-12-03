@@ -1,4 +1,4 @@
-package domain.frame.result;
+package domain.frame.state;
 
 import domain.Pin;
 import domain.Score;
@@ -6,8 +6,8 @@ import domain.Score;
 /**
  * Created by hspark on 22/11/2018.
  */
-public interface FrameResult {
-	FrameResult tryBowl(Pin pin);
+public interface State {
+	State tryBowl(Pin pin);
 
 	int getFrameNumber();
 
