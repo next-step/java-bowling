@@ -1,4 +1,4 @@
-package domain.frame.result;
+package domain.frame.state;
 
 /**
  * Created by hspark on 22/11/2018.
@@ -16,17 +16,17 @@ public class HitTest {
 
 	@Test
 	public void test_스페어_생성() {
-		FrameResult frameResult = new Hit(1, Pin.of(8));
+		State state = new Hit(Pin.of(8));
 
-		FrameResult spare = frameResult.tryBowl(Pin.of(2));
+		State spare = state.tryBowl(Pin.of(2));
 		Assertions.assertThat(spare).isInstanceOf(Spare.class);
 		Assertions.assertThat(spare.toString()).isEqualTo("8|/");
 	}
 
 	@Test
 	public void test_미스_생성() {
-		FrameResult frameResult = new Hit(1, Pin.of(8));
-		FrameResult spare = frameResult.tryBowl(Pin.of(1));
+		State state = new Hit(Pin.of(8));
+		State spare = state.tryBowl(Pin.of(1));
 
 		Assertions.assertThat(spare).isInstanceOf(Miss.class);
 		Assertions.assertThat(spare.toString()).isEqualTo("8|1");
@@ -34,9 +34,9 @@ public class HitTest {
 
 	@Test
 	public void test_거터_생성() {
-		FrameResult frameResult = new Hit(1, Pin.of(8));
+		State state = new Hit(Pin.of(8));
 
-		FrameResult spare = frameResult.tryBowl(Pin.ZERO);
+		State spare = state.tryBowl(Pin.ZERO);
 
 		Assertions.assertThat(spare).isInstanceOf(Miss.class);
 		Assertions.assertThat(spare.toString()).isEqualTo("8|-");

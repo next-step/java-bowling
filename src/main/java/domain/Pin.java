@@ -10,6 +10,8 @@ import static com.google.common.base.Preconditions.checkArgument;
  * Created by hspark on 22/11/2018.
  */
 public final class Pin {
+	private static final int MAX_PIN_COUNT = 10;
+	private static final int MIN_PIN_COUNT = 0;
 	private static final String GUTTER_STR = "-";
 	private static Map<Integer, Pin> CACHE = new HashMap<>();
 	public static final Pin ZERO = Pin.of(0);
@@ -18,12 +20,12 @@ public final class Pin {
 	private final int score;
 
 	private Pin(int score) {
+		checkArgument(score <= MAX_PIN_COUNT);
+		checkArgument(score >= MIN_PIN_COUNT);
 		this.score = score;
 	}
 
 	public static Pin of(int scoreValue) {
-		checkArgument(scoreValue <= 10);
-		checkArgument(scoreValue >= 0);
 		Pin cachePin = CACHE.get(scoreValue);
 		if (Objects.nonNull(cachePin)) {
 			return cachePin;

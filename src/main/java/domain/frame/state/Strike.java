@@ -1,29 +1,17 @@
-package domain.frame.result;
+package domain.frame.state;
 
-import domain.FrameNumber;
 import domain.Pin;
 import domain.Score;
 
 /**
  * Created by hspark on 22/11/2018.
  */
-public class Strike implements FrameResult {
+public class Strike implements State {
 	public static final String STRIKE_STR = "X";
 
-	private FrameNumber frameNumber;
-
-	public Strike(int frameNumber) {
-		this.frameNumber = new FrameNumber(frameNumber);
-	}
-
 	@Override
-	public FrameResult tryBowl(Pin pin) {
+	public State tryBowl(Pin pin) {
 		throw new IllegalArgumentException();
-	}
-
-	@Override
-	public int getFrameNumber() {
-		return this.frameNumber.toInteger();
 	}
 
 	@Override

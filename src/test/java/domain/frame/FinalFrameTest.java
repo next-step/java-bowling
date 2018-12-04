@@ -15,7 +15,7 @@ public class FinalFrameTest {
 		while (frame.isLeftFrame()) {
 			frame.pitch(Pin.TEN);
 		}
-		Assertions.assertThat(frame.getFrameResult().toString()).isEqualTo("X|X|X");
+		Assertions.assertThat(frame.getState().toString()).isEqualTo("X|X|X");
 	}
 
 	@Test

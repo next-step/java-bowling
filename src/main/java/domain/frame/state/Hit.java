@@ -1,32 +1,24 @@
-package domain.frame.result;
+package domain.frame.state;
 
-import domain.FrameNumber;
 import domain.Pin;
 import domain.Score;
 
 /**
  * Created by hspark on 22/11/2018.
  */
-public class Hit implements FrameResult {
-	private FrameNumber frameNumber;
+public class Hit implements State {
 	private Pin firstPin;
 
-	public Hit(int frameNumber, Pin firstPin) {
-		this.frameNumber = new FrameNumber(frameNumber);
+	public Hit(Pin firstPin) {
 		this.firstPin = firstPin;
 	}
 
 	@Override
-	public FrameResult tryBowl(Pin pin) {
+	public State tryBowl(Pin pin) {
 		if (firstPin.add(pin).equals(Pin.TEN)) {
-			return new Spare(getFrameNumber(), firstPin);
+			return new Spare(firstPin);
 		}
-		return new Miss(getFrameNumber(), firstPin, pin);
-	}
-
-	@Override
-	public int getFrameNumber() {
-		return frameNumber.toInteger();
+		return new Miss(firstPin, pin);
 	}
 
 	@Override

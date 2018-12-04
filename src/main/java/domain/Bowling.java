@@ -1,7 +1,7 @@
 package domain;
 
 import domain.frame.Frame;
-import domain.frame.result.FrameResults;
+import domain.frame.FrameResults;
 
 /**
  * Created by hspark on 22/11/2018.
@@ -22,9 +22,7 @@ public class Bowling {
 		return frame.getLastFrame().getFrameNumber();
 	}
 
-	public BowlingScoreBoard getBowlingScoreBoard() {
-		FrameResults frameResults = frame.getFrameResults();
-		FrameScores frameScores = frame.getScores();
-		return new BowlingScoreBoard(frameResults, frameScores);
+	public FrameResults getFrameResults() {
+		return frame.getFrameResults();
 	}
 }

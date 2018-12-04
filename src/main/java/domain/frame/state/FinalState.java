@@ -1,9 +1,8 @@
-package domain.frame.result;
+package domain.frame.state;
 
 import com.google.common.base.Preconditions;
 import domain.Pin;
 import domain.Score;
-import domain.frame.Frame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,40 +12,35 @@ import java.util.stream.Collectors;
 /**
  * Created by hspark on 22/11/2018.
  */
-public class FinalFrameResult implements FrameResult {
+public class FinalState implements State {
 	private int lastIndex = 0;
-	private List<FrameResult> frameResults = new ArrayList<>();
+	private List<State> states = new ArrayList<>();
 
-	public FinalFrameResult() {
-		frameResults.add(new None(Frame.MAX_FRAME));
-	}
-
-	@Override
-	public int getFrameNumber() {
-		return Frame.MAX_FRAME;
+	public FinalState() {
+		states.add(new None());
 	}
 
 	@Override
 	public boolean isFinished() {
 		// 전체 스트라이크일 경우 세번까지 칠 수 있다.
-		if (isAllStrike() && frameResults.size() < 3) {
+		if (isAllStrike() && states.size() < 3) {
 			return false;
 		}
 
 		//스페어일 경우 한번 더 칠 수 있다.
-		if (containSpare() && frameResults.size() < 2) {
+		if (containSpare() && states.size() < 2) {
 			return false;
 		}
 
-		return frameResults.stream().anyMatch(FrameResult::isFinished);
+		return states.stream().anyMatch(State::isFinished);
 	}
 
 	// 마지막 프레임의 점수는 보너스 계산 없이 단순 합으로 계산한다.
 	@Override
 	public Score getScore() {
 		int totalScore = 0;
-		for (FrameResult frameResult : frameResults) {
-			totalScore += frameResult.getScore().toInteger();
+		for (State state : states) {
+			totalScore += state.getScore().toInteger();
 		}
 		return Score.of(totalScore);
 	}
@@ -54,8 +48,8 @@ public class FinalFrameResult implements FrameResult {
 	@Override
 	public Score calculateScore(Score previousScore) {
 		Score score = previousScore;
-		for (FrameResult frameResult : frameResults) {
-			score = frameResult.calculateScore(score);
+		for (State state : states) {
+			score = state.calculateScore(score);
 		}
 		return score;
 	}
@@ -69,9 +63,9 @@ public class FinalFrameResult implements FrameResult {
 	}
 
 	@Override
-	public FrameResult tryBowl(Pin pin) {
+	public State tryBowl(Pin pin) {
 		Preconditions.checkArgument(!isFinished());
-		FrameResult lastResult = frameResults.get(lastIndex);
+		State lastResult = states.get(lastIndex);
 		if (lastResult.isFinished()) {
 			return bowlNext(pin);
 		}
@@ -79,16 +73,16 @@ public class FinalFrameResult implements FrameResult {
 		return this;
 	}
 
-	private void bowlCurrent(Pin pin, FrameResult lastResult) {
+	private void bowlCurrent(Pin pin, State lastResult) {
 		lastResult = lastResult.tryBowl(pin);
-		frameResults.remove(lastIndex);
-		frameResults.add(lastIndex, lastResult);
+		states.remove(lastIndex);
+		states.add(lastIndex, lastResult);
 	}
 
-	private FrameResult bowlNext(Pin pin) {
-		FrameResult frameResult = new None(Frame.MAX_FRAME);
-		frameResult = frameResult.tryBowl(pin);
-		frameResults.add(frameResult);
+	private State bowlNext(Pin pin) {
+		State state = new None();
+		state = state.tryBowl(pin);
+		states.add(state);
 		lastIndex++;
 		return this;
 	}
@@ -96,16 +90,16 @@ public class FinalFrameResult implements FrameResult {
 	@Override
 	public String toString() {
 		StringJoiner stringJoiner = new StringJoiner("|");
-		List<FrameResult> runningResult = getRunningResult();
+		List<State> runningResult = getRunningResult();
 
-		for (FrameResult frameResult : runningResult) {
-			stringJoiner.add(frameResult.toString());
+		for (State state : runningResult) {
+			stringJoiner.add(state.toString());
 		}
 		return stringJoiner.toString();
 	}
 
-	private List<FrameResult> getRunningResult() {
-		return frameResults.stream()
+	private List<State> getRunningResult() {
+		return states.stream()
 			.filter(frameResult -> frameResult.getClass() != None.class)
 			.collect(Collectors.toList());
 	}
