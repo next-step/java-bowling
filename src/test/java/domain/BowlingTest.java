@@ -9,7 +9,7 @@ import org.junit.Test;
 public class BowlingTest {
 	@Test
 	public void test_시작_다음프레임() {
-		Bowling bowling = new Bowling();
+		Bowling bowling = new Bowling(new Player("ABC"));
 
 		// 1 Frame
 		bowling.bowl(Pin.of(8));
@@ -23,7 +23,7 @@ public class BowlingTest {
 
 	@Test
 	public void test_게임_결과() {
-		Bowling bowling = new Bowling();
+		Bowling bowling = new Bowling(new Player("ABC"));
 
 		// 1 Frame
 		bowling.bowl(Pin.of(8));
@@ -32,8 +32,8 @@ public class BowlingTest {
 		// 2 Frame
 		bowling.bowl(Pin.of(2));
 
-		Assertions.assertThat(bowling.getFrameResults().toResultList()).hasSize(2);
-		Assertions.assertThat(bowling.getFrameResults().toScoreList()).hasSize(2);
+		Assertions.assertThat(bowling.getBowlingScoreBoard().getResultList()).hasSize(2);
+		Assertions.assertThat(bowling.getBowlingScoreBoard().getScoreList()).hasSize(2);
 
 	}
 }
