@@ -1,18 +1,19 @@
 package domain;
 
+import domain.frames.Frame;
 import domain.frames.NormalFrame;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResultManager {
-    private List<NormalFrame> normalFrames;
+    private List<Frame> normalFrames;
 
     public ResultManager() {
         normalFrames = new ArrayList<>();
     }
 
-    public void addResult(NormalFrame normalFrame) {
+    public void addResult(Frame normalFrame) {
         normalFrames.add(normalFrame);
     }
 
@@ -20,12 +21,11 @@ public class ResultManager {
         return this.normalFrames.get(number).getFrameNumber();
     }
 
-
-    public String toString(int number) {
-        return this.normalFrames.get(number).toString();
+    public List<Frame> getNormalFrames() {
+        return normalFrames;
     }
 
-    public List<NormalFrame> getNormalFrames() {
-        return normalFrames;
+    public void deleteLastResult() {
+        normalFrames.remove(normalFrames.size()-1);
     }
 }

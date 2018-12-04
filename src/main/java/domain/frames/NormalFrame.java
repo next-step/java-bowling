@@ -8,34 +8,40 @@ public class NormalFrame extends Frame {
 
     private int frameNumber;
     private FrameStatus frameStatus;
-    private StringBuilder stringBuilder;
 
     private NormalFrame(int frameNumber) {
         this.frameNumber = frameNumber;
-        stringBuilder = new StringBuilder();
     }
 
     public static NormalFrame frameFactory(int frameNumber) {
         return new NormalFrame(frameNumber);
     }
 
-    private NormalFrame first(int ball) {
+    private Frame first(int ball) {
         this.frameStatus = new FrameStatus(ball, StatusFrameEnum.FIRST);
-        checkSB();
-        if (askFramePoint() == StatusPointEnum.STRIKE) {
+        if (frameStatus.isStrike()) {
+
+            if (frameNumber +1 == 10) {
+                return new FinalFrame();
+            }
+
             return frameFactory(frameNumber+1);
         }
-
         return this;
     }
 
-    private NormalFrame second(int ball) {
+    private Frame second(int ball) {
         frameStatus.statusUpdate(ball, StatusFrameEnum.SECOND);
+
+        if (frameNumber +1 == 10) {
+            return new FinalFrame();
+        }
+
         return frameFactory(frameNumber+1);
     }
 
     @Override
-    public NormalFrame bowling(int ball) {
+    public Frame bowling(int ball) {
         if (this.frameStatus == null) {
             return this.first(ball);
         }
@@ -50,33 +56,23 @@ public class NormalFrame extends Frame {
         return frameNumber;
     }
 
-    public void checkSB() {
-        if (askFramePoint() == StatusPointEnum.STRIKE) {
-            stringBuilder.append("X");
-        }
-
-        if (askFramePoint() == StatusPointEnum.SPARE) {
-            stringBuilder.append("|/");
-        }
-
-        if (askFramePoint() == StatusPointEnum.FIRSTGUTTER) {
-            stringBuilder.append("-");
-        }
-
-        if (askFramePoint() == StatusPointEnum.SECONDGUTTER) {
-            stringBuilder.append("|-");
-        }
-
-        if (askFramePoint() == StatusPointEnum.MISS) {
-            stringBuilder.append(String.valueOf(frameStatus.getLeftPinCount()));
-        }
+    public String showResultFirst(){
+        return frameStatus.getCurrentResultFirst();
     }
 
-    public boolean isSameFrame(NormalFrame normalFrame) {
+    public String showResultSecond(){
+        return frameStatus.getCurrentResultSecond();
+    }
+
+    public boolean isSameFrame(Frame normalFrame) {
         NormalFrame otherNormalFrame = (NormalFrame)normalFrame;
         if (this.frameNumber == otherNormalFrame.getFrameNumber()) {
             return true;
         }
         return false;
+    }
+
+    public boolean isStrike() {
+        return this.frameStatus.isStrike();
     }
 }

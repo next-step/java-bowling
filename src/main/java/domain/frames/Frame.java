@@ -1,6 +1,11 @@
 package domain.frames;
 
 public abstract class Frame {
-    abstract Frame bowling(int ball);
+    public abstract Frame bowling(int ball);
 
+    public abstract boolean isSameFrame(Frame nextNormalFrame);
+
+    public abstract boolean isStrike();
+
+    public abstract int getFrameNumber();
 }
