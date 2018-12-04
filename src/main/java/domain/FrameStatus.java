@@ -68,7 +68,7 @@ public class FrameStatus {
     }
 
     public StatusPointEnum getFramePoint() {
-        return StatusPointEnum.Of(this.pin.getPin(), statusFrameEnum);
+        return StatusPointEnum.Of(pin, statusFrameEnum);
     }
 
     public String getCurrentResultFirst() {

@@ -21,8 +21,8 @@ public class NormalFrame extends Frame {
         this.frameStatus = new FrameStatus(ball, StatusFrameEnum.FIRST);
         if (frameStatus.isStrike()) {
 
-            if (frameNumber +1 == 10) {
-                return new FinalFrame();
+            if (frameNumber + 1 == 10) {
+                return new FinalFrame(frameNumber + 1);
             }
 
             return frameFactory(frameNumber+1);
@@ -33,8 +33,8 @@ public class NormalFrame extends Frame {
     private Frame second(int ball) {
         frameStatus.statusUpdate(ball, StatusFrameEnum.SECOND);
 
-        if (frameNumber +1 == 10) {
-            return new FinalFrame();
+        if (frameNumber + 1 == 10) {
+            return new FinalFrame(frameNumber + 1);
         }
 
         return frameFactory(frameNumber+1);
@@ -56,15 +56,19 @@ public class NormalFrame extends Frame {
         return frameNumber;
     }
 
-    public String showResultFirst(){
+    public String showResultFirst() {
         return frameStatus.getCurrentResultFirst();
     }
 
-    public String showResultSecond(){
+    public String showResultSecond() {
         return frameStatus.getCurrentResultSecond();
     }
 
     public boolean isSameFrame(Frame normalFrame) {
+        if (normalFrame instanceof FinalFrame) {
+            return false;
+        }
+
         NormalFrame otherNormalFrame = (NormalFrame)normalFrame;
         if (this.frameNumber == otherNormalFrame.getFrameNumber()) {
             return true;

@@ -1,5 +1,8 @@
 package domain.enums;
 
+
+import domain.Pin;
+
 import java.util.Arrays;
 
 public enum StatusPointEnum {
@@ -17,15 +20,19 @@ public enum StatusPointEnum {
         this.statusFrameEnum = frameStatus;
     }
 
-    public static StatusPointEnum Of(int pinCount, StatusFrameEnum statusFrameEnum) {
+    public static StatusPointEnum Of(Pin pin, StatusFrameEnum statusFrameEnum) {
+        if (StatusFrameEnum.SECOND == statusFrameEnum && pin.isBallCountZero()) {
+            return StatusPointEnum.SECONDGUTTER;
+        }
+
         return Arrays.stream(StatusPointEnum.values())
-                .filter(statusPointEnum -> statusPointEnum.equals(pinCount, statusFrameEnum))
+                .filter(statusPointEnum -> statusPointEnum.equals(pin, statusFrameEnum))
                 .findAny()
                 .orElse(MISS);
     }
 
-    private boolean equals(int pinCount, StatusFrameEnum statusFrameEnum) {
-        if (this.pinCount == pinCount && this.statusFrameEnum == statusFrameEnum) {
+    private boolean equals(Pin pin, StatusFrameEnum statusFrameEnum) {
+        if (pin.isSamePinCount(pinCount) && this.statusFrameEnum == statusFrameEnum) {
             return true;
         }
         return false;

@@ -15,8 +15,7 @@ public class OutputView {
         System.out.println();
         System.out.print("|  " + player.getName() + " |");
         for (Frame frame : resultManager.getNormalFrames()) {
-            NormalFrame normalFrame = (NormalFrame)frame;
-            System.out.print(" " + normalFrame.showResultFirst() + normalFrame.showResultSecond() + " |");
+            System.out.print(" " + frame.showResultFirst() + frame.showResultSecond() + " |");
         }
         System.out.println();
     }

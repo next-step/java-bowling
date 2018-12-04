@@ -8,4 +8,8 @@ public abstract class Frame {
     public abstract boolean isStrike();
 
     public abstract int getFrameNumber();
+
+    public abstract String showResultFirst();
+
+    public abstract String showResultSecond();
 }
