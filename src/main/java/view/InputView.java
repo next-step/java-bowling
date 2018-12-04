@@ -1,6 +1,6 @@
 package view;
 
-import domain.NormalFrame;
+import domain.frames.NormalFrame;
 import domain.Player;
 
 import java.util.Scanner;

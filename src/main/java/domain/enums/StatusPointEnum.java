@@ -6,7 +6,8 @@ public enum StatusPointEnum {
     STRIKE(0, StatusFrameEnum.FIRST),
     SPARE(0, StatusFrameEnum.SECOND),
     MISS(0, StatusFrameEnum.SECOND),
-    GUTTER(10, StatusFrameEnum.SECOND);
+    FIRSTGUTTER(10, StatusFrameEnum.FIRST),
+    SECONDGUTTER(10, StatusFrameEnum.SECOND);
 
     private int pinCount;
     private StatusFrameEnum statusFrameEnum;

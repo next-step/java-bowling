@@ -1,6 +1,8 @@
 package domain;
 
 import domain.enums.StatusPointEnum;
+import domain.frames.Frame;
+import domain.frames.NormalFrame;
 import org.junit.Test;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -11,7 +13,7 @@ public class NormalFrameTest {
     @Test
     public void strike_test() {
         int ballCount = 10;
-        NormalFrame normalFrame = NormalFrame.first(ballCount);
+        Frame normalFrame = NormalFrame.(ballCount);
         assertThat(normalFrame.askFramePoint()).isEqualTo(StatusPointEnum.STRIKE);
     }
 

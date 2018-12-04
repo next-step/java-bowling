@@ -20,4 +20,8 @@ public class FrameStatus {
     public StatusPointEnum getFramePoint() {
         return StatusPointEnum.Of(this.pin.getPin(), statusFrameEnum);
     }
+
+    public int getLeftPinCount() {
+        return this.pin.getPin();
+    }
 }
