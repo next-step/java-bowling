@@ -20,6 +20,10 @@ public class BowlingScoreBoard {
 		return player;
 	}
 
+	public boolean isRecentFrameFinished() {
+		return frameResults.isRecentFrameFinished();
+	}
+
 	public List<String> getResultList() {
 		return frameResults.toResultList();
 	}

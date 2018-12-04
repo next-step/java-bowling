@@ -19,6 +19,10 @@ public class Bowling {
 		lastFrame.pitch(pin);
 	}
 
+	public Player getPlayer() {
+		return player;
+	}
+
 	public boolean hasNext() {
 		return frame.getLastFrame().isLeftFrame();
 	}

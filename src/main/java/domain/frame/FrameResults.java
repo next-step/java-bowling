@@ -29,6 +29,14 @@ public class FrameResults {
 		return Collections.unmodifiableList(resultList);
 	}
 
+	public boolean isRecentFrameFinished() {
+		int size = frameResults.size();
+		if (size > 1) {
+			return frameResults.get(size - 1).isFinished();
+		}
+		return false;
+	}
+
 	public List<Integer> toScoreList() {
 		List<Integer> scores = frameResults.stream().filter(FrameResult::isCalculatedScore)
 			.map(FrameResult::getScore).collect(Collectors.toList());

@@ -1,7 +1,7 @@
+package view.console;
+
 import domain.Bowling;
 import domain.Player;
-import view.InputView;
-import view.OutputView;
 
 /**
  * Created by hspark on 21/11/2018.

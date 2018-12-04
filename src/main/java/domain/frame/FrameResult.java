@@ -1,5 +1,6 @@
 package domain.frame;
 
+import domain.frame.state.None;
 import domain.frame.state.State;
 
 /**
@@ -30,5 +31,12 @@ public class FrameResult {
 
 	public State getState() {
 		return state;
+	}
+
+	public boolean isFinished() {
+		if (state.getClass() == None.class) {
+			return true;
+		}
+		return state.isFinished();
 	}
 }

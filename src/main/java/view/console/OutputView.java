@@ -1,4 +1,4 @@
-package view;
+package view.console;
 
 import domain.BowlingScoreBoard;
 import domain.Player;
