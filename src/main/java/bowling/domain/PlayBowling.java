@@ -1,7 +1,9 @@
 package bowling.domain;
 
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 import bowling.domain.frame.Records;
+import bowling.domain.score.BowlingScores;
 
 import static bowling.utils.BowlingConstants.ONE;
 
@@ -27,5 +29,9 @@ public class PlayBowling {
 
     public int playingFrameNumber() {
         return this.frame.getCurrFrame();
+    }
+
+    public BowlingScores scores() {
+        return new BowlingScores(Frames.getFrames());
     }
 }

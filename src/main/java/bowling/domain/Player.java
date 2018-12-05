@@ -23,6 +23,7 @@ public class Player {
         return frame.isFinished()
                 && frame.isLastFrame();
     }
+
     public String getName() {
         return this.name;
     }

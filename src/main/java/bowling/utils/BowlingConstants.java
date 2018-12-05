@@ -13,5 +13,8 @@ public class BowlingConstants {
     public static final int ZERO = 0;
     public static final int ONE = 1;
 
+    public static final int SPARE_BONUS_COUNT = 1;
+    public static final int STRIKE_BONUS_COUNT = 2;
+
     public static final int MAX_PLAYER_LENGTH = 3;
 }

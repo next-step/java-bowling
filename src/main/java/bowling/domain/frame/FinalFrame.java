@@ -2,10 +2,9 @@ package bowling.domain.frame;
 
 import bowling.domain.Pin;
 import bowling.domain.record.Record;
+import bowling.domain.score.Score;
 
-import static bowling.utils.BowlingConstants.FINAL_FRAME_CHANCE;
-import static bowling.utils.BowlingConstants.MAX_FRAME_COUNT;
-import static bowling.utils.BowlingConstants.NORMAL_FRAME_CHANCE;
+import static bowling.utils.BowlingConstants.*;
 
 public class FinalFrame implements Frame {
 
@@ -22,6 +21,7 @@ public class FinalFrame implements Frame {
         recordFrameResult(pin);
 
         if(isFinished()) {
+            Frames.addToFrames(this);
             return this;
         }
         return this;
@@ -57,5 +57,26 @@ public class FinalFrame implements Frame {
     @Override
     public Records getRecords() {
         return this.records;
+    }
+
+    @Override
+    public Score calculateScore() {
+        Score score = Score.initialize();
+        score = score.calculateScore(this.records.calculateRecordsForFinalFrame());
+
+        return score;
+    }
+
+    @Override
+    public Score calculateBonus(Score score) {
+        if(score.isBonusForSpare()) {
+            score = score.calculateScore(this.records.calculateFirstRecord());
+        }
+
+        if(score.isBonusForStrike()) {
+            score = score.calculateScore(this.records.calculateAfterSecondPitch());
+        }
+
+        return score;
     }
 }

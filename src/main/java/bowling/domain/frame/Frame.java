@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.Pin;
 import bowling.domain.record.Record;
+import bowling.domain.score.Score;
 
 import static bowling.utils.BowlingConstants.*;
 
@@ -31,4 +32,7 @@ public interface Frame {
     int getCurrFrame();
 
     Records getRecords();
+
+    Score calculateScore();
+    Score calculateBonus(Score score);
 }
