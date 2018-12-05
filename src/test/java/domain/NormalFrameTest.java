@@ -31,8 +31,8 @@ public class NormalFrameTest {
 
     @Test
     public void miss_test() {
-        int firstBallCount = 7;
-        int secondBallCount = 0;
+        int firstBallCount = 3;
+        int secondBallCount = 5;
 
         NormalFrame normalFrame = NormalFrame.frameFactory(1);
         normalFrame.bowling(firstBallCount);

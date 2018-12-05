@@ -1,4 +1,5 @@
 import domain.ResultManager;
+import domain.enums.FrameNumberEnum;
 import domain.frames.Frame;
 import domain.frames.NormalFrame;
 import domain.Player;
@@ -10,7 +11,7 @@ public class BowlingController {
     public static void main(String[] args) {
         Player player = InputView.getPlayer();
 
-        Frame normalFrame = NormalFrame.frameFactory(1);
+        Frame normalFrame = NormalFrame.frameFactory(FrameNumberEnum.NEXT_DEFAULT_NUMBER.getFrameNumber());
 
         ResultManager resultManager = new ResultManager();
         while (true) {
@@ -25,7 +26,7 @@ public class BowlingController {
             OutputView.showBasicFrames(player, resultManager);
             normalFrame = nextNormalFrame;
 
-            if (nextNormalFrame.getFrameNumber() == 12) {
+            if (nextNormalFrame.getFrameNumber() == FrameNumberEnum.FINISH_FRAME_NUMBER.getFrameNumber()) {
                 break;
             }
         }

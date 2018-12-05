@@ -1,6 +1,7 @@
 package domain.frames;
 
 import domain.FrameStatus;
+import domain.enums.FrameNumberEnum;
 import domain.enums.StatusFrameEnum;
 import domain.enums.StatusPointEnum;
 
@@ -21,23 +22,27 @@ public class NormalFrame extends Frame {
         this.frameStatus = new FrameStatus(ball, StatusFrameEnum.FIRST);
         if (frameStatus.isStrike()) {
 
-            if (frameNumber + 1 == 10) {
-                return new FinalFrame(frameNumber + 1);
+            if (FrameNumberEnum.FINAL_FRAME_NUMBER.isEqual(getNextFrameNumber())) {
+                return new FinalFrame(getNextFrameNumber());
             }
 
-            return frameFactory(frameNumber+1);
+            return frameFactory(getNextFrameNumber());
         }
         return this;
+    }
+
+    private int getNextFrameNumber() {
+        return FrameNumberEnum.NEXT_DEFAULT_NUMBER.addFrameNumber(frameNumber);
     }
 
     private Frame second(int ball) {
         frameStatus.statusUpdate(ball, StatusFrameEnum.SECOND);
 
-        if (frameNumber + 1 == 10) {
-            return new FinalFrame(frameNumber + 1);
+        if (FrameNumberEnum.FINAL_FRAME_NUMBER.isEqual(getNextFrameNumber())) {
+            return new FinalFrame(getNextFrameNumber());
         }
 
-        return frameFactory(frameNumber+1);
+        return frameFactory(getNextFrameNumber());
     }
 
     @Override
