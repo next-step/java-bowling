@@ -1,7 +1,6 @@
 package bowlinggame.domain.frame;
 
 import bowlinggame.domain.PlayerResult;
-import bowlinggame.domain.frame.result.Score;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,7 +55,7 @@ public class Frames {
 	}
 
 	private List<FrameResult> calculateScore(List<FrameResult> frameResults) {
-		Score totalScore = Score.init();
+		int totalScore = 0;
 		for (FrameResult frameResult : frameResults) {
 			totalScore = frameResult.calculateScore(totalScore);
 		}

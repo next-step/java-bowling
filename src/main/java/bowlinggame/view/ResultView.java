@@ -38,11 +38,7 @@ public class ResultView {
 	private static void printRollResult(PlayerResult playerResult) {
 		String playerName = StringUtils.rightAlign(playerResult.getName(), VALUE_MAX_LENGTH);
 		List<String> frameResults = IntStream.range(FrameNumber.FIRST - 1, FrameNumber.LAST)
-				.mapToObj(frameNumber -> {
-					List<String> results = playerResult.getRollResult(frameNumber);
-					String frameResult = StringUtils.join(results, SEPARATOR);
-					return StringUtils.centerAlign(frameResult, COLUMN_MAX_LENGTH);
-				})
+				.mapToObj(frameNumber -> StringUtils.centerAlign(playerResult.getRollResult(frameNumber), COLUMN_MAX_LENGTH))
 				.collect(Collectors.toList());
 		print(playerName, frameResults);
 	}

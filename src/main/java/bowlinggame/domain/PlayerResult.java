@@ -1,8 +1,7 @@
 package bowlinggame.domain;
 
 import bowlinggame.domain.frame.FrameResult;
-import bowlinggame.domain.frame.result.Score;
-import java.util.Collections;
+import bowlinggame.domain.frame.Score;
 import java.util.List;
 
 public class PlayerResult {
@@ -19,9 +18,9 @@ public class PlayerResult {
 		return name;
 	}
 
-	public List<String> getRollResult(int index) {
+	public String getRollResult(int index) {
 		if (!isFinished(index)) {
-			return Collections.emptyList();
+			return "";
 		}
 		return frameResults.get(index).getRollResults();
 	}

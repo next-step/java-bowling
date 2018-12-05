@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Pin {
 
+	public static final String GUTTER_RESULT_CHARACTER = "-";
 	private static final Map<Integer, Pin> CACHE = new HashMap<>();
 
 	public static final int MIN_COUNT = 0;
@@ -16,13 +17,12 @@ public class Pin {
 		this.count = count;
 	}
 
-	public static Pin ready() {
-		return Pin.of(MAX_COUNT);
+	public static Pin ZERO() {
+		return Pin.of(MIN_COUNT);
 	}
 
-	public static Pin fromKnockedPinCount(int knockedDownPinCount) {
-		int remainingPinCount = MAX_COUNT - knockedDownPinCount;
-		return Pin.of(remainingPinCount);
+	public static Pin TEN() {
+		return Pin.of(MAX_COUNT);
 	}
 
 	public static Pin of(int pinCount) {
@@ -33,26 +33,43 @@ public class Pin {
 		return CACHE.computeIfAbsent(Integer.valueOf(pinCount), key -> new Pin(key));
 	}
 
-	public Pin knockDown(int pinCount) {
-		if (count < pinCount) {
+	public String getResult() {
+		if (isAllStanding()) {
+			return GUTTER_RESULT_CHARACTER;
+		}
+		return String.valueOf(count);
+	}
+
+	public boolean isAllKnockedDown(Pin pin) {
+		Pin total = add(pin);
+		return total.isAllKnockedDown();
+	}
+
+	public Pin add(Pin pin) {
+		return add(pin.count);
+	}
+
+	public Pin add(int pinCount) {
+		int totalPin = count + pinCount;
+		if (totalPin > Pin.MAX_COUNT) {
 			throw new IllegalArgumentException("넘어뜨린 핀이 남은 핀보다 많습니다.");
 		}
-		return Pin.of(count - pinCount);
+		return Pin.of(totalPin);
 	}
 
 	public boolean isAllKnockedDown() {
-		return count == MIN_COUNT;
-	}
-
-	public boolean isAllStanding() {
 		return count == MAX_COUNT;
 	}
 
-	public int getKnockedPinCount() {
-		return MAX_COUNT - count;
+	public boolean isAllStanding() {
+		return count == MIN_COUNT;
 	}
 
-	public boolean isSameKnockedPinCount(int pinCount) {
-		return getKnockedPinCount() == pinCount;
+	public Score toScore() {
+		return toScore(0);
+	}
+
+	public Score toScore(int bonusCount) {
+		return Score.of(count, bonusCount);
 	}
 }

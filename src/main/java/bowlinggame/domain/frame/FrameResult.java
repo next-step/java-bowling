@@ -1,38 +1,37 @@
 package bowlinggame.domain.frame;
 
-import bowlinggame.domain.frame.result.Score;
-import java.util.List;
-
 public class FrameResult {
 
-	private List<String> results;
-	private Score score;
+	public static final int UNSCORE = -1;
 
-	public FrameResult(List<String> results) {
-		this.results = results;
-	}
+	private String result;
+	private int score;
 
-	public FrameResult(List<String> results, Score score) {
-		this.results = results;
+	public FrameResult(String result, int score) {
+		this.result = result;
 		this.score = score;
 	}
 
-	public Score calculateScore(Score totalScore) {
-		if (score == null) {
-			return totalScore;
+	public int calculateScore(int beforeScore) {
+		if (isUnscore()) {
+			return beforeScore;
 		}
-		score = score.sum(totalScore);
+		score += beforeScore;
 		return score;
 	}
 
-	public List<String> getRollResults() {
-		return results;
+	public boolean isUnscore() {
+		return score == UNSCORE;
+	}
+
+	public String getRollResults() {
+		return result;
 	}
 
 	public String getScore() {
-		if (score == null) {
+		if (isUnscore()) {
 			return Score.EMPTY_SCORE_CHARACTER;
 		}
-		return score.getScoreCharacter();
+		return String.valueOf(score);
 	}
 }

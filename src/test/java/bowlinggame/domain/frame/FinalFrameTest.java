@@ -2,7 +2,6 @@ package bowlinggame.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowlinggame.domain.frame.result.Score;
 import org.junit.Before;
 import org.junit.Test;
 
