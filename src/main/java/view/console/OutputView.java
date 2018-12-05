@@ -1,5 +1,6 @@
-package view;
+package view.console;
 
+import domain.BowlingScoreBoard;
 import domain.Player;
 import domain.frame.FrameResults;
 
@@ -34,6 +35,32 @@ public class OutputView {
 		stringJoiner.add(center(EMPTY_STR, PADDING_SIZE));
 
 		for (Integer score : frameResults.toScoreList()) {
+			String str = center(score.toString(), PADDING_SIZE);
+			stringJoiner.add(str);
+		}
+
+		System.out.println(stringJoiner.toString());
+	}
+
+	public static void printBoard(BowlingScoreBoard scoreBoard) {
+		StringJoiner stringJoiner = new StringJoiner("|", "|", "|");
+		stringJoiner.add(center("NAME", PADDING_SIZE));
+		for (int i = 1; i <= 10; i++) {
+			String str = center(i < 10 ? FRAME_NUMBER_PREFIX + i : EMPTY_STR + i, PADDING_SIZE);
+			stringJoiner.add(str);
+		}
+		stringJoiner.add("\n");
+		stringJoiner.add(center(scoreBoard.getPlayer().toString(), PADDING_SIZE));
+
+		for (String frameResult : scoreBoard.getResultList()) {
+			String str = center(frameResult, PADDING_SIZE);
+			stringJoiner.add(str);
+		}
+
+		stringJoiner.add("\n");
+		stringJoiner.add(center(EMPTY_STR, PADDING_SIZE));
+
+		for (Integer score : scoreBoard.getScoreList()) {
 			String str = center(score.toString(), PADDING_SIZE);
 			stringJoiner.add(str);
 		}

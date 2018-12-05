@@ -55,12 +55,20 @@ body {
 <div class="container">
 <form class="form-show" method="post" action="/throw">
   <div class="form-show-div form-group">
-    <label for="throwingNo">pobi의 4 프레임 첫번째 시도</label>
+    {{#unless finished}}
+    <label for="throwingNo">{{currentBowling.player}}의 {{currentBowling.nextFrameNumber}}프레임 첫번째 시도</label>
     <input type="text" id="throwingNo" class="form-control"
         name="throwingNo" placeholder="10" required autofocus>
+    {{/unless}}
+
+    {{#if finished}}
+    <label for="throwingNo">게임 종료</label>
+    {{/if}}
   </div>
   <div class="submit-button centent">
+    {{#unless finished}}
     <button class="btn btn-primary" type="submit">투구 결과 입력</button>
+    {{/unless}}
     <a class="btn btn-warning" href="/" role="button">다시하기</a>
   </div>
 </form>
@@ -88,56 +96,19 @@ body {
 </thead>
 </thead>
     <tbody>
+    {{#bowlingGames.bowlingGames}}
       <tr>
-        <th rowspan=2 class="text-center">pobi</th>
-        <td class="text-center">X</td>
-        <td class="text-center">8&nbsp;/</td>
-        <td class="text-center">7&nbsp;-</td>
-        <td class="text-center">X</td>
-        <td class="text-center">X</td>
-        <td class="text-center">X</td>
-        <td class="text-center">9&nbsp;/</td>
-        <td class="text-center">8&nbsp;-</td>
-        <td class="text-center">6&nbsp;3</td>
-        <td class="text-center">8&nbsp;/&nbsp;9</td>
+        <th rowspan=2 class="text-center">{{player}}</th>
+        {{#bowlingScoreBoard.resultList}}
+        <td class="text-center">{{this}}</td>
+        {{/bowlingScoreBoard.resultList}}
       </tr>
       <tr>
-        <td class="text-center">20</td>
-        <td class="text-center">37</td>
-        <td class="text-center">44</td>
-        <td class="text-center">74</td>
-        <td class="text-center">103</td>
-        <td class="text-center">123</td>
-        <td class="text-center">141</td>
-        <td class="text-center">149</td>
-        <td class="text-center">158</td>
-        <td class="text-center">177</td>
+        {{#bowlingScoreBoard.scoreList}}
+        <td class="text-center">{{this}}</td>
+        {{/bowlingScoreBoard.scoreList}}
       </tr>
-      <tr>
-        <th rowspan=2 class="text-center">jk</th>
-        <td class="text-center">X</td>
-        <td class="text-center">8&nbsp;/</td>
-        <td class="text-center">7&nbsp;-</td>
-        <td class="text-center">X</td>
-        <td class="text-center">X</td>
-        <td class="text-center">X</td>
-        <td class="text-center">9&nbsp;/</td>
-        <td class="text-center">8&nbsp;-</td>
-        <td class="text-center">6&nbsp;3</td>
-        <td class="text-center">8&nbsp;/&nbsp;9</td>
-      </tr>
-      <tr>
-        <td class="text-center">20</td>
-        <td class="text-center">37</td>
-        <td class="text-center">44</td>
-        <td class="text-center">74</td>
-        <td class="text-center">103</td>
-        <td class="text-center">123</td>
-        <td class="text-center">141</td>
-        <td class="text-center">149</td>
-        <td class="text-center">158</td>
-        <td class="text-center">177</td>
-      </tr>      
+    {{/bowlingGames.bowlingGames}}
     </tbody>
   </table>
 </div>
