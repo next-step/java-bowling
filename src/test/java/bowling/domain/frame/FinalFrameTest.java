@@ -56,7 +56,7 @@ public class FinalFrameTest {
     }
 
     @Test
-    public void 마지막_프레임의_점수만_합산되는지_세번_쳤을경우() {
+    public void 마지막_프레임의_점수만_합산되는지_스트라이크_세번_쳤을경우() {
         Frame frame = new FinalFrame(10);
         frame.rollBowlingBall(Pin.getInstance(10));
         frame.rollBowlingBall(Pin.getInstance(10));
@@ -68,7 +68,7 @@ public class FinalFrameTest {
     }
 
     @Test
-    public void 마지막_프레임의_점수만_합산_세번_쳤을경우() {
+    public void 마지막_프레임의_점수만_합산_스트라이크_스페어처리로_총_세번_쳤을경우() {
         Frame frame = new FinalFrame(10);
         frame.rollBowlingBall(Pin.getInstance(10));
         frame.rollBowlingBall(Pin.getInstance(5));
