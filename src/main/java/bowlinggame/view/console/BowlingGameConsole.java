@@ -1,9 +1,7 @@
-package bowlinggame;
+package bowlinggame.view.console;
 
 import bowlinggame.domain.BowlingGame;
 import bowlinggame.domain.frame.FrameNumber;
-import bowlinggame.view.InputView;
-import bowlinggame.view.ResultView;
 
 public class BowlingGameConsole {
 

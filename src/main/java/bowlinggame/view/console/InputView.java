@@ -1,4 +1,4 @@
-package bowlinggame.view;
+package bowlinggame.view.console;
 
 import bowlinggame.domain.frame.FrameNumber;
 import java.util.Scanner;
