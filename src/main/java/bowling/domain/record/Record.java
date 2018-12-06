@@ -19,4 +19,5 @@ public interface Record {
     Pin hitPinCount();
     String recordToString();
     Record nextRecord(Pin pin);
+    int hitPinCountToInteger();
 }

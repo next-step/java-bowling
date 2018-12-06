@@ -30,12 +30,13 @@ public class Score {
         return this.bonusCount > ZERO;
     }
 
-    public int getScore() {
-        return score;
+    public static int scoreForFrame(Score frameScore) {
+        return frameScore.score;
     }
 
     public int getBonusCount() {
         return bonusCount;
     }
+
 }
 

@@ -50,9 +50,7 @@ public class FinalFrameTest {
         frame.rollBowlingBall(Pin.getInstance(5));
         frame.rollBowlingBall(Pin.getInstance(4));
 
-        Score score = frame.calculateScore();
-
-        assertThat(score.getScore()).isEqualTo(9);
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(9);
     }
 
     @Test
@@ -62,9 +60,7 @@ public class FinalFrameTest {
         frame.rollBowlingBall(Pin.getInstance(10));
         frame.rollBowlingBall(Pin.getInstance(10));
 
-        Score score = frame.calculateScore();
-
-        assertThat(score.getScore()).isEqualTo(30);
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(30);
     }
 
     @Test
@@ -74,8 +70,6 @@ public class FinalFrameTest {
         frame.rollBowlingBall(Pin.getInstance(5));
         frame.rollBowlingBall(Pin.getInstance(5));
 
-        Score score = frame.calculateScore();
-
-        assertThat(score.getScore()).isEqualTo(20);
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(20);
     }
 }

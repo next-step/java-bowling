@@ -35,4 +35,9 @@ public class Strike implements Record {
     public Record nextRecord(Pin nextPin) {
         return Record.ofPinCount(nextPin);
     }
+
+    @Override
+    public int hitPinCountToInteger() {
+        return MAX_HIT;
+    }
 }

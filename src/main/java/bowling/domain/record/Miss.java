@@ -49,4 +49,9 @@ public class Miss implements Record {
 
         return Miss.getInstance(nextPin);
     }
+
+    @Override
+    public int hitPinCountToInteger() {
+        return this.pin.getPinNum();
+    }
 }

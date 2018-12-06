@@ -16,7 +16,7 @@ public class BowlingScores {
         frameScore = new ArrayList<>();
 
         frames.stream()
-                .mapToInt(frame -> frame.calculateScore().getScore())
+                .mapToInt(frame -> Score.scoreForFrame(frame.calculateScore()))
                 .forEach(this::addScore);
     }
 

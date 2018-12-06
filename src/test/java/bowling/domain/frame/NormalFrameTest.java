@@ -59,9 +59,7 @@ public class NormalFrameTest {
         frame.recordFrameResult(Pin.getInstance(4));
         frame.recordFrameResult(Pin.getInstance(4));
 
-        Score score = frame.calculateScore();
-
-        assertThat(score.getScore()).isEqualTo(8);
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(8);
     }
 
     @Test
@@ -72,7 +70,7 @@ public class NormalFrameTest {
         Frame next = frame.rollBowlingBall(Pin.getInstance(5));
         next.rollBowlingBall(Pin.getInstance(4));
 
-        assertThat(frame.calculateScore().getScore()).isEqualTo(14);
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(14);
     }
 
     @Test
@@ -83,7 +81,7 @@ public class NormalFrameTest {
         next.rollBowlingBall(Pin.getInstance(5));
         next.rollBowlingBall(Pin.getInstance(4));
 
-        assertThat(frame.calculateScore().getScore()).isEqualTo(19);
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(19);
     }
 
     @Test
@@ -93,6 +91,6 @@ public class NormalFrameTest {
         Frame next2 = next.rollBowlingBall(Pin.getInstance(10));
         next2.rollBowlingBall(Pin.getInstance(10));
 
-        assertThat(frame.calculateScore().getScore()).isEqualTo(30);
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(30);
     }
 }

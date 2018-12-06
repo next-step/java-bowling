@@ -45,4 +45,9 @@ public class Gutter implements Record {
 
         return Miss.getInstance(nextPin);
     }
+
+    @Override
+    public int hitPinCountToInteger() {
+        return MIN_HIT;
+    }
 }

@@ -76,12 +76,12 @@ public class Records {
             range = frameRecord.size();
 
         score = IntStream.range(0, range)
-                .map(i -> this.frameRecord.get(i).hitPinCount().getPinNum())
+                .map(i -> this.frameRecord.get(i).hitPinCountToInteger())
                 .sum();
 
         minus = IntStream.range(0, range)
                 .filter(i -> this.frameRecord.get(i).equals(Spare.getInstance()))
-                .map(i -> frameRecord.get(i - ONE).hitPinCount().getPinNum())
+                .map(i -> frameRecord.get(i - ONE).hitPinCountToInteger())
                 .sum();
 
         return score - minus;
