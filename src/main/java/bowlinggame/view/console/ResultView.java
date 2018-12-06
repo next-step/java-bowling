@@ -1,8 +1,9 @@
-package bowlinggame.view;
+package bowlinggame.view.console;
 
 import bowlinggame.domain.Player;
 import bowlinggame.domain.PlayerResult;
 import bowlinggame.domain.frame.FrameNumber;
+import bowlinggame.view.StringUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
