@@ -3,9 +3,9 @@ package domain.frames;
 import domain.FrameStatus;
 import domain.enums.FrameNumberEnum;
 import domain.enums.StatusFrameEnum;
-import domain.enums.StatusPointEnum;
+import domain.status.Status;
 
-public class NormalFrame extends Frame {
+public class NormalFrame implements Frame {
 
     private int frameNumber;
     private FrameStatus frameStatus;
@@ -21,7 +21,6 @@ public class NormalFrame extends Frame {
     private Frame first(int ball) {
         this.frameStatus = new FrameStatus(ball, StatusFrameEnum.FIRST);
         if (frameStatus.isStrike()) {
-
             if (FrameNumberEnum.FINAL_FRAME_NUMBER.isEqual(getNextFrameNumber())) {
                 return new FinalFrame(getNextFrameNumber());
             }
@@ -53,7 +52,7 @@ public class NormalFrame extends Frame {
         return this.second(ball);
     }
 
-    public StatusPointEnum askFramePoint() {
+    public Status askFramePoint() {
         return frameStatus.getFramePoint();
     }
 
@@ -61,27 +60,9 @@ public class NormalFrame extends Frame {
         return frameNumber;
     }
 
-    public String showResultFirst() {
-        return frameStatus.getCurrentResultFirst();
+    @Override
+    public Status collectResult() {
+        return frameStatus.getFramePoint();
     }
 
-    public String showResultSecond() {
-        return frameStatus.getCurrentResultSecond();
-    }
-
-    public boolean isSameFrame(Frame normalFrame) {
-        if (normalFrame instanceof FinalFrame) {
-            return false;
-        }
-
-        NormalFrame otherNormalFrame = (NormalFrame)normalFrame;
-        if (this.frameNumber == otherNormalFrame.getFrameNumber()) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isStrike() {
-        return this.frameStatus.isStrike();
-    }
 }

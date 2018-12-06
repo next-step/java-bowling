@@ -1,7 +1,10 @@
 package domain;
 
-import domain.enums.StatusPointEnum;
 import domain.frames.NormalFrame;
+import domain.status.Gutter;
+import domain.status.Miss;
+import domain.status.Spare;
+import domain.status.Strike;
 import org.junit.Test;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -14,7 +17,7 @@ public class NormalFrameTest {
         int strikeBall = 10;
         NormalFrame normalFrame = NormalFrame.frameFactory(1);
         normalFrame.bowling(strikeBall);
-        assertThat(normalFrame.askFramePoint()).isEqualTo(StatusPointEnum.STRIKE);
+        assertThat(normalFrame.askFramePoint()).isInstanceOf(Strike.class);
     }
 
     @Test
@@ -26,7 +29,7 @@ public class NormalFrameTest {
         normalFrame.bowling(firstBallCount);
         normalFrame.bowling(secondBallCount);
 
-        assertThat(normalFrame.askFramePoint()).isEqualTo(StatusPointEnum.SPARE);
+        assertThat(normalFrame.askFramePoint()).isInstanceOf(Spare.class);
     }
 
     @Test
@@ -38,7 +41,7 @@ public class NormalFrameTest {
         normalFrame.bowling(firstBallCount);
         normalFrame.bowling(secondBallCount);
 
-        assertThat(normalFrame.askFramePoint()).isEqualTo(StatusPointEnum.MISS);
+        assertThat(normalFrame.askFramePoint()).isInstanceOf(Miss.class);
     }
 
     @Test
@@ -48,7 +51,7 @@ public class NormalFrameTest {
         NormalFrame normalFrame = NormalFrame.frameFactory(1);
         normalFrame.bowling(firstBallCount);
 
-        assertThat(normalFrame.askFramePoint()).isEqualTo(StatusPointEnum.FIRSTGUTTER);
+        assertThat(normalFrame.askFramePoint()).isInstanceOf(Gutter.class);
     }
 
     @Test
@@ -60,6 +63,6 @@ public class NormalFrameTest {
         normalFrame.bowling(firstBallCount);
         normalFrame.bowling(secondBallCount);
 
-        assertThat(normalFrame.askFramePoint()).isEqualTo(StatusPointEnum.SECONDGUTTER);
+        assertThat(normalFrame.askFramePoint()).isInstanceOf(Gutter.class);
     }
 }

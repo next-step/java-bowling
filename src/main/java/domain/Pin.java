@@ -12,8 +12,21 @@ public class Pin {
         this.pin = pin - ball;
     }
 
+    private Pin(Pin pin) {
+        this.pin = pin.pin;
+        this.ball = pin.ball;
+    }
+
+    public static Pin of(int ball) {
+        return new Pin(ball);
+    }
+
     public static Pin firstPin(int ball) {
         return new Pin(ball);
+    }
+
+    public static Pin copyOf(Pin pin) {
+        return new Pin(pin);
     }
 
     public Pin secondPin(int ball) {
@@ -22,21 +35,21 @@ public class Pin {
         return this;
     }
 
-    public int getPin() {
-        return this.pin;
-    }
-
-    public boolean isSamePinCount(int pinCount) {
-        if (this.pin == pinCount) {
+    public boolean isAllPinDown() {
+        if (this.pin == DEFAULT_ZERO) {
             return true;
         }
         return false;
     }
 
-    public boolean isBallCountZero() {
+    public boolean isAllPinUp() {
         if (this.ball == DEFAULT_ZERO) {
             return true;
         }
         return false;
+    }
+
+    public int getPin() {
+        return pin;
     }
 }

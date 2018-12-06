@@ -1,16 +1,12 @@
 package domain.frames;
 
-public abstract class Frame {
+import domain.status.Status;
 
-    public abstract Frame bowling(int ball);
+public interface Frame {
 
-    public abstract boolean isSameFrame(Frame nextNormalFrame);
+    Frame bowling(int ball);
 
-    public abstract boolean isStrike();
+    int getFrameNumber();
 
-    public abstract int getFrameNumber();
-
-    public abstract String showResultFirst();
-
-    public abstract String showResultSecond();
+    Status collectResult();
 }

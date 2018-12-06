@@ -1,31 +1,23 @@
 package domain;
 
-import domain.frames.Frame;
-import domain.frames.NormalFrame;
+import domain.status.Status;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResultManager {
-    private List<Frame> normalFrames;
+    private List<Status> statuses;
 
     public ResultManager() {
-        normalFrames = new ArrayList<>();
+        statuses = new ArrayList<>();
     }
 
-    public void addResult(Frame normalFrame) {
-        normalFrames.add(normalFrame);
+    public void addResult(Status normalFrame) {
+        statuses.add(normalFrame);
     }
 
-    public int getFrameNumber(int number) {
-        return this.normalFrames.get(number).getFrameNumber();
+    public List<Status> getStatuses() {
+        return statuses;
     }
 
-    public List<Frame> getNormalFrames() {
-        return normalFrames;
-    }
-
-    public void deleteLastResult() {
-        normalFrames.remove(normalFrames.size()-1);
-    }
 }

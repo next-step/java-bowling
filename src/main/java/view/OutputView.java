@@ -4,6 +4,7 @@ import domain.ResultManager;
 import domain.frames.Frame;
 import domain.frames.NormalFrame;
 import domain.Player;
+import domain.status.Status;
 
 public class OutputView {
 
@@ -14,8 +15,8 @@ public class OutputView {
         }
         System.out.println();
         System.out.print("|  " + player.getName() + " |");
-        for (Frame frame : resultManager.getNormalFrames()) {
-            System.out.print(" " + frame.showResultFirst() + frame.showResultSecond() + " |");
+        for (Status status : resultManager.getStatuses()) {
+            System.out.print("  " + status.toString() + "  ");
         }
         System.out.println();
     }

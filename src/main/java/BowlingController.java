@@ -16,12 +16,7 @@ public class BowlingController {
         ResultManager resultManager = new ResultManager();
         while (true) {
             Frame nextNormalFrame = normalFrame.bowling(InputView.getFrameThrow(normalFrame));
-
-            resultManager.addResult(normalFrame);
-
-            if (!normalFrame.isSameFrame(nextNormalFrame) && !normalFrame.isStrike()) {
-                resultManager.deleteLastResult();
-            }
+            resultManager.addResult(normalFrame.collectResult());
 
             OutputView.showBasicFrames(player, resultManager);
             normalFrame = nextNormalFrame;
