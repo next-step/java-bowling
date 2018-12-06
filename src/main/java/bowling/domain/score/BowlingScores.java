@@ -5,8 +5,8 @@ import bowling.domain.frame.Frame;
 import java.util.ArrayList;
 import java.util.List;
 
+import static bowling.utils.BowlingConstants.INITIAL_SCORE;
 import static bowling.utils.BowlingConstants.ONE;
-import static bowling.utils.BowlingConstants.ZERO;
 
 public class BowlingScores {
 
@@ -27,7 +27,7 @@ public class BowlingScores {
             prevScore = frameScore.get(frameScore.size() - ONE);
         }
 
-        if(score >= ZERO)
+        if(score != INITIAL_SCORE)
             frameScore.add(score + prevScore);
     }
 

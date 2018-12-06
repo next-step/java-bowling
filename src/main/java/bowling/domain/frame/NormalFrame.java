@@ -58,7 +58,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score calculateScore() {
-        Score score = Score.of(Pin.getInstance(this.records.calculateAfterSecondPitch()), 0);
+        Score score = Score.of(Pin.getInstance(this.records.calculateRecords(NORMAL_FRAME_CHANCE)), 0);
 
         if(this.records.isLastRecordSpare())
             score = Score.of(Spare.getInstance().hitPinCount(), SPARE_BONUS_COUNT);
@@ -79,13 +79,8 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score calculateBonus(Score score) {
-        if(score.isBonusForSpare()) {
-            score = score.calculateScore(this.records.calculateAfterFirstPitch());
-        }
-
-        if(score.isBonusForStrike()) {
-            score = score.calculateScore(this.records.calculateAfterSecondPitch());
-        }
+        int bonusCount = score.getBonusCount();
+        score = score.calculateScore(this.records.calculateRecords(bonusCount));
 
         if(!this.records.isLastRecordStrike()) {
             score = score.calculateScore(ZERO);

@@ -8,10 +8,9 @@ import bowling.domain.record.Strike;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import static bowling.utils.BowlingConstants.MAX_HIT;
-import static bowling.utils.BowlingConstants.ONE;
-import static bowling.utils.BowlingConstants.ZERO;
+import static bowling.utils.BowlingConstants.*;
 
 public class Records {
 
@@ -69,27 +68,22 @@ public class Records {
         return false;
     }
 
-    int calculateAfterFirstPitch() {
-        return this.frameRecord.get(0).hitPinCount().getPinNum();
-    }
+    int calculateRecords(int range) {
+        int score;
+        int minus;
 
-    int calculateAfterSecondPitch() {
+        if(range > frameRecord.size())
+            range = frameRecord.size();
 
-        if(this.frameRecord.size() > 1 && this.frameRecord.get(1).equals(Spare.getInstance()))
-            return MAX_HIT;
+        score = IntStream.range(0, range)
+                .map(i -> this.frameRecord.get(i).hitPinCount().getPinNum())
+                .sum();
 
-        if(this.frameRecord.size() >= 2) {
-            return calculateAfterFirstPitch() + this.frameRecord.get(1).hitPinCount().getPinNum();
-        }
+        minus = IntStream.range(0, range)
+                .filter(i -> this.frameRecord.get(i).equals(Spare.getInstance()))
+                .map(i -> frameRecord.get(i - ONE).hitPinCount().getPinNum())
+                .sum();
 
-        return calculateAfterFirstPitch();
-    }
-
-    int calculateAfterFinalPitch() {
-        if(this.frameRecord.size() == 3) {
-            return calculateAfterSecondPitch() + this.frameRecord.get(2).hitPinCount().getPinNum();
-        }
-
-        return calculateAfterSecondPitch();
+        return score - minus;
     }
 }

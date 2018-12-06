@@ -61,22 +61,15 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score calculateScore() {
-        Score score = Score.initialize();
-        score = score.calculateScore(this.records.calculateAfterFinalPitch());
-
+        Score score = Score.of(Pin.getInstance(ZERO), ZERO);
+        score = score.calculateScore(this.records.calculateRecords(FINAL_FRAME_CHANCE));
         return score;
     }
 
     @Override
     public Score calculateBonus(Score score) {
-        if(score.isBonusForSpare()) {
-            score = score.calculateScore(this.records.calculateAfterFirstPitch());
-        }
-
-        if(score.isBonusForStrike()) {
-            score = score.calculateScore(this.records.calculateAfterSecondPitch());
-        }
-
+        int bonusCount = score.getBonusCount();
+        score = score.calculateScore(this.records.calculateRecords(bonusCount));
         return score;
     }
 }

@@ -6,8 +6,6 @@ import static bowling.utils.BowlingConstants.*;
 
 public class Score {
 
-    private static final int INITIAL_SCORE = -1;
-
     private int score;
     private int bonusCount;
 
@@ -36,12 +34,8 @@ public class Score {
         return score;
     }
 
-    public boolean isBonusForStrike() {
-        return this.bonusCount == STRIKE_BONUS_COUNT;
-    }
-
-    public boolean isBonusForSpare() {
-        return this.bonusCount == SPARE_BONUS_COUNT;
+    public int getBonusCount() {
+        return bonusCount;
     }
 }
 

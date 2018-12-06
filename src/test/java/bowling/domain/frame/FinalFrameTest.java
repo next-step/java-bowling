@@ -66,4 +66,16 @@ public class FinalFrameTest {
 
         assertThat(score.getScore()).isEqualTo(30);
     }
+
+    @Test
+    public void 마지막_프레임의_점수만_합산_세번_쳤을경우() {
+        Frame frame = new FinalFrame(10);
+        frame.rollBowlingBall(Pin.getInstance(10));
+        frame.rollBowlingBall(Pin.getInstance(5));
+        frame.rollBowlingBall(Pin.getInstance(5));
+
+        Score score = frame.calculateScore();
+
+        assertThat(score.getScore()).isEqualTo(20);
+    }
 }
