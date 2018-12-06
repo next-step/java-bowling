@@ -2,9 +2,8 @@ package bowling.domain;
 
 import bowling.domain.frame.Frame;
 
-import static bowling.utils.BowlingConstants.MAX_PLAYER_LENGTH;
-
 public class Player {
+    private static final int MAX_PLAYER_LENGTH = 3;
 
     private String name;
 
@@ -23,6 +22,7 @@ public class Player {
         return frame.isFinished()
                 && frame.isLastFrame();
     }
+
     public String getName() {
         return this.name;
     }

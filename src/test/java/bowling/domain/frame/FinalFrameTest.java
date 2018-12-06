@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.Pin;
 import bowling.domain.record.Record;
+import bowling.domain.score.Score;
 import org.junit.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -43,4 +44,32 @@ public class FinalFrameTest {
         assertThat(result).isEqualTo("4|4");
     }
 
+    @Test
+    public void 마지막_프레임의_점수만_합산되는지_두번_쳤을경우() {
+        Frame frame = new FinalFrame(10);
+        frame.rollBowlingBall(Pin.getInstance(5));
+        frame.rollBowlingBall(Pin.getInstance(4));
+
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(9);
+    }
+
+    @Test
+    public void 마지막_프레임의_점수만_합산되는지_스트라이크_세번_쳤을경우() {
+        Frame frame = new FinalFrame(10);
+        frame.rollBowlingBall(Pin.getInstance(10));
+        frame.rollBowlingBall(Pin.getInstance(10));
+        frame.rollBowlingBall(Pin.getInstance(10));
+
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(30);
+    }
+
+    @Test
+    public void 마지막_프레임의_점수만_합산_스트라이크_스페어처리로_총_세번_쳤을경우() {
+        Frame frame = new FinalFrame(10);
+        frame.rollBowlingBall(Pin.getInstance(10));
+        frame.rollBowlingBall(Pin.getInstance(5));
+        frame.rollBowlingBall(Pin.getInstance(5));
+
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(20);
+    }
 }

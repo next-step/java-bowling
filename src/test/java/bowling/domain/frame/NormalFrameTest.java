@@ -4,6 +4,7 @@ import bowling.domain.Pin;
 import bowling.domain.record.Record;
 import bowling.domain.record.Spare;
 import bowling.domain.record.Strike;
+import bowling.domain.score.Score;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,5 +51,46 @@ public class NormalFrameTest {
         Record result = frame.recordFrameResult(Pin.getInstance(1));
 
         assertThat(result).isEqualTo(Spare.getInstance());
+    }
+
+    @Test
+    public void 프레임_스코어에_보너스가_없는경우(){
+        Frame frame = new NormalFrame(1);
+        frame.recordFrameResult(Pin.getInstance(4));
+        frame.recordFrameResult(Pin.getInstance(4));
+
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(8);
+    }
+
+    @Test
+    public void 프레임_스코어에_스페어처리_보너스_계산() {
+        Frame frame = new NormalFrame(1);
+        frame = frame.rollBowlingBall(Pin.getInstance(5));
+
+        Frame next = frame.rollBowlingBall(Pin.getInstance(5));
+        next.rollBowlingBall(Pin.getInstance(4));
+
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(14);
+    }
+
+    @Test
+    public void 프레임_스코어에_스트라이크처리_보너스_계산() {
+        Frame frame = new NormalFrame(1);
+        Frame next = frame.rollBowlingBall(Pin.getInstance(10));
+
+        next.rollBowlingBall(Pin.getInstance(5));
+        next.rollBowlingBall(Pin.getInstance(4));
+
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(19);
+    }
+
+    @Test
+    public void 스트라이크를_세번_친_경우_보너스(){
+        Frame frame = new NormalFrame(1);
+        Frame next = frame.rollBowlingBall(Pin.getInstance(10));
+        Frame next2 = next.rollBowlingBall(Pin.getInstance(10));
+        next2.rollBowlingBall(Pin.getInstance(10));
+
+        assertThat(Score.scoreForFrame(frame.calculateScore())).isEqualTo(30);
     }
 }

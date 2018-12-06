@@ -42,6 +42,10 @@ public class Pin {
         return this.pinNum == MAX_HIT;
     }
 
+    public int getPinNum() {
+        return this.pinNum;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(pinNum);

@@ -8,9 +8,9 @@ import bowling.domain.record.Strike;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import static bowling.utils.BowlingConstants.ONE;
-import static bowling.utils.BowlingConstants.ZERO;
+import static bowling.utils.BowlingConstants.*;
 
 public class Records {
 
@@ -43,7 +43,7 @@ public class Records {
         return this.frameRecord.size() == chance;
     }
 
-    public boolean isLastRecordStrike() {
+    boolean isLastRecordStrike() {
         if(!frameRecord.isEmpty()) {
             Record record = frameRecord.get(this.frameRecord.size() - ONE);
             return record.equals(Strike.getInstance());
@@ -51,7 +51,7 @@ public class Records {
         return false;
     }
 
-    public boolean isLastRecordSpare() {
+    boolean isLastRecordSpare() {
         if(!frameRecord.isEmpty()) {
             Record record = frameRecord.get(this.frameRecord.size() - ONE);
             return record.equals(Spare.getInstance());
@@ -59,12 +59,31 @@ public class Records {
         return false;
     }
 
-    public boolean isFirstRecordStrike() {
+    boolean isFirstRecordStrike() {
         if(!frameRecord.isEmpty()) {
             Record record = frameRecord.get(ZERO);
             return record.equals(Strike.getInstance());
         }
 
         return false;
+    }
+
+    int calculateRecords(int range) {
+        int score;
+        int minus;
+
+        if(range > frameRecord.size())
+            range = frameRecord.size();
+
+        score = IntStream.range(0, range)
+                .map(i -> this.frameRecord.get(i).hitPinCountToInteger())
+                .sum();
+
+        minus = IntStream.range(0, range)
+                .filter(i -> this.frameRecord.get(i).equals(Spare.getInstance()))
+                .map(i -> frameRecord.get(i - ONE).hitPinCountToInteger())
+                .sum();
+
+        return score - minus;
     }
 }
