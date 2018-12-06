@@ -80,7 +80,7 @@ public class NormalFrame implements Frame {
     @Override
     public Score calculateBonus(Score score) {
         if(score.isBonusForSpare()) {
-            score = score.calculateScore(this.records.calculateFirstRecord());
+            score = score.calculateScore(this.records.calculateAfterFirstPitch());
         }
 
         if(score.isBonusForStrike()) {

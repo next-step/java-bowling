@@ -62,7 +62,7 @@ public class FinalFrame implements Frame {
     @Override
     public Score calculateScore() {
         Score score = Score.initialize();
-        score = score.calculateScore(this.records.calculateRecordsForFinalFrame());
+        score = score.calculateScore(this.records.calculateAfterFinalPitch());
 
         return score;
     }
@@ -70,7 +70,7 @@ public class FinalFrame implements Frame {
     @Override
     public Score calculateBonus(Score score) {
         if(score.isBonusForSpare()) {
-            score = score.calculateScore(this.records.calculateFirstRecord());
+            score = score.calculateScore(this.records.calculateAfterFirstPitch());
         }
 
         if(score.isBonusForStrike()) {

@@ -6,6 +6,8 @@ import static bowling.utils.BowlingConstants.*;
 
 public class Score {
 
+    private static final int INITIAL_SCORE = -1;
+
     private int score;
     private int bonusCount;
 
@@ -15,7 +17,7 @@ public class Score {
     }
 
     public static Score initialize() {
-        return new Score(0, 0);
+        return new Score(INITIAL_SCORE, 0);
     }
 
     public static Score of(Pin pin, int bonusCount) {

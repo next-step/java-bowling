@@ -44,7 +44,7 @@ public class Records {
         return this.frameRecord.size() == chance;
     }
 
-    public boolean isLastRecordStrike() {
+    boolean isLastRecordStrike() {
         if(!frameRecord.isEmpty()) {
             Record record = frameRecord.get(this.frameRecord.size() - ONE);
             return record.equals(Strike.getInstance());
@@ -52,7 +52,7 @@ public class Records {
         return false;
     }
 
-    public boolean isLastRecordSpare() {
+    boolean isLastRecordSpare() {
         if(!frameRecord.isEmpty()) {
             Record record = frameRecord.get(this.frameRecord.size() - ONE);
             return record.equals(Spare.getInstance());
@@ -60,7 +60,7 @@ public class Records {
         return false;
     }
 
-    public boolean isFirstRecordStrike() {
+    boolean isFirstRecordStrike() {
         if(!frameRecord.isEmpty()) {
             Record record = frameRecord.get(ZERO);
             return record.equals(Strike.getInstance());
@@ -69,7 +69,7 @@ public class Records {
         return false;
     }
 
-    int calculateFirstRecord() {
+    int calculateAfterFirstPitch() {
         return this.frameRecord.get(0).hitPinCount().getPinNum();
     }
 
@@ -79,13 +79,13 @@ public class Records {
             return MAX_HIT;
 
         if(this.frameRecord.size() >= 2) {
-            return calculateFirstRecord() + this.frameRecord.get(1).hitPinCount().getPinNum();
+            return calculateAfterFirstPitch() + this.frameRecord.get(1).hitPinCount().getPinNum();
         }
 
-        return calculateFirstRecord();
+        return calculateAfterFirstPitch();
     }
 
-    int calculateRecordsForFinalFrame() {
+    int calculateAfterFinalPitch() {
         if(this.frameRecord.size() == 3) {
             return calculateAfterSecondPitch() + this.frameRecord.get(2).hitPinCount().getPinNum();
         }

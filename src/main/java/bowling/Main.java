@@ -17,7 +17,7 @@ public class Main {
         while(!playBowling.isFinished()) {
             int frameNumber = playBowling.playingFrameNumber();
             ResultView.record(playBowling.playBowling(Pin.getInstance(InputView.inputPitch(frameNumber))), frameNumber);
-            System.out.println(playBowling.scores());
+            ResultView.score(playBowling.scores());
         }
     }
 }
