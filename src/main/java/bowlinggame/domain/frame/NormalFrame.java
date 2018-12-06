@@ -1,26 +1,22 @@
 package bowlinggame.domain.frame;
 
-import bowlinggame.domain.frame.result.Result;
-import bowlinggame.domain.frame.result.Results;
-import bowlinggame.domain.frame.result.Score;
+import bowlinggame.domain.frame.state.Ready;
+import bowlinggame.domain.frame.state.State;
 import java.util.Objects;
-import java.util.Optional;
 
 public class NormalFrame implements Frame {
 
-	public static final int MAX_ROLL_OPPORTUNITY = 2;
-
 	private FrameNumber frameNumber;
-	private Results results;
+	private State state;
 	private Frame nextFrame;
 
 	public NormalFrame(FrameNumber frameNumber) {
-		this(frameNumber, new Results());
+		this(frameNumber, new Ready());
 	}
 
-	public NormalFrame(FrameNumber frameNumber, Results results) {
+	public NormalFrame(FrameNumber frameNumber, State state) {
 		this.frameNumber = frameNumber;
-		this.results = results;
+		this.state = state;
 	}
 
 	@Override
@@ -37,42 +33,32 @@ public class NormalFrame implements Frame {
 			return next().roll(pinCount);
 		}
 
-		Pin pin = Pin.fromKnockedPinCount(results.getTotalKnockedDownPinCount());
-		results.record(pin.knockDown(pinCount));
+		state = state.roll(pinCount);
 		return this;
 	}
 
 	@Override
 	public Score getScore() {
-		Score score = initScore();
+		Score score = state.getScore();
+		return delegateNextFrame(score);
+	}
+
+	@Override
+	public Score calculateBonus(Score score) {
+		score = state.calculateBonus(score);
+		return delegateNextFrame(score);
+	}
+
+	private Score delegateNextFrame(Score score) {
 		if (score.hasBonus()) {
 			return next().calculateBonus(score);
 		}
 		return score;
 	}
 
-	private Score initScore() {
-		Optional<Result> result = results.getCurrentResult();
-		if (result.isPresent()) {
-			return Score.of(results.getTotalKnockedDownPinCount(),
-					result.get().getBonusCount());
-		}
-		return Score.init();
-	}
-
-	@Override
-	public Score calculateBonus(Score score) {
-		Score calculatedScore = results.addScore(score);
-		if (calculatedScore.hasBonus()) {
-			return next().calculateBonus(calculatedScore);
-		}
-		return score;
-	}
-
 	@Override
 	public boolean isCompleted() {
-		return results.isSameRollOpportunity(MAX_ROLL_OPPORTUNITY)
-				|| results.isAllKnockedDown();
+		return state.isFinished();
 	}
 
 	@Override
@@ -82,10 +68,11 @@ public class NormalFrame implements Frame {
 
 	@Override
 	public FrameResult getFrameResult() {
-		if (isCompleted()) {
-			return new FrameResult(results.getDisplayResults(), getScore());
+		Score score = getScore();
+		if (isCompleted() && !score.hasBonus()) {
+			return new FrameResult(state.getResult(), score.getScore());
 		}
-		return new FrameResult(results.getDisplayResults());
+		return new FrameResult(state.getResult(), FrameResult.UNSCORE);
 	}
 
 	@Override

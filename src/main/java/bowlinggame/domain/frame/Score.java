@@ -1,4 +1,4 @@
-package bowlinggame.domain.frame.result;
+package bowlinggame.domain.frame;
 
 import java.util.Objects;
 
@@ -22,27 +22,16 @@ public class Score {
 		return Score.of(score, 0);
 	}
 
-	public static Score of(int score, Result result) {
-		return Score.of(score, result.getBonusCount());
-	}
-
 	public static Score of(int score, int bonusCount) {
 		return new Score(score, bonusCount);
 	}
 
-	public Score calculateBonus(Result result) {
+	public Score calculateBonus(Score score) {
 		if (hasBonus()) {
-			score += result.getKnockedDownPinCount();
-			--bonusCount;
+			int total = this.score + score.score;
+			return of(total, bonusCount - 1);
 		}
 		return this;
-	}
-
-	public Score sum(Score totalScore) {
-		if (hasBonus()) {
-			return this;
-		}
-		return Score.of(score + totalScore.score);
 	}
 
 	public String getScoreCharacter() {
@@ -54,6 +43,10 @@ public class Score {
 
 	public boolean hasBonus() {
 		return bonusCount > 0;
+	}
+
+	public int getScore() {
+		return score;
 	}
 
 	@Override
@@ -74,3 +67,4 @@ public class Score {
 		return Objects.hash(score, bonusCount);
 	}
 }
+

@@ -1,7 +1,5 @@
 package bowlinggame.domain.frame;
 
-import bowlinggame.domain.frame.result.Score;
-
 public interface Frame {
 
 	static Frame first() {

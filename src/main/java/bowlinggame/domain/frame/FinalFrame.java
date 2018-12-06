@@ -1,17 +1,10 @@
 package bowlinggame.domain.frame;
 
-import bowlinggame.domain.frame.result.Results;
-import bowlinggame.domain.frame.result.Score;
+import bowlinggame.domain.frame.state.FinalState;
 
 public class FinalFrame implements Frame {
 
-	private static final int MAX_ROLL_OPPORTUNITY = 3;
-
-	private Results results;
-
-	public FinalFrame() {
-		this.results = new Results();
-	}
+	private FinalState state = new FinalState();
 
 	@Override
 	public Frame next() {
@@ -24,40 +17,23 @@ public class FinalFrame implements Frame {
 			return this;
 		}
 
-		int knockedDownPinCount = changeToMinCount(results.getTotalKnockedDownPinCount());
-		Pin pin = Pin.fromKnockedPinCount(knockedDownPinCount);
-		results.record(pin.knockDown(pinCount));
+		state.roll(pinCount);
 		return this;
 	}
 
 	@Override
 	public Score getScore() {
-		return Score.of(results.getTotalKnockedDownPinCount(), 0);
+		return state.getScore();
 	}
 
 	@Override
 	public Score calculateBonus(Score score) {
-		return results.addScore(score);
-	}
-
-	private int changeToMinCount(int totalKnockedDownPinCount) {
-		return totalKnockedDownPinCount % Pin.MAX_COUNT;
+		return state.calculateBonus(score);
 	}
 
 	@Override
 	public boolean isCompleted() {
-		if (isFinishedRolling(FinalFrame.MAX_ROLL_OPPORTUNITY)) {
-			return true;
-		}
-		if (isFinishedRolling(NormalFrame.MAX_ROLL_OPPORTUNITY)
-				&& !results.isAllKnockedDown()) {
-			return true;
-		}
-		return false;
-	}
-
-	private boolean isFinishedRolling(int maxRollOpportunity) {
-		return results.isSameRollOpportunity(maxRollOpportunity);
+		return state.isFinished();
 	}
 
 	@Override
@@ -67,9 +43,10 @@ public class FinalFrame implements Frame {
 
 	@Override
 	public FrameResult getFrameResult() {
-		if (isCompleted()) {
-			return new FrameResult(results.getDisplayResults(), getScore());
+		Score score = getScore();
+		if (isCompleted() && !score.hasBonus()) {
+			return new FrameResult(state.getResult(), score.getScore());
 		}
-		return new FrameResult(results.getDisplayResults());
+		return new FrameResult(state.getResult(), FrameResult.UNSCORE);
 	}
 }
