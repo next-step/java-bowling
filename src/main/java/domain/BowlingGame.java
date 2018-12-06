@@ -44,6 +44,6 @@ public class BowlingGame {
     }
 
     public static boolean hasNext() {
-        return frames.getSize() <= Frame.MAX_FRAME;
+        return frames.hasNext();
     }
 }

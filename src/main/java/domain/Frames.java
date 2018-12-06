@@ -32,4 +32,8 @@ public class Frames {
     public int getSize() {
         return frames.size();
     }
+
+    public boolean hasNext() {
+        return frames.size() <= Frame.MAX_FRAME;
+    }
 }
