@@ -1,8 +1,16 @@
 package domain.status;
 
+import domain.pin.Pin;
+
 public class Strike extends FrameFinished {
-    protected Strike(int pin) {
-        super(pin);
+    @Override
+    public Status getNext(Pin pin) {
+        return super.getNext(pin);
+    }
+
+    @Override
+    public boolean isClear() {
+        return true;
     }
 
     @Override

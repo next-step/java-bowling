@@ -1,8 +1,9 @@
 package domain.status;
 
 public class Spare extends FrameFinished {
-    protected Spare(int pin) {
-        super(pin);
+    @Override
+    public boolean isClear() {
+        return true;
     }
 
     @Override

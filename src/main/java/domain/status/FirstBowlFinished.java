@@ -1,32 +1,31 @@
 package domain.status;
 
-import static domain.pin.Pin.MAXIMUM_PINS;
-import static domain.pin.Pin.MINIMUM_PINS;
+import domain.pin.Pin;
 
 public class FirstBowlFinished extends Status {
-
-    protected FirstBowlFinished(int pin) {
+    public FirstBowlFinished(Pin pin) {
         super(pin);
     }
 
     @Override
-    public boolean isFrameFinished() {
+    public boolean isClear() {
+        return false;
+    }
+
+    @Override
+    public boolean isNormalFrameFinished() {
         return false;
     }
 
     @Override
     public String toString() {
-        return pin + "|";
+        return pin.isZeroPin() ? "-" : pin.toString();
     }
 
     @Override
-    public Status getNext(int pin) {
-        if(this.pin + pin == MINIMUM_PINS) {
-            return new Miss(pin);
-        }
-
-        if(this.pin + pin == MAXIMUM_PINS) {
-            return new Spare(pin);
+    public Status getNext(Pin pin) {
+        if(this.pin.isSpare(pin)) {
+            return new Spare();
         }
 
         return new Open(pin);

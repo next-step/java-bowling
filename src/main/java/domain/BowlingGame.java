@@ -3,6 +3,7 @@ package domain;
 import domain.frame.Frame;
 import domain.frame.Frames;
 import domain.frame.NormalFrame;
+import domain.pin.Pin;
 
 import static domain.frame.Frames.LAST_FRAME;
 import static domain.frame.Frames.START_FRAME;
@@ -19,33 +20,29 @@ public class BowlingGame {
         return playerName.getName();
     }
 
-    public Frames getFrames() {
-        return frames;
-    }
-
     public String getFramesStatus() {
         return frames.getStatus();
     }
 
-    public boolean isFramesEmpty() {
-        return frames.isEmpty();
+    public int getNextFrameNumber() {
+        return frames.getNextFrameNumber();
     }
 
-    public int getRecentFrameNumber() {
-        return (frames.isEmpty()) ? START_FRAME : frames.getRecentFrameNumber();
-    }
-
-    public Frame play(int pin) {
-        Frame currentFrame = (frames.isEmpty()) ? new NormalFrame(START_FRAME) : frames.getRecentFrame();
+    public Frames play(int pin) {
+        Frame currentFrame = (frames.isEmpty()) ? new NormalFrame(START_FRAME, Pin.of(pin)) : frames.getRecentFrame().bowl(Pin.of(pin));
 
         if(!frames.contains(currentFrame)) {
             frames.add(currentFrame);
         }
 
-        return currentFrame.bowl(pin);
+        return frames;
     }
 
     public boolean isContinuable() {
-        return frames.size() <= LAST_FRAME || !frames.getRecentFrame().isFinished();
+        if(frames.isEmpty()) {
+            return true;
+        }
+
+        return frames.getNextFrameNumber() <= LAST_FRAME || !frames.getRecentFrame().isFinished();
     }
 }

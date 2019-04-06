@@ -1,16 +1,22 @@
 package domain.status;
 
+import domain.pin.Pin;
+
 import static domain.pin.Pin.MAXIMUM_PINS;
 import static domain.pin.Pin.MINIMUM_PINS;
 
 public class Ready extends Status {
-
-    public Ready(int pin) {
-        super(pin);
+    public Ready() {
+        super();
     }
 
     @Override
-    public boolean isFrameFinished() {
+    public boolean isClear() {
+        return false;
+    }
+
+    @Override
+    public boolean isNormalFrameFinished() {
         return false;
     }
 
@@ -20,15 +26,7 @@ public class Ready extends Status {
     }
 
     @Override
-    public Status getNext(int pin) {
-        if(pin == MAXIMUM_PINS) {
-            return new Strike(pin);
-        }
-
-        if(pin == MINIMUM_PINS) {
-            return new Gutter(pin);
-        }
-
-        return new FirstBowlFinished(pin);
+    public Status getNext(Pin pin) {
+        return super.getNext(pin);
     }
 }

@@ -4,61 +4,66 @@ import domain.pin.Pin;
 import domain.pin.Pins;
 import domain.status.Ready;
 import domain.status.Status;
+import domain.status.Statuses;
+import util.StringUtils;
 
 import java.util.stream.Collectors;
 
 import static domain.frame.Frames.LAST_FRAME;
 
 public abstract class Frame {
-    protected final int number;
-    protected final Pins pins = new Pins();
+    private final int number;
+    protected Pins pins = new Pins();
+    protected Statuses statuses = new Statuses();
 
-    public Frame(int number) {
+    public Frame(int number, Pin pin) {
         this.number = number;
+        pins.add(pin);
+        statuses.add(new Ready().getNext(pin));
     }
 
-    public int getNumber() {
-        return number;
+    protected Status getLastStatus() {
+        return statuses.getLastStatus();
     }
 
-    public boolean hasAnyPin() {
-        return pins.getSize() > 0;
+    protected void addPin(Pin pin) {
+        pins.add(pin);
     }
 
-    public Status getRecentStatus() {
-        return pins.getRecentStatus();
+    protected void addNextStatus(Pin pin) {
+        statuses.add(getLastStatus().getNext(pin));
     }
 
-    public Pins getPins() {
-        return pins;
-    }
+    public Frame bowl(Pin pin) {
+        if(isFinished()) {
+            return createNextFrame(pin);
+        }
 
-    public Frame bowl(int pin) {
-        Frame frame = (isFinished()) ? createNextFrame() : this;
-        Status status = (hasAnyPin()) ? getRecentStatus() : new Ready(0).getNext(pin);
-        pins.add(new Pin(pin, status));
+        addPin(pin);
+        addNextStatus(pin);
         return this;
     }
 
-    private Frame createNextFrame() {
-        if(number > LAST_FRAME) {
+    private Frame createNextFrame(Pin pin) {
+        if(number >= LAST_FRAME) {
             throw new IllegalStateException(String.format("프레임의 최대 개수는 %d개 입니다.", LAST_FRAME));
         }
 
         if(number == LAST_FRAME - 1) {
-            new LastFrame(number + 1);
+            return new LastFrame(number + 1, pin);
         }
 
-        return new NormalFrame(number + 1);
+        return new NormalFrame(number + 1, pin);
     }
 
     public abstract boolean isFinished();
 
     @Override
     public String toString() {
-        return pins.getPins().stream()
-                    .map(Pin::getStatus)
-                    .map(status -> String.format("  %s  ", status.toString()))
-                    .collect(Collectors.joining("|"));
+        String status = statuses.getStream()
+                .map(Status::toString)
+                .collect(Collectors.joining("|"));
+
+        return StringUtils.center(status, 6);
     }
 }

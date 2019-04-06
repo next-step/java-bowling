@@ -8,27 +8,30 @@ public class Frames {
     public static int START_FRAME = 1;
     public static int LAST_FRAME = 10;
 
-    private List<Frame> frames = new ArrayList<>();
+    private final List<Frame> frames = new ArrayList<>();
 
     public boolean isEmpty() {
         return frames.isEmpty();
     }
 
-    public Frames add(Frame frame) {
+    public void add(Frame frame) {
         frames.add(frame);
-        return this;
+    }
+
+    public int getNextFrameNumber() {
+        if(isEmpty()) {
+            return START_FRAME;
+        }
+
+        if(getRecentFrame().isFinished()) {
+            return frames.size()+1;
+        }
+
+        return frames.size();
     }
 
     public Frame getRecentFrame() {
         return frames.get(frames.size() - 1);
-    }
-
-    public int getRecentFrameNumber() {
-        return frames.get(frames.size() - 1).getNumber();
-    }
-
-    public int size() {
-        return frames.size();
     }
 
     public boolean contains(Frame frame) {
@@ -38,6 +41,6 @@ public class Frames {
     public String getStatus() {
         return frames.stream()
                     .map(Frame::toString)
-                    .collect(Collectors.joining());
+                    .collect(Collectors.joining("|"));
     }
 }

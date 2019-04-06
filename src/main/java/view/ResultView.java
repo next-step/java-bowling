@@ -11,7 +11,6 @@ public class ResultView {
     public static void showResult(BowlingGame game) {
         showHeadLine();
         showStatus(game);
-        System.out.println();
     }
 
     private static void showHeadLine() {
@@ -34,6 +33,7 @@ public class ResultView {
 
     private static void showStatus(BowlingGame game) {
         System.out.println(getStatus(game));
+        System.out.println();
     }
 
     private static String getStatus(BowlingGame game) {

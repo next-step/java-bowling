@@ -1,13 +1,26 @@
 package domain.status;
 
-public abstract class Status {
-    protected int pin;
+import domain.pin.Pin;
 
-    public Status(int pin) {
+public abstract class Status {
+    protected Pin pin;
+
+    public Status() {
+    }
+
+    public Status(Pin pin) {
         this.pin = pin;
     }
 
-    public abstract boolean isFrameFinished();
+    public abstract boolean isClear();
+    public abstract boolean isNormalFrameFinished();
     public abstract String toString();
-    public abstract Status getNext(int pin);
+
+    public Status getNext(Pin pin) {
+        if(pin.isStrike()) {
+            return new Strike();
+        }
+
+        return new FirstBowlFinished(pin);
+    }
 }

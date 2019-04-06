@@ -7,12 +7,16 @@ public class ConsoleApplicationLauncher {
 
     public static void main(String[] args) {
         PlayerName playerName = InputView.getPlayerName();
-
         BowlingGame game = new BowlingGame(playerName);
-        //game.prepareInitialFrame();
         do {
-            game.play(InputView.getBowl(game.getRecentFrameNumber()));
-            ResultView.showResult(game);
+            try {
+                game.play(InputView.getBowl(game.getNextFrameNumber()));
+                ResultView.showResult(game);
+            } catch(Exception e) {
+                e.printStackTrace();
+                System.out.println();
+                continue;
+            }
         } while(game.isContinuable());
     }
 }

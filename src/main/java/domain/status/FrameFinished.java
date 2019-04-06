@@ -1,18 +1,23 @@
 package domain.status;
 
-public abstract class FrameFinished extends Status {
+import domain.pin.Pin;
 
-    protected FrameFinished(int pin) {
+public abstract class FrameFinished extends Status {
+    public FrameFinished() {
+        super();
+    }
+
+    public FrameFinished(Pin pin) {
         super(pin);
     }
 
     @Override
-    public boolean isFrameFinished() {
+    public boolean isNormalFrameFinished() {
         return true;
     }
 
     @Override
-    public Status getNext(int pin) {
-        throw new UnsupportedOperationException();
+    public Status getNext(Pin pin) {
+        return super.getNext(pin);
     }
 }

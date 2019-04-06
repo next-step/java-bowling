@@ -1,37 +1,66 @@
 package domain.pin;
 
-import domain.status.Ready;
-import domain.status.Status;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Pin {
     public static final int MAXIMUM_PINS = 10;
     public static final int MINIMUM_PINS = 0;
 
-    private int pin;
-    private Status status;
+    private final int pin;
 
-    public Pin(int pin) {
-       this(pin, new Ready(0).getNext(pin));
-    }
+    private static final Map<Integer, Pin> pins = new HashMap<>();
 
-    public Pin(int pin, Status status) {
+    private Pin(int pin) {
         if(pin > MAXIMUM_PINS) {
-            throw new IllegalArgumentException(MAXIMUM_PINS + " 이하의 숫자를 입력하세요");
+            throw new IllegalArgumentException("핀의 숫자는 " + MAXIMUM_PINS + " 이하입니다.");
         }
 
         if(pin < MINIMUM_PINS) {
-            throw new IllegalArgumentException(MAXIMUM_PINS + " 이상의 숫자를 입력하세요");
+            throw new IllegalArgumentException("핀의 숫자는" + MAXIMUM_PINS + " 이상입니다.");
         }
 
         this.pin = pin;
-        this.status = status;
+    }
+
+    public Pin add(Pin pin) {
+        return Pin.of(this.pin + pin.getPin());
+    }
+
+    public static Pin of(int pin) {
+        if(!pins.containsKey(pin)) {
+            pins.put(pin, new Pin(pin));
+        }
+
+        return pins.get(pin);
+    }
+
+    public static Pin ofZero() {
+        return Pin.of(0);
     }
 
     public int getPin() {
         return pin;
     }
 
-    public Status getStatus() {
-        return status;
+    public boolean isZeroPin() {
+        return pin == MINIMUM_PINS;
+    }
+
+    public boolean isZeroPin(Pin pin) {
+        return add(pin).getPin() == MINIMUM_PINS;
+    }
+
+    public boolean isSpare(Pin pin) {
+        return add(pin).getPin() == MAXIMUM_PINS;
+    }
+
+    public boolean isStrike() {
+        return pin == MAXIMUM_PINS;
+    }
+
+    @Override
+    public String toString() {
+        return "" + pin;
     }
 }
