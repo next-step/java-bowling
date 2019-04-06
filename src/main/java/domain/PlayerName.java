@@ -7,7 +7,7 @@ public class PlayerName {
     private final String name;
 
     public PlayerName(String name) {
-        if(StringUtils.isEmpty(name) || name.length() != VALID_NAME_LENGTH) {
+        if(StringUtils.isEmpty(name) || name.length() != VALID_NAME_LENGTH || !name.matches("[A-Za-z]+")) {
             throw new IllegalArgumentException("잘못 입력된 이름입니다.");
         }
 

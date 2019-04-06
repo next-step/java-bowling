@@ -35,20 +35,12 @@ public class Pin {
         return pins.get(pin);
     }
 
-    public static Pin ofZero() {
-        return Pin.of(0);
-    }
-
     public int getPin() {
         return pin;
     }
 
     public boolean isZeroPin() {
         return pin == MINIMUM_PINS;
-    }
-
-    public boolean isZeroPin(Pin pin) {
-        return add(pin).getPin() == MINIMUM_PINS;
     }
 
     public boolean isSpare(Pin pin) {
