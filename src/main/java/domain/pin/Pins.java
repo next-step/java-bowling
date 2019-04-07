@@ -3,8 +3,6 @@ package domain.pin;
 import java.util.ArrayList;
 import java.util.List;
 
-import static domain.pin.Pin.MAXIMUM_PINS;
-
 public class Pins {
     private final List<Pin> pins = new ArrayList<>();
 

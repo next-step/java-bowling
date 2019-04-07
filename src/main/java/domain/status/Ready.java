@@ -2,9 +2,6 @@ package domain.status;
 
 import domain.pin.Pin;
 
-import static domain.pin.Pin.MAXIMUM_PINS;
-import static domain.pin.Pin.MINIMUM_PINS;
-
 public class Ready extends Status {
     public Ready() {
         super();

@@ -3,6 +3,8 @@ package domain.status;
 import domain.pin.Pin;
 
 public class FirstBowlFinished extends Status {
+    static final String ZERO_PIN_DISPLAY_STRING = "-";
+
     public FirstBowlFinished(Pin pin) {
         super(pin);
     }
@@ -19,7 +21,7 @@ public class FirstBowlFinished extends Status {
 
     @Override
     public String toString() {
-        return pin.isZeroPin() ? "-" : pin.toString();
+        return pin.isZeroPin() ? ZERO_PIN_DISPLAY_STRING : pin.toString();
     }
 
     @Override

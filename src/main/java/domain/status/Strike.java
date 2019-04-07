@@ -3,6 +3,8 @@ package domain.status;
 import domain.pin.Pin;
 
 public class Strike extends FrameFinished {
+    static final String STRIKE_DISPLAY_STRING = "X";
+
     @Override
     public Status getNext(Pin pin) {
         return super.getNext(pin);
@@ -15,6 +17,6 @@ public class Strike extends FrameFinished {
 
     @Override
     public String toString() {
-        return "X";
+        return STRIKE_DISPLAY_STRING;
     }
 }

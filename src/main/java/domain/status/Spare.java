@@ -1,6 +1,8 @@
 package domain.status;
 
 public class Spare extends FrameFinished {
+    static final String SPARE_DISPLAY_STRING = "/";
+
     @Override
     public boolean isClear() {
         return true;
@@ -8,6 +10,6 @@ public class Spare extends FrameFinished {
 
     @Override
     public String toString() {
-       return "/";
+       return SPARE_DISPLAY_STRING;
     }
 }
