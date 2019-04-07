@@ -1,5 +1,6 @@
 package domain.status;
 
+import domain.base.BaseTest;
 import domain.pin.Pin;
 import org.junit.Test;
 
@@ -9,7 +10,7 @@ import static domain.status.FirstBowlFinished.ZERO_PIN_DISPLAY_STRING;
 import static domain.status.Strike.STRIKE_DISPLAY_STRING;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ReadyTest {
+public class ReadyTest extends BaseTest {
 
     @Test
     public void getNext_zeroPin() {
@@ -24,14 +25,13 @@ public class ReadyTest {
 
     @Test
     public void getNext() {
-        for(int i = MINIMUM_PINS+1; i < MAXIMUM_PINS; ++i) {
-            Pin pin = Pin.of(i);
-            Status status = new Ready().getNext(pin);
+        for(Pin firstBowl : getPins(MINIMUM_PINS + 1, MAXIMUM_PINS - 1)) {
+            Status status = new Ready().getNext(firstBowl);
 
             assertThat(status).isInstanceOf(FirstBowlFinished.class);
             assertThat(status.isClear()).isEqualTo(false);
             assertThat(status.isNormalFrameFinished()).isEqualTo(false);
-            assertThat(status.toString()).isEqualTo(i + "");
+            assertThat(status.toString()).isEqualTo(firstBowl.toString());
         }
     }
 

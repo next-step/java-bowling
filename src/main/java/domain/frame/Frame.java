@@ -22,6 +22,14 @@ public abstract class Frame {
         statuses.add(new Ready().getNext(pin));
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public Pin getPin(int i) {
+        return pins.get(i);
+    }
+
     protected Status getLastStatus() {
         return statuses.getLastStatus();
     }
@@ -35,16 +43,12 @@ public abstract class Frame {
     }
 
     public Frame bowl(Pin pin) {
-        if(isFinished()) {
-            return createNextFrame(pin);
-        }
-
         addPin(pin);
         addNextStatus(pin);
         return this;
     }
 
-    private Frame createNextFrame(Pin pin) {
+    Frame createNextFrame(Pin pin) {
         if(number >= LAST_FRAME) {
             throw new IllegalStateException(String.format("프레임의 최대 개수는 %d개 입니다.", LAST_FRAME));
         }

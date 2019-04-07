@@ -16,28 +16,12 @@ public class LastFrame extends Frame {
     }
 
     @Override
-    protected void addNextStatus(Pin pin) {
-        statuses.add(getLastStatus().getNext(pin));
-    }
-
-    private boolean isBonusBowl() {
-        return pins.size() > 2;
-    }
-
-    @Override
-    public Frame bowl(Pin pin) {
-        addPin(pin);
-        addNextStatus(pin);
-        return this;
-    }
-
-    @Override
     public boolean isFinished() {
         if(statuses.isEmpty()) {
             return false;
         }
 
-        if(isBonusBowl()) {
+        if(pins.size() > 2) {
             return true;
         }
 

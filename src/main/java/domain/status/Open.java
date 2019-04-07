@@ -2,7 +2,10 @@ package domain.status;
 
 import domain.pin.Pin;
 
+import static domain.status.FirstBowlFinished.ZERO_PIN_DISPLAY_STRING;
+
 public class Open extends FrameFinished {
+
     public Open(Pin first) {
         super(first);
     }
@@ -14,6 +17,6 @@ public class Open extends FrameFinished {
 
     @Override
     public String toString() {
-        return pin.isZeroPin() ? "-" : pin.toString();
+        return pin.isZeroPin() ? ZERO_PIN_DISPLAY_STRING : pin.toString();
     }
 }

@@ -1,7 +1,10 @@
 package domain.status;
 
+import domain.pin.Pin;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Statuses {
@@ -21,5 +24,20 @@ public class Statuses {
 
     public Stream<Status> getStream() {
         return statuses.stream();
+    }
+
+    public int size() {
+        return statuses.size();
+    }
+
+    public Status get(int i) {
+        return statuses.get(i);
+    }
+
+    @Override
+    public String toString() {
+        return statuses.stream()
+                .map(Status::toString)
+                .collect(Collectors.joining(" "));
     }
 }

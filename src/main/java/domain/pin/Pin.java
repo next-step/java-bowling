@@ -23,6 +23,14 @@ public class Pin {
         this.pin = pin;
     }
 
+    public static Pin ofStrike() {
+        return Pin.of(MAXIMUM_PINS);
+    }
+
+    public static Pin ofZero() {
+        return Pin.of(MINIMUM_PINS);
+    }
+
     public Pin add(Pin pin) {
         return Pin.of(this.pin + pin.getPin());
     }

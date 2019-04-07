@@ -10,10 +10,15 @@ import static domain.frame.Frames.START_FRAME;
 
 public class BowlingGame {
     private final PlayerName playerName;
-    private final Frames frames = new Frames();
+    private Frames frames = new Frames();
 
     public BowlingGame(PlayerName playerName) {
         this.playerName = playerName;
+    }
+
+    BowlingGame(PlayerName playerName, Frames frames) {
+        this.playerName = playerName;
+        this.frames = frames;
     }
 
     public String getPlayerName() {

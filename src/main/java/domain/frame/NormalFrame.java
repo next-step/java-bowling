@@ -16,6 +16,15 @@ public class NormalFrame extends Frame {
     }
 
     @Override
+    public Frame bowl(Pin pin) {
+        if(isFinished()) {
+            return createNextFrame(pin);
+        }
+
+        return super.bowl(pin);
+    }
+
+    @Override
     public boolean isFinished() {
         return !statuses.isEmpty() && getLastStatus().isNormalFrameFinished();
     }
