@@ -7,12 +7,10 @@ import static domain.frame.Frames.LAST_FRAME;
 
 public class LastFrame extends Frame {
 
-    public LastFrame(int number, Pin pin) {
-        super(number, pin);
+    private static final int LAST_FRAME_FINISH_SIZE = 3;
 
-        if(number != LAST_FRAME) {
-            throw new IllegalArgumentException("잘못된 프레임 번호입니다.");
-        }
+    public LastFrame(Pin pin) {
+        super(LAST_FRAME, pin);
     }
 
     @Override
@@ -21,7 +19,7 @@ public class LastFrame extends Frame {
             return false;
         }
 
-        if(pins.size() > 2) {
+        if(pins.size() >= LAST_FRAME_FINISH_SIZE) {
             return true;
         }
 

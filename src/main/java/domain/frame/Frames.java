@@ -19,12 +19,12 @@ public class Frames {
     }
 
     public int getNextFrameNumber() {
-        if(isEmpty()) {
+        if( isEmpty() ) {
             return START_FRAME;
         }
 
-        if(getRecentFrame().isFinished()) {
-            return frames.size()+1;
+        if( getRecentFrame().isFinished() ) {
+            return frames.size() + 1;
         }
 
         return frames.size();
@@ -42,5 +42,13 @@ public class Frames {
         return frames.stream()
                     .map(Frame::toString)
                     .collect(Collectors.joining("|"));
+    }
+
+    public Frame get(int i) {
+        return frames.get(i);
+    }
+
+    public int size() {
+        return frames.size();
     }
 }

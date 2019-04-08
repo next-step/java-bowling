@@ -8,8 +8,6 @@ import domain.status.Spare;
 import domain.status.Strike;
 import org.junit.Test;
 
-import static domain.frame.Frames.LAST_FRAME;
-import static domain.frame.Frames.START_FRAME;
 import static domain.pin.Pin.MAXIMUM_PINS;
 import static domain.pin.Pin.MINIMUM_PINS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +17,7 @@ public class LastFrameTest extends BaseTest {
     @Test
     public void constructor_for_not_strike() {
         for (Pin curPin : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            Frame frame = new LastFrame(LAST_FRAME, curPin);
+            Frame frame = new LastFrame(curPin);
 
             assertThat(frame.statuses.size()).isEqualTo(1);
             assertThat(frame.statuses.getLastStatus()).isInstanceOf(FirstBowlFinished.class);
@@ -30,7 +28,7 @@ public class LastFrameTest extends BaseTest {
 
     @Test
     public void constructor_for_strike() {
-        Frame frame = new LastFrame(LAST_FRAME, Pin.ofStrike());
+        Frame frame = new LastFrame(Pin.ofStrike());
 
         assertThat(frame.statuses.size()).isEqualTo(1);
         assertThat(frame.statuses.getLastStatus()).isInstanceOf(Strike.class);
@@ -38,22 +36,12 @@ public class LastFrameTest extends BaseTest {
         assertThat(frame.pins.get(0)).isEqualTo(Pin.ofStrike());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_for_start_frame_number() {
-        new LastFrame(START_FRAME, Pin.ofZero());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_for_not_last_frame_number() {
-        new LastFrame(LAST_FRAME-1, Pin.ofStrike());
-    }
-
     @Test
     public void isFinished_after_third_bowl_for_strike() {
         Pin firstBowl = Pin.ofStrike();
         for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
             for (Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - secondBowl.getPin())) {
-                Frame frame = new LastFrame(LAST_FRAME, firstBowl);
+                Frame frame = new LastFrame(firstBowl);
 
                 assertThat(frame.isFinished()).isFalse();
                 assertThat(frame.getLastStatus()).isInstanceOf(Strike.class);
@@ -77,7 +65,7 @@ public class LastFrameTest extends BaseTest {
         for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
             for (Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
-                Frame frame = new LastFrame(LAST_FRAME, firstBowl);
+                Frame frame = new LastFrame(firstBowl);
 
                 assertThat(frame.isFinished()).isFalse();
 
@@ -100,7 +88,7 @@ public class LastFrameTest extends BaseTest {
     public void isFinished_after_second_bowl_for_open() {
         for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
-                Frame frame = new LastFrame(LAST_FRAME, firstBowl);
+                Frame frame = new LastFrame(firstBowl);
                 frame = frame.bowl(secondBowl);
 
                 assertThat(frame.getLastStatus()).isInstanceOf(Open.class);

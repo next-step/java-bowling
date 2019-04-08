@@ -25,6 +25,18 @@ public class BowlingGame {
         return playerName.getName();
     }
 
+    public int getFramesSize() {
+        return frames.size();
+    }
+
+    public Frame getFrame(int i) {
+        return frames.get(i);
+    }
+
+    public Frame getRecentFrame() {
+        return frames.get(frames.size()-1);
+    }
+
     public String getFramesStatus() {
         return frames.getStatus();
     }
@@ -33,18 +45,25 @@ public class BowlingGame {
         return frames.getNextFrameNumber();
     }
 
-    public Frames play(int pin) {
-        Frame currentFrame = (frames.isEmpty()) ? new NormalFrame(START_FRAME, Pin.of(pin)) : frames.getRecentFrame().bowl(Pin.of(pin));
+    public void play(int pin) {
+        Frame currentFrame = null;
 
-        if(!frames.contains(currentFrame)) {
+        if( frames.isEmpty() ) {
+            currentFrame = new NormalFrame(START_FRAME, Pin.of(pin));
+        }
+
+        if( !frames.isEmpty() ) {
+            currentFrame = frames.getRecentFrame().bowl(Pin.of(pin));
+        }
+
+        if( !frames.contains(currentFrame) ) {
             frames.add(currentFrame);
         }
 
-        return frames;
     }
 
     public boolean isContinuable() {
-        if(frames.isEmpty()) {
+        if( frames.isEmpty() ) {
             return true;
         }
 
