@@ -3,6 +3,8 @@ package domain.status;
 import domain.pin.Pin;
 
 public abstract class Status {
+    static final int DEFAULT_BONUS_COUNT = 0;
+
     protected Pin pin;
 
     public Status() {
@@ -12,9 +14,9 @@ public abstract class Status {
         this.pin = pin;
     }
 
-    public abstract boolean isClear();
-    public abstract boolean isNormalFrameFinished();
-    public abstract String toString();
+    public int getBonusCount() {
+        return DEFAULT_BONUS_COUNT;
+    }
 
     public Status getNext(Pin pin) {
         if (pin.isStrike()) {
@@ -23,4 +25,8 @@ public abstract class Status {
 
         return new FirstBowlFinished(pin);
     }
+
+    public abstract boolean isClear();
+    public abstract boolean isNormalFrameFinished();
+    public abstract String toString();
 }

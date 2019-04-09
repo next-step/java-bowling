@@ -44,6 +44,12 @@ public class Frames {
                     .collect(Collectors.joining("|"));
     }
 
+    public String getScoreString() {
+        return frames.stream()
+                    .map(Frame::getScoreString)
+                    .collect(Collectors.joining("|"));
+    }
+
     public Frame get(int i) {
         return frames.get(i);
     }

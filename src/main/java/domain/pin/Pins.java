@@ -2,7 +2,6 @@ package domain.pin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Pins {
     private final List<Pin> pins = new ArrayList<>();
@@ -19,10 +18,9 @@ public class Pins {
         return pins.get(i);
     }
 
-    @Override
-    public String toString() {
+    public int getScore() {
         return pins.stream()
-                    .map(Pin::toString)
-                    .collect(Collectors.joining(" "));
+                    .mapToInt(Pin::getPin)
+                    .sum();
     }
 }
