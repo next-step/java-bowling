@@ -35,7 +35,7 @@ public class InputView {
     private static String getInputLine() {
         String inputLine = scanner.nextLine();
 
-        if(StringUtils.isEmpty(inputLine)) {
+        if (StringUtils.isEmpty(inputLine)) {
             throw new IllegalArgumentException("잘못된 입력값입니다.");
         }
 

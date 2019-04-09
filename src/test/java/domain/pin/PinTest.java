@@ -29,7 +29,7 @@ public class PinTest {
 
     @Test
     public void of_for_MEDIAN_VALUE() {
-        int expected = MAXIMUM_PINS + MINIMUM_PINS / 2;
+        int expected = (MAXIMUM_PINS + MINIMUM_PINS)/2;
 
         Pin pin = Pin.of(expected);
 
@@ -71,7 +71,7 @@ public class PinTest {
 
     @Test
     public void isSpare() {
-        for(int i = MINIMUM_PINS; i <= MAXIMUM_PINS-1; ++i) {
+        for(int i = MINIMUM_PINS; i <= MAXIMUM_PINS - 1; ++i) {
             Pin first = Pin.of(i);
             assertTrue(first.isSpare(Pin.of(MAXIMUM_PINS-i)));
         }
@@ -79,7 +79,7 @@ public class PinTest {
 
     @Test
     public void isSpare_for_not_spares() {
-        for(int i = MINIMUM_PINS; i <= MAXIMUM_PINS-1; ++i) {
+        for(int i = MINIMUM_PINS; i <= MAXIMUM_PINS - 1; ++i) {
             for(int j = MINIMUM_PINS; j < MAXIMUM_PINS-i; ++j) {
                 Pin first = Pin.of(i);
                 assertFalse(first.isSpare(Pin.of(j)));

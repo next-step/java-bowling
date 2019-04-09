@@ -10,14 +10,14 @@ public class NormalFrame extends Frame {
     public NormalFrame(int number, Pin pin) {
         super(number, pin);
 
-        if(number < START_FRAME || number >= LAST_FRAME) {
+        if (number < START_FRAME || number >= LAST_FRAME) {
             throw new IllegalArgumentException("잘못된 프레임 번호입니다.");
         }
     }
 
     @Override
     public Frame bowl(Pin pin) {
-        if(isFinished()) {
+        if (isFinished()) {
             return createNextFrame(pin);
         }
 

@@ -48,7 +48,7 @@ public class NormalFrameTest extends BaseTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void constructor_for_less_than_start_frame_number() {
-        new NormalFrame(START_FRAME - 1, Pin.of(MAXIMUM_PINS));
+        new NormalFrame(START_FRAME-1, Pin.of(MAXIMUM_PINS));
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -17,7 +17,7 @@ public abstract class Status {
     public abstract String toString();
 
     public Status getNext(Pin pin) {
-        if(pin.isStrike()) {
+        if (pin.isStrike()) {
             return new Strike();
         }
 

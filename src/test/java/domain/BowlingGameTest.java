@@ -257,7 +257,7 @@ public class BowlingGameTest extends BaseTest {
     @Test
     public void isContinuable() {
         Frames frames = new Frames();
-        for(int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME-1)) {
+        for(int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
             frames.add(new NormalFrame(frameNumber, Pin.ofStrike()));
             BowlingGame game = new BowlingGame(PLAYER_NAME, frames);
 

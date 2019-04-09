@@ -12,11 +12,11 @@ public class Pin {
     private static final Map<Integer, Pin> pins = new HashMap<>();
 
     private Pin(int pin) {
-        if( pin > MAXIMUM_PINS ) {
+        if (pin > MAXIMUM_PINS) {
             throw new IllegalArgumentException("핀의 숫자는 " + MAXIMUM_PINS + " 이하입니다.");
         }
 
-        if( pin < MINIMUM_PINS ) {
+        if (pin < MINIMUM_PINS) {
             throw new IllegalArgumentException("핀의 숫자는" + MINIMUM_PINS + " 이상입니다.");
         }
 
@@ -36,7 +36,7 @@ public class Pin {
     }
 
     public static Pin of(int pin) {
-        if(!pins.containsKey(pin)) {
+        if (!pins.containsKey(pin)) {
             pins.put(pin, new Pin(pin));
         }
 

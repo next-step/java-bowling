@@ -48,22 +48,22 @@ public class BowlingGame {
     public void play(int pin) {
         Frame currentFrame = null;
 
-        if( frames.isEmpty() ) {
+        if (frames.isEmpty()) {
             currentFrame = new NormalFrame(START_FRAME, Pin.of(pin));
         }
 
-        if( !frames.isEmpty() ) {
+        if (!frames.isEmpty()) {
             currentFrame = frames.getRecentFrame().bowl(Pin.of(pin));
         }
 
-        if( !frames.contains(currentFrame) ) {
+        if (!frames.contains(currentFrame)) {
             frames.add(currentFrame);
         }
 
     }
 
     public boolean isContinuable() {
-        if( frames.isEmpty() ) {
+        if (frames.isEmpty()) {
             return true;
         }
 

@@ -15,11 +15,11 @@ public class LastFrame extends Frame {
 
     @Override
     public boolean isFinished() {
-        if(statuses.isEmpty()) {
+        if (statuses.isEmpty()) {
             return false;
         }
 
-        if(pins.size() >= LAST_FRAME_FINISH_SIZE) {
+        if (pins.size() >= LAST_FRAME_FINISH_SIZE) {
             return true;
         }
 

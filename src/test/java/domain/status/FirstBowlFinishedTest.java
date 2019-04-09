@@ -42,7 +42,6 @@ public class FirstBowlFinishedTest extends BaseTest {
     public void getNext_for_open() {
         for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             for(Pin secondBowl : getPins(MINIMUM_PINS + 1, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
-
                 Status status = new FirstBowlFinished(firstBowl).getNext(secondBowl);
                 assertThat(status).isInstanceOf(Open.class);
                 assertThat(status.isClear()).isEqualTo(false);

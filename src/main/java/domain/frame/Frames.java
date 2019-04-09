@@ -19,11 +19,11 @@ public class Frames {
     }
 
     public int getNextFrameNumber() {
-        if( isEmpty() ) {
+        if (isEmpty()) {
             return START_FRAME;
         }
 
-        if( getRecentFrame().isFinished() ) {
+        if (getRecentFrame().isFinished()) {
             return frames.size() + 1;
         }
 

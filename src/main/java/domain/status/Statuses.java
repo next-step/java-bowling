@@ -1,7 +1,5 @@
 package domain.status;
 
-import domain.pin.Pin;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

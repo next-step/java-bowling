@@ -61,15 +61,15 @@ public abstract class Frame {
     }
 
     Frame createNextFrame(Pin pin) {
-        if( number >= LAST_FRAME ) {
+        if (number >= LAST_FRAME) {
             throw new IllegalStateException(String.format("프레임의 최대 개수는 %d개 입니다.", LAST_FRAME));
         }
 
-        if( number == LAST_FRAME - 1 ) {
+        if (number == LAST_FRAME-1) {
             return new LastFrame(pin);
         }
 
-        return new NormalFrame(number + 1, pin);
+        return new NormalFrame(number+1, pin);
     }
 
     public abstract boolean isFinished();

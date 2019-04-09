@@ -26,7 +26,7 @@ public class FirstBowlFinished extends Status {
 
     @Override
     public Status getNext(Pin pin) {
-        if(this.pin.isSpare(pin)) {
+        if (this.pin.isSpare(pin)) {
             return new Spare();
         }
 
