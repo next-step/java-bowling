@@ -1,14 +1,18 @@
 package domain.frame;
 
-import java.util.ArrayList;
+import util.StringUtils;
+
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Frames {
     public static int START_FRAME = 1;
     public static int LAST_FRAME = 10;
 
-    private final List<Frame> frames = new ArrayList<>();
+    private final List<Frame> frames = new LinkedList<>();
 
     public boolean isEmpty() {
         return frames.isEmpty();
@@ -44,11 +48,26 @@ public class Frames {
                     .collect(Collectors.joining("|"));
     }
 
+    public String getScoreString() {
+        AtomicInteger sum = new AtomicInteger(0);
+
+        return frames.stream()
+                    .filter(Frame::isFinished)
+                    .filter(frame -> frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount()))
+                    .map(frame -> sum.addAndGet(frame.getScore()))
+                    .map(curSum -> StringUtils.center(curSum + "", 6))
+                    .collect(Collectors.joining("|"));
+    }
+
     public Frame get(int i) {
         return frames.get(i);
     }
 
     public int size() {
         return frames.size();
+    }
+
+    public Stream<Frame> getStream() {
+        return frames.stream();
     }
 }

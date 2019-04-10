@@ -16,7 +16,7 @@ public class BowlingGame {
         this.playerName = playerName;
     }
 
-    BowlingGame(PlayerName playerName, Frames frames) {
+    public BowlingGame(PlayerName playerName, Frames frames) {
         this.playerName = playerName;
         this.frames = frames;
     }
@@ -45,7 +45,7 @@ public class BowlingGame {
         return frames.getNextFrameNumber();
     }
 
-    public void play(int pin) {
+    public Frame play(int pin) {
         Frame currentFrame = null;
 
         if (frames.isEmpty()) {
@@ -60,6 +60,7 @@ public class BowlingGame {
             frames.add(currentFrame);
         }
 
+        return currentFrame;
     }
 
     public boolean isContinuable() {
@@ -68,5 +69,9 @@ public class BowlingGame {
         }
 
         return frames.getNextFrameNumber() <= LAST_FRAME || !frames.getRecentFrame().isFinished();
+    }
+
+    public String getFrameScore() {
+        return frames.getScoreString();
     }
 }

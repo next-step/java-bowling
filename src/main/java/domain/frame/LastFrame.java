@@ -26,4 +26,20 @@ public class LastFrame extends Frame {
         Status lastStatus = getLastStatus();
         return lastStatus.isNormalFrameFinished() && !lastStatus.isClear();
     }
+
+    @Override
+    public int getScore() {
+        return pins.getScore();
+    }
+
+
+    @Override
+    public int getBonusScore(int left) {
+        return 0;
+    }
+
+    @Override
+    public boolean isBonusCalculationFinished(int left) {
+        return true;
+    }
 }
