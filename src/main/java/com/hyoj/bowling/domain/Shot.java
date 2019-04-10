@@ -40,4 +40,9 @@ public class Shot {
 
         return false;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(knockDownPinsCount);
+    }
 }

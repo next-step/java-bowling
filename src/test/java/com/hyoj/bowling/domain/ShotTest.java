@@ -47,4 +47,10 @@ public class ShotTest {
         final Shot shot2 = new Shot(0, shot1);
         assertThat(shot2.isAllStanding()).isEqualTo(true);
     }
+
+    @Test
+    public void 투구_텍스트표현() {
+        assertThat(new Shot(1).toString()).isEqualTo("1");
+        assertThat(new Shot(2).toString()).isEqualTo("2");
+    }
 }

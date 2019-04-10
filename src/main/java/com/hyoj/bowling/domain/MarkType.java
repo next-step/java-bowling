@@ -6,10 +6,10 @@ public enum MarkType {
     MISS("N"),
     GUTTER("-");
 
-    private String mark;
+    private String looks;
 
-    MarkType(String mark) {
-        this.mark = mark;
+    MarkType(String looks) {
+        this.looks = looks;
     }
 
     public static MarkType makeMarkType(final int shotTimes, final Shot shot) {
@@ -30,6 +30,6 @@ public enum MarkType {
 
     @Override
     public String toString() {
-        return mark;
+        return looks;
     }
 }
