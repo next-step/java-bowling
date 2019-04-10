@@ -13,15 +13,15 @@ public enum MarkType {
     }
 
     public static MarkType makeMarkType(final int shotTimes, final Shot shot) {
-        if (shotTimes == 0 && shot.isAllDown()) {
+        if (shot.isAllDown() && shotTimes == 1) {
             return STRIKE;
         }
 
-        if (shotTimes > 0 && shot.isAllDown()) {
+        if (shot.isAllDown() && shotTimes > 1) {
             return SPARE;
         }
 
-        if (shotTimes > 0 && shot.isAllStanding()) {
+        if (shot.isAllStanding()) {
             return GUTTER;
         }
 

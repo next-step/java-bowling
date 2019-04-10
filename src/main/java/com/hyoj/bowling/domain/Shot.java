@@ -26,23 +26,23 @@ public class Shot {
     }
 
     public boolean isAllDown() {
-        if (standingPinsCount == MIN_COUNT) {
-            return true;
-        }
-
-        return false;
+        return standingPinsCount == MIN_COUNT;
     }
 
     public boolean isAllStanding() {
-        if (standingPinsCount == MAX_COUNT) {
-            return true;
-        }
-
-        return false;
+        return knockDownPinsCount == MIN_COUNT;
     }
 
     @Override
     public String toString() {
+        if (isAllStanding()) {
+            return MarkType.GUTTER.toString();
+        }
+
+        if (isAllDown()) {
+            return MarkType.SPARE.toString();
+        }
+
         return String.valueOf(knockDownPinsCount);
     }
 }
