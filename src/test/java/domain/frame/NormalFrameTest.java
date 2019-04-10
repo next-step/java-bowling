@@ -415,29 +415,6 @@ public class NormalFrameTest extends BaseTest {
     }
 
     @Test
-    public void isBonusCalculationFinished_for_spare_ninth_frame() {
-        for(Pin firstBowl : getAllPins()) {
-            for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin())) {
-                PlayerName playerName = new PlayerName("pdy");
-                Frames frames = new Frames();
-                for (int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 2)) {
-                    frames.add(new NormalFrame(frameNumber, Pin.ofStrike()));
-                }
-
-                BowlingGame game = new BowlingGame(playerName, frames);
-                Frame targetFrame = game.getFrame(LAST_FRAME - 2);
-                assertThat(targetFrame.isBonusCalculationFinished(targetFrame.getLastStatus().getBonusCount())).isEqualTo(false);
-
-                game.play(firstBowl.getPin());
-                assertThat(targetFrame.isBonusCalculationFinished(targetFrame.getLastStatus().getBonusCount())).isEqualTo(false);
-
-                game.play(secondBowl.getPin());
-                assertThat(targetFrame.isBonusCalculationFinished(targetFrame.getLastStatus().getBonusCount())).isEqualTo(true);
-            }
-        }
-    }
-
-    @Test
     public void isBonusCalculationFinished_for_spare_ninth_frame_and_spare_last_frame() {
         for(Pin firstBowlInNinthFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             for(Pin firstBowlInLastFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
