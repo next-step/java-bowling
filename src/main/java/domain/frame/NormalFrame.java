@@ -62,4 +62,33 @@ public class NormalFrame extends Frame {
 
         return next.getBonusScore(left);
     }
+
+    @Override
+    public boolean isBonusCalculationFinished(int left) {
+        if (left <= 0 || isOpen() || canFinishBonusCalculationInTheNext(left)) {
+            return true;
+        }
+
+        if (!isFinished() || isClearedButNotStartedNextFrame()) {
+            return false;
+        }
+
+        if (next.getNumber() == LAST_FRAME) {
+            return next.getPinsSize() >= left;
+        }
+
+        return next.isBonusCalculationFinished(left-next.getPinsSize());
+    }
+
+    private boolean isClearedButNotStartedNextFrame() {
+        return getLastStatus().isClear() && (next == null || next.getPinsSize() <= 0);
+    }
+
+    private boolean canFinishBonusCalculationInTheNext(int left) {
+        return isFinished() && next != null && next.getPinsSize() >= left;
+    }
+
+    private boolean isOpen() {
+        return isFinished() && !getLastStatus().isClear();
+    }
 }

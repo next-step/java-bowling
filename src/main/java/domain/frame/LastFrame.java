@@ -32,8 +32,14 @@ public class LastFrame extends Frame {
         return pins.getScore();
     }
 
+
     @Override
     public int getBonusScore(int left) {
         return 0;
+    }
+
+    @Override
+    public boolean isBonusCalculationFinished(int left) {
+        return true;
     }
 }

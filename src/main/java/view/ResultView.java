@@ -54,10 +54,20 @@ public class ResultView {
     }
 
     private static String getScore(BowlingGame game) {
-        return getBlankScoreColum() + getFrameScoreColumn(game) + "|";
+        String scoreColumn = getFrameScoreColumn(game);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(getBlankScoreColumn());
+        sb.append(scoreColumn);
+
+        if (scoreColumn.length() > 0) {
+            sb.append("|");
+        }
+
+        return sb.toString();
     }
 
-    private static String getBlankScoreColum() {
+    private static String getBlankScoreColumn() {
         return "|      |";
     }
 

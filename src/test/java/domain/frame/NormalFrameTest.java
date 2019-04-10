@@ -10,10 +10,6 @@ import domain.status.Spare;
 import domain.status.Strike;
 import org.junit.Test;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import static domain.frame.Frames.LAST_FRAME;
 import static domain.frame.Frames.START_FRAME;
 import static domain.pin.Pin.MAXIMUM_PINS;
@@ -62,7 +58,7 @@ public class NormalFrameTest extends BaseTest {
     public void bowl_for_spare() {
         for (int curFrameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
             for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-                Pin secondBowl = Pin.ofSparePin(firstBowl);
+                Pin secondBowl = Pin.ofSpare(firstBowl);
                 Frame frame = new NormalFrame(curFrameNumber, firstBowl);
                 frame.bowl(secondBowl);
 
@@ -88,6 +84,7 @@ public class NormalFrameTest extends BaseTest {
                     assertThat(frame.statuses.getLastStatus()).isInstanceOf(Open.class);
                     assertThat(frame.pins.get(0)).isEqualTo(firstBowl);
                     assertThat(frame.pins.get(1)).isEqualTo(secondBowl);
+                    assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(true);
                 }
             }
         }
@@ -145,7 +142,7 @@ public class NormalFrameTest extends BaseTest {
     @Test
     public void getScore_for_spare_start_frame() {
         for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            Pin secondBowl = Pin.ofSparePin(firstBowl);
+            Pin secondBowl = Pin.ofSpare(firstBowl);
             Frame frame = new NormalFrame(START_FRAME, firstBowl);
             frame.bowl(secondBowl);
 
@@ -190,7 +187,7 @@ public class NormalFrameTest extends BaseTest {
     public void getScore_for_spare_start_frame_and_started_second_frame() {
         for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             for(Pin secondFrameBowl : getAllPins()) {
-                Pin secondBowl = Pin.ofSparePin(firstBowl);
+                Pin secondBowl = Pin.ofSpare(firstBowl);
 
                 Frame startFrame = new NormalFrame(START_FRAME, firstBowl);
                 Frame secondFrame = startFrame.bowl(secondBowl);
@@ -235,7 +232,7 @@ public class NormalFrameTest extends BaseTest {
     @Test
     public void getScore_for_strike_ninth_frame_and_spare_last_frame() {
         for(Pin firstBowlInLastFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            Pin secondBowlInLastFrame = Pin.ofSparePin(firstBowlInLastFrame);
+            Pin secondBowlInLastFrame = Pin.ofSpare(firstBowlInLastFrame);
 
             PlayerName playerName = new PlayerName("pdy");
             Frames frames = new Frames();
@@ -256,8 +253,8 @@ public class NormalFrameTest extends BaseTest {
     public void getScore_for_spare_ninth_frame_and_spare_last_frame() {
         for(Pin firstBowlInNinthFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             for(Pin firstBowlInLastFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-                Pin secondBowlInNinthFrame = Pin.ofSparePin(firstBowlInNinthFrame);
-                Pin secondBowlInLastFrame = Pin.ofSparePin(firstBowlInLastFrame);
+                Pin secondBowlInNinthFrame = Pin.ofSpare(firstBowlInNinthFrame);
+                Pin secondBowlInLastFrame = Pin.ofSpare(firstBowlInLastFrame);
 
                 PlayerName playerName = new PlayerName("pdy");
                 Frames frames = new Frames();
@@ -273,6 +270,175 @@ public class NormalFrameTest extends BaseTest {
 
                 assertThat(game.getFrame(LAST_FRAME - 2).getScore())
                         .isEqualTo(MAXIMUM_PINS + firstBowlInLastFrame.getPin());
+            }
+        }
+    }
+
+    @Test
+    public void isBonusCalculationFinished_for_no_left() {
+        assertThat(new NormalFrame(START_FRAME, Pin.ofStrike()).isBonusCalculationFinished(0)).isEqualTo(true);
+    }
+
+    @Test
+    public void isBonusCalculationFinished_for_open() {
+
+        for (int curFrameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
+            for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+                for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
+                    Frame frame = new NormalFrame(curFrameNumber, firstBowl);
+                    frame.bowl(secondBowl);
+
+                    assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(true);
+                }
+            }
+        }
+    }
+
+    @Test
+    public void isBonusCalculationFinished_for_spare_and_finished_in_the_next_frame() {
+        for (int curFrameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
+            for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+                for (Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
+                    Pin secondBowl = Pin.ofSpare(firstBowl);
+                    Frame frame = new NormalFrame(curFrameNumber, firstBowl);
+                    Frame secondFrame = frame.bowl(secondBowl);
+
+                    assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+                    secondFrame.bowl(thirdBowl);
+
+                    assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(true);
+                }
+            }
+        }
+    }
+
+    @Test
+    public void isBonusCalculationFinished_for_strike_and_open() {
+        for (int curFrameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
+            for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+                Pin thirdBowl = Pin.of(MAXIMUM_PINS - secondBowl.getPin() - 1);
+
+                Frame frame = new NormalFrame(curFrameNumber, Pin.ofStrike());
+
+                assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+                Frame secondFrame = frame.bowl(secondBowl);
+
+                assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+                secondFrame.bowl(thirdBowl);
+
+                assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(true);
+            }
+        }
+    }
+
+    @Test
+    public void isBonusCalculationFinished_for_strike_and_spare() {
+        for (int curFrameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
+            for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+                Pin thirdBowl = Pin.ofSpare(secondBowl);
+
+                Frame frame = new NormalFrame(curFrameNumber, Pin.ofStrike());
+
+                assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+                Frame secondFrame = frame.bowl(secondBowl);
+
+                assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+                secondFrame.bowl(thirdBowl);
+
+                assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(true);
+            }
+        }
+    }
+
+    @Test
+    public void isBonusCalculationFinished_for_double() {
+        for (int curFrameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
+            for (Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+                Frame frame = new NormalFrame(curFrameNumber, Pin.ofStrike());
+
+                assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+                Frame secondFrame = frame.bowl(Pin.ofStrike());
+
+                assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+                secondFrame.bowl(thirdBowl);
+
+                assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(true);
+            }
+        }
+    }
+
+    @Test
+    public void isBonusCalculationFinished_for_turkey() {
+        for (int curFrameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
+            Frame frame = new NormalFrame(curFrameNumber, Pin.ofStrike());
+
+            assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+            Frame secondFrame = frame.bowl(Pin.ofStrike());
+
+            assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+            secondFrame.bowl(Pin.ofStrike());
+
+            assertThat(frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount())).isEqualTo(true);
+        }
+    }
+
+    @Test
+    public void isBonusCalculationFinished_for_strike_ninth_frame() {
+        for(Pin firstBowl : getAllPins()) {
+            for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin())) {
+                PlayerName playerName = new PlayerName("pdy");
+                Frames frames = new Frames();
+                for (int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
+                    frames.add(new NormalFrame(frameNumber, Pin.ofStrike()));
+                }
+
+                BowlingGame game = new BowlingGame(playerName, frames);
+                Frame targetFrame = game.getFrame(LAST_FRAME - 2);
+                assertThat(targetFrame.isBonusCalculationFinished(targetFrame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+                game.play(firstBowl.getPin());
+                assertThat(targetFrame.isBonusCalculationFinished(targetFrame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+                game.play(secondBowl.getPin());
+                assertThat(targetFrame.isBonusCalculationFinished(targetFrame.getLastStatus().getBonusCount())).isEqualTo(true);
+            }
+        }
+    }
+
+    @Test
+    public void isBonusCalculationFinished_for_spare_ninth_frame_and_spare_last_frame() {
+        for(Pin firstBowlInNinthFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for(Pin firstBowlInLastFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+                Pin secondBowlInNinthFrame = Pin.ofSpare(firstBowlInNinthFrame);
+                Pin secondBowlInLastFrame = Pin.ofSpare(firstBowlInLastFrame);
+
+                PlayerName playerName = new PlayerName("pdy");
+                Frames frames = new Frames();
+                for (int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 2)) {
+                    frames.add(new NormalFrame(frameNumber, Pin.ofStrike()));
+                }
+
+                BowlingGame game = new BowlingGame(playerName, frames);
+                game.play(firstBowlInNinthFrame.getPin());
+                game.play(secondBowlInNinthFrame.getPin());
+
+                Frame targetFrame = game.getFrame(LAST_FRAME - 2);
+                assertThat(targetFrame.isBonusCalculationFinished(targetFrame.getLastStatus().getBonusCount())).isEqualTo(false);
+
+                game.play(firstBowlInLastFrame.getPin());
+                assertThat(targetFrame.isBonusCalculationFinished(targetFrame.getLastStatus().getBonusCount())).isEqualTo(true);
+
+                game.play(secondBowlInLastFrame.getPin());
+                assertThat(targetFrame.isBonusCalculationFinished(targetFrame.getLastStatus().getBonusCount())).isEqualTo(true);
             }
         }
     }

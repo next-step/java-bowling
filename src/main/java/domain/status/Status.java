@@ -3,7 +3,7 @@ package domain.status;
 import domain.pin.Pin;
 
 public abstract class Status {
-    static final int DEFAULT_BONUS_COUNT = 0;
+    private static final int DEFAULT_BONUS_COUNT = 0;
 
     protected Pin pin;
 

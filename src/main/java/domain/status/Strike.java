@@ -3,7 +3,7 @@ package domain.status;
 import domain.pin.Pin;
 
 public class Strike extends FrameFinished {
-    static final int STRIKE_BONUS_COUNT = 2;
+    private static final int STRIKE_BONUS_COUNT = 2;
     static final String STRIKE_DISPLAY_STRING = "X";
 
     @Override

@@ -31,8 +31,8 @@ public class Pin {
         return Pin.of(MINIMUM_PINS);
     }
 
-    public static Pin ofSparePin(Pin firstPin) {
-        return Pin.of(MAXIMUM_PINS - firstPin.getPin());
+    public static Pin ofSpare(Pin previousPin) {
+        return Pin.of(MAXIMUM_PINS - previousPin.getPin());
     }
 
     public Pin add(Pin pin) {

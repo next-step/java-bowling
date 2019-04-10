@@ -80,6 +80,7 @@ public abstract class Frame {
     public abstract boolean isFinished();
     public abstract int getScore();
     public abstract int getBonusScore(int left);
+    public abstract boolean isBonusCalculationFinished(int left);
 
     @Override
     public String toString() {
