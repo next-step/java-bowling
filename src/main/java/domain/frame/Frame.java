@@ -15,6 +15,7 @@ public abstract class Frame {
     private final int number;
     protected Pins pins = new Pins();
     protected Statuses statuses = new Statuses();
+    protected Frame next;
 
     public Frame(int number, Pin pin) {
         this.number = number;
@@ -32,6 +33,10 @@ public abstract class Frame {
 
     public int getPinsSize() {
         return pins.size();
+    }
+
+    public int getPinScore(int i) {
+        return pins.get(i).getPin();
     }
 
     public Status getStatus(int i) {
@@ -73,6 +78,9 @@ public abstract class Frame {
     }
 
     public abstract boolean isFinished();
+    public abstract int getScore();
+    public abstract int getBonusScore(int left);
+    public abstract boolean isBonusCalculationFinished(int left);
 
     @Override
     public String toString() {
@@ -81,5 +89,9 @@ public abstract class Frame {
                 .collect(Collectors.joining("|"));
 
         return StringUtils.center(status, 6);
+    }
+
+    public String getScoreString() {
+        return StringUtils.center(getScore() + "", 6);
     }
 }

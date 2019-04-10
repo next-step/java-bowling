@@ -11,6 +11,7 @@ public class ResultView {
     public static void showResult(BowlingGame game) {
         showHeadLine();
         showStatus(game);
+        showScore(game);
     }
 
     private static void showHeadLine() {
@@ -33,7 +34,6 @@ public class ResultView {
 
     private static void showStatus(BowlingGame game) {
         System.out.println(getStatus(game));
-        System.out.println();
     }
 
     private static String getStatus(BowlingGame game) {
@@ -46,5 +46,32 @@ public class ResultView {
 
     private static String getFrameStatusColumn(BowlingGame game) {
         return game.getFramesStatus();
+    }
+
+    private static void showScore(BowlingGame game) {
+        System.out.println(getScore(game));
+        System.out.println();
+    }
+
+    private static String getScore(BowlingGame game) {
+        String scoreColumn = getFrameScoreColumn(game);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(getBlankScoreColumn());
+        sb.append(scoreColumn);
+
+        if (scoreColumn.length() > 0) {
+            sb.append("|");
+        }
+
+        return sb.toString();
+    }
+
+    private static String getBlankScoreColumn() {
+        return "|      |";
+    }
+
+    private static String getFrameScoreColumn(BowlingGame game) {
+        return game.getFrameScore();
     }
 }

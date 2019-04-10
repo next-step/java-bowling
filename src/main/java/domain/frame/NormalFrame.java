@@ -18,7 +18,7 @@ public class NormalFrame extends Frame {
     @Override
     public Frame bowl(Pin pin) {
         if (isFinished()) {
-            return createNextFrame(pin);
+            return (next = createNextFrame(pin));
         }
 
         return super.bowl(pin);
@@ -27,5 +27,68 @@ public class NormalFrame extends Frame {
     @Override
     public boolean isFinished() {
         return !statuses.isEmpty() && getLastStatus().isNormalFrameFinished();
+    }
+
+    @Override
+    public int getScore() {
+        if (isFinished() && getLastStatus().isClear()) {
+            return pins.getScore() + getBonusScore(getLastStatus().getBonusCount());
+        }
+
+        return pins.getScore();
+    }
+
+    @Override
+    public int getBonusScore(int left) {
+        if (!canGetBonusScore(left)) {
+            return 0;
+        }
+
+        return next.getPinScore(0) + getAdditionalBonusScore(left-1);
+    }
+
+    private boolean canGetBonusScore(int left) {
+        return left > 0 && next != null && next.getPinsSize() > 0;
+    }
+
+    private int getAdditionalBonusScore(int left) {
+        if (left <= 0) {
+            return 0;
+        }
+
+        if (next.getPinsSize() > 1) {
+            return next.getPinScore(1);
+        }
+
+        return next.getBonusScore(left);
+    }
+
+    @Override
+    public boolean isBonusCalculationFinished(int left) {
+        if (left <= 0 || isOpen() || canFinishBonusCalculationInTheNext(left)) {
+            return true;
+        }
+
+        if (!isFinished() || isClearedButNotStartedNextFrame()) {
+            return false;
+        }
+
+        if (next.getNumber() == LAST_FRAME) {
+            return next.getPinsSize() >= left;
+        }
+
+        return next.isBonusCalculationFinished(left-next.getPinsSize());
+    }
+
+    private boolean isClearedButNotStartedNextFrame() {
+        return getLastStatus().isClear() && (next == null || next.getPinsSize() <= 0);
+    }
+
+    private boolean canFinishBonusCalculationInTheNext(int left) {
+        return isFinished() && next != null && next.getPinsSize() >= left;
+    }
+
+    private boolean isOpen() {
+        return isFinished() && !getLastStatus().isClear();
     }
 }
