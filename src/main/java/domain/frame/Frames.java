@@ -66,8 +66,4 @@ public class Frames {
     public int size() {
         return frames.size();
     }
-
-    public Stream<Frame> getStream() {
-        return frames.stream();
-    }
 }

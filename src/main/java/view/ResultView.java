@@ -57,7 +57,7 @@ public class ResultView {
         String scoreColumn = getFrameScoreColumn(game);
 
         StringBuilder sb = new StringBuilder();
-        sb.append(getBlankScoreColum());
+        sb.append(getBlankScoreColumn());
         sb.append(scoreColumn);
 
         if (scoreColumn.length() > 0) {
@@ -67,7 +67,7 @@ public class ResultView {
         return sb.toString();
     }
 
-    private static String getBlankScoreColum() {
+    private static String getBlankScoreColumn() {
         return "|      |";
     }
 

@@ -45,7 +45,7 @@ public class BowlingGame {
         return frames.getNextFrameNumber();
     }
 
-    public Frame play(int pin) {
+    public void play(int pin) {
         Frame currentFrame = null;
 
         if (frames.isEmpty()) {
@@ -60,7 +60,6 @@ public class BowlingGame {
             frames.add(currentFrame);
         }
 
-        return currentFrame;
     }
 
     public boolean isContinuable() {

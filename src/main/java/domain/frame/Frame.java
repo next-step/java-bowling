@@ -7,12 +7,9 @@ import domain.status.Status;
 import domain.status.Statuses;
 import util.StringUtils;
 
-import java.util.ListIterator;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static domain.frame.Frames.LAST_FRAME;
-import static domain.frame.Frames.START_FRAME;
 
 public abstract class Frame {
     private final int number;
@@ -21,12 +18,6 @@ public abstract class Frame {
     protected Frame next;
 
     public Frame(int number, Pin pin) {
-        this.number = number;
-        pins.add(pin);
-        statuses.add(new Ready().getNext(pin));
-    }
-
-    public Frame(int number, int accumulatedScore, Pin pin) {
         this.number = number;
         pins.add(pin);
         statuses.add(new Ready().getNext(pin));
