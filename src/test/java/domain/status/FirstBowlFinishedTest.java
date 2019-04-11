@@ -2,6 +2,7 @@ package domain.status;
 
 import domain.base.BaseTest;
 import domain.pin.Pin;
+import domain.score.Score;
 import org.junit.Test;
 
 import static domain.pin.Pin.MAXIMUM_PINS;
@@ -22,6 +23,8 @@ public class FirstBowlFinishedTest extends BaseTest {
             assertThat(status.isClear()).isEqualTo(true);
             assertThat(status.isNormalFrameFinished()).isEqualTo(true);
             assertThat(status.toString()).isEqualTo(SPARE_DISPLAY_STRING);
+            assertThat(status.getCurrentPin()).isEqualTo(secondBowl.getPin());
+            assertThat(status.getScore()).isEqualTo(Score.ofSpare());
         }
     }
 
@@ -35,6 +38,8 @@ public class FirstBowlFinishedTest extends BaseTest {
             assertThat(status.isClear()).isEqualTo(false);
             assertThat(status.isNormalFrameFinished()).isEqualTo(true);
             assertThat(status.toString()).isEqualTo(ZERO_PIN_DISPLAY_STRING);
+            assertThat(status.getCurrentPin()).isEqualTo(secondBowl.getPin());
+            assertThat(status.getScore()).isEqualTo(Score.of(firstBowl.getPin() + secondBowl.getPin()));
         }
     }
 
@@ -43,10 +48,13 @@ public class FirstBowlFinishedTest extends BaseTest {
         for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             for(Pin secondBowl : getPins(MINIMUM_PINS + 1, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
                 Status status = new FirstBowlFinished(firstBowl).getNext(secondBowl);
+
                 assertThat(status).isInstanceOf(Open.class);
                 assertThat(status.isClear()).isEqualTo(false);
                 assertThat(status.isNormalFrameFinished()).isEqualTo(true);
                 assertThat(status.toString()).isEqualTo(secondBowl.getPin() + "");
+                assertThat(status.getCurrentPin()).isEqualTo(secondBowl.getPin());
+                assertThat(status.getScore()).isEqualTo(Score.of(firstBowl.getPin() + secondBowl.getPin()));
             }
         }
     }

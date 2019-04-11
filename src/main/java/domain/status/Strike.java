@@ -1,24 +1,30 @@
 package domain.status;
 
 import domain.pin.Pin;
+import domain.score.Score;
+
+import static domain.pin.Pin.MAXIMUM_PINS;
 
 public class Strike extends FrameFinished {
     private static final int STRIKE_BONUS_COUNT = 2;
     static final String STRIKE_DISPLAY_STRING = "X";
 
-    @Override
-    public int getBonusCount() {
-        return STRIKE_BONUS_COUNT;
-    }
+    public Strike(Pin first) {
+        super(first);
 
-    @Override
-    public Status getNext(Pin pin) {
-        return super.getNext(pin);
+        if (first.getPin() != MAXIMUM_PINS) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
     public boolean isClear() {
         return true;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofStrike();
     }
 
     @Override

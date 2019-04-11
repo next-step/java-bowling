@@ -1,32 +1,47 @@
 package domain.status;
 
+import domain.score.CannotCalculateException;
+import domain.score.Score;
 import domain.pin.Pin;
 
 public abstract class Status {
     private static final int DEFAULT_BONUS_COUNT = 0;
 
-    protected Pin pin;
+    protected Pin first;
+    protected Status next;
 
     public Status() {
     }
 
-    public Status(Pin pin) {
-        this.pin = pin;
+    public Status(Pin first) {
+        this.first = first;
     }
 
-    public int getBonusCount() {
-        return DEFAULT_BONUS_COUNT;
+    public int getCurrentPin() {
+        return first.getPin();
+    }
+
+    public Status getNext() {
+        return this.next;
+    }
+
+    public boolean hasNext() {
+        return next != null;
     }
 
     public Status getNext(Pin pin) {
         if (pin.isStrike()) {
-            return new Strike();
+            return (next = new Strike(pin));
         }
 
-        return new FirstBowlFinished(pin);
+        return (next = new FirstBowlFinished(pin));
     }
 
     public abstract boolean isClear();
     public abstract boolean isNormalFrameFinished();
     public abstract String toString();
+
+    public Score getScore() {
+        throw new CannotCalculateException();
+    }
 }

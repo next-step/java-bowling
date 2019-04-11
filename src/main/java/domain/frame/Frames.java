@@ -52,8 +52,7 @@ public class Frames {
         AtomicInteger sum = new AtomicInteger(0);
 
         return frames.stream()
-                    .filter(Frame::isFinished)
-                    .filter(frame -> frame.isBonusCalculationFinished(frame.getLastStatus().getBonusCount()))
+                    .filter(frame -> frame.isScoreCalculationFinished())
                     .map(frame -> sum.addAndGet(frame.getScore()))
                     .map(curSum -> StringUtils.center(curSum + "", 6))
                     .collect(Collectors.joining("|"));
