@@ -17,10 +17,18 @@ public abstract class Frame {
     protected Statuses statuses = new Statuses();
     protected Frame next;
 
-    public Frame(int number, Pin pin) {
+    public Frame(int number, Pin pin, Frame previous) {
         this.number = number;
         pins.add(pin);
-        statuses.add(new Ready().getNext(pin));
+        statuses.add(new Ready(getPreviousStatus(previous)).getNext(pin));
+    }
+
+    private Status getPreviousStatus(Frame previous) {
+        if (previous != null) {
+            return previous.getLastStatus();
+        }
+
+        return null;
     }
 
     public int getNumber() {
@@ -33,10 +41,6 @@ public abstract class Frame {
 
     public int getPinsSize() {
         return pins.size();
-    }
-
-    public int getPinScore(int i) {
-        return pins.get(i).getPin();
     }
 
     public Status getStatus(int i) {
@@ -71,16 +75,15 @@ public abstract class Frame {
         }
 
         if (number == LAST_FRAME-1) {
-            return new LastFrame(pin);
+            return new LastFrame(pin, this);
         }
 
-        return new NormalFrame(number+1, pin);
+        return new NormalFrame(number+1, pin, this);
     }
 
     public abstract boolean isFinished();
+    public abstract boolean isScoreCalculationFinished();
     public abstract int getScore();
-    public abstract int getBonusScore(int left);
-    public abstract boolean isBonusCalculationFinished(int left);
 
     @Override
     public String toString() {
@@ -89,9 +92,5 @@ public abstract class Frame {
                 .collect(Collectors.joining("|"));
 
         return StringUtils.center(status, 6);
-    }
-
-    public String getScoreString() {
-        return StringUtils.center(getScore() + "", 6);
     }
 }

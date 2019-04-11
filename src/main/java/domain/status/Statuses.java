@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Statuses {
-    private List<Status> statuses = new ArrayList<>();
+    private final List<Status> statuses = new ArrayList<>();
 
     public void add(Status status) {
         statuses.add(status);

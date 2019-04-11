@@ -1,6 +1,8 @@
 package domain.frame;
 
+import domain.score.Score;
 import domain.pin.Pin;
+import domain.status.Status;
 
 import static domain.frame.Frames.LAST_FRAME;
 import static domain.frame.Frames.START_FRAME;
@@ -8,7 +10,11 @@ import static domain.frame.Frames.START_FRAME;
 public class NormalFrame extends Frame {
 
     public NormalFrame(int number, Pin pin) {
-        super(number, pin);
+        this(number, pin, null);
+    }
+
+    public NormalFrame(int number, Pin pin, Frame previous) {
+        super(number, pin, previous);
 
         if (number < START_FRAME || number >= LAST_FRAME) {
             throw new IllegalArgumentException("잘못된 프레임 번호입니다.");
@@ -32,63 +38,50 @@ public class NormalFrame extends Frame {
     @Override
     public int getScore() {
         if (isFinished() && getLastStatus().isClear()) {
-            return pins.getScore() + getBonusScore(getLastStatus().getBonusCount());
+            return getScoreWithBonus(getLastStatus());
         }
 
         return pins.getScore();
     }
 
-    @Override
-    public int getBonusScore(int left) {
-        if (!canGetBonusScore(left)) {
-            return 0;
+    private int getScoreWithBonus(Status status) {
+        Score score = status.getScore();
+        while (canMoveToNextStatus(score, status)) {
+            status = status.getNext();
+            score = score.bowl(status.getCurrentPin());
         }
 
-        return next.getPinScore(0) + getAdditionalBonusScore(left-1);
+        return score.getCalculatedScore();
     }
 
-    private boolean canGetBonusScore(int left) {
-        return left > 0 && next != null && next.getPinsSize() > 0;
-    }
-
-    private int getAdditionalBonusScore(int left) {
-        if (left <= 0) {
-            return 0;
-        }
-
-        if (next.getPinsSize() > 1) {
-            return next.getPinScore(1);
-        }
-
-        return next.getBonusScore(left);
+    private boolean canMoveToNextStatus(Score score, Status status) {
+        return !score.isScoreCalculationFinished() && status.hasNext();
     }
 
     @Override
-    public boolean isBonusCalculationFinished(int left) {
-        if (left <= 0 || isOpen() || canFinishBonusCalculationInTheNext(left)) {
-            return true;
-        }
-
-        if (!isFinished() || isClearedButNotStartedNextFrame()) {
+    public boolean isScoreCalculationFinished() {
+        if (!isFinished()) {
             return false;
         }
 
-        if (next.getNumber() == LAST_FRAME) {
-            return next.getPinsSize() >= left;
+        return isScoreCalculationFinished(getLastStatus());
+    }
+
+    private boolean isScoreCalculationFinished(Status status) {
+        int left = status.getScore().getLeft();
+
+        if (left <= 0) {
+            return true;
         }
 
-        return next.isBonusCalculationFinished(left-next.getPinsSize());
-    }
+        while (status.hasNext()) {
+            if(--left <= 0) {
+                return true;
+            }
 
-    private boolean isClearedButNotStartedNextFrame() {
-        return getLastStatus().isClear() && (next == null || next.getPinsSize() <= 0);
-    }
+            status = status.getNext();
+        }
 
-    private boolean canFinishBonusCalculationInTheNext(int left) {
-        return isFinished() && next != null && next.getPinsSize() >= left;
-    }
-
-    private boolean isOpen() {
-        return isFinished() && !getLastStatus().isClear();
+        return false;
     }
 }

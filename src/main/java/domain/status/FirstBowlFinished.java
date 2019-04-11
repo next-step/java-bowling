@@ -21,15 +21,15 @@ public class FirstBowlFinished extends Status {
 
     @Override
     public String toString() {
-        return pin.isZeroPin() ? ZERO_PIN_DISPLAY_STRING : pin.toString();
+        return first.isZeroPin() ? ZERO_PIN_DISPLAY_STRING : first.toString();
     }
 
     @Override
     public Status getNext(Pin pin) {
-        if (this.pin.isSpare(pin)) {
-            return new Spare();
+        if (first.isSpare(pin)) {
+            return (next = new Spare(first, pin));
         }
 
-        return new Open(pin);
+        return (next = new Open(first, pin));
     }
 }

@@ -43,5 +43,4 @@ public class FramesTest extends BaseTest {
             assertThat(actual).isEqualTo(frameNumber);
         }
     }
-
 }

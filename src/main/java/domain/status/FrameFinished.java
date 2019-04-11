@@ -3,12 +3,9 @@ package domain.status;
 import domain.pin.Pin;
 
 public abstract class FrameFinished extends Status {
-    public FrameFinished() {
-        super();
-    }
 
-    public FrameFinished(Pin pin) {
-        super(pin);
+    public FrameFinished(Pin first) {
+        super(first);
     }
 
     @Override
@@ -18,6 +15,6 @@ public abstract class FrameFinished extends Status {
 
     @Override
     public Status getNext(Pin pin) {
-        return super.getNext(pin);
+        return (next = super.getNext(pin));
     }
 }

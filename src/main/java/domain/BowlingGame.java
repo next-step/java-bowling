@@ -49,7 +49,7 @@ public class BowlingGame {
         Frame currentFrame = null;
 
         if (frames.isEmpty()) {
-            currentFrame = new NormalFrame(START_FRAME, Pin.of(pin));
+            currentFrame = new NormalFrame(START_FRAME, Pin.of(pin), null);
         }
 
         if (!frames.isEmpty()) {
@@ -59,7 +59,6 @@ public class BowlingGame {
         if (!frames.contains(currentFrame)) {
             frames.add(currentFrame);
         }
-
     }
 
     public boolean isContinuable() {

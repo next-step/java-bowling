@@ -10,7 +10,11 @@ public class LastFrame extends Frame {
     private static final int LAST_FRAME_FINISH_SIZE = 3;
 
     public LastFrame(Pin pin) {
-        super(LAST_FRAME, pin);
+        super(LAST_FRAME, pin, null);
+    }
+
+    public LastFrame(Pin pin, Frame previous) {
+        super(LAST_FRAME, pin, previous);
     }
 
     @Override
@@ -32,14 +36,8 @@ public class LastFrame extends Frame {
         return pins.getScore();
     }
 
-
     @Override
-    public int getBonusScore(int left) {
-        return 0;
-    }
-
-    @Override
-    public boolean isBonusCalculationFinished(int left) {
-        return true;
+    public boolean isScoreCalculationFinished() {
+        return isFinished();
     }
 }
