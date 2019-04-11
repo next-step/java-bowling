@@ -6,10 +6,9 @@ import domain.score.Score;
 import static domain.pin.Pin.MAXIMUM_PINS;
 
 public class Spare extends FrameFinished {
-    static final int SPARE_BONUS_COUNT = 1;
     static final String SPARE_DISPLAY_STRING = "/";
 
-    private Pin second;
+    private final Pin second;
 
     public Spare(Pin first, Pin second) {
         super(first);

@@ -6,7 +6,6 @@ import domain.score.Score;
 import static domain.pin.Pin.MAXIMUM_PINS;
 
 public class Strike extends FrameFinished {
-    private static final int STRIKE_BONUS_COUNT = 2;
     static final String STRIKE_DISPLAY_STRING = "X";
 
     public Strike(Pin first) {

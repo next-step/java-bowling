@@ -43,10 +43,6 @@ public abstract class Frame {
         return pins.size();
     }
 
-    public int getPinScore(int i) {
-        return pins.get(i).getPin();
-    }
-
     public Status getStatus(int i) {
         return statuses.get(i);
     }

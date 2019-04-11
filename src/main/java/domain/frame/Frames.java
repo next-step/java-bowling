@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Frames {
     public static int START_FRAME = 1;
@@ -52,7 +51,7 @@ public class Frames {
         AtomicInteger sum = new AtomicInteger(0);
 
         return frames.stream()
-                    .filter(frame -> frame.isScoreCalculationFinished())
+                    .filter(Frame::isScoreCalculationFinished)
                     .map(frame -> sum.addAndGet(frame.getScore()))
                     .map(curSum -> StringUtils.center(curSum + "", 6))
                     .collect(Collectors.joining("|"));

@@ -8,7 +8,7 @@ import static domain.pin.Pin.MINIMUM_PINS;
 import static domain.status.FirstBowlFinished.ZERO_PIN_DISPLAY_STRING;
 
 public class Open extends FrameFinished {
-    private Pin second;
+    private final Pin second;
 
     public Open(Pin first, Pin second) {
         super(first);

@@ -5,8 +5,8 @@ import java.util.Objects;
 import static domain.pin.Pin.MAXIMUM_PINS;
 
 public class Score {
-	private int score; // 현재까지 점수
-	private int left; // 남은 시도 횟수
+	private final int score; // 현재까지 점수
+	private final int left; // 남은 시도 횟수
 
 	private Score(int score, int left) {
 		this.score = score;
@@ -14,7 +14,7 @@ public class Score {
 	}
 
 	public int getScore() {
-		return this.score;
+		return score;
 	}
 
 	public int getLeft() {
@@ -29,7 +29,7 @@ public class Score {
 		if (!isScoreCalculationFinished()) {
 			throw new CannotCalculateException();
 		}
-		return this.score;
+		return score;
 	}
 
 	public boolean isScoreCalculationFinished() {

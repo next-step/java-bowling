@@ -5,7 +5,6 @@ import domain.score.Score;
 import domain.pin.Pin;
 
 public abstract class Status {
-    private static final int DEFAULT_BONUS_COUNT = 0;
 
     protected Pin first;
     protected Status next;
@@ -22,7 +21,7 @@ public abstract class Status {
     }
 
     public Status getNext() {
-        return this.next;
+        return next;
     }
 
     public boolean hasNext() {

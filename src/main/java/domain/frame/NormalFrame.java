@@ -44,7 +44,7 @@ public class NormalFrame extends Frame {
         return pins.getScore();
     }
 
-    public int getScoreWithBonus(Status status) {
+    private int getScoreWithBonus(Status status) {
         Score score = status.getScore();
         while (canMoveToNextStatus(score, status)) {
             status = status.getNext();

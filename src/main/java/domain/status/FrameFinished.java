@@ -3,9 +3,6 @@ package domain.status;
 import domain.pin.Pin;
 
 public abstract class FrameFinished extends Status {
-    public FrameFinished() {
-        super();
-    }
 
     public FrameFinished(Pin first) {
         super(first);
