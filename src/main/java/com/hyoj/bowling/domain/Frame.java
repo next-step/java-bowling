@@ -5,5 +5,5 @@ public interface Frame {
 
     boolean isDone();
 
-    boolean canOneMoreShot();
+    MarkType getFinalMarkType();
 }

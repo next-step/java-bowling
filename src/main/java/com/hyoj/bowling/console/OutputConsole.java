@@ -1,6 +1,6 @@
 package com.hyoj.bowling.console;
 
-import com.hyoj.bowling.domain.GameResult;
+import com.hyoj.bowling.domain.GameBoard;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -15,11 +15,11 @@ public class OutputConsole {
             Arrays.asList("NAME", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10")
     );
 
-    public static void printGameResult(final GameResult gameResult) {
+    public static void printGameBoard(final GameBoard gameBoard) {
         System.out.print(BAR);
         FRAME_TITLES.forEach(title -> System.out.print(toStringWithBar(title)));
         System.out.println();
-        System.out.print(gameResult);
+        System.out.print(gameBoard);
         System.out.println();
     }
 

@@ -4,7 +4,8 @@ public enum MarkType {
     STRIKE("X"),
     SPARE("/"),
     MISS("N"),
-    GUTTER("-");
+    GUTTER("-"),
+    NONE("");
 
     private String looks;
 
@@ -26,6 +27,14 @@ public enum MarkType {
         }
 
         return MISS;
+    }
+
+    public boolean canOneMoreShotAtFinal() {
+        if (this == STRIKE || this == SPARE) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
