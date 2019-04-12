@@ -55,9 +55,8 @@ body {
 <div class="container">
 <form class="form-show" method="post" action="/throw">
   <div class="form-show-div form-group">
-    <label for="throwingNo">pobi의 4 프레임 첫번째 시도</label>
-    <input type="text" id="throwingNo" class="form-control"
-        name="throwingNo" placeholder="10" required autofocus>
+    <label for="bowl">{{currentPlayerName}}의  {{currentFrameNumber}}프레임  {{currentBowl}}번째시도</label>
+    <input type="text" id="bowl" class="form-control" name="bowl" placeholder="10" value="10" required autofocus>
   </div>
   <div class="submit-button centent">
     <button class="btn btn-primary" type="submit">투구 결과 입력</button>
@@ -88,56 +87,19 @@ body {
 </thead>
 </thead>
     <tbody>
+      {{#games.games}}
       <tr>
-        <th rowspan=2 class="text-center">pobi</th>
-        <td class="text-center">X</td>
-        <td class="text-center">8&nbsp;/</td>
-        <td class="text-center">7&nbsp;-</td>
-        <td class="text-center">X</td>
-        <td class="text-center">X</td>
-        <td class="text-center">X</td>
-        <td class="text-center">9&nbsp;/</td>
-        <td class="text-center">8&nbsp;-</td>
-        <td class="text-center">6&nbsp;3</td>
-        <td class="text-center">8&nbsp;/&nbsp;9</td>
+        <th rowspan=2 class="text-center">{{playerName}}</th>
+        {{#statusStrings}}
+        <td class="text-center">{{.}}</td>
+        {{/statusStrings}}
       </tr>
       <tr>
-        <td class="text-center">20</td>
-        <td class="text-center">37</td>
-        <td class="text-center">44</td>
-        <td class="text-center">74</td>
-        <td class="text-center">103</td>
-        <td class="text-center">123</td>
-        <td class="text-center">141</td>
-        <td class="text-center">149</td>
-        <td class="text-center">158</td>
-        <td class="text-center">177</td>
+        {{#scoreStrings}}
+        <td class="text-center">{{.}}</td>
+        {{/scoreStrings}}
       </tr>
-      <tr>
-        <th rowspan=2 class="text-center">jk</th>
-        <td class="text-center">X</td>
-        <td class="text-center">8&nbsp;/</td>
-        <td class="text-center">7&nbsp;-</td>
-        <td class="text-center">X</td>
-        <td class="text-center">X</td>
-        <td class="text-center">X</td>
-        <td class="text-center">9&nbsp;/</td>
-        <td class="text-center">8&nbsp;-</td>
-        <td class="text-center">6&nbsp;3</td>
-        <td class="text-center">8&nbsp;/&nbsp;9</td>
-      </tr>
-      <tr>
-        <td class="text-center">20</td>
-        <td class="text-center">37</td>
-        <td class="text-center">44</td>
-        <td class="text-center">74</td>
-        <td class="text-center">103</td>
-        <td class="text-center">123</td>
-        <td class="text-center">141</td>
-        <td class="text-center">149</td>
-        <td class="text-center">158</td>
-        <td class="text-center">177</td>
-      </tr>      
+      {{/games.games}}
     </tbody>
   </table>
 </div>

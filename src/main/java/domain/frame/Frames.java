@@ -1,11 +1,10 @@
 package domain.frame;
 
-import util.StringUtils;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Frames {
     public static int START_FRAME = 1;
@@ -41,27 +40,45 @@ public class Frames {
         return frames.contains(frame);
     }
 
-    public String getStatus() {
-        return frames.stream()
-                    .map(Frame::toString)
-                    .collect(Collectors.joining("|"));
-    }
-
-    public String getScoreString() {
-        AtomicInteger sum = new AtomicInteger(0);
-
-        return frames.stream()
-                    .filter(Frame::isScoreCalculationFinished)
-                    .map(frame -> sum.addAndGet(frame.getScore()))
-                    .map(curSum -> StringUtils.center(curSum + "", 6))
-                    .collect(Collectors.joining("|"));
-    }
-
     public Frame get(int i) {
         return frames.get(i);
     }
 
     public int size() {
         return frames.size();
+    }
+
+    public List<String> getStatusStrings() {
+        List<String> statusString = getFrameStatusStrings();
+        statusString.addAll(getBlankStrings(statusString.size()));
+        return statusString;
+    }
+
+    private List<String> getFrameStatusStrings() {
+        return frames.stream()
+                .map(Frame::toString)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getScoreStrings() {
+        List<String> scoreStrings = getFrameScoreStrings();
+        scoreStrings.addAll(getBlankStrings(scoreStrings.size()));
+        return scoreStrings;
+    }
+
+    private List<String> getFrameScoreStrings() {
+        AtomicInteger sum = new AtomicInteger(0);
+
+        return frames.stream()
+                .filter(Frame::isScoreCalculationFinished)
+                .map(frame -> sum.addAndGet(frame.getScore()))
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+    }
+
+    private List<String> getBlankStrings(int previousSize) {
+        return IntStream.range(0, LAST_FRAME - previousSize)
+                .mapToObj($ -> "")
+                .collect(Collectors.toList());
     }
 }

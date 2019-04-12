@@ -1,8 +1,8 @@
 package domain.frame;
 
-import domain.BowlingGame;
+import domain.game.BowlingGame;
 import domain.score.CannotCalculateException;
-import domain.PlayerName;
+import domain.player.PlayerName;
 import domain.base.BaseTest;
 import domain.pin.Pin;
 import domain.status.FirstBowlFinished;
