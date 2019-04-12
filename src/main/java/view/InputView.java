@@ -1,6 +1,6 @@
 package view;
 
-import domain.PlayerName;
+import domain.player.PlayerName;
 import util.StringUtils;
 
 import java.util.Scanner;

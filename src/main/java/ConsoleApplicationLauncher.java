@@ -1,5 +1,5 @@
-import domain.BowlingGame;
-import domain.PlayerName;
+import domain.game.BowlingGame;
+import domain.player.PlayerName;
 import view.InputView;
 import view.ResultView;
 

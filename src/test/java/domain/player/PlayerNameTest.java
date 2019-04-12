@@ -1,5 +1,6 @@
-package domain;
+package domain.player;
 
+import domain.player.PlayerName;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

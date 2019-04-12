@@ -1,4 +1,4 @@
-package domain;
+package domain.player;
 
 import util.StringUtils;
 

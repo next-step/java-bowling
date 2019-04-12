@@ -63,6 +63,10 @@ public abstract class Frame {
         statuses.add(getLastStatus().getNext(pin));
     }
 
+    public boolean isLastFrame() {
+        return number >= LAST_FRAME;
+    }
+
     public Frame bowl(Pin pin) {
         addPin(pin);
         addNextStatus(pin);
@@ -87,10 +91,8 @@ public abstract class Frame {
 
     @Override
     public String toString() {
-        String status = statuses.getStream()
+        return statuses.getStream()
                 .map(Status::toString)
                 .collect(Collectors.joining("|"));
-
-        return StringUtils.center(status, 6);
     }
 }

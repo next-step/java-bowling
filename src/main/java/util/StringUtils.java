@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Optional;
+
 public class StringUtils {
     public static boolean isEmpty(String s) {
         return s == null || s.length() <= 0;
@@ -22,5 +24,11 @@ public class StringUtils {
             sb.append(pad);
         }
         return sb.toString();
+    }
+
+    public static String removeWhitespace(String string) {
+        return Optional.ofNullable(string)
+                .orElse("")
+                .replaceAll("\\s+", "");
     }
 }
