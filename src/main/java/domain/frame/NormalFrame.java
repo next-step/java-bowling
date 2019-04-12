@@ -1,7 +1,7 @@
 package domain.frame;
 
-import domain.score.Score;
 import domain.pin.Pin;
+import domain.score.Score;
 import domain.status.Status;
 
 import static domain.frame.Frames.LAST_FRAME;
@@ -75,7 +75,7 @@ public class NormalFrame extends Frame {
         }
 
         while (status.hasNext()) {
-            if(--left <= 0) {
+            if (--left <= 0) {
                 return true;
             }
 

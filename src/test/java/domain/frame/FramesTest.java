@@ -22,7 +22,7 @@ public class FramesTest extends BaseTest {
     public void getNextFrameNumber_for_finished_frames() {
         Frames frames = new Frames();
 
-        for(int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
+        for (int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
             Frame frame = new NormalFrame(frameNumber, Pin.ofStrike());
             frames.add(frame);
             int actual = frames.getNextFrameNumber();
@@ -35,7 +35,7 @@ public class FramesTest extends BaseTest {
     public void getNextFrameNumber_for_unfinished_frames() {
         Frames frames = new Frames();
 
-        for(int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
+        for (int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
             Frame frame = new NormalFrame(frameNumber, Pin.ofZero());
             frames.add(frame);
 

@@ -38,7 +38,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_spare_first_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
             BowlingGame game = new BowlingGame(PLAYER_NAME);
             game.play(firstBowl.getPin());
@@ -58,8 +58,8 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_open_first_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
                 BowlingGame game = new BowlingGame(PLAYER_NAME);
                 game.play(firstBowl.getPin());
                 game.play(secondBowl.getPin());
@@ -94,7 +94,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_spare_ninth_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
 
             Frames frames = new Frames();
@@ -118,8 +118,8 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_open_ninth_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
                 Frames frames = new Frames();
                 fillNormalFrames(frames, START_FRAME, LAST_FRAME - 2, Pin.ofStrike());
 
@@ -142,7 +142,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_strike_and_open_last_frame() {
-        for(Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             for (Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - secondBowl.getPin() - 1)) {
                 Pin firstBowl = Pin.ofStrike();
 
@@ -170,8 +170,8 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_spare_last_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
                 Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
 
                 Frames frames = new Frames();
@@ -199,7 +199,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_spare_last_frame2() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
             Pin thirdBowl = Pin.ofStrike();
 
@@ -227,8 +227,8 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_open_last_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
                 Frames frames = new Frames();
                 fillNormalFrames(frames, START_FRAME, LAST_FRAME - 1, Pin.ofStrike());
 
@@ -259,7 +259,7 @@ public class BowlingGameTest extends BaseTest {
     @Test
     public void isContinuable() {
         Frames frames = new Frames();
-        for(int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
+        for (int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
             frames.add(new NormalFrame(frameNumber, Pin.ofStrike()));
             BowlingGame game = new BowlingGame(PLAYER_NAME, frames);
 
@@ -269,7 +269,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void isContinuable_for_last_frame_after_first_bowl() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
             Frame frame = new LastFrame(firstBowl);
             Frames frames = new Frames();
             frames.add(frame);
@@ -281,7 +281,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void isContinuable_for_last_frame_after_second_bowl_strike() {
-        for(Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
+        for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
             Frame frame = new LastFrame(Pin.ofStrike());
             frame.bowl(secondBowl);
             Frames frames = new Frames();
@@ -294,7 +294,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void isContinuable_for_last_frame_after_second_bowl_spare() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
             Frame frame = new LastFrame(firstBowl);
             frame.bowl(secondBowl);
@@ -308,7 +308,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void isContinuable_for_last_frame_after_second_bowl_open() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Frames frames = new Frames();
             fillNormalFrames(frames, Pin.ofStrike());
 
@@ -325,7 +325,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void isContinuable_for_last_frame_after_third_bowl() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
             Frames frames = new Frames();
             fillNormalFrames(frames, Pin.ofStrike());
 

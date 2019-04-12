@@ -15,7 +15,7 @@ public class FirstBowlFinishedTest extends BaseTest {
 
     @Test
     public void getNext_for_spare() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
 
             Status status = new FirstBowlFinished(firstBowl).getNext(secondBowl);
@@ -30,7 +30,7 @@ public class FirstBowlFinishedTest extends BaseTest {
 
     @Test
     public void getNext_for_gutter() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MINIMUM_PINS);
 
             Status status = new FirstBowlFinished(firstBowl).getNext(secondBowl);
@@ -45,8 +45,8 @@ public class FirstBowlFinishedTest extends BaseTest {
 
     @Test
     public void getNext_for_open() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin secondBowl : getPins(MINIMUM_PINS + 1, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin secondBowl : getPins(MINIMUM_PINS + 1, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
                 Status status = new FirstBowlFinished(firstBowl).getNext(secondBowl);
 
                 assertThat(status).isInstanceOf(Open.class);

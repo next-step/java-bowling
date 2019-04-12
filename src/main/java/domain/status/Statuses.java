@@ -16,7 +16,7 @@ public class Statuses {
     }
 
     public Status getLastStatus() {
-        return statuses.get(statuses.size()-1);
+        return statuses.get(statuses.size() - 1);
     }
 
     public Stream<Status> getStream() {

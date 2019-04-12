@@ -5,7 +5,6 @@ import domain.pin.Pins;
 import domain.status.Ready;
 import domain.status.Status;
 import domain.status.Statuses;
-import util.StringUtils;
 
 import java.util.stream.Collectors;
 
@@ -68,9 +67,22 @@ public abstract class Frame {
     }
 
     public Frame bowl(Pin pin) {
-        addPin(pin);
-        addNextStatus(pin);
+        int pinSize = pins.size();
+
+        try {
+            addPin(pin);
+            addNextStatus(pin);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            if (isRecentPinRemovable(pinSize)) {
+                pins.removeRecent();
+            }
+        }
         return this;
+    }
+
+    private boolean isRecentPinRemovable(int pinSize) {
+        return pins.size() > 0 && pins.size() > pinSize;
     }
 
     Frame createNextFrame(Pin pin) {
@@ -78,15 +90,17 @@ public abstract class Frame {
             throw new IllegalStateException(String.format("프레임의 최대 개수는 %d개 입니다.", LAST_FRAME));
         }
 
-        if (number == LAST_FRAME-1) {
+        if (number == LAST_FRAME - 1) {
             return new LastFrame(pin, this);
         }
 
-        return new NormalFrame(number+1, pin, this);
+        return new NormalFrame(number + 1, pin, this);
     }
 
     public abstract boolean isFinished();
+
     public abstract boolean isScoreCalculationFinished();
+
     public abstract int getScore();
 
     @Override

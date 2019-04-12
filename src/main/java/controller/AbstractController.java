@@ -79,7 +79,7 @@ public abstract class AbstractController {
                         return 1;
                     }
 
-                    return game.getFrame(currentFrameNumber-1).getPinsSize() + 1;
+                    return game.getFrame(currentFrameNumber - 1).getPinsSize() + 1;
                 })
                 .orElse(1);
     }

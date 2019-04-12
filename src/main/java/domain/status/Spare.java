@@ -35,6 +35,6 @@ public class Spare extends FrameFinished {
 
     @Override
     public String toString() {
-       return SPARE_DISPLAY_STRING;
+        return SPARE_DISPLAY_STRING;
     }
 }

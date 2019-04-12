@@ -19,6 +19,7 @@ public class InputView {
             return getPlayerName();
         }
     }
+
     private static void showInputPlayerNameMessage() {
         System.out.print("플레이어 이름은(3 english letters)? ");
     }

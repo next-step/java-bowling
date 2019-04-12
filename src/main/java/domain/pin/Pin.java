@@ -6,10 +6,8 @@ import java.util.Map;
 public class Pin {
     public static final int MAXIMUM_PINS = 10;
     public static final int MINIMUM_PINS = 0;
-
-    private final int pin;
-
     private static final Map<Integer, Pin> pins = new HashMap<>();
+    private final int pin;
 
     private Pin(int pin) {
         if (pin > MAXIMUM_PINS) {
@@ -35,16 +33,16 @@ public class Pin {
         return Pin.of(MAXIMUM_PINS - previousPin.getPin());
     }
 
-    public Pin add(Pin pin) {
-        return Pin.of(this.pin + pin.getPin());
-    }
-
     public static Pin of(int pin) {
         if (!pins.containsKey(pin)) {
             pins.put(pin, new Pin(pin));
         }
 
         return pins.get(pin);
+    }
+
+    public Pin add(Pin pin) {
+        return Pin.of(this.pin + pin.getPin());
     }
 
     public int getPin() {

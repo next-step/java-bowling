@@ -2,7 +2,6 @@ package controller;
 
 import domain.game.BowlingGames;
 import spark.Request;
-import util.StringUtils;
 
 import static spark.Spark.post;
 
@@ -25,7 +24,7 @@ public class ResultController extends AbstractController {
                 Integer bowl = getBowl(req);
                 games.get(currentPlayerIndex).play(bowl);
 
-                if(isFrameFinished(currentPlayerIndex)) {
+                if (isFrameFinished(currentPlayerIndex)) {
                     currentPlayerIndex = getNextPlayerIndex();
                 }
 
@@ -42,7 +41,7 @@ public class ResultController extends AbstractController {
     }
 
     private Integer getBowl(Request req) {
-        return Integer.parseInt(StringUtils.removeWhitespace(getInputLine(req, "bowl")));
+        return Integer.parseInt(getInputLine(req, "bowl"));
     }
 }
 

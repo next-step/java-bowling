@@ -1,107 +1,110 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>볼링 게임 점수판</title>
+    <meta charset="UTF-8">
+    <title>볼링 게임 점수판</title>
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-  crossorigin="anonymous">
+    <!-- Latest compiled and minified CSS -->
+    <link crossorigin="anonymous"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          rel="stylesheet">
 
-<!-- Optional theme -->
-<link rel="stylesheet"
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-  integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-  crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link crossorigin="anonymous"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          rel="stylesheet">
 
-<!-- Latest compiled and minified JavaScript -->
-<script
-  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-  crossorigin="anonymous"></script>
-<style>
-body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;
-}
-</style>
+    <!-- Latest compiled and minified JavaScript -->
+    <script
+            crossorigin="anonymous"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #eee;
+        }
+    </style>
 
-<style>
-.form-show {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
+    <style>
+        .form-show {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
 
-.form-show .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
+        .form-show .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+        }
 
-.submit-button{
-  margin-top: 10px;
-}
-</style>
+        .submit-button {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-<form class="form-show" method="post" action="/throw">
-  <div class="form-show-div form-group">
-    <label for="bowl">{{currentPlayerName}}의  {{currentFrameNumber}}프레임  {{currentBowl}}번째시도</label>
-    <input type="text" id="bowl" class="form-control" name="bowl" placeholder="10" value="10" required autofocus>
-  </div>
-  <div class="submit-button centent">
-    <button class="btn btn-primary" type="submit">투구 결과 입력</button>
-    <a class="btn btn-warning" href="/" role="button">다시하기</a>
-  </div>
-</form>
-  <h4 class="text-center"><게임 점수></h4>
-  <table class="table table-bordered">
-    <thead>
-      <th class="col-md-2 text-center">플레이어</th>
-      <th class="text-center">1</th>
-      <th class="text-center">2</th>
-      <th class="text-center">3</th>
-      <th class="text-center">4</th>
-      <th class="text-center">5</th>
-      <th class="text-center">6</th>
-      <th class="text-center">7</th>
-      <th class="text-center">8</th>
-      <th class="text-center">9</th>
-      <th class="text-center">10</th>
-    </thead>
-    </thead>
-  </thead>
-  </thead>
-</thead>
-</thead>
-</thead>
-</thead>
-</thead>
-    <tbody>
-      {{#games.games}}
-      <tr>
-        <th rowspan=2 class="text-center">{{playerName}}</th>
-        {{#statusStrings}}
-        <td class="text-center">{{.}}</td>
-        {{/statusStrings}}
-      </tr>
-      <tr>
-        {{#scoreStrings}}
-        <td class="text-center">{{.}}</td>
-        {{/scoreStrings}}
-      </tr>
-      {{/games.games}}
-    </tbody>
-  </table>
+    <form action="/throw" class="form-show" method="post">
+        <div class="form-show-div form-group">
+            <label for="bowl">{{currentPlayerName}}의 {{currentFrameNumber}}프레임 {{currentBowl}}번째시도</label>
+            <input autofocus class="form-control" id="bowl" name="bowl" placeholder="10" required type="text"
+                   value="10">
+        </div>
+        <div class="submit-button centent">
+            <button class="btn btn-primary" type="submit">투구 결과 입력</button>
+            <a class="btn btn-warning" href="/" role="button">다시하기</a>
+        </div>
+    </form>
+    <h4 class="text-center">
+        <게임 점수>
+    </h4>
+    <table class="table table-bordered">
+        <thead>
+        <th class="col-md-2 text-center">플레이어</th>
+        <th class="text-center">1</th>
+        <th class="text-center">2</th>
+        <th class="text-center">3</th>
+        <th class="text-center">4</th>
+        <th class="text-center">5</th>
+        <th class="text-center">6</th>
+        <th class="text-center">7</th>
+        <th class="text-center">8</th>
+        <th class="text-center">9</th>
+        <th class="text-center">10</th>
+        </thead>
+        </thead>
+        </thead>
+        </thead>
+        </thead>
+        </thead>
+        </thead>
+        </thead>
+        </thead>
+        <tbody>
+        {{#games.games}}
+        <tr>
+            <th class="text-center" rowspan=2>{{playerName}}</th>
+            {{#statusStrings}}
+            <td class="text-center">{{.}}</td>
+            {{/statusStrings}}
+        </tr>
+        <tr>
+            {{#scoreStrings}}
+            <td class="text-center">{{.}}</td>
+            {{/scoreStrings}}
+        </tr>
+        {{/games.games}}
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

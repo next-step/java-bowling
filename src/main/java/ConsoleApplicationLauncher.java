@@ -12,10 +12,10 @@ public class ConsoleApplicationLauncher {
             try {
                 game.play(InputView.getBowl(game.getNextFrameNumber()));
                 ResultView.showResult(game);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println();
             }
-        } while(game.isContinuable());
+        } while (game.isContinuable());
     }
 }

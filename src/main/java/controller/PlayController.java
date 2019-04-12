@@ -7,7 +7,7 @@ import domain.player.PlayerNames;
 import spark.Request;
 import util.StringUtils;
 
-import java.util.*;
+import java.util.Arrays;
 
 import static spark.Spark.post;
 
@@ -37,15 +37,15 @@ public class PlayController extends AbstractController {
         });
     }
 
+    private PlayerNames getPlayerNames(Request req) {
+        return new PlayerNames(Arrays.asList(StringUtils.removeWhitespace(getInputLine(req, "players")).split(PLAYER_NAMES_DELIMITER)));
+    }
+
     private void createGames(PlayerNames playerNames) {
         for (PlayerName curPlayer : playerNames.getNames()) {
             BowlingGame curGame = new BowlingGame(curPlayer);
             games.add(curGame);
         }
-    }
-
-    private static PlayerNames getPlayerNames(Request req) {
-        return new PlayerNames(Arrays.asList(StringUtils.removeWhitespace(getInputLine(req, "players")).split(PLAYER_NAMES_DELIMITER)));
     }
 }
 

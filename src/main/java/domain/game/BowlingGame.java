@@ -37,7 +37,7 @@ public class BowlingGame {
     }
 
     public Frame getRecentFrame() {
-        return (frames.isEmpty()) ? null : frames.get(frames.size()-1);
+        return (frames.isEmpty()) ? null : frames.get(frames.size() - 1);
     }
 
     public int getNextFrameNumber() {
