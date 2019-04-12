@@ -21,7 +21,7 @@ public class FrameTest extends BaseTest {
 
         assertThat(nextFrame).isInstanceOf(NormalFrame.class);
         assertThat(nextFrame.getNumber()).isEqualTo(currentFrame.getNumber() + 1);
-        assertThat(nextFrame.getPin(0)).isEqualTo(newFramePin);
+        assertThat(nextFrame.getLastStatus().getCurrentPin()).isEqualTo(newFramePin.getPin());
         assertThat(nextFrame.getLastStatus()).isInstanceOf(FirstBowlFinished.class);
     }
 
@@ -33,7 +33,7 @@ public class FrameTest extends BaseTest {
 
         assertThat(nextFrame).isInstanceOf(LastFrame.class);
         assertThat(nextFrame.getNumber()).isEqualTo(currentFrame.getNumber() + 1);
-        assertThat(nextFrame.getPin(0)).isEqualTo(newFramePin);
+        assertThat(nextFrame.getLastStatus().getCurrentPin()).isEqualTo(newFramePin.getPin());
         assertThat(nextFrame.getLastStatus()).isInstanceOf(Strike.class);
     }
 
@@ -41,7 +41,6 @@ public class FrameTest extends BaseTest {
     public void bowl_for_strike() {
         Frame currentFrame = new NormalFrame(START_FRAME, Pin.ofStrike());
 
-        assertThat(currentFrame.getPinsSize()).isEqualTo(1);
         assertThat(currentFrame.getStatusesSize()).isEqualTo(1);
     }
 
@@ -52,7 +51,6 @@ public class FrameTest extends BaseTest {
                 Frame currentFrame = new NormalFrame(START_FRAME, first);
                 currentFrame.bowl(second);
 
-                assertThat(currentFrame.getPinsSize()).isEqualTo(2);
                 assertThat(currentFrame.getStatusesSize()).isEqualTo(2);
             }
         }
@@ -65,22 +63,18 @@ public class FrameTest extends BaseTest {
                 Frame currentFrame = new NormalFrame(START_FRAME, first);
                 currentFrame.bowl(second);
 
-                assertThat(currentFrame.getPinsSize()).isEqualTo(2);
                 assertThat(currentFrame.getStatusesSize()).isEqualTo(2);
             }
         }
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void bowl_for_over_MAXIMUM_PINS() {
         for (Pin first : getPins(MINIMUM_PINS + 1, MAXIMUM_PINS - 1)) {
             Pin second = Pin.of(MAXIMUM_PINS);
 
             Frame currentFrame = new NormalFrame(START_FRAME, first);
             currentFrame.bowl(second);
-
-            assertThat(currentFrame.getPinsSize()).isEqualTo(1);
-            assertThat(currentFrame.getStatusesSize()).isEqualTo(1);
         }
     }
 

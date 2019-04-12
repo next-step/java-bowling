@@ -32,7 +32,7 @@ public class BowlingGameTest extends BaseTest {
         assertThat(game.getFramesSize()).isEqualTo(1);
         assertThat(game.getFrame(0)).isInstanceOf(NormalFrame.class);
         assertThat(game.getFrame(0).getNumber()).isEqualTo(START_FRAME);
-        assertThat(game.getFrame(0).getPin(0)).isEqualTo(curPin);
+        assertThat(game.getFrame(0).getPin(0)).isEqualTo(curPin.getPin());
         assertThat(game.getFrame(0).getLastStatus()).isInstanceOf(Strike.class);
     }
 
@@ -47,9 +47,8 @@ public class BowlingGameTest extends BaseTest {
             assertThat(game.getFramesSize()).isEqualTo(1);
             assertThat(game.getFrame(0)).isInstanceOf(NormalFrame.class);
             assertThat(game.getFrame(0).getNumber()).isEqualTo(START_FRAME);
-            assertThat(game.getFrame(0).getPinsSize()).isEqualTo(2);
-            assertThat(game.getFrame(0).getPin(0)).isEqualTo(firstBowl);
-            assertThat(game.getFrame(0).getPin(1)).isEqualTo(secondBowl);
+            assertThat(game.getFrame(0).getPin(0)).isEqualTo(firstBowl.getPin());
+            assertThat(game.getFrame(0).getStatus(1).getCurrentPin()).isEqualTo(secondBowl.getPin());
             assertThat(game.getFrame(0).getStatusesSize()).isEqualTo(2);
             assertThat(game.getFrame(0).getStatus(0)).isInstanceOf(FirstBowlFinished.class);
             assertThat(game.getFrame(0).getLastStatus()).isInstanceOf(Spare.class);
@@ -67,9 +66,8 @@ public class BowlingGameTest extends BaseTest {
                 assertThat(game.getFramesSize()).isEqualTo(1);
                 assertThat(game.getFrame(0)).isInstanceOf(NormalFrame.class);
                 assertThat(game.getFrame(0).getNumber()).isEqualTo(START_FRAME);
-                assertThat(game.getFrame(0).getPinsSize()).isEqualTo(2);
-                assertThat(game.getFrame(0).getPin(0)).isEqualTo(firstBowl);
-                assertThat(game.getFrame(0).getPin(1)).isEqualTo(secondBowl);
+                assertThat(game.getFrame(0).getPin(0)).isEqualTo(firstBowl.getPin());
+                assertThat(game.getFrame(0).getStatus(1).getCurrentPin()).isEqualTo(secondBowl.getPin());
                 assertThat(game.getFrame(0).getStatusesSize()).isEqualTo(2);
                 assertThat(game.getFrame(0).getStatus(0)).isInstanceOf(FirstBowlFinished.class);
                 assertThat(game.getFrame(0).getLastStatus()).isInstanceOf(Open.class);
@@ -88,7 +86,7 @@ public class BowlingGameTest extends BaseTest {
         assertThat(game.getFramesSize()).isEqualTo(9);
         assertThat(game.getRecentFrame()).isInstanceOf(NormalFrame.class);
         assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME - 1);
-        assertThat(game.getRecentFrame().getPin(0)).isEqualTo(Pin.ofStrike());
+        assertThat(game.getRecentFrame().getPin(0)).isEqualTo(Pin.ofStrike().getPin());
         assertThat(game.getRecentFrame().getLastStatus()).isInstanceOf(Strike.class);
     }
 
@@ -107,9 +105,8 @@ public class BowlingGameTest extends BaseTest {
             assertThat(game.getFramesSize()).isEqualTo(9);
             assertThat(game.getRecentFrame()).isInstanceOf(NormalFrame.class);
             assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME - 1);
-            assertThat(game.getRecentFrame().getPinsSize()).isEqualTo(2);
-            assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-            assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
+            assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+            assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
             assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(2);
             assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(FirstBowlFinished.class);
             assertThat(game.getRecentFrame().getLastStatus()).isInstanceOf(Spare.class);
@@ -130,9 +127,8 @@ public class BowlingGameTest extends BaseTest {
                 assertThat(game.getFramesSize()).isEqualTo(9);
                 assertThat(game.getRecentFrame()).isInstanceOf(NormalFrame.class);
                 assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME - 1);
-                assertThat(game.getRecentFrame().getPinsSize()).isEqualTo(2);
-                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
+                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
                 assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(2);
                 assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(FirstBowlFinished.class);
                 assertThat(game.getRecentFrame().getLastStatus()).isInstanceOf(Open.class);
@@ -157,9 +153,9 @@ public class BowlingGameTest extends BaseTest {
                 assertThat(game.getFramesSize()).isEqualTo(10);
                 assertThat(game.getRecentFrame()).isInstanceOf(LastFrame.class);
                 assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME);
-                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
-                assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl);
+                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl.getPin());
                 assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(3);
                 assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(Strike.class);
                 assertThat(game.getRecentFrame().getStatus(1)).isInstanceOf(FirstBowlFinished.class);
@@ -185,10 +181,9 @@ public class BowlingGameTest extends BaseTest {
                 assertThat(game.getFramesSize()).isEqualTo(10);
                 assertThat(game.getRecentFrame()).isInstanceOf(LastFrame.class);
                 assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME);
-                assertThat(game.getRecentFrame().getPinsSize()).isEqualTo(3);
-                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
-                assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl);
+                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl.getPin());
                 assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(3);
                 assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(FirstBowlFinished.class);
                 assertThat(game.getRecentFrame().getStatus(1)).isInstanceOf(Spare.class);
@@ -214,10 +209,9 @@ public class BowlingGameTest extends BaseTest {
             assertThat(game.getFramesSize()).isEqualTo(10);
             assertThat(game.getRecentFrame()).isInstanceOf(LastFrame.class);
             assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME);
-            assertThat(game.getRecentFrame().getPinsSize()).isEqualTo(3);
-            assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-            assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
-            assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl);
+            assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+            assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
+            assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl.getPin());
             assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(3);
             assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(FirstBowlFinished.class);
             assertThat(game.getRecentFrame().getStatus(1)).isInstanceOf(Spare.class);
@@ -239,9 +233,8 @@ public class BowlingGameTest extends BaseTest {
                 assertThat(game.getFramesSize()).isEqualTo(10);
                 assertThat(game.getRecentFrame()).isInstanceOf(LastFrame.class);
                 assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME);
-                assertThat(game.getRecentFrame().getPinsSize()).isEqualTo(2);
-                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
+                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
                 assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(2);
                 assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(FirstBowlFinished.class);
                 assertThat(game.getRecentFrame().getLastStatus()).isInstanceOf(Open.class);

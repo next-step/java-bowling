@@ -1,6 +1,7 @@
 package domain.frame;
 
 import domain.pin.Pin;
+import domain.score.CannotCalculateException;
 import domain.score.Score;
 import domain.status.Status;
 
@@ -37,11 +38,15 @@ public class NormalFrame extends Frame {
 
     @Override
     public int getScore() {
-        if (isFinished() && getLastStatus().isClear()) {
+        if (!isFinished()) {
+            throw new CannotCalculateException();
+        }
+
+        if (getLastStatus().isClear()) {
             return getScoreWithBonus(getLastStatus());
         }
 
-        return pins.getScore();
+        return super.getScore();
     }
 
     private int getScoreWithBonus(Status status) {

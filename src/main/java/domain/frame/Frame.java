@@ -1,7 +1,6 @@
 package domain.frame;
 
 import domain.pin.Pin;
-import domain.pin.Pins;
 import domain.status.Ready;
 import domain.status.Status;
 import domain.status.Statuses;
@@ -12,13 +11,11 @@ import static domain.frame.Frames.LAST_FRAME;
 
 public abstract class Frame {
     private final int number;
-    protected Pins pins = new Pins();
     protected Statuses statuses = new Statuses();
     protected Frame next;
 
     public Frame(int number, Pin pin, Frame previous) {
         this.number = number;
-        pins.add(pin);
         statuses.add(new Ready(getPreviousStatus(previous)).getNext(pin));
     }
 
@@ -34,12 +31,8 @@ public abstract class Frame {
         return number;
     }
 
-    public Pin getPin(int i) {
-        return pins.get(i);
-    }
-
-    public int getPinsSize() {
-        return pins.size();
+    public int getPin(int i) {
+        return getStatus(i).getCurrentPin();
     }
 
     public Status getStatus(int i) {
@@ -54,10 +47,6 @@ public abstract class Frame {
         return statuses.size();
     }
 
-    private void addPin(Pin pin) {
-        pins.add(pin);
-    }
-
     private void addNextStatus(Pin pin) {
         statuses.add(getLastStatus().getNext(pin));
     }
@@ -67,22 +56,8 @@ public abstract class Frame {
     }
 
     public Frame bowl(Pin pin) {
-        int pinSize = pins.size();
-
-        try {
-            addPin(pin);
-            addNextStatus(pin);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            if (isRecentPinRemovable(pinSize)) {
-                pins.removeRecent();
-            }
-        }
+        addNextStatus(pin);
         return this;
-    }
-
-    private boolean isRecentPinRemovable(int pinSize) {
-        return pins.size() > 0 && pins.size() > pinSize;
     }
 
     Frame createNextFrame(Pin pin) {
@@ -101,7 +76,11 @@ public abstract class Frame {
 
     public abstract boolean isScoreCalculationFinished();
 
-    public abstract int getScore();
+    public int getScore() {
+        return statuses.getStream()
+                .mapToInt(Status::getCurrentPin)
+                .sum();
+    }
 
     @Override
     public String toString() {
