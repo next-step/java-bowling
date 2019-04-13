@@ -21,7 +21,7 @@ public class PinsTest extends BaseTest {
 
     @Test
     public void getScore_for_spare() {
-    for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS-1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
 
             Pins pins = new Pins();
@@ -34,7 +34,7 @@ public class PinsTest extends BaseTest {
 
     @Test
     public void getScore_for_open() {
-        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS-1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin() - 1);
 
             Pins pins = new Pins();
@@ -49,7 +49,7 @@ public class PinsTest extends BaseTest {
     public void getScore_for_spare_last_frame() {
         for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
-            for(Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
+            for (Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
                 Pins pins = new Pins();
                 pins.add(firstBowl);
                 pins.add(secondBowl);

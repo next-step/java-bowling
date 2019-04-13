@@ -25,7 +25,7 @@ public class ReadyTest extends BaseTest {
 
     @Test
     public void getNext() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS + 1, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS + 1, MAXIMUM_PINS - 1)) {
             Status status = new Ready().getNext(firstBowl);
 
             assertThat(status).isInstanceOf(FirstBowlFinished.class);

@@ -1,7 +1,7 @@
 package domain.status;
 
-import domain.score.Score;
 import domain.pin.Pin;
+import domain.score.Score;
 
 import static domain.pin.Pin.MAXIMUM_PINS;
 import static domain.pin.Pin.MINIMUM_PINS;
@@ -15,7 +15,7 @@ public class Open extends FrameFinished {
         this.second = second;
 
         if (first.getPin() + second.getPin() >= MAXIMUM_PINS ||
-            first.getPin() + second.getPin() < MINIMUM_PINS) {
+                first.getPin() + second.getPin() < MINIMUM_PINS) {
             throw new IllegalArgumentException();
         }
     }

@@ -12,7 +12,7 @@ import static domain.pin.Pin.MINIMUM_PINS;
 public class BaseTest {
     protected List<Pin> getPins(int from, int to) {
         return IntStream.rangeClosed(from, to)
-                .mapToObj(number -> Pin.of(number))
+                .mapToObj(Pin::of)
                 .collect(Collectors.toList());
     }
 

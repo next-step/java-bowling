@@ -1,9 +1,12 @@
-package domain;
+package domain.game;
 
 import domain.frame.Frame;
 import domain.frame.Frames;
 import domain.frame.NormalFrame;
 import domain.pin.Pin;
+import domain.player.PlayerName;
+
+import java.util.List;
 
 import static domain.frame.Frames.LAST_FRAME;
 import static domain.frame.Frames.START_FRAME;
@@ -34,11 +37,7 @@ public class BowlingGame {
     }
 
     public Frame getRecentFrame() {
-        return frames.get(frames.size()-1);
-    }
-
-    public String getFramesStatus() {
-        return frames.getStatus();
+        return (frames.isEmpty()) ? null : frames.get(frames.size() - 1);
     }
 
     public int getNextFrameNumber() {
@@ -69,7 +68,11 @@ public class BowlingGame {
         return frames.getNextFrameNumber() <= LAST_FRAME || !frames.getRecentFrame().isFinished();
     }
 
-    public String getFrameScore() {
-        return frames.getScoreString();
+    public List<String> getStatusStrings() {
+        return frames.getStatusStrings();
+    }
+
+    public List<String> getScoreStrings() {
+        return frames.getScoreStrings();
     }
 }

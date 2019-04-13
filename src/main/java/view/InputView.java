@@ -1,6 +1,6 @@
 package view;
 
-import domain.PlayerName;
+import domain.player.PlayerName;
 import util.StringUtils;
 
 import java.util.Scanner;
@@ -19,6 +19,7 @@ public class InputView {
             return getPlayerName();
         }
     }
+
     private static void showInputPlayerNameMessage() {
         System.out.print("플레이어 이름은(3 english letters)? ");
     }

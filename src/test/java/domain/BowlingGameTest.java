@@ -5,7 +5,9 @@ import domain.frame.Frame;
 import domain.frame.Frames;
 import domain.frame.LastFrame;
 import domain.frame.NormalFrame;
+import domain.game.BowlingGame;
 import domain.pin.Pin;
+import domain.player.PlayerName;
 import domain.status.FirstBowlFinished;
 import domain.status.Open;
 import domain.status.Spare;
@@ -30,13 +32,13 @@ public class BowlingGameTest extends BaseTest {
         assertThat(game.getFramesSize()).isEqualTo(1);
         assertThat(game.getFrame(0)).isInstanceOf(NormalFrame.class);
         assertThat(game.getFrame(0).getNumber()).isEqualTo(START_FRAME);
-        assertThat(game.getFrame(0).getPin(0)).isEqualTo(curPin);
+        assertThat(game.getFrame(0).getPin(0)).isEqualTo(curPin.getPin());
         assertThat(game.getFrame(0).getLastStatus()).isInstanceOf(Strike.class);
     }
 
     @Test
     public void play_for_spare_first_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
             BowlingGame game = new BowlingGame(PLAYER_NAME);
             game.play(firstBowl.getPin());
@@ -45,9 +47,8 @@ public class BowlingGameTest extends BaseTest {
             assertThat(game.getFramesSize()).isEqualTo(1);
             assertThat(game.getFrame(0)).isInstanceOf(NormalFrame.class);
             assertThat(game.getFrame(0).getNumber()).isEqualTo(START_FRAME);
-            assertThat(game.getFrame(0).getPinsSize()).isEqualTo(2);
-            assertThat(game.getFrame(0).getPin(0)).isEqualTo(firstBowl);
-            assertThat(game.getFrame(0).getPin(1)).isEqualTo(secondBowl);
+            assertThat(game.getFrame(0).getPin(0)).isEqualTo(firstBowl.getPin());
+            assertThat(game.getFrame(0).getStatus(1).getCurrentPin()).isEqualTo(secondBowl.getPin());
             assertThat(game.getFrame(0).getStatusesSize()).isEqualTo(2);
             assertThat(game.getFrame(0).getStatus(0)).isInstanceOf(FirstBowlFinished.class);
             assertThat(game.getFrame(0).getLastStatus()).isInstanceOf(Spare.class);
@@ -56,8 +57,8 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_open_first_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
                 BowlingGame game = new BowlingGame(PLAYER_NAME);
                 game.play(firstBowl.getPin());
                 game.play(secondBowl.getPin());
@@ -65,9 +66,8 @@ public class BowlingGameTest extends BaseTest {
                 assertThat(game.getFramesSize()).isEqualTo(1);
                 assertThat(game.getFrame(0)).isInstanceOf(NormalFrame.class);
                 assertThat(game.getFrame(0).getNumber()).isEqualTo(START_FRAME);
-                assertThat(game.getFrame(0).getPinsSize()).isEqualTo(2);
-                assertThat(game.getFrame(0).getPin(0)).isEqualTo(firstBowl);
-                assertThat(game.getFrame(0).getPin(1)).isEqualTo(secondBowl);
+                assertThat(game.getFrame(0).getPin(0)).isEqualTo(firstBowl.getPin());
+                assertThat(game.getFrame(0).getStatus(1).getCurrentPin()).isEqualTo(secondBowl.getPin());
                 assertThat(game.getFrame(0).getStatusesSize()).isEqualTo(2);
                 assertThat(game.getFrame(0).getStatus(0)).isInstanceOf(FirstBowlFinished.class);
                 assertThat(game.getFrame(0).getLastStatus()).isInstanceOf(Open.class);
@@ -86,13 +86,13 @@ public class BowlingGameTest extends BaseTest {
         assertThat(game.getFramesSize()).isEqualTo(9);
         assertThat(game.getRecentFrame()).isInstanceOf(NormalFrame.class);
         assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME - 1);
-        assertThat(game.getRecentFrame().getPin(0)).isEqualTo(Pin.ofStrike());
+        assertThat(game.getRecentFrame().getPin(0)).isEqualTo(Pin.ofStrike().getPin());
         assertThat(game.getRecentFrame().getLastStatus()).isInstanceOf(Strike.class);
     }
 
     @Test
     public void play_for_spare_ninth_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
 
             Frames frames = new Frames();
@@ -105,9 +105,8 @@ public class BowlingGameTest extends BaseTest {
             assertThat(game.getFramesSize()).isEqualTo(9);
             assertThat(game.getRecentFrame()).isInstanceOf(NormalFrame.class);
             assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME - 1);
-            assertThat(game.getRecentFrame().getPinsSize()).isEqualTo(2);
-            assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-            assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
+            assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+            assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
             assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(2);
             assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(FirstBowlFinished.class);
             assertThat(game.getRecentFrame().getLastStatus()).isInstanceOf(Spare.class);
@@ -116,8 +115,8 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_open_ninth_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
                 Frames frames = new Frames();
                 fillNormalFrames(frames, START_FRAME, LAST_FRAME - 2, Pin.ofStrike());
 
@@ -128,9 +127,8 @@ public class BowlingGameTest extends BaseTest {
                 assertThat(game.getFramesSize()).isEqualTo(9);
                 assertThat(game.getRecentFrame()).isInstanceOf(NormalFrame.class);
                 assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME - 1);
-                assertThat(game.getRecentFrame().getPinsSize()).isEqualTo(2);
-                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
+                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
                 assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(2);
                 assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(FirstBowlFinished.class);
                 assertThat(game.getRecentFrame().getLastStatus()).isInstanceOf(Open.class);
@@ -140,7 +138,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_strike_and_open_last_frame() {
-        for(Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             for (Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - secondBowl.getPin() - 1)) {
                 Pin firstBowl = Pin.ofStrike();
 
@@ -155,9 +153,9 @@ public class BowlingGameTest extends BaseTest {
                 assertThat(game.getFramesSize()).isEqualTo(10);
                 assertThat(game.getRecentFrame()).isInstanceOf(LastFrame.class);
                 assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME);
-                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
-                assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl);
+                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl.getPin());
                 assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(3);
                 assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(Strike.class);
                 assertThat(game.getRecentFrame().getStatus(1)).isInstanceOf(FirstBowlFinished.class);
@@ -168,8 +166,8 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_spare_last_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin thirdBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
                 Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
 
                 Frames frames = new Frames();
@@ -183,10 +181,9 @@ public class BowlingGameTest extends BaseTest {
                 assertThat(game.getFramesSize()).isEqualTo(10);
                 assertThat(game.getRecentFrame()).isInstanceOf(LastFrame.class);
                 assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME);
-                assertThat(game.getRecentFrame().getPinsSize()).isEqualTo(3);
-                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
-                assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl);
+                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl.getPin());
                 assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(3);
                 assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(FirstBowlFinished.class);
                 assertThat(game.getRecentFrame().getStatus(1)).isInstanceOf(Spare.class);
@@ -197,7 +194,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_spare_last_frame2() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
             Pin thirdBowl = Pin.ofStrike();
 
@@ -212,10 +209,9 @@ public class BowlingGameTest extends BaseTest {
             assertThat(game.getFramesSize()).isEqualTo(10);
             assertThat(game.getRecentFrame()).isInstanceOf(LastFrame.class);
             assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME);
-            assertThat(game.getRecentFrame().getPinsSize()).isEqualTo(3);
-            assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-            assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
-            assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl);
+            assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+            assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
+            assertThat(game.getRecentFrame().getPin(2)).isEqualTo(thirdBowl.getPin());
             assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(3);
             assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(FirstBowlFinished.class);
             assertThat(game.getRecentFrame().getStatus(1)).isInstanceOf(Spare.class);
@@ -225,8 +221,8 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void play_for_open_last_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
                 Frames frames = new Frames();
                 fillNormalFrames(frames, START_FRAME, LAST_FRAME - 1, Pin.ofStrike());
 
@@ -237,9 +233,8 @@ public class BowlingGameTest extends BaseTest {
                 assertThat(game.getFramesSize()).isEqualTo(10);
                 assertThat(game.getRecentFrame()).isInstanceOf(LastFrame.class);
                 assertThat(game.getRecentFrame().getNumber()).isEqualTo(LAST_FRAME);
-                assertThat(game.getRecentFrame().getPinsSize()).isEqualTo(2);
-                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl);
-                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl);
+                assertThat(game.getRecentFrame().getPin(0)).isEqualTo(firstBowl.getPin());
+                assertThat(game.getRecentFrame().getPin(1)).isEqualTo(secondBowl.getPin());
                 assertThat(game.getRecentFrame().getStatusesSize()).isEqualTo(2);
                 assertThat(game.getRecentFrame().getStatus(0)).isInstanceOf(FirstBowlFinished.class);
                 assertThat(game.getRecentFrame().getLastStatus()).isInstanceOf(Open.class);
@@ -257,7 +252,7 @@ public class BowlingGameTest extends BaseTest {
     @Test
     public void isContinuable() {
         Frames frames = new Frames();
-        for(int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
+        for (int frameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
             frames.add(new NormalFrame(frameNumber, Pin.ofStrike()));
             BowlingGame game = new BowlingGame(PLAYER_NAME, frames);
 
@@ -267,7 +262,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void isContinuable_for_last_frame_after_first_bowl() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
             Frame frame = new LastFrame(firstBowl);
             Frames frames = new Frames();
             frames.add(frame);
@@ -279,7 +274,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void isContinuable_for_last_frame_after_second_bowl_strike() {
-        for(Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
+        for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
             Frame frame = new LastFrame(Pin.ofStrike());
             frame.bowl(secondBowl);
             Frames frames = new Frames();
@@ -292,7 +287,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void isContinuable_for_last_frame_after_second_bowl_spare() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.of(MAXIMUM_PINS - firstBowl.getPin());
             Frame frame = new LastFrame(firstBowl);
             frame.bowl(secondBowl);
@@ -306,7 +301,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void isContinuable_for_last_frame_after_second_bowl_open() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Frames frames = new Frames();
             fillNormalFrames(frames, Pin.ofStrike());
 
@@ -323,7 +318,7 @@ public class BowlingGameTest extends BaseTest {
 
     @Test
     public void isContinuable_for_last_frame_after_third_bowl() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
             Frames frames = new Frames();
             fillNormalFrames(frames, Pin.ofStrike());
 

@@ -1,4 +1,4 @@
-package domain;
+package domain.player;
 
 import org.junit.Test;
 

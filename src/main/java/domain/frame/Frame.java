@@ -1,11 +1,9 @@
 package domain.frame;
 
 import domain.pin.Pin;
-import domain.pin.Pins;
 import domain.status.Ready;
 import domain.status.Status;
 import domain.status.Statuses;
-import util.StringUtils;
 
 import java.util.stream.Collectors;
 
@@ -13,13 +11,11 @@ import static domain.frame.Frames.LAST_FRAME;
 
 public abstract class Frame {
     private final int number;
-    protected Pins pins = new Pins();
     protected Statuses statuses = new Statuses();
     protected Frame next;
 
     public Frame(int number, Pin pin, Frame previous) {
         this.number = number;
-        pins.add(pin);
         statuses.add(new Ready(getPreviousStatus(previous)).getNext(pin));
     }
 
@@ -35,12 +31,8 @@ public abstract class Frame {
         return number;
     }
 
-    public Pin getPin(int i) {
-        return pins.get(i);
-    }
-
-    public int getPinsSize() {
-        return pins.size();
+    public int getPin(int i) {
+        return getStatus(i).getCurrentPin();
     }
 
     public Status getStatus(int i) {
@@ -55,16 +47,15 @@ public abstract class Frame {
         return statuses.size();
     }
 
-    private void addPin(Pin pin) {
-        pins.add(pin);
-    }
-
     private void addNextStatus(Pin pin) {
         statuses.add(getLastStatus().getNext(pin));
     }
 
+    public boolean isLastFrame() {
+        return number >= LAST_FRAME;
+    }
+
     public Frame bowl(Pin pin) {
-        addPin(pin);
         addNextStatus(pin);
         return this;
     }
@@ -74,23 +65,27 @@ public abstract class Frame {
             throw new IllegalStateException(String.format("프레임의 최대 개수는 %d개 입니다.", LAST_FRAME));
         }
 
-        if (number == LAST_FRAME-1) {
+        if (number == LAST_FRAME - 1) {
             return new LastFrame(pin, this);
         }
 
-        return new NormalFrame(number+1, pin, this);
+        return new NormalFrame(number + 1, pin, this);
     }
 
     public abstract boolean isFinished();
+
     public abstract boolean isScoreCalculationFinished();
-    public abstract int getScore();
+
+    public int getScore() {
+        return statuses.getStream()
+                .mapToInt(Status::getCurrentPin)
+                .sum();
+    }
 
     @Override
     public String toString() {
-        String status = statuses.getStream()
+        return statuses.getStream()
                 .map(Status::toString)
                 .collect(Collectors.joining("|"));
-
-        return StringUtils.center(status, 6);
     }
 }

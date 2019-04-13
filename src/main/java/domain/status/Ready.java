@@ -33,7 +33,7 @@ public class Ready extends Status {
         Status nextStatus = super.getNext(pin);
 
         if (previous != null) {
-           previous.next = nextStatus;
+            previous.next = nextStatus;
         }
 
         return nextStatus;

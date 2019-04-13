@@ -1,8 +1,8 @@
 package domain.status;
 
+import domain.pin.Pin;
 import domain.score.CannotCalculateException;
 import domain.score.Score;
-import domain.pin.Pin;
 
 public abstract class Status {
 
@@ -37,7 +37,9 @@ public abstract class Status {
     }
 
     public abstract boolean isClear();
+
     public abstract boolean isNormalFrameFinished();
+
     public abstract String toString();
 
     public Score getScore() {
