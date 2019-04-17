@@ -3,8 +3,8 @@ package com.hyoj.bowling.domain;
 import static java.util.stream.Collectors.joining;
 
 import com.hyoj.bowling.console.OutputConsole;
-import com.hyoj.bowling.domain.status.None;
 import com.hyoj.bowling.domain.status.ResultStatus;
+import com.hyoj.bowling.domain.status.Spare;
 import com.hyoj.bowling.domain.status.Strike;
 
 import java.util.ArrayList;
@@ -60,6 +60,10 @@ public class FinalFrame implements Frame {
 
         if (shotTimes == 0) {
             return false;
+        }
+
+        if (frame.getResultStatus() == Spare.getInstance() && shotTimes == 1) {
+            return true;
         }
 
         return shotTimes == MAX_SHOTS_COUNT || !shots.get(shotTimes - 1).isAllDown();
