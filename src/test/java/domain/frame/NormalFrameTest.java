@@ -1,10 +1,10 @@
 package domain.frame;
 
-import domain.BowlingGame;
-import domain.score.CannotCalculateException;
-import domain.PlayerName;
 import domain.base.BaseTest;
+import domain.game.BowlingGame;
 import domain.pin.Pin;
+import domain.player.PlayerName;
+import domain.score.CannotCalculateException;
 import domain.status.FirstBowlFinished;
 import domain.status.Open;
 import domain.status.Spare;
@@ -25,10 +25,9 @@ public class NormalFrameTest extends BaseTest {
             for (Pin curPin : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
                 Frame frame = new NormalFrame(curFrameNumber, curPin);
 
-                assertThat(frame.statuses.size()).isEqualTo(1);
-                assertThat(frame.statuses.getLastStatus()).isInstanceOf(FirstBowlFinished.class);
-                assertThat(frame.pins.size()).isEqualTo(1);
-                assertThat(frame.pins.get(0)).isEqualTo(curPin);
+                assertThat(frame.getStatusesSize()).isEqualTo(1);
+                assertThat(frame.getLastStatus()).isInstanceOf(FirstBowlFinished.class);
+                assertThat(frame.getLastStatus().getCurrentPin()).isEqualTo(curPin.getPin());
             }
         }
     }
@@ -38,16 +37,15 @@ public class NormalFrameTest extends BaseTest {
         for (int curFrameNumber : getFrameNumbers(START_FRAME, LAST_FRAME - 1)) {
             Frame frame = new NormalFrame(curFrameNumber, Pin.ofStrike());
 
-            assertThat(frame.statuses.size()).isEqualTo(1);
-            assertThat(frame.statuses.getLastStatus()).isInstanceOf(Strike.class);
-            assertThat(frame.pins.size()).isEqualTo(1);
-            assertThat(frame.pins.get(0)).isEqualTo(Pin.ofStrike());
+            assertThat(frame.getStatusesSize()).isEqualTo(1);
+            assertThat(frame.getLastStatus()).isInstanceOf(Strike.class);
+            assertThat(frame.getLastStatus().getCurrentPin()).isEqualTo(Pin.ofStrike().getPin());
         }
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void constructor_for_less_than_start_frame_number() {
-        new NormalFrame(START_FRAME-1, Pin.of(MAXIMUM_PINS));
+        new NormalFrame(START_FRAME - 1, Pin.of(MAXIMUM_PINS));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -63,11 +61,12 @@ public class NormalFrameTest extends BaseTest {
                 Frame frame = new NormalFrame(curFrameNumber, firstBowl);
                 frame.bowl(secondBowl);
 
-                assertThat(frame.statuses.size()).isEqualTo(2);
-                assertThat(frame.statuses.get(0)).isInstanceOf(FirstBowlFinished.class);
-                assertThat(frame.statuses.getLastStatus()).isInstanceOf(Spare.class);
-                assertThat(frame.pins.get(0)).isEqualTo(firstBowl);
-                assertThat(frame.pins.get(1)).isEqualTo(secondBowl);
+                assertThat(frame.getStatusesSize()).isEqualTo(2);
+                assertThat(frame.getStatus(0)).isInstanceOf(FirstBowlFinished.class);
+                assertThat(frame.getLastStatus()).isInstanceOf(Spare.class);
+                assertThat(frame.getPin(0)).isEqualTo(firstBowl.getPin());
+                assertThat(frame.getStatus(1).getCurrentPin()).isEqualTo(secondBowl.getPin());
+                assertThat(frame.isScoreCalculationFinished()).isEqualTo(false);
             }
         }
     }
@@ -80,11 +79,11 @@ public class NormalFrameTest extends BaseTest {
                     Frame frame = new NormalFrame(curFrameNumber, firstBowl);
                     frame.bowl(secondBowl);
 
-                    assertThat(frame.statuses.size()).isEqualTo(2);
-                    assertThat(frame.statuses.get(0)).isInstanceOf(FirstBowlFinished.class);
-                    assertThat(frame.statuses.getLastStatus()).isInstanceOf(Open.class);
-                    assertThat(frame.pins.get(0)).isEqualTo(firstBowl);
-                    assertThat(frame.pins.get(1)).isEqualTo(secondBowl);
+                    assertThat(frame.getStatusesSize()).isEqualTo(2);
+                    assertThat(frame.getStatus(0)).isInstanceOf(FirstBowlFinished.class);
+                    assertThat(frame.getLastStatus()).isInstanceOf(Open.class);
+                    assertThat(frame.getPin(0)).isEqualTo(firstBowl.getPin());
+                    assertThat(frame.getStatus(1).getCurrentPin()).isEqualTo(secondBowl.getPin());
                     assertThat(frame.isScoreCalculationFinished()).isEqualTo(true);
                 }
             }
@@ -109,7 +108,7 @@ public class NormalFrameTest extends BaseTest {
 
     @Test
     public void isFinished_for_not_strike() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Frame frame = new NormalFrame(START_FRAME, firstBowl);
 
             assertThat(frame.isFinished()).isEqualTo(false);
@@ -123,13 +122,11 @@ public class NormalFrameTest extends BaseTest {
         assertThat(frame.isFinished()).isEqualTo(true);
     }
 
-    @Test
+    @Test(expected = CannotCalculateException.class)
     public void getScore_for_unfinished_start_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            Frame frame = new NormalFrame(START_FRAME, firstBowl);
+        Frame frame = new NormalFrame(START_FRAME, Pin.of(5));
 
-            assertThat(frame.getScore()).isEqualTo(firstBowl.getPin());
-        }
+        frame.getScore();
     }
 
     @Test(expected = CannotCalculateException.class)
@@ -142,7 +139,7 @@ public class NormalFrameTest extends BaseTest {
 
     @Test(expected = CannotCalculateException.class)
     public void getScore_for_spare_start_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowl = Pin.ofSpare(firstBowl);
             Frame frame = new NormalFrame(START_FRAME, firstBowl);
             frame.bowl(secondBowl);
@@ -153,8 +150,8 @@ public class NormalFrameTest extends BaseTest {
 
     @Test
     public void getScore_for_open_start_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for( Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin() - 1)) {
                 Frame frame = new NormalFrame(START_FRAME, firstBowl);
                 frame.bowl(secondBowl);
 
@@ -174,7 +171,7 @@ public class NormalFrameTest extends BaseTest {
 
     @Test
     public void getScore_for_double_and_started_third_frame() {
-        for(Pin thirdFrameBowl : getAllPins()) {
+        for (Pin thirdFrameBowl : getAllPins()) {
             Pin strike = Pin.ofStrike();
             Frame startFrame = new NormalFrame(START_FRAME, strike);
             Frame secondFrame = startFrame.bowl(strike);
@@ -186,8 +183,8 @@ public class NormalFrameTest extends BaseTest {
 
     @Test
     public void getScore_for_spare_start_frame_and_started_second_frame() {
-        for(Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin secondFrameBowl : getAllPins()) {
+        for (Pin firstBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin secondFrameBowl : getAllPins()) {
                 Pin secondBowl = Pin.ofSpare(firstBowl);
 
                 Frame startFrame = new NormalFrame(START_FRAME, firstBowl);
@@ -201,7 +198,7 @@ public class NormalFrameTest extends BaseTest {
 
     @Test(expected = CannotCalculateException.class)
     public void getScore_for_strike_ninth_frame_and_started_last_frame() {
-        for(Pin lastBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
+        for (Pin lastBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS)) {
             PlayerName playerName = new PlayerName("pdy");
             Frames frames = getStrikeNormalFrames();
 
@@ -239,7 +236,7 @@ public class NormalFrameTest extends BaseTest {
 
     @Test
     public void getScore_for_strike_ninth_frame_and_spare_last_frame() {
-        for(Pin firstBowlInLastFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowlInLastFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
             Pin secondBowlInLastFrame = Pin.ofSpare(firstBowlInLastFrame);
 
             PlayerName playerName = new PlayerName("pdy");
@@ -256,8 +253,8 @@ public class NormalFrameTest extends BaseTest {
 
     @Test
     public void getScore_for_spare_ninth_frame_and_spare_last_frame() {
-        for(Pin firstBowlInNinthFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin firstBowlInLastFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowlInNinthFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin firstBowlInLastFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
                 Pin secondBowlInNinthFrame = Pin.ofSpare(firstBowlInNinthFrame);
                 Pin secondBowlInLastFrame = Pin.ofSpare(firstBowlInLastFrame);
 
@@ -398,7 +395,7 @@ public class NormalFrameTest extends BaseTest {
 
     @Test
     public void isScoreCalculationFinished_for_strike_ninth_frame() {
-        for(Pin firstBowl : getAllPins()) {
+        for (Pin firstBowl : getAllPins()) {
             for (Pin secondBowl : getPins(MINIMUM_PINS, MAXIMUM_PINS - firstBowl.getPin())) {
                 PlayerName playerName = new PlayerName("pdy");
                 Frames frames = new Frames();
@@ -421,8 +418,8 @@ public class NormalFrameTest extends BaseTest {
 
     @Test
     public void isScoreCalculationFinished_for_spare_ninth_frame_and_spare_last_frame() {
-        for(Pin firstBowlInNinthFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
-            for(Pin firstBowlInLastFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+        for (Pin firstBowlInNinthFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
+            for (Pin firstBowlInLastFrame : getPins(MINIMUM_PINS, MAXIMUM_PINS - 1)) {
                 Pin secondBowlInNinthFrame = Pin.ofSpare(firstBowlInNinthFrame);
                 Pin secondBowlInLastFrame = Pin.ofSpare(firstBowlInLastFrame);
 

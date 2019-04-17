@@ -2,7 +2,6 @@ package domain.status;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Statuses {
@@ -17,7 +16,7 @@ public class Statuses {
     }
 
     public Status getLastStatus() {
-        return statuses.get(statuses.size()-1);
+        return statuses.get(statuses.size() - 1);
     }
 
     public Stream<Status> getStream() {
@@ -30,12 +29,5 @@ public class Statuses {
 
     public Status get(int i) {
         return statuses.get(i);
-    }
-
-    @Override
-    public String toString() {
-        return statuses.stream()
-                .map(Status::toString)
-                .collect(Collectors.joining(" "));
     }
 }

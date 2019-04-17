@@ -1,6 +1,9 @@
 package view;
 
-import domain.BowlingGame;
+import domain.game.BowlingGame;
+import util.StringUtils;
+
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -37,15 +40,15 @@ public class ResultView {
     }
 
     private static String getStatus(BowlingGame game) {
-        return getNameStatusColumn(game) + getFrameStatusColumn(game) + "|";
+        return getNameStatusColumn(game) + getFrameStatusColumns(game) + "|";
     }
 
     private static String getNameStatusColumn(BowlingGame game) {
         return String.format("|  %3s |", game.getPlayerName());
     }
 
-    private static String getFrameStatusColumn(BowlingGame game) {
-        return game.getFramesStatus();
+    private static String getFrameStatusColumns(BowlingGame game) {
+        return getCollectedColumns(game.getStatusStrings());
     }
 
     private static void showScore(BowlingGame game) {
@@ -54,24 +57,25 @@ public class ResultView {
     }
 
     private static String getScore(BowlingGame game) {
-        String scoreColumn = getFrameScoreColumn(game);
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(getBlankScoreColumn());
-        sb.append(scoreColumn);
-
-        if (scoreColumn.length() > 0) {
-            sb.append("|");
-        }
-
-        return sb.toString();
+        String scores = getCollectedColumns(getFrameScoreColumns(game));
+        return padBlankColumnAndGet(scores);
     }
 
-    private static String getBlankScoreColumn() {
+    private static List<String> getFrameScoreColumns(BowlingGame game) {
+        return game.getScoreStrings();
+    }
+
+    private static String getCollectedColumns(List<String> columns) {
+        return columns.stream()
+                .map(column -> StringUtils.center(column, 6))
+                .collect(Collectors.joining("|"));
+    }
+
+    private static String padBlankColumnAndGet(String string) {
+        return getBlankColumn() + string + "|";
+    }
+
+    private static String getBlankColumn() {
         return "|      |";
-    }
-
-    private static String getFrameScoreColumn(BowlingGame game) {
-        return game.getFrameScore();
     }
 }

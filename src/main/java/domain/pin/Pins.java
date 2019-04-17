@@ -20,7 +20,11 @@ public class Pins {
 
     public int getScore() {
         return pins.stream()
-                    .mapToInt(Pin::getPin)
-                    .sum();
+                .mapToInt(Pin::getPin)
+                .sum();
+    }
+
+    public void removeRecent() {
+        pins.remove(pins.size() - 1);
     }
 }

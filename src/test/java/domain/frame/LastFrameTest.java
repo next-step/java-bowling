@@ -21,8 +21,7 @@ public class LastFrameTest extends BaseTest {
 
             assertThat(frame.statuses.size()).isEqualTo(1);
             assertThat(frame.statuses.getLastStatus()).isInstanceOf(FirstBowlFinished.class);
-            assertThat(frame.pins.size()).isEqualTo(1);
-            assertThat(frame.pins.get(0)).isEqualTo(curPin);
+            assertThat(frame.getLastStatus().getCurrentPin()).isEqualTo(curPin.getPin());
         }
     }
 
@@ -32,8 +31,7 @@ public class LastFrameTest extends BaseTest {
 
         assertThat(frame.statuses.size()).isEqualTo(1);
         assertThat(frame.statuses.getLastStatus()).isInstanceOf(Strike.class);
-        assertThat(frame.pins.size()).isEqualTo(1);
-        assertThat(frame.pins.get(0)).isEqualTo(Pin.ofStrike());
+        assertThat(frame.statuses.getLastStatus().getCurrentPin()).isEqualTo(Pin.ofStrike().getPin());
     }
 
     @Test
@@ -54,7 +52,7 @@ public class LastFrameTest extends BaseTest {
 
                 frame.bowl(thirdBowl);
 
-                assertThat(frame.pins.size()).isGreaterThan(2);
+                assertThat(frame.statuses.size()).isGreaterThan(2);
                 assertThat(frame.isFinished()).isTrue();
             }
         }
@@ -78,7 +76,7 @@ public class LastFrameTest extends BaseTest {
 
                 frame = frame.bowl(thirdBowl);
 
-                assertThat(frame.pins.size()).isGreaterThan(2);
+                assertThat(frame.statuses.size()).isGreaterThan(2);
                 assertThat(frame.isFinished()).isTrue();
             }
         }

@@ -23,17 +23,12 @@ public class LastFrame extends Frame {
             return false;
         }
 
-        if (pins.size() >= LAST_FRAME_FINISH_SIZE) {
+        if (statuses.size() >= LAST_FRAME_FINISH_SIZE) {
             return true;
         }
 
         Status lastStatus = getLastStatus();
         return lastStatus.isNormalFrameFinished() && !lastStatus.isClear();
-    }
-
-    @Override
-    public int getScore() {
-        return pins.getScore();
     }
 
     @Override
