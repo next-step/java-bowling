@@ -14,6 +14,10 @@ public class GameBoard {
     private final List<Frame> frames;
 
     private GameBoard(String playerName, List<Frame> frames) {
+        if (playerName.length() != 3) {
+            throw new IllegalArgumentException("플레이어 이름은 3글자 이어야 함");
+        }
+
         this.playerName = playerName;
         this.frames = frames;
     }
