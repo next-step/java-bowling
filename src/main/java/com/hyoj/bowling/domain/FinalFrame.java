@@ -3,12 +3,14 @@ package com.hyoj.bowling.domain;
 import static java.util.stream.Collectors.joining;
 
 import com.hyoj.bowling.console.OutputConsole;
+import com.hyoj.bowling.domain.status.None;
+import com.hyoj.bowling.domain.status.ResultStatus;
+import com.hyoj.bowling.domain.status.Strike;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class FinalFrame implements Frame {
-    public static final int MAX_SHOTS_COUNT = 3;
-
     private final Frame frame;
     private final List<Shot> shots = new ArrayList<>();
 
@@ -17,16 +19,7 @@ public class FinalFrame implements Frame {
     }
 
     public boolean canOneMoreShot() {
-        int shotTimes = shots.size();
-        if (shotTimes == 0 && frame.getFinalMarkType().canOneMoreShotAtFinal()) {
-            return true;
-        }
-
-        if (shots.get(shotTimes - 1).isAllDown()) {
-            return true;
-        }
-
-        return false;
+        return getResultStatus().canOneMoreShotAtFinal();
     }
 
     @Override
@@ -52,6 +45,16 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public ResultStatus getResultStatus() {
+        final int shotTimes = shots.size();
+        if (shotTimes == 0) {
+            return frame.getResultStatus();
+        }
+
+        return ResultStatus.getResultStatusInstance(shots);
+    }
+
+    @Override
     public boolean isDone() {
         final int shotTimes = shots.size();
 
@@ -60,21 +63,6 @@ public class FinalFrame implements Frame {
         }
 
         return shotTimes == MAX_SHOTS_COUNT || !shots.get(shotTimes - 1).isAllDown();
-
-    }
-
-    @Override
-    public MarkType getFinalMarkType() {
-        final int shotTimes = shots.size();
-        if (shotTimes == 0) {
-            return MarkType.NONE;
-        }
-
-        if (isDone()) {
-            return MarkType.STRIKE;
-        }
-
-        return MarkType.makeMarkType(shotTimes, shots.get(shotTimes - 1));
     }
 
     @Override
@@ -84,7 +72,7 @@ public class FinalFrame implements Frame {
         }
 
         return frame + OutputConsole.BAR + shots.stream()
-            .map(shot -> shot.isAllDown() ? MarkType.STRIKE.toString() : shot.toString())
+            .map(shot -> shot.isAllDown() ? Strike.getInstance().toString() : shot.toString())
             .collect(joining(OutputConsole.BAR));
     }
 }

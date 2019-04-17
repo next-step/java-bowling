@@ -1,5 +1,8 @@
 package com.hyoj.bowling.domain;
 
+import com.hyoj.bowling.domain.status.Gutter;
+import com.hyoj.bowling.domain.status.Spare;
+
 public class Shot {
     public static final int MAX_COUNT = 10;
     public static final int MIN_COUNT = 0;
@@ -36,11 +39,11 @@ public class Shot {
     @Override
     public String toString() {
         if (isAllStanding()) {
-            return MarkType.GUTTER.toString();
+            return Gutter.getInstance().toString();
         }
 
         if (isAllDown()) {
-            return MarkType.SPARE.toString();
+            return Spare.getInstance().toString();
         }
 
         return String.valueOf(knockDownPinsCount);

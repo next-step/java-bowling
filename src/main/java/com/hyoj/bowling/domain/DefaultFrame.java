@@ -1,13 +1,15 @@
 package com.hyoj.bowling.domain;
 
+import com.hyoj.bowling.domain.status.None;
+import com.hyoj.bowling.domain.status.ResultStatus;
+import com.hyoj.bowling.domain.status.Strike;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.joining;
 
 public class DefaultFrame implements Frame {
-    public static final int MAX_SHOTS_COUNT = 2;
-
     private final List<Shot> shots = new ArrayList<>();
     private final int index;
 
@@ -50,13 +52,13 @@ public class DefaultFrame implements Frame {
     }
 
     @Override
-    public MarkType getFinalMarkType() {
+    public ResultStatus getResultStatus() {
         final int shotTimes = shots.size();
         if (shotTimes == 0) {
-            return MarkType.NONE;
+            return None.getInstance();
         }
 
-        return MarkType.makeMarkType(shotTimes, shots.get(shotTimes - 1));
+        return ResultStatus.getResultStatusInstance(shots);
     }
 
     @Override
@@ -72,10 +74,10 @@ public class DefaultFrame implements Frame {
 
     @Override
     public String toString() {
-        final MarkType finalMarkType = getFinalMarkType();
+        final ResultStatus resultStatus = ResultStatus.getResultStatusInstance(shots);
 
-        if (finalMarkType.equals(MarkType.STRIKE)) {
-            return finalMarkType.toString();
+        if (resultStatus == Strike.getInstance()) {
+            return resultStatus.toString();
         }
 
         return shots.stream()

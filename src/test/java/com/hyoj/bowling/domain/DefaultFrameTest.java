@@ -1,5 +1,9 @@
 package com.hyoj.bowling.domain;
 
+import com.hyoj.bowling.domain.status.Gutter;
+import com.hyoj.bowling.domain.status.Miss;
+import com.hyoj.bowling.domain.status.Spare;
+import com.hyoj.bowling.domain.status.Strike;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,7 +24,7 @@ public class DefaultFrameTest {
         frame.add(0);
         frame.add(0);
 
-        assertThat(frame.getFinalMarkType()).isEqualTo(MarkType.GUTTER);
+        assertThat(frame.getResultStatus()).isEqualTo(Gutter.getInstance());
     }
 
     @Test
@@ -29,7 +33,7 @@ public class DefaultFrameTest {
         frame.add(5);
         frame.add(3);
 
-        assertThat(frame.getFinalMarkType()).isEqualTo(MarkType.MISS);
+        assertThat(frame.getResultStatus()).isEqualTo(Miss.getInstance());
     }
 
     @Test
@@ -38,7 +42,7 @@ public class DefaultFrameTest {
         frame.add(2);
         frame.add(8);
 
-        assertThat(frame.getFinalMarkType()).isEqualTo(MarkType.SPARE);
+        assertThat(frame.getResultStatus()).isEqualTo(Spare.getInstance());
     }
 
     @Test
@@ -46,7 +50,7 @@ public class DefaultFrameTest {
         final Frame frame = DefaultFrame.createFirstFrame();
         frame.add(10);
 
-        assertThat(frame.getFinalMarkType()).isEqualTo(MarkType.STRIKE);
+        assertThat(frame.getResultStatus()).isEqualTo(Strike.getInstance());
     }
 
     @Test
@@ -71,7 +75,7 @@ public class DefaultFrameTest {
         final Frame frame = DefaultFrame.createFirstFrame();
         frame.add(10);
 
-        assertThat(frame.toString()).isEqualTo(MarkType.STRIKE.toString());
+        assertThat(frame.toString()).isEqualTo(Strike.getInstance().toString());
     }
 
     @Test
@@ -80,7 +84,7 @@ public class DefaultFrameTest {
         frame.add(0);
         frame.add(10);
 
-        assertThat(frame.toString()).isEqualTo("-|" + MarkType.SPARE.toString());
+        assertThat(frame.toString()).isEqualTo("-|" + Spare.getInstance().toString());
     }
 
     @Test
@@ -89,7 +93,7 @@ public class DefaultFrameTest {
         frame.add(0);
         frame.add(0);
 
-        assertThat(frame.toString()).isEqualTo(MarkType.GUTTER.toString() + "|" + MarkType.GUTTER.toString());
+        assertThat(frame.toString()).isEqualTo(Gutter.getInstance().toString() + "|" + Gutter.getInstance().toString());
     }
 
     @Test
