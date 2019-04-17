@@ -3,6 +3,7 @@ package controller;
 import launcher.WebApplicationLauncher;
 import spark.Request;
 
+import static launcher.WebApplicationLauncher.areAllGamesFinished;
 import static launcher.WebApplicationLauncher.getCurrentGame;
 import static spark.Spark.post;
 
@@ -12,7 +13,7 @@ public class ResultController extends AbstractController {
 
     public void showResult() {
         post("/throw", (req, res) -> {
-            if (WebApplicationLauncher.areAllGamesFinished()) {
+            if (areAllGamesFinished()) {
                 redirectToIndex(res);
                 return null;
             }
