@@ -1,7 +1,6 @@
 package controller;
 
 import domain.game.BowlingGame;
-import domain.game.BowlingGames;
 import domain.player.PlayerName;
 import domain.player.PlayerNames;
 import spark.Request;
@@ -9,17 +8,14 @@ import util.StringUtils;
 
 import java.util.Arrays;
 
+import static launcher.WebApplicationLauncher.addGame;
+import static launcher.WebApplicationLauncher.clearGames;
 import static spark.Spark.post;
 
 public class PlayController extends AbstractController {
 
     private static final String PLAYER_NAMES_DELIMITER = ",";
-
     private static final String TEMPLATE_PATH = "play.html";
-
-    public PlayController(BowlingGames games, int currentPlayerIndex) {
-        super(games, currentPlayerIndex);
-    }
 
     public void play() {
 
@@ -27,6 +23,7 @@ public class PlayController extends AbstractController {
             PlayerNames playerNames = getPlayerNames(req);
 
             try {
+                clearGames();
                 createGames(playerNames);
                 return render(putAndGetModel(), TEMPLATE_PATH);
 
@@ -44,7 +41,7 @@ public class PlayController extends AbstractController {
     private void createGames(PlayerNames playerNames) {
         for (PlayerName curPlayer : playerNames.getNames()) {
             BowlingGame curGame = new BowlingGame(curPlayer);
-            games.add(curGame);
+            addGame(curGame);
         }
     }
 }

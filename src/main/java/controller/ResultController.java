@@ -1,31 +1,28 @@
 package controller;
 
-import domain.game.BowlingGames;
+import launcher.WebApplicationLauncher;
 import spark.Request;
 
+import static launcher.WebApplicationLauncher.getCurrentGame;
 import static spark.Spark.post;
 
 public class ResultController extends AbstractController {
 
     private static final String TEMPLATE_PATH = "play.html";
 
-    public ResultController(BowlingGames games, int currentPlayerIndex) {
-        super(games, currentPlayerIndex);
-    }
-
     public void showResult() {
         post("/throw", (req, res) -> {
-            if (games.isFinished()) {
+            if (WebApplicationLauncher.areAllGamesFinished()) {
                 redirectToIndex(res);
                 return null;
             }
 
             try {
                 Integer bowl = getBowl(req);
-                games.get(currentPlayerIndex).play(bowl);
+                getCurrentGame().play(bowl);
 
-                if (isFrameFinished(currentPlayerIndex)) {
-                    currentPlayerIndex = getNextPlayerIndex();
+                if (isFrameFinished()) {
+                    WebApplicationLauncher.turnToNextPlayer();
                 }
 
                 return render(putAndGetModel(), TEMPLATE_PATH);
@@ -36,8 +33,8 @@ public class ResultController extends AbstractController {
         });
     }
 
-    private boolean isFrameFinished(int currentPlayerIndex) {
-        return games.get(currentPlayerIndex).getRecentFrame().isFinished();
+    private boolean isFrameFinished() {
+        return getCurrentGame().getRecentFrame().isFinished();
     }
 
     private Integer getBowl(Request req) {

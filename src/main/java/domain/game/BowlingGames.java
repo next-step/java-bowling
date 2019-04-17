@@ -23,9 +23,13 @@ public class BowlingGames {
         return games.size();
     }
 
-    public boolean isFinished() {
+    public boolean areFinished() {
         return games.stream()
                 .filter(BowlingGame::isContinuable)
                 .count() <= 0;
+    }
+
+    public void clear() {
+        games.clear();
     }
 }
