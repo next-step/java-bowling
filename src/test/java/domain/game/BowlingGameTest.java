@@ -1,11 +1,10 @@
-package domain;
+package domain.game;
 
 import domain.base.BaseTest;
 import domain.frame.Frame;
 import domain.frame.Frames;
 import domain.frame.LastFrame;
 import domain.frame.NormalFrame;
-import domain.game.BowlingGame;
 import domain.pin.Pin;
 import domain.player.PlayerName;
 import domain.status.FirstBowlFinished;

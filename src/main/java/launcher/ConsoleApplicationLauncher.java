@@ -1,3 +1,5 @@
+package launcher;
+
 import domain.game.BowlingGame;
 import domain.player.PlayerName;
 import view.InputView;

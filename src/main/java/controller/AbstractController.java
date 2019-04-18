@@ -1,7 +1,7 @@
 package controller;
 
 import domain.game.BowlingGame;
-import domain.game.BowlingGames;
+import launcher.WebApplicationLauncher;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -12,29 +12,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static launcher.WebApplicationLauncher.getCurrentGame;
+import static launcher.WebApplicationLauncher.getGames;
+
 public abstract class AbstractController {
     protected static final String INDEX_TEMPLATE_PATH = "index.html";
 
-    protected BowlingGames games;
-    protected int currentPlayerIndex;
-
-    public AbstractController() {
-    }
-
-    public AbstractController(BowlingGames games, int currentPlayerIndex) {
-        this.games = games;
-        this.currentPlayerIndex = currentPlayerIndex;
-    }
-
-    protected static String render(Map<String, Object> model, String templatePath) {
+    protected String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 
-    protected static void redirectToIndex(Response response) {
+    protected void redirectToIndex(Response response) {
         response.redirect(INDEX_TEMPLATE_PATH);
     }
 
-    protected static String getInputLine(Request req, String key) {
+    protected String getInputLine(Request req, String key) {
         String inputLine = req.queryParams(key);
         if (StringUtils.isEmpty(inputLine)) {
             throw new IllegalArgumentException("잘못된 입력값입니다.");
@@ -45,7 +37,7 @@ public abstract class AbstractController {
 
     protected Map<String, Object> putAndGetModel() {
         Map<String, Object> model = new HashMap<>();
-        model.put("games", games);
+        model.put("games", getGames());
         model.put("currentPlayerName", getCurrentPlayerName());
 
         int currentFrameNumber = getCurrentFrameNumber();
@@ -56,11 +48,11 @@ public abstract class AbstractController {
     }
 
     private String getCurrentPlayerName() {
-        return games.get(currentPlayerIndex).getPlayerName();
+        return getCurrentGame().getPlayerName();
     }
 
     private int getCurrentFrameNumber() {
-        return Optional.ofNullable(games.get(currentPlayerIndex))
+        return Optional.ofNullable(WebApplicationLauncher.getCurrentGame())
                 .map(BowlingGame::getRecentFrame)
                 .map(frame -> {
                     if (frame.isFinished() && !frame.isLastFrame()) {
@@ -73,7 +65,7 @@ public abstract class AbstractController {
     }
 
     private int getCurrentBowl(int currentFrameNumber) {
-        return Optional.ofNullable(games.get(currentPlayerIndex))
+        return Optional.ofNullable(WebApplicationLauncher.getCurrentGame())
                 .map(game -> {
                     if (game.getFramesSize() < currentFrameNumber) {
                         return 1;
@@ -82,9 +74,5 @@ public abstract class AbstractController {
                     return game.getFrame(currentFrameNumber - 1).getStatusesSize() + 1;
                 })
                 .orElse(1);
-    }
-
-    protected int getNextPlayerIndex() {
-        return (currentPlayerIndex + 1) % games.size();
     }
 }
