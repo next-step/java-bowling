@@ -1,5 +1,6 @@
 package com.hyoj.bowling.console;
 
+import com.hyoj.bowling.domain.Pins;
 import java.util.Scanner;
 
 public class InputConsole {
@@ -10,8 +11,8 @@ public class InputConsole {
         return scanner.next();
     }
 
-    public static int enterKnockDownPinsCount(int frameTimes) {
+    public static Pins enterKnockDownPinsCount(int frameTimes) {
         System.out.print(frameTimes + " 프레임 투구 : ");
-        return scanner.nextInt();
+        return Pins.getInstanceOf(scanner.nextInt());
     }
 }

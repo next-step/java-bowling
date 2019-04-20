@@ -10,7 +10,7 @@ public class GameExecutor {
         this.gameBoard = gameBoard;
     }
 
-    public void play(Function<Integer, Integer> pinsSupplier,
+    public void play(Function<Integer, Pins> pinsSupplier,
                      Consumer<GameBoard> boardPrinter) {
 
         for (int i = 0; i < GameBoard.MAX_FRAMES_COUNT ; i++) {

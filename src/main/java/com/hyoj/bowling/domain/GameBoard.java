@@ -1,11 +1,11 @@
 package com.hyoj.bowling.domain;
 
 import com.hyoj.bowling.console.OutputConsole;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 public class GameBoard {
     public static final int MAX_FRAMES_COUNT = 10;
@@ -14,8 +14,8 @@ public class GameBoard {
     private final List<Frame> frames;
 
     private GameBoard(String playerName, List<Frame> frames) {
-        if (playerName.length() != 3) {
-            throw new IllegalArgumentException("플레이어 이름은 3글자 이어야 함");
+        if (!Pattern.matches("^[a-zA-Z]{3}$", playerName)) {
+            throw new IllegalArgumentException("플레이어 이름은 영어로 3글자 이어야 함");
         }
 
         this.playerName = playerName;
@@ -44,14 +44,14 @@ public class GameBoard {
         return new GameBoard(playerName, frames);
     }
 
-    public GameBoard play(final Function<Integer, Integer> pinsSupplier,
+    public GameBoard play(final Function<Integer, Pins> pinsSupplier,
                           final Consumer<GameBoard> boardPrinter,
                           int index) {
         final int frameTitleIndex = index + 1;
         final Frame frame = frames.get(index);
 
         do {
-            frame.add(pinsSupplier.apply(frameTitleIndex));
+            frame.throwBowlingBall(pinsSupplier.apply(frameTitleIndex));
             boardPrinter.accept(this);
         } while (!frame.isDone());
 

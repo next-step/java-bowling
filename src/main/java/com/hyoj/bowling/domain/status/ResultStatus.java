@@ -1,27 +1,24 @@
 package com.hyoj.bowling.domain.status;
 
-import com.hyoj.bowling.domain.Shot;
-
+import com.hyoj.bowling.domain.Pins;
 import java.util.List;
 
 public interface ResultStatus {
-    static ResultStatus getResultStatusInstance(List<Shot> shots) {
-        final int shotTimes = shots.size();
-        if (shotTimes == 0) {
+    static ResultStatus getResultStatusInstance(List<Pins> pins) {
+        final int thrownCount = pins.size();
+        if (thrownCount == 0) {
             return None.getInstance();
         }
 
-        final Shot finalShot = shots.get(shotTimes - 1);
-
-        if (shotTimes == 1 && finalShot.isAllDown()) {
+        if (thrownCount == 1 && Pins.isAllDown(pins)) {
             return Strike.getInstance();
         }
 
-        if (shotTimes == 2 && finalShot.isAllDown()) {
+        if (thrownCount == 2 && Pins.isAllDown(pins)) {
             return Spare.getInstance();
         }
 
-        if (finalShot.isAllStanding()) {
+        if (Pins.isAllStanding(pins)) {
             return Gutter.getInstance();
         }
 

@@ -3,9 +3,9 @@ package com.hyoj.bowling.domain;
 import com.hyoj.bowling.domain.status.ResultStatus;
 
 public interface Frame {
-    int MAX_SHOTS_COUNT = 2;
+    int MAX_THROW_COUNT = 2;
 
-    Frame add(int knockDownPinsCount);
+    Frame throwBowlingBall(Pins pins);
     boolean isDone();
     ResultStatus getResultStatus();
 }

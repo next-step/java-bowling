@@ -14,15 +14,15 @@ public class DefaultFrameTest {
     public void 투구_네번재_시도() {
         final Frame frame = DefaultFrame.createFirstFrame();
         for (int i = 0; i < 4; i++) {
-            frame.add(2);
+            frame.throwBowlingBall(Pins.getInstanceOf(2));
         }
     }
 
     @Test
     public void 총투구_결과_거터() {
         final Frame frame = DefaultFrame.createFirstFrame();
-        frame.add(0);
-        frame.add(0);
+        frame.throwBowlingBall(Pins.getInstanceOf(0));
+        frame.throwBowlingBall(Pins.getInstanceOf(0));
 
         assertThat(frame.getResultStatus()).isEqualTo(Gutter.getInstance());
     }
@@ -30,8 +30,8 @@ public class DefaultFrameTest {
     @Test
     public void 총투구_결과_미스() {
         final Frame frame = DefaultFrame.createFirstFrame();
-        frame.add(5);
-        frame.add(3);
+        frame.throwBowlingBall(Pins.getInstanceOf(5));
+        frame.throwBowlingBall(Pins.getInstanceOf(3));
 
         assertThat(frame.getResultStatus()).isEqualTo(Miss.getInstance());
     }
@@ -39,8 +39,8 @@ public class DefaultFrameTest {
     @Test
     public void 총투구_결과_스페어() {
         final Frame frame = DefaultFrame.createFirstFrame();
-        frame.add(2);
-        frame.add(8);
+        frame.throwBowlingBall(Pins.getInstanceOf(2));
+        frame.throwBowlingBall(Pins.getInstanceOf(8));
 
         assertThat(frame.getResultStatus()).isEqualTo(Spare.getInstance());
     }
@@ -48,7 +48,7 @@ public class DefaultFrameTest {
     @Test
     public void 총투구_결과_스트라이크() {
         final Frame frame = DefaultFrame.createFirstFrame();
-        frame.add(10);
+        frame.throwBowlingBall(Pins.getInstanceOf(10));
 
         assertThat(frame.getResultStatus()).isEqualTo(Strike.getInstance());
     }
@@ -56,7 +56,7 @@ public class DefaultFrameTest {
     @Test
     public void 한번에_투구_횟수_모두_소모() {
         final Frame frame = DefaultFrame.createFirstFrame();
-        frame.add(10);
+        frame.throwBowlingBall(Pins.getInstanceOf(10));
 
         assertThat(frame.isDone()).isEqualTo(true);
     }
@@ -64,8 +64,8 @@ public class DefaultFrameTest {
     @Test
     public void 두번에_투구_횟수_모두_소모() {
         final Frame frame = DefaultFrame.createFirstFrame();
-        frame.add(4);
-        frame.add(6);
+        frame.throwBowlingBall(Pins.getInstanceOf(4));
+        frame.throwBowlingBall(Pins.getInstanceOf(6));
 
         assertThat(frame.isDone()).isEqualTo(true);
     }
@@ -73,7 +73,7 @@ public class DefaultFrameTest {
     @Test
     public void 텍스트로_표현_STRIKE() {
         final Frame frame = DefaultFrame.createFirstFrame();
-        frame.add(10);
+        frame.throwBowlingBall(Pins.getInstanceOf(10));
 
         assertThat(frame.toString()).isEqualTo(Strike.getInstance().toString());
     }
@@ -81,8 +81,8 @@ public class DefaultFrameTest {
     @Test
     public void 텍스트로_표현_SPARE() {
         final Frame frame = DefaultFrame.createFirstFrame();
-        frame.add(0);
-        frame.add(10);
+        frame.throwBowlingBall(Pins.getInstanceOf(0));
+        frame.throwBowlingBall(Pins.getInstanceOf(10));
 
         assertThat(frame.toString()).isEqualTo("-|" + Spare.getInstance().toString());
     }
@@ -90,8 +90,8 @@ public class DefaultFrameTest {
     @Test
     public void 텍스트로_표현_GUTTUER() {
         final Frame frame = DefaultFrame.createFirstFrame();
-        frame.add(0);
-        frame.add(0);
+        frame.throwBowlingBall(Pins.getInstanceOf(0));
+        frame.throwBowlingBall(Pins.getInstanceOf(0));
 
         assertThat(frame.toString()).isEqualTo(Gutter.getInstance().toString() + "|" + Gutter.getInstance().toString());
     }
@@ -99,8 +99,8 @@ public class DefaultFrameTest {
     @Test
     public void 텍스트로_표현_MISS() {
         final Frame frame = DefaultFrame.createFirstFrame();
-        frame.add(3);
-        frame.add(5);
+        frame.throwBowlingBall(Pins.getInstanceOf(3));
+        frame.throwBowlingBall(Pins.getInstanceOf(5));
 
         assertThat(frame.toString()).isEqualTo("3|5");
     }
