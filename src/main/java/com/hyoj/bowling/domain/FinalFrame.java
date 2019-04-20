@@ -1,7 +1,5 @@
 package com.hyoj.bowling.domain;
 
-import static java.util.stream.Collectors.joining;
-
 import com.hyoj.bowling.console.OutputConsole;
 import com.hyoj.bowling.domain.status.ResultStatus;
 import com.hyoj.bowling.domain.status.Spare;
