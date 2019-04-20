@@ -1,8 +1,6 @@
 package com.hyoj.bowling.domain;
 
 import com.hyoj.bowling.console.OutputConsole;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -11,9 +9,9 @@ public class GameBoard {
     public static final int MAX_FRAMES_COUNT = 10;
 
     private final String playerName;
-    private final List<Frame> frames;
+    private final Frames frames;
 
-    private GameBoard(String playerName, List<Frame> frames) {
+    private GameBoard(final String playerName, final Frames frames) {
         if (!Pattern.matches("^[a-zA-Z]{3}$", playerName)) {
             throw new IllegalArgumentException("플레이어 이름은 영어로 3글자 이어야 함");
         }
@@ -31,7 +29,7 @@ public class GameBoard {
     }
 
     public static GameBoard init(String playerName) {
-        List<Frame> frames = new ArrayList<>();
+        Frames frames = new Frames();
 
         final DefaultFrame firstFrame = (DefaultFrame) DefaultFrame.createFirstFrame();
         frames.add(firstFrame);
@@ -60,11 +58,6 @@ public class GameBoard {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder(
-                OutputConsole.BAR + OutputConsole.toStringWithBar(playerName));
-
-        frames.forEach(frame -> result.append(OutputConsole.toStringWithBar(frame.toString())));
-
-        return result.toString();
+        return OutputConsole.BAR + OutputConsole.toStringWithBar(playerName) + frames.toString();
     }
 }

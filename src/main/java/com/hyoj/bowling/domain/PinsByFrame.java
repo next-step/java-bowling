@@ -2,6 +2,7 @@ package com.hyoj.bowling.domain;
 
 import static java.util.stream.Collectors.joining;
 
+import com.hyoj.bowling.console.OutputConsole;
 import com.hyoj.bowling.domain.status.ResultStatus;
 import com.hyoj.bowling.domain.status.Spare;
 import java.util.ArrayList;
@@ -49,11 +50,11 @@ public class PinsByFrame {
         final ResultStatus resultStatus = getResultStatusInstance();
 
         if (resultStatus == Spare.getInstance()) {
-            return knockDownPins.get(0) + "|" + Spare.MARK;
+            return knockDownPins.get(0) + OutputConsole.BAR + Spare.MARK;
         }
 
         return knockDownPins.stream()
             .map(Pins::toString)
-            .collect(joining("|"));
+            .collect(joining(OutputConsole.BAR));
     }
 }

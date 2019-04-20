@@ -6,13 +6,11 @@ import com.hyoj.bowling.console.OutputConsole;
 import com.hyoj.bowling.domain.status.ResultStatus;
 import com.hyoj.bowling.domain.status.Spare;
 import com.hyoj.bowling.domain.status.Strike;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FinalFrame implements Frame {
     private final Frame frame;
     private final PinsByFrame pinsByFrame = new PinsByFrame(true);
-    private List<Frame> optionalFrames = new ArrayList<>();
+    private Frames optionalFrames = new Frames();
 
     public FinalFrame(DefaultFrame frame) {
         this.frame = frame;
@@ -83,8 +81,6 @@ public class FinalFrame implements Frame {
             return frame.toString();
         }
 
-        return frame + OutputConsole.BAR + optionalFrames.stream()
-            .map(Object::toString)
-            .collect(joining("|"));
+        return frame + OutputConsole.BAR + optionalFrames.toStringForOptional();
     }
 }
