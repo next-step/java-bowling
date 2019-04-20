@@ -29,7 +29,7 @@ public class FinalFrameTest {
         final FinalFrame finalFrame = (FinalFrame) frame.createFinalFrame()
             .throwBowlingBall(Pins.getInstanceOf(4))
             .throwBowlingBall(Pins.getInstanceOf(6));
-        assertThat(finalFrame.canOneMoreShot()).isEqualTo(true);
+        assertThat(finalFrame.isDone()).isEqualTo(false);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class FinalFrameTest {
         final FinalFrame finalFrame = (FinalFrame) frame.createFinalFrame()
             .throwBowlingBall(Pins.getInstanceOf(4))
             .throwBowlingBall(Pins.getInstanceOf(6)).throwBowlingBall(Pins.getInstanceOf(2));
-        assertThat(finalFrame.canOneMoreShot()).isEqualTo(false);
+        assertThat(finalFrame.isDone()).isEqualTo(true);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class FinalFrameTest {
         final DefaultFrame frame = (DefaultFrame) DefaultFrame.createFirstFrame();
         final FinalFrame finalFrame = (FinalFrame) frame.createFinalFrame()
             .throwBowlingBall(Pins.getInstanceOf(10));
-        assertThat(finalFrame.canOneMoreShot()).isEqualTo(true);
+        assertThat(finalFrame.isDone()).isEqualTo(false);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class FinalFrameTest {
         final FinalFrame finalFrame = (FinalFrame) frame.createFinalFrame()
             .throwBowlingBall(Pins.getInstanceOf(10))
             .throwBowlingBall(Pins.getInstanceOf(2));
-        assertThat(finalFrame.canOneMoreShot()).isEqualTo(false);
+        assertThat(finalFrame.isDone()).isEqualTo(true);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class FinalFrameTest {
         final FinalFrame finalFrame = (FinalFrame) frame.createFinalFrame()
             .throwBowlingBall(Pins.getInstanceOf(10))
             .throwBowlingBall(Pins.getInstanceOf(10));
-        assertThat(finalFrame.canOneMoreShot()).isEqualTo(true);
+        assertThat(finalFrame.isDone()).isEqualTo(false);
     }
 
     @Test

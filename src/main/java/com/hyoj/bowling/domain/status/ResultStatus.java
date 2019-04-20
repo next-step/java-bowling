@@ -1,24 +1,23 @@
 package com.hyoj.bowling.domain.status;
 
-import com.hyoj.bowling.domain.Pins;
-import java.util.List;
+import com.hyoj.bowling.domain.PinsByFrame;
 
 public interface ResultStatus {
-    static ResultStatus getResultStatusInstance(List<Pins> pins) {
-        final int thrownCount = pins.size();
-        if (thrownCount == 0) {
+    static ResultStatus getResultStatusInstance(final PinsByFrame pinsByFrame) {
+        final int throwCount = pinsByFrame.size();
+        if (throwCount == 0) {
             return None.getInstance();
         }
 
-        if (thrownCount == 1 && Pins.isAllDown(pins)) {
+        if (throwCount == 1 && pinsByFrame.isAllDown()) {
             return Strike.getInstance();
         }
 
-        if (thrownCount == 2 && Pins.isAllDown(pins)) {
+        if (throwCount == 2 && pinsByFrame.isAllDown()) {
             return Spare.getInstance();
         }
 
-        if (Pins.isAllStanding(pins)) {
+        if (pinsByFrame.isAllStanding()) {
             return Gutter.getInstance();
         }
 

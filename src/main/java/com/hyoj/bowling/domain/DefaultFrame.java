@@ -1,17 +1,12 @@
 package com.hyoj.bowling.domain;
 
-import static java.util.stream.Collectors.joining;
-
 import com.hyoj.bowling.domain.status.None;
 import com.hyoj.bowling.domain.status.ResultStatus;
-import com.hyoj.bowling.domain.status.Spare;
 import com.hyoj.bowling.domain.status.Strike;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DefaultFrame implements Frame {
-    private final List<Pins> thrownPins = new ArrayList<>();
     private final int index;
+    private final PinsByFrame pinsByFrame = new PinsByFrame(false);
 
     private DefaultFrame(int index) {
         this.index = index;
@@ -36,56 +31,45 @@ public class DefaultFrame implements Frame {
 
     @Override
     public DefaultFrame throwBowlingBall(Pins pins) {
-        final int thrownCount = thrownPins.size();
+        final int throwCount = pinsByFrame.size();
 
-        if (thrownCount > MAX_THROW_COUNT) {
+        if (throwCount > MAX_THROW_COUNT) {
             throw new IllegalArgumentException("유효하지 않은 투구 횟수");
         }
 
-        if (thrownCount == 0) {
-            thrownPins.add(pins);
-            return this;
-        }
-
-        thrownPins.add(thrownPins.get(thrownCount - 1).next(pins));
+        pinsByFrame.add(pins);
         return this;
     }
 
     @Override
     public ResultStatus getResultStatus() {
-        final int shotTimes = thrownPins.size();
-        if (shotTimes == 0) {
+        final int throwCount = pinsByFrame.size();
+        if (throwCount == 0) {
             return None.getInstance();
         }
 
-        return ResultStatus.getResultStatusInstance(thrownPins);
+        return pinsByFrame.getResultStatusInstance();
     }
 
     @Override
     public boolean isDone() {
-        final int shotsCount = thrownPins.size();
+        final int shotsCount = pinsByFrame.size();
 
         if (shotsCount == 0) {
             return false;
         }
 
-        return shotsCount == MAX_THROW_COUNT || Pins.isAllDown(thrownPins);
+        return shotsCount == MAX_THROW_COUNT || pinsByFrame.isAllDown();
     }
 
     @Override
     public String toString() {
-        final ResultStatus resultStatus = ResultStatus.getResultStatusInstance(thrownPins);
+        final ResultStatus resultStatus = pinsByFrame.getResultStatusInstance();
 
         if (resultStatus == Strike.getInstance()) {
             return resultStatus.toString();
         }
 
-        if (resultStatus == Spare.getInstance()) {
-            return thrownPins.get(0) + "|" + Spare.MARK;
-        }
-
-        return thrownPins.stream()
-            .map(Pins::toString)
-            .collect(joining("|"));
+        return pinsByFrame.toString();
     }
 }
