@@ -7,8 +7,8 @@ public class NormalFrame {
         this.score = new Score();
     }
 
-    public int doBowling(int score) {
-        return this.score.bowl(score);
+    public int doBowling(int point) {
+        return this.score.bowl(point);
     }
 
     public String getScore() {

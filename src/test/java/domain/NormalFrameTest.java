@@ -13,13 +13,13 @@ public class NormalFrameTest {
     private final int GUTTER = 0;
 
     @Test
-    void 초구_던짐_5점() {
+    void 한번_던짐_3점() {
         NormalFrame normalFrame = new NormalFrame();
         assertThat(normalFrame.doBowling(FIRST_BALL)).isEqualTo(FIRST_BALL);
     }
 
     @Test
-    void 두번째_던짐_총합_8점() {
+    void 두번_던짐_총합_7점() {
         NormalFrame normalFrame = new NormalFrame();
         normalFrame.doBowling(FIRST_BALL);
         assertThat(normalFrame.doBowling(SECOND_BALL)).isEqualTo(FIRST_BALL + SECOND_BALL);
