@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class NormalScore {
+    private static final int NORMAL_FRAME_SIZE = 2;
     private static final int FIRST = 0;
     public static final int STRIKE = 10;
 
@@ -16,7 +17,7 @@ public class NormalScore {
     }
 
     public int bowl(int score) {
-        if (points.size() == NormalFrame.NORMAL_FRAME_SIZE) {
+        if (points.size() == NORMAL_FRAME_SIZE) {
             throw new IllegalStateException("사전 정의된 size수 만큼 투구 가능합니다.");
         }
 
@@ -70,7 +71,7 @@ public class NormalScore {
     public String getScore() {
         final String SCORE_CONNECTOR = "|";
 
-        String score = IntStream.range(0, NormalFrame.NORMAL_FRAME_SIZE)
+        String score = IntStream.range(0, NORMAL_FRAME_SIZE)
                 .boxed()
                 .map(count -> PointName.valueOfPointName(getPoint(count), isSpare()))
                 .map(result -> result + SCORE_CONNECTOR)
