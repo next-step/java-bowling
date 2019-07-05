@@ -10,4 +10,8 @@ public class NormalFrame {
     public int doBowling(int score) {
         return this.score.bowl(score);
     }
+
+    public String getScore() {
+        return score.getScore();
+    }
 }
