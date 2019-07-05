@@ -1,17 +1,18 @@
 package domain;
 
 public class NormalFrame {
-    private Score score;
+    protected static final int NORMAL_FRAME_SIZE = 2;
+    private NormalScore normalScore;
 
     public NormalFrame() {
-        this.score = new Score();
+        normalScore = new NormalScore();
     }
 
     public int doBowling(int point) {
-        return this.score.bowl(point);
+        return normalScore.bowl(point);
     }
 
     public String getScore() {
-        return score.getScore();
+        return normalScore.getScore();
     }
 }
