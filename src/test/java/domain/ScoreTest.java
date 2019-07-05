@@ -34,6 +34,14 @@ public class ScoreTest {
     }
 
     @Test
+    void 초구_10점_두번째_또_던짐_예외발생() {
+        score.bowl(10);
+        assertThatIllegalStateException().isThrownBy(() -> {
+            score.bowl(1);
+        });
+    }
+
+    @Test
     void 세_번_굴리면_예외발생() {
         score.bowl(5);
         score.bowl(2);
