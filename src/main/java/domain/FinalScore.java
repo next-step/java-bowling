@@ -8,8 +8,9 @@ import java.util.stream.IntStream;
 public class FinalScore {
     private static final int FINAL_FRAME_SIZE = 3;
     private static final int STRIKE = 10;
+    private static final int FIRST = 0;
+    private static final int SECOND = 1;
     private static final int BOWL_ONCE = 1;
-    private static final int BOWL_TWICE_INDEX = 1;
     private static final int BOWL_TWICE = 2;
 
     private final List<Point> points;
@@ -64,7 +65,7 @@ public class FinalScore {
     }
 
     public boolean isSpare(int position) {
-        if (position < BOWL_TWICE_INDEX) {
+        if (position < SECOND) {
             return false;
         }
         if (!isStrike(position) && (getPoint(position - 1) + getPoint(position)) == STRIKE) {
