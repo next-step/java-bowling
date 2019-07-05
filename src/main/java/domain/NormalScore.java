@@ -8,6 +8,8 @@ import java.util.stream.IntStream;
 public class NormalScore {
     private static final int NORMAL_FRAME_SIZE = 2;
     private static final int FIRST = 0;
+    private static final int SECOND = 1;
+    private static final int BOWL_ONCE = 1;
     public static final int STRIKE = 10;
 
     private final List<Point> points;
@@ -36,7 +38,7 @@ public class NormalScore {
     }
 
     private boolean isOverScore(int currentScore) {
-        if (points.size() < 1) {
+        if (points.size() < BOWL_ONCE) {
             return false;
         }
         int lastScore = getPoint(points.size() - 1);
@@ -50,14 +52,17 @@ public class NormalScore {
     }
 
     public boolean isStrike() {
-        if (points.size() < 1) {
+        if (points.size() < BOWL_ONCE) {
             return false;
         }
         return getPoint(FIRST) == STRIKE ? true : false;
     }
 
-    public boolean isSpare() {
-        if (!isStrike() && sumScore() == STRIKE) {
+    public boolean isSpare(int position) {
+        if (position < SECOND) {
+            return false;
+        }
+        if (!isStrike() && (getPoint(position - 1) + getPoint(position)) == STRIKE) {
             return true;
         }
         return false;
@@ -71,11 +76,11 @@ public class NormalScore {
     public String getScore() {
         final String SCORE_CONNECTOR = "|";
 
-        String score = IntStream.range(0, NORMAL_FRAME_SIZE)
+        String score = IntStream.range(0, points.size())
                 .boxed()
-                .map(count -> PointName.valueOfPointName(getPoint(count), isSpare()))
+                .map(count -> PointName.valueOfPointName(getPoint(count), isSpare(count)))
                 .map(result -> result + SCORE_CONNECTOR)
                 .collect(Collectors.joining());
-        return score.substring(0, score.length() - 2);
+        return score.substring(0, score.length() - 1);
     }
 }
