@@ -10,8 +10,7 @@
 1. 두 개의 점수를 갖는 ```Score(int first, int second)``` 객체 생성
 1. 볼링 프레임 내 두 개의 점수를 갖는 ```NormalFrame(Score score)``` 객체 생성
 1. 볼링 프레임 내 세 개의 점수를 갖는 ```FinalFrame(Score score, int bonus)``` 객체 생성
-1. 볼링 전체프레임 ```Frames(List<NormalFrame> normalFrames, FinalFrame finalFrame)``` 객체 생성
-1. 볼링 게임 ```Bowling(Frames frames)``` 객체 생성
+1. 볼링 전체프레임 ```BowlingGame(List<NormalFrame> normalFrames, FinalFrame finalFrame)``` 객체 생성
 1. 플레이어의 이름을 갖는 ```Player(String name)``` 객체 생성
 1. 플레이어들을 갖는 ```Players(List<Player>)``` 객체 생성
 
