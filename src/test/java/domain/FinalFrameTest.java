@@ -16,7 +16,7 @@ public class FinalFrameTest {
         FinalFrame finalFrame = new FinalFrame();
         finalFrame.doBowling(STRIKE);
 
-        assertThat(finalFrame.getScore()).isEqualTo("X");
+        assertThat(finalFrame.getResult()).isEqualTo("X");
     }
 
     @Test
@@ -26,7 +26,7 @@ public class FinalFrameTest {
         finalFrame.doBowling(STRIKE);
         finalFrame.doBowling(STRIKE);
 
-        assertThat(finalFrame.getScore()).isEqualTo("X|X|X");
+        assertThat(finalFrame.getResult()).isEqualTo("X|X|X");
     }
 
     @Test
@@ -35,7 +35,7 @@ public class FinalFrameTest {
         finalFrame.doBowling(FIRST_BALL);
         finalFrame.doBowling(SPARE);
 
-        assertThat(finalFrame.getScore()).isEqualTo(FIRST_BALL + "|/");
+        assertThat(finalFrame.getResult()).isEqualTo(FIRST_BALL + "|/");
     }
 
     @Test
@@ -44,7 +44,7 @@ public class FinalFrameTest {
         finalFrame.doBowling(FIRST_BALL);
         finalFrame.doBowling(SECOND_BALL);
 
-        assertThat(finalFrame.getScore()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL);
+        assertThat(finalFrame.getResult()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL);
     }
 
     @Test
@@ -53,6 +53,6 @@ public class FinalFrameTest {
         finalFrame.doBowling(FIRST_BALL);
         finalFrame.doBowling(GUTTER);
 
-        assertThat(finalFrame.getScore()).isEqualTo(FIRST_BALL + "|" + "-");
+        assertThat(finalFrame.getResult()).isEqualTo(FIRST_BALL + "|" + "-");
     }
 }

@@ -1,9 +1,11 @@
 package domain;
 
 public class NormalFrame {
+    private int frameNumber;
     private NormalScore normalScore;
 
-    public NormalFrame() {
+    public NormalFrame(int frameNumber) {
+        this.frameNumber = frameNumber;
         this.normalScore = new NormalScore();
     }
 
@@ -20,14 +22,18 @@ public class NormalFrame {
     }
 
     public NormalFrame nextFrame() {
-        return new NormalFrame();
+        return new NormalFrame(frameNumber + 1);
     }
 
-    public String getScore() {
-        return normalScore.getScore();
+    public String getResult() {
+        return normalScore.getResult();
     }
 
     public int sumScore() {
         return normalScore.sumScore();
+    }
+
+    public int getNextFrameNumber() {
+        return nowBowlable() ? frameNumber : frameNumber + 1;
     }
 }

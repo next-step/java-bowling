@@ -37,7 +37,7 @@ public class BowlingGameTest {
                 .forEach(count -> bowlingGame.playBowling(scores[count]));
 
         assertThat(bowlingGame.sumScore()).isEqualTo(sumExpectScore(FIRST_FRAME));
-        assertThat(bowlingGame.getNormalFrameCount()).isEqualTo(1);
+        assertThat(bowlingGame.getNextFrameNumber()).isEqualTo(2);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class BowlingGameTest {
                 .forEach(count -> bowlingGame.playBowling(scores[count]));
 
         assertThat(bowlingGame.sumScore()).isEqualTo(sumExpectScore(SECOND_FRAME));
-        assertThat(bowlingGame.getNormalFrameCount()).isEqualTo(2);
+        assertThat(bowlingGame.getNextFrameNumber()).isEqualTo(3);
     }
 
     @Test
@@ -54,16 +54,16 @@ public class BowlingGameTest {
         IntStream.range(0, THIRD_FRAME)
                 .forEach(count -> bowlingGame.playBowling(scores[count]));
         assertThat(bowlingGame.sumScore()).isEqualTo(sumExpectScore(THIRD_FRAME));
-        assertThat(bowlingGame.getNormalFrameCount()).isEqualTo(3);
+        assertThat(bowlingGame.getNextFrameNumber()).isEqualTo(4);
     }
 
     @Test
     void 볼링게임_열프레임_진행() {
         IntStream.range(0, FINAL_FRAME)
                 .forEach(count -> bowlingGame.playBowling(scores[count]));
-        System.out.println(bowlingGame.getScore());
+        System.out.println(bowlingGame.getResult());
         assertThat(bowlingGame.sumScore()).isEqualTo(sumExpectScore(FINAL_FRAME));
-        assertThat(bowlingGame.getNormalFrameCount() + 1).isEqualTo(10);
+        assertThat(bowlingGame.getNextFrameNumber()).isEqualTo(11);
     }
 
     int sumExpectScore(int count) {

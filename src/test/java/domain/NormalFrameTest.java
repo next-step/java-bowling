@@ -11,19 +11,20 @@ public class NormalFrameTest {
     private final int STRIKE = 10;
     private final int SPARE = 7;
     private final int GUTTER = 0;
+    private final String BLANK = "  ";
 
     private NormalFrame normalFrame;
 
     @BeforeEach
     void setUp() {
-        normalFrame = new NormalFrame();
+        normalFrame = new NormalFrame(0);
     }
 
     @Test
     void 스트라이크_결과_출력() {
         normalFrame.doBowling(STRIKE);
 
-        assertThat(normalFrame.getScore()).isEqualTo("X");
+        assertThat(normalFrame.getResult()).isEqualTo("X" + BLANK);
     }
 
     @Test
@@ -31,7 +32,7 @@ public class NormalFrameTest {
         normalFrame.doBowling(FIRST_BALL);
         normalFrame.doBowling(SPARE);
 
-        assertThat(normalFrame.getScore()).isEqualTo(FIRST_BALL + "|/");
+        assertThat(normalFrame.getResult()).isEqualTo(FIRST_BALL + "|/");
     }
 
     @Test
@@ -39,7 +40,7 @@ public class NormalFrameTest {
         normalFrame.doBowling(FIRST_BALL);
         normalFrame.doBowling(SECOND_BALL);
 
-        assertThat(normalFrame.getScore()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL);
+        assertThat(normalFrame.getResult()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL);
     }
 
     @Test
@@ -47,7 +48,7 @@ public class NormalFrameTest {
         normalFrame.doBowling(FIRST_BALL);
         normalFrame.doBowling(GUTTER);
 
-        assertThat(normalFrame.getScore()).isEqualTo(FIRST_BALL + "|" + "-");
+        assertThat(normalFrame.getResult()).isEqualTo(FIRST_BALL + "|" + "-");
     }
 
 }

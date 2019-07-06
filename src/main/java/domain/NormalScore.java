@@ -2,8 +2,6 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class NormalScore {
     private static final int FRAME_SIZE = 2;
@@ -19,7 +17,7 @@ public class NormalScore {
     }
 
     public boolean bowl(int score) {
-        if(!nowBowlable()) {
+        if (!nowBowlable()) {
             return false;
         }
 
@@ -34,7 +32,7 @@ public class NormalScore {
     }
 
     public boolean nowBowlable() {
-        if (points.size() == FRAME_SIZE) {
+        if (getPointSize() == FRAME_SIZE) {
             return false;
         }
         if (isStrike()) {
@@ -44,10 +42,10 @@ public class NormalScore {
     }
 
     private boolean isOverScore(int currentScore) {
-        if (points.size() < BOWL_ONCE) {
+        if (getPointSize() < BOWL_ONCE) {
             return false;
         }
-        int lastScore = getPoint(points.size() - 1);
+        int lastScore = getPoint(getPointSize() - 1);
         return lastScore + currentScore > 10 ? true : false;
     }
 
@@ -58,7 +56,7 @@ public class NormalScore {
     }
 
     public boolean isStrike() {
-        if (points.size() < BOWL_ONCE) {
+        if (getPointSize() < BOWL_ONCE) {
             return false;
         }
         return getPoint(FIRST) == STRIKE ? true : false;
@@ -74,19 +72,26 @@ public class NormalScore {
         return false;
     }
 
+    public int getPointSize() {
+        return points.size();
+    }
+
     private int getPoint(int position) {
         Point point = points.get(position);
         return point.getPoint();
     }
 
-    public String getScore() {
+    public String getResult() {
         final String SCORE_CONNECTOR = "|";
 
-        String score = IntStream.range(0, points.size())
-                .boxed()
-                .map(count -> PointName.valueOfPointName(getPoint(count), isSpare(count)))
-                .map(result -> result + SCORE_CONNECTOR)
-                .collect(Collectors.joining());
-        return score.substring(0, score.length() - 1);
+        StringBuilder builder = new StringBuilder();
+        builder.append(PointName.valueOfPointName(getPoint(FIRST), isSpare(FIRST)));
+
+        if (getPointSize() == FRAME_SIZE) {
+            builder.append(SCORE_CONNECTOR);
+            builder.append(PointName.valueOfPointName(getPoint(SECOND), isSpare(SECOND)));
+        }
+
+        return String.format("%-4s", builder.toString());
     }
 }

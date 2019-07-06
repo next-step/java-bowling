@@ -20,7 +20,7 @@ public class FinalScore {
     }
 
     public boolean bowl(int score) {
-        if(!nowBowlable()) {
+        if (!nowBowlable()) {
             return false;
         }
 
@@ -35,7 +35,7 @@ public class FinalScore {
     }
 
     public boolean nowBowlable() {
-        if (points.size() == FRAME_SIZE) {
+        if (getPointSize() == FRAME_SIZE) {
             return false;
         }
         if (isAbleToBonus()) {
@@ -45,16 +45,16 @@ public class FinalScore {
     }
 
     private boolean isOverPoint(int currentScore) {
-        int lastPosition = points.size() - 1;
-        if (points.size() < BOWL_ONCE) {
+        int lastPosition = getPointSize() - 1;
+        if (getPointSize() < BOWL_ONCE) {
             return false;
         }
         return !isStrike(lastPosition) && !isSpare(lastPosition) && (getPoint(lastPosition) + currentScore) > STRIKE;
     }
 
     private boolean isAbleToBonus() {
-        int lastPosition = points.size() - 1;
-        if (points.size() < BOWL_TWICE) {
+        int lastPosition = getPointSize() - 1;
+        if (getPointSize() < BOWL_TWICE) {
             return false;
         }
         return !isStrike(lastPosition - 1) && !isStrike(lastPosition) && !isSpare(lastPosition);
@@ -80,19 +80,29 @@ public class FinalScore {
         return false;
     }
 
+    public int getPointSize() {
+        return points.size();
+    }
+
     private int getPoint(int position) {
         Point point = points.get(position);
         return point.getPoint();
     }
 
-    public String getScore() {
+    public String getResult() {
+        final String BLANK_FRAME = "     ";
         final String SCORE_CONNECTOR = "|";
 
-        String score = IntStream.range(0, points.size())
+        if (getPointSize() == 0) {
+            return BLANK_FRAME;
+        }
+
+        String score = IntStream.range(0, getPointSize())
                 .boxed()
                 .map(count -> PointName.valueOfPointName(getPoint(count), isSpare(count)))
-                .map(result -> result + SCORE_CONNECTOR)
+                .map(result -> SCORE_CONNECTOR + result)
                 .collect(Collectors.joining());
-        return score.substring(0, score.length() - 1);
+        score = score.substring(SECOND);
+        return String.format("%-5s", score);
     }
 }
