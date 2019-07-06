@@ -82,11 +82,11 @@ public class FinalScore {
     public String getScore() {
         final String SCORE_CONNECTOR = "|";
 
-        String score = IntStream.range(0, FINAL_FRAME_SIZE)
+        String score = IntStream.range(0, points.size())
                 .boxed()
                 .map(count -> PointName.valueOfPointName(getPoint(count), isSpare(count)))
                 .map(result -> result + SCORE_CONNECTOR)
                 .collect(Collectors.joining());
-        return score.substring(0, score.length() - 2);
+        return score.substring(0, score.length() - 1);
     }
 }
