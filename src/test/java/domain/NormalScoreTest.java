@@ -15,8 +15,9 @@ public class NormalScoreTest {
 
     @Test
     void 두_번_투구() {
-        assertThat(normalScore.bowl(5)).isEqualTo(5);
-        assertThat(normalScore.bowl(4)).isEqualTo(9);
+        normalScore.bowl(5);
+        normalScore.bowl(4);
+        assertThat(normalScore.sumScore()).isEqualTo(9);
     }
 
     @Test
@@ -36,9 +37,7 @@ public class NormalScoreTest {
     @Test
     void 초구_10점_두번째_또_던짐_예외발생() {
         normalScore.bowl(10);
-        assertThatIllegalStateException().isThrownBy(() -> {
-            normalScore.bowl(1);
-        });
+        assertThat(normalScore.bowl(1)).isFalse();
     }
 
     @Test
@@ -46,8 +45,6 @@ public class NormalScoreTest {
         normalScore.bowl(5);
         normalScore.bowl(2);
 
-        assertThatIllegalStateException().isThrownBy(() -> {
-            normalScore.bowl(1);
-        });
+        assertThat(normalScore.bowl(1)).isFalse();
     }
 }

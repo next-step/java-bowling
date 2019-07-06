@@ -7,11 +7,15 @@ public class FinalFrame {
         finalScore = new FinalScore();
     }
 
-    public int doBowling(int point) {
+    public boolean doBowling(int point) {
         return finalScore.bowl(point);
     }
 
     public String getScore() {
         return finalScore.getScore();
+    }
+
+    public int sumScore() {
+        return finalScore.sumScore();
     }
 }

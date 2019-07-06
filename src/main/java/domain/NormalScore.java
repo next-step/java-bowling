@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class NormalScore {
-    private static final int NORMAL_FRAME_SIZE = 2;
+    private static final int FRAME_SIZE = 2;
     private static final int FIRST = 0;
     private static final int SECOND = 1;
     private static final int BOWL_ONCE = 1;
@@ -18,23 +18,29 @@ public class NormalScore {
         this.points = new ArrayList<>();
     }
 
-    public int bowl(int score) {
-        if (points.size() == NORMAL_FRAME_SIZE) {
-            throw new IllegalStateException("사전 정의된 size수 만큼 투구 가능합니다.");
-        }
-
-        if (isStrike()) {
-            throw new IllegalStateException("1~9번 프레임은 초구가 스트라이크면 더이상 던질 수 없습니다.");
+    public boolean bowl(int score) {
+        if(!nowBowlable()) {
+            return false;
         }
 
         if (isOverScore(score)) {
-            throw new IllegalArgumentException("두 번의 투구 합은 10점을 초과할 수 없습니다.");
+            throw new IllegalArgumentException("한 프레임의 합은 10점을 초과할 수 없습니다.");
         }
 
         Point point = Point.bowl(score);
         points.add(point);
 
-        return sumScore();
+        return true;
+    }
+
+    public boolean nowBowlable() {
+        if (points.size() == FRAME_SIZE) {
+            return false;
+        }
+        if (isStrike()) {
+            return false;
+        }
+        return true;
     }
 
     private boolean isOverScore(int currentScore) {
@@ -45,7 +51,7 @@ public class NormalScore {
         return lastScore + currentScore > 10 ? true : false;
     }
 
-    private int sumScore() {
+    public int sumScore() {
         return points.stream()
                 .mapToInt(point -> point.getPoint())
                 .sum();

@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class FinalScore {
-    private static final int FINAL_FRAME_SIZE = 3;
+    private static final int FRAME_SIZE = 3;
     private static final int STRIKE = 10;
     private static final int FIRST = 0;
     private static final int SECOND = 1;
@@ -19,23 +19,29 @@ public class FinalScore {
         this.points = new ArrayList<>();
     }
 
-    public int bowl(int score) {
-        if (points.size() == FINAL_FRAME_SIZE) {
-            throw new IllegalStateException("사전 정의된 size수 만큼 투구 가능합니다.");
+    public boolean bowl(int score) {
+        if(!nowBowlable()) {
+            return false;
         }
 
         if (isOverPoint(score)) {
             throw new IllegalArgumentException("최근 두 번의 투구 합은 10점을 초과할 수 없습니다.");
         }
 
-        if (isAbleToBonus()) {
-            throw new IllegalStateException("보너스 투구는 두 번째 투구가 커버여야 가능합니다.");
-        }
-
         Point point = Point.bowl(score);
         points.add(point);
 
-        return sumScore();
+        return true;
+    }
+
+    public boolean nowBowlable() {
+        if (points.size() == FRAME_SIZE) {
+            return false;
+        }
+        if (isAbleToBonus()) {
+            return false;
+        }
+        return true;
     }
 
     private boolean isOverPoint(int currentScore) {
@@ -54,7 +60,7 @@ public class FinalScore {
         return !isStrike(lastPosition - 1) && !isStrike(lastPosition) && !isSpare(lastPosition);
     }
 
-    private int sumScore() {
+    public int sumScore() {
         return points.stream()
                 .mapToInt(point -> point.getPoint())
                 .sum();

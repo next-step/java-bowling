@@ -1,5 +1,6 @@
 package domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,9 +12,15 @@ public class NormalFrameTest {
     private final int SPARE = 7;
     private final int GUTTER = 0;
 
+    private NormalFrame normalFrame;
+
+    @BeforeEach
+    void setUp() {
+        normalFrame = new NormalFrame();
+    }
+
     @Test
     void 스트라이크_결과_출력() {
-        NormalFrame normalFrame = new NormalFrame();
         normalFrame.doBowling(STRIKE);
 
         assertThat(normalFrame.getScore()).isEqualTo("X");
@@ -21,7 +28,6 @@ public class NormalFrameTest {
 
     @Test
     void 스페어_결과_출력() {
-        NormalFrame normalFrame = new NormalFrame();
         normalFrame.doBowling(FIRST_BALL);
         normalFrame.doBowling(SPARE);
 
@@ -30,7 +36,6 @@ public class NormalFrameTest {
 
     @Test
     void 미스_결과_출력() {
-        NormalFrame normalFrame = new NormalFrame();
         normalFrame.doBowling(FIRST_BALL);
         normalFrame.doBowling(SECOND_BALL);
 
@@ -39,7 +44,6 @@ public class NormalFrameTest {
 
     @Test
     void 거터_결과_출력() {
-        NormalFrame normalFrame = new NormalFrame();
         normalFrame.doBowling(FIRST_BALL);
         normalFrame.doBowling(GUTTER);
 
