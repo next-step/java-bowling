@@ -55,6 +55,11 @@ public class NormalScore {
                 .sum();
     }
 
+    private int getPoint(int position) {
+        Point point = points.get(position);
+        return point.getPoint();
+    }
+
     public boolean isStrike() {
         if (getPointSize() < BOWL_ONCE) {
             return false;
@@ -74,11 +79,6 @@ public class NormalScore {
 
     public int getPointSize() {
         return points.size();
-    }
-
-    private int getPoint(int position) {
-        Point point = points.get(position);
-        return point.getPoint();
     }
 
     public String getResult() {

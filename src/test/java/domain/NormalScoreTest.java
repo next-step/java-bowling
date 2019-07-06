@@ -36,16 +36,56 @@ public class NormalScoreTest {
     }
 
     @Test
-    void 초구_10점_두번째_또_던짐_예외발생() {
+    void 초구_10점_두번째_또_던짐_False() {
         normalScore.bowl(10);
         assertThat(normalScore.bowl(1)).isFalse();
     }
 
     @Test
-    void 세_번_굴리면_예외발생() {
+    void 세_번_굴리면_False() {
         normalScore.bowl(5);
         normalScore.bowl(2);
 
         assertThat(normalScore.bowl(1)).isFalse();
+    }
+
+    @Test
+    void 한번_미스_더_굴릴수_있는_상태() {
+        normalScore.bowl(3);
+        assertThat(normalScore.nowBowlable()).isTrue();
+    }
+
+    @Test
+    void 스페어_더_굴릴수_없는_상태() {
+        normalScore.bowl(3);
+        normalScore.bowl(7);
+        assertThat(normalScore.nowBowlable()).isFalse();
+    }
+
+    @Test
+    void 스트라이크_더_굴릴수_없는_상태() {
+        normalScore.bowl(10);
+        assertThat(normalScore.nowBowlable()).isFalse();
+    }
+
+    @Test
+    void 스트라이크_여부() {
+        normalScore.bowl(10);
+        assertThat(normalScore.isStrike()).isTrue();
+    }
+
+    @Test
+    void 스페어_여부() {
+        final int SECOND_BOWL = 1;
+        normalScore.bowl(3);
+        normalScore.bowl(7);
+        assertThat(normalScore.isSpare(SECOND_BOWL)).isTrue();
+    }
+
+    @Test
+    void 결과_출력() {
+        normalScore.bowl(3);
+        normalScore.bowl(7);
+        assertThat(normalScore.getResult()).isEqualTo("3|/ ");
     }
 }
