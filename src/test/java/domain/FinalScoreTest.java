@@ -3,9 +3,17 @@ package domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class FinalScoreTest {
+    private final int FIRST_BALL = 3;
+    private final int SECOND_BALL = 4;
+    private final int STRIKE = 10;
+    private final int SPARE = 7;
+    private final int GUTTER = 0;
+    private final String BLANK = "  ";
+
     private FinalScore finalScore;
 
     @BeforeEach
@@ -182,6 +190,45 @@ public class FinalScoreTest {
         finalScore.bowl(10);
         finalScore.bowl(10);
         assertThat(finalScore.bowl(10)).isFalse();
+    }
 
+    @Test
+    void 스트라이크_결과_출력() {
+        finalScore.bowl(STRIKE);
+
+        assertThat(finalScore.getResult()).isEqualTo("X" + BLANK + BLANK);
+    }
+
+    @Test
+    void 스트라이크_연속세번_결과_출력() {
+        finalScore.bowl(STRIKE);
+        finalScore.bowl(STRIKE);
+        finalScore.bowl(STRIKE);
+
+        assertThat(finalScore.getResult()).isEqualTo("X|X|X");
+    }
+
+    @Test
+    void 스페어_결과_출력() {
+        finalScore.bowl(FIRST_BALL);
+        finalScore.bowl(SPARE);
+
+        assertThat(finalScore.getResult()).isEqualTo(FIRST_BALL + "|/" + BLANK);
+    }
+
+    @Test
+    void 미스_결과_출력() {
+        finalScore.bowl(FIRST_BALL);
+        finalScore.bowl(SECOND_BALL);
+
+        assertThat(finalScore.getResult()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL + BLANK);
+    }
+
+    @Test
+    void 거터_결과_출력() {
+        finalScore.bowl(FIRST_BALL);
+        finalScore.bowl(GUTTER);
+
+        assertThat(finalScore.getResult()).isEqualTo(FIRST_BALL + "|" + "-" + BLANK);
     }
 }

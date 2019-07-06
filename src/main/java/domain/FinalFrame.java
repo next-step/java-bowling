@@ -11,10 +11,6 @@ public class FinalFrame {
         return finalScore.bowl(point);
     }
 
-    public String getResult() {
-        return finalScore.getResult();
-    }
-
     public int sumScore() {
         return finalScore.sumScore();
     }
@@ -23,7 +19,7 @@ public class FinalFrame {
         return !finalScore.nowBowlable();
     }
 
-    public int getPointSize() {
-        return finalScore.getPointSize();
+    public String getResult() {
+        return finalScore.getResult();
     }
 }

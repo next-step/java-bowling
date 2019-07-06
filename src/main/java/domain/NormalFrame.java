@@ -25,12 +25,12 @@ public class NormalFrame {
         return new NormalFrame(frameNumber + 1);
     }
 
-    public String getResult() {
-        return normalScore.getResult();
-    }
-
     public int sumScore() {
         return normalScore.sumScore();
+    }
+
+    public String getResult() {
+        return normalScore.getResult();
     }
 
     public int getNextFrameNumber() {

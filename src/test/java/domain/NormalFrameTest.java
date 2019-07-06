@@ -6,13 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
-    private final int FIRST_BALL = 3;
-    private final int SECOND_BALL = 4;
-    private final int STRIKE = 10;
-    private final int SPARE = 7;
-    private final int GUTTER = 0;
-    private final String BLANK = "  ";
-
     private NormalFrame normalFrame;
 
     @BeforeEach
@@ -21,34 +14,13 @@ public class NormalFrameTest {
     }
 
     @Test
-    void 스트라이크_결과_출력() {
-        normalFrame.doBowling(STRIKE);
-
-        assertThat(normalFrame.getResult()).isEqualTo("X" + BLANK);
+    void 다음프레임번호_안친상태() {
+        assertThat(normalFrame.getNextFrameNumber()).isEqualTo(0);
     }
-
     @Test
-    void 스페어_결과_출력() {
-        normalFrame.doBowling(FIRST_BALL);
-        normalFrame.doBowling(SPARE);
-
-        assertThat(normalFrame.getResult()).isEqualTo(FIRST_BALL + "|/");
+    void 다음프레임번호_친상태() {
+        normalFrame.doBowling(5);
+        normalFrame.doBowling(5);
+        assertThat(normalFrame.getNextFrameNumber()).isEqualTo(1);
     }
-
-    @Test
-    void 미스_결과_출력() {
-        normalFrame.doBowling(FIRST_BALL);
-        normalFrame.doBowling(SECOND_BALL);
-
-        assertThat(normalFrame.getResult()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL);
-    }
-
-    @Test
-    void 거터_결과_출력() {
-        normalFrame.doBowling(FIRST_BALL);
-        normalFrame.doBowling(GUTTER);
-
-        assertThat(normalFrame.getResult()).isEqualTo(FIRST_BALL + "|" + "-");
-    }
-
 }

@@ -7,6 +7,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class NormalScoreTest {
+    private final int FIRST_BALL = 3;
+    private final int SECOND_BALL = 4;
+    private final int STRIKE = 10;
+    private final int SPARE = 7;
+    private final int GUTTER = 0;
+
     private NormalScore normalScore;
 
     @BeforeEach
@@ -16,9 +22,9 @@ public class NormalScoreTest {
 
     @Test
     void 두_번_투구() {
-        normalScore.bowl(5);
-        normalScore.bowl(4);
-        assertThat(normalScore.sumScore()).isEqualTo(9);
+        normalScore.bowl(FIRST_BALL);
+        normalScore.bowl(SECOND_BALL);
+        assertThat(normalScore.sumScore()).isEqualTo(7);
     }
 
     @Test
@@ -37,55 +43,79 @@ public class NormalScoreTest {
 
     @Test
     void 초구_10점_두번째_또_던짐_False() {
-        normalScore.bowl(10);
+        normalScore.bowl(STRIKE);
         assertThat(normalScore.bowl(1)).isFalse();
     }
 
     @Test
     void 세_번_굴리면_False() {
-        normalScore.bowl(5);
-        normalScore.bowl(2);
+        normalScore.bowl(FIRST_BALL);
+        normalScore.bowl(SECOND_BALL);
 
         assertThat(normalScore.bowl(1)).isFalse();
     }
 
     @Test
     void 한번_미스_더_굴릴수_있는_상태() {
-        normalScore.bowl(3);
+        normalScore.bowl(FIRST_BALL);
         assertThat(normalScore.nowBowlable()).isTrue();
     }
 
     @Test
     void 스페어_더_굴릴수_없는_상태() {
-        normalScore.bowl(3);
-        normalScore.bowl(7);
+        normalScore.bowl(FIRST_BALL);
+        normalScore.bowl(SPARE);
         assertThat(normalScore.nowBowlable()).isFalse();
     }
 
     @Test
     void 스트라이크_더_굴릴수_없는_상태() {
-        normalScore.bowl(10);
+        normalScore.bowl(STRIKE);
         assertThat(normalScore.nowBowlable()).isFalse();
     }
 
     @Test
     void 스트라이크_여부() {
-        normalScore.bowl(10);
+        normalScore.bowl(STRIKE);
         assertThat(normalScore.isStrike()).isTrue();
     }
 
     @Test
     void 스페어_여부() {
         final int SECOND_BOWL = 1;
-        normalScore.bowl(3);
-        normalScore.bowl(7);
+        normalScore.bowl(FIRST_BALL);
+        normalScore.bowl(SPARE);
         assertThat(normalScore.isSpare(SECOND_BOWL)).isTrue();
     }
 
     @Test
-    void 결과_출력() {
-        normalScore.bowl(3);
-        normalScore.bowl(7);
-        assertThat(normalScore.getResult()).isEqualTo("3|/ ");
+    void 스트라이크_결과_출력() {
+        normalScore.bowl(STRIKE);
+
+        assertThat(normalScore.getResult()).isEqualTo("X   ");
+    }
+
+    @Test
+    void 스페어_결과_출력() {
+        normalScore.bowl(FIRST_BALL);
+        normalScore.bowl(SPARE);
+
+        assertThat(normalScore.getResult()).isEqualTo(FIRST_BALL + "|/ ");
+    }
+
+    @Test
+    void 미스_결과_출력() {
+        normalScore.bowl(FIRST_BALL);
+        normalScore.bowl(SECOND_BALL);
+
+        assertThat(normalScore.getResult()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL + " ");
+    }
+
+    @Test
+    void 거터_결과_출력() {
+        normalScore.bowl(FIRST_BALL);
+        normalScore.bowl(GUTTER);
+
+        assertThat(normalScore.getResult()).isEqualTo(FIRST_BALL + "|" + "- ");
     }
 }

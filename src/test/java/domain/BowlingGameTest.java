@@ -61,14 +61,21 @@ public class BowlingGameTest {
     void 볼링게임_열프레임_진행() {
         IntStream.range(0, FINAL_FRAME)
                 .forEach(count -> bowlingGame.playBowling(scores[count]));
-        System.out.println(bowlingGame.getResult());
         assertThat(bowlingGame.sumScore()).isEqualTo(sumExpectScore(FINAL_FRAME));
-        assertThat(bowlingGame.getNextFrameNumber()).isEqualTo(11);
+        assertThat(bowlingGame.getNextFrameNumber()).isEqualTo(10);
     }
 
     int sumExpectScore(int count) {
         return Arrays.stream(scores)
                 .limit(count)
                 .sum();
+    }
+
+    @Test
+    void 다음_프레임_번호() {
+        IntStream.range(0, THIRD_FRAME)
+                .forEach(count -> bowlingGame.playBowling(scores[count]));
+        assertThat(bowlingGame.getNextFrameNumber()).isEqualTo(4);
+
     }
 }
