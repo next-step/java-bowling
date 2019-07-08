@@ -1,16 +1,17 @@
 package domain;
 
+import View.BowlingScore;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class FinalScore {
+import static domain.NormalScore.*;
+
+public class FinalScore implements BowlingScore {
     private static final int FRAME_SIZE = 3;
-    private static final int STRIKE = 10;
-    private static final int FIRST = 0;
-    private static final int SECOND = 1;
-    private static final int BOWL_ONCE = 1;
     private static final int BOWL_TWICE = 2;
 
     private final List<Point> points;
@@ -19,6 +20,7 @@ public class FinalScore {
         this.points = new ArrayList<>();
     }
 
+    @Override
     public boolean bowl(int score) {
         if (!nowBowlable()) {
             return false;
@@ -34,6 +36,7 @@ public class FinalScore {
         return true;
     }
 
+    @Override
     public boolean nowBowlable() {
         if (getPointSize() == FRAME_SIZE) {
             return false;
@@ -60,6 +63,7 @@ public class FinalScore {
         return !isStrike(lastPosition - 1) && !isStrike(lastPosition) && !isSpare(lastPosition);
     }
 
+    @Override
     public int sumScore() {
         return points.stream()
                 .mapToInt(point -> point.getPoint())
@@ -80,15 +84,18 @@ public class FinalScore {
         return false;
     }
 
+    @Override
     public int getPointSize() {
         return points.size();
     }
 
-    private int getPoint(int position) {
-        Point point = points.get(position);
+    protected int getPoint(int position) {
+        Optional<Point> maybePoint = Optional.ofNullable(points.get(position));
+        Point point = maybePoint.orElseThrow(IllegalStateException::new);
         return point.getPoint();
     }
 
+    @Override
     public String getResult() {
         final String BLANK_FRAME = "     ";
         final String SCORE_CONNECTOR = "|";
@@ -97,8 +104,7 @@ public class FinalScore {
             return BLANK_FRAME;
         }
 
-        String score = IntStream.range(0, getPointSize())
-                .boxed()
+        String score = IntStream.range(0, getPointSize()).boxed()
                 .map(count -> PointName.valueOfPointName(getPoint(count), isSpare(count)))
                 .map(result -> SCORE_CONNECTOR + result)
                 .collect(Collectors.joining());

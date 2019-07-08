@@ -1,5 +1,7 @@
 package domain;
 
+import View.PointResultFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +10,6 @@ import java.util.stream.IntStream;
 public class BowlingGame {
     private static final int ZERO = 0;
     private static final int ONE = 1;
-    private static final int FINAL_FRAME_COUNT = 1;
     public static final int NORMAL_FRAME_COUNT = 9;
     public static final int TOTAL_FRAME_COUNT = 10;
     public static final int MAX_BOWL_COUNT = 2 * 9 + 3;
@@ -27,7 +28,7 @@ public class BowlingGame {
         }
     }
 
-    public int playBowling(int score) {
+    public boolean playBowling(int score) {
         return normalFrameIsBowlable() ? playNormalFrame(score) : playFinalFrame(score);
     }
 
@@ -42,7 +43,7 @@ public class BowlingGame {
         return false;
     }
 
-    private int playNormalFrame(int score) {
+    private boolean playNormalFrame(int score) {
         initNormalFrame();
 
         NormalFrame frame = normalFrames.get(lastPosition());
@@ -52,13 +53,11 @@ public class BowlingGame {
             frame.doBowling(score);
             normalFrames.add(frame);
         }
-
-        return sumScore();
+        return true;
     }
 
-    private int playFinalFrame(int score) {
-        finalFrame.doBowling(score);
-        return finalFrame.sumScore();
+    private boolean playFinalFrame(int score) {
+        return finalFrame.doBowling(score);
     }
 
     public boolean isGameOver() {
@@ -74,20 +73,12 @@ public class BowlingGame {
         return frame.getNextFrameNumber();
     }
 
-    private int lastPosition() {
+    public int lastPosition() {
         return normalFrames.size() - ONE;
     }
 
-    public int sumScore() {
-        int normalScore = normalFrames.stream()
-                .mapToInt(frame -> frame.sumScore())
-                .sum();
-        int finalScore = finalFrame.sumScore();
-        return normalScore + finalScore;
-    }
-
     public String getResult() {
-        String result = IntStream.range(0, NORMAL_FRAME_COUNT)
+        String result = IntStream.range(ZERO, NORMAL_FRAME_COUNT)
                 .mapToObj(count -> getFrameResult(count))
                 .collect(Collectors.joining());
         result += finalFrame.getResult() + "|";
@@ -99,10 +90,23 @@ public class BowlingGame {
         final String BLANK_FRAME = "    ";
         final String SCORE_CONNECTOR = " | ";
 
-        if(count > lastPosition()) {
+        if (count > lastPosition()) {
             return BLANK_FRAME + SCORE_CONNECTOR;
         }
         NormalFrame frame = normalFrames.get(count);
         return frame.getResult() + SCORE_CONNECTOR;
+    }
+
+    public String getFormattedPointResult() {
+        PointResultFormatter pointResultFormatter = new PointResultFormatter();
+        return pointResultFormatter.format(this);
+    }
+
+    public FinalFrame getFinalFrame() {
+        return finalFrame;
+    }
+
+    public NormalFrame getNormalFrame(int frameNumber) {
+        return normalFrames.get(frameNumber);
     }
 }

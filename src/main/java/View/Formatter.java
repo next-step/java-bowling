@@ -1,4 +1,6 @@
 package View;
 
-public interface Formatter {
+@FunctionalInterface
+public interface Formatter<T> {
+    String format(T target);
 }

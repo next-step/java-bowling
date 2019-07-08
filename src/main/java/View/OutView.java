@@ -4,6 +4,8 @@ import domain.BowlingGame;
 
 import java.util.stream.IntStream;
 
+import static domain.BowlingGame.TOTAL_FRAME_COUNT;
+
 public class OutView {
     private static String ASK_PLAYER_NAME = "플레이어 이름은(3 english letters)? : ";
     private static String ASK_FRAME_SCORE = "%d프레임 투구 : ";
@@ -32,7 +34,7 @@ public class OutView {
 
     public static void showFrameHeader() {
         StringBuilder builder = new StringBuilder("| " + NAME + LINE_CONNECTOR);
-        IntStream.rangeClosed(1, BowlingGame.TOTAL_FRAME_COUNT)
+        IntStream.rangeClosed(1, TOTAL_FRAME_COUNT)
                 .peek(number -> builder.append(String.format(" %02d ", number)))
                 .forEach(n -> builder.append(LINE_CONNECTOR));
         println(builder.toString());
@@ -42,6 +44,5 @@ public class OutView {
         StringBuilder builder = new StringBuilder("| " + String.format("%4s", playerName) + LINE_CONNECTOR);
         builder.append(result);
         println(builder.toString());
-        printBlankLine();
     }
 }

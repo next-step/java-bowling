@@ -17,7 +17,7 @@ public class NormalScoreTest {
 
     @BeforeEach
     void setUp() {
-        normalScore = new NormalScore();
+        normalScore = new NormalScore(0);
     }
 
     @Test
@@ -82,10 +82,9 @@ public class NormalScoreTest {
 
     @Test
     void 스페어_여부() {
-        final int SECOND_BOWL = 1;
         normalScore.bowl(FIRST_BALL);
         normalScore.bowl(SPARE);
-        assertThat(normalScore.isSpare(SECOND_BOWL)).isTrue();
+        assertThat(normalScore.isSpare()).isTrue();
     }
 
     @Test
