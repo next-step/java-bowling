@@ -5,9 +5,13 @@ public interface BowlingScore {
 
     boolean nowBowlable();
 
+    boolean isOverPoint(int currentScore);
+
     int sumScore();
 
-    int getPointExistCount();
-
     String framePoint();
+
+    int getPointScore(int position);
+
+    int getPointExistCount();
 }

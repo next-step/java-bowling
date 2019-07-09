@@ -24,11 +24,7 @@ public class NormalFrame implements BowlingFrame {
 
     @Override
     public boolean doBowling(int point) {
-        if (nowBowlable()) {
-            normalScore.bowl(point);
-            return true;
-        }
-        return false;
+        return normalScore.bowl(point);
     }
 
     @Override

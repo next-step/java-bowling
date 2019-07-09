@@ -28,8 +28,8 @@ public class BowlingGame {
         }
     }
 
-    public boolean playBowling(int score) {
-        return normalFrameIsBowlable() ? playNormalFrame(score) : playFinalFrame(score);
+    public boolean playBowling(int point) {
+        return normalFrameIsBowlable() ? playNormalFrame(point) : playFinalFrame(point);
     }
 
     private boolean normalFrameIsBowlable() {
@@ -43,21 +43,21 @@ public class BowlingGame {
         return false;
     }
 
-    private boolean playNormalFrame(int score) {
+    private boolean playNormalFrame(int point) {
         initNormalFrame();
 
         NormalFrame frame = normalFrames.get(lastPosition());
 
-        if (!frame.doBowling(score)) {
+        if (!frame.doBowling(point)) {
             frame = frame.nextFrame();
-            frame.doBowling(score);
+            frame.doBowling(point);
             normalFrames.add(frame);
         }
         return true;
     }
 
-    private boolean playFinalFrame(int score) {
-        return finalFrame.doBowling(score);
+    private boolean playFinalFrame(int point) {
+        return finalFrame.doBowling(point);
     }
 
     public boolean isGameOver() {

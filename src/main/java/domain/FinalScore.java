@@ -22,17 +22,17 @@ public class FinalScore implements BowlingScore {
     }
 
     @Override
-    public boolean bowl(int score) {
+    public boolean bowl(int point) {
         if (!nowBowlable()) {
-            return false;
+            return FALSE;
         }
 
-        if (isOverPoint(score)) {
+        if (isOverPoint(point)) {
             throw new IllegalArgumentException("최근 두 번의 투구 합은 10점을 초과할 수 없습니다.");
         }
 
-        Point point = Point.bowl(score);
-        points.add(point);
+        Point newPoint = Point.bowl(point);
+        points.add(newPoint);
 
         return TRUE;
     }
@@ -42,7 +42,8 @@ public class FinalScore implements BowlingScore {
         return (isAbleToBonus() || getPointExistCount() == FRAME_SIZE) ? FALSE : TRUE;
     }
 
-    private boolean isOverPoint(int currentScore) {
+    @Override
+    public boolean isOverPoint(int currentScore) {
         int lastPosition = getPointExistCount() - 1;
         if (getPointExistCount() < BOWL_ONCE) {
             return FALSE;
@@ -52,33 +53,11 @@ public class FinalScore implements BowlingScore {
                 (getPointScore(lastPosition) + currentScore) > STRIKE;
     }
 
-    private boolean isAbleToBonus() {
-        int lastPosition = getPointExistCount() - 1;
-        if (getPointExistCount() < BOWL_TWICE) {
-            return FALSE;
-        }
-        return !isStrike(lastPosition - 1) && !isStrike(lastPosition) && !isSpare(lastPosition);
-    }
-
     @Override
     public int sumScore() {
         return points.stream()
                 .mapToInt(point -> point.getPointScore())
                 .sum();
-    }
-
-    private boolean isStrike(int position) {
-        return getPointScore(position) == STRIKE ? TRUE : FALSE;
-    }
-
-    private boolean isSpare(int position) {
-        if (position < SECOND) {
-            return FALSE;
-        }
-        if (!isStrike(position) && (getPointScore(position - 1) + getPointScore(position)) == STRIKE) {
-            return TRUE;
-        }
-        return FALSE;
     }
 
     @Override
@@ -98,7 +77,8 @@ public class FinalScore implements BowlingScore {
         return String.format("%-5s", score);
     }
 
-    protected int getPointScore(int position) {
+    @Override
+    public int getPointScore(int position) {
         Optional<Point> maybePoint = Optional.ofNullable(points.get(position));
         Point point = maybePoint.orElseThrow(IllegalStateException::new);
         return point.getPointScore();
@@ -107,5 +87,27 @@ public class FinalScore implements BowlingScore {
     @Override
     public int getPointExistCount() {
         return points.size();
+    }
+
+    private boolean isStrike(int position) {
+        return getPointScore(position) == STRIKE ? TRUE : FALSE;
+    }
+
+    private boolean isSpare(int position) {
+        if (position < SECOND) {
+            return FALSE;
+        }
+        if (!isStrike(position) && (getPointScore(position - 1) + getPointScore(position)) == STRIKE) {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    private boolean isAbleToBonus() {
+        int lastPosition = getPointExistCount() - 1;
+        if (getPointExistCount() < BOWL_TWICE) {
+            return FALSE;
+        }
+        return !isStrike(lastPosition - 1) && !isStrike(lastPosition) && !isSpare(lastPosition);
     }
 }

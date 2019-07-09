@@ -28,17 +28,17 @@ public class NormalScore implements BowlingScore {
     }
 
     @Override
-    public boolean bowl(int score) {
+    public boolean bowl(int point) {
         if (!nowBowlable()) {
             return FALSE;
         }
 
-        if (isOverScore(score)) {
+        if (isOverPoint(point)) {
             throw new IllegalArgumentException("한 프레임의 합은 10점을 초과할 수 없습니다.");
         }
 
-        Point point = Point.bowl(score);
-        points.add(point);
+        Point newPoint = Point.bowl(point);
+        points.add(newPoint);
 
         return TRUE;
     }
@@ -48,7 +48,8 @@ public class NormalScore implements BowlingScore {
         return isStrike() || getPointExistCount() == BOWL_TWICE ? FALSE : TRUE;
     }
 
-    private boolean isOverScore(int currentScore) {
+    @Override
+    public boolean isOverPoint(int currentScore) {
         if (getPointExistCount() < BOWL_ONCE) {
             return FALSE;
         }
@@ -61,6 +62,37 @@ public class NormalScore implements BowlingScore {
         return points.stream()
                 .mapToInt(point -> point.getPointScore())
                 .sum();
+    }
+
+    @Override
+    public String framePoint() {
+        final String SCORE_CONNECTOR = "|";
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(PointName.valueOfPointName(getPointScore(FIRST), FIRST_IS_NOT_SPARE));
+
+        if (getPointExistCount() == FRAME_SIZE) {
+            builder.append(SCORE_CONNECTOR);
+            builder.append(PointName.valueOfPointName(getPointScore(SECOND), isSpare()));
+        }
+
+        return String.format("%-4s", builder.toString());
+    }
+
+    @Override
+    public int getPointScore(int position) {
+        Optional<Point> maybePoint = Optional.ofNullable(points.get(position));
+        Point point = maybePoint.orElseThrow(IllegalStateException::new);
+        return point.getPointScore();
+    }
+
+    @Override
+    public int getPointExistCount() {
+        return points.size();
+    }
+
+    protected int getFrameNumber() {
+        return scoreNumber;
     }
 
     protected boolean isStrike() {
@@ -82,35 +114,5 @@ public class NormalScore implements BowlingScore {
 
     protected boolean isNullablePoint(int pointPosition) {
         return getPointExistCount() <= pointPosition ? Boolean.TRUE : FALSE;
-    }
-
-    @Override
-    public String framePoint() {
-        final String SCORE_CONNECTOR = "|";
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(PointName.valueOfPointName(getPointScore(FIRST), FIRST_IS_NOT_SPARE));
-
-        if (getPointExistCount() == FRAME_SIZE) {
-            builder.append(SCORE_CONNECTOR);
-            builder.append(PointName.valueOfPointName(getPointScore(SECOND), isSpare()));
-        }
-
-        return String.format("%-4s", builder.toString());
-    }
-
-    protected int getPointScore(int position) {
-        Optional<Point> maybePoint = Optional.ofNullable(points.get(position));
-        Point point = maybePoint.orElseThrow(IllegalStateException::new);
-        return point.getPointScore();
-    }
-
-    protected int getFrameNumber() {
-        return scoreNumber;
-    }
-
-    @Override
-    public int getPointExistCount() {
-        return points.size();
     }
 }

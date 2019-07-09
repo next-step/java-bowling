@@ -44,7 +44,7 @@ public class PointResultFormatter implements Formatter<BowlingGame> {
     }
 
     private String calculateFramePoint(int score) {
-        String scoreResult = score == -1 ? "" : Integer.toString(score + previousPoint);
+        String scoreResult = (score == -1 ? "" : Integer.toString(score + previousPoint));
         previousPoint += (score == -1 ? 0 : score);
         return String.format("%-4s", scoreResult);
     }
