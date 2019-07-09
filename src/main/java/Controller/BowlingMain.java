@@ -32,8 +32,8 @@ public class BowlingMain {
                 .map(ballCount -> requestFrameScore(bowlingGame.getNextFrameNumber()))
                 .peek(bowlingGame::playBowling)
                 .peek(score -> OutView.showFrameHeader())
-                .peek(score -> OutView.showFrameResult(player.getName(), bowlingGame.getResult()))
-                .peek(frame -> OutView.showFrameResult("", bowlingGame.getFormattedPointResult()))
+                .peek(score -> OutView.showFrameResult(player.getName(), bowlingGame.getFormattedPointResult()))
+                .peek(frame -> OutView.showFrameResult("", bowlingGame.getFormattedScoreResult()))
                 .forEach(frame -> OutView.printBlankLine());
     }
 }

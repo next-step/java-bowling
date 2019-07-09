@@ -54,7 +54,7 @@ public class NormalFrame implements BowlingFrame {
 
     private int sumIfStrike(FinalFrame finalFrame) {
         if (getNextFrameNumber() == TOTAL_FRAME_COUNT && (finalFrame.getPointSize() >= STRIKE_CHECKING_POINTS)) {
-            return finalFrame.isStart() ? finalFrame.framePoint(STRIKE_CHECKING_POINTS) : NO_MORE_NEXT;
+            return finalFrame.isStart() ? finalFrame.frameScore(STRIKE_CHECKING_POINTS) : NO_MORE_NEXT;
         }
 
         Optional<NormalFrame> maybeNextNormalFrame = Optional.ofNullable(next);
@@ -70,7 +70,7 @@ public class NormalFrame implements BowlingFrame {
         Optional<NormalFrame> maybeThirdNormalFrame = Optional.ofNullable(maybeNextNormalFrame.get().next);
         if (nextNormalScore.isStrike() && (maybeThirdNormalFrame.isPresent() || finalFrame.isStart())) {
             int secondScore = nextNormalScore.sumScore();
-            int thirdScore = maybeThirdNormalFrame.isPresent() ? maybeThirdNormalFrame.get().sumScore() : finalFrame.framePoint(ONE);
+            int thirdScore = maybeThirdNormalFrame.isPresent() ? maybeThirdNormalFrame.get().sumScore() : finalFrame.frameScore(ONE);
             return secondScore + thirdScore;
         }
 
@@ -79,7 +79,7 @@ public class NormalFrame implements BowlingFrame {
 
     private int sumIfSpare(FinalFrame finalFrame) {
         if (getNextFrameNumber() == TOTAL_FRAME_COUNT) {
-            return finalFrame.isStart() ? finalFrame.framePoint(SPARE_CHECKING_POINTS) : NO_MORE_NEXT;
+            return finalFrame.isStart() ? finalFrame.frameScore(SPARE_CHECKING_POINTS) : NO_MORE_NEXT;
         }
 
         Optional<NormalFrame> maybeNextNormalFrame = Optional.ofNullable(next);

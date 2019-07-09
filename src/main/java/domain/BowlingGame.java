@@ -1,11 +1,10 @@
 package domain;
 
 import View.PointResultFormatter;
+import View.ScoreResultFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class BowlingGame {
     private static final int ZERO = 0;
@@ -77,29 +76,14 @@ public class BowlingGame {
         return normalFrames.size() - ONE;
     }
 
-    public String getResult() {
-        String result = IntStream.range(ZERO, NORMAL_FRAME_COUNT)
-                .mapToObj(count -> getFrameResult(count))
-                .collect(Collectors.joining());
-        result += finalFrame.framePoint() + "|";
-
-        return result;
-    }
-
-    private String getFrameResult(int count) {
-        final String BLANK_FRAME = "    ";
-        final String SCORE_CONNECTOR = " | ";
-
-        if (count > lastPosition()) {
-            return BLANK_FRAME + SCORE_CONNECTOR;
-        }
-        NormalFrame frame = normalFrames.get(count);
-        return frame.framePoint() + SCORE_CONNECTOR;
-    }
-
     public String getFormattedPointResult() {
         PointResultFormatter pointResultFormatter = new PointResultFormatter();
         return pointResultFormatter.format(this);
+    }
+
+    public String getFormattedScoreResult() {
+        ScoreResultFormatter scoreResultFormatter = new ScoreResultFormatter();
+        return scoreResultFormatter.format(this);
     }
 
     public FinalFrame getFinalFrame() {

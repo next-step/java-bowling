@@ -42,7 +42,7 @@ public class FinalFrame implements BowlingFrame {
         return Boolean.TRUE;
     }
 
-    public int framePoint(int checkingCount) {
+    public int frameScore(int checkingCount) {
         int frameScore = IntStream.range(0, checkingCount)
                 .boxed()
                 .mapToInt(n -> finalScore.getPointScore(n))

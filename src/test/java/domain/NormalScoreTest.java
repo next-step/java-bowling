@@ -1,8 +1,10 @@
 package domain;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static domain.NormalScore.BOWL_TWICE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -116,5 +118,28 @@ public class NormalScoreTest {
         normalScore.bowl(GUTTER);
 
         assertThat(normalScore.framePoint()).isEqualTo(FIRST_BALL + "|" + "- ");
+    }
+
+    @DisplayName("3점 이후 10점 입력하면 isOverPoint==True")
+    @Test
+    void isOverPointTest() {
+        normalScore.bowl(FIRST_BALL);
+        assertThat(normalScore.isOverPoint(STRIKE)).isTrue();
+    }
+
+    @DisplayName("0 번째 포인트 출력")
+    @Test
+    void getPointScoreTest() {
+        normalScore.bowl(FIRST_BALL);
+        normalScore.bowl(SECOND_BALL);
+        assertThat(normalScore.getPointScore(0)).isEqualTo(FIRST_BALL);
+    }
+
+    @DisplayName("볼링 공 던진 횟수 출력")
+    @Test
+    void getPointExistCountTest() {
+        normalScore.bowl(FIRST_BALL);
+        normalScore.bowl(SECOND_BALL);
+        assertThat(normalScore.getPointExistCount()).isEqualTo(BOWL_TWICE);
     }
 }

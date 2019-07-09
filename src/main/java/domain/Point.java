@@ -1,7 +1,7 @@
 package domain;
 
-import static domain.NormalScore.ZERO;
 import static domain.NormalScore.STRIKE;
+import static domain.NormalScore.ZERO;
 
 public class Point {
     private int point;

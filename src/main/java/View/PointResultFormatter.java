@@ -1,51 +1,35 @@
 package View;
 
 import domain.BowlingGame;
-import domain.FinalFrame;
 import domain.NormalFrame;
 
 import java.util.stream.IntStream;
 
 import static domain.BowlingGame.NORMAL_FRAME_COUNT;
-import static domain.BowlingGame.TOTAL_FRAME_COUNT;
+import static domain.NormalScore.ZERO;
 
 public class PointResultFormatter implements Formatter<BowlingGame> {
-    private int previousPoint;
 
     @Override
     public String format(BowlingGame bowlingGame) {
-        previousPoint = 0;
         StringBuilder builder = new StringBuilder();
-
-        IntStream.range(0, TOTAL_FRAME_COUNT)
+        IntStream.range(ZERO, NORMAL_FRAME_COUNT)
                 .boxed()
                 .map(count -> getNormalFramePoint(bowlingGame, count))
                 .forEach(builder::append);
+        builder.append(bowlingGame.getFinalFrame().framePoint() + "|");
+
         return builder.toString();
     }
 
-    public String getNormalFramePoint(BowlingGame bowlingGame, int frameNumber) {
+    private String getNormalFramePoint(BowlingGame bowlingGame, int count) {
         final String BLANK_FRAME = "    ";
         final String SCORE_CONNECTOR = " | ";
 
-        FinalFrame finalFrame = bowlingGame.getFinalFrame();
-        if (frameNumber > bowlingGame.lastPosition() + (finalFrame.isStart() ? 1 : 0)) {
+        if (count > bowlingGame.lastPosition()) {
             return BLANK_FRAME + SCORE_CONNECTOR;
         }
-
-        if (frameNumber < NORMAL_FRAME_COUNT) {
-            NormalFrame frame = bowlingGame.getNormalFrame(frameNumber);
-            int score = frame.frameScore(bowlingGame.getFinalFrame());
-            return calculateFramePoint(score) + SCORE_CONNECTOR;
-        }
-
-        int score = finalFrame.sumScore();
-        return calculateFramePoint(score) + SCORE_CONNECTOR;
-    }
-
-    private String calculateFramePoint(int score) {
-        String scoreResult = (score == -1 ? "" : Integer.toString(score + previousPoint));
-        previousPoint += (score == -1 ? 0 : score);
-        return String.format("%-4s", scoreResult);
+        NormalFrame frame = bowlingGame.getNormalFrame(count);
+        return frame.framePoint() + SCORE_CONNECTOR;
     }
 }
