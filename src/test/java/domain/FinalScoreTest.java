@@ -196,7 +196,7 @@ public class FinalScoreTest {
     void 스트라이크_결과_출력() {
         finalScore.bowl(STRIKE);
 
-        assertThat(finalScore.getResult()).isEqualTo("X" + BLANK + BLANK);
+        assertThat(finalScore.framePoint()).isEqualTo("X" + BLANK + BLANK);
     }
 
     @Test
@@ -205,7 +205,7 @@ public class FinalScoreTest {
         finalScore.bowl(STRIKE);
         finalScore.bowl(STRIKE);
 
-        assertThat(finalScore.getResult()).isEqualTo("X|X|X");
+        assertThat(finalScore.framePoint()).isEqualTo("X|X|X");
     }
 
     @Test
@@ -213,7 +213,7 @@ public class FinalScoreTest {
         finalScore.bowl(FIRST_BALL);
         finalScore.bowl(SPARE);
 
-        assertThat(finalScore.getResult()).isEqualTo(FIRST_BALL + "|/" + BLANK);
+        assertThat(finalScore.framePoint()).isEqualTo(FIRST_BALL + "|/" + BLANK);
     }
 
     @Test
@@ -221,7 +221,7 @@ public class FinalScoreTest {
         finalScore.bowl(FIRST_BALL);
         finalScore.bowl(SECOND_BALL);
 
-        assertThat(finalScore.getResult()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL + BLANK);
+        assertThat(finalScore.framePoint()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL + BLANK);
     }
 
     @Test
@@ -229,6 +229,6 @@ public class FinalScoreTest {
         finalScore.bowl(FIRST_BALL);
         finalScore.bowl(GUTTER);
 
-        assertThat(finalScore.getResult()).isEqualTo(FIRST_BALL + "|" + "-" + BLANK);
+        assertThat(finalScore.framePoint()).isEqualTo(FIRST_BALL + "|" + "-" + BLANK);
     }
 }

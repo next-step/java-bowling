@@ -91,7 +91,7 @@ public class NormalScoreTest {
     void 스트라이크_결과_출력() {
         normalScore.bowl(STRIKE);
 
-        assertThat(normalScore.getResult()).isEqualTo("X   ");
+        assertThat(normalScore.framePoint()).isEqualTo("X   ");
     }
 
     @Test
@@ -99,7 +99,7 @@ public class NormalScoreTest {
         normalScore.bowl(FIRST_BALL);
         normalScore.bowl(SPARE);
 
-        assertThat(normalScore.getResult()).isEqualTo(FIRST_BALL + "|/ ");
+        assertThat(normalScore.framePoint()).isEqualTo(FIRST_BALL + "|/ ");
     }
 
     @Test
@@ -107,7 +107,7 @@ public class NormalScoreTest {
         normalScore.bowl(FIRST_BALL);
         normalScore.bowl(SECOND_BALL);
 
-        assertThat(normalScore.getResult()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL + " ");
+        assertThat(normalScore.framePoint()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL + " ");
     }
 
     @Test
@@ -115,6 +115,6 @@ public class NormalScoreTest {
         normalScore.bowl(FIRST_BALL);
         normalScore.bowl(GUTTER);
 
-        assertThat(normalScore.getResult()).isEqualTo(FIRST_BALL + "|" + "- ");
+        assertThat(normalScore.framePoint()).isEqualTo(FIRST_BALL + "|" + "- ");
     }
 }

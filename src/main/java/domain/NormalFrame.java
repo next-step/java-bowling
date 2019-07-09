@@ -15,7 +15,7 @@ public class NormalFrame implements BowlingFrame {
     protected static final int NO_MORE_NEXT = -1;
 
     private NormalScore normalScore;
-    public NormalFrame next;
+    private NormalFrame next;
 
     public NormalFrame(int frameNumber) {
         this.normalScore = new NormalScore(frameNumber);
@@ -37,25 +37,11 @@ public class NormalFrame implements BowlingFrame {
     }
 
     @Override
-    public String getResult() {
-        return normalScore.getResult();
+    public String framePoint() {
+        return normalScore.framePoint();
     }
 
-    public boolean nowBowlable() {
-        return normalScore.nowBowlable();
-    }
-
-    public NormalFrame nextFrame() {
-        next = new NormalFrame(normalScore.getFrameNumber() + NEXT);
-        return next;
-    }
-
-    public int getNextFrameNumber() {
-        int scoreNumber = normalScore.getFrameNumber();
-        return nowBowlable() ? scoreNumber : scoreNumber + NEXT;
-    }
-
-    public int framePoint(FinalFrame finalFrame) {
+    protected int frameScore(FinalFrame finalFrame) {
         if (getNextFrameNumber() < TOTAL_FRAME_COUNT && normalScore.nowBowlable()) {
             return NO_MORE_NEXT;
         }
@@ -112,7 +98,21 @@ public class NormalFrame implements BowlingFrame {
     private int sumPoint(NormalScore nextNormalScore, int count) {
         return IntStream.range(0, count)
                 .boxed()
-                .mapToInt(n -> nextNormalScore.getPoint(n))
+                .mapToInt(n -> nextNormalScore.getPointScore(n))
                 .sum();
+    }
+
+    protected boolean nowBowlable() {
+        return normalScore.nowBowlable();
+    }
+
+    protected NormalFrame nextFrame() {
+        next = new NormalFrame(normalScore.getFrameNumber() + NEXT);
+        return next;
+    }
+
+    protected int getNextFrameNumber() {
+        int scoreNumber = normalScore.getFrameNumber();
+        return nowBowlable() ? scoreNumber : scoreNumber + NEXT;
     }
 }

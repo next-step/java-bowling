@@ -27,8 +27,8 @@ public class FinalFrame implements BowlingFrame {
     }
 
     @Override
-    public String getResult() {
-        return finalScore.getResult();
+    public String framePoint() {
+        return finalScore.framePoint();
     }
 
     public boolean isGameOver() {
@@ -36,7 +36,7 @@ public class FinalFrame implements BowlingFrame {
     }
 
     public boolean isStart() {
-        if (finalScore.getPointSize() == 0) {
+        if (finalScore.getPointExistCount() == 0) {
             return Boolean.FALSE;
         }
         return Boolean.TRUE;
@@ -45,12 +45,12 @@ public class FinalFrame implements BowlingFrame {
     public int framePoint(int checkingCount) {
         int frameScore = IntStream.range(0, checkingCount)
                 .boxed()
-                .mapToInt(n -> finalScore.getPoint(n))
+                .mapToInt(n -> finalScore.getPointScore(n))
                 .sum();
         return frameScore;
     }
 
     public int getPointSize() {
-        return finalScore.getPointSize();
+        return finalScore.getPointExistCount();
     }
 }

@@ -7,7 +7,7 @@ public interface BowlingScore {
 
     int sumScore();
 
-    int getPointSize();
+    int getPointExistCount();
 
-    String getResult();
+    String framePoint();
 }

@@ -31,7 +31,7 @@ public enum PointName {
     }
 
     public static PointName valueOf(int point, boolean isSpare) {
-        if(isSpare) {
+        if (isSpare) {
             return SPARE;
         }
 

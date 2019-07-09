@@ -5,5 +5,5 @@ public interface BowlingFrame {
 
     int sumScore();
 
-    String getResult();
+    String framePoint();
 }

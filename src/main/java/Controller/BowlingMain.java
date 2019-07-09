@@ -30,7 +30,7 @@ public class BowlingMain {
         IntStream.rangeClosed(1, MAX_BOWL_COUNT)
                 .filter(ballCount -> !bowlingGame.isGameOver())
                 .map(ballCount -> requestFrameScore(bowlingGame.getNextFrameNumber()))
-                .peek(score -> bowlingGame.playBowling(score))
+                .peek(bowlingGame::playBowling)
                 .peek(score -> OutView.showFrameHeader())
                 .peek(score -> OutView.showFrameResult(player.getName(), bowlingGame.getResult()))
                 .peek(frame -> OutView.showFrameResult("", bowlingGame.getFormattedPointResult()))

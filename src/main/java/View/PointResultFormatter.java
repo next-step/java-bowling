@@ -35,7 +35,7 @@ public class PointResultFormatter implements Formatter<BowlingGame> {
 
         if (frameNumber < NORMAL_FRAME_COUNT) {
             NormalFrame frame = bowlingGame.getNormalFrame(frameNumber);
-            int score = frame.framePoint(bowlingGame.getFinalFrame());
+            int score = frame.frameScore(bowlingGame.getFinalFrame());
             return calculateFramePoint(score) + SCORE_CONNECTOR;
         }
 

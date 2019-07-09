@@ -81,7 +81,7 @@ public class BowlingGame {
         String result = IntStream.range(ZERO, NORMAL_FRAME_COUNT)
                 .mapToObj(count -> getFrameResult(count))
                 .collect(Collectors.joining());
-        result += finalFrame.getResult() + "|";
+        result += finalFrame.framePoint() + "|";
 
         return result;
     }
@@ -94,7 +94,7 @@ public class BowlingGame {
             return BLANK_FRAME + SCORE_CONNECTOR;
         }
         NormalFrame frame = normalFrames.get(count);
-        return frame.getResult() + SCORE_CONNECTOR;
+        return frame.framePoint() + SCORE_CONNECTOR;
     }
 
     public String getFormattedPointResult() {
