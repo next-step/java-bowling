@@ -41,7 +41,7 @@ public class NormalFrame implements BowlingFrame {
         return normalScore.framePoint();
     }
 
-    protected int frameScore(FinalFrame finalFrame) {
+    public int frameScore(FinalFrame finalFrame) {
         if (getNextFrameNumber() < TOTAL_FRAME_COUNT && normalScore.nowBowlable()) {
             return NO_MORE_NEXT;
         }
