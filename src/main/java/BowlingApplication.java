@@ -1,5 +1,3 @@
-package step1;
-
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
