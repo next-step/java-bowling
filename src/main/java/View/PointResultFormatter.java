@@ -36,14 +36,16 @@ public class PointResultFormatter implements Formatter<BowlingGame> {
         if (frameNumber < NORMAL_FRAME_COUNT) {
             NormalFrame frame = bowlingGame.getNormalFrame(frameNumber);
             int score = frame.framePoint(bowlingGame.getFinalFrame());
-            String scoreResult = score == -1 ? "" : Integer.toString(score + previousPoint);
-            previousPoint += (score == -1 ? 0 : score);
-            return String.format("%-4s", scoreResult) + SCORE_CONNECTOR;
+            return calculateFramePoint(score) + SCORE_CONNECTOR;
         }
 
         int score = finalFrame.sumScore();
-        String scoreResult = Integer.toString(score + previousPoint);
-        previousPoint += score;
-        return String.format("%-4s", scoreResult) + SCORE_CONNECTOR;
+        return calculateFramePoint(score) + SCORE_CONNECTOR;
+    }
+
+    private String calculateFramePoint(int score) {
+        String scoreResult = score == -1 ? "" : Integer.toString(score + previousPoint);
+        previousPoint += (score == -1 ? 0 : score);
+        return String.format("%-4s", scoreResult);
     }
 }

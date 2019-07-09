@@ -1,10 +1,12 @@
 package domain;
 
 import View.BowlingFrame;
+import View.OutView;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import static domain.BowlingGame.NORMAL_FRAME_COUNT;
 import static domain.BowlingGame.TOTAL_FRAME_COUNT;
 
 public class NormalFrame implements BowlingFrame {
@@ -56,13 +58,16 @@ public class NormalFrame implements BowlingFrame {
     }
 
     public int framePoint(FinalFrame finalFrame) {
+        if(getNextFrameNumber() < TOTAL_FRAME_COUNT && normalScore.nowBowlable()) {
+            return NO_MORE_NEXT;
+        }
         if (normalScore.isStrike()) {
             int result = sumIfStrike(finalFrame);
-            return result == -1 ? result : result + sumScore();
+            return result == NO_MORE_NEXT ? result : result + sumScore();
         }
         if (normalScore.isSpare()) {
             int result = sumIfSpare(finalFrame);
-            return result == -1 ? result : result + sumScore();
+            return result == NO_MORE_NEXT ? result : result + sumScore();
         }
         return sumScore();
     }
