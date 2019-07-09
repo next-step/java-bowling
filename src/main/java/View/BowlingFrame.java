@@ -1,9 +1,9 @@
 package View;
 
 public interface BowlingFrame {
-	boolean doBowling(int point);
+    boolean doBowling(int point);
 
-	int sumScore();
+    int sumScore();
 
-	String getResult();
+    String getResult();
 }

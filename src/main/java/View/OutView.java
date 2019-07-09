@@ -1,7 +1,5 @@
 package View;
 
-import domain.BowlingGame;
-
 import java.util.stream.IntStream;
 
 import static domain.BowlingGame.TOTAL_FRAME_COUNT;

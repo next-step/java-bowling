@@ -1,13 +1,13 @@
 package View;
 
 public interface BowlingScore {
-	boolean bowl(int score);
+    boolean bowl(int score);
 
-	boolean nowBowlable();
+    boolean nowBowlable();
 
-	int sumScore();
+    int sumScore();
 
-	int getPointSize();
+    int getPointSize();
 
-	String getResult();
+    String getResult();
 }

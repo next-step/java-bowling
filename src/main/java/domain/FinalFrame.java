@@ -1,11 +1,9 @@
 package domain;
 
 import View.BowlingFrame;
-import View.OutView;
 
 import java.util.stream.IntStream;
 
-import static domain.BowlingGame.TOTAL_FRAME_COUNT;
 import static domain.NormalFrame.NO_MORE_NEXT;
 
 public class FinalFrame implements BowlingFrame {
@@ -22,7 +20,7 @@ public class FinalFrame implements BowlingFrame {
 
     @Override
     public int sumScore() {
-        if(!isGameOver()) {
+        if (!isGameOver()) {
             return NO_MORE_NEXT;
         }
         return finalScore.sumScore();
