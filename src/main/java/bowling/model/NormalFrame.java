@@ -2,34 +2,43 @@ package bowling.model;
 
 import java.util.Objects;
 
-import static bowling.model.Pins.DOWN_ALL;
 import static bowling.model.Pins.MIN;
 
 public class NormalFrame implements Frame {
 
     private int index;
-    private int round = 0;
     private Pins score = Pins.valueOf(MIN);
+    private FrameState state = null;
 
     private NormalFrame(int index) {
         this.index = index;
     }
 
-    public static Frame ofFirst() {
-        return new NormalFrame(NUMBER_OF_START);
+    static Frame ofFirst() {
+        return of(NUMBER_OF_START);
+    }
+
+    static Frame of(int index) {
+        return new NormalFrame(index);
     }
 
     @Override
     public Frame bowling(Pins pins) {
-        round++;
         score = pins;
-        if (round == 1) {
-            if (pins.equals(DOWN_ALL)) {
-                return new NormalFrame(index + 1);
-            }
+        if (state == null) {
+            state = new FirstBowl(pins);
+            return moveNextFrame();
+        }
+        state = new SecondBowl(score, pins);
+        return moveNextFrame();
+    }
+
+    private Frame moveNextFrame() {
+        if (state.isFinished()) {
+            return Frame.generate(index + 1);
+        } else {
             return this;
         }
-        return new NormalFrame(index + 1);
     }
 
     @Override

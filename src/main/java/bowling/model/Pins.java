@@ -47,4 +47,8 @@ public class Pins {
                 "countOfDownPins=" + countOfDownPins +
                 '}';
     }
+
+    public Pins sum(Pins pins) {
+        return new Pins(pins.countOfDownPins + this.countOfDownPins);
+    }
 }
