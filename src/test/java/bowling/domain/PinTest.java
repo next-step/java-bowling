@@ -15,9 +15,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * project      : java-bowling
  * create date  : 2019-07-09 12:58
  */
-public class ScoreTest {
-    @DisplayName("스트라이크 인자가 넘어왔을때의 Pin 상태")
+public class PinTest {
+    @DisplayName("스트라이크 인지 확인")
     @Test
     void 스트라이크_핀_생성() {
+        Pin pin = Pin.of(10);
+        assertThat(pin.isStrike()).isTrue();
     }
 }
