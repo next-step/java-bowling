@@ -1,23 +1,17 @@
 package bowling.model.frame;
 
 import bowling.model.Pins;
-import bowling.model.frame.state.Miss;
-import bowling.model.frame.state.None;
+import bowling.model.frame.state.FinalState;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.stream.Collectors.joining;
+import static bowling.model.frame.FrameNumber.NUMBER_OF_FINAL_FRAME;
 
 public class FinalFrame extends Frame {
 
-    private int round;
-    private List<State> states;
+    private State states;
 
     private FinalFrame() {
-        super(FrameNumber.NUMBER_OF_FINAL_FRAME);
-        states = new ArrayList<>();
-        states.add(new None());
+        super(NUMBER_OF_FINAL_FRAME);
+        this.states = FinalState.valueOf();
     }
 
     static Frame of() {
@@ -26,33 +20,17 @@ public class FinalFrame extends Frame {
 
     @Override
     public Frame bowl(Pins downPins) {
-        round++;
-        State state = states.get(states.size() - 1).isFinished() ? new None() : states.get(states.size() - 1);
-        state = state.bowl(downPins);
-        if (states.get(states.size() - 1).isFinished()) {
-            states.add(state);
-        } else {
-            states.set(states.size() - 1, state);
-        }
+        states.bowl(downPins);
         return this;
     }
 
     @Override
     public boolean isGameOver() {
-        boolean existMiss = states.stream()
-                .anyMatch(Miss.class::isInstance);
-        return round == 3 || existMiss;
+        return states.isFinished();
     }
 
     @Override
     public String printResult() {
-        return "   " + states.stream()
-                .map(State::printResult)
-                .map(String::trim)
-                .collect(joining("|")) + "   |";
-    }
-
-    List<State> getStates() {
-        return states;
+        return states.printResult();
     }
 }
