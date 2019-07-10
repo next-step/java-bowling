@@ -7,59 +7,43 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BowlingGameTest {
 
-    @DisplayName("게임에 참여하는 플레이어 등록에 성공한다")
+    @DisplayName("참가하는 플레이어를 주입하는데 성공한다")
     @Test
-    void play_success() {
+    void setting_inputPlayer_success() {
+        // given
+        Player player = Player.of("YJY");
+
         // when
-        BowlingGame bowlingGame = new BowlingGame();
+        BowlingGame bowlingGame = BowlingGame.settingOf(player);
 
         // then
         assertThat(bowlingGame).isNotNull();
     }
 
-    @DisplayName("볼링을 친 결과를 반환한다")
+    @DisplayName("참가하는 플레이어를 주입하는데 성공한다")
     @Test
-    void bowl_success() {
+    void setting_inputPlayer_() {
+        // given
+        Player player = Player.of("YJY");
+
         // when
-        BowlingGame bowlingGame = new BowlingGame();
-        bowlingGame
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(10))
-                .play(Pins.valueOf(0)).play(Pins.valueOf(10))
-                .play(Pins.valueOf(5)).play(Pins.valueOf(5))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(9))
-                .play(Pins.valueOf(1));
+        BowlingGame bowlingGame = BowlingGame.settingOf(player);
 
         // then
         assertThat(bowlingGame).isNotNull();
     }
 
-    @DisplayName("볼링을 친 결과를 반환한다")
+    @DisplayName("참가하는 플레이어를 주입하는데 성공한다")
     @Test
-    void bowl_success2() {
-        // when
-        BowlingGame bowlingGame = new BowlingGame();
-        bowlingGame
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(10))
-                .play(Pins.valueOf(0)).play(Pins.valueOf(10))
-                .play(Pins.valueOf(5)).play(Pins.valueOf(5))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(1))
-                .play(Pins.valueOf(1)).play(Pins.valueOf(9))
-                .play(Pins.valueOf(1));
+    void gameOver_success() {
+        // given
+        Player player = Player.of("YJY");
 
-        bowlingGame.print();
+        // when
+        BowlingGame bowlingGame = BowlingGame.settingOf(player);
+        boolean result = bowlingGame.isGameOver();
 
         // then
-        assertThat(bowlingGame).isNotNull();
+        assertThat(result).isTrue();
     }
 }

@@ -14,6 +14,10 @@ public abstract class Frame {
         return frameNumber.increase();
     }
 
+    public FrameNumber getNumber() {
+        return frameNumber.self();
+    }
+
     public static Frame initialize() {
         return NormalFrame.ofFirst();
     }
@@ -23,4 +27,5 @@ public abstract class Frame {
     public abstract String printResult();
 
     public abstract boolean isGameOver();
+
 }

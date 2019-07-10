@@ -1,27 +1,34 @@
 package bowling.model;
 
-import bowling.model.frame.Frame;
+import bowling.model.frame.FrameNumber;
 
 public class BowlingGame {
 
-    private Frame firstFrame;
-    private Frame currentFrame;
+    private Player player;
+    private bowling.model.GameEngine gameEngine;
 
-    BowlingGame() {
-        this.firstFrame = Frame.initialize();
-        this.currentFrame = firstFrame;
+    private BowlingGame(Player player, bowling.model.GameEngine gameEngine) {
+        this.player = player;
+        this.gameEngine = gameEngine;
     }
 
-    BowlingGame play(Pins downPins) {
-        if (currentFrame.isGameOver()) {
-            throw new IllegalStateException("게임이 종료되었습니다.");
-        }
-        currentFrame = currentFrame.bowl(downPins);
-        System.out.println(firstFrame.printResult());
-        return this;
+    public static BowlingGame settingOf(Player player) {
+        return new BowlingGame(player, new bowling.model.GameEngine());
     }
 
-    public void print() {
+    public void play(Pins pins) {
+        gameEngine.play(pins);
+    }
 
+    public boolean isGameOver() {
+        return gameEngine.isGameOver();
+    }
+
+    public FrameNumber getCurrentNumber() {
+        return gameEngine.getCurrenNumber();
+    }
+
+    public String getCurrentStates() {
+        return player.toString().concat(gameEngine.getCurrentStates());
     }
 }

@@ -31,6 +31,10 @@ public class FrameNumber {
         return MAX == number;
     }
 
+    FrameNumber self() {
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,8 +50,6 @@ public class FrameNumber {
 
     @Override
     public String toString() {
-        return "FrameNumber{" +
-                "number=" + number +
-                '}';
+        return String.valueOf(number);
     }
 }
