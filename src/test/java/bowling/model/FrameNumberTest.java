@@ -39,7 +39,7 @@ class FrameNumberTest {
 
         // then
         assertThat(gameEngine).isNotNull();
-        assertThat(currentStates).isEqualTo("   1|1   |   1|1   |   X   |   -|/   |   5|/   |   1|1   |   1|1   |   1|1   |   1|1   |   1|1   |");
+        assertThat(currentStates).isEqualTo("  1|1   |  1|1   |   X    |  -|/   |  5|/   |  1|1   |  1|1   |  1|1   |  1|1   |  1|1   |");
     }
 
     @DisplayName("보너스 게임을 치는데 성공한다")
@@ -56,6 +56,6 @@ class FrameNumberTest {
         assertThatIllegalStateException()
                 .isThrownBy(() -> IntStream.rangeClosed(1, 22)
                         .forEach(countOfPlay -> gameEngine.play(Pins.DOWN_ZERO)))
-                .withMessage("게임이 종료되었습니다.");
+                .withMessage("게임이 종료되었습니다");
     }
 }

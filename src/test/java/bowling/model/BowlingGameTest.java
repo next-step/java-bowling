@@ -19,31 +19,4 @@ class BowlingGameTest {
         // then
         assertThat(bowlingGame).isNotNull();
     }
-
-    @DisplayName("참가하는 플레이어를 주입하는데 성공한다")
-    @Test
-    void setting_inputPlayer_() {
-        // given
-        Player player = Player.of("YJY");
-
-        // when
-        BowlingGame bowlingGame = BowlingGame.settingOf(player);
-
-        // then
-        assertThat(bowlingGame).isNotNull();
-    }
-
-    @DisplayName("참가하는 플레이어를 주입하는데 성공한다")
-    @Test
-    void gameOver_success() {
-        // given
-        Player player = Player.of("YJY");
-
-        // when
-        BowlingGame bowlingGame = BowlingGame.settingOf(player);
-        boolean result = bowlingGame.isGameOver();
-
-        // then
-        assertThat(result).isTrue();
-    }
 }
