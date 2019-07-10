@@ -1,5 +1,11 @@
 package bowling.domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -10,5 +16,108 @@ package bowling.domain;
  * project      : java-bowling
  * create date  : 2019-07-10 16:12
  */
-public class FrameScore {
+class FrameScore {
+    private static final int LIMIT_SCORE_COUNT = 2;
+    private static final int MAX_SUM_SCORE = 10;
+    public static final int LAST_INDEX = 1;
+    private List<Score> scores;
+
+    FrameScore() {
+        this.scores = new ArrayList<>();
+    }
+
+    FrameScore(int score) {
+        List<Score> scores = new ArrayList<>();
+        scores.add(Score.of(score));
+        this.scores = scores;
+    }
+
+    FrameScore(List<Score> score) {
+        this.scores = new ArrayList<>(score);
+    }
+
+    boolean addScore(int fallCount) {
+        if(isExitFrame() || isStrike()) {
+            return false;
+        }
+
+        if (isOverScore(fallCount)) {
+            throw new IllegalArgumentException("두번 투구의 합은 10을 넘을 수 없습니다.");
+        }
+
+        scores.add(Score.of(fallCount));
+        return true;
+    }
+
+    int bowlCount() {
+        return scores.size();
+    }
+
+    boolean isStrike() {
+        return scores.stream()
+                .filter(Score::isStrike)
+                .findFirst()
+                .isPresent();
+    }
+
+    boolean isOverScore(int fallCount) {
+        return scores.stream()
+                .mapToInt(Score::getScore)
+                .sum() + fallCount > MAX_SUM_SCORE;
+    }
+
+    boolean isExitFrame() {
+        return scores.size() >= LIMIT_SCORE_COUNT;
+    }
+
+    List<Score> getScores() {
+        return Collections.unmodifiableList(scores);
+    }
+
+    List<Integer> getScoreNumber() {
+        List<Integer> scoreIncrease = new ArrayList<>();
+        int sum = 0;
+        for (Score score : scores) {
+            sum += score.getScore();
+            scoreIncrease.add(sum);
+        }
+        return scoreIncrease;
+    }
+
+    int getScore() {
+        if (bowlCount() >= LIMIT_SCORE_COUNT) {
+            return sum();
+        }
+        return searchRecentScore();
+    }
+
+    int searchRecentScore() {
+        return scores.get(bowlCount() - LAST_INDEX).getScore();
+    }
+
+    int sum() {
+        return scores.stream()
+                .mapToInt(Score::getScore)
+                .sum();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FrameScore that = (FrameScore) o;
+        return Objects.equals(scores, that.scores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scores);
+    }
+
+    @Override
+    public String toString() {
+        return "FrameScore{" +
+                "scores=" + scores +
+                '}';
+    }
 }
