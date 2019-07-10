@@ -2,6 +2,7 @@ package bowling.model.frame.state;
 
 import bowling.model.Pins;
 import bowling.model.frame.State;
+import bowling.utils.Pretty;
 
 public class Hit implements State {
 
@@ -28,6 +29,6 @@ public class Hit implements State {
 
     @Override
     public String printResult() {
-        return String.format("   %s   ", first);
+        return Pretty.alignCenter(first.toString());
     }
 }

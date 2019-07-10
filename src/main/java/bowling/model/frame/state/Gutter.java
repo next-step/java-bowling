@@ -2,6 +2,7 @@ package bowling.model.frame.state;
 
 import bowling.model.Pins;
 import bowling.model.frame.State;
+import bowling.utils.Pretty;
 
 public class Gutter implements State {
 
@@ -30,6 +31,6 @@ public class Gutter implements State {
 
     @Override
     public String printResult() {
-        return "   " + PRINT_SYMBOL_OF_GUTTER + "   ";
+        return Pretty.alignCenter(PRINT_SYMBOL_OF_GUTTER);
     }
 }

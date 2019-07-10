@@ -2,6 +2,7 @@ package bowling.model.frame.state;
 
 import bowling.model.Pins;
 import bowling.model.frame.State;
+import bowling.utils.Pretty;
 
 public class Miss implements State {
 
@@ -32,6 +33,6 @@ public class Miss implements State {
 
     @Override
     public String printResult() {
-        return String.format("   %s|%s   ", first, second);
+        return Pretty.alignCenter(first.toString(), second.toString());
     }
 }

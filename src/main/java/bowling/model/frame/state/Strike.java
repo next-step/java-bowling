@@ -2,13 +2,15 @@ package bowling.model.frame.state;
 
 import bowling.model.Pins;
 import bowling.model.frame.State;
+import bowling.utils.Pretty;
 
 public class Strike implements State {
 
     private static final Strike SELF = new Strike();
     private static final Pins score = Pins.DOWN_ALL;
 
-    private Strike() { }
+    private Strike() {
+    }
 
     static State getInstance() {
         return SELF;
@@ -30,6 +32,6 @@ public class Strike implements State {
 
     @Override
     public String printResult() {
-        return "   X   ";
+        return Pretty.alignCenter("X");
     }
 }

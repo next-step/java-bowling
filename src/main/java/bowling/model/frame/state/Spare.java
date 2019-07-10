@@ -2,6 +2,7 @@ package bowling.model.frame.state;
 
 import bowling.model.Pins;
 import bowling.model.frame.State;
+import bowling.utils.Pretty;
 
 import static bowling.model.frame.state.Gutter.PRINT_SYMBOL_OF_GUTTER;
 
@@ -30,6 +31,6 @@ public class Spare implements State {
     @Override
     public String printResult() {
         String formatOfNumber = first.isGutter() ? PRINT_SYMBOL_OF_GUTTER : first.toString();
-        return String.format("   %s|/   ", formatOfNumber);
+        return Pretty.alignCenter(formatOfNumber, "/");
     }
 }

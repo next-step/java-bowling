@@ -1,5 +1,7 @@
 package bowling.model;
 
+import bowling.utils.Pretty;
+
 import java.util.Objects;
 
 public class Player {
@@ -11,7 +13,7 @@ public class Player {
         this.name = name;
     }
 
-    static Player of(String name) {
+    public static Player of(String name) {
         if (MAX_LENGTH_OF_NAME < name.trim().length()) {
             throw new IllegalArgumentException(String.format("이름을 %d 이하로 작성해주세요.", MAX_LENGTH_OF_NAME));
         }
@@ -33,8 +35,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
-                "name='" + name + '\'' +
-                '}';
+        return "|".concat(Pretty.alignCenter(name)).concat("|");
     }
 }

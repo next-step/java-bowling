@@ -2,6 +2,7 @@ package bowling.model.frame.state;
 
 import bowling.model.Pins;
 import bowling.model.frame.State;
+import bowling.utils.Pretty;
 
 public class None implements State {
 
@@ -23,6 +24,6 @@ public class None implements State {
 
     @Override
     public String printResult() {
-        return "      ";
+        return Pretty.alignCenter("");
     }
 }
