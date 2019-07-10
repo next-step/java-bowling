@@ -49,6 +49,10 @@ class Frame {
         return index;
     }
 
+    boolean isStrike() {
+        return frameScore.isStrike();
+    }
+
     FrameScore nowFrameScores() {
         return new FrameScore(frameScore.getScores());
     }

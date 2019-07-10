@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * project      : java-bowling
  * create date  : 2019-07-10 16:10
  */
-public class FrameScoreTest {
+public class NormalFrameScoreTest {
     @DisplayName("FrameScore의 Size는 2인지 확인 가능합니다.")
     @Test
     void isOver() {
