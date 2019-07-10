@@ -47,7 +47,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public String printResult() {
-        return state.printResult();
+        return state.printResult() + "|" + next.printResult();
     }
 
     @Override

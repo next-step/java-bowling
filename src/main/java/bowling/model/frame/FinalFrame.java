@@ -6,7 +6,8 @@ import bowling.model.frame.state.None;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 public class FinalFrame extends Frame {
 
@@ -45,7 +46,10 @@ public class FinalFrame extends Frame {
 
     @Override
     public String printResult() {
-        return states.stream().map(state -> state.printResult()).collect(Collectors.joining("|"));
+        return "   " + states.stream()
+                .map(State::printResult)
+                .map(String::trim)
+                .collect(joining("|")) + "   |";
     }
 
     List<State> getStates() {

@@ -5,6 +5,7 @@ import bowling.model.frame.State;
 
 public class Gutter implements State {
 
+    static final String PRINT_SYMBOL_OF_GUTTER = "-";
     private static final Pins first = Pins.DOWN_ZERO;
 
     static State valueOf() {
@@ -29,6 +30,6 @@ public class Gutter implements State {
 
     @Override
     public String printResult() {
-        return "   -   ";
+        return "   " + PRINT_SYMBOL_OF_GUTTER + "   ";
     }
 }

@@ -28,6 +28,14 @@ public class Pins {
         return CACHE.get(countOfDownPins);
     }
 
+    public boolean isGutter() {
+        return countOfDownPins == MIN;
+    }
+
+    public Pins sum(Pins pins) {
+        return new Pins(pins.countOfDownPins + this.countOfDownPins);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,9 +52,5 @@ public class Pins {
     @Override
     public String toString() {
         return String.valueOf(countOfDownPins);
-    }
-
-    public Pins sum(Pins pins) {
-        return new Pins(pins.countOfDownPins + this.countOfDownPins);
     }
 }
