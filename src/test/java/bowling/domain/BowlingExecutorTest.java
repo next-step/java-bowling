@@ -11,4 +11,5 @@ package bowling.domain;
  * create date  : 2019-07-10 18:51
  */
 public class BowlingExecutorTest {
+
 }
