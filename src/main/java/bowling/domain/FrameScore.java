@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 class FrameScore {
     private static final int LIMIT_SCORE_COUNT = 2;
     private static final int MAX_SUM_SCORE = 10;
-    public static final int LAST_INDEX = 1;
     private List<Score> scores;
 
     FrameScore() {
@@ -37,7 +35,7 @@ class FrameScore {
     }
 
     boolean addScore(int fallCount) {
-        if(isExitFrame() || isStrike()) {
+        if (isExitFrame() || isStrike()) {
             return false;
         }
 
@@ -83,24 +81,6 @@ class FrameScore {
         }
         return scoreIncrease;
     }
-
-    int getScore() {
-        if (bowlCount() >= LIMIT_SCORE_COUNT) {
-            return sum();
-        }
-        return searchRecentScore();
-    }
-
-    int searchRecentScore() {
-        return scores.get(bowlCount() - LAST_INDEX).getScore();
-    }
-
-    int sum() {
-        return scores.stream()
-                .mapToInt(Score::getScore)
-                .sum();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

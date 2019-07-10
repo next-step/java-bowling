@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -46,16 +44,9 @@ class Frame {
         }
         return false;
     }
+
     int frameNumber() {
         return index;
-    }
-
-    int getRecentScore() {
-        return frameScore.searchRecentScore();
-    }
-
-    boolean isStrike() {
-        return frameScore.isStrike();
     }
 
     FrameScore nowFrameScores() {
