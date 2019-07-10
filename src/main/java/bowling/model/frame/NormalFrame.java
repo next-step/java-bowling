@@ -30,10 +30,14 @@ public class NormalFrame {
     }
 
     NormalFrame nextFrame() {
-        if(state.isFinished()){
+        if (state.isFinished()) {
             return of(frameNumber.increase());
         }
         return this;
+    }
+
+    boolean isFinished() {
+        return false;
     }
 
     @Override
