@@ -17,7 +17,7 @@ public class NormalFrameTest {
         // when
         NormalFrame frame = NormalFrame.ofFirst();
         frame.bowl(first);
-        NormalFrame nextFrame = frame.nextFrame();
+        Frame nextFrame = frame.nextFrame();
 
         // then
         assertThat(nextFrame).isEqualTo(frame);
@@ -31,7 +31,7 @@ public class NormalFrameTest {
         // when
         NormalFrame frame = NormalFrame.ofFirst();
         frame.bowl(first);
-        NormalFrame nextFrame = frame.nextFrame();
+        Frame nextFrame = frame.nextFrame();
 
         // then
         assertThat(nextFrame).isNotEqualTo(frame);
@@ -47,7 +47,7 @@ public class NormalFrameTest {
         NormalFrame frame = NormalFrame.ofFirst();
         frame.bowl(first);
         frame.bowl(second);
-        NormalFrame nextFrame = frame.nextFrame();
+        Frame nextFrame = frame.nextFrame();
 
         // then
         assertThat(nextFrame).isNotEqualTo(frame);

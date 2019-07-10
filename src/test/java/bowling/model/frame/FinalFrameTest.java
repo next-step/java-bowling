@@ -3,12 +3,20 @@ package bowling.model.frame;
 import bowling.model.Pins;
 import bowling.model.frame.state.Spare;
 import bowling.model.frame.state.Strike;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class FinalFrameTest {
+
+    private FinalFrame frame;
+
+    @BeforeEach
+    void setUp() {
+        frame = (FinalFrame) FinalFrame.of();
+    }
 
     @Test
     void downPinFirstZeroAndSecondThree_thanGameOver() {
@@ -17,13 +25,12 @@ public class FinalFrameTest {
         Pins second = Pins.valueOf(1);
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
         frame.bowl(second);
 
         // exception
         assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(()-> frame.nextFrame());
+                .isThrownBy(() -> frame.nextFrame());
     }
 
     @Test
@@ -32,7 +39,6 @@ public class FinalFrameTest {
         Pins first = Pins.valueOf(5);
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
 
         assertThat(frame.nextFrame()).isEqualTo(frame);
@@ -45,7 +51,6 @@ public class FinalFrameTest {
         Pins second = Pins.valueOf(5);
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
         frame.bowl(second);
 
@@ -59,7 +64,6 @@ public class FinalFrameTest {
         Pins second = Pins.valueOf(0);
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
         frame.bowl(second);
 
@@ -73,7 +77,6 @@ public class FinalFrameTest {
         Pins second = Pins.valueOf(10);
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
         frame.bowl(second);
 
@@ -88,14 +91,13 @@ public class FinalFrameTest {
         Pins third = Pins.valueOf(10);
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
         frame.bowl(second);
         frame.bowl(third);
 
         // exception
         assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(()-> frame.nextFrame());
+                .isThrownBy(() -> frame.nextFrame());
     }
 
     @Test
@@ -104,11 +106,11 @@ public class FinalFrameTest {
         Pins first = Pins.DOWN_ALL;
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
 
         // then
         assertThat(frame.nextFrame()).isEqualTo(frame);
+        assertThat(frame.getStates().get(0)).isInstanceOf(Strike.class);
         assertThat(frame.getStates().get(0)).isInstanceOf(Strike.class);
     }
 
@@ -119,7 +121,6 @@ public class FinalFrameTest {
         Pins second = Pins.DOWN_ALL;
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
         frame.bowl(second);
 
@@ -137,7 +138,6 @@ public class FinalFrameTest {
         Pins third = Pins.valueOf(9);
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
         frame.bowl(second);
         frame.bowl(third);
@@ -155,7 +155,6 @@ public class FinalFrameTest {
         Pins third = Pins.valueOf(10);
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
         frame.bowl(second);
         frame.bowl(third);
@@ -174,7 +173,6 @@ public class FinalFrameTest {
         Pins third = Pins.valueOf(10);
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
         frame.bowl(second);
         frame.bowl(third);
@@ -192,7 +190,6 @@ public class FinalFrameTest {
         Pins third = Pins.valueOf(10);
 
         // when
-        FinalFrame frame = FinalFrame.of();
         frame.bowl(first);
         frame.bowl(second);
         frame.bowl(third);

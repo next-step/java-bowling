@@ -7,7 +7,7 @@ import bowling.model.frame.state.State;
 import java.util.Objects;
 
 
-public class NormalFrame {
+public class NormalFrame extends Frame {
 
     private final FrameNumber frameNumber;
     private State state;
@@ -21,22 +21,25 @@ public class NormalFrame {
         return new NormalFrame(FrameNumber.NUMBER_OF_START_FRAME);
     }
 
-    static NormalFrame of(FrameNumber frameNumber) {
+    static Frame of(FrameNumber frameNumber) {
         return new NormalFrame(frameNumber);
     }
 
-    void bowl(Pins downPins) {
+    @Override
+    public void bowl(Pins downPins) {
         state = state.bowl(downPins);
     }
 
-    NormalFrame nextFrame() {
+    @Override
+    public Frame nextFrame() {
         if (state.isFinished()) {
-            return of(frameNumber.increase());
+            return generate(frameNumber.increase());
         }
         return this;
     }
 
-    boolean isFinished() {
+    @Override
+    public boolean isGameOver() {
         return false;
     }
 

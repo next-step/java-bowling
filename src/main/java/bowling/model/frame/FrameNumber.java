@@ -46,4 +46,8 @@ public class FrameNumber {
                 "number=" + number +
                 '}';
     }
+
+    public boolean isFinalNumber() {
+        return MAX == number;
+    }
 }
