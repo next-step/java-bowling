@@ -3,7 +3,6 @@ package bowling.model.frame;
 import bowling.model.Pins;
 import bowling.model.frame.state.Miss;
 import bowling.model.frame.state.None;
-import bowling.model.frame.state.State;
 
 import java.util.ArrayList;
 import java.util.List;

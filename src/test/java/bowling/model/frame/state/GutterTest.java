@@ -1,6 +1,7 @@
 package bowling.model.frame.state;
 
 import bowling.model.Pins;
+import bowling.model.frame.State;
 import org.junit.jupiter.api.Test;
 
 import static bowling.model.Pins.MAX;

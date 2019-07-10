@@ -1,4 +1,4 @@
-package bowling.model.frame.state;
+package bowling.model.frame;
 
 import bowling.model.Pins;
 
