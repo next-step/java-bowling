@@ -9,7 +9,7 @@ public class PlayerNameTest {
         String name = "HJS";
         PlayerName playerName = PlayerName.from(name);
 
-        assertThat(playerName.getName()).isEqualTo(name);
+        assertThat(playerName.isSameName(name)).isTrue();
     }
 
     @Test
@@ -57,6 +57,6 @@ public class PlayerNameTest {
         String name = "hjs";
         PlayerName playerName = PlayerName.from(name);
 
-        assertThat(playerName.getName()).isEqualTo("HJS");
+        assertThat(playerName.isSameName("HJS")).isTrue();
     }
 }

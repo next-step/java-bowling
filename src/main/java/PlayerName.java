@@ -19,7 +19,7 @@ public class PlayerName {
         }
     }
 
-    public String getName() {
-        return name;
+    public boolean isSameName(String nameToCompare) {
+        return nameToCompare.equals(name);
     }
 }
