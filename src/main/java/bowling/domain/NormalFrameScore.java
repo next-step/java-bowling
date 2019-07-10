@@ -15,22 +15,18 @@ import java.util.Objects;
  * project      : java-bowling
  * create date  : 2019-07-10 16:12
  */
-class FrameScore {
+class NormalFrameScore {
     private static final int LIMIT_SCORE_COUNT = 2;
     private static final int MAX_SUM_SCORE = 10;
     private List<Score> scores;
 
-    FrameScore() {
-        this.scores = new ArrayList<>();
-    }
-
-    FrameScore(int score) {
+    NormalFrameScore(int score) {
         List<Score> scores = new ArrayList<>();
         scores.add(Score.of(score));
         this.scores = scores;
     }
 
-    FrameScore(List<Score> score) {
+    NormalFrameScore(List<Score> score) {
         this.scores = new ArrayList<>(score);
     }
 
@@ -85,7 +81,7 @@ class FrameScore {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FrameScore that = (FrameScore) o;
+        NormalFrameScore that = (NormalFrameScore) o;
         return Objects.equals(scores, that.scores);
     }
 
@@ -96,7 +92,7 @@ class FrameScore {
 
     @Override
     public String toString() {
-        return "FrameScore{" +
+        return "NormalFrameScore{" +
                 "scores=" + scores +
                 '}';
     }

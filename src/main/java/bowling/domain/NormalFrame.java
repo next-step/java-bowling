@@ -10,35 +10,28 @@ package bowling.domain;
  * project      : java-bowling
  * create date  : 2019-07-10 16:25
  */
-class Frame {
+class NormalFrame {
     private static int AUTO_INCREASE = 0;
-    private static int FRAME_MAX_NUMBER = 10;
-    private FrameScore frameScore;
+    private static int FRAME_MAX_NUMBER = 9;
+
+    private NormalFrameScore normalFrameScore;
     private int index;
 
-    public Frame() {
-        if (AUTO_INCREASE > FRAME_MAX_NUMBER) {
-            throw new IllegalArgumentException("10번의 경기가 종료되었습니다.");
-        }
-        this.index = AUTO_INCREASE++;
-        this.frameScore = new FrameScore();
-    }
-
-    private Frame(int fallCount) {
+    private NormalFrame(int fallCount) {
         if (AUTO_INCREASE >= FRAME_MAX_NUMBER) {
-            throw new IllegalArgumentException("10번의 경기가 종료되었습니다.");
+            throw new IllegalArgumentException("경기 횟수가 넘었습니다.");
         }
-        FrameScore scores = new FrameScore(fallCount);
+        NormalFrameScore scores = new NormalFrameScore(fallCount);
         this.index = AUTO_INCREASE++;
-        this.frameScore = scores;
+        this.normalFrameScore = scores;
     }
 
-    public static Frame of(int fallCount) {
-        return new Frame(fallCount);
+    public static NormalFrame of(int fallCount) {
+        return new NormalFrame(fallCount);
     }
 
     boolean bowl(int fallCount) {
-        boolean isBowl = frameScore.addScore(fallCount);
+        boolean isBowl = normalFrameScore.addScore(fallCount);
         if (isBowl) {
             return true;
         }
@@ -49,16 +42,7 @@ class Frame {
         return index;
     }
 
-    boolean isStrike() {
-        return frameScore.isStrike();
-    }
-
-    FrameScore nowFrameScores() {
-        return new FrameScore(frameScore.getScores());
-    }
-
-    @Override
-    public String toString() {
-        return "Frame{" + frameScore + '}';
+    NormalFrameScore nowFrameScores() {
+        return new NormalFrameScore(normalFrameScore.getScores());
     }
 }
