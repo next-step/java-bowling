@@ -2,24 +2,25 @@ package bowling.model.frame;
 
 import bowling.model.Pins;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Frame {
 
-    List<State> statetsOfHistory = new ArrayList<>();
+    private final FrameNumber frameNumber;
 
-    Frame initialize() {
+    Frame(FrameNumber frameNumber) {
+        this.frameNumber = frameNumber;
+    }
+
+    FrameNumber nextFrameNumber() {
+        return frameNumber.increase();
+    }
+
+    public static Frame initialize() {
         return NormalFrame.ofFirst();
     }
 
-    Frame generate(FrameNumber number) {
-        return number.isFinalNumber() ? FinalFrame.of() : NormalFrame.of(number);
-    }
+    public abstract Frame bowl(Pins downPins);
 
-    abstract void bowl(Pins downPins);
+    public abstract String printResult();
 
-    abstract Frame nextFrame();
-
-    abstract boolean isGameOver();
+    public abstract boolean isGameOver();
 }

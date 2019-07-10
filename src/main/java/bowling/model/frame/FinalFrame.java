@@ -6,6 +6,7 @@ import bowling.model.frame.state.None;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
 
@@ -13,6 +14,7 @@ public class FinalFrame extends Frame {
     private List<State> states;
 
     private FinalFrame() {
+        super(FrameNumber.NUMBER_OF_FINAL_FRAME);
         states = new ArrayList<>();
         states.add(new None());
     }
@@ -22,7 +24,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public void bowl(Pins downPins) {
+    public Frame bowl(Pins downPins) {
         round++;
         State state = states.get(states.size() - 1).isFinished() ? new None() : states.get(states.size() - 1);
         state = state.bowl(downPins);
@@ -30,12 +32,6 @@ public class FinalFrame extends Frame {
             states.add(state);
         } else {
             states.set(states.size() - 1, state);
-        }
-    }
-    @Override
-    public Frame nextFrame() {
-        if (isGameOver()) {
-            throw new IllegalStateException("더 이상 게임을 진행할 수 없습니다.");
         }
         return this;
     }
@@ -45,6 +41,11 @@ public class FinalFrame extends Frame {
         boolean existMiss = states.stream()
                 .anyMatch(Miss.class::isInstance);
         return round == 3 || existMiss;
+    }
+
+    @Override
+    public String printResult() {
+        return states.stream().map(state -> state.printResult()).collect(Collectors.joining("|"));
     }
 
     List<State> getStates() {

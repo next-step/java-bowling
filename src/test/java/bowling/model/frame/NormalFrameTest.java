@@ -15,12 +15,11 @@ public class NormalFrameTest {
         Pins first = Pins.valueOf(MIN);
 
         // when
-        NormalFrame frame = NormalFrame.ofFirst();
-        frame.bowl(first);
-        Frame nextFrame = frame.nextFrame();
+        Frame frame = NormalFrame.ofFirst();
+        Frame resultFrame = frame.bowl(first);
 
         // then
-        assertThat(nextFrame).isEqualTo(frame);
+        assertThat(resultFrame).isEqualTo(frame);
     }
 
     @Test
@@ -30,11 +29,10 @@ public class NormalFrameTest {
 
         // when
         NormalFrame frame = NormalFrame.ofFirst();
-        frame.bowl(first);
-        Frame nextFrame = frame.nextFrame();
+        Frame resultFrame = frame.bowl(first);
 
         // then
-        assertThat(nextFrame).isNotEqualTo(frame);
+        assertThat(resultFrame).isNotEqualTo(frame);
     }
 
     @Test
@@ -45,11 +43,9 @@ public class NormalFrameTest {
 
         // when
         NormalFrame frame = NormalFrame.ofFirst();
-        frame.bowl(first);
-        frame.bowl(second);
-        Frame nextFrame = frame.nextFrame();
+        Frame resultFrame = frame.bowl(first).bowl(second);
 
         // then
-        assertThat(nextFrame).isNotEqualTo(frame);
+        assertThat(resultFrame).isNotEqualTo(frame);
     }
 }

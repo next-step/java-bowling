@@ -27,6 +27,10 @@ public class FrameNumber {
         return of(number + 1);
     }
 
+    boolean isFinalNumber() {
+        return MAX == number;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,9 +49,5 @@ public class FrameNumber {
         return "FrameNumber{" +
                 "number=" + number +
                 '}';
-    }
-
-    public boolean isFinalNumber() {
-        return MAX == number;
     }
 }

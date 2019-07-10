@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class FinalFrameTest {
 
@@ -28,9 +27,7 @@ public class FinalFrameTest {
         frame.bowl(first);
         frame.bowl(second);
 
-        // exception
-        assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(() -> frame.nextFrame());
+        assertThat(frame.isGameOver()).isTrue();
     }
 
     @Test
@@ -41,7 +38,7 @@ public class FinalFrameTest {
         // when
         frame.bowl(first);
 
-        assertThat(frame.nextFrame()).isEqualTo(frame);
+        assertThat(frame.isGameOver()).isFalse();
     }
 
     @Test
@@ -54,7 +51,7 @@ public class FinalFrameTest {
         frame.bowl(first);
         frame.bowl(second);
 
-        assertThat(frame.nextFrame()).isEqualTo(frame);
+        assertThat(frame.isGameOver()).isFalse();
     }
 
     @Test
@@ -67,7 +64,7 @@ public class FinalFrameTest {
         frame.bowl(first);
         frame.bowl(second);
 
-        assertThat(frame.nextFrame()).isEqualTo(frame);
+        assertThat(frame.isGameOver()).isFalse();
     }
 
     @Test
@@ -80,7 +77,7 @@ public class FinalFrameTest {
         frame.bowl(first);
         frame.bowl(second);
 
-        assertThat(frame.nextFrame()).isEqualTo(frame);
+        assertThat(frame.isGameOver()).isFalse();
     }
 
     @Test
@@ -95,9 +92,7 @@ public class FinalFrameTest {
         frame.bowl(second);
         frame.bowl(third);
 
-        // exception
-        assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(() -> frame.nextFrame());
+        assertThat(frame.isGameOver()).isTrue();
     }
 
     @Test
@@ -109,7 +104,7 @@ public class FinalFrameTest {
         frame.bowl(first);
 
         // then
-        assertThat(frame.nextFrame()).isEqualTo(frame);
+        assertThat(frame.isGameOver()).isFalse();
         assertThat(frame.getStates().get(0)).isInstanceOf(Strike.class);
         assertThat(frame.getStates().get(0)).isInstanceOf(Strike.class);
     }
@@ -125,7 +120,7 @@ public class FinalFrameTest {
         frame.bowl(second);
 
         // then
-        assertThat(frame.nextFrame()).isEqualTo(frame);
+        assertThat(frame.isGameOver()).isFalse();
         assertThat(frame.getStates().get(0)).isInstanceOf(Strike.class);
         assertThat(frame.getStates().get(1)).isInstanceOf(Strike.class);
     }

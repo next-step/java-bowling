@@ -8,12 +8,19 @@ import java.util.Objects;
 
 public class NormalFrame extends Frame {
 
-    private final FrameNumber frameNumber;
+    private final Frame next;
     private State state;
 
     private NormalFrame(FrameNumber frameNumber) {
-        this.frameNumber = frameNumber;
+        super(frameNumber);
+        this.next = nextFrame();
         this.state = new None();
+    }
+
+    private Frame nextFrame() {
+        FrameNumber nextFrameNumber = nextFrameNumber();
+        return nextFrameNumber.isFinalNumber() ? FinalFrame.of()
+                : NormalFrame.of(nextFrameNumber);
     }
 
     static NormalFrame ofFirst() {
@@ -25,14 +32,10 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public void bowl(Pins downPins) {
+    public Frame bowl(Pins downPins) {
         state = state.bowl(downPins);
-    }
-
-    @Override
-    public Frame nextFrame() {
         if (state.isFinished()) {
-            return generate(frameNumber.increase());
+            return next;
         }
         return this;
     }
@@ -43,23 +46,28 @@ public class NormalFrame extends Frame {
     }
 
     @Override
+    public String printResult() {
+        return state.printResult();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(frameNumber, that.frameNumber) &&
+        return Objects.equals(next, that.next) &&
                 Objects.equals(state, that.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNumber, state);
+        return Objects.hash(next, state);
     }
 
     @Override
     public String toString() {
         return "NormalFrame{" +
-                "frameNumber=" + frameNumber +
+                "next=" + next +
                 ", state=" + state +
                 '}';
     }
