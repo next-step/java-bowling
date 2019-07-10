@@ -6,7 +6,7 @@ public class PlayerName {
 
     private PlayerName(String inputName) {
         validationPlayerName(inputName);
-        this.name = inputName;
+        this.name = inputName.toUpperCase();
     }
 
     public static PlayerName from(String inputName) {

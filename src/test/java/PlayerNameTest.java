@@ -51,4 +51,12 @@ public class PlayerNameTest {
                     PlayerName.from(name);
                 }).withMessage(PlayerName.ALERT_INVALID_PLAYER_NAME);
     }
+
+    @Test
+    void 플레이어의_이름을_대문자로_바꾼다() {
+        String name = "hjs";
+        PlayerName playerName = PlayerName.from(name);
+
+        assertThat(playerName.getName()).isEqualTo("HJS");
+    }
 }
