@@ -15,7 +15,7 @@ public class Application {
         BowlingGame bowlingGame = BowlingGame.settingOf(player);
         OutView.printCurrentScores(bowlingGame.getCurrentStates());
 
-        while (!bowlingGame.isGameOver()){
+        while (!bowlingGame.isGameOver()) {
             int countOfDownPins = InputView.askCountOfDownPins(bowlingGame.getCurrentNumber());
             Pins downPins = Pins.valueOf(countOfDownPins);
             bowlingGame.play(downPins);

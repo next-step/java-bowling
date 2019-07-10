@@ -25,7 +25,7 @@ public class BowlingGame {
     }
 
     public FrameNumber getCurrentNumber() {
-        return gameEngine.getCurrenNumber();
+        return gameEngine.getCurrentNumber();
     }
 
     public String getCurrentStates() {

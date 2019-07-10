@@ -22,7 +22,7 @@ public class GameEngine {
         return this;
     }
 
-    FrameNumber getCurrenNumber() {
+    FrameNumber getCurrentNumber() {
         return currentFrame.getNumber();
     }
 
