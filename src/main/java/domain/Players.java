@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Players {
     private List<Player> players;
@@ -15,7 +16,7 @@ public class Players {
     }
 
     public String getPlayerName(int position) {
-        Player player = players.get(position);
-        return player.getName();
+        Optional<Player> maybePlayer = Optional.ofNullable(players.get(position));
+        return maybePlayer.orElseThrow(IllegalArgumentException::new).getName();
     }
 }

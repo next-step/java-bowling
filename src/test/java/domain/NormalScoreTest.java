@@ -1,8 +1,10 @@
 package domain;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static domain.NormalScore.BOWL_TWICE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -17,7 +19,7 @@ public class NormalScoreTest {
 
     @BeforeEach
     void setUp() {
-        normalScore = new NormalScore();
+        normalScore = new NormalScore(0);
     }
 
     @Test
@@ -82,17 +84,16 @@ public class NormalScoreTest {
 
     @Test
     void 스페어_여부() {
-        final int SECOND_BOWL = 1;
         normalScore.bowl(FIRST_BALL);
         normalScore.bowl(SPARE);
-        assertThat(normalScore.isSpare(SECOND_BOWL)).isTrue();
+        assertThat(normalScore.isSpare()).isTrue();
     }
 
     @Test
     void 스트라이크_결과_출력() {
         normalScore.bowl(STRIKE);
 
-        assertThat(normalScore.getResult()).isEqualTo("X   ");
+        assertThat(normalScore.framePoint()).isEqualTo("X   ");
     }
 
     @Test
@@ -100,7 +101,7 @@ public class NormalScoreTest {
         normalScore.bowl(FIRST_BALL);
         normalScore.bowl(SPARE);
 
-        assertThat(normalScore.getResult()).isEqualTo(FIRST_BALL + "|/ ");
+        assertThat(normalScore.framePoint()).isEqualTo(FIRST_BALL + "|/ ");
     }
 
     @Test
@@ -108,7 +109,7 @@ public class NormalScoreTest {
         normalScore.bowl(FIRST_BALL);
         normalScore.bowl(SECOND_BALL);
 
-        assertThat(normalScore.getResult()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL + " ");
+        assertThat(normalScore.framePoint()).isEqualTo(FIRST_BALL + "|" + SECOND_BALL + " ");
     }
 
     @Test
@@ -116,6 +117,29 @@ public class NormalScoreTest {
         normalScore.bowl(FIRST_BALL);
         normalScore.bowl(GUTTER);
 
-        assertThat(normalScore.getResult()).isEqualTo(FIRST_BALL + "|" + "- ");
+        assertThat(normalScore.framePoint()).isEqualTo(FIRST_BALL + "|" + "- ");
+    }
+
+    @DisplayName("3점 이후 10점 입력하면 isOverPoint==True")
+    @Test
+    void isOverPointTest() {
+        normalScore.bowl(FIRST_BALL);
+        assertThat(normalScore.isOverPoint(STRIKE)).isTrue();
+    }
+
+    @DisplayName("0 번째 포인트 출력")
+    @Test
+    void getPointScoreTest() {
+        normalScore.bowl(FIRST_BALL);
+        normalScore.bowl(SECOND_BALL);
+        assertThat(normalScore.getPointScore(0)).isEqualTo(FIRST_BALL);
+    }
+
+    @DisplayName("볼링 공 던진 횟수 출력")
+    @Test
+    void getPointExistCountTest() {
+        normalScore.bowl(FIRST_BALL);
+        normalScore.bowl(SECOND_BALL);
+        assertThat(normalScore.getPointExistCount()).isEqualTo(BOWL_TWICE);
     }
 }

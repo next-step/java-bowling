@@ -1,17 +1,19 @@
 package domain;
 
+import View.BowlingScore;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class FinalScore {
+import static domain.NormalScore.*;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
+public class FinalScore implements BowlingScore {
     private static final int FRAME_SIZE = 3;
-    private static final int STRIKE = 10;
-    private static final int FIRST = 0;
-    private static final int SECOND = 1;
-    private static final int BOWL_ONCE = 1;
-    private static final int BOWL_TWICE = 2;
 
     private final List<Point> points;
 
@@ -19,90 +21,93 @@ public class FinalScore {
         this.points = new ArrayList<>();
     }
 
-    public boolean bowl(int score) {
+    @Override
+    public boolean bowl(int point) {
         if (!nowBowlable()) {
-            return false;
+            return FALSE;
         }
 
-        if (isOverPoint(score)) {
+        if (isOverPoint(point)) {
             throw new IllegalArgumentException("최근 두 번의 투구 합은 10점을 초과할 수 없습니다.");
         }
 
-        Point point = Point.bowl(score);
-        points.add(point);
+        Point newPoint = Point.bowl(point);
+        points.add(newPoint);
 
-        return true;
+        return TRUE;
     }
 
+    @Override
     public boolean nowBowlable() {
-        if (getPointSize() == FRAME_SIZE) {
-            return false;
-        }
-        if (isAbleToBonus()) {
-            return false;
-        }
-        return true;
+        return (isAbleToBonus() || getPointExistCount() == FRAME_SIZE) ? FALSE : TRUE;
     }
 
-    private boolean isOverPoint(int currentScore) {
-        int lastPosition = getPointSize() - 1;
-        if (getPointSize() < BOWL_ONCE) {
-            return false;
+    @Override
+    public boolean isOverPoint(int currentScore) {
+        int lastPosition = getPointExistCount() - 1;
+        if (getPointExistCount() < BOWL_ONCE) {
+            return FALSE;
         }
-        return !isStrike(lastPosition) && !isSpare(lastPosition) && (getPoint(lastPosition) + currentScore) > STRIKE;
+        return !isStrike(lastPosition) &&
+                !isSpare(lastPosition) &&
+                (getPointScore(lastPosition) + currentScore) > STRIKE;
     }
 
-    private boolean isAbleToBonus() {
-        int lastPosition = getPointSize() - 1;
-        if (getPointSize() < BOWL_TWICE) {
-            return false;
-        }
-        return !isStrike(lastPosition - 1) && !isStrike(lastPosition) && !isSpare(lastPosition);
-    }
-
+    @Override
     public int sumScore() {
         return points.stream()
-                .mapToInt(point -> point.getPoint())
+                .mapToInt(point -> point.getPointScore())
                 .sum();
     }
 
-    public boolean isStrike(int position) {
-        return getPoint(position) == STRIKE ? true : false;
-    }
-
-    public boolean isSpare(int position) {
-        if (position < SECOND) {
-            return false;
-        }
-        if (!isStrike(position) && (getPoint(position - 1) + getPoint(position)) == STRIKE) {
-            return true;
-        }
-        return false;
-    }
-
-    public int getPointSize() {
-        return points.size();
-    }
-
-    private int getPoint(int position) {
-        Point point = points.get(position);
-        return point.getPoint();
-    }
-
-    public String getResult() {
+    @Override
+    public String framePoint() {
         final String BLANK_FRAME = "     ";
         final String SCORE_CONNECTOR = "|";
 
-        if (getPointSize() == 0) {
+        if (getPointExistCount() == 0) {
             return BLANK_FRAME;
         }
 
-        String score = IntStream.range(0, getPointSize())
-                .boxed()
-                .map(count -> PointName.valueOfPointName(getPoint(count), isSpare(count)))
+        String score = IntStream.range(0, getPointExistCount()).boxed()
+                .map(count -> PointName.valueOfPointName(getPointScore(count), isSpare(count)))
                 .map(result -> SCORE_CONNECTOR + result)
                 .collect(Collectors.joining());
         score = score.substring(SECOND);
         return String.format("%-5s", score);
+    }
+
+    @Override
+    public int getPointScore(int position) {
+        Optional<Point> maybePoint = Optional.ofNullable(points.get(position));
+        Point point = maybePoint.orElseThrow(IllegalStateException::new);
+        return point.getPointScore();
+    }
+
+    @Override
+    public int getPointExistCount() {
+        return points.size();
+    }
+
+    private boolean isStrike(int position) {
+        return getPointScore(position) == STRIKE ? TRUE : FALSE;
+    }
+
+    private boolean isSpare(int position) {
+        if (position < SECOND) {
+            return FALSE;
+        }
+        if (!isStrike(position) && (getPointScore(position - 1) + getPointScore(position)) == STRIKE) {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    private boolean isAbleToBonus() {
+        int lastPosition = getPointExistCount() - 1;
+        if (getPointExistCount() < BOWL_TWICE) {
+            return FALSE;
+        }
+        return !isStrike(lastPosition - 1) && !isStrike(lastPosition) && !isSpare(lastPosition);
     }
 }

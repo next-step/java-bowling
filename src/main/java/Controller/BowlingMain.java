@@ -7,6 +7,8 @@ import domain.Player;
 
 import java.util.stream.IntStream;
 
+import static domain.BowlingGame.MAX_BOWL_COUNT;
+
 public class BowlingMain {
     public static void main(String[] args) {
         Player player = new Player(requestPlayerName());
@@ -25,11 +27,13 @@ public class BowlingMain {
     }
 
     private static void playBowling(BowlingGame bowlingGame, Player player) {
-        IntStream.rangeClosed(1, BowlingGame.MAX_BOWL_COUNT)
-                .filter(n -> !bowlingGame.isGameOver())
-                .map(frame -> requestFrameScore(bowlingGame.getNextFrameNumber()))
-                .peek(n -> OutView.showFrameHeader())
-                .peek(score -> bowlingGame.playBowling(score))
-                .forEach(result -> OutView.showFrameResult(player.getName(), bowlingGame.getResult()));
+        IntStream.rangeClosed(1, MAX_BOWL_COUNT)
+                .filter(ballCount -> !bowlingGame.isGameOver())
+                .map(ballCount -> requestFrameScore(bowlingGame.getNextFrameNumber()))
+                .peek(bowlingGame::playBowling)
+                .peek(score -> OutView.showFrameHeader())
+                .peek(score -> OutView.showFrameResult(player.getName(), bowlingGame.getFormattedPointResult()))
+                .peek(frame -> OutView.showFrameResult("", bowlingGame.getFormattedScoreResult()))
+                .forEach(frame -> OutView.printBlankLine());
     }
 }
