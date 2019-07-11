@@ -13,13 +13,13 @@ public class ScoreBoard {
         return new ScoreBoard(playerName);
     }
 
-    public String printBoard() {
-        String nameFrame = "|  " + playerName.getName() + " |";
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(nameFrame);
+//    public String printInitialBoard() {
+//        String nameFrame = String.format("|  %s |", playerName.getName());
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append(nameFrame);
 //        for (Score score : scores) {
-//            stringBuilder.append("  " + score + "   |");
+//            stringBuilder.append("     |");
 //        }
-        return stringBuilder.toString();
-    }
+//        return stringBuilder.toString();
+//    }
 }

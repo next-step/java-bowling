@@ -7,8 +7,9 @@ public class Application {
 
     public static void main(String[] args) {
         PlayerName playerName = PlayerName.from(InputView.askPlayerName());
-        ScoreBoard scoreBoard = ScoreBoard.of(playerName);
+        OutputView.printInitialBoard(playerName);
 
-        OutputView.printScoreBoard(scoreBoard);
+        ScoreBoard scoreBoard = ScoreBoard.of(playerName);
+//        OutputView.printScoreBoard(scoreBoard);
     }
 }
