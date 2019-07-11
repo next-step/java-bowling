@@ -41,7 +41,7 @@ public class FrameIndex {
         return valueOf(frameIndex + INCREMENT_VALUE);
     }
 
-    public boolean isMax() {
+    boolean isMax() {
         return frameIndex == MAX;
     }
 

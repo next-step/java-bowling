@@ -11,7 +11,7 @@ public class KnockdownPins {
     static final int MIN_VALUE = 0;
 
     public static final KnockdownPins MAX = valueOf(MAX_VALUE);
-    public static final KnockdownPins MIN = valueOf(MIN_VALUE);
+    public static final KnockdownPins GUTTER = valueOf(MIN_VALUE);
 
     private final int knockdownPins;
 
@@ -40,6 +40,14 @@ public class KnockdownPins {
 
     public boolean isGutter() {
         return knockdownPins == MIN_VALUE;
+    }
+
+    public KnockdownPins remaining() {
+        return KnockdownPins.valueOf(MAX_VALUE - knockdownPins);
+    }
+
+    public KnockdownPins sum(final KnockdownPins other) {
+        return valueOf(knockdownPins + other.knockdownPins);
     }
 
     public String toSymbol() {

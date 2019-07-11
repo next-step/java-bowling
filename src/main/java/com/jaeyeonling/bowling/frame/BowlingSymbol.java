@@ -30,7 +30,7 @@ public enum BowlingSymbol {
         }
 
         final String symbol = toSymbol(firstKnockdownPins) + DELIMITER;
-        if (secondKnockdownPins.isMax()) {
+        if (firstKnockdownPins.sum(secondKnockdownPins).isMax()) {
             return symbol + SPARE;
         }
         if (secondKnockdownPins.isGutter()) {
