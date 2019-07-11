@@ -1,5 +1,6 @@
 package com.jaeyeonling.bowling.domain;
 
+import com.jaeyeonling.bowling.domain.frame.FinishedBowlingGameException;
 import com.jaeyeonling.bowling.domain.frame.Frame;
 import com.jaeyeonling.bowling.domain.frame.FrameIndex;
 import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
@@ -23,7 +24,7 @@ public class BowlingGame implements StringVisualizable {
 
     public void bowl(final KnockdownPins knockdownPins) {
         if (isFinish()) {
-            throw new IllegalStateException();
+            throw new FinishedBowlingGameException();
         }
 
         currentFrame = currentFrame.bowl(knockdownPins);

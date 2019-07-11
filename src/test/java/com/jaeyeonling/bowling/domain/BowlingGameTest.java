@@ -1,5 +1,6 @@
 package com.jaeyeonling.bowling.domain;
 
+import com.jaeyeonling.bowling.domain.frame.FinishedBowlingGameException;
 import com.jaeyeonling.bowling.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.jaeyeonling.bowling.domain.frame.KnockdownPins.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class BowlingGameTest {
 
@@ -109,5 +111,25 @@ class BowlingGameTest {
 
         // then
         assertThat(bowlingGame.visualize()).isEqualTo(expected);
+    }
+
+    @DisplayName("완료된 게임을 시작하면 예외처리한다.")
+    @Test
+    void throwFinishedBowlingGameException() {
+        // given
+        bowlingGame.bowl(MAX);
+        bowlingGame.bowl(MAX);
+        bowlingGame.bowl(MAX);
+        bowlingGame.bowl(MAX);
+        bowlingGame.bowl(MAX);
+        bowlingGame.bowl(MAX);
+        bowlingGame.bowl(MAX);
+        bowlingGame.bowl(MAX);
+        bowlingGame.bowl(MAX);
+        bowlingGame.bowl(MAX); bowlingGame.bowl(MAX); bowlingGame.bowl(MAX);
+
+        // when / then
+        assertThatExceptionOfType(FinishedBowlingGameException.class)
+                .isThrownBy(() -> bowlingGame.bowl(MAX));
     }
 }
