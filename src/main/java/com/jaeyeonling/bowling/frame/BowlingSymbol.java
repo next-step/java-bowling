@@ -14,10 +14,10 @@ public enum BowlingSymbol {
 
     static String toSymbol(final KnockdownPins knockdownPins) {
         if (knockdownPins.isMax()) {
-            return STRIKE.symbol;
+            return STRIKE.toString();
         }
-        if (knockdownPins.isMin()) {
-            return GUTTER.symbol;
+        if (knockdownPins.isGutter()) {
+            return GUTTER.toString();
         }
 
         return String.valueOf(knockdownPins.getKnockdownPins());
@@ -26,17 +26,22 @@ public enum BowlingSymbol {
     static String toSymbol(final KnockdownPins firstKnockdownPins,
                            final KnockdownPins secondKnockdownPins) {
         if (firstKnockdownPins.isMax()) {
-            return STRIKE.symbol;
+            return STRIKE.toString();
         }
 
-        final String symbol = toSymbol(firstKnockdownPins) + DELIMITER.symbol;
+        final String symbol = toSymbol(firstKnockdownPins) + DELIMITER;
         if (secondKnockdownPins.isMax()) {
-            return symbol + SPARE.symbol;
+            return symbol + SPARE;
         }
-        if (secondKnockdownPins.isMin()) {
-            return symbol + GUTTER.symbol;
+        if (secondKnockdownPins.isGutter()) {
+            return symbol + GUTTER;
         }
 
         return symbol + secondKnockdownPins.getKnockdownPins();
+    }
+
+    @Override
+    public String toString() {
+        return symbol;
     }
 }

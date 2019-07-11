@@ -38,7 +38,7 @@ public class KnockdownPins {
         return knockdownPins == MAX_VALUE;
     }
 
-    public boolean isMin() {
+    public boolean isGutter() {
         return knockdownPins == MIN_VALUE;
     }
 

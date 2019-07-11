@@ -41,29 +41,29 @@ class KnockdownPinsTest {
         assertThat(isEquals).isTrue();
     }
 
-    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.MIN_VALUE + " 이면 최소다.")
+    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.MIN_VALUE + " 이면 거터다.")
     @ParameterizedTest
     @ValueSource(ints = {KnockdownPins.MIN_VALUE})
-    void isMin(final int rawKnockdownPins) {
+    void isGutter(final int rawKnockdownPins) {
         // given
         final KnockdownPins knockdownPins = KnockdownPins.valueOf(rawKnockdownPins);
 
         // when
-        final boolean isMin = knockdownPins.isMin();
+        final boolean isMin = knockdownPins.isGutter();
 
         // then
         assertThat(isMin).isTrue();
     }
 
-    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.MIN_VALUE + "이 아니면 최소가 아니다.")
+    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.MIN_VALUE + "이 아니면 거터가 아니다.")
     @ParameterizedTest
     @ValueSource(ints = {KnockdownPins.MIN_VALUE + 1, KnockdownPins.MAX_VALUE})
-    void isNotMin(final int rawKnockdownPins) {
+    void isNotGutter(final int rawKnockdownPins) {
         // given
         final KnockdownPins knockdownPins = KnockdownPins.valueOf(rawKnockdownPins);
 
         // when
-        final boolean isMin = knockdownPins.isMin();
+        final boolean isMin = knockdownPins.isGutter();
 
         // then
         assertThat(isMin).isFalse();
