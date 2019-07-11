@@ -16,6 +16,14 @@ class NormalFrameTest {
         firstFrame = Frame.first();
     }
 
+    @DisplayName("거터 시 시각화한다.")
+    @Test
+    void gutterVisualize() {
+        firstFrame.bowl(GUTTER);
+
+        assertThat(firstFrame.visualize()).isEqualTo("   -   |       |       |       |       |       |       |       |       |       |");
+    }
+
     @DisplayName("거터 거터 시 시각화한다.")
     @Test
     void gutterGutterVisualize() {
@@ -30,6 +38,14 @@ class NormalFrameTest {
         firstFrame.bowl(GUTTER).bowl(valueOf(1));
 
         assertThat(firstFrame.visualize()).isEqualTo("  -|1  |       |       |       |       |       |       |       |       |       |");
+    }
+
+    @DisplayName("미스 시 시각화한다.")
+    @Test
+    void missVisualize() {
+        firstFrame.bowl(valueOf(1));
+
+        assertThat(firstFrame.visualize()).isEqualTo("   1   |       |       |       |       |       |       |       |       |       |");
     }
 
     @DisplayName("미스 미스 시 시각화한다.")

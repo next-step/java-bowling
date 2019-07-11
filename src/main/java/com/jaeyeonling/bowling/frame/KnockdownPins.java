@@ -8,10 +8,10 @@ public class KnockdownPins {
     private static final Map<Integer, KnockdownPins> POOL = new HashMap<>();
 
     static final int MAX_VALUE = 10;
-    static final int MIN_VALUE = 0;
+    static final int GUTTER_VALUE = 0;
 
     public static final KnockdownPins MAX = valueOf(MAX_VALUE);
-    public static final KnockdownPins GUTTER = valueOf(MIN_VALUE);
+    public static final KnockdownPins GUTTER = valueOf(GUTTER_VALUE);
 
     private final int knockdownPins;
 
@@ -20,7 +20,7 @@ public class KnockdownPins {
     }
 
     public static KnockdownPins valueOf(final int knockdownPins) {
-        if (knockdownPins < MIN_VALUE) {
+        if (knockdownPins < GUTTER_VALUE) {
             throw new ShorterThanMinKnockdownPinsException(knockdownPins);
         }
         if (knockdownPins > MAX_VALUE) {
@@ -35,7 +35,7 @@ public class KnockdownPins {
     }
 
     public boolean isGutter() {
-        return knockdownPins == MIN_VALUE;
+        return knockdownPins == GUTTER_VALUE;
     }
 
     public KnockdownPins remaining() {

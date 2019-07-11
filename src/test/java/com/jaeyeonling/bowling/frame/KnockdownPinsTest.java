@@ -18,9 +18,9 @@ class KnockdownPinsTest {
                 .isThrownBy(() -> KnockdownPins.valueOf(knockdownPins));
     }
 
-    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.MIN_VALUE + "보다 낮으면 예외처리 한다.")
+    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.GUTTER_VALUE + "보다 낮으면 예외처리 한다.")
     @ParameterizedTest
-    @ValueSource(ints = {KnockdownPins.MIN_VALUE - 1})
+    @ValueSource(ints = {KnockdownPins.GUTTER_VALUE - 1})
     void throwShorterThanMinKnockdownPinsException(final int knockdownPins) {
         assertThatExceptionOfType(ShorterThanMinKnockdownPinsException.class)
                 .isThrownBy(() -> KnockdownPins.valueOf(knockdownPins));
@@ -28,7 +28,7 @@ class KnockdownPinsTest {
 
     @DisplayName("쓰러트린 핀의 갯수가 같다면 같은 객체다.")
     @ParameterizedTest
-    @ValueSource(ints = {KnockdownPins.MIN_VALUE, 5, KnockdownPins.MAX_VALUE})
+    @ValueSource(ints = {KnockdownPins.GUTTER_VALUE, 5, KnockdownPins.MAX_VALUE})
     void equals(final int rawKnockdownPins) {
         // given
         final KnockdownPins knockdownPins = KnockdownPins.valueOf(rawKnockdownPins);
@@ -41,9 +41,9 @@ class KnockdownPinsTest {
         assertThat(isEquals).isTrue();
     }
 
-    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.MIN_VALUE + " 이면 거터다.")
+    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.GUTTER_VALUE + " 이면 거터다.")
     @ParameterizedTest
-    @ValueSource(ints = {KnockdownPins.MIN_VALUE})
+    @ValueSource(ints = {KnockdownPins.GUTTER_VALUE})
     void isGutter(final int rawKnockdownPins) {
         // given
         final KnockdownPins knockdownPins = KnockdownPins.valueOf(rawKnockdownPins);
@@ -55,9 +55,9 @@ class KnockdownPinsTest {
         assertThat(isMin).isTrue();
     }
 
-    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.MIN_VALUE + "이 아니면 거터가 아니다.")
+    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.GUTTER_VALUE + "이 아니면 거터가 아니다.")
     @ParameterizedTest
-    @ValueSource(ints = {KnockdownPins.MIN_VALUE + 1, KnockdownPins.MAX_VALUE})
+    @ValueSource(ints = {KnockdownPins.GUTTER_VALUE + 1, KnockdownPins.MAX_VALUE})
     void isNotGutter(final int rawKnockdownPins) {
         // given
         final KnockdownPins knockdownPins = KnockdownPins.valueOf(rawKnockdownPins);
@@ -83,9 +83,9 @@ class KnockdownPinsTest {
         assertThat(isMax).isTrue();
     }
 
-    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.MIN_VALUE + "이 아니면 최대가 아니다.")
+    @DisplayName("쓰러트린 핀의 갯수가 " + KnockdownPins.GUTTER_VALUE + "이 아니면 최대가 아니다.")
     @ParameterizedTest
-    @ValueSource(ints = {KnockdownPins.MIN_VALUE, KnockdownPins.MAX_VALUE - 1})
+    @ValueSource(ints = {KnockdownPins.GUTTER_VALUE, KnockdownPins.MAX_VALUE - 1})
     void isNotMax(final int rawKnockdownPins) {
         // given
         final KnockdownPins knockdownPins = KnockdownPins.valueOf(rawKnockdownPins);
@@ -217,7 +217,7 @@ class KnockdownPinsTest {
     @Test
     void minAndSpareToSymbol() {
         // given
-        final KnockdownPins first = KnockdownPins.valueOf(KnockdownPins.MIN_VALUE);
+        final KnockdownPins first = KnockdownPins.valueOf(KnockdownPins.GUTTER_VALUE);
         final KnockdownPins second = KnockdownPins.valueOf(KnockdownPins.MAX_VALUE);
 
         // when
