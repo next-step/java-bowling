@@ -30,10 +30,6 @@ public class KnockdownPins {
         return POOL.computeIfAbsent(knockdownPins, KnockdownPins::new);
     }
 
-    int getKnockdownPins() {
-        return knockdownPins;
-    }
-
     public boolean isMax() {
         return knockdownPins == MAX_VALUE;
     }
@@ -56,5 +52,9 @@ public class KnockdownPins {
 
     public String toSymbol(final KnockdownPins next) {
         return BowlingSymbol.toSymbol(this, next);
+    }
+
+    int getKnockdownPins() {
+        return knockdownPins;
     }
 }
