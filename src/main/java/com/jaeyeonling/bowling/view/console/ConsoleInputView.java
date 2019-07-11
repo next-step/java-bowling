@@ -1,8 +1,7 @@
 package com.jaeyeonling.bowling.view.console;
 
-import com.jaeyeonling.bowling.domain.frame.Frame;
-import com.jaeyeonling.bowling.domain.frame.FrameIndex;
 import com.jaeyeonling.bowling.domain.user.Username;
+import com.jaeyeonling.bowling.view.Visualizable;
 
 import java.util.Scanner;
 
@@ -19,8 +18,8 @@ public final class ConsoleInputView {
         return readStringWithMessage(READ_USER_MESSAGE);
     }
 
-    public static int readKnockdownPins(final FrameIndex frameIndex) {
-        return readIntWithMessage(String.format(READ_KNOCKDOWN_PINS_MESSAGE, frameIndex.visualize()));
+    public static int readKnockdownPins(final Visualizable<?> visualizer) {
+        return readIntWithMessage(String.format(READ_KNOCKDOWN_PINS_MESSAGE, visualizer.visualize()));
     }
 
     private static String readStringWithMessage(final String message) {
