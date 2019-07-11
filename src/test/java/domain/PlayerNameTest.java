@@ -1,3 +1,6 @@
+package domain;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,7 +12,7 @@ public class PlayerNameTest {
         String name = "HJS";
         PlayerName playerName = PlayerName.from(name);
 
-        assertThat(playerName.isSameName(name)).isTrue();
+        Assertions.assertThat(playerName.isSameName(name)).isTrue();
     }
 
     @Test
@@ -57,6 +60,6 @@ public class PlayerNameTest {
         String name = "hjs";
         PlayerName playerName = PlayerName.from(name);
 
-        assertThat(playerName.isSameName("HJS")).isTrue();
+        Assertions.assertThat(playerName.isSameName("HJS")).isTrue();
     }
 }

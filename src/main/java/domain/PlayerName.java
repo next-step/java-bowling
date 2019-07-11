@@ -1,3 +1,5 @@
+package domain;
+
 public class PlayerName {
     private static final String REGEX_FOR_PLAYER_NAME = "^[a-zA-Z]{3}$";
     static final String ALERT_INVALID_PLAYER_NAME = "플레이어의 이름은 세 자리의 영문만 가능합니다.";
@@ -21,5 +23,9 @@ public class PlayerName {
 
     public boolean isSameName(String nameToCompare) {
         return nameToCompare.equals(name);
+    }
+
+    public String getName() {
+        return name;
     }
 }
