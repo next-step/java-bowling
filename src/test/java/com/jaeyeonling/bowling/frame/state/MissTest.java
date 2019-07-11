@@ -1,6 +1,5 @@
 package com.jaeyeonling.bowling.frame.state;
 
-import com.jaeyeonling.bowling.frame.KnockdownPins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

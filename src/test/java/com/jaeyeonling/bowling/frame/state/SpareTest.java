@@ -1,10 +1,10 @@
 package com.jaeyeonling.bowling.frame.state;
 
-import com.jaeyeonling.bowling.frame.KnockdownPins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.jaeyeonling.bowling.frame.KnockdownPins.*;
 import static com.jaeyeonling.bowling.frame.KnockdownPins.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -22,7 +22,7 @@ class SpareTest {
     @Test
     void type() {
         assertThat(state.bowl(valueOf(1)).bowl(valueOf(9))).isInstanceOf(Spare.class);
-        assertThat(state.bowl(valueOf(0)).bowl(KnockdownPins.MAX)).isInstanceOf(Spare.class);
+        assertThat(state.bowl(valueOf(0)).bowl(MAX)).isInstanceOf(Spare.class);
         assertThat(state.bowl(valueOf(5)).bowl(valueOf(5))).isInstanceOf(Spare.class);
     }
 
@@ -30,7 +30,7 @@ class SpareTest {
     @Test
     void finishedType() {
         assertThat(state.bowl(valueOf(1)).bowl(valueOf(9))).isInstanceOf(Finished.class);
-        assertThat(state.bowl(valueOf(0)).bowl(KnockdownPins.MAX)).isInstanceOf(Finished.class);
+        assertThat(state.bowl(valueOf(0)).bowl(MAX)).isInstanceOf(Finished.class);
         assertThat(state.bowl(valueOf(5)).bowl(valueOf(5))).isInstanceOf(Finished.class);
     }
 
@@ -44,7 +44,7 @@ class SpareTest {
     @Test
     void readyVisualize() {
         assertThat(state.bowl(valueOf(1)).bowl(valueOf(9)).visualize()).isEqualTo("1|/");
-        assertThat(state.bowl(valueOf(0)).bowl(KnockdownPins.MAX).visualize()).isEqualTo("-|/");
+        assertThat(state.bowl(valueOf(0)).bowl(MAX).visualize()).isEqualTo("-|/");
         assertThat(state.bowl(valueOf(5)).bowl(valueOf(5)).visualize()).isEqualTo("5|/");
     }
 

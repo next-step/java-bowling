@@ -1,10 +1,10 @@
 package com.jaeyeonling.bowling.frame.state;
 
-import com.jaeyeonling.bowling.frame.KnockdownPins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.jaeyeonling.bowling.frame.KnockdownPins.MAX;
 import static com.jaeyeonling.bowling.frame.KnockdownPins.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -15,7 +15,7 @@ class StrikeTest {
 
     @BeforeEach
     void setUp() {
-        state = new Ready().bowl(KnockdownPins.MAX);
+        state = new Ready().bowl(MAX);
     }
 
     @DisplayName("첫 볼링에 최대점수면 스트라이크다.")

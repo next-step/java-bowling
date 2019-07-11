@@ -1,10 +1,10 @@
 package com.jaeyeonling.bowling.frame.state;
 
-import com.jaeyeonling.bowling.frame.KnockdownPins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.jaeyeonling.bowling.frame.KnockdownPins.*;
 import static com.jaeyeonling.bowling.frame.KnockdownPins.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,8 +32,8 @@ class ReadyTest {
     @DisplayName("볼링을 할 수 있다.")
     @Test
     void bowl() {
-        assertThat(state.bowl(KnockdownPins.GUTTER)).isNotNull();
+        assertThat(state.bowl(GUTTER)).isNotNull();
         assertThat(state.bowl(valueOf(5))).isNotNull();
-        assertThat(state.bowl(KnockdownPins.MAX)).isNotNull();
+        assertThat(state.bowl(MAX)).isNotNull();
     }
 }
