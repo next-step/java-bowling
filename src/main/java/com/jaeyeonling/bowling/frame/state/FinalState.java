@@ -12,6 +12,7 @@ import static java.util.stream.Collectors.joining;
 public class FinalState extends ValidFrameState {
 
     private static final String DELIMITER = BowlingSymbol.DELIMITER.toString();
+    private static final int START_INDEX = 0;
     private static final int DEFAULT_SIZE = 1;
     private static final int BONUS_ROUND = 3;
 
@@ -30,8 +31,18 @@ public class FinalState extends ValidFrameState {
         if (roundCounter.isHigherAndEquals(BONUS_ROUND)) {
             return true;
         }
+        if (isFirstStrike()) {
+            return false;
+        }
 
         return isNotBonus();
+    }
+
+    @Override
+    public String visualize() {
+        return frameStates.stream()
+                .map(FrameState::visualize)
+                .collect(joining(DELIMITER));
     }
 
     @Override
@@ -46,30 +57,27 @@ public class FinalState extends ValidFrameState {
         return this;
     }
 
-    @Override
-    public String visualize() {
-        return frameStates.stream()
-                .map(FrameState::visualize)
-                .collect(joining(DELIMITER));
-    }
-
-    private void bowlAndReplace(final KnockdownPins knockdownPins) {
-        frameStates.set(currentIndex(), getCurrentFrameState().bowl(knockdownPins));
-    }
-
-    private boolean isNotBonus() {
-        return !(getCurrentFrameState() instanceof Finished);
-    }
-
-    private void ready() {
-        frameStates.add(new Ready());
-    }
-
     private FrameState getCurrentFrameState() {
         return frameStates.get(currentIndex());
     }
 
     private int currentIndex() {
         return frameStates.size() - DEFAULT_SIZE;
+    }
+
+    private void ready() {
+        frameStates.add(new Ready());
+    }
+
+    private void bowlAndReplace(final KnockdownPins knockdownPins) {
+        frameStates.set(currentIndex(), getCurrentFrameState().bowl(knockdownPins));
+    }
+
+    private boolean isFirstStrike() {
+        return frameStates.get(START_INDEX) instanceof Strike;
+    }
+
+    private boolean isNotBonus() {
+        return !(getCurrentFrameState() instanceof Finished);
     }
 }
