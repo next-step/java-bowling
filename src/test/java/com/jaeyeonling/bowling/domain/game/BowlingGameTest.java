@@ -1,4 +1,4 @@
-package com.jaeyeonling.bowling.domain;
+package com.jaeyeonling.bowling.domain.game;
 
 import com.jaeyeonling.bowling.domain.frame.FinishedBowlingGameException;
 import com.jaeyeonling.bowling.domain.user.User;

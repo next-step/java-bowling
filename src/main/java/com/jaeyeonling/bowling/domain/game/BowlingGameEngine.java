@@ -1,28 +1,19 @@
-package com.jaeyeonling.bowling.domain;
+package com.jaeyeonling.bowling.domain.game;
 
 import com.jaeyeonling.bowling.domain.frame.FinishedBowlingGameException;
 import com.jaeyeonling.bowling.domain.frame.Frame;
 import com.jaeyeonling.bowling.domain.frame.FrameIndex;
 import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
-import com.jaeyeonling.bowling.domain.user.User;
 import com.jaeyeonling.bowling.view.StringVisualizable;
 
-public class BowlingGame implements StringVisualizable {
+class BowlingGameEngine implements StringVisualizable {
 
     private final Frame firstFrame = Frame.first();
-
-    private final User user;
     private Frame currentFrame = firstFrame;
 
-    private BowlingGame(final User user) {
-        this.user = user;
-    }
+    BowlingGameEngine() { }
 
-    public static BowlingGame with(final User user) {
-        return new BowlingGame(user);
-    }
-
-    public void bowl(final KnockdownPins knockdownPins) {
+    void bowl(final KnockdownPins knockdownPins) {
         if (isFinish()) {
             throw new FinishedBowlingGameException();
         }
@@ -30,17 +21,17 @@ public class BowlingGame implements StringVisualizable {
         currentFrame = currentFrame.bowl(knockdownPins);
     }
 
-    public boolean canPlay() {
+    boolean canPlay() {
         return !isFinish();
     }
 
-    public FrameIndex getCurrentFrameIndex() {
+    FrameIndex getCurrentFrameIndex() {
         return currentFrame.getFrameIndex();
     }
 
     @Override
     public String visualize() {
-        return user.visualize() + firstFrame.visualize();
+        return firstFrame.visualize();
     }
 
     private boolean isFinish() {

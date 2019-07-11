@@ -1,6 +1,6 @@
 package com.jaeyeonling.bowling;
 
-import com.jaeyeonling.bowling.domain.BowlingGame;
+import com.jaeyeonling.bowling.domain.game.BowlingGame;
 import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
 import com.jaeyeonling.bowling.domain.user.User;
 import com.jaeyeonling.bowling.view.console.ConsoleInputView;
