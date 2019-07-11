@@ -1,7 +1,5 @@
 package com.jaeyeonling.bowling.utils;
 
-import com.jaeyeonling.bowling.frame.BowlingSymbol;
-
 public final class BowlingUtils {
 
     private static final int FORMAT_LENGTH = 7;
@@ -9,6 +7,6 @@ public final class BowlingUtils {
     private BowlingUtils() { }
 
     public static String format(final String target) {
-        return StringUtils.alignCenter(target, FORMAT_LENGTH) + BowlingSymbol.DELIMITER;
+        return StringUtils.alignCenter(target, FORMAT_LENGTH);
     }
 }

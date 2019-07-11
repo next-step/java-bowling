@@ -114,7 +114,7 @@ class KnockdownPinsTest {
     @Test
     void minToSymbol() {
         // given
-        final KnockdownPins knockdownPins = KnockdownPins.MIN;
+        final KnockdownPins knockdownPins = KnockdownPins.GUTTER;
 
         // when
         final String symbol = knockdownPins.toSymbol();
@@ -141,8 +141,8 @@ class KnockdownPinsTest {
     @Test
     void gutterAndGutterToSymbol() {
         // given
-        final KnockdownPins first = KnockdownPins.MIN;
-        final KnockdownPins second = KnockdownPins.MIN;
+        final KnockdownPins first = KnockdownPins.GUTTER;
+        final KnockdownPins second = KnockdownPins.GUTTER;
 
         // when
         final String symbol = first.toSymbol(second);
@@ -156,7 +156,7 @@ class KnockdownPinsTest {
     @ValueSource(ints = {1, 5, 9})
     void gutterAndMissToSymbol(final int rawKnockdownPins) {
         // given
-        final KnockdownPins first = KnockdownPins.MIN;
+        final KnockdownPins first = KnockdownPins.GUTTER;
         final KnockdownPins second = KnockdownPins.valueOf(rawKnockdownPins);
 
         // when
@@ -172,7 +172,7 @@ class KnockdownPinsTest {
     void missAndGutterToSymbol(final int rawKnockdownPins) {
         // given
         final KnockdownPins first = KnockdownPins.valueOf(rawKnockdownPins);
-        final KnockdownPins second = KnockdownPins.MIN;
+        final KnockdownPins second = KnockdownPins.GUTTER;
 
         // when
         final String symbol = first.toSymbol(second);
