@@ -34,7 +34,7 @@ public class Miss extends ValidFrameState {
     }
 
     @Override
-    public String visualize() {
+    public String toSymbol() {
         return getSecond().map(first::toSymbol)
                 .orElseGet(first::toSymbol);
     }

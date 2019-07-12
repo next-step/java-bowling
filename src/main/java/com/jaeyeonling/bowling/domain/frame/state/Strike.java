@@ -7,7 +7,7 @@ public class Strike extends Finished {
     private static final KnockdownPins STRIKE_PINS = KnockdownPins.MAX;
 
     @Override
-    public String visualize() {
+    public String toSymbol() {
         return STRIKE_PINS.toSymbol();
     }
 }

@@ -7,21 +7,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.IntStream;
-
 import static com.jaeyeonling.bowling.domain.frame.KnockdownPins.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class BowlingGameTest {
 
-    private User user;
     private BowlingGame bowlingGame;
 
     @BeforeEach
     void setUp() {
-        user = User.of("TST");
-        bowlingGame = BowlingGame.with(user);
+        bowlingGame = BowlingGame.with(User.of("TST"));
     }
 
     @DisplayName("전부 거터 시 검증한다.")
@@ -31,11 +27,10 @@ class BowlingGameTest {
         bowl(GUTTER, 20);
 
         // when
-        final String expected = user.visualize() +
-                "  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |";
+        final String expected = "  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |  -|-  |";
 
         // then
-        assertThat(bowlingGame.visualize()).isEqualTo(expected);
+        assertThat(bowlingGame.getFirstFrame().getFrameState()).isEqualTo(expected);
     }
 
     @DisplayName("전부 퍼펙트 시 검증한다.")
@@ -45,11 +40,10 @@ class BowlingGameTest {
         bowl(MAX, 12);
 
         // when
-        final String expected = user.visualize() +
-                "   X   |   X   |   X   |   X   |   X   |   X   |   X   |   X   |   X   | X|X|X |";
+        final String expected = "   X   |   X   |   X   |   X   |   X   |   X   |   X   |   X   |   X   | X|X|X |";
 
         // then
-        assertThat(bowlingGame.visualize()).isEqualTo(expected);
+        assertThat(bowlingGame.getFirstFrame().getFrameState()).isEqualTo(expected);
     }
 
     @DisplayName("전부 스페어 시 검증한다.")
@@ -60,11 +54,10 @@ class BowlingGameTest {
         bowl(MAX);
 
         // when
-        final String expected = user.visualize() +
-                "  5|/  |  5|/  |  5|/  |  5|/  |  5|/  |  5|/  |  5|/  |  5|/  |  5|/  | 5|/|X |";
+        final String expected = "  5|/  |  5|/  |  5|/  |  5|/  |  5|/  |  5|/  |  5|/  |  5|/  |  5|/  | 5|/|X |";
 
         // then
-        assertThat(bowlingGame.visualize()).isEqualTo(expected);
+        assertThat(bowlingGame.getFirstFrame().getFrameState()).isEqualTo(expected);
     }
 
     @DisplayName("복잡한 게임을 검증한다.")
@@ -83,11 +76,10 @@ class BowlingGameTest {
         bowlingGame.bowl(MAX); bowlingGame.bowl(MAX); bowlingGame.bowl(MAX);
 
         // when
-        final String expected = user.visualize() +
-                "  -|-  |  1|1  |  5|-  |   X   |  5|/  |  -|/  |   X   |   X   |  -|-  | X|X|X |";
+        final String expected = "  -|-  |  1|1  |  5|-  |   X   |  5|/  |  -|/  |   X   |   X   |  -|-  | X|X|X |";
 
         // then
-        assertThat(bowlingGame.visualize()).isEqualTo(expected);
+        assertThat(bowlingGame.getFirstFrame().getFrameState()).isEqualTo(expected);
     }
 
     @DisplayName("완료된 게임을 시작하면 예외처리한다.")

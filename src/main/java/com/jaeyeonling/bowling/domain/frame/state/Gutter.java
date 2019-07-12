@@ -34,7 +34,7 @@ public class Gutter extends ValidFrameState {
     }
 
     @Override
-    public String visualize() {
+    public String toSymbol() {
         return isFinished ? GUTTER_PINS.toSymbol(GUTTER_PINS) : GUTTER_PINS.toSymbol();
     }
 }

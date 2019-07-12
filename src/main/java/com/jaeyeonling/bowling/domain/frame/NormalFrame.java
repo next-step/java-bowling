@@ -10,8 +10,8 @@ public class NormalFrame extends StateFrame {
         super(frameIndex, new Ready());
     }
 
-    static Frame of(final FrameIndex frameIndex) {
-        return new NormalFrame(frameIndex);
+    public static Frame first() {
+        return new NormalFrame(FrameIndex.first());
     }
 
     @Override
@@ -39,7 +39,7 @@ public class NormalFrame extends StateFrame {
     }
 
     @Override
-    public String visualize() {
-        return super.visualize() + nextFrame.visualize();
+    public String getFrameState() {
+        return super.getFrameState() + nextFrame.getFrameState();
     }
 }

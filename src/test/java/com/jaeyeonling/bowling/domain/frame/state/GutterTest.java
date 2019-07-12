@@ -20,13 +20,13 @@ class GutterTest {
     @DisplayName("거터 1번을 시각화를 한다.")
     @Test
     void gutterVisualize() {
-        assertThat(state.visualize()).isEqualTo("-");
+        assertThat(state.toSymbol()).isEqualTo("-");
     }
 
     @DisplayName("거터 2번을 시각화를 한다.")
     @Test
     void gutterGutterVisualize() {
-        assertThat(state.bowl(GUTTER).visualize()).isEqualTo("-|-");
+        assertThat(state.bowl(GUTTER).toSymbol()).isEqualTo("-|-");
     }
 
     @DisplayName("거터 1번 시 끝나지 않았다.")

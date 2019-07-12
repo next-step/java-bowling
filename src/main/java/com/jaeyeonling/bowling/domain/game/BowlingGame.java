@@ -1,11 +1,11 @@
 package com.jaeyeonling.bowling.domain.game;
 
+import com.jaeyeonling.bowling.domain.frame.Frame;
 import com.jaeyeonling.bowling.domain.frame.FrameIndex;
 import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
 import com.jaeyeonling.bowling.domain.user.User;
-import com.jaeyeonling.bowling.view.StringVisualizable;
 
-public class BowlingGame implements StringVisualizable {
+public class BowlingGame {
 
     private final User user;
     private final BowlingGameEngine bowlingGameEngine;
@@ -31,8 +31,11 @@ public class BowlingGame implements StringVisualizable {
         return bowlingGameEngine.getCurrentFrameIndex();
     }
 
-    @Override
-    public String visualize() {
-        return user.visualize() + bowlingGameEngine.visualize();
+    public User getUser() {
+        return user;
+    }
+
+    public Frame getFirstFrame() {
+        return bowlingGameEngine.getFirstFrame();
     }
 }

@@ -1,12 +1,10 @@
 package com.jaeyeonling.bowling.domain.frame;
 
-import com.jaeyeonling.bowling.view.StringVisualizable;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class FrameIndex implements StringVisualizable {
+public class FrameIndex {
 
     private static final Map<Integer, FrameIndex> POOL = new HashMap<>();
 
@@ -39,6 +37,10 @@ public class FrameIndex implements StringVisualizable {
         return valueOf(MAX);
     }
 
+    public int getFrameIndex() {
+        return frameIndex;
+    }
+
     public FrameIndex next() {
         return valueOf(frameIndex + INCREMENT_VALUE);
     }
@@ -63,10 +65,5 @@ public class FrameIndex implements StringVisualizable {
     @Override
     public int hashCode() {
         return Objects.hash(frameIndex);
-    }
-
-    @Override
-    public String visualize() {
-        return String.valueOf(frameIndex);
     }
 }

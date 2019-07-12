@@ -1,6 +1,11 @@
 package com.jaeyeonling.bowling.view.console;
 
-import com.jaeyeonling.bowling.view.Visualizable;
+import com.jaeyeonling.bowling.domain.frame.BowlingSymbol;
+import com.jaeyeonling.bowling.domain.frame.Frame;
+import com.jaeyeonling.bowling.domain.game.BowlingGame;
+import com.jaeyeonling.bowling.domain.user.User;
+import com.jaeyeonling.bowling.domain.user.Username;
+import com.jaeyeonling.bowling.utils.BowlingUtils;
 
 import java.io.PrintStream;
 
@@ -14,14 +19,15 @@ public final class ConsoleOutputView {
 
     private ConsoleOutputView() { }
 
-    public static void printBowlingGame(final Visualizable<?> visualizer) {
+    public static void printBowlingGame(final BowlingGame bowlingGame) {
         println(BOWLING_GAME_HEADER);
-        println(visualizer.visualize());
+        print(format(bowlingGame.getUser()));
+        println(format(bowlingGame.getFirstFrame()));
         newline();
     }
 
-    public static void printResult(final Visualizable<?> visualizer) {
-        printBowlingGame(visualizer);
+    public static void printResult(final BowlingGame bowlingGame) {
+        printBowlingGame(bowlingGame);
         newline();
         println(RESULT_MESSAGE);
     }
@@ -36,5 +42,17 @@ public final class ConsoleOutputView {
 
     private static void newline() {
         CONSOLE.println();
+    }
+
+    private static String format(final User user) {
+        return BowlingSymbol.DELIMITER + BowlingUtils.format(format(user.getUsername())) + BowlingSymbol.DELIMITER;
+    }
+
+    private static String format(final Username username) {
+        return username.getUsername();
+    }
+
+    private static String format(final Frame frame) {
+        return frame.getFrameState();
     }
 }

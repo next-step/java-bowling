@@ -47,14 +47,14 @@ class MissTest {
     @DisplayName("miss 1번 시 시각화를 한다.")
     @Test
     void missVisualize() {
-        assertThat(state.visualize()).isEqualTo("1");
+        assertThat(state.toSymbol()).isEqualTo("1");
     }
 
     @DisplayName("miss 2번 시 시각화를 한다.")
     @ParameterizedTest
     @ValueSource(ints = {1,5,6,8})
     void missMissVisualize(final int knockdownPins) {
-        assertThat(state.bowl(valueOf(knockdownPins)).visualize()).isEqualTo("1|" + knockdownPins);
+        assertThat(state.bowl(valueOf(knockdownPins)).toSymbol()).isEqualTo("1|" + knockdownPins);
     }
 
     @DisplayName("게임이 끝난 후 게임 시 예외처리 한다.")

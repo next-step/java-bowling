@@ -1,8 +1,6 @@
 package com.jaeyeonling.bowling.domain.user;
 
-import com.jaeyeonling.bowling.view.StringVisualizable;
-
-public class Username implements StringVisualizable {
+public class Username {
 
     public static final int LENGTH = 3;
 
@@ -22,8 +20,7 @@ public class Username implements StringVisualizable {
         return new Username(username);
     }
 
-    @Override
-    public String visualize() {
+    public String getUsername() {
         return username;
     }
 }

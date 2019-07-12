@@ -21,7 +21,7 @@ class FinalFrameTest {
     void gutterVisualize() {
         finalFrame.bowl(GUTTER);
 
-        assertThat(finalFrame.visualize()).isEqualTo("   -   |");
+        assertThat(finalFrame.getFrameState()).isEqualTo("   -   |");
     }
 
     @DisplayName("거터 거터 시 시각화한다.")
@@ -29,7 +29,7 @@ class FinalFrameTest {
     void gutterGutterVisualize() {
         finalFrame.bowl(GUTTER).bowl(GUTTER);
 
-        assertThat(finalFrame.visualize()).isEqualTo("  -|-  |");
+        assertThat(finalFrame.getFrameState()).isEqualTo("  -|-  |");
     }
 
     @DisplayName("거터 미스 시 시각화한다.")
@@ -37,7 +37,7 @@ class FinalFrameTest {
     void gutterMissVisualize() {
         finalFrame.bowl(GUTTER).bowl(valueOf(1));
 
-        assertThat(finalFrame.visualize()).isEqualTo("  -|1  |");
+        assertThat(finalFrame.getFrameState()).isEqualTo("  -|1  |");
     }
 
     @DisplayName("미스 시 시각화한다.")
@@ -45,7 +45,7 @@ class FinalFrameTest {
     void missVisualize() {
         finalFrame.bowl(valueOf(1));
 
-        assertThat(finalFrame.visualize()).isEqualTo("   1   |");
+        assertThat(finalFrame.getFrameState()).isEqualTo("   1   |");
     }
 
     @DisplayName("미스 미스 시 시각화한다.")
@@ -53,7 +53,7 @@ class FinalFrameTest {
     void missMissVisualize() {
         finalFrame.bowl(valueOf(1)).bowl(valueOf(1));
 
-        assertThat(finalFrame.visualize()).isEqualTo("  1|1  |");
+        assertThat(finalFrame.getFrameState()).isEqualTo("  1|1  |");
     }
 
     @DisplayName("스페어 시 시각화한다.")
@@ -61,7 +61,7 @@ class FinalFrameTest {
     void spareVisualize() {
         finalFrame.bowl(valueOf(5)).bowl(valueOf(5));
 
-        assertThat(finalFrame.visualize()).isEqualTo("  5|/  |");
+        assertThat(finalFrame.getFrameState()).isEqualTo("  5|/  |");
     }
 
     @DisplayName("스트라이크 시 시각화한다.")
@@ -69,7 +69,7 @@ class FinalFrameTest {
     void strikeVisualize() {
         finalFrame.bowl(MAX);
 
-        assertThat(finalFrame.visualize()).isEqualTo("   X   |");
+        assertThat(finalFrame.getFrameState()).isEqualTo("   X   |");
     }
 
     @DisplayName("거터 스페어 시 시각화한다.")
@@ -77,7 +77,7 @@ class FinalFrameTest {
     void gutterSpareVisualize() {
         finalFrame.bowl(GUTTER).bowl(MAX);
 
-        assertThat(finalFrame.visualize()).isEqualTo("  -|/  |");
+        assertThat(finalFrame.getFrameState()).isEqualTo("  -|/  |");
     }
 
     @DisplayName("미스 스페어 거터 시 시각화한다.")
@@ -85,7 +85,7 @@ class FinalFrameTest {
     void missSpareGutterVisualize() {
         finalFrame.bowl(valueOf(1)).bowl(valueOf(9)).bowl(GUTTER);
 
-        assertThat(finalFrame.visualize()).isEqualTo(" 1|/|- |");
+        assertThat(finalFrame.getFrameState()).isEqualTo(" 1|/|- |");
     }
 
     @DisplayName("미스 스페어 거터 시 시각화한다.")
@@ -93,7 +93,7 @@ class FinalFrameTest {
     void missSpareMissVisualize() {
         finalFrame.bowl(valueOf(1)).bowl(valueOf(9)).bowl(valueOf(1));
 
-        assertThat(finalFrame.visualize()).isEqualTo(" 1|/|1 |");
+        assertThat(finalFrame.getFrameState()).isEqualTo(" 1|/|1 |");
     }
 
     @DisplayName("스트라이크 미스 스페어 시 시각화한다.")
@@ -101,7 +101,7 @@ class FinalFrameTest {
     void strikeMissSpareVisualize() {
         finalFrame.bowl(MAX).bowl(valueOf(5)).bowl(valueOf(5));
 
-        assertThat(finalFrame.visualize()).isEqualTo(" X|5|/ |");
+        assertThat(finalFrame.getFrameState()).isEqualTo(" X|5|/ |");
     }
 
     @DisplayName("스트라이크 스트라이크 미스 시 시각화한다.")
@@ -109,7 +109,7 @@ class FinalFrameTest {
     void strikeStrikeMissVisualize() {
         finalFrame.bowl(MAX).bowl(MAX).bowl(valueOf(5));
 
-        assertThat(finalFrame.visualize()).isEqualTo(" X|X|5 |");
+        assertThat(finalFrame.getFrameState()).isEqualTo(" X|X|5 |");
     }
 
     @DisplayName("스트라이크 스트라이크 스트라이크 시 시각화한다.")
@@ -117,7 +117,7 @@ class FinalFrameTest {
     void strikeStrikeStrikeVisualize() {
         finalFrame.bowl(MAX).bowl(MAX).bowl(MAX);
 
-        assertThat(finalFrame.visualize()).isEqualTo(" X|X|X |");
+        assertThat(finalFrame.getFrameState()).isEqualTo(" X|X|X |");
     }
 
     @DisplayName("거터 스페어 스트라이크 시 시각화한다.")
@@ -125,7 +125,7 @@ class FinalFrameTest {
     void gutterSpareStrikeVisualize() {
         finalFrame.bowl(GUTTER).bowl(MAX).bowl(MAX);
 
-        assertThat(finalFrame.visualize()).isEqualTo(" -|/|X |");
+        assertThat(finalFrame.getFrameState()).isEqualTo(" -|/|X |");
     }
 
     @DisplayName("거터 스페어 거터 시 시각화한다.")
@@ -133,6 +133,6 @@ class FinalFrameTest {
     void gutterSpareGutterVisualize() {
         finalFrame.bowl(GUTTER).bowl(MAX).bowl(GUTTER);
 
-        assertThat(finalFrame.visualize()).isEqualTo(" -|/|- |");
+        assertThat(finalFrame.getFrameState()).isEqualTo(" -|/|- |");
     }
 }

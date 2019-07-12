@@ -19,7 +19,7 @@ public class Ready extends ValidFrameState {
     }
 
     @Override
-    public String visualize() {
+    public String toSymbol() {
         return SYMBOL;
     }
 

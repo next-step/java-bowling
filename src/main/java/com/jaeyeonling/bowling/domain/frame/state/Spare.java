@@ -11,7 +11,7 @@ public class Spare extends Finished {
     }
 
     @Override
-    public String visualize() {
+    public String toSymbol() {
         return knockdownPins.toSymbol(knockdownPins.remaining());
     }
 }

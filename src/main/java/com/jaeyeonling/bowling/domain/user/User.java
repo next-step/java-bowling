@@ -2,9 +2,8 @@ package com.jaeyeonling.bowling.domain.user;
 
 import com.jaeyeonling.bowling.domain.frame.BowlingSymbol;
 import com.jaeyeonling.bowling.utils.BowlingUtils;
-import com.jaeyeonling.bowling.view.StringVisualizable;
 
-public class User implements StringVisualizable {
+public class User {
 
     private final Username username;
 
@@ -16,8 +15,11 @@ public class User implements StringVisualizable {
         return new User(Username.valueOf(username));
     }
 
-    @Override
-    public String visualize() {
-        return BowlingSymbol.DELIMITER + BowlingUtils.format(username.visualize()) + BowlingSymbol.DELIMITER;
+    public Username getUsername() {
+        return username;
+    }
+
+    public String format() {
+        return BowlingSymbol.DELIMITER + BowlingUtils.format(username.getUsername()) + BowlingSymbol.DELIMITER;
     }
 }

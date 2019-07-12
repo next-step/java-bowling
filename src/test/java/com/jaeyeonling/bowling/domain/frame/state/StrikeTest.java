@@ -39,7 +39,7 @@ class StrikeTest {
     @DisplayName("시각화를 한다.")
     @Test
     void readyVisualize() {
-        assertThat(state.visualize()).isEqualTo("X");
+        assertThat(state.toSymbol()).isEqualTo("X");
     }
 
     @DisplayName("게임이 끝난 후 게임 시 예외처리 한다.")

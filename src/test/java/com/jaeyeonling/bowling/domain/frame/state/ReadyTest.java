@@ -26,7 +26,7 @@ class ReadyTest {
     @DisplayName("시각화 시 공백이다.")
     @Test
     void readyVisualize() {
-        assertThat(state.visualize()).isEqualTo("");
+        assertThat(state.toSymbol()).isEqualTo("");
     }
 
     @DisplayName("거터를 할 수 있다.")

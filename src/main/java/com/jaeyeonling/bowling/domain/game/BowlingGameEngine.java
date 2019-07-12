@@ -1,14 +1,10 @@
 package com.jaeyeonling.bowling.domain.game;
 
-import com.jaeyeonling.bowling.domain.frame.FinishedBowlingGameException;
-import com.jaeyeonling.bowling.domain.frame.Frame;
-import com.jaeyeonling.bowling.domain.frame.FrameIndex;
-import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
-import com.jaeyeonling.bowling.view.StringVisualizable;
+import com.jaeyeonling.bowling.domain.frame.*;
 
-class BowlingGameEngine implements StringVisualizable {
+class BowlingGameEngine {
 
-    private final Frame firstFrame = Frame.first();
+    private final Frame firstFrame = NormalFrame.first();
     private Frame currentFrame = firstFrame;
 
     BowlingGameEngine() { }
@@ -29,9 +25,8 @@ class BowlingGameEngine implements StringVisualizable {
         return currentFrame.getFrameIndex();
     }
 
-    @Override
-    public String visualize() {
-        return firstFrame.visualize();
+    Frame getFirstFrame() {
+        return firstFrame;
     }
 
     private boolean isFinish() {

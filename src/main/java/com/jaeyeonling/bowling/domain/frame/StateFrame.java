@@ -20,8 +20,8 @@ public abstract class StateFrame implements Frame {
     }
 
     @Override
-    public String visualize() {
-        return BowlingUtils.format(frameState.visualize()) + BowlingSymbol.DELIMITER;
+    public String getFrameState() {
+        return BowlingUtils.format(frameState.toSymbol()) + BowlingSymbol.DELIMITER;
     }
 
     @Override

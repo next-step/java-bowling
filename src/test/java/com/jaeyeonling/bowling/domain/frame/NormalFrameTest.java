@@ -13,7 +13,7 @@ class NormalFrameTest {
 
     @BeforeEach
     void setUp() {
-        firstFrame = Frame.first();
+        firstFrame = NormalFrame.first();
     }
 
     @DisplayName("거터 시 시각화한다.")
@@ -21,7 +21,7 @@ class NormalFrameTest {
     void gutterVisualize() {
         firstFrame.bowl(GUTTER);
 
-        assertThat(firstFrame.visualize()).isEqualTo("   -   |       |       |       |       |       |       |       |       |       |");
+        assertThat(firstFrame.getFrameState()).isEqualTo("   -   |       |       |       |       |       |       |       |       |       |");
     }
 
     @DisplayName("거터 거터 시 시각화한다.")
@@ -29,7 +29,7 @@ class NormalFrameTest {
     void gutterGutterVisualize() {
         firstFrame.bowl(GUTTER).bowl(GUTTER);
 
-        assertThat(firstFrame.visualize()).isEqualTo("  -|-  |       |       |       |       |       |       |       |       |       |");
+        assertThat(firstFrame.getFrameState()).isEqualTo("  -|-  |       |       |       |       |       |       |       |       |       |");
     }
 
     @DisplayName("거터 미스 시 시각화한다.")
@@ -37,7 +37,7 @@ class NormalFrameTest {
     void gutterMissVisualize() {
         firstFrame.bowl(GUTTER).bowl(valueOf(1));
 
-        assertThat(firstFrame.visualize()).isEqualTo("  -|1  |       |       |       |       |       |       |       |       |       |");
+        assertThat(firstFrame.getFrameState()).isEqualTo("  -|1  |       |       |       |       |       |       |       |       |       |");
     }
 
     @DisplayName("미스 시 시각화한다.")
@@ -45,7 +45,7 @@ class NormalFrameTest {
     void missVisualize() {
         firstFrame.bowl(valueOf(1));
 
-        assertThat(firstFrame.visualize()).isEqualTo("   1   |       |       |       |       |       |       |       |       |       |");
+        assertThat(firstFrame.getFrameState()).isEqualTo("   1   |       |       |       |       |       |       |       |       |       |");
     }
 
     @DisplayName("미스 미스 시 시각화한다.")
@@ -53,7 +53,7 @@ class NormalFrameTest {
     void missMissVisualize() {
         firstFrame.bowl(valueOf(1)).bowl(valueOf(1));
 
-        assertThat(firstFrame.visualize()).isEqualTo("  1|1  |       |       |       |       |       |       |       |       |       |");
+        assertThat(firstFrame.getFrameState()).isEqualTo("  1|1  |       |       |       |       |       |       |       |       |       |");
     }
 
     @DisplayName("스페어 시 시각화한다.")
@@ -61,7 +61,7 @@ class NormalFrameTest {
     void spareVisualize() {
         firstFrame.bowl(valueOf(5)).bowl(valueOf(5));
 
-        assertThat(firstFrame.visualize()).isEqualTo("  5|/  |       |       |       |       |       |       |       |       |       |");
+        assertThat(firstFrame.getFrameState()).isEqualTo("  5|/  |       |       |       |       |       |       |       |       |       |");
     }
 
     @DisplayName("스트라이크 시 시각화한다.")
@@ -69,7 +69,7 @@ class NormalFrameTest {
     void strikeVisualize() {
         firstFrame.bowl(MAX);
 
-        assertThat(firstFrame.visualize()).isEqualTo("   X   |       |       |       |       |       |       |       |       |       |");
+        assertThat(firstFrame.getFrameState()).isEqualTo("   X   |       |       |       |       |       |       |       |       |       |");
     }
 
     @DisplayName("거터 스페어 시 시각화한다.")
@@ -77,6 +77,6 @@ class NormalFrameTest {
     void gutterSpareVisualize() {
         firstFrame.bowl(GUTTER).bowl(MAX);
 
-        assertThat(firstFrame.visualize()).isEqualTo("  -|/  |       |       |       |       |       |       |       |       |       |");
+        assertThat(firstFrame.getFrameState()).isEqualTo("  -|/  |       |       |       |       |       |       |       |       |       |");
     }
 }

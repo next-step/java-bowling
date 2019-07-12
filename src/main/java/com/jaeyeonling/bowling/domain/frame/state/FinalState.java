@@ -35,13 +35,13 @@ public class FinalState extends ValidFrameState {
             return false;
         }
 
-        return isNotBonus();
+        return nonBonusOfCurrentFrameState();
     }
 
     @Override
-    public String visualize() {
+    public String toSymbol() {
         return frameStates.stream()
-                .map(FrameState::visualize)
+                .map(FrameState::toSymbol)
                 .collect(joining(DELIMITER));
     }
 
@@ -49,7 +49,7 @@ public class FinalState extends ValidFrameState {
     FrameState validBowl(final KnockdownPins knockdownPins) {
         roundCounter.count();
 
-        if (getCurrentFrameState().isFinished()) {
+        if (isCurrentFrameStateFinished()) {
             ready();
         }
         bowlAndReplace(knockdownPins);
@@ -59,6 +59,10 @@ public class FinalState extends ValidFrameState {
 
     private FrameState getCurrentFrameState() {
         return frameStates.get(currentIndex());
+    }
+
+    private boolean isCurrentFrameStateFinished() {
+        return getCurrentFrameState().isFinished();
     }
 
     private int currentIndex() {
@@ -77,7 +81,7 @@ public class FinalState extends ValidFrameState {
         return frameStates.get(START_INDEX) instanceof Strike;
     }
 
-    private boolean isNotBonus() {
+    private boolean nonBonusOfCurrentFrameState() {
         return !(getCurrentFrameState() instanceof Finished);
     }
 }

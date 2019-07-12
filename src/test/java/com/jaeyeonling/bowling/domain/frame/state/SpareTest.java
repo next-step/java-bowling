@@ -48,13 +48,13 @@ class SpareTest {
     @DisplayName("시각화를 한다.")
     @Test
     void missSpareVisualize() {
-        assertThat(state.bowl(valueOf(1)).bowl(valueOf(9)).visualize()).isEqualTo("1|/");
+        assertThat(state.bowl(valueOf(1)).bowl(valueOf(9)).toSymbol()).isEqualTo("1|/");
     }
 
     @DisplayName("시각화를 한다.")
     @Test
     void gutterSpareVisualize() {
-        assertThat(state.bowl(valueOf(0)).bowl(MAX).visualize()).isEqualTo("-|/");
+        assertThat(state.bowl(valueOf(0)).bowl(MAX).toSymbol()).isEqualTo("-|/");
     }
 
     @DisplayName("게임이 끝난 후 게임 시 예외처리 한다.")
