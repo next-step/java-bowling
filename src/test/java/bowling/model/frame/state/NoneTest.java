@@ -34,14 +34,4 @@ class NoneTest {
         // then
         assertThat(result).isInstanceOf(Strike.class);
     }
-
-    @DisplayName("결과 값의 출력값을 확인한다")
-    @Test
-    void printResult() {
-        // when
-        String result = new None().printResult();
-
-        // then
-        assertThat(result).isEqualTo("        ");
-    }
 }
