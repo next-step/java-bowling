@@ -8,8 +8,8 @@ import static bowling.model.Pins.DOWN_ZERO;
 public class Gutter extends FirstState {
 
     static final String PRINT_SYMBOL_OF_GUTTER = "-";
-    private static final Gutter SELF = new Gutter();
     private static final Pins firstBowl = DOWN_ZERO;
+    private static final Gutter SELF = new Gutter();
 
     private Gutter() {
         super(firstBowl);

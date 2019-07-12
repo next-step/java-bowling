@@ -21,5 +21,7 @@ public class Application {
             bowlingGame.play(downPins);
             OutView.printProgress(bowlingGame.getCurrentStates());
         }
+
+        OutView.printGameOver();
     }
 }

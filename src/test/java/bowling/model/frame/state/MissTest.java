@@ -38,26 +38,12 @@ class MissTest {
                 .isThrownBy(() -> Miss.valueOf(first, second));
     }
 
-    //todo :
     @DisplayName("스페어 일 경우 생성에 실패한다")
     @Test
     void createMiss_whenFirstMinSumSecondMax_fail() {
         // given
         Pins first = Pins.valueOf(MIN);
         Pins second = Pins.valueOf(MAX);
-
-        // when
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> Miss.valueOf(first, second));
-    }
-
-    //todo :
-    @DisplayName("볼의 합이 " + MAX + "이상일 경우 생성에 실패한다")
-    @Test
-    void createMiss_whenFirstSumSecondMoreThanMax_fail() {
-        // given
-        Pins first = Pins.valueOf(MAX - 1);
-        Pins second = Pins.valueOf(MAX - 1);
 
         // when
         assertThatIllegalArgumentException()

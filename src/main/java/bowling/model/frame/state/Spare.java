@@ -6,34 +6,23 @@ import bowling.utils.Pretty;
 
 import static bowling.model.frame.state.Gutter.PRINT_SYMBOL_OF_GUTTER;
 
-public class Spare implements State {
+public class Spare extends SecondState {
 
     private static final String SYMBOL_OF_SPARE = "/";
-    private Pins firstBowl;
 
-    private Spare(Pins firstBowl) {
-        this.firstBowl = firstBowl;
+    private Spare(Pins firstBowl, Pins secondBowl) {
+        super(firstBowl, secondBowl);
     }
 
     public static State valueOf(Pins firstBowl) {
-        return new Spare(firstBowl);
-    }
-
-    @Override
-    public State bowl(Pins pins) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
+        return new Spare(firstBowl, firstBowl.saveRemaining());
     }
 
     @Override
     public String printResult() {
-        if (Gutter.isMatch(firstBowl)) {
+        if (Gutter.isMatch(getFirstBowl())) {
             return Pretty.putPartitionOfState(PRINT_SYMBOL_OF_GUTTER, SYMBOL_OF_SPARE);
         }
-        return Pretty.putPartitionOfState(firstBowl.toString(), SYMBOL_OF_SPARE);
+        return Pretty.putPartitionOfState(getFirstBowl().toString(), SYMBOL_OF_SPARE);
     }
 }

@@ -25,6 +25,6 @@ public class Hit extends FirstState {
 
     @Override
     public String printResult() {
-        return firstBowl.toString();
+        return getFirstBowl().toString();
     }
 }
