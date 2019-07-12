@@ -8,7 +8,7 @@ import static java.util.stream.Collectors.joining;
 public class Pretty {
 
     public static final String PARTITION = "|";
-    private static final String PARTITION_OF_SYMBOL = "|";
+    public static final String PARTITION_OF_SYMBOL = "|";
     private static final String EMPTY = " ";
 
     private static final int DEFAULT_SPACE_SIZE = 8;

@@ -4,44 +4,42 @@ import bowling.model.Pins;
 import bowling.model.frame.State;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static bowling.utils.Pretty.PARTITION_OF_SYMBOL;
 import static java.util.stream.Collectors.joining;
 
 public class FinalState implements State {
 
     private static final int MAX_NUMBER_OF_ROUND = 3;
+    private static final int LAST_INDEX = 1;
 
     private int round;
-    private List<State> states;
+    private List<State> states = new ArrayList<>();
 
-    private FinalState(List<State> states) {
-        this.states = new ArrayList<>(states);
+    private FinalState() {
+        ready();
     }
 
     public static State valueOf() {
-        List<State> states = Arrays.asList(None.getInstance());
-        return new FinalState(states);
+        return new FinalState();
+    }
+
+    private void ready() {
+        states.add(None.getInstance());
     }
 
     @Override
     public State bowl(Pins pins) {
         round++;
-
-        State state = getCurrentState();
         if (getCurrentState().isFinished()) {
-            state = None.getInstance();
+            ready();
         }
-        state = state.bowl(pins);
 
-        if (getCurrentState().isFinished()) {
-            states.add(state);
-        }
-        if (!getCurrentState().isFinished()) {
-            states.set(getLastStateIndex(), state);
-        }
+        State state = getCurrentState().bowl(pins);
+
+        states.set(getLastStateIndex(), state);
         return state;
     }
 
@@ -50,7 +48,7 @@ public class FinalState implements State {
     }
 
     private int getLastStateIndex() {
-        return states.size() - 1;
+        return states.size() - LAST_INDEX;
     }
 
     @Override
@@ -67,7 +65,7 @@ public class FinalState implements State {
     public String printResult() {
         return states.stream()
                 .map(State::printResult)
-                .collect(joining("|"));
+                .collect(joining(PARTITION_OF_SYMBOL));
     }
 
     List<State> getStates() {
