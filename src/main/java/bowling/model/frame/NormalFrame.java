@@ -14,7 +14,7 @@ public class NormalFrame extends Frame {
     private NormalFrame(FrameNumber frameNumber) {
         super(frameNumber);
         this.next = nextFrame();
-        this.state = new None();
+        this.state = None.getInstance();
     }
 
     private Frame nextFrame() {

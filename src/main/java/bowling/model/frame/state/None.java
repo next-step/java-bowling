@@ -7,15 +7,18 @@ public class None implements State {
 
     private static final String SYMBOL_OF_NONE = " ";
 
+    private static final None SELF = new None();
+
+    private None() {
+    }
+
+    public static State getInstance() {
+        return SELF;
+    }
+
     @Override
     public State bowl(Pins pins) {
-        if(Gutter.isMatch(pins)){
-            return Gutter.valueOf();
-        }
-        if(Strike.isMatch(pins)){
-            return Strike.getInstance();
-        }
-        return Hit.valueOf(pins);
+        return FirstState.of(pins);
     }
 
     @Override

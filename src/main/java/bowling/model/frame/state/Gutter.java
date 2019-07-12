@@ -5,34 +5,26 @@ import bowling.model.frame.State;
 
 import static bowling.model.Pins.DOWN_ZERO;
 
-public class Gutter implements State {
+public class Gutter extends FirstState {
 
     static final String PRINT_SYMBOL_OF_GUTTER = "-";
-    private static final Pins first = DOWN_ZERO;
+    private static final Gutter SELF = new Gutter();
+    private static final Pins firstBowl = DOWN_ZERO;
 
-    static State valueOf() {
-        return new Gutter();
+    private Gutter() {
+        super(firstBowl);
+    }
+
+    static State getInstance() {
+        return SELF;
     }
 
     static boolean isMatch(Pins downPins) {
-        return first.equals(downPins);
-    }
-
-    public State bowl(Pins second) {
-        if (second.equals(Pins.DOWN_ALL)) {
-            return Spare.valueOf(first);
-        }
-        return Miss.valueOf(first, second);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
+        return firstBowl.equals(downPins);
     }
 
     @Override
     public String printResult() {
         return PRINT_SYMBOL_OF_GUTTER;
     }
-
 }

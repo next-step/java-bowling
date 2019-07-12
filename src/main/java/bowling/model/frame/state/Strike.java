@@ -10,6 +10,7 @@ public class Strike extends FirstState {
     private static final Pins firstBowl = Pins.DOWN_ALL;
 
     private Strike() {
+        super(firstBowl);
     }
 
     static State getInstance() {

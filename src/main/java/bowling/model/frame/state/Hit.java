@@ -3,32 +3,24 @@ package bowling.model.frame.state;
 import bowling.model.Pins;
 import bowling.model.frame.State;
 
-import static bowling.model.Pins.DOWN_ALL;
+import static bowling.model.Pins.MAX;
+import static bowling.model.Pins.MIN;
 
-public class Hit implements State {
+public class Hit extends FirstState {
 
-    private final Pins firstBowl;
+    private static final String ERROR_MESSAGE = "핀은 %s ~ %s 사이 값이어야 합니다";
+    static final int MIN_COUNT_OF_PINS_IN_HIT = MIN + 1;
+    static final int MAX_COUNT_OF_PINS_IN_HIT = MAX - 1;
 
     private Hit(Pins firstBowl) {
-        this.firstBowl = firstBowl;
+        super(firstBowl);
     }
 
-    static State valueOf(Pins first) {
-        return new Hit(first);
-    }
-
-    @Override
-    public State bowl(Pins secondBowl) {
-        Pins totalDownPins = firstBowl.sum(secondBowl);
-        if (totalDownPins.equals(DOWN_ALL)) {
-            return Spare.valueOf(firstBowl);
+    static State valueOf(Pins firstBowl) {
+        if (Gutter.isMatch(firstBowl) || Strike.isMatch(firstBowl)) {
+            throw new IllegalArgumentException(String.format(ERROR_MESSAGE, MIN_COUNT_OF_PINS_IN_HIT, MAX_COUNT_OF_PINS_IN_HIT));
         }
-        return Miss.valueOf(firstBowl, secondBowl);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
+        return new Hit(firstBowl);
     }
 
     @Override

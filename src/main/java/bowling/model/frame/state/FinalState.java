@@ -22,7 +22,7 @@ public class FinalState implements State {
     }
 
     public static State valueOf() {
-        List<State> states = Arrays.asList(new None());
+        List<State> states = Arrays.asList(None.getInstance());
         return new FinalState(states);
     }
 
@@ -31,8 +31,8 @@ public class FinalState implements State {
         round++;
 
         State state = getCurrentState();
-        if(getCurrentState().isFinished()){
-            state = new None();
+        if (getCurrentState().isFinished()) {
+            state = None.getInstance();
         }
         state = state.bowl(pins);
 

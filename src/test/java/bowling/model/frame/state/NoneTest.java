@@ -1,6 +1,5 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
 import bowling.model.frame.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,29 +8,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class NoneTest {
 
-    @DisplayName("시작 시 기본 상태이며, 첫번째 공이 0일 시 거터를 반환한다")
+    @DisplayName("싱글톤 확인")
     @Test
-    void bowl_pinsZero_thanGutter() {
-        // given
-        Pins pins = Pins.DOWN_ZERO;
-
-        // when
-        State result = new None().bowl(pins);
-
-        // then
-        assertThat(result).isInstanceOf(Gutter.class);
+    void check_singleton() {
+        assertThat(None.getInstance()).isEqualTo(None.getInstance());
     }
 
-    @DisplayName("첫번째 공을 모두 쓰러트렸을 시 스트라이크를 반환한다")
+    @DisplayName("아무런 상태가 아닐 시 현 프레임을 계속 진행한다")
     @Test
-    void bowl_pinsMax_thanStrike() {
+    void isFinished_false() {
         // given
-        Pins pins = Pins.DOWN_ALL;
+        State none = None.getInstance();
 
-        // when
-        State result = new None().bowl(pins);
-
-        // then
-        assertThat(result).isInstanceOf(Strike.class);
+        // when && than
+        assertThat(none.isFinished()).isFalse();
     }
 }
