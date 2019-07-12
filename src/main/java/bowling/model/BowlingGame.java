@@ -7,15 +7,15 @@ import static bowling.model.frame.Frame.SEPARATOR_OF_FRAME;
 public class BowlingGame {
 
     private Player player;
-    private bowling.model.GameEngine gameEngine;
+    private GameEngine gameEngine;
 
-    private BowlingGame(Player player, bowling.model.GameEngine gameEngine) {
+    private BowlingGame(Player player, GameEngine gameEngine) {
         this.player = player;
         this.gameEngine = gameEngine;
     }
 
     public static BowlingGame settingOf(Player player) {
-        return new BowlingGame(player, new bowling.model.GameEngine());
+        return new BowlingGame(player, new GameEngine());
     }
 
     public void play(Pins pins) {
