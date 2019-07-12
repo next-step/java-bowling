@@ -14,7 +14,7 @@ public class Miss extends SecondState {
 
     static State valueOf(Pins firstBowl, Pins secondBowl) {
         if (DOWN_ALL.equals(firstBowl) || DOWN_ALL.equals(secondBowl)) {
-            throw new InvalidMissException();
+            throw new IllegalArgumentException("핀을 모두 쓰러트릴 수 없습니다");
         }
         return new Miss(firstBowl, secondBowl);
     }
