@@ -14,7 +14,11 @@ class FinalStateTest {
     @BeforeEach
     void setUp() {
         state = new FinalState();
+    }
 
+    @DisplayName("기본 상태에서 시각화한다.")
+    @Test
+    void defaultVisualize() {
         assertThat(state.visualize()).isEqualTo("");
     }
 

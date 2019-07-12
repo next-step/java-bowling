@@ -29,11 +29,27 @@ class ReadyTest {
         assertThat(state.visualize()).isEqualTo("");
     }
 
-    @DisplayName("볼링을 할 수 있다.")
+    @DisplayName("거터를 할 수 있다.")
     @Test
-    void bowl() {
+    void gutterBowl() {
         assertThat(state.bowl(GUTTER)).isNotNull();
+    }
+
+    @DisplayName("미스를 할 수 있다.")
+    @Test
+    void missBowl() {
         assertThat(state.bowl(valueOf(5))).isNotNull();
+    }
+
+    @DisplayName("스트라이크를 할 수 있다.")
+    @Test
+    void strikeBowl() {
         assertThat(state.bowl(MAX)).isNotNull();
+    }
+
+    @DisplayName("스페어를 할 수 있다.")
+    @Test
+    void spareBowl() {
+        assertThat(state.bowl(valueOf(5)).bowl(valueOf(5))).isNotNull();
     }
 }

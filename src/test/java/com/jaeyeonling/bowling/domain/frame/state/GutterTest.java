@@ -17,10 +17,15 @@ class GutterTest {
         state = new Ready().bowl(GUTTER);
     }
 
-    @DisplayName("시각화를 한다.")
+    @DisplayName("거터 1번을 시각화를 한다.")
     @Test
-    void readyVisualize() {
+    void gutterVisualize() {
         assertThat(state.visualize()).isEqualTo("-");
+    }
+
+    @DisplayName("거터 2번을 시각화를 한다.")
+    @Test
+    void gutterGutterVisualize() {
         assertThat(state.bowl(GUTTER).visualize()).isEqualTo("-|-");
     }
 

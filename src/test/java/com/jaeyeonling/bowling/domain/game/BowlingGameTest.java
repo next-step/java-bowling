@@ -1,10 +1,13 @@
 package com.jaeyeonling.bowling.domain.game;
 
 import com.jaeyeonling.bowling.domain.frame.FinishedBowlingGameException;
+import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
 import com.jaeyeonling.bowling.domain.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.stream.IntStream;
 
 import static com.jaeyeonling.bowling.domain.frame.KnockdownPins.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,16 +28,7 @@ class BowlingGameTest {
     @Test
     void gutter() {
         // given
-        bowlingGame.bowl(GUTTER); bowlingGame.bowl(GUTTER);
-        bowlingGame.bowl(GUTTER); bowlingGame.bowl(GUTTER);
-        bowlingGame.bowl(GUTTER); bowlingGame.bowl(GUTTER);
-        bowlingGame.bowl(GUTTER); bowlingGame.bowl(GUTTER);
-        bowlingGame.bowl(GUTTER); bowlingGame.bowl(GUTTER);
-        bowlingGame.bowl(GUTTER); bowlingGame.bowl(GUTTER);
-        bowlingGame.bowl(GUTTER); bowlingGame.bowl(GUTTER);
-        bowlingGame.bowl(GUTTER); bowlingGame.bowl(GUTTER);
-        bowlingGame.bowl(GUTTER); bowlingGame.bowl(GUTTER);
-        bowlingGame.bowl(GUTTER); bowlingGame.bowl(GUTTER);
+        bowl(GUTTER, 20);
 
         // when
         final String expected = user.visualize() +
@@ -48,16 +42,7 @@ class BowlingGameTest {
     @Test
     void perfect() {
         // given
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX); bowlingGame.bowl(MAX); bowlingGame.bowl(MAX);
+        bowl(MAX, 12);
 
         // when
         final String expected = user.visualize() +
@@ -71,16 +56,8 @@ class BowlingGameTest {
     @Test
     void spare() {
         // given
-        bowlingGame.bowl(valueOf(5)); bowlingGame.bowl(valueOf(5));
-        bowlingGame.bowl(valueOf(5)); bowlingGame.bowl(valueOf(5));
-        bowlingGame.bowl(valueOf(5)); bowlingGame.bowl(valueOf(5));
-        bowlingGame.bowl(valueOf(5)); bowlingGame.bowl(valueOf(5));
-        bowlingGame.bowl(valueOf(5)); bowlingGame.bowl(valueOf(5));
-        bowlingGame.bowl(valueOf(5)); bowlingGame.bowl(valueOf(5));
-        bowlingGame.bowl(valueOf(5)); bowlingGame.bowl(valueOf(5));
-        bowlingGame.bowl(valueOf(5)); bowlingGame.bowl(valueOf(5));
-        bowlingGame.bowl(valueOf(5)); bowlingGame.bowl(valueOf(5));
-        bowlingGame.bowl(valueOf(5)); bowlingGame.bowl(valueOf(5));  bowlingGame.bowl(MAX);
+        bowl(valueOf(5), 20);
+        bowl(MAX);
 
         // when
         final String expected = user.visualize() +
@@ -117,19 +94,21 @@ class BowlingGameTest {
     @Test
     void throwFinishedBowlingGameException() {
         // given
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX);
-        bowlingGame.bowl(MAX); bowlingGame.bowl(MAX); bowlingGame.bowl(MAX);
+        bowl(MAX, 12);
 
         // when / then
         assertThatExceptionOfType(FinishedBowlingGameException.class)
                 .isThrownBy(() -> bowlingGame.bowl(MAX));
+    }
+
+    private void bowl(final KnockdownPins knockdownPins,
+                      final int count) {
+        for (int i = 0; i < count; i++) {
+            bowl(knockdownPins);
+        }
+    }
+
+    private void bowl(final KnockdownPins knockdownPins) {
+        bowlingGame.bowl(knockdownPins);
     }
 }
