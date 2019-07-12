@@ -7,24 +7,31 @@ import static java.util.stream.Collectors.joining;
 
 public class Pretty {
 
-    private static final int DEFAULT_SPACE = 8;
+    private static final String PARTITION = "|";
     private static final String EMPTY = " ";
+
+    private static final int DEFAULT_SPACE_SIZE = 8;
+    private static final int BISECTION = 2;
+    private static final int DEFAULT_SIZE_OF_PADDING = 0;
 
     public static String alignCenter(String... targets) {
         String merge = Arrays.stream(targets)
-                .collect(joining("|"));
+                .collect(joining(PARTITION));
         return alignCenter(merge);
     }
 
     public static String alignCenter(String target) {
-        int half = DEFAULT_SPACE - target.length();
-        int padding = half / 2;
+        int remainingSpace = DEFAULT_SPACE_SIZE - target.length();
+        int sizeOfPadding = remainingSpace / BISECTION;
 
-        String empty = IntStream.range(0, padding)
+        String padding = IntStream.range(DEFAULT_SIZE_OF_PADDING, sizeOfPadding)
                 .mapToObj(num -> EMPTY)
                 .collect(joining());
 
-        String after = empty.concat(target).concat(empty);
-        return (after.length() < DEFAULT_SPACE) ? after + EMPTY : after;
+        String afterTarget = padding + target + padding;
+        if (DEFAULT_SPACE_SIZE > afterTarget.length()) {
+            return afterTarget + EMPTY;
+        }
+        return afterTarget;
     }
 }
