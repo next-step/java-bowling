@@ -23,7 +23,7 @@ public class Strike extends FirstState {
 
     @Override
     public State bowl(Pins pins) {
-        throw new UnsupportedOperationException();
+        throw new CanNotBowlException();
     }
 
     @Override

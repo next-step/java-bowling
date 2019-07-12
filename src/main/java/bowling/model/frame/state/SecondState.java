@@ -7,7 +7,6 @@ import static bowling.model.Pins.DOWN_ALL;
 
 public abstract class SecondState extends FirstState {
 
-    private static final String ERROR_MESSAGE_OF_TRY_BOWLING = "더 이상 볼을 던질 수 없습니다";
     private final Pins secondBowl;
 
     SecondState(Pins firstBowl, Pins secondBowl) {
@@ -30,7 +29,7 @@ public abstract class SecondState extends FirstState {
 
     @Override
     public State bowl(Pins secondBowl) {
-        throw new UnsupportedOperationException(ERROR_MESSAGE_OF_TRY_BOWLING);
+        throw new CanNotBowlException();
     }
 
     @Override

@@ -5,9 +5,9 @@ import bowling.model.frame.State;
 
 public class None implements State {
 
-    private static final String SYMBOL_OF_NONE = " ";
-
     private static final None SELF = new None();
+
+    private static final String SYMBOL_OF_NONE = " ";
 
     private None() {
     }

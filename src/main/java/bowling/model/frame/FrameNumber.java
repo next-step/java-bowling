@@ -18,7 +18,7 @@ public class FrameNumber {
 
     static FrameNumber of(int number) {
         if (MIN > number || MAX < number) {
-            throw new IllegalArgumentException();
+            throw new InvalidFrameNumberException();
         }
         return new FrameNumber(number);
     }

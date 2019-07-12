@@ -28,5 +28,4 @@ public abstract class Frame {
     public abstract String printResult();
 
     public abstract boolean isGameOver();
-
 }

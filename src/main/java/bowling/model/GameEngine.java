@@ -1,6 +1,5 @@
 package bowling.model;
 
-import bowling.exception.GameOverException;
 import bowling.model.frame.Frame;
 import bowling.model.frame.FrameNumber;
 

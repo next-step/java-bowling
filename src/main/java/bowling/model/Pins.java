@@ -22,7 +22,7 @@ public class Pins {
 
     public static Pins valueOf(int countOfDownPins) {
         if (MIN > countOfDownPins || MAX < countOfDownPins) {
-            throw new IllegalArgumentException(String.format("핀은 %d~%d개 쓰러트릴 수 있습니다.", MIN, MAX));
+            throw new InvalidPinsException(MIN, MAX, countOfDownPins);
         }
         CACHE.computeIfAbsent(countOfDownPins, Pins::new);
         return CACHE.get(countOfDownPins);

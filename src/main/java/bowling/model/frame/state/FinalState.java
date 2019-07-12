@@ -15,8 +15,8 @@ public class FinalState implements State {
     private static final int MAX_NUMBER_OF_ROUND = 3;
     private static final int LAST_INDEX = 1;
 
-    private int round;
     private List<State> states = new ArrayList<>();
+    private int round;
 
     private FinalState() {
         ready();

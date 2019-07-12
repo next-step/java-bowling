@@ -2,6 +2,8 @@ package bowling.model;
 
 import bowling.model.frame.FrameNumber;
 
+import static bowling.model.frame.Frame.SEPARATOR_OF_FRAME;
+
 public class BowlingGame {
 
     private Player player;
@@ -29,6 +31,6 @@ public class BowlingGame {
     }
 
     public String getCurrentStates() {
-        return player.toString() + "," + gameEngine.getCurrentStates();
+        return player.toString() + SEPARATOR_OF_FRAME + gameEngine.getCurrentStates();
     }
 }

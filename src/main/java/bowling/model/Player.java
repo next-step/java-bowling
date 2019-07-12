@@ -13,7 +13,7 @@ public class Player {
 
     public static Player of(String name) {
         if (MAX_LENGTH_OF_NAME < name.trim().length()) {
-            throw new IllegalArgumentException(String.format("이름을 %d 이하로 작성해주세요.", MAX_LENGTH_OF_NAME));
+            throw new PlayerNameLengthException();
         }
         return new Player(name);
     }
