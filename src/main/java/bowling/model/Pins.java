@@ -28,12 +28,8 @@ public class Pins {
         return CACHE.get(countOfDownPins);
     }
 
-    public boolean isGutter() {
-        return countOfDownPins == MIN;
-    }
-
     public Pins sum(Pins pins) {
-        return new Pins(pins.countOfDownPins + this.countOfDownPins);
+        return Pins.valueOf(this.countOfDownPins + pins.countOfDownPins);
     }
 
     @Override

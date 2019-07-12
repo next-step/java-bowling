@@ -54,6 +54,6 @@ class GutterTest {
         String print = new Gutter().printResult();
 
         // then
-        assertThat(print).isEqualTo("   -    ");
+        assertThat(print).isEqualTo("-");
     }
 }

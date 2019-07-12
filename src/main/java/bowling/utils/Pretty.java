@@ -7,17 +7,17 @@ import static java.util.stream.Collectors.joining;
 
 public class Pretty {
 
-    private static final String PARTITION = "|";
+    public static final String PARTITION = "|";
+    private static final String PARTITION_OF_SYMBOL = "|";
     private static final String EMPTY = " ";
 
     private static final int DEFAULT_SPACE_SIZE = 8;
     private static final int BISECTION = 2;
     private static final int DEFAULT_SIZE_OF_PADDING = 0;
 
-    public static String alignCenter(String... targets) {
-        String merge = Arrays.stream(targets)
-                .collect(joining(PARTITION));
-        return alignCenter(merge);
+    public static String putPartitionOfState(String... targets) {
+        return Arrays.stream(targets)
+                .collect(joining(PARTITION_OF_SYMBOL));
     }
 
     public static String alignCenter(String target) {

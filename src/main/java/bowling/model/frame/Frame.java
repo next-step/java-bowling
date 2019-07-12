@@ -4,6 +4,7 @@ import bowling.model.Pins;
 
 public abstract class Frame {
 
+    public static final String SEPARATOR_OF_FRAME = ",";
     private final FrameNumber frameNumber;
 
     Frame(FrameNumber frameNumber) {

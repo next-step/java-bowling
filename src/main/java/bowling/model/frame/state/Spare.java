@@ -8,14 +8,15 @@ import static bowling.model.frame.state.Gutter.PRINT_SYMBOL_OF_GUTTER;
 
 public class Spare implements State {
 
-    private Pins first;
+    private static final String SYMBOL_OF_SPARE = "/";
+    private Pins firstBowl;
 
-    private Spare(Pins first) {
-        this.first = first;
+    private Spare(Pins firstBowl) {
+        this.firstBowl = firstBowl;
     }
 
-    public static State valueOf(Pins first) {
-        return new Spare(first);
+    public static State valueOf(Pins firstBowl) {
+        return new Spare(firstBowl);
     }
 
     @Override
@@ -30,7 +31,9 @@ public class Spare implements State {
 
     @Override
     public String printResult() {
-        String formatOfNumber = first.isGutter() ? PRINT_SYMBOL_OF_GUTTER : first.toString();
-        return Pretty.alignCenter(formatOfNumber, "/");
+        if (Gutter.isMatch(firstBowl)) {
+            return Pretty.putPartitionOfState(PRINT_SYMBOL_OF_GUTTER, SYMBOL_OF_SPARE);
+        }
+        return Pretty.putPartitionOfState(firstBowl.toString(), SYMBOL_OF_SPARE);
     }
 }

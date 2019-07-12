@@ -2,9 +2,10 @@ package bowling.model.frame.state;
 
 import bowling.model.Pins;
 import bowling.model.frame.State;
-import bowling.utils.Pretty;
 
 public class None implements State {
+
+    private static final String SYMBOL_OF_NONE = " ";
 
     @Override
     public State bowl(Pins pins) {
@@ -24,6 +25,6 @@ public class None implements State {
 
     @Override
     public String printResult() {
-        return Pretty.alignCenter("");
+        return SYMBOL_OF_NONE;
     }
 }

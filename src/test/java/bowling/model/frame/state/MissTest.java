@@ -26,9 +26,21 @@ class MissTest {
         assertThat(result).isInstanceOf(Miss.class);
     }
 
-    @DisplayName("볼의 합이 " + MAX + "이상일 경우 생성에 실패한다")
+    @DisplayName("스트라이크 일 경우 생성에 실패한다")
     @Test
     void createMiss_whenFirstSumSecond_fail() {
+        // given
+        Pins first = Pins.valueOf(MAX);
+        Pins second = Pins.valueOf(MIN);
+
+        // when
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Miss.valueOf(first, second));
+    }
+
+    @DisplayName("스페어 일 경우 생성에 실패한다")
+    @Test
+    void createMiss_whenFirstMinSumSecondMax_fail() {
         // given
         Pins first = Pins.valueOf(MIN);
         Pins second = Pins.valueOf(MAX);
@@ -38,7 +50,19 @@ class MissTest {
                 .isThrownBy(() -> Miss.valueOf(first, second));
     }
 
-    @DisplayName("미스의 결과 갑을 화인하는데 성공한다")
+    @DisplayName("볼의 합이 " + MAX + "이상일 경우 생성에 실패한다")
+    @Test
+    void createMiss_whenFirstSumSecondMoreThanMax_fail() {
+        // given
+        Pins first = Pins.valueOf(MAX - 1);
+        Pins second = Pins.valueOf(MAX - 1);
+
+        // when
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Miss.valueOf(first, second));
+    }
+
+    @DisplayName("미스의 결과 값을 확인하는데 성공한다")
     @Test
     void printResult_success() {
         // given
@@ -49,6 +73,6 @@ class MissTest {
         String print = Miss.valueOf(first, second).printResult();
 
         // then
-        assertThat(print).isEqualTo("  0|1   ");
+        assertThat(print).isEqualTo("0|1");
     }
 }

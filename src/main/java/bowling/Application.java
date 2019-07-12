@@ -13,13 +13,13 @@ public class Application {
         Player player = Player.of(name);
 
         BowlingGame bowlingGame = BowlingGame.settingOf(player);
-        OutView.printCurrentScores(bowlingGame.getCurrentStates());
+        OutView.printProgress(bowlingGame.getCurrentStates());
 
         while (!bowlingGame.isGameOver()) {
             int countOfDownPins = InputView.askCountOfDownPins(bowlingGame.getCurrentNumber());
             Pins downPins = Pins.valueOf(countOfDownPins);
             bowlingGame.play(downPins);
-            OutView.printCurrentScores(bowlingGame.getCurrentStates());
+            OutView.printProgress(bowlingGame.getCurrentStates());
         }
     }
 }

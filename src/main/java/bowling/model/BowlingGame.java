@@ -29,6 +29,6 @@ public class BowlingGame {
     }
 
     public String getCurrentStates() {
-        return player.toString().concat(gameEngine.getCurrentStates());
+        return player.toString() + "," + gameEngine.getCurrentStates();
     }
 }

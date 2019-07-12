@@ -2,7 +2,6 @@ package bowling.model.frame.state;
 
 import bowling.model.Pins;
 import bowling.model.frame.State;
-import bowling.utils.Pretty;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +11,8 @@ import java.util.List;
 import static java.util.stream.Collectors.joining;
 
 public class FinalState implements State {
+
+    private static final int MAX_NUMBER_OF_ROUND = 3;
 
     private int round;
     private List<State> states;
@@ -28,27 +29,33 @@ public class FinalState implements State {
     @Override
     public State bowl(Pins pins) {
         round++;
-        State state = getCurrentState().isFinished() ? new None() : getCurrentState();
+
+        State state = getCurrentState();
+        if(getCurrentState().isFinished()){
+            state = new None();
+        }
         state = state.bowl(pins);
+
         if (getCurrentState().isFinished()) {
             states.add(state);
-        } else {
-            states.set(getCurrentStateIndex(), state);
+        }
+        if (!getCurrentState().isFinished()) {
+            states.set(getLastStateIndex(), state);
         }
         return state;
     }
 
     private State getCurrentState() {
-        return states.get(getCurrentStateIndex());
+        return states.get(getLastStateIndex());
     }
 
-    private int getCurrentStateIndex() {
+    private int getLastStateIndex() {
         return states.size() - 1;
     }
 
     @Override
     public boolean isFinished() {
-        return round == 3 || hasNotBonusStage();
+        return hasNotBonusStage() || MAX_NUMBER_OF_ROUND == round;
     }
 
     private boolean hasNotBonusStage() {
@@ -58,11 +65,9 @@ public class FinalState implements State {
 
     @Override
     public String printResult() {
-        String result = states.stream()
+        return states.stream()
                 .map(State::printResult)
-                .map(String::trim)
                 .collect(joining("|"));
-        return Pretty.alignCenter(result).concat("|");
     }
 
     List<State> getStates() {

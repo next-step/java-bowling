@@ -33,6 +33,6 @@ class HitTest {
         String result = Hit.valueOf(pins).printResult();
 
         // then
-        assertThat(result).isEqualTo("   1    ");
+        assertThat(result).isEqualTo("1");
     }
 }

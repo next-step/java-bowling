@@ -2,14 +2,15 @@ package bowling.model.frame.state;
 
 import bowling.model.Pins;
 import bowling.model.frame.State;
-import bowling.utils.Pretty;
+
+import static bowling.model.Pins.DOWN_ALL;
 
 public class Hit implements State {
 
-    private final Pins first;
+    private final Pins firstBowl;
 
-    private Hit(Pins first) {
-        this.first = first;
+    private Hit(Pins firstBowl) {
+        this.firstBowl = firstBowl;
     }
 
     static State valueOf(Pins first) {
@@ -17,9 +18,12 @@ public class Hit implements State {
     }
 
     @Override
-    public State bowl(Pins second) {
-        Pins totalPins = first.sum(second);
-        return totalPins.equals(Pins.DOWN_ALL) ? Spare.valueOf(first) : Miss.valueOf(first, second);
+    public State bowl(Pins secondBowl) {
+        Pins totalDownPins = firstBowl.sum(secondBowl);
+        if (totalDownPins.equals(DOWN_ALL)) {
+            return Spare.valueOf(firstBowl);
+        }
+        return Miss.valueOf(firstBowl, secondBowl);
     }
 
     @Override
@@ -29,6 +33,6 @@ public class Hit implements State {
 
     @Override
     public String printResult() {
-        return Pretty.alignCenter(first.toString());
+        return firstBowl.toString();
     }
 }

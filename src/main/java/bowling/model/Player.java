@@ -1,7 +1,5 @@
 package bowling.model;
 
-import bowling.utils.Pretty;
-
 import java.util.Objects;
 
 public class Player {
@@ -35,6 +33,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return "|".concat(Pretty.alignCenter(name)).concat("|");
+        return name;
     }
 }

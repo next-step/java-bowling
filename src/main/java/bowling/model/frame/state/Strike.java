@@ -2,12 +2,12 @@ package bowling.model.frame.state;
 
 import bowling.model.Pins;
 import bowling.model.frame.State;
-import bowling.utils.Pretty;
 
-public class Strike implements State {
+public class Strike extends FirstState {
 
+    private static final String SYMBOL_OF_STRIKE = "X";
     private static final Strike SELF = new Strike();
-    private static final Pins score = Pins.DOWN_ALL;
+    private static final Pins firstBowl = Pins.DOWN_ALL;
 
     private Strike() {
     }
@@ -17,7 +17,7 @@ public class Strike implements State {
     }
 
     static boolean isMatch(Pins pins) {
-        return score.equals(pins);
+        return firstBowl.equals(pins);
     }
 
     @Override
@@ -32,6 +32,6 @@ public class Strike implements State {
 
     @Override
     public String printResult() {
-        return Pretty.alignCenter("X");
+        return SYMBOL_OF_STRIKE;
     }
 }

@@ -19,6 +19,6 @@ class SpareTest {
         String result = Spare.valueOf(first).printResult();
 
         // then
-        assertThat(result).isEqualTo("  1|/   ");
+        assertThat(result).isEqualTo("1|/");
     }
 }
