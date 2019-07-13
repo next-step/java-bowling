@@ -50,13 +50,4 @@ public class NormalFrameScoreTest {
         normalFrameScore.addBowlScore(10);
         assertThat(normalFrameScore.isStrike()).isTrue();
     }
-
-    @DisplayName("스페어 체크")
-    @Test
-    void isSpare() {
-        NormalFrameScore normalFrameScore = new NormalFrameScore();
-        normalFrameScore.addBowlScore(1);
-        normalFrameScore.addBowlScore(9);
-        assertThat(normalFrameScore.isSpare()).isTrue();
-    }
 }

@@ -17,6 +17,7 @@ public class NormalFrameScore {
     public static final int FRAME_MAX_SCORE = 10;
     public static final int FRAME_MAX_BOWL_COUNT = 2;
     public static final int STRIKE_BOWL_COUNT = 1;
+
     private List<Pin> downPins;
 
     NormalFrameScore() {
@@ -24,7 +25,9 @@ public class NormalFrameScore {
     }
 
     boolean addBowlScore(int downCount) {
-        if (invalidScore(downCount) || invalidBowlCount()) {
+        if (invalidScore(downCount)
+                || invalidBowlCount()
+                || isStrike()) {
             return false;
         }
         downPins.add(Pin.fallDown(downCount));
@@ -33,10 +36,6 @@ public class NormalFrameScore {
 
     boolean isStrike() {
         return countBowl() == STRIKE_BOWL_COUNT && sum() == FRAME_MAX_SCORE;
-    }
-
-    boolean isSpare() {
-        return countBowl() == FRAME_MAX_BOWL_COUNT && sum() == FRAME_MAX_SCORE;
     }
 
     int sum() {

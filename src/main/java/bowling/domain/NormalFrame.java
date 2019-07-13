@@ -20,17 +20,16 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    NormalFrame bowl(int downCount) {
+    Frame bowl(int downCount) {
         if (currentFrameScore.addBowlScore(downCount)) {
             return this;
         }
-        return next();
+        return next(downCount);
     }
 
-    private NormalFrame next() {
+    private NormalFrame next(int downCount) {
         next = new NormalFrame();
+        next.bowl(downCount);
         return next;
     }
 }
-
-

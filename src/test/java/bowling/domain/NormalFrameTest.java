@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -16,19 +17,28 @@ import static org.assertj.core.api.Assertions.assertThat;
  * create date  : 2019-07-13 17:41
  */
 public class NormalFrameTest {
-    @DisplayName("투구가 가능한 상태인지 체크 (스트라이크)")
-    @Test
-    void invalid_bowl_by_strike() {
-        NormalFrame normal = new NormalFrame();
-        normal.bowl(10);
-        assertThat(normal.bowl(10)).isEqualTo(normal);
-    }
-
     @DisplayName("현재 몇번째 Frame인지 확인")
     @Test
     void getIndex() {
-        NormalFrame frame1 = new NormalFrame();
-        NormalFrame frame2 = new NormalFrame();
-        assertThat(frame2.getIndex()).isEqualTo(2);
+        NormalFrame originFrame = new NormalFrame();
+
+        Frame bowl1 = originFrame.bowl(10);
+        Frame bowl2 = bowl1.bowl(3);
+        Frame bowl3 = bowl2.bowl(2);
+
+        assertAll(
+                () -> assertThat(bowl1.getIndex()).isEqualTo(1),
+                () -> assertThat(bowl2.getIndex()).isEqualTo(2),
+                () -> assertThat(bowl3.getIndex()).isEqualTo(2),
+                () -> assertThat(bowl3.bowl(10).getIndex()).isEqualTo(3)
+        );
+    }
+
+    @DisplayName("Frame 종료 후 새로운 Frame 생성되는지 확인")
+    @Test
+    void new_confirm_Frame() {
+        NormalFrame originFrame = new NormalFrame();
+        originFrame.bowl(10);
+        assertThat(originFrame.bowl(10)).isNotSameAs(originFrame);
     }
 }
