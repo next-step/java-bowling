@@ -14,10 +14,10 @@ public enum BowlingType {
     }
 
     static String toSymbol(final KnockdownPins knockdownPins) {
-        if (knockdownPins.isMax()) {
+        if (isStrike(knockdownPins)) {
             return STRIKE.toString();
         }
-        if (knockdownPins.isGutter()) {
+        if (isGutter(knockdownPins)) {
             return GUTTER.toString();
         }
 
@@ -26,19 +26,32 @@ public enum BowlingType {
 
     static String toSymbol(final KnockdownPins firstKnockdownPins,
                            final KnockdownPins secondKnockdownPins) {
-        if (firstKnockdownPins.isMax()) {
+        if (isStrike(firstKnockdownPins)) {
             return STRIKE.toString();
         }
 
         final String symbol = toSymbol(firstKnockdownPins) + DELIMITER;
-        if (firstKnockdownPins.sum(secondKnockdownPins).isMax()) {
+        if (isSpare(firstKnockdownPins, secondKnockdownPins)) {
             return symbol + SPARE;
         }
-        if (secondKnockdownPins.isGutter()) {
+        if (isGutter(secondKnockdownPins)) {
             return symbol + GUTTER;
         }
 
         return symbol + secondKnockdownPins.getKnockdownPins();
+    }
+
+    private static boolean isStrike(KnockdownPins firstKnockdownPins) {
+        return firstKnockdownPins.isMax();
+    }
+
+    private static boolean isSpare(final KnockdownPins firstKnockdownPins,
+                                   final KnockdownPins secondKnockdownPins) {
+        return firstKnockdownPins.sum(secondKnockdownPins).isMax();
+    }
+
+    private static boolean isGutter(KnockdownPins knockdownPins) {
+        return knockdownPins.isGutter();
     }
 
     @Override
