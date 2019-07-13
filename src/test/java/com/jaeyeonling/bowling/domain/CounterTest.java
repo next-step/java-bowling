@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,20 +14,72 @@ class CounterTest {
 
     @BeforeEach
     void setUp() {
-        counter = new Counter();
+        counter = Counter.initialize();
     }
 
     @DisplayName("카운트하면 기본 값 보다 높거나 같다.")
     @Test
-    void isHigherAndEquals() {
+    void isHigherAndEqualsWhenCount() {
+        // given
         counter.count();
-        assertThat(counter.isHigherAndEquals(1)).isTrue();
+
+        // when
+        final boolean condition = counter.isHigherAndEquals(1);
+
+        // then
+        assertThat(condition).isTrue();
     }
 
     @DisplayName("카운트하면 기본 값 보다 낮거나 같다.")
     @Test
-    void isLowerAndEquals() {
+    void isLowerAndEqualsWhenCount() {
+        // given
         counter.count();
-        assertThat(counter.isLowerAndEquals(0)).isFalse();
+
+        // when
+        final boolean condition = counter.isLowerAndEquals(0);
+
+        // then
+        assertThat(condition).isFalse();
+    }
+
+    @DisplayName("카운트다운하면 기본 값 보다 높거나 같지 않다.")
+    @Test
+    void isHigherAndEqualsWhenCountdown() {
+        // given
+        counter.countdown();
+
+        // when
+        final boolean condition = counter.isHigherAndEquals(0);
+
+        // then
+        assertThat(condition).isFalse();
+    }
+
+    @DisplayName("카운트다운하면 기본 값 보다 낮거나 같지 않다.")
+    @Test
+    void isLowerAndEqualsWhenCountdown() {
+        // given
+        counter.countdown();
+
+        // when
+        final boolean condition = counter.isLowerAndEquals(-1);
+
+        // then
+        assertThat(condition).isTrue();
+    }
+
+    @DisplayName("기본 값을 가진 카운터를 만든다.")
+    @ParameterizedTest
+    @ValueSource(ints = {1, 4, 5, 75, 35, 354, 7, 63, 55, 74652, 3652335})
+    void initializeCounter(final int initializeCount) {
+        // given
+        final Counter initializeCounter = Counter.initialize(initializeCount);
+
+        // when
+        final boolean condition = initializeCounter.isLowerAndEquals(initializeCount);
+
+        // then
+        assertThat(condition).isTrue();
     }
 }
