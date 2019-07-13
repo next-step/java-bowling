@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class PlayerNameTest {
+public class PlayerTest {
     @Test
     void 플레이어의_이름을_입력받아서_생성한다() {
         String name = "HJS";
-        PlayerName playerName = PlayerName.from(name);
+        Player playerName = Player.from(name);
 
         Assertions.assertThat(playerName.isSameName(name)).isTrue();
     }
@@ -21,8 +21,8 @@ public class PlayerNameTest {
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> {
-                    PlayerName.from(name);
-                }).withMessage(PlayerName.ALERT_INVALID_PLAYER_NAME);
+                    Player.from(name);
+                }).withMessage(Player.ALERT_INVALID_PLAYER_NAME);
     }
 
     @Test
@@ -31,8 +31,8 @@ public class PlayerNameTest {
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> {
-                    PlayerName.from(name);
-                }).withMessage(PlayerName.ALERT_INVALID_PLAYER_NAME);
+                    Player.from(name);
+                }).withMessage(Player.ALERT_INVALID_PLAYER_NAME);
     }
 
     @Test
@@ -41,8 +41,8 @@ public class PlayerNameTest {
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> {
-                    PlayerName.from(name);
-                }).withMessage(PlayerName.ALERT_INVALID_PLAYER_NAME);
+                    Player.from(name);
+                }).withMessage(Player.ALERT_INVALID_PLAYER_NAME);
     }
 
     @Test
@@ -51,14 +51,14 @@ public class PlayerNameTest {
 
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> {
-                    PlayerName.from(name);
-                }).withMessage(PlayerName.ALERT_INVALID_PLAYER_NAME);
+                    Player.from(name);
+                }).withMessage(Player.ALERT_INVALID_PLAYER_NAME);
     }
 
     @Test
     void 플레이어의_이름을_대문자로_바꾼다() {
         String name = "hjs";
-        PlayerName playerName = PlayerName.from(name);
+        Player playerName = Player.from(name);
 
         Assertions.assertThat(playerName.isSameName("HJS")).isTrue();
     }
