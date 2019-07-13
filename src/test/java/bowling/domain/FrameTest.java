@@ -1,11 +1,5 @@
 package bowling.domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -17,41 +11,4 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
  * create date  : 2019-07-13 15:10
  */
 public class FrameTest {
-    @DisplayName("현재 스코어의 합을 가지고 온다.")
-    @Test
-    void sum() {
-        Frame frame = new Frame();
-        frame.bowl(4);
-        assertThat(frame.bowl(5)).isEqualTo(9);
-    }
-
-    @DisplayName("현재 스코어의 합을 가지고 온다.")
-    @Test
-    void getNumber() {
-        Frame frame1 = new Frame();
-        Frame frame2 = new Frame();
-        Frame frame3 = new Frame();
-
-        assertThat(frame3.getNumber()).isEqualTo(3);
-    }
-
-    @DisplayName("몇번 투구했는지 가지고 온다.")
-    @Test
-    void bowlCount() {
-        Frame frame = new Frame();
-        frame.bowl(3);
-        frame.bowl(5);
-
-        assertThat(frame.countBowl()).isEqualTo(2);
-    }
-
-    @DisplayName("게임 종료 총 10번의 Frame - 예외처리")
-    @Test
-    void exception_total_game_count() {
-        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> {
-            for (int i = 0; i < 11; i++) {
-                new Frame();
-            }
-        }).withMessageContaining("게임 종료입니다.");
-    }
 }
