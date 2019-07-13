@@ -3,6 +3,10 @@ package domain;
 import java.util.*;
 
 public class NormalFrame {
+    private static final int MAXIMUM_NUMBER_OF_ROUND_RESULTS_FOR_NORMAL_FRAME = 2;
+    private static final int FIRST_TRIAL = 0;
+    private static final int STRIKE_PINS = 10;
+    private static final int GAP_BETWEEN_FRAME_NUMBERS = 1;
 
     private final int frameNumber;
     private List<Pins> roundResult;
@@ -17,8 +21,8 @@ public class NormalFrame {
         return new NormalFrame(frameNumber, roundResult);
     }
 
-    public boolean isMatch(NormalFrame normalFrame) {
-        return this.equals(normalFrame);
+    private NormalFrame makeNextFrame(Pins pins) {
+        return of(increaseFrameNumber(), new ArrayList<>(Arrays.asList(pins)));
     }
 
     public NormalFrame fillFrame(Pins pins) {
@@ -26,12 +30,28 @@ public class NormalFrame {
             roundResult.add(pins);
             return this;
         }
-        if(roundResult.size() == 2 || roundResult.get(0).equals(Pins.from(10))) {
-            nextNormalFrame = of(frameNumber + 1, new ArrayList<>(Arrays.asList(pins)));
+        if(isFull() || isStrike()) {
+            nextNormalFrame = makeNextFrame(pins);
             return nextNormalFrame;
         }
         roundResult.add(pins);
         return this;
+    }
+
+    private boolean isFull() {
+        return roundResult.size() == MAXIMUM_NUMBER_OF_ROUND_RESULTS_FOR_NORMAL_FRAME;
+    }
+
+    private boolean isStrike() {
+        return roundResult.get(FIRST_TRIAL).equals(Pins.from(STRIKE_PINS));
+    }
+
+    private int increaseFrameNumber() {
+        return frameNumber + GAP_BETWEEN_FRAME_NUMBERS;
+    }
+
+    public boolean isMatch(NormalFrame normalFrame) {
+        return this.equals(normalFrame);
     }
 
     public List<Pins> getRoundResult() {
