@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -11,4 +14,37 @@ package bowling.domain;
  * create date  : 2019-07-13 14:00
  */
 public class NormalFrameScore {
+    public static final String INVALID_DOWN_BOWL_COUNT = "넘어진 핀의 개수가 유효하지 않습니다. [%d]";
+    public static final String INVALID_BOWL_COUNT = "이미 2번의 투구를 끝냈습니다. 다음 Frame에 투구하세요";
+    public static final int FRAME_MAX_SCORE = 10;
+    public static final int FRAME_MAX_BOWL_COUNT = 2;
+    private List<Pin> downPins;
+
+    public NormalFrameScore() {
+        this.downPins = new ArrayList<>();
+    }
+
+    public void addBowlScore(int downCount) {
+        if (invalidScore(downCount)) {
+            throw new IllegalArgumentException(String.format(INVALID_DOWN_BOWL_COUNT, downCount));
+        }
+        if (invalidBowlCount()) {
+            throw new IllegalArgumentException(INVALID_BOWL_COUNT);
+        }
+        downPins.add(Pin.fallDown(downCount));
+    }
+
+    public int sum() {
+        return downPins.stream()
+                .mapToInt(Pin::fallCount)
+                .sum();
+    }
+
+    private boolean invalidBowlCount() {
+        return downPins.size() >= FRAME_MAX_BOWL_COUNT;
+    }
+
+    private boolean invalidScore(int downCount) {
+        return sum() + downCount > FRAME_MAX_SCORE;
+    }
 }
