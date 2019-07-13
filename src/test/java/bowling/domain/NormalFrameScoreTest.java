@@ -46,4 +46,21 @@ public class NormalFrameScoreTest {
             normalFrameScore.addBowlScore(1);
         }).withMessageContaining("이미 2번의 투구를 끝냈습니다. 다음 Frame에 투구하세요");
     }
+
+    @DisplayName("스트라이크 체크")
+    @Test
+    void isStrike() {
+        NormalFrameScore normalFrameScore = new NormalFrameScore();
+        normalFrameScore.addBowlScore(10);
+        assertThat(normalFrameScore.isStrike()).isTrue();
+    }
+
+    @DisplayName("스페어 체크")
+    @Test
+    void isSpare() {
+        NormalFrameScore normalFrameScore = new NormalFrameScore();
+        normalFrameScore.addBowlScore(1);
+        normalFrameScore.addBowlScore(9);
+        assertThat(normalFrameScore.isSpare()).isTrue();
+    }
 }

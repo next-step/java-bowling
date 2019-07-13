@@ -18,6 +18,7 @@ public class NormalFrameScore {
     public static final String INVALID_BOWL_COUNT = "이미 2번의 투구를 끝냈습니다. 다음 Frame에 투구하세요";
     public static final int FRAME_MAX_SCORE = 10;
     public static final int FRAME_MAX_BOWL_COUNT = 2;
+    public static final int STRIKE_BOWL_COUNT = 1;
     private List<Pin> downPins;
 
     public NormalFrameScore() {
@@ -34,6 +35,14 @@ public class NormalFrameScore {
         downPins.add(Pin.fallDown(downCount));
     }
 
+    public boolean isStrike() {
+        return countBowl() == STRIKE_BOWL_COUNT && sum() == FRAME_MAX_SCORE;
+    }
+
+    public boolean isSpare() {
+        return countBowl() == FRAME_MAX_BOWL_COUNT && sum() == FRAME_MAX_SCORE;
+    }
+
     public int sum() {
         return downPins.stream()
                 .mapToInt(Pin::fallCount)
@@ -41,7 +50,11 @@ public class NormalFrameScore {
     }
 
     private boolean invalidBowlCount() {
-        return downPins.size() >= FRAME_MAX_BOWL_COUNT;
+        return countBowl() >= FRAME_MAX_BOWL_COUNT;
+    }
+
+    private int countBowl() {
+        return downPins.size();
     }
 
     private boolean invalidScore(int downCount) {
