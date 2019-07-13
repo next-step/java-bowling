@@ -50,8 +50,9 @@ public class NormalFrameScoreTest {
     @Test
     void invalid_downPin_count() {
         NormalFrameScore normalScore = new NormalFrameScore();
+        normalScore.bowl(3);
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            normalScore.bowl(11);
+            normalScore.bowl(8);
         }).withMessageContaining("쓰러진 핀의 개수가 유효하지 않습니다.");
 
     }
