@@ -10,15 +10,17 @@ package bowling.domain;
  * project      : java-bowling
  * create date  : 2019-07-13 17:16
  */
-public class Frame {
+public abstract class Frame {
     private static int AUTO_INCREASE = 1;
     private final int index;
 
-    public Frame() {
+    Frame() {
         this.index = AUTO_INCREASE++;
     }
 
-    public int getIndex() {
+    int getIndex() {
         return index;
     }
+
+    abstract Frame bowl(int downCount);
 }
