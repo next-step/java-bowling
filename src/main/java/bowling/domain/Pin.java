@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+package bowling.domain;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -10,18 +8,20 @@ import java.util.List;
  * | blog         : sksggg123.github.io     |
  * ------------------------------------------
  * project      : java-bowling
- * create date  : 2019-07-07 23:07
+ * create date  : 2019-07-13 13:22
  */
-public class BowlingApplication {
+public class Pin {
+    private final int downCount;
 
-    public static void main(final String[] args)
-    {
-        BowlingApplication app = new BowlingApplication();
-        app.run();
+    public Pin(int downCount) {
+        this.downCount = downCount;
     }
 
-    public void run()
-    {
+    public static Pin fallDown(int downCount) {
+        return new Pin(downCount);
+    }
 
+    public int fallCount() {
+        return downCount;
     }
 }
