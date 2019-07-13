@@ -1,6 +1,6 @@
 package domain;
 
-import java.util.List;
+import java.util.*;
 
 public class NormalFrame {
 
@@ -22,14 +22,38 @@ public class NormalFrame {
     }
 
     public NormalFrame fillFrame(Pins pins) {
-        roundResult.add(pins);
+        if (roundResult.isEmpty()) {
+            roundResult.add(pins);
+            return this;
+        }
         if(roundResult.size() == 2 || roundResult.get(0).equals(Pins.from(10))) {
+            nextNormalFrame = of(frameNumber + 1, new ArrayList<>(Arrays.asList(pins)));
             return nextNormalFrame;
         }
+        roundResult.add(pins);
         return this;
     }
 
     public List<Pins> getRoundResult() {
-        return roundResult;
+        return Collections.unmodifiableList(roundResult);
+    }
+
+    public int getFrameNumber() {
+        return frameNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame that = (NormalFrame) o;
+        return frameNumber == that.frameNumber &&
+                Objects.equals(roundResult, that.roundResult) &&
+                Objects.equals(nextNormalFrame, that.nextNormalFrame);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber, roundResult, nextNormalFrame);
     }
 }
