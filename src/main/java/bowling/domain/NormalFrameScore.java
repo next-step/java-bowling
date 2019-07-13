@@ -17,6 +17,8 @@ public class NormalFrameScore {
     private static final int MAX_BOWL_COUNT = 2;
     private static final int MAX_DOWN_PIN = 10;
     private static final int STRIKE_BOWL_COUNT = 1;
+    public static final String INVALID_DOWN_PIN_COUNT = "쓰러진 핀의 개수가 유효하지 않습니다.";
+
     private List<Pin> downPin;
 
     public NormalFrameScore() {
@@ -24,7 +26,13 @@ public class NormalFrameScore {
     }
 
     public boolean bowl(int downCount) {
-        downPin.add(Pin.fallDown(downCount));
+        if (!validateDownCount(downCount)) {
+            throw new IllegalArgumentException(INVALID_DOWN_PIN_COUNT);
+        }
+        if (isBowl()) {
+            downPin.add(Pin.fallDown(downCount));
+            return true;
+        }
         return false;
     }
 
@@ -37,6 +45,10 @@ public class NormalFrameScore {
             return false;
         }
         return bowlCount() < MAX_BOWL_COUNT;
+    }
+
+    public boolean validateDownCount(int downCount) {
+        return sum() + downCount <= MAX_DOWN_PIN;
     }
 
     public boolean isStrike() {

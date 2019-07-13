@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -43,5 +44,15 @@ public class NormalFrameScoreTest {
         normalScore.bowl(10);
 
         assertThat(normalScore.isBowl()).isFalse();
+    }
+
+    @DisplayName("넘어간 Pin의 개수가 유효하지 않은상황 - 예외")
+    @Test
+    void invalid_downPin_count() {
+        NormalFrameScore normalScore = new NormalFrameScore();
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            normalScore.bowl(11);
+        }).withMessageContaining("쓰러진 핀의 개수가 유효하지 않습니다.");
+
     }
 }
