@@ -60,7 +60,7 @@ class SpareTest {
     @DisplayName("게임이 끝난 후 게임 시 예외처리 한다.")
     @Test
     void throwAlreadyFinishedFrameStateException() {
-        assertThatExceptionOfType(AlreadyFinishedFrameStateException.class)
+        assertThatExceptionOfType(FinishedFrameStateException.class)
                 .isThrownBy(() -> state.bowl(valueOf(1))
                         .bowl(valueOf(9))
                         .bowl(valueOf(5)));

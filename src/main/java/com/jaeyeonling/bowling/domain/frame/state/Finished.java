@@ -11,6 +11,6 @@ public abstract class Finished extends ValidFrameState {
 
     @Override
     FrameState validBowl(final KnockdownPins ignore) {
-        throw new AlreadyFinishedFrameStateException();
+        throw new FinishedFrameStateException();
     }
 }
