@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -42,5 +43,15 @@ public class FrameTest {
         frame.bowl(5);
 
         assertThat(frame.countBowl()).isEqualTo(2);
+    }
+
+    @DisplayName("게임 종료 총 10번의 Frame - 예외처리")
+    @Test
+    void exception_total_game_count() {
+        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> {
+            for (int i = 0; i < 11; i++) {
+                new Frame();
+            }
+        }).withMessageContaining("게임 종료입니다.");
     }
 }

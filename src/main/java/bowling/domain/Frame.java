@@ -15,11 +15,15 @@ import java.util.List;
  */
 public class Frame {
     private static int AUTO_INCREASE = 1;
+    private static int GAME_OVER_COUNT = 10;
 
     private List<Pin> pins;
     private final int number;
 
     public Frame() {
+        if (AUTO_INCREASE > GAME_OVER_COUNT) {
+            throw new IllegalStateException("게임 종료입니다.");
+        }
         this.pins = new ArrayList<>();
         this.number = AUTO_INCREASE++;
     }
