@@ -31,9 +31,7 @@ public class NormalFrameScoreTest {
     void exception_score() {
         NormalFrameScore normalFrameScore = new NormalFrameScore();
         normalFrameScore.addBowlScore(10);
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            normalFrameScore.addBowlScore(1);
-        }).withMessageContaining("넘어진 핀의 개수가 유효하지 않습니다.");
+        assertThat(normalFrameScore.addBowlScore(1)).isFalse();
     }
 
     @DisplayName("예외상황 - 투구 시 이미 2번의 투구를 끝냈을 경우")
@@ -42,9 +40,7 @@ public class NormalFrameScoreTest {
         NormalFrameScore normalFrameScore = new NormalFrameScore();
         normalFrameScore.addBowlScore(1);
         normalFrameScore.addBowlScore(1);
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            normalFrameScore.addBowlScore(1);
-        }).withMessageContaining("이미 2번의 투구를 끝냈습니다. 다음 Frame에 투구하세요");
+        assertThat(normalFrameScore.addBowlScore(1)).isFalse();
     }
 
     @DisplayName("스트라이크 체크")
