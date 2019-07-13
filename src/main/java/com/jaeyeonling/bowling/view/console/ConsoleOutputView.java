@@ -1,6 +1,6 @@
 package com.jaeyeonling.bowling.view.console;
 
-import com.jaeyeonling.bowling.domain.frame.BowlingSymbol;
+import com.jaeyeonling.bowling.domain.frame.BowlingType;
 import com.jaeyeonling.bowling.domain.frame.Frame;
 import com.jaeyeonling.bowling.domain.game.BowlingGame;
 import com.jaeyeonling.bowling.domain.user.User;
@@ -45,7 +45,8 @@ public final class ConsoleOutputView {
     }
 
     private static String format(final User user) {
-        return BowlingSymbol.DELIMITER + BowlingUtils.format(format(user.getUsername())) + BowlingSymbol.DELIMITER;
+        final String formattedUsername = format(user.getUsername());
+        return BowlingType.DELIMITER + BowlingUtils.format(formattedUsername) + BowlingType.DELIMITER;
     }
 
     private static String format(final Username username) {

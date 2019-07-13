@@ -1,6 +1,6 @@
 package com.jaeyeonling.bowling.domain.user;
 
-import com.jaeyeonling.bowling.domain.frame.BowlingSymbol;
+import com.jaeyeonling.bowling.domain.frame.BowlingType;
 import com.jaeyeonling.bowling.utils.BowlingUtils;
 
 public class User {
@@ -20,6 +20,6 @@ public class User {
     }
 
     public String format() {
-        return BowlingSymbol.DELIMITER + BowlingUtils.format(username.getUsername()) + BowlingSymbol.DELIMITER;
+        return BowlingType.DELIMITER + BowlingUtils.format(username.getUsername()) + BowlingType.DELIMITER;
     }
 }

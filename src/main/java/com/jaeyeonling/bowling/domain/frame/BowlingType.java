@@ -1,14 +1,15 @@
 package com.jaeyeonling.bowling.domain.frame;
 
-public enum BowlingSymbol {
+public enum BowlingType {
     STRIKE("X"),
     SPARE("/"),
-    DELIMITER("|"),
     GUTTER("-");
+
+    public static final String DELIMITER = "|";
 
     private final String symbol;
 
-    BowlingSymbol(final String symbol) {
+    BowlingType(final String symbol) {
         this.symbol = symbol;
     }
 

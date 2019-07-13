@@ -1,7 +1,7 @@
 package com.jaeyeonling.bowling.domain.frame.state;
 
 import com.jaeyeonling.bowling.domain.Counter;
-import com.jaeyeonling.bowling.domain.frame.BowlingSymbol;
+import com.jaeyeonling.bowling.domain.frame.BowlingType;
 import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
 
 import java.util.ArrayList;
@@ -11,7 +11,6 @@ import static java.util.stream.Collectors.joining;
 
 public class FinalState extends ValidFrameState {
 
-    private static final String DELIMITER = BowlingSymbol.DELIMITER.toString();
     private static final int START_INDEX = 0;
     private static final int DEFAULT_SIZE = 1;
     private static final int BONUS_ROUND = 3;
@@ -42,7 +41,12 @@ public class FinalState extends ValidFrameState {
     public String toSymbol() {
         return frameStates.stream()
                 .map(FrameState::toSymbol)
-                .collect(joining(DELIMITER));
+                .collect(joining(BowlingType.DELIMITER));
+    }
+
+    @Override
+    FrameScore validCalculateScore(final FrameScore base) {
+        return null;
     }
 
     @Override

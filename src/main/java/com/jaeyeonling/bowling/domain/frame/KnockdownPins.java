@@ -47,14 +47,14 @@ public class KnockdownPins {
     }
 
     public String toSymbol() {
-        return BowlingSymbol.toSymbol(this);
+        return BowlingType.toSymbol(this);
     }
 
     public String toSymbol(final KnockdownPins next) {
-        return BowlingSymbol.toSymbol(this, next);
+        return BowlingType.toSymbol(this, next);
     }
 
-    int getKnockdownPins() {
+    public int getKnockdownPins() {
         return knockdownPins;
     }
 }
