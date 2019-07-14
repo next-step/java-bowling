@@ -30,7 +30,7 @@ public class NormalFrame {
             roundResult.add(pins);
             return this;
         }
-        if(isFull() || isStrike()) {
+        if (isFull() || isStrike()) {
             nextNormalFrame = makeNextFrame(pins);
             return nextNormalFrame;
         }
