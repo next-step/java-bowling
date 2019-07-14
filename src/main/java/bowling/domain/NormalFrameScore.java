@@ -38,21 +38,21 @@ public class NormalFrameScore {
         return countBowl() == STRIKE_BOWL_COUNT && sum() == FRAME_MAX_SCORE;
     }
 
+    int countBowl() {
+        return downPins.size();
+    }
+
     int sum() {
         return downPins.stream()
                 .mapToInt(Pin::fallCount)
                 .sum();
     }
 
-    boolean invalidBowlCount() {
+    private boolean invalidBowlCount() {
         return countBowl() >= FRAME_MAX_BOWL_COUNT;
     }
 
-    int countBowl() {
-        return downPins.size();
-    }
-
-    boolean invalidScore(int downCount) {
+    private boolean invalidScore(int downCount) {
         return sum() + downCount > FRAME_MAX_SCORE;
     }
 }
