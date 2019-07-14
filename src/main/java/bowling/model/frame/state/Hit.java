@@ -32,9 +32,4 @@ public class Hit extends FirstState {
     public Score getScore() {
         return Score.of(getFirstBowl());
     }
-
-    @Override
-    public Score calculate(Score score) {
-        return score.calculate(getScore());
-    }
 }

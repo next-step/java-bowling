@@ -40,9 +40,4 @@ public class Strike extends FirstState {
     public Score getScore() {
         return Score.of(2, firstBowl);
     }
-
-    @Override
-    public Score calculate(Score score) {
-        return score.calculate(getScore());
-    }
 }

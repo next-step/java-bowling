@@ -32,9 +32,4 @@ public class Gutter extends FirstState {
     public Score getScore() {
         return Score.of(firstBowl);
     }
-
-    @Override
-    public Score calculate(Score score) {
-        return score.calculate(getScore());
-    }
 }

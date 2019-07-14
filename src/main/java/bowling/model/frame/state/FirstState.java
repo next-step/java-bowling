@@ -34,4 +34,9 @@ public abstract class FirstState implements State {
     Pins getFirstBowl() {
         return firstBowl;
     }
+
+    @Override
+    public Score calculate(Score score) {
+        return score.calculate(getScore());
+    }
 }
