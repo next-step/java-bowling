@@ -1,35 +1,35 @@
 package View;
 
-import domain.BowlingGame;
-import domain.NormalFrame;
+import domain.Bowling;
+import domain.Frame;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static domain.BowlingGame.NORMAL_FRAME_COUNT;
-import static domain.NormalScore.ZERO;
+import static domain.Bowling.TOTAL_FRAME_COUNT;
+import static domain.Frame.ONE;
 
-public class PointResultFormatter implements Formatter<BowlingGame> {
+public class PointResultFormatter implements Formatter<Bowling> {
 
     @Override
-    public String format(BowlingGame bowlingGame) {
+    public String format(Bowling bowling) {
         StringBuilder builder = new StringBuilder();
-        IntStream.range(ZERO, NORMAL_FRAME_COUNT)
+        IntStream.rangeClosed(ONE, TOTAL_FRAME_COUNT)
                 .boxed()
-                .map(count -> getNormalFramePoint(bowlingGame, count))
+                .map(frameNumber -> getFramePoint(bowling, frameNumber))
                 .forEach(builder::append);
-        builder.append(bowlingGame.getFinalFrame().framePoint() + "|");
-
         return builder.toString();
     }
 
-    private String getNormalFramePoint(BowlingGame bowlingGame, int count) {
+    private String getFramePoint(Bowling bowling, int frameNumber) {
         final String BLANK_FRAME = "    ";
         final String SCORE_CONNECTOR = " | ";
 
-        if (count > bowlingGame.lastPosition()) {
-            return BLANK_FRAME + SCORE_CONNECTOR;
+        Optional<Frame> maybeTargetFrame = Optional.ofNullable(bowling.getFrame(frameNumber));
+        if(maybeTargetFrame.isPresent()) {
+            Frame targetFrame = maybeTargetFrame.get();
+            return targetFrame.getPoint() + SCORE_CONNECTOR;
         }
-        NormalFrame frame = bowlingGame.getNormalFrame(count);
-        return frame.framePoint() + SCORE_CONNECTOR;
+        return BLANK_FRAME + SCORE_CONNECTOR;
     }
 }

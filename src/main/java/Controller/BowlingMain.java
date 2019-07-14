@@ -2,18 +2,20 @@ package Controller;
 
 import View.InView;
 import View.OutView;
-import domain.BowlingGame;
+import domain.Bowling;
+import domain.FrameCounter;
 import domain.Player;
 
 import java.util.stream.IntStream;
 
-import static domain.BowlingGame.MAX_BOWL_COUNT;
+import static domain.Frame.ZERO;
+import static domain.Bowling.MAX_BOWL_COUNT;
 
 public class BowlingMain {
     public static void main(String[] args) {
         Player player = new Player(requestPlayerName());
-        BowlingGame bowlingGame = new BowlingGame();
-        playBowling(bowlingGame, player);
+        Bowling bowling = new Bowling();
+        playBowling(bowling, player);
     }
 
     private static String requestPlayerName() {
@@ -21,19 +23,19 @@ public class BowlingMain {
         return InView.getString();
     }
 
-    private static int requestFrameScore(int frameNumber) {
+    private static int requestFramePoint(int frameNumber) {
         OutView.askFrameScore(frameNumber);
         return InView.getInt();
     }
 
-    private static void playBowling(BowlingGame bowlingGame, Player player) {
-        IntStream.rangeClosed(1, MAX_BOWL_COUNT)
-                .filter(ballCount -> !bowlingGame.isGameOver())
-                .map(ballCount -> requestFrameScore(bowlingGame.getNextFrameNumber()))
-                .peek(bowlingGame::playBowling)
-                .peek(score -> OutView.showFrameHeader())
-                .peek(score -> OutView.showFrameResult(player.getName(), bowlingGame.getFormattedPointResult()))
-                .peek(frame -> OutView.showFrameResult("", bowlingGame.getFormattedScoreResult()))
-                .forEach(frame -> OutView.printBlankLine());
+    private static void playBowling(Bowling bowling, Player player) {
+        IntStream.range(ZERO, MAX_BOWL_COUNT)
+                .filter(count -> bowling.nowPlaying())
+                .map(count -> requestFramePoint(FrameCounter.getFrameCounter()))
+                .peek(bowling::playBowling)
+                .peek(point -> OutView.showFrameHeader())
+                .peek(point -> OutView.showFrameResult(player.getName(), bowling.getFormattedPointResult()))
+                .peek(point -> OutView.showFrameResult("", bowling.getFormattedScoreResult()))
+                .forEach(point -> OutView.printBlankLine());
     }
 }

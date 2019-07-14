@@ -1,51 +1,47 @@
 package View;
 
-import domain.BowlingGame;
-import domain.FinalFrame;
-import domain.NormalFrame;
+import domain.Bowling;
+import domain.Frame;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static domain.BowlingGame.NORMAL_FRAME_COUNT;
-import static domain.BowlingGame.TOTAL_FRAME_COUNT;
+import static domain.Bowling.TOTAL_FRAME_COUNT;
+import static domain.Frame.NO_MORE_NEXT;
+import static domain.Frame.ONE;
 
-public class ScoreResultFormatter implements Formatter<BowlingGame> {
+public class ScoreResultFormatter implements Formatter<Bowling> {
     private int previousScore;
 
     @Override
-    public String format(BowlingGame bowlingGame) {
-        previousScore = 0;
+    public String format(Bowling bowling) {
         StringBuilder builder = new StringBuilder();
-
-        IntStream.range(0, TOTAL_FRAME_COUNT)
+        IntStream.rangeClosed(ONE, TOTAL_FRAME_COUNT)
                 .boxed()
-                .map(count -> getNormalFrameScore(bowlingGame, count))
+                .map(frameNumber -> getFrameScore(bowling, frameNumber))
                 .forEach(builder::append);
         return builder.toString();
     }
 
-    public String getNormalFrameScore(BowlingGame bowlingGame, int frameNumber) {
+    private String getFrameScore(Bowling bowling, int frameNumber) {
         final String BLANK_FRAME = "    ";
         final String SCORE_CONNECTOR = " | ";
 
-        FinalFrame finalFrame = bowlingGame.getFinalFrame();
-        if (frameNumber > bowlingGame.lastPosition() + (finalFrame.isStart() ? 1 : 0)) {
-            return BLANK_FRAME + SCORE_CONNECTOR;
+        Optional<Frame> maybeTargetFrame = Optional.ofNullable(bowling.getFrame(frameNumber));
+        if(maybeTargetFrame.isPresent()) {
+            Frame targetFrame = maybeTargetFrame.get();
+            int score = targetFrame.getScore();
+            return calculateFrameScore(score, targetFrame.nowPlaying()) + SCORE_CONNECTOR;
         }
-
-        if (frameNumber < NORMAL_FRAME_COUNT) {
-            NormalFrame frame = bowlingGame.getNormalFrame(frameNumber);
-            int score = frame.frameScore(bowlingGame.getFinalFrame());
-            return calculateFrameScore(score) + SCORE_CONNECTOR;
-        }
-
-        int score = finalFrame.sumScore();
-        return calculateFrameScore(score) + SCORE_CONNECTOR;
+        return BLANK_FRAME + SCORE_CONNECTOR;
     }
 
-    private String calculateFrameScore(int score) {
-        String scoreResult = (score == -1 ? "" : Integer.toString(score + previousScore));
-        previousScore += (score == -1 ? 0 : score);
+    private String calculateFrameScore(int score, boolean nowPlaying) {
+        String scoreResult = "";
+        if(!nowPlaying && score != NO_MORE_NEXT) {
+            scoreResult = Integer.toString(score + previousScore);
+            previousScore += nowPlaying ? 0 : score;
+        }
         return String.format("%-4s", scoreResult);
     }
 }

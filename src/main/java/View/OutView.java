@@ -2,7 +2,7 @@ package View;
 
 import java.util.stream.IntStream;
 
-import static domain.BowlingGame.TOTAL_FRAME_COUNT;
+import static domain.Bowling.TOTAL_FRAME_COUNT;
 
 public class OutView {
     private static String ASK_PLAYER_NAME = "플레이어 이름은(3 english letters)? : ";
