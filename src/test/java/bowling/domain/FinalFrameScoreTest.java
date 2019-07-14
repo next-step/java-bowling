@@ -20,44 +20,44 @@ public class FinalFrameScoreTest {
     @Test
     void second_bowl() {
         FinalFrameScore finalFrameScore = new FinalFrameScore();
-        finalFrameScore.bowl(10);
-        assertThat(finalFrameScore.bowl(10)).isTrue();
+        finalFrameScore.addBowlScore(10);
+        assertThat(finalFrameScore.addBowlScore(10)).isTrue();
     }
 
     @DisplayName("스페어면 세번째 투구가 가능하다")
     @Test
     void third_bowl_spare() {
         FinalFrameScore finalFrameScore = new FinalFrameScore();
-        finalFrameScore.bowl(5);
-        finalFrameScore.bowl(5);
-        assertThat(finalFrameScore.bowl(10)).isTrue();
+        finalFrameScore.addBowlScore(5);
+        finalFrameScore.addBowlScore(5);
+        assertThat(finalFrameScore.addBowlScore(10)).isTrue();
     }
 
     @DisplayName("스트라이크면 세번째 투구가 가능하다")
     @Test
     void third_bowl_strike() {
         FinalFrameScore finalFrameScore = new FinalFrameScore();
-        finalFrameScore.bowl(10);
-        finalFrameScore.bowl(10);
-        assertThat(finalFrameScore.bowl(10)).isTrue();
+        finalFrameScore.addBowlScore(10);
+        finalFrameScore.addBowlScore(10);
+        assertThat(finalFrameScore.addBowlScore(10)).isTrue();
     }
 
     @DisplayName("4번째 투구는 던질 수 없다")
     @Test
     void third_bowl_strike_2() {
         FinalFrameScore finalFrameScore = new FinalFrameScore();
-        finalFrameScore.bowl(10);
-        finalFrameScore.bowl(10);
-        finalFrameScore.bowl(10);
-        assertThat(finalFrameScore.bowl(10)).isFalse();
+        finalFrameScore.addBowlScore(10);
+        finalFrameScore.addBowlScore(10);
+        finalFrameScore.addBowlScore(10);
+        assertThat(finalFrameScore.addBowlScore(10)).isFalse();
     }
 
     @DisplayName("첫 번째 투구가 스트라이크면 세번째 투구가 가능하다")
     @Test
     void third_bowl_strike_3() {
         FinalFrameScore finalFrameScore = new FinalFrameScore();
-        finalFrameScore.bowl(10);
-        finalFrameScore.bowl(5);
-        assertThat(finalFrameScore.bowl(3)).isTrue();
+        finalFrameScore.addBowlScore(10);
+        finalFrameScore.addBowlScore(5);
+        assertThat(finalFrameScore.addBowlScore(3)).isTrue();
     }
 }
