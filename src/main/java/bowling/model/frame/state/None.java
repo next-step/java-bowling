@@ -3,6 +3,8 @@ package bowling.model.frame.state;
 import bowling.model.Pins;
 import bowling.model.frame.State;
 
+import static bowling.model.frame.state.Score.DEFAULT;
+
 public class None implements State {
 
     private static final None SELF = new None();
@@ -33,7 +35,7 @@ public class None implements State {
 
     @Override
     public Score getScore() {
-        return null;
+        return DEFAULT;
     }
 
     @Override

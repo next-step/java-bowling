@@ -4,10 +4,12 @@ import bowling.model.Pins;
 import bowling.model.frame.State;
 import bowling.utils.Pretty;
 
+import static bowling.model.Pins.MAX;
 import static bowling.model.frame.state.Gutter.PRINT_SYMBOL_OF_GUTTER;
 
 public class Spare extends SecondState {
 
+    private static final int SPARE_BONUS_COUNT = 1;
     private static final String SYMBOL_OF_SPARE = "/";
 
     private Spare(Pins firstBowl, Pins secondBowl) {
@@ -28,15 +30,6 @@ public class Spare extends SecondState {
 
     @Override
     public Score getScore() {
-        return Score.of(1, Pins.valueOf(10));
-    }
-
-    @Override
-    public Score calculate(Score score) {
-        Score calculate = score.calculate(getFirstBowl().count());
-        if(!score.isCompleted()){
-            return score.calculate(getSecondBowl().count());
-        }
-        return calculate;
+        return Score.of(SPARE_BONUS_COUNT, MAX);
     }
 }

@@ -4,6 +4,9 @@ import bowling.model.Pins;
 
 public class Score {
 
+    private static final int DEFAULT_SCORE = -1;
+    public static final Score DEFAULT = Score.of(DEFAULT_SCORE);
+
     private int count;
     private int score;
 
@@ -20,8 +23,16 @@ public class Score {
         return new Score(0, pins.count());
     }
 
+    public static Score of(int score) {
+        return of(0, score);
+    }
+
     public static Score of(int count, Pins pins) {
         return new Score(count, pins.count());
+    }
+
+    public static Score of(int count, int score) {
+        return new Score(count, score);
     }
 
     public static Score of(int count, Pins first, Pins second) {
@@ -55,7 +66,11 @@ public class Score {
         return count == 0;
     }
 
-    public boolean isStrike() {
-        return count == 2;
+    @Override
+    public String toString() {
+        return "Score{" +
+                "count=" + count +
+                ", score=" + score +
+                '}';
     }
 }

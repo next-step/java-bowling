@@ -3,8 +3,11 @@ package bowling.model.frame.state;
 import bowling.model.Pins;
 import bowling.model.frame.State;
 
+import static bowling.model.Pins.MAX;
+
 public class Strike extends FirstState {
 
+    private static final int STRIKE_BONUS_COUNT = 2;
     private static final String SYMBOL_OF_STRIKE = "X";
     private static final Strike SELF = new Strike();
     private static final Pins firstBowl = Pins.DOWN_ALL;
@@ -38,6 +41,6 @@ public class Strike extends FirstState {
 
     @Override
     public Score getScore() {
-        return Score.of(2, firstBowl);
+        return Score.of(STRIKE_BONUS_COUNT, MAX);
     }
 }
