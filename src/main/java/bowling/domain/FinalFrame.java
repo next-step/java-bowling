@@ -10,5 +10,21 @@ package bowling.domain;
  * project      : java-bowling
  * create date  : 2019-07-14 22:56
  */
-public class FinalFrame {
+public class FinalFrame extends Frame {
+
+    private FinalFrameScore finalFrameScore;
+
+    FinalFrame() {
+        this.finalFrameScore = new FinalFrameScore();
+    }
+
+    @Override
+    Frame bowl(int downCount) {
+        finalFrameScore.addBowlScore(downCount);
+        return this;
+    }
+
+    boolean isGameOver() {
+        return finalFrameScore.invalidBowlCount();
+    }
 }
