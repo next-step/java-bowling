@@ -1,6 +1,7 @@
 package bowling.model.frame;
 
 import bowling.model.Pins;
+import bowling.model.frame.state.Score;
 
 public interface State {
 
@@ -9,4 +10,8 @@ public interface State {
     boolean isFinished();
 
     String printResult();
+
+    Score getScore();
+
+    Score calculate(Score score);
 }

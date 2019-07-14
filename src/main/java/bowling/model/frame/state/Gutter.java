@@ -27,4 +27,14 @@ public class Gutter extends FirstState {
     public String printResult() {
         return PRINT_SYMBOL_OF_GUTTER;
     }
+
+    @Override
+    public Score getScore() {
+        return Score.of(firstBowl);
+    }
+
+    @Override
+    public Score calculate(Score score) {
+        return score.calculate(getScore());
+    }
 }

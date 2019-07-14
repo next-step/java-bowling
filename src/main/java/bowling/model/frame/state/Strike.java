@@ -35,4 +35,14 @@ public class Strike extends FirstState {
     public String printResult() {
         return SYMBOL_OF_STRIKE;
     }
+
+    @Override
+    public Score getScore() {
+        return Score.of(2, firstBowl);
+    }
+
+    @Override
+    public Score calculate(Score score) {
+        return score.calculate(getScore());
+    }
 }

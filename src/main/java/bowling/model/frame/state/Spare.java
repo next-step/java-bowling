@@ -25,4 +25,18 @@ public class Spare extends SecondState {
         }
         return Pretty.putPartitionOfState(getFirstBowl().toString(), SYMBOL_OF_SPARE);
     }
+
+    @Override
+    public Score getScore() {
+        return Score.of(1, Pins.valueOf(10));
+    }
+
+    @Override
+    public Score calculate(Score score) {
+        Score calculate = score.calculate(getFirstBowl().count());
+        if(!score.isCompleted()){
+            return score.calculate(getSecondBowl().count());
+        }
+        return calculate;
+    }
 }

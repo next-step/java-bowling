@@ -3,9 +3,13 @@ package bowling.model;
 import bowling.model.frame.Frame;
 import bowling.model.frame.FrameNumber;
 
+import java.util.List;
+
 public class GameEngine {
 
     private Frame firstFrame;
+
+    private List<Frame> frames;
     private Frame currentFrame;
 
     GameEngine() {

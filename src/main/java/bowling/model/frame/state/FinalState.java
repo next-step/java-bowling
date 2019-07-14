@@ -68,6 +68,16 @@ public class FinalState implements State {
                 .collect(joining(PARTITION_OF_SYMBOL));
     }
 
+    @Override
+    public Score getScore() {
+        return null;
+    }
+
+    @Override
+    public Score calculate(Score score) {
+        return null;
+    }
+
     List<State> getStates() {
         return Collections.unmodifiableList(states);
     }

@@ -23,4 +23,22 @@ public class Miss extends SecondState {
     public String printResult() {
         return Pretty.putPartitionOfState(getFirstBowl().toString(), getSecondBowl().toString());
     }
+
+    @Override
+    public Score getScore() {
+        return Score.of(0, getFirstBowl(), getSecondBowl());
+    }
+
+    @Override
+    public Score calculate(Score score) {
+        if (score.isCompleted()) {
+            return score;
+        }
+        Score calculate = score.calculate(getFirstBowl().count());
+
+        if (!score.isCompleted()) {
+            calculate = calculate.calculate(getSecondBowl().count());
+        }
+        return calculate;
+    }
 }

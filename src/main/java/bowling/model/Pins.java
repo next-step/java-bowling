@@ -53,4 +53,9 @@ public class Pins {
     public String toString() {
         return String.valueOf(countOfDownPins);
     }
+
+    public int count() {
+        return countOfDownPins;
+    }
+
 }

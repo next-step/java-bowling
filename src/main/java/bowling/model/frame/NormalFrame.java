@@ -2,6 +2,7 @@ package bowling.model.frame;
 
 import bowling.model.Pins;
 import bowling.model.frame.state.None;
+import bowling.model.frame.state.Score;
 
 import java.util.Objects;
 
@@ -48,6 +49,30 @@ public class NormalFrame extends Frame {
     @Override
     public String printResult() {
         return state.printResult() + SEPARATOR_OF_FRAME + next.printResult();
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = state.getScore();
+        if (score.isCompleted()) {
+            return score;
+        }
+        return next.calculate(score);
+    }
+
+    @Override
+    Score calculate(Score score) {
+        if (!state.isFinished()) {
+            return score;
+        }
+        if (score.isCompleted()) {
+            return score;
+        }
+        Score calculated = state.calculate(score);
+        if (calculated.isCompleted()) {
+            return calculated;
+        }
+        return next.calculate(calculated);
     }
 
     @Override

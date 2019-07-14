@@ -30,4 +30,14 @@ public class None implements State {
     public String printResult() {
         return SYMBOL_OF_NONE;
     }
+
+    @Override
+    public Score getScore() {
+        return null;
+    }
+
+    @Override
+    public Score calculate(Score score) {
+        return score;
+    }
 }
