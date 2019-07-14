@@ -15,7 +15,7 @@ public class NormalFrame extends Frame {
     private NormalFrameScore currentFrameScore;
     private NormalFrame next;
 
-    public NormalFrame() {
+    NormalFrame() {
         this.currentFrameScore = new NormalFrameScore();
     }
 
