@@ -4,13 +4,16 @@ import View.OutView;
 
 import java.util.Optional;
 
+import static domain.Score.ONCE_LEFT;
+import static domain.Score.TWICE_LEFT;
+
 public class Frame {
     private static final String MISS = "Miss";
     private static final String STRIKE = "Strike";
     private static final String SPARE = "Spare";
     private static final String FIRST_BOWL = "FirstBowl";
     private static final String FINAL_BOWL = "FinalBowl";
-    private static final boolean FIRST_IS_NOT_SPARE = false;
+    public static final boolean FIRST_IS_NOT_SPARE = false;
     public static final int NO_MORE_NEXT = -1;
     public static final int ONE = 1;
     public static final int ZERO = 0;
@@ -39,35 +42,15 @@ public class Frame {
             state = state.bowl(fellPins);
             return this;
         }
-        next = new Frame();
-        next.doBowling(fellPins);
-        return next;
+        return this;
     }
 
     public String getPoint() {
-        Pin firstPin = Pin.of(state.getFirstPin());
-        Pin secondPin = Pin.of(state.getSecondPin());
-
-        int firstPins = firstPin.getFellPins();
-        int secondPins = secondPin.getFellPins();
-
-        if (state.isNameOfState(FIRST_BOWL)) {
-            firstPins = state.getFellPins();
-            secondPins = NO_MORE_NEXT;
-        }
-
-        String first = PointName.valueOfPointName(firstPins, FIRST_IS_NOT_SPARE);
-        String pointResult = first;
-
-        if (!state.isNameOfState(STRIKE)) {
-            String second = PointName.valueOfPointName(secondPins, firstPin.isSpare(secondPin));
-            pointResult += "|" + second;
-        }
-        return String.format("%-4s", pointResult);
+        return state.getPoint();
     }
 
     public int getScore() {
-        Score score = createScore();
+        Score score = state.getScore();
         if (score.canCalculateScore()) {
             return score.getScore();
         }
@@ -80,71 +63,49 @@ public class Frame {
     }
 
     private int calculateAdditionalScore(Score beforeScore) {
-        int before = beforeScore.getScore();
-        int now = this.getScore();
-
-        if(now == NO_MORE_NEXT) {
-            return now;
-        }
-        return before + now;
+        int previousScore = beforeScore.getScore();
+        int currentScore = getLeftScore(state, beforeScore.getLeft());
+        return currentScore == NO_MORE_NEXT ? NO_MORE_NEXT : previousScore + currentScore;
     }
 
-    private Score createScore() {
-        Pin firstPin = Pin.of(state.getFirstPin());
-        Pin secondPin = Pin.of(state.getSecondPin());
-
-        if (FrameCounter.isFinalFrame()) {
-            return finalScore(firstPin, secondPin);
+    private int getLeftScore(State currentState, int left) {
+        if (left == ONCE_LEFT) {
+            Pin first = currentState.getFirstPin();
+            return first.getFellPins();
         }
-        return normalScore(firstPin, secondPin);
+        if (left == TWICE_LEFT && (currentState.getSecondPin() != null || Optional.ofNullable(next).isPresent())) {
+            Pin first = currentState.getFirstPin();
+            return first.getFellPins() + getTwiceLeftScore(currentState);
+        }
+        return NO_MORE_NEXT;
     }
 
-    private Score finalScore(Pin firstPin, Pin secondPin) {
-        final int TWICE_LEFT = 3;
-
-        int left = TWICE_LEFT;
-        if (firstPin != null) {
-            left += firstPin.isStrike() ? ZERO : NO_MORE_NEXT;
+    private int getTwiceLeftScore(State currentState) {
+        Optional<Pin> maybeSecondPin = Optional.ofNullable(currentState.getSecondPin());
+        if (maybeSecondPin.isPresent()) {
+            Pin second = maybeSecondPin.get();
+            return second.getFellPins();
         }
-        if (secondPin != null) {
-            left += firstPin.isSpare(secondPin) ? ZERO : NO_MORE_NEXT;
+        Optional<Frame> maybeNextFrame = Optional.ofNullable(next);
+        if (maybeNextFrame.isPresent()) {
+            Frame nextFrame = maybeNextFrame.get();
+            State nextFrameState = nextFrame.getState();
+            Pin nextFrameStatePin = nextFrameState.getFirstPin();
+            return nextFrameStatePin.getFellPins();
         }
-
-        return new Score(state.getFellPins(), left);
+        return ZERO;
     }
 
-    private Score normalScore(Pin firstPin, Pin secondPin) {
-        if (firstPin.isStrike()) {
-            return Score.ofStrike();
-        }
-        if (firstPin.isSpare(secondPin)) {
-            return Score.ofSpare();
-        }
-        if (firstPin.isMiss(secondPin)) {
-            return Score.ofMiss(state.getFellPins());
-        }
-        return new Score(firstPin.getFellPins(), ONE);
-    }
-
-    public boolean nowPlaying() {
-        if (isNullState()) {
-            return Boolean.TRUE;
-        }
-        if (state.isNameOfState(MISS) || state.isNameOfState(SPARE) || state.isNameOfState(STRIKE)) {
-            return Boolean.FALSE;
-        }
-        if (state.isNameOfState(FINAL_BOWL)) {
-            return state.nowPlaying();
-        }
-        return Boolean.TRUE;
+    public boolean isFrameEnd() {
+        return state.isFrameEnd();
     }
 
     public boolean isFinalFrame() {
         if (isNullState()) {
             return Boolean.FALSE;
         }
-        if (state.isNameOfState(FINAL_BOWL)) {
-            return Boolean.TRUE;
+        if (FrameCounter.isFinalFrame()) {
+            return isFrameEnd();
         }
         return Boolean.FALSE;
     }
@@ -153,10 +114,19 @@ public class Frame {
         return next;
     }
 
+    public Frame createNext() {
+        next = new Frame();
+        return next;
+    }
+
     private boolean isNullState() {
         if (state == null) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
+    }
+
+    public State getState() {
+        return state;
     }
 }

@@ -1,20 +1,26 @@
 package domain;
 
 abstract class State {
-    private final String STATE_NAME = "State";
     protected final int STRIKE = 10;
+    protected final int FIRST = 0;
+    protected final int SECOND = 1;
+    protected final int THIRD= 2;
 
     abstract State bowl(int countOfPins);
 
-    abstract int getFellPins();
+    abstract int getPoints();
 
-    abstract int getFirstPin();
+    abstract Pin getFirstPin();
 
-    abstract int getSecondPin();
+    abstract Pin getSecondPin();
+
+    abstract boolean isFrameEnd();
 
     abstract boolean isNameOfState(String state);
 
     abstract String getNameOfState();
 
-    abstract boolean nowPlaying();
+    abstract String getPoint();
+
+    abstract Score getScore();
 }

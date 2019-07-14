@@ -7,7 +7,7 @@ public class Ready extends State {
 
     @Override
     public State bowl(int countOfPins) {
-        if (countOfPins == super.STRIKE) {
+        if (!FrameCounter.isFinalFrame() && countOfPins == super.STRIKE) {
             return new Strike();
         }
 
@@ -15,18 +15,18 @@ public class Ready extends State {
     }
 
     @Override
-    int getFellPins() {
+    int getPoints() {
         return MIN_PINS;
     }
 
     @Override
-    int getFirstPin() {
-        return MIN_PINS;
+    Pin getFirstPin() {
+        return null;
     }
 
     @Override
-    int getSecondPin() {
-        return MIN_PINS;
+    Pin getSecondPin() {
+        return null;
     }
 
     @Override
@@ -40,7 +40,17 @@ public class Ready extends State {
     }
 
     @Override
-    boolean nowPlaying() {
-        return Boolean.TRUE;
+    public String getPoint() {
+        return null;
+    }
+
+    @Override
+    public Score getScore() {
+        return null;
+    }
+
+    @Override
+    boolean isFrameEnd() {
+        return Boolean.FALSE;
     }
 }

@@ -7,11 +7,10 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static domain.Bowling.TOTAL_FRAME_COUNT;
-import static domain.Frame.NO_MORE_NEXT;
-import static domain.Frame.ONE;
+import static domain.Frame.*;
 
 public class ScoreResultFormatter implements Formatter<Bowling> {
-    private int previousScore;
+    private int previouslyTotalScore;
 
     @Override
     public String format(Bowling bowling) {
@@ -31,16 +30,16 @@ public class ScoreResultFormatter implements Formatter<Bowling> {
         if(maybeTargetFrame.isPresent()) {
             Frame targetFrame = maybeTargetFrame.get();
             int score = targetFrame.getScore();
-            return calculateFrameScore(score, targetFrame.nowPlaying()) + SCORE_CONNECTOR;
+            return calculateFrameScore(score, targetFrame.isFrameEnd()) + SCORE_CONNECTOR;
         }
         return BLANK_FRAME + SCORE_CONNECTOR;
     }
 
-    private String calculateFrameScore(int score, boolean nowPlaying) {
+    private String calculateFrameScore(int score, boolean isFrameEnd) {
         String scoreResult = "";
-        if(!nowPlaying && score != NO_MORE_NEXT) {
-            scoreResult = Integer.toString(score + previousScore);
-            previousScore += nowPlaying ? 0 : score;
+        if(isFrameEnd && (score != NO_MORE_NEXT)) {
+            scoreResult = Integer.toString(score + previouslyTotalScore);
+            previouslyTotalScore += score;
         }
         return String.format("%-4s", scoreResult);
     }

@@ -1,42 +1,56 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static domain.Frame.*;
 import static domain.Pin.MAX_PINS;
 
 public class FinalBowl extends State {
     private final String STATE_NAME = "FinalBowl";
 
-    private int firstPin;
-    private int secondPin;
-    private int bonusPin;
+    private List<Pin> pins;
 
-    public FinalBowl(int firstPin, int secondPin) {
-        this.firstPin = firstPin;
-        this.secondPin = secondPin;
-        this.bonusPin = -1;
+    public FinalBowl(Pin firstPin, Pin secondPin) {
+        pins = new ArrayList<>();
+        pins.add(firstPin);
+        pins.add(secondPin);
     }
 
     @Override
     public State bowl(int countOfPins) {
-        if ((firstPin + secondPin) < MAX_PINS) {
+        if (getPoints() < MAX_PINS) {
             throw new IllegalStateException("2번 투구까지 커버되지 않으면 보너스 투구할 수 없습니다.");
         }
-        bonusPin = countOfPins;
+        pins.add(Pin.of(countOfPins));
         return this;
     }
 
     @Override
-    public int getFellPins() {
-        return firstPin + secondPin + bonusPin;
+    public int getPoints() {
+        return pins.stream()
+                .mapToInt(pin -> pin.getFellPins())
+                .sum();
     }
 
     @Override
-    public int getFirstPin() {
-        return firstPin;
+    public Pin getFirstPin() {
+        return pins.get(FIRST);
     }
 
     @Override
-    public int getSecondPin() {
-        return secondPin;
+    public Pin getSecondPin() {
+        return pins.get(SECOND);
+    }
+
+    @Override
+    boolean isFrameEnd() {
+        Optional<Pin> maybeThird = Optional.empty();
+        if (pins.size() == THIRD + 1) {
+            maybeThird = Optional.ofNullable(pins.get(THIRD));
+        }
+        return canBonus() && !maybeThird.isPresent() ? Boolean.FALSE : Boolean.TRUE;
     }
 
     @Override
@@ -50,10 +64,48 @@ public class FinalBowl extends State {
     }
 
     @Override
-    boolean nowPlaying() {
-        Pin first = Pin.of(firstPin);
-        Pin second = Pin.of(secondPin);
-        boolean isBonus = first.isSpare(second) || first.isStrike();
-        return (isBonus && bonusPin == -1) ? Boolean.TRUE : Boolean.FALSE;
+    public String getPoint() {
+        Optional<Pin> maybeThirdPin = Optional.empty();
+        if (pins.size() == THIRD + 1) {
+            maybeThirdPin = Optional.ofNullable(pins.get(THIRD));
+        }
+
+        Pin firstPin = pins.get(FIRST);
+        Pin secondPin = pins.get(SECOND);
+        Pin thirdPin = maybeThirdPin.orElse(Pin.of(ZERO));
+
+        int firstPins = firstPin.getFellPins();
+        int secondPins = secondPin.getFellPins();
+        int thirdPins = maybeThirdPin.isPresent() ? thirdPin.getFellPins() : NO_MORE_NEXT;
+
+        String first = PointName.valueOfPointName(firstPins, FIRST_IS_NOT_SPARE);
+        String second = PointName.valueOfPointName(secondPins, firstPin.isSpare(secondPin));
+        String third = PointName.valueOfPointName(thirdPins, secondPin.isSpare(thirdPin));
+
+        String pointResult = first + addConnector(second) + addConnector(third);
+        return String.format("%-4s", pointResult);
+    }
+
+    @Override
+    public Score getScore() {
+        final int TOTAL_LEFT = 3 + (canBonus() ? ZERO : NO_MORE_NEXT);
+
+        int left = TOTAL_LEFT % pins.size();
+        return new Score(getPoints(), left);
+    }
+
+    private String addConnector(String text) {
+        final String CONNECTOR = "|";
+
+        if (!text.equals("")) {
+            return CONNECTOR + text;
+        }
+        return text;
+    }
+
+    private boolean canBonus() {
+        Pin first = pins.get(FIRST);
+        Pin second = pins.get(SECOND);
+        return first.isStrike() || first.isSpare(second);
     }
 }

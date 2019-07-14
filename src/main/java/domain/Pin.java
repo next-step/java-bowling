@@ -1,6 +1,10 @@
 package domain;
 
+import View.OutView;
+
 import java.util.Objects;
+
+import static domain.Frame.ZERO;
 
 public class Pin {
     protected static final int MIN_PINS = 0;
@@ -41,7 +45,7 @@ public class Pin {
             return Boolean.FALSE;
         }
 
-        if ((fellPins + secondPin.fellPins) == MAX_PINS) {
+        if (secondPin.fellPins != ZERO && (fellPins + secondPin.fellPins) == MAX_PINS) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;

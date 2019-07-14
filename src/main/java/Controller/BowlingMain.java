@@ -30,12 +30,17 @@ public class BowlingMain {
 
     private static void playBowling(Bowling bowling, Player player) {
         IntStream.range(ZERO, MAX_BOWL_COUNT)
-                .filter(count -> bowling.nowPlaying())
+                .filter(count -> !bowling.isBowlingEnd())
                 .map(count -> requestFramePoint(FrameCounter.getFrameCounter()))
                 .peek(bowling::playBowling)
                 .peek(point -> OutView.showFrameHeader())
                 .peek(point -> OutView.showFrameResult(player.getName(), bowling.getFormattedPointResult()))
                 .peek(point -> OutView.showFrameResult("", bowling.getFormattedScoreResult()))
-                .forEach(point -> OutView.printBlankLine());
+                .peek(point -> OutView.printBlankLine())
+                .forEach(point -> {
+                    if(!bowling.isBowlingEnd()) {
+                        bowling.getNextFrame();
+                    }
+                });
     }
 }

@@ -1,18 +1,19 @@
 package domain;
 
-import static domain.Frame.ZERO;
-import static domain.Pin.MIN_PINS;
+import java.util.ArrayList;
+import java.util.List;
+
+import static domain.Frame.FIRST_IS_NOT_SPARE;
 
 public class Strike extends State {
     private final String STATE_NAME = "Strike";
     private final int STRIKE = 10;
 
-    private int firstPin;
-    private int secondPin;
+    private List<Pin> pins;
 
     Strike() {
-        firstPin = STRIKE;
-        secondPin = ZERO;
+        pins = new ArrayList<>();
+        pins.add(Pin.of(STRIKE));
     }
 
     @Override
@@ -21,18 +22,25 @@ public class Strike extends State {
     }
 
     @Override
-    public int getFellPins() {
-        return firstPin;
+    public int getPoints() {
+        return pins.stream()
+                .mapToInt(pin -> pin.getFellPins())
+                .sum();
     }
 
     @Override
-    int getFirstPin() {
-        return firstPin;
+    Pin getFirstPin() {
+        return pins.get(FIRST);
     }
 
     @Override
-    int getSecondPin() {
-        return MIN_PINS;
+    Pin getSecondPin() {
+        return null;
+    }
+
+    @Override
+    boolean isFrameEnd() {
+        return Boolean.TRUE;
     }
 
     public boolean isNameOfState(String state) {
@@ -45,7 +53,16 @@ public class Strike extends State {
     }
 
     @Override
-    boolean nowPlaying() {
-        return Boolean.TRUE;
+    public String getPoint() {
+        Pin firstPin = pins.get(FIRST);
+        int firstPins = firstPin.getFellPins();
+        String result = PointName.valueOfPointName(firstPins, FIRST_IS_NOT_SPARE);
+
+        return String.format("%-4s", result);
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofStrike();
     }
 }

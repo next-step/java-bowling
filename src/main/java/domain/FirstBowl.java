@@ -1,43 +1,49 @@
 package domain;
 
-import static domain.Pin.MAX_PINS;
-import static domain.Pin.MIN_PINS;
+import static domain.Frame.*;
 
 public class FirstBowl extends State {
     private final String STATE_NAME = "FirstBowl";
 
-    private int countOfPins;
+    private Pin firstPin;
 
-    FirstBowl(int countOfPins) {
-        this.countOfPins = countOfPins;
+    FirstBowl(int firstPins) {
+        firstPin = Pin.of(firstPins);
     }
 
     @Override
-    public State bowl(int countOfPins) {
+    public State bowl(int secondPins) {
+        Pin secondPin = Pin.of(secondPins);
+
         if (FrameCounter.isFinalFrame()) {
-            return new FinalBowl(this.countOfPins, countOfPins);
+            return new FinalBowl(firstPin, secondPin);
         }
 
-        if (this.countOfPins + countOfPins == MAX_PINS) {
-            return new Spare(this.countOfPins, countOfPins);
+        if (firstPin.isSpare(secondPin)) {
+            return new Spare(firstPin, secondPin);
         }
 
-        return new Miss(this.countOfPins, countOfPins);
+        return new Miss(firstPin, secondPin);
     }
 
     @Override
-    public int getFellPins() {
-        return countOfPins;
+    public int getPoints() {
+        return firstPin.getFellPins();
     }
 
     @Override
-    int getFirstPin() {
-        return MIN_PINS;
+    Pin getFirstPin() {
+        return firstPin;
     }
 
     @Override
-    int getSecondPin() {
-        return MIN_PINS;
+    Pin getSecondPin() {
+        return null;
+    }
+
+    @Override
+    boolean isFrameEnd() {
+        return Boolean.FALSE;
     }
 
     @Override
@@ -51,7 +57,14 @@ public class FirstBowl extends State {
     }
 
     @Override
-    boolean nowPlaying() {
-        return Boolean.TRUE;
+    public String getPoint() {
+        int firstPins = firstPin.getFellPins();
+        String result = PointName.valueOfPointName(firstPins, FIRST_IS_NOT_SPARE);
+        return String.format("%-4s", result);
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(firstPin.getFellPins(), ZERO);
     }
 }

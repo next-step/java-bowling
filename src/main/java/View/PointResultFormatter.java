@@ -10,6 +10,8 @@ import static domain.Bowling.TOTAL_FRAME_COUNT;
 import static domain.Frame.ONE;
 
 public class PointResultFormatter implements Formatter<Bowling> {
+    final String BLANK_FRAME = "    ";
+    final String SCORE_CONNECTOR = " | ";
 
     @Override
     public String format(Bowling bowling) {
@@ -22,14 +24,19 @@ public class PointResultFormatter implements Formatter<Bowling> {
     }
 
     private String getFramePoint(Bowling bowling, int frameNumber) {
-        final String BLANK_FRAME = "    ";
-        final String SCORE_CONNECTOR = " | ";
 
         Optional<Frame> maybeTargetFrame = Optional.ofNullable(bowling.getFrame(frameNumber));
-        if(maybeTargetFrame.isPresent()) {
-            Frame targetFrame = maybeTargetFrame.get();
-            return targetFrame.getPoint() + SCORE_CONNECTOR;
+        if (maybeTargetFrame.isPresent()) {
+            Frame targetFrame = maybeTargetFrame.orElse(null);
+            return targetFrame.getPoint() + getConnector(frameNumber, bowling.isBowlingEnd());
         }
         return BLANK_FRAME + SCORE_CONNECTOR;
+    }
+
+    private String getConnector(int frameNumber, boolean bowlingEnd) {
+        if (frameNumber == TOTAL_FRAME_COUNT && bowlingEnd) {
+            return "|";
+        }
+        return SCORE_CONNECTOR;
     }
 }

@@ -2,8 +2,9 @@ package domain;
 
 import org.junit.jupiter.api.Test;
 
-import static domain.BowlingGame.TOTAL_FRAME_COUNT;
-import static org.assertj.core.api.Assertions.*;
+import static domain.Bowling.TOTAL_FRAME_COUNT;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class BonusFrameTest {
     @Test

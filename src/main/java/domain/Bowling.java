@@ -33,19 +33,35 @@ public class Bowling {
         return scoreResultFormatter.format(this);
     }
 
-    public boolean nowPlaying() {
-
-        if(frame.isFinalFrame()) {
-            return frame.nowPlaying() ? Boolean.TRUE : Boolean.FALSE;
-        }
-        return Boolean.TRUE;
+    public boolean isBowlingEnd() {
+        return frame.isFinalFrame() ? Boolean.TRUE : Boolean.FALSE;
     }
 
     public Frame getFrame(int frameNumber) {
-        Optional<Frame> maybeNextFrame = Optional.ofNullable(firstFrame);
-        for (int number = ONE; number < frameNumber; number++) {
-            maybeNextFrame = Optional.ofNullable(maybeNextFrame.orElse(firstFrame).getNext());
+        if (getFrameCount() < frameNumber) {
+            return null;
         }
-        return maybeNextFrame.orElse(null);
+
+        Optional<Frame> maybeTargetFrame = Optional.ofNullable(firstFrame);
+        for (int number = ONE; number < frameNumber; number++) {
+            maybeTargetFrame = Optional.ofNullable(maybeTargetFrame.get().getNext());
+        }
+        return maybeTargetFrame.orElse(null);
+    }
+
+    private int getFrameCount() {
+        int count = ONE;
+        Frame target = firstFrame;
+        while (target.getNext() != null) {
+            target = target.getNext();
+            count++;
+        }
+        return count;
+    }
+
+    public void getNextFrame() {
+        if (frame.isFrameEnd()) {
+            frame = frame.createNext();
+        }
     }
 }

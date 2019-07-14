@@ -1,13 +1,19 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static domain.Frame.FIRST_IS_NOT_SPARE;
+
 public class Spare extends State {
     private final String STATE_NAME = "Spare";
-    private int firstPin;
-    private int secondPin;
 
-    Spare(int firstPin, int secondPin) {
-        this.firstPin = firstPin;
-        this.secondPin = secondPin;
+    private List<Pin> pins;
+
+    Spare(Pin firstPin, Pin secondPin) {
+        pins = new ArrayList<>();
+        pins.add(firstPin);
+        pins.add(secondPin);
     }
 
     @Override
@@ -16,18 +22,25 @@ public class Spare extends State {
     }
 
     @Override
-    public int getFellPins() {
-        return firstPin + secondPin;
+    public int getPoints() {
+        return pins.stream()
+                .mapToInt(pin -> pin.getFellPins())
+                .sum();
     }
 
     @Override
-    public int getFirstPin() {
-        return firstPin;
+    public Pin getFirstPin() {
+        return pins.get(FIRST);
     }
 
     @Override
-    public int getSecondPin() {
-        return secondPin;
+    public Pin getSecondPin() {
+        return pins.get(SECOND);
+    }
+
+    @Override
+    boolean isFrameEnd() {
+        return Boolean.TRUE;
     }
 
     public boolean isNameOfState(String state) {
@@ -40,7 +53,22 @@ public class Spare extends State {
     }
 
     @Override
-    boolean nowPlaying() {
-        return Boolean.TRUE;
+    public String getPoint() {
+        Pin firstPin = pins.get(FIRST);
+        Pin secondPin = pins.get(SECOND);
+
+        int firstPins = firstPin.getFellPins();
+        int secondPins = secondPin.getFellPins();
+
+        String first = PointName.valueOfPointName(firstPins, FIRST_IS_NOT_SPARE);
+        String second = PointName.valueOfPointName(secondPins, firstPin.isSpare(secondPin));
+        String pointResult = first + "|" + second;
+
+        return String.format("%-4s", pointResult);
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofSpare();
     }
 }
