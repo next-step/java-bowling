@@ -51,4 +51,13 @@ public class FinalFrameScoreTest {
         finalFrameScore.bowl(10);
         assertThat(finalFrameScore.bowl(10)).isFalse();
     }
+
+    @DisplayName("첫 번째 투구가 스트라이크면 세번째 투구가 가능하다")
+    @Test
+    void third_bowl_strike_3() {
+        FinalFrameScore finalFrameScore = new FinalFrameScore();
+        finalFrameScore.bowl(10);
+        finalFrameScore.bowl(5);
+        assertThat(finalFrameScore.bowl(3)).isTrue();
+    }
 }

@@ -14,10 +14,14 @@ import java.util.List;
  * create date  : 2019-07-13 22:32
  */
 public class FinalFrameScore {
-    public static final int FRAME_MAX_SCORE = 30;
-    public static final int FRAME_DEFAULT_SCORE = 10;
-    public static final int ONE = 1;
-    public static final int TWO = 2;
+    private static final int FRAME_MAX_SCORE = 30;
+    private static final int FRAME_MAX_BOWL_COUNT = 3;
+    private static final int FRAME_DEFAULT_SCORE = 10;
+    private static final int FRAME_DEFAULT_BOWL_COUNT = 2;
+    private static final int FIRST_STRIKE_SCORE = 10;
+    private static final int ZERO = 0;
+    private static final int ONE = 1;
+    private static final int TWO = 2;
 
     private List<Pin> downPins;
 
@@ -35,8 +39,8 @@ public class FinalFrameScore {
         return true;
     }
 
-    boolean isStrike() {
-        return sum() == countBowl() * FRAME_DEFAULT_SCORE;
+    boolean isFirstBowlStrike() {
+        return downPins.get(ZERO).fallCount() == FIRST_STRIKE_SCORE;
     }
 
     boolean isSpare() {
@@ -53,11 +57,20 @@ public class FinalFrameScore {
                 .sum();
     }
 
+    /**
+     * 세번째 투구할 수 있는 케이스
+     * 1. 첫 번째 투구가 Strike
+     * 2. 두 번째 투구가 Spare
+     *
+     * 그 외에는 2번만 투구 할 수 있다.
+     */
     private boolean invalidBowlCount() {
-        if (countBowl() == ONE
-                || (countBowl() == TWO && (isSpare()) || isStrike())) {
+        if (countBowl() < FRAME_DEFAULT_BOWL_COUNT
+                || countBowl() == FRAME_DEFAULT_BOWL_COUNT && isFirstBowlStrike()
+                || isSpare()) {
             return false;
         }
+
         return true;
     }
 
