@@ -23,4 +23,6 @@ public abstract class Frame {
     }
 
     abstract Frame bowl(int downCount);
+
+    abstract boolean isGameOver();
 }

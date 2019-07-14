@@ -24,6 +24,7 @@ public class FinalFrame extends Frame {
         return this;
     }
 
+    @Override
     boolean isGameOver() {
         return finalFrameScore.invalidBowlCount();
     }

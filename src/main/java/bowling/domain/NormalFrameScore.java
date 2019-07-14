@@ -48,7 +48,7 @@ public class NormalFrameScore {
                 .sum();
     }
 
-    private boolean invalidBowlCount() {
+    boolean invalidBowlCount() {
         return countBowl() >= FRAME_MAX_BOWL_COUNT;
     }
 
