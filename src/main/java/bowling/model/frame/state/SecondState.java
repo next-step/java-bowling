@@ -39,9 +39,9 @@ public abstract class SecondState extends FirstState {
 
     @Override
     public Score calculate(Score score) {
-        Score calculate = score.calculate(getFirstBowl().count());
+        Score calculate = score.calculate(getFirstBowl());
         if (!score.isCompleted()) {
-            calculate = calculate.calculate(getSecondBowl().count());
+            calculate = calculate.calculate(getSecondBowl());
         }
         return calculate;
     }

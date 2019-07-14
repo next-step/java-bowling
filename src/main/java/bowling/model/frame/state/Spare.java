@@ -9,7 +9,7 @@ import static bowling.model.frame.state.Gutter.PRINT_SYMBOL_OF_GUTTER;
 
 public class Spare extends SecondState {
 
-    private static final int SPARE_BONUS_COUNT = 1;
+    static final int SPARE_BONUS_COUNT = 1;
     private static final String SYMBOL_OF_SPARE = "/";
 
     private Spare(Pins firstBowl, Pins secondBowl) {

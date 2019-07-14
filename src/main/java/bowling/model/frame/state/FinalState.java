@@ -70,6 +70,7 @@ public class FinalState implements State {
 
     @Override
     public Score getScore() {
+
         return null;
     }
 

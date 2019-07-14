@@ -23,14 +23,14 @@ public abstract class Frame {
     public static Frame initialize() {
         return NormalFrame.ofFirst();
     }
-    
-    public abstract Score getScore();
 
-    public abstract Frame bowl(Pins downPins);
+    public abstract Frame bowl(Pins downPin);
 
     public abstract String printResult();
 
     public abstract boolean isGameOver();
+
+    public abstract Score getScore();
 
     abstract Score calculate(Score score);
 }
