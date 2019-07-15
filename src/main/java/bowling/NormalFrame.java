@@ -20,11 +20,16 @@ public class NormalFrame {
   public NormalFrame roll(int countOfPin) {
     if (isFirstRoll()) {
       fallDownPins = FallDownPins.first(countOfPin);
+      return fallDownPins.isFinish() ? nextFrame() : this;
     }
-    if (fallDownPins.isFinish()) {
-      return new NormalFrame(frameNo + NEXT_FRAME_INTERVAL);
-    }
-    return this;
+
+    fallDownPins = fallDownPins.second(countOfPin);
+    return nextFrame();
+
+  }
+
+  private NormalFrame nextFrame() {
+    return new NormalFrame(frameNo + NEXT_FRAME_INTERVAL);
   }
 
   private boolean isFirstRoll() {
