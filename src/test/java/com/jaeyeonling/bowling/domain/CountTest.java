@@ -3,28 +3,27 @@ package com.jaeyeonling.bowling.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CounterTest {
+class CountTest {
 
-    private Counter counter;
+    private final int DEFAULT_VALUE = 10;
+    private Count count;
 
     @BeforeEach
     void setUp() {
-        counter = Counter.of();
+        count = Count.of(DEFAULT_VALUE);
     }
 
     @DisplayName("카운트업하면 기본 값 보다 높거나 같다.")
     @Test
     void isHigherAndEqualsWhenCount() {
         // given
-        counter = counter.up();
+        count = count.up();
 
         // when
-        final boolean condition = counter.isHigherAndEquals(1);
+        final boolean condition = count.isHigherAndEquals(DEFAULT_VALUE + 1);
 
         // then
         assertThat(condition).isTrue();
@@ -34,10 +33,10 @@ class CounterTest {
     @Test
     void isLowerAndEqualsWhenCount() {
         // given
-        counter = counter.up();
+        count = count.up();
 
         // when
-        final boolean condition = counter.isLowerAndEquals(0);
+        final boolean condition = count.isLowerAndEquals(DEFAULT_VALUE);
 
         // then
         assertThat(condition).isFalse();
@@ -47,10 +46,10 @@ class CounterTest {
     @Test
     void isHigherAndEqualsWhenCountdown() {
         // given
-        counter = counter.down();
+        count = count.down();
 
         // when
-        final boolean condition = counter.isHigherAndEquals(0);
+        final boolean condition = count.isHigherAndEquals(DEFAULT_VALUE);
 
         // then
         assertThat(condition).isFalse();
@@ -60,24 +59,10 @@ class CounterTest {
     @Test
     void isLowerAndEqualsWhenCountdown() {
         // given
-        counter = counter.down();
+        count = count.down();
 
         // when
-        final boolean condition = counter.isLowerAndEquals(-1);
-
-        // then
-        assertThat(condition).isTrue();
-    }
-
-    @DisplayName("기본 값을 가진 카운터를 만든다.")
-    @ParameterizedTest
-    @ValueSource(ints = {1, 4, 5, 75, 35, 354, 7, 63, 55, 74652, 3652335})
-    void initializeCounter(final int initializeCount) {
-        // given
-        counter = Counter.of(initializeCount);
-
-        // when
-        final boolean condition = counter.isLowerAndEquals(initializeCount);
+        final boolean condition = count.isLowerAndEquals(DEFAULT_VALUE - 1);
 
         // then
         assertThat(condition).isTrue();

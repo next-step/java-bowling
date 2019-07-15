@@ -1,7 +1,7 @@
 package com.jaeyeonling.bowling.domain.frame.state;
 
 import com.jaeyeonling.bowling.domain.BowlingSymbol;
-import com.jaeyeonling.bowling.domain.Counter;
+import com.jaeyeonling.bowling.domain.Count;
 import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 import com.jaeyeonling.bowling.domain.frame.FrameScore;
 
@@ -17,7 +17,7 @@ public class FinalState extends FrameState {
     private static final int BONUS_ROUND = 3;
 
     private final List<FrameState> frameStates = new ArrayList<>();
-    private Counter counter = Counter.of();
+    private Count count = Count.of();
 
     public FinalState() {
         ready();
@@ -25,10 +25,10 @@ public class FinalState extends FrameState {
 
     @Override
     public boolean isFinished() {
-        if (counter.isLowerAndEquals(DEFAULT_SIZE)) {
+        if (count.isLowerAndEquals(DEFAULT_SIZE)) {
             return false;
         }
-        if (counter.isHigherAndEquals(BONUS_ROUND)) {
+        if (count.isHigherAndEquals(BONUS_ROUND)) {
             return true;
         }
         if (isFirstStrike()) {
@@ -47,7 +47,7 @@ public class FinalState extends FrameState {
 
     @Override
     public FrameState bowl(final KnockdownPins knockdownPins) {
-        counter = counter.up();
+        count = count.up();
 
         if (isCurrentFrameStateFinished()) {
             ready();
