@@ -1,4 +1,4 @@
-package com.jaeyeonling.bowling.domain;
+package com.jaeyeonling.bowling.domain.count;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ public class Count {
     private static final Map<Integer, Count> CACHE = new HashMap<>();
 
     private static final int INCREMENT_VALUE = 1;
-    private static final int DEFAULT = 0;
+    static final int MIN = 0;
 
     private final int count;
 
@@ -18,12 +18,12 @@ public class Count {
     }
 
     public static Count of() {
-        return of(DEFAULT);
+        return of(MIN);
     }
 
     public static Count of(final int initialValue) {
-        if (DEFAULT > initialValue) {
-            throw new IllegalStateException();
+        if (MIN > initialValue) {
+            throw new ShorterThanMinCountException(initialValue);
         }
 
         return CACHE.computeIfAbsent(initialValue, Count::new);
@@ -49,12 +49,8 @@ public class Count {
         return this.count <= count;
     }
 
-    public boolean isLower(int count) {
-        return this.count < count;
-    }
-
     public boolean isDefault() {
-        return count == DEFAULT;
+        return count == MIN;
     }
 
     @Override

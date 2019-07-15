@@ -1,10 +1,13 @@
-package com.jaeyeonling.bowling.domain;
+package com.jaeyeonling.bowling.domain.count;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class CountTest {
 
@@ -66,5 +69,13 @@ class CountTest {
 
         // then
         assertThat(condition).isTrue();
+    }
+
+    @DisplayName("카운트 초기화 값이 " + Count.MIN + " 보다 낮으면 예외처리한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {Count.MIN - 1})
+    void throwShorterThanMinCountException(final int initialValue) {
+        assertThatExceptionOfType(ShorterThanMinCountException.class)
+                .isThrownBy(() -> Count.of(initialValue));
     }
 }
