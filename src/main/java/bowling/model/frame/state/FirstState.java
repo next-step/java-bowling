@@ -27,16 +27,21 @@ public abstract class FirstState implements State {
     }
 
     @Override
+    public Score calculate(Score score) {
+        return score.calculate(getScore());
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.parse(firstBowl);
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }
 
     Pins getFirstBowl() {
         return firstBowl;
-    }
-
-    @Override
-    public Score calculate(Score score) {
-        return score.calculate(getScore());
     }
 }

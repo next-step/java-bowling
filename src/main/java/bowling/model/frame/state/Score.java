@@ -4,9 +4,9 @@ import bowling.model.Pins;
 
 public class Score {
 
-    private static final int DEFAULT_SCORE = -1;
-    private static final int DEFAULT_COUNT = 0;
-    public static final Score DEFAULT = Score.of(DEFAULT_SCORE);
+    public static final int DEFAULT_SCORE = -1;
+    public static final int ZERO_COUNT = 0;
+    public static final Score DEFAULT = Score.of(ZERO_COUNT, DEFAULT_SCORE);
 
     private int count;
     private int score;
@@ -16,12 +16,12 @@ public class Score {
         this.score = score;
     }
 
-    static Score of(Pins pins) {
-        return of(pins.count());
+    public static Score parse(Pins pins) {
+        return of(ZERO_COUNT, pins.count());
     }
 
     static Score of(int score) {
-        return of(DEFAULT_COUNT, score);
+        return of(ZERO_COUNT, score);
     }
 
     static Score of(int count, int score) {
@@ -29,26 +29,19 @@ public class Score {
     }
 
     Score calculate(Pins pins) {
-        return calculate(of(pins));
+        return calculate(parse(pins));
     }
 
     Score calculate(Score score) {
-        if (isCompleted()) {
-            return this;
-        }
-        return new Score(count- 1, this.score + score.score);
+        return new Score(this.count - 1, this.score + score.score);
+    }
+
+    public boolean isCompleted() {
+        return ZERO_COUNT == count;
     }
 
     public int getScore() {
         return score;
-    }
-
-    int getCount() {
-        return count;
-    }
-
-    public boolean isCompleted() {
-        return count == 0;
     }
 
     @Override

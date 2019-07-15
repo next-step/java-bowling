@@ -24,12 +24,12 @@ public class Hit extends FirstState {
     }
 
     @Override
-    public String printResult() {
-        return getFirstBowl().toString();
+    public Score getScore() {
+        return Score.parse(getFirstBowl());
     }
 
     @Override
-    public Score getScore() {
-        return Score.of(getFirstBowl());
+    public String printResult() {
+        return getFirstBowl().toString();
     }
 }

@@ -26,7 +26,16 @@ public class Miss extends SecondState {
 
     @Override
     public Score getScore() {
-        int total = getFirstBowl().sum(getSecondBowl()).count();
-        return Score.of(total);
+        Pins totalPins = getFirstBowl().sum(getSecondBowl());
+        return Score.parse(totalPins);
+    }
+
+    @Override
+    public Score calculate(Score prevScore) {
+        Score calculatedScore = prevScore.calculate(getFirstBowl());
+        if (!calculatedScore.isCompleted()) {
+            calculatedScore = calculatedScore.calculate(getSecondBowl());
+        }
+        return calculatedScore;
     }
 }

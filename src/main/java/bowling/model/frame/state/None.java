@@ -9,7 +9,7 @@ public class None implements State {
 
     private static final None SELF = new None();
 
-    private static final String SYMBOL_OF_NONE = " ";
+    public static final String SYMBOL_OF_NONE = " ";
 
     private None() {
     }
@@ -24,16 +24,6 @@ public class None implements State {
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
-    }
-
-    @Override
-    public String printResult() {
-        return SYMBOL_OF_NONE;
-    }
-
-    @Override
     public Score getScore() {
         return DEFAULT;
     }
@@ -41,5 +31,15 @@ public class None implements State {
     @Override
     public Score calculate(Score score) {
         return score;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public String printResult() {
+        return SYMBOL_OF_NONE;
     }
 }

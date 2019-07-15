@@ -4,7 +4,10 @@ import bowling.model.Pins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
+import static bowling.model.Pins.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FinalStateTest {
@@ -20,7 +23,7 @@ class FinalStateTest {
     @Test
     void bowl_pinsFirstTen_strike() {
         // given
-        Pins first = Pins.DOWN_ALL;
+        Pins first = DOWN_ALL;
 
         // when
         finalState.bowl(first);
@@ -34,15 +37,15 @@ class FinalStateTest {
     @Test
     void bowl_pinsFirstTenSecondTen_twoStrike() {
         // given
-        Pins first = Pins.DOWN_ALL;
-        Pins second = Pins.DOWN_ALL;
+        Pins strike = DOWN_ALL;
 
         // when
-        finalState.bowl(first);
-        finalState.bowl(second);
+        finalState.bowl(strike);
+        finalState.bowl(strike);
 
         // then
         assertThat(finalState.isFinished()).isFalse();
+        assertThat(finalState.getScore()).extracting(Score::getScore).isEqualTo(20);
         assertThat(finalState.getStates()).hasOnlyElementsOfType(Strike.class);
     }
 
@@ -50,53 +53,34 @@ class FinalStateTest {
     @Test
     void bowl_pinsTenAndTenAndTen_thanGameOver() {
         // given
-        Pins first = Pins.DOWN_ALL;
-        Pins second = Pins.DOWN_ALL;
-        Pins third = Pins.DOWN_ALL;
+        Pins strike = DOWN_ALL;
 
         // when
-        finalState.bowl(first);
-        finalState.bowl(second);
-        finalState.bowl(third);
+        finalState.bowl(strike);
+        finalState.bowl(strike);
+        finalState.bowl(strike);
 
         // then
         assertThat(finalState.isFinished()).isTrue();
+        assertThat(finalState.getScore()).extracting(Score::getScore).isEqualTo(30);
         assertThat(finalState.getStates()).hasOnlyElementsOfType(Strike.class);
     }
 
     @DisplayName("스페어, 스트라이크 일 시 게임을 종료한다")
-    @Test
-    void bowl_pinsZeroAndTenAndTen_thanGameOver() {
-        // given
-        Pins first = Pins.DOWN_ZERO;
-        Pins second = Pins.DOWN_ALL;
-        Pins third = Pins.DOWN_ALL;
-
+    @ParameterizedTest
+    @CsvSource(value = {
+             MAX + "," + MIN,
+             MIN + "," + MAX
+    })
+    void bowl_pinsZeroAndTenAndTen_thanGameOver(int first, int second) {
         // when
-        finalState.bowl(first);
-        finalState.bowl(second);
-        finalState.bowl(third);
+        finalState.bowl(Pins.valueOf(first));
+        finalState.bowl(Pins.valueOf(second));
+        finalState.bowl(DOWN_ALL);
 
         // then
         assertThat(finalState.isFinished()).isTrue();
-        assertThat(finalState.getStates()).hasOnlyElementsOfTypes(Spare.class, Strike.class);
-    }
-
-    @DisplayName("스트라이크, 스페어 일 시 게임을 종료한다")
-    @Test
-    void bowl_pinsTenAndZeroAndTen_thanGameOver() {
-        // given
-        Pins first = Pins.DOWN_ALL;
-        Pins second = Pins.DOWN_ZERO;
-        Pins third = Pins.DOWN_ALL;
-
-        // when
-        finalState.bowl(first);
-        finalState.bowl(second);
-        finalState.bowl(third);
-
-        // then
-        assertThat(finalState.isFinished()).isTrue();
+        assertThat(finalState.getScore()).extracting(Score::getScore).isEqualTo(20);
         assertThat(finalState.getStates()).hasOnlyElementsOfTypes(Spare.class, Strike.class);
     }
 }

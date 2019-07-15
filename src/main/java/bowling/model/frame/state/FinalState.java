@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static bowling.model.frame.state.Score.DEFAULT;
 import static bowling.utils.Pretty.PARTITION_OF_SYMBOL;
 import static java.util.stream.Collectors.joining;
 
@@ -70,13 +71,23 @@ public class FinalState implements State {
 
     @Override
     public Score getScore() {
-
-        return null;
+        int totalScore = states.stream()
+                .map(State::getScore)
+                .mapToInt(Score::getScore)
+                .sum();
+        return Score.of(totalScore);
     }
 
     @Override
-    public Score calculate(Score score) {
-        return null;
+    public Score calculate(Score prevScore) {
+        Score calculatedScore = prevScore.calculate(states.get(0).getScore());
+        if(calculatedScore.isCompleted()){
+            return calculatedScore;
+        }
+        if (states.size() == 1) {
+            return DEFAULT;
+        }
+        return calculatedScore.calculate(states.get(1).getScore());
     }
 
     List<State> getStates() {

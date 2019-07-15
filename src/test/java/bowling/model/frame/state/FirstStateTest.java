@@ -68,4 +68,6 @@ class FirstStateTest {
         // than
         assertThat(strike.isFinished()).isEqualTo(expectedResult);
     }
+
+
 }
