@@ -30,4 +30,9 @@ public class FallDownPinsTest {
       FallDownPins.first(-1);
     });
   }
+
+  @Test
+  void 핀이_처음에10개_넘어가면_Finish다() {
+    assertThat(FallDownPins.first(10).isFinish()).isEqualTo(true);
+  }
 }
