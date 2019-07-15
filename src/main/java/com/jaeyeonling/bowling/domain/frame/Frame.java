@@ -7,11 +7,9 @@ import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 public abstract class Frame {
 
     private FrameState frameState;
-    private FrameScore frameScore;
 
     Frame(final FrameState frameState) {
         this.frameState = frameState;
-        frameScore = frameState.getFrameScore();
     }
 
     public FrameScore calculateScore(final FrameScore base) {
@@ -27,7 +25,7 @@ public abstract class Frame {
     }
 
     public FrameScore getFrameScore() {
-        return frameScore;
+        return frameState.getFrameScore();
     }
 
     boolean isFinished() {
@@ -36,6 +34,5 @@ public abstract class Frame {
 
     void bowl(final KnockdownPins knockdownPins) {
         frameState = frameState.bowl(knockdownPins);
-        frameScore = frameState.getFrameScore();
     }
 }
