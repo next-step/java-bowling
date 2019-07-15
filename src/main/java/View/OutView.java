@@ -5,10 +5,10 @@ import java.util.stream.IntStream;
 import static domain.Bowling.TOTAL_FRAME_COUNT;
 
 public class OutView {
-    private static String ASK_PLAYER_NAME = "플레이어 이름은(3 english letters)? : ";
-    private static String ASK_FRAME_SCORE = "%d프레임 투구 : ";
-    private static String NAME = "NAME";
-    private static String LINE_CONNECTOR = " | ";
+    private static final String ASK_PLAYER_NAME = "플레이어 이름은(3 english letters)? : ";
+    private static final String ASK_FRAME_SCORE = "%d프레임 투구 : ";
+    private static final String NAME = "NAME";
+    private static final String LINE_CONNECTOR = " | ";
 
     public static void printBlankLine() {
         System.out.println();
