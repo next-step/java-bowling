@@ -1,5 +1,6 @@
 package bowling.model;
 
+import bowling.io.Board;
 import bowling.model.frame.FrameNumber;
 
 public class BowlingGame {
@@ -16,6 +17,10 @@ public class BowlingGame {
         return new BowlingGame(player, new GameEngine());
     }
 
+    public FrameNumber getCurrentNumber() {
+        return gameEngine.getCurrentNumber();
+    }
+
     public BowlingGame play(Pins pins) {
         gameEngine.play(pins);
         return this;
@@ -27,9 +32,5 @@ public class BowlingGame {
 
     public boolean isGameOver() {
         return gameEngine.isGameOver();
-    }
-
-    public FrameNumber getCurrentNumber() {
-        return gameEngine.getCurrentNumber();
     }
 }

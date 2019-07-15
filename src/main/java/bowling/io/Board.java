@@ -1,5 +1,6 @@
-package bowling.model;
+package bowling.io;
 
+import bowling.model.Player;
 import bowling.model.frame.Results;
 
 public class Board {

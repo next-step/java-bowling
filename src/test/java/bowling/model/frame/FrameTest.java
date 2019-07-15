@@ -124,8 +124,8 @@ class FrameTest {
     void getScore_strike_strike() {
         // when
         Frame frame = Frame.initialize();
-        frame.bowl(DOWN_ALL)
-                .bowl(DOWN_ALL)
+        Frame nextFrame = frame.bowl(DOWN_ALL);
+        nextFrame.bowl(DOWN_ALL)
                 .bowl(Pins.valueOf(3));
         Score result = frame.getScore();
 

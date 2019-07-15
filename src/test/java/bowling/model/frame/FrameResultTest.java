@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static bowling.model.Pins.MAX;
 import static bowling.model.Pins.MIN;
 import static bowling.model.frame.state.Score.DEFAULT_SCORE;
-import static bowling.model.frame.state.Score.ZERO_COUNT;
+import static bowling.model.frame.state.Score.ZERO_OF_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FrameResultTest extends AbstractStateTest {
@@ -50,7 +50,7 @@ class FrameResultTest extends AbstractStateTest {
     void getScore_isFinishedAndCalculateComplete_success() {
         // given
         int totalScore = 14;
-        Score score = scoreOf(ZERO_COUNT, totalScore);
+        Score score = scoreOf(ZERO_OF_COUNT, totalScore);
         State state = ofStrike();
 
         // when
@@ -64,7 +64,7 @@ class FrameResultTest extends AbstractStateTest {
     @Test
     void getScore_isFinishedAndCalculateComplete_success2() {
         // given
-        Score score = scoreOf(ZERO_COUNT + 1, 10);
+        Score score = scoreOf(ZERO_OF_COUNT + 1, 10);
         State state = ofStrike();
 
         // when

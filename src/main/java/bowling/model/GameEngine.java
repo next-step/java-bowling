@@ -4,7 +4,7 @@ import bowling.model.frame.FrameNumber;
 import bowling.model.frame.Frames;
 import bowling.model.frame.Results;
 
-public class GameEngine {
+class GameEngine {
 
     private Frames gameEngine;
 
@@ -20,7 +20,7 @@ public class GameEngine {
         return this;
     }
 
-    Results results(){
+    Results results() {
         return gameEngine.getResult();
     }
 
@@ -28,7 +28,7 @@ public class GameEngine {
         return gameEngine.isGameOver();
     }
 
-    public FrameNumber getCurrentNumber() {
+    FrameNumber getCurrentNumber() {
         return gameEngine.getCurrentNumber();
     }
 }

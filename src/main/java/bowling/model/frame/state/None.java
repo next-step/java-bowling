@@ -4,6 +4,7 @@ import bowling.model.Pins;
 import bowling.model.frame.State;
 
 import static bowling.model.frame.state.Score.DEFAULT;
+import static java.lang.Boolean.FALSE;
 
 public class None implements State {
 
@@ -35,7 +36,7 @@ public class None implements State {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return FALSE;
     }
 
     @Override

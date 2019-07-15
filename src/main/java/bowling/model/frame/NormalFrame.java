@@ -7,6 +7,7 @@ import bowling.model.frame.state.Score;
 import java.util.Objects;
 
 import static bowling.model.frame.state.Score.DEFAULT;
+import static java.lang.Boolean.FALSE;
 
 
 public class NormalFrame extends Frame {
@@ -72,7 +73,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isGameOver() {
-        return false;
+        return FALSE;
     }
 
     @Override

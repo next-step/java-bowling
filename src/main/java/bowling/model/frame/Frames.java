@@ -12,6 +12,7 @@ import static java.util.stream.Collectors.toList;
 
 public class Frames {
 
+    private static final int LAST_INDEX = 1;
     private List<Frame> frames;
 
     private Frames(List<Frame> frameList) {
@@ -40,7 +41,7 @@ public class Frames {
     }
 
     private int getLastIndex() {
-        return frames.size() - 1;
+        return frames.size() - LAST_INDEX;
     }
 
     private boolean isEqualFrame(Frame frameAfterBowling) {

@@ -1,6 +1,5 @@
 package bowling.io;
 
-import bowling.model.Board;
 import bowling.model.Player;
 import bowling.model.frame.FrameNumber;
 import bowling.model.frame.Results;

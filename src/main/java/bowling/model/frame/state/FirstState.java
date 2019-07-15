@@ -3,6 +3,8 @@ package bowling.model.frame.state;
 import bowling.model.Pins;
 import bowling.model.frame.State;
 
+import static java.lang.Boolean.FALSE;
+
 public abstract class FirstState implements State {
 
     private final Pins firstBowl;
@@ -21,14 +23,13 @@ public abstract class FirstState implements State {
         return Hit.valueOf(pins);
     }
 
-    @Override
-    public State bowl(Pins secondBowl) {
-        return SecondState.of(firstBowl, secondBowl);
+    Pins getFirstBowl() {
+        return firstBowl;
     }
 
     @Override
-    public Score calculate(Score score) {
-        return score.calculate(getScore());
+    public State bowl(Pins secondBowl) {
+        return SecondState.of(firstBowl, secondBowl);
     }
 
     @Override
@@ -37,11 +38,12 @@ public abstract class FirstState implements State {
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
+    public Score calculate(Score prevScore) {
+        return prevScore.calculate(getScore());
     }
 
-    Pins getFirstBowl() {
-        return firstBowl;
+    @Override
+    public boolean isFinished() {
+        return FALSE;
     }
 }

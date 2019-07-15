@@ -4,11 +4,10 @@ import bowling.model.Pins;
 import bowling.model.frame.State;
 
 import static bowling.model.Pins.DOWN_ALL;
-import static bowling.model.Pins.MAX;
+import static java.lang.Boolean.TRUE;
 
 public class Strike extends FirstState {
 
-    static final int STRIKE_BONUS_COUNT = 2;
     private static final String SYMBOL_OF_STRIKE = "X";
     private static final Strike SELF = new Strike();
     private static final Pins firstBowl = DOWN_ALL;
@@ -31,8 +30,8 @@ public class Strike extends FirstState {
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public Score getScore() {
+        return Score.ofStrike();
     }
 
     @Override
@@ -41,7 +40,7 @@ public class Strike extends FirstState {
     }
 
     @Override
-    public Score getScore() {
-        return Score.of(STRIKE_BONUS_COUNT, MAX);
+    public boolean isFinished() {
+        return TRUE;
     }
 }

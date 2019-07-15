@@ -7,11 +7,11 @@ public interface State {
 
     State bowl(Pins pins);
 
-    boolean isFinished();
-
-    String printResult();
-
     Score getScore();
 
     Score calculate(Score score);
+
+    String printResult();
+
+    boolean isFinished();
 }

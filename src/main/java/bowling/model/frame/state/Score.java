@@ -2,11 +2,15 @@ package bowling.model.frame.state;
 
 import bowling.model.Pins;
 
+import static bowling.model.Pins.MAX;
+
 public class Score {
 
     public static final int DEFAULT_SCORE = -1;
-    public static final int ZERO_COUNT = 0;
-    public static final Score DEFAULT = Score.of(ZERO_COUNT, DEFAULT_SCORE);
+    public static final int ZERO_OF_COUNT = 0;
+    private static final int ONCE_OF_COUNT = 1;
+    private static final int TWICE_OF_COUNT = 2;
+    public static final Score DEFAULT = Score.of(ZERO_OF_COUNT, DEFAULT_SCORE);
 
     private int count;
     private int score;
@@ -17,11 +21,19 @@ public class Score {
     }
 
     public static Score parse(Pins pins) {
-        return of(ZERO_COUNT, pins.count());
+        return of(ZERO_OF_COUNT, pins.count());
     }
 
     static Score of(int score) {
-        return of(ZERO_COUNT, score);
+        return of(ZERO_OF_COUNT, score);
+    }
+
+    static Score ofStrike() {
+        return of(TWICE_OF_COUNT, MAX);
+    }
+
+    static Score ofSpare() {
+        return of(ONCE_OF_COUNT, MAX);
     }
 
     static Score of(int count, int score) {
@@ -37,7 +49,7 @@ public class Score {
     }
 
     public boolean isCompleted() {
-        return ZERO_COUNT == count;
+        return ZERO_OF_COUNT == count;
     }
 
     public int getScore() {
