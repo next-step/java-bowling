@@ -48,28 +48,11 @@ Frame 이 LinkedList 와 같은 자료 구조 기반으로 구현해 본다.
 Frame 외부에서 점수를 계산해 set 하는 것이 아니라 
 Frame 자체가 점수를 계산할 수 있도록 한다.
 
+# 출력 결과
 ```
-Frame frame = new Frame(frameNo);
-frame.bowl(10);
-frame.bowl(8);
-frame.bowl(2);
-int score = frame.getScore();
-// score는 20을 반환해야 한다.
+10 프레임 투구 : 10
+
+|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |
+|   10   |   X    |   X    |   X    |   X    |   X    |   X    |   X    |   X    |   X    | X|X|X  |
+|        |   30   |   60   |   90   |  120   |  150   |  180   |  210   |  240   |  270   |  300   |
 ```
-
- 1 -> 2 
- 2 -> 3
- 3 -> 4
-------------
-5/3 ->  
-score ->
-score -> 
-2, 1 -> state.getScore()
-
-next.getScore(state);
-
-------------
-
-return 
-next.getScore(this.score);
-

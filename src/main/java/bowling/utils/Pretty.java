@@ -9,7 +9,7 @@ public class Pretty {
 
     public static final String PARTITION = "|";
     public static final String PARTITION_OF_SYMBOL = "|";
-    private static final String EMPTY = " ";
+    public static final String EMPTY = " ";
 
     private static final int DEFAULT_SPACE_SIZE = 8;
     private static final int BISECTION = 2;
