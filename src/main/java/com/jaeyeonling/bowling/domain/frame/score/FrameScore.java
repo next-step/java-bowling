@@ -1,11 +1,13 @@
-package com.jaeyeonling.bowling.domain.frame;
+package com.jaeyeonling.bowling.domain.frame.score;
 
-import com.jaeyeonling.bowling.domain.Count;
+import com.jaeyeonling.bowling.domain.count.Count;
 import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 
 import java.util.Objects;
 
 public class FrameScore {
+
+    static final int MIN = 0;
 
     public static final FrameScore UN_SCORE = FrameScore.of(KnockdownPins.MIN_VALUE, 1);
     public static final FrameScore STRIKE = FrameScore.of(KnockdownPins.MAX_VALUE, 2);
@@ -32,6 +34,10 @@ public class FrameScore {
 
     public static FrameScore of(final int score,
                                 final Count count) {
+        if (score < MIN) {
+            throw new ShorterThanMinFrameScoreException(score);
+        }
+
         return new FrameScore(score, count);
     }
 
