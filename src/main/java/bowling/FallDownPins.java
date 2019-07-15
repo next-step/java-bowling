@@ -13,7 +13,6 @@ public class FallDownPins {
 
   List<Integer> fallDownCounts = new ArrayList<>();
 
-
   public FallDownPins(int fallDownCount) {
     validatePinCount(fallDownCount);
     fallDownCounts.add(fallDownCount);
@@ -32,7 +31,7 @@ public class FallDownPins {
     return new FallDownPins(fallDownCount);
   }
 
-  public FallDownPins second(int fallDownCount) {
+  public FallDownPins roll(int fallDownCount) {
     if (validateSumOfFallDownCount(fallDownCount)) {
       throw new IllegalArgumentException("한 프레임에서 넘어뜨릴 수 있는 핀의 합은 10을 넘어 갈 수 없습니다.");
     }
@@ -46,7 +45,7 @@ public class FallDownPins {
   }
 
   public boolean isFinish() {
-    if (isAllFallDown()) {
+    if (isStrike()) {
       return true;
     }
     if (isCompleteTwice()) {
@@ -59,7 +58,7 @@ public class FallDownPins {
     return fallDownCounts.size() == NORMAL_FRAME_ROLL_CHANCE;
   }
 
-  private boolean isAllFallDown() {
+  private boolean isStrike() {
     return fallDownCounts.get(FIRST_FALL_DOWN_COUNT_INDEX) == MAX_FALL_DOWN_COUNT;
   }
 

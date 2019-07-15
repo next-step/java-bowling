@@ -38,13 +38,14 @@ public class FallDownPinsTest {
 
   @Test
   void 핀이_두번쓰러지면_프레임이끝난다() {
-    assertThat(FallDownPins.first(5).second(5).isFinish()).isEqualTo(true);
+    assertThat(FallDownPins.first(5).roll(5).isFinish()).isEqualTo(true);
   }
 
   @Test
   void 두번넘어진_핀의합이_10이_넘어갈수_없다() {
     assertThatIllegalArgumentException().isThrownBy(() -> {
-      FallDownPins.first(6).second(5);
+      FallDownPins.first(6).roll(5);
     });
   }
+
 }
