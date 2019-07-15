@@ -6,7 +6,6 @@ import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 public abstract class FrameState {
 
     public abstract String toSymbol();
-
     public abstract FrameState bowl(final KnockdownPins knockdownPins);
     public abstract boolean isFinished();
     public abstract FrameScore calculateScore(final FrameScore frameScore);

@@ -7,7 +7,8 @@ public class Username {
 
     private static final Map<String, Username> CACHE = new HashMap<>();
 
-    private static final int LENGTH = 3;
+    public static final int LENGTH = 3;
+
     static final String PATTERN = String.format("[A-Z]{%d}", LENGTH);
 
     private final String username;

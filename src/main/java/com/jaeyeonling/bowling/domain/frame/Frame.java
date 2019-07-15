@@ -22,6 +22,10 @@ public abstract class Frame {
         return frameState.calculateScore(base);
     }
 
+    public FrameState getFrameState() {
+        return frameState;
+    }
+
     public FrameScore getFrameScore() {
         return frameScore;
     }
