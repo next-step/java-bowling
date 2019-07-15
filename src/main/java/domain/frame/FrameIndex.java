@@ -24,7 +24,7 @@ public class FrameIndex {
 
     public FrameIndex next() {
         int nextFrameCount = frameCount + 1;
-        if (TOTAL_FRAME < nextFrameCount ) {
+        if (TOTAL_FRAME < nextFrameCount) {
             throw new RuntimeException("10 프레임 이상으로 진행 할 수 없습니다. 현재 프레임 : " + nextFrameCount);
         }
         return FrameIndex.of(nextFrameCount);
