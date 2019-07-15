@@ -32,7 +32,12 @@ public class FallDownPinsTest {
   }
 
   @Test
-  void 핀이_처음에10개_넘어가면_Finish다() {
+  void 핀이_처음에10개_넘어가면_프레임이끝난다() {
     assertThat(FallDownPins.first(10).isFinish()).isEqualTo(true);
+  }
+
+  @Test
+  void 핀이_두번쓰러지면_프레임이끝난다() {
+    assertThat(FallDownPins.first(5).second(5).isFinish()).isEqualTo(true);
   }
 }
