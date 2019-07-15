@@ -2,7 +2,7 @@ package com.jaeyeonling.bowling.domain.frame.state;
 
 import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 
-abstract class Finished extends FrameState {
+abstract class Finished implements FrameState {
 
     Finished() { }
 

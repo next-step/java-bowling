@@ -10,7 +10,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.joining;
 
-public class FinalState extends FrameState {
+public class FinalState implements FrameState {
 
     private static final int START_INDEX = 0;
     private static final int DEFAULT_SIZE = 1;
