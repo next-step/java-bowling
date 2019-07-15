@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -43,11 +42,37 @@ public class NormalFrameScoreTest {
         assertThat(normalFrameScore.addBowlScore(1)).isFalse();
     }
 
+    @DisplayName("NormalFrame단위 최대 얻을 수 있는 score가 넘을 경우")
+    @Test
+    void invalidScore() {
+        NormalFrameScore normalFrameScore = new NormalFrameScore();
+        normalFrameScore.addBowlScore(1);
+        assertThat(normalFrameScore.invalidScore(10)).isTrue();
+    }
+
+    @DisplayName("NormalFrame단위 2번 이상 투구하는지 확인하는 테스트")
+    @Test
+    void invalidBowlCount() {
+        NormalFrameScore normalFrameScore = new NormalFrameScore();
+        normalFrameScore.addBowlScore(1);
+        normalFrameScore.addBowlScore(1);
+        assertThat(normalFrameScore.invalidBowlCount()).isTrue();
+    }
+
     @DisplayName("스트라이크 체크")
     @Test
     void isStrike() {
         NormalFrameScore normalFrameScore = new NormalFrameScore();
         normalFrameScore.addBowlScore(10);
         assertThat(normalFrameScore.isStrike()).isTrue();
+    }
+
+    @DisplayName("스페어 체크")
+    @Test
+    void isSpare() {
+        NormalFrameScore normalFrameScore = new NormalFrameScore();
+        normalFrameScore.addBowlScore(1);
+        normalFrameScore.addBowlScore(9);
+        assertThat(normalFrameScore.isSpare()).isTrue();
     }
 }
