@@ -2,8 +2,6 @@ package bowling.model;
 
 import bowling.model.frame.FrameNumber;
 
-import static bowling.model.frame.Frame.SEPARATOR_OF_FRAME;
-
 public class BowlingGame {
 
     private Player player;
@@ -18,8 +16,13 @@ public class BowlingGame {
         return new BowlingGame(player, new GameEngine());
     }
 
-    public void play(Pins pins) {
+    public BowlingGame play(Pins pins) {
         gameEngine.play(pins);
+        return this;
+    }
+
+    public Board results() {
+        return new Board(player, gameEngine.results());
     }
 
     public boolean isGameOver() {
@@ -28,9 +31,5 @@ public class BowlingGame {
 
     public FrameNumber getCurrentNumber() {
         return gameEngine.getCurrentNumber();
-    }
-
-    public String getCurrentStates() {
-        return player.toString() + SEPARATOR_OF_FRAME + gameEngine.getCurrentStates();
     }
 }

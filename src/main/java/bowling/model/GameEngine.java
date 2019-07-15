@@ -1,39 +1,34 @@
 package bowling.model;
 
-import bowling.model.frame.Frame;
 import bowling.model.frame.FrameNumber;
-
-import java.util.List;
+import bowling.model.frame.Frames;
+import bowling.model.frame.Results;
 
 public class GameEngine {
 
-    private Frame firstFrame;
-
-    private List<Frame> frames;
-    private Frame currentFrame;
+    private Frames gameEngine;
 
     GameEngine() {
-        this.firstFrame = Frame.initialize();
-        this.currentFrame = firstFrame;
+        this.gameEngine = Frames.initialize();
     }
 
     GameEngine play(Pins downPins) {
-        if (currentFrame.isGameOver()) {
+        if (gameEngine.isGameOver()) {
             throw new GameOverException();
         }
-        currentFrame = currentFrame.bowl(downPins);
+        gameEngine = gameEngine.saveBowling(downPins);
         return this;
     }
 
-    FrameNumber getCurrentNumber() {
-        return currentFrame.getNumber();
+    Results results(){
+        return gameEngine.getResult();
     }
 
     boolean isGameOver() {
-        return currentFrame.isGameOver();
+        return gameEngine.isGameOver();
     }
 
-    String getCurrentStates() {
-        return firstFrame.printResult();
+    public FrameNumber getCurrentNumber() {
+        return gameEngine.getCurrentNumber();
     }
 }
