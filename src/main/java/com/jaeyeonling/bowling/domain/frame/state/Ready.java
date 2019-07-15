@@ -1,7 +1,7 @@
 package com.jaeyeonling.bowling.domain.frame.state;
 
 import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
-import com.jaeyeonling.bowling.domain.frame.FrameScore;
+import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 
 public class Ready extends Running {
 
