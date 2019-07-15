@@ -8,6 +8,8 @@ public class FinalFrame {
     static final int FIRST_TRIAL = 0;
     static final int STRIKE_PINS = 10;
     static final String ALERT_END_OF_GAME = "게임이 끝났습니다.";
+    static final int MAXIMUM_SCORE_FOR_A_ROUND = 10;
+    static final String ALERT_EXCEED_MAXIMUM_SCORE = "두번째 투구의 결과는 초구 이후 남은 핀의 개수를 초과할 수 없습니다.";
 
     private final List<Pins> roundResult;
 
@@ -20,12 +22,23 @@ public class FinalFrame {
     }
 
     public FinalFrame fillFrame(Pins fallenPins) {
+        if (roundResult.isEmpty()) {
+            roundResult.add(fallenPins);
+            return this;
+        }
+        if (!isStrike() && firstResult() + fallenPins.getFallenPins() > MAXIMUM_SCORE_FOR_A_ROUND) { //TODO: 조건문 개선
+            throw new IllegalArgumentException(ALERT_EXCEED_MAXIMUM_SCORE);
+        }
         if (roundResult.size() < 2 || bonusBowlable()) {
             roundResult.add(fallenPins);
             return this;
         }
         throw new IllegalArgumentException(ALERT_END_OF_GAME);
         //TODO: 게임종료를 판단한 후에 fillFrame 메서드를 수행하는 것 고려해보기
+    }
+
+    private int firstResult() {
+        return roundResult.get(FIRST_TRIAL).getFallenPins(); //TODO: RoundResult 객체 만들어서 위임하기
     }
 
     boolean bonusBowlable() {

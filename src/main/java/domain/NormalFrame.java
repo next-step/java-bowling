@@ -3,10 +3,12 @@ package domain;
 import java.util.*;
 
 public class NormalFrame {
-    private static final int MAXIMUM_NUMBER_OF_ROUND_RESULTS_FOR_NORMAL_FRAME = 2;
+    private static final int MAXIMUM_SIZE_FOR_NORMAL_FRAME = 2;
     private static final int FIRST_TRIAL = 0;
     private static final int STRIKE_PINS = 10;
     private static final int GAP_BETWEEN_FRAME_NUMBERS = 1;
+    private static final int MAXIMUM_SCORE_FOR_A_ROUND = 10;
+    static final String ALERT_EXCEED_MAXIMUM_SCORE = "두번째 투구의 결과는 초구 이후 남은 핀의 개수를 초과할 수 없습니다.";
 
     private final int frameNumber;
     private List<Pins> roundResult;
@@ -34,12 +36,19 @@ public class NormalFrame {
             nextNormalFrame = makeNextFrame(pins);
             return nextNormalFrame;
         }
+        if (firstResult() + pins.getFallenPins() > MAXIMUM_SCORE_FOR_A_ROUND) {
+            throw new IllegalArgumentException(ALERT_EXCEED_MAXIMUM_SCORE);
+        }
         roundResult.add(pins);
         return this;
     }
 
+    private int firstResult() {
+        return roundResult.get(FIRST_TRIAL).getFallenPins(); //TODO: RoundResult 객체 만들어서 위임하기
+    }
+
     private boolean isFull() {
-        return roundResult.size() == MAXIMUM_NUMBER_OF_ROUND_RESULTS_FOR_NORMAL_FRAME;
+        return roundResult.size() == MAXIMUM_SIZE_FOR_NORMAL_FRAME;
     }
 
     private boolean isStrike() {

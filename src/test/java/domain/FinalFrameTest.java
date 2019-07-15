@@ -72,6 +72,22 @@ public class FinalFrameTest {
         assertThat(finalFrame.bonusBowlable()).isTrue();
     }
 
+    @ParameterizedTest
+    @CsvSource({"1, 10", "9, 2"})
+    void 첫번쨰_투구가_스트라이크가_아닌_경우_두번째_투구와의_합이_10이_넘으면_예외가_발생한다(int firstFallenPins, int secondFallenPins) {
+        //given
+        Pins firstPins = Pins.from(firstFallenPins);
+        Pins secondPins = Pins.from(secondFallenPins);
+        finalFrame.fillFrame(firstPins);
+
+        //when
+        //then
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> {
+                    finalFrame.fillFrame(secondPins);
+                }).withMessage(FinalFrame.ALERT_EXCEED_MAXIMUM_SCORE);
+    }
+
     @Test
     void 두번쨰_투구에서_게임이_종료되었는데_추가로_투구결과를_입력하면_예외가_발생한다() {
         //given

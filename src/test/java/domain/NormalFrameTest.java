@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class NormalFrameTest {
@@ -80,6 +81,22 @@ public class NormalFrameTest {
                 () -> assertThat(normalFrame.getRoundResult().size()).isEqualTo(1),
                 () -> assertThat(nextNormalFrame.getRoundResult().get(0)).isEqualTo(secondFallenPins)
         );
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1, 10", "9, 2"})
+    void 첫번쨰_투구가_스트라이크가_아닌_경우_두번째_투구와의_합이_10이_넘으면_예외가_발생한다(int firstFallenPins, int secondFallenPins) {
+        //given
+        Pins firstPins = Pins.from(firstFallenPins);
+        Pins secondPins = Pins.from(secondFallenPins);
+        normalFrame.fillFrame(firstPins);
+
+        //when
+        //then
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> {
+                    normalFrame.fillFrame(secondPins);
+                }).withMessage(normalFrame.ALERT_EXCEED_MAXIMUM_SCORE);
     }
 
     @Test
