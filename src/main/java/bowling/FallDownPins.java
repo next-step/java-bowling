@@ -33,9 +33,16 @@ public class FallDownPins {
   }
 
   public FallDownPins second(int fallDownCount) {
+    if(validateSumOfFallDownCount(fallDownCount)) {
+      throw new IllegalArgumentException("한 프레임에서 넘어뜨릴 수 있는 핀의 합은 10을 넘어 갈 수 없습니다.");
+    }
     validatePinCount(fallDownCount);
     fallDownCounts.add(fallDownCount);
     return this;
+  }
+
+  private boolean validateSumOfFallDownCount(int fallDownCount) {
+    return fallDownCounts.get(FIRST_FALL_DOWN_COUNT_INDEX) + fallDownCount > MAX_FALL_DOWN_COUNT;
   }
 
   public boolean isFinish() {
