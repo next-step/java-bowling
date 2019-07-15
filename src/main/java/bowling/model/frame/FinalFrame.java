@@ -20,8 +20,13 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public Score getScore() {
-        return null;
+    Score getScore() {
+        return states.getScore();
+    }
+
+    @Override
+    Score calculate(Score prevScore) {
+        return states.calculate(prevScore);
     }
 
     @Override
@@ -31,17 +36,12 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    public FrameResult getResult() {
+        return FrameResult.of(states.getScore(), states);
+    }
+
+    @Override
     public boolean isGameOver() {
         return states.isFinished();
-    }
-
-    @Override
-    Score calculate(Score score) {
-        return null;
-    }
-
-    @Override
-    public String printResult() {
-        return states.printResult();
     }
 }

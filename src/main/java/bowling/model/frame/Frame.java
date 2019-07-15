@@ -16,21 +16,21 @@ public abstract class Frame {
         return frameNumber.increase();
     }
 
-    public FrameNumber getNumber() {
+    FrameNumber getNumber() {
         return frameNumber.self();
     }
 
-    public static Frame initialize() {
+    static Frame initialize() {
         return NormalFrame.ofFirst();
     }
 
-    public abstract Frame bowl(Pins downPin);
-
-    public abstract String printResult();
-
-    public abstract boolean isGameOver();
-
-    public abstract Score getScore();
+    abstract Score getScore();
 
     abstract Score calculate(Score score);
+
+    public abstract Frame bowl(Pins downPin);
+
+    public abstract FrameResult getResult();
+
+    public abstract boolean isGameOver();
 }

@@ -11,18 +11,46 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class FrameTest {
 
-    @DisplayName("게임을 진행하지 않은 경우 상태를 반환한다")
+    @DisplayName("볼링을 한번도 안쳤을 시 기본 상태")
     @Test
-    void getScore_default() {
+    void getResult_none_default() {
         // when
         Frame frame = Frame.initialize();
-        Score result = frame.getScore();
 
         // then
-        assertThat(result).isEqualTo(DEFAULT);
+        assertThat(frame.getScore()).isEqualTo(DEFAULT);
     }
 
-    @DisplayName("히트일 경우의 현 프레임 점수를 구한다")
+    @DisplayName("미스일 시 점수를 반환한다")
+    @Test
+    void getResult_bowlOne_returnMiss() {
+        // given
+        Frame frame = Frame.initialize();
+        frame.bowl(Pins.valueOf(3))
+                .bowl(Pins.valueOf(5));
+
+        // when
+        FrameResult frameResult = frame.getResult();
+
+        // then
+        assertThat(frameResult.getScore()).isEqualTo(8);
+    }
+
+    @DisplayName("스트라이크 후 두번의 게임 쳤을 시 점수를 반환한다")
+    @Test
+    void bowl_strikeX3_resultFirstFrame() {
+        // when
+        Frame frame = Frame.initialize();
+        frame.bowl(DOWN_ALL)
+                .bowl(DOWN_ALL)
+                .bowl(Pins.DOWN_ALL);
+        FrameResult frameResult = frame.getResult();
+
+        // then
+        assertThat(frameResult.getScore()).isEqualTo(30);
+    }
+
+    @DisplayName("히트일 경우의 점수를 구하는데 성공한다")
     @Test
     void getScore_hit() {
         // given
@@ -35,10 +63,10 @@ class FrameTest {
         Score result = frame.getScore();
 
         // then
-        assertThat(result.getScore()).isEqualTo(3);
+        assertThat(result.getScore()).isEqualTo(countOfDownPins);
     }
 
-    @DisplayName("거터인 경우 점수는 0점이다")
+    @DisplayName("거터인 경우 0점이다")
     @Test
     void getScore_gutter_zero() {
         // given
@@ -63,8 +91,8 @@ class FrameTest {
 
         // when
         Frame frame = Frame.initialize();
-        frame.bowl(first);
-        frame.bowl(second);
+        frame.bowl(first)
+                .bowl(second);
         Score result = frame.getScore();
 
         // then
@@ -96,10 +124,24 @@ class FrameTest {
     void getScore_strike_strike() {
         // when
         Frame frame = Frame.initialize();
-        Frame nextFrame = frame.bowl(DOWN_ALL);
-        Frame nextFrame2 = nextFrame.bowl(DOWN_ALL);
-        nextFrame2.bowl(Pins.valueOf(3));
-        nextFrame2.bowl(Pins.valueOf(4));
+        frame.bowl(DOWN_ALL)
+                .bowl(DOWN_ALL)
+                .bowl(Pins.valueOf(3));
+        Score result = frame.getScore();
+
+        // then
+        assertThat(result.getScore()).isEqualTo(23);
+    }
+
+    @DisplayName("스트라이크 인 경우 점수를 구한다")
+    @Test
+    void getScore_strike_strike_miss() {
+        // when
+        Frame frame = Frame.initialize();
+        frame.bowl(DOWN_ALL)
+                .bowl(DOWN_ALL)
+                .bowl(Pins.valueOf(3))
+                .bowl(Pins.valueOf(5));
         Score result = frame.getScore();
 
         // then
@@ -116,10 +158,9 @@ class FrameTest {
 
         // when
         Frame frame = Frame.initialize();
-        frame.bowl(first);
-        Frame nextFrame = frame.bowl(second);
-        nextFrame.bowl(third);
-        nextFrame.bowl(third);
+        frame.bowl(first)
+                .bowl(second)
+                .bowl(third);
         Score result = frame.getScore();
 
         // then

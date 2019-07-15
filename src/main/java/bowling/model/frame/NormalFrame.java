@@ -6,15 +6,16 @@ import bowling.model.frame.state.Score;
 
 import java.util.Objects;
 
+import static bowling.model.frame.state.Score.DEFAULT;
+
 
 public class NormalFrame extends Frame {
 
-    private final Frame next;
+    private Frame next;
     private State state;
 
     private NormalFrame(FrameNumber frameNumber) {
         super(frameNumber);
-        this.next = nextFrame();
         this.state = None.getInstance();
     }
 
@@ -24,8 +25,8 @@ public class NormalFrame extends Frame {
                 : NormalFrame.of(nextFrameNumber);
     }
 
-    static NormalFrame ofFirst() {
-        return new NormalFrame(FrameNumber.NUMBER_OF_START_FRAME);
+    static Frame ofFirst() {
+        return of(FrameNumber.NUMBER_OF_START_FRAME);
     }
 
     static Frame of(FrameNumber frameNumber) {
@@ -33,26 +34,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame bowl(Pins downPins) {
-        state = state.bowl(downPins);
-        if (state.isFinished()) {
-            return next;
-        }
-        return this;
-    }
-
-    @Override
-    public boolean isGameOver() {
-        return false;
-    }
-
-    @Override
-    public String printResult() {
-        return state.printResult() + SEPARATOR_OF_FRAME + next.printResult();
-    }
-
-    @Override
-    public Score getScore() {
+    Score getScore() {
         Score score = state.getScore();
         if (score.isCompleted()) {
             return score;
@@ -61,18 +43,36 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    Score calculate(Score score) {
-        if (!state.isFinished()) {
-            return score;
+    Score calculate(Score prevScore) {
+        Score calculatedScore = state.calculate(prevScore);
+        if (calculatedScore.isCompleted()) {
+            return calculatedScore;
         }
-        if (score.isCompleted()) {
-            return score;
+
+        if (next == null) {
+            return DEFAULT;
         }
-        Score calculated = state.calculate(score);
-        if (calculated.isCompleted()) {
-            return calculated;
+        return next.calculate(calculatedScore);
+    }
+
+    @Override
+    public Frame bowl(Pins downPins) {
+        state = state.bowl(downPins);
+        if (state.isFinished()) {
+            this.next = nextFrame();
+            return next;
         }
-        return next.calculate(calculated);
+        return this;
+    }
+
+    @Override
+    public FrameResult getResult() {
+        return FrameResult.of(getScore(), state);
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return false;
     }
 
     @Override
