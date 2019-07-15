@@ -7,7 +7,8 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static domain.Bowling.TOTAL_FRAME_COUNT;
-import static domain.Frame.*;
+import static domain.Frame.NO_MORE_NEXT;
+import static domain.Frame.ONE;
 
 public class ScoreResultFormatter implements Formatter<Bowling> {
     private int previouslyTotalScore;
@@ -27,7 +28,7 @@ public class ScoreResultFormatter implements Formatter<Bowling> {
         final String SCORE_CONNECTOR = " | ";
 
         Optional<Frame> maybeTargetFrame = Optional.ofNullable(bowling.getFrame(frameNumber));
-        if(maybeTargetFrame.isPresent()) {
+        if (maybeTargetFrame.isPresent()) {
             Frame targetFrame = maybeTargetFrame.get();
             int score = targetFrame.getScore();
             return calculateFrameScore(score, targetFrame.isFrameEnd()) + SCORE_CONNECTOR;
@@ -37,7 +38,7 @@ public class ScoreResultFormatter implements Formatter<Bowling> {
 
     private String calculateFrameScore(int score, boolean isFrameEnd) {
         String scoreResult = "";
-        if(isFrameEnd && (score != NO_MORE_NEXT)) {
+        if (isFrameEnd && (score != NO_MORE_NEXT)) {
             scoreResult = Integer.toString(score + previouslyTotalScore);
             previouslyTotalScore += score;
         }

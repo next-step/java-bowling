@@ -1,7 +1,5 @@
 package domain;
 
-import View.OutView;
-
 import java.util.Objects;
 
 import static domain.Frame.ZERO;
@@ -41,7 +39,7 @@ public class Pin {
     }
 
     public boolean isSpare(Pin secondPin) {
-        if(isNull(secondPin)) {
+        if (isNull(secondPin)) {
             return Boolean.FALSE;
         }
 
@@ -52,7 +50,7 @@ public class Pin {
     }
 
     public boolean isMiss(Pin secondPin) {
-        if(isNull(secondPin)) {
+        if (isNull(secondPin)) {
             return Boolean.FALSE;
         }
 

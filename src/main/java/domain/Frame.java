@@ -1,16 +1,11 @@
 package domain;
 
-import View.OutView;
-
 import java.util.Optional;
 
 import static domain.Score.ONCE_LEFT;
 import static domain.Score.TWICE_LEFT;
 
 public class Frame {
-    private static final String MISS = "Miss";
-    private static final String STRIKE = "Strike";
-    private static final String SPARE = "Spare";
     private static final String FIRST_BOWL = "FirstBowl";
     private static final String FINAL_BOWL = "FinalBowl";
     public static final boolean FIRST_IS_NOT_SPARE = false;
@@ -110,10 +105,6 @@ public class Frame {
         return Boolean.FALSE;
     }
 
-    public Frame getNext() {
-        return next;
-    }
-
     public Frame createNext() {
         next = new Frame();
         return next;
@@ -128,5 +119,9 @@ public class Frame {
 
     public State getState() {
         return state;
+    }
+
+    public Frame getNext() {
+        return next;
     }
 }

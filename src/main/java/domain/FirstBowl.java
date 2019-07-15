@@ -1,6 +1,7 @@
 package domain;
 
-import static domain.Frame.*;
+import static domain.Frame.FIRST_IS_NOT_SPARE;
+import static domain.Frame.ZERO;
 
 public class FirstBowl extends State {
     private final String STATE_NAME = "FirstBowl";

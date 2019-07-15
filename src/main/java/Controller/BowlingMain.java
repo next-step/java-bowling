@@ -8,8 +8,8 @@ import domain.Player;
 
 import java.util.stream.IntStream;
 
-import static domain.Frame.ZERO;
 import static domain.Bowling.MAX_BOWL_COUNT;
+import static domain.Frame.ZERO;
 
 public class BowlingMain {
     public static void main(String[] args) {
@@ -38,7 +38,7 @@ public class BowlingMain {
                 .peek(point -> OutView.showFrameResult("", bowling.getFormattedScoreResult()))
                 .peek(point -> OutView.printBlankLine())
                 .forEach(point -> {
-                    if(!bowling.isBowlingEnd()) {
+                    if (!bowling.isBowlingEnd()) {
                         bowling.getNextFrame();
                     }
                 });

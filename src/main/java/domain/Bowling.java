@@ -1,6 +1,5 @@
 package domain;
 
-import View.OutView;
 import View.PointResultFormatter;
 import View.ScoreResultFormatter;
 
