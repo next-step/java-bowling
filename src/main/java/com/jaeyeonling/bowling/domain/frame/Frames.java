@@ -42,7 +42,7 @@ public class Frames {
     }
 
     public List<Frame> getFrames() {
-        return frames;
+        return Collections.unmodifiableList(frames);
     }
 
     private Frame getCurrentFrame() {
