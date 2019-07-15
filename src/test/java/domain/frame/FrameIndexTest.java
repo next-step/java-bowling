@@ -22,4 +22,12 @@ class FrameIndexTest {
         FrameIndex frameIndex = FrameIndex.of(10);
         Assertions.assertThrows(RuntimeException.class, frameIndex::next);
     }
+
+    @Test
+    @DisplayName("새로운 인스턴스 생성")
+    void newInstance() {
+        FrameIndex frameIndex = FrameIndex.of(1);
+        FrameIndex newInstance = frameIndex.newInstance();
+        assertThat(frameIndex.equals(newInstance)).isTrue();
+    }
 }
