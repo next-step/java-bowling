@@ -48,4 +48,35 @@ public class BowlingGameTest {
             }
         }).withMessageContaining("게임 종료");
     }
+
+    @DisplayName("FirstFrame을 통해 연결 확인")
+    @Test
+    void frameLinkByFirstFrame() {
+        List<Integer> downCount = new ArrayList<>(Arrays.asList(
+                1, 2, 3, 4, 4, 6
+        ));
+        BowlingGame game = new BowlingGame();
+        for (int down : downCount) {
+            game.play(down);
+        }
+
+        assertThat(game.normalFrameScoreToBowl()).isEqualTo("1|2\n3|4\n4|/\n");
+    }
+
+    @DisplayName("FirstFrame(normal) + currentFrame (final)을 통해 출력물 확인")
+    @Test
+    void allFrameDisplay() {
+        List<Integer> downCount = new ArrayList<>(Arrays.asList(
+                10, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 1, 9, 0, 10, 10
+        ));
+        BowlingGame game = new BowlingGame();
+        for (int down : downCount) {
+            game.play(down);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(game.normalFrameScoreToBowl());
+        sb.append(game.finalFrameScoreToBowl());
+        assertThat(sb.toString()).isEqualTo("X\n1|2\n1|3\n1|4\n1|5\n1|6\n1|7\n1|8\n1|/\n-|/|X");
+    }
 }

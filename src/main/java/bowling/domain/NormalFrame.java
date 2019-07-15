@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
  */
 public class NormalFrame extends Frame {
     private static final int NORMAL_FRAME_MAX_NUMBER = 9;
+    private static final String NEXT_LINE_DELIMITER = "\n";
+    private static final String FRAME_SCORE_DELIMITER = "|";
 
     private NormalFrameScore currentFrameScore;
     private NormalFrame next;
@@ -42,7 +44,15 @@ public class NormalFrame extends Frame {
         return currentFrameScore.stream()
                 .map(pin -> Bowl.check(isSpareConvertToSpareScore(pin.downCount()), currentFrameScore.isStrike()))
                 .map(bowl -> bowl.getScoreDisplay())
-                .collect(Collectors.joining("|"));
+                .collect(Collectors.joining(FRAME_SCORE_DELIMITER));
+    }
+
+    String convertAllFrameScoreToBowl(StringBuilder combineBowlDisplay) {
+        combineBowlDisplay.append(this.convertScoreToBowl()+ NEXT_LINE_DELIMITER);
+        if (next != null) {
+            next.convertAllFrameScoreToBowl(combineBowlDisplay);
+        }
+        return combineBowlDisplay.toString();
     }
 
     private NormalFrame next(int downCount) {

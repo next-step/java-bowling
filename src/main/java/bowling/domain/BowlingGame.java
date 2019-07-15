@@ -11,6 +11,8 @@ package bowling.domain;
  * create date  : 2019-07-14 23:14
  */
 public class BowlingGame {
+    private static final String INIT_BOWL_DISPLAY = "";
+    private final StringBuilder COMBINE_BOWL_DISPLAY = new StringBuilder(INIT_BOWL_DISPLAY);
     private Frame firstFrame;
     private Frame currentFrame;
 
@@ -32,5 +34,15 @@ public class BowlingGame {
 
     public boolean isNormalFrameOver() {
         return currentFrame.isGameOver();
+    }
+
+    public String normalFrameScoreToBowl() {
+        NormalFrame normalFrame = (NormalFrame) firstFrame;
+        return normalFrame.convertAllFrameScoreToBowl(COMBINE_BOWL_DISPLAY);
+    }
+
+    public String finalFrameScoreToBowl() {
+        FinalFrame finalFrame = (FinalFrame) currentFrame;
+        return finalFrame.convertScoreToBowl();
     }
 }
