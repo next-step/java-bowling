@@ -11,14 +11,14 @@ class BowlingUtilsTest {
     @DisplayName("중앙 정렬 한다.")
     @ParameterizedTest
     @CsvSource({
-            "'','       '",
-            "' ','       '",
-            "'  ','       '",
-            "'   ','       '",
-            "'     ','       '",
-            "'a','   a   '",
-            "'aaa','  aaa  '",
-            "'aaaaa',' aaaaa '",
+            "'','       |'",
+            "' ','       |'",
+            "'  ','       |'",
+            "'   ','       |'",
+            "'     ','       |'",
+            "'a','   a   |'",
+            "'aaa','  aaa  |'",
+            "'aaaaa',' aaaaa |'",
     })
     void format(final String before,
                 final String after) {
