@@ -42,4 +42,76 @@ public class FinalFrameTest {
         finalFrame.bowl(5);
         assertThat(finalFrame.isGameOver()).isFalse();
     }
+
+    @DisplayName("스트라이크 상태 메시지 비교 - 1번 투구")
+    @Test
+    void convertToStrike_1() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(10);
+        assertThat(finalFrame.convertScoreToBowl()).isEqualTo("X");
+    }
+
+    @DisplayName("스트라이크 상태 메시지 비교 - 2번 투구")
+    @Test
+    void convertToStrike_2() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(10);
+        finalFrame.bowl(10);
+        assertThat(finalFrame.convertScoreToBowl()).isEqualTo("X|X");
+    }
+
+    @DisplayName("스트라이크 상태 메시지 비교 - 2번 투구")
+    @Test
+    void convertToStrike_3() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(10);
+        finalFrame.bowl(10);
+        finalFrame.bowl(10);
+        assertThat(finalFrame.convertScoreToBowl()).isEqualTo("X|X|X");
+    }
+
+    @DisplayName("거터 상태 메시지 비교 - 1번 투구")
+    @Test
+    void convertToGutter_1() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(0);
+        assertThat(finalFrame.convertScoreToBowl()).isEqualTo("-");
+    }
+
+    @DisplayName("거터 상태 메시지 비교 - 2번 투구")
+    @Test
+    void convertToGutter_2() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(0);
+        finalFrame.bowl(0);
+        assertThat(finalFrame.convertScoreToBowl()).isEqualTo("-|-");
+    }
+
+    @DisplayName("미스 상태 메시지 비교")
+    @Test
+    void convertToMiss() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(3);
+        finalFrame.bowl(6);
+        assertThat(finalFrame.convertScoreToBowl()).isEqualTo("3|6");
+    }
+
+    @DisplayName("스페어 상태 메시지 비교 - 2번 투구")
+    @Test
+    void convertToSpare_1() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(3);
+        finalFrame.bowl(7);
+        assertThat(finalFrame.convertScoreToBowl()).isEqualTo("3|/");
+    }
+
+    @DisplayName("스페어 상태 메시지 비교 - 3번 투구")
+    @Test
+    void convertToSpare_2() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(3);
+        finalFrame.bowl(7);
+        finalFrame.bowl(10);
+        assertThat(finalFrame.convertScoreToBowl()).isEqualTo("3|/|X");
+    }
 }

@@ -15,12 +15,14 @@ import java.util.stream.Stream;
  * create date  : 2019-07-13 22:32
  */
 public class FinalFrameScore {
+    public static final int SPARE_SCORE = 10;
     private static final int FRAME_MAX_SCORE = 30;
     private static final int FRAME_DEFAULT_SCORE = 10;
     private static final int FRAME_DEFAULT_BOWL_COUNT = 2;
     private static final int FIRST_STRIKE_SCORE = 10;
     private static final int STRIKE_DOWN_COUNT = 10;
     private static final int ZERO = 0;
+    private static final int SPARE_CHECK_INDEX = 1;
     private static final int TWO = 2;
 
     private List<Pin> downPins;
@@ -48,7 +50,7 @@ public class FinalFrameScore {
     }
 
     boolean isSpare() {
-        return countBowl() == TWO && sum() == FRAME_DEFAULT_SCORE;
+        return countBowl() >= TWO && sumFromIndexNumberTwo() == FRAME_DEFAULT_SCORE;
     }
 
     int countBowl() {
@@ -58,6 +60,13 @@ public class FinalFrameScore {
     int sum() {
         return downPins.stream()
                 .mapToInt(Pin::downCount)
+                .sum();
+    }
+
+    int sumFromIndexNumberTwo() {
+        return downPins.stream()
+                .mapToInt(Pin::downCount)
+                .limit(TWO)
                 .sum();
     }
 
@@ -71,11 +80,15 @@ public class FinalFrameScore {
         return true;
     }
 
-    Stream<Pin> stream() {
-        return downPins.stream();
-    }
-
     boolean invalidScore(int downCount) {
         return sum() + downCount > FRAME_MAX_SCORE;
+    }
+
+    boolean checkBowlPositionFromDownCount(int downCount) {
+        return downPins.indexOf(Pin.fallDown(downCount)) == SPARE_CHECK_INDEX;
+    }
+
+    Stream<Pin> stream() {
+        return downPins.stream();
     }
 }

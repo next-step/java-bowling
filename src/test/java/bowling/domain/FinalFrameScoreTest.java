@@ -60,4 +60,14 @@ public class FinalFrameScoreTest {
         finalFrameScore.addBowlScore(5);
         assertThat(finalFrameScore.addBowlScore(3)).isTrue();
     }
+
+    @DisplayName("2번째 인덱스까지 합계를 구한다.")
+    @Test
+    void sumFromIndexNumberTwo() {
+        FinalFrameScore finalFrameScore = new FinalFrameScore();
+        finalFrameScore.addBowlScore(5);
+        finalFrameScore.addBowlScore(5);
+        finalFrameScore.addBowlScore(10);
+        assertThat(finalFrameScore.sumFromIndexNumberTwo()).isEqualTo(10);
+    }
 }
