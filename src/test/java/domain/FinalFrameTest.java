@@ -6,7 +6,7 @@ import static domain.Bowling.TOTAL_FRAME_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
-public class BonusFrameTest {
+public class FinalFrameTest {
     @Test
     void 보너스투구() {
         Frame frame = new Frame(TOTAL_FRAME_COUNT);
