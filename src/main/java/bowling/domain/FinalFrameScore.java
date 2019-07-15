@@ -72,11 +72,10 @@ public class FinalFrameScore {
 
     boolean invalidBowlCount() {
         if (countBowl() < FRAME_DEFAULT_BOWL_COUNT
-                || countBowl() == FRAME_DEFAULT_BOWL_COUNT && isFirstBowlStrike()
-                || isSpare()) {
+                || (countBowl() == FRAME_DEFAULT_BOWL_COUNT && isFirstBowlStrike())
+                || (countBowl() == FRAME_DEFAULT_BOWL_COUNT && isSpare())) {
             return false;
         }
-
         return true;
     }
 

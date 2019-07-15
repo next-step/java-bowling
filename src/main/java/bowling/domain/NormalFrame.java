@@ -32,7 +32,9 @@ public class NormalFrame extends Frame {
 
     @Override
     boolean isGameOver() {
-        return nowFrameNumber() == NORMAL_FRAME_MAX_NUMBER;
+        return nowFrameNumber() == NORMAL_FRAME_MAX_NUMBER
+                && (currentFrameScore.invalidBowlCount()
+                    || currentFrameScore.isStrike());
     }
 
     @Override

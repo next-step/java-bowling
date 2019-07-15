@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -28,18 +27,11 @@ public class NormalFrameTest {
     @DisplayName("현재 몇번째 Frame인지 확인")
     @Test
     void getIndex() {
-        NormalFrame originFrame = new NormalFrame();
+        currentFrame = currentFrame.bowl(10);
+        currentFrame = currentFrame.bowl(3);
+        currentFrame = currentFrame.bowl(2);
 
-        Frame bowl1 = originFrame.bowl(10);
-        Frame bowl2 = bowl1.bowl(3);
-        Frame bowl3 = bowl2.bowl(2);
-
-        assertAll(
-                () -> assertThat(bowl1.nowFrameNumber()).isEqualTo(1),
-                () -> assertThat(bowl2.nowFrameNumber()).isEqualTo(2),
-                () -> assertThat(bowl3.nowFrameNumber()).isEqualTo(2),
-                () -> assertThat(bowl3.bowl(10).nowFrameNumber()).isEqualTo(3)
-        );
+        assertThat(assertThat(currentFrame.bowl(10).nowFrameNumber()).isEqualTo(3));
     }
 
     @DisplayName("Frame 종료 후 새로운 Frame 생성되는지 확인")

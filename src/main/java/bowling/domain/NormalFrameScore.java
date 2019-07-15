@@ -40,7 +40,7 @@ public class NormalFrameScore {
         return countBowl() == STRIKE_BOWL_COUNT && sum() == FRAME_MAX_SCORE;
     }
 
-    public boolean isSpare() {
+    boolean isSpare() {
         return countBowl() == FRAME_MAX_BOWL_COUNT && sum() == FRAME_MAX_SCORE;
     }
 

@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import bowling.domain.BowlingGame;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -14,6 +12,12 @@ import java.util.List;
  */
 public class BowlingApplication {
 
+    private BowlingGame game;
+
+    public BowlingApplication() {
+        this.game = new BowlingGame();
+    }
+
     public static void main(final String[] args)
     {
         BowlingApplication app = new BowlingApplication();
@@ -23,5 +27,6 @@ public class BowlingApplication {
     public void run()
     {
 
+        game.play(10);
     }
 }

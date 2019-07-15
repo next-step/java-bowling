@@ -18,7 +18,7 @@ public class Pin {
 
     private final int downCount;
 
-    public Pin(int downCount) {
+    Pin(int downCount) {
         this.downCount = downCount;
     }
 
@@ -29,7 +29,7 @@ public class Pin {
         return new Pin(downCount);
     }
 
-    public int downCount() {
+    int downCount() {
         return downCount;
     }
 

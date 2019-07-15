@@ -24,6 +24,15 @@ public class FinalFrameScoreTest {
         assertThat(finalFrameScore.addBowlScore(10)).isTrue();
     }
 
+    @DisplayName("첫 번째 투구가 스트라이크 인지 확인")
+    @Test
+    void isFirstBowlStrike() {
+        FinalFrameScore finalFrameScore = new FinalFrameScore();
+        finalFrameScore.addBowlScore(10);
+        finalFrameScore.addBowlScore(5);
+        assertThat(finalFrameScore.isFirstBowlStrike()).isTrue();
+    }
+
     @DisplayName("스페어면 세번째 투구가 가능하다")
     @Test
     void third_bowl_spare() {
@@ -46,10 +55,10 @@ public class FinalFrameScoreTest {
     @Test
     void third_bowl_strike_2() {
         FinalFrameScore finalFrameScore = new FinalFrameScore();
+        finalFrameScore.addBowlScore(1);
+        finalFrameScore.addBowlScore(9);
         finalFrameScore.addBowlScore(10);
-        finalFrameScore.addBowlScore(10);
-        finalFrameScore.addBowlScore(10);
-        assertThat(finalFrameScore.addBowlScore(10)).isFalse();
+        assertThat(finalFrameScore.addBowlScore(1)).isFalse();
     }
 
     @DisplayName("첫 번째 투구가 스트라이크면 세번째 투구가 가능하다")
