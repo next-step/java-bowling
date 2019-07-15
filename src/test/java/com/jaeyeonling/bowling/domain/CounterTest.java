@@ -14,14 +14,14 @@ class CounterTest {
 
     @BeforeEach
     void setUp() {
-        counter = new Counter();
+        counter = Counter.of();
     }
 
     @DisplayName("카운트업하면 기본 값 보다 높거나 같다.")
     @Test
     void isHigherAndEqualsWhenCount() {
         // given
-        counter.countup();
+        counter = counter.up();
 
         // when
         final boolean condition = counter.isHigherAndEquals(1);
@@ -34,7 +34,7 @@ class CounterTest {
     @Test
     void isLowerAndEqualsWhenCount() {
         // given
-        counter.countup();
+        counter = counter.up();
 
         // when
         final boolean condition = counter.isLowerAndEquals(0);
@@ -47,7 +47,7 @@ class CounterTest {
     @Test
     void isHigherAndEqualsWhenCountdown() {
         // given
-        counter.countdown();
+        counter = counter.down();
 
         // when
         final boolean condition = counter.isHigherAndEquals(0);
@@ -60,7 +60,7 @@ class CounterTest {
     @Test
     void isLowerAndEqualsWhenCountdown() {
         // given
-        counter.countdown();
+        counter = counter.down();
 
         // when
         final boolean condition = counter.isLowerAndEquals(-1);
@@ -74,7 +74,7 @@ class CounterTest {
     @ValueSource(ints = {1, 4, 5, 75, 35, 354, 7, 63, 55, 74652, 3652335})
     void initializeCounter(final int initializeCount) {
         // given
-        counter = new Counter(initializeCount);
+        counter = Counter.of(initializeCount);
 
         // when
         final boolean condition = counter.isLowerAndEquals(initializeCount);

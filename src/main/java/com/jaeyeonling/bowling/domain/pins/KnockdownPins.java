@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class KnockdownPins {
 
-    static final int MAX_VALUE = 10;
-    static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 10;
+    public static final int MIN_VALUE = 0;
 
     public static final KnockdownPins MAX = valueOf(MAX_VALUE);
     public static final KnockdownPins MIN = valueOf(MIN_VALUE);
