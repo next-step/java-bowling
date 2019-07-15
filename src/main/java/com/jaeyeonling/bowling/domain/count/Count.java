@@ -49,7 +49,7 @@ public class Count {
         return this.count <= count;
     }
 
-    public boolean isDefault() {
+    public boolean isMin() {
         return count == MIN;
     }
 

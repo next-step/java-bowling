@@ -7,12 +7,12 @@ import java.util.Objects;
 
 public class FrameScore {
 
-    static final int MIN = 0;
-
     public static final FrameScore UN_SCORE = FrameScore.of(KnockdownPins.MIN_VALUE, 1);
     public static final FrameScore STRIKE = FrameScore.of(KnockdownPins.MAX_VALUE, 2);
     public static final FrameScore SPARE = FrameScore.of(KnockdownPins.MAX_VALUE, 1);
     public static final FrameScore GUTTER = FrameScore.of(KnockdownPins.MIN_VALUE, 0);
+
+    static final int MIN = 0;
 
     private final int score;
     private final Count remainingCount;
@@ -28,17 +28,17 @@ public class FrameScore {
     }
 
     public static FrameScore of(final int score,
-                                final int counter) {
-        return of(score, Count.of(counter));
+                                final int remainingCount) {
+        return of(score, Count.of(remainingCount));
     }
 
     public static FrameScore of(final int score,
-                                final Count count) {
+                                final Count remainingCount) {
         if (score < MIN) {
             throw new ShorterThanMinFrameScoreException(score);
         }
 
-        return new FrameScore(score, count);
+        return new FrameScore(score, remainingCount);
     }
 
     public FrameScore sum(final FrameScore other) {
@@ -50,7 +50,7 @@ public class FrameScore {
     }
 
     public boolean isComplete() {
-        return remainingCount.isDefault();
+        return remainingCount.isMin();
     }
 
     public int getScore() {
