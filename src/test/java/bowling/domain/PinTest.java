@@ -21,7 +21,7 @@ public class PinTest {
     @Test
     void fallDown() {
         Pin pin = Pin.fallDown(3);
-        assertThat(pin.fallCount()).isEqualTo(3);
+        assertThat(pin.downCount()).isEqualTo(3);
     }
 
     @DisplayName("핀의 넘어진 개수 유효성 검사 - 예외상황")

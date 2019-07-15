@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -27,7 +29,20 @@ public class Pin {
         return new Pin(downCount);
     }
 
-    public int fallCount() {
+    public int downCount() {
         return downCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pin pin = (Pin) o;
+        return downCount == pin.downCount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(downCount);
     }
 }

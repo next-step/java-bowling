@@ -34,7 +34,7 @@ public class FinalFrame extends Frame {
     @Override
     String convertScoreToBowl() {
         return finalFrameScore.stream()
-                .map(pin -> Bowl.check(pin.fallCount(), finalFrameScore.isStrike(pin.fallCount())))
+                .map(pin -> Bowl.check(pin.downCount(), finalFrameScore.isStrike(pin.downCount())))
                 .map(bowl -> bowl.getScoreDisplay())
                 .collect(Collectors.joining("|"));
     }

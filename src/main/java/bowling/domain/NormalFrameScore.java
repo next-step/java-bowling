@@ -15,9 +15,10 @@ import java.util.stream.Stream;
  * create date  : 2019-07-13 14:00
  */
 public class NormalFrameScore {
-    private static final int FRAME_MAX_SCORE = 10;
+    public static final int FRAME_MAX_SCORE = 10;
     private static final int FRAME_MAX_BOWL_COUNT = 2;
     private static final int STRIKE_BOWL_COUNT = 1;
+    private static final int LAST_INDEX = 1;
 
     private List<Pin> downPins;
 
@@ -45,7 +46,7 @@ public class NormalFrameScore {
 
     int sum() {
         return downPins.stream()
-                .mapToInt(Pin::fallCount)
+                .mapToInt(Pin::downCount)
                 .sum();
     }
 
@@ -55,6 +56,10 @@ public class NormalFrameScore {
 
     boolean invalidScore(int downCount) {
         return sum() + downCount > FRAME_MAX_SCORE;
+    }
+
+    boolean checkBowlPositionFromDownCount(int downCount) {
+        return downPins.indexOf(Pin.fallDown(downCount)) == LAST_INDEX;
     }
 
     int countBowl() {

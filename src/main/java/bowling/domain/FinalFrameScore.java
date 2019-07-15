@@ -40,7 +40,7 @@ public class FinalFrameScore {
     }
 
     boolean isFirstBowlStrike() {
-        return downPins.get(ZERO).fallCount() == FIRST_STRIKE_SCORE;
+        return downPins.get(ZERO).downCount() == FIRST_STRIKE_SCORE;
     }
 
     boolean isStrike(int downCount) {
@@ -57,7 +57,7 @@ public class FinalFrameScore {
 
     int sum() {
         return downPins.stream()
-                .mapToInt(Pin::fallCount)
+                .mapToInt(Pin::downCount)
                 .sum();
     }
 

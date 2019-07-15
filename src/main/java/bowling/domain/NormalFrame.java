@@ -38,7 +38,7 @@ public class NormalFrame extends Frame {
     @Override
     String convertScoreToBowl() {
         return currentFrameScore.stream()
-                .map(pin -> Bowl.check(pin.fallCount(), currentFrameScore.isStrike()))
+                .map(pin -> Bowl.check(isSpareConvertToSpareScore(pin.downCount()), currentFrameScore.isStrike()))
                 .map(bowl -> bowl.getScoreDisplay())
                 .collect(Collectors.joining("|"));
     }
@@ -47,5 +47,13 @@ public class NormalFrame extends Frame {
         next = new NormalFrame();
         next.bowl(downCount);
         return next;
+    }
+
+    private int isSpareConvertToSpareScore(int downCount) {
+        if (currentFrameScore.isSpare()
+                && currentFrameScore.checkBowlPositionFromDownCount(downCount)) {
+            return NormalFrameScore.FRAME_MAX_SCORE;
+        }
+        return downCount;
     }
 }
