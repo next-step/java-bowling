@@ -2,7 +2,6 @@ package bowling;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,14 +19,14 @@ public class FallDownPinsTest {
 
   @Test
   void 핀은_한번에_10개이상_넘어가지_못한다() {
-    assertThatIllegalArgumentException().isThrownBy(() ->{
+    assertThatIllegalArgumentException().isThrownBy(() -> {
       FallDownPins.first(11);
     });
   }
 
   @Test
   void 핀이_넘어간수는_양수다() {
-    assertThatIllegalArgumentException().isThrownBy(() ->{
+    assertThatIllegalArgumentException().isThrownBy(() -> {
       FallDownPins.first(-1);
     });
   }
@@ -44,7 +43,7 @@ public class FallDownPinsTest {
 
   @Test
   void 두번넘어진_핀의합이_10이_넘어갈수_없다() {
-    assertThatIllegalArgumentException().isThrownBy(()->{
+    assertThatIllegalArgumentException().isThrownBy(() -> {
       FallDownPins.first(6).second(5);
     });
   }
