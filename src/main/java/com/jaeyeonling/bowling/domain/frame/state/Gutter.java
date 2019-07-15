@@ -6,13 +6,11 @@ import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 
 class Gutter extends Finished {
 
-    private static final KnockdownPins KNOCKDOWN_PINS = KnockdownPins.valueOf(0);
-
     Gutter() { }
 
     @Override
     public String toSymbol() {
-        return BowlingSymbol.toSymbolFrom(KNOCKDOWN_PINS, KNOCKDOWN_PINS);
+        return BowlingSymbol.toSymbolFrom(KnockdownPins.MIN, KnockdownPins.MIN);
     }
 
     @Override

@@ -7,13 +7,11 @@ import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 @HaveBonus
 class Strike extends Finished {
 
-    private static final KnockdownPins KNOCKDOWN_PINS = KnockdownPins.valueOf(10);
-
     Strike() { }
 
     @Override
     public String toSymbol() {
-        return BowlingSymbol.toSymbolFrom(KNOCKDOWN_PINS);
+        return BowlingSymbol.toSymbolFrom(KnockdownPins.MAX);
     }
 
     @Override

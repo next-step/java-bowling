@@ -9,6 +9,7 @@ import java.util.List;
 public class Frames {
 
     private static final int START_INDEX = 0;
+    private static final int DEFAULT_INDEX = 1;
     private static final int NORMAL_FRAME_COUNT = 9;
 
     private final List<Frame> frames = new ArrayList<>();
@@ -38,7 +39,7 @@ public class Frames {
     }
 
     public int getCurrentFrameIndex() {
-        return currentIndex + 1;
+        return currentIndex + DEFAULT_INDEX;
     }
 
     public List<Frame> getFrames() {

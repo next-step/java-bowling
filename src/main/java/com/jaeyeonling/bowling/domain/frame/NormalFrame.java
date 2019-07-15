@@ -9,6 +9,7 @@ public class NormalFrame extends Frame {
 
     NormalFrame(final Frame next) {
         super(new Ready());
+
         this.next = next;
     }
 

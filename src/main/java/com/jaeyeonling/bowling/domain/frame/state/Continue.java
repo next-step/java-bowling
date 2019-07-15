@@ -6,6 +6,8 @@ import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 
 class Continue extends Running {
 
+    private static final int REMAINING_COUNT = 1;
+
     private final KnockdownPins first;
 
     Continue(final KnockdownPins first) {
@@ -37,6 +39,6 @@ class Continue extends Running {
 
     @Override
     public FrameScore getFrameScore() {
-        return FrameScore.of(first.getKnockdownPins(), 1);
+        return FrameScore.of(first.getKnockdownPins(), REMAINING_COUNT);
     }
 }
