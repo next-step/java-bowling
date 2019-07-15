@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -18,6 +19,7 @@ public class FinalFrameScore {
     private static final int FRAME_DEFAULT_SCORE = 10;
     private static final int FRAME_DEFAULT_BOWL_COUNT = 2;
     private static final int FIRST_STRIKE_SCORE = 10;
+    private static final int STRIKE_DOWN_COUNT = 10;
     private static final int ZERO = 0;
     private static final int TWO = 2;
 
@@ -39,6 +41,10 @@ public class FinalFrameScore {
 
     boolean isFirstBowlStrike() {
         return downPins.get(ZERO).fallCount() == FIRST_STRIKE_SCORE;
+    }
+
+    boolean isStrike(int downCount) {
+        return downCount == STRIKE_DOWN_COUNT;
     }
 
     boolean isSpare() {
@@ -63,6 +69,10 @@ public class FinalFrameScore {
         }
 
         return true;
+    }
+
+    Stream<Pin> stream() {
+        return downPins.stream();
     }
 
     boolean invalidScore(int downCount) {

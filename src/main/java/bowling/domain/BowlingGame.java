@@ -20,6 +20,10 @@ public class BowlingGame {
     }
 
     public void play(int downCount) {
+        if (currentFrame instanceof FinalFrame && currentFrame.isGameOver()) {
+            throw new IllegalStateException("게임 종료");
+        }
+
         if (isNormalFrameOver()) {
             currentFrame = new FinalFrame();
         }

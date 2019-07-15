@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.stream.Collectors;
+
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -30,7 +32,15 @@ public class NormalFrame extends Frame {
 
     @Override
     boolean isGameOver() {
-        return getIndex() == NORMAL_FRAME_MAX_NUMBER;
+        return nowFrameNumber() == NORMAL_FRAME_MAX_NUMBER;
+    }
+
+    @Override
+    String convertScoreToBowl() {
+        return currentFrameScore.stream()
+                .map(pin -> Bowl.check(pin.fallCount(), currentFrameScore.isStrike()))
+                .map(bowl -> bowl.getScoreDisplay())
+                .collect(Collectors.joining("|"));
     }
 
     private NormalFrame next(int downCount) {

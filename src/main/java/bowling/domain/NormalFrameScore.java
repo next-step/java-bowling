@@ -1,7 +1,9 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -14,9 +16,9 @@ import java.util.List;
  * create date  : 2019-07-13 14:00
  */
 public class NormalFrameScore {
-    public static final int FRAME_MAX_SCORE = 10;
-    public static final int FRAME_MAX_BOWL_COUNT = 2;
-    public static final int STRIKE_BOWL_COUNT = 1;
+    private static final int FRAME_MAX_SCORE = 10;
+    private static final int FRAME_MAX_BOWL_COUNT = 2;
+    private static final int STRIKE_BOWL_COUNT = 1;
 
     private List<Pin> downPins;
 
@@ -50,6 +52,10 @@ public class NormalFrameScore {
 
     boolean invalidBowlCount() {
         return countBowl() >= FRAME_MAX_BOWL_COUNT;
+    }
+
+    Stream<Pin> stream() {
+        return downPins.stream();
     }
 
     private boolean invalidScore(int downCount) {

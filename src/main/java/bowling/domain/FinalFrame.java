@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.stream.Collectors;
+
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -27,5 +29,13 @@ public class FinalFrame extends Frame {
     @Override
     boolean isGameOver() {
         return finalFrameScore.invalidBowlCount();
+    }
+
+    @Override
+    String convertScoreToBowl() {
+        return finalFrameScore.stream()
+                .map(pin -> Bowl.check(pin.fallCount(), finalFrameScore.isStrike(pin.fallCount())))
+                .map(bowl -> bowl.getScoreDisplay())
+                .collect(Collectors.joining("|"));
     }
 }

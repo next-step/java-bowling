@@ -27,10 +27,10 @@ public class NormalFrameTest {
         Frame bowl3 = bowl2.bowl(2);
 
         assertAll(
-                () -> assertThat(bowl1.getIndex()).isEqualTo(1),
-                () -> assertThat(bowl2.getIndex()).isEqualTo(2),
-                () -> assertThat(bowl3.getIndex()).isEqualTo(2),
-                () -> assertThat(bowl3.bowl(10).getIndex()).isEqualTo(3)
+                () -> assertThat(bowl1.nowFrameNumber()).isEqualTo(1),
+                () -> assertThat(bowl2.nowFrameNumber()).isEqualTo(2),
+                () -> assertThat(bowl3.nowFrameNumber()).isEqualTo(2),
+                () -> assertThat(bowl3.bowl(10).nowFrameNumber()).isEqualTo(3)
         );
     }
 

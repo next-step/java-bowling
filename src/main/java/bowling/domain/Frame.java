@@ -18,11 +18,13 @@ public abstract class Frame {
         this.index = AUTO_INCREASE++;
     }
 
-    int getIndex() {
+    int nowFrameNumber() {
         return index;
     }
 
     abstract Frame bowl(int downCount);
 
     abstract boolean isGameOver();
+
+    abstract String convertScoreToBowl();
 }
