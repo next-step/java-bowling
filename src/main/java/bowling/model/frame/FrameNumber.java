@@ -5,7 +5,7 @@ import java.util.Objects;
 public class FrameNumber {
 
     static final int MIN = 1;
-    static final int MAX = 10;
+    public static final int MAX = 10;
 
     static final FrameNumber NUMBER_OF_START_FRAME = of(MIN);
     static final FrameNumber NUMBER_OF_FINAL_FRAME = of(MAX);

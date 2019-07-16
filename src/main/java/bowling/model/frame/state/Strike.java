@@ -3,11 +3,14 @@ package bowling.model.frame.state;
 import bowling.model.Pins;
 import bowling.model.frame.State;
 
+import static bowling.model.Pins.DOWN_ALL;
+import static java.lang.Boolean.TRUE;
+
 public class Strike extends FirstState {
 
     private static final String SYMBOL_OF_STRIKE = "X";
     private static final Strike SELF = new Strike();
-    private static final Pins firstBowl = Pins.DOWN_ALL;
+    private static final Pins firstBowl = DOWN_ALL;
 
     private Strike() {
         super(firstBowl);
@@ -27,12 +30,17 @@ public class Strike extends FirstState {
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public Score getScore() {
+        return Score.ofStrike();
     }
 
     @Override
     public String printResult() {
         return SYMBOL_OF_STRIKE;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return TRUE;
     }
 }

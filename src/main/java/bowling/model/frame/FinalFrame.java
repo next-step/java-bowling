@@ -2,6 +2,7 @@ package bowling.model.frame;
 
 import bowling.model.Pins;
 import bowling.model.frame.state.FinalState;
+import bowling.model.frame.state.Score;
 
 import static bowling.model.frame.FrameNumber.NUMBER_OF_FINAL_FRAME;
 
@@ -19,18 +20,28 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    Score getScore() {
+        return states.getScore();
+    }
+
+    @Override
+    Score calculate(Score prevScore) {
+        return states.calculate(prevScore);
+    }
+
+    @Override
     public Frame bowl(Pins downPins) {
         states.bowl(downPins);
         return this;
     }
 
     @Override
-    public boolean isGameOver() {
-        return states.isFinished();
+    public FrameResult getResult() {
+        return FrameResult.of(states.getScore(), states);
     }
 
     @Override
-    public String printResult() {
-        return states.printResult();
+    public boolean isGameOver() {
+        return states.isFinished();
     }
 }

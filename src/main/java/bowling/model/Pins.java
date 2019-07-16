@@ -36,6 +36,10 @@ public class Pins {
         return Pins.valueOf(MAX - this.countOfDownPins);
     }
 
+    public int count() {
+        return countOfDownPins;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

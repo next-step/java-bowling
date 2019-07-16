@@ -20,6 +20,12 @@ public class Miss extends SecondState {
     }
 
     @Override
+    public Score getScore() {
+        Pins totalPins = getFirstBowl().sum(getSecondBowl());
+        return Score.parse(totalPins);
+    }
+
+    @Override
     public String printResult() {
         return Pretty.putPartitionOfState(getFirstBowl().toString(), getSecondBowl().toString());
     }

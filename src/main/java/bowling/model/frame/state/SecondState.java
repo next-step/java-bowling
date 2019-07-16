@@ -4,6 +4,7 @@ import bowling.model.Pins;
 import bowling.model.frame.State;
 
 import static bowling.model.Pins.DOWN_ALL;
+import static java.lang.Boolean.TRUE;
 
 public abstract class SecondState extends FirstState {
 
@@ -33,8 +34,16 @@ public abstract class SecondState extends FirstState {
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public Score calculate(Score prevScore) {
+        Score calculatedScore = prevScore.calculate(getFirstBowl());
+        if (!calculatedScore.isCompleted()) {
+            calculatedScore = calculatedScore.calculate(getSecondBowl());
+        }
+        return calculatedScore;
     }
 
+    @Override
+    public boolean isFinished() {
+        return TRUE;
+    }
 }

@@ -9,14 +9,6 @@
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
 
 
-- 볼링을 친다 -> 1프레임을 치겠지 
-           -> currentFrame 당 1~3번 칠수있다.
-           -> currentFrame 1~2
-           -> 마지막만 3번 가능
-             
-             
-             
-             
 normalFrame
 bowl(in: downPins, out: currentFrame)
     currentFrame.isFinish(out: boolean) // 현 프레임을 완료하는 지?
@@ -26,51 +18,41 @@ getState(in: index, out: state)
 finalFrame
 bowl(in: downPins, out: currentFrame)
     currentFrame.isFinish(out: boolean)
-        currentFrame.next(out: X)  
-        
-        
+        currentFrame.next(out: X)
+         
 Frame 
  -> bowl(in: pins, out: currentFrame)
  -> getState(out: frameState)
  -> isFinish(out: boolean)
  
-normal state
- -> 1 round (gutter, hit, strike) : currentFrame 생성할 때 같이 준다면?
- ---
- -> 2 round (miss, spare)
-1~2번
+----
+- Step2. 기능 요구사항
+- 사용자 1명의 볼링 게임 점수를 관리할 수 있는 프로그램을 구현한다.
+각 프레임이 스트라이크이면 "X"
+스페어이면 "9 | /"
+미스이면 "8 | 1"과 같이 출력하도록 구현한다.
 
-final state
- -> 1 round (gutter, hit, strike) 
- ---
- -> 2 round (miss, spare, strike) 
- 
- -> 3 round (miss, spare, strike)
- 
-2~3번
-1round : none
+- 스트라이크(strike) : 프레임의 첫번째 투구에서 모든 핀(10개)을 쓰러트린 상태
+- 스페어(spare) : 프레임의 두번재 투구에서 모든 핀(10개)을 쓰러트린 상태
+- 미스(miss) : 프레임의 두번재 투구에서도 모든 핀이 쓰러지지 않은 상태
+- 거터(gutter) : 핀을 하나도 쓰러트리지 못한 상태. 거터는 "-"로 표시
+- 스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. 
+- 스페어는 다음 1번의 투구까지 점수를 합산해야 한다.
+- 10 프레임은 스트라이크이거나 스페어이면 한 번을 더 투구할 수 있다.
+스페어는 다음 1번의 투구까지 점수를 합산해야 한다.
 
-2round : FinalState(in: first, second) 
-         // isFinish : T,F (first + second < 10 ) 
-3round :
+점수를 구하는 역할을 각 Frame 이 담당할 수 있도록 구현해 본다. 
+Frame 이 자신의 점수를 구하려면 다음 Frame 에 접근할 수 있어야 한다. 
+Frame 이 LinkedList 와 같은 자료 구조 기반으로 구현해 본다.
 
-strike  / strike / strike
-H       /strike  / strike
-H       /spare   / strike
-strike / hit     /  
--------------------
-= first + second < 10 (한번더)
-= second + third < 10 (stop)
-first + second < 10 
-first : 10 strike
-else
-spare
+Frame 외부에서 점수를 계산해 set 하는 것이 아니라 
+Frame 자체가 점수를 계산할 수 있도록 한다.
 
+# 출력 결과
+```
+10 프레임 투구 : 10
 
-
-
-
-
-
-
-
+|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |
+|   10   |   X    |   X    |   X    |   X    |   X    |   X    |   X    |   X    |   X    | X|X|X  |
+|        |   30   |   60   |   90   |  120   |  150   |  180   |  210   |  240   |  270   |  300   |
+```

@@ -13,7 +13,7 @@ import static bowling.model.frame.state.Hit.MIN_COUNT_OF_PINS_IN_HIT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class HitTest {
+public class HitTest {
 
     @DisplayName("핀이 " + MIN_COUNT_OF_PINS_IN_HIT + "~" + MAX_COUNT_OF_PINS_IN_HIT + "사이 일 시 생성에 성공한다")
     @ParameterizedTest
@@ -39,5 +39,9 @@ class HitTest {
         // exception
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Hit.valueOf(firstPins));
+    }
+
+    public static State ofHit(Pins downPins){
+        return Hit.valueOf(downPins);
     }
 }

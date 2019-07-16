@@ -1,10 +1,10 @@
 package bowling.model.frame;
 
 import bowling.model.Pins;
+import bowling.model.frame.state.Score;
 
 public abstract class Frame {
 
-    public static final String SEPARATOR_OF_FRAME = ",";
     private final FrameNumber frameNumber;
 
     Frame(FrameNumber frameNumber) {
@@ -15,17 +15,21 @@ public abstract class Frame {
         return frameNumber.increase();
     }
 
-    public FrameNumber getNumber() {
+    FrameNumber getNumber() {
         return frameNumber.self();
     }
 
-    public static Frame initialize() {
+    static Frame initialize() {
         return NormalFrame.ofFirst();
     }
 
-    public abstract Frame bowl(Pins downPins);
+    abstract Score getScore();
 
-    public abstract String printResult();
+    abstract Score calculate(Score score);
+
+    public abstract Frame bowl(Pins downPin);
+
+    public abstract FrameResult getResult();
 
     public abstract boolean isGameOver();
 }

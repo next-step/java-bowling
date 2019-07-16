@@ -19,6 +19,11 @@ public class Spare extends SecondState {
     }
 
     @Override
+    public Score getScore() {
+        return Score.ofSpare();
+    }
+
+    @Override
     public String printResult() {
         if (Gutter.isMatch(getFirstBowl())) {
             return Pretty.putPartitionOfState(PRINT_SYMBOL_OF_GUTTER, SYMBOL_OF_SPARE);

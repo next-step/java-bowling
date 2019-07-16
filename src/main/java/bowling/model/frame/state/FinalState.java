@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static bowling.model.frame.state.Score.DEFAULT;
 import static bowling.utils.Pretty.PARTITION_OF_SYMBOL;
 import static java.util.stream.Collectors.joining;
 
@@ -51,6 +52,31 @@ public class FinalState implements State {
         return states.size() - LAST_INDEX;
     }
 
+    List<State> getStates() {
+        return Collections.unmodifiableList(states);
+    }
+
+    @Override
+    public Score getScore() {
+        int totalScore = states.stream()
+                .map(State::getScore)
+                .mapToInt(Score::getScore)
+                .sum();
+        return Score.of(totalScore);
+    }
+
+    @Override
+    public Score calculate(Score prevScore) {
+        Score calculatedScore = prevScore.calculate(states.get(0).getScore());
+        if (calculatedScore.isCompleted()) {
+            return calculatedScore;
+        }
+        if (states.size() == 1) {
+            return DEFAULT;
+        }
+        return calculatedScore.calculate(states.get(1).getScore());
+    }
+
     @Override
     public boolean isFinished() {
         return hasNotBonusStage() || MAX_NUMBER_OF_ROUND == round;
@@ -66,9 +92,5 @@ public class FinalState implements State {
         return states.stream()
                 .map(State::printResult)
                 .collect(joining(PARTITION_OF_SYMBOL));
-    }
-
-    List<State> getStates() {
-        return Collections.unmodifiableList(states);
     }
 }
