@@ -15,18 +15,43 @@ import java.util.List;
  */
 public class FrameScore {
     public static final int FRAME_MAX_SCORE = 10;
-    private static final String EXCESS_SCORE_POINT_EXCEPTION_MESSAGE = "입력된 점수는 추가할 수 없습니다.";
+    public static final int FRAME_MAX_BOWL_COUNT = 10;
+    public static final int STRIKE_BOWL_COUNT = 1;
+    public static final int SPARE_BOWL_COUNT = 2;
+
     private List<Point> scores;
 
     public FrameScore() {
         this.scores = new ArrayList<>();
     }
 
-    public void addPoint(Point fallCount) {
-        if(sum() + fallCount.fallCount() > FRAME_MAX_SCORE) {
-            throw new IllegalArgumentException(EXCESS_SCORE_POINT_EXCEPTION_MESSAGE);
+    public boolean addPoint(Point fallCount) {
+        if (invalidScore(fallCount)
+                || invalidCountBowl()) {
+            return false;
         }
         scores.add(fallCount);
+        return true;
+    }
+
+    public boolean isStrike() {
+        return sum() == FRAME_MAX_SCORE && countBowl() == STRIKE_BOWL_COUNT;
+    }
+
+    public boolean isSpare() {
+        return sum() == FRAME_MAX_SCORE && countBowl() == SPARE_BOWL_COUNT;
+    }
+
+    private boolean invalidCountBowl() {
+        return countBowl() >= FRAME_MAX_BOWL_COUNT;
+    }
+
+    private boolean invalidScore(Point fallCount) {
+        return sum() + fallCount.fallCount() > FRAME_MAX_SCORE;
+    }
+
+    private int countBowl() {
+        return scores.size();
     }
 
     private int sum() {
