@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class FrameScore {
     public static final int FRAME_MAX_SCORE = 10;
-    public static final int FRAME_MAX_BOWL_COUNT = 10;
+    public static final int FRAME_MAX_BOWL_COUNT = 2;
     public static final int STRIKE_BOWL_COUNT = 1;
     public static final int SPARE_BOWL_COUNT = 2;
 
