@@ -31,9 +31,7 @@ public class Pins {
 
     @Override
     public String toString() {
-        return "Pins{" +
-                "hit=" + hit +
-                '}';
+        return String.valueOf(hit);
     }
 
     @Override
@@ -49,7 +47,7 @@ public class Pins {
         return Objects.hash(hit);
     }
 
-    public Pins minus(Pins pins) {
-        return Pins.of(this.hit - pins.hit);
+    public int value() {
+        return hit;
     }
 }
