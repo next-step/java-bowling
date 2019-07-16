@@ -27,7 +27,7 @@ class GameEngineTest {
                 .play(valueOf(1)).play(valueOf(1))
                 .play(valueOf(1)).play(valueOf(1))
                 .play(valueOf(10))
-                .play(valueOf(0)).play(valueOf(10))
+                .play(valueOf(10))
                 .play(valueOf(5)).play(valueOf(5))
                 .play(valueOf(1)).play(valueOf(1))
                 .play(valueOf(1)).play(valueOf(1))

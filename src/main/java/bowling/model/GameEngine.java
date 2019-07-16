@@ -13,10 +13,7 @@ class GameEngine {
     }
 
     GameEngine play(Pins downPins) {
-        if (gameEngine.isGameOver()) {
-            throw new GameOverException();
-        }
-        gameEngine = gameEngine.saveBowling(downPins);
+        gameEngine.saveBowling(downPins);
         return this;
     }
 

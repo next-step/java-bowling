@@ -4,6 +4,7 @@ import bowling.model.Pins;
 import bowling.model.frame.State;
 
 import static bowling.model.Pins.DOWN_ALL;
+import static bowling.model.frame.state.Score.STRIKE;
 import static java.lang.Boolean.TRUE;
 
 public class Strike extends FirstState {
@@ -31,7 +32,7 @@ public class Strike extends FirstState {
 
     @Override
     public Score getScore() {
-        return Score.ofStrike();
+        return STRIKE;
     }
 
     @Override

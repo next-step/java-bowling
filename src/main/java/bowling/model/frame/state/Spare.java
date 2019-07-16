@@ -5,6 +5,7 @@ import bowling.model.frame.State;
 import bowling.utils.Pretty;
 
 import static bowling.model.frame.state.Gutter.PRINT_SYMBOL_OF_GUTTER;
+import static bowling.model.frame.state.Score.SPARE;
 
 public class Spare extends SecondState {
 
@@ -20,7 +21,7 @@ public class Spare extends SecondState {
 
     @Override
     public Score getScore() {
-        return Score.ofSpare();
+        return SPARE;
     }
 
     @Override
