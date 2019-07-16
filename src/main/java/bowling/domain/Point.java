@@ -25,4 +25,8 @@ public class Point {
         }
         return new Point(fallCount);
     }
+
+    public int fallCount() {
+        return point;
+    }
 }

@@ -24,4 +24,11 @@ public class PointTest {
             Point.of(11);
         }).withMessageContaining("점수는 10 이하의 자연수만 가능합니다.");
     }
+
+    @DisplayName("현재 포인트 가지고 오기")
+    @Test
+    void 현재_포인트_가지고오기() {
+        Point point = Point.of(10);
+        assertThat(point.fallCount()).isEqualTo(10);
+    }
 }
