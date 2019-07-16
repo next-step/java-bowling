@@ -1,13 +1,7 @@
 import domain.BowlingGame;
-import domain.NormalFrame;
-import domain.Pins;
 import domain.Player;
 import view.InputView;
 import view.OutputView;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Application {
 
