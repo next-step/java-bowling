@@ -11,4 +11,11 @@ public class InputView {
         System.out.print(MESSAGE_FOR_ASK_PLAYER_NAME);
         return scanner.nextLine();
     }
+
+    public static int askFallenPins(int frameNumber) {
+        System.out.print(frameNumber + "프레임 투구 : ");
+        int fallenPins = scanner.nextInt();
+        scanner.nextLine();
+        return fallenPins;
+    }
 }

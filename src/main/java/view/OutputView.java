@@ -7,7 +7,7 @@ public class OutputView {
 
     public static void printBoard(BowlingGame bowlingGame) {
         System.out.println(UPPER_SIDE_OF_SCORE_BOARD);
-        System.out.println(); //TODO: BowlingGame 로직 구현하고 이 부분 바꾸기
+        System.out.println(bowlingGame); //TODO: BowlingGame 로직 구현하고 이 부분 바꾸기
         printEmptyLine();
     }
 
