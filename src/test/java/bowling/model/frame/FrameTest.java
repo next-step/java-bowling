@@ -36,7 +36,7 @@ class FrameTest {
         assertThat(frameResult.getScore()).isEqualTo(8);
     }
 
-    @DisplayName("스트라이크 후 두번의 게임 쳤을 시 점수를 반환한다")
+    @DisplayName("스트라이크 세번일 경우 점수를 구한다")
     @Test
     void bowl_strikeX3_resultFirstFrame() {
         // when
@@ -97,26 +97,6 @@ class FrameTest {
 
         // then
         assertThat(result.getScore()).isEqualTo(2);
-    }
-
-    @DisplayName("스트라이크 인 경우 점수를 구한다")
-    @Test
-    void getScore_strike() {
-        // given
-        Pins first = DOWN_ALL;
-        Pins second = Pins.valueOf(1);
-        Pins third = Pins.valueOf(3);
-
-        // when
-        Frame frame = Frame.initialize();
-        Frame nextFrame = frame.bowl(first);
-
-        nextFrame.bowl(second);
-        nextFrame.bowl(third);
-        Score result = frame.getScore();
-
-        // then
-        assertThat(result.getScore()).isEqualTo(14);
     }
 
     @DisplayName("스트라이크 인 경우 점수를 구한다")

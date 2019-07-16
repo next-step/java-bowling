@@ -32,7 +32,9 @@ public class FrameResult {
         return score;
     }
 
-    public void calculate(FrameResult before) {
-        this.score += before.getScore();
+    public void calculate(FrameResult prevFrameResult) {
+        if (DEFAULT_SCORE < this.score) {
+            this.score += prevFrameResult.getScore();
+        }
     }
 }

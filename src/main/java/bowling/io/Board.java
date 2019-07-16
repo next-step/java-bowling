@@ -13,11 +13,11 @@ public class Board {
         this.bowlingResults = bowlingResults;
     }
 
-    public Player getPlayer() {
+    Player getPlayer() {
         return player;
     }
 
-    public Results getBowlingResults() {
+    Results getBowlingResults() {
         return bowlingResults;
     }
 }

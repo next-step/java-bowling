@@ -8,22 +8,21 @@ import static java.util.stream.Collectors.toList;
 
 public class Results {
 
+    private static final int DEFAULT_INDEX = 1;
     private List<FrameResult> resultsOfEachFrame;
 
     private Results(List<FrameResult> resultsOfEachFrame) {
         this.resultsOfEachFrame = resultsOfEachFrame;
     }
 
-    public static Results of(List<FrameResult> frameResult) {
-        for (int i = 1; i < frameResult.size(); i++) {
-            int score = frameResult.get(i).getScore();
-            if (score > -1) {
-                frameResult.get(i).calculate(frameResult.get(i - 1));
-            }
+    public static Results of(List<FrameResult> frameResults) {
+        for (int i = DEFAULT_INDEX; i < frameResults.size(); i++) {
+            FrameResult frameResult = frameResults.get(i);
+            FrameResult prevFrameResult = frameResults.get(i - DEFAULT_INDEX);
+            frameResult.calculate(prevFrameResult);
         }
-        return new Results(frameResult);
+        return new Results(frameResults);
     }
-
 
     public List<Integer> getScores() {
         return resultsOfEachFrame.stream()
@@ -31,7 +30,6 @@ public class Results {
                 .filter(score -> DEFAULT_SCORE != score)
                 .collect(toList());
     }
-
 
     public List<String> getStates() {
         return resultsOfEachFrame.stream()

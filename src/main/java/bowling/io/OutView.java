@@ -22,7 +22,8 @@ public class OutView {
 
         Results bowlingResults = board.getBowlingResults();
         System.out.println(getCurrentStates(board.getPlayer(), bowlingResults.getStates()));
-        System.out.println(getCurrentScores(bowlingResults.getScores()));
+        System.out.println(getCurrentScores(bowlingResults.
+                getScores()));
         System.out.println();
     }
 
@@ -45,12 +46,7 @@ public class OutView {
         settingLeftColumn(stringBuilder, EMPTY);
 
         scores.stream()
-                .map(score -> {
-                    if (DEFAULT_SCORE == score) {
-                        return EMPTY;
-                    }
-                    return score.toString();
-                })
+                .map(OutView::formatScore)
                 .map(Pretty::alignCenter)
                 .map(frame -> frame.concat(PARTITION))
                 .forEach(stringBuilder::append);
@@ -58,6 +54,13 @@ public class OutView {
         printEmpty(stringBuilder, scores.size());
 
         return stringBuilder.toString();
+    }
+
+    private static String formatScore(Integer score) {
+        if (DEFAULT_SCORE == score) {
+            return EMPTY;
+        }
+        return score.toString();
     }
 
     private static void settingLeftColumn(StringBuilder stringBuilder, String info) {
