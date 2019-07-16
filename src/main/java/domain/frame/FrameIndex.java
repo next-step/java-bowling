@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class FrameIndex {
 
-    public final static int START_FRAME = 1;
+    public final static int START_FRAME = 0;
     public final static int TOTAL_FRAME = 10;
     public final static int LAST_NORMAL_FRAME = 9;
 
@@ -45,5 +45,16 @@ public class FrameIndex {
     @Override
     public int hashCode() {
         return Objects.hash(frameCount);
+    }
+
+    @Override
+    public String toString() {
+        return "FrameIndex{" +
+                "frameCount=" + frameCount +
+                '}';
+    }
+
+    public boolean isStop() {
+        return frameCount == TOTAL_FRAME;
     }
 }
