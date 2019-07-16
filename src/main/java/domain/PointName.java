@@ -3,6 +3,7 @@ package domain;
 import java.util.Arrays;
 
 public enum PointName {
+    NON_BOWL(-1, "", false),
     ZERO(0, "-", false),
     ONE(1, "1", false),
     TWO(2, "2", false),
