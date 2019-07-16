@@ -2,6 +2,8 @@ package domain.state;
 
 import domain.Pins;
 
+import static io.OutputResult.SYMBOL_DELIMITER;
+
 public class Open implements State {
     private final Pins first;
     private final Pins second;
@@ -13,7 +15,7 @@ public class Open implements State {
     }
 
     private void verify(Pins first, Pins second) {
-        if(Pins.EMPTY.equals(first.minus(second))) {
+        if (Pins.ALL.equals(first.add(second))) {
             throw new IllegalArgumentException("상태와 맞지 않는 정보 입니다.");
         }
     }
@@ -27,4 +29,11 @@ public class Open implements State {
     public Boolean isClosed() {
         return true;
     }
+
+    @Override
+    public String toSymbol() {
+        return first + SYMBOL_DELIMITER + second;
+    }
+
+
 }

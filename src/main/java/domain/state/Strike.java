@@ -4,6 +4,7 @@ import domain.Pins;
 
 public class Strike implements State {
 
+    private final static String STRIKE = " X ";
     private final Pins first;
     private final Pins second;
 
@@ -27,5 +28,10 @@ public class Strike implements State {
     @Override
     public Boolean isClosed() {
         return true;
+    }
+
+    @Override
+    public String toSymbol() {
+        return STRIKE;
     }
 }

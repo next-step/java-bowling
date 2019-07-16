@@ -2,7 +2,8 @@ package domain.state;
 
 import domain.Pins;
 
-import static domain.Pins.EMPTY;
+import static domain.Pins.ALL;
+import static io.OutputResult.SYMBOL_DELIMITER;
 
 public class Ongoing implements State {
 
@@ -14,8 +15,8 @@ public class Ongoing implements State {
 
     @Override
     public State bowl(Pins downPins) {
-        Pins remainder = first.minus(downPins);
-        if (EMPTY.equals(remainder)) {
+        Pins downWholePins = first.add(downPins);
+        if (ALL.equals(downWholePins)) {
             return new Spares(first, downPins);
         }
         return new Open(first, downPins);
@@ -24,5 +25,10 @@ public class Ongoing implements State {
     @Override
     public Boolean isClosed() {
         return false;
+    }
+
+    @Override
+    public String toSymbol() {
+        return first + SYMBOL_DELIMITER;
     }
 }

@@ -2,8 +2,11 @@ package domain.state;
 
 import domain.Pins;
 
+import static io.OutputResult.SYMBOL_DELIMITER;
+
 public class Spares implements State {
 
+    private final static String SPARES = "/";
     private final Pins first;
     private final Pins second;
 
@@ -14,7 +17,7 @@ public class Spares implements State {
     }
 
     private void verify(Pins first, Pins second) {
-        if (!Pins.EMPTY.equals(first.minus(second))) {
+        if (!Pins.ALL.equals(first.add(second))) {
             throw new IllegalArgumentException("핀이 남아 있는데");
         }
     }
@@ -27,5 +30,10 @@ public class Spares implements State {
     @Override
     public Boolean isClosed() {
         return true;
+    }
+
+    @Override
+    public String toSymbol() {
+        return first + SYMBOL_DELIMITER + SPARES;
     }
 }
