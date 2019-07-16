@@ -6,25 +6,13 @@ import java.util.Objects;
 
 public class FallDownPins {
 
-  private static final int MAX_FALL_DOWN_COUNT = 10;
-  private static final int MIN_FALL_DOWN_COUNT = 0;
   private static final int FIRST_FALL_DOWN_COUNT_INDEX = 0;
-  private static final int NORMAL_FRAME_ROLL_CHANCE = 2;
+  private static final int NORMAL_FRAME_ROLL_COUNT = 2;
 
-  List<Integer> fallDownCounts = new ArrayList<>();
+  List<FallDownPin> fallDownCounts = new ArrayList<>();
 
   public FallDownPins(int fallDownCount) {
-    validatePinCount(fallDownCount);
-    fallDownCounts.add(fallDownCount);
-  }
-
-  private void validatePinCount(int fallDownCount) {
-    if (fallDownCount > MAX_FALL_DOWN_COUNT) {
-      throw new IllegalArgumentException("핀은 한번에 " + MAX_FALL_DOWN_COUNT + "개 초과로 넘어가지 못합니다.");
-    }
-    if (fallDownCount < MIN_FALL_DOWN_COUNT) {
-      throw new IllegalArgumentException("핀이 넘어간 수는 음수가 될 수 없습니다.");
-    }
+    fallDownCounts.add(FallDownPin.of(fallDownCount));
   }
 
   public static FallDownPins first(int fallDownCount) {
@@ -32,16 +20,15 @@ public class FallDownPins {
   }
 
   public FallDownPins roll(int fallDownCount) {
-    if (validateSumOfFallDownCount(fallDownCount)) {
+    if (!validateSumOfFallDownCount(fallDownCount)) {
       throw new IllegalArgumentException("한 프레임에서 넘어뜨릴 수 있는 핀의 합은 10을 넘어 갈 수 없습니다.");
     }
-    validatePinCount(fallDownCount);
-    fallDownCounts.add(fallDownCount);
+    fallDownCounts.add(FallDownPin.of(fallDownCount));
     return this;
   }
 
   private boolean validateSumOfFallDownCount(int fallDownCount) {
-    return fallDownCounts.get(FIRST_FALL_DOWN_COUNT_INDEX) + fallDownCount > MAX_FALL_DOWN_COUNT;
+    return getFirstFallDown().isValidCount(fallDownCount);
   }
 
   public boolean isFinish() {
@@ -55,11 +42,15 @@ public class FallDownPins {
   }
 
   private boolean isCompleteTwice() {
-    return fallDownCounts.size() == NORMAL_FRAME_ROLL_CHANCE;
+    return fallDownCounts.size() == NORMAL_FRAME_ROLL_COUNT;
   }
 
   private boolean isStrike() {
-    return fallDownCounts.get(FIRST_FALL_DOWN_COUNT_INDEX) == MAX_FALL_DOWN_COUNT;
+    return getFirstFallDown().isStrike();
+  }
+
+  private FallDownPin getFirstFallDown() {
+    return fallDownCounts.get(FIRST_FALL_DOWN_COUNT_INDEX);
   }
 
   @Override

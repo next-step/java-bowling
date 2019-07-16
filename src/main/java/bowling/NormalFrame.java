@@ -6,7 +6,7 @@ public class NormalFrame implements Frame {
 
   private static final int FIRST_FRAME_NUMBER = 1;
   private static final int NEXT_FRAME_INTERVAL = 1;
-  private static final int NORMAL_FRAME_LAST_INDEX= 9;
+  private static final int NORMAL_FRAME_LAST_INDEX = 9;
 
   private int frameNo;
   private FallDownPins fallDownPins;
@@ -24,10 +24,8 @@ public class NormalFrame implements Frame {
       fallDownPins = FallDownPins.first(countOfPin);
       return fallDownPins.isFinish() ? nextFrame() : this;
     }
-
     fallDownPins = fallDownPins.roll(countOfPin);
     return nextFrame();
-
   }
 
   private Frame nextFrame() {

@@ -5,18 +5,17 @@ import java.util.List;
 
 public class LastFallDownPins {
 
-  private static final int LAST_FRAME_SPARE_AND_BONUS_SIZE = 3;
+  private static final int LAST_FRAME_MAX_COUNT = 3;
   private static final int LAST_FRAME_STRIKE_AND_BONUS_SIZE = 2;
   private static final int NO_BONUS_SIZE = 2;
-  private static final int MAX_FALL_DOWN_COUNT = 10;
   private static final int FIRST_FALL_DOWN_COUNT_INDEX = 0;
   private static final int SECOND_FALL_DOWN_COUNT_INDEX = 1;
   private static final int SPARE_SIZE = 2;
 
-  List<Integer> fallDownCounts = new ArrayList<>();
+  List<FallDownPin> fallDownCounts = new ArrayList<>();
 
   public LastFallDownPins(int countOfPin) {
-    fallDownCounts.add(countOfPin);
+    fallDownCounts.add(FallDownPin.of(countOfPin));
   }
 
   public static LastFallDownPins first(int countOfPin) {
@@ -24,36 +23,12 @@ public class LastFallDownPins {
   }
 
   public LastFallDownPins roll(int countOfPin) {
-    fallDownCounts.add(countOfPin);
+    fallDownCounts.add(FallDownPin.of(countOfPin));
     return this;
   }
 
-  private boolean isStrike() {
-    return fallDownCounts.get(FIRST_FALL_DOWN_COUNT_INDEX) == MAX_FALL_DOWN_COUNT;
-  }
-
-  private boolean isSpare() {
-    if (fallDownCounts.size() < SPARE_SIZE) {
-      return false;
-    }
-    return fallDownCounts.get(FIRST_FALL_DOWN_COUNT_INDEX) + fallDownCounts
-        .get(SECOND_FALL_DOWN_COUNT_INDEX) == MAX_FALL_DOWN_COUNT;
-  }
-
-  private boolean isStrikeBonusSize() {
-    return fallDownCounts.size() == LAST_FRAME_STRIKE_AND_BONUS_SIZE;
-  }
-
-  private boolean isSpareAndBonus() {
-    return fallDownCounts.size() == LAST_FRAME_SPARE_AND_BONUS_SIZE;
-  }
-
-  private boolean isNoBonusSize() {
-    return fallDownCounts.size() == NO_BONUS_SIZE;
-  }
-
   public boolean isLastFrameFinish() {
-    if (isSpareAndBonus()) {
+    if (isMaxCount()) {
       return true;
     }
     if (isStrikeAndBonus()) {
@@ -65,12 +40,44 @@ public class LastFallDownPins {
     return false;
   }
 
-  private boolean isNoBonus() {
-    return !isStrike() && !isSpare() && isNoBonusSize();
+  private boolean isMaxCount() {
+    return fallDownCounts.size() == LAST_FRAME_MAX_COUNT;
   }
 
   private boolean isStrikeAndBonus() {
     return isStrike() && isStrikeBonusSize();
+  }
+
+  private boolean isStrike() {
+    return getFirstFallDown().isStrike();
+  }
+
+  private boolean isStrikeBonusSize() {
+    return fallDownCounts.size() == LAST_FRAME_STRIKE_AND_BONUS_SIZE;
+  }
+
+  private boolean isNoBonus() {
+    return !isStrike() && !isSpare() && isNoBonusSize();
+  }
+
+  private boolean isSpare() {
+    if (fallDownCounts.size() < SPARE_SIZE) {
+      return false;
+    }
+    return getFirstFallDown().isSpare(getSecondFallDown());
+  }
+
+  private FallDownPin getFirstFallDown() {
+    return fallDownCounts.get(FIRST_FALL_DOWN_COUNT_INDEX);
+  }
+
+  private FallDownPin getSecondFallDown() {
+    return fallDownCounts
+        .get(SECOND_FALL_DOWN_COUNT_INDEX);
+  }
+
+  private boolean isNoBonusSize() {
+    return fallDownCounts.size() == NO_BONUS_SIZE;
   }
 
 }
