@@ -49,6 +49,14 @@ public class NormalFrame implements Frame {
   }
 
   @Override
+  public String toString() {
+    if(fallDownPins == null) {
+      return "";
+    }
+    return fallDownPins.toString();
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;

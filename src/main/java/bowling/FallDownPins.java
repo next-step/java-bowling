@@ -3,10 +3,12 @@ package bowling;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class FallDownPins {
 
   private static final int FIRST_FALL_DOWN_COUNT_INDEX = 0;
+  private static final int SECOND_FALL_DOWN_COUNT_INDEX = 1;
   private static final int NORMAL_FRAME_ROLL_COUNT = 2;
 
   List<FallDownPin> fallDownCounts = new ArrayList<>();
@@ -51,6 +53,28 @@ public class FallDownPins {
 
   private FallDownPin getFirstFallDown() {
     return fallDownCounts.get(FIRST_FALL_DOWN_COUNT_INDEX);
+  }
+
+  private FallDownPin getSecondFallDown() {
+    return fallDownCounts.get(SECOND_FALL_DOWN_COUNT_INDEX);
+  }
+
+  private boolean isSpare() {
+    if (fallDownCounts.size() < NORMAL_FRAME_ROLL_COUNT) {
+      return false;
+    }
+    return getFirstFallDown().isSpare(getSecondFallDown());
+  }
+
+  @Override
+  public String toString() {
+    if(isStrike()) {
+      return "X";
+    }
+    if(isSpare()) {
+      return getFirstFallDown().toString()+"|"+"/";
+    }
+    return fallDownCounts.stream().map(FallDownPin::toString).collect(Collectors.joining("|"));
   }
 
   @Override

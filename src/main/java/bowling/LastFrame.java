@@ -16,6 +16,9 @@ public class LastFrame implements Frame {
   }
 
   public boolean isFinish() {
+    if (lastFallDownPins == null) {
+      return false;
+    }
     return lastFallDownPins.isLastFrameFinish();
   }
 
@@ -27,5 +30,13 @@ public class LastFrame implements Frame {
   @Override
   public int getFrameNo() {
     return LAST_FRAME_NO;
+  }
+
+  @Override
+  public String toString() {
+    if (lastFallDownPins == null) {
+      return "";
+    }
+    return lastFallDownPins.toString();
   }
 }

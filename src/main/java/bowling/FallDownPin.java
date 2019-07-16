@@ -6,6 +6,8 @@ public class FallDownPin {
 
   private static final int MAX_FALL_DOWN_COUNT = 10;
   private static final int MIN_FALL_DOWN_COUNT = 0;
+  private static final int GUTTER_COUNT = 0;
+  private static final String GUTTER_SYMBOL = "-";
 
   private int fallDownCount;
 
@@ -37,6 +39,18 @@ public class FallDownPin {
 
   public int getFallDownCount() {
     return fallDownCount;
+  }
+
+  @Override
+  public String toString() {
+    if (isGutter()) {
+      return GUTTER_SYMBOL;
+    }
+    return String.valueOf(fallDownCount);
+  }
+
+  private boolean isGutter() {
+    return fallDownCount == GUTTER_COUNT;
   }
 
   @Override

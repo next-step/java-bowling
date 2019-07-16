@@ -10,6 +10,7 @@ public class LastFallDownPins {
   private static final int NO_BONUS_SIZE = 2;
   private static final int FIRST_FALL_DOWN_COUNT_INDEX = 0;
   private static final int SECOND_FALL_DOWN_COUNT_INDEX = 1;
+  private static final int BONUS_FALL_DOWN_COUNT_INDEX = 2;
   private static final int SPARE_SIZE = 2;
 
   List<FallDownPin> fallDownCounts = new ArrayList<>();
@@ -80,4 +81,18 @@ public class LastFallDownPins {
     return fallDownCounts.size() == NO_BONUS_SIZE;
   }
 
+  private String getBonus() {
+    return fallDownCounts.get(BONUS_FALL_DOWN_COUNT_INDEX).toString();
+  }
+
+  @Override
+  public String toString() {
+    if(isStrike()) {
+      return "X";
+    }
+    if(isSpare()) {
+      return getFirstFallDown().toString()+"|"+"/"+getBonus();
+    }
+    return getFirstFallDown().toString()+"|"+getSecondFallDown().toString();
+  }
 }
