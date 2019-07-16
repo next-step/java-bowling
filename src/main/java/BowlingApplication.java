@@ -1,5 +1,3 @@
-import bowling.domain.BowlingGame;
-
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -12,10 +10,7 @@ import bowling.domain.BowlingGame;
  */
 public class BowlingApplication {
 
-    private BowlingGame game;
-
     public BowlingApplication() {
-        this.game = new BowlingGame();
     }
 
     public static void main(final String[] args)
@@ -26,7 +21,5 @@ public class BowlingApplication {
 
     public void run()
     {
-
-        game.play(10);
     }
 }
