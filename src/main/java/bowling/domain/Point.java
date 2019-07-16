@@ -29,4 +29,15 @@ public class Point {
     public int fallCount() {
         return point;
     }
+
+    public int remainPoint() {
+        return MAX_POINT - point;
+    }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "point=" + point +
+                '}';
+    }
 }

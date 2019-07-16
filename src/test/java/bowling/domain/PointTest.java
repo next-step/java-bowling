@@ -31,4 +31,11 @@ public class PointTest {
         Point point = Point.of(10);
         assertThat(point.fallCount()).isEqualTo(10);
     }
+
+    @DisplayName("남은 포인트 가지고 오기")
+    @Test
+    void 남은_포인트_가지고오기() {
+        Point point = Point.of(9);
+        assertThat(point.remainPoint()).isEqualTo(1);
+    }
 }
