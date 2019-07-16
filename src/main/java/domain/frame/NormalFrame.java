@@ -17,4 +17,9 @@ public class NormalFrame implements Frame {
         state = state.bowl(knockedDown);
         return state;
     }
+
+    @Override
+    public State getState() {
+        return state;
+    }
 }
