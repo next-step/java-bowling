@@ -22,6 +22,7 @@ class BonusTest {
     void bowl() {
         State result = bonus.bowl(Pins.ALL).bowl(Pins.ALL).bowl(Pins.ALL);
         assertThat(result.isClosed()).isTrue();
+        System.out.println(result.toSymbol());
     }
 
     @Test

@@ -2,7 +2,6 @@ package domain.frame;
 
 import domain.Pins;
 import domain.state.Bonus;
-import domain.state.Ready;
 import domain.state.State;
 
 public class LastFrame implements Frame {
@@ -16,5 +15,10 @@ public class LastFrame implements Frame {
     @Override
     public State setKnockedDownPins(Pins knockedDown) {
         return state.bowl(knockedDown);
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 }
