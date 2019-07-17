@@ -38,6 +38,10 @@ public class FrameIndex {
         }
     }
 
+    public int getFrameIndex() {
+        return frameIndex;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

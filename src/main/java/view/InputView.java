@@ -16,7 +16,7 @@ public class InputView {
     }
 
     public static Pins askFallenPins(FrameIndex index) {
-        System.out.print(String.format("%s프레임 투구 : ", String.valueOf(index)));
+        System.out.print(String.format("%s프레임 투구 : ", index.getFrameIndex()));
         int fallenPins = scanner.nextInt();
         scanner.nextLine();
         return Pins.from(fallenPins);
