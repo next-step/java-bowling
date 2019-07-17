@@ -1,5 +1,6 @@
 package bowling.model.frame.state;
 
+import bowling.model.Count;
 import bowling.model.DownPin;
 import bowling.model.frame.State;
 
@@ -7,17 +8,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static bowling.model.Count.COUNT_THIRD;
 import static bowling.model.frame.state.Score.DEFAULT;
 import static bowling.utils.Pretty.PARTITION_OF_SYMBOL;
 import static java.util.stream.Collectors.joining;
 
 public class FinalState implements State {
 
-    private static final int MAX_NUMBER_OF_ROUND = 3;
+    private static final Count MAX_OF_ROUND = COUNT_THIRD;
     private static final int LAST_INDEX = 1;
 
     private List<State> states = new ArrayList<>();
-    private int round;
+    private Count round = Count.COUNT_ZERO;
 
     private FinalState() {
         ready();
@@ -33,7 +35,7 @@ public class FinalState implements State {
 
     @Override
     public State bowl(DownPin downPin) {
-        round++;
+        round = round.increase();
         if (getCurrentState().isFinished()) {
             ready();
         }
@@ -52,10 +54,6 @@ public class FinalState implements State {
         return states.size() - LAST_INDEX;
     }
 
-    List<State> getStates() {
-        return Collections.unmodifiableList(states);
-    }
-
     @Override
     public Score getScore() {
         int totalScore = states.stream()
@@ -72,15 +70,17 @@ public class FinalState implements State {
             return DEFAULT;
         }
         while (prevScore.hasCountLeft()) {
-            Score score = states.get(indexOfState).getScore();
+            Score score = states.get(indexOfState++).getScore();
             prevScore= prevScore.calculate(score);
         }
         return prevScore;
     }
 
     @Override
-    public boolean isFinished() {
-        return hasNotBonusStage() || MAX_NUMBER_OF_ROUND == round;
+    public String printResult() {
+        return states.stream()
+                .map(State::printResult)
+                .collect(joining(PARTITION_OF_SYMBOL));
     }
 
     private boolean hasNotBonusStage() {
@@ -89,9 +89,11 @@ public class FinalState implements State {
     }
 
     @Override
-    public String printResult() {
-        return states.stream()
-                .map(State::printResult)
-                .collect(joining(PARTITION_OF_SYMBOL));
+    public boolean isFinished() {
+        return hasNotBonusStage() || MAX_OF_ROUND.isMatch(round);
+    }
+
+    List<State> getStates() {
+        return Collections.unmodifiableList(states);
     }
 }

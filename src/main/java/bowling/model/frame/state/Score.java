@@ -15,6 +15,7 @@ public class Score {
     static final Score SPARE = Score.of(ONCE_OF_COUNT, MAX);
 
     private int count;
+//    private Count count;
     private int score;
 
     private Score(int count, int score) {
