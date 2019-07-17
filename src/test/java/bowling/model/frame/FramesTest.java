@@ -1,13 +1,13 @@
 package bowling.model.frame;
 
-import bowling.model.Pins;
+import bowling.model.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static bowling.model.Pins.*;
+import static bowling.model.Pin.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FramesTest {
@@ -39,9 +39,9 @@ class FramesTest {
     @Test
     void saveBowlHistory_pinStrikeAndMiss() {
         // given
-        Pins firstBowl = Pins.DOWN_ALL;
-        Pins secondBowl = Pins.DOWN_ZERO;
-        Pins thirdBowl = Pins.valueOf(MAX - 1);
+        Pin firstBowl = Pin.DOWN_ALL;
+        Pin secondBowl = Pin.DOWN_ZERO;
+        Pin thirdBowl = Pin.valueOf(MAX - 1);
 
         // when
         Frames frames = Frames.initialize();

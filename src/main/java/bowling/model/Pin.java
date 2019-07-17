@@ -4,36 +4,36 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Pins {
+public class Pin {
 
-    private static final Map<Integer, Pins> CACHE = new HashMap<>();
+    private static final Map<Integer, Pin> CACHE = new HashMap<>();
 
     public static final int MIN = 0;
     public static final int MAX = 10;
 
-    public static final Pins DOWN_ALL = Pins.valueOf(MAX);
-    public static final Pins DOWN_ZERO = Pins.valueOf(MIN);
+    public static final Pin DOWN_ALL = Pin.valueOf(MAX);
+    public static final Pin DOWN_ZERO = Pin.valueOf(MIN);
 
     private int countOfDownPins;
 
-    private Pins(int countOfDownPins) {
+    private Pin(int countOfDownPins) {
         this.countOfDownPins = countOfDownPins;
     }
 
-    public static Pins valueOf(int countOfDownPins) {
+    public static Pin valueOf(int countOfDownPins) {
         if (MIN > countOfDownPins || MAX < countOfDownPins) {
             throw new InvalidPinsException(MIN, MAX, countOfDownPins);
         }
-        CACHE.computeIfAbsent(countOfDownPins, Pins::new);
+        CACHE.computeIfAbsent(countOfDownPins, Pin::new);
         return CACHE.get(countOfDownPins);
     }
 
-    public Pins sum(Pins pins) {
-        return Pins.valueOf(this.countOfDownPins + pins.countOfDownPins);
+    public Pin sum(Pin pin) {
+        return Pin.valueOf(this.countOfDownPins + pin.countOfDownPins);
     }
 
-    public Pins saveRemaining() {
-        return Pins.valueOf(MAX - this.countOfDownPins);
+    public Pin saveRemaining() {
+        return Pin.valueOf(MAX - this.countOfDownPins);
     }
 
     public int count() {
@@ -44,8 +44,8 @@ public class Pins {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pins pins = (Pins) o;
-        return countOfDownPins == pins.countOfDownPins;
+        Pin pin = (Pin) o;
+        return countOfDownPins == pin.countOfDownPins;
     }
 
     @Override

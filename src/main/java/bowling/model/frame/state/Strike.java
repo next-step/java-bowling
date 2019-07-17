@@ -1,9 +1,9 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.Pin;
 import bowling.model.frame.State;
 
-import static bowling.model.Pins.DOWN_ALL;
+import static bowling.model.Pin.DOWN_ALL;
 import static bowling.model.frame.state.Score.STRIKE;
 import static java.lang.Boolean.TRUE;
 
@@ -11,7 +11,7 @@ public class Strike extends FirstState {
 
     private static final String SYMBOL_OF_STRIKE = "X";
     private static final Strike SELF = new Strike();
-    private static final Pins firstBowl = DOWN_ALL;
+    private static final Pin firstBowl = DOWN_ALL;
 
     private Strike() {
         super(firstBowl);
@@ -21,12 +21,12 @@ public class Strike extends FirstState {
         return SELF;
     }
 
-    static boolean isMatch(Pins pins) {
-        return firstBowl.equals(pins);
+    static boolean isMatch(Pin pin) {
+        return firstBowl.equals(pin);
     }
 
     @Override
-    public State bowl(Pins pins) {
+    public State bowl(Pin pin) {
         throw new CanNotBowlException();
     }
 

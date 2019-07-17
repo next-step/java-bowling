@@ -1,6 +1,6 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.Pin;
 import bowling.model.frame.State;
 
 import static bowling.model.frame.state.Score.DEFAULT;
@@ -20,8 +20,8 @@ public class None implements State {
     }
 
     @Override
-    public State bowl(Pins pins) {
-        return FirstState.of(pins);
+    public State bowl(Pin pin) {
+        return FirstState.of(pin);
     }
 
     @Override

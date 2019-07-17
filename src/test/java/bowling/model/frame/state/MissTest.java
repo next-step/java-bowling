@@ -1,12 +1,12 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.Pin;
 import bowling.model.frame.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.model.Pins.MAX;
-import static bowling.model.Pins.MIN;
+import static bowling.model.Pin.MAX;
+import static bowling.model.Pin.MIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -16,8 +16,8 @@ class MissTest {
     @Test
     void getScore_success() {
         // given
-        Pins first = Pins.DOWN_ZERO;
-        Pins second = Pins.valueOf(MIN + 1);
+        Pin first = Pin.DOWN_ZERO;
+        Pin second = Pin.valueOf(MIN + 1);
 
         // when
         State result = Miss.valueOf(first, second);
@@ -30,8 +30,8 @@ class MissTest {
     @Test
     void createMiss_whenFirstSumSecond_fail() {
         // given
-        Pins first = Pins.valueOf(MAX);
-        Pins second = Pins.valueOf(MIN);
+        Pin first = Pin.valueOf(MAX);
+        Pin second = Pin.valueOf(MIN);
 
         // when
         assertThatIllegalArgumentException()
@@ -42,8 +42,8 @@ class MissTest {
     @Test
     void createMiss_whenFirstMinSumSecondMax_fail() {
         // given
-        Pins first = Pins.valueOf(MIN);
-        Pins second = Pins.valueOf(MAX);
+        Pin first = Pin.valueOf(MIN);
+        Pin second = Pin.valueOf(MAX);
 
         // when
         assertThatIllegalArgumentException()
@@ -54,8 +54,8 @@ class MissTest {
     @Test
     void printResult_success() {
         // given
-        Pins first = Pins.DOWN_ZERO;
-        Pins second = Pins.valueOf(MIN + 1);
+        Pin first = Pin.DOWN_ZERO;
+        Pin second = Pin.valueOf(MIN + 1);
 
         // when
         String print = Miss.valueOf(first, second).printResult();

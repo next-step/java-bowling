@@ -1,6 +1,6 @@
 package bowling.model.frame;
 
-import bowling.model.Pins;
+import bowling.model.Pin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,8 +24,8 @@ public class Frames {
     }
 
     // todo: No chaining
-    public Frames saveBowling(Pins downPins) {
-        Frame frameAfterBowling = currentFrame().bowl(downPins);
+    public Frames saveBowling(Pin downPin) {
+        Frame frameAfterBowling = currentFrame().bowl(downPin);
 
         if (isEqualFrame(frameAfterBowling)) {
             frames.set(getLastIndex(), frameAfterBowling);

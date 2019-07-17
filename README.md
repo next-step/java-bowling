@@ -10,18 +10,18 @@
 
 
 normalFrame
-bowl(in: downPins, out: currentFrame)
+bowl(in: downPin, out: currentFrame)
     currentFrame.isFinish(out: boolean) // 현 프레임을 완료하는 지?
         currentFrame.next(out: nextFrame) createFrame
 getState(in: index, out: state)
 
 finalFrame
-bowl(in: downPins, out: currentFrame)
+bowl(in: downPin, out: currentFrame)
     currentFrame.isFinish(out: boolean)
         currentFrame.next(out: X)
          
 Frame 
- -> bowl(in: pins, out: currentFrame)
+ -> bowl(in: pin, out: currentFrame)
  -> getState(out: frameState)
  -> isFinish(out: boolean)
  

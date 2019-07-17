@@ -1,14 +1,14 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.Pin;
 import bowling.model.frame.State;
 
-import static bowling.model.Pins.DOWN_ZERO;
+import static bowling.model.Pin.DOWN_ZERO;
 
 public class Gutter extends FirstState {
 
     static final String PRINT_SYMBOL_OF_GUTTER = "-";
-    private static final Pins firstBowl = DOWN_ZERO;
+    private static final Pin firstBowl = DOWN_ZERO;
     private static final Gutter SELF = new Gutter();
 
     private Gutter() {
@@ -19,8 +19,8 @@ public class Gutter extends FirstState {
         return SELF;
     }
 
-    static boolean isMatch(Pins downPins) {
-        return firstBowl.equals(downPins);
+    static boolean isMatch(Pin downPin) {
+        return firstBowl.equals(downPin);
     }
 
     @Override

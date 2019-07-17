@@ -20,8 +20,8 @@ public class BowlingGame {
         return gameEngine.getCurrentNumber();
     }
 
-    public void play(Pins pins) {
-        gameEngine.play(pins);
+    public void play(Pin pin) {
+        gameEngine.play(pin);
     }
 
     public Board results() {

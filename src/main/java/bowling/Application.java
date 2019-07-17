@@ -3,7 +3,7 @@ package bowling;
 import bowling.io.InputView;
 import bowling.io.OutView;
 import bowling.model.BowlingGame;
-import bowling.model.Pins;
+import bowling.model.Pin;
 import bowling.model.Player;
 
 public class Application {
@@ -17,8 +17,8 @@ public class Application {
 
         while (!bowlingGame.isGameOver()) {
             int countOfDownPins = InputView.askCountOfDownPins(bowlingGame.getCurrentNumber());
-            Pins downPins = Pins.valueOf(countOfDownPins);
-            bowlingGame.play(downPins);
+            Pin downPin = Pin.valueOf(countOfDownPins);
+            bowlingGame.play(downPin);
             OutView.printProgress(bowlingGame.results());
         }
 

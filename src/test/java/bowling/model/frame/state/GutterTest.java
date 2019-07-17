@@ -1,10 +1,10 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.model.Pins.MIN;
+import static bowling.model.Pin.MIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GutterTest {
@@ -19,7 +19,7 @@ class GutterTest {
     @Test
     void isMatch_pinsZero_thanTrue() {
         // when
-        boolean result = Gutter.isMatch(Pins.DOWN_ZERO);
+        boolean result = Gutter.isMatch(Pin.DOWN_ZERO);
 
         // then
         assertThat(result).isTrue();

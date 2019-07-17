@@ -1,6 +1,6 @@
 package bowling.model.frame;
 
-import bowling.model.Pins;
+import bowling.model.Pin;
 import bowling.model.frame.state.None;
 import bowling.model.frame.state.Score;
 
@@ -58,8 +58,8 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame bowl(Pins downPins) {
-        state = state.bowl(downPins);
+    public Frame bowl(Pin downPin) {
+        state = state.bowl(downPin);
         if (state.isFinished()) {
             this.next = nextFrame();
             return next;

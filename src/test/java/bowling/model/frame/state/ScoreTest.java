@@ -3,7 +3,7 @@ package bowling.model.frame.state;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.model.Pins.DOWN_ALL;
+import static bowling.model.Pin.DOWN_ALL;
 import static bowling.model.frame.state.Score.*;
 import static org.assertj.core.api.Assertions.assertThat;
 

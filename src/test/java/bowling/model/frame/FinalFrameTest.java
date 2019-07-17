@@ -1,6 +1,6 @@
 package bowling.model.frame;
 
-import bowling.model.Pins;
+import bowling.model.Pin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class FinalFrameTest {
     @Test
     void bowl_oneTime_thanContinueGame() {
         // given
-        Pins first = Pins.valueOf(5);
+        Pin first = Pin.valueOf(5);
 
         // when
         frame.bowl(first);
@@ -32,8 +32,8 @@ public class FinalFrameTest {
     @Test
     void downPinTenAndTen_nextBonusStage() {
         // given
-        Pins first = Pins.valueOf(5);
-        Pins second = Pins.valueOf(5);
+        Pin first = Pin.valueOf(5);
+        Pin second = Pin.valueOf(5);
 
         // when
         frame.bowl(first);
@@ -46,8 +46,8 @@ public class FinalFrameTest {
     @Test
     void downPinTenAndZero_nextBonusStage() {
         // given
-        Pins first = Pins.DOWN_ALL;
-        Pins second = Pins.DOWN_ZERO;
+        Pin first = Pin.DOWN_ALL;
+        Pin second = Pin.DOWN_ZERO;
 
         // when
         frame.bowl(first);
@@ -60,8 +60,8 @@ public class FinalFrameTest {
     @Test
     void downPin0And10_nextBonusStage() {
         // given
-        Pins first = Pins.DOWN_ZERO;
-        Pins second = Pins.DOWN_ALL;
+        Pin first = Pin.DOWN_ZERO;
+        Pin second = Pin.DOWN_ALL;
 
         // when
         frame.bowl(first);
@@ -74,12 +74,12 @@ public class FinalFrameTest {
     @Test
     void bowl_threeTime_thanGameOver() {
         // given
-        Pins downPins = Pins.DOWN_ALL;
+        Pin downPin = Pin.DOWN_ALL;
 
         // when
-        frame.bowl(downPins);
-        frame.bowl(downPins);
-        frame.bowl(downPins);
+        frame.bowl(downPin);
+        frame.bowl(downPin);
+        frame.bowl(downPin);
 
         assertThat(frame.isGameOver()).isTrue();
     }
@@ -88,8 +88,8 @@ public class FinalFrameTest {
     @Test
     void bowl_twoTime_thanContinueGame() {
         // given
-        Pins first = Pins.valueOf(5);
-        Pins second = Pins.DOWN_ZERO;
+        Pin first = Pin.valueOf(5);
+        Pin second = Pin.DOWN_ZERO;
 
         // when
         frame.bowl(first);

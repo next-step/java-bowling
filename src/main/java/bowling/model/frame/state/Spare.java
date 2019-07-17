@@ -1,6 +1,6 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.Pin;
 import bowling.model.frame.State;
 import bowling.utils.Pretty;
 
@@ -11,11 +11,11 @@ public class Spare extends SecondState {
 
     private static final String SYMBOL_OF_SPARE = "/";
 
-    private Spare(Pins firstBowl, Pins secondBowl) {
+    private Spare(Pin firstBowl, Pin secondBowl) {
         super(firstBowl, secondBowl);
     }
 
-    public static State valueOf(Pins firstBowl) {
+    public static State valueOf(Pin firstBowl) {
         return new Spare(firstBowl, firstBowl.saveRemaining());
     }
 

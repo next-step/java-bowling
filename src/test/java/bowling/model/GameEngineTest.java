@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
-import static bowling.model.Pins.DOWN_ALL;
-import static bowling.model.Pins.valueOf;
+import static bowling.model.Pin.DOWN_ALL;
+import static bowling.model.Pin.valueOf;
 import static org.assertj.core.api.Assertions.*;
 
 class GameEngineTest {
@@ -67,8 +67,8 @@ class GameEngineTest {
     @Test
     void play_success() {
         // given
-        Pins first = Pins.DOWN_ZERO;
-        Pins second = Pins.DOWN_ALL;
+        Pin first = Pin.DOWN_ZERO;
+        Pin second = Pin.DOWN_ALL;
 
         // when
         GameEngine gameEngine = new GameEngine();
@@ -84,7 +84,7 @@ class GameEngineTest {
     void bowl_hasBonus_success() {
         // when
         IntStream.rangeClosed(1, 12)
-                .forEach((totalOfPlay) -> gameEngine.play(Pins.DOWN_ALL));
+                .forEach((totalOfPlay) -> gameEngine.play(Pin.DOWN_ALL));
     }
 
     @DisplayName("마지막 프레임 이후 play 시 게임종료")
@@ -92,16 +92,16 @@ class GameEngineTest {
     void play_excess_fail() {
         assertThatIllegalStateException()
                 .isThrownBy(() -> IntStream.rangeClosed(1, 22)
-                        .forEach(countOfPlay -> gameEngine.play(Pins.DOWN_ZERO)))
+                        .forEach(countOfPlay -> gameEngine.play(Pin.DOWN_ZERO)))
                 .withMessage("게임이 종료되었습니다");
     }
 
-    @DisplayName("한 프레임에 " + Pins.MAX + "초과로 던질 시 실패한다")
+    @DisplayName("한 프레임에 " + Pin.MAX + "초과로 던질 시 실패한다")
     @Test
     void play_whenPinsGreaterThanMax_exception() {
         // given
-        Pins first = Pins.valueOf(Pins.MAX - 1);
-        Pins second = Pins.valueOf(Pins.MAX - 1);
+        Pin first = Pin.valueOf(Pin.MAX - 1);
+        Pin second = Pin.valueOf(Pin.MAX - 1);
 
         // exception
         GameEngine gameEngine = new GameEngine();

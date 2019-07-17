@@ -1,35 +1,35 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.Pin;
 import bowling.model.frame.State;
 
-import static bowling.model.Pins.DOWN_ALL;
+import static bowling.model.Pin.DOWN_ALL;
 import static java.lang.Boolean.TRUE;
 
 public abstract class SecondState extends FirstState {
 
-    private final Pins secondBowl;
+    private final Pin secondBowl;
 
-    SecondState(Pins firstBowl, Pins secondBowl) {
+    SecondState(Pin firstBowl, Pin secondBowl) {
         super(firstBowl);
         this.secondBowl = secondBowl;
     }
 
-    static State of(Pins firstBowl, Pins secondBowl) {
-        Pins totalPins = firstBowl.sum(secondBowl);
+    static State of(Pin firstBowl, Pin secondBowl) {
+        Pin totalPin = firstBowl.sum(secondBowl);
 
-        if (DOWN_ALL.equals(totalPins)) {
+        if (DOWN_ALL.equals(totalPin)) {
             return Spare.valueOf(firstBowl);
         }
         return Miss.valueOf(firstBowl, secondBowl);
     }
 
-    Pins getSecondBowl() {
+    Pin getSecondBowl() {
         return secondBowl;
     }
 
     @Override
-    public State bowl(Pins secondBowl) {
+    public State bowl(Pin secondBowl) {
         throw new CanNotBowlException();
     }
 
