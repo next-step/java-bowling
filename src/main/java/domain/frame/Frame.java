@@ -1,6 +1,7 @@
 package domain.frame;
 
 import domain.Pins;
+import domain.state.State;
 
 public interface Frame {
 
@@ -9,4 +10,6 @@ public interface Frame {
     boolean isGameOver();
 
     FrameIndex getIndex();
+
+    State getState();
 }

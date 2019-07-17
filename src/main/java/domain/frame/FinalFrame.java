@@ -1,6 +1,7 @@
 package domain.frame;
 
 import domain.Pins;
+import domain.state.FinalState;
 import domain.state.Miss;
 import domain.state.StandBy;
 import domain.state.State;
@@ -51,7 +52,7 @@ public class FinalFrame implements Frame {
         return states.get(getLastBowlOrder()) instanceof Miss;
     }
 
-    private State currentState() {
+    public State currentState() {
         return states.get(getLastBowlOrder());
     }
 
@@ -62,5 +63,10 @@ public class FinalFrame implements Frame {
     @Override
     public FrameIndex getIndex() {
         return FrameIndex.from(INDEX_OF_FINAL_FRAME);
+    }
+
+    @Override
+    public State getState() {
+        return new FinalState(states);
     }
 }

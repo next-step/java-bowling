@@ -6,6 +6,7 @@ import domain.frame.NormalFrame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class BowlingGame {
@@ -46,5 +47,13 @@ public class BowlingGame {
 
     private int lastFrameIndex() {
         return frames.size() - 1;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public List<Frame> getFrames() {
+        return Collections.unmodifiableList(frames);
     }
 }

@@ -51,4 +51,9 @@ public class NormalFrame implements Frame {
     public boolean isGameOver() {
         return Boolean.FALSE;
     }
+
+    @Override
+    public State getState() {
+        return state;
+    }
 }
