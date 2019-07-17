@@ -51,7 +51,7 @@ public class FinalState implements FrameState {
             throw new FinishedFrameStateException();
         }
 
-        count = count.up();
+        incrementCount();
 
         if (isCurrentFrameStateFinished()) {
             ready();
@@ -89,6 +89,10 @@ public class FinalState implements FrameState {
 
     private void ready() {
         frameStates.add(new Ready());
+    }
+
+    private void incrementCount() {
+        count = count.up();
     }
 
     private FrameState getCurrentFrameState() {

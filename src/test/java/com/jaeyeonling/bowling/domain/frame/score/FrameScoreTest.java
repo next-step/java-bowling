@@ -88,12 +88,4 @@ class FrameScoreTest {
         // then
         assertThat(frameScore.isComplete()).isTrue();
     }
-
-    @DisplayName("점수를 계산할 수 있는 횟수가 없는 상태에서 계산 시 예외처리한다.")
-    @Test
-    void throwShorterThanMinCountException() {
-        // when / then
-        assertThatExceptionOfType(ShorterThanMinCountException.class)
-                .isThrownBy(() -> Gutter.SCORE.calculate(Gutter.SCORE));
-    }
 }

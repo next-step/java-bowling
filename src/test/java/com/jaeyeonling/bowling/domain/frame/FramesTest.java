@@ -15,7 +15,7 @@ class FramesTest {
 
     @BeforeEach
     void setUp() {
-        frames = new Frames();
+        frames = FramesFactory.create();
     }
 
     @DisplayName("프레임들의 첫 프레임 값은 1이다.")
