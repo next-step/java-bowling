@@ -3,20 +3,16 @@ package bowling.model;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.model.Count.ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CountTest {
 
-    private static final int STRIKE_BONUS_COUNT = 2;
-
-    @DisplayName("스트라이크 일 시 " + STRIKE_BONUS_COUNT + "번의 보너스 점수를 획득한다")
+    @DisplayName("동등성 체크")
     @Test
     void createDefault() {
-        // when
-        Count count = Count.of(STRIKE_BONUS_COUNT);
-
         // then
-        assertThat(Count.of(STRIKE_BONUS_COUNT)).isEqualTo(Count.of(STRIKE_BONUS_COUNT));
+        assertThat(Count.of(ZERO)).isEqualTo(Count.of(ZERO));
     }
 
     @DisplayName("카운트가 감소한다")

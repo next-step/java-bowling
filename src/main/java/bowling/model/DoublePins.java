@@ -11,6 +11,7 @@ public class DoublePins {
 
     public static final int FIRST = 0;
     public static final int SECOND = 1;
+
     private List<DownPin> downDownPins;
 
     private DoublePins(List<DownPin> downDownPins) {
