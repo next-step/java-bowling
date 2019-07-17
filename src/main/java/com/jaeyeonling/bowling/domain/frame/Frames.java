@@ -11,11 +11,10 @@ public class Frames {
     static final int NORMAL_FRAME_COUNT = 9;
 
     private final List<Frame> frames;
-    private Count indexCount;
+    private Count indexCount = Count.of();
 
     Frames(final List<Frame> frames) {
         this.frames = frames;
-        indexCount = Count.of();
     }
 
     public void bowl(final KnockdownPins knockdownPins) {

@@ -50,7 +50,6 @@ class FramesTest {
         }
     }
 
-
     @DisplayName("모든 프레임이 끝난 후 게임 시 예외처리한다.")
     @Test
     void throwFinishedFrameStateException() {
