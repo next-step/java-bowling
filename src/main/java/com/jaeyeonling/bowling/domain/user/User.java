@@ -1,10 +1,11 @@
 package com.jaeyeonling.bowling.domain.user;
 
-import com.jaeyeonling.bowling.domain.frame.BowlingSymbol;
-import com.jaeyeonling.bowling.utils.BowlingUtils;
-import com.jaeyeonling.bowling.view.StringVisualizable;
+import java.util.HashMap;
+import java.util.Map;
 
-public class User implements StringVisualizable {
+public class User {
+
+    private static final Map<Username, User> CACHE = new HashMap<>();
 
     private final Username username;
 
@@ -13,11 +14,14 @@ public class User implements StringVisualizable {
     }
 
     public static User of(final String username) {
-        return new User(Username.valueOf(username));
+        return of(Username.valueOf(username));
     }
 
-    @Override
-    public String visualize() {
-        return BowlingSymbol.DELIMITER + BowlingUtils.format(username.visualize()) + BowlingSymbol.DELIMITER;
+    public static User of(final Username username) {
+        return CACHE.computeIfAbsent(username, User::new);
+    }
+
+    public Username getUsername() {
+        return username;
     }
 }

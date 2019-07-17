@@ -1,45 +1,25 @@
 package com.jaeyeonling.bowling.domain.frame;
 
+import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 import com.jaeyeonling.bowling.domain.frame.state.Ready;
 
-public class NormalFrame extends StateFrame {
+public class NormalFrame extends Frame {
 
-    private final Frame nextFrame = getNextFrame();
+    private final Frame next;
 
-    private NormalFrame(final FrameIndex frameIndex) {
-        super(frameIndex, new Ready());
-    }
+    NormalFrame(final Frame next) {
+        super(new Ready());
 
-    static Frame of(final FrameIndex frameIndex) {
-        return new NormalFrame(frameIndex);
-    }
-
-    @Override
-    public Frame bowl(final KnockdownPins knockdownPins) {
-        frameState = frameState.bowl(knockdownPins);
-        if (frameState.isFinished()) {
-            return nextFrame;
-        }
-
-        return this;
+        this.next = next;
     }
 
     @Override
-    public boolean isFinish() {
-        return false;
-    }
-
-    private Frame getNextFrame() {
-        final FrameIndex nextIndex = nextIndex();
-        if (nextIndex.isMax()) {
-            return new FinalFrame();
-        }
-
-        return new NormalFrame(nextIndex);
+    public FrameScore calculateScore(final FrameScore base) {
+        return next.calculateScore(super.calculateScore(base));
     }
 
     @Override
-    public String visualize() {
-        return super.visualize() + nextFrame.visualize();
+    public FrameScore getFrameScore() {
+        return next.calculateScore(super.getFrameScore());
     }
 }

@@ -1,8 +1,10 @@
 package com.jaeyeonling.bowling.domain.frame.state;
 
-import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
+import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 
-public abstract class Finished extends ValidFrameState {
+abstract class Finished implements FrameState {
+
+    Finished() { }
 
     @Override
     public boolean isFinished() {
@@ -10,7 +12,7 @@ public abstract class Finished extends ValidFrameState {
     }
 
     @Override
-    FrameState validBowl(final KnockdownPins ignore) {
-        throw new AlreadyFinishedFrameStateException();
+    public FrameState bowl(final KnockdownPins ignore) {
+        throw new FinishedFrameStateException();
     }
 }

@@ -1,10 +1,10 @@
 package com.jaeyeonling.bowling.domain.frame.state;
 
-import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
+import com.jaeyeonling.bowling.domain.BowlingSymbol;
+import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
+import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 
-import java.util.Optional;
-
-public class Miss extends ValidFrameState {
+class Miss extends Finished {
 
     private final KnockdownPins first;
     private final KnockdownPins second;
@@ -15,31 +15,31 @@ public class Miss extends ValidFrameState {
         this.second = second;
     }
 
-    static Miss of(final KnockdownPins knockdownPins) {
-        return new Miss(knockdownPins, null);
+    @Override
+    public String toSymbol() {
+        return BowlingSymbol.toSymbolFrom(first, second);
     }
 
     @Override
-    public boolean isFinished() {
-        return getSecond().isPresent();
-    }
-
-    @Override
-    FrameState validBowl(final KnockdownPins knockdownPins) {
-        if (first.sum(knockdownPins).isMax()) {
-            return new Spare(first);
+    public FrameScore calculateScore(FrameScore base) {
+        base = base.calculate(getFirstScore());
+        if (base.isComplete()) {
+            return base;
         }
 
-        return new Miss(first, knockdownPins);
+        return base.calculate(getSecondScore());
     }
 
     @Override
-    public String visualize() {
-        return getSecond().map(first::toSymbol)
-                .orElseGet(first::toSymbol);
+    public FrameScore getFrameScore() {
+        return getFirstScore().sum(getSecondScore());
     }
 
-    private Optional<KnockdownPins> getSecond() {
-        return Optional.ofNullable(second);
+    private FrameScore getFirstScore() {
+        return FrameScore.of(first.getKnockdownPins());
+    }
+
+    private FrameScore getSecondScore() {
+        return FrameScore.of(second.getKnockdownPins());
     }
 }

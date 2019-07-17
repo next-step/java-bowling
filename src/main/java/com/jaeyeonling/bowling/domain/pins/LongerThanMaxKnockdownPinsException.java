@@ -1,4 +1,4 @@
-package com.jaeyeonling.bowling.domain.frame;
+package com.jaeyeonling.bowling.domain.pins;
 
 public class LongerThanMaxKnockdownPinsException extends IllegalArgumentException {
 

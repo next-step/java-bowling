@@ -1,13 +1,26 @@
 package com.jaeyeonling.bowling.domain.frame.state;
 
-import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
+import com.jaeyeonling.bowling.domain.BowlingSymbol;
+import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
+import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 
-public class Strike extends Finished {
+@HaveBonus
+class Strike extends Finished {
 
-    private static final KnockdownPins STRIKE_PINS = KnockdownPins.MAX;
+    Strike() { }
 
     @Override
-    public String visualize() {
-        return STRIKE_PINS.toSymbol();
+    public String toSymbol() {
+        return BowlingSymbol.toSymbolFrom(KnockdownPins.MAX);
+    }
+
+    @Override
+    public FrameScore calculateScore(final FrameScore frameScore) {
+        return frameScore.calculate(getFrameScore());
+    }
+
+    @Override
+    public FrameScore getFrameScore() {
+        return FrameScore.STRIKE;
     }
 }

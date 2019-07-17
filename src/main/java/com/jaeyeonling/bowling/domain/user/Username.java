@@ -1,8 +1,11 @@
 package com.jaeyeonling.bowling.domain.user;
 
-import com.jaeyeonling.bowling.view.StringVisualizable;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Username implements StringVisualizable {
+public class Username {
+
+    private static final Map<String, Username> CACHE = new HashMap<>();
 
     public static final int LENGTH = 3;
 
@@ -19,11 +22,10 @@ public class Username implements StringVisualizable {
             throw new InvalidUsernameException(username);
         }
 
-        return new Username(username);
+        return CACHE.computeIfAbsent(username, Username::new);
     }
 
-    @Override
-    public String visualize() {
+    public String getUsername() {
         return username;
     }
 }

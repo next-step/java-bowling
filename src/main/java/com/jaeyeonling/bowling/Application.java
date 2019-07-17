@@ -1,10 +1,10 @@
 package com.jaeyeonling.bowling;
 
-import com.jaeyeonling.bowling.domain.game.BowlingGame;
-import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
+import com.jaeyeonling.bowling.domain.BowlingGame;
+import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 import com.jaeyeonling.bowling.domain.user.User;
-import com.jaeyeonling.bowling.view.console.ConsoleInputView;
-import com.jaeyeonling.bowling.view.console.ConsoleOutputView;
+import com.jaeyeonling.bowling.view.ConsoleInputView;
+import com.jaeyeonling.bowling.view.ConsoleOutputView;
 
 public class Application {
 

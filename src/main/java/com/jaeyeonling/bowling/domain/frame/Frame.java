@@ -1,14 +1,34 @@
 package com.jaeyeonling.bowling.domain.frame;
 
-import com.jaeyeonling.bowling.view.StringVisualizable;
+import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
+import com.jaeyeonling.bowling.domain.frame.state.FrameState;
+import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 
-public interface Frame extends StringVisualizable {
+public abstract class Frame {
 
-    Frame bowl(final KnockdownPins knockdownPins);
-    boolean isFinish();
-    FrameIndex getFrameIndex();
+    private FrameState frameState;
 
-    static Frame first() {
-        return NormalFrame.of(FrameIndex.first());
+    Frame(final FrameState frameState) {
+        this.frameState = frameState;
+    }
+
+    public FrameScore calculateScore(final FrameScore base) {
+        return frameState.calculateScore(base);
+    }
+
+    public FrameState getFrameState() {
+        return frameState;
+    }
+
+    public FrameScore getFrameScore() {
+        return frameState.getFrameScore();
+    }
+
+    boolean isFinished() {
+        return frameState.isFinished();
+    }
+
+    void bowl(final KnockdownPins knockdownPins) {
+        frameState = frameState.bowl(knockdownPins);
     }
 }

@@ -1,138 +1,311 @@
 package com.jaeyeonling.bowling.domain.frame;
 
+import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
+import com.jaeyeonling.bowling.domain.frame.state.FinishedFrameStateException;
+import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.jaeyeonling.bowling.domain.frame.KnockdownPins.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class FinalFrameTest {
 
-    private Frame finalFrame;
+    private Frame frame;
 
     @BeforeEach
     void setUp() {
-        finalFrame = new FinalFrame();
+        frame = new FinalFrame();
     }
 
-    @DisplayName("거터 시 시각화한다.")
+    @DisplayName("볼을 던진다.")
     @Test
-    void gutterVisualize() {
-        finalFrame.bowl(GUTTER);
-
-        assertThat(finalFrame.visualize()).isEqualTo("   -   |");
+    void bowl() {
+        frame.bowl(KnockdownPins.MIN);
     }
 
-    @DisplayName("거터 거터 시 시각화한다.")
+    @DisplayName("거터 후 점수를 확인한다.")
     @Test
-    void gutterGutterVisualize() {
-        finalFrame.bowl(GUTTER).bowl(GUTTER);
+    void gutter() {
+        // when
+        frame.bowl(KnockdownPins.MIN);
+        frame.bowl(KnockdownPins.MIN);
+        final FrameScore frameScore = frame.getFrameScore();
 
-        assertThat(finalFrame.visualize()).isEqualTo("  -|-  |");
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.GUTTER);
     }
 
-    @DisplayName("거터 미스 시 시각화한다.")
+    @DisplayName("스페어 후 점수를 확인한다.")
     @Test
-    void gutterMissVisualize() {
-        finalFrame.bowl(GUTTER).bowl(valueOf(1));
+    void spare() {
+        // when
+        frame.bowl(KnockdownPins.MIN);
+        frame.bowl(KnockdownPins.MAX);
+        final FrameScore frameScore = frame.getFrameScore();
 
-        assertThat(finalFrame.visualize()).isEqualTo("  -|1  |");
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.UN_SCORE);
     }
 
-    @DisplayName("미스 시 시각화한다.")
+    @DisplayName("미스 후 점수를 확인한다.")
     @Test
-    void missVisualize() {
-        finalFrame.bowl(valueOf(1));
+    void miss() {
+        // when
+        frame.bowl(KnockdownPins.valueOf(1));
+        frame.bowl(KnockdownPins.valueOf(1));
+        final FrameScore frameScore = frame.getFrameScore();
 
-        assertThat(finalFrame.visualize()).isEqualTo("   1   |");
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.of(2));
     }
 
-    @DisplayName("미스 미스 시 시각화한다.")
+    @DisplayName("진행 중 프레임 종료되지 않음을 확인한다.")
     @Test
-    void missMissVisualize() {
-        finalFrame.bowl(valueOf(1)).bowl(valueOf(1));
+    void continueIsFinished() {
+        // when
+        frame.bowl(KnockdownPins.MIN);
+        final boolean finished = frame.isFinished();
 
-        assertThat(finalFrame.visualize()).isEqualTo("  1|1  |");
+        // then
+        assertThat(finished).isFalse();
     }
 
-    @DisplayName("스페어 시 시각화한다.")
+    @DisplayName("거터 후 프레임 종료를 확인한다.")
     @Test
-    void spareVisualize() {
-        finalFrame.bowl(valueOf(5)).bowl(valueOf(5));
+    void gutterIsFinished() {
+        // when
+        frame.bowl(KnockdownPins.MIN);
+        frame.bowl(KnockdownPins.MIN);
+        final boolean finished = frame.isFinished();
 
-        assertThat(finalFrame.visualize()).isEqualTo("  5|/  |");
+        // then
+        assertThat(finished).isTrue();
     }
 
-    @DisplayName("스트라이크 시 시각화한다.")
+    @DisplayName("스페어 미스 후 프레임 종료를 확인한다.")
     @Test
-    void strikeVisualize() {
-        finalFrame.bowl(MAX);
+    void spareIsFinished() {
+        // when
+        frame.bowl(KnockdownPins.MIN);
+        frame.bowl(KnockdownPins.MAX);
+        frame.bowl(KnockdownPins.valueOf(5));
 
-        assertThat(finalFrame.visualize()).isEqualTo("   X   |");
+        final boolean finished = frame.isFinished();
+
+        // then
+        assertThat(finished).isTrue();
     }
 
-    @DisplayName("거터 스페어 시 시각화한다.")
+    @DisplayName("스트라이크 후 프레임 종료가 안됐는지 확인한다.")
     @Test
-    void gutterSpareVisualize() {
-        finalFrame.bowl(GUTTER).bowl(MAX);
+    void strikeIsNotFinished() {
+        // when
+        frame.bowl(KnockdownPins.MAX);
+        final boolean finished = frame.isFinished();
 
-        assertThat(finalFrame.visualize()).isEqualTo("  -|/  |");
+        // then
+        assertThat(finished).isFalse();
     }
 
-    @DisplayName("미스 스페어 거터 시 시각화한다.")
+    @DisplayName("스트라이크 스트라이크 스트라이크 후 프레임 종료가 됐는지 확인한다.")
     @Test
-    void missSpareGutterVisualize() {
-        finalFrame.bowl(valueOf(1)).bowl(valueOf(9)).bowl(GUTTER);
+    void strikeStrikeStrikeIsFinished() {
+        // when
+        frame.bowl(KnockdownPins.MAX);
+        frame.bowl(KnockdownPins.MAX);
+        frame.bowl(KnockdownPins.MAX);
 
-        assertThat(finalFrame.visualize()).isEqualTo(" 1|/|- |");
+        final boolean finished = frame.isFinished();
+
+        // then
+        assertThat(finished).isTrue();
     }
 
-    @DisplayName("미스 스페어 거터 시 시각화한다.")
+    @DisplayName("미스 후 프레임 종료를 확인한다.")
     @Test
-    void missSpareMissVisualize() {
-        finalFrame.bowl(valueOf(1)).bowl(valueOf(9)).bowl(valueOf(1));
+    void missIsFinished() {
+        // when
+        frame.bowl(KnockdownPins.valueOf(1));
+        frame.bowl(KnockdownPins.valueOf(1));
+        final boolean finished = frame.isFinished();
 
-        assertThat(finalFrame.visualize()).isEqualTo(" 1|/|1 |");
+        // then
+        assertThat(finished).isTrue();
     }
 
-    @DisplayName("스트라이크 미스 스페어 시 시각화한다.")
+    @DisplayName("거터로 프레임 종료 후 게임시 예외처리를 확인한다.")
     @Test
-    void strikeMissSpareVisualize() {
-        finalFrame.bowl(MAX).bowl(valueOf(5)).bowl(valueOf(5));
+    void gutterThrowFinishedFrameStateException() {
+        // given
+        frame.bowl(KnockdownPins.MIN);
+        frame.bowl(KnockdownPins.MIN);
 
-        assertThat(finalFrame.visualize()).isEqualTo(" X|5|/ |");
+        // when / then
+        assertThatExceptionOfType(FinishedFrameStateException.class)
+                .isThrownBy(() -> frame.bowl(KnockdownPins.MIN));
     }
 
-    @DisplayName("스트라이크 스트라이크 미스 시 시각화한다.")
+    @DisplayName("스페어로 스트라이크로 프레임 종료 후 게임시 예외처리를 확인한다.")
     @Test
-    void strikeStrikeMissVisualize() {
-        finalFrame.bowl(MAX).bowl(MAX).bowl(valueOf(5));
+    void spareSpareThrowFinishedFrameStateException() {
+        // given
+        frame.bowl(KnockdownPins.MIN);
+        frame.bowl(KnockdownPins.MAX);
 
-        assertThat(finalFrame.visualize()).isEqualTo(" X|X|5 |");
+        frame.bowl(KnockdownPins.MAX);
+
+        // when / then
+        assertThatExceptionOfType(FinishedFrameStateException.class)
+                .isThrownBy(() -> frame.bowl(KnockdownPins.MIN));
     }
 
-    @DisplayName("스트라이크 스트라이크 스트라이크 시 시각화한다.")
+    @DisplayName("스트라이크 스트라이크 스트라이크로 프레임 종료 후 게임시 예외처리를 확인한다.")
     @Test
-    void strikeStrikeStrikeVisualize() {
-        finalFrame.bowl(MAX).bowl(MAX).bowl(MAX);
+    void strikeStrikeStrikeThrowFinishedFrameStateException() {
+        // given
+        frame.bowl(KnockdownPins.MAX);
+        frame.bowl(KnockdownPins.MAX);
+        frame.bowl(KnockdownPins.MAX);
 
-        assertThat(finalFrame.visualize()).isEqualTo(" X|X|X |");
+        // when / then
+        assertThatExceptionOfType(FinishedFrameStateException.class)
+                .isThrownBy(() -> frame.bowl(KnockdownPins.MIN));
     }
 
-    @DisplayName("거터 스페어 스트라이크 시 시각화한다.")
+    @DisplayName("미스 미스로 프레임 종료 후 게임시 예외처리를 확인한다.")
     @Test
-    void gutterSpareStrikeVisualize() {
-        finalFrame.bowl(GUTTER).bowl(MAX).bowl(MAX);
+    void missMissThrowFinishedFrameStateException() {
+        // given
+        frame.bowl(KnockdownPins.valueOf(1));
+        frame.bowl(KnockdownPins.valueOf(1));
 
-        assertThat(finalFrame.visualize()).isEqualTo(" -|/|X |");
+        // when / then
+        assertThatExceptionOfType(FinishedFrameStateException.class)
+                .isThrownBy(() -> frame.bowl(KnockdownPins.MIN));
     }
 
-    @DisplayName("거터 스페어 거터 시 시각화한다.")
+    @DisplayName("스페어와 거터를 점수 계산한다.")
     @Test
-    void gutterSpareGutterVisualize() {
-        finalFrame.bowl(GUTTER).bowl(MAX).bowl(GUTTER);
+    void spareGutterCalculate() {
+        // given
+        frame.bowl(KnockdownPins.MIN);
+        frame.bowl(KnockdownPins.MIN);
 
-        assertThat(finalFrame.visualize()).isEqualTo(" -|/|- |");
+        // when
+        final FrameScore frameScore = frame.calculateScore(FrameScore.SPARE);
+
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.of(10));
+    }
+
+    @DisplayName("스페어와 미스를 점수 계산한다.")
+    @Test
+    void spareMissCalculate() {
+        // given
+        frame.bowl(KnockdownPins.valueOf(5));
+        frame.bowl(KnockdownPins.MIN);
+
+        // when
+        final FrameScore frameScore = frame.calculateScore(FrameScore.SPARE);
+
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.of(15));
+    }
+
+    @DisplayName("스페어와 스트라이크를 점수 계산한다.")
+    @Test
+    void spareStrikeCalculate() {
+        // given
+        frame.bowl(KnockdownPins.MAX);
+
+        // when
+        final FrameScore frameScore = frame.calculateScore(FrameScore.SPARE);
+
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.of(20));
+    }
+
+    @DisplayName("스트라이크와 거터와 거터를 점수 계산한다.")
+    @Test
+    void strikeGutterGutterCalculate() {
+        // given
+        frame.bowl(KnockdownPins.MIN);
+        frame.bowl(KnockdownPins.MIN);
+
+        // when
+        final FrameScore frameScore = frame.calculateScore(FrameScore.STRIKE);
+
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.of(10));
+    }
+
+    @DisplayName("스트라이크와 거터와 미스를 점수 계산한다.")
+    @Test
+    void strikeGutterMissCalculate() {
+        // given
+        frame.bowl(KnockdownPins.MIN);
+        frame.bowl(KnockdownPins.valueOf(5));
+
+        // when
+        final FrameScore frameScore = frame.calculateScore(FrameScore.STRIKE);
+
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.of(15));
+    }
+
+    @DisplayName("스트라이크와 거터와 미스를 점수 계산한다.")
+    @Test
+    void strikeMissMissCalculate() {
+        // given
+        frame.bowl(KnockdownPins.valueOf(5));
+        frame.bowl(KnockdownPins.valueOf(4));
+
+        // when
+        final FrameScore frameScore = frame.calculateScore(FrameScore.STRIKE);
+
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.of(19));
+    }
+
+    @DisplayName("스트라이크와 스페어를 점수 계산한다.")
+    @Test
+    void strikeSpareCalculate() {
+        // given
+        frame.bowl(KnockdownPins.valueOf(5));
+        frame.bowl(KnockdownPins.valueOf(5));
+
+        // when
+        final FrameScore frameScore = frame.calculateScore(FrameScore.STRIKE);
+
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.of(20));
+    }
+
+    @DisplayName("스트라이크와 스트라이크와 스트라이크를 점수 계산한다.")
+    @Test
+    void strikeStrikeStrikeCalculate() {
+        // given
+        frame.bowl(KnockdownPins.MAX);
+
+        // when
+        FrameScore frameScore = frame.calculateScore(FrameScore.STRIKE);
+        frameScore = frame.calculateScore(frameScore);
+
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.of(30));
+    }
+
+    @DisplayName("계산할 수 없는 값을 점수 시 무시한다.")
+    @Test
+    void ignoreCalculate() {
+        // given
+        frame.bowl(KnockdownPins.MIN);
+
+        // when
+        final FrameScore frameScore = frame.calculateScore(FrameScore.GUTTER);
+
+        // then
+        assertThat(frameScore).isEqualTo(FrameScore.GUTTER);
     }
 }

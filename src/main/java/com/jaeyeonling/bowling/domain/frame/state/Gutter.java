@@ -1,40 +1,30 @@
 package com.jaeyeonling.bowling.domain.frame.state;
 
-import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
+import com.jaeyeonling.bowling.domain.BowlingSymbol;
+import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
+import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 
-public class Gutter extends ValidFrameState {
+class Gutter extends Finished {
 
-    private static final KnockdownPins GUTTER_PINS = KnockdownPins.GUTTER;
+    Gutter() { }
 
-    private final boolean isFinished;
-
-    private Gutter(final boolean isFinished) {
-        this.isFinished = isFinished;
-    }
-
-    Gutter() {
-        this(false);
+    @Override
+    public String toSymbol() {
+        return BowlingSymbol.toSymbolFrom(KnockdownPins.MIN, KnockdownPins.MIN);
     }
 
     @Override
-    public boolean isFinished() {
-        return isFinished;
-    }
-
-    @Override
-    FrameState validBowl(final KnockdownPins knockdownPins) {
-        if (knockdownPins.isMax()) {
-            return new Spare(KnockdownPins.GUTTER);
-        }
-        if (knockdownPins.isGutter()) {
-            return new Gutter(true);
+    public FrameScore calculateScore(FrameScore base) {
+        base = base.calculate(getFrameScore());
+        if (base.isComplete()) {
+            return base;
         }
 
-        return new Miss(KnockdownPins.GUTTER, knockdownPins);
+        return base.calculate(getFrameScore());
     }
 
     @Override
-    public String visualize() {
-        return isFinished ? GUTTER_PINS.toSymbol(GUTTER_PINS) : GUTTER_PINS.toSymbol();
+    public FrameScore getFrameScore() {
+        return FrameScore.GUTTER;
     }
 }

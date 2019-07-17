@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.jaeyeonling.bowling.domain.frame.KnockdownPins.MAX;
-import static com.jaeyeonling.bowling.domain.frame.KnockdownPins.valueOf;
+import static com.jaeyeonling.bowling.domain.pins.KnockdownPins.MAX;
+import static com.jaeyeonling.bowling.domain.pins.KnockdownPins.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -39,13 +39,13 @@ class StrikeTest {
     @DisplayName("시각화를 한다.")
     @Test
     void readyVisualize() {
-        assertThat(state.visualize()).isEqualTo("X");
+        assertThat(state.toSymbol()).isEqualTo("X");
     }
 
     @DisplayName("게임이 끝난 후 게임 시 예외처리 한다.")
     @Test
     void throwAlreadyFinishedFrameStateException() {
-        assertThatExceptionOfType(AlreadyFinishedFrameStateException.class)
+        assertThatExceptionOfType(FinishedFrameStateException.class)
                 .isThrownBy(() -> state.bowl(valueOf(1)));
     }
 }

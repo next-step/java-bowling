@@ -1,23 +1,23 @@
 package com.jaeyeonling.bowling.domain.frame.state;
 
-import com.jaeyeonling.bowling.domain.Counter;
-import com.jaeyeonling.bowling.domain.frame.BowlingSymbol;
-import com.jaeyeonling.bowling.domain.frame.KnockdownPins;
+import com.jaeyeonling.bowling.domain.BowlingSymbol;
+import com.jaeyeonling.bowling.domain.count.Count;
+import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
+import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.joining;
 
-public class FinalState extends ValidFrameState {
+public class FinalState implements FrameState {
 
-    private static final String DELIMITER = BowlingSymbol.DELIMITER.toString();
     private static final int START_INDEX = 0;
     private static final int DEFAULT_SIZE = 1;
     private static final int BONUS_ROUND = 3;
 
-    private Counter roundCounter = new Counter();
-    private List<FrameState> frameStates = new ArrayList<>();
+    private final List<FrameState> frameStates = new ArrayList<>();
+    private Count count = Count.of();
 
     public FinalState() {
         ready();
@@ -25,31 +25,35 @@ public class FinalState extends ValidFrameState {
 
     @Override
     public boolean isFinished() {
-        if (roundCounter.isLowerAndEquals(DEFAULT_SIZE)) {
+        if (count.isLowerAndEquals(DEFAULT_SIZE)) {
             return false;
         }
-        if (roundCounter.isHigherAndEquals(BONUS_ROUND)) {
+        if (count.isHigherAndEquals(BONUS_ROUND)) {
             return true;
         }
         if (isFirstStrike()) {
             return false;
         }
 
-        return isNotBonus();
+        return doNotHaveBonusOfCurrentFrameState();
     }
 
     @Override
-    public String visualize() {
+    public String toSymbol() {
         return frameStates.stream()
-                .map(FrameState::visualize)
-                .collect(joining(DELIMITER));
+                .map(FrameState::toSymbol)
+                .collect(joining(BowlingSymbol.DELIMITER));
     }
 
     @Override
-    FrameState validBowl(final KnockdownPins knockdownPins) {
-        roundCounter.count();
+    public FrameState bowl(final KnockdownPins knockdownPins) {
+        if (isFinished()) {
+            throw new FinishedFrameStateException();
+        }
 
-        if (getCurrentFrameState().isFinished()) {
+        count = count.up();
+
+        if (isCurrentFrameStateFinished()) {
             ready();
         }
         bowlAndReplace(knockdownPins);
@@ -57,27 +61,57 @@ public class FinalState extends ValidFrameState {
         return this;
     }
 
-    private FrameState getCurrentFrameState() {
-        return frameStates.get(currentIndex());
+    @Override
+    public FrameScore calculateScore(FrameScore base) {
+        for (final FrameState frameState : frameStates) {
+            base = frameState.calculateScore(base);
+            if (base.isComplete()) {
+                return base;
+            }
+        }
+
+        return base;
     }
 
-    private int currentIndex() {
-        return frameStates.size() - DEFAULT_SIZE;
+    @Override
+    public FrameScore getFrameScore() {
+        if (isFinished()) {
+            final int totalScore = frameStates.stream()
+                    .map(FrameState::getFrameScore)
+                    .mapToInt(FrameScore::getScore)
+                    .sum();
+
+            return FrameScore.of(totalScore);
+        }
+
+        return FrameScore.UN_SCORE;
     }
 
     private void ready() {
         frameStates.add(new Ready());
     }
 
-    private void bowlAndReplace(final KnockdownPins knockdownPins) {
-        frameStates.set(currentIndex(), getCurrentFrameState().bowl(knockdownPins));
+    private FrameState getCurrentFrameState() {
+        return frameStates.get(currentIndex());
+    }
+
+    private boolean isCurrentFrameStateFinished() {
+        return getCurrentFrameState().isFinished();
+    }
+
+    private int currentIndex() {
+        return frameStates.size() - DEFAULT_SIZE;
     }
 
     private boolean isFirstStrike() {
         return frameStates.get(START_INDEX) instanceof Strike;
     }
 
-    private boolean isNotBonus() {
-        return !(getCurrentFrameState() instanceof Finished);
+    private boolean doNotHaveBonusOfCurrentFrameState() {
+        return !getCurrentFrameState().getClass().isAnnotationPresent(HaveBonus.class);
+    }
+
+    private void bowlAndReplace(final KnockdownPins knockdownPins) {
+        frameStates.set(currentIndex(), getCurrentFrameState().bowl(knockdownPins));
     }
 }
