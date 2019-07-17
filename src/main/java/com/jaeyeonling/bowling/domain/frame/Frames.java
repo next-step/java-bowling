@@ -1,5 +1,6 @@
 package com.jaeyeonling.bowling.domain.frame;
 
+import com.jaeyeonling.bowling.domain.count.Count;
 import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 
 import java.util.Collections;
@@ -7,15 +8,14 @@ import java.util.List;
 
 public class Frames {
 
-    private static final int DEFAULT_INDEX = 1;
-
     static final int NORMAL_FRAME_COUNT = 9;
 
     private final List<Frame> frames;
-    private int currentIndex;
+    private Count indexCount;
 
     Frames(final List<Frame> frames) {
         this.frames = frames;
+        indexCount = Count.of();
     }
 
     public void bowl(final KnockdownPins knockdownPins) {
@@ -24,16 +24,16 @@ public class Frames {
         currentFrame.bowl(knockdownPins);
 
         if (currentFrame.isFinished()) {
-            incrementCurrentIndex();
+            incrementIndex();
         }
     }
 
     public boolean isFinished() {
-        return currentIndex >= NORMAL_FRAME_COUNT && getCurrentFrame().isFinished();
+        return indexCount.isHigherAndEquals(NORMAL_FRAME_COUNT) && getCurrentFrame().isFinished();
     }
 
     public int getCurrentFrameIndex() {
-        return currentIndex + DEFAULT_INDEX;
+        return indexCount.up().getCount();
     }
 
     public List<Frame> getFrames() {
@@ -41,10 +41,14 @@ public class Frames {
     }
 
     private Frame getCurrentFrame() {
-        return frames.get(Math.min(currentIndex, NORMAL_FRAME_COUNT));
+        return frames.get(getCurrentIndex());
     }
 
-    private void incrementCurrentIndex() {
-        currentIndex++;
+    private int getCurrentIndex() {
+        return Math.min(indexCount.getCount(), NORMAL_FRAME_COUNT);
+    }
+
+    private void incrementIndex() {
+        indexCount = indexCount.up();
     }
 }

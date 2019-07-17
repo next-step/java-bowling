@@ -34,12 +34,10 @@ public class FramesFactory {
                                                final List<Frame> frames) {
         Frame prevFrame = finalFrame;
         for (int i = START_INDEX; i < Frames.NORMAL_FRAME_COUNT; i++) {
-            prevFrame = initializeNormalFrame(prevFrame);
-            frames.add(prevFrame);
-        }
-    }
+            final Frame normalFrame = new NormalFrame(prevFrame);
+            frames.add(normalFrame);
 
-    private static Frame initializeNormalFrame(final Frame prevFrame) {
-        return new NormalFrame(prevFrame);
+            prevFrame = normalFrame;
+        }
     }
 }
