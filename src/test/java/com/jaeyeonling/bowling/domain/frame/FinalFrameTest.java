@@ -2,6 +2,9 @@ package com.jaeyeonling.bowling.domain.frame;
 
 import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 import com.jaeyeonling.bowling.domain.frame.state.FinishedFrameStateException;
+import com.jaeyeonling.bowling.domain.frame.state.Gutter;
+import com.jaeyeonling.bowling.domain.frame.state.Spare;
+import com.jaeyeonling.bowling.domain.frame.state.Strike;
 import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +36,7 @@ class FinalFrameTest {
         final FrameScore frameScore = frame.getFrameScore();
 
         // then
-        assertThat(frameScore).isEqualTo(FrameScore.GUTTER);
+        assertThat(frameScore).isEqualTo(Gutter.SCORE);
     }
 
     @DisplayName("스페어 후 점수를 확인한다.")
@@ -193,7 +196,7 @@ class FinalFrameTest {
         frame.bowl(KnockdownPins.MIN);
 
         // when
-        final FrameScore frameScore = frame.calculateScore(FrameScore.SPARE);
+        final FrameScore frameScore = frame.calculateScore(Spare.SCORE);
 
         // then
         assertThat(frameScore).isEqualTo(FrameScore.of(10));
@@ -207,7 +210,7 @@ class FinalFrameTest {
         frame.bowl(KnockdownPins.MIN);
 
         // when
-        final FrameScore frameScore = frame.calculateScore(FrameScore.SPARE);
+        final FrameScore frameScore = frame.calculateScore(Spare.SCORE);
 
         // then
         assertThat(frameScore).isEqualTo(FrameScore.of(15));
@@ -220,7 +223,7 @@ class FinalFrameTest {
         frame.bowl(KnockdownPins.MAX);
 
         // when
-        final FrameScore frameScore = frame.calculateScore(FrameScore.SPARE);
+        final FrameScore frameScore = frame.calculateScore(Spare.SCORE);
 
         // then
         assertThat(frameScore).isEqualTo(FrameScore.of(20));
@@ -234,7 +237,7 @@ class FinalFrameTest {
         frame.bowl(KnockdownPins.MIN);
 
         // when
-        final FrameScore frameScore = frame.calculateScore(FrameScore.STRIKE);
+        final FrameScore frameScore = frame.calculateScore(Strike.SCORE);
 
         // then
         assertThat(frameScore).isEqualTo(FrameScore.of(10));
@@ -248,7 +251,7 @@ class FinalFrameTest {
         frame.bowl(KnockdownPins.valueOf(5));
 
         // when
-        final FrameScore frameScore = frame.calculateScore(FrameScore.STRIKE);
+        final FrameScore frameScore = frame.calculateScore(Strike.SCORE);
 
         // then
         assertThat(frameScore).isEqualTo(FrameScore.of(15));
@@ -262,7 +265,7 @@ class FinalFrameTest {
         frame.bowl(KnockdownPins.valueOf(4));
 
         // when
-        final FrameScore frameScore = frame.calculateScore(FrameScore.STRIKE);
+        final FrameScore frameScore = frame.calculateScore(Strike.SCORE);
 
         // then
         assertThat(frameScore).isEqualTo(FrameScore.of(19));
@@ -276,7 +279,7 @@ class FinalFrameTest {
         frame.bowl(KnockdownPins.valueOf(5));
 
         // when
-        final FrameScore frameScore = frame.calculateScore(FrameScore.STRIKE);
+        final FrameScore frameScore = frame.calculateScore(Strike.SCORE);
 
         // then
         assertThat(frameScore).isEqualTo(FrameScore.of(20));
@@ -289,7 +292,7 @@ class FinalFrameTest {
         frame.bowl(KnockdownPins.MAX);
 
         // when
-        FrameScore frameScore = frame.calculateScore(FrameScore.STRIKE);
+        FrameScore frameScore = frame.calculateScore(Strike.SCORE);
         frameScore = frame.calculateScore(frameScore);
 
         // then
@@ -303,9 +306,9 @@ class FinalFrameTest {
         frame.bowl(KnockdownPins.MIN);
 
         // when
-        final FrameScore frameScore = frame.calculateScore(FrameScore.GUTTER);
+        final FrameScore frameScore = frame.calculateScore(Gutter.SCORE);
 
         // then
-        assertThat(frameScore).isEqualTo(FrameScore.GUTTER);
+        assertThat(frameScore).isEqualTo(Gutter.SCORE);
     }
 }

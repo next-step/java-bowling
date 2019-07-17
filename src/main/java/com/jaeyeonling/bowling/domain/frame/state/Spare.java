@@ -5,7 +5,9 @@ import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 
 @HaveBonus
-class Spare extends Finished {
+public class Spare extends Finished {
+
+    public static final FrameScore SCORE = FrameScore.of(KnockdownPins.MAX_VALUE, 1);
 
     private final KnockdownPins first;
 
@@ -30,7 +32,7 @@ class Spare extends Finished {
 
     @Override
     public FrameScore getFrameScore() {
-        return FrameScore.SPARE;
+        return SCORE;
     }
 
     private FrameScore getFirstScore() {

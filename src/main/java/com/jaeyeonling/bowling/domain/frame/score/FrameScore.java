@@ -8,9 +8,6 @@ import java.util.Objects;
 public class FrameScore {
 
     public static final FrameScore UN_SCORE = FrameScore.of(KnockdownPins.MIN_VALUE, 1);
-    public static final FrameScore STRIKE = FrameScore.of(KnockdownPins.MAX_VALUE, 2);
-    public static final FrameScore SPARE = FrameScore.of(KnockdownPins.MAX_VALUE, 1);
-    public static final FrameScore GUTTER = FrameScore.of(KnockdownPins.MIN_VALUE, 0);
 
     static final int MIN = 0;
 
