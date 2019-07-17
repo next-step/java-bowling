@@ -2,16 +2,16 @@ package domain;
 
 public class NormalFrame implements Frame{
 
-    private int index;
+    private FrameIndex index;
     private State state;
     private Frame nextFrame;
 
-    private NormalFrame(int index) {
+    private NormalFrame(FrameIndex index) {
         this.index = index;
         this.state = new StandBy();
     }
 
-    public static NormalFrame of(int index) {
+    public static NormalFrame of(FrameIndex index) {
         return new NormalFrame(index);
     }
 
@@ -26,13 +26,13 @@ public class NormalFrame implements Frame{
     }
 
     Frame generateNextFrame() {
-        if (this.index == 9) {
+        if (this.index.isSecondToLastIndex()) {
             return new FinalFrame();
         }
-        return new NormalFrame(index + 1);
+        return new NormalFrame(index.increment());
     }
 
-    public int getIndex() {
+    FrameIndex getIndex() {
         return index;
     }
 }

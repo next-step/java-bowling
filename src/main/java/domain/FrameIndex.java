@@ -6,6 +6,8 @@ public class FrameIndex {
     static final String ALERT_INVALID_FRAME_NUMBER = "프레임 번호는 1부터 10까지만 허용됩니다.";
     static final int MINIMUM_FRAME_INDEX = 1;
     static final int MAXIMUM_FRAME_INDEX = 10;
+    static final int SECOND_TO_LAST_INDEX = 9;
+    static final int INCREMENT_AMOUNT = 1;
 
     private int frameIndex;
 
@@ -16,6 +18,14 @@ public class FrameIndex {
 
     public static FrameIndex from(int frameNumber) {
         return new FrameIndex(frameNumber);
+    }
+
+    boolean isSecondToLastIndex() {
+        return frameIndex == SECOND_TO_LAST_INDEX;
+    }
+
+    FrameIndex increment() {
+        return from(frameIndex + INCREMENT_AMOUNT);
     }
 
     private void validationFrameNumber(int frameNumber) {
