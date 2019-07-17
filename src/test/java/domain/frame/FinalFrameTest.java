@@ -70,15 +70,13 @@ public class FinalFrameTest {
 
         //when
         //then
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatExceptionOfType(GameOverException.class)
                 .isThrownBy(() -> {
                     finalFrame
                             .fillFrame(first)
                             .fillFrame(second)
                             .fillFrame(third)
                             .fillFrame(fourth);
-                }).withMessage("게임이 끝났습니다.");
+                });
     }
-
-
 }

@@ -11,12 +11,13 @@ import java.util.List;
 public class FinalFrame implements Frame {
     private static final int INDEX_OF_FINAL_FRAME = 10;
     private static final int MAXIMUM_BOWL_ORDER = 3;
+    private static final int INITIAL_BOWL_ORDER = 0;
 
     private int bowlOrder;
     private List<State> states = new ArrayList<>();
 
     private FinalFrame() {
-        this.bowlOrder = 0;
+        this.bowlOrder = INITIAL_BOWL_ORDER;
         this.states.add(new StandBy());
     }
 
@@ -27,7 +28,7 @@ public class FinalFrame implements Frame {
     @Override
     public Frame fillFrame(Pins fallenPins) {
         if (isGameOver()) {
-            throw new RuntimeException("게임이 끝났습니다."); //TODO: 예외 만들기
+            throw new GameOverException();
         }
         bowlOrder++;
 
