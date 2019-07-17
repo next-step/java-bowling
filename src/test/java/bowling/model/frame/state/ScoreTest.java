@@ -3,7 +3,6 @@ package bowling.model.frame.state;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.model.Pin.DOWN_ALL;
 import static bowling.model.frame.state.Score.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,9 +36,9 @@ class ScoreTest {
     @Test
     void getScore_strike_thanTwoBonus() {
         // given && when
-        Score result = ofStrike()
-                .calculate(DOWN_ALL)
-                .calculate(DOWN_ALL);
+        Score result = STRIKE
+                .calculate(STRIKE)
+                .calculate(STRIKE);
 
         // then
         assertThat(result.isCompleted()).isTrue();
@@ -50,19 +49,11 @@ class ScoreTest {
     @Test
     void getScore_spare_thanOneBonus() {
         // given && when
-        Score result = ofSpare()
-                .calculate(DOWN_ALL);
+        Score result = SPARE
+                .calculate(SPARE);
 
         // then
         assertThat(result.isCompleted()).isTrue();
         assertThat(result.getScore()).isEqualTo(20);
-    }
-
-    private static Score ofStrike() {
-        return Score.of(2, DOWN_ALL.count());
-    }
-
-    private static Score ofSpare() {
-        return Score.of(1, DOWN_ALL.count());
     }
 }

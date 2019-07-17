@@ -1,6 +1,6 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pin;
+import bowling.model.DownPin;
 import bowling.model.frame.State;
 
 import java.util.ArrayList;
@@ -28,17 +28,17 @@ public class FinalState implements State {
     }
 
     private void ready() {
-        states.add(None.getInstance());
+        states.add(Ready.getInstance());
     }
 
     @Override
-    public State bowl(Pin pin) {
+    public State bowl(DownPin downPin) {
         round++;
         if (getCurrentState().isFinished()) {
             ready();
         }
 
-        State state = getCurrentState().bowl(pin);
+        State state = getCurrentState().bowl(downPin);
 
         states.set(getLastStateIndex(), state);
         return state;
@@ -67,14 +67,15 @@ public class FinalState implements State {
 
     @Override
     public Score calculate(Score prevScore) {
-        Score calculatedScore = prevScore.calculate(states.get(0).getScore());
-        if (calculatedScore.isCompleted()) {
-            return calculatedScore;
-        }
+        int indexOfState = 0;
         if (states.size() == 1) {
             return DEFAULT;
         }
-        return calculatedScore.calculate(states.get(1).getScore());
+        while (prevScore.hasCountLeft()) {
+            Score score = states.get(indexOfState).getScore();
+            prevScore= prevScore.calculate(score);
+        }
+        return prevScore;
     }
 
     @Override

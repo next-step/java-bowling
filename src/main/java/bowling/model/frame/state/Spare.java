@@ -1,34 +1,34 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pin;
+import bowling.model.DoublePins;
+import bowling.model.DownPin;
 import bowling.model.frame.State;
 import bowling.utils.Pretty;
 
-import static bowling.model.frame.state.Gutter.PRINT_SYMBOL_OF_GUTTER;
-import static bowling.model.frame.state.Score.SPARE;
+import static bowling.model.DoublePins.FIRST;
 
 public class Spare extends SecondState {
 
-    private static final String SYMBOL_OF_SPARE = "/";
+    private static final String SYMBOL = "/";
 
-    private Spare(Pin firstBowl, Pin secondBowl) {
-        super(firstBowl, secondBowl);
+    Spare(DoublePins downDoublePins) {
+        super(downDoublePins);
     }
 
-    public static State valueOf(Pin firstBowl) {
-        return new Spare(firstBowl, firstBowl.saveRemaining());
+    public static State valueOf(DownPin first) {
+        return new Spare(DoublePins.valueOf(first));
     }
 
     @Override
     public Score getScore() {
-        return SPARE;
+        return Score.SPARE;
     }
 
     @Override
     public String printResult() {
-        if (Gutter.isMatch(getFirstBowl())) {
-            return Pretty.putPartitionOfState(PRINT_SYMBOL_OF_GUTTER, SYMBOL_OF_SPARE);
+        if (Gutter.isMatch(getDoublePins().get(FIRST))) {
+            return Pretty.putPartitionOfState(Gutter.SYMBOL, SYMBOL);
         }
-        return Pretty.putPartitionOfState(getFirstBowl().toString(), SYMBOL_OF_SPARE);
+        return Pretty.putPartitionOfState(getDoublePins().get(FIRST).toString(), SYMBOL);
     }
 }

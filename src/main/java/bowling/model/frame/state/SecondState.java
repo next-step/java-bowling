@@ -1,45 +1,37 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pin;
+import bowling.model.DoublePins;
+import bowling.model.DownPin;
 import bowling.model.frame.State;
 
-import static bowling.model.Pin.DOWN_ALL;
+import static bowling.model.frame.state.Score.ZERO_OF_COUNT;
 import static java.lang.Boolean.TRUE;
 
-public abstract class SecondState extends FirstState {
+public abstract class SecondState implements State {
 
-    private final Pin secondBowl;
+    private final DoublePins doublePins;
 
-    SecondState(Pin firstBowl, Pin secondBowl) {
-        super(firstBowl);
-        this.secondBowl = secondBowl;
+    SecondState(DoublePins doublePins) {
+        this.doublePins = doublePins;
     }
 
-    static State of(Pin firstBowl, Pin secondBowl) {
-        Pin totalPin = firstBowl.sum(secondBowl);
-
-        if (DOWN_ALL.equals(totalPin)) {
-            return Spare.valueOf(firstBowl);
-        }
-        return Miss.valueOf(firstBowl, secondBowl);
-    }
-
-    Pin getSecondBowl() {
-        return secondBowl;
+    DoublePins getDoublePins() {
+        return doublePins;
     }
 
     @Override
-    public State bowl(Pin secondBowl) {
+    public State bowl(DownPin secondBowl) {
         throw new CanNotBowlException();
     }
 
     @Override
     public Score calculate(Score prevScore) {
-        Score calculatedScore = prevScore.calculate(getFirstBowl());
-        if (!calculatedScore.isCompleted()) {
-            calculatedScore = calculatedScore.calculate(getSecondBowl());
+        int indexOfDownpin = DoublePins.FIRST;
+        while (prevScore.hasCountLeft()) {
+            Score score = Score.of(ZERO_OF_COUNT, doublePins.get(indexOfDownpin++));
+            prevScore = prevScore.calculate(score);
         }
-        return calculatedScore;
+        return prevScore;
     }
 
     @Override

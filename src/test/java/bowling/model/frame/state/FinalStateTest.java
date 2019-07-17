@@ -1,13 +1,13 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pin;
+import bowling.model.DownPin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static bowling.model.Pin.*;
+import static bowling.model.DownPin.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FinalStateTest {
@@ -23,7 +23,7 @@ class FinalStateTest {
     @Test
     void bowl_pinsFirstTen_strike() {
         // given
-        Pin first = DOWN_ALL;
+        DownPin first = DOWN_ALL;
 
         // when
         finalState.bowl(first);
@@ -37,7 +37,7 @@ class FinalStateTest {
     @Test
     void bowl_pinsFirstTenSecondTen_twoStrike() {
         // given
-        Pin strike = DOWN_ALL;
+        DownPin strike = DOWN_ALL;
 
         // when
         finalState.bowl(strike);
@@ -53,7 +53,7 @@ class FinalStateTest {
     @Test
     void bowl_pinsTenAndTenAndTen_thanGameOver() {
         // given
-        Pin strike = DOWN_ALL;
+        DownPin strike = DOWN_ALL;
 
         // when
         finalState.bowl(strike);
@@ -74,8 +74,8 @@ class FinalStateTest {
     })
     void bowl_pinsZeroAndTenAndTen_thanGameOver(int first, int second) {
         // when
-        finalState.bowl(Pin.valueOf(first));
-        finalState.bowl(Pin.valueOf(second));
+        finalState.bowl(DownPin.valueOf(first));
+        finalState.bowl(DownPin.valueOf(second));
         finalState.bowl(DOWN_ALL);
 
         // then

@@ -4,8 +4,8 @@ import bowling.model.frame.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.model.Pin.DOWN_ALL;
-import static bowling.model.Pin.MAX;
+import static bowling.model.DownPin.DOWN_ALL;
+import static bowling.model.DownPin.MAX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 

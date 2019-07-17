@@ -1,8 +1,8 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pin;
+import bowling.model.DownPin;
 
-import static bowling.model.Pin.MAX;
+import static bowling.model.DownPin.MAX;
 
 // todo : count 추출
 public class Score {
@@ -23,20 +23,20 @@ public class Score {
         this.score = score;
     }
 
-    public static Score parse(Pin pin) {
-        return of(ZERO_OF_COUNT, pin.count());
+    public static Score ofDefault(DownPin downPin) {
+        return of(ZERO_OF_COUNT, downPin.count());
     }
 
-    static Score of(int score) {
+    public static Score of(int count, DownPin downPin) {
+        return of(ZERO_OF_COUNT, downPin.count());
+    }
+
+    public static Score of(int score) {
         return of(ZERO_OF_COUNT, score);
     }
 
     static Score of(int count, int score) {
         return new Score(count, score);
-    }
-
-    Score calculate(Pin pin) {
-        return calculate(parse(pin));
     }
 
     Score calculate(Score score) {
@@ -45,6 +45,10 @@ public class Score {
 
     public boolean isCompleted() {
         return ZERO_OF_COUNT == count;
+    }
+
+    boolean hasCountLeft() {
+        return !isCompleted();
     }
 
     public int getScore() {
