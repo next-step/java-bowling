@@ -36,11 +36,11 @@ public class BowlingGame {
         }
     }
 
-    private Frame currentFrame() {
+    public Frame currentFrame() {
         return frames.get(lastFrameIndex());
     }
 
-    private boolean isGameOver() {
+    public boolean isGameOver() {
         return frames.get(lastFrameIndex()).isGameOver();
     }
 

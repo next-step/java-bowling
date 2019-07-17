@@ -1,5 +1,8 @@
 package view;
 
+import domain.Pins;
+import domain.frame.FrameIndex;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -12,10 +15,10 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static int askFallenPins(int frameNumber) {
-        System.out.print(frameNumber + "프레임 투구 : ");
+    public static Pins askFallenPins(FrameIndex index) {
+        System.out.print(String.format("%s프레임 투구 : ", String.valueOf(index)));
         int fallenPins = scanner.nextInt();
         scanner.nextLine();
-        return fallenPins;
+        return Pins.from(fallenPins);
     }
 }
