@@ -24,27 +24,28 @@ public class Pins {
         return new Pins(fallenPins);
     }
 
+    public static Pins from(Pins fallenPins) {
+        return new Pins(fallenPins.fallenPins);
+    }
+
     public boolean isStrike() {
         return this.fallenPins == STRIKE_PINS;
     }
 
     public boolean isSpare(Pins secondFallenPins) {
-        int sumOfPins = this.fallenPins + secondFallenPins.getNumber();
+        int sumOfPins = this.fallenPins + secondFallenPins.fallenPins;
         validationPins(sumOfPins);
         return sumOfPins == STRIKE_PINS;
     }
 
     public boolean exceedMiss(Pins secondFallenPins) {
-        return fallenPins + secondFallenPins.getNumber() >= STRIKE_PINS;
+        return fallenPins + secondFallenPins.fallenPins >= STRIKE_PINS;
     }
 
     public boolean isMatch(Pins pins) {
         return this.equals(pins);
     }
 
-    public int getNumber() {
-        return fallenPins;
-    }
 
     @Override
     public boolean equals(Object o) {
