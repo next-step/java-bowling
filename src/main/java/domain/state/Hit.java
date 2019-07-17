@@ -2,6 +2,8 @@ package domain.state;
 
 import domain.Pins;
 
+import static domain.state.Miss.GUTTER_SYMBOL;
+
 public class Hit implements State {
 
     private Pins firstFallenPins;
@@ -21,5 +23,13 @@ public class Hit implements State {
     @Override
     public boolean isClosed() {
         return Boolean.FALSE;
+    }
+
+    @Override
+    public String printState() {
+        if (firstFallenPins.isMatch(Pins.from(0))) {
+            return GUTTER_SYMBOL;
+        }
+        return firstFallenPins.toString();
     }
 }

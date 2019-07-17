@@ -59,4 +59,9 @@ public class Pins {
     public int hashCode() {
         return Objects.hash(fallenPins);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(fallenPins);
+    }
 }

@@ -3,13 +3,7 @@ package domain.state;
 import domain.Pins;
 
 public class Strike implements State {
-
-    public State updateOnFinalFrame(Pins fallenPins) {
-        if (fallenPins.isStrike()) {
-            return new Strike();
-        }
-        return new Hit(fallenPins);
-    }
+    private static final String STRIKE_SYMBOL = "X";
 
     @Override
     public State update(Pins fallenPins) {
@@ -19,5 +13,10 @@ public class Strike implements State {
     @Override
     public boolean isClosed() {
         return Boolean.TRUE;
+    }
+
+    @Override
+    public String printState() {
+        return STRIKE_SYMBOL;
     }
 }

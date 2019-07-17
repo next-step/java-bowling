@@ -7,4 +7,6 @@ public interface State {
     State update(Pins fallenPins);
 
     boolean isClosed();
+
+    String printState();
 }
