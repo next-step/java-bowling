@@ -7,3 +7,20 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## 구현 목록
+
+### 점수 입력
+* 첫번째 점수 입력
+* 두번째 점수 입력
+* 첫번째가 10이면 두번째는 넘어간다. 
+* 두 수의 합은 10보가 클 수 없다. 
+* Frame은 총 10개 
+    * 일반 9개
+    * 보너스 1개
+* board형태로 보여진다.
+    * strike : X
+    * spares : /
+    * open : 7/1 
+
+
