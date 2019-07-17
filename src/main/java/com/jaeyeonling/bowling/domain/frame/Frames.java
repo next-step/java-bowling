@@ -16,7 +16,6 @@ public class Frames {
 
     Frames(final List<Frame> frames) {
         this.frames = frames;
-
     }
 
     public void bowl(final KnockdownPins knockdownPins) {
