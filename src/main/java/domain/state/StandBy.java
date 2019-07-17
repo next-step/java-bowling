@@ -14,6 +14,6 @@ public class StandBy implements State {
 
     @Override
     public boolean isClosed() {
-        return false;
+        return Boolean.FALSE;
     }
 }

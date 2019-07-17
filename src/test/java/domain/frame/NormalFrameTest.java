@@ -1,9 +1,5 @@
 package domain.frame;
 
-import domain.frame.FinalFrame;
-import domain.frame.Frame;
-import domain.frame.FrameIndex;
-import domain.frame.NormalFrame;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

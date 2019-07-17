@@ -1,16 +1,15 @@
 package domain.state;
 
 import domain.Pins;
-import domain.state.State;
 
 public class Strike implements State {
     @Override
     public State update(Pins fallenPins) {
-        return null;
+        throw new ClosedFrameException();
     }
 
     @Override
     public boolean isClosed() {
-        return false;
+        return Boolean.TRUE;
     }
 }
