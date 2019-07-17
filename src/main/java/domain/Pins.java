@@ -46,7 +46,6 @@ public class Pins {
         return this.equals(pins);
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
