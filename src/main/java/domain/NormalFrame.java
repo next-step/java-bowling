@@ -27,9 +27,9 @@ public class NormalFrame implements Frame{
 
     Frame generateNextFrame() {
         if (this.index.isSecondToLastIndex()) {
-            return new FinalFrame();
+            return FinalFrame.of();
         }
-        return new NormalFrame(index.increment());
+        return NormalFrame.of(index.increment());
     }
 
     FrameIndex getIndex() {
