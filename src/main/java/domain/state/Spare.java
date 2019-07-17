@@ -3,7 +3,7 @@ package domain.state;
 import domain.Pins;
 
 public class Spare implements State {
-    static final String ALERT_CANNOT_BE_SPARE = "스페어가 아닙니다.";
+    static final String ALERT_CANNOT_BE_SPARE = "SPARE가 아닙니다.";
 
     private Pins firstFallenPins;
     private Pins secondFallenPins;

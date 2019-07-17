@@ -34,6 +34,10 @@ public class Pins {
         return sumOfPins == STRIKE_PINS;
     }
 
+    public boolean exceedMiss(Pins secondFallenPins) {
+        return fallenPins + secondFallenPins.getNumber() >= STRIKE_PINS;
+    }
+
     public boolean isMatch(Pins pins) {
         return this.equals(pins);
     }
