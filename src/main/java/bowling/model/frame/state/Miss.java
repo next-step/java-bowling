@@ -7,7 +7,6 @@ import bowling.utils.Pretty;
 
 import static bowling.model.DoublePins.FIRST;
 import static bowling.model.DoublePins.SECOND;
-import static bowling.model.frame.state.Score.ZERO_OF_COUNT;
 
 public class Miss extends SecondState {
 
@@ -21,7 +20,7 @@ public class Miss extends SecondState {
 
     @Override
     public Score getScore() {
-        return Score.of(ZERO_OF_COUNT, getDoublePins().getTotalCount());
+        return Score.of(getDoublePins().getTotalCount());
     }
 
     @Override

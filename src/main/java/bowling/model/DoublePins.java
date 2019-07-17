@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static bowling.model.DownPin.DOWN_ZERO;
 import static java.util.stream.Collectors.toList;
 
 public class DoublePins {
@@ -32,9 +33,10 @@ public class DoublePins {
         downPins.stream().reduce(DownPin::sum);
     }
 
-    public DownPin getTotalCount() {
+    public int getTotalCount() {
         return downDownPins.stream()
-                .reduce(DownPin.DOWN_ZERO, DownPin::sum);
+                .reduce(DOWN_ZERO, DownPin::sum)
+                .count();
     }
 
     public DownPin get(int index) {

@@ -22,7 +22,7 @@ class FrameResultTest extends AbstractStateTest {
         State state = ofHit(downPin);
 
         // when
-        FrameResult frameResult = FrameResult.of(Score.ofDefault(downPin), state);
+        FrameResult frameResult = FrameResult.of(Score.of(downPin), state);
         String expectedState = String.valueOf(downPin.count());
 
         // then
@@ -38,7 +38,7 @@ class FrameResultTest extends AbstractStateTest {
         State state = ofGutter();
 
         // when
-        FrameResult frameResult = FrameResult.of(Score.ofDefault(downPin), state);
+        FrameResult frameResult = FrameResult.of(Score.of(downPin), state);
 
         // then
         assertThat(frameResult).extracting(FrameResult::getScore).isEqualTo(DEFAULT_SCORE);

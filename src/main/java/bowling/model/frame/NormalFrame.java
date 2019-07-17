@@ -36,6 +36,16 @@ public class NormalFrame extends Frame {
     }
 
     @Override
+    public Frame bowl(DownPin downPin) {
+        state = state.bowl(downPin);
+        if (state.isFinished()) {
+            this.next = nextFrame();
+            return next;
+        }
+        return this;
+    }
+
+    @Override
     Score getScore() {
         Score score = state.getScore();
         if (score.isCompleted()) {
@@ -55,16 +65,6 @@ public class NormalFrame extends Frame {
             return DEFAULT;
         }
         return next.calculate(calculatedScore);
-    }
-
-    @Override
-    public Frame bowl(DownPin downPin) {
-        state = state.bowl(downPin);
-        if (state.isFinished()) {
-            this.next = nextFrame();
-            return next;
-        }
-        return this;
     }
 
     @Override

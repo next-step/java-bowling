@@ -3,7 +3,7 @@ package bowling.model.frame.state;
 import bowling.model.DownPin;
 import bowling.model.frame.State;
 
-import static bowling.model.frame.state.Score.*;
+import static bowling.model.frame.state.Score.DEFAULT;
 import static java.lang.Boolean.FALSE;
 
 public class Ready implements State {
@@ -37,7 +37,7 @@ public class Ready implements State {
 
     @Override
     public Score calculate(Score score) {
-        return Score.of(ZERO_OF_COUNT, DEFAULT_SCORE);
+        return Score.DEFAULT;
     }
 
     @Override

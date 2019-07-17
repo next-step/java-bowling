@@ -4,7 +4,6 @@ import bowling.model.DownPin;
 import bowling.model.frame.State;
 
 import static bowling.model.DownPin.DOWN_ALL;
-import static bowling.model.frame.state.Score.ZERO_OF_COUNT;
 import static java.lang.Boolean.FALSE;
 
 public abstract class FirstState implements State {
@@ -30,7 +29,7 @@ public abstract class FirstState implements State {
 
     @Override
     public Score getScore() {
-        return Score.of(ZERO_OF_COUNT, first);
+        return Score.of(first.count());
     }
 
     @Override
