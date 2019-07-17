@@ -28,8 +28,18 @@ public class Pins {
         return this.fallenPins == STRIKE_PINS;
     }
 
+    public boolean isSpare(Pins secondFallenPins) {
+        int sumOfPins = this.fallenPins + secondFallenPins.getNumber();
+        validationPins(sumOfPins);
+        return sumOfPins == STRIKE_PINS;
+    }
+
     public boolean isMatch(Pins pins) {
         return this.equals(pins);
+    }
+
+    public int getNumber() {
+        return fallenPins;
     }
 
     @Override

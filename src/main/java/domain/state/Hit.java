@@ -11,12 +11,15 @@ public class Hit implements State {
     }
 
     @Override
-    public State update(Pins fallenPins) {
-        return null;
+    public State update(Pins secondFallenPins) {
+        if (firstFallenPins.isSpare(secondFallenPins)) {
+            return new Spare(firstFallenPins, secondFallenPins);
+        }
+        return new Miss(firstFallenPins, secondFallenPins);
     }
 
     @Override
     public boolean isClosed() {
-        return false;
+        return Boolean.FALSE;
     }
 }
