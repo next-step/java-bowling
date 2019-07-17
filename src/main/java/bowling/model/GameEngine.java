@@ -12,7 +12,7 @@ class GameEngine {
         this.gameEngine = Frames.initialize();
     }
 
-    GameEngine play(Pin downPin) {
+    GameEngine play(DownPin downPin) {
         gameEngine.saveBowling(downPin);
         return this;
     }

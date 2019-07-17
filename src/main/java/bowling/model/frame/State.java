@@ -1,11 +1,11 @@
 package bowling.model.frame;
 
-import bowling.model.Pin;
+import bowling.model.DownPin;
 import bowling.model.frame.state.Score;
 
 public interface State {
 
-    State bowl(Pin pin);
+    State bowl(DownPin downPin);
 
     Score getScore();
 

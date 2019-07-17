@@ -1,6 +1,6 @@
 package bowling.model.frame;
 
-import bowling.model.Pin;
+import bowling.model.DownPin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class FinalFrameTest {
     @Test
     void bowl_oneTime_thanContinueGame() {
         // given
-        Pin first = Pin.valueOf(5);
+        DownPin first = DownPin.valueOf(5);
 
         // when
         frame.bowl(first);
@@ -32,8 +32,8 @@ public class FinalFrameTest {
     @Test
     void downPinTenAndTen_nextBonusStage() {
         // given
-        Pin first = Pin.valueOf(5);
-        Pin second = Pin.valueOf(5);
+        DownPin first = DownPin.valueOf(5);
+        DownPin second = DownPin.valueOf(5);
 
         // when
         frame.bowl(first);
@@ -46,8 +46,8 @@ public class FinalFrameTest {
     @Test
     void downPinTenAndZero_nextBonusStage() {
         // given
-        Pin first = Pin.DOWN_ALL;
-        Pin second = Pin.DOWN_ZERO;
+        DownPin first = DownPin.DOWN_ALL;
+        DownPin second = DownPin.DOWN_ZERO;
 
         // when
         frame.bowl(first);
@@ -60,8 +60,8 @@ public class FinalFrameTest {
     @Test
     void downPin0And10_nextBonusStage() {
         // given
-        Pin first = Pin.DOWN_ZERO;
-        Pin second = Pin.DOWN_ALL;
+        DownPin first = DownPin.DOWN_ZERO;
+        DownPin second = DownPin.DOWN_ALL;
 
         // when
         frame.bowl(first);
@@ -74,7 +74,7 @@ public class FinalFrameTest {
     @Test
     void bowl_threeTime_thanGameOver() {
         // given
-        Pin downPin = Pin.DOWN_ALL;
+        DownPin downPin = DownPin.DOWN_ALL;
 
         // when
         frame.bowl(downPin);
@@ -88,8 +88,8 @@ public class FinalFrameTest {
     @Test
     void bowl_twoTime_thanContinueGame() {
         // given
-        Pin first = Pin.valueOf(5);
-        Pin second = Pin.DOWN_ZERO;
+        DownPin first = DownPin.valueOf(5);
+        DownPin second = DownPin.DOWN_ZERO;
 
         // when
         frame.bowl(first);

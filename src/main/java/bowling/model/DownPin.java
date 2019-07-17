@@ -4,36 +4,36 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Pin {
+public class DownPin {
 
-    private static final Map<Integer, Pin> CACHE = new HashMap<>();
+    private static final Map<Integer, DownPin> CACHE = new HashMap<>();
 
     public static final int MIN = 0;
     public static final int MAX = 10;
 
-    public static final Pin DOWN_ALL = Pin.valueOf(MAX);
-    public static final Pin DOWN_ZERO = Pin.valueOf(MIN);
+    public static final DownPin DOWN_ALL = DownPin.valueOf(MAX);
+    public static final DownPin DOWN_ZERO = DownPin.valueOf(MIN);
 
     private int countOfDownPins;
 
-    private Pin(int countOfDownPins) {
+    private DownPin(int countOfDownPins) {
         this.countOfDownPins = countOfDownPins;
     }
 
-    public static Pin valueOf(int countOfDownPins) {
+    public static DownPin valueOf(int countOfDownPins) {
         if (MIN > countOfDownPins || MAX < countOfDownPins) {
-            throw new InvalidPinsException(MIN, MAX, countOfDownPins);
+            throw new InvalidPinException(MIN, MAX, countOfDownPins);
         }
-        CACHE.computeIfAbsent(countOfDownPins, Pin::new);
+        CACHE.computeIfAbsent(countOfDownPins, DownPin::new);
         return CACHE.get(countOfDownPins);
     }
 
-    public Pin sum(Pin pin) {
-        return Pin.valueOf(this.countOfDownPins + pin.countOfDownPins);
+    public DownPin sum(DownPin downPin) {
+        return DownPin.valueOf(this.countOfDownPins + downPin.countOfDownPins);
     }
 
-    public Pin saveRemaining() {
-        return Pin.valueOf(MAX - this.countOfDownPins);
+    DownPin saveRemaining() {
+        return DownPin.valueOf(MAX - this.countOfDownPins);
     }
 
     public int count() {
@@ -44,8 +44,8 @@ public class Pin {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pin pin = (Pin) o;
-        return countOfDownPins == pin.countOfDownPins;
+        DownPin downPin = (DownPin) o;
+        return countOfDownPins == downPin.countOfDownPins;
     }
 
     @Override

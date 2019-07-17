@@ -1,13 +1,13 @@
 package bowling.model.frame;
 
-import bowling.model.Pin;
+import bowling.model.DownPin;
 import bowling.model.frame.state.AbstractStateTest;
 import bowling.model.frame.state.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.model.Pin.MAX;
-import static bowling.model.Pin.MIN;
+import static bowling.model.DownPin.MAX;
+import static bowling.model.DownPin.MIN;
 import static bowling.model.frame.state.Score.DEFAULT_SCORE;
 import static bowling.model.frame.state.Score.ZERO_OF_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,11 +18,11 @@ class FrameResultTest extends AbstractStateTest {
     @Test
     void getState_hit() {
         // given
-        Pin downPin = Pin.valueOf(MAX - 1);
+        DownPin downPin = DownPin.valueOf(MAX - 1);
         State state = ofHit(downPin);
 
         // when
-        FrameResult frameResult = FrameResult.of(Score.parse(downPin), state);
+        FrameResult frameResult = FrameResult.of(Score.ofDefault(downPin), state);
         String expectedState = String.valueOf(downPin.count());
 
         // then
@@ -34,11 +34,11 @@ class FrameResultTest extends AbstractStateTest {
     @Test
     void getState_gutter() {
         // given
-        Pin downPin = Pin.valueOf(MIN);
+        DownPin downPin = DownPin.valueOf(MIN);
         State state = ofGutter();
 
         // when
-        FrameResult frameResult = FrameResult.of(Score.parse(downPin), state);
+        FrameResult frameResult = FrameResult.of(Score.ofDefault(downPin), state);
 
         // then
         assertThat(frameResult).extracting(FrameResult::getScore).isEqualTo(DEFAULT_SCORE);

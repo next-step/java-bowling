@@ -1,7 +1,7 @@
 package bowling.model.frame;
 
-import bowling.model.Pin;
-import bowling.model.frame.state.None;
+import bowling.model.DownPin;
+import bowling.model.frame.state.Ready;
 import bowling.model.frame.state.Score;
 
 import static bowling.model.frame.FrameNumber.NUMBER_OF_START_FRAME;
@@ -16,7 +16,7 @@ public class NormalFrame extends Frame {
 
     private NormalFrame(FrameNumber frameNumber) {
         super(frameNumber);
-        this.state = None.getInstance();
+        this.state = Ready.getInstance();
     }
 
     private Frame nextFrame() {
@@ -58,7 +58,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame bowl(Pin downPin) {
+    public Frame bowl(DownPin downPin) {
         state = state.bowl(downPin);
         if (state.isFinished()) {
             this.next = nextFrame();

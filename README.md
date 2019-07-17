@@ -21,7 +21,7 @@ bowl(in: downPin, out: currentFrame)
         currentFrame.next(out: X)
          
 Frame 
- -> bowl(in: pin, out: currentFrame)
+ -> bowl(in: downPin, out: currentFrame)
  -> getState(out: frameState)
  -> isFinish(out: boolean)
  
