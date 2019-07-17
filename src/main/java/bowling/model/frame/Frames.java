@@ -23,17 +23,15 @@ public class Frames {
         return new Frames(Arrays.asList(Frame.initialize()));
     }
 
-    // todo: No chaining
-    public Frames saveBowling(DownPin downPin) {
+    public void saveBowling(DownPin downPin) {
         Frame frameAfterBowling = currentFrame().bowl(downPin);
 
         if (isEqualFrame(frameAfterBowling)) {
             frames.set(getLastIndex(), frameAfterBowling);
-            return this;
+            return;
         }
 
         frames.add(frameAfterBowling);
-        return this;
     }
 
     private Frame currentFrame() {

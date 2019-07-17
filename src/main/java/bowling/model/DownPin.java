@@ -24,15 +24,14 @@ public class DownPin {
         if (MIN > countOfDownPins || MAX < countOfDownPins) {
             throw new InvalidPinException(MIN, MAX, countOfDownPins);
         }
-        CACHE.computeIfAbsent(countOfDownPins, DownPin::new);
-        return CACHE.get(countOfDownPins);
+        return CACHE.computeIfAbsent(countOfDownPins, DownPin::new);
     }
 
     public DownPin sum(DownPin downPin) {
         return DownPin.valueOf(this.countOfDownPins + downPin.countOfDownPins);
     }
 
-    DownPin saveRemaining() {
+    public DownPin saveRemaining() {
         return DownPin.valueOf(MAX - this.countOfDownPins);
     }
 

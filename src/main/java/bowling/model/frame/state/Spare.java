@@ -1,22 +1,22 @@
 package bowling.model.frame.state;
 
-import bowling.model.DoublePins;
 import bowling.model.DownPin;
 import bowling.model.frame.State;
 import bowling.utils.Pretty;
 
-import static bowling.model.DoublePins.FIRST;
+import java.util.Arrays;
+import java.util.List;
 
 public class Spare extends SecondState {
 
     private static final String SYMBOL = "/";
 
-    Spare(DoublePins downDoublePins) {
+    private Spare(List<DownPin> downDoublePins) {
         super(downDoublePins);
     }
 
     public static State valueOf(DownPin first) {
-        return new Spare(DoublePins.valueOf(first));
+        return new Spare(Arrays.asList(first, first.saveRemaining()));
     }
 
     @Override
@@ -26,9 +26,6 @@ public class Spare extends SecondState {
 
     @Override
     public String printResult() {
-        if (Gutter.isMatch(getDoublePins().get(FIRST))) {
-            return Pretty.putPartitionOfState(Gutter.SYMBOL, SYMBOL);
-        }
-        return Pretty.putPartitionOfState(getDoublePins().get(FIRST).toString(), SYMBOL);
+        return Pretty.putPartitionOfState(getFirstSymbol(), SYMBOL);
     }
 }

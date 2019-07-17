@@ -27,8 +27,8 @@ class FramesTest {
     void saveBowlHistory_pinZeroAndZero_returnFramesTwo() {
         // given  && when
         Frames frames = Frames.initialize();
-        frames.saveBowling(DOWN_ZERO)
-                .saveBowling(DOWN_ZERO);
+        frames.saveBowling(DOWN_ZERO);
+        frames.saveBowling(DOWN_ZERO);
         List<Frame> result = frames.getFrames();
 
         // then
@@ -45,9 +45,9 @@ class FramesTest {
 
         // when
         Frames frames = Frames.initialize();
-        frames.saveBowling(firstBowl)
-                .saveBowling(secondBowl)
-                .saveBowling(thirdBowl);
+        frames.saveBowling(firstBowl);
+        frames.saveBowling(secondBowl);
+        frames.saveBowling(thirdBowl);
 
         // then
         assertThat(frames.getFrames()).hasSize(3);

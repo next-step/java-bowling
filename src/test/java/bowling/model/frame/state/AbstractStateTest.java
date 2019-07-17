@@ -1,11 +1,8 @@
 package bowling.model.frame.state;
 
-import bowling.model.DoublePins;
 import bowling.model.DownPin;
 import bowling.model.frame.State;
 import jdk.nashorn.internal.ir.annotations.Ignore;
-
-import java.util.Arrays;
 
 @Ignore
 public class AbstractStateTest {
@@ -26,10 +23,4 @@ public class AbstractStateTest {
         return Score.of(count, score);
     }
 
-    public static DoublePins pinsOf(int... pins) {
-        DownPin[] pinsArr = Arrays.stream(pins)
-                .mapToObj(DownPin::valueOf)
-                .toArray(DownPin[]::new);
-        return DoublePins.valueOf(pinsArr);
-    }
 }

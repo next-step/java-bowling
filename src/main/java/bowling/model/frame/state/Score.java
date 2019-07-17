@@ -34,6 +34,10 @@ public class Score {
     }
 
     Score calculate(Score score) {
+        if (isDefaultValue(score) || isCompleted()) {
+            return this;
+        }
+
         return new Score(count.decrease(), this.score + score.score);
     }
 
@@ -41,12 +45,12 @@ public class Score {
         return COUNT_ZERO.isMatch(count);
     }
 
-    boolean hasCountLeft() {
-        return !isCompleted();
-    }
-
     public int getScore() {
         return score;
+    }
+
+    private boolean isDefaultValue(Score score) {
+        return DEFAULT_SCORE == score.score;
     }
 
     @Override

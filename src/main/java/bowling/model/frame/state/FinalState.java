@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static bowling.model.Count.COUNT_THIRD;
-import static bowling.model.frame.state.Score.DEFAULT;
 import static bowling.utils.Pretty.PARTITION_OF_SYMBOL;
 import static java.util.stream.Collectors.joining;
 
@@ -65,14 +64,10 @@ public class FinalState implements State {
 
     @Override
     public Score calculate(Score prevScore) {
-        int indexOfState = 0;
-        if (states.size() == 1) {
-            return DEFAULT;
+        for (State state : states) {
+            prevScore = prevScore.calculate(state.getScore());
         }
-        while (prevScore.hasCountLeft()) {
-            Score score = states.get(indexOfState++).getScore();
-            prevScore= prevScore.calculate(score);
-        }
+
         return prevScore;
     }
 
@@ -83,14 +78,14 @@ public class FinalState implements State {
                 .collect(joining(PARTITION_OF_SYMBOL));
     }
 
-    private boolean hasNotBonusStage() {
-        return states.stream()
-                .anyMatch(Miss.class::isInstance);
-    }
-
     @Override
     public boolean isFinished() {
         return hasNotBonusStage() || MAX_OF_ROUND.isMatch(round);
+    }
+
+    private boolean hasNotBonusStage() {
+        return states.stream()
+                .anyMatch(Miss.class::isInstance);
     }
 
     List<State> getStates() {

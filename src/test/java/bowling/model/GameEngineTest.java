@@ -24,17 +24,16 @@ class GameEngineTest {
     @Test
     void bowl_success() {
         // when
-        gameEngine
-                .play(valueOf(1)).play(valueOf(1))
-                .play(valueOf(1)).play(valueOf(1))
-                .play(valueOf(10))
-                .play(valueOf(10))
-                .play(valueOf(5)).play(valueOf(5))
-                .play(valueOf(1)).play(valueOf(1))
-                .play(valueOf(1)).play(valueOf(1))
-                .play(valueOf(1)).play(valueOf(1))
-                .play(valueOf(1)).play(valueOf(1))
-                .play(valueOf(1)).play(valueOf(1));
+        gameEngine.play(valueOf(1)); gameEngine.play(valueOf(1));
+        gameEngine.play(valueOf(1)); gameEngine.play(valueOf(1));
+        gameEngine.play(valueOf(10));
+        gameEngine.play(valueOf(10));
+        gameEngine.play(valueOf(5)); gameEngine.play(valueOf(5));
+        gameEngine.play(valueOf(1)); gameEngine.play(valueOf(1));
+        gameEngine.play(valueOf(1)); gameEngine.play(valueOf(1));
+        gameEngine.play(valueOf(1)); gameEngine.play(valueOf(1));
+        gameEngine.play(valueOf(1)); gameEngine.play(valueOf(1));
+        gameEngine.play(valueOf(1)); gameEngine.play(valueOf(1));
 
         // then
         assertThat(gameEngine).isNotNull();
@@ -45,19 +44,18 @@ class GameEngineTest {
     @Test
     void bowl_all_strike_success() {
         // when
-        gameEngine
-                .play(DOWN_ALL)
-                .play(DOWN_ALL)
-                .play(DOWN_ALL)
-                .play(DOWN_ALL)
-                .play(DOWN_ALL)
-                .play(DOWN_ALL)
-                .play(DOWN_ALL)
-                .play(DOWN_ALL)
-                .play(DOWN_ALL)
-                .play(DOWN_ALL)
-                .play(DOWN_ALL)
-                .play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
+        gameEngine.play(DOWN_ALL);
 
         // then
         assertThat(gameEngine).isNotNull();
