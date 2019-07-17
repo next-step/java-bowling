@@ -28,6 +28,10 @@ public class FrameIndex {
         return from(frameIndex + INCREMENT_AMOUNT);
     }
 
+    public boolean isSameIndex(FrameIndex target) {
+        return frameIndex == target.frameIndex;
+    }
+
     private void validationFrameNumber(int frameNumber) {
         if (frameNumber < MINIMUM_FRAME_INDEX || frameNumber > MAXIMUM_FRAME_INDEX) {
             throw new IllegalArgumentException(ALERT_INVALID_FRAME_NUMBER);

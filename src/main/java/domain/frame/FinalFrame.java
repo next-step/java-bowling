@@ -42,7 +42,8 @@ public class FinalFrame implements Frame {
         return this;
     }
 
-    boolean isGameOver() {
+    @Override
+    public boolean isGameOver() {
         return bowlOrder == MAXIMUM_BOWL_ORDER || isStateMiss();
     }
 
@@ -58,7 +59,8 @@ public class FinalFrame implements Frame {
         return states.size() - 1;
     }
 
-    FrameIndex getIndex() {
+    @Override
+    public FrameIndex getIndex() {
         return FrameIndex.from(INDEX_OF_FINAL_FRAME);
     }
 }

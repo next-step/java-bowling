@@ -4,6 +4,8 @@ import domain.Pins;
 import domain.state.StandBy;
 import domain.state.State;
 
+import static domain.frame.FrameIndex.MINIMUM_FRAME_INDEX;
+
 public class NormalFrame implements Frame {
 
     private FrameIndex index;
@@ -17,6 +19,10 @@ public class NormalFrame implements Frame {
 
     public static NormalFrame of(FrameIndex index) {
         return new NormalFrame(index);
+    }
+
+    public static Frame initFrame() {
+        return of(FrameIndex.from(MINIMUM_FRAME_INDEX));
     }
 
     @Override
@@ -36,7 +42,13 @@ public class NormalFrame implements Frame {
         return NormalFrame.of(index.increment());
     }
 
-    FrameIndex getIndex() {
+    @Override
+    public FrameIndex getIndex() {
         return index;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return Boolean.FALSE;
     }
 }
