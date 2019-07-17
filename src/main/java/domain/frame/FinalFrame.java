@@ -1,4 +1,8 @@
-package domain;
+package domain.frame;
+
+import domain.Pins;
+import domain.state.StandBy;
+import domain.state.State;
 
 public class FinalFrame implements Frame {
 

@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Pins {
     static final String ALERT_OUT_OF_PINS_RANGE = "쓰러진 핀의 개수는 최소 0개에서 최대 10개 입니다.";
+    public static final int STRIKE_PINS = 10;
+    public static final int GUTTER_PINS = 0;
 
     private final int fallenPins;
 
@@ -13,13 +15,17 @@ public class Pins {
     }
 
     private void validationPins(int fallenPins) {
-        if (fallenPins < 0 || fallenPins > 10) {
+        if (fallenPins < GUTTER_PINS || fallenPins > STRIKE_PINS) {
             throw new IllegalArgumentException(ALERT_OUT_OF_PINS_RANGE);
         }
     }
 
     public static Pins from(int fallenPins) {
         return new Pins(fallenPins);
+    }
+
+    public boolean isStrike() {
+        return this.fallenPins == STRIKE_PINS;
     }
 
     public boolean isMatch(Pins pins) {

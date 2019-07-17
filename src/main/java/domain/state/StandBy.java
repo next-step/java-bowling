@@ -1,10 +1,15 @@
-package domain;
+package domain.state;
+
+import domain.Pins;
 
 public class StandBy implements State {
 
     @Override
     public State update(Pins fallenPins) {
-        return null;
+        if (fallenPins.isStrike()) {
+            return new Strike();
+        }
+        return new Hit(fallenPins);
     }
 
     @Override

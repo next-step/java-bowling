@@ -1,4 +1,6 @@
-package domain;
+package domain.frame;
+
+import domain.Pins;
 
 public interface Frame {
 

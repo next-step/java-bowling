@@ -1,4 +1,6 @@
-package domain;
+package domain.state;
+
+import domain.Pins;
 
 public interface State {
 

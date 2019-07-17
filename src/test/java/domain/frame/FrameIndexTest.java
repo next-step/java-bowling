@@ -1,9 +1,10 @@
-package domain;
+package domain.frame;
 
+import domain.frame.FrameIndex;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static domain.FrameIndex.*;
+import static domain.frame.FrameIndex.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 

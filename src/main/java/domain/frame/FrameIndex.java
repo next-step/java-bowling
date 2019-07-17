@@ -1,4 +1,4 @@
-package domain;
+package domain.frame;
 
 import java.util.Objects;
 

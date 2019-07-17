@@ -1,6 +1,10 @@
-package domain;
+package domain.frame;
 
-public class NormalFrame implements Frame{
+import domain.Pins;
+import domain.state.StandBy;
+import domain.state.State;
+
+public class NormalFrame implements Frame {
 
     private FrameIndex index;
     private State state;
