@@ -15,7 +15,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public FrameScore calculateScore(final FrameScore base) {
-        return super.calculateScore(next.calculateScore(base));
+        return next.calculateScore(super.calculateScore(base));
     }
 
     @Override

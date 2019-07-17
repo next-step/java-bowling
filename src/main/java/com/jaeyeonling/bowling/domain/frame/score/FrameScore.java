@@ -46,6 +46,10 @@ public class FrameScore {
     }
 
     public FrameScore calculate(final FrameScore other) {
+        if (isComplete()) {
+            return this;
+        }
+
         return of(score + other.score, remainingCount.down());
     }
 

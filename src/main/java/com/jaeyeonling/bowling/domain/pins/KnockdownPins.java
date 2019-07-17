@@ -24,7 +24,6 @@ public class KnockdownPins {
             throw new LongerThanMaxKnockdownPinsException(knockdownPins);
         }
 
-
         return new KnockdownPins(knockdownPins);
     }
 
@@ -41,11 +40,11 @@ public class KnockdownPins {
     }
 
     public KnockdownPins sum(final KnockdownPins other) {
-        return new KnockdownPins(knockdownPins + other.knockdownPins);
+        return valueOf(knockdownPins + other.knockdownPins);
     }
 
     public KnockdownPins remaining() {
-        return new KnockdownPins(MAX_VALUE - knockdownPins);
+        return valueOf(MAX_VALUE - knockdownPins);
     }
 
     @Override

@@ -13,10 +13,6 @@ public abstract class Frame {
     }
 
     public FrameScore calculateScore(final FrameScore base) {
-        if (base.isComplete()) {
-            return base;
-        }
-
         return frameState.calculateScore(base);
     }
 
