@@ -7,7 +7,9 @@ import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 @HaveBonus
 public class Spare extends Finished {
 
-    public static final FrameScore SCORE = FrameScore.of(KnockdownPins.MAX_VALUE, 1);
+    private static final int REMAINING_COUNT = 1;
+
+    public static final FrameScore SCORE = FrameScore.of(KnockdownPins.MAX_VALUE, REMAINING_COUNT);
 
     private final KnockdownPins first;
 

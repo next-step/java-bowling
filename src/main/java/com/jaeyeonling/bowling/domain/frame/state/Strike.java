@@ -7,9 +7,11 @@ import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 @HaveBonus
 public class Strike extends Finished {
 
+    private static final int REMAINING_COUNT = 2;
+
     private static final KnockdownPins KNOCKDOWN_PINS = KnockdownPins.MAX;
 
-    public static final FrameScore SCORE = FrameScore.of(KNOCKDOWN_PINS.getKnockdownPins(), 2);
+    public static final FrameScore SCORE = FrameScore.of(KNOCKDOWN_PINS.getKnockdownPins(), REMAINING_COUNT);
 
     Strike() { }
 
