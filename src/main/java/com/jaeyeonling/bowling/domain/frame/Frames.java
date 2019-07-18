@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Frames {
 
-    static final int NORMAL_FRAME_COUNT = 9;
+    public static final int NORMAL_FRAME_COUNT = 9;
 
     private final List<Frame> frames;
     private Count indexCount = Count.of();
