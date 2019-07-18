@@ -15,13 +15,9 @@ public class LastFrameSet implements Bowling {
     private List<Pins> pins = new ArrayList<>();
     private State state;
 
-    public LastFrameSet() {
-
-    }
-
     @Override
     public Bowling bowl(Pins downPins) {
-        if (isLastBowl() || isEmptyWhenSecondBowl()) {
+        if (isClosed()) {
             throw new IllegalArgumentException("더이상 진행 할 수 없습니다.");
         }
         state = getState(downPins);
@@ -35,14 +31,18 @@ public class LastFrameSet implements Bowling {
     }
 
     private State getState(Pins downPins) {
-        if (pins.isEmpty()) {
+        if (pins.isEmpty() || state.isClosed()) {
             return StateFactory.firstState(downPins);
         }
-        Pins pins = this.pins.get(this.pins.size() - 1);
-        if (Pins.ALL.equals(pins)) {
-            return StateFactory.firstState(downPins);
-        }
-        return StateFactory.secondState(pins, downPins);
+        return StateFactory.secondState(getLastDownPins(), downPins);
+    }
+
+    private Pins getLastDownPins() {
+        return this.pins.get(this.pins.size() - 1);
+    }
+
+    public boolean isClosed() {
+        return isLastBowl() || isEmptyWhenSecondBowl();
     }
 
     private boolean isLastBowl() {
