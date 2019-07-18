@@ -15,7 +15,7 @@ class FramesTest {
 
     @BeforeEach
     void setUp() {
-        frames = new Frames();
+        frames = FramesFactory.create();
     }
 
     @DisplayName("프레임들의 첫 프레임 값은 1이다.")
@@ -49,7 +49,6 @@ class FramesTest {
             assertThat(currentFrameIndex).isEqualTo(i);
         }
     }
-
 
     @DisplayName("모든 프레임이 끝난 후 게임 시 예외처리한다.")
     @Test

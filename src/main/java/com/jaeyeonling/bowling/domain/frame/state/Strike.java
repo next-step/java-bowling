@@ -5,13 +5,19 @@ import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 import com.jaeyeonling.bowling.domain.frame.score.FrameScore;
 
 @HaveBonus
-class Strike extends Finished {
+public class Strike extends Finished {
+
+    private static final int REMAINING_COUNT = 2;
+
+    private static final KnockdownPins KNOCKDOWN_PINS = KnockdownPins.MAX;
+
+    public static final FrameScore SCORE = FrameScore.of(KNOCKDOWN_PINS.getKnockdownPins(), REMAINING_COUNT);
 
     Strike() { }
 
     @Override
     public String toSymbol() {
-        return BowlingSymbol.toSymbolFrom(KnockdownPins.MAX);
+        return BowlingSymbol.toSymbolFrom(KNOCKDOWN_PINS);
     }
 
     @Override
@@ -21,6 +27,6 @@ class Strike extends Finished {
 
     @Override
     public FrameScore getFrameScore() {
-        return FrameScore.STRIKE;
+        return SCORE;
     }
 }

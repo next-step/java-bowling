@@ -7,10 +7,10 @@ import java.util.Objects;
 
 public class FrameScore {
 
-    public static final FrameScore UN_SCORE = FrameScore.of(KnockdownPins.MIN_VALUE, 1);
-    public static final FrameScore STRIKE = FrameScore.of(KnockdownPins.MAX_VALUE, 2);
-    public static final FrameScore SPARE = FrameScore.of(KnockdownPins.MAX_VALUE, 1);
-    public static final FrameScore GUTTER = FrameScore.of(KnockdownPins.MIN_VALUE, 0);
+    private static final int DEFAULT_REMAINING_COUNT = 0;
+    private static final int UN_SCORE_REMAINING_COUNT = 1;
+
+    public static final FrameScore UN_SCORE = FrameScore.of(KnockdownPins.MIN_VALUE, UN_SCORE_REMAINING_COUNT);
 
     static final int MIN = 0;
 
@@ -24,7 +24,7 @@ public class FrameScore {
     }
 
     public static FrameScore of(final int score) {
-        return of(score, 0);
+        return of(score, DEFAULT_REMAINING_COUNT);
     }
 
     public static FrameScore of(final int score,

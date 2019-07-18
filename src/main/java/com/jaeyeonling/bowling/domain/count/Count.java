@@ -29,6 +29,10 @@ public class Count {
         return CACHE.computeIfAbsent(initialValue, Count::new);
     }
 
+    public int getCount() {
+        return count;
+    }
+
     public Count up() {
         return Count.of(count + INCREMENT_VALUE);
     }

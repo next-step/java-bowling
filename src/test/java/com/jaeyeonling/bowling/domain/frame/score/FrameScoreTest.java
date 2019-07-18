@@ -1,6 +1,9 @@
 package com.jaeyeonling.bowling.domain.frame.score;
 
 import com.jaeyeonling.bowling.domain.count.ShorterThanMinCountException;
+import com.jaeyeonling.bowling.domain.frame.state.Gutter;
+import com.jaeyeonling.bowling.domain.frame.state.Spare;
+import com.jaeyeonling.bowling.domain.frame.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,11 +39,11 @@ class FrameScoreTest {
     @Test
     void strikeCalculateScore() {
         // given
-        FrameScore frameScore = FrameScore.STRIKE;
+        FrameScore frameScore = Strike.SCORE;
 
         // when
-        frameScore = frameScore.calculate(FrameScore.STRIKE);
-        frameScore = frameScore.calculate(FrameScore.STRIKE);
+        frameScore = frameScore.calculate(Strike.SCORE);
+        frameScore = frameScore.calculate(Strike.SCORE);
 
         // then
         assertThat(frameScore.getScore()).isEqualTo(30);
@@ -50,10 +53,10 @@ class FrameScoreTest {
     @Test
     void spareCalculateScore() {
         // given
-        FrameScore frameScore = FrameScore.STRIKE;
+        FrameScore frameScore = Strike.SCORE;
 
         // when
-        frameScore = frameScore.calculate(FrameScore.SPARE);
+        frameScore = frameScore.calculate(Spare.SCORE);
 
         // then
         assertThat(frameScore.getScore()).isEqualTo(20);
@@ -63,11 +66,11 @@ class FrameScoreTest {
     @Test
     void strikeCalculateScoreComplete() {
         // given
-        FrameScore frameScore = FrameScore.STRIKE;
+        FrameScore frameScore = Strike.SCORE;
 
         // when
-        frameScore = frameScore.calculate(FrameScore.STRIKE);
-        frameScore = frameScore.calculate(FrameScore.STRIKE);
+        frameScore = frameScore.calculate(Strike.SCORE);
+        frameScore = frameScore.calculate(Strike.SCORE);
 
         // then
         assertThat(frameScore.isComplete()).isTrue();
@@ -77,20 +80,12 @@ class FrameScoreTest {
     @Test
     void spareCalculateScoreComplete() {
         // given
-        FrameScore frameScore = FrameScore.SPARE;
+        FrameScore frameScore = Spare.SCORE;
 
         // when
-        frameScore = frameScore.calculate(FrameScore.SPARE);
+        frameScore = frameScore.calculate(Spare.SCORE);
 
         // then
         assertThat(frameScore.isComplete()).isTrue();
-    }
-
-    @DisplayName("점수를 계산할 수 있는 횟수가 없는 상태에서 계산 시 예외처리한다.")
-    @Test
-    void throwShorterThanMinCountException() {
-        // when / then
-        assertThatExceptionOfType(ShorterThanMinCountException.class)
-                .isThrownBy(() -> FrameScore.GUTTER.calculate(FrameScore.GUTTER));
     }
 }

@@ -1,6 +1,7 @@
 package com.jaeyeonling.bowling.domain;
 
 import com.jaeyeonling.bowling.domain.frame.Frames;
+import com.jaeyeonling.bowling.domain.frame.FramesFactory;
 import com.jaeyeonling.bowling.domain.pins.KnockdownPins;
 import com.jaeyeonling.bowling.domain.user.User;
 
@@ -16,7 +17,7 @@ public class BowlingGame {
     }
 
     public static BowlingGame with(final User user) {
-        return new BowlingGame(user, new Frames());
+        return new BowlingGame(user, FramesFactory.create());
     }
 
     public boolean canPlay() {
