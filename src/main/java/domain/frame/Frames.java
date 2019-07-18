@@ -1,6 +1,7 @@
 package domain.frame;
 
 import domain.Pins;
+
 import java.util.List;
 
 public class Frames {
@@ -25,12 +26,20 @@ public class Frames {
         Frame currentFrame = getCurrentFrame();
         Frame frame = currentFrame.setKnockedDownPins(downPins);
         if (frame.isClosed()) {
-            currentFrameIndex.next();
+            currentFrameIndex = currentFrameIndex.next();
         }
         return this;
     }
 
     public boolean isFinished() {
         return currentFrameIndex.isStop();
+    }
+
+    public FrameIndex getCurrentFrameIndex() {
+        return currentFrameIndex;
+    }
+
+    public List<Frame> getFrames() {
+        return frames;
     }
 }
