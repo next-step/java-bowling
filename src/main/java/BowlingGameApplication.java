@@ -13,11 +13,11 @@ public class BowlingGameApplication {
         String name = InputView.askPlayerInitial();
         BowlingGame bowlingGame = new BowlingGame();
 
-        while (!bowlingGame.isGameFinished()) {
+        while (bowlingGame.isRunning()) {
             Integer currentIndex = bowlingGame.getCurrentFrameIndex().value();
-            Pins pins = InputView.askKnockDownedPins(currentIndex);
-            List<Frame> frames = bowlingGame.bowl(pins);
-            OutputResult.printBoard(name, frames);
+//            Pins pins = InputView.askKnockDownedPins(currentIndex);
+//            List<Frame> frames = bowlingGame.bowl(pins);
+//            OutputResult.printBoard(name, frames);
         }
     }
 }

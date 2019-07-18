@@ -15,18 +15,17 @@ public class Open implements State {
     }
 
     private void verify(Pins first, Pins second) {
-        if (Pins.ALL.equals(first.add(second))) {
+        if (isClear(first, second)) {
             throw new IllegalArgumentException("상태와 맞지 않는 정보 입니다.");
         }
     }
 
-    @Override
-    public State bowl(Pins downPins) {
-        throw new RuntimeException("더이상 진행 할 수 없습니다.");
+    private boolean isClear(Pins first, Pins second) {
+        return Pins.ALL.equals(first.add(second));
     }
 
     @Override
-    public Boolean isClosed() {
+    public boolean isClosed() {
         return true;
     }
 

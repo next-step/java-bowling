@@ -15,18 +15,17 @@ public class Strike implements State {
     }
 
     private void verify(Pins downPins) {
-        if (!Pins.ALL.equals(downPins)) {
+        if (isNotStrike(downPins)) {
             throw new IllegalArgumentException("스트라이크 아님");
         }
     }
 
-    @Override
-    public State bowl(Pins downPins) {
-        throw new RuntimeException("더이상 진행 할 수 없습니다.");
+    private boolean isNotStrike(Pins downPins) {
+        return !Pins.ALL.equals(downPins);
     }
 
     @Override
-    public Boolean isClosed() {
+    public boolean isClosed() {
         return true;
     }
 

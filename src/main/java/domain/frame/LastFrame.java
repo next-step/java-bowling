@@ -1,24 +1,35 @@
 package domain.frame;
 
 import domain.Pins;
-import domain.state.Bonus;
+import domain.bowling.LastFrameSet;
 import domain.state.State;
 
 public class LastFrame implements Frame {
 
-    private State state;
+    private LastFrameSet bowling;
 
     public LastFrame() {
-        this.state = new Bonus();
+        this.bowling = new LastFrameSet();
     }
 
     @Override
     public State setKnockedDownPins(Pins knockedDown) {
-        return state.bowl(knockedDown);
+
+        return null;
     }
 
     @Override
     public State getState() {
-        return state;
+        return null;
+    }
+
+    @Override
+    public boolean isClosed() {
+        return false;
+    }
+
+    @Override
+    public FrameIndex getFrameNumber() {
+        return null;
     }
 }

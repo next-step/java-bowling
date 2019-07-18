@@ -10,25 +10,24 @@ public class Spares implements State {
     private final Pins first;
     private final Pins second;
 
-    Spares(Pins first, Pins second) {
+    public Spares(Pins first, Pins second) {
         verify(first, second);
         this.first = first;
         this.second = second;
     }
 
     private void verify(Pins first, Pins second) {
-        if (!Pins.ALL.equals(first.add(second))) {
+        if (isNotSpares(first, second)) {
             throw new IllegalArgumentException("핀이 남아 있는데");
         }
     }
 
-    @Override
-    public State bowl(Pins downPins) {
-        throw new RuntimeException("더이상 진행 할 수 없습니다.");
+    private boolean isNotSpares(Pins first, Pins second) {
+        return !Pins.ALL.equals(first.add(second));
     }
 
     @Override
-    public Boolean isClosed() {
+    public boolean isClosed() {
         return true;
     }
 

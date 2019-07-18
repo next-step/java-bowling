@@ -5,7 +5,9 @@ import domain.state.State;
 
 public interface Frame {
 
-    State setKnockedDownPins(Pins knockedDown);
+    Frame setKnockedDownPins(Pins knockedDown);
 
     State getState();
+
+    boolean isClosed();
 }

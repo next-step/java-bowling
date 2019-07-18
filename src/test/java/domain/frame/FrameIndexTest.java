@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FrameIndexTest {
@@ -27,7 +30,7 @@ class FrameIndexTest {
     @DisplayName("새로운 인스턴스 생성")
     void newInstance() {
         FrameIndex frameIndex = FrameIndex.of(1);
-        FrameIndex newInstance = frameIndex.newInstance();
+        FrameIndex newInstance = frameIndex.next();
         assertThat(frameIndex.equals(newInstance)).isTrue();
     }
 }

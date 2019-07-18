@@ -19,22 +19,11 @@ public class Bonus implements State {
     public Bonus() {
         pins = new ArrayList<>();
         states = new ArrayList<>();
-        states.add(new Ready());
+        states.add(new Waiting());
     }
 
     @Override
-    public State bowl(Pins downPins) {
-        if (isLastBowl() || isEmptyWhenSecondBowl()) {
-            throw new IllegalArgumentException("더이상 진행 할 수 없습니다.");
-        }
-        State state = getState();
-        states.add(state.bowl(downPins));
-        pins.add(downPins);
-        return this;
-    }
-
-    @Override
-    public Boolean isClosed() {
+    public boolean isClosed() {
         return isLastBowl() || isEmptyWhenSecondBowl();
     }
 
@@ -49,7 +38,7 @@ public class Bonus implements State {
 
     private State getState() {
         State state = states.get(states.size() - 1);
-        return state.isClosed() ? new Ready() : state;
+        return state.isClosed() ? new Waiting() : state;
     }
 
     private boolean isLastBowl() {

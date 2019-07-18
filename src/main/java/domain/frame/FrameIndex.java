@@ -18,8 +18,8 @@ public class FrameIndex {
         return new FrameIndex(frameCount);
     }
 
-    public FrameIndex newInstance() {
-        return new FrameIndex(frameCount);
+    public static FrameIndex initiate() {
+        return new FrameIndex(START_FRAME);
     }
 
     public FrameIndex next() {
@@ -27,11 +27,15 @@ public class FrameIndex {
         if (TOTAL_FRAME < nextFrameCount) {
             throw new RuntimeException("10 프레임 이상으로 진행 할 수 없습니다. 현재 프레임 : " + nextFrameCount);
         }
-        return FrameIndex.of(nextFrameCount);
+        return new FrameIndex(nextFrameCount);
     }
 
     public Integer value() {
         return frameCount;
+    }
+
+    public boolean isStop() {
+        return frameCount == TOTAL_FRAME;
     }
 
     @Override
@@ -49,12 +53,6 @@ public class FrameIndex {
 
     @Override
     public String toString() {
-        return "FrameIndex{" +
-                "frameCount=" + frameCount +
-                '}';
-    }
-
-    public boolean isStop() {
-        return frameCount == TOTAL_FRAME;
+        return frameCount.toString();
     }
 }
