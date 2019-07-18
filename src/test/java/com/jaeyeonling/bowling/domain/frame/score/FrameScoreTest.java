@@ -1,7 +1,5 @@
 package com.jaeyeonling.bowling.domain.frame.score;
 
-import com.jaeyeonling.bowling.domain.count.ShorterThanMinCountException;
-import com.jaeyeonling.bowling.domain.frame.state.Gutter;
 import com.jaeyeonling.bowling.domain.frame.state.Spare;
 import com.jaeyeonling.bowling.domain.frame.state.Strike;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class FrameScoreTest {
 
