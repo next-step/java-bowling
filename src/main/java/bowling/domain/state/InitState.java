@@ -21,7 +21,7 @@ public class InitState implements State {
     }
 
     @Override
-    public State update(Point fallCount) {
+    public State update(Point fallCount, boolean isFinalFrame) {
         if (fallCount.isStrike()) {
             return new Strike(fallCount);
         }

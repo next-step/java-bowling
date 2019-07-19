@@ -3,7 +3,6 @@ package bowling.domain.state;
 import bowling.domain.Point;
 import bowling.exception.OutOfBowlCountException;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -37,9 +36,9 @@ public class FinalStateTest {
     void 마지막_프레임_투구_상태출력_세번_투구(int first, int second, int third, String display) {
         FinalState state = new FinalState();
 
-        state.update(Point.of(first));
-        state.update(Point.of(second));
-        state.update(Point.of(third));
+        state.update(Point.of(first), true);
+        state.update(Point.of(second), true);
+        state.update(Point.of(third), true);
         assertThat(state.printState()).isEqualTo(display);
     }
 
@@ -54,8 +53,8 @@ public class FinalStateTest {
     void 마지막_프레임_투구_상태출력_두번_투구(int first, int second, String display) {
         FinalState state = new FinalState();
 
-        state.update(Point.of(first));
-        state.update(Point.of(second));
+        state.update(Point.of(first), true);
+        state.update(Point.of(second), true);
         assertThat(state.printState()).isEqualTo(display);
     }
 
@@ -68,10 +67,10 @@ public class FinalStateTest {
     })
     void 모든_게임_종료_1(int first, int second, int third) {
         FinalState state = new FinalState();
-        state.update(Point.of(first));
-        state.update(Point.of(second));
+        state.update(Point.of(first), true);
+        state.update(Point.of(second), true);
         assertThatExceptionOfType(OutOfBowlCountException.class).isThrownBy(() -> {
-           state.update(Point.of(third));
+           state.update(Point.of(third), true);
         }).withMessageContaining("모든 게임이 종료되어 더이상 투구를 할 수 없습니다.");
     }
 
@@ -85,11 +84,11 @@ public class FinalStateTest {
     })
     void 모든_게임_종료_2(int first, int second, int third, int fourth) {
         FinalState state = new FinalState();
-        state.update(Point.of(first));
-        state.update(Point.of(second));
-        state.update(Point.of(third));
+        state.update(Point.of(first), true);
+        state.update(Point.of(second), true);
+        state.update(Point.of(third), true);
         assertThatExceptionOfType(OutOfBowlCountException.class).isThrownBy(() -> {
-            state.update(Point.of(fourth));
+            state.update(Point.of(fourth), true);
         }).withMessageContaining("모든 게임이 종료되어 더이상 투구를 할 수 없습니다.");
     }
 }

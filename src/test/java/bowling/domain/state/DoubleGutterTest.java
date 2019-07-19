@@ -32,8 +32,8 @@ public class DoubleGutterTest {
     @ParameterizedTest
     @CsvSource({"0,0"})
     void DOUBLEGUTTER_상태_출력(int firstBowl, int secondBowl) {
-        State first = state.update(Point.of(firstBowl));
-        State second = first.update(Point.of(secondBowl));
+        State first = state.update(Point.of(firstBowl), false);
+        State second = first.update(Point.of(secondBowl), false);
         assertThat(second.printState()).isEqualTo("-|-");
     }
 
@@ -41,8 +41,8 @@ public class DoubleGutterTest {
     @ParameterizedTest
     @CsvSource({"0,0"})
     void DOUBLEGUTTER_종료_상태(int firstBowl, int secondBowl) {
-        State first = state.update(Point.of(firstBowl));
-        State second = first.update(Point.of(secondBowl));
+        State first = state.update(Point.of(firstBowl), false);
+        State second = first.update(Point.of(secondBowl), false);
         assertThat(second.isOver()).isTrue();
     }
 
@@ -50,10 +50,10 @@ public class DoubleGutterTest {
     @ParameterizedTest
     @CsvSource({"0,0"})
     void 세번쨰_투구_예외처리(int firstBowl, int secondBowl) {
-        State first = state.update(Point.of(firstBowl));
-        State second = first.update(Point.of(secondBowl));
+        State first = state.update(Point.of(firstBowl), false);
+        State second = first.update(Point.of(secondBowl), false);
         assertThatExceptionOfType(IllegalBowlCountException.class).isThrownBy(() -> {
-            second.update(Point.of(1));
+            second.update(Point.of(1), false);
         }).withMessageContaining("프레임 종료되었습니다.");
     }
 }

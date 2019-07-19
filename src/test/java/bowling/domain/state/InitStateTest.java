@@ -41,21 +41,21 @@ public class InitStateTest {
     @DisplayName("Hit 상태로 반환")
     @Test
     void HIT_상태로_반환() {
-        State updateState = state.update(Point.of(1));
+        State updateState = state.update(Point.of(1), false);
         assertThat(updateState instanceof Hit).isTrue();
     }
 
     @DisplayName("Gutter 상태로 반환")
     @Test
     void GUTTER_상태로_반환() {
-        State updateState = state.update(Point.of(0));
+        State updateState = state.update(Point.of(0), false);
         assertThat(updateState instanceof Gutter).isTrue();
     }
 
     @DisplayName("Strike 상태로 반환")
     @Test
     void STRIKE_상태로_반환() {
-        State updateState = state.update(Point.of(10));
+        State updateState = state.update(Point.of(10), false);
         assertThat(updateState instanceof Strike).isTrue();
     }
 

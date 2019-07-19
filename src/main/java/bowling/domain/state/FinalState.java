@@ -1,8 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.exception.IllegalBowlCountException;
 import bowling.exception.OutOfBowlCountException;
-import sun.print.CUPSPrinter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,31 +20,48 @@ import java.util.stream.Collectors;
  * project      : java-bowling
  * create date  : 2019-07-19 17:01
  */
-public class FinalState {
+public class FinalState implements State {
     public static final String DELIMITER = "|";
     private static final int EXCLUDE_LAST_INDEX = 1;
     public static final int MAX_BOWL_COUNT = 3;
     private List<State> state;
-    
+
+    private State states;
+    private Point thirdBowl;
+
     public FinalState() {
         this.state = new ArrayList<>(Arrays.asList(InitState.of()));
     }
 
-    public List<State> update(Point fallCount) {
-        if(isFinalOverGmae()) {
-            throw new OutOfBowlCountException();
-        }
-
+    public State update(Point fallCount, boolean isFinalFrame) {
         State tempState = state.get(lastIndex());
         if (tempState.isOver()) {
             tempState = InitState.of();
         }
-        state.add(tempState.update(fallCount));
+        state.add(tempState.update(fallCount, isFinalFrame));
 
-        return Collections.unmodifiableList(state);
+        return this;
     }
 
-    public boolean isFinalOverGmae() {
+    @Override
+    public boolean isOver() {
+        if (states instanceof Strike) {
+
+        }
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public Point getFirstBowl() {
+        return states.getFirstBowl();
+    }
+
+    @Override
+    public Point getSecondBowl() {
+        return states.getSecondBowl();
+    }
+
+    private boolean isFinalGmaeOver() {
         if(state.size() > MAX_BOWL_COUNT
                 || lastOfStateState() instanceof Miss
                 || lastOfStateState() instanceof DoubleGutter) {

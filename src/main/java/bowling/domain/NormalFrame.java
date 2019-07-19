@@ -36,7 +36,7 @@ public class NormalFrame extends Frame {
         if(state.isOver()) {
             return nextFrame(fallCount);
         }
-        state = state.update(Point.of(fallCount));
+        state = state.update(Point.of(fallCount), false);
         return this;
     }
 

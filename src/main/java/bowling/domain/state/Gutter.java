@@ -22,7 +22,7 @@ public class Gutter implements State {
     }
 
     @Override
-    public State update(Point fallCount) {
+    public State update(Point fallCount, boolean isFinalFrame) {
         // TODO fallCount 임계관련 예외처리 필요
         if (firstBowl.isSpare(fallCount)) {
             return new Spare(this, fallCount);

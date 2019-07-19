@@ -13,7 +13,7 @@ import bowling.domain.Point;
  * create date  : 2019-07-19 11:50
  */
 public interface State {
-    State update(Point fallCount);
+    State update(Point fallCount, boolean isFinalFrame);
 
     boolean isOver();
 

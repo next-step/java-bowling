@@ -1,10 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.state.InitState;
+import bowling.domain.state.FinalState;
 import bowling.domain.state.State;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -17,32 +14,25 @@ import java.util.List;
  * create date  : 2019-07-19 15:29
  */
 public class FinalFrame extends Frame {
-    public static final int BONUS_STATE_COUNT = 2;
-    private State currentState;
-    private List<State> state;
+    private FinalState state;
 
     public FinalFrame() {
-        this.currentState = InitState.of();
-        this.state = new ArrayList<>();
+        this.state = new FinalState();
     }
 
     @Override
     Frame bowl(int fallCount) {
-        currentState = currentState.update(Point.of(fallCount));
-        if (currentState.isOver()) {
-            state.add(currentState);
-        }
-
-        return null;
+        state.update(Point.of(fallCount), true);
+        return this;
     }
 
     @Override
     boolean isGameOver() {
-        return false;
+        return state.isOver();
     }
 
     @Override
     State getState() {
-        return null;
+        return (State) state;
     }
 }

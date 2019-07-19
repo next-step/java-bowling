@@ -33,8 +33,8 @@ class MissTest {
     @ParameterizedTest
     @CsvSource({"0,9"})
     void MISS_상태_출력(int firstBowl, int secondBowl) {
-        State first = state.update(Point.of(firstBowl));
-        State second = first.update(Point.of(secondBowl));
+        State first = state.update(Point.of(firstBowl), false);
+        State second = first.update(Point.of(secondBowl), false);
         assertThat(second.printState()).isEqualTo("-|9");
     }
 
@@ -42,8 +42,8 @@ class MissTest {
     @ParameterizedTest
     @CsvSource({"1,8"})
     void Miss_종료_상태(int firstBowl, int secondBowl) {
-        State first = state.update(Point.of(firstBowl));
-        State second = first.update(Point.of(secondBowl));
+        State first = state.update(Point.of(firstBowl), false);
+        State second = first.update(Point.of(secondBowl), false);
         assertThat(second.isOver()).isTrue();
     }
 
@@ -51,10 +51,10 @@ class MissTest {
     @ParameterizedTest
     @CsvSource({"0,9"})
     void 세번쨰_투구_예외처리(int firstBowl, int secondBowl) {
-        State first = state.update(Point.of(firstBowl));
-        State second = first.update(Point.of(secondBowl));
+        State first = state.update(Point.of(firstBowl), false);
+        State second = first.update(Point.of(secondBowl), false);
         assertThatExceptionOfType(IllegalBowlCountException.class).isThrownBy(() -> {
-            second.update(Point.of(1));
+            second.update(Point.of(1), false);
         }).withMessageContaining("프레임 종료되었습니다.");
     }
 }

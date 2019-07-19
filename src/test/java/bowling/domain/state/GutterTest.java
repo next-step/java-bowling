@@ -30,37 +30,37 @@ class GutterTest {
     @DisplayName("Gutter 상태출력")
     @Test
     void GUTTER_상태_출력() {
-        assertThat(state.update(Point.of(0)).printState()).isEqualTo("-");
+        assertThat(state.update(Point.of(0), false).printState()).isEqualTo("-");
     }
 
     @DisplayName("GUTTER 게임종료 상태")
     @Test
     void GUTTER_종료_상태() {
-        State hit = state.update(Point.of(0));
+        State hit = state.update(Point.of(0), false);
         assertThat(hit.isOver()).isFalse();
     }
 
     @DisplayName("Spare 상태로 반환")
     @Test
     void SPARE_상태로_반환() {
-        State updateState = state.update(Point.of(0));
-        State updateStateSpare = updateState.update(Point.of(10));
+        State updateState = state.update(Point.of(0), false);
+        State updateStateSpare = updateState.update(Point.of(10), false);
         assertThat(updateStateSpare instanceof Spare).isTrue();
     }
 
     @DisplayName("Miss 상태로 반환")
     @Test
     void MISS_상태로_반환() {
-        State updateState = state.update(Point.of(0));
-        State updateStateSpare = updateState.update(Point.of(9));
+        State updateState = state.update(Point.of(0), false);
+        State updateStateSpare = updateState.update(Point.of(9), false);
         assertThat(updateStateSpare instanceof Miss).isTrue();
     }
 
     @DisplayName("DoubleGutter 상태로 반환")
     @Test
     void DoubleGutter_상태로_반환() {
-        State updateState = state.update(Point.of(0));
-        State updateStateSpare = updateState.update(Point.of(0));
+        State updateState = state.update(Point.of(0), false);
+        State updateStateSpare = updateState.update(Point.of(0), false);
         assertThat(updateStateSpare instanceof DoubleGutter).isTrue();
     }
 
@@ -68,7 +68,7 @@ class GutterTest {
     @Test
     void 점수_가져오기_예외처리() {
         assertThatExceptionOfType(IllegalIndexOfExcpetion.class).isThrownBy(() -> {
-            state.update(Point.of(0)).getSecondBowl();
+            state.update(Point.of(0), false).getSecondBowl();
         }).withMessageContaining("현재 INDEX는 데이터가 없습니다.");
     }
 }

@@ -68,7 +68,7 @@ public class NormalFrameTest {
     @Test
     void 첫투구_STRIKE() {
         assertAll(
-                () -> assertThat(frame.bowl(10).getState().printState()).isEqualTo(" X |"),
+                () -> assertThat(frame.bowl(10).getState().printState()).isEqualTo("X"),
                 () -> assertThat(frame.bowl(10).getState().getFirstBowl()).isEqualTo(Point.of(10))
         );
     }
@@ -99,7 +99,7 @@ public class NormalFrameTest {
         frame = frame.bowl(secondBowl);
         assertAll(
                 () -> assertThat(frame.isGameOver()).isFalse(),
-                () -> assertThat(frame.getState().printState()).isEqualTo("-|/ |"),
+                () -> assertThat(frame.getState().printState()).isEqualTo("-|/"),
                 () -> assertThat(frame.getState().getFirstBowl()).isEqualTo(Point.of(0)),
                 () -> assertThat(frame.getState().getSecondBowl()).isEqualTo(Point.of(10))
         );
@@ -113,7 +113,7 @@ public class NormalFrameTest {
         frame = frame.bowl(secondBowl);
         assertAll(
                 () -> assertThat(frame.isGameOver()).isFalse(),
-                () -> assertThat(frame.getState().printState()).isEqualTo("5|/ |"),
+                () -> assertThat(frame.getState().printState()).isEqualTo("5|/"),
                 () -> assertThat(frame.getState().getFirstBowl()).isEqualTo(Point.of(5)),
                 () -> assertThat(frame.getState().getSecondBowl()).isEqualTo(Point.of(5))
         );
@@ -127,7 +127,7 @@ public class NormalFrameTest {
         frame = frame.bowl(secondBowl);
         assertAll(
                 () -> assertThat(frame.isGameOver()).isFalse(),
-                () -> assertThat(frame.getState().printState()).isEqualTo("-|9 |"),
+                () -> assertThat(frame.getState().printState()).isEqualTo("-|9"),
                 () -> assertThat(frame.getState().getFirstBowl()).isEqualTo(Point.of(0)),
                 () -> assertThat(frame.getState().getSecondBowl()).isEqualTo(Point.of(9))
         );
@@ -141,7 +141,7 @@ public class NormalFrameTest {
         frame = frame.bowl(secondBowl);
         assertAll(
                 () -> assertThat(frame.isGameOver()).isFalse(),
-                () -> assertThat(frame.getState().printState()).isEqualTo("1|8 |"),
+                () -> assertThat(frame.getState().printState()).isEqualTo("1|8"),
                 () -> assertThat(frame.getState().getFirstBowl()).isEqualTo(Point.of(1)),
                 () -> assertThat(frame.getState().getSecondBowl()).isEqualTo(Point.of(8))
         );
@@ -155,7 +155,7 @@ public class NormalFrameTest {
         frame = frame.bowl(secondBowl);
         assertAll(
                 () -> assertThat(frame.isGameOver()).isFalse(),
-                () -> assertThat(frame.getState().printState()).isEqualTo("-|- |"),
+                () -> assertThat(frame.getState().printState()).isEqualTo("-|-"),
                 () -> assertThat(frame.getState().getFirstBowl()).isEqualTo(Point.of(0)),
                 () -> assertThat(frame.getState().getSecondBowl()).isEqualTo(Point.of(0))
         );

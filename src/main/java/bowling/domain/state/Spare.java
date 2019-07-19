@@ -25,7 +25,7 @@ public class Spare implements State {
     }
 
     @Override
-    public State update(Point fallCount) {
+    public State update(Point fallCount, boolean isFinalFrame) {
         throw new IllegalBowlCountException();
     }
 
