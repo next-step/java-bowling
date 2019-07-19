@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.exception.OutOfBowlCountException;
 import sun.print.CUPSPrinter;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 public class FinalState {
     public static final String DELIMITER = "|";
     private static final int EXCLUDE_LAST_INDEX = 1;
+    public static final int MAX_BOWL_COUNT = 3;
     private List<State> state;
     
     public FinalState() {
@@ -29,6 +31,10 @@ public class FinalState {
     }
 
     public List<State> update(Point fallCount) {
+        if(isFinalOverGmae()) {
+            throw new OutOfBowlCountException();
+        }
+
         State tempState = state.get(lastIndex());
         if (tempState.isOver()) {
             tempState = InitState.of();
@@ -36,6 +42,15 @@ public class FinalState {
         state.add(tempState.update(fallCount));
 
         return Collections.unmodifiableList(state);
+    }
+
+    public boolean isFinalOverGmae() {
+        if(state.size() > MAX_BOWL_COUNT
+                || lastOfStateState() instanceof Miss
+                || lastOfStateState() instanceof DoubleGutter) {
+            return true;
+        }
+        return false;
     }
 
     public String printState() {
