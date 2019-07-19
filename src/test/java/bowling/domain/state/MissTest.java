@@ -1,12 +1,14 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.state.exception.IllegalBowlCountException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -43,5 +45,16 @@ class MissTest {
         State first = state.update(Point.of(firstBowl));
         State second = first.update(Point.of(secondBowl));
         assertThat(second.isOver()).isTrue();
+    }
+
+    @DisplayName("세번째 투구 예외처리")
+    @ParameterizedTest
+    @CsvSource({"0,9"})
+    void 세번쨰_투구_예외처리(int firstBowl, int secondBowl) {
+        State first = state.update(Point.of(firstBowl));
+        State second = first.update(Point.of(secondBowl));
+        assertThatExceptionOfType(IllegalBowlCountException.class).isThrownBy(() -> {
+            second.update(Point.of(1));
+        }).withMessageContaining("프레임 종료되었습니다.");
     }
 }
