@@ -1,33 +1,31 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 import bowling.model.frame.State;
 import bowling.utils.Pretty;
 
-import static bowling.model.frame.state.Gutter.PRINT_SYMBOL_OF_GUTTER;
+import java.util.Arrays;
+import java.util.List;
 
 public class Spare extends SecondState {
 
-    private static final String SYMBOL_OF_SPARE = "/";
+    private static final String SYMBOL = "/";
 
-    private Spare(Pins firstBowl, Pins secondBowl) {
-        super(firstBowl, secondBowl);
+    private Spare(List<DownPin> downDoublePins) {
+        super(downDoublePins);
     }
 
-    public static State valueOf(Pins firstBowl) {
-        return new Spare(firstBowl, firstBowl.saveRemaining());
+    public static State valueOf(DownPin first) {
+        return new Spare(Arrays.asList(first, first.saveRemaining()));
     }
 
     @Override
     public Score getScore() {
-        return Score.ofSpare();
+        return Score.SPARE;
     }
 
     @Override
     public String printResult() {
-        if (Gutter.isMatch(getFirstBowl())) {
-            return Pretty.putPartitionOfState(PRINT_SYMBOL_OF_GUTTER, SYMBOL_OF_SPARE);
-        }
-        return Pretty.putPartitionOfState(getFirstBowl().toString(), SYMBOL_OF_SPARE);
+        return Pretty.putPartitionOfState(getFirstSymbol(), SYMBOL);
     }
 }

@@ -1,6 +1,6 @@
 package bowling.model.frame;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 import bowling.model.frame.state.FinalState;
 import bowling.model.frame.state.Score;
 
@@ -30,8 +30,8 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public Frame bowl(Pins downPins) {
-        states.bowl(downPins);
+    public Frame bowl(DownPin downPin) {
+        states.bowl(downPin);
         return this;
     }
 

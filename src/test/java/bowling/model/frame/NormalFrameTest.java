@@ -1,13 +1,13 @@
 package bowling.model.frame;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static bowling.model.Pins.MAX;
-import static bowling.model.Pins.MIN;
+import static bowling.model.DownPin.MAX;
+import static bowling.model.DownPin.MIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
@@ -17,7 +17,7 @@ public class NormalFrameTest {
     @ValueSource(ints = {MIN, MIN + 1})
     void bowl_hit_thanCurrentFrame(int downPins) {
         // given
-        Pins first = Pins.valueOf(downPins);
+        DownPin first = DownPin.valueOf(downPins);
 
         // when
         Frame frame = NormalFrame.ofFirst();
@@ -31,7 +31,7 @@ public class NormalFrameTest {
     @Test
     void bowl_strikeFirstPinsTen_thenHasNextFrame() {
         // given
-        Pins first = Pins.valueOf(MAX);
+        DownPin first = DownPin.valueOf(MAX);
 
         // when
         Frame frame = NormalFrame.ofFirst();
@@ -45,8 +45,8 @@ public class NormalFrameTest {
     @Test
     void bowl_pinsOneAndNine_thenHasNextFrame() {
         // given
-        Pins first = Pins.valueOf(MIN + 1);
-        Pins second = Pins.valueOf(MAX - 1);
+        DownPin first = DownPin.valueOf(MIN + 1);
+        DownPin second = DownPin.valueOf(MAX - 1);
 
         // when
         Frame frame = NormalFrame.ofFirst();

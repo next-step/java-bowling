@@ -1,23 +1,24 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.Count;
+import bowling.model.DownPin;
 import bowling.model.frame.State;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static bowling.model.frame.state.Score.DEFAULT;
+import static bowling.model.Count.COUNT_THIRD;
 import static bowling.utils.Pretty.PARTITION_OF_SYMBOL;
 import static java.util.stream.Collectors.joining;
 
 public class FinalState implements State {
 
-    private static final int MAX_NUMBER_OF_ROUND = 3;
+    private static final Count MAX_OF_ROUND = COUNT_THIRD;
     private static final int LAST_INDEX = 1;
 
     private List<State> states = new ArrayList<>();
-    private int round;
+    private Count round = Count.COUNT_ZERO;
 
     private FinalState() {
         ready();
@@ -28,17 +29,17 @@ public class FinalState implements State {
     }
 
     private void ready() {
-        states.add(None.getInstance());
+        states.add(Ready.getInstance());
     }
 
     @Override
-    public State bowl(Pins pins) {
-        round++;
+    public State bowl(DownPin downPin) {
+        round = round.increase();
         if (getCurrentState().isFinished()) {
             ready();
         }
 
-        State state = getCurrentState().bowl(pins);
+        State state = getCurrentState().bowl(downPin);
 
         states.set(getLastStateIndex(), state);
         return state;
@@ -52,10 +53,6 @@ public class FinalState implements State {
         return states.size() - LAST_INDEX;
     }
 
-    List<State> getStates() {
-        return Collections.unmodifiableList(states);
-    }
-
     @Override
     public Score getScore() {
         int totalScore = states.stream()
@@ -67,24 +64,11 @@ public class FinalState implements State {
 
     @Override
     public Score calculate(Score prevScore) {
-        Score calculatedScore = prevScore.calculate(states.get(0).getScore());
-        if (calculatedScore.isCompleted()) {
-            return calculatedScore;
+        for (State state : states) {
+            prevScore = prevScore.calculate(state.getScore());
         }
-        if (states.size() == 1) {
-            return DEFAULT;
-        }
-        return calculatedScore.calculate(states.get(1).getScore());
-    }
 
-    @Override
-    public boolean isFinished() {
-        return hasNotBonusStage() || MAX_NUMBER_OF_ROUND == round;
-    }
-
-    private boolean hasNotBonusStage() {
-        return states.stream()
-                .anyMatch(Miss.class::isInstance);
+        return prevScore;
     }
 
     @Override
@@ -92,5 +76,19 @@ public class FinalState implements State {
         return states.stream()
                 .map(State::printResult)
                 .collect(joining(PARTITION_OF_SYMBOL));
+    }
+
+    @Override
+    public boolean isFinished() {
+        return hasNotBonusStage() || MAX_OF_ROUND.isMatch(round);
+    }
+
+    private boolean hasNotBonusStage() {
+        return states.stream()
+                .anyMatch(Miss.class::isInstance);
+    }
+
+    List<State> getStates() {
+        return Collections.unmodifiableList(states);
     }
 }

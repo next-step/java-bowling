@@ -1,11 +1,11 @@
 package bowling.model.frame;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 import bowling.model.frame.state.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.model.Pins.*;
+import static bowling.model.DownPin.*;
 import static bowling.model.frame.state.Score.DEFAULT;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,8 +26,8 @@ class FrameTest {
     void getResult_bowlOne_returnMiss() {
         // given
         Frame frame = Frame.initialize();
-        frame.bowl(Pins.valueOf(3))
-                .bowl(Pins.valueOf(5));
+        frame.bowl(DownPin.valueOf(3))
+                .bowl(DownPin.valueOf(5));
 
         // when
         FrameResult frameResult = frame.getResult();
@@ -43,7 +43,7 @@ class FrameTest {
         Frame frame = Frame.initialize();
         frame.bowl(DOWN_ALL)
                 .bowl(DOWN_ALL)
-                .bowl(Pins.DOWN_ALL);
+                .bowl(DownPin.DOWN_ALL);
         FrameResult frameResult = frame.getResult();
 
         // then
@@ -55,7 +55,7 @@ class FrameTest {
     void getScore_hit() {
         // given
         int countOfDownPins = 3;
-        Pins first = Pins.valueOf(countOfDownPins);
+        DownPin first = DownPin.valueOf(countOfDownPins);
 
         // when
         Frame frame = Frame.initialize();
@@ -71,7 +71,7 @@ class FrameTest {
     void getScore_gutter_zero() {
         // given
         int countOfDownPins = 0;
-        Pins first = Pins.valueOf(countOfDownPins);
+        DownPin first = DownPin.valueOf(countOfDownPins);
 
         // when
         Frame frame = Frame.initialize();
@@ -86,8 +86,8 @@ class FrameTest {
     @Test
     void getScore_miss() {
         // given
-        Pins first = Pins.valueOf(MIN + 1);
-        Pins second = Pins.valueOf(MIN + 1);
+        DownPin first = DownPin.valueOf(MIN + 1);
+        DownPin second = DownPin.valueOf(MIN + 1);
 
         // when
         Frame frame = Frame.initialize();
@@ -106,7 +106,7 @@ class FrameTest {
         Frame frame = Frame.initialize();
         Frame nextFrame = frame.bowl(DOWN_ALL);
         nextFrame.bowl(DOWN_ALL)
-                .bowl(Pins.valueOf(3));
+                .bowl(DownPin.valueOf(3));
         Score result = frame.getScore();
 
         // then
@@ -120,8 +120,8 @@ class FrameTest {
         Frame frame = Frame.initialize();
         frame.bowl(DOWN_ALL)
                 .bowl(DOWN_ALL)
-                .bowl(Pins.valueOf(3))
-                .bowl(Pins.valueOf(5));
+                .bowl(DownPin.valueOf(3))
+                .bowl(DownPin.valueOf(5));
         Score result = frame.getScore();
 
         // then
@@ -132,9 +132,9 @@ class FrameTest {
     @Test
     void getScore_spare() {
         // given
-        Pins first = Pins.valueOf(MIN + 1);
-        Pins second = Pins.valueOf(MAX - 1);
-        Pins third = Pins.valueOf(3);
+        DownPin first = DownPin.valueOf(MIN + 1);
+        DownPin second = DownPin.valueOf(MAX - 1);
+        DownPin third = DownPin.valueOf(3);
 
         // when
         Frame frame = Frame.initialize();

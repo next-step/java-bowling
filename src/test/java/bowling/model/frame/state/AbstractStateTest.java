@@ -1,6 +1,6 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 import bowling.model.frame.State;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 
@@ -11,8 +11,8 @@ public class AbstractStateTest {
         return Gutter.getInstance();
     }
 
-    protected static State ofHit(Pins downPins) {
-        return Hit.valueOf(downPins);
+    protected static State ofHit(DownPin downPin) {
+        return Hit.valueOf(downPin);
     }
 
     protected static State ofStrike() {
@@ -22,4 +22,5 @@ public class AbstractStateTest {
     protected static Score scoreOf(int count, int score) {
         return Score.of(count, score);
     }
+
 }

@@ -1,6 +1,6 @@
 package bowling.model.frame;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,17 +23,15 @@ public class Frames {
         return new Frames(Arrays.asList(Frame.initialize()));
     }
 
-    public Frames saveBowling(Pins downPins) {
-        Frame frameAfterBowling = currentFrame().bowl(downPins);
+    public void saveBowling(DownPin downPin) {
+        Frame frameAfterBowling = currentFrame().bowl(downPin);
 
         if (isEqualFrame(frameAfterBowling)) {
             frames.set(getLastIndex(), frameAfterBowling);
+            return;
         }
 
-        if (!isEqualFrame(frameAfterBowling)) {
-            frames.add(frameAfterBowling);
-        }
-        return this;
+        frames.add(frameAfterBowling);
     }
 
     private Frame currentFrame() {

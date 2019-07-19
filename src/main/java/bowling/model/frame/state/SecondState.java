@@ -1,49 +1,61 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 import bowling.model.frame.State;
 
-import static bowling.model.Pins.DOWN_ALL;
+import java.util.List;
+
 import static java.lang.Boolean.TRUE;
 
-public abstract class SecondState extends FirstState {
+public abstract class SecondState implements State {
 
-    private final Pins secondBowl;
+    private static final int FIRST = 0;
+    private static final int SECOND = 1;
 
-    SecondState(Pins firstBowl, Pins secondBowl) {
-        super(firstBowl);
-        this.secondBowl = secondBowl;
+    private final List<DownPin> doublePins;
+
+    SecondState(List<DownPin> doublePins) {
+        this.doublePins = doublePins;
     }
 
-    static State of(Pins firstBowl, Pins secondBowl) {
-        Pins totalPins = firstBowl.sum(secondBowl);
-
-        if (DOWN_ALL.equals(totalPins)) {
-            return Spare.valueOf(firstBowl);
-        }
-        return Miss.valueOf(firstBowl, secondBowl);
+    List<DownPin> getDoublePins() {
+        return doublePins;
     }
 
-    Pins getSecondBowl() {
-        return secondBowl;
+    DownPin getFirstDownPins() {
+        return doublePins.get(FIRST);
+    }
+
+    DownPin getSecondDownPins() {
+        return doublePins.get(SECOND);
     }
 
     @Override
-    public State bowl(Pins secondBowl) {
+    public State bowl(DownPin secondBowl) {
         throw new CanNotBowlException();
     }
 
     @Override
     public Score calculate(Score prevScore) {
-        Score calculatedScore = prevScore.calculate(getFirstBowl());
-        if (!calculatedScore.isCompleted()) {
-            calculatedScore = calculatedScore.calculate(getSecondBowl());
+        for (DownPin downPin : doublePins) {
+            Score score = Score.of(downPin);
+            prevScore = prevScore.calculate(score);
         }
-        return calculatedScore;
+
+        return prevScore;
     }
 
     @Override
     public boolean isFinished() {
         return TRUE;
+    }
+
+    String getFirstSymbol() {
+        DownPin firstDownPins = getFirstDownPins();
+        if (Gutter.isMatch(firstDownPins)) {
+            return Gutter.SYMBOL;
+        }
+
+        return firstDownPins.toString();
     }
 }

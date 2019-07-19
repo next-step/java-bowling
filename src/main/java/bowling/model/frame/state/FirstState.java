@@ -1,40 +1,35 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 import bowling.model.frame.State;
 
+import static bowling.model.DownPin.DOWN_ALL;
 import static java.lang.Boolean.FALSE;
 
 public abstract class FirstState implements State {
 
-    private final Pins firstBowl;
+    private final DownPin first;
 
-    FirstState(Pins firstBowl) {
-        this.firstBowl = firstBowl;
+    FirstState(DownPin first) {
+        this.first = first;
     }
 
-    static State of(Pins pins) {
-        if (Gutter.isMatch(pins)) {
-            return Gutter.getInstance();
-        }
-        if (Strike.isMatch(pins)) {
-            return Strike.getInstance();
-        }
-        return Hit.valueOf(pins);
-    }
-
-    Pins getFirstBowl() {
-        return firstBowl;
+    DownPin getFirst() {
+        return first;
     }
 
     @Override
-    public State bowl(Pins secondBowl) {
-        return SecondState.of(firstBowl, secondBowl);
+    public State bowl(DownPin second) {
+        DownPin totalCount = first.sum(second);
+        if (totalCount.equals(DOWN_ALL)) {
+            return Spare.valueOf(first);
+        }
+        return Miss.valueOf(first, second);
     }
 
     @Override
     public Score getScore() {
-        return Score.parse(firstBowl);
+        return Score.of(first.count());
     }
 
     @Override

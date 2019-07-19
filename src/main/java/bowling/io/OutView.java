@@ -1,5 +1,6 @@
 package bowling.io;
 
+import bowling.model.Board;
 import bowling.model.Player;
 import bowling.model.frame.FrameNumber;
 import bowling.model.frame.Results;
@@ -70,7 +71,7 @@ public class OutView {
     }
 
     private static void printEmpty(StringBuilder stringBuilder, int size) {
-        IntStream.rangeClosed(size, FrameNumber.MAX)
+        IntStream.range(size, FrameNumber.MAX)
                 .mapToObj((ignore) -> Pretty.alignCenter(EMPTY).concat(PARTITION))
                 .forEach(stringBuilder::append);
     }

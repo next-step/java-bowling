@@ -15,10 +15,7 @@ public class FrameResult {
     }
 
     static FrameResult of(Score score, State state) {
-        if (!score.isCompleted()) {
-            return new FrameResult(DEFAULT_SCORE, state.printResult());
-        }
-        if (state.isFinished()) {
+        if (score.isCompleted() && state.isFinished()) {
             return new FrameResult(score.getScore(), state.printResult());
         }
         return new FrameResult(DEFAULT_SCORE, state.printResult());

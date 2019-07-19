@@ -1,6 +1,6 @@
 package bowling.model.frame;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 import bowling.model.frame.state.Score;
 
 public abstract class Frame {
@@ -25,9 +25,9 @@ public abstract class Frame {
 
     abstract Score getScore();
 
-    abstract Score calculate(Score score);
+    abstract Score calculate(Score prevScore);
 
-    public abstract Frame bowl(Pins downPin);
+    public abstract Frame bowl(DownPin downPin);
 
     public abstract FrameResult getResult();
 

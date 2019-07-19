@@ -1,13 +1,13 @@
 package bowling.model.frame;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static bowling.model.Pins.*;
+import static bowling.model.DownPin.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FramesTest {
@@ -27,8 +27,8 @@ class FramesTest {
     void saveBowlHistory_pinZeroAndZero_returnFramesTwo() {
         // given  && when
         Frames frames = Frames.initialize();
-        frames.saveBowling(DOWN_ZERO)
-                .saveBowling(DOWN_ZERO);
+        frames.saveBowling(DOWN_ZERO);
+        frames.saveBowling(DOWN_ZERO);
         List<Frame> result = frames.getFrames();
 
         // then
@@ -39,15 +39,15 @@ class FramesTest {
     @Test
     void saveBowlHistory_pinStrikeAndMiss() {
         // given
-        Pins firstBowl = Pins.DOWN_ALL;
-        Pins secondBowl = Pins.DOWN_ZERO;
-        Pins thirdBowl = Pins.valueOf(MAX - 1);
+        DownPin firstBowl = DownPin.DOWN_ALL;
+        DownPin secondBowl = DownPin.DOWN_ZERO;
+        DownPin thirdBowl = DownPin.valueOf(MAX - 1);
 
         // when
         Frames frames = Frames.initialize();
-        frames.saveBowling(firstBowl)
-                .saveBowling(secondBowl)
-                .saveBowling(thirdBowl);
+        frames.saveBowling(firstBowl);
+        frames.saveBowling(secondBowl);
+        frames.saveBowling(thirdBowl);
 
         // then
         assertThat(frames.getFrames()).hasSize(3);

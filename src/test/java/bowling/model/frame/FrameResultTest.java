@@ -1,15 +1,16 @@
 package bowling.model.frame;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 import bowling.model.frame.state.AbstractStateTest;
 import bowling.model.frame.state.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.model.Pins.MAX;
-import static bowling.model.Pins.MIN;
+import static bowling.model.Count.ONCE;
+import static bowling.model.Count.ZERO;
+import static bowling.model.DownPin.MAX;
+import static bowling.model.DownPin.MIN;
 import static bowling.model.frame.state.Score.DEFAULT_SCORE;
-import static bowling.model.frame.state.Score.ZERO_OF_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FrameResultTest extends AbstractStateTest {
@@ -18,12 +19,12 @@ class FrameResultTest extends AbstractStateTest {
     @Test
     void getState_hit() {
         // given
-        Pins downPins = Pins.valueOf(MAX - 1);
-        State state = ofHit(downPins);
+        DownPin downPin = DownPin.valueOf(MAX - 1);
+        State state = ofHit(downPin);
 
         // when
-        FrameResult frameResult = FrameResult.of(Score.parse(downPins), state);
-        String expectedState = String.valueOf(downPins.count());
+        FrameResult frameResult = FrameResult.of(Score.of(downPin), state);
+        String expectedState = String.valueOf(downPin.count());
 
         // then
         assertThat(frameResult).extracting(FrameResult::getScore).isEqualTo(DEFAULT_SCORE);
@@ -34,11 +35,11 @@ class FrameResultTest extends AbstractStateTest {
     @Test
     void getState_gutter() {
         // given
-        Pins downPins = Pins.valueOf(MIN);
+        DownPin downPin = DownPin.valueOf(MIN);
         State state = ofGutter();
 
         // when
-        FrameResult frameResult = FrameResult.of(Score.parse(downPins), state);
+        FrameResult frameResult = FrameResult.of(Score.of(downPin), state);
 
         // then
         assertThat(frameResult).extracting(FrameResult::getScore).isEqualTo(DEFAULT_SCORE);
@@ -50,7 +51,7 @@ class FrameResultTest extends AbstractStateTest {
     void getScore_isFinishedAndCalculateComplete_success() {
         // given
         int totalScore = 14;
-        Score score = scoreOf(ZERO_OF_COUNT, totalScore);
+        Score score = scoreOf(ZERO, totalScore);
         State state = ofStrike();
 
         // when
@@ -64,7 +65,7 @@ class FrameResultTest extends AbstractStateTest {
     @Test
     void getScore_isFinishedAndCalculateComplete_success2() {
         // given
-        Score score = scoreOf(ZERO_OF_COUNT + 1, 10);
+        Score score = scoreOf(ONCE, 10);
         State state = ofStrike();
 
         // when

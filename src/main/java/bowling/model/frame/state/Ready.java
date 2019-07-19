@@ -1,18 +1,18 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.DownPin;
 import bowling.model.frame.State;
 
 import static bowling.model.frame.state.Score.DEFAULT;
 import static java.lang.Boolean.FALSE;
 
-public class None implements State {
+public class Ready implements State {
 
-    private static final None SELF = new None();
+    private static final Ready SELF = new Ready();
 
-    public static final String SYMBOL_OF_NONE = " ";
+    private static final String SYMBOL = " ";
 
-    private None() {
+    private Ready() {
     }
 
     public static State getInstance() {
@@ -20,8 +20,14 @@ public class None implements State {
     }
 
     @Override
-    public State bowl(Pins pins) {
-        return FirstState.of(pins);
+    public State bowl(DownPin first) {
+        if (Gutter.isMatch(first)) {
+            return Gutter.getInstance();
+        }
+        if (Strike.isMatch(first)) {
+            return Strike.getInstance();
+        }
+        return Hit.valueOf(first);
     }
 
     @Override
@@ -31,7 +37,7 @@ public class None implements State {
 
     @Override
     public Score calculate(Score score) {
-        return score;
+        return Score.DEFAULT;
     }
 
     @Override
@@ -41,6 +47,6 @@ public class None implements State {
 
     @Override
     public String printResult() {
-        return SYMBOL_OF_NONE;
+        return SYMBOL;
     }
 }

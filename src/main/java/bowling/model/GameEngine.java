@@ -12,12 +12,8 @@ class GameEngine {
         this.gameEngine = Frames.initialize();
     }
 
-    GameEngine play(Pins downPins) {
-        if (gameEngine.isGameOver()) {
-            throw new GameOverException();
-        }
-        gameEngine = gameEngine.saveBowling(downPins);
-        return this;
+    void play(DownPin downPin) {
+        gameEngine.saveBowling(downPin);
     }
 
     Results results() {

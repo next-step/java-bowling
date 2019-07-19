@@ -1,59 +1,56 @@
 package bowling.model.frame.state;
 
-import bowling.model.Pins;
+import bowling.model.Count;
+import bowling.model.DownPin;
 
-import static bowling.model.Pins.MAX;
+import static bowling.model.Count.*;
+import static bowling.model.DownPin.MAX;
 
 public class Score {
 
     public static final int DEFAULT_SCORE = -1;
-    public static final int ZERO_OF_COUNT = 0;
-    private static final int ONCE_OF_COUNT = 1;
-    private static final int TWICE_OF_COUNT = 2;
-    public static final Score DEFAULT = Score.of(ZERO_OF_COUNT, DEFAULT_SCORE);
+    public static final Score DEFAULT = Score.of(ZERO, DEFAULT_SCORE);
+    static final Score SPARE = Score.of(ONCE, MAX);
+    static final Score STRIKE = Score.of(TWICE, MAX);
 
-    private int count;
+    private Count count;
     private int score;
 
-    private Score(int count, int score) {
+    private Score(Count count, int score) {
         this.count = count;
         this.score = score;
     }
 
-    public static Score parse(Pins pins) {
-        return of(ZERO_OF_COUNT, pins.count());
+    public static Score of(int score) {
+        return new Score(COUNT_ZERO, score);
     }
 
-    static Score of(int score) {
-        return of(ZERO_OF_COUNT, score);
-    }
-
-    static Score ofStrike() {
-        return of(TWICE_OF_COUNT, MAX);
-    }
-
-    static Score ofSpare() {
-        return of(ONCE_OF_COUNT, MAX);
+    public static Score of(DownPin downPin) {
+        return new Score(COUNT_ZERO, downPin.count());
     }
 
     static Score of(int count, int score) {
-        return new Score(count, score);
-    }
-
-    Score calculate(Pins pins) {
-        return calculate(parse(pins));
+        return new Score(Count.of(count), score);
     }
 
     Score calculate(Score score) {
-        return new Score(this.count - 1, this.score + score.score);
+        if (isDefaultValue(score) || isCompleted()) {
+            return this;
+        }
+
+        return new Score(count.decrease(), this.score + score.score);
     }
 
     public boolean isCompleted() {
-        return ZERO_OF_COUNT == count;
+        return COUNT_ZERO.isMatch(count);
     }
 
     public int getScore() {
         return score;
+    }
+
+    private boolean isDefaultValue(Score score) {
+        return DEFAULT_SCORE == score.score;
     }
 
     @Override
