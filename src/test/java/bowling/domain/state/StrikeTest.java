@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Point;
 import bowling.domain.state.exception.IllegalBowlCountException;
+import bowling.domain.state.exception.IllegalIndexOfExcpetion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,9 +48,16 @@ class StrikeTest {
     @DisplayName("세번째 투구 예외처리")
     @Test
     void 세번쨰_투구_예외처리() {
-        State first = state.update(Point.of(10));
         assertThatExceptionOfType(IllegalBowlCountException.class).isThrownBy(() -> {
-            first.update(Point.of(1));
+            state.update(Point.of(10)).update(Point.of(1));
         }).withMessageContaining("프레임 종료되었습니다.");
+    }
+
+    @DisplayName("점수 가져오기 예외처리")
+    @Test
+    void 점수_가져오기_예외처리() {
+        assertThatExceptionOfType(IllegalIndexOfExcpetion.class).isThrownBy(() -> {
+            state.update(Point.of(10)).getSecondBowl();
+        }).withMessageContaining("현재 INDEX는 데이터가 없습니다.");
     }
 }

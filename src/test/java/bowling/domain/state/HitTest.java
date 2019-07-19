@@ -1,11 +1,13 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.state.exception.IllegalIndexOfExcpetion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -53,5 +55,13 @@ public class HitTest {
         State updateState = state.update(Point.of(1));
         State updateStateSpare = updateState.update(Point.of(8));
         assertThat(updateStateSpare instanceof Miss).isTrue();
+    }
+
+    @DisplayName("점수 가져오기 예외처리")
+    @Test
+    void 점수_가져오기_예외처리() {
+        assertThatExceptionOfType(IllegalIndexOfExcpetion.class).isThrownBy(() -> {
+            state.update(Point.of(3)).getSecondBowl();
+        }).withMessageContaining("현재 INDEX는 데이터가 없습니다.");
     }
 }
