@@ -38,7 +38,7 @@ public class HitTest {
     @Test
     void HIT_종료_상태() {
         State hit = state.update(Point.of(1), false);
-        assertThat(hit.isOver()).isFalse();
+        assertThat(hit.isOver(false)).isFalse();
     }
 
     @DisplayName("Spare 상태로 반환")

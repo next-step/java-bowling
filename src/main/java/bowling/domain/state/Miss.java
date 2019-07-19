@@ -29,7 +29,7 @@ public class Miss implements State {
     }
 
     @Override
-    public boolean isOver() {
+    public boolean isOver(boolean isFinalFrame) {
         return Boolean.TRUE;
     }
 
@@ -53,5 +53,13 @@ public class Miss implements State {
             return Gutter.DISPLAY_STATE;
         }
         return String.valueOf(secondBowl.fallCount());
+    }
+
+    @Override
+    public String toString() {
+        return "Miss{" +
+                "firstBowl=" + firstBowl +
+                ", secondBowl=" + secondBowl +
+                '}';
     }
 }

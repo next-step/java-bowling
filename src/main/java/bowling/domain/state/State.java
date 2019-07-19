@@ -15,7 +15,7 @@ import bowling.domain.Point;
 public interface State {
     State update(Point fallCount, boolean isFinalFrame);
 
-    boolean isOver();
+    boolean isOver(boolean isFinalFrame);
 
     String printState();
 

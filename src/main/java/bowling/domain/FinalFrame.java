@@ -1,7 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.state.FinalState;
+import bowling.domain.state.InitState;
 import bowling.domain.state.State;
+import bowling.exception.OutOfBowlCountException;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -14,25 +15,28 @@ import bowling.domain.state.State;
  * create date  : 2019-07-19 15:29
  */
 public class FinalFrame extends Frame {
-    private FinalState state;
+    private State state;
 
     public FinalFrame() {
-        this.state = new FinalState();
+        this.state = InitState.of();
     }
 
     @Override
     Frame bowl(int fallCount) {
-        state.update(Point.of(fallCount), true);
+        if (isGameOver()) {
+            throw new OutOfBowlCountException();
+        }
+        state = state.update(Point.of(fallCount), true);
         return this;
     }
 
     @Override
     boolean isGameOver() {
-        return state.isOver();
+        return state.isOver(true);
     }
 
     @Override
     State getState() {
-        return (State) state;
+        return state;
     }
 }

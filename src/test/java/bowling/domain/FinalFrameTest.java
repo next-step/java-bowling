@@ -3,6 +3,8 @@ package bowling.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -26,14 +28,17 @@ public class FinalFrameTest {
     }
 
     @DisplayName("FinalFrame - 두번 투구 게임종료")
-    @Test
-    void 프레임_생성_초기화() {
-        frame.bowl(10);
-        frame.bowl(10);
-        frame.bowl(10);
-        assertThat(frame.getState().printState()).isEqualTo("X|X|X");
-//        assertAll(
-//                () -> assertThat(frame.isGameOver()).isFalse();
-//        );
+    @ParameterizedTest
+    @CsvSource({
+            "1,8,1|8",
+            "0,0,-|-"
+    })
+    void 두번_투구_게임종료(int firstBowl, int secondBowl, String display) {
+        Frame first = frame.bowl(firstBowl);
+        Frame second = first.bowl(secondBowl);
+        assertAll(
+                () -> assertThat(second.isGameOver()).isTrue(),
+                () -> assertThat(second.getState().printState()).isEqualTo(display)
+        );
     }
 }

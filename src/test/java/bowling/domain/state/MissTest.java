@@ -44,7 +44,7 @@ class MissTest {
     void Miss_종료_상태(int firstBowl, int secondBowl) {
         State first = state.update(Point.of(firstBowl), false);
         State second = first.update(Point.of(secondBowl), false);
-        assertThat(second.isOver()).isTrue();
+        assertThat(second.isOver(false)).isTrue();
     }
 
     @DisplayName("세번째 투구 예외처리")

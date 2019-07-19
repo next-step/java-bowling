@@ -24,11 +24,17 @@ public class Strike implements State {
 
     @Override
     public State update(Point fallCount, boolean isFinalFrame) {
+        if (isFinalFrame) {
+            return nextState(fallCount, isFinalFrame);
+        }
         throw new IllegalBowlCountException();
     }
 
     @Override
-    public boolean isOver() {
+    public boolean isOver(boolean isFinalFrame) {
+        if (isFinalFrame) {
+            return Boolean.FALSE;
+        }
         return Boolean.TRUE;
     }
 
@@ -45,5 +51,20 @@ public class Strike implements State {
     @Override
     public Point getSecondBowl() {
         throw new IllegalIndexOfExcpetion();
+    }
+
+    private State nextState(Point fallCount, boolean isFinalFrame) {
+        if (fallCount.isStrike()) {
+            return new DoubleStrike(this, fallCount);
+        }
+        State lastState = InitState.of().update(fallCount, isFinalFrame);
+        return new FinalState(this, lastState);
+    }
+
+    @Override
+    public String toString() {
+        return "Strike{" +
+                "firstBowl=" + firstBowl +
+                '}';
     }
 }

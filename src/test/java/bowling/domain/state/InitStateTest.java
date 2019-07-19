@@ -33,7 +33,7 @@ public class InitStateTest {
     void 상태값_초기화_생성() {
         State state = InitState.of();
         assertAll(
-                () -> assertThat(state.isOver()).isFalse(),
+                () -> assertThat(state.isOver(false)).isFalse(),
                 () -> assertThat(state.printState()).isEqualTo("| ")
         );
     }

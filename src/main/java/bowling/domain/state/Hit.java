@@ -30,7 +30,7 @@ public class Hit implements State {
     }
 
     @Override
-    public boolean isOver() {
+    public boolean isOver(boolean isFinalFrame) {
         return Boolean.FALSE;
     }
 
@@ -47,5 +47,12 @@ public class Hit implements State {
     @Override
     public Point getSecondBowl() {
         throw new IllegalIndexOfExcpetion();
+    }
+
+    @Override
+    public String toString() {
+        return "Hit{" +
+                "firstBowl=" + firstBowl +
+                '}';
     }
 }

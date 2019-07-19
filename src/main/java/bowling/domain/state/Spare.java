@@ -26,11 +26,18 @@ public class Spare implements State {
 
     @Override
     public State update(Point fallCount, boolean isFinalFrame) {
+        if (isFinalFrame) {
+            State lastState = InitState.of().update(fallCount, isFinalFrame);
+            return new FinalState(this, lastState);
+        }
         throw new IllegalBowlCountException();
     }
 
     @Override
-    public boolean isOver() {
+    public boolean isOver(boolean isFinalFrame) {
+        if (isFinalFrame) {
+            return Boolean.FALSE;
+        }
         return Boolean.TRUE;
     }
 
@@ -47,5 +54,13 @@ public class Spare implements State {
     @Override
     public Point getSecondBowl() {
         return secondBowl;
+    }
+
+    @Override
+    public String toString() {
+        return "Spare{" +
+                "firstBowl=" + firstBowl +
+                ", secondBowl=" + secondBowl +
+                '}';
     }
 }

@@ -32,7 +32,7 @@ public class InitState implements State {
     }
 
     @Override
-    public boolean isOver() {
+    public boolean isOver(boolean isFinalFrame) {
         return Boolean.FALSE;
     }
 

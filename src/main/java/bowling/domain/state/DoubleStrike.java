@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
-import bowling.exception.IllegalBowlCountException;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -11,32 +10,35 @@ import bowling.exception.IllegalBowlCountException;
  * | blog         : sksggg123.github.io     |
  * ------------------------------------------
  * project      : java-bowling
- * create date  : 2019-07-19 13:41
+ * create date  : 2019-07-20 01:10
  */
-public class DoubleGutter implements State {
-    public static final String DELIMITER = "|";
-    private static final String DISPLAT_STATE = "-";
-    private final State firstBowl;
-    private final Point secondBowl;
+public class DoubleStrike implements State {
+    public static final String DISPLAY_STATE = "X|X";
+    private State firstBowl;
+    private Point secondBowl;
 
-    public DoubleGutter(State state, Point secondBowl) {
+    public DoubleStrike(State state, Point fallCount) {
         this.firstBowl = state;
-        this.secondBowl = secondBowl;
+        this.secondBowl = fallCount;
     }
 
     @Override
     public State update(Point fallCount, boolean isFinalFrame) {
-        throw new IllegalBowlCountException();
+        State lastState = InitState.of().update(fallCount, isFinalFrame);
+        return new FinalState(this, lastState);
     }
 
     @Override
     public boolean isOver(boolean isFinalFrame) {
+        if (isFinalFrame) {
+            return Boolean.FALSE;
+        }
         return Boolean.TRUE;
     }
 
     @Override
     public String printState() {
-        return firstBowl.printState() + DELIMITER + DISPLAT_STATE;
+        return DISPLAY_STATE;
     }
 
     @Override
@@ -51,7 +53,7 @@ public class DoubleGutter implements State {
 
     @Override
     public String toString() {
-        return "DoubleGutter{" +
+        return "DoubleStrike{" +
                 "firstBowl=" + firstBowl +
                 ", secondBowl=" + secondBowl +
                 '}';
