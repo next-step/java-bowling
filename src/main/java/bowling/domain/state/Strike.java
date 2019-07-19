@@ -15,7 +15,7 @@ import bowling.domain.state.exception.IllegalIndexOfExcpetion;
  * create date  : 2019-07-19 12:49
  */
 public class Strike implements State {
-    private static final String DISPLAY_STATE = "X";
+    private static final String DISPLAY_STATE = " X |";
     private Point firstBowl;
 
     public Strike(Point fallCount) {
