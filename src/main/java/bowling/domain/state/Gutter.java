@@ -10,24 +10,19 @@ import bowling.domain.Point;
  * | blog         : sksggg123.github.io     |
  * ------------------------------------------
  * project      : java-bowling
- * create date  : 2019-07-19 12:01
+ * create date  : 2019-07-19 12:32
  */
-public class InitState implements State {
-    private static final String DISPLAY_STATE = "| ";
+public class Gutter implements State {
+    private static final String DISPLAY_STATE = "-";
+    private Point firstBowl;
 
-    public static State of() {
-        return new InitState();
+    public Gutter(Point firstBowl) {
+        this.firstBowl = firstBowl;
     }
 
     @Override
     public State update(Point fallCount) {
-        if (fallCount.isStrike()) {
-            // TODO Strike 상태 반환
-        }
-        if (fallCount.isGutter()) {
-            return new Gutter(Point.of(0));
-        }
-        return new Hit(fallCount);
+        return null;
     }
 
     @Override

@@ -32,10 +32,17 @@ public class PointTest {
         assertThat(point.fallCount()).isEqualTo(10);
     }
 
-    @DisplayName("남은 포인트 가지고 오기")
+    @DisplayName("스트라이크 확인")
     @Test
-    void 남은_포인트_가지고오기() {
-        Point point = Point.of(9);
-        assertThat(point.remainPoint()).isEqualTo(1);
+    void Point가_스트라이크인지_확인() {
+        Point point = Point.of(10);
+        assertThat(point.isStrike()).isTrue();
+    }
+
+    @DisplayName("거터 확인")
+    @Test
+    void Point가_거터인지_확인() {
+        Point point = Point.of(0);
+        assertThat(point.isGutter()).isTrue();
     }
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -15,9 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * | blog         : sksggg123.github.io     |
  * ------------------------------------------
  * project      : java-bowling
- * create date  : 2019-07-19 12:06
+ * create date  : 2019-07-19 12:43
  */
-public class HitTest {
+class GutterTest {
     private State state;
 
     @BeforeEach
@@ -25,17 +26,17 @@ public class HitTest {
         state = InitState.of();
     }
 
-    @DisplayName("Hit 상태출력")
+    @DisplayName("Gutter 상태출력")
     @Test
-    void HIT_상태_출력() {
-        State hit = state.update(Point.of(1));
-        assertThat(hit.printState()).isEqualTo("1");
+    void GUTTER_상태_출력() {
+        State hit = state.update(Point.of(0));
+        assertThat(hit.printState()).isEqualTo("-");
     }
 
-    @DisplayName("Hit 게임종료 상태")
+    @DisplayName("GUTTER 게임종료 상태")
     @Test
-    void HIT_종료_상태() {
-        State hit = state.update(Point.of(1));
+    void GUTTER_종료_상태() {
+        State hit = state.update(Point.of(0));
         assertThat(hit.isOver()).isFalse();
     }
 }

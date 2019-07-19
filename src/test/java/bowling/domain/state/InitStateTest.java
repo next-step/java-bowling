@@ -42,4 +42,11 @@ public class InitStateTest {
         State updateState = state.update(Point.of(1));
         assertThat(updateState instanceof Hit).isTrue();
     }
+
+    @DisplayName("Gutter 상태로 반환")
+    @Test
+    void GUTTER_상태로_반환() {
+        State updateState = state.update(Point.of(0));
+        assertThat(updateState instanceof Gutter).isTrue();
+    }
 }

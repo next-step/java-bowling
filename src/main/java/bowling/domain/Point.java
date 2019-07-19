@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.state.Gutter;
+
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -13,6 +15,7 @@ package bowling.domain;
 public class Point {
     private static final int MAX_POINT = 10;
     private static final String EXCESS_POINT_EXCEPTION_MESSAGE = "점수는 %d 이하의 자연수만 가능합니다.";
+    private static final int GUTTER = 0;
     private final int point;
 
     private Point(int point) {
@@ -30,8 +33,8 @@ public class Point {
         return point;
     }
 
-    public int remainPoint() {
-        return MAX_POINT - point;
+    public boolean isGutter() {
+        return point == GUTTER;
     }
 
     public boolean isStrike() {
