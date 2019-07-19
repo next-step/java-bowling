@@ -30,6 +30,9 @@ public class NormalFrame extends Frame {
     @Override
     public NormalFrame bowl(int fallCount) {
         if (isGameOver()) {
+            // TODO 예외처리
+        }
+        if (isNormalFrameOver()) {
             // TODO FinalFrame 생성 반환
         }
         if(state.isOver()) {
