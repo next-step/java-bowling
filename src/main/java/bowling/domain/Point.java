@@ -34,6 +34,10 @@ public class Point {
         return MAX_POINT - point;
     }
 
+    public boolean isStrike() {
+        return point == MAX_POINT;
+    }
+
     @Override
     public String toString() {
         return "Point{" +
