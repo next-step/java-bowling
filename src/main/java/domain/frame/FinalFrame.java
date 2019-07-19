@@ -69,4 +69,10 @@ public class FinalFrame implements Frame {
     public State getState() {
         return new FinalState(states);
     }
+
+    @Override
+    public boolean isSameFrame(Frame targetFrame) {
+        return targetFrame.getIndex().equals(getIndex());
+    }
+
 }

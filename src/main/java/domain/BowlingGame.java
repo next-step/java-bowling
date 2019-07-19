@@ -1,22 +1,20 @@
 package domain;
 
 import domain.frame.Frame;
-import domain.frame.GameOverException;
+import domain.frame.Frames;
 import domain.frame.NormalFrame;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class BowlingGame {
 
     private Player player;
-    private List<Frame> frames;
+    private Frames frames;
 
     private BowlingGame(Player player) {
         this.player = player;
-        this.frames = new ArrayList<>(Arrays.asList(NormalFrame.initFrame()));
+        this.frames = Frames.from(Arrays.asList(NormalFrame.initFrame()));
     }
 
     public static BowlingGame from(Player player) {
@@ -24,29 +22,15 @@ public class BowlingGame {
     }
 
     public void play(Pins fallenPins) {
-        if (isGameOver()) {
-            throw new GameOverException();
-        }
-        Frame bowledFrame = currentFrame().fillFrame(fallenPins);
-
-        if (bowledFrame.getIndex().isSameIndex(currentFrame().getIndex())) {
-            frames.set(lastFrameIndex(), bowledFrame);
-        }
-        if (!bowledFrame.getIndex().isSameIndex(currentFrame().getIndex())) {
-            frames.add(bowledFrame);
-        }
+        frames.play(fallenPins);
     }
 
     public Frame currentFrame() {
-        return frames.get(lastFrameIndex());
+        return frames.currentFrame();
     }
 
     public boolean isGameOver() {
-        return frames.get(lastFrameIndex()).isGameOver();
-    }
-
-    private int lastFrameIndex() {
-        return frames.size() - 1;
+        return frames.isGameOver();
     }
 
     public Player getPlayer() {
@@ -54,6 +38,6 @@ public class BowlingGame {
     }
 
     public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
+        return frames.getFrames();
     }
 }

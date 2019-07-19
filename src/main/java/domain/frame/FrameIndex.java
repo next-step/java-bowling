@@ -28,8 +28,8 @@ public class FrameIndex {
         return from(frameIndex + INCREMENT_AMOUNT);
     }
 
-    public boolean isSameIndex(FrameIndex target) {
-        return frameIndex == target.frameIndex;
+    boolean isSameIndex(Frame targetFrame) {
+        return this.equals(targetFrame.getIndex());
     }
 
     private void validationFrameNumber(int frameNumber) {

@@ -56,4 +56,9 @@ public class NormalFrame implements Frame {
     public State getState() {
         return state;
     }
+
+    @Override
+    public boolean isSameFrame(Frame targetFrame) {
+        return index.isSameIndex(targetFrame);
+    }
 }

@@ -12,4 +12,6 @@ public interface Frame {
     FrameIndex getIndex();
 
     State getState();
+
+    boolean isSameFrame(Frame targetFrame);
 }
