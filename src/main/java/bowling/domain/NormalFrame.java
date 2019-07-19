@@ -49,6 +49,10 @@ public class NormalFrame extends Frame {
         return state;
     }
 
+    public boolean isNormalFrameOver() {
+        return frameNumber.isNormalFrameOver();
+    }
+
     private NormalFrame nextFrame(int fallCount) {
         NormalFrame newFrame = new NormalFrame(frameNumber.next());
         newFrame.bowl(fallCount);

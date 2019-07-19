@@ -49,6 +49,37 @@ public class NormalFrameTest {
         assertThat(origin).isNotSameAs(newFrame);
     }
 
+    @DisplayName("FinalFrame 종료 확인 - FrameNumber가 10이면 종료이다.")
+    @Test
+    void 전체_프레임_종료() {
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        assertThat(normalFrame.isGameOver()).isTrue();
+    }
+
+    @DisplayName("NormalFrame 종료 확인 - FrameNumber가 9이면 종료이다.")
+    @Test
+    void 기본_프레임_종료() {
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        normalFrame = normalFrame.bowl(10);
+        assertThat(normalFrame.isNormalFrameOver()).isTrue();
+    }
+
     @DisplayName("Strike")
     @Test
     void 첫투구_STRIKE() {
