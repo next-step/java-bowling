@@ -49,4 +49,11 @@ public class InitStateTest {
         State updateState = state.update(Point.of(0));
         assertThat(updateState instanceof Gutter).isTrue();
     }
+
+    @DisplayName("Strike 상태로 반환")
+    @Test
+    void STRIKE_상태로_반환() {
+        State updateState = state.update(Point.of(10));
+        assertThat(updateState instanceof Strike).isTrue();
+    }
 }
