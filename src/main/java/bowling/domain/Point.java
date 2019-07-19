@@ -41,6 +41,11 @@ public class Point {
         return point == MAX_POINT;
     }
 
+    public boolean isSpare(Point fallCount) {
+        int sparePointCheck = point + fallCount.fallCount();
+        return sparePointCheck == MAX_POINT;
+    }
+
     @Override
     public String toString() {
         return "Point{" +

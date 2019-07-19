@@ -22,7 +22,14 @@ public class Gutter implements State {
 
     @Override
     public State update(Point fallCount) {
-        return null;
+        // TODO fallCount 임계관련 예외처리 필요
+        if (firstBowl.isSpare(fallCount)) {
+            return new Spare(this, fallCount);
+        }
+        if (fallCount.isGutter()) {
+            return new DoubleGutter(this, fallCount);
+        }
+        return new Miss(this, fallCount);
     }
 
     @Override
@@ -33,5 +40,16 @@ public class Gutter implements State {
     @Override
     public String printState() {
         return DISPLAY_STATE;
+    }
+
+    @Override
+    public Point getFirstBowl() {
+        return firstBowl;
+    }
+
+    @Override
+    public Point getSecondBowl() {
+        // TODO 예외처리
+        return null;
     }
 }

@@ -18,4 +18,8 @@ public interface State {
     boolean isOver();
 
     String printState();
+
+    Point getFirstBowl();
+
+    Point getSecondBowl();
 }

@@ -22,10 +22,10 @@ public class InitState implements State {
     @Override
     public State update(Point fallCount) {
         if (fallCount.isStrike()) {
-            return new Strike(Point.of(10));
+            return new Strike(fallCount);
         }
         if (fallCount.isGutter()) {
-            return new Gutter(Point.of(0));
+            return new Gutter(fallCount);
         }
         return new Hit(fallCount);
     }
@@ -38,5 +38,17 @@ public class InitState implements State {
     @Override
     public String printState() {
         return DISPLAY_STATE;
+    }
+
+    @Override
+    public Point getFirstBowl() {
+        // TODO 예외처리
+        return null;
+    }
+
+    @Override
+    public Point getSecondBowl() {
+        // TODO 예외처리
+        return null;
     }
 }

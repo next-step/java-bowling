@@ -10,18 +10,22 @@ import bowling.domain.Point;
  * | blog         : sksggg123.github.io     |
  * ------------------------------------------
  * project      : java-bowling
- * create date  : 2019-07-19 12:49
+ * create date  : 2019-07-19 13:09
  */
-public class Strike implements State {
-    private static final String DISPLAY_STATE = "X";
-    private Point firstBowl;
+public class Miss implements State {
+    public static final String DELIMITER = "|";
+    private final State firstBowl;
+    private final Point secondBowl;
 
-    public Strike(Point fallCount) {
-        this.firstBowl = fallCount;
+    public Miss(State state, Point fallCount) {
+        this.firstBowl = state;
+        this.secondBowl = fallCount;
     }
 
     @Override
     public State update(Point fallCount) {
+        // TODO fallCount 임계관련 예외처리 필요
+        // TODO 게임종료 예외처리 필요
         return null;
     }
 
@@ -32,17 +36,16 @@ public class Strike implements State {
 
     @Override
     public String printState() {
-        return DISPLAY_STATE;
+        return firstBowl.printState() + DELIMITER + secondBowl.fallCount() + " " + DELIMITER;
     }
 
     @Override
     public Point getFirstBowl() {
-        return firstBowl;
+        return firstBowl.getFirstBowl();
     }
 
     @Override
     public Point getSecondBowl() {
-        // TODO 예외처리
-        return null;
+        return secondBowl;
     }
 }

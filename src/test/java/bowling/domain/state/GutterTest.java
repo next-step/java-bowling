@@ -39,4 +39,28 @@ class GutterTest {
         State hit = state.update(Point.of(0));
         assertThat(hit.isOver()).isFalse();
     }
+
+    @DisplayName("Spare 상태로 반환")
+    @Test
+    void SPARE_상태로_반환() {
+        State updateState = state.update(Point.of(0));
+        State updateStateSpare = updateState.update(Point.of(10));
+        assertThat(updateStateSpare instanceof Spare).isTrue();
+    }
+
+    @DisplayName("Miss 상태로 반환")
+    @Test
+    void MISS_상태로_반환() {
+        State updateState = state.update(Point.of(0));
+        State updateStateSpare = updateState.update(Point.of(9));
+        assertThat(updateStateSpare instanceof Miss).isTrue();
+    }
+
+    @DisplayName("DoubleGutter 상태로 반환")
+    @Test
+    void DoubleGutter_상태로_반환() {
+        State updateState = state.update(Point.of(0));
+        State updateStateSpare = updateState.update(Point.of(0));
+        assertThat(updateStateSpare instanceof DoubleGutter).isTrue();
+    }
 }
