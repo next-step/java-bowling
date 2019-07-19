@@ -2,6 +2,8 @@ package bowling.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -44,5 +46,13 @@ public class PointTest {
     void Point가_거터인지_확인() {
         Point point = Point.of(0);
         assertThat(point.isGutter()).isTrue();
+    }
+
+    @DisplayName("스페어 확인")
+    @ParameterizedTest
+    @CsvSource({"0,10", "1,9", "5,5"})
+    void Point가_스페어인지_확인(int firstBowl, int secondBowl) {
+        Point firstPoint = Point.of(firstBowl);
+        assertThat(firstPoint.isSpare(Point.of(secondBowl))).isTrue();
     }
 }
