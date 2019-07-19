@@ -17,16 +17,20 @@ import static org.assertj.core.api.Assertions.assertThat;
  * create date  : 2019-07-19 15:25
  */
 public class FinalFrameTest {
-    private FinalFrame finalFrame;
+    private Frame frame;
 
     @BeforeEach
     void 초기화() {
-        finalFrame = new FinalFrame();
+        frame = new NormalFrame();
+        for (int i = 0; i <9 ; i++) {
+            frame = frame.bowl(10);
+        }
     }
 
-    @DisplayName("FinalFrame 생성 시 초기화 작업")
+    @DisplayName("FinalFrame 생성")
     @Test
     void 프레임_생성_초기화() {
-        assertThat(finalFrame.isGameOver()).isFalse();
+        frame = frame.bowl(3);
+        assertThat(frame.isGameOver()).isFalse();
     }
 }

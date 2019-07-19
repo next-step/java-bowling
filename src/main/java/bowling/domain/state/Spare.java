@@ -14,7 +14,8 @@ import bowling.exception.IllegalBowlCountException;
  * create date  : 2019-07-19 13:01
  */
 public class Spare implements State {
-    private static final String DISPLAT_STATE = "|/ |";
+    public static final String DELIMITER = "|";
+    public static final String DISPLAT_STATE = "/";
     private final State firstBowl;
     private final Point secondBowl;
 
@@ -35,7 +36,7 @@ public class Spare implements State {
 
     @Override
     public String printState() {
-        return firstBowl.printState() + DISPLAT_STATE;
+        return firstBowl.printState() + DELIMITER + DISPLAT_STATE;
     }
 
     @Override

@@ -28,12 +28,10 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public NormalFrame bowl(int fallCount) {
+    public Frame bowl(int fallCount) {
         if (isGameOver()) {
-            // TODO 예외처리
-        }
-        if (isNormalFrameOver()) {
-            // TODO FinalFrame 생성 반환
+            FinalFrame finalFrame = new FinalFrame();
+            return finalFrame.bowl(fallCount);
         }
         if(state.isOver()) {
             return nextFrame(fallCount);
@@ -44,16 +42,12 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isGameOver() {
-        return frameNumber.isOver();
+        return frameNumber.isNormalFrameOver();
     }
 
     @Override
     State getState() {
         return state;
-    }
-
-    public boolean isNormalFrameOver() {
-        return frameNumber.isNormalFrameOver();
     }
 
     private NormalFrame nextFrame(int fallCount) {

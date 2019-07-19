@@ -3,6 +3,9 @@ package bowling.domain;
 import bowling.domain.state.InitState;
 import bowling.domain.state.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -14,15 +17,22 @@ import bowling.domain.state.State;
  * create date  : 2019-07-19 15:29
  */
 public class FinalFrame extends Frame {
-    private State defaultState;
-    private State bonusState;
+    public static final int BONUS_STATE_COUNT = 2;
+    private State currentState;
+    private List<State> state;
 
     public FinalFrame() {
-        this.defaultState = InitState.of();
+        this.currentState = InitState.of();
+        this.state = new ArrayList<>();
     }
 
     @Override
-    Frame bowl(int fallCOunt) {
+    Frame bowl(int fallCount) {
+        currentState = currentState.update(Point.of(fallCount));
+        if (currentState.isOver()) {
+            state.add(currentState);
+        }
+
         return null;
     }
 

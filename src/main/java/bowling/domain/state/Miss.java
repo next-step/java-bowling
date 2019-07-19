@@ -35,7 +35,7 @@ public class Miss implements State {
 
     @Override
     public String printState() {
-        return firstBowl.printState() + DELIMITER + secondBowl.fallCount() + " " + DELIMITER;
+        return firstBowl.printState() + DELIMITER + printGutter();
     }
 
     @Override
@@ -46,5 +46,12 @@ public class Miss implements State {
     @Override
     public Point getSecondBowl() {
         return secondBowl;
+    }
+
+    private String printGutter() {
+        if (secondBowl.isGutter()) {
+            return Gutter.DISPLAY_STATE;
+        }
+        return String.valueOf(secondBowl.fallCount());
     }
 }

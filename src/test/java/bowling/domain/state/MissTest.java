@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Point;
 import bowling.exception.IllegalBowlCountException;
+import bowling.exception.IllegalIndexOfExcpetion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,7 +35,7 @@ class MissTest {
     void MISS_상태_출력(int firstBowl, int secondBowl) {
         State first = state.update(Point.of(firstBowl));
         State second = first.update(Point.of(secondBowl));
-        assertThat(second.printState()).isEqualTo("-|9 |");
+        assertThat(second.printState()).isEqualTo("-|9");
     }
 
     @DisplayName("Miss 게임종료 상태")

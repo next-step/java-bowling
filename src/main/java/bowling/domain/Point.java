@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.state.Gutter;
-
 import java.util.Objects;
 
 /**

@@ -13,7 +13,7 @@ import bowling.domain.state.State;
  * create date  : 2019-07-19 14:50
  */
 public abstract class Frame {
-    abstract Frame bowl(int fallCOunt);
+    abstract Frame bowl(int fallCount);
 
     abstract boolean isGameOver();
 

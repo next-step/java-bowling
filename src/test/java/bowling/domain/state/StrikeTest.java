@@ -32,7 +32,7 @@ class StrikeTest {
     @Test
     void STRIKE_상태_출력() {
         State hit = state.update(Point.of(10));
-        assertThat(hit.printState()).isEqualTo(" X |");
+        assertThat(hit.printState()).isEqualTo("X");
     }
 
     @DisplayName("스트라이크 게임종료 상태")

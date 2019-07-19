@@ -14,7 +14,7 @@ import bowling.exception.IllegalIndexOfExcpetion;
  * create date  : 2019-07-19 12:32
  */
 public class Gutter implements State {
-    private static final String DISPLAY_STATE = "-";
+    public static final String DISPLAY_STATE = "-";
     private Point firstBowl;
 
     public Gutter(Point firstBowl) {

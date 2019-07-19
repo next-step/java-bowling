@@ -34,7 +34,7 @@ public class DoubleGutterTest {
     void DOUBLEGUTTER_상태_출력(int firstBowl, int secondBowl) {
         State first = state.update(Point.of(firstBowl));
         State second = first.update(Point.of(secondBowl));
-        assertThat(second.printState()).isEqualTo("-|- |");
+        assertThat(second.printState()).isEqualTo("-|-");
     }
 
     @DisplayName("DoubleGutter 게임종료 상태")
@@ -53,7 +53,7 @@ public class DoubleGutterTest {
         State first = state.update(Point.of(firstBowl));
         State second = first.update(Point.of(secondBowl));
         assertThatExceptionOfType(IllegalBowlCountException.class).isThrownBy(() -> {
-           second.update(Point.of(1));
+            second.update(Point.of(1));
         }).withMessageContaining("프레임 종료되었습니다.");
     }
 }
