@@ -3,23 +3,32 @@ package bowling;
 import bowling.io.InputView;
 import bowling.io.OutView;
 import bowling.model.BowlingGame;
+import bowling.model.BowlingGames;
 import bowling.model.DownPin;
 import bowling.model.Player;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Application {
 
     public static void main(String[] args) {
-        String name = InputView.askOfPlayerName();
-        Player player = Player.of(name);
+        int countOfPlayer = InputView.askCountOfPlayer();
 
-        BowlingGame bowlingGame = BowlingGame.settingOf(player);
-        OutView.printProgress(bowlingGame.results());
+        List<String> playerNames = InputView.askOfPlayerNames(countOfPlayer);
+        List<Player> players = playerNames.stream()
+                .map(Player::of)
+                .collect(Collectors.toList());
 
-        while (!bowlingGame.isGameOver()) {
-            int countOfDownPins = InputView.askCountOfDownPins(bowlingGame.getCurrentNumber());
-            DownPin downPin = DownPin.valueOf(countOfDownPins);
-            bowlingGame.play(downPin);
-            OutView.printProgress(bowlingGame.results());
+        BowlingGames bowlingGames = BowlingGames.settingOf(players);
+        OutView.printProgress(bowlingGames.results());
+
+        while (!bowlingGames.isGameOver()) {
+            BowlingGame currentGame = bowlingGames.getCurrentGame();
+            int countOfDownPins = InputView.askCountOfDownPins(currentGame.getPlayer());
+            DownPin downPins = DownPin.valueOf(countOfDownPins);
+            currentGame.play(downPins);
+            OutView.printProgress(bowlingGames.results());
         }
 
         OutView.printGameOver();
