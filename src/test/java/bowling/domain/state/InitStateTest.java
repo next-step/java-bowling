@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class InitStateTest {
     @DisplayName("초기 상태값 설정")
     @Test
-    void 스트라이크_생성() {
+    void 상태값_초기화_생성() {
         State state = InitState.of();
         assertAll(
                 () -> assertThat(state.isOver()).isFalse(),
