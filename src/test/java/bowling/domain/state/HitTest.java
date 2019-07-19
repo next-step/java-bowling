@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
-import bowling.domain.state.exception.IllegalIndexOfExcpetion;
+import bowling.exception.IllegalIndexOfExcpetion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

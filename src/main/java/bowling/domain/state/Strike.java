@@ -1,8 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
-import bowling.domain.state.exception.IllegalBowlCountException;
-import bowling.domain.state.exception.IllegalIndexOfExcpetion;
+import bowling.exception.IllegalBowlCountException;
+import bowling.exception.IllegalIndexOfExcpetion;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>

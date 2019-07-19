@@ -1,4 +1,4 @@
-package bowling.domain.state.exception;
+package bowling.exception;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
