@@ -19,7 +19,6 @@ public class Hit implements State {
         this.firstBowl = firstBowl;
     }
 
-
     @Override
     public State update(Point fallCount) {
         return null;
@@ -32,6 +31,6 @@ public class Hit implements State {
 
     @Override
     public String printState() {
-        return null;
+        return String.valueOf(firstBowl.fallCount());
     }
 }
