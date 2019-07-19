@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.state.exception.IllegalBowlCountException;
+import bowling.domain.state.exception.IllegalIndexOfExcpetion;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -22,7 +24,7 @@ public class Strike implements State {
 
     @Override
     public State update(Point fallCount) {
-        return null;
+        throw new IllegalBowlCountException();
     }
 
     @Override
@@ -42,7 +44,6 @@ public class Strike implements State {
 
     @Override
     public Point getSecondBowl() {
-        // TODO 예외처리
-        return null;
+        throw new IllegalIndexOfExcpetion();
     }
 }

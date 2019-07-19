@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.state.exception.IllegalBowlCountException;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -24,9 +25,7 @@ public class Miss implements State {
 
     @Override
     public State update(Point fallCount) {
-        // TODO fallCount 임계관련 예외처리 필요
-        // TODO 게임종료 예외처리 필요
-        return null;
+        throw new IllegalBowlCountException();
     }
 
     @Override

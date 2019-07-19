@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.state.exception.IllegalIndexOfExcpetion;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -45,7 +46,6 @@ public class Hit implements State {
 
     @Override
     public Point getSecondBowl() {
-        // TODO 예외처리
-        return null;
+        throw new IllegalIndexOfExcpetion();
     }
 }
