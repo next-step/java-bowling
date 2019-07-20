@@ -29,7 +29,6 @@ public class FrameNumber {
         if (frameNumber >= LAST_FRAME_NUMBER) {
             throw new IllegalStateException("10프레임까지만 게임할 수 있습니다.");
         }
-        System.out.println(this);
         return new FrameNumber(frameNumber + NEXT_FRAME_NUMBER);
     }
 
