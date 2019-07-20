@@ -1,24 +1,30 @@
 package com.jaeyeonling.bowling.view;
 
+import com.jaeyeonling.bowling.domain.user.User;
 import com.jaeyeonling.bowling.domain.user.Username;
 
 import java.util.Scanner;
 
 public final class ConsoleInputView {
 
-    private static final String READ_USER_MESSAGE = String.format("플레이어 이름은(%d english letters)? ", Username.LENGTH);
-    private static final String READ_KNOCKDOWN_PINS_MESSAGE = "%d 프레임 투구 : ";
+    private static final String READ_COUNT_OF_USER_MESSAGE = "How many people?";
+    private static final String READ_USER_MESSAGE = "플레이어 %d의 이름은?(" + Username.LENGTH + " english letters): ";
+    private static final String READ_KNOCKDOWN_PINS_MESSAGE = "%s's turn :";
 
     private static final Scanner CONSOLE = new Scanner(System.in);
 
     private ConsoleInputView() { }
 
-    public static String readUsername() {
-        return readStringWithMessage(READ_USER_MESSAGE);
+    public static int readCountOfUser() {
+        return readIntWithMessage(READ_COUNT_OF_USER_MESSAGE);
     }
 
-    public static int readKnockdownPins(final int frameIndex) {
-        return readIntWithMessage(String.format(READ_KNOCKDOWN_PINS_MESSAGE, frameIndex));
+    public static String readUsername(final int count) {
+        return readStringWithMessage(String.format(READ_USER_MESSAGE, count));
+    }
+
+    public static int readKnockdownPins(final User user) {
+        return readIntWithMessage(String.format(READ_KNOCKDOWN_PINS_MESSAGE, user.getUsername().getUsername()));
     }
 
     private static String readStringWithMessage(final String message) {

@@ -1,6 +1,7 @@
 package com.jaeyeonling.bowling.view;
 
 import com.jaeyeonling.bowling.domain.BowlingGame;
+import com.jaeyeonling.bowling.domain.BowlingGames;
 import com.jaeyeonling.bowling.domain.BowlingSymbol;
 import com.jaeyeonling.bowling.domain.frame.Frame;
 import com.jaeyeonling.bowling.domain.frame.Frames;
@@ -15,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.System.lineSeparator;
+
 public final class ConsoleOutputView {
 
     private static final String BOWLING_GAME_HEADER =
             "|  NAME |  01   |  02   |  03   |  04   |  05   |  06   |  07   |  08   |  09   |  10   |";
     private static final String SCORE_PREFIX = "|       |";
     private static final int DEFAULT_SCORE = 0;
-    private static final String NEW_LINE = System.lineSeparator();
     private static final String EMPTY = "";
     private static final String RESULT_MESSAGE = "게임이 끝났습니다.";
 
@@ -29,14 +31,14 @@ public final class ConsoleOutputView {
 
     private ConsoleOutputView() { }
 
-    public static void printBowlingGame(final BowlingGame bowlingGame) {
+    public static void printBowlingGames(final BowlingGames bowlingGames) {
         println(BOWLING_GAME_HEADER);
-        println(format(bowlingGame));
+        println(format(bowlingGames));
         newline();
     }
 
-    public static void printResult(final BowlingGame bowlingGame) {
-        printBowlingGame(bowlingGame);
+    public static void printResult(final BowlingGames bowlingGames) {
+        printBowlingGames(bowlingGames);
         newline();
         println(RESULT_MESSAGE);
     }
@@ -45,12 +47,19 @@ public final class ConsoleOutputView {
         CONSOLE.print(message);
     }
 
-    static void println(final Object message) {
+    private static void println(final Object message) {
         CONSOLE.println(message);
     }
 
     private static void newline() {
         CONSOLE.println();
+    }
+
+    private static String format(final BowlingGames bowlingGames) {
+        return bowlingGames.getBowlingGames()
+                .stream()
+                .map(ConsoleOutputView::format)
+                .collect(Collectors.joining(lineSeparator()));
     }
 
     private static String format(final BowlingGame bowlingGame) {
@@ -70,7 +79,7 @@ public final class ConsoleOutputView {
     }
 
     private static String format(final List<Frame> frames) {
-        return formatFrameStates(frames) + NEW_LINE + formatFrameScores(frames);
+        return formatFrameStates(frames) + lineSeparator() + formatFrameScores(frames);
     }
 
     private static String formatFrameStates(final List<Frame> frames) {
