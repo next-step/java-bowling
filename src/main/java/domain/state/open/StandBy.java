@@ -1,8 +1,10 @@
-package domain.state;
+package domain.state.open;
 
 import domain.Pins;
+import domain.state.State;
+import domain.state.closed.Strike;
 
-public class StandBy implements State {
+public class StandBy extends Open {
     private static final String STAND_BY_SYMBOL = " ";
 
     @Override
@@ -11,11 +13,6 @@ public class StandBy implements State {
             return new Strike();
         }
         return new Hit(fallenPins);
-    }
-
-    @Override
-    public boolean isClosed() {
-        return Boolean.FALSE;
     }
 
     @Override

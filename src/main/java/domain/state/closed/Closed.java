@@ -1,9 +1,9 @@
-package domain.state;
+package domain.state.closed;
 
 import domain.Pins;
+import domain.state.State;
 
-public class Strike implements State {
-    private static final String STRIKE_SYMBOL = "X";
+abstract class Closed implements State {
 
     @Override
     public State update(Pins fallenPins) {
@@ -13,10 +13,5 @@ public class Strike implements State {
     @Override
     public boolean isClosed() {
         return Boolean.TRUE;
-    }
-
-    @Override
-    public String printState() {
-        return STRIKE_SYMBOL;
     }
 }

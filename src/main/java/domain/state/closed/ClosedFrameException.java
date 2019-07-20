@@ -1,4 +1,4 @@
-package domain.state;
+package domain.state.closed;
 
 public class ClosedFrameException extends RuntimeException {
 

@@ -1,30 +1,20 @@
-package domain.state;
+package domain.state.closed;
 
 import domain.Pins;
 
-import static domain.state.Miss.GUTTER_SYMBOL;
+import static domain.state.closed.Miss.GUTTER_SYMBOL;
 
-public class Spare implements State {
+public class Spare extends Closed {
     static final String ALERT_CANNOT_BE_SPARE = "SPARE가 아닙니다.";
     private static final String SPARE_SYMBOL = "/";
 
     private Pins firstFallenPins;
 
-    Spare(Pins firstFallenPins, Pins secondFallenPins) {
+    public Spare(Pins firstFallenPins, Pins secondFallenPins) {
         if (!firstFallenPins.isSpare(secondFallenPins)) {
             throw new IllegalArgumentException(ALERT_CANNOT_BE_SPARE);
         }
         this.firstFallenPins = firstFallenPins;
-    }
-
-    @Override
-    public State update(Pins fallenPins) {
-        throw new ClosedFrameException();
-    }
-
-    @Override
-    public boolean isClosed() {
-        return Boolean.TRUE;
     }
 
     @Override

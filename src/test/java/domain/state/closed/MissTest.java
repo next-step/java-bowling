@@ -1,10 +1,11 @@
-package domain.state;
+package domain.state.closed;
 
 import domain.Pins;
+import domain.state.State;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static domain.state.Miss.ALERT_CANNOT_BE_MISS;
+import static domain.state.closed.Miss.ALERT_CANNOT_BE_MISS;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class MissTest {

@@ -1,10 +1,13 @@
-package domain.state;
+package domain.state.open;
 
 import domain.Pins;
+import domain.state.State;
+import domain.state.closed.Miss;
+import domain.state.closed.Spare;
 
-import static domain.state.Miss.GUTTER_SYMBOL;
+import static domain.state.closed.Miss.GUTTER_SYMBOL;
 
-public class Hit implements State {
+public class Hit extends Open {
 
     private Pins firstFallenPins;
 
@@ -18,11 +21,6 @@ public class Hit implements State {
             return new Spare(firstFallenPins, secondFallenPins);
         }
         return new Miss(firstFallenPins, secondFallenPins);
-    }
-
-    @Override
-    public boolean isClosed() {
-        return Boolean.FALSE;
     }
 
     @Override

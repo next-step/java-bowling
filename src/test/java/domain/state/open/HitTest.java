@@ -1,6 +1,9 @@
-package domain.state;
+package domain.state.open;
 
 import domain.Pins;
+import domain.state.State;
+import domain.state.closed.Miss;
+import domain.state.closed.Spare;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

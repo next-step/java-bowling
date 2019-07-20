@@ -1,30 +1,20 @@
-package domain.state;
+package domain.state.closed;
 
 import domain.Pins;
 
-public class Miss implements State {
+public class Miss extends Closed {
     static final String ALERT_CANNOT_BE_MISS = "MISS가 아닙니다.";
-    static final String GUTTER_SYMBOL = "-";
+    public static final String GUTTER_SYMBOL = "-";
 
     private Pins firstFallenPins;
     private Pins secondFallenPins;
 
-    Miss(Pins firstFallenPins, Pins secondFallenPins) {
+    public Miss(Pins firstFallenPins, Pins secondFallenPins) {
         if (firstFallenPins.exceedMiss(secondFallenPins)) {
             throw new IllegalArgumentException(ALERT_CANNOT_BE_MISS);
         }
         this.firstFallenPins = firstFallenPins;
         this.secondFallenPins = secondFallenPins;
-    }
-
-    @Override
-    public State update(Pins fallenPins) {
-        throw new ClosedFrameException();
-    }
-
-    @Override
-    public boolean isClosed() {
-        return Boolean.TRUE;
     }
 
     @Override

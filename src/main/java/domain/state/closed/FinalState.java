@@ -1,27 +1,17 @@
-package domain.state;
+package domain.state.closed;
 
-import domain.Pins;
+import domain.state.State;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FinalState implements State {
+public class FinalState extends Closed {
     private static final String FINAL_FRAME_DELIMITER = "|";
 
     private List<State> states;
 
     public FinalState(List<State> states) {
         this.states = states;
-    }
-
-    @Override
-    public State update(Pins fallenPins) { //TODO: 개선 필요
-        return null;
-    }
-
-    @Override
-    public boolean isClosed() {
-        return false;
     }
 
     @Override

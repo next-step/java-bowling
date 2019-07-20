@@ -1,7 +1,7 @@
 package domain.frame;
 
 import domain.Pins;
-import domain.state.StandBy;
+import domain.state.open.StandBy;
 import domain.state.State;
 
 import static domain.frame.FrameIndex.MINIMUM_FRAME_INDEX;

@@ -1,9 +1,9 @@
 package domain.frame;
 
 import domain.Pins;
-import domain.state.FinalState;
-import domain.state.Miss;
-import domain.state.StandBy;
+import domain.state.closed.FinalState;
+import domain.state.closed.Miss;
+import domain.state.open.StandBy;
 import domain.state.State;
 
 import java.util.ArrayList;

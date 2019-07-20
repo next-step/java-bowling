@@ -1,6 +1,8 @@
-package domain.state;
+package domain.state.open;
 
 import domain.Pins;
+import domain.state.State;
+import domain.state.closed.Strike;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
