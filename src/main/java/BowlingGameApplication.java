@@ -1,10 +1,9 @@
 import domain.BowlingGame;
 import domain.Pins;
-import domain.frame.Frame;
+import domain.frame.FrameIndex;
+import domain.frame.Frames;
 import io.InputView;
 import io.OutputResult;
-
-import java.util.List;
 
 public class BowlingGameApplication {
 
@@ -12,12 +11,13 @@ public class BowlingGameApplication {
 
         String name = InputView.askPlayerInitial();
         BowlingGame bowlingGame = new BowlingGame();
-
+        FrameIndex currentIndex = FrameIndex.initiate();
         while (bowlingGame.isRunning()) {
-            Integer currentIndex = bowlingGame.getCurrentFrameIndex().value();
-//            Pins pins = InputView.askKnockDownedPins(currentIndex);
-//            List<Frame> frames = bowlingGame.bowl(pins);
-//            OutputResult.printBoard(name, frames);
+            Pins pins = InputView.askKnockDownedPins(currentIndex);
+            Frames frames = bowlingGame.bowl(pins);
+            currentIndex = frames.getCurrentFrameIndex();
+            OutputResult.printBoard(name, frames);
         }
+        System.out.println();
     }
 }
