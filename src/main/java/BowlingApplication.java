@@ -1,10 +1,10 @@
 import bowling.domain.BowlingCenter;
 import bowling.domain.Player;
 import bowling.domain.Players;
+import view.ConsoleInputView;
 import view.ConsoleOutView;
 
 import java.util.Arrays;
-import java.util.Random;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -17,23 +17,22 @@ import java.util.Random;
  * create date  : 2019-07-07 23:07
  */
 public class BowlingApplication {
-
     public BowlingApplication() {
     }
 
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) {
         BowlingApplication app = new BowlingApplication();
         app.run();
     }
 
-    public void run()
-    {
-        Players players = new Players(Arrays.asList(Player.of("KBY")));
+    public void run() {
+        String name = ConsoleInputView.inputPlayerName();
+        Players players = new Players(Arrays.asList(Player.of(name)));
         BowlingCenter center = new BowlingCenter(players);
 
-        while(true) {
-            if(!center.play()) {
+        while (true) {
+            int fallCount = ConsoleInputView.inputFallenBowl();
+            if (!center.play(fallCount)) {
                 break;
             }
             ConsoleOutView.printFrameResult(center);

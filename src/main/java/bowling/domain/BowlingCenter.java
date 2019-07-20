@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
  * create date  : 2019-07-20 03:24
  */
 public class BowlingCenter {
-    public static final int MAX_POINT_RANGE = 10;
     private Frames frames;
     private final Players players;
 
@@ -25,8 +23,8 @@ public class BowlingCenter {
     }
 
     // TODO 이후 2~3 단계에서 Player 별개의 Frames를 할당하여 수행되게 변경해야될 Point (사용자 이름 전달하여 Frame 투구 수정필요)
-    public boolean play() {
-        return frames.bowl(random());
+    public boolean play(int fallCount) {
+        return frames.bowl(fallCount);
     }
 
     // TODO 이후 2~3 단계에서 Player 별개의 Frames를 할당하여 수행되게 변경해야될 Point (사용자 이름 전달 하여 해당 Frame 출력되게 수정필요)
@@ -44,9 +42,5 @@ public class BowlingCenter {
 
     public int playFrameNumber() {
         return frames.currentFrameNumber();
-    }
-
-    private int random() {
-        return new Random().nextInt(MAX_POINT_RANGE);
     }
 }
