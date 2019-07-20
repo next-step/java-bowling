@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,5 +22,9 @@ public class Players {
 
     public int count() {
         return players.size();
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }

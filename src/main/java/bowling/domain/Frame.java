@@ -18,4 +18,6 @@ public abstract class Frame {
     abstract boolean isGameOver();
 
     abstract State getState();
+
+    abstract int getNumber();
 }

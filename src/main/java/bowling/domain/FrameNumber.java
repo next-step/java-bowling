@@ -40,6 +40,10 @@ public class FrameNumber {
         return frameNumber == NORMAL_FRAME_MAX_NUMBER;
     }
 
+    public int getFrameNumber() {
+        return frameNumber;
+    }
+
     @Override
     public String toString() {
         return "FrameNumber{" +

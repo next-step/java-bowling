@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.state.FinalState;
 import bowling.domain.state.InitState;
 import bowling.domain.state.State;
 import bowling.exception.OutOfBowlCountException;
@@ -16,6 +15,7 @@ import bowling.exception.OutOfBowlCountException;
  * create date  : 2019-07-19 15:29
  */
 public class FinalFrame extends Frame {
+    public static final int LAST_FRAME_NUMBER = 10;
     private State state;
 
     public FinalFrame() {
@@ -39,5 +39,10 @@ public class FinalFrame extends Frame {
     @Override
     State getState() {
         return state;
+    }
+
+    @Override
+    int getNumber() {
+        return LAST_FRAME_NUMBER;
     }
 }

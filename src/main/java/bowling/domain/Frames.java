@@ -37,11 +37,15 @@ public class Frames {
         return true;
     }
 
-    public String stateDlsplay() {
+    public List<String> displayState() {
         return frames.stream()
                 .map(Frame::getState)
                 .map(State::printState)
-                .collect(Collectors.joining("  |  "));
+                .collect(Collectors.toList());
+    }
+
+    public int currentFrameNumber() {
+        return currentFrame.getNumber();
     }
 
     private boolean isGameOver() {

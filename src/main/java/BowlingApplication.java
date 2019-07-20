@@ -1,3 +1,11 @@
+import bowling.domain.BowlingCenter;
+import bowling.domain.Player;
+import bowling.domain.Players;
+import view.ConsoleOutView;
+
+import java.util.Arrays;
+import java.util.Random;
+
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -21,5 +29,14 @@ public class BowlingApplication {
 
     public void run()
     {
+        Players players = new Players(Arrays.asList(Player.of("KBY")));
+        BowlingCenter center = new BowlingCenter(players);
+
+        while(true) {
+            if(!center.play()) {
+                break;
+            }
+            ConsoleOutView.printFrameResult(center);
+        }
     }
 }
