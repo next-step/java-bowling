@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ScoreTest {
 
@@ -18,14 +17,14 @@ class ScoreTest {
     @Test
     @DisplayName("점수 가져오기")
     void getScore() {
-        Score score = Score.of(Pins.ALL, Pins.EMPTY, BonusType.strike());
+        Score score = Score.of(Pins.ALL, Pins.ZERO, BonusType.strike());
         assertThat(score.getValue()).isEqualTo(10);
     }
 
     @Test
     @DisplayName("스코어 전체가 더하기")
     void strikeAddBonus() {
-        Score score = Score.of(Pins.ALL, Pins.EMPTY, BonusType.strike());
+        Score score = Score.of(Pins.ALL, Pins.ZERO, BonusType.strike());
         Score added = Score.of(Pins.of(5), Pins.of(4), BonusType.normal());
         Score calculated = score.calculate(added);
         assertThat(calculated.getValue()).isEqualTo(19);
@@ -35,7 +34,7 @@ class ScoreTest {
     @DisplayName("스페어 타입은 first 만 더해진다.")
     void spareAddBonus() {
         Score score = Score.of(Pins.of(9), Pins.of(1), BonusType.spare());
-        Score added = Score.of(Pins.of(5), Pins.EMPTY, BonusType.normal());
+        Score added = Score.of(Pins.of(5), Pins.ZERO, BonusType.normal());
         Score calculated = score.calculate(added);
         assertThat(calculated.getValue()).isEqualTo(15);
     }
@@ -50,7 +49,7 @@ class ScoreTest {
     @Test
     @DisplayName("보너스가 존재한다")
     void hasBonus() {
-        Score strike = Score.of(Pins.ALL, Pins.EMPTY, BonusType.strike());
+        Score strike = Score.of(Pins.ALL, Pins.ZERO, BonusType.strike());
         assertThat(strike.hasBonus()).isTrue();
         Score spare = Score.of(Pins.of(9), Pins.of(1), BonusType.spare());
         assertThat(spare.hasBonus()).isTrue();

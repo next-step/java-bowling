@@ -14,6 +14,10 @@ public class Score {
         this.type = type;
     }
 
+    public static Score of(int score) {
+        return new Score(score, BonusType.normal());
+    }
+
     public static Score of(Pins first, Pins second, BonusType type) {
         return new Score(sum(first, second), type);
     }
