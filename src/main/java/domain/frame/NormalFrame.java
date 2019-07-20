@@ -9,7 +9,6 @@ import domain.state.State;
 import domain.state.Waiting;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class NormalFrame implements Frame {

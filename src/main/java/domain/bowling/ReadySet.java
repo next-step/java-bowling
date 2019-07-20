@@ -1,8 +1,8 @@
 package domain.bowling;
 
 import domain.Pins;
-import domain.state.Waiting;
 import domain.state.State;
+import domain.state.Waiting;
 
 public class ReadySet implements Bowling {
 

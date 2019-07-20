@@ -4,8 +4,6 @@ import domain.Pins;
 import domain.score.BonusType;
 import domain.score.Score;
 
-import static io.OutputResult.EMPTY_SPACE;
-
 public class Waiting implements State {
 
     private final Pins first;
@@ -24,13 +22,12 @@ public class Waiting implements State {
     @Override
     public Score getScore() {
         return Score.of(first, second, BonusType.normal());
-//        return Score.EMPTY;
     }
 
     @Override
     public Score calculateBonusScore(Score beforeScore) {
         Score calculate = beforeScore.calculate(getScore());
-        if(calculate.hasBonus()) {
+        if (calculate.hasBonus()) {
             return Score.EMPTY;
         }
         Score waiting = Score.of(first, second, BonusType.normal());

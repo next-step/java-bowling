@@ -5,7 +5,6 @@ import java.util.Objects;
 public class Pins {
 
     public final static Pins ZERO = new Pins(0);
-    public final static Pins EMPTY = new Pins(-1);
     public final static Pins ALL = new Pins(10);
 
     private final static int MAX_PINS = 10;

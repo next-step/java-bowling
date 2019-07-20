@@ -1,6 +1,7 @@
 package domain;
 
-import domain.frame.*;
+import domain.frame.FrameFactory;
+import domain.frame.Frames;
 
 public class BowlingGame {
 
