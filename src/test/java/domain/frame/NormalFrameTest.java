@@ -122,6 +122,23 @@ class NormalFrameTest {
         assertThat(score.getValue()).isEqualTo(-1);
     }
 
+    @Test
+    @DisplayName("open -> open")
+    void openOpen() {
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+
+        Frame secondFrame = new NormalFrame(lastNormalFrame);
+        secondFrame.setKnockedDownPins(Pins.of(5));
+        secondFrame.setKnockedDownPins(Pins.of(4));
+
+        Frame firstFrame = new NormalFrame(secondFrame);
+        firstFrame.setKnockedDownPins(Pins.of(8));
+        firstFrame.setKnockedDownPins(Pins.of(1));
+
+        Score score = firstFrame.getScore();
+        assertThat(score.getValue()).isEqualTo(9);
+    }
+
 
     @Test
     @DisplayName("spare -> strike")
@@ -171,7 +188,4 @@ class NormalFrameTest {
         Score score = firstFrame.getScore();
         assertThat(score.getValue()).isEqualTo(15);
     }
-
-
-
 }
