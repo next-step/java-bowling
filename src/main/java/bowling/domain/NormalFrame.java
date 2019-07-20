@@ -3,6 +3,8 @@ package bowling.domain;
 import bowling.domain.state.InitState;
 import bowling.domain.state.State;
 
+import java.util.Objects;
+
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -42,7 +44,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isGameOver() {
-        return frameNumber.isNormalFrameOver();
+        return frameNumber.isNormalFrameOver() && state.isOver(false);
     }
 
     @Override
@@ -55,5 +57,27 @@ public class NormalFrame extends Frame {
         newFrame.bowl(fallCount);
 
         return newFrame;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame that = (NormalFrame) o;
+        return Objects.equals(state, that.state) &&
+                Objects.equals(frameNumber, that.frameNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(state, frameNumber);
+    }
+
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "state=" + state +
+                ", frameNumber=" + frameNumber +
+                '}';
     }
 }
