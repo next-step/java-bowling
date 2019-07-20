@@ -34,7 +34,7 @@ public class FinalState implements State {
 
     @Override
     public boolean isOver(boolean isFinalFrame) {
-        if (firstState instanceof Spare) {
+        if (isFirstState(firstState) || isLastState(lastState)) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
@@ -55,9 +55,18 @@ public class FinalState implements State {
         return null;
     }
 
-    private boolean isUnFinishState(State checkState) {
-        if (checkState instanceof Gutter
-            || checkState instanceof Hit) {
+    private boolean isFirstState(State checkState) {
+        if (checkState instanceof DoubleStrike
+            || checkState instanceof Spare) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isLastState(State checkState) {
+        if (checkState instanceof Miss
+                || checkState instanceof DoubleGutter
+                || checkState instanceof Spare) {
             return true;
         }
         return false;

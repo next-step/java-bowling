@@ -67,16 +67,17 @@ public class FinalStateTest {
             "1,9,10,true",
             "1,9,0,true",
             "1,9,1,true",
-            "10,10,false",
-            "10,1,false",
-            "10,0,false",
-            "1,9,false",
+            "10,10,0,true",
+            "10,1,9,true",
+            "10,0,10,true",
+            "1,9,0,true",
 
     })
-    void FINALSTATE_종료_상태(int firstBowl, int secondBowl, boolean result) {
+    void FINALSTATE_종료_상태(int firstBowl, int secondBowl, int thirdBowl, boolean result) {
         State first = state.update(Point.of(firstBowl), true);
         State second = first.update(Point.of(secondBowl), true);
-        assertThat(second.isOver(true)).isEqualTo(result);
+        State third = second.update(Point.of(thirdBowl), true);
+        assertThat(third.isOver(true)).isEqualTo(result);
     }
 
     @DisplayName("네번째 투구")
