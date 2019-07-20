@@ -9,14 +9,12 @@ public class Spare implements State {
     private static final String SPARE_SYMBOL = "/";
 
     private Pins firstFallenPins;
-    private Pins secondFallenPins;
 
     Spare(Pins firstFallenPins, Pins secondFallenPins) {
         if (!firstFallenPins.isSpare(secondFallenPins)) {
             throw new IllegalArgumentException(ALERT_CANNOT_BE_SPARE);
         }
         this.firstFallenPins = firstFallenPins;
-        this.secondFallenPins = secondFallenPins;
     }
 
     @Override
