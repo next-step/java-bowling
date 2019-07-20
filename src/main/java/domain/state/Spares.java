@@ -1,8 +1,8 @@
 package domain.state;
 
 import domain.Pins;
-
-import static io.OutputResult.SYMBOL_DELIMITER;
+import domain.score.BonusType;
+import domain.score.Score;
 
 public class Spares implements State {
 
@@ -32,7 +32,29 @@ public class Spares implements State {
     }
 
     @Override
+    public Score getScore() {
+        return Score.of(first, second, BonusType.spare());
+    }
+
+    @Override
+    public Score calculateBonusScore(Score beforeScore) {
+        Score score = beforeScore.calculate(getFirstScore());
+        if(score.hasBonus()) {
+            return score.calculate(getSecondScore());
+        }
+        return score;
+    }
+
+    public Score getFirstScore() {
+        return Score.of(first, Pins.EMPTY, BonusType.spare());
+    }
+
+    public Score getSecondScore() {
+        return Score.of(Pins.EMPTY, second, BonusType.spare());
+    }
+
+    @Override
     public String toSymbol() {
-        return first + SYMBOL_DELIMITER + SPARES;
+        return "";
     }
 }

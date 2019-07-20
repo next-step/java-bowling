@@ -1,6 +1,8 @@
 package domain.state;
 
 import domain.Pins;
+import domain.score.BonusType;
+import domain.score.Score;
 
 public class Strike implements State {
 
@@ -22,6 +24,16 @@ public class Strike implements State {
 
     private boolean isNotStrike(Pins downPins) {
         return !Pins.ALL.equals(downPins);
+    }
+
+    @Override
+    public Score calculateBonusScore(Score beforeScore) {
+        return beforeScore.calculate(getScore());
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.of(first, second, BonusType.strike());
     }
 
     @Override

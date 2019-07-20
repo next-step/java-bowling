@@ -1,6 +1,8 @@
 package domain.state;
 
 import domain.Pins;
+import domain.score.BonusType;
+import domain.score.Score;
 
 import static io.OutputResult.SYMBOL_DELIMITER;
 
@@ -29,10 +31,31 @@ public class Open implements State {
         return true;
     }
 
+
+    @Override
+    public Score calculateBonusScore(Score beforeScore) {
+        Score score = beforeScore.calculate(getFirstScore());
+        if (score.hasBonus()) {
+            return score.calculate(getSecondScore());
+        }
+        return score;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.of(first, second, BonusType.normal());
+    }
+
     @Override
     public String toSymbol() {
         return first + SYMBOL_DELIMITER + second;
     }
 
+    private Score getFirstScore() {
+        return Score.of(first, Pins.EMPTY, BonusType.spare());
+    }
 
+    private Score getSecondScore() {
+        return Score.of(Pins.EMPTY, second, BonusType.spare());
+    }
 }

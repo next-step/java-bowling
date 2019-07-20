@@ -8,8 +8,4 @@ class WaitingTest {
 
     private Waiting waiting;
 
-    @BeforeEach
-    void setUp() {
-        waiting = new Waiting();
-    }
 }
