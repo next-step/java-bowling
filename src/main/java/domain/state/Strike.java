@@ -13,7 +13,7 @@ public class Strike implements State {
     public Strike(Pins downPins) {
         verify(downPins);
         this.first = downPins;
-        this.second = Pins.EMPTY;
+        this.second = Pins.ZERO;
     }
 
     private void verify(Pins downPins) {

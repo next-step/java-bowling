@@ -10,7 +10,7 @@ public class StateFactory {
         if (isStrike(first)) {
             return new Strike(first);
         }
-        return new Waiting();
+        return new Waiting(first);
     }
 
     public static State secondState(Pins first, Pins second) {

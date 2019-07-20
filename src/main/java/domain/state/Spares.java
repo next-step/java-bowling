@@ -46,15 +46,15 @@ public class Spares implements State {
     }
 
     public Score getFirstScore() {
-        return Score.of(first, Pins.EMPTY, BonusType.spare());
+        return Score.of(first, Pins.ZERO, BonusType.spare());
     }
 
     public Score getSecondScore() {
-        return Score.of(Pins.EMPTY, second, BonusType.spare());
+        return Score.of(Pins.ZERO, second, BonusType.spare());
     }
 
     @Override
     public String toSymbol() {
-        return "";
+        return first + "|" + SPARES;
     }
 }

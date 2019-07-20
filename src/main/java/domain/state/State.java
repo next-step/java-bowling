@@ -8,7 +8,6 @@ public interface State {
 
     boolean isClosed();
 
-
     Score getScore();
 
     Score calculateBonusScore(Score beforeScore);

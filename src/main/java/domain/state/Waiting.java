@@ -13,7 +13,7 @@ public class Waiting implements State {
 
     public Waiting(Pins downPins) {
         this.first = downPins;
-        this.second = Pins.EMPTY;
+        this.second = Pins.ZERO;
     }
 
     @Override
@@ -24,6 +24,7 @@ public class Waiting implements State {
     @Override
     public Score getScore() {
         return Score.of(first, second, BonusType.normal());
+//        return Score.EMPTY;
     }
 
     @Override
@@ -32,11 +33,12 @@ public class Waiting implements State {
         if(calculate.hasBonus()) {
             return Score.EMPTY;
         }
-        return getScore().calculate(beforeScore);
+        Score waiting = Score.of(first, second, BonusType.normal());
+        return waiting.calculate(beforeScore);
     }
 
     @Override
     public String toSymbol() {
-        return EMPTY_SPACE;
+        return first + "|";
     }
 }
