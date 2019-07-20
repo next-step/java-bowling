@@ -2,7 +2,6 @@ package bowling.domain.state;
 
 import bowling.domain.Point;
 import bowling.exception.IllegalBowlCountException;
-import bowling.exception.OutOfBowlCountException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

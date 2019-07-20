@@ -57,7 +57,7 @@ public class FinalState implements State {
 
     private boolean isFirstState(State checkState) {
         if (checkState instanceof DoubleStrike
-            || checkState instanceof Spare) {
+                || checkState instanceof Spare) {
             return true;
         }
         return false;
