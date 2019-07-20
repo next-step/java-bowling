@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.state.FinalState;
 import bowling.domain.state.InitState;
 import bowling.domain.state.State;
 import bowling.exception.OutOfBowlCountException;
