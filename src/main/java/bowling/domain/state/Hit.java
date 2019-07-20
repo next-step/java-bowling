@@ -14,6 +14,7 @@ import bowling.exception.IllegalIndexOfExcpetion;
  * create date  : 2019-07-19 12:22
  */
 public class Hit implements State {
+    public static final String OUT_OF_POINT_RANGE_EXCEPTION_MESSAGE = "두번째 투구까지의 합이 10점을 넘었습니다.[%d, %d]";
     private Point firstBowl;
 
     public Hit(Point firstBowl) {
@@ -22,7 +23,9 @@ public class Hit implements State {
 
     @Override
     public State update(Point fallCount, boolean isFinalFrame) {
-        // TODO fallCount 임계관련 예외처리 필요
+        if (firstBowl.checkRemainPointOver(fallCount)) {
+            throw new IllegalArgumentException(String.format(OUT_OF_POINT_RANGE_EXCEPTION_MESSAGE, firstBowl.fallCount(), fallCount.fallCount()));
+        }
         if (firstBowl.isSpare(fallCount)) {
             return new Spare(this, fallCount);
         }

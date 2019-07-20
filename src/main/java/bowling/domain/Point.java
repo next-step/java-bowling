@@ -46,6 +46,10 @@ public class Point {
         return sparePointCheck == MAX_POINT;
     }
 
+    public boolean checkRemainPointOver(Point secondBowl) {
+        return secondBowl.point + point > MAX_POINT;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
