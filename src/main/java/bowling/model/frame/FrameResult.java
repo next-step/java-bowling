@@ -33,9 +33,10 @@ public class FrameResult {
         return score;
     }
 
-    void calculateTotalScore(FrameResult prevFrameResult) {
+    FrameResult calculate(FrameResult prevFrameResult) {
         if (DEFAULT_SCORE < this.score) {
             this.score += prevFrameResult.getScore();
         }
+        return this;
     }
 }

@@ -48,6 +48,19 @@ Frame 이 LinkedList 와 같은 자료 구조 기반으로 구현해 본다.
 Frame 외부에서 점수를 계산해 set 하는 것이 아니라 
 Frame 자체가 점수를 계산할 수 있도록 한다.
 
+---
+
+| type | isFinish | bowl |c|getScore | calculate(max) | printResult |
+|:---|:---|:---|:---|:---|:---|:---|
+|Ready |F         | H/G/S|0|0,-1   | 0       | " "  |
+|Hit   |F         | Sp/M |1|0,c1   | 1 c1    | c1   | 
+|Gutter|F         | Sp/M |1|0,0    | 1 0(c1) | -    |
+
+|Strike|T         | -    |1|2,10   | 1 c1    | X    |
+|Spare |T         | -    |2|1,10   | 2 c1/c2 | c1/  |
+|Miss  |T         | -    |2|0,c1,c2| 2 c1/c2 | c1/c2|
+
+
 # 출력 결과
 ```
 10 프레임 투구 : 10

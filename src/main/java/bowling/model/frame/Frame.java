@@ -19,12 +19,12 @@ public abstract class Frame {
         return frameNumber.self();
     }
 
-    static Frame initialize() {
-        return NormalFrame.ofFirst();
-    }
-
     boolean isEqualFrameNumber(Frame frameAfterBowling){
         return frameNumber.equals(frameAfterBowling.getNumber());
+    }
+
+    static Frame initialize() {
+        return NormalFrame.ofFirst();
     }
 
     abstract Score getScore();

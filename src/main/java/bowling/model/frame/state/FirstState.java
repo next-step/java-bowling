@@ -28,11 +28,6 @@ public abstract class FirstState implements State {
     }
 
     @Override
-    public Score getScore() {
-        return Score.of(first.count());
-    }
-
-    @Override
     public Score calculate(Score prevScore) {
         return prevScore.calculate(getScore());
     }

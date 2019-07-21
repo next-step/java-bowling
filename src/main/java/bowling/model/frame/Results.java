@@ -8,7 +8,6 @@ import static java.util.stream.Collectors.toList;
 
 public class Results {
 
-    private static final int DEFAULT_INDEX = 1;
     private List<FrameResult> resultsOfEachFrame;
 
     private Results(List<FrameResult> resultsOfEachFrame) {
@@ -16,12 +15,10 @@ public class Results {
     }
 
     public static Results of(List<FrameResult> frameResults) {
-        for (int i = DEFAULT_INDEX; i < frameResults.size(); i++) {
-            FrameResult frameResult = frameResults.get(i);
-            FrameResult prevFrameResult = frameResults.get(i - DEFAULT_INDEX);
-            frameResult.calculate(prevFrameResult);
-        }
-        return new Results(frameResults);
+        return frameResults.stream()
+                .reduce((prev, current) -> current.calculate(prev))
+                .map(frameResult -> new Results(frameResults))
+                .orElseThrow(IllegalStateException::new);
     }
 
     public List<Integer> getScores() {

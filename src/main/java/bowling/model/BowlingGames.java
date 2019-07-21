@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class BowlingGames {
@@ -45,9 +46,8 @@ public class BowlingGames {
     }
 
     public List<Board> results() {
-        List<Board> results = bowlingGames.stream()
+        return bowlingGames.stream()
                 .map(BowlingGame::results)
-                .collect(toList());
-        return Collections.unmodifiableList(results);
+                .collect(collectingAndThen(toList(), Collections::unmodifiableList));
     }
 }
