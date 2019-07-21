@@ -2,11 +2,10 @@ package bowling.model;
 
 import bowling.model.frame.FrameNumber;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
 
-import static java.lang.Boolean.TRUE;
 import static java.util.stream.Collectors.toList;
 
 public class BowlingGames {
@@ -30,25 +29,25 @@ public class BowlingGames {
         return bowlingGames.stream()
                 .filter(bowlingGame -> bowlingGame.isYourTurn(currentNumber))
                 .findFirst()
-                .get();
+                .orElseThrow(NoSuchElementException::new);
     }
 
     private FrameNumber getCurrentFrameNumber() {
         return bowlingGames.stream()
                 .map(BowlingGame::getCurrentNumber)
                 .min(FrameNumber::compareTo)
-                .get();
+                .orElseThrow(NoSuchElementException::new);
     }
 
     public boolean isGameOver() {
         return bowlingGames.stream()
-                .map(BowlingGame::isGameOver)
-                .allMatch(Predicate.isEqual(TRUE));
+                .allMatch(BowlingGame::isGameOver);
     }
 
     public List<Board> results() {
-        return bowlingGames.stream()
+        List<Board> results = bowlingGames.stream()
                 .map(BowlingGame::results)
-                .collect(Collectors.toList());
+                .collect(toList());
+        return Collections.unmodifiableList(results);
     }
 }
