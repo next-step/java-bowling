@@ -17,13 +17,16 @@ public class OutputView {
     public static void printBoard(BowlingGame bowlingGame) {
         System.out.println(UPPER_SIDE_OF_SCORE_BOARD);
         System.out.println(printStates(bowlingGame));
+        System.out.println(printScores(bowlingGame));
         printEmptyLine();
     }
 
     private static String printStates(BowlingGame bowlingGame) {
         String player = bowlingGame.getPlayerName();
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(SEPARATOR + PrintUtils.centralize(player) + SEPARATOR);
+        StringBuilder statesBuilder = new StringBuilder();
+        statesBuilder.append(SEPARATOR)
+                .append(PrintUtils.centralize(player))
+                .append(SEPARATOR);
 
         bowlingGame.getFrames()
                 .stream()
@@ -31,14 +34,33 @@ public class OutputView {
                 .map(State::printState)
                 .map(PrintUtils::centralize)
                 .map(String -> String.concat(SEPARATOR))
-                .forEach(stringBuilder::append);
+                .forEach(statesBuilder::append);
 
+        fillUnplayedFrames(bowlingGame, statesBuilder);
+
+        return statesBuilder.toString();
+    }
+
+    private static String printScores(BowlingGame bowlingGame) {
+        StringBuilder scoresBuilder = new StringBuilder();
+        scoresBuilder.append(SEPARATOR)
+                .append(PrintUtils.centralize(EMPTY_SYMBOL))
+                .append(SEPARATOR);
+
+//        bowlingGame.getFrames()
+//                .stream()
+//                .map(Frame::getScore)
+
+        fillUnplayedFrames(bowlingGame, scoresBuilder);
+
+        return scoresBuilder.toString();
+    }
+
+    private static void fillUnplayedFrames(BowlingGame bowlingGame, StringBuilder stringBuilder) {
         IntStream.range(bowlingGame.sizeOfFrames(), MAXIMUM_FRAME_INDEX)
                 .mapToObj(num -> PrintUtils.centralize(EMPTY_SYMBOL))
                 .map(String -> String.concat(SEPARATOR))
                 .forEach(stringBuilder::append);
-
-        return stringBuilder.toString();
     }
 
     private static void printEmptyLine() {
