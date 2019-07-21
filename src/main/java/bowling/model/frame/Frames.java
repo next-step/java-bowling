@@ -3,7 +3,6 @@ package bowling.model.frame;
 import bowling.model.DownPin;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class Frames {
     }
 
     public static Frames initialize() {
-        return new Frames(Arrays.asList(Frame.initialize()));
+        return new Frames(Collections.singletonList(Frame.initialize()));
     }
 
     public void saveBowling(DownPin downPin) {
@@ -43,7 +42,7 @@ public class Frames {
     }
 
     private boolean isEqualFrame(Frame frameAfterBowling) {
-        return currentFrame().getNumber() == frameAfterBowling.getNumber();
+        return currentFrame().isEqualFrameNumber(frameAfterBowling);
     }
 
     public Results getResult() {
