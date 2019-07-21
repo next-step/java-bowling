@@ -1,6 +1,7 @@
 package domain.state.open;
 
 import domain.Pins;
+import domain.UndoneCalculationException;
 import domain.state.State;
 import domain.state.closed.Strike;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static domain.Pins.GUTTER_PINS;
 import static domain.Pins.STRIKE_PINS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class StandByTest {
 
@@ -36,5 +38,18 @@ public class StandByTest {
 
         //then
         assertThat(state instanceof Hit).isTrue();
+    }
+
+    @Test
+    void 스탠드바이_상태에서_점수를_구하려하면_예외를_반환한다() {
+        //given
+        StandBy standBy = new StandBy();
+
+        //when
+        //then
+        assertThatExceptionOfType(UndoneCalculationException.class)
+                .isThrownBy(() -> {
+                    standBy.getScore();
+                });
     }
 }

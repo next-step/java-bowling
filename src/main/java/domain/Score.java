@@ -15,9 +15,13 @@ public class Score {
     }
 
     public int getScore() {
-        if (remainingAddition != 0) {
+        if (!isFullyCalculated()) {
             throw new UndoneCalculationException();
         }
         return score;
+    }
+
+    public boolean isFullyCalculated() {
+        return remainingAddition == 0;
     }
 }

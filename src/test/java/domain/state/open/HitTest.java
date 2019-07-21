@@ -1,13 +1,17 @@
 package domain.state.open;
 
 import domain.Pins;
+import domain.UndoneCalculationException;
 import domain.state.State;
 import domain.state.closed.Miss;
 import domain.state.closed.Spare;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class HitTest {
 
@@ -35,5 +39,19 @@ public class HitTest {
 
         //then
         assertThat(state instanceof Miss).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 10})
+    void 히트_상태에서_점수를_구하려하면_예외를_반환한다(int firstPins) {
+        //given
+        Hit hit = new Hit(Pins.from(firstPins));
+
+        //when
+        //then
+        assertThatExceptionOfType(UndoneCalculationException.class)
+                .isThrownBy(() -> {
+                    hit.getScore();
+                });
     }
 }

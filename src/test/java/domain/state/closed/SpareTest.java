@@ -1,10 +1,12 @@
 package domain.state.closed;
 
 import domain.Pins;
+import domain.Score;
 import domain.state.State;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class SpareTest {
@@ -30,5 +32,18 @@ public class SpareTest {
                 .isThrownBy(() -> {
                     state.update(Pins.from(firstPins));
                 });
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 10", "1, 9"})
+    void 스페어_상태는_계산이_끝난_상태가_아니다(int firstPins, int secondPins) {
+        //given
+        State state = new Spare(Pins.from(firstPins), Pins.from(secondPins));
+
+        //when
+        Score score = state.getScore();
+
+        //then
+        assertThat(score.isFullyCalculated()).isFalse();
     }
 }

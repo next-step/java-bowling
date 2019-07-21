@@ -1,6 +1,7 @@
 package domain.frame;
 
 import domain.Pins;
+import domain.Score;
 import domain.state.closed.FinalState;
 import domain.state.closed.Miss;
 import domain.state.open.StandBy;
@@ -73,6 +74,11 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isSameFrame(Frame targetFrame) {
         return targetFrame.getIndex().equals(getIndex());
+    }
+
+    @Override
+    public Score getScore() {
+        return null;
     }
 
 }

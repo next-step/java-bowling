@@ -1,6 +1,9 @@
 package domain.state.closed;
 
 import domain.Pins;
+import domain.Score;
+
+import static view.OutputView.SEPARATOR;
 
 public class Miss extends Closed {
     static final String ALERT_CANNOT_BE_MISS = "MISS가 아닙니다.";
@@ -27,6 +30,12 @@ public class Miss extends Closed {
         if (secondFallenPins.isMatch(Pins.from(0))) {
             secondPins = GUTTER_SYMBOL;
         }
-        return firstPins + "|" + secondPins;
+        return firstPins + SEPARATOR + secondPins;
+    }
+
+    @Override
+    public Score getScore() {
+        int sumOfPins = firstFallenPins.sumPins(secondFallenPins);
+        return Score.of(sumOfPins, 0);
     }
 }

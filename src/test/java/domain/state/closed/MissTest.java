@@ -1,11 +1,14 @@
 package domain.state.closed;
 
 import domain.Pins;
+import domain.Score;
 import domain.state.State;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static domain.state.closed.Miss.ALERT_CANNOT_BE_MISS;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class MissTest {
@@ -33,5 +36,18 @@ public class MissTest {
                 .isThrownBy(() -> {
                     state.update(Pins.from(firstPins));
                 });
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 9", "1, 8"})
+    void 점수를_반환한다(int firstPins, int secondPins) {
+        //given
+        State state = new Miss(Pins.from(firstPins), Pins.from(secondPins));
+
+        //when
+        Score score = state.getScore();
+
+        //then
+        assertThat(score.getScore()).isEqualTo(firstPins + secondPins);
     }
 }

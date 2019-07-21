@@ -1,6 +1,7 @@
 package domain.frame;
 
 import domain.Pins;
+import domain.Score;
 import domain.state.State;
 
 public interface Frame {
@@ -14,4 +15,6 @@ public interface Frame {
     State getState();
 
     boolean isSameFrame(Frame targetFrame);
+
+    Score getScore();
 }

@@ -1,6 +1,7 @@
 package domain.frame;
 
 import domain.Pins;
+import domain.Score;
 import domain.state.open.StandBy;
 import domain.state.State;
 
@@ -60,5 +61,14 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isSameFrame(Frame targetFrame) {
         return index.isSameIndex(targetFrame);
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = state.getScore();
+        if (score.isFullyCalculated()) {
+            return score;
+        }
+        return score; //TODO: 다음 프레임에 계산 위임하도록 수정
     }
 }
