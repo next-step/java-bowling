@@ -78,7 +78,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score getScore() {
-        return null;
+        return new FinalState(states).getScore();
     }
 
 }

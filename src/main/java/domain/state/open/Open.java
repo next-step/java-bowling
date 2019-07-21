@@ -1,7 +1,6 @@
 package domain.state.open;
 
 import domain.Score;
-import domain.UndoneCalculationException;
 import domain.state.State;
 
 abstract class Open implements State {
@@ -13,6 +12,6 @@ abstract class Open implements State {
 
     @Override
     public Score getScore() {
-        throw new UndoneCalculationException();
+        return Score.of(0, 0);
     }
 }

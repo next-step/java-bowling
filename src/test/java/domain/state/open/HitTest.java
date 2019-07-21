@@ -1,6 +1,7 @@
 package domain.state.open;
 
 import domain.Pins;
+import domain.Score;
 import domain.UndoneCalculationException;
 import domain.state.State;
 import domain.state.closed.Miss;
@@ -43,15 +44,14 @@ public class HitTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 10})
-    void 히트_상태에서_점수를_구하려하면_예외를_반환한다(int firstPins) {
+    void 히트_상태에서_점수를_구하면_0을_반환한다(int firstPins) {
         //given
         Hit hit = new Hit(Pins.from(firstPins));
 
         //when
+        Score score = hit.getScore();
+
         //then
-        assertThatExceptionOfType(UndoneCalculationException.class)
-                .isThrownBy(() -> {
-                    hit.getScore();
-                });
+        assertThat(score.getScore()).isEqualTo(0);
     }
 }

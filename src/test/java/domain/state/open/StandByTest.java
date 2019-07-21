@@ -1,6 +1,7 @@
 package domain.state.open;
 
 import domain.Pins;
+import domain.Score;
 import domain.UndoneCalculationException;
 import domain.state.State;
 import domain.state.closed.Strike;
@@ -41,15 +42,14 @@ public class StandByTest {
     }
 
     @Test
-    void 스탠드바이_상태에서_점수를_구하려하면_예외를_반환한다() {
+    void 히트_상태에서_점수를_구하면_0을_반환한다() {
         //given
         StandBy standBy = new StandBy();
 
         //when
+        Score score = standBy.getScore();
+
         //then
-        assertThatExceptionOfType(UndoneCalculationException.class)
-                .isThrownBy(() -> {
-                    standBy.getScore();
-                });
+        assertThat(score.getScore()).isEqualTo(0);
     }
 }
