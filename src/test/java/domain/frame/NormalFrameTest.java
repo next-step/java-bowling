@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalFrameTest {
@@ -21,31 +23,27 @@ class NormalFrameTest {
     @Test
     void strike() {
         Frame frame = this.lastNormalFrame.setKnockedDownPins(Pins.ALL);
-        State state = frame.getState();
-        assertThat(state).isInstanceOf(Strike.class);
+        assertThat(getLast(lastNormalFrame.getState())).isInstanceOf(Strike.class);
     }
 
     @Test
     void spares() {
         this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
         this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
-        State state = lastNormalFrame.getState();
-        assertThat(state).isInstanceOf(Spares.class);
+        assertThat(getLast(lastNormalFrame.getState())).isInstanceOf(Spares.class);
     }
 
     @Test
     void open() {
         this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
         this.lastNormalFrame.setKnockedDownPins(Pins.of(4));
-        State state = lastNormalFrame.getState();
-        assertThat(state).isInstanceOf(Open.class);
+        assertThat(getLast(lastNormalFrame.getState())).isInstanceOf(Open.class);
     }
 
     @Test
     void waiting() {
         this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
-        State state = lastNormalFrame.getState();
-        assertThat(state).isInstanceOf(Waiting.class);
+        assertThat(getLast(lastNormalFrame.getState())).isInstanceOf(Waiting.class);
     }
 
     @Test
@@ -187,5 +185,9 @@ class NormalFrameTest {
 
         Score score = firstFrame.getScore();
         assertThat(score.getValue()).isEqualTo(15);
+    }
+
+    private State getLast(List<State> states) {
+        return states.get(states.size() - 1);
     }
 }
