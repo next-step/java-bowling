@@ -1,6 +1,7 @@
 package domain;
 
 import domain.frame.Frame;
+import domain.frame.FrameIndex;
 import domain.frame.Frames;
 import domain.frame.NormalFrame;
 
@@ -25,8 +26,8 @@ public class BowlingGame {
         frames.play(fallenPins);
     }
 
-    public Frame currentFrame() {
-        return frames.currentFrame();
+    public FrameIndex currentFrameIndex() {
+        return frames.currentFrameIndex();
     }
 
     public boolean isGameOver() {
@@ -37,7 +38,15 @@ public class BowlingGame {
         return player;
     }
 
+    public String getPlayerName() {
+        return player.getName();
+    }
+
     public List<Frame> getFrames() {
         return frames.getFrames();
+    }
+
+    public int sizeOfFrames() {
+        return frames.sizeOfFrames();
     }
 }

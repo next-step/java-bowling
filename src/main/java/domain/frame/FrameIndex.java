@@ -5,7 +5,7 @@ import java.util.Objects;
 public class FrameIndex {
     static final String ALERT_INVALID_FRAME_NUMBER = "프레임 번호는 1부터 10까지만 허용됩니다.";
     static final int MINIMUM_FRAME_INDEX = 1;
-    static final int MAXIMUM_FRAME_INDEX = 10;
+    public static final int MAXIMUM_FRAME_INDEX = 10;
     static final int SECOND_TO_LAST_INDEX = 9;
     static final int INCREMENT_AMOUNT = 1;
 

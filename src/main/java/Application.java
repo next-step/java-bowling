@@ -13,7 +13,7 @@ public class Application {
         OutputView.printBoard(bowlingGame);
 
         while(!bowlingGame.isGameOver()) {
-            FrameIndex currentFrameIndex = bowlingGame.currentFrame().getIndex();
+            FrameIndex currentFrameIndex = bowlingGame.currentFrameIndex();
             Pins fallenPins = InputView.askFallenPins(currentFrameIndex);
 
             bowlingGame.play(fallenPins);

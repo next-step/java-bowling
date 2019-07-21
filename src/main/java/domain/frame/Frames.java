@@ -39,8 +39,16 @@ public class Frames {
         return frames.get(lastFrameIndex());
     }
 
+    public FrameIndex currentFrameIndex() {
+        return currentFrame().getIndex();
+    }
+
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
+    }
+
+    public int sizeOfFrames() {
+        return frames.size();
     }
 
     private boolean isSameFrame(Frame bowledFrame) {
