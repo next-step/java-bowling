@@ -23,6 +23,10 @@ public abstract class Frame {
         return NormalFrame.ofFirst();
     }
 
+    boolean isEqualFrameNumber(Frame frameAfterBowling){
+        return frameNumber.equals(frameAfterBowling.getNumber());
+    }
+
     abstract Score getScore();
 
     abstract Score calculate(Score prevScore);
