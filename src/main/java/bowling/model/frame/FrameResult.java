@@ -15,10 +15,14 @@ public class FrameResult {
     }
 
     static FrameResult of(Score score, State state) {
-        if (score.isCompleted() && state.isFinished()) {
+        if (isCompleteFrame(score, state)) {
             return new FrameResult(score.getScore(), state.printResult());
         }
         return new FrameResult(DEFAULT_SCORE, state.printResult());
+    }
+
+    private static boolean isCompleteFrame(Score score, State state) {
+        return score.isCompleted() && state.isFinished();
     }
 
     public String getState() {
@@ -29,9 +33,10 @@ public class FrameResult {
         return score;
     }
 
-    public void calculate(FrameResult prevFrameResult) {
+    FrameResult calculate(FrameResult prevFrameResult) {
         if (DEFAULT_SCORE < this.score) {
             this.score += prevFrameResult.getScore();
         }
+        return this;
     }
 }

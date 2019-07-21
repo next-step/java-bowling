@@ -12,11 +12,11 @@ public class BowlingGame {
         this.gameEngine = gameEngine;
     }
 
-    public static BowlingGame settingOf(Player player) {
+    static BowlingGame settingOf(Player player) {
         return new BowlingGame(player, new GameEngine());
     }
 
-    public FrameNumber getCurrentNumber() {
+    FrameNumber getCurrentNumber() {
         return gameEngine.getCurrentNumber();
     }
 
@@ -24,11 +24,19 @@ public class BowlingGame {
         gameEngine.play(downPin);
     }
 
-    public Board results() {
+    boolean isYourTurn(FrameNumber currentNumber) {
+        return !isGameOver() && getCurrentNumber().equals(currentNumber);
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    Board results() {
         return new Board(player, gameEngine.results());
     }
 
-    public boolean isGameOver() {
+    boolean isGameOver() {
         return gameEngine.isGameOver();
     }
 }

@@ -14,6 +14,11 @@ public class Hit extends FirstState {
     }
 
     @Override
+    public Score getScore() {
+        return Score.of(getFirst().count());
+    }
+
+    @Override
     public String printResult() {
         return getFirst().toString();
     }

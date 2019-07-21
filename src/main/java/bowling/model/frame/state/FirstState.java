@@ -21,15 +21,10 @@ public abstract class FirstState implements State {
     @Override
     public State bowl(DownPin second) {
         DownPin totalCount = first.sum(second);
-        if (totalCount.equals(DOWN_ALL)) {
+        if (DOWN_ALL.equals(totalCount)) {
             return Spare.valueOf(first);
         }
         return Miss.valueOf(first, second);
-    }
-
-    @Override
-    public Score getScore() {
-        return Score.of(first.count());
     }
 
     @Override

@@ -36,6 +36,6 @@ class MissTest {
         String print = Miss.valueOf(first, second).printResult();
 
         // then
-        assertThat(print).isEqualTo("0|1");
+        assertThat(print).isEqualTo("-|1");
     }
 }

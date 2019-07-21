@@ -19,6 +19,10 @@ public abstract class Frame {
         return frameNumber.self();
     }
 
+    boolean isEqualFrameNumber(Frame frameAfterBowling){
+        return frameNumber.equals(frameAfterBowling.getNumber());
+    }
+
     static Frame initialize() {
         return NormalFrame.ofFirst();
     }

@@ -18,9 +18,15 @@ public class OutView {
     private static final String MESSAGE_OF_HEADER = "|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |";
     private static final String MESSAGE_OF_GAME_OVER = "게임이 종료되었습니다";
 
-    public static void printProgress(Board board) {
+    public static void printProgress(List<Board> boards) {
         System.out.println(MESSAGE_OF_HEADER);
 
+        for (Board board : boards) {
+            printProgress(board);
+        }
+    }
+
+    private static void printProgress(Board board) {
         Results bowlingResults = board.getBowlingResults();
         System.out.println(getCurrentStates(board.getPlayer(), bowlingResults.getStates()));
         System.out.println(getCurrentScores(bowlingResults.

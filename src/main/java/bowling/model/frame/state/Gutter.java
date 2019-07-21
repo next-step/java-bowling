@@ -24,6 +24,11 @@ public class Gutter extends FirstState {
     }
 
     @Override
+    public Score getScore() {
+        return Score.of(GUTTER_PIN);
+    }
+
+    @Override
     public String printResult() {
         return SYMBOL;
     }
