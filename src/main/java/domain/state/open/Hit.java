@@ -36,4 +36,9 @@ public class Hit extends Open {
     public Score updateScore(Score score) {
         return score.update(score.getScore());
     }
+
+    @Override
+    public Score getScore() {
+        return Score.of(firstFallenPins.getFallenPins(), 1);
+    }
 }

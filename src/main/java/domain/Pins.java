@@ -50,6 +50,10 @@ public class Pins {
         return this.fallenPins + secondFallenPins.fallenPins;
     }
 
+    public int getFallenPins() {
+        return fallenPins;
+    }
+
     public Score updateScore(Score score) {
         return score.update(fallenPins);
     }

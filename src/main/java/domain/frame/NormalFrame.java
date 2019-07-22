@@ -69,6 +69,9 @@ public class NormalFrame implements Frame {
         if (score.isFullyCalculated()) {
             return score;
         }
+        if (nextFrame == null) {
+            return score;
+        }
         return nextFrame.updateScore(score);
     }
 
@@ -79,7 +82,6 @@ public class NormalFrame implements Frame {
             return updatedScore;
         }
         if (nextFrame == null) {
-//            return Score.of(0, 0);
             return score;
         }
         return nextFrame.updateScore(updatedScore);

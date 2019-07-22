@@ -1,7 +1,9 @@
 package domain.frame;
 
 import domain.Pins;
+import domain.Score;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -78,5 +80,137 @@ public class FinalFrameTest {
                             .fillFrame(third)
                             .fillFrame(fourth);
                 });
+    }
+
+    @Test
+    void 거터_처리를_할_경우_거터_점수를_반환한다() {
+        //given
+        finalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
+        finalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
+
+        //when
+        Score score = finalFrame.getScore();
+
+        //then
+        assertThat(score).isEqualTo(Score.of(0, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 1", "5, 4", "9, 0"})
+    void 미쓰_처리를_할_경우_미쓰_점수를_반환한다(int first, int second) {
+        //given
+        finalFrame.fillFrame(Pins.from(first));
+        finalFrame.fillFrame(Pins.from(second));
+
+        //when
+        Score score = finalFrame.getScore();
+
+        //then
+        assertThat(score).isEqualTo(Score.of(first + second, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 10", "5, 5"})
+    void 스페어와_거터_처리를_할_경우의_점수를_반환한다(int first, int second) {
+        //given
+        finalFrame.fillFrame(Pins.from(first));
+        finalFrame.fillFrame(Pins.from(second));
+        finalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
+
+        //when
+        Score score = finalFrame.getScore();
+
+        //then
+        assertThat(score).isEqualTo(Score.of(first + second, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 10, 5", "5, 5, 5"})
+    void 스페어와_미쓰_처리를_할_경우의_점수를_반환한다(int first, int second, int third) {
+        //given
+        finalFrame.fillFrame(Pins.from(first));
+        finalFrame.fillFrame(Pins.from(second));
+        finalFrame.fillFrame(Pins.from(third));
+
+        //when
+        Score score = finalFrame.getScore();
+
+        //then
+        assertThat(score).isEqualTo(Score.of(first + second + third, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 10, 10", "5, 5, 10"})
+    void 스페어와_스트라이크_처리를_할_경우의_점수를_반환한다(int first, int second, int third) {
+        //given
+        finalFrame.fillFrame(Pins.from(first));
+        finalFrame.fillFrame(Pins.from(second));
+        finalFrame.fillFrame(Pins.from(third));
+
+        //when
+        Score score = finalFrame.getScore();
+
+        //then
+        assertThat(score).isEqualTo(Score.of(first + second + third, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"10, 10, 10"})
+    void 스트라이크_세_번_처리를_할_경우의_점수를_반환한다(int first, int second, int third) {
+        //given
+        finalFrame.fillFrame(Pins.from(first));
+        finalFrame.fillFrame(Pins.from(second));
+        finalFrame.fillFrame(Pins.from(third));
+
+        //when
+        Score score = finalFrame.getScore();
+
+        //then
+        assertThat(score).isEqualTo(Score.of(first + second + third, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"10, 0, 10", "10, 5, 5"})
+    void 스트라이크와_스페어를_할_경우의_점수를_반환한다(int first, int second, int third) {
+        //given
+        finalFrame.fillFrame(Pins.from(first));
+        finalFrame.fillFrame(Pins.from(second));
+        finalFrame.fillFrame(Pins.from(third));
+
+        //when
+        Score score = finalFrame.getScore();
+
+        //then
+        assertThat(score).isEqualTo(Score.of(first + second + third, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"10, 0, 0"})
+    void 스트라이크와_거터_할_경우의_점수를_반환한다(int first, int second, int third) {
+        //given
+        finalFrame.fillFrame(Pins.from(first));
+        finalFrame.fillFrame(Pins.from(second));
+        finalFrame.fillFrame(Pins.from(third));
+
+        //when
+        Score score = finalFrame.getScore();
+
+        //then
+        assertThat(score).isEqualTo(Score.of(first + second + third, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"10, 0, 1", "10, 1, 0", "10, 1, 1"})
+    void 스트라이크와_미쓰_할_경우의_점수를_반환한다(int first, int second, int third) {
+        //given
+        finalFrame.fillFrame(Pins.from(first));
+        finalFrame.fillFrame(Pins.from(second));
+        finalFrame.fillFrame(Pins.from(third));
+
+        //when
+        Score score = finalFrame.getScore();
+
+        //then
+        assertThat(score).isEqualTo(Score.of(first + second + third, 0));
     }
 }

@@ -25,4 +25,9 @@ public class StandBy extends Open {
     public Score updateScore(Score score) {
         return score; //TODO: 개선 고민해보기
     }
+
+    @Override
+    public Score getScore() {
+        return Score.of(0, 0);
+    }
 }
