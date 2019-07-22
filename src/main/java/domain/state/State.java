@@ -1,12 +1,14 @@
 package domain.state;
 
-import domain.Pins;
+import domain.score.Score;
 
 public interface State {
 
-    State bowl(Pins downPins);
-
-    Boolean isClosed();
-
     String toSymbol();
+
+    boolean isClosed();
+
+    Score getScore();
+
+    Score calculateBonusScore(Score beforeScore);
 }

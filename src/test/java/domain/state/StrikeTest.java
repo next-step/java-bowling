@@ -16,13 +16,4 @@ class StrikeTest {
             new Strike(Pins.of(5));
         });
     }
-
-    @Test
-    @DisplayName("더이상 추가 금지 예외처리")
-    void bowlExcpetion() {
-        Strike strike = new Strike(Pins.ALL);
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            strike.bowl(Pins.of(4));
-        });
-    }
 }

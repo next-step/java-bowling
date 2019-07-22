@@ -16,14 +16,4 @@ class SparesTest {
             new Spares(Pins.of(5), Pins.of(4));
         });
     }
-
-    @Test
-    @DisplayName("더이상 추가 금지 예외처리")
-    void bowlExcpetion() {
-        Spares spares = new Spares(Pins.of(5), Pins.of(5));
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            spares.bowl(Pins.of(4));
-        });
-    }
-
 }

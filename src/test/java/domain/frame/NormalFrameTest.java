@@ -1,42 +1,193 @@
 package domain.frame;
 
 import domain.Pins;
+import domain.score.Score;
 import domain.state.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalFrameTest {
 
-    private NormalFrame frame;
+    private NormalFrame lastNormalFrame;
 
     @BeforeEach
     void setUp() {
-        frame = new NormalFrame();
+        lastNormalFrame = new NormalFrame(new LastFrame());
     }
 
     @Test
     void strike() {
-        State state = frame.setKnockedDownPins(Pins.ALL);
-        assertThat(state instanceof Strike).isTrue();
+        Frame frame = this.lastNormalFrame.setKnockedDownPins(Pins.ALL);
+        assertThat(getLast(lastNormalFrame.getState())).isInstanceOf(Strike.class);
     }
 
     @Test
     void spares() {
-        State state = frame.setKnockedDownPins(Pins.of(5)).bowl(Pins.of(5));
-        assertThat(state instanceof Spares).isTrue();
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+        assertThat(getLast(lastNormalFrame.getState())).isInstanceOf(Spares.class);
     }
 
     @Test
     void open() {
-        State state = frame.setKnockedDownPins(Pins.of(5)).bowl(Pins.of(4));
-        assertThat(state instanceof Open).isTrue();
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(4));
+        assertThat(getLast(lastNormalFrame.getState())).isInstanceOf(Open.class);
     }
 
     @Test
-    void Ongoing() {
-        State state = frame.setKnockedDownPins(Pins.of(5));
-        assertThat(state instanceof Ongoing).isTrue();
+    void waiting() {
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+        assertThat(getLast(lastNormalFrame.getState())).isInstanceOf(Waiting.class);
+    }
+
+    @Test
+    @DisplayName("strke -> spare -> strke")
+    void score() {
+        this.lastNormalFrame.setKnockedDownPins(Pins.ALL);
+
+        Frame secondFrame = new NormalFrame(lastNormalFrame);
+        secondFrame.setKnockedDownPins(Pins.of(9));
+        secondFrame.setKnockedDownPins(Pins.of(1));
+
+        Frame firstFrame = new NormalFrame(secondFrame);
+        firstFrame.setKnockedDownPins(Pins.ALL);
+
+        Score score = firstFrame.getScore();
+        assertThat(score.getValue()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("strke -> strike -> strke")
+    void terkey() {
+        this.lastNormalFrame.setKnockedDownPins(Pins.ALL);
+
+        Frame secondFrame = new NormalFrame(lastNormalFrame);
+        secondFrame.setKnockedDownPins(Pins.ALL);
+
+        Frame firstFrame = new NormalFrame(secondFrame);
+        firstFrame.setKnockedDownPins(Pins.ALL);
+
+        Score score = firstFrame.getScore();
+        assertThat(score.getValue()).isEqualTo(30);
+    }
+
+    @Test
+    @DisplayName("strke -> strike -> open")
+    void strikeOpen() {
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(3));
+
+        Frame secondFrame = new NormalFrame(lastNormalFrame);
+        secondFrame.setKnockedDownPins(Pins.ALL);
+
+        Frame firstFrame = new NormalFrame(secondFrame);
+        firstFrame.setKnockedDownPins(Pins.ALL);
+
+        Score score = firstFrame.getScore();
+        assertThat(score.getValue()).isEqualTo(25);
+    }
+
+    @Test
+    @DisplayName("strke -> strike -> waiting")
+    void strikeStrikeWaiting() {
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+
+        Frame secondFrame = new NormalFrame(lastNormalFrame);
+        secondFrame.setKnockedDownPins(Pins.ALL);
+
+        Frame firstFrame = new NormalFrame(secondFrame);
+        firstFrame.setKnockedDownPins(Pins.ALL);
+
+        Score score = firstFrame.getScore();
+        assertThat(score.getValue()).isEqualTo(25);
+    }
+
+    @Test
+    @DisplayName("strke -> waiting")
+    void strikeWaiting() {
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+
+        Frame firstFrame = new NormalFrame(lastNormalFrame);
+        firstFrame.setKnockedDownPins(Pins.ALL);
+
+        Score score = firstFrame.getScore();
+        assertThat(score.getValue()).isEqualTo(-1);
+    }
+
+    @Test
+    @DisplayName("open -> open")
+    void openOpen() {
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+
+        Frame secondFrame = new NormalFrame(lastNormalFrame);
+        secondFrame.setKnockedDownPins(Pins.of(5));
+        secondFrame.setKnockedDownPins(Pins.of(4));
+
+        Frame firstFrame = new NormalFrame(secondFrame);
+        firstFrame.setKnockedDownPins(Pins.of(8));
+        firstFrame.setKnockedDownPins(Pins.of(1));
+
+        Score score = firstFrame.getScore();
+        assertThat(score.getValue()).isEqualTo(9);
+    }
+
+
+    @Test
+    @DisplayName("spare -> strike")
+    void sparesStrke() {
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+
+        Frame secondFrame = new NormalFrame(lastNormalFrame);
+        secondFrame.setKnockedDownPins(Pins.ALL);
+
+        Frame firstFrame = new NormalFrame(secondFrame);
+        firstFrame.setKnockedDownPins(Pins.of(9));
+        firstFrame.setKnockedDownPins(Pins.of(1));
+
+        Score score = firstFrame.getScore();
+        assertThat(score.getValue()).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("spare -> wating")
+    void sparesWaiting() {
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+
+        Frame secondFrame = new NormalFrame(lastNormalFrame);
+        secondFrame.setKnockedDownPins(Pins.of(5));
+
+        Frame firstFrame = new NormalFrame(secondFrame);
+        firstFrame.setKnockedDownPins(Pins.of(9));
+        firstFrame.setKnockedDownPins(Pins.of(1));
+
+        Score score = firstFrame.getScore();
+        assertThat(score.getValue()).isEqualTo(15);
+    }
+
+    @Test
+    @DisplayName("spare -> open")
+    void sparesOpen() {
+        this.lastNormalFrame.setKnockedDownPins(Pins.of(5));
+
+        Frame secondFrame = new NormalFrame(lastNormalFrame);
+        secondFrame.setKnockedDownPins(Pins.of(5));
+        secondFrame.setKnockedDownPins(Pins.of(4));
+
+        Frame firstFrame = new NormalFrame(secondFrame);
+        firstFrame.setKnockedDownPins(Pins.of(9));
+        firstFrame.setKnockedDownPins(Pins.of(1));
+
+        Score score = firstFrame.getScore();
+        assertThat(score.getValue()).isEqualTo(15);
+    }
+
+    private State getLast(List<State> states) {
+        return states.get(states.size() - 1);
     }
 }

@@ -1,33 +1,28 @@
 package domain.state;
 
-import domain.Pins;
+import domain.score.Score;
 
 import static io.OutputResult.EMPTY_SPACE;
 
 public class Ready implements State {
 
-    private Pins first;
-
     @Override
-    public State bowl(Pins downPins) {
-        this.first = downPins;
-        if (isStrike()) {
-            return new Strike(downPins);
-        }
-        return new Ongoing(first);
+    public boolean isClosed() {
+        return false;
     }
 
     @Override
-    public Boolean isClosed() {
-        return false;
+    public Score getScore() {
+        return Score.EMPTY;
+    }
+
+    @Override
+    public Score calculateBonusScore(Score beforeScore) {
+        return Score.EMPTY;
     }
 
     @Override
     public String toSymbol() {
         return EMPTY_SPACE;
-    }
-
-    private boolean isStrike() {
-        return first.equals(Pins.ALL);
     }
 }

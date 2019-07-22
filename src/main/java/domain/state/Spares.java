@@ -1,8 +1,8 @@
 package domain.state;
 
 import domain.Pins;
-
-import static io.OutputResult.SYMBOL_DELIMITER;
+import domain.score.BonusType;
+import domain.score.Score;
 
 public class Spares implements State {
 
@@ -10,30 +10,51 @@ public class Spares implements State {
     private final Pins first;
     private final Pins second;
 
-    Spares(Pins first, Pins second) {
+    public Spares(Pins first, Pins second) {
         verify(first, second);
         this.first = first;
         this.second = second;
     }
 
     private void verify(Pins first, Pins second) {
-        if (!Pins.ALL.equals(first.add(second))) {
+        if (isNotSpares(first, second)) {
             throw new IllegalArgumentException("핀이 남아 있는데");
         }
     }
 
-    @Override
-    public State bowl(Pins downPins) {
-        throw new RuntimeException("더이상 진행 할 수 없습니다.");
+    private boolean isNotSpares(Pins first, Pins second) {
+        return !Pins.ALL.equals(first.add(second));
     }
 
     @Override
-    public Boolean isClosed() {
+    public boolean isClosed() {
         return true;
     }
 
     @Override
+    public Score getScore() {
+        return Score.of(first, second, BonusType.spare());
+    }
+
+    @Override
+    public Score calculateBonusScore(Score beforeScore) {
+        Score score = beforeScore.calculate(getFirstScore());
+        if(score.hasBonus()) {
+            return score.calculate(getSecondScore());
+        }
+        return score;
+    }
+
+    public Score getFirstScore() {
+        return Score.of(first, Pins.ZERO, BonusType.spare());
+    }
+
+    public Score getSecondScore() {
+        return Score.of(Pins.ZERO, second, BonusType.spare());
+    }
+
+    @Override
     public String toSymbol() {
-        return first + SYMBOL_DELIMITER + SPARES;
+        return first + "|" + SPARES;
     }
 }

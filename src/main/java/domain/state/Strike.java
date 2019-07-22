@@ -1,6 +1,8 @@
 package domain.state;
 
 import domain.Pins;
+import domain.score.BonusType;
+import domain.score.Score;
 
 public class Strike implements State {
 
@@ -11,22 +13,31 @@ public class Strike implements State {
     public Strike(Pins downPins) {
         verify(downPins);
         this.first = downPins;
-        this.second = Pins.EMPTY;
+        this.second = Pins.ZERO;
     }
 
     private void verify(Pins downPins) {
-        if (!Pins.ALL.equals(downPins)) {
+        if (isNotStrike(downPins)) {
             throw new IllegalArgumentException("스트라이크 아님");
         }
     }
 
-    @Override
-    public State bowl(Pins downPins) {
-        throw new RuntimeException("더이상 진행 할 수 없습니다.");
+    private boolean isNotStrike(Pins downPins) {
+        return !Pins.ALL.equals(downPins);
     }
 
     @Override
-    public Boolean isClosed() {
+    public Score calculateBonusScore(Score beforeScore) {
+        return beforeScore.calculate(getScore());
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.of(first, second, BonusType.strike());
+    }
+
+    @Override
+    public boolean isClosed() {
         return true;
     }
 
