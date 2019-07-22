@@ -50,6 +50,10 @@ public class Pins {
         return this.fallenPins + secondFallenPins.fallenPins;
     }
 
+    public Score updateScore(Score score) {
+        return score.update(fallenPins);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Score {
 
     private int score;
@@ -14,14 +16,37 @@ public class Score {
         return new Score(score, remainingAddition);
     }
 
+    public Score update(int fallenPins) {
+        return of(score + fallenPins, remainingAddition - 1);
+    }
+
     public int getScore() {
-        if (!isFullyCalculated()) {
-            throw new UndoneCalculationException();
-        }
         return score;
     }
 
     public boolean isFullyCalculated() {
         return remainingAddition == 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score &&
+                remainingAddition == score1.remainingAddition;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score, remainingAddition);
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "score=" + score +
+                ", remainingAddition=" + remainingAddition +
+                '}';
     }
 }

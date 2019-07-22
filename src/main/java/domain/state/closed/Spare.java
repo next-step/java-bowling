@@ -12,12 +12,14 @@ public class Spare extends Closed {
     private static final String SPARE_SYMBOL = "/";
 
     private Pins firstFallenPins;
+    private Pins secondFallenPins;
 
     public Spare(Pins firstFallenPins, Pins secondFallenPins) {
         if (!firstFallenPins.isSpare(secondFallenPins)) {
             throw new IllegalArgumentException(ALERT_CANNOT_BE_SPARE);
         }
         this.firstFallenPins = firstFallenPins;
+        this.secondFallenPins = secondFallenPins;
     }
 
     @Override
@@ -32,5 +34,15 @@ public class Spare extends Closed {
     @Override
     public Score getScore() {
         return Score.of(STRIKE_PINS, 1);
+    }
+
+    @Override
+    public Score updateScore(Score score) {
+        Score updatedScore = firstFallenPins.updateScore(score);
+        if (updatedScore.isFullyCalculated()) {
+            return updatedScore;
+        }
+        updatedScore = secondFallenPins.updateScore(updatedScore);
+        return updatedScore;
     }
 }

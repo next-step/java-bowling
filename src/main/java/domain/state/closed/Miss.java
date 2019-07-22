@@ -38,4 +38,14 @@ public class Miss extends Closed {
         int sumOfPins = firstFallenPins.sumPins(secondFallenPins);
         return Score.of(sumOfPins, 0);
     }
+
+    @Override
+    public Score updateScore(Score score) {
+        Score updatedScore = firstFallenPins.updateScore(score);
+        if (updatedScore.isFullyCalculated()) {
+            return updatedScore;
+        }
+        updatedScore = secondFallenPins.updateScore(updatedScore);
+        return updatedScore;
+    }
 }

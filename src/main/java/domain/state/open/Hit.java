@@ -1,6 +1,7 @@
 package domain.state.open;
 
 import domain.Pins;
+import domain.Score;
 import domain.state.State;
 import domain.state.closed.Miss;
 import domain.state.closed.Spare;
@@ -29,5 +30,10 @@ public class Hit extends Open {
             return GUTTER_SYMBOL;
         }
         return firstFallenPins.toString();
+    }
+
+    @Override
+    public Score updateScore(Score score) {
+        return score.update(score.getScore());
     }
 }

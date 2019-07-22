@@ -31,4 +31,12 @@ public class FinalState extends Closed {
 
         return Score.of(sumOfScores, 0);
     }
+
+    @Override
+    public Score updateScore(Score score) {
+        for (State state : states) {
+            score = state.updateScore(score);
+        }
+        return score;
+    }
 }

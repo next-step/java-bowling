@@ -1,6 +1,7 @@
 package domain.state.open;
 
 import domain.Pins;
+import domain.Score;
 import domain.state.State;
 import domain.state.closed.Strike;
 
@@ -18,5 +19,10 @@ public class StandBy extends Open {
     @Override
     public String printState() {
         return STAND_BY_SYMBOL;
+    }
+
+    @Override
+    public Score updateScore(Score score) {
+        return score; //TODO: 개선 고민해보기
     }
 }

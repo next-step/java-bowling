@@ -69,6 +69,19 @@ public class NormalFrame implements Frame {
         if (score.isFullyCalculated()) {
             return score;
         }
-        return score; //TODO: 다음 프레임에 계산 위임하도록 수정
+        return nextFrame.updateScore(score);
+    }
+
+    @Override
+    public Score updateScore(Score score) {
+        Score updatedScore = state.updateScore(score);
+        if (updatedScore.isFullyCalculated()) {
+            return updatedScore;
+        }
+        if (nextFrame == null) {
+//            return Score.of(0, 0);
+            return score;
+        }
+        return nextFrame.updateScore(updatedScore);
     }
 }

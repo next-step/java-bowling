@@ -81,4 +81,9 @@ public class FinalFrame implements Frame {
         return new FinalState(states).getScore();
     }
 
+    @Override
+    public Score updateScore(Score score) {
+        return new FinalState(states).updateScore(score);
+    }
+
 }

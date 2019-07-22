@@ -1,6 +1,7 @@
 package view;
 
 import domain.BowlingGame;
+import domain.Score;
 import domain.frame.Frame;
 import domain.state.State;
 import utils.PrintUtils;
@@ -47,9 +48,12 @@ public class OutputView {
                 .append(PrintUtils.centralize(EMPTY_SYMBOL))
                 .append(SEPARATOR);
 
-//        bowlingGame.getFrames()
-//                .stream()
-//                .map(Frame::getScore)
+        bowlingGame.getFrames()
+                .stream()
+                .map(Frame::getScore)
+                .map(Score::getScore)
+                .map(String::valueOf)
+                .forEach(scoresBuilder::append);
 
         fillUnplayedFrames(bowlingGame, scoresBuilder);
 

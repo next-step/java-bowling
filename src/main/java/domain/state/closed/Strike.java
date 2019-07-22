@@ -16,4 +16,12 @@ public class Strike extends Closed {
     public Score getScore() {
         return Score.of(STRIKE_PINS, 2);
     }
+
+    @Override
+    public Score updateScore(Score score) {
+        if (score.isFullyCalculated()) {
+            return score;
+        }
+        return score.update(STRIKE_PINS);
+    }
 }

@@ -17,4 +17,6 @@ public interface Frame {
     boolean isSameFrame(Frame targetFrame);
 
     Score getScore();
+
+    Score updateScore(Score score);
 }

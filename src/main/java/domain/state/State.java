@@ -12,4 +12,6 @@ public interface State {
     String printState();
 
     Score getScore();
+
+    Score updateScore(Score score);
 }
