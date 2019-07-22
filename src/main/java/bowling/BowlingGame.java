@@ -7,12 +7,12 @@ import java.util.Map;
 public class BowlingGame {
 
   Frame frame = NormalFrame.first();
-  Map<Integer,String> result = new HashMap<>();
+  Map<Integer, String> result = new HashMap<>();
 
   public Frame roll(int countOfPin) {
-    frame = frame.roll(countOfPin);
-
-    result.put(frame.getFrameNo(),frame.toString());
+    Frame currentFrame = frame.roll(countOfPin);
+    result.put(currentFrame.getFrameNo(), currentFrame.toString());
+    frame = currentFrame.nextFrame();
     return frame;
   }
 
@@ -24,7 +24,7 @@ public class BowlingGame {
     return frame.getFrameNo();
   }
 
-  public Map<Integer,String> getResult() {
+  public Map<Integer, String> getResult() {
     return Collections.unmodifiableMap(result);
   }
 

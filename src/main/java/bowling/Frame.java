@@ -7,4 +7,6 @@ public interface Frame {
   boolean isGameEnd();
 
   int getFrameNo();
+
+  Frame nextFrame();
 }

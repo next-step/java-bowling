@@ -87,12 +87,18 @@ public class LastFallDownPins {
 
   @Override
   public String toString() {
-    if(isStrike()) {
+    if (isStrike()) {
       return "X";
     }
-    if(isSpare()) {
-      return getFirstFallDown().toString()+"|"+"/"+getBonus();
+    if (isSpare() && fallDownCounts.size() == SPARE_SIZE) {
+      return getFirstFallDown().toString() + "|" + "/";
     }
-    return getFirstFallDown().toString()+"|"+getSecondFallDown().toString();
+    if (isSpare()) {
+      return getFirstFallDown().toString() + "|" + "/" +"|"+ getBonus();
+    }
+    if (fallDownCounts.size() == 1) {
+      return getFirstFallDown().toString();
+    }
+    return getFirstFallDown().toString() + "|" + getSecondFallDown().toString();
   }
 }

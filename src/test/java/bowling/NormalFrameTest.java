@@ -17,15 +17,15 @@ public class NormalFrameTest {
   }
 
   @Test
-  void 첫번째_시도에_10개를_쓰러뜨리면_다음프레임이_리턴된다() {
+  void 첫번째_시도에_10개를_쓰러뜨린후__다음프레임을_호출하면_다음프레임이_리턴된다() {
     Frame firstFrame = NormalFrame.first();
-    assertThat(firstFrame.roll(10)).isEqualTo(new NormalFrame(2));
+    assertThat(firstFrame.roll(10).nextFrame()).isEqualTo(new NormalFrame(2));
   }
 
   @Test
   void 두번_roll을하면_다음_프레임이_리턴된다() {
     Frame firstFrame = NormalFrame.first();
-    assertThat(firstFrame.roll(5).roll(5)).isEqualTo(new NormalFrame(2));
+    assertThat(firstFrame.roll(5).roll(5).nextFrame()).isEqualTo(new NormalFrame(2));
   }
 
   @Test

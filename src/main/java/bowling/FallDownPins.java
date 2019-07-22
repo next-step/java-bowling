@@ -34,6 +34,9 @@ public class FallDownPins {
   }
 
   public boolean isFinish() {
+    if(fallDownCounts == null ) {
+      return false;
+    }
     if (isStrike()) {
       return true;
     }

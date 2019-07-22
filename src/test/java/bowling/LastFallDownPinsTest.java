@@ -18,4 +18,12 @@ public class LastFallDownPinsTest {
     assertThat(LastFallDownPins.first(3).roll(7).roll(6).isLastFrameFinish()).isEqualTo(true);
   }
 
+  @Test
+  void 스트라이크나_스페어못하면_보너스가_없다() {
+    assertThat(LastFallDownPins.first(3).roll(6).isLastFrameFinish()).isEqualTo(true);
+
+  }
+
+
+
 }

@@ -36,8 +36,40 @@ public class BowlingGameTest {
     bowlingGame.roll(10);
     bowlingGame.roll(10);
     bowlingGame.roll(10);
-    bowlingGame.roll(10);
+    System.out.println(bowlingGame.roll(10).getFrameNo());
 
     assertThat(bowlingGame.roll(4).roll(5).isGameEnd()).isTrue();
+  }
+
+  @Test
+  void 프레임에대한_결과를_저장한다() {
+    bowlingGame.roll(5);
+    assertThat(bowlingGame.getResult().get(1)).isEqualTo("5");
+    bowlingGame.roll(5);
+    assertThat(bowlingGame.getResult().get(1)).isEqualTo("5|/");
+
+    bowlingGame.roll(10);
+    assertThat(bowlingGame.getResult().get(2)).isEqualTo("X");
+
+    bowlingGame.roll(3);
+    assertThat(bowlingGame.getResult().get(3)).isEqualTo("3");
+    bowlingGame.roll(5);
+    assertThat(bowlingGame.getResult().get(3)).isEqualTo("3|5");
+
+
+    bowlingGame.roll(10);
+    bowlingGame.roll(10);
+    bowlingGame.roll(10);
+    bowlingGame.roll(10);
+    bowlingGame.roll(10);
+    bowlingGame.roll(10);
+
+
+    bowlingGame.roll(3);
+    bowlingGame.roll(7);
+    bowlingGame.roll(7);
+
+    assertThat(bowlingGame.getResult().get(10)).isEqualTo("3|/|7");
+
   }
 }

@@ -33,6 +33,11 @@ public class LastFrame implements Frame {
   }
 
   @Override
+  public Frame nextFrame() {
+    return this;
+  }
+
+  @Override
   public String toString() {
     if (lastFallDownPins == null) {
       return "";

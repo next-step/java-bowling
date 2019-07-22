@@ -22,13 +22,16 @@ public class NormalFrame implements Frame {
   public Frame roll(int countOfPin) {
     if (isFirstRoll()) {
       fallDownPins = FallDownPins.first(countOfPin);
-      return fallDownPins.isFinish() ? nextFrame() : this;
+      return this;
     }
     fallDownPins = fallDownPins.roll(countOfPin);
-    return nextFrame();
+    return this;
   }
 
-  private Frame nextFrame() {
+  public Frame nextFrame() {
+    if(!isGameEnd()) {
+      return this;
+    }
     if (frameNo == NORMAL_FRAME_LAST_INDEX) {
       return new LastFrame();
     }
@@ -45,7 +48,10 @@ public class NormalFrame implements Frame {
 
   @Override
   public boolean isGameEnd() {
-    return false;
+    if(fallDownPins == null ) {
+      return false;
+    }
+    return fallDownPins.isFinish();
   }
 
   @Override
