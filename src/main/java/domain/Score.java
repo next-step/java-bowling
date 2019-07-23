@@ -1,6 +1,10 @@
 package domain;
 
+import domain.frame.FrameResult;
+
 import java.util.Objects;
+
+import static domain.frame.FrameResult.UNFINISHED_SCORE;
 
 public class Score {
 
@@ -16,19 +20,23 @@ public class Score {
         return new Score(score, remainingAddition);
     }
 
-    public Score update(int fallenPins) {
-        if (isFullyCalculated()) {
+    public Score update(int newScore) {
+        if (isFullyCalculated() || isUnfinishedScore(newScore)) {
             return this;
         }
-        return of(score + fallenPins, remainingAddition - 1);
-    }
-
-    public int getScore() {
-        return score;
+        return of(score + newScore, remainingAddition - 1);
     }
 
     public boolean isFullyCalculated() {
         return remainingAddition == 0;
+    }
+
+    private boolean isUnfinishedScore(int newScore) {
+        return newScore == UNFINISHED_SCORE;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     @Override

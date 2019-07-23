@@ -2,17 +2,13 @@ package domain.state.open;
 
 import domain.Pins;
 import domain.Score;
-import domain.UndoneCalculationException;
 import domain.state.State;
 import domain.state.closed.Miss;
 import domain.state.closed.Spare;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class HitTest {
 
@@ -43,15 +39,16 @@ public class HitTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 10})
-    void 히트_상태에서_점수를_구하면_0을_반환한다(int firstPins) {
+    @CsvSource({"1, 0", "0, 10", "1, 8", "9, 1"})
+    void HIT_상태에서_스코어를_업데이트하면_스코어_자신을_반환한다(int firstPins, int newScore) {
         //given
         Hit hit = new Hit(Pins.from(firstPins));
+        Score score = Score.of(newScore, 0);
 
         //when
-        Score score = hit.getScore();
+        Score updatedScore = hit.updateScore(score);
 
         //then
-        assertThat(score.getScore()).isEqualTo(0);
+        assertThat(updatedScore).isEqualTo(score);
     }
 }

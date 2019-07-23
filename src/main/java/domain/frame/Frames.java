@@ -48,10 +48,6 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
-    public int sizeOfFrames() {
-        return frames.size();
-    }
-
     private boolean isSameFrame(Frame bowledFrame) {
         return currentFrame().isSameFrame(bowledFrame);
     }

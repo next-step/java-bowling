@@ -4,7 +4,6 @@ import domain.frame.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BowlingGame {
 
@@ -42,10 +41,6 @@ public class BowlingGame {
 
     public List<Frame> getFrames() {
         return frames.getFrames();
-    }
-
-    public int sizeOfFrames() {
-        return frames.sizeOfFrames();
     }
 
     public FrameResults getFrameResults() {

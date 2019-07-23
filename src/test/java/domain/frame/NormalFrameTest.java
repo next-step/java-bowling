@@ -2,13 +2,13 @@ package domain.frame;
 
 import domain.Pins;
 import domain.Score;
-import domain.state.State;
 import domain.state.closed.Miss;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static domain.frame.FrameResult.UNFINISHED_SCORE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -88,7 +88,7 @@ public class NormalFrameTest {
     }
 
     @Test
-    void 스페어_처리를_할_경우_스페어_점수를_반환한다() {
+    void 스페어_처리를_할_경우_UNFINISHED_SCORE를_반환한다() {
         //given
         //when
         normalFrame.fillFrame(Pins.from(5));
@@ -96,18 +96,18 @@ public class NormalFrameTest {
         Score score = normalFrame.getScore();
 
         //then
-        assertThat(score).isEqualTo(Score.of(10, 1));
+        assertThat(score).isEqualTo(Score.of(UNFINISHED_SCORE, 0));
     }
 
     @Test
-    void 스트라이크_처리를_할_경우_스트라이크_점수를_반환한다() {
+    void 스트라이크_처리를_할_경우_UNFINISHED_SCORE를_반환한다() {
         //given
         //when
         normalFrame.fillFrame(Pins.from(Pins.STRIKE_PINS));
         Score score = normalFrame.getScore();
 
         //then
-        assertThat(score).isEqualTo(Score.of(10, 2));
+        assertThat(score).isEqualTo(Score.of(UNFINISHED_SCORE, 0));
     }
 
     @Test
@@ -191,7 +191,7 @@ public class NormalFrameTest {
     }
 
     @Test
-    void 스트라이크_처리_후_스트라이크일_경우의_점수를_계산한다() {
+    void 스트라이크_처리_후_스트라이크일_경우_UNFINISHED_SCORE를_반환한다() {
         //given
         normalFrame.fillFrame(Pins.from(Pins.STRIKE_PINS));
 
@@ -199,7 +199,7 @@ public class NormalFrameTest {
         Score score = normalFrame.updateScore(Score.of(10, 2));
 
         //then
-        assertThat(score).isEqualTo(Score.of(10 + Pins.STRIKE_PINS, 1));
+        assertThat(score).isEqualTo(Score.of(UNFINISHED_SCORE, 0));
     }
 
     @ParameterizedTest

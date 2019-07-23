@@ -1,9 +1,11 @@
 package domain;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
+import static domain.Pins.STRIKE_PINS;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class ScoreTest {
     @Test
@@ -20,17 +22,28 @@ public class ScoreTest {
     }
 
     @Test
-    void 더_계산할_수_있으면_점수_반환시_예외가_발생한다() {
+    void 더_계산할_수_있는_동시에_상태가_Closed_된_경우에_계산된_점수를_반환한다() {
         //given
-        int testScore = 1;
-        int remainingAddition = 1;
-        Score score = Score.of(testScore, remainingAddition);
+        Score strikeScore = Score.of(STRIKE_PINS, 2);
+        int fallenPins = 5;
 
         //when
+        Score updatedScore = strikeScore.update(fallenPins);
+
         //then
-        assertThatExceptionOfType(UndoneCalculationException.class)
-                .isThrownBy(() -> {
-                    score.getScore();
-                });
+        assertThat(updatedScore).isEqualTo(Score.of(STRIKE_PINS + fallenPins, 1));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 1", "1, 9", "10, 0", "20, 10"})
+    void 더_계산할_수_없으면_점수를_업데이트해도_현재_스코어_객체를_반환한다(int score, int newScore) {
+        //given
+        Score incalculableScore = Score.of(score, 0);
+
+        //when
+        Score updatedScore = incalculableScore.update(newScore);
+
+        //then
+        assertThat(updatedScore).isEqualTo(incalculableScore);
     }
 }

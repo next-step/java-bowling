@@ -34,11 +34,11 @@ public class Hit extends Open {
 
     @Override
     public Score updateScore(Score score) {
-        return score.update(score.getScore());
+        return score.update(firstFallenPins.getFallenPins());
     }
 
     @Override
     public Score getScore() {
-        return Score.of(firstFallenPins.getFallenPins(), 1);
+        return Score.of(firstFallenPins.getFallenPins(), 0);
     }
 }

@@ -1,17 +1,12 @@
 package view;
 
 import domain.BowlingGame;
-import domain.Score;
-import domain.frame.Frame;
-import domain.frame.FrameResult;
-import domain.state.State;
 import utils.PrintUtils;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static domain.frame.FrameIndex.MAXIMUM_FRAME_INDEX;
-import static domain.frame.FrameResult.UNFINISHED_SCORE;
 
 public class OutputView {
     private static final String UPPER_SIDE_OF_SCORE_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
