@@ -46,6 +46,18 @@ public class Pins {
         return this.equals(pins);
     }
 
+    public int sumPins(Pins secondFallenPins) {
+        return this.fallenPins + secondFallenPins.fallenPins;
+    }
+
+    public int getFallenPins() {
+        return fallenPins;
+    }
+
+    public Score updateScore(Score score) {
+        return score.update(fallenPins);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

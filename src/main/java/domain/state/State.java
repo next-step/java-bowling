@@ -1,6 +1,7 @@
 package domain.state;
 
 import domain.Pins;
+import domain.Score;
 
 public interface State {
 
@@ -9,4 +10,8 @@ public interface State {
     boolean isClosed();
 
     String printState();
+
+    Score getScore();
+
+    Score updateScore(Score score);
 }

@@ -1,10 +1,12 @@
 package domain.frame;
 
 import domain.Pins;
-import domain.state.StandBy;
+import domain.Score;
+import domain.state.open.StandBy;
 import domain.state.State;
 
 import static domain.frame.FrameIndex.MINIMUM_FRAME_INDEX;
+import static domain.frame.FrameResult.UNFINISHED_SCORE;
 
 public class NormalFrame implements Frame {
 
@@ -55,5 +57,36 @@ public class NormalFrame implements Frame {
     @Override
     public State getState() {
         return state;
+    }
+
+    @Override
+    public boolean isSameFrame(Frame targetFrame) {
+        return index.isSameIndex(targetFrame);
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = state.getScore();
+        if (score.isFullyCalculated()) {
+            return score;
+        }
+        return nextFrame.updateScore(score);
+    }
+
+    @Override
+    public Score updateScore(Score score) {
+        Score updatedScore = state.updateScore(score);
+        if (updatedScore.isFullyCalculated()) {
+            return updatedScore;
+        }
+        if (nextFrame == null) {
+            return Score.of(UNFINISHED_SCORE, 0);
+        }
+        return nextFrame.updateScore(updatedScore);
+    }
+
+    @Override
+    public FrameResult getResult() {
+        return FrameResult.of(state, getScore());
     }
 }

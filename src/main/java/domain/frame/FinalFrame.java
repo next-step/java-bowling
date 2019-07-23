@@ -1,9 +1,10 @@
 package domain.frame;
 
 import domain.Pins;
-import domain.state.FinalState;
-import domain.state.Miss;
-import domain.state.StandBy;
+import domain.Score;
+import domain.state.closed.FinalState;
+import domain.state.closed.Miss;
+import domain.state.open.StandBy;
 import domain.state.State;
 
 import java.util.ArrayList;
@@ -67,6 +68,27 @@ public class FinalFrame implements Frame {
 
     @Override
     public State getState() {
-        return new FinalState(states);
+        return new FinalState(states, bowlOrder);
     }
+
+    @Override
+    public boolean isSameFrame(Frame targetFrame) {
+        return targetFrame.getIndex().equals(getIndex());
+    }
+
+    @Override
+    public Score getScore() {
+        return new FinalState(states, bowlOrder).getScore();
+    }
+
+    @Override
+    public Score updateScore(Score score) {
+        return new FinalState(states, bowlOrder).updateScore(score);
+    }
+
+    @Override
+    public FrameResult getResult() {
+        return FrameResult.of(new FinalState(states, bowlOrder), getScore());
+    }
+
 }
