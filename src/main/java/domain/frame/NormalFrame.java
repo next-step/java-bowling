@@ -86,4 +86,9 @@ public class NormalFrame implements Frame {
         }
         return nextFrame.updateScore(updatedScore);
     }
+
+    @Override
+    public FrameResult getResult() {
+        return FrameResult.of(state, getScore());
+    }
 }

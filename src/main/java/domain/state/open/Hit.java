@@ -12,7 +12,7 @@ public class Hit extends Open {
 
     private Pins firstFallenPins;
 
-    Hit(Pins fallenPins) {
+    public Hit(Pins fallenPins) {
         this.firstFallenPins = fallenPins;
     }
 

@@ -2,12 +2,15 @@ package domain.frame;
 
 import domain.Pins;
 import domain.Score;
+import domain.state.State;
+import domain.state.closed.Miss;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class NormalFrameTest {
 
@@ -211,5 +214,23 @@ public class NormalFrameTest {
 
         //then
         assertThat(score).isEqualTo(Score.of(20 + first, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 0", "0, 1", "1, 0", "1, 1"})
+    void 프레임의_상태와_최종점수를_반환한다(int first, int second) {
+        //given
+        normalFrame.fillFrame(Pins.from(first));
+        normalFrame.fillFrame(Pins.from(second));
+
+        //when
+        //then
+        assertAll(
+                () -> assertThat(normalFrame.getResult().getScore())
+                        .isEqualTo(first + second),
+                () -> assertThat(normalFrame.getResult().getState())
+                        .isEqualTo(new Miss(Pins.from(first), Pins.from(second)).printState())
+        );
+
     }
 }

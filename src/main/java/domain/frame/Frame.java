@@ -19,4 +19,6 @@ public interface Frame {
     Score getScore();
 
     Score updateScore(Score score);
+
+    FrameResult getResult();
 }

@@ -5,7 +5,7 @@ import domain.Score;
 import static domain.Pins.STRIKE_PINS;
 
 public class Strike extends Closed {
-    private static final String STRIKE_SYMBOL = "X";
+    public static final String STRIKE_SYMBOL = "X";
 
     @Override
     public String printState() {
