@@ -121,8 +121,8 @@ public class NormalFrameTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"0, 9", "9, 0", "5, 4"})
-    void 스페어_처리_후_미쓰일_경우_초구의_점수만_합산한다(int first, int second) {
+    @CsvSource({"0, 9", "0, 10", "9, 0", "5, 4"})
+    void 스페어_처리_후에는_초구의_점수만_합산한다(int first, int second) {
         //given
         normalFrame.fillFrame(Pins.from(first));
         normalFrame.fillFrame(Pins.from(second));
@@ -197,5 +197,19 @@ public class NormalFrameTest {
 
         //then
         assertThat(score).isEqualTo(Score.of(10 + Pins.STRIKE_PINS, 1));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 9", "9, 0", "5, 4"})
+    void 연속_스트라이크_처리_후에는_초구의_점수만_합산한다(int first, int second) {
+        //given
+        normalFrame.fillFrame(Pins.from(first));
+        normalFrame.fillFrame(Pins.from(second));
+
+        //when
+        Score score = normalFrame.updateScore(Score.of(20, 1));
+
+        //then
+        assertThat(score).isEqualTo(Score.of(20 + first, 0));
     }
 }
