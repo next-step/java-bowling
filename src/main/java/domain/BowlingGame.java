@@ -1,12 +1,10 @@
 package domain;
 
-import domain.frame.Frame;
-import domain.frame.FrameIndex;
-import domain.frame.Frames;
-import domain.frame.NormalFrame;
+import domain.frame.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BowlingGame {
 
@@ -48,5 +46,9 @@ public class BowlingGame {
 
     public int sizeOfFrames() {
         return frames.sizeOfFrames();
+    }
+
+    public FrameResults getFrameResults() {
+        return frames.getResults();
     }
 }

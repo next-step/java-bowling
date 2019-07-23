@@ -5,6 +5,7 @@ import domain.Pins;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
 
@@ -57,5 +58,11 @@ public class Frames {
 
     private int lastFrameIndex() {
         return frames.size() - 1;
+    }
+
+    public FrameResults getResults() {
+        return FrameResults.from(frames.stream()
+                .map(Frame::getResult)
+                .collect(Collectors.toList()));
     }
 }
