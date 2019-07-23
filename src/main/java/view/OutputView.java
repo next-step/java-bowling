@@ -3,12 +3,14 @@ package view;
 import domain.BowlingGame;
 import domain.Score;
 import domain.frame.Frame;
+import domain.frame.FrameResult;
 import domain.state.State;
 import utils.PrintUtils;
 
 import java.util.stream.IntStream;
 
 import static domain.frame.FrameIndex.MAXIMUM_FRAME_INDEX;
+import static domain.frame.FrameResult.UNFINISHED_SCORE;
 
 public class OutputView {
     private static final String UPPER_SIDE_OF_SCORE_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
@@ -29,10 +31,18 @@ public class OutputView {
                 .append(PrintUtils.centralize(player))
                 .append(SEPARATOR);
 
-        bowlingGame.getFrames()
+//        bowlingGame.getFrames()
+//                .stream()
+//                .map(Frame::getState)
+//                .map(State::printState)
+//                .map(PrintUtils::centralize)
+//                .map(String -> String.concat(SEPARATOR))
+//                .forEach(statesBuilder::append);
+
+        bowlingGame.getFrameResults()
+                .getFrameResults()
                 .stream()
-                .map(Frame::getState)
-                .map(State::printState)
+                .map(FrameResult::getState)
                 .map(PrintUtils::centralize)
                 .map(String -> String.concat(SEPARATOR))
                 .forEach(statesBuilder::append);
@@ -48,10 +58,20 @@ public class OutputView {
                 .append(PrintUtils.centralize(EMPTY_SYMBOL))
                 .append(SEPARATOR);
 
-        bowlingGame.getFrames()
+//        bowlingGame.getFrames()
+//                .stream()
+//                .map(Frame::getScore)
+//                .map(Score::getScore)
+//                .map(OutputView::removeZero)
+//                .map(PrintUtils::centralize)
+//                .map(OutputView::partitioning)
+//                .forEach(scoresBuilder::append);
+
+        bowlingGame.getFrameResults()
+                .getFrameResults()
                 .stream()
-                .map(Frame::getScore)
-                .map(Score::getScore)
+                .map(FrameResult::getScore)
+                .filter(score -> score != UNFINISHED_SCORE)
                 .map(OutputView::removeZero)
                 .map(PrintUtils::centralize)
                 .map(OutputView::partitioning)
@@ -76,7 +96,7 @@ public class OutputView {
     private static void fillUnplayedFrames(BowlingGame bowlingGame, StringBuilder stringBuilder) {
         IntStream.range(bowlingGame.sizeOfFrames(), MAXIMUM_FRAME_INDEX)
                 .mapToObj(num -> PrintUtils.centralize(EMPTY_SYMBOL))
-                .map(String -> String.concat(SEPARATOR))
+                .map(OutputView::partitioning)
                 .forEach(stringBuilder::append);
     }
 

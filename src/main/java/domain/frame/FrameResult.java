@@ -4,7 +4,7 @@ import domain.Score;
 import domain.state.State;
 
 public class FrameResult {
-    static final int UNFINISHED_SCORE = -1;
+    public static final int UNFINISHED_SCORE = -1;
 
     private String state;
     private int score;

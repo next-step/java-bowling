@@ -19,6 +19,12 @@ public class FrameResults {
                 .get();
     }
 
+//    public List<Integer> finalScores() {
+//        return frameResults.stream()
+//                .map(FrameResult::getScore)
+//                .filter(score -> )
+//    }
+
     public List<FrameResult> getFrameResults() {
         return Collections.unmodifiableList(frameResults);
     }
