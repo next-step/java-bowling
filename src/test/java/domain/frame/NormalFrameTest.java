@@ -4,6 +4,8 @@ import domain.Pins;
 import domain.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -103,5 +105,97 @@ public class NormalFrameTest {
 
         //then
         assertThat(score).isEqualTo(Score.of(10, 2));
+    }
+
+    @Test
+    void 스페어_처리_후_거터일_경우의_점수를_계산한다() {
+        //given
+        normalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
+        normalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
+
+        //when
+        Score score = normalFrame.updateScore(Score.of(10, 1));
+
+        //then
+        assertThat(score).isEqualTo(Score.of(10, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 9", "9, 0", "5, 4"})
+    void 스페어_처리_후_미쓰일_경우_초구의_점수만_합산한다(int first, int second) {
+        //given
+        normalFrame.fillFrame(Pins.from(first));
+        normalFrame.fillFrame(Pins.from(second));
+
+        //when
+        Score score = normalFrame.updateScore(Score.of(10, 1));
+
+        //then
+        assertThat(score).isEqualTo(Score.of(10 + first, 0));
+    }
+
+    @Test
+    void 스페어_처리_후_스트라이크일_경우의_점수를_계산한다() {
+        //given
+        normalFrame.fillFrame(Pins.from(Pins.STRIKE_PINS));
+
+        //when
+        Score score = normalFrame.updateScore(Score.of(10, 1));
+
+        //then
+        assertThat(score).isEqualTo(Score.of(10 + Pins.STRIKE_PINS, 0));
+    }
+
+    @Test
+    void 스트라이크_처리_후_거터일_경우의_점수를_계산한다() {
+        //given
+        normalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
+        normalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
+
+        //when
+        Score score = normalFrame.updateScore(Score.of(10, 2));
+
+        //then
+        assertThat(score).isEqualTo(Score.of(10, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 9", "9, 0", "5, 4"})
+    void 스트라이크_처리_후_미쓰일_경우_초구와_2구의_점수를_모두_합산한다(int first, int second) {
+        //given
+        normalFrame.fillFrame(Pins.from(first));
+        normalFrame.fillFrame(Pins.from(second));
+
+        //when
+        Score score = normalFrame.updateScore(Score.of(10, 2));
+
+        //then
+        assertThat(score).isEqualTo(Score.of(10 + first + second, 0));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 10", "1, 9"})
+    void 스트라이크_처리_후_스페어일_경우의_점수를_계산한다(int first, int second) {
+        //given
+        normalFrame.fillFrame(Pins.from(first));
+        normalFrame.fillFrame(Pins.from(second));
+
+        //when
+        Score score = normalFrame.updateScore(Score.of(10, 2));
+
+        //then
+        assertThat(score).isEqualTo(Score.of(10 + first + second, 0));
+    }
+
+    @Test
+    void 스트라이크_처리_후_스트라이크일_경우의_점수를_계산한다() {
+        //given
+        normalFrame.fillFrame(Pins.from(Pins.STRIKE_PINS));
+
+        //when
+        Score score = normalFrame.updateScore(Score.of(10, 2));
+
+        //then
+        assertThat(score).isEqualTo(Score.of(10 + Pins.STRIKE_PINS, 1));
     }
 }

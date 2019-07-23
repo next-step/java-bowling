@@ -17,6 +17,9 @@ public class Score {
     }
 
     public Score update(int fallenPins) {
+        if (isFullyCalculated()) {
+            return this;
+        }
         return of(score + fallenPins, remainingAddition - 1);
     }
 
