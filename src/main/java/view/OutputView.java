@@ -52,12 +52,25 @@ public class OutputView {
                 .stream()
                 .map(Frame::getScore)
                 .map(Score::getScore)
-                .map(String::valueOf)
+                .map(OutputView::removeZero)
+                .map(PrintUtils::centralize)
+                .map(OutputView::partitioning)
                 .forEach(scoresBuilder::append);
 
         fillUnplayedFrames(bowlingGame, scoresBuilder);
 
         return scoresBuilder.toString();
+    }
+
+    private static String partitioning(String data) {
+        return data.concat(SEPARATOR);
+    }
+
+    private static String removeZero(Integer score) {
+        if (score == 0) {
+            return EMPTY_SYMBOL;
+        }
+        return score.toString();
     }
 
     private static void fillUnplayedFrames(BowlingGame bowlingGame, StringBuilder stringBuilder) {
