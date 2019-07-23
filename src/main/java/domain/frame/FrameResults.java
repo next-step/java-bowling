@@ -3,6 +3,9 @@ package domain.frame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static domain.frame.FrameResult.UNFINISHED_SCORE;
 
 public class FrameResults {
 
@@ -19,11 +22,18 @@ public class FrameResults {
                 .get();
     }
 
-//    public List<Integer> finalScores() {
-//        return frameResults.stream()
-//                .map(FrameResult::getScore)
-//                .filter(score -> )
-//    }
+    public List<String> getFinalStates() {
+        return frameResults.stream()
+                .map(FrameResult::getState)
+                .collect(Collectors.toList());
+    }
+
+    public List<Integer> getFinalScores() {
+        return frameResults.stream()
+                .map(FrameResult::getScore)
+                .filter(score -> score != UNFINISHED_SCORE)
+                .collect(Collectors.toList());
+    }
 
     public List<FrameResult> getFrameResults() {
         return Collections.unmodifiableList(frameResults);
