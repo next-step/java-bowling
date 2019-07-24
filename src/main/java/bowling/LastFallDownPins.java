@@ -87,6 +87,9 @@ public class LastFallDownPins {
 
   @Override
   public String toString() {
+    if (isStrikeAndBonus()) {
+      return "X|"+getSecondFallDown().toString();
+    }
     if (isStrike()) {
       return "X";
     }
