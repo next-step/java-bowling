@@ -17,8 +17,24 @@ public class LastFallDownPins {
   List<FallDownPin> fallDownCounts = new ArrayList<>();
 
   public LastFallDownPins roll(int countOfPin) {
+    if (!validateSumOfFallDownCount(countOfPin)) {
+      throw new IllegalArgumentException("한 프레임에서 넘어뜨릴 수 있는 핀의 합은 10을 넘어 갈 수 없습니다.");
+    }
     fallDownCounts.add(FallDownPin.of(countOfPin));
     return this;
+  }
+
+  private boolean validateSumOfFallDownCount(int fallDownCount) {
+    if (isNoPlay()) {
+      return true;
+    }
+    if (isStrike()) {
+      return true;
+    }
+    if (isSpare()) {
+      return true;
+    }
+    return getFirstFallDown().isValidCount(fallDownCount);
   }
 
   public boolean isLastFrameFinish() {

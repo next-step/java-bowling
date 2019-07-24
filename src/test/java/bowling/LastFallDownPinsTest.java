@@ -1,6 +1,7 @@
 package bowling;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,13 @@ public class LastFallDownPinsTest {
   @Test
   void 스트라이크나_스페어못하면_보너스가_없다() {
     assertThat(lastFallDownPins.roll(3).roll(6).isLastFrameFinish()).isEqualTo(true);
+  }
+
+  @Test
+  void 두번넘어진_핀의합이_10이_넘어갈수_없다() {
+    assertThatIllegalArgumentException().isThrownBy(() -> {
+      lastFallDownPins.roll(5).roll(6);
+    });
   }
 
 }
