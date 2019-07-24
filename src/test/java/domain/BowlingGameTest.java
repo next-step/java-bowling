@@ -28,7 +28,7 @@ public class BowlingGameTest {
     @Test
     void 볼링게임이_생성될_때_1번_프레임이_생성된다() {
 
-        assertThat(testGame.getFrames().get(0).getIndex())
+        assertThat(testGame.getFirstFrame().getIndex())
                 .isEqualTo(FrameIndex.from(MINIMUM_FRAME_INDEX));
     }
 }

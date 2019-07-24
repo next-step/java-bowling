@@ -39,8 +39,8 @@ public class BowlingGame {
         return player.getName();
     }
 
-    public List<Frame> getFrames() {
-        return frames.getFrames();
+    public Frame getFirstFrame() {
+        return frames.getFrames().get(0);
     }
 
     public FrameResults getFrameResults() {
