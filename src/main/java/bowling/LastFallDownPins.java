@@ -15,14 +15,6 @@ public class LastFallDownPins {
 
   List<FallDownPin> fallDownCounts = new ArrayList<>();
 
-  public LastFallDownPins(int countOfPin) {
-    fallDownCounts.add(FallDownPin.of(countOfPin));
-  }
-
-  public static LastFallDownPins first(int countOfPin) {
-    return new LastFallDownPins(countOfPin);
-  }
-
   public LastFallDownPins roll(int countOfPin) {
     fallDownCounts.add(FallDownPin.of(countOfPin));
     return this;
@@ -88,7 +80,7 @@ public class LastFallDownPins {
   @Override
   public String toString() {
     if (isStrikeAndBonus()) {
-      return "X|"+getSecondFallDown().toString();
+      return "X|" + getSecondFallDown().toString();
     }
     if (isStrike()) {
       return "X";
@@ -97,7 +89,7 @@ public class LastFallDownPins {
       return getFirstFallDown().toString() + "|" + "/";
     }
     if (isSpare()) {
-      return getFirstFallDown().toString() + "|" + "/" +"|"+ getBonus();
+      return getFirstFallDown().toString() + "|" + "/" + "|" + getBonus();
     }
     if (fallDownCounts.size() == 1) {
       return getFirstFallDown().toString();
