@@ -9,11 +9,11 @@ public class NormalFrame implements Frame {
   private static final int NORMAL_FRAME_LAST_INDEX = 9;
 
   private int frameNo;
-  private FallDownPins fallDownPins;
+  private State state;
 
   public NormalFrame(int frameNo) {
     this.frameNo = frameNo;
-    this.fallDownPins = new FallDownPins();
+    this.state = new FallDownPins();
   }
 
   public static Frame first() {
@@ -21,7 +21,7 @@ public class NormalFrame implements Frame {
   }
 
   public Frame roll(int countOfPin) {
-    fallDownPins = fallDownPins.roll(countOfPin);
+    state = state.roll(countOfPin);
     return this;
   }
 
@@ -41,12 +41,12 @@ public class NormalFrame implements Frame {
 
   @Override
   public boolean isGameEnd() {
-    return fallDownPins.isFinish();
+    return state.isFinish();
   }
 
   @Override
   public String toString() {
-    return fallDownPins.toString();
+    return state.toString();
   }
 
   @Override
@@ -59,11 +59,11 @@ public class NormalFrame implements Frame {
     }
     NormalFrame that = (NormalFrame) o;
     return frameNo == that.frameNo &&
-        Objects.equals(fallDownPins, that.fallDownPins);
+        Objects.equals(state, that.state);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(frameNo, fallDownPins);
+    return Objects.hash(frameNo, state);
   }
 }

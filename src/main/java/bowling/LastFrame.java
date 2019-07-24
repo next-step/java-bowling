@@ -4,16 +4,16 @@ public class LastFrame implements Frame {
 
   private static final int LAST_FRAME_NO = 10;
 
-  private LastFallDownPins lastFallDownPins = new LastFallDownPins();
+  private State state = new LastFallDownPins();
 
   public LastFrame roll(int countOfPin) {
-    lastFallDownPins = lastFallDownPins.roll(countOfPin);
+    state = state.roll(countOfPin);
     return this;
   }
 
   @Override
   public boolean isGameEnd() {
-    return lastFallDownPins.isFinish();
+    return state.isFinish();
   }
 
   @Override
@@ -28,6 +28,6 @@ public class LastFrame implements Frame {
 
   @Override
   public String toString() {
-    return lastFallDownPins.toString();
+    return state.toString();
   }
 }
