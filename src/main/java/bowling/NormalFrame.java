@@ -13,6 +13,7 @@ public class NormalFrame implements Frame {
 
   public NormalFrame(int frameNo) {
     this.frameNo = frameNo;
+    this.fallDownPins = new FallDownPins();
   }
 
   public static Frame first() {
@@ -20,10 +21,6 @@ public class NormalFrame implements Frame {
   }
 
   public Frame roll(int countOfPin) {
-    if (isFirstRoll()) {
-      fallDownPins = FallDownPins.first(countOfPin);
-      return this;
-    }
     fallDownPins = fallDownPins.roll(countOfPin);
     return this;
   }
@@ -38,27 +35,17 @@ public class NormalFrame implements Frame {
     return new NormalFrame(frameNo + NEXT_FRAME_INTERVAL);
   }
 
-  private boolean isFirstRoll() {
-    return fallDownPins == null;
-  }
-
   public int getFrameNo() {
     return frameNo;
   }
 
   @Override
   public boolean isGameEnd() {
-    if(fallDownPins == null ) {
-      return false;
-    }
     return fallDownPins.isFinish();
   }
 
   @Override
   public String toString() {
-    if(fallDownPins == null) {
-      return "";
-    }
     return fallDownPins.toString();
   }
 

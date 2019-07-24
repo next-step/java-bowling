@@ -10,16 +10,9 @@ public class FallDownPins {
   private static final int FIRST_FALL_DOWN_COUNT_INDEX = 0;
   private static final int SECOND_FALL_DOWN_COUNT_INDEX = 1;
   private static final int NORMAL_FRAME_ROLL_COUNT = 2;
+  private static final int NO_PLAY_SIZE = 0;
 
   List<FallDownPin> fallDownCounts = new ArrayList<>();
-
-  public FallDownPins(int fallDownCount) {
-    fallDownCounts.add(FallDownPin.of(fallDownCount));
-  }
-
-  public static FallDownPins first(int fallDownCount) {
-    return new FallDownPins(fallDownCount);
-  }
 
   public FallDownPins roll(int fallDownCount) {
     if (!validateSumOfFallDownCount(fallDownCount)) {
@@ -30,11 +23,18 @@ public class FallDownPins {
   }
 
   private boolean validateSumOfFallDownCount(int fallDownCount) {
+    if (isNoPlay()) {
+      return true;
+    }
     return getFirstFallDown().isValidCount(fallDownCount);
   }
 
+  private boolean isNoPlay() {
+    return fallDownCounts.size() == NO_PLAY_SIZE;
+  }
+
   public boolean isFinish() {
-    if(fallDownCounts == null ) {
+    if (isNoPlay()) {
       return false;
     }
     if (isStrike()) {
@@ -71,11 +71,11 @@ public class FallDownPins {
 
   @Override
   public String toString() {
-    if(isStrike()) {
+    if (isStrike()) {
       return "X";
     }
-    if(isSpare()) {
-      return getFirstFallDown().toString()+"|"+"/";
+    if (isSpare()) {
+      return getFirstFallDown().toString() + "|" + "/";
     }
     return fallDownCounts.stream().map(FallDownPin::toString).collect(Collectors.joining("|"));
   }
@@ -96,5 +96,4 @@ public class FallDownPins {
   public int hashCode() {
     return Objects.hash(fallDownCounts);
   }
-
 }
