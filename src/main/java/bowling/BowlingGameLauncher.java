@@ -2,7 +2,6 @@ package bowling;
 
 import bowling.view.InputView;
 import bowling.view.OutputView;
-import java.util.Map;
 
 public class BowlingGameLauncher {
 
@@ -10,10 +9,10 @@ public class BowlingGameLauncher {
     Player player = InputView.askPlayerName();
 
     BowlingGame bowlingGame = new BowlingGame();
-    while(!bowlingGame.isGameEnd()) {
+    while (!bowlingGame.isGameEnd()) {
       bowlingGame.roll(InputView.askFallDownCount(bowlingGame.currentFrameNo()));
-      Map<Integer, String> result = bowlingGame.getResult();
-      OutputView.initialBoardPrint(player,result);
+      BowlingGameResult gameResult = bowlingGame.getResult();
+      OutputView.initialBoardPrint(player, gameResult);
     }
   }
 

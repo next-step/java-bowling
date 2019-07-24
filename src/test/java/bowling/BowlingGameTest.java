@@ -44,32 +44,30 @@ public class BowlingGameTest {
   @Test
   void 프레임에대한_결과를_저장한다() {
     bowlingGame.roll(5);
-    assertThat(bowlingGame.getResult().get(1)).isEqualTo("5");
+    assertThat(bowlingGame.getResult().result(1)).isEqualTo("5");
     bowlingGame.roll(5);
-    assertThat(bowlingGame.getResult().get(1)).isEqualTo("5|/");
+    assertThat(bowlingGame.getResult().result(1)).isEqualTo("5|/");
 
     bowlingGame.roll(10);
-    assertThat(bowlingGame.getResult().get(2)).isEqualTo("X");
+    assertThat(bowlingGame.getResult().result(2)).isEqualTo("X");
 
     bowlingGame.roll(3);
-    assertThat(bowlingGame.getResult().get(3)).isEqualTo("3");
+    assertThat(bowlingGame.getResult().result(3)).isEqualTo("3");
     bowlingGame.roll(5);
-    assertThat(bowlingGame.getResult().get(3)).isEqualTo("3|5");
+    assertThat(bowlingGame.getResult().result(3)).isEqualTo("3|5");
 
-
     bowlingGame.roll(10);
     bowlingGame.roll(10);
     bowlingGame.roll(10);
     bowlingGame.roll(10);
     bowlingGame.roll(10);
     bowlingGame.roll(10);
-
 
     bowlingGame.roll(3);
     bowlingGame.roll(7);
     bowlingGame.roll(7);
 
-    assertThat(bowlingGame.getResult().get(10)).isEqualTo("3|/|7");
+    assertThat(bowlingGame.getResult().result(10)).isEqualTo("3|/|7");
 
   }
 }
