@@ -24,10 +24,10 @@ public class Miss extends Closed {
     public String printState() {
         String firstPins = firstFallenPins.toString();
         String secondPins = secondFallenPins.toString();
-        if (firstFallenPins.isMatch(Pins.from(0))) {
+        if (firstFallenPins.isMatch(Pins.GUTTER)) {
             firstPins = GUTTER_SYMBOL;
         }
-        if (secondFallenPins.isMatch(Pins.from(0))) {
+        if (secondFallenPins.isMatch(Pins.GUTTER)) {
             secondPins = GUTTER_SYMBOL;
         }
         return firstPins + SEPARATOR + secondPins;

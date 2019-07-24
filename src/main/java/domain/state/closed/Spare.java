@@ -25,7 +25,7 @@ public class Spare extends Closed {
     @Override
     public String printState() {
         String firstPins = firstFallenPins.toString();
-        if (firstFallenPins.isMatch(Pins.from(0))) {
+        if (firstFallenPins.isMatch(Pins.GUTTER)) {
             firstPins = GUTTER_SYMBOL;
         }
         return firstPins + SEPARATOR + SPARE_SYMBOL;

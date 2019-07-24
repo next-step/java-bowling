@@ -104,7 +104,7 @@ public class NormalFrameTest {
     void 스트라이크_처리를_할_경우_UNFINISHED_SCORE를_반환한다() {
         //given
         //when
-        normalFrame.fillFrame(Pins.from(STRIKE_PINS));
+        normalFrame.fillFrame(Pins.STRIKE);
         Score score = normalFrame.getScore();
 
         //then
@@ -114,8 +114,8 @@ public class NormalFrameTest {
     @Test
     void 스페어_처리_후_거터일_경우의_점수를_계산한다() {
         //given
-        normalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
-        normalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
+        normalFrame.fillFrame(Pins.GUTTER);
+        normalFrame.fillFrame(Pins.GUTTER);
 
         //when
         Score score = normalFrame.updateScore(Score.ofSpare());
@@ -141,7 +141,7 @@ public class NormalFrameTest {
     @Test
     void 스페어_처리_후_스트라이크일_경우의_점수를_계산한다() {
         //given
-        normalFrame.fillFrame(Pins.from(STRIKE_PINS));
+        normalFrame.fillFrame(Pins.STRIKE);
 
         //when
         Score score = normalFrame.updateScore(Score.ofSpare());
@@ -194,7 +194,7 @@ public class NormalFrameTest {
     @Test
     void 스트라이크_처리_후_스트라이크일_경우_UNFINISHED_SCORE를_반환한다() {
         //given
-        normalFrame.fillFrame(Pins.from(STRIKE_PINS));
+        normalFrame.fillFrame(Pins.STRIKE);
 
         //when
         Score score = normalFrame.updateScore(Score.ofStrike());

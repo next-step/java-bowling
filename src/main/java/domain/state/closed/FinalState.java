@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 
 public class FinalState extends Closed {
     private static final String FINAL_FRAME_DELIMITER = "|";
-    public static final int BONUS_CHANCE = 3;
-    public static final int DEFAULT_CHANCES = 2;
-    public static final int FIRST_STATE = 0;
+    private static final int BONUS_CHANCE = 3;
+    private static final int DEFAULT_CHANCES = 2;
+    private static final int FIRST_STATE = 0;
 
     private List<State> states;
     private int bowlOrder;

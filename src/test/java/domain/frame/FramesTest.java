@@ -30,7 +30,7 @@ public class FramesTest {
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void 게임이_끝났는데_게임을_진행하면_예외가_발생한다(int fallenPins) {
         //given
-        Pins strike = Pins.from(STRIKE_PINS);
+        Pins strike = Pins.STRIKE;
         for (int i = 0; i < 12; i++) {
             frames.play(strike);
         }
@@ -52,14 +52,14 @@ public class FramesTest {
                     .isTrue();
 
             //when
-            frames.play(Pins.from(STRIKE_PINS));
+            frames.play(Pins.STRIKE);
         }
     }
 
     @Test
     void 프레임이_Closed_되지_않으면_현재_인덱스의_프레임을_업데이트한다() {
         //when
-        frames.play(Pins.from(GUTTER_PINS));
+        frames.play(Pins.GUTTER);
 
         //then
         assertThat(frames.currentFrame().getIndex())

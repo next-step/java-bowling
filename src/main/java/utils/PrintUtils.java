@@ -1,7 +1,6 @@
 package utils;
 
 public class PrintUtils {
-
     private static final int FRAME_SIZE = 6;
     private static final int PREFIX_SIZE = 2;
     private static final String PREFIX = "  ";
