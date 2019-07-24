@@ -27,7 +27,7 @@ public class NormalFrame implements Frame {
   }
 
   public Frame nextFrame() {
-    if(!isGameEnd()) {
+    if (!isGameEnd()) {
       return this;
     }
     if (frameNo == NORMAL_FRAME_LAST_INDEX) {

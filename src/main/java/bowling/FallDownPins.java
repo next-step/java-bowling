@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.state.FirstRoll;
 import bowling.state.State;
 import bowling.state.Strike;
 import java.util.ArrayList;
@@ -17,21 +18,10 @@ public class FallDownPins implements State {
   List<FallDownPin> fallDownCounts = new ArrayList<>();
 
   public State roll(int fallDownCount) {
-    if (!validateSumOfFallDownCount(fallDownCount)) {
-      throw new IllegalArgumentException("한 프레임에서 넘어뜨릴 수 있는 핀의 합은 10을 넘어 갈 수 없습니다.");
-    }
-    fallDownCounts.add(FallDownPin.of(fallDownCount));
-    if (isStrike()) {
+    if(new FallDownPin(fallDownCount).isStrike()) {
       return new Strike();
     }
-    return this;
-  }
-
-  private boolean validateSumOfFallDownCount(int fallDownCount) {
-    if (isNoPlay()) {
-      return true;
-    }
-    return getFirstFallDown().isValidCount(fallDownCount);
+    return new FirstRoll(fallDownCount);
   }
 
   private boolean isNoPlay() {
