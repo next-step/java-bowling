@@ -14,7 +14,7 @@ public class NormalFrame implements Frame {
 
   public NormalFrame(int frameNo) {
     this.frameNo = frameNo;
-    this.state = new FallDownPins();
+    //this.state = new StateFactory();
   }
 
   public static Frame first() {
@@ -22,6 +22,10 @@ public class NormalFrame implements Frame {
   }
 
   public Frame roll(int countOfPin) {
+    if (state == null) {
+      state = StateFactory.make(countOfPin);
+      return this;
+    }
     state = state.roll(countOfPin);
     return this;
   }
@@ -42,6 +46,9 @@ public class NormalFrame implements Frame {
 
   @Override
   public boolean isGameEnd() {
+    if (state == null) {
+      return false;
+    }
     return state.isFinish();
   }
 

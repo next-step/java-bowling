@@ -1,8 +1,11 @@
 package bowling.state;
 
 import bowling.FallDownPin;
+import java.util.Objects;
 
 public class Miss implements State {
+
+  private static final String ROLL_DELIMITER = "|";
 
   private FallDownPin firstFallDownPin;
   private FallDownPin secondFallDownPin;
@@ -24,6 +27,24 @@ public class Miss implements State {
 
   @Override
   public String toString() {
-    return firstFallDownPin.toString()+"|"+secondFallDownPin.toString();
+    return firstFallDownPin.toString() + ROLL_DELIMITER + secondFallDownPin.toString();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Miss miss = (Miss) o;
+    return Objects.equals(firstFallDownPin, miss.firstFallDownPin) &&
+        Objects.equals(secondFallDownPin, miss.secondFallDownPin);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(firstFallDownPin, secondFallDownPin);
   }
 }

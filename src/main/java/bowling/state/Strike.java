@@ -18,4 +18,6 @@ public class Strike implements State {
   public String toString() {
     return STRIKE_SYMBOL;
   }
+
+
 }

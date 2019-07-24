@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.state.State;
+
 public class LastFrame implements Frame {
 
   private static final int LAST_FRAME_NO = 10;
