@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static domain.frame.FrameResult.UNFINISHED_SCORE;
+import static domain.Pins.STRIKE_PINS;
+import static domain.Score.UNFINISHED_SCORE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -60,7 +61,7 @@ public class NormalFrameTest {
         Score score = normalFrame.getScore();
 
         //then
-        assertThat(score).isEqualTo(Score.of(0, 0));
+        assertThat(score).isEqualTo(Score.ofDefault());
     }
 
     @Test
@@ -72,7 +73,7 @@ public class NormalFrameTest {
         Score score = normalFrame.getScore();
 
         //then
-        assertThat(score).isEqualTo(Score.of(0, 0));
+        assertThat(score).isEqualTo(Score.ofDefault());
     }
 
     @Test
@@ -84,7 +85,7 @@ public class NormalFrameTest {
         Score score = normalFrame.getScore();
 
         //then
-        assertThat(score).isEqualTo(Score.of(9, 0));
+        assertThat(score).isEqualTo(Score.ofMiss(9));
     }
 
     @Test
@@ -96,18 +97,18 @@ public class NormalFrameTest {
         Score score = normalFrame.getScore();
 
         //then
-        assertThat(score).isEqualTo(Score.of(UNFINISHED_SCORE, 0));
+        assertThat(score).isEqualTo(Score.ofUnfinished());
     }
 
     @Test
     void 스트라이크_처리를_할_경우_UNFINISHED_SCORE를_반환한다() {
         //given
         //when
-        normalFrame.fillFrame(Pins.from(Pins.STRIKE_PINS));
+        normalFrame.fillFrame(Pins.from(STRIKE_PINS));
         Score score = normalFrame.getScore();
 
         //then
-        assertThat(score).isEqualTo(Score.of(UNFINISHED_SCORE, 0));
+        assertThat(score).isEqualTo(Score.ofUnfinished());
     }
 
     @Test
@@ -117,7 +118,7 @@ public class NormalFrameTest {
         normalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
 
         //when
-        Score score = normalFrame.updateScore(Score.of(10, 1));
+        Score score = normalFrame.updateScore(Score.ofSpare());
 
         //then
         assertThat(score).isEqualTo(Score.of(10, 0));
@@ -131,7 +132,7 @@ public class NormalFrameTest {
         normalFrame.fillFrame(Pins.from(second));
 
         //when
-        Score score = normalFrame.updateScore(Score.of(10, 1));
+        Score score = normalFrame.updateScore(Score.ofSpare());
 
         //then
         assertThat(score).isEqualTo(Score.of(10 + first, 0));
@@ -140,13 +141,13 @@ public class NormalFrameTest {
     @Test
     void 스페어_처리_후_스트라이크일_경우의_점수를_계산한다() {
         //given
-        normalFrame.fillFrame(Pins.from(Pins.STRIKE_PINS));
+        normalFrame.fillFrame(Pins.from(STRIKE_PINS));
 
         //when
-        Score score = normalFrame.updateScore(Score.of(10, 1));
+        Score score = normalFrame.updateScore(Score.ofSpare());
 
         //then
-        assertThat(score).isEqualTo(Score.of(10 + Pins.STRIKE_PINS, 0));
+        assertThat(score).isEqualTo(Score.of(10 + STRIKE_PINS, 0));
     }
 
     @Test
@@ -156,7 +157,7 @@ public class NormalFrameTest {
         normalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
 
         //when
-        Score score = normalFrame.updateScore(Score.of(10, 2));
+        Score score = normalFrame.updateScore(Score.ofStrike());
 
         //then
         assertThat(score).isEqualTo(Score.of(10, 0));
@@ -170,10 +171,10 @@ public class NormalFrameTest {
         normalFrame.fillFrame(Pins.from(second));
 
         //when
-        Score score = normalFrame.updateScore(Score.of(10, 2));
+        Score score = normalFrame.updateScore(Score.ofStrike());
 
         //then
-        assertThat(score).isEqualTo(Score.of(10 + first + second, 0));
+        assertThat(score).isEqualTo(Score.ofMiss(STRIKE_PINS + first + second));
     }
 
     @ParameterizedTest
@@ -184,7 +185,7 @@ public class NormalFrameTest {
         normalFrame.fillFrame(Pins.from(second));
 
         //when
-        Score score = normalFrame.updateScore(Score.of(10, 2));
+        Score score = normalFrame.updateScore(Score.ofStrike());
 
         //then
         assertThat(score).isEqualTo(Score.of(10 + first + second, 0));
@@ -193,13 +194,13 @@ public class NormalFrameTest {
     @Test
     void 스트라이크_처리_후_스트라이크일_경우_UNFINISHED_SCORE를_반환한다() {
         //given
-        normalFrame.fillFrame(Pins.from(Pins.STRIKE_PINS));
+        normalFrame.fillFrame(Pins.from(STRIKE_PINS));
 
         //when
-        Score score = normalFrame.updateScore(Score.of(10, 2));
+        Score score = normalFrame.updateScore(Score.ofStrike());
 
         //then
-        assertThat(score).isEqualTo(Score.of(UNFINISHED_SCORE, 0));
+        assertThat(score).isEqualTo(Score.ofUnfinished());
     }
 
     @ParameterizedTest
@@ -210,10 +211,10 @@ public class NormalFrameTest {
         normalFrame.fillFrame(Pins.from(second));
 
         //when
-        Score score = normalFrame.updateScore(Score.of(20, 1));
+        Score score = normalFrame.updateScore(Score.of(STRIKE_PINS + STRIKE_PINS, 1));
 
         //then
-        assertThat(score).isEqualTo(Score.of(20 + first, 0));
+        assertThat(score).isEqualTo(Score.of(STRIKE_PINS + STRIKE_PINS + first, 0));
     }
 
     @ParameterizedTest

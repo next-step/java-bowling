@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static domain.frame.FrameResult.UNFINISHED_SCORE;
+import static domain.Score.UNFINISHED_SCORE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -93,7 +93,7 @@ public class FinalFrameTest {
         Score score = finalFrame.getScore();
 
         //then
-        assertThat(score).isEqualTo(Score.of(UNFINISHED_SCORE, 0));
+        assertThat(score).isEqualTo(Score.ofUnfinished());
     }
 
     @ParameterizedTest
@@ -107,7 +107,7 @@ public class FinalFrameTest {
         Score score = finalFrame.getScore();
 
         //then
-        assertThat(score).isEqualTo(Score.of(UNFINISHED_SCORE, 0));
+        assertThat(score).isEqualTo(Score.ofUnfinished());
     }
 
     @ParameterizedTest

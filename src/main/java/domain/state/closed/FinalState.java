@@ -6,8 +6,6 @@ import domain.state.State;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static domain.frame.FrameResult.UNFINISHED_SCORE;
-
 public class FinalState extends Closed {
     private static final String FINAL_FRAME_DELIMITER = "|";
     public static final int BONUS_CHANCE = 3;

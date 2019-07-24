@@ -6,7 +6,6 @@ import domain.state.open.StandBy;
 import domain.state.State;
 
 import static domain.frame.FrameIndex.MINIMUM_FRAME_INDEX;
-import static domain.frame.FrameResult.UNFINISHED_SCORE;
 
 public class NormalFrame implements Frame {
 
