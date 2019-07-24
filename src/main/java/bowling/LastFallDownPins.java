@@ -12,6 +12,7 @@ public class LastFallDownPins {
   private static final int SECOND_FALL_DOWN_COUNT_INDEX = 1;
   private static final int BONUS_FALL_DOWN_COUNT_INDEX = 2;
   private static final int SPARE_SIZE = 2;
+  private static final int NO_PLAY_SIZE = 0;
 
   List<FallDownPin> fallDownCounts = new ArrayList<>();
 
@@ -21,6 +22,9 @@ public class LastFallDownPins {
   }
 
   public boolean isLastFrameFinish() {
+    if (isNoPlay()) {
+      return false;
+    }
     if (isMaxCount()) {
       return true;
     }
@@ -31,6 +35,10 @@ public class LastFallDownPins {
       return true;
     }
     return false;
+  }
+
+  private boolean isNoPlay() {
+    return fallDownCounts.size() == NO_PLAY_SIZE;
   }
 
   private boolean isMaxCount() {

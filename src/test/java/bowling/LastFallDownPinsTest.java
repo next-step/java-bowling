@@ -15,6 +15,16 @@ public class LastFallDownPinsTest {
   }
 
   @Test
+  void 한번도_안굴리면_마지막프레임은_안끝난다() {
+    assertThat(lastFallDownPins.isLastFrameFinish()).isFalse();
+  }
+
+  @Test
+  void 한번만_굴리면_마지막프레임은_안끝난다() {
+    assertThat(lastFallDownPins.roll(5).isLastFrameFinish()).isFalse();
+  }
+
+  @Test
   void 마지막_프레임은_스트라이크면_한번더_투구할수있다() {
     assertThat(lastFallDownPins.roll(10).roll(6).isLastFrameFinish()).isEqualTo(true);
   }
