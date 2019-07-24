@@ -9,7 +9,7 @@ public class FallDownPins {
 
   private static final int FIRST_FALL_DOWN_COUNT_INDEX = 0;
   private static final int SECOND_FALL_DOWN_COUNT_INDEX = 1;
-  private static final int NORMAL_FRAME_ROLL_COUNT = 2;
+  private static final int NORMAL_FRAME_MAX_COUNT = 2;
   private static final int NO_PLAY_SIZE = 0;
 
   List<FallDownPin> fallDownCounts = new ArrayList<>();
@@ -37,17 +37,13 @@ public class FallDownPins {
     if (isNoPlay()) {
       return false;
     }
+    if (isMaxCount()) {
+      return true;
+    }
     if (isStrike()) {
       return true;
     }
-    if (isCompleteTwice()) {
-      return true;
-    }
     return false;
-  }
-
-  private boolean isCompleteTwice() {
-    return fallDownCounts.size() == NORMAL_FRAME_ROLL_COUNT;
   }
 
   private boolean isStrike() {
@@ -58,12 +54,16 @@ public class FallDownPins {
     return fallDownCounts.get(FIRST_FALL_DOWN_COUNT_INDEX);
   }
 
+  private boolean isMaxCount() {
+    return fallDownCounts.size() == NORMAL_FRAME_MAX_COUNT;
+  }
+
   private FallDownPin getSecondFallDown() {
     return fallDownCounts.get(SECOND_FALL_DOWN_COUNT_INDEX);
   }
 
   private boolean isSpare() {
-    if (fallDownCounts.size() < NORMAL_FRAME_ROLL_COUNT) {
+    if (fallDownCounts.size() < NORMAL_FRAME_MAX_COUNT) {
       return false;
     }
     return getFirstFallDown().isSpare(getSecondFallDown());
