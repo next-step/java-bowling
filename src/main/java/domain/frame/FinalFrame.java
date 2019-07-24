@@ -68,7 +68,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public State getState() {
-        return new FinalState(states, bowlOrder);
+        return FinalState.of(states, bowlOrder);
     }
 
     @Override
@@ -78,17 +78,17 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score getScore() {
-        return new FinalState(states, bowlOrder).getScore();
+        return getState().getScore();
     }
 
     @Override
     public Score updateScore(Score score) {
-        return new FinalState(states, bowlOrder).updateScore(score);
+        return getState().updateScore(score);
     }
 
     @Override
     public FrameResult getResult() {
-        return FrameResult.of(new FinalState(states, bowlOrder), getScore());
+        return FrameResult.of(getState(), getScore());
     }
 
 }

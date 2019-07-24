@@ -15,9 +15,13 @@ public class FinalState extends Closed {
     private List<State> states;
     private int bowlOrder;
 
-    public FinalState(List<State> states, int bowlOrder) {
+    private FinalState(List<State> states, int bowlOrder) {
         this.states = states;
         this.bowlOrder = bowlOrder;
+    }
+
+    public static State of(List<State> states, int bowlOrder) {
+        return new FinalState(states, bowlOrder);
     }
 
     @Override
