@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.state.State;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
