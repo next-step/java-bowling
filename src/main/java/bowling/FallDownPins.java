@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class FallDownPins {
+public class FallDownPins implements State{
 
   private static final int FIRST_FALL_DOWN_COUNT_INDEX = 0;
   private static final int SECOND_FALL_DOWN_COUNT_INDEX = 1;
@@ -33,7 +33,7 @@ public class FallDownPins {
     return fallDownCounts.size() == NO_PLAY_SIZE;
   }
 
-  public boolean isFinish() {
+  public Boolean isFinish() {
     if (isNoPlay()) {
       return false;
     }

@@ -3,7 +3,7 @@ package bowling;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LastFallDownPins {
+public class LastFallDownPins implements State {
 
   private static final int LAST_FRAME_MAX_COUNT = 3;
   private static final int LAST_FRAME_STRIKE_AND_BONUS_SIZE = 2;
@@ -24,6 +24,7 @@ public class LastFallDownPins {
     return this;
   }
 
+
   private boolean validateSumOfFallDownCount(int fallDownCount) {
     if (isNoPlay()) {
       return true;
@@ -37,7 +38,9 @@ public class LastFallDownPins {
     return getFirstFallDown().isValidCount(fallDownCount);
   }
 
-  public boolean isLastFrameFinish() {
+
+  @Override
+  public Boolean isFinish() {
     if (isNoPlay()) {
       return false;
     }

@@ -13,7 +13,7 @@ public class LastFrame implements Frame {
 
   @Override
   public boolean isGameEnd() {
-    return lastFallDownPins.isLastFrameFinish();
+    return lastFallDownPins.isFinish();
   }
 
   @Override
