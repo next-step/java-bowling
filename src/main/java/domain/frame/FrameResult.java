@@ -3,8 +3,9 @@ package domain.frame;
 import domain.Score;
 import domain.state.State;
 
+import static domain.Score.UNFINISHED_SCORE;
+
 public class FrameResult {
-    public static final int UNFINISHED_SCORE = -1;
 
     private String state;
     private int score;

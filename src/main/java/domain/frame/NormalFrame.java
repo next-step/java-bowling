@@ -80,7 +80,7 @@ public class NormalFrame implements Frame {
             return updatedScore;
         }
         if (nextFrame == null) {
-            return Score.of(UNFINISHED_SCORE, 0);
+            return Score.ofUnfinished();
         }
         return nextFrame.updateScore(updatedScore);
     }

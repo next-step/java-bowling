@@ -23,11 +23,11 @@ public class StandBy extends Open {
 
     @Override
     public Score updateScore(Score score) {
-        return score; //TODO: 개선 고민해보기
+        return Score.ofUnfinished();
     }
 
     @Override
     public Score getScore() {
-        return Score.of(0, 0);
+        return Score.ofDefault();
     }
 }

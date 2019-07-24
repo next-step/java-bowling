@@ -36,7 +36,7 @@ public class Miss extends Closed {
     @Override
     public Score getScore() {
         int sumOfPins = firstFallenPins.sumPins(secondFallenPins);
-        return Score.of(sumOfPins, 0);
+        return Score.ofMiss(sumOfPins);
     }
 
     @Override

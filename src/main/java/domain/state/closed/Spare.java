@@ -33,7 +33,7 @@ public class Spare extends Closed {
 
     @Override
     public Score getScore() {
-        return Score.of(STRIKE_PINS, 1);
+        return Score.ofSpare();
     }
 
     @Override

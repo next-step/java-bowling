@@ -30,7 +30,7 @@ public class FinalState extends Closed {
     }
 
     @Override
-    public boolean isClosed() { //TODO: 로직 개선하기
+    public boolean isClosed() {
         if (states.get(FIRST_STATE) instanceof Strike && bowlOrder == BONUS_CHANCE) {
             return Boolean.TRUE;
         }
@@ -53,7 +53,7 @@ public class FinalState extends Closed {
 
             return Score.of(sumOfScores, 0);
         }
-        return Score.of(UNFINISHED_SCORE, 0);
+        return Score.ofUnfinished();
     }
 
     @Override

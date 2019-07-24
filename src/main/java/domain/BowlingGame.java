@@ -40,7 +40,7 @@ public class BowlingGame {
     }
 
     public Frame getFirstFrame() {
-        return frames.getFrames().get(0);
+        return frames.getFirstFrame();
     }
 
     public FrameResults getFrameResults() {
