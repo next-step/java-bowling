@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Spare implements State {
 
-  private static final String SPARE_SYMBOL = "-";
+  private static final String SPARE_SYMBOL = "/";
   private static final String ROLL_DELIMITER = "|";
 
   private FallDownPin firstFallDownPin;

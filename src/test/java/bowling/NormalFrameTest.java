@@ -29,9 +29,4 @@ public class NormalFrameTest {
     assertThat(firstFrame.roll(5).roll(5).nextFrame()).isEqualTo(new NormalFrame(2));
   }
 
-  @Test
-  void toStringTest() {
-    Frame firstFrame = NormalFrame.first();
-    System.out.println(firstFrame.roll(5).roll(4).toString());
-  }
 }

@@ -36,7 +36,6 @@ public class BowlingGameTest {
     bowlingGame.roll(10);
     bowlingGame.roll(10);
     bowlingGame.roll(10);
-    System.out.println(bowlingGame.roll(10).getFrameNo());
 
     assertThat(bowlingGame.roll(4).roll(5).isGameEnd()).isTrue();
   }

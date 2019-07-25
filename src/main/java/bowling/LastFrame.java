@@ -1,12 +1,13 @@
 package bowling;
 
+import bowling.state.FinalState;
 import bowling.state.State;
 
 public class LastFrame implements Frame {
 
   private static final int LAST_FRAME_NO = 10;
 
-  private State state = new LastFallDownPins();
+  private State state = new FinalState();
 
   public LastFrame roll(int countOfPin) {
     state = state.roll(countOfPin);

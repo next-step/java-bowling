@@ -14,7 +14,6 @@ public class NormalFrame implements Frame {
 
   public NormalFrame(int frameNo) {
     this.frameNo = frameNo;
-    //this.state = new StateFactory();
   }
 
   public static Frame first() {

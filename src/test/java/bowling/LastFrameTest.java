@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 public class LastFrameTest {
 
   @Test
-  void 스트라이크_그리고_보너스샷을하면_끝이난다() {
-    assertThat(new LastFrame().roll(10).roll(10).isGameEnd()).isEqualTo(true);
+  void 스트라이크_세번_하면_끝이난다() {
+    assertThat(new LastFrame().roll(10).roll(10).roll(10).isGameEnd()).isEqualTo(true);
   }
 
   @Test
