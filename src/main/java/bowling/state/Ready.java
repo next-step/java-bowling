@@ -6,7 +6,7 @@ public class Ready implements State {
 
   @Override
   public State roll(int countOfPin) {
-    if(new FallDownPin(countOfPin).isStrike()) {
+    if (new FallDownPin(countOfPin).isStrike()) {
       return new Strike();
     }
     return new FirstRoll(countOfPin);

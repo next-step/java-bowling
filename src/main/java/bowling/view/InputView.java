@@ -16,7 +16,7 @@ public class InputView {
   }
 
   public static int askFallDownCount(int frameNo) {
-    System.out.println(frameNo+QUESTION_OF_FALL_DOWN_COUNT);
+    System.out.println(frameNo + QUESTION_OF_FALL_DOWN_COUNT);
     return scanner.nextInt();
   }
 

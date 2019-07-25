@@ -17,7 +17,7 @@ public class Spare implements State {
   }
 
   @Override
-  public State roll(int countOfPin)  {
+  public State roll(int countOfPin) {
     throw new RuntimeException("해당프레임은 끝났습니다.");
   }
 
@@ -28,7 +28,7 @@ public class Spare implements State {
 
   @Override
   public String toString() {
-    return firstFallDownPin.toString()+ROLL_DELIMITER+SPARE_SYMBOL;
+    return firstFallDownPin.toString() + ROLL_DELIMITER + SPARE_SYMBOL;
   }
 
   @Override

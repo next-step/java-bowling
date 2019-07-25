@@ -10,7 +10,7 @@ public class FinalState implements State {
   private static final int MAX_ROLL_COUNT = 3;
 
   LinkedList<State> states = new LinkedList<>();
-  int rollCount = 0;
+  private int rollCount = 0;
 
   public FinalState() {
     this.states.add(new Ready());
@@ -35,16 +35,16 @@ public class FinalState implements State {
     return this;
   }
 
-  private boolean noPlay() {
-    return states.isEmpty();
-  }
-
   @Override
   public Boolean isFinish() {
     if (noPlay()) {
       return false;
     }
     return rollCount == MAX_ROLL_COUNT || states.getFirst() instanceof Miss;
+  }
+
+  private boolean noPlay() {
+    return states.isEmpty();
   }
 
   @Override
