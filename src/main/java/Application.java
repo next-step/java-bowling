@@ -1,4 +1,5 @@
 import domain.BowlingGame;
+import domain.BowlingMatch;
 import domain.Pins;
 import domain.Player;
 import domain.frame.FrameIndex;
