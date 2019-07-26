@@ -26,7 +26,7 @@ public class Hit extends Open {
 
     @Override
     public String printState() {
-        if (firstFallenPins.isMatch(Pins.from(0))) {
+        if (firstFallenPins.isMatch(Pins.GUTTER)) {
             return GUTTER_SYMBOL;
         }
         return firstFallenPins.toString();

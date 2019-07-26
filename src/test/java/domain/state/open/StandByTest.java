@@ -22,7 +22,7 @@ public class StandByTest {
         StandBy standBy = new StandBy();
 
         //when
-        State state = standBy.update(Pins.from(STRIKE_PINS));
+        State state = standBy.update(Pins.STRIKE);
 
         //then
         assertThat(state instanceof Strike).isTrue();

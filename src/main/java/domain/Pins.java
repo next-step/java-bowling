@@ -6,6 +6,8 @@ public class Pins {
     static final String ALERT_OUT_OF_PINS_RANGE = "쓰러진 핀의 개수는 최소 0개에서 최대 10개 입니다.";
     public static final int STRIKE_PINS = 10;
     public static final int GUTTER_PINS = 0;
+    public static final Pins STRIKE = Pins.from(STRIKE_PINS);
+    public static final Pins GUTTER = Pins.from(GUTTER_PINS);
 
     private final int fallenPins;
 

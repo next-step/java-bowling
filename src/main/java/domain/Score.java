@@ -1,12 +1,12 @@
 package domain;
 
-import domain.frame.FrameResult;
-
 import java.util.Objects;
 
-import static domain.frame.FrameResult.UNFINISHED_SCORE;
+import static domain.Pins.STRIKE_PINS;
 
 public class Score {
+    private static final int DEFAULT_SCORE = 0;
+    public static final int UNFINISHED_SCORE = -1;
 
     private int score;
     private int remainingAddition;
@@ -18,6 +18,26 @@ public class Score {
 
     public static Score of(int score, int remainingAddition) {
         return new Score(score, remainingAddition);
+    }
+
+    public static Score ofDefault() {
+        return new Score(DEFAULT_SCORE, 0);
+    }
+
+    public static Score ofUnfinished() {
+        return new Score(UNFINISHED_SCORE, 0);
+    }
+
+    public static Score ofMiss(int sumOfPins) {
+        return new Score(sumOfPins, 0);
+    }
+
+    public static Score ofSpare() {
+        return new Score(STRIKE_PINS, 1);
+    }
+
+    public static Score ofStrike() {
+        return new Score(STRIKE_PINS, 2);
     }
 
     public Score update(int newScore) {

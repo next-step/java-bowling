@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static domain.Score.UNFINISHED_SCORE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FrameResultTest {
@@ -20,7 +21,7 @@ public class FrameResultTest {
         FrameResult frameResult = FrameResult.of(new Strike(), score);
 
         //then
-        assertThat(frameResult.getScore()).isEqualTo(FrameResult.UNFINISHED_SCORE);
+        assertThat(frameResult.getScore()).isEqualTo(UNFINISHED_SCORE);
     }
 
     @ParameterizedTest
@@ -46,6 +47,6 @@ public class FrameResultTest {
         FrameResult frameResult = FrameResult.of(new Hit(Pins.from(firstPins)), score);
 
         //then
-        assertThat(frameResult.getScore()).isEqualTo(FrameResult.UNFINISHED_SCORE);
+        assertThat(frameResult.getScore()).isEqualTo(UNFINISHED_SCORE);
     }
 }

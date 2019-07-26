@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static domain.Score.UNFINISHED_SCORE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -83,7 +84,7 @@ public class FinalFrameTest {
     }
 
     @Test
-    void 거터_처리를_할_경우_거터_점수를_반환한다() {
+    void 거터_처리를_할_경우_UNFINISHED_SCORE를_반환한다() {
         //given
         finalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
         finalFrame.fillFrame(Pins.from(Pins.GUTTER_PINS));
@@ -92,12 +93,12 @@ public class FinalFrameTest {
         Score score = finalFrame.getScore();
 
         //then
-        assertThat(score).isEqualTo(Score.of(0, 0));
+        assertThat(score).isEqualTo(Score.ofUnfinished());
     }
 
     @ParameterizedTest
     @CsvSource({"0, 1", "5, 4", "9, 0"})
-    void 미쓰_처리를_할_경우_미쓰_점수를_반환한다(int first, int second) {
+    void 미쓰_처리를_할_경우_UNFINISHED_SCORE를_반환한다(int first, int second) {
         //given
         finalFrame.fillFrame(Pins.from(first));
         finalFrame.fillFrame(Pins.from(second));
@@ -106,7 +107,7 @@ public class FinalFrameTest {
         Score score = finalFrame.getScore();
 
         //then
-        assertThat(score).isEqualTo(Score.of(first + second, 0));
+        assertThat(score).isEqualTo(Score.ofUnfinished());
     }
 
     @ParameterizedTest

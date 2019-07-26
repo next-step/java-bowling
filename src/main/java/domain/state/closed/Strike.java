@@ -14,7 +14,7 @@ public class Strike extends Closed {
 
     @Override
     public Score getScore() {
-        return Score.of(STRIKE_PINS, 2);
+        return Score.ofStrike();
     }
 
     @Override

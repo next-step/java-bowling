@@ -61,4 +61,8 @@ public class Frames {
                 .map(Frame::getResult)
                 .collect(Collectors.toList()));
     }
+
+    public Frame getFirstFrame() {
+        return frames.get(0);
+    }
 }

@@ -6,20 +6,22 @@ import domain.state.State;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static domain.frame.FrameResult.UNFINISHED_SCORE;
-
 public class FinalState extends Closed {
     private static final String FINAL_FRAME_DELIMITER = "|";
-    public static final int BONUS_CHANCE = 3;
-    public static final int DEFAULT_CHANCES = 2;
-    public static final int FIRST_STATE = 0;
+    private static final int BONUS_CHANCE = 3;
+    private static final int DEFAULT_CHANCES = 2;
+    private static final int FIRST_STATE = 0;
 
     private List<State> states;
     private int bowlOrder;
 
-    public FinalState(List<State> states, int bowlOrder) {
+    private FinalState(List<State> states, int bowlOrder) {
         this.states = states;
         this.bowlOrder = bowlOrder;
+    }
+
+    public static State of(List<State> states, int bowlOrder) {
+        return new FinalState(states, bowlOrder);
     }
 
     @Override
@@ -30,7 +32,7 @@ public class FinalState extends Closed {
     }
 
     @Override
-    public boolean isClosed() { //TODO: 로직 개선하기
+    public boolean isClosed() {
         if (states.get(FIRST_STATE) instanceof Strike && bowlOrder == BONUS_CHANCE) {
             return Boolean.TRUE;
         }
@@ -53,7 +55,7 @@ public class FinalState extends Closed {
 
             return Score.of(sumOfScores, 0);
         }
-        return Score.of(UNFINISHED_SCORE, 0);
+        return Score.ofUnfinished();
     }
 
     @Override

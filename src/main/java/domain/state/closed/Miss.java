@@ -24,10 +24,10 @@ public class Miss extends Closed {
     public String printState() {
         String firstPins = firstFallenPins.toString();
         String secondPins = secondFallenPins.toString();
-        if (firstFallenPins.isMatch(Pins.from(0))) {
+        if (firstFallenPins.isMatch(Pins.GUTTER)) {
             firstPins = GUTTER_SYMBOL;
         }
-        if (secondFallenPins.isMatch(Pins.from(0))) {
+        if (secondFallenPins.isMatch(Pins.GUTTER)) {
             secondPins = GUTTER_SYMBOL;
         }
         return firstPins + SEPARATOR + secondPins;
@@ -36,7 +36,7 @@ public class Miss extends Closed {
     @Override
     public Score getScore() {
         int sumOfPins = firstFallenPins.sumPins(secondFallenPins);
-        return Score.of(sumOfPins, 0);
+        return Score.ofMiss(sumOfPins);
     }
 
     @Override

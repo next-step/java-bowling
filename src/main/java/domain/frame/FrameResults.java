@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static domain.frame.FrameResult.UNFINISHED_SCORE;
+import static domain.Score.UNFINISHED_SCORE;
 
 public class FrameResults {
 
