@@ -8,6 +8,9 @@ import view.OutputView;
 public class Application {
 
     public static void main(String[] args) {
+
+        int numberOfPlayers = InputView.askNumberOfPlayers();
+
         Player player = Player.from(InputView.askPlayerName());
         BowlingGame bowlingGame = BowlingGame.from(player);
         OutputView.printBoard(bowlingGame);
