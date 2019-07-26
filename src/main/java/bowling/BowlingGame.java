@@ -2,8 +2,12 @@ package bowling;
 
 public class BowlingGame {
 
-  Frame frame = NormalFrame.first();
+  private Frame frame;
   BowlingGameResult result = new BowlingGameResult();
+
+  public BowlingGame() {
+    this.frame = NormalFrame.first();
+  }
 
   public Frame roll(int countOfPin) {
     Frame currentFrame = frame.roll(countOfPin);
