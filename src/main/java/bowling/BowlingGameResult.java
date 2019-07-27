@@ -1,13 +1,19 @@
 package bowling;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class BowlingGameResult {
 
   private Map<Integer, String> gameResult = new HashMap<>();
 
-  public void record(int frameNo, String result) {
+  public BowlingGameResult(LinkedList<Frame> frames) {
+    frames.stream()
+        .forEach(frame -> record(frame.getFrameNo(), frame.toString()));
+  }
+
+  private void record(int frameNo, String result) {
     gameResult.put(frameNo, result);
   }
 

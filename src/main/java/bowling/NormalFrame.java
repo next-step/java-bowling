@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.state.Ready;
 import bowling.state.State;
 import java.util.Objects;
 
@@ -14,6 +15,7 @@ public class NormalFrame implements Frame {
 
   public NormalFrame(int frameNo) {
     this.frameNo = frameNo;
+    this.state = new Ready();
   }
 
   public static Frame first() {
@@ -21,7 +23,7 @@ public class NormalFrame implements Frame {
   }
 
   public Frame roll(int countOfPin) {
-    if (state == null) {
+    if (state instanceof Ready) {
       state = StateFactory.make(countOfPin);
       return this;
     }

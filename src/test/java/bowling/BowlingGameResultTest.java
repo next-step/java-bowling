@@ -11,22 +11,26 @@ public class BowlingGameResultTest {
 
   @BeforeEach
   void 생성() {
-    gameResult = new BowlingGameResult();
+    Frames frames = new Frames();
+    frames.roll(5);
+    frames.roll(5);
+
+    gameResult = new BowlingGameResult(frames.getFrames());
   }
 
   @Test
   void 결과입력_및_조회() {
-    gameResult.record(1, "X");
-    gameResult.record(2, "5|/");
-    assertThat(gameResult.result(1)).isEqualTo("X");
-    assertThat(gameResult.result(2)).isEqualTo("5|/");
+    assertThat(gameResult.result(1)).isEqualTo("5|/");
   }
 
   @Test
-  void 해당프레임_결과가_있는지_확인한다() {
-    gameResult.record(1, "X");
-    assertThat(gameResult.hasResult(1)).isTrue();
-    assertThat(gameResult.hasResult(2)).isFalse();
+  void Frames로_생성확인() {
+    Frames frames = new Frames();
+    frames.roll(5);
+    frames.roll(5);
 
+    BowlingGameResult gameResult = new BowlingGameResult(frames.getFrames());
+    assertThat(gameResult.result(1)).isEqualTo("5|/");
   }
+
 }
