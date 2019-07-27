@@ -39,4 +39,9 @@ public class BowlingMatch {
                 .min()
                 .orElseThrow(RuntimeException::new);
     }
+
+    public boolean isOver() {
+        return bowlingMatch.stream()
+                .allMatch(BowlingGame::isGameOver);
+    }
 }

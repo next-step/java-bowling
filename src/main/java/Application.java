@@ -19,15 +19,15 @@ public class Application {
             players.add(Player.from(InputView.askPlayerName()));
         }
 
-        BowlingGame bowlingGame = BowlingGame.from(players);
-        OutputView.printBoard(bowlingGame);
+        BowlingMatch bowlingMatch = BowlingMatch.start(players);
+        OutputView.printBoard(bowlingMatch);
 
-        while(!bowlingGame.isGameOver()) {
-            FrameIndex currentFrameIndex = bowlingGame.currentFrameIndex();
-            Pins fallenPins = InputView.askFallenPins(currentFrameIndex);
+        while(!bowlingMatch.isOver()) {
+            BowlingGame ongoingGame = bowlingMatch.getOngoingGame();
+            Pins fallenPins = InputView.askFallenPins(ongoingGame);
 
-            bowlingGame.play(fallenPins);
-            OutputView.printBoard(bowlingGame);
+            ongoingGame.play(fallenPins);
+            OutputView.printBoard(bowlingMatch);
         }
     }
 }
