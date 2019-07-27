@@ -2,6 +2,7 @@ package domain;
 
 import domain.frame.FrameIndex;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +47,6 @@ public class BowlingMatch {
     }
 
     public List<BowlingGame> getBowlingMatch() {
-        return bowlingMatch;
+        return Collections.unmodifiableList(bowlingMatch);
     }
 }

@@ -2,6 +2,7 @@ package domain.state.closed;
 
 import domain.Score;
 import domain.state.State;
+import domain.state.open.StandBy;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +41,9 @@ public class FinalState extends Closed {
             return Boolean.TRUE;
         }
         if (states.get(FIRST_STATE) instanceof Strike) {
+            return Boolean.FALSE;
+        }
+        if (states.get(FIRST_STATE) instanceof StandBy) {
             return Boolean.FALSE;
         }
         return bowlOrder < DEFAULT_CHANCES;
