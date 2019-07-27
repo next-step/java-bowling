@@ -12,9 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class BowlingMatchTest {
 
-    public static final int INDEX_OF_FIRST_PLAYER = 0;
-    public static final int INDEX_OF_SECOND_PLAYER = 1;
-    public static final int 12 = 12;
+    private static final int INDEX_OF_FIRST_PLAYER = 0;
+    private static final int INDEX_OF_SECOND_PLAYER = 1;
     private List<Player> players;
     private BowlingMatch bowlingMatch;
 

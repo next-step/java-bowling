@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private static final String MESSAGE_FOR_ASK_PLAYER_NAME = "플레이어 이름은(3 english letters)?: ";
     private static final String MESSAGE_FOR_ASK_NUMBER_OF_PLAYERS = "How many people? ";
     private static Scanner scanner = new Scanner(System.in);
 
@@ -18,8 +17,8 @@ public class InputView {
         return numberOfPlayers;
     }
 
-    public static String askPlayerName() {
-        System.out.print(MESSAGE_FOR_ASK_PLAYER_NAME);
+    public static String askPlayerName(int index) {
+        System.out.print(String.format("플레이어 %d의 이름은?(3 english letters): ", index));
         return scanner.nextLine();
     }
 

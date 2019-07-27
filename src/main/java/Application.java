@@ -15,8 +15,8 @@ public class Application {
         int numberOfPlayers = InputView.askNumberOfPlayers();
         List<Player> players = new ArrayList<>();
 
-        for (int i = 0; i < numberOfPlayers; i++) {
-            players.add(Player.from(InputView.askPlayerName()));
+        for (int index = 1; index <= numberOfPlayers; index++) {
+            players.add(Player.from(InputView.askPlayerName(index)));
         }
 
         BowlingMatch bowlingMatch = BowlingMatch.start(players);

@@ -44,4 +44,8 @@ public class BowlingMatch {
         return bowlingMatch.stream()
                 .allMatch(BowlingGame::isGameOver);
     }
+
+    public List<BowlingGame> getBowlingMatch() {
+        return bowlingMatch;
+    }
 }
