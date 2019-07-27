@@ -52,15 +52,7 @@ public class NormalFrameTest {
     @DisplayName("NormalFrame 종료 확인 - FrameNumber가 9이면 종료이다.")
     @Test
     void 기본_프레임_종료() {
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
+        Frame frame = new NormalFrame(new FrameNumber(9));
         assertThat(frame.isGameOver()).isTrue();
     }
 

@@ -14,16 +14,18 @@ import bowling.exception.OutOfBowlCountException;
  * project      : java-bowling
  * create date  : 2019-07-19 15:29
  */
-public class FinalFrame extends Frame {
+public class FinalFrame implements Frame {
     public static final int LAST_FRAME_NUMBER = 10;
     private State state;
+    private final FrameNumber frameNumber;
 
-    public FinalFrame() {
+    public FinalFrame(FrameNumber frameNumber) {
         this.state = InitState.of();
+        this.frameNumber = frameNumber;
     }
 
     @Override
-    Frame bowl(int fallCount) {
+    public Frame bowl(int fallCount) {
         if (isGameOver()) {
             throw new OutOfBowlCountException();
         }
@@ -32,17 +34,17 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    boolean isGameOver() {
+    public boolean isGameOver() {
         return state.isOver(true);
     }
 
     @Override
-    State getState() {
+    public State getState() {
         return state;
     }
 
     @Override
-    int getNumber() {
-        return LAST_FRAME_NUMBER;
+    public int getNumber() {
+        return frameNumber.getFrameNumber();
     }
 }
