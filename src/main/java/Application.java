@@ -16,7 +16,8 @@ public class Application {
         List<Player> players = new ArrayList<>();
 
         for (int index = 1; index <= numberOfPlayers; index++) {
-            players.add(Player.from(InputView.askPlayerName(index)));
+            String playerName = InputView.askPlayerName(index);
+            players.add(Player.from(playerName));
         }
 
         BowlingMatch bowlingMatch = BowlingMatch.start(players);
