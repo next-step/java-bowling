@@ -1,5 +1,6 @@
 package view;
 
+import domain.BowlingGame;
 import domain.Pins;
 import domain.frame.FrameIndex;
 
@@ -22,8 +23,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static Pins askFallenPins(FrameIndex index) {
-        System.out.print(String.format("%s프레임 투구 : ", index.getFrameIndex()));
+    public static Pins askFallenPins(BowlingGame ongoingGame) {
+        System.out.print(String.format("%s's turn : ", ongoingGame.getPlayerName()));
         int fallenPins = scanner.nextInt();
         scanner.nextLine();
         return Pins.from(fallenPins);
