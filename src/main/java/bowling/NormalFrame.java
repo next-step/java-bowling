@@ -75,4 +75,5 @@ public class NormalFrame implements Frame {
   public int hashCode() {
     return Objects.hash(frameNo, state);
   }
+
 }

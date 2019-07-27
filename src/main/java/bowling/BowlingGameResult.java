@@ -24,4 +24,5 @@ public class BowlingGameResult {
   public boolean hasResult(int frameNo) {
     return gameResult.containsKey(frameNo);
   }
+
 }

@@ -19,5 +19,4 @@ public class Strike implements State {
     return STRIKE_SYMBOL;
   }
 
-
 }

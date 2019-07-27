@@ -47,4 +47,5 @@ public class Miss implements State {
   public int hashCode() {
     return Objects.hash(firstFallDownPin, secondFallDownPin);
   }
+
 }

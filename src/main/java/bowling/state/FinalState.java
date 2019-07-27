@@ -53,4 +53,5 @@ public class FinalState implements State {
         .map(State::toString)
         .collect(Collectors.joining(ROLL_DELIMITER));
   }
+
 }
