@@ -1,6 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.state.*;
+import bowling.domain.state.InitState;
+import bowling.domain.state.State;
 
 import java.util.Objects;
 

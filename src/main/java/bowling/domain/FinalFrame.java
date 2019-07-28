@@ -1,9 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.state.InitState;
-import bowling.domain.state.Spare;
 import bowling.domain.state.State;
-import bowling.domain.state.Strike;
 import bowling.exception.OutOfBowlCountException;
 
 /**

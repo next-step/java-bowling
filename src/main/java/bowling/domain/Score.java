@@ -50,7 +50,7 @@ public class Score {
     }
 
     public boolean remainCalculate() {
-        if(remainCount == FINISH_CHECK_COUNT) {
+        if (remainCount == FINISH_CHECK_COUNT) {
             return false;
         }
         return true;
