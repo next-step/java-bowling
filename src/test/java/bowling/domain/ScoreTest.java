@@ -2,8 +2,6 @@ package bowling.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -43,7 +41,7 @@ public class ScoreTest {
     @DisplayName("점수 생성 조건 - Miss 투구")
     @Test
     void 미스_투구_점수_생성() {
-        Score score = Score.ofMiss(3);
+        Score score = Score.of(3);
         assertAll(
                 () -> assertThat(score.getScore()).isEqualTo(3),
                 () -> assertThat(score.remainCalculate()).isFalse()
@@ -57,7 +55,7 @@ public class ScoreTest {
         assertAll(
                 () -> assertThat(score.getScore()).isEqualTo(10),
                 () -> assertThat(score.remainCalculate()).isTrue(),
-                () -> assertThat(score.calculate(Score.ofMiss(3)).getScore()).isEqualTo(13)
+                () -> assertThat(score.calculate(3).getScore()).isEqualTo(13)
         );
     }
 }

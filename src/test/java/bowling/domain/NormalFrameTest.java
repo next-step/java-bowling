@@ -154,7 +154,7 @@ public class NormalFrameTest {
         );
     }
 
-    @DisplayName("remainCount가 남았을때 점수 update하기 - Strke, nextFrame=null")
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Strike, nextFrame=null")
     @Test
     void 점수_계산_업데이트_스트라이크_다음프레임X() {
         frame = frame.bowl(10);
@@ -166,7 +166,7 @@ public class NormalFrameTest {
         );
     }
 
-    @DisplayName("remainCount가 남았을때 점수 update하기 - Strke, nextFrame=not null")
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Strike, nextFrame=not null")
     @ParameterizedTest
     @CsvSource({"10,3,7"})
     void 점수_계산_업데이트_스트라이크_다음프레임O_1(int firstBowl, int secondBowl, int thirdBowl) {
@@ -177,11 +177,11 @@ public class NormalFrameTest {
 
         assertAll(
                 () -> assertThat(firstFrame.getScore().getScore()).isEqualTo(20),
-                () -> assertThat(firstFrame.getScore().remainCalculate()).isTrue()
+                () -> assertThat(firstFrame.getScore().remainCalculate()).isFalse()
         );
     }
 
-    @DisplayName("remainCount가 남았을때 점수 update하기 - Strke, nextFrame=not null")
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Strike, nextFrame=not null")
     @ParameterizedTest
     @CsvSource({"10,10,7"})
     void 점수_계산_업데이트_연속스트라이크_다음프레임O_2(int firstBowl, int secondBowl, int thirdBowl) {
@@ -192,6 +192,51 @@ public class NormalFrameTest {
 
         assertAll(
                 () -> assertThat(firstFrame.getScore().getScore()).isEqualTo(27),
+                () -> assertThat(firstFrame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Spare, nextFrame=null")
+    @ParameterizedTest
+    @CsvSource({"3,7"})
+    void 점수_계산_업데이트_스페어_다음프레임X(int firstBowl, int secondBowl) {
+        frame = frame.bowl(firstBowl);
+        frame = frame.bowl(secondBowl);
+
+        assertAll(
+                () -> assertThat(frame.getScore()).isEqualTo(Score.ofSpare()),
+                () -> assertThat(frame.getScore().getScore()).isEqualTo(10),
+                () -> assertThat(frame.getScore().remainCalculate()).isTrue()
+        );
+    }
+
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Spare, nextFrame=not null")
+    @ParameterizedTest
+    @CsvSource({"3,7,10"})
+    void 점수_계산_업데이트_스페어_다음프레임O_1(int firstBowl, int secondBowl, int thirdBowl) {
+        Frame firstFrame = new NormalFrame();
+        Frame currentFrame = firstFrame.bowl(firstBowl);
+        currentFrame = currentFrame.bowl(secondBowl);
+        currentFrame = currentFrame.bowl(thirdBowl);
+
+        assertAll(
+                () -> assertThat(firstFrame.getScore().getScore()).isEqualTo(20),
+                () -> assertThat(firstFrame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Spare, nextFrame=not null")
+    @ParameterizedTest
+    @CsvSource({"3,7,3,7"})
+    void 점수_계산_업데이트_스페어_다음프레임O_2(int firstBowl, int secondBowl, int thirdBowl, int fourthBowl) {
+        Frame firstFrame = new NormalFrame();
+        Frame currentFrame = firstFrame.bowl(firstBowl);
+        currentFrame = currentFrame.bowl(secondBowl);
+        currentFrame = currentFrame.bowl(thirdBowl);
+        currentFrame = currentFrame.bowl(fourthBowl);
+
+        assertAll(
+                () -> assertThat(firstFrame.getScore().getScore()).isEqualTo(13),
                 () -> assertThat(firstFrame.getScore().remainCalculate()).isFalse()
         );
     }

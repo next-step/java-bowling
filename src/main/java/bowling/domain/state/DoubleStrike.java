@@ -54,12 +54,15 @@ public class DoubleStrike implements State {
 
     @Override
     public Score stateScore() {
-        return Score.ofMiss(firstBowl.getFirstBowl().fallCount() + secondBowl.fallCount());
+        return Score.of(firstBowl.getFirstBowl().fallCount() + secondBowl.fallCount());
     }
 
     @Override
-    public Score updateScore(Score sourceScore, Score targetScore) {
-        return null;
+    public Score updateScore(Score sourceScore) {
+        if (sourceScore.remainCalculate()) {
+            return sourceScore.calculate(getFirstBowl().fallCount());
+        }
+        return sourceScore;
     }
 
     @Override

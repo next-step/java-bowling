@@ -1,8 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.state.InitState;
-import bowling.domain.state.State;
-import bowling.domain.state.Strike;
+import bowling.domain.state.*;
 
 import java.util.Objects;
 
@@ -70,10 +68,7 @@ public class NormalFrame implements Frame {
         if (!isCalculable(source)) {
             return source;
         }
-        Score nextFrameScore = nextFrame.getState().stateScore();
-        Score calculateScore = source.calculate(nextFrameScore);
-
-        return nextFrame.updateScore(calculateScore);
+        return nextFrame.updateScore(nextFrame.getState().updateScore(source));
     }
 
     private boolean isCalculable(Score source) {

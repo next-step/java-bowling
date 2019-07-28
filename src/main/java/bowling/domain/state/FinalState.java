@@ -58,11 +58,11 @@ public class FinalState implements State {
 
     @Override
     public Score stateScore() {
-        return Score.ofMiss(firstState.stateScore().getScore() + lastState.stateScore().getScore());
+        return Score.of(firstState.stateScore().getScore() + lastState.stateScore().getScore());
     }
 
     @Override
-    public Score updateScore(Score sourceScore, Score targetScore) {
+    public Score updateScore(Score sourceScore) {
         return null;
     }
 

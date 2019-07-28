@@ -19,6 +19,7 @@ public class Score {
     private static final int MISS_STATE_DEFUALT_REMAIN_COUNT = 0;
     private static final int FINISH_CHECK_COUNT = 0;
     private static final int CALCULATE_DECREASE_DEPTH = 1;
+    private static final int STRIKE_REMAIN_COUNT = 2;
 
     private int score;
     private int remainCount;
@@ -36,16 +37,12 @@ public class Score {
         return new Score(Spare.SCORE, Spare.SCORE_BOWL_COUNT);
     }
 
-    public static Score ofMiss(int score) {
+    public static Score of(int score) {
         return new Score(score, MISS_STATE_DEFUALT_REMAIN_COUNT);
     }
 
-    public static Score ofRemain(int score, int remainCount) {
-        return new Score(score, remainCount);
-    }
-
-    public Score calculate(Score addScore) {
-        return new Score(this.score + addScore.getScore(), remainCount - CALCULATE_DECREASE_DEPTH);
+    public Score calculate(int addScore) {
+        return new Score(this.score + addScore, remainCount - CALCULATE_DECREASE_DEPTH);
     }
 
     public int getScore() {
@@ -57,6 +54,10 @@ public class Score {
             return false;
         }
         return true;
+    }
+
+    public boolean isTwoRemainCount() {
+        return remainCount == STRIKE_REMAIN_COUNT;
     }
 
     @Override

@@ -63,9 +63,9 @@ public class Strike implements State {
     }
 
     @Override
-    public Score updateScore(Score sourceScore, Score targetScore) {
+    public Score updateScore(Score sourceScore) {
         if (sourceScore.remainCalculate()) {
-            return sourceScore.calculate(targetScore);
+            return sourceScore.calculate(firstBowl.fallCount());
         }
         return sourceScore;
     }

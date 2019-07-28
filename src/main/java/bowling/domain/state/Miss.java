@@ -51,12 +51,16 @@ public class Miss implements State {
 
     @Override
     public Score stateScore() {
-        return Score.ofMiss(firstBowl.getFirstBowl().fallCount() + secondBowl.fallCount());
+        return Score.of(firstBowl.getFirstBowl().fallCount() + secondBowl.fallCount());
     }
 
     @Override
-    public Score updateScore(Score sourceScore, Score targetScore) {
-        return null;
+    public Score updateScore(Score sourceScore) {
+        if (sourceScore.isTwoRemainCount()) {
+            Score firstCalculateScore = sourceScore.calculate(getFirstBowl().fallCount());
+            return firstCalculateScore.calculate(getSecondBowl().fallCount());
+        }
+        return sourceScore.calculate(firstBowl.getFirstBowl().fallCount());
     }
 
     private String printGutter() {

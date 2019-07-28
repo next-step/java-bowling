@@ -58,7 +58,7 @@ public class InitState implements State {
     }
 
     @Override
-    public Score updateScore(Score sourceScore, Score targetScore) {
+    public Score updateScore(Score sourceScore) {
         return null;
     }
 }

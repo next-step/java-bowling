@@ -26,5 +26,5 @@ public interface State {
 
     Score stateScore();
 
-    Score updateScore(Score sourceScore, Score targetScore);
+    Score updateScore(Score sourceScore);
 }

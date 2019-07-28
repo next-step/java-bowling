@@ -55,12 +55,15 @@ public class Hit implements State {
 
     @Override
     public Score stateScore() {
-        return Score.ofMiss(firstBowl.fallCount());
+        return Score.of(firstBowl.fallCount());
     }
 
     @Override
-    public Score updateScore(Score sourceScore, Score targetScore) {
-        return null;
+    public Score updateScore(Score sourceScore) {
+        if (sourceScore.remainCalculate()) {
+            return sourceScore.calculate(getFirstBowl().fallCount());
+        }
+        return sourceScore;
     }
 
     @Override
