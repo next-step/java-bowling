@@ -1,7 +1,9 @@
 package bowling.domain;
 
 import bowling.domain.state.InitState;
+import bowling.domain.state.Spare;
 import bowling.domain.state.State;
+import bowling.domain.state.Strike;
 import bowling.exception.OutOfBowlCountException;
 
 /**
@@ -55,7 +57,14 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score updateScore(Score source) {
-        // TODO Exception 처리필요
-        return null;
+        return source;
+    }
+
+    @Override
+    public String toString() {
+        return "FinalFrame{" +
+                "state=" + state +
+                ", frameNumber=" + frameNumber +
+                '}';
     }
 }

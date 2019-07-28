@@ -48,7 +48,7 @@ public class FinalState implements State {
 
     @Override
     public Point getFirstBowl() {
-        return Point.of(firstState.getFirstBowl().fallCount() + firstState.getSecondBowl().fallCount());
+        return Point.of(firstState.getFirstBowl().fallCount());
     }
 
     @Override
@@ -63,8 +63,13 @@ public class FinalState implements State {
 
     @Override
     public Score updateScore(Score sourceScore) {
-        // TODO Exception 처리필요
-        return null;
+        if (sourceScore.isTwoRemainCount()) {
+            return Score.of(sourceScore.getScore() + DoubleStrike.DOUBLE_STRIKE_SCORE);
+        }
+        if (sourceScore.remainCalculate()) {
+            return sourceScore.calculate(Score.ofStrike().getScore());
+        }
+        return sourceScore;
     }
 
     private boolean isFirstState(State checkState) {

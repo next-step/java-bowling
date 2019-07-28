@@ -15,6 +15,7 @@ import bowling.domain.Score;
  */
 public class DoubleStrike implements State {
     public static final String DISPLAY_STATE = "X|X";
+    public static final int DOUBLE_STRIKE_SCORE = 20;
     private State firstBowl;
     private Point secondBowl;
 
