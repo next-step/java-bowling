@@ -240,4 +240,54 @@ public class NormalFrameTest {
                 () -> assertThat(firstFrame.getScore().remainCalculate()).isFalse()
         );
     }
+
+    @DisplayName("추가 투구가 없는 State(Gutter) 점수 계산")
+    @ParameterizedTest
+    @CsvSource({"0"})
+    void 점수_계산_업데이트_거터(int firstBowl) {
+        frame = frame.bowl(firstBowl);
+
+        assertAll(
+                () -> assertThat(frame.getScore().getScore()).isEqualTo(0),
+                () -> assertThat(frame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("추가 투구가 없는 State(DoubleGutter) 점수 계산")
+    @ParameterizedTest
+    @CsvSource({"0,0"})
+    void 점수_계산_업데이트_더블거터(int firstBowl, int secondBowl) {
+        frame = frame.bowl(firstBowl);
+        frame = frame.bowl(secondBowl);
+
+        assertAll(
+                () -> assertThat(frame.getScore().getScore()).isEqualTo(0),
+                () -> assertThat(frame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("추가 투구가 없는 State(Hit) 점수 계산")
+    @ParameterizedTest
+    @CsvSource({"3"})
+    void 점수_계산_업데이트_히트(int firstBowl) {
+        frame = frame.bowl(firstBowl);
+
+        assertAll(
+                () -> assertThat(frame.getScore().getScore()).isEqualTo(3),
+                () -> assertThat(frame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("추가 투구가 없는 State(Miss) 점수 계산")
+    @ParameterizedTest
+    @CsvSource({"3,6"})
+    void 점수_계산_업데이트_미스(int firstBowl, int secondBowl) {
+        frame = frame.bowl(firstBowl);
+        frame = frame.bowl(secondBowl);
+
+        assertAll(
+                () -> assertThat(frame.getScore().getScore()).isEqualTo(9),
+                () -> assertThat(frame.getScore().remainCalculate()).isFalse()
+        );
+    }
 }
