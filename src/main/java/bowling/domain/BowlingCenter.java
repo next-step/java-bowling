@@ -37,10 +37,21 @@ public class BowlingCenter {
         return players.getPlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.joining());
+    }
 
+    public List<Integer> displayScore() {
+        return frames.displayScore();
     }
 
     public int playFrameNumber() {
         return frames.currentFrameNumber();
+    }
+
+    @Override
+    public String toString() {
+        return "BowlingCenter{" +
+                "frames=" + frames +
+                ", players=" + players +
+                '}';
     }
 }

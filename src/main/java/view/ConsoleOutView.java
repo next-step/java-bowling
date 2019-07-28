@@ -24,12 +24,14 @@ public class ConsoleOutView {
     private static final String SPACE_SUFFIX = "|";
     private static final String IDLE_FRAME = "      |";
     private static final String SINGLE_WORD_SPACE = "   ";
+    private static final String SCORE_FRAME_SPACE = "|      ";
     private static final int SINGLE_WORD = 1;
 
     // TODO Result OUTPUT 로직 개선 필요..
     public static void printFrameResult(BowlingCenter center) {
         printHeader();
         combinePlayerAndFrameState(center);
+        combineScore(center);
     }
 
     private static void combinePlayerAndFrameState(BowlingCenter center) {
@@ -42,9 +44,27 @@ public class ConsoleOutView {
         sb.append(SPACE_SUFFIX);
 
         sb.append(combineIdleFrame(center));
+        System.out.println(sb.toString());
+    }
+
+    private static void combineScore(BowlingCenter center) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(SCORE_FRAME_SPACE);
+        sb.append(SPACE_PREFIX + SPACE);
+
+        sb.append(extractScore(center));
+        sb.append(SPACE + SPACE_SUFFIX);
+
+        sb.append(combineIdleFrame(center));
 
         System.out.println(sb.toString());
         println();
+    }
+
+    private static String extractScore(BowlingCenter center) {
+        return center.displayScore().stream()
+                .map(score -> combineSpace(String.valueOf(score)))
+                .collect(Collectors.joining(SPACE + SPACE_SUFFIX + DOUBLE_SPACE));
     }
 
     private static String extractState(BowlingCenter center) {
