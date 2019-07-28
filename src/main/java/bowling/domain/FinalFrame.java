@@ -50,11 +50,12 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score getScore() {
-        return null;
+        return state.stateScore();
     }
 
     @Override
     public Score updateScore(Score source) {
+        // TODO Exception 처리필요
         return null;
     }
 }

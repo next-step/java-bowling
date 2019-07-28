@@ -48,12 +48,12 @@ public class FinalState implements State {
 
     @Override
     public Point getFirstBowl() {
-        return null;
+        return Point.of(firstState.getFirstBowl().fallCount() + firstState.getSecondBowl().fallCount());
     }
 
     @Override
     public Point getSecondBowl() {
-        return null;
+        return Point.of(lastState.getFirstBowl().fallCount());
     }
 
     @Override
@@ -63,6 +63,7 @@ public class FinalState implements State {
 
     @Override
     public Score updateScore(Score sourceScore) {
+        // TODO Exception 처리필요
         return null;
     }
 

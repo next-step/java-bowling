@@ -1,5 +1,8 @@
 package bowling.domain.state;
 
+import bowling.domain.FinalFrame;
+import bowling.domain.Frame;
+import bowling.domain.FrameNumber;
 import bowling.domain.Point;
 import bowling.exception.IllegalBowlCountException;
 import org.junit.jupiter.api.BeforeEach;
@@ -102,5 +105,30 @@ public class FinalStateTest {
         assertThatExceptionOfType(IllegalBowlCountException.class).isThrownBy(() -> {
             third.update(Point.of(fourthBowl), true);
         }).withMessageContaining("프레임 종료되었습니다.");
+    }
+
+    @DisplayName("FinalState 점수 계산결과 - Strike, Spare인 경우")
+    @ParameterizedTest
+    @CsvSource({
+            "10,10,10,30",
+            "10,1,1,12",
+            "10,1,9,20",
+            "10,0,0,10",
+            "10,0,1,11",
+            "10,0,10,20",
+            "0,10,10,20",
+            "0,10,0,10",
+            "0,10,1,11",
+            "1,9,10,20",
+            "1,9,0,10",
+            "1,9,1,11",
+    })
+    void FINALSTATE_점수계산(int firstBowl, int secondBowl, int thirdBowl, int score) {
+        Frame frame = new FinalFrame(new FrameNumber(10));
+        frame = frame.bowl(firstBowl);
+        frame = frame.bowl(secondBowl);
+        frame = frame.bowl(thirdBowl);
+
+        assertThat(frame.getScore().getScore()).isEqualTo(score);
     }
 }
