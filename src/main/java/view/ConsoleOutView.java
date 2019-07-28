@@ -27,7 +27,7 @@ public class ConsoleOutView {
     private static final String SCORE_FRAME_SPACE = "|      ";
     private static final int SINGLE_WORD = 1;
 
-    // TODO Result OUTPUT 로직 개선 필요..
+    // TODO 3단계 리펙토링에서 Result OUTPUT 로직 개선 필요..
     public static void printFrameResult(BowlingCenter center) {
         printHeader();
         combinePlayerAndFrameState(center);

@@ -22,17 +22,17 @@ public class BowlingCenter {
         this.players = players;
     }
 
-    // TODO 이후 2~3 단계에서 Player 별개의 Frames를 할당하여 수행되게 변경해야될 Point (사용자 이름 전달하여 Frame 투구 수정필요)
+    // TODO 이후 4 단계에서 Player 별개의 Frames를 할당하여 수행되게 변경해야될 Point (사용자 이름 전달하여 Frame 투구 수정필요)
     public boolean play(int fallCount) {
         return frames.bowl(fallCount);
     }
 
-    // TODO 이후 2~3 단계에서 Player 별개의 Frames를 할당하여 수행되게 변경해야될 Point (사용자 이름 전달 하여 해당 Frame 출력되게 수정필요)
+    // TODO 이후 4 단계에서 Player 별개의 Frames를 할당하여 수행되게 변경해야될 Point (사용자 이름 전달 하여 해당 Frame 출력되게 수정필요)
     public List<String> displayState() {
         return frames.displayState();
     }
 
-    // TODO 이후 2~3 단계에서 Player 별개의 Frames를 할당하여 수행되게 변경해야될 Point (Frame 상태 출력 시 Player 매핑되게 가져오게 수정필요)
+    // TODO 이후 4 단계에서 Player 별개의 Frames를 할당하여 수행되게 변경해야될 Point (Frame 상태 출력 시 Player 매핑되게 가져오게 수정필요)
     public String playerName() {
         return players.getPlayers().stream()
                 .map(Player::getName)
