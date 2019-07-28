@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.Score;
 import bowling.exception.IllegalIndexOfExcpetion;
 
 /**
@@ -49,5 +50,15 @@ public class InitState implements State {
     @Override
     public Point getSecondBowl() {
         throw new IllegalIndexOfExcpetion();
+    }
+
+    @Override
+    public Score stateScore() {
+        return null;
+    }
+
+    @Override
+    public Score updateScore(Score sourceScore, Score targetScore) {
+        return null;
     }
 }

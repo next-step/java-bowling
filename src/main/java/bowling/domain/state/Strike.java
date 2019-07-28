@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.Score;
 import bowling.exception.IllegalBowlCountException;
 import bowling.exception.IllegalIndexOfExcpetion;
 
@@ -16,6 +17,9 @@ import bowling.exception.IllegalIndexOfExcpetion;
  */
 public class Strike implements State {
     public static final String DISPLAY_STATE = "X";
+    public static final int SCORE = 10;
+    public static final int SCORE_BOWL_COUNT = 2;
+
     private Point firstBowl;
 
     public Strike(Point fallCount) {
@@ -51,6 +55,19 @@ public class Strike implements State {
     @Override
     public Point getSecondBowl() {
         throw new IllegalIndexOfExcpetion();
+    }
+
+    @Override
+    public Score stateScore() {
+        return Score.ofStrike();
+    }
+
+    @Override
+    public Score updateScore(Score sourceScore, Score targetScore) {
+        if (sourceScore.remainCalculate()) {
+            return sourceScore.calculate(targetScore);
+        }
+        return sourceScore;
     }
 
     private State nextState(Point fallCount, boolean isFinalFrame) {

@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.Score;
 import bowling.exception.IllegalBowlCountException;
 
 /**
@@ -52,6 +53,16 @@ public class FinalState implements State {
 
     @Override
     public Point getSecondBowl() {
+        return null;
+    }
+
+    @Override
+    public Score stateScore() {
+        return Score.ofMiss(firstState.stateScore().getScore() + lastState.stateScore().getScore());
+    }
+
+    @Override
+    public Score updateScore(Score sourceScore, Score targetScore) {
         return null;
     }
 

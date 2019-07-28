@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.Score;
 import bowling.exception.IllegalBowlCountException;
 
 /**
@@ -47,6 +48,16 @@ public class DoubleGutter implements State {
     @Override
     public Point getSecondBowl() {
         return secondBowl;
+    }
+
+    @Override
+    public Score stateScore() {
+        return Score.ofMiss(firstBowl.getFirstBowl().fallCount() + secondBowl.fallCount());
+    }
+
+    @Override
+    public Score updateScore(Score sourceScore, Score targetScore) {
+        return null;
     }
 
     @Override
