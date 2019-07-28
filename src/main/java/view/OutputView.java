@@ -1,6 +1,7 @@
 package view;
 
 import domain.BowlingGame;
+import domain.BowlingMatch;
 import utils.PrintUtils;
 
 import java.util.List;
@@ -13,10 +14,13 @@ public class OutputView {
     public static final String SEPARATOR = "|";
     public static final String EMPTY_SYMBOL = " ";
 
-    public static void printBoard(BowlingGame bowlingGame) {
+    public static void printBoard(BowlingMatch bowlingMatch) {
         System.out.println(UPPER_SIDE_OF_SCORE_BOARD);
-        System.out.println(printStates(bowlingGame));
-        System.out.println(printScores(bowlingGame));
+
+        for (BowlingGame bowlingGame : bowlingMatch.getBowlingMatch()) {
+            System.out.println(printStates(bowlingGame));
+            System.out.println(printScores(bowlingGame));
+        }
         printEmptyLine();
     }
 

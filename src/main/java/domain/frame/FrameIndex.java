@@ -38,6 +38,10 @@ public class FrameIndex {
         }
     }
 
+    public boolean isOngoingGameIndex(int index) {
+        return frameIndex == index;
+    }
+
     public int getFrameIndex() {
         return frameIndex;
     }
