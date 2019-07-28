@@ -1,6 +1,12 @@
 # 2단계 - 볼링 점수판(점수 계산)  나의미션
 
 ## 요구사항 정리
+- [X] State 클래스에서 Score의 값을 계산하도록 구현
+- [X] Strike State에서는 초구와 두번째 투구의 결과를 가지고 오도록 구현
+- [X] Spare State에서는 초구의 투구 결과를 가지고 오도록 구현
+- [X] Gutter, Hit, Strike State는 계산 결과를 가지고올때 하나의 투구로 계산
+- [X] Spare, Miss, DoubleStrike, DoubleGutter State는 계산 결과를 가지고올때 두번의 투구로 계산
+- [X] 각각의 테스트코드의 커버리지를 80% 수준으로 검증해보기 (View, E2E Test는 제외)
 
 ## 요구사항
 
