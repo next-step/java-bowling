@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.domain.state.InitState;
-import bowling.domain.state.Spare;
 import bowling.domain.state.State;
 import bowling.domain.state.Strike;
 
@@ -59,6 +58,29 @@ public class NormalFrame implements Frame {
     @Override
     public int getNumber() {
         return frameNumber.getFrameNumber();
+    }
+
+    @Override
+    public Score getScore() {
+        return updateScore(state.stateScore());
+    }
+
+    @Override
+    public Score updateScore(Score source) {
+        if (!isCalculable(source)) {
+            return source;
+        }
+        Score nextFrameScore = nextFrame.getState().stateScore();
+        Score calculateScore = source.calculate(nextFrameScore);
+
+        return nextFrame.updateScore(calculateScore);
+    }
+
+    private boolean isCalculable(Score source) {
+        if (source.remainCalculate() && nextFrame != null) {
+            return true;
+        }
+        return false;
     }
 
     private NormalFrame nextFrame(int fallCount) {

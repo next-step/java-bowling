@@ -47,4 +47,14 @@ public class FinalFrame implements Frame {
     public int getNumber() {
         return frameNumber.getFrameNumber();
     }
+
+    @Override
+    public Score getScore() {
+        return null;
+    }
+
+    @Override
+    public Score updateScore(Score source) {
+        return null;
+    }
 }

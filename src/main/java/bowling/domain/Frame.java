@@ -20,4 +20,8 @@ public interface Frame {
     State getState();
 
     int getNumber();
+
+    Score getScore();
+
+    Score updateScore(Score source);
 }
