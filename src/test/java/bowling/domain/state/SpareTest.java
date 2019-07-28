@@ -56,4 +56,24 @@ class SpareTest {
             second.update(Point.of(1), false);
         }).withMessageContaining("프레임 종료되었습니다.");
     }
+
+    @DisplayName("점수계산")
+    @ParameterizedTest
+    @CsvSource({
+            "0,10,10",
+            "1,9,10",
+            "2,8,10",
+            "3,7,10",
+            "4,6,10",
+            "5,5,10",
+            "6,4,10",
+            "7,3,10",
+            "8,2,10",
+            "9,1,10",
+    })
+    void 점수계산(int firstBowl, int secondBowl, int score) {
+        State first = state.update(Point.of(firstBowl), false);
+        State second = first.update(Point.of(secondBowl), false);
+        assertThat(second.stateScore().getScore()).isEqualTo(score);
+    }
 }

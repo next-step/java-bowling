@@ -56,4 +56,13 @@ class MissTest {
             second.update(Point.of(1), false);
         }).withMessageContaining("프레임 종료되었습니다.");
     }
+
+    @DisplayName("점수계산")
+    @ParameterizedTest
+    @CsvSource({"1,8"})
+    void 점수계산(int firstBowl, int secondBowl) {
+        State first = state.update(Point.of(firstBowl), false);
+        State second = first.update(Point.of(secondBowl), false);
+        assertThat(second.stateScore().getScore()).isEqualTo(9);
+    }
 }
