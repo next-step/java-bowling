@@ -57,6 +57,9 @@ public class DoubleGutter implements State {
 
     @Override
     public Score updateScore(Score sourceScore) {
+        if (sourceScore.isTwoRemainCount()) {
+            return Score.of(sourceScore.getScore() + stateScore().getScore());
+        }
         if (sourceScore.remainCalculate()) {
             return sourceScore.calculate(getFirstBowl().fallCount());
         }
