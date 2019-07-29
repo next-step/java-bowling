@@ -1,6 +1,7 @@
 package bowling.state;
 
 import bowling.FallDownPin;
+import bowling.Score;
 import java.util.Objects;
 
 public class Miss implements State {
@@ -23,6 +24,20 @@ public class Miss implements State {
   @Override
   public Boolean isFinish() {
     return true;
+  }
+
+  @Override
+  public Score score() {
+    return new Score(firstFallDownPin.getFallDownCount() + secondFallDownPin.getFallDownCount(), 0);
+  }
+
+  @Override
+  public Score addScore(Score previousScore) {
+    Score score = previousScore.addScore(firstFallDownPin.getFallDownCount(), 1);
+    if(score.hasNoAdditionalScore()){
+      return score;
+    }
+    return score.addScore(secondFallDownPin.getFallDownCount(),1);
   }
 
   @Override

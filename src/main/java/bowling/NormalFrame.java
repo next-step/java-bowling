@@ -12,6 +12,7 @@ public class NormalFrame implements Frame {
 
   private int frameNo;
   private State state;
+  private Frame nextFrame;
 
   public NormalFrame(int frameNo) {
     this.frameNo = frameNo;
@@ -36,9 +37,32 @@ public class NormalFrame implements Frame {
       return this;
     }
     if (frameNo == NORMAL_FRAME_LAST_INDEX) {
-      return new LastFrame();
+      nextFrame = new LastFrame();
+      return nextFrame;
     }
-    return new NormalFrame(frameNo + NEXT_FRAME_INTERVAL);
+    nextFrame = new NormalFrame(frameNo + NEXT_FRAME_INTERVAL);
+    return nextFrame;
+  }
+
+  @Override
+  public int score() {
+    Score score = state.score();
+    if (score.hasNoAdditionalScore()) {
+      return state.score().scoreValue();
+    }
+    return nextFrame.addScore(score);
+  }
+
+  @Override
+  public int addScore(Score previousScore) {
+    Score score = state.addScore(previousScore);
+    if (score.hasNoAdditionalScore()) {
+      return score.scoreValue();
+    }
+    if (nextFrame == null) {
+      return Score.defaultScore().scoreValue();
+    }
+    return nextFrame.addScore(score);
   }
 
   public int getFrameNo() {

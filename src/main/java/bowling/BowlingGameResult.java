@@ -7,14 +7,16 @@ import java.util.Map;
 public class BowlingGameResult {
 
   private Map<Integer, String> gameResult = new HashMap<>();
+  private Map<Integer, Integer> gameScore = new HashMap<>();
 
   public BowlingGameResult(LinkedList<Frame> frames) {
     frames.stream()
-        .forEach(frame -> record(frame.getFrameNo(), frame.toString()));
+        .forEach(frame -> record(frame));
   }
 
-  private void record(int frameNo, String result) {
-    gameResult.put(frameNo, result);
+  private void record(Frame frame) {
+    gameResult.put(frame.getFrameNo(), frame.toString());
+    gameScore.put(frame.getFrameNo(), frame.score());
   }
 
   public String result(int frameNo) {
@@ -25,4 +27,11 @@ public class BowlingGameResult {
     return gameResult.containsKey(frameNo);
   }
 
+  public boolean hasScore(int frameNo) {
+    return gameScore.containsKey(frameNo);
+  }
+
+  public int score(int frameNo) {
+    return gameScore.get(frameNo);
+  }
 }

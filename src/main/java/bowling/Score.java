@@ -20,12 +20,28 @@ public class Score {
     return new Score(10, 1);
   }
 
-  public Score addScore(int score) {
-    return new Score(this.score + score, this.remainTimes - 1);
+  public static Score defaultScore() {
+    return new Score(-1, 0);
+  }
+
+  public Score addScore(int score, int minusCount) {
+    return new Score(this.score + score, this.remainTimes - minusCount);
   }
 
   public boolean hasNoAdditionalScore() {
     return remainTimes == 0;
+  }
+
+  public int scoreValue() {
+    return score;
+  }
+
+  @Override
+  public String toString() {
+    return "Score{" +
+        "score=" + score +
+        ", remainTimes=" + remainTimes +
+        '}';
   }
 
   @Override

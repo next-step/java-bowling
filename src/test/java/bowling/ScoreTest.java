@@ -18,7 +18,7 @@ public class ScoreTest {
 
   @Test
   void 추가점수처리() {
-    assertThat(new Score(10,1).addScore(8)).isEqualTo(new Score(18,0));
+    assertThat(new Score(10,1).addScore(8,1)).isEqualTo(new Score(18,0));
   }
 
   @Test
