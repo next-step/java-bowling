@@ -52,4 +52,5 @@ public class FirstRoll implements State {
   public int hashCode() {
     return Objects.hash(fallDownPin);
   }
+  
 }

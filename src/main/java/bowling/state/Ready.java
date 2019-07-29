@@ -16,4 +16,10 @@ public class Ready implements State {
   public Boolean isFinish() {
     return false;
   }
+
+  @Override
+  public String toString() {
+    return "";
+  }
+
 }

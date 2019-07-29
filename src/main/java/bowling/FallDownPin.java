@@ -41,16 +41,16 @@ public class FallDownPin {
     return fallDownCount;
   }
 
+  private boolean isGutter() {
+    return fallDownCount == GUTTER_COUNT;
+  }
+
   @Override
   public String toString() {
     if (isGutter()) {
       return GUTTER_SYMBOL;
     }
     return String.valueOf(fallDownCount);
-  }
-
-  private boolean isGutter() {
-    return fallDownCount == GUTTER_COUNT;
   }
 
   @Override

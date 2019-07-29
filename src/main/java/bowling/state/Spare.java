@@ -48,4 +48,5 @@ public class Spare implements State {
   public int hashCode() {
     return Objects.hash(firstFallDownPin, secondFallDownPin);
   }
+
 }

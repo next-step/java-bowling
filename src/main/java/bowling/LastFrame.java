@@ -33,4 +33,5 @@ public class LastFrame implements Frame {
   public String toString() {
     return state.toString();
   }
+
 }
