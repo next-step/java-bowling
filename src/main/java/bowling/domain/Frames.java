@@ -48,6 +48,13 @@ public class Frames {
         return currentFrame.getNumber();
     }
 
+    public List<Integer> displayScore() {
+        return frames.stream()
+                .map(Frame::getScore)
+                .map(Score::getScore)
+                .collect(Collectors.toList());
+    }
+
     private boolean isGameOver() {
         if (currentFrame instanceof FinalFrame && currentFrame.isGameOver()) {
             return true;
@@ -60,5 +67,13 @@ public class Frames {
                 .filter(target -> target.equals(sourceFrame))
                 .findFirst()
                 .isPresent();
+    }
+
+    @Override
+    public String toString() {
+        return "Frames{" +
+                "frames=" + frames +
+                ", currentFrame=" + currentFrame +
+                '}';
     }
 }

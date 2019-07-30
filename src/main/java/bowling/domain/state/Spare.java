@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.Score;
 import bowling.exception.IllegalBowlCountException;
 
 /**
@@ -16,6 +17,10 @@ import bowling.exception.IllegalBowlCountException;
 public class Spare implements State {
     public static final String DELIMITER = "|";
     public static final String DISPLAT_STATE = "/";
+    public static final int SCORE = 10;
+    public static final int SCORE_BOWL_COUNT = 1;
+    private static final int SCORE_DECREAS_COUNT = 2;
+
     private final State firstBowl;
     private final Point secondBowl;
 
@@ -54,6 +59,20 @@ public class Spare implements State {
     @Override
     public Point getSecondBowl() {
         return secondBowl;
+    }
+
+    @Override
+    public Score stateScore() {
+        return Score.ofSpare();
+    }
+
+    @Override
+    public Score updateScore(Score sourceScore) {
+        if (sourceScore.isTwoRemainCount()) {
+            Score firstCalculateScore = sourceScore.calculate(getFirstBowl().fallCount());
+            return firstCalculateScore.calculate(getSecondBowl().fallCount());
+        }
+        return sourceScore.calculate(firstBowl.getFirstBowl().fallCount());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.Score;
 import bowling.exception.IllegalBowlCountException;
 
 /**
@@ -46,6 +47,20 @@ public class Miss implements State {
     @Override
     public Point getSecondBowl() {
         return secondBowl;
+    }
+
+    @Override
+    public Score stateScore() {
+        return Score.of(firstBowl.getFirstBowl().fallCount() + secondBowl.fallCount());
+    }
+
+    @Override
+    public Score updateScore(Score sourceScore) {
+        if (sourceScore.isTwoRemainCount()) {
+            Score firstCalculateScore = sourceScore.calculate(getFirstBowl().fallCount());
+            return firstCalculateScore.calculate(getSecondBowl().fallCount());
+        }
+        return sourceScore.calculate(firstBowl.getFirstBowl().fallCount());
     }
 
     private String printGutter() {

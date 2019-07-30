@@ -52,15 +52,8 @@ public class NormalFrameTest {
     @DisplayName("NormalFrame 종료 확인 - FrameNumber가 9이면 종료이다.")
     @Test
     void 기본_프레임_종료() {
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
-        frame = frame.bowl(10);
+        Frame frame = new NormalFrame(new FrameNumber(9));
+        frame.bowl(10);
         assertThat(frame.isGameOver()).isTrue();
     }
 
@@ -158,6 +151,143 @@ public class NormalFrameTest {
                 () -> assertThat(frame.getState().printState()).isEqualTo("-|-"),
                 () -> assertThat(frame.getState().getFirstBowl()).isEqualTo(Point.of(0)),
                 () -> assertThat(frame.getState().getSecondBowl()).isEqualTo(Point.of(0))
+        );
+    }
+
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Strike, nextFrame=null")
+    @Test
+    void 점수_계산_업데이트_스트라이크_다음프레임X() {
+        frame = frame.bowl(10);
+
+        assertAll(
+                () -> assertThat(frame.getScore()).isEqualTo(Score.ofStrike()),
+                () -> assertThat(frame.getScore().getScore()).isEqualTo(10),
+                () -> assertThat(frame.getScore().remainCalculate()).isTrue()
+        );
+    }
+
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Strike, nextFrame=not null")
+    @ParameterizedTest
+    @CsvSource({"10,3,7"})
+    void 점수_계산_업데이트_스트라이크_다음프레임O_1(int firstBowl, int secondBowl, int thirdBowl) {
+        Frame firstFrame = new NormalFrame();
+        Frame currentFrame = firstFrame.bowl(firstBowl);
+        currentFrame = currentFrame.bowl(secondBowl);
+        currentFrame = currentFrame.bowl(thirdBowl);
+
+        assertAll(
+                () -> assertThat(firstFrame.getScore().getScore()).isEqualTo(20),
+                () -> assertThat(firstFrame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Strike, nextFrame=not null")
+    @ParameterizedTest
+    @CsvSource({"10,10,7"})
+    void 점수_계산_업데이트_연속스트라이크_다음프레임O_2(int firstBowl, int secondBowl, int thirdBowl) {
+        Frame firstFrame = new NormalFrame();
+        Frame currentFrame = firstFrame.bowl(firstBowl);
+        currentFrame = currentFrame.bowl(secondBowl);
+        currentFrame = currentFrame.bowl(thirdBowl);
+
+        assertAll(
+                () -> assertThat(firstFrame.getScore().getScore()).isEqualTo(27),
+                () -> assertThat(firstFrame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Spare, nextFrame=null")
+    @ParameterizedTest
+    @CsvSource({"3,7"})
+    void 점수_계산_업데이트_스페어_다음프레임X(int firstBowl, int secondBowl) {
+        frame = frame.bowl(firstBowl);
+        frame = frame.bowl(secondBowl);
+
+        assertAll(
+                () -> assertThat(frame.getScore()).isEqualTo(Score.ofSpare()),
+                () -> assertThat(frame.getScore().getScore()).isEqualTo(10),
+                () -> assertThat(frame.getScore().remainCalculate()).isTrue()
+        );
+    }
+
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Spare, nextFrame=not null")
+    @ParameterizedTest
+    @CsvSource({"3,7,10"})
+    void 점수_계산_업데이트_스페어_다음프레임O_1(int firstBowl, int secondBowl, int thirdBowl) {
+        Frame firstFrame = new NormalFrame();
+        Frame currentFrame = firstFrame.bowl(firstBowl);
+        currentFrame = currentFrame.bowl(secondBowl);
+        currentFrame = currentFrame.bowl(thirdBowl);
+
+        assertAll(
+                () -> assertThat(firstFrame.getScore().getScore()).isEqualTo(20),
+                () -> assertThat(firstFrame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("remainCount가 남았을때 점수 update하기 - Spare, nextFrame=not null")
+    @ParameterizedTest
+    @CsvSource({"3,7,3,7"})
+    void 점수_계산_업데이트_스페어_다음프레임O_2(int firstBowl, int secondBowl, int thirdBowl, int fourthBowl) {
+        Frame firstFrame = new NormalFrame();
+        Frame currentFrame = firstFrame.bowl(firstBowl);
+        currentFrame = currentFrame.bowl(secondBowl);
+        currentFrame = currentFrame.bowl(thirdBowl);
+        currentFrame = currentFrame.bowl(fourthBowl);
+
+        assertAll(
+                () -> assertThat(firstFrame.getScore().getScore()).isEqualTo(13),
+                () -> assertThat(firstFrame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("추가 투구가 없는 State(Gutter) 점수 계산")
+    @ParameterizedTest
+    @CsvSource({"0"})
+    void 점수_계산_업데이트_거터(int firstBowl) {
+        frame = frame.bowl(firstBowl);
+
+        assertAll(
+                () -> assertThat(frame.getScore().getScore()).isEqualTo(0),
+                () -> assertThat(frame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("추가 투구가 없는 State(DoubleGutter) 점수 계산")
+    @ParameterizedTest
+    @CsvSource({"0,0"})
+    void 점수_계산_업데이트_더블거터(int firstBowl, int secondBowl) {
+        frame = frame.bowl(firstBowl);
+        frame = frame.bowl(secondBowl);
+
+        assertAll(
+                () -> assertThat(frame.getScore().getScore()).isEqualTo(0),
+                () -> assertThat(frame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("추가 투구가 없는 State(Hit) 점수 계산")
+    @ParameterizedTest
+    @CsvSource({"3"})
+    void 점수_계산_업데이트_히트(int firstBowl) {
+        frame = frame.bowl(firstBowl);
+
+        assertAll(
+                () -> assertThat(frame.getScore().getScore()).isEqualTo(3),
+                () -> assertThat(frame.getScore().remainCalculate()).isFalse()
+        );
+    }
+
+    @DisplayName("추가 투구가 없는 State(Miss) 점수 계산")
+    @ParameterizedTest
+    @CsvSource({"3,6"})
+    void 점수_계산_업데이트_미스(int firstBowl, int secondBowl) {
+        frame = frame.bowl(firstBowl);
+        frame = frame.bowl(secondBowl);
+
+        assertAll(
+                () -> assertThat(frame.getScore().getScore()).isEqualTo(9),
+                () -> assertThat(frame.getScore().remainCalculate()).isFalse()
         );
     }
 }

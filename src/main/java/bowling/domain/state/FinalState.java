@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.Score;
 import bowling.exception.IllegalBowlCountException;
 
 /**
@@ -47,12 +48,28 @@ public class FinalState implements State {
 
     @Override
     public Point getFirstBowl() {
-        return null;
+        return Point.of(firstState.getFirstBowl().fallCount());
     }
 
     @Override
     public Point getSecondBowl() {
-        return null;
+        return Point.of(lastState.getFirstBowl().fallCount());
+    }
+
+    @Override
+    public Score stateScore() {
+        return Score.of(firstState.stateScore().getScore() + lastState.stateScore().getScore());
+    }
+
+    @Override
+    public Score updateScore(Score sourceScore) {
+        if (sourceScore.isTwoRemainCount()) {
+            return Score.of(sourceScore.getScore() + DoubleStrike.DOUBLE_STRIKE_SCORE);
+        }
+        if (sourceScore.remainCalculate()) {
+            return sourceScore.calculate(Score.ofStrike().getScore());
+        }
+        return sourceScore;
     }
 
     private boolean isFirstState(State checkState) {

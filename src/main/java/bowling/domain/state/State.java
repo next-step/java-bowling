@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.Score;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -22,4 +23,8 @@ public interface State {
     Point getFirstBowl();
 
     Point getSecondBowl();
+
+    Score stateScore();
+
+    Score updateScore(Score sourceScore);
 }

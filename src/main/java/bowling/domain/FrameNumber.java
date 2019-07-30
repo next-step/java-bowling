@@ -1,5 +1,9 @@
 package bowling.domain;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * author       : gwonbyeong-yun <sksggg123>
  * ------------------------------------------
@@ -11,25 +15,29 @@ package bowling.domain;
  * create date  : 2019-07-17 00:36
  */
 public class FrameNumber {
-    public static final int INIT_FRAME_NUMBER = 1;
-    public static final int NEXT_FRAME_NUMBER = 1;
-    public static final int LAST_FRAME_NUMBER = 10;
     public static final int NORMAL_FRAME_MAX_NUMBER = 9;
+    private static final int FIRST_INDEX = 0;
+    private static final int INIT_FRAME_NUMBER = 1;
+    private static final int LAST_FRAME_NUMBER = 10;
+    private static final List<FrameNumber> frameNumbers = IntStream.rangeClosed(INIT_FRAME_NUMBER, LAST_FRAME_NUMBER)
+            .mapToObj(integer -> new FrameNumber(integer))
+            .collect(Collectors.toList());
+
     private final int frameNumber;
 
-    private FrameNumber(int frameNumber) {
+    public FrameNumber(int frameNumber) {
         this.frameNumber = frameNumber;
     }
 
     public static FrameNumber init() {
-        return new FrameNumber(INIT_FRAME_NUMBER);
+        return frameNumbers.get(FIRST_INDEX);
     }
 
     public FrameNumber next() {
         if (frameNumber >= LAST_FRAME_NUMBER) {
             throw new IllegalStateException("10프레임까지만 게임할 수 있습니다.");
         }
-        return new FrameNumber(frameNumber + NEXT_FRAME_NUMBER);
+        return frameNumbers.get(frameNumber);
     }
 
     public boolean isOver() {

@@ -12,12 +12,16 @@ import bowling.domain.state.State;
  * project      : java-bowling
  * create date  : 2019-07-19 14:50
  */
-public abstract class Frame {
-    abstract Frame bowl(int fallCount);
+public interface Frame {
+    Frame bowl(int fallCount);
 
-    abstract boolean isGameOver();
+    boolean isGameOver();
 
-    abstract State getState();
+    State getState();
 
-    abstract int getNumber();
+    int getNumber();
+
+    Score getScore();
+
+    Score updateScore(Score source);
 }

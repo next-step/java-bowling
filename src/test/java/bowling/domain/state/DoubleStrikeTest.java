@@ -59,6 +59,14 @@ public class DoubleStrikeTest {
                 () -> assertThat(
                         second.update(Point.of(10), true) instanceof FinalState).isTrue()
         );
+    }
 
+    @DisplayName("점수계산")
+    @ParameterizedTest
+    @CsvSource({"10,10"})
+    void 점수계산(int firstBowl, int secondBowl) {
+        State first = state.update(Point.of(firstBowl), true);
+        State second = first.update(Point.of(secondBowl), true);
+        assertThat(second.stateScore().getScore()).isEqualTo(20);
     }
 }

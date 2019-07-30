@@ -5,6 +5,8 @@ import bowling.exception.IllegalIndexOfExcpetion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -63,5 +65,13 @@ public class HitTest {
         assertThatExceptionOfType(IllegalIndexOfExcpetion.class).isThrownBy(() -> {
             state.update(Point.of(3), false).getSecondBowl();
         }).withMessageContaining("현재 INDEX는 데이터가 없습니다.");
+    }
+
+    @DisplayName("점수계산")
+    @ParameterizedTest
+    @CsvSource({"7"})
+    void 점수계산(int firstBowl) {
+        State first = state.update(Point.of(firstBowl), false);
+        assertThat(first.stateScore().getScore()).isEqualTo(7);
     }
 }

@@ -6,6 +6,8 @@ import bowling.exception.IllegalIndexOfExcpetion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -76,5 +78,13 @@ class StrikeTest {
                 () -> assertThat(next.update(Point.of(1), true) instanceof FinalState).isTrue(),
                 () -> assertThat(next.update(Point.of(10), true) instanceof DoubleStrike).isTrue()
         );
+    }
+
+    @DisplayName("점수계산")
+    @ParameterizedTest
+    @CsvSource({"10"})
+    void 점수계산(int firstBowl) {
+        State first = state.update(Point.of(firstBowl), false);
+        assertThat(first.stateScore().getScore()).isEqualTo(10);
     }
 }

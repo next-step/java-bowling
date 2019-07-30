@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
+import bowling.domain.Score;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -14,6 +15,7 @@ import bowling.domain.Point;
  */
 public class DoubleStrike implements State {
     public static final String DISPLAY_STATE = "X|X";
+    public static final int DOUBLE_STRIKE_SCORE = 20;
     private State firstBowl;
     private Point secondBowl;
 
@@ -49,6 +51,22 @@ public class DoubleStrike implements State {
     @Override
     public Point getSecondBowl() {
         return secondBowl;
+    }
+
+    @Override
+    public Score stateScore() {
+        return Score.of(firstBowl.stateScore().getScore() + secondBowl.fallCount());
+    }
+
+    @Override
+    public Score updateScore(Score sourceScore) {
+        if (sourceScore.isTwoRemainCount()) {
+            return Score.of(sourceScore.getScore() + stateScore().getScore());
+        }
+        if (sourceScore.remainCalculate()) {
+            return sourceScore.calculate(getFirstBowl().fallCount());
+        }
+        return sourceScore;
     }
 
     @Override
