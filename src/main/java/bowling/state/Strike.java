@@ -1,5 +1,7 @@
 package bowling.state;
 
+import bowling.Score;
+
 public class Strike implements State {
 
   private static final String STRIKE_SYMBOL = "X";
@@ -15,9 +17,18 @@ public class Strike implements State {
   }
 
   @Override
+  public Score score() {
+    return Score.strike();
+  }
+
+  @Override
+  public Score addScore(Score previousScore) {
+    return previousScore.addScore(10,1);
+  }
+
+  @Override
   public String toString() {
     return STRIKE_SYMBOL;
   }
-
 
 }

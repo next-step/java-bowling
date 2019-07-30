@@ -2,30 +2,31 @@ package bowling;
 
 public class BowlingGame {
 
-  Frame frame = NormalFrame.first();
-  BowlingGameResult result = new BowlingGameResult();
+  private Frames frames;
+
+  public BowlingGame() {
+    frames = new Frames();
+  }
 
   public Frame roll(int countOfPin) {
-    Frame currentFrame = frame.roll(countOfPin);
-    result.record(currentFrame.getFrameNo(), currentFrame.toString());
-    frame = currentFrame.nextFrame();
-    return frame;
+    return frames.roll(countOfPin);
   }
 
   public Boolean isGameEnd() {
-    return frame.isGameEnd();
+    return frames.isGameEnd();
   }
 
   public int currentFrameNo() {
-    return frame.getFrameNo();
+    return frames.getFrameNo();
   }
 
   public BowlingGameResult getResult() {
-    return result;
+    return frames.getResult();
   }
 
   @Override
   public String toString() {
-    return frame.toString();
+    return frames.toString();
   }
+
 }

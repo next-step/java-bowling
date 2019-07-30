@@ -1,6 +1,7 @@
 package bowling.state;
 
 import bowling.FallDownPin;
+import bowling.Score;
 import java.util.Objects;
 
 public class FirstRoll implements State {
@@ -32,6 +33,16 @@ public class FirstRoll implements State {
   }
 
   @Override
+  public Score score() {
+    return new Score(-1,0);
+  }
+
+  @Override
+  public Score addScore(Score previousScore) {
+    return new Score(-1,0);
+  }
+
+  @Override
   public String toString() {
     return fallDownPin.toString();
   }
@@ -52,4 +63,5 @@ public class FirstRoll implements State {
   public int hashCode() {
     return Objects.hash(fallDownPin);
   }
+  
 }

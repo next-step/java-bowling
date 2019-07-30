@@ -1,6 +1,7 @@
 package bowling.state;
 
 import bowling.FallDownPin;
+import bowling.Score;
 import java.util.Objects;
 
 public class Spare implements State {
@@ -27,6 +28,20 @@ public class Spare implements State {
   }
 
   @Override
+  public Score score() {
+    return Score.spare();
+  }
+
+  @Override
+  public Score addScore(Score previousScore) {
+    Score score = previousScore.addScore(firstFallDownPin.getFallDownCount(), 1);
+    if(score.hasNoAdditionalScore()){
+      return score;
+    }
+    return score.addScore(secondFallDownPin.getFallDownCount(),1);
+  }
+
+  @Override
   public String toString() {
     return firstFallDownPin.toString() + ROLL_DELIMITER + SPARE_SYMBOL;
   }
@@ -48,4 +63,5 @@ public class Spare implements State {
   public int hashCode() {
     return Objects.hash(firstFallDownPin, secondFallDownPin);
   }
+
 }

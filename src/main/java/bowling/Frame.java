@@ -9,4 +9,8 @@ public interface Frame {
   int getFrameNo();
 
   Frame nextFrame();
+
+  int score();
+
+  int addScore(Score previousScore);
 }

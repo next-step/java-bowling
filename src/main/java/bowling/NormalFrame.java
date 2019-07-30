@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.state.Ready;
 import bowling.state.State;
 import java.util.Objects;
 
@@ -11,9 +12,11 @@ public class NormalFrame implements Frame {
 
   private int frameNo;
   private State state;
+  private Frame nextFrame;
 
   public NormalFrame(int frameNo) {
     this.frameNo = frameNo;
+    this.state = new Ready();
   }
 
   public static Frame first() {
@@ -21,7 +24,7 @@ public class NormalFrame implements Frame {
   }
 
   public Frame roll(int countOfPin) {
-    if (state == null) {
+    if (state instanceof Ready) {
       state = StateFactory.make(countOfPin);
       return this;
     }
@@ -34,9 +37,32 @@ public class NormalFrame implements Frame {
       return this;
     }
     if (frameNo == NORMAL_FRAME_LAST_INDEX) {
-      return new LastFrame();
+      nextFrame = new LastFrame();
+      return nextFrame;
     }
-    return new NormalFrame(frameNo + NEXT_FRAME_INTERVAL);
+    nextFrame = new NormalFrame(frameNo + NEXT_FRAME_INTERVAL);
+    return nextFrame;
+  }
+
+  @Override
+  public int score() {
+    Score score = state.score();
+    if (score.hasNoAdditionalScore()) {
+      return state.score().scoreValue();
+    }
+    return nextFrame.addScore(score);
+  }
+
+  @Override
+  public int addScore(Score previousScore) {
+    Score score = state.addScore(previousScore);
+    if (score.hasNoAdditionalScore()) {
+      return score.scoreValue();
+    }
+    if (nextFrame == null) {
+      return Score.defaultScore().scoreValue();
+    }
+    return nextFrame.addScore(score);
   }
 
   public int getFrameNo() {
@@ -73,4 +99,5 @@ public class NormalFrame implements Frame {
   public int hashCode() {
     return Objects.hash(frameNo, state);
   }
+
 }
