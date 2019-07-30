@@ -1,48 +1,21 @@
 package bowling.state;
 
-import bowling.FallDownPin;
-import bowling.Score;
+import bowling.Pins;
 import java.util.Objects;
 
-public class Miss implements State {
+public class Miss extends Finished {
 
-  private static final String ROLL_DELIMITER = "|";
+  private Pins firstPins;
+  private Pins secondPins;
 
-  private FallDownPin firstFallDownPin;
-  private FallDownPin secondFallDownPin;
-
-  public Miss(FallDownPin first, FallDownPin second) {
-    this.firstFallDownPin = first;
-    this.secondFallDownPin = second;
+  public Miss(Pins firstPins, Pins secondPins) {
+    this.firstPins = firstPins;
+    this.secondPins = secondPins;
   }
 
   @Override
-  public State roll(int countOfPin) {
-    throw new RuntimeException("해당프레임은 끝났습니다.");
-  }
-
-  @Override
-  public Boolean isFinish() {
-    return true;
-  }
-
-  @Override
-  public Score score() {
-    return new Score(firstFallDownPin.getFallDownCount() + secondFallDownPin.getFallDownCount(), 0);
-  }
-
-  @Override
-  public Score addScore(Score previousScore) {
-    Score score = previousScore.addScore(firstFallDownPin.getFallDownCount(), 1);
-    if(score.hasNoAdditionalScore()){
-      return score;
-    }
-    return score.addScore(secondFallDownPin.getFallDownCount(),1);
-  }
-
-  @Override
-  public String toString() {
-    return firstFallDownPin.toString() + ROLL_DELIMITER + secondFallDownPin.toString();
+  public String desc() {
+    return firstPins.desc() + RESULT_CONCAT_SYMBOL + secondPins.desc();
   }
 
   @Override
@@ -54,13 +27,12 @@ public class Miss implements State {
       return false;
     }
     Miss miss = (Miss) o;
-    return Objects.equals(firstFallDownPin, miss.firstFallDownPin) &&
-        Objects.equals(secondFallDownPin, miss.secondFallDownPin);
+    return Objects.equals(firstPins, miss.firstPins) &&
+        Objects.equals(secondPins, miss.secondPins);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(firstFallDownPin, secondFallDownPin);
+    return Objects.hash(firstPins, secondPins);
   }
-
 }

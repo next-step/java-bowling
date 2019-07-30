@@ -4,49 +4,43 @@ import java.util.LinkedList;
 
 public class Frames {
 
-  private LinkedList<Frame> frames;
+  private static final int LIST_INDEX_AND_FRAME_NO_DIFF = 1;
+
+  private LinkedList<Frame> frames = new LinkedList<>();
 
   public Frames() {
-    this.frames = new LinkedList<>();
     frames.add(NormalFrame.first());
   }
 
-  public Frame roll(int countOfPin) {
-    Frame currentFrame = currentFrame().roll(countOfPin);
-    return saveFrame(currentFrame);
-
-  }
-
-  private Frame saveFrame(Frame currentFrame) {
-    if (currentFrame.isGameEnd()) {
-      frames.add(currentFrame.nextFrame());
+  public Frame bowl(int countOfPin) {
+    Frame frame = currentFrame().bowl(new Pins(countOfPin));
+    if (!isCurrentFrame(frame)) {
+      frames.add(frame);
     }
     return currentFrame();
   }
 
-  public Boolean isGameEnd() {
-    return currentFrame().isGameEnd();
-  }
-
-  private Frame currentFrame() {
+  public Frame currentFrame() {
     return frames.getLast();
   }
 
-  public BowlingGameResult getResult() {
+  public int currentFrameNo() {
+    return frames.getLast().frameNo();
+  }
+
+  private boolean isCurrentFrame(Frame frame) {
+    return frame.equals(currentFrame());
+  }
+
+  public String desc(int frameNo) {
+    return frames.get(frameNo - LIST_INDEX_AND_FRAME_NO_DIFF).desc();
+  }
+
+  public GameResult getResult() {
     return new BowlingGameResult(frames);
   }
 
-  public LinkedList<Frame> getFrames() {
-    return frames;
+  public boolean isGameEnd() {
+    return currentFrame().isGameEnd();
   }
-
-  public int getFrameNo() {
-    return currentFrame().getFrameNo();
-  }
-
-  @Override
-  public String toString() {
-    return currentFrame().toString();
-  }
-
 }

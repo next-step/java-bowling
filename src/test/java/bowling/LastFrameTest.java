@@ -2,64 +2,59 @@ package bowling;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LastFrameTest {
+class LastFrameTest {
 
-  @Test
-  void 스트라이크_세번_하면_끝이난다() {
-    assertThat(new LastFrame().roll(10).roll(10).roll(10).isGameEnd()).isEqualTo(true);
+  Frame lastFrame;
+
+  @BeforeEach
+  void 생성() {
+    lastFrame = new LastFrame();
   }
 
   @Test
-  void 스페어_그리고_보너스샷을하면_끝이난다() {
-    assertThat(new LastFrame().roll(2).roll(8).roll(10).isGameEnd()).isEqualTo(true);
+  void Miss하면_게임이_끝이난다() {
+    assertThat(lastFrame.bowl(new Pins(5)).bowl(new Pins(3)).isGameEnd()).isTrue();
   }
 
   @Test
-  void 스페어나_스크라이크_못하면_보너스_없다() {
-    assertThat(new LastFrame().roll(2).roll(7).isGameEnd()).isEqualTo(true);
+  void 스트라이크하면_세번_투구하고_끝이난다() {
+    Frame currentFrame = new LastFrame().bowl(new Pins(10)).bowl(new Pins(10));
+
+    assertThat(currentFrame.isGameEnd()).isFalse();
+    assertThat(currentFrame.bowl(new Pins(10)).isGameEnd()).isTrue();
   }
 
   @Test
-  void 구프레임_뒤에는_LastFrame이_리턴된다() {
-    Frame currentFrame = new NormalFrame(9).roll(10);
-    Frame nextFrame = currentFrame.nextFrame();
-    assertThat(currentFrame.score()).isEqualTo(-1);
-
-    nextFrame.roll(10);
-    assertThat(currentFrame.score()).isEqualTo(-1);
-
-    nextFrame.roll(10);
-    assertThat(currentFrame.score()).isEqualTo(30);
+  void 스패어하면_세번_투구하고_끝이난다() {
+    Frame currentFrame = new LastFrame().bowl(new Pins(5)).bowl(new Pins(5));
+    assertThat(currentFrame.isGameEnd()).isFalse();
+    assertThat(currentFrame.bowl(new Pins(10)).isGameEnd()).isTrue();
   }
 
   @Test
-  void 마지막_프레임결과를_리턴한다_strike() {
-    Frame lastFrame = new LastFrame();
-    lastFrame.roll(10);
-    lastFrame.roll(10);
-    lastFrame.roll(10);
-
-    assertThat(lastFrame.score()).isEqualTo(30);
+  void 스트라이크_desc를_확인한다() {
+    assertThat(new LastFrame().bowl(new Pins(10)).desc()).isEqualTo("X");
+    assertThat(new LastFrame().bowl(new Pins(10)).bowl(new Pins(10)).desc()).isEqualTo("X|X");
+    assertThat(new LastFrame().bowl(new Pins(10)).bowl(new Pins(10)).bowl(new Pins(10)).desc())
+        .isEqualTo("X|X|X");
   }
 
   @Test
-  void 마지막_프레임결과를_리턴한다_spare() {
-    Frame lastFrame = new LastFrame();
-    lastFrame.roll(5);
-    lastFrame.roll(5);
-    lastFrame.roll(10);
-
-    assertThat(lastFrame.score()).isEqualTo(20);
+  void 스페어_desc를_확인한다() {
+    assertThat(new LastFrame().bowl(new Pins(5)).desc()).isEqualTo("5");
+    assertThat(new LastFrame().bowl(new Pins(5)).bowl(new Pins(5)).desc()).isEqualTo("5|/");
+    assertThat(new LastFrame().bowl(new Pins(5)).bowl(new Pins(5)).bowl(new Pins(5)).desc())
+        .isEqualTo("5|/|5");
   }
 
   @Test
-  void 마지막_프레임결과를_리턴한다_Miss() {
-    Frame lastFrame = new LastFrame();
-    lastFrame.roll(3);
-    lastFrame.roll(5);
-
-    assertThat(lastFrame.score()).isEqualTo(8);
+  void 미스_desc를_확인한다() {
+    assertThat(new LastFrame().bowl(new Pins(5)).desc()).isEqualTo("5");
+    assertThat(new LastFrame().bowl(new Pins(5)).bowl(new Pins(4)).desc()).isEqualTo("5|4");
   }
+
+
 }

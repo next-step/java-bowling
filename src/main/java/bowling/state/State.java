@@ -1,14 +1,14 @@
 package bowling.state;
 
-import bowling.Score;
+import bowling.Pins;
 
 public interface State {
 
-  State roll(int countOfPin);
+  String RESULT_CONCAT_SYMBOL ="|";
 
-  Boolean isFinish();
+  State bowl(Pins pins);
 
-  Score score();
+  boolean isFinish();
 
-  Score addScore(Score previousScore);
+  String desc();
 }

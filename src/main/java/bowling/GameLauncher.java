@@ -3,21 +3,21 @@ package bowling;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
-public class BowlingGameLauncher {
+public class GameLauncher {
+
+  public static void main(String[] args) {
+    GameLauncher.start();
+  }
 
   private static void start() {
     Player player = InputView.askPlayerName();
 
     BowlingGame bowlingGame = new BowlingGame();
     while (!bowlingGame.isGameEnd()) {
-      bowlingGame.roll(InputView.askFallDownCount(bowlingGame.currentFrameNo()));
-      BowlingGameResult gameResult = bowlingGame.getResult();
+      bowlingGame.bowl(InputView.askFallDownCount(bowlingGame.currentFrameNo()));
+      GameResult gameResult = bowlingGame.result();
       OutputView.initialBoardPrint(player, gameResult);
     }
-  }
-
-  public static void main(String[] args) {
-    start();
   }
 
 }
