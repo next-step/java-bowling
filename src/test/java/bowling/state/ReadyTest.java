@@ -3,6 +3,7 @@ package bowling.state;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import bowling.Pins;
+import bowling.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,5 +29,12 @@ class ReadyTest {
   @Test
   void Ready는_프레임의_끝이아니다() {
     assertThat(new Ready().isFinish()).isFalse();
+  }
+
+  @Test
+  void Ready의_addAdditionalScore은_noFinishScore을_리턴한다() {
+    Score prevScore = new Score(10, 2);
+    State readyState = new Ready();
+    assertThat(readyState.addAdditionalScore(prevScore)).isEqualTo(Score.noFinishScore());
   }
 }

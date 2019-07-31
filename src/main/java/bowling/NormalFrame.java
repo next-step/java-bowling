@@ -9,8 +9,9 @@ public class NormalFrame implements Frame {
   private static final int LAST_NORMAL_FRAME_NO = 9;
   private static final int NEXT_FRAME_DISTANCE = 1;
 
+  private State state;
+  private Frame nextFrame;
   private int frameNo;
-  State state;
 
   public NormalFrame(int frameNo) {
     this.frameNo = frameNo;
@@ -42,14 +43,37 @@ public class NormalFrame implements Frame {
 
   private Frame nextFrame() {
     if (frameNo == LAST_NORMAL_FRAME_NO) {
-      return new LastFrame();
+      nextFrame = new LastFrame();
+      return nextFrame;
     }
-    return new NormalFrame(frameNo + NEXT_FRAME_DISTANCE);
+    nextFrame = new NormalFrame(frameNo + NEXT_FRAME_DISTANCE);
+    return nextFrame;
   }
 
   @Override
   public boolean isGameEnd() {
     return false;
+  }
+
+  @Override
+  public Score getScore() {
+    Score score = state.getScore();
+    if (score.isCompleteScore()) {
+      return score;
+    }
+    return nextFrame.addAdditionalScore(score);
+  }
+
+  @Override
+  public Score addAdditionalScore(Score prevScore) {
+    Score score = state.addAdditionalScore(prevScore);
+    if (score.isCompleteScore()) {
+      return score;
+    }
+    if (nextFrame == null) {
+      return Score.noFinishScore();
+    }
+    return nextFrame.addAdditionalScore(score);
   }
 
   @Override

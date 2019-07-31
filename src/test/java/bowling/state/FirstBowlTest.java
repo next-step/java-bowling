@@ -2,9 +2,9 @@ package bowling.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.*;
 
 import bowling.Pins;
+import bowling.Score;
 import org.junit.jupiter.api.Test;
 
 class FirstBowlTest {
@@ -21,7 +21,7 @@ class FirstBowlTest {
 
   @Test
   void 한프레임의_두개의_투구의_합은_10보다_클수없다() {
-    assertThatIllegalArgumentException().isThrownBy(()->{
+    assertThatIllegalArgumentException().isThrownBy(() -> {
       new FirstBowl(new Pins(5)).bowl(new Pins(6));
     });
   }
@@ -48,5 +48,12 @@ class FirstBowlTest {
   @Test
   void FirstBowl_desc_확인() {
     assertThat(new FirstBowl(new Pins(5)).desc()).isEqualTo("5");
+  }
+
+  @Test
+  void FirstBowl의_addAdditionalScore은_해당투구의_Score값을_더해_리턴한다() {
+    Score prevScore = new Score(10, 2);
+    State firstBowalState = new FirstBowl(new Pins(7));
+    assertThat(firstBowalState.addAdditionalScore(prevScore)).isEqualTo(new Score(17, 1));
   }
 }

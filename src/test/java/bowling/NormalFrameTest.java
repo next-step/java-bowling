@@ -36,4 +36,24 @@ class NormalFrameTest {
 
     assertThat(nineFrame.bowl(new Pins(10))).isInstanceOf(LastFrame.class);
   }
+
+  @Test
+  void Miss인_프레임의_Score를_확인할수있다() {
+    frame.bowl(new Pins(5));
+    frame.bowl(new Pins(3));
+
+    assertThat(frame.getScore()).isEqualTo(new Score(8, 0));
+  }
+
+  @Test
+  void Strike의_점수계산이_완료되지않으면_noFinishScore을_리턴한다() {
+    frame.bowl(new Pins(10));
+    assertThat(frame.getScore()).isEqualTo(Score.noFinishScore());
+  }
+
+  @Test
+  void Spare의_점수계산이_완료되지않으면_noFinishScore을_리턴한다() {
+    frame.bowl(new Pins(6)).bowl(new Pins(4));
+    assertThat(frame.getScore()).isEqualTo(Score.noFinishScore());
+  }
 }

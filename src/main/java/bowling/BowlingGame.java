@@ -9,7 +9,7 @@ public class BowlingGame {
     this.frames = new Frames();
   }
 
-  public Frame bowl(int countOfPin) {
+  public Frames bowl(int countOfPin) {
     return frames.bowl(countOfPin);
   }
 

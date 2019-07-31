@@ -1,38 +1,22 @@
 package bowling.state;
 
 import bowling.Pins;
-import java.util.Objects;
+import bowling.Score;
 
-public class Miss extends Finished {
-
-  private Pins firstPins;
-  private Pins secondPins;
+public class Miss extends DoubleBowl {
 
   public Miss(Pins firstPins, Pins secondPins) {
-    this.firstPins = firstPins;
-    this.secondPins = secondPins;
+    super(firstPins, secondPins);
   }
 
   @Override
   public String desc() {
-    return firstPins.desc() + RESULT_CONCAT_SYMBOL + secondPins.desc();
+    return getFirstPins().desc() + RESULT_CONCAT_SYMBOL + getSecondPins().desc();
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Miss miss = (Miss) o;
-    return Objects.equals(firstPins, miss.firstPins) &&
-        Objects.equals(secondPins, miss.secondPins);
+  public Score getScore() {
+    return new Score(getFirstPins().count() + getSecondPins().count(), 0);
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(firstPins, secondPins);
-  }
 }

@@ -1,6 +1,7 @@
 package bowling.state;
 
 import bowling.Pins;
+import bowling.Score;
 import java.util.Objects;
 
 public class FirstBowl extends Running {
@@ -25,6 +26,11 @@ public class FirstBowl extends Running {
   @Override
   public String desc() {
     return firstPins.desc();
+  }
+
+  @Override
+  public Score addAdditionalScore(Score prevScore) {
+    return prevScore.addScore(new Score(firstPins.count(), 0));
   }
 
   @Override

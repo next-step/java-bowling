@@ -48,4 +48,29 @@ public class LastFrame implements Frame {
   public boolean isGameEnd() {
     return states.getLast() instanceof Miss || bowlCount == LAST_FRAME_MAX_ROLL_COUNT;
   }
+
+  @Override
+  public Score getScore() {
+    if (!isGameEnd()) {
+      return Score.noFinishScore();
+    }
+    return new Score(states.stream()
+        .map(State::getScore)
+        .map(Score::getScore)
+        .reduce(0, (a, b) -> a + b), 0);
+  }
+
+  @Override
+  public Score addAdditionalScore(Score prevScore) {
+    Score currentScore = prevScore;
+    for (int i = 0; i < states.size(); i++) {
+      Score score = states.get(i).addAdditionalScore(currentScore);
+      if (score.isCompleteScore()) {
+        return score;
+      }
+      currentScore = score;
+    }
+    return Score.noFinishScore();
+  }
+
 }
