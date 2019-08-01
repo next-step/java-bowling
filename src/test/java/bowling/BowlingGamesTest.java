@@ -4,7 +4,6 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,8 +34,8 @@ public class BowlingGamesTest {
   @Test
   void PlayerName으로_BowlingGame을_찾는다() {
     String playerName = "LCJ";
-    Optional<BowlingGame> bowlingGame = games.findBowlingGameByName(playerName);
-    assertThat(bowlingGame.get()).isEqualTo(new BowlingGame("LCJ"));
+    BowlingGame bowlingGame = games.findBowlingGameByName(playerName);
+    assertThat(bowlingGame).isEqualTo(new BowlingGame("LCJ"));
   }
 
   @Test
@@ -46,4 +45,6 @@ public class BowlingGamesTest {
     assertThat(results).isInstanceOf(List.class);
     assertThat(results).hasSize(2);
   }
+
+
 }

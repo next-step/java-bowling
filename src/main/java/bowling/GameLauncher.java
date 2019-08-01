@@ -10,14 +10,32 @@ public class GameLauncher {
   }
 
   private static void start() {
-    Player player = InputView.askPlayerName();
+    Players players = playersInit();
 
-    BowlingGame bowlingGame = new BowlingGame(player.toString());
-    while (!bowlingGame.isGameEnd()) {
-      bowlingGame.bowl(InputView.askFallDownCount(bowlingGame.currentFrameNo()));
-      GameResult gameResult = bowlingGame.result();
-      OutputView.initialBoardPrint(player, gameResult);
+    BowlingGames bowlingGames = new BowlingGames(players.names());
+    OutputView.initialBoardPrint(bowlingGames.result());
+
+    while (!bowlingGames.isAllGamesEnd()) {
+      players.names().stream()
+          .forEach(name -> onePlayerBowl(bowlingGames, name));
     }
   }
 
+  private static Players playersInit() {
+    int peopleCount = InputView.askHowManyPeople();
+    Players players = new Players();
+    for (int i = 0; i < peopleCount; i++) {
+      players.addPlayer(InputView.askPlayerName());
+    }
+    return players;
+  }
+
+  private static void onePlayerBowl(BowlingGames bowlingGames, String name) {
+    BowlingGame myGame = bowlingGames.findBowlingGameByName(name);
+    int currentFrameNo = myGame.currentFrameNo();
+    while (!myGame.isOneFrameEnd(currentFrameNo)) {
+      myGame.bowl(InputView.askFallDownCount(name));
+      OutputView.initialBoardPrint(bowlingGames.result());
+    }
+  }
 }

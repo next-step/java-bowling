@@ -21,16 +21,20 @@ public class BowlingGame {
     return frames.getResult(playerName);
   }
 
-  public boolean isGameEnd() {
-    return frames.isGameEnd();
-  }
-
   public int currentFrameNo() {
     return frames.currentFrameNo();
   }
 
+  public boolean isGameEnd() {
+    return frames.isGameEnd();
+  }
+
   public boolean isYourGame(String playerName) {
     return this.playerName.equals(playerName);
+  }
+
+  public boolean isOneFrameEnd(int currentFrameNo) {
+    return frames.isOneFrameEnd(currentFrameNo);
   }
 
   @Override
@@ -58,4 +62,5 @@ public class BowlingGame {
   public int hashCode() {
     return Objects.hash(frames, playerName);
   }
+
 }

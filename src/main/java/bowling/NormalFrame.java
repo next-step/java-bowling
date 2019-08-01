@@ -61,6 +61,9 @@ public class NormalFrame implements Frame {
     if (score.isCompleteScore()) {
       return score;
     }
+    if (nextFrame == null) {
+      return Score.noFinishScore();
+    }
     return nextFrame.addAdditionalScore(score);
   }
 

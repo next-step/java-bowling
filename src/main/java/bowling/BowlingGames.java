@@ -3,7 +3,6 @@ package bowling;
 import static java.util.stream.Collectors.toList;
 
 import java.util.List;
-import java.util.Optional;
 
 public class BowlingGames {
 
@@ -19,10 +18,10 @@ public class BowlingGames {
     return games.size();
   }
 
-  public Optional<BowlingGame> findBowlingGameByName(String playerName) {
+  public BowlingGame findBowlingGameByName(String playerName) {
     return games.stream()
         .filter(game -> game.isYourGame(playerName))
-        .findFirst();
+        .findFirst().orElseThrow(RuntimeException::new);
   }
 
   public List<GameResult> result() {
@@ -30,4 +29,10 @@ public class BowlingGames {
         .map(BowlingGame::result)
         .collect(toList());
   }
+
+  public boolean isAllGamesEnd() {
+    return games.stream()
+        .allMatch(bowlingGame -> bowlingGame.isGameEnd() == Boolean.TRUE);
+  }
+
 }

@@ -24,16 +24,12 @@ public class Frames {
     return this;
   }
 
-  public Frame currentFrame() {
-    return frames.getLast();
-  }
-
-  public int currentFrameNo() {
-    return frames.getLast().frameNo();
-  }
-
   private boolean isCurrentFrame(Frame frame) {
     return frame.equals(currentFrame());
+  }
+
+  public Frame currentFrame() {
+    return frames.getLast();
   }
 
   public String desc(int frameNo) {
@@ -48,11 +44,22 @@ public class Frames {
     List<FrameResult> collect = frames.stream()
         .map(frame -> new FrameResult(frame.desc(), frame.getScore().getScore()))
         .collect(toList());
-    return new BowlingGameResult(collect,playerName);
+    return new BowlingGameResult(collect, playerName);
   }
 
   public boolean isGameEnd() {
     return currentFrame().isGameEnd();
+  }
+
+  public int currentFrameNo() {
+    return currentFrame().frameNo();
+  }
+
+  public boolean isOneFrameEnd(int currentFrameNo) {
+    if (isGameEnd()) {
+      return true;
+    }
+    return currentFrameNo() != currentFrameNo;
   }
 
   @Override
@@ -71,4 +78,5 @@ public class Frames {
   public int hashCode() {
     return Objects.hash(frames);
   }
+
 }
