@@ -16,7 +16,7 @@ public class BowlingGame {
   }
 
   public GameResult result() {
-    return frames.getResult();
+    return frames.getResult(playerName);
   }
 
   public boolean isGameEnd() {

@@ -43,11 +43,11 @@ public class Frames {
     return frames.get(frameNo - LIST_INDEX_AND_FRAME_NO_DIFF).getScore();
   }
 
-  public GameResult getResult() {
+  public GameResult getResult(String playerName) {
     List<FrameResult> collect = frames.stream()
         .map(frame -> new FrameResult(frame.desc(), frame.getScore().getScore()))
         .collect(toList());
-    return new BowlingGameResult(collect);
+    return new BowlingGameResult(collect,playerName);
   }
 
   public boolean isGameEnd() {
