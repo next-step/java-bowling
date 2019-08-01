@@ -4,9 +4,11 @@ package bowling;
 public class BowlingGame {
 
   private Frames frames;
+  private String playerName;
 
-  public BowlingGame() {
+  public BowlingGame(String playerName) {
     this.frames = new Frames();
+    this.playerName = playerName;
   }
 
   public Frames bowl(int countOfPin) {
@@ -23,5 +25,9 @@ public class BowlingGame {
 
   public int currentFrameNo() {
     return frames.currentFrameNo();
+  }
+
+  public boolean isYourGame(String playerName) {
+    return this.playerName.equals(playerName);
   }
 }
