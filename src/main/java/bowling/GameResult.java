@@ -6,4 +6,5 @@ public interface GameResult {
 
   int scoreResult(int frameNo);
 
+  String getPlayerName();
 }

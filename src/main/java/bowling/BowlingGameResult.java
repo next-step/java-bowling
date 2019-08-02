@@ -9,9 +9,11 @@ public class BowlingGameResult implements GameResult {
   private static final int DEFAULT_SCORE = -1;
 
   private List<FrameResult> framesResult;
+  private String playerName;
 
-  public BowlingGameResult(List<FrameResult> frames) {
+  public BowlingGameResult(List<FrameResult> frames, String playerName) {
     this.framesResult = frames;
+    this.playerName = playerName;
   }
 
   @Override
@@ -30,6 +32,11 @@ public class BowlingGameResult implements GameResult {
       return DEFAULT_SCORE;
     }
     return framesResult.get(listIndex).getScore();
+  }
+
+  @Override
+  public String getPlayerName() {
+    return this.playerName;
   }
 
   private boolean hasNoResult(int listIndex) {

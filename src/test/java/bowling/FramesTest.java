@@ -37,4 +37,13 @@ class FramesTest {
     frames.bowl(3).bowl(3);
     assertThat(frames.score(1)).isEqualTo(new Score(6, 0));
   }
+
+  @Test
+  void BowlingGameResult생성시_플레이어명도_전달한다() {
+    String playerName = "LCJ";
+    GameResult result = frames.getResult(playerName);
+
+    assertThat(result.getPlayerName()).isEqualTo(playerName);
+
+  }
 }
