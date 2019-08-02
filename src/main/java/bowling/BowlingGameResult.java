@@ -1,37 +1,38 @@
 package bowling;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.List;
 
-public class BowlingGameResult {
+public class BowlingGameResult implements GameResult {
 
-  private Map<Integer, String> gameResult = new HashMap<>();
-  private Map<Integer, Integer> gameScore = new HashMap<>();
+  private static final int LIST_INDEX_AND_FRAME_NO_DIFF = 1;
+  private static final String DEFAULT_DESC = "";
+  private static final int DEFAULT_SCORE = -1;
 
-  public BowlingGameResult(LinkedList<Frame> frames) {
-    frames.stream()
-        .forEach(frame -> record(frame));
+  private List<FrameResult> framesResult;
+
+  public BowlingGameResult(List<FrameResult> frames) {
+    this.framesResult = frames;
   }
 
-  private void record(Frame frame) {
-    gameResult.put(frame.getFrameNo(), frame.toString());
-    gameScore.put(frame.getFrameNo(), frame.score());
+  @Override
+  public String frameResult(int frameNo) {
+    int listIndex = frameNo - LIST_INDEX_AND_FRAME_NO_DIFF;
+    if (hasNoResult(listIndex)) {
+      return DEFAULT_DESC;
+    }
+    return framesResult.get(listIndex).getFrameDesc();
   }
 
-  public String result(int frameNo) {
-    return gameResult.get(frameNo);
+  @Override
+  public int scoreResult(int frameNo) {
+    int listIndex = frameNo - LIST_INDEX_AND_FRAME_NO_DIFF;
+    if (hasNoResult(listIndex)) {
+      return DEFAULT_SCORE;
+    }
+    return framesResult.get(listIndex).getScore();
   }
 
-  public boolean hasResult(int frameNo) {
-    return gameResult.containsKey(frameNo);
-  }
-
-  public boolean hasScore(int frameNo) {
-    return gameScore.containsKey(frameNo);
-  }
-
-  public int score(int frameNo) {
-    return gameScore.get(frameNo);
+  private boolean hasNoResult(int listIndex) {
+    return listIndex >= framesResult.size();
   }
 }

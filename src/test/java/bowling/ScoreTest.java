@@ -8,32 +8,22 @@ public class ScoreTest {
 
   @Test
   void 생성() {
-    Score score = new Score(10,2);
+    Score score = new Score(5, 0);
   }
 
   @Test
   void 동치테스트() {
-    assertThat(new Score(5,0)).isEqualTo(new Score(5,0));
+    assertThat(new Score(5, 1)).isEqualTo(new Score(5, 1));
   }
 
   @Test
-  void 추가점수처리() {
-    assertThat(new Score(10,1).addScore(8,1)).isEqualTo(new Score(18,0));
+  void 현재점수를_확인_할수있다() {
+    assertThat(new Score(5, 0).getScore()).isEqualTo(5);
   }
 
   @Test
-  void 스트라이크_Score반환() {
-    assertThat(Score.strike()).isEqualTo(new Score(10,2));
-  }
-
-  @Test
-  void 스패어_Score반환() {
-    assertThat(Score.spare()).isEqualTo(new Score(10,1));
-  }
-
-  @Test
-  void 더이상_더해질_점수가_없는지_확인() {
-    assertThat(new Score(10,1).hasNoAdditionalScore()).isFalse();
-    assertThat(new Score(15,0).hasNoAdditionalScore()).isTrue();
+  void 계산이_다끝났는지_확인할수있다() {
+    assertThat(new Score(10, 1).isCompleteScore()).isFalse();
+    assertThat(new Score(5, 0).isCompleteScore()).isTrue();
   }
 }

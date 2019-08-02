@@ -1,32 +1,27 @@
 package bowling;
 
+
 public class BowlingGame {
 
   private Frames frames;
 
   public BowlingGame() {
-    frames = new Frames();
+    this.frames = new Frames();
   }
 
-  public Frame roll(int countOfPin) {
-    return frames.roll(countOfPin);
+  public Frames bowl(int countOfPin) {
+    return frames.bowl(countOfPin);
   }
 
-  public Boolean isGameEnd() {
+  public GameResult result() {
+    return frames.getResult();
+  }
+
+  public boolean isGameEnd() {
     return frames.isGameEnd();
   }
 
   public int currentFrameNo() {
-    return frames.getFrameNo();
+    return frames.currentFrameNo();
   }
-
-  public BowlingGameResult getResult() {
-    return frames.getResult();
-  }
-
-  @Override
-  public String toString() {
-    return frames.toString();
-  }
-
 }

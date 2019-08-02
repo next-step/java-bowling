@@ -1,64 +1,76 @@
 package bowling;
 
-import bowling.state.FinalState;
+import bowling.state.Miss;
+import bowling.state.Ready;
 import bowling.state.State;
-import java.util.Objects;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public class LastFrame implements Frame {
 
   private static final int LAST_FRAME_NO = 10;
+  private static final int LAST_FRAME_MAX_ROLL_COUNT = 3;
 
-  private State state = new FinalState();
+  private LinkedList<State> states = new LinkedList<>();
+  private int bowlCount = 0;
 
-  public LastFrame roll(int countOfPin) {
-    state = state.roll(countOfPin);
+  public LastFrame() {
+    states.add(new Ready());
+  }
+
+  @Override
+  public int frameNo() {
+    return LAST_FRAME_NO;
+  }
+
+  @Override
+  public String desc() {
+    return states.stream()
+        .map(State::desc)
+        .collect(Collectors.joining("|"));
+  }
+
+  @Override
+  public Frame bowl(Pins pins) {
+    if (isGameEnd()) {
+      throw new RuntimeException("게임오버");
+    }
+    bowlCount++;
+    if (!states.getLast().isFinish()) {
+      states.add(states.pop().bowl(pins));
+      return this;
+    }
+    states.add(new Ready().bowl(pins));
     return this;
   }
 
   @Override
   public boolean isGameEnd() {
-    return state.isFinish();
+    return states.getLast() instanceof Miss || bowlCount == LAST_FRAME_MAX_ROLL_COUNT;
   }
 
   @Override
-  public int getFrameNo() {
-    return LAST_FRAME_NO;
-  }
-
-  @Override
-  public Frame nextFrame() {
-    return this;
-  }
-
-  @Override
-  public int score() {
-    return state.score().scoreValue();
-  }
-
-  @Override
-  public int addScore(Score previousScore) {
-    return state.addScore(previousScore).scoreValue();
-  }
-
-  @Override
-  public String toString() {
-    return state.toString();
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+  public Score getScore() {
+    if (!isGameEnd()) {
+      return Score.noFinishScore();
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    LastFrame lastFrame = (LastFrame) o;
-    return Objects.equals(state, lastFrame.state);
+    return new Score(states.stream()
+        .map(State::getScore)
+        .map(Score::getScore)
+        .reduce(0, (a, b) -> a + b), 0);
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(state);
+  public Score addAdditionalScore(Score prevScore) {
+    Score currentScore = prevScore;
+    for (int i = 0; i < states.size(); i++) {
+      Score score = states.get(i).addAdditionalScore(currentScore);
+      if (score.isCompleteScore()) {
+        return score;
+      }
+      currentScore = score;
+    }
+    return Score.noFinishScore();
   }
+
 }

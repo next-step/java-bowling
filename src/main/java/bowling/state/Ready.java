@@ -1,36 +1,26 @@
 package bowling.state;
 
-import bowling.FallDownPin;
+import bowling.Pins;
 import bowling.Score;
 
-public class Ready implements State {
+public class Ready extends Running {
 
   @Override
-  public State roll(int countOfPin) {
-    if (new FallDownPin(countOfPin).isStrike()) {
+  public State bowl(Pins pins) {
+    if (pins.isStrike()) {
       return new Strike();
     }
-    return new FirstRoll(countOfPin);
+    return new FirstBowl(pins);
   }
 
   @Override
-  public Boolean isFinish() {
-    return false;
-  }
-
-  @Override
-  public Score score() {
-    return new Score(-1,0);
-  }
-
-  @Override
-  public Score addScore(Score previousScore) {
-    return new Score(-1,0);
-  }
-
-  @Override
-  public String toString() {
+  public String desc() {
     return "";
+  }
+
+  @Override
+  public Score addAdditionalScore(Score prevScore) {
+    return Score.noFinishScore();
   }
 
 }

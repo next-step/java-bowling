@@ -4,43 +4,51 @@ import java.util.Objects;
 
 public class Score {
 
-  private int score;
-  private int remainTimes;
+  private static final int STRIKE_SPARE_SCORE = 10;
+  private static final int STRIKE_REMAIN_COUNT = 2;
+  private static final int SPARE_REMAIN_COUNT = 1;
+  private static final int UNDER_SCORE = -1;
+  private static final int UNDER_SCORE_COUNT = 0;
+  private static final int DECREASE_COUNT = 1;
+  private static final int COMPLETE_CONDITION_COUNT = 0;
 
-  public Score(int score, int remainTimes) {
+  private int score;
+  private int remainBowlCount;
+
+  public Score(int score, int remainBowlCount) {
     this.score = score;
-    this.remainTimes = remainTimes;
+    this.remainBowlCount = remainBowlCount;
   }
 
   public static Score strike() {
-    return new Score(10, 2);
+    return new Score(STRIKE_SPARE_SCORE, STRIKE_REMAIN_COUNT);
   }
 
   public static Score spare() {
-    return new Score(10, 1);
+    return new Score(STRIKE_SPARE_SCORE, SPARE_REMAIN_COUNT);
   }
 
-  public static Score defaultScore() {
-    return new Score(-1, 0);
+  public static Score noFinishScore() {
+    return new Score(UNDER_SCORE, UNDER_SCORE_COUNT);
   }
 
-  public Score addScore(int score, int minusCount) {
-    return new Score(this.score + score, this.remainTimes - minusCount);
-  }
-
-  public boolean hasNoAdditionalScore() {
-    return remainTimes == 0;
-  }
-
-  public int scoreValue() {
+  public int getScore() {
     return score;
+  }
+
+  public boolean isCompleteScore() {
+    return remainBowlCount == COMPLETE_CONDITION_COUNT;
+  }
+
+  public Score addScore(Score addScore) {
+    return new Score(score + addScore.getScore(), remainBowlCount - DECREASE_COUNT);
   }
 
   @Override
   public String toString() {
     return "Score{" +
         "score=" + score +
-        ", remainTimes=" + remainTimes +
+        ", remainBowlCount=" + remainBowlCount +
         '}';
   }
 
@@ -54,12 +62,12 @@ public class Score {
     }
     Score score1 = (Score) o;
     return score == score1.score &&
-        remainTimes == score1.remainTimes;
+        remainBowlCount == score1.remainBowlCount;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(score, remainTimes);
+    return Objects.hash(score, remainBowlCount);
   }
 
 }

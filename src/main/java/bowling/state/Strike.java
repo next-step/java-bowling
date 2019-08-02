@@ -2,33 +2,23 @@ package bowling.state;
 
 import bowling.Score;
 
-public class Strike implements State {
+public class Strike extends Finished {
 
   private static final String STRIKE_SYMBOL = "X";
 
   @Override
-  public State roll(int countOfPin) {
-    throw new RuntimeException("해당프레임은 끝났습니다.");
+  public String desc() {
+    return STRIKE_SYMBOL;
   }
 
   @Override
-  public Boolean isFinish() {
-    return true;
-  }
-
-  @Override
-  public Score score() {
+  public Score getScore() {
     return Score.strike();
   }
 
   @Override
-  public Score addScore(Score previousScore) {
-    return previousScore.addScore(10,1);
-  }
-
-  @Override
-  public String toString() {
-    return STRIKE_SYMBOL;
+  public Score addAdditionalScore(Score prevScore) {
+    return prevScore.addScore(getScore());
   }
 
 }

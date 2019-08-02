@@ -8,7 +8,7 @@ class TextArrangeUtilTest {
 
   @Test
   void 정해진_길이의_중간에_텍스트를_정렬해준다() {
-    assertThat(TextArrangeUtil.arrange("LCJ",8)).isEqualTo("  LCJ   ");
-    assertThat(TextArrangeUtil.arrange("5|/",8)).isEqualTo("  5|/   ");
+    assertThat(TextArrangeUtil.arrange("LCJ", 8)).isEqualTo("  LCJ   ");
+    assertThat(TextArrangeUtil.arrange("5|/", 8)).isEqualTo("  5|/   ");
   }
 }

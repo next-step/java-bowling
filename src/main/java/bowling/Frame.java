@@ -2,15 +2,15 @@ package bowling;
 
 public interface Frame {
 
-  Frame roll(int countOfPin);
+  int frameNo();
+
+  String desc();
+
+  Frame bowl(Pins pins);
 
   boolean isGameEnd();
 
-  int getFrameNo();
+  Score getScore();
 
-  Frame nextFrame();
-
-  int score();
-
-  int addScore(Score previousScore);
+  Score addAdditionalScore(Score prevScore);
 }

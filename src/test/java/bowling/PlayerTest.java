@@ -22,16 +22,16 @@ public class PlayerTest {
 
   @Test
   void 이름은_세글자를_넘어갈수_없습니다() {
-    assertThatIllegalArgumentException().isThrownBy(() ->{
+    assertThatIllegalArgumentException().isThrownBy(() -> {
       Player.of("LCJJ");
     });
   }
 
   @ParameterizedTest
-  @ValueSource(strings = {""," "})
+  @ValueSource(strings = {"", " "})
   @NullSource
   void 이름은_공백이나_null일수_없습니다(String name) {
-    assertThatIllegalArgumentException().isThrownBy(() ->{
+    assertThatIllegalArgumentException().isThrownBy(() -> {
       Player.of(name);
     });
   }

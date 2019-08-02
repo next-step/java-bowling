@@ -1,52 +1,57 @@
 package bowling;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.LinkedList;
+import java.util.List;
 
 public class Frames {
 
-  private LinkedList<Frame> frames;
+  private static final int LIST_INDEX_AND_FRAME_NO_DIFF = 1;
+
+  private LinkedList<Frame> frames = new LinkedList<>();
 
   public Frames() {
-    this.frames = new LinkedList<>();
     frames.add(NormalFrame.first());
   }
 
-  public Frame roll(int countOfPin) {
-    Frame currentFrame = currentFrame().roll(countOfPin);
-    return saveFrame(currentFrame);
-
-  }
-
-  private Frame saveFrame(Frame currentFrame) {
-    if (currentFrame.isGameEnd()) {
-      frames.add(currentFrame.nextFrame());
+  public Frames bowl(int countOfPin) {
+    Frame frame = currentFrame().bowl(new Pins(countOfPin));
+    if (!isCurrentFrame(frame)) {
+      frames.add(frame);
     }
-    return currentFrame();
+    return this;
   }
 
-  public Boolean isGameEnd() {
-    return currentFrame().isGameEnd();
-  }
-
-  private Frame currentFrame() {
+  public Frame currentFrame() {
     return frames.getLast();
   }
 
-  public BowlingGameResult getResult() {
-    return new BowlingGameResult(frames);
+  public int currentFrameNo() {
+    return frames.getLast().frameNo();
   }
 
-  public LinkedList<Frame> getFrames() {
-    return frames;
+  private boolean isCurrentFrame(Frame frame) {
+    return frame.equals(currentFrame());
   }
 
-  public int getFrameNo() {
-    return currentFrame().getFrameNo();
+  public String desc(int frameNo) {
+    return frames.get(frameNo - LIST_INDEX_AND_FRAME_NO_DIFF).desc();
   }
 
-  @Override
-  public String toString() {
-    return currentFrame().toString();
+  public Score score(int frameNo) {
+    return frames.get(frameNo - LIST_INDEX_AND_FRAME_NO_DIFF).getScore();
+  }
+
+  public GameResult getResult() {
+    List<FrameResult> collect = frames.stream()
+        .map(frame -> new FrameResult(frame.desc(), frame.getScore().getScore()))
+        .collect(toList());
+    return new BowlingGameResult(collect);
+  }
+
+  public boolean isGameEnd() {
+    return currentFrame().isGameEnd();
   }
 
 }

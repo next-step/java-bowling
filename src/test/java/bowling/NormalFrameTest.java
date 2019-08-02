@@ -2,67 +2,58 @@ package bowling;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class NormalFrameTest {
+class NormalFrameTest {
 
-  @Test
+  Frame frame;
+
+  @BeforeEach
   void 생성() {
-    Frame normalFrame = NormalFrame.first();
+    frame = NormalFrame.first();
   }
 
   @Test
-  void 첫번째_시도에_10개를_쓰러뜨린후__다음프레임을_호출하면_다음프레임이_리턴된다() {
-    Frame firstFrame = NormalFrame.first();
-    assertThat(firstFrame.roll(10).nextFrame().getFrameNo()).isEqualTo(2);
+  void 스트라이크를_Bowl하면_다음프레임이_리턴된다() {
+    assertThat(frame.bowl(new Pins(10)).frameNo()).isEqualTo(2);
   }
 
   @Test
-  void 두번_roll을하면_다음_프레임이_리턴된다() {
-    Frame firstFrame = NormalFrame.first();
-    assertThat(firstFrame.roll(5).roll(5).nextFrame().getFrameNo()).isEqualTo(2);
+  void 스트라이크가아닌_Bowl하면_현재프레임이_리턴된다() {
+    assertThat(frame.bowl(new Pins(9)).frameNo()).isEqualTo(1);
   }
 
   @Test
-  void Miss일때_점수를_가지고온다() {
-    Frame firstFrame = NormalFrame.first();
-    assertThat(firstFrame.roll(3).roll(5).score()).isEqualTo(8);
+  void 스트라이크제외_두번_Bowl하면_다음프레임이_리턴된다() {
+    Frame currentframe = this.frame.bowl(new Pins(5)).bowl(new Pins(5));
+    assertThat(currentframe.frameNo()).isEqualTo(2);
   }
 
   @Test
-  void Strike일때_점수를_가지고온다() {
-    Frame firstFrame = NormalFrame.first();
-    firstFrame.roll(10);
+  void 구프레임_다음에는_LastFrame이_리턴된다() {
+    Frame nineFrame = new NormalFrame(9);
 
-    Frame nextFrame = firstFrame.nextFrame();
-    nextFrame.roll(5);
-    nextFrame.roll(3);
-
-    assertThat(firstFrame.score()).isEqualTo(18);
+    assertThat(nineFrame.bowl(new Pins(10))).isInstanceOf(LastFrame.class);
   }
 
   @Test
-  void Strike일때_점수가_다_더해지지_않았을때는_마이너스1을_가지고온다() {
-    Frame firstFrame = NormalFrame.first();
-    firstFrame.roll(10);
+  void Miss인_프레임의_Score를_확인할수있다() {
+    frame.bowl(new Pins(5));
+    frame.bowl(new Pins(3));
 
-    Frame nextFrame = firstFrame.nextFrame();
-    nextFrame.roll(5);
-
-    assertThat(firstFrame.score()).isEqualTo(-1);
+    assertThat(frame.getScore()).isEqualTo(new Score(8, 0));
   }
 
   @Test
-  void Spare일때_점수를_가지고온다() {
-    Frame firstFrame = NormalFrame.first();
-    firstFrame.roll(5);
-    firstFrame.roll(5);
-
-    Frame nextFrame = firstFrame.nextFrame();
-    nextFrame.roll(6);
-    nextFrame.roll(2);
-
-    assertThat(firstFrame.score()).isEqualTo(16);
+  void Strike의_점수계산이_완료되지않으면_noFinishScore을_리턴한다() {
+    frame.bowl(new Pins(10));
+    assertThat(frame.getScore()).isEqualTo(Score.noFinishScore());
   }
 
+  @Test
+  void Spare의_점수계산이_완료되지않으면_noFinishScore을_리턴한다() {
+    frame.bowl(new Pins(6)).bowl(new Pins(4));
+    assertThat(frame.getScore()).isEqualTo(Score.noFinishScore());
+  }
 }

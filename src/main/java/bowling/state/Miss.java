@@ -1,66 +1,22 @@
 package bowling.state;
 
-import bowling.FallDownPin;
+import bowling.Pins;
 import bowling.Score;
-import java.util.Objects;
 
-public class Miss implements State {
+public class Miss extends DoubleBowl {
 
-  private static final String ROLL_DELIMITER = "|";
-
-  private FallDownPin firstFallDownPin;
-  private FallDownPin secondFallDownPin;
-
-  public Miss(FallDownPin first, FallDownPin second) {
-    this.firstFallDownPin = first;
-    this.secondFallDownPin = second;
+  public Miss(Pins firstPins, Pins secondPins) {
+    super(firstPins, secondPins);
   }
 
   @Override
-  public State roll(int countOfPin) {
-    throw new RuntimeException("해당프레임은 끝났습니다.");
+  public String desc() {
+    return getFirstPins().desc() + RESULT_CONCAT_SYMBOL + getSecondPins().desc();
   }
 
   @Override
-  public Boolean isFinish() {
-    return true;
-  }
-
-  @Override
-  public Score score() {
-    return new Score(firstFallDownPin.getFallDownCount() + secondFallDownPin.getFallDownCount(), 0);
-  }
-
-  @Override
-  public Score addScore(Score previousScore) {
-    Score score = previousScore.addScore(firstFallDownPin.getFallDownCount(), 1);
-    if(score.hasNoAdditionalScore()){
-      return score;
-    }
-    return score.addScore(secondFallDownPin.getFallDownCount(),1);
-  }
-
-  @Override
-  public String toString() {
-    return firstFallDownPin.toString() + ROLL_DELIMITER + secondFallDownPin.toString();
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Miss miss = (Miss) o;
-    return Objects.equals(firstFallDownPin, miss.firstFallDownPin) &&
-        Objects.equals(secondFallDownPin, miss.secondFallDownPin);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(firstFallDownPin, secondFallDownPin);
+  public Score getScore() {
+    return new Score(getFirstPins().count() + getSecondPins().count(), 0);
   }
 
 }
