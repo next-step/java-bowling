@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import bowling.Pins;
 import bowling.Score;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ReadyTest {
@@ -32,7 +33,8 @@ class ReadyTest {
   }
 
   @Test
-  void Ready의_addAdditionalScore은_noFinishScore을_리턴한다() {
+  @DisplayName("Ready의_addAdditionalScore은_noFinishScore을_리턴한다")
+  void readey_addAdditionalScore_test() {
     Score prevScore = new Score(10, 2);
     State readyState = new Ready();
     assertThat(readyState.addAdditionalScore(prevScore)).isEqualTo(Score.noFinishScore());

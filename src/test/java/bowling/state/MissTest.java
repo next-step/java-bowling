@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import bowling.Pins;
 import bowling.Score;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class MissTest {
@@ -35,14 +36,16 @@ class MissTest {
   }
 
   @Test
-  void Miss의_addAdditionalScore은_remainCount가_1일때_첫번째_투구의_값만더해준다() {
+  @DisplayName("Miss의_addAdditionalScore은_remainCount가_1일때_첫번째_투구의_값만더해준다")
+  void miss_addAdditionalScore_case_remain1() {
     Score prevScore = new Score(10, 1);
     State missState = new Miss(new Pins(7), new Pins(2));
     assertThat(missState.addAdditionalScore(prevScore)).isEqualTo(new Score(17, 0));
   }
 
   @Test
-  void Miss의_addAdditionalScore은_remainCount가_2일때_두번의_Score값_모두_더해준다() {
+  @DisplayName("Miss의_addAdditionalScore은_remainCount가_2일때_두번의_Score값_모두_더해준다")
+  void miss_addAdditionalScore_case_remain2() {
     Score prevScore = new Score(10, 2);
     State missState = new Miss(new Pins(7), new Pins(2));
     assertThat(missState.addAdditionalScore(prevScore)).isEqualTo(new Score(19, 0));

@@ -11,7 +11,7 @@ public class BowlingGameTest {
 
   @BeforeEach
   void 게임생성() {
-    game = new BowlingGame();
+    game = new BowlingGame("LCJ");
   }
 
   @Test
@@ -55,4 +55,11 @@ public class BowlingGameTest {
     assertThat(result.scoreResult(4)).isEqualTo(9);
   }
 
+  @Test
+  void 플레이어명으로_해당게임이_자신의_BowlingGame인지_알수있다() {
+    String playerName = "LCJ";
+    BowlingGame game = new BowlingGame(playerName);
+
+    assertThat(game.isYourGame(playerName)).isTrue();
+  }
 }

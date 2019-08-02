@@ -1,21 +1,17 @@
 package bowling;
 
-import bowling.state.Miss;
-import bowling.state.Ready;
-import bowling.state.State;
-import java.util.LinkedList;
-import java.util.stream.Collectors;
+import bowling.state.LastFrameState;
 
 public class LastFrame implements Frame {
 
   private static final int LAST_FRAME_NO = 10;
   private static final int LAST_FRAME_MAX_ROLL_COUNT = 3;
 
-  private LinkedList<State> states = new LinkedList<>();
+  private LastFrameState states;
   private int bowlCount = 0;
 
   public LastFrame() {
-    states.add(new Ready());
+    states = new LastFrameState();
   }
 
   @Override
@@ -25,9 +21,7 @@ public class LastFrame implements Frame {
 
   @Override
   public String desc() {
-    return states.stream()
-        .map(State::desc)
-        .collect(Collectors.joining("|"));
+    return states.desc();
   }
 
   @Override
@@ -36,17 +30,13 @@ public class LastFrame implements Frame {
       throw new RuntimeException("게임오버");
     }
     bowlCount++;
-    if (!states.getLast().isFinish()) {
-      states.add(states.pop().bowl(pins));
-      return this;
-    }
-    states.add(new Ready().bowl(pins));
+    states = states.bowl(pins);
     return this;
   }
 
   @Override
   public boolean isGameEnd() {
-    return states.getLast() instanceof Miss || bowlCount == LAST_FRAME_MAX_ROLL_COUNT;
+    return states.isMiss() || bowlCount == LAST_FRAME_MAX_ROLL_COUNT;
   }
 
   @Override
@@ -54,23 +44,11 @@ public class LastFrame implements Frame {
     if (!isGameEnd()) {
       return Score.noFinishScore();
     }
-    return new Score(states.stream()
-        .map(State::getScore)
-        .map(Score::getScore)
-        .reduce(0, (a, b) -> a + b), 0);
+    return new Score(states.getScore(), 0);
   }
 
   @Override
   public Score addAdditionalScore(Score prevScore) {
-    Score currentScore = prevScore;
-    for (int i = 0; i < states.size(); i++) {
-      Score score = states.get(i).addAdditionalScore(currentScore);
-      if (score.isCompleteScore()) {
-        return score;
-      }
-      currentScore = score;
-    }
-    return Score.noFinishScore();
+    return states.addAdditionalScore(prevScore);
   }
-
 }

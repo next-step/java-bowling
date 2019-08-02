@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import bowling.Pins;
 import bowling.Score;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class StrikeTest {
@@ -36,7 +37,8 @@ class StrikeTest {
   }
 
   @Test
-  void Stike의_addAdditionalScore은_score가_10이증가하고_remainCount가_1이감소한다() {
+  @DisplayName("Stike의_addAdditionalScore은_score가_10이증가하고_remainCount가_1이감소한다")
+  void strike_addAdditionalScore_test() {
     Score prevScore = new Score(10, 1);
     assertThat(state.addAdditionalScore(prevScore)).isEqualTo(new Score(20, 0));
   }
