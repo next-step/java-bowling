@@ -14,10 +14,8 @@ import bowling.exception.IllegalBowlCountException;
  * project      : java-bowling
  * create date  : 2019-07-19 13:09
  */
-public class Miss implements State {
+public class Miss extends DoubleBaseState {
     public static final String DELIMITER = "|";
-    private final State firstBowl;
-    private final Point secondBowl;
 
     public Miss(State state, Point fallCount) {
         this.firstBowl = state;
@@ -30,37 +28,8 @@ public class Miss implements State {
     }
 
     @Override
-    public boolean isOver(boolean isFinalFrame) {
-        return Boolean.TRUE;
-    }
-
-    @Override
     public String printState() {
         return firstBowl.printState() + DELIMITER + printGutter();
-    }
-
-    @Override
-    public Point getFirstBowl() {
-        return firstBowl.getFirstBowl();
-    }
-
-    @Override
-    public Point getSecondBowl() {
-        return secondBowl;
-    }
-
-    @Override
-    public Score stateScore() {
-        return Score.of(firstBowl.getFirstBowl().fallCount() + secondBowl.fallCount());
-    }
-
-    @Override
-    public Score updateScore(Score sourceScore) {
-        if (sourceScore.isTwoRemainCount()) {
-            Score firstCalculateScore = sourceScore.calculate(getFirstBowl().fallCount());
-            return firstCalculateScore.calculate(getSecondBowl().fallCount());
-        }
-        return sourceScore.calculate(firstBowl.getFirstBowl().fallCount());
     }
 
     private String printGutter() {

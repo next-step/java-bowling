@@ -14,15 +14,11 @@ import bowling.exception.IllegalBowlCountException;
  * project      : java-bowling
  * create date  : 2019-07-19 13:01
  */
-public class Spare implements State {
+public class Spare extends DoubleBaseState {
     public static final String DELIMITER = "|";
     public static final String DISPLAT_STATE = "/";
     public static final int SCORE = 10;
     public static final int SCORE_BOWL_COUNT = 1;
-    private static final int SCORE_DECREAS_COUNT = 2;
-
-    private final State firstBowl;
-    private final Point secondBowl;
 
     public Spare(State state, Point fallCount) {
         this.firstBowl = state;
@@ -39,6 +35,11 @@ public class Spare implements State {
     }
 
     @Override
+    public String printState() {
+        return firstBowl.printState() + DELIMITER + DISPLAT_STATE;
+    }
+
+    @Override
     public boolean isOver(boolean isFinalFrame) {
         if (isFinalFrame) {
             return Boolean.FALSE;
@@ -47,32 +48,8 @@ public class Spare implements State {
     }
 
     @Override
-    public String printState() {
-        return firstBowl.printState() + DELIMITER + DISPLAT_STATE;
-    }
-
-    @Override
-    public Point getFirstBowl() {
-        return firstBowl.getFirstBowl();
-    }
-
-    @Override
-    public Point getSecondBowl() {
-        return secondBowl;
-    }
-
-    @Override
     public Score stateScore() {
         return Score.ofSpare();
-    }
-
-    @Override
-    public Score updateScore(Score sourceScore) {
-        if (sourceScore.isTwoRemainCount()) {
-            Score firstCalculateScore = sourceScore.calculate(getFirstBowl().fallCount());
-            return firstCalculateScore.calculate(getSecondBowl().fallCount());
-        }
-        return sourceScore.calculate(firstBowl.getFirstBowl().fallCount());
     }
 
     @Override

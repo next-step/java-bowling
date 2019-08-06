@@ -1,8 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
-import bowling.domain.Score;
-import bowling.exception.IllegalIndexOfExcpetion;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -14,9 +12,8 @@ import bowling.exception.IllegalIndexOfExcpetion;
  * project      : java-bowling
  * create date  : 2019-07-19 12:22
  */
-public class Hit implements State {
+public class Hit extends SingleBaseState {
     public static final String OUT_OF_POINT_RANGE_EXCEPTION_MESSAGE = "두번째 투구까지의 합이 10점을 넘었습니다.[%d, %d]";
-    private Point firstBowl;
 
     public Hit(Point firstBowl) {
         this.firstBowl = firstBowl;
@@ -34,36 +31,8 @@ public class Hit implements State {
     }
 
     @Override
-    public boolean isOver(boolean isFinalFrame) {
-        return Boolean.FALSE;
-    }
-
-    @Override
     public String printState() {
         return String.valueOf(firstBowl.fallCount());
-    }
-
-    @Override
-    public Point getFirstBowl() {
-        return firstBowl;
-    }
-
-    @Override
-    public Point getSecondBowl() {
-        throw new IllegalIndexOfExcpetion();
-    }
-
-    @Override
-    public Score stateScore() {
-        return Score.of(firstBowl.fallCount());
-    }
-
-    @Override
-    public Score updateScore(Score sourceScore) {
-        if (sourceScore.remainCalculate()) {
-            return sourceScore.calculate(getFirstBowl().fallCount());
-        }
-        return sourceScore;
     }
 
     @Override
