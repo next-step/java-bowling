@@ -5,6 +5,7 @@ import bowling.domain.state.State;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -45,7 +46,10 @@ public class Frames {
     }
 
     public int currentFrameNumber() {
-        return currentFrame.getNumber();
+        return IntStream.rangeClosed(0, frames.size())
+                .filter(frameNumber -> currentFrame.matchNumber(frameNumber))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     public List<Integer> displayScore() {

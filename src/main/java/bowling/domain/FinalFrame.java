@@ -44,8 +44,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int getNumber() {
-        return frameNumber.getFrameNumber();
+    public boolean matchNumber(int frameNumber) {
+        return this.frameNumber.matchFrameNumber(frameNumber);
     }
 
     @Override

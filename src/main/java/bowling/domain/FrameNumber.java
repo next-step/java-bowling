@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -48,7 +49,11 @@ public class FrameNumber {
         return frameNumber == NORMAL_FRAME_MAX_NUMBER;
     }
 
-    public int getFrameNumber() {
+    public boolean matchFrameNumber(int frameNumber) {
+        return this.frameNumber == frameNumber;
+    }
+
+    private int getFrameNumber() {
         return frameNumber;
     }
 
@@ -57,5 +62,18 @@ public class FrameNumber {
         return "FrameNumber{" +
                 "frameNumber=" + frameNumber +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FrameNumber that = (FrameNumber) o;
+        return frameNumber == that.frameNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber);
     }
 }

@@ -19,7 +19,7 @@ public interface Frame {
 
     State getState();
 
-    int getNumber();
+    boolean matchNumber(int frameNumber);
 
     Score getScore();
 

@@ -49,4 +49,11 @@ public class FrameNumberTest {
         }
         assertThat(number.isNormalFrameOver()).isTrue();
     }
+
+    @DisplayName("전달된 FrameNumber와 일치하는지 확인")
+    @Test
+    void 프레임_Number_확인() {
+        FrameNumber frameNumber = new FrameNumber(7);
+        assertThat(frameNumber.matchFrameNumber(7)).isTrue();
+    }
 }
