@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.domain.state.InitState;
-import bowling.domain.state.State;
 import bowling.exception.OutOfBowlCountException;
 
 /**
@@ -15,7 +14,6 @@ import bowling.exception.OutOfBowlCountException;
  * create date  : 2019-07-19 15:29
  */
 public class FinalFrame extends Frame {
-    public static final int LAST_FRAME_NUMBER = 10;
 
     public FinalFrame(int frameNumber) {
         this.state = InitState.of();

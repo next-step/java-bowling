@@ -26,6 +26,8 @@ public class PrintUtil {
     private static final String PREFIX_DIGIT = "0";
     private static final int TWO_DIGIT = 2;
     private static final int SINGLE_WORD = 1;
+    private static final int DIVID_NUMBER = 100;
+    private static final int ONE = 1;
 
     public static String headerArea() {
         StringBuilder sb = new StringBuilder();
@@ -37,7 +39,7 @@ public class PrintUtil {
 
         return sb.toString();
     }
-    
+
     public static String playerNameArea(String playName) {
         StringBuilder sb = new StringBuilder();
         sb.append(getFrameFirstArea(SINGLE_SPACE + playName));
@@ -81,7 +83,7 @@ public class PrintUtil {
         sb.append(DOUBLE_SPACE);
         sb.append(score);
 
-        if(score % 100 >= 1) {
+        if (score % DIVID_NUMBER >= ONE) {
             sb.append(DOUBLE_SPACE);
             sb.append(FRAME_SEPARATOR);
             return sb.toString();
@@ -108,7 +110,7 @@ public class PrintUtil {
     }
 
     private static String combineTwoDigit(int frameNumber) {
-        int digit = (int) Math.log10(frameNumber) + 1;
+        int digit = (int) Math.log10(frameNumber) + ONE;
         if (digit >= TWO_DIGIT) {
             return String.valueOf(frameNumber);
         }

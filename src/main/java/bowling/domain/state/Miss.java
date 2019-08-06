@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
-import bowling.domain.Score;
 import bowling.exception.IllegalBowlCountException;
 
 /**
