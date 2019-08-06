@@ -16,10 +16,10 @@ import java.util.stream.IntStream;
  * create date  : 2019-07-17 00:36
  */
 public class FrameNumber {
+    public static final int INIT_FRAME_NUMBER = 1;
+    public static final int LAST_FRAME_NUMBER = 10;
     public static final int NORMAL_FRAME_MAX_NUMBER = 9;
     private static final int FIRST_INDEX = 0;
-    private static final int INIT_FRAME_NUMBER = 1;
-    private static final int LAST_FRAME_NUMBER = 10;
     private static final List<FrameNumber> frameNumbers = IntStream.rangeClosed(INIT_FRAME_NUMBER, LAST_FRAME_NUMBER)
             .mapToObj(integer -> new FrameNumber(integer))
             .collect(Collectors.toList());
