@@ -23,7 +23,7 @@ public class FinalFrameTest {
 
     @BeforeEach
     void 초기화() {
-        frame = new FinalFrame(new FrameNumber(10));
+        frame = new FinalFrame(10);
     }
 
     @DisplayName("FinalFrame - 두번 투구 게임종료")

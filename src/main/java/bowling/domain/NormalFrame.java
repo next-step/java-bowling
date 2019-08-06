@@ -25,9 +25,9 @@ public class NormalFrame implements Frame {
         this.state = InitState.of();
     }
 
-    public NormalFrame(FrameNumber frameNumber) {
+    public NormalFrame(int frameNumber) {
         this.state = InitState.of();
-        this.frameNumber = frameNumber;
+        this.frameNumber = new FrameNumber(frameNumber);
     }
 
     @Override

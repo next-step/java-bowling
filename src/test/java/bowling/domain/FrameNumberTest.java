@@ -22,7 +22,7 @@ public class FrameNumberTest {
     void 열한번째_프레임_생성_불가() {
         FrameNumber number = FrameNumber.init();
         for (int i = 0; i < 9; i++) {
-            number = number.next();
+            number = new FrameNumber(number.next());
         }
         FrameNumber finalNumber = number;
         assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> {
@@ -35,7 +35,7 @@ public class FrameNumberTest {
     void 게임_종료() {
         FrameNumber number = FrameNumber.init();
         for (int i = 0; i < 9; i++) {
-            number = number.next();
+            number = new FrameNumber(number.next());
         }
         assertThat(number.isOver()).isTrue();
     }
@@ -45,7 +45,7 @@ public class FrameNumberTest {
     void 일반프레임_종료() {
         FrameNumber number = FrameNumber.init();
         for (int i = 0; i < 8; i++) {
-            number = number.next();
+            number = new FrameNumber(number.next());
         }
         assertThat(number.isNormalFrameOver()).isTrue();
     }

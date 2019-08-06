@@ -33,11 +33,11 @@ public class FrameNumber {
         return frameNumbers.get(FIRST_INDEX);
     }
 
-    public FrameNumber next() {
+    public int next() {
         if (frameNumber >= LAST_FRAME_NUMBER) {
             throw new IllegalStateException("10프레임까지만 게임할 수 있습니다.");
         }
-        return frameNumbers.get(frameNumber);
+        return frameNumbers.get(frameNumber).getFrameNumber();
     }
 
     public boolean isOver() {

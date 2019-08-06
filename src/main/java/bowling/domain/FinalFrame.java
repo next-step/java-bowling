@@ -19,9 +19,9 @@ public class FinalFrame implements Frame {
     private State state;
     private final FrameNumber frameNumber;
 
-    public FinalFrame(FrameNumber frameNumber) {
+    public FinalFrame(int frameNumber) {
         this.state = InitState.of();
-        this.frameNumber = frameNumber;
+        this.frameNumber = new FrameNumber(frameNumber);
     }
 
     @Override
