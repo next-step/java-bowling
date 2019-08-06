@@ -14,10 +14,8 @@ import bowling.exception.OutOfBowlCountException;
  * project      : java-bowling
  * create date  : 2019-07-19 15:29
  */
-public class FinalFrame implements Frame {
+public class FinalFrame extends Frame {
     public static final int LAST_FRAME_NUMBER = 10;
-    private State state;
-    private final FrameNumber frameNumber;
 
     public FinalFrame(int frameNumber) {
         this.state = InitState.of();
@@ -36,16 +34,6 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isGameOver() {
         return state.isOver(true);
-    }
-
-    @Override
-    public State getState() {
-        return state;
-    }
-
-    @Override
-    public boolean matchNumber(int frameNumber) {
-        return this.frameNumber.matchFrameNumber(frameNumber);
     }
 
     @Override

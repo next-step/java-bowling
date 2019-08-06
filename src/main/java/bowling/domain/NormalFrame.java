@@ -15,9 +15,7 @@ import java.util.Objects;
  * project      : java-bowling
  * create date  : 2019-07-17 00:53
  */
-public class NormalFrame implements Frame {
-    private State state;
-    private final FrameNumber frameNumber;
+public class NormalFrame extends Frame {
     private Frame nextFrame;
 
     public NormalFrame() {
@@ -47,16 +45,6 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isGameOver() {
         return frameNumber.isNormalFrameOver() && state.isOver(false);
-    }
-
-    @Override
-    public State getState() {
-        return state;
-    }
-
-    @Override
-    public boolean matchNumber(int frameNumber) {
-        return this.frameNumber.matchFrameNumber(frameNumber);
     }
 
     @Override
