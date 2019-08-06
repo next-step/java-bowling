@@ -1,7 +1,6 @@
 package view.util;
 
 import bowling.domain.FrameNumber;
-import bowling.domain.Score;
 
 import java.util.stream.IntStream;
 
@@ -41,7 +40,7 @@ public class PrintUtil {
     
     public static String playerNameArea(String playName) {
         StringBuilder sb = new StringBuilder();
-        sb.append(getFrameFirstArea(playName));
+        sb.append(getFrameFirstArea(SINGLE_SPACE + playName));
 
         return sb.toString();
     }
@@ -55,7 +54,7 @@ public class PrintUtil {
         return sb.toString();
     }
 
-    public static String scoreFrmaeArea(String displayScore) {
+    public static String stateFrmaeArea(String displayScore) {
         StringBuilder sb = new StringBuilder();
         sb.append(DOUBLE_SPACE);
         sb.append(displayScore);
@@ -70,6 +69,26 @@ public class PrintUtil {
         sb.append(SINGLE_SPACE);
         sb.append(FRAME_SEPARATOR);
 
+        return sb.toString();
+    }
+
+    public static String scoreFrameFirstArea() {
+        return getFrameFirstArea("    ");
+    }
+
+    public static String scoreFrameArea(int score) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(DOUBLE_SPACE);
+        sb.append(score);
+
+        if(score % 100 >= 1) {
+            sb.append(DOUBLE_SPACE);
+            sb.append(FRAME_SEPARATOR);
+            return sb.toString();
+        }
+
+        sb.append(DOUBLE_SPACE + SINGLE_SPACE);
+        sb.append(FRAME_SEPARATOR);
         return sb.toString();
     }
 

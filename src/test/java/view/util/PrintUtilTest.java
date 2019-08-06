@@ -49,9 +49,9 @@ class PrintUtilTest {
     @Test
     void 프레임_점수_출력() {
         assertAll(
-                () -> assertThat(PrintUtil.scoreFrmaeArea("X")).isEqualTo("  X   |"),
-                () -> assertThat(PrintUtil.scoreFrmaeArea("-|/")).isEqualTo("  -|/ |"),
-                () -> assertThat(PrintUtil.scoreFrmaeArea("3|6")).isEqualTo("  3|6 |")
+                () -> assertThat(PrintUtil.stateFrmaeArea("X")).isEqualTo("  X   |"),
+                () -> assertThat(PrintUtil.stateFrmaeArea("-|/")).isEqualTo("  -|/ |"),
+                () -> assertThat(PrintUtil.stateFrmaeArea("3|6")).isEqualTo("  3|6 |")
         );
     }
 }
