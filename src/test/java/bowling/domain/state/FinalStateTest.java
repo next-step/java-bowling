@@ -124,7 +124,7 @@ public class FinalStateTest {
             "1,9,1,11",
     })
     void FINALSTATE_점수계산(int firstBowl, int secondBowl, int thirdBowl, int score) {
-        Frame frame = new FinalFrame(new FrameNumber(10));
+        Frame frame = new FinalFrame(10);
         frame = frame.bowl(firstBowl);
         frame = frame.bowl(secondBowl);
         frame = frame.bowl(thirdBowl);

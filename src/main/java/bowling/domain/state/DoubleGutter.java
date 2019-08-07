@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
-import bowling.domain.Score;
 import bowling.exception.IllegalBowlCountException;
 
 /**
@@ -14,11 +13,9 @@ import bowling.exception.IllegalBowlCountException;
  * project      : java-bowling
  * create date  : 2019-07-19 13:41
  */
-public class DoubleGutter implements State {
+public class DoubleGutter extends DoubleBaseState {
     public static final String DELIMITER = "|";
     private static final String DISPLAT_STATE = "-";
-    private final State firstBowl;
-    private final Point secondBowl;
 
     public DoubleGutter(State state, Point secondBowl) {
         this.firstBowl = state;
@@ -31,39 +28,8 @@ public class DoubleGutter implements State {
     }
 
     @Override
-    public boolean isOver(boolean isFinalFrame) {
-        return Boolean.TRUE;
-    }
-
-    @Override
     public String printState() {
         return firstBowl.printState() + DELIMITER + DISPLAT_STATE;
-    }
-
-    @Override
-    public Point getFirstBowl() {
-        return firstBowl.getFirstBowl();
-    }
-
-    @Override
-    public Point getSecondBowl() {
-        return secondBowl;
-    }
-
-    @Override
-    public Score stateScore() {
-        return Score.of(firstBowl.getFirstBowl().fallCount() + secondBowl.fallCount());
-    }
-
-    @Override
-    public Score updateScore(Score sourceScore) {
-        if (sourceScore.isTwoRemainCount()) {
-            return Score.of(sourceScore.getScore() + stateScore().getScore());
-        }
-        if (sourceScore.remainCalculate()) {
-            return sourceScore.calculate(getFirstBowl().fallCount());
-        }
-        return sourceScore;
     }
 
     @Override

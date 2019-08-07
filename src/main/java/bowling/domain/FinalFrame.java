@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.domain.state.InitState;
-import bowling.domain.state.State;
 import bowling.exception.OutOfBowlCountException;
 
 /**
@@ -14,14 +13,11 @@ import bowling.exception.OutOfBowlCountException;
  * project      : java-bowling
  * create date  : 2019-07-19 15:29
  */
-public class FinalFrame implements Frame {
-    public static final int LAST_FRAME_NUMBER = 10;
-    private State state;
-    private final FrameNumber frameNumber;
+public class FinalFrame extends Frame {
 
-    public FinalFrame(FrameNumber frameNumber) {
+    public FinalFrame(int frameNumber) {
         this.state = InitState.of();
-        this.frameNumber = frameNumber;
+        this.frameNumber = new FrameNumber(frameNumber);
     }
 
     @Override
@@ -36,16 +32,6 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isGameOver() {
         return state.isOver(true);
-    }
-
-    @Override
-    public State getState() {
-        return state;
-    }
-
-    @Override
-    public int getNumber() {
-        return frameNumber.getFrameNumber();
     }
 
     @Override

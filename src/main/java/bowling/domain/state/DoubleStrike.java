@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.Point;
-import bowling.domain.Score;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -13,11 +12,9 @@ import bowling.domain.Score;
  * project      : java-bowling
  * create date  : 2019-07-20 01:10
  */
-public class DoubleStrike implements State {
+public class DoubleStrike extends DoubleBaseState {
     public static final String DISPLAY_STATE = "X|X";
     public static final int DOUBLE_STRIKE_SCORE = 20;
-    private State firstBowl;
-    private Point secondBowl;
 
     public DoubleStrike(State state, Point fallCount) {
         this.firstBowl = state;
@@ -31,42 +28,16 @@ public class DoubleStrike implements State {
     }
 
     @Override
-    public boolean isOver(boolean isFinalFrame) {
-        if (isFinalFrame) {
-            return Boolean.FALSE;
-        }
-        return Boolean.TRUE;
-    }
-
-    @Override
     public String printState() {
         return DISPLAY_STATE;
     }
 
     @Override
-    public Point getFirstBowl() {
-        return firstBowl.getFirstBowl();
-    }
-
-    @Override
-    public Point getSecondBowl() {
-        return secondBowl;
-    }
-
-    @Override
-    public Score stateScore() {
-        return Score.of(firstBowl.stateScore().getScore() + secondBowl.fallCount());
-    }
-
-    @Override
-    public Score updateScore(Score sourceScore) {
-        if (sourceScore.isTwoRemainCount()) {
-            return Score.of(sourceScore.getScore() + stateScore().getScore());
+    public boolean isOver(boolean isFinalFrame) {
+        if (isFinalFrame) {
+            return Boolean.FALSE;
         }
-        if (sourceScore.remainCalculate()) {
-            return sourceScore.calculate(getFirstBowl().fallCount());
-        }
-        return sourceScore;
+        return Boolean.TRUE;
     }
 
     @Override

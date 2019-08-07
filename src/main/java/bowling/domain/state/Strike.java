@@ -3,7 +3,6 @@ package bowling.domain.state;
 import bowling.domain.Point;
 import bowling.domain.Score;
 import bowling.exception.IllegalBowlCountException;
-import bowling.exception.IllegalIndexOfExcpetion;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -15,12 +14,10 @@ import bowling.exception.IllegalIndexOfExcpetion;
  * project      : java-bowling
  * create date  : 2019-07-19 12:49
  */
-public class Strike implements State {
+public class Strike extends SingleBaseState {
     public static final String DISPLAY_STATE = "X";
     public static final int SCORE = 10;
     public static final int SCORE_BOWL_COUNT = 2;
-
-    private Point firstBowl;
 
     public Strike(Point fallCount) {
         this.firstBowl = fallCount;
@@ -35,26 +32,8 @@ public class Strike implements State {
     }
 
     @Override
-    public boolean isOver(boolean isFinalFrame) {
-        if (isFinalFrame) {
-            return Boolean.FALSE;
-        }
-        return Boolean.TRUE;
-    }
-
-    @Override
     public String printState() {
         return DISPLAY_STATE;
-    }
-
-    @Override
-    public Point getFirstBowl() {
-        return firstBowl;
-    }
-
-    @Override
-    public Point getSecondBowl() {
-        throw new IllegalIndexOfExcpetion();
     }
 
     @Override
@@ -63,11 +42,11 @@ public class Strike implements State {
     }
 
     @Override
-    public Score updateScore(Score sourceScore) {
-        if (sourceScore.remainCalculate()) {
-            return sourceScore.calculate(firstBowl.fallCount());
+    public boolean isOver(boolean isFinalFrame) {
+        if (isFinalFrame) {
+            return Boolean.FALSE;
         }
-        return sourceScore;
+        return Boolean.TRUE;
     }
 
     private State nextState(Point fallCount, boolean isFinalFrame) {

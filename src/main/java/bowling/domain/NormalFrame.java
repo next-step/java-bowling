@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.domain.state.InitState;
-import bowling.domain.state.State;
 
 import java.util.Objects;
 
@@ -15,9 +14,7 @@ import java.util.Objects;
  * project      : java-bowling
  * create date  : 2019-07-17 00:53
  */
-public class NormalFrame implements Frame {
-    private State state;
-    private final FrameNumber frameNumber;
+public class NormalFrame extends Frame {
     private Frame nextFrame;
 
     public NormalFrame() {
@@ -25,9 +22,9 @@ public class NormalFrame implements Frame {
         this.state = InitState.of();
     }
 
-    public NormalFrame(FrameNumber frameNumber) {
+    public NormalFrame(int frameNumber) {
         this.state = InitState.of();
-        this.frameNumber = frameNumber;
+        this.frameNumber = new FrameNumber(frameNumber);
     }
 
     @Override
@@ -47,16 +44,6 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isGameOver() {
         return frameNumber.isNormalFrameOver() && state.isOver(false);
-    }
-
-    @Override
-    public State getState() {
-        return state;
-    }
-
-    @Override
-    public int getNumber() {
-        return frameNumber.getFrameNumber();
     }
 
     @Override

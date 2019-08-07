@@ -30,12 +30,14 @@ public class BowlingApplication {
         Players players = new Players(Arrays.asList(Player.of(name)));
         BowlingCenter center = new BowlingCenter(players);
 
+        ConsoleOutView.printFrame(center);
+
         while (true) {
             int fallCount = ConsoleInputView.inputFallenBowl();
             if (!center.play(fallCount)) {
                 break;
             }
-            ConsoleOutView.printFrameResult(center);
+            ConsoleOutView.printFrame(center);
         }
     }
 }
