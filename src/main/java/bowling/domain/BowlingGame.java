@@ -13,7 +13,6 @@ import java.util.List;
  * create date  : 2019-08-11 21:09
  */
 public class BowlingGame {
-
     private Player player;
     private Frames frames;
 
@@ -44,5 +43,17 @@ public class BowlingGame {
 
     public Player getPlayerName() {
         return player;
+    }
+
+    public boolean matchFrameNumber(int number) {
+        return frames.matchFrameNumber(number);
+    }
+
+    public boolean matchPlayer(Player player) {
+        return this.player.equals(player);
+    }
+
+    public boolean isGameOver() {
+        return frames.isGameOver();
     }
 }

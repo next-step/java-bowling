@@ -41,6 +41,7 @@ class BowlingGameTest {
         game.play(9);
         game.play(10);
         game.play(7);
+
         assertAll(
                 () -> assertThat(game.getPlayerName()).isEqualTo(Player.of("KBY")),
                 () -> assertThat(game.currentFrameNumber()).isEqualTo(3)
@@ -87,6 +88,22 @@ class BowlingGameTest {
                 () -> assertThat(game.currentFrameNumber()).isEqualTo(frameNumber),
                 () -> assertThat(game.displayState().stream().collect(Collectors.joining())).isEqualTo(status),
                 () -> assertThat(game.displayScore().stream().mapToInt(Integer::intValue).sum()).isEqualTo(score)
+        );
+    }
+
+    @DisplayName("현재 게임의 진행중인 프레임 번호가 맞는지 확인")
+    @Test
+    void 현재_프레임_확인() {
+        Player player = Player.of("KBY");
+        BowlingGame game = BowlingGame.of(player);
+
+        game.play(10);
+        game.play(10);
+        game.play(10);
+
+        assertAll(
+                () -> assertThat(game.currentFrameNumber()).isEqualTo(3),
+                () -> assertThat(game.matchFrameNumber(3)).isTrue()
         );
     }
 }
