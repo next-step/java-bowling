@@ -5,7 +5,6 @@ import view.ConsoleInputView;
 import view.ConsoleOutView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,7 +36,6 @@ public class BowlingApplication {
         Players players = new Players(playerList);
         BowlingCenter center = new BowlingCenter(players);
 
-//        ConsoleOutView.printFrame(center);
         ConsoleOutView.printFrame(center, players);
         while (true) {
             int fallCount = ConsoleInputView.inputFallenBowl();

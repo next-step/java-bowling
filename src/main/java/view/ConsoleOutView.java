@@ -29,21 +29,18 @@ public class ConsoleOutView {
 
     public static void printPlayNameArea(BowlingCenter center, Player player) {
         StringBuilder sb = new StringBuilder();
-
         sb.append(PrintUtil.playerNameArea(player.getName()));
-
         center.displayState(player).stream()
                 .forEach(state -> sb.append(PrintUtil.stateFrmaeArea(state)));
         sb.append(PrintUtil.idleFrameArea(center.displayState(player).size()));
-        System.out.println(sb.toString());
 
+        System.out.println(sb.toString());
         printScoreArea(center, player);
     }
 
     public static void printScoreArea(BowlingCenter center, Player player) {
         StringBuilder sb = new StringBuilder();
         sb.append(PrintUtil.scoreFrameFirstArea());
-
         center.displayScore(player).stream()
                 .forEach(score -> sb.append(PrintUtil.scoreFrameArea(score)));
         sb.append(PrintUtil.idleFrameArea(center.displayScore(player).size()));

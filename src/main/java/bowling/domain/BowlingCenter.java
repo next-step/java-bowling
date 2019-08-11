@@ -1,9 +1,7 @@
 package bowling.domain;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>

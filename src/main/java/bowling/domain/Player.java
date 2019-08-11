@@ -42,10 +42,6 @@ public class Player {
         return name;
     }
 
-    public int getPlayerNumber() {
-        return playerNumber;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
