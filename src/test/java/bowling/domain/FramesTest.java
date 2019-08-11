@@ -39,6 +39,16 @@ public class FramesTest {
         assertThat(frames.bowl(1)).isTrue();
     }
 
+    @DisplayName("현재 진행중인 프레임 번호 가지고 오기")
+    @Test
+    void 프레임_번호_확인() {
+        Frames frames = new Frames();
+        for (int i = 0; i < 5; i++) {
+            frames.bowl(10);
+        }
+        assertThat(frames.currentFrameNumber()).isEqualTo(5);
+    }
+
     @DisplayName("결과 출력 검증 - 10번 투구 (추가 투구 X)")
     @ParameterizedTest
     @CsvSource({
