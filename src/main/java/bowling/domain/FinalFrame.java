@@ -13,7 +13,7 @@ import bowling.exception.OutOfBowlCountException;
  * project      : java-bowling
  * create date  : 2019-07-19 15:29
  */
-public class FinalFrame extends Frame {
+public class FinalFrame extends CommonFrame {
 
     public FinalFrame(int frameNumber) {
         this.state = InitState.of();
