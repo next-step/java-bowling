@@ -50,14 +50,14 @@ public class BowlingCenter {
                 .allMatch(game -> game.isGameOver());
     }
 
-    private BowlingGame matchGamePlatform(int minFrameNumber) {
+    public BowlingGame matchGamePlatform(int minFrameNumber) {
         return games.stream()
                 .filter(game -> game.matchFrameNumber(minFrameNumber))
                 .findFirst()
                 .get();
     }
 
-    private int minFrameNumber() {
+    public int minFrameNumber() {
         return games.stream()
                 .mapToInt(BowlingGame::currentFrameNumber)
                 .min()

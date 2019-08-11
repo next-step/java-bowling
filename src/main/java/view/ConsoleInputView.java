@@ -17,6 +17,7 @@ import java.util.Scanner;
 public class ConsoleInputView {
     private static final String INPUT_PLAYER_MESSAGE = "플레이어 이름은(3 english letters)?:";
     private static final String INPUT_PLAYER_COUNT_MESSAGE = "How many people? ";
+    private static final String INPUT_FALLEND_BOWL_TARGET_PLAYER = "%s's turn : ";
     private static Scanner scanner = new Scanner(System.in);
 
     public static Player inputPlayerName() {
@@ -24,7 +25,8 @@ public class ConsoleInputView {
         return Player.of(scanner.next());
     }
 
-    public static int inputFallenBowl() {
+    public static int inputFallenBowl(Player player){
+        System.out.println(String.format(INPUT_FALLEND_BOWL_TARGET_PLAYER, player.getName()));
         return scanner.nextInt();
     }
 

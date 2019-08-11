@@ -38,7 +38,8 @@ public class BowlingApplication {
 
         ConsoleOutView.printFrame(center, players);
         while (true) {
-            int fallCount = ConsoleInputView.inputFallenBowl();
+            Player playerName = center.matchGamePlatform(center.minFrameNumber()).getPlayerName();
+            int fallCount = ConsoleInputView.inputFallenBowl(playerName);
             if (!center.play(fallCount)) {
                 break;
             }
