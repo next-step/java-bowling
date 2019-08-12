@@ -26,8 +26,10 @@ public class PrintUtil {
     private static final String PREFIX_DIGIT = "0";
     private static final int TWO_DIGIT = 2;
     private static final int SINGLE_WORD = 1;
-    private static final int DIVID_NUMBER = 100;
+    private static final int DIVID_NUMBER_TREE_DIGIT = 100;
+    private static final int DIVID_NUMBER_TWO_DIGIT = 10;
     private static final int ONE = 1;
+    private static final int NINE = 0;
 
     public static String headerArea() {
         StringBuilder sb = new StringBuilder();
@@ -83,8 +85,21 @@ public class PrintUtil {
         sb.append(DOUBLE_SPACE);
         sb.append(score);
 
-        if (score % DIVID_NUMBER >= ONE) {
+        if (score / DIVID_NUMBER_TWO_DIGIT < ONE) {
+            sb.append(DOUBLE_SPACE + SINGLE_SPACE);
+            sb.append(FRAME_SEPARATOR);
+            return sb.toString();
+        }
+
+        if (score / DIVID_NUMBER_TWO_DIGIT >= ONE
+                || score / DIVID_NUMBER_TWO_DIGIT <= NINE) {
             sb.append(DOUBLE_SPACE);
+            sb.append(FRAME_SEPARATOR);
+            return sb.toString();
+        }
+
+        if (score / DIVID_NUMBER_TREE_DIGIT >= ONE) {
+            sb.append(SINGLE_SPACE);
             sb.append(FRAME_SEPARATOR);
             return sb.toString();
         }

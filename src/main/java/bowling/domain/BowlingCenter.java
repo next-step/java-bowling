@@ -14,44 +14,53 @@ import java.util.stream.Collectors;
  * create date  : 2019-07-20 03:24
  */
 public class BowlingCenter {
-    private Frames frames;
-    private final Players players;
+    private final List<BowlingGame> games;
 
     public BowlingCenter(Players players) {
-        this.frames = new Frames();
-        this.players = players;
+        this.games = players.getPlayers().stream()
+                .map(player -> BowlingGame.of(player))
+                .collect(Collectors.toList());
     }
 
-    // TODO 이후 4 단계에서 Player 별개의 Frames를 할당하여 수행되게 변경해야될 Point (사용자 이름 전달하여 Frame 투구 수정필요)
     public boolean play(int fallCount) {
-        return frames.bowl(fallCount);
+        if (isEndGamePlatform()) {
+            return Boolean.FALSE;
+        }
+        return matchGamePlatform(minFrameNumber()).play(fallCount);
     }
 
-    // TODO 이후 4 단계에서 Player 별개의 Frames를 할당하여 수행되게 변경해야될 Point (사용자 이름 전달 하여 해당 Frame 출력되게 수정필요)
-    public List<String> displayState() {
-        return frames.displayState();
+    public List<String> displayState(Player player) {
+        return games.stream()
+                .filter(game -> game.matchPlayer(player))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new)
+                .displayState();
     }
 
-    // TODO 이후 4 단계에서 Player 별개의 Frames를 할당하여 수행되게 변경해야될 Point (Frame 상태 출력 시 Player 매핑되게 가져오게 수정필요)
-    public String playerName() {
-        return players.getPlayers().stream()
-                .map(Player::getName)
-                .collect(Collectors.joining());
+    public List<Integer> displayScore(Player player) {
+        return games.stream()
+                .filter(game -> game.matchPlayer(player))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new)
+                .displayScore();
     }
 
-    public List<Integer> displayScore() {
-        return frames.displayScore();
+    private boolean isEndGamePlatform() {
+        return games.stream()
+                .allMatch(game -> game.isGameOver());
     }
 
-    public int playFrameNumber() {
-        return frames.currentFrameNumber();
+    public BowlingGame matchGamePlatform(int minFrameNumber) {
+        return games.stream()
+                .filter(game -> game.matchFrameNumber(minFrameNumber))
+                .findFirst()
+                .get();
     }
 
-    @Override
-    public String toString() {
-        return "BowlingCenter{" +
-                "frames=" + frames +
-                ", players=" + players +
-                '}';
+    public int minFrameNumber() {
+        return games.stream()
+                .mapToInt(BowlingGame::currentFrameNumber)
+                .min()
+                .orElseThrow(RuntimeException::new);
     }
 }

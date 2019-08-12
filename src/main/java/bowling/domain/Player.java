@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -14,13 +15,19 @@ import java.util.regex.Pattern;
  */
 public class Player {
     private static final String REG_NAME = "^[A-Z]*$";
-    public static final String NAME_REG_EXCEPTION_MESSAGE = "이름은 영문 대문자 3자리만 가능합니다. : {} %s";
-    public static final int IIMIT_NAME_SIZE = 3;
+    private static final String NAME_REG_EXCEPTION_MESSAGE = "이름은 영문 대문자 3자리만 가능합니다. : {} %s";
+    private static final int IIMIT_NAME_SIZE = 3;
+    private static final int INCREASE_PLAYER_NUMBER = 1;
+
+    private static int number = 0;
 
     private final String name;
+    private final int playerNumber;
 
     private Player(String name) {
         this.name = name;
+        this.playerNumber = number;
+        number = this.playerNumber + INCREASE_PLAYER_NUMBER;
     }
 
     public static Player of(String name) {
@@ -33,5 +40,18 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

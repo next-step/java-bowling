@@ -46,10 +46,10 @@ public class Frames {
     }
 
     public int currentFrameNumber() {
-        return IntStream.rangeClosed(0, frames.size())
+        return IntStream.rangeClosed(1, frames.size())
                 .filter(frameNumber -> currentFrame.matchNumber(frameNumber))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElse(FrameNumber.INIT_FRAME_NUMBER);
     }
 
     public List<Integer> displayScore() {
@@ -59,11 +59,15 @@ public class Frames {
                 .collect(Collectors.toList());
     }
 
-    private boolean isGameOver() {
+    public boolean isGameOver() {
         if (currentFrame instanceof FinalFrame && currentFrame.isGameOver()) {
             return true;
         }
         return false;
+    }
+
+    public boolean matchFrameNumber(int frameNumber) {
+        return currentFrame.matchNumber(frameNumber);
     }
 
     private boolean match(Frame sourceFrame) {

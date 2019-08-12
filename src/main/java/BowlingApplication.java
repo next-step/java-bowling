@@ -4,7 +4,8 @@ import bowling.domain.Players;
 import view.ConsoleInputView;
 import view.ConsoleOutView;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * author       : gwonbyeong-yun <sksggg123>
@@ -26,18 +27,23 @@ public class BowlingApplication {
     }
 
     public void run() {
-        String name = ConsoleInputView.inputPlayerName();
-        Players players = new Players(Arrays.asList(Player.of(name)));
+        int playerCount = ConsoleInputView.inputPlayerCount();
+
+        List<Player> playerList = new ArrayList<>();
+        for (int i = 0; i < playerCount; i++) {
+            playerList.add(ConsoleInputView.inputPlayerName());
+        }
+        Players players = new Players(playerList);
         BowlingCenter center = new BowlingCenter(players);
 
-        ConsoleOutView.printFrame(center);
-
+        ConsoleOutView.printFrame(center, players);
         while (true) {
-            int fallCount = ConsoleInputView.inputFallenBowl();
+            Player playerName = center.matchGamePlatform(center.minFrameNumber()).getPlayerName();
+            int fallCount = ConsoleInputView.inputFallenBowl(playerName);
             if (!center.play(fallCount)) {
                 break;
             }
-            ConsoleOutView.printFrame(center);
+            ConsoleOutView.printFrame(center, players);
         }
     }
 }

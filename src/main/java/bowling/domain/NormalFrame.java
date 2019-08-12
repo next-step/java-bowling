@@ -14,7 +14,7 @@ import java.util.Objects;
  * project      : java-bowling
  * create date  : 2019-07-17 00:53
  */
-public class NormalFrame extends Frame {
+public class NormalFrame extends CommonFrame {
     private Frame nextFrame;
 
     public NormalFrame() {

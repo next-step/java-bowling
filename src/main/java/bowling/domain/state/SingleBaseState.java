@@ -18,10 +18,8 @@ public abstract class SingleBaseState implements State {
 
     protected Point firstBowl;
 
-    @Override
     public abstract State update(Point fallCount, boolean isFinalFrame);
 
-    @Override
     public abstract String printState();
 
     @Override

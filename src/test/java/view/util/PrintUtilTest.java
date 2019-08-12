@@ -31,7 +31,7 @@ class PrintUtilTest {
     @Test
     void 프레임_플레이어_이름_영역_출력() {
         StringBuilder sb = new StringBuilder();
-        sb.append("| KBY |");
+        sb.append("|  KBY |");
 
         assertThat(PrintUtil.playerNameArea("KBY")).isEqualTo(sb.toString());
     }

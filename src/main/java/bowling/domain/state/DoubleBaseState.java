@@ -18,10 +18,8 @@ public abstract class DoubleBaseState implements State {
     protected State firstBowl;
     protected Point secondBowl;
 
-    @Override
     public abstract State update(Point fallCount, boolean isFinalFrame);
 
-    @Override
     public abstract String printState();
 
     @Override
