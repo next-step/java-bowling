@@ -1,5 +1,6 @@
-package domain;
+package domain.frame;
 
+import domain.PhaseResult;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,7 +64,7 @@ class FinalFrameTest {
 		assertThatThrownBy(() -> {
 			finalFrame.shoot(6);
 		})
-		.isInstanceOf(IllegalStateException.class);
+		.isInstanceOf(IllegalArgumentException.class);
 	}
 
 }
