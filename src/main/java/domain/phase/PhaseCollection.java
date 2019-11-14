@@ -2,10 +2,27 @@ package domain.phase;
 
 import domain.PhaseResult;
 
-public interface PhaseCollection {
+import java.util.List;
 
-	PhaseResult getFrameResult(int remainBowlingPins);
+public abstract class PhaseCollection {
 
-	void addThirdPhase();
+	private static final int START_INDEX = 0;
+
+	final List<Phase> phaseList;
+	int currentPhaseIndex;
+
+	PhaseCollection(List<Phase> phaseList) {
+		this.phaseList = phaseList;
+		this.currentPhaseIndex = START_INDEX;
+	}
+
+	public PhaseResult getFrameResult(int remainBowlingPins) {
+		validateCurrentPhaseIndex();
+		return phaseList.get(currentPhaseIndex++).getFrameResult(remainBowlingPins);
+	}
+
+	abstract void validateCurrentPhaseIndex();
+
+	public abstract void addThirdPhase();
 
 }
