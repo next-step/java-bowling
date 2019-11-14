@@ -1,31 +1,39 @@
 package domain.phase;
 
-import domain.FrameResult;
+import domain.PhaseResult;
 
 public enum Phase {
 
 	FIRST_PHASE {
-		public FrameResult getFrameResult(int remainBowlingPins) {
+		@Override
+		public PhaseResult getFrameResult(int remainBowlingPins) {
 			if (remainBowlingPins == 0) {
-				return FrameResult.STRIKE;
+				return PhaseResult.STRIKE;
 			}
-			return FrameResult.UNKNOWN;
+			return PhaseResult.IN_PROGRESS;
 		}
 	},
 	SECOND_PHASE {
-		public FrameResult getFrameResult(int remainBowlingPins) {
+		@Override
+		public PhaseResult getFrameResult(int remainBowlingPins) {
 			if (remainBowlingPins == 0) {
-				return FrameResult.SPARE;
+				return PhaseResult.SPARE;
 			}
 
 			if (remainBowlingPins == 10) {
-				return FrameResult.GUTTER;
+				return PhaseResult.GUTTER;
 			}
 
-			return FrameResult.MISS;
+			return PhaseResult.MISS;
+		}
+	},
+	THIRD_PHASE {
+		@Override
+		PhaseResult getFrameResult(int remainBowlingPins) {
+			return PhaseResult.LAST_SCORE;
 		}
 	};
 
-	abstract FrameResult getFrameResult(int remainBowlingPins);
+	abstract PhaseResult getFrameResult(int remainBowlingPins);
 
 }

@@ -1,9 +1,11 @@
 package domain.phase;
 
-import domain.FrameResult;
+import domain.PhaseResult;
 
 public interface PhaseCollection {
 
-	FrameResult getFrameResult(int remainBowlingPins);
+	PhaseResult getFrameResult(int remainBowlingPins);
+
+	void addThirdPhase();
 
 }

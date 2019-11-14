@@ -14,10 +14,10 @@ class NormalFrameTest {
 		NormalFrame frame = new NormalFrame();
 
 		// when
-		FrameResult result = frame.shoot(10);
+		PhaseResult result = frame.shoot(10);
 
 		// then
-		assertThat(result).isEqualTo(FrameResult.STRIKE);
+		assertThat(result).isEqualTo(PhaseResult.STRIKE);
 	}
 
 	@Test
@@ -27,10 +27,10 @@ class NormalFrameTest {
 
 		// when
 		frame.shoot(4);
-		FrameResult result = frame.shoot(6);
+		PhaseResult result = frame.shoot(6);
 
 		// then
-		assertThat(result).isEqualTo(FrameResult.SPARE);
+		assertThat(result).isEqualTo(PhaseResult.SPARE);
 	}
 
 	@Test
@@ -40,10 +40,10 @@ class NormalFrameTest {
 
 		// when
 		frame.shoot(4);
-		FrameResult result = frame.shoot(5);
+		PhaseResult result = frame.shoot(5);
 
 		// then
-		assertThat(result).isEqualTo(FrameResult.MISS);
+		assertThat(result).isEqualTo(PhaseResult.MISS);
 	}
 
 	@Test
@@ -53,10 +53,10 @@ class NormalFrameTest {
 
 		// when
 		frame.shoot(0);
-		FrameResult result = frame.shoot(0);
+		PhaseResult result = frame.shoot(0);
 
 		// then
-		assertThat(result).isEqualTo(FrameResult.GUTTER);
+		assertThat(result).isEqualTo(PhaseResult.GUTTER);
 	}
 
 	@Test
