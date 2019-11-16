@@ -1,12 +1,12 @@
 package bowling;
 
 public class Frame {
-    private static final int LAST_FRAME = 10;
-    private int number;
+    private static final int ZERO_PIN_COUNT = 0;
+    private int frameNumber;
     private Balls balls;
 
     public Frame(int frameNumber) {
-        this.number = frameNumber;
+        this.frameNumber = frameNumber;
     }
 
     public void addBall(int pin) {
@@ -14,10 +14,22 @@ public class Frame {
     }
 
     private boolean isLastFrame() {
-        return number == LAST_FRAME;
+        return frameNumber == Frames.LAST_FRAME;
     }
 
     public int getScore() {
         return balls.score();
+    }
+
+    public int getFrameNumber() {
+        return frameNumber;
+    }
+
+    public boolean isAddAble() {
+        return addAblePinCount() > ZERO_PIN_COUNT;
+    }
+
+    public int addAblePinCount() {
+        return balls.addAblePinCount();
     }
 }

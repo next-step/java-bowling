@@ -39,7 +39,11 @@ public class Balls {
     }
 
     private boolean isNotAddAbleThirdBall() {
-        return !(isStrike() || isSpare());
+        return !isAddAbleThirdBall();
+    }
+
+    private boolean isAddAbleThirdBall() {
+        return isStrike() || isSpare();
     }
 
     private boolean isOverFlowPinCount(int pin) {
@@ -66,5 +70,13 @@ public class Balls {
         return balls.stream()
                 .mapToInt(Ball::getPin)
                 .sum();
+    }
+
+    public int addAblePinCount() {
+        if (isThirdBall() && isAddAbleThirdBall()) {
+            return Ball.ALL_PIN_COUNT;
+        }
+
+        return Ball.ALL_PIN_COUNT - score();
     }
 }

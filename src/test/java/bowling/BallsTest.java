@@ -1,6 +1,7 @@
 package bowling;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -52,5 +53,18 @@ public class BallsTest {
                 Arguments.of(new int[] {6, 3, 2}, false, Balls.IS_OVER_FLOW_BALL_COUNT),
                 Arguments.of(new int[] {6, 3, 2}, true, Balls.IS_NOT_ADD_ABLE_THIRD_BALL_MESSAGE)
         );
+    }
+
+    @Test
+    @DisplayName("투구 가능한 수를 리턴한다.")
+    void addAblePinCount() {
+        Balls balls = new Balls();
+        assertThat(balls.addAblePinCount()).isEqualTo(10);
+
+        balls.add(5, false);
+        assertThat(balls.addAblePinCount()).isEqualTo(5);
+
+        balls.add(5, true);
+        assertThat(balls.addAblePinCount()).isEqualTo(10);
     }
 }
