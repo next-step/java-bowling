@@ -65,7 +65,7 @@ public class BallsTest {
         assertThat(balls.addAblePinCount()).isEqualTo(5);
 
         balls.add(5);
-        assertThat(balls.addAblePinCount()).isEqualTo(10);
+        assertThat(balls.addAblePinCount()).isEqualTo(0);
     }
 
     @ParameterizedTest

@@ -14,24 +14,31 @@ public class Frames {
 
     public Frames() {
         this.frames = new ArrayList<>();
+        for (int i = 0; i < LAST_FRAME; i++) {
+            Frame frame = new Frame(i + 1);
+            frames.add(frame);
+        }
     }
 
-    public Frame nextFrame() {
-        return frames.stream()
-                .filter(Frame::isAddAble)
-                .findFirst()
-                .orElse(createFrame());
-    }
-
-    private Frame createFrame() {
-        Frame frame = new Frame(frames.size() + 1);
-        frames.add(frame);
-        return frame;
+    public Frame frameByIndex(int index) {
+        return frames.get(index);
     }
 
     public List<String> getResult() {
-        return frames.stream()
+        List<String> result = frames.stream()
                 .map(Frame::getResult)
                 .collect(Collectors.toList());
+
+        if (result.size() < LAST_FRAME) {
+            addEmptyResult(result);
+        }
+        return result;
+    }
+
+    private void addEmptyResult(List<String> result) {
+        String empty = "";
+        while (result.size() < LAST_FRAME) {
+            result.add(empty);
+        }
     }
 }
