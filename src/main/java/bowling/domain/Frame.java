@@ -1,16 +1,16 @@
-package bowling;
+package bowling.domain;
 
 public class Frame {
-    private static final int ZERO_PIN_COUNT = 0;
     private int frameNumber;
     private Balls balls;
 
     public Frame(int frameNumber) {
         this.frameNumber = frameNumber;
+        this.balls = new Balls(isLastFrame());
     }
 
     public void addBall(int pin) {
-       balls.add(pin, isLastFrame());
+       balls.add(pin);
     }
 
     private boolean isLastFrame() {
@@ -26,10 +26,14 @@ public class Frame {
     }
 
     public boolean isAddAble() {
-        return addAblePinCount() > ZERO_PIN_COUNT;
+        return addAblePinCount() > Ball.ZERO_PIN_COUNT;
     }
 
     public int addAblePinCount() {
         return balls.addAblePinCount();
+    }
+
+    public String getResult() {
+        return balls.getResult();
     }
 }
