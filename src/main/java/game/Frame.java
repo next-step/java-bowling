@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Frame {
     private final FrameType frameType;
     private List<Score> scores;
-    private Score bonus;
+    private Bonus bonus;
 
     private Frame(FrameType frameType) {
         this.scores = new ArrayList<>();
@@ -46,14 +46,14 @@ public class Frame {
         if (getGameType() == GameType.MISS) {
             throw new IllegalArgumentException("보너스 게임은 스트라이크/스페어에서만 발생합니다");
         }
-        this.bonus = Score.of(bonusScore);
+        if (this.bonus == null) {
+            this.bonus = Bonus.of(getGameType(), bonusScore);
+        } else {
+            this.bonus.addBonus(bonusScore);
+        }
     }
 
-    public FrameType getFrameType() {
-        return frameType;
-    }
-
-    public Score getBonus() {
+    public Bonus getBonus() {
         return this.bonus;
     }
 

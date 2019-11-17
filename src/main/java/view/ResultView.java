@@ -11,7 +11,7 @@ public class ResultView {
     private static String DELIMITER = "|";
     private static String FIRST_ROLLING_SCORE = "  %s   ";
     private static String SECOND_ROLLING_SCORE = "  %s|%s ";
-    private static String BONUS_ROLLING_SCORE = " %s|%s|%s";
+    private static String THIRD_ROLLING_SCORE = " %s|%s|%s";
     private static String GAME_TO_GO_FORMAT = "      ";
 
     public static void printInitialScoreBoard(BowlingGame bowlingGame) {
@@ -38,21 +38,38 @@ public class ResultView {
     }
 
     private static String scoreToString(Frame frame) {
-        List<Score> scores = frame.getScores();
-        if (frame.getFrameType() == FrameType.NORMAL || frame.getBonus() == null) {
-            if (scores.size() == 1) {
-                return String.format(FIRST_ROLLING_SCORE,
-                        firstRollingScore(frame));
-            } else {
-                return String.format(SECOND_ROLLING_SCORE,
-                        firstRollingScore(frame),
-                        secondRollingScoreToString(frame));
-            }
+        if (frame.getBonus() == null) {
+            return basicGameScoreToString(frame);
         }
-        return String.format(BONUS_ROLLING_SCORE,
+        Bonus bonus = frame.getBonus();
+        if (frame.getGameType() == GameType.SPARE) {
+            return String.format(THIRD_ROLLING_SCORE,
+                    firstRollingScore(frame),
+                    secondRollingScoreToString(frame),
+                    bonusRollingScore(bonus.getBonusScore().get(0)));
+        }
+        if (bonus.getBonusScore().size() == 1) {
+            return String.format(SECOND_ROLLING_SCORE,
+                    firstRollingScore(frame),
+                    bonusRollingScore(bonus.getBonusScore().get(0)));
+        }
+
+        return String.format(THIRD_ROLLING_SCORE,
                 firstRollingScore(frame),
-                secondRollingScoreToString(frame),
-                bonusRollingScore(frame.getBonus()));
+                bonusRollingScore(bonus.getBonusScore().get(0)),
+                bonusRollingScore(bonus.getBonusScore().get(1)));
+    }
+
+    private static String basicGameScoreToString(Frame frame) {
+        List<Score> scores = frame.getScores();
+        if (scores.size() == 1) {
+            return String.format(FIRST_ROLLING_SCORE,
+                    firstRollingScore(frame));
+        } else {
+            return String.format(SECOND_ROLLING_SCORE,
+                    firstRollingScore(frame),
+                    secondRollingScoreToString(frame));
+        }
     }
 
     private static String bonusRollingScore(Score bonus) {
@@ -67,7 +84,7 @@ public class ResultView {
     }
 
     private static String firstRollingScore(Frame frame) {
-        return ScoreType.toString(frame.getScores().get(1).getScore());
+        return ScoreType.toString(frame.getScores().get(0).getScore());
     }
 
     private static String gameScoreToString(List<String> scoresByFrameString) {

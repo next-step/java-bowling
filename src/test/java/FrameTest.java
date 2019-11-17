@@ -54,4 +54,21 @@ public class FrameTest {
         Frame bonusGameWithSingleRollWithoutStrike = Frame.finalOf(8);
         assertThrows(IllegalArgumentException.class, () -> bonusGameWithSingleRollWithoutStrike.addBonus(1));
     }
+
+    @Test
+    @DisplayName("스페어에서 보너스 게임을 두번 실행 한 경우")
+    void twoBonusGameWithSpareException() {
+        Frame frame = Frame.finalOf(9);
+        frame.addScore(1);
+        frame.addBonus(10);
+        assertThrows(IllegalArgumentException.class, () -> frame.addBonus(10));
+    }
+
+    @Test
+    @DisplayName("보너스게임에서 스트라이크를 잡지 못했는데 보너스 게임을 추가로 진행한 경우")
+    void twoBonusGameWithoutDoubleStrikeException() {
+        Frame frame = Frame.finalOf(10);
+        frame.addBonus(9);
+        assertThrows(IllegalArgumentException.class, () -> frame.addBonus(10));
+    }
 }
