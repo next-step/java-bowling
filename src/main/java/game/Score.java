@@ -1,18 +1,28 @@
 package game;
 
-public enum Score {
-    STRIKE, SPARE, MISS;
+import java.util.List;
+import java.util.stream.IntStream;
 
-    public static Score get(int size, int score) {
-        if (size > 3) {
-            throw new IllegalArgumentException("한 프레임에 세번 이상 공을 던질 수 없습니다.");
+import static java.util.stream.Collectors.toList;
+
+public class Score {
+    private static List<Score> scoreList = IntStream.rangeClosed(0, 10).boxed()
+            .map(Score::new).collect(toList());
+    private int score;
+
+    private Score(int score) {
+        this.score = score;
+    }
+
+    public static Score of(int score) {
+        try {
+            return scoreList.get(score);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("점수는 10 점 이상이 될 수 없습니다.");
         }
-        if (size == 1 && score == 10) {
-            return STRIKE;
-        }
-        if (score == 10) {
-            return SPARE;
-        }
-        return MISS;
+    }
+
+    public int getScore() {
+        return this.score;
     }
 }

@@ -15,12 +15,12 @@ public class BowlingGameTest {
     }
 
     @Test
-    @DisplayName("볼링게임 예외발생")
+    @DisplayName("프레임이 10개 이상인 경우")
     void createBowlingGameException() {
         BowlingGame bowlingGame = new BowlingGame("test");
         for (int i = 0; i < 10; i++) {
-            bowlingGame.addFrame(new Frame());
+            bowlingGame.addFrame(Frame.of(10));
         }
-        assertThrows(IllegalArgumentException.class, () -> bowlingGame.addFrame(new Frame()));
+        assertThrows(IllegalArgumentException.class, () -> bowlingGame.addFrame(Frame.of(10)));
     }
 }

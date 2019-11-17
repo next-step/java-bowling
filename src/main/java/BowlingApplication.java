@@ -10,9 +10,13 @@ public class BowlingApplication {
         ResultView.printInitialScoreBoard(bowlingGame);
         for (int frameIndex = 1; frameIndex <= 10; frameIndex++) {
             int firstScore = InputView.inputFrame(frameIndex);
-            Frame frame = new Frame();
+            Frame frame;
+            if (frameIndex == 10) {
+                frame = Frame.finalOf(firstScore);
+            } else {
+                frame = Frame.of(firstScore);
+            }
             bowlingGame.addFrame(frame);
-            frame.addScore(firstScore);
 
             ResultView.printScoreBoard(bowlingGame);
             int secondScore = 0;
