@@ -3,12 +3,15 @@ import game.Frame;
 import view.InputView;
 import view.ResultView;
 
+import static game.Frames.FINAL_FRAME;
+import static score.Score.MAX_SCORE;
+
 public class BowlingApplication {
     public static void main(String[] args) {
         String name = InputView.inputPlayer();
         BowlingGame bowlingGame = new BowlingGame(name);
         ResultView.printInitialScoreBoard(bowlingGame);
-        for (int frameIndex = 1; frameIndex <= 9; frameIndex++) {
+        for (int frameIndex = 1; frameIndex < FINAL_FRAME; frameIndex++) {
             runNormalFrame(bowlingGame, frameIndex);
         }
         runFinalFrame(bowlingGame);
@@ -19,7 +22,7 @@ public class BowlingApplication {
         Frame frame = Frame.of(firstScore);
         bowlingGame.addFrame(frame);
         ResultView.printScoreBoard(bowlingGame);
-        if (firstScore < 10) {
+        if (firstScore < MAX_SCORE) {
             int secondScore = InputView.inputFrame(frameIndex);
             frame.addScore(secondScore);
             ResultView.printScoreBoard(bowlingGame);
@@ -27,24 +30,24 @@ public class BowlingApplication {
     }
 
     private static void runFinalFrame(BowlingGame bowlingGame) {
-        int firstScore = InputView.inputFrame(10);
+        int firstScore = InputView.inputFrame(FINAL_FRAME);
         Frame frame = Frame.finalOf(firstScore);
         bowlingGame.addFrame(frame);
         ResultView.printScoreBoard(bowlingGame);
 
         int secondScore = 0;
-        if (firstScore < 10) {
-            secondScore = InputView.inputFrame(10);
+        if (firstScore < MAX_SCORE) {
+            secondScore = InputView.inputFrame(FINAL_FRAME);
             frame.addScore(secondScore);
             ResultView.printScoreBoard(bowlingGame);
         }
-        if (firstScore == 10) {
-            secondScore = InputView.inputFrame(10);
+        if (firstScore == MAX_SCORE) {
+            secondScore = InputView.inputFrame(FINAL_FRAME);
             frame.addBonus(secondScore);
             ResultView.printScoreBoard(bowlingGame);
         }
-        if (secondScore == 10 || firstScore + secondScore == 10) {
-            int bonusScore = InputView.inputFrame(10);
+        if (secondScore == MAX_SCORE || firstScore + secondScore == MAX_SCORE) {
+            int bonusScore = InputView.inputFrame(FINAL_FRAME);
             frame.addBonus(bonusScore);
             ResultView.printScoreBoard(bowlingGame);
         }

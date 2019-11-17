@@ -10,6 +10,8 @@ import score.ScoreType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static game.Frames.FINAL_FRAME;
+
 public class ResultView {
     private static String INITIAL_LINE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static String SCORE_LINE_FORMAT = "|  %s |%s";
@@ -93,7 +95,7 @@ public class ResultView {
     }
 
     private static String gameScoreToString(List<String> scoresByFrameString) {
-        for (int index = scoresByFrameString.size(); index <= 10; index++) {
+        for (int index = scoresByFrameString.size(); index <= FINAL_FRAME; index++) {
             scoresByFrameString.add(GAME_TO_GO_FORMAT);
         }
         return scoresByFrameString.stream().reduce((o1, o2) -> o1 + DELIMITER + o2).orElse("");
