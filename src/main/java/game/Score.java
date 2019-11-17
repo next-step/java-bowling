@@ -1,3 +1,5 @@
+package game;
+
 public enum Score {
     STRIKE, SPARE, MISS;
 

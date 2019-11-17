@@ -1,3 +1,5 @@
+import game.Frame;
+import game.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,5 +1,8 @@
 package view;
 
+import game.BowlingGame;
+import game.Frame;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,47 +14,54 @@ public class ResultView {
     private static String DOUBLE_SCORE = "  %s|%s ";
     private static String TRIPLE_SCORE = " %s|%s|%s";
 
-    public static void printInitialScoreBoard(String name) {
+    public static void printInitialScoreBoard(BowlingGame bowlingGame) {
         printInitialLine();
-        printScoreLine(name, new ArrayList<>());
+        printScoreLine(bowlingGame);
     }
 
-    public static void printScoreBoard(String name, List<List<Integer>> scoresByFrame) {
+    public static void printScoreBoard(BowlingGame bowlingGame) {
         printInitialLine();
-        printScoreLine(name, scoresByFrame);
+        printScoreLine(bowlingGame);
     }
 
     private static void printInitialLine() {
         System.out.println(INITIAL_LINE);
     }
 
-    private static void printScoreLine(String name, List<List<Integer>> scores) {
+    private static void printScoreLine(BowlingGame bowlingGame) {
         List<String> scoresByFrameString = new ArrayList<>();
-        for (List<Integer> scoresByFrame : scores) {
+        for (Frame frame : bowlingGame.getFrames()) {
             String scoresByFrameToString = "";
-            if (scoresByFrame.size() == 1) {
-                scoresByFrameToString = String.format(SINGLE_SCORE, scoreToString(scoresByFrame.get(0)));
-            } else if (scoresByFrame.size() == 2) {
-                if (scoresByFrame.get(0) + scoresByFrame.get(1) == 10) {
+            if (frame.getBonus() != null) {
+                if (frame.getScores().size() == 1) {
                     scoresByFrameToString =
                             String.format(DOUBLE_SCORE,
-                                    scoreToString(scoresByFrame.get(0)), "/");
+                                    scoreToString(frame.getScores().get(0)), scoreToString(frame.getBonus()));
+                } else {
+                    scoresByFrameToString =
+                            String.format(TRIPLE_SCORE,
+                                    scoreToString(frame.getScores().get(0)), "/", scoreToString(frame.getBonus()));
+                }
+            } else if (frame.getScores().size() == 1) {
+                scoresByFrameToString = String.format(SINGLE_SCORE, scoreToString(frame.getScores().get(0)));
+            } else {
+                if (frame.getScores().get(0) + frame.getScores().get(1) == 10) {
+                    scoresByFrameToString =
+                            String.format(DOUBLE_SCORE,
+                                    scoreToString(frame.getScores().get(0)), "/");
                 } else {
                     scoresByFrameToString =
                             String.format(DOUBLE_SCORE,
-                                    scoreToString(scoresByFrame.get(0)), scoreToString(scoresByFrame.get(1)));
+                                    scoreToString(frame.getScores().get(0)), scoreToString(frame.getScores().get(1)));
                 }
-            } else {
-                scoresByFrameToString =
-                        String.format(TRIPLE_SCORE,
-                                scoreToString(scoresByFrame.get(0)), "/", scoreToString(scoresByFrame.get(2)));
             }
             scoresByFrameString.add(scoresByFrameToString);
         }
         for (int index = scoresByFrameString.size(); index <= 10; index++) {
             scoresByFrameString.add("      ");
         }
-        System.out.println(String.format(SCORE_LINE_FORMAT, name, scoresToString(scoresByFrameString)));
+        System.out.println(String.format(SCORE_LINE_FORMAT, bowlingGame.getName(), scoresToString(scoresByFrameString)));
+        System.out.println();
     }
 
     private static String scoreToString(int num) {

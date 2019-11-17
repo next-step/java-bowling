@@ -11,7 +11,7 @@ public class InputView {
     }
 
     public static int inputFrame(int frame) {
-        System.out.println(frame + "프레임 투구 : ");
+        System.out.print(frame + "프레임 투구 : ");
         return scanner.nextInt();
     }
 }
