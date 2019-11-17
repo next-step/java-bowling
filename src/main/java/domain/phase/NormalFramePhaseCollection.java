@@ -7,7 +7,7 @@ public class NormalFramePhaseCollection extends PhaseCollection {
 	private static final int MAX_INDEX = 1;
 
 	public NormalFramePhaseCollection() {
-		super(Arrays.asList(Phase.FIRST_PHASE, Phase.SECOND_PHASE));
+		super(Arrays.asList(NormalPhase.FIRST_PHASE, NormalPhase.SECOND_PHASE));
 	}
 
 	@Override

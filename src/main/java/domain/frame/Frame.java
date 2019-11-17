@@ -1,7 +1,9 @@
 package domain.frame;
 
-import domain.PhaseResult;
 import domain.phase.PhaseCollection;
+import domain.phase.result.PhaseResult;
+
+import java.util.Objects;
 
 public abstract class Frame {
 
@@ -33,6 +35,20 @@ public abstract class Frame {
 	void restoreBallingPins() {
 		remainBowlingPins = START_BOWLING_PINS;
 		phaseCollection.addThirdPhase();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Frame frame = (Frame) o;
+		return remainBowlingPins == frame.remainBowlingPins &&
+				Objects.equals(phaseCollection, frame.phaseCollection);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(phaseCollection, remainBowlingPins);
 	}
 
 }

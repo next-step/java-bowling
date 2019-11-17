@@ -1,6 +1,8 @@
 package domain.frame;
 
-import domain.PhaseResult;
+import domain.phase.NormalPhase;
+import domain.phase.result.NormalPhaseResult;
+import domain.phase.result.PhaseResult;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +20,7 @@ class NormalFrameTest {
 		PhaseResult result = frame.shoot(10);
 
 		// then
-		assertThat(result).isEqualTo(PhaseResult.STRIKE);
+		assertThat(result).isEqualTo(NormalPhaseResult.STRIKE);
 	}
 
 	@Test
@@ -31,7 +33,7 @@ class NormalFrameTest {
 		PhaseResult result = frame.shoot(6);
 
 		// then
-		assertThat(result).isEqualTo(PhaseResult.SPARE);
+		assertThat(result).isEqualTo(NormalPhaseResult.SPARE);
 	}
 
 	@Test
@@ -44,7 +46,7 @@ class NormalFrameTest {
 		PhaseResult result = frame.shoot(5);
 
 		// then
-		assertThat(result).isEqualTo(PhaseResult.MISS);
+		assertThat(result).isEqualTo(NormalPhaseResult.MISS);
 	}
 
 	@Test
@@ -57,7 +59,7 @@ class NormalFrameTest {
 		PhaseResult result = frame.shoot(0);
 
 		// then
-		assertThat(result).isEqualTo(PhaseResult.GUTTER);
+		assertThat(result).isEqualTo(NormalPhaseResult.GUTTER);
 	}
 
 	@Test

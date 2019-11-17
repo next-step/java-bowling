@@ -1,7 +1,7 @@
 package domain.frame;
 
-import domain.PhaseResult;
 import domain.phase.NormalFramePhaseCollection;
+import domain.phase.result.PhaseResult;
 
 public class NormalFrame extends Frame {
 

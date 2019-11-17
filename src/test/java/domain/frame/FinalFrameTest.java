@@ -1,6 +1,7 @@
 package domain.frame;
 
-import domain.PhaseResult;
+import domain.phase.result.FinalPhaseResult;
+import domain.phase.result.PhaseResult;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,7 +21,7 @@ class FinalFrameTest {
 		PhaseResult result = finalFrame.shoot(8);
 
 		// then
-		assertThat(result).isEqualTo(PhaseResult.LAST_SCORE);
+		assertThat(result).isEqualTo(FinalPhaseResult.LAST_SCORE);
 	}
 
 	@Test
@@ -34,7 +35,7 @@ class FinalFrameTest {
 		PhaseResult result = finalFrame.shoot(3);
 
 		// then
-		assertThat(result).isEqualTo(PhaseResult.LAST_SCORE);
+		assertThat(result).isEqualTo(FinalPhaseResult.LAST_SCORE);
 	}
 
 	@Test
@@ -48,7 +49,7 @@ class FinalFrameTest {
 		PhaseResult result = finalFrame.shoot(6);
 
 		// then
-		assertThat(result).isEqualTo(PhaseResult.LAST_SCORE);
+		assertThat(result).isEqualTo(FinalPhaseResult.LAST_SCORE);
 	}
 
 	@Test

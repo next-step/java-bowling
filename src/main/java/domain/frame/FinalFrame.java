@@ -1,7 +1,7 @@
 package domain.frame;
 
-import domain.PhaseResult;
 import domain.phase.FinalFramePhaseCollection;
+import domain.phase.result.PhaseResult;
 
 public class FinalFrame extends Frame {
 

@@ -1,8 +1,10 @@
 package domain.phase;
 
-import domain.PhaseResult;
+
+import domain.phase.result.PhaseResult;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class PhaseCollection {
 
@@ -24,5 +26,19 @@ public abstract class PhaseCollection {
 	abstract void validateCurrentPhaseIndex();
 
 	public abstract void addThirdPhase();
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		PhaseCollection that = (PhaseCollection) o;
+		return currentPhaseIndex == that.currentPhaseIndex &&
+				Objects.equals(phaseList, that.phaseList);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(phaseList, currentPhaseIndex);
+	}
 
 }

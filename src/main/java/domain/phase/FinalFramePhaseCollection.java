@@ -8,7 +8,7 @@ public class FinalFramePhaseCollection extends PhaseCollection {
 	private static final int MAX_INDEX = 2;
 
 	public FinalFramePhaseCollection() {
-		super(new ArrayList<>(Arrays.asList(Phase.FIRST_PHASE, Phase.SECOND_PHASE)));
+		super(new ArrayList<>(Arrays.asList(FinalPhase.FIRST_PHASE, FinalPhase.SECOND_PHASE)));
 	}
 
 	@Override
@@ -20,7 +20,7 @@ public class FinalFramePhaseCollection extends PhaseCollection {
 
 	@Override
 	public void addThirdPhase() {
-		phaseList.add(Phase.THIRD_PHASE);
+		phaseList.add(FinalPhase.THIRD_PHASE);
 	}
 
 }
