@@ -1,6 +1,11 @@
 package view;
 
-import game.*;
+import game.BowlingGame;
+import game.Frame;
+import game.GameType;
+import score.BonusScores;
+import score.Score;
+import score.ScoreType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +35,7 @@ public class ResultView {
 
     private static void printScoreLine(BowlingGame bowlingGame) {
         List<String> scoresByFrameString = new ArrayList<>();
-        for (Frame frame : bowlingGame.getFrames()) {
+        for (Frame frame : bowlingGame.getFrames().getFrames()) {
             scoresByFrameString.add(scoreToString(frame));
         }
         System.out.println(String.format(SCORE_LINE_FORMAT, bowlingGame.getName(), gameScoreToString(scoresByFrameString)));
@@ -41,23 +46,23 @@ public class ResultView {
         if (frame.getBonus() == null) {
             return basicGameScoreToString(frame);
         }
-        Bonus bonus = frame.getBonus();
+        BonusScores bonusScores = frame.getBonus();
         if (frame.getGameType() == GameType.SPARE) {
             return String.format(THIRD_ROLLING_SCORE,
                     firstRollingScore(frame),
                     secondRollingScoreToString(frame),
-                    bonusRollingScore(bonus.getBonusScore().get(0)));
+                    bonusRollingScore(bonusScores.getScores().get(0)));
         }
-        if (bonus.getBonusScore().size() == 1) {
+        if (bonusScores.getScores().size() == 1) {
             return String.format(SECOND_ROLLING_SCORE,
                     firstRollingScore(frame),
-                    bonusRollingScore(bonus.getBonusScore().get(0)));
+                    bonusRollingScore(bonusScores.getScores().get(0)));
         }
 
         return String.format(THIRD_ROLLING_SCORE,
                 firstRollingScore(frame),
-                bonusRollingScore(bonus.getBonusScore().get(0)),
-                bonusRollingScore(bonus.getBonusScore().get(1)));
+                bonusRollingScore(bonusScores.getScores().get(0)),
+                bonusRollingScore(bonusScores.getScores().get(1)));
     }
 
     private static String basicGameScoreToString(Frame frame) {

@@ -1,16 +1,20 @@
 package game;
 
-import java.util.ArrayList;
+import score.BasicScores;
+import score.BonusScores;
+import score.Score;
+
 import java.util.List;
 import java.util.Objects;
 
 public class Frame {
+    private static final String BONUS_WITHOUT_FINAL_FRAME = "보너스 게임은 10번째 frame에서만 가능합니다";
     private final FrameType frameType;
-    private List<Score> scores;
-    private Bonus bonus;
+    private BasicScores scores;
+    private BonusScores bonus;
 
     private Frame(FrameType frameType) {
-        this.scores = new ArrayList<>();
+        this.scores = new BasicScores();
         this.frameType = frameType;
     }
 
@@ -27,33 +31,27 @@ public class Frame {
     }
 
     public void addScore(int score) {
-        if (sumScore() + score > 10) {
-            throw new IllegalArgumentException("점수들의 합은 10을 넘길 수 없습니다.");
+        if (this.scores.size() > 1) {
+            throw new IllegalArgumentException("한 프레임에 세번 이상 공을 던질 수 없습니다.");
         }
-        this.scores.add(Score.of(score));
-    }
-
-    private int sumScore() {
-        return scores.stream()
-                .map(Score::getScore)
-                .reduce(Integer::sum).orElse(0);
+        this.scores.addScore(score);
     }
 
     public void addBonus(int bonusScore) {
         if (frameType == FrameType.NORMAL) {
-            throw new IllegalArgumentException("보너스 게임은 10번째 frame에서만 가능합니다");
-        }
-        if (getGameType() == GameType.MISS) {
-            throw new IllegalArgumentException("보너스 게임은 스트라이크/스페어에서만 발생합니다");
+            throw new IllegalArgumentException(BONUS_WITHOUT_FINAL_FRAME);
         }
         if (this.bonus == null) {
-            this.bonus = Bonus.of(getGameType(), bonusScore);
-        } else {
-            this.bonus.addBonus(bonusScore);
+            this.bonus = new BonusScores();
         }
+        this.bonus.addScore(getGameType(), bonusScore);
     }
 
-    public Bonus getBonus() {
+    private int sumScore() {
+        return scores.sumScore();
+    }
+
+    public BonusScores getBonus() {
         return this.bonus;
     }
 
@@ -63,7 +61,7 @@ public class Frame {
     }
 
     public List<Score> getScores() {
-        return this.scores;
+        return this.scores.getScores();
     }
 
     @Override

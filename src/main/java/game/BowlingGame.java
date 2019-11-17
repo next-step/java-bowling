@@ -1,30 +1,29 @@
 package game;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class BowlingGame {
+    private static final String USER_NAME_LENGTH_EXCEPTION = "이용자 이름은 3글자입니다";
     private String name;
-    private List<Frame> frames;
+    private Frames frames;
 
     public BowlingGame(String name) {
+        if (name.length() > 3) {
+            throw new IllegalArgumentException(USER_NAME_LENGTH_EXCEPTION);
+        }
         this.name = name;
-        this.frames = new ArrayList<>();
+        this.frames = new Frames();
     }
 
     public void addFrame(Frame frame) {
-        if (this.frames.size() > 9) {
-            throw new IllegalArgumentException("프레임은 10번을 넘을 수 없습니다");
-        }
-        this.frames.add(frame);
+        this.frames.addFrame(frame);
     }
 
     public String getName() {
         return this.name;
     }
 
-    public List<Frame> getFrames() {
+    public Frames getFrames() {
         return this.frames;
     }
 

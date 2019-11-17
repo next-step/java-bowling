@@ -1,4 +1,4 @@
-package game;
+package score;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 
 public class Score {
+    private static final String SCORE_OVER_TEN = "점수는 10 점 이상이 될 수 없습니다.";
     private static List<Score> scoreList = IntStream.rangeClosed(0, 10).boxed()
             .map(Score::new).collect(toList());
     private int score;
@@ -18,7 +19,7 @@ public class Score {
         try {
             return scoreList.get(score);
         } catch (Exception e) {
-            throw new IllegalArgumentException("점수는 10 점 이상이 될 수 없습니다.");
+            throw new IllegalArgumentException(SCORE_OVER_TEN);
         }
     }
 

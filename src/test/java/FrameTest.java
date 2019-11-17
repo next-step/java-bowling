@@ -8,13 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FrameTest {
     @Test
-    @DisplayName("프레임 생성 테스트")
-    void createTest() {
-        Frame frame = Frame.of(10);
-        assertThat(frame).isEqualTo(Frame.of(10));
-    }
-
-    @Test
     @DisplayName("점수생성")
     void checkScore() {
         Frame frame = Frame.of(9);
