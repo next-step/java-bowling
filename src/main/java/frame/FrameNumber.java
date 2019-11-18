@@ -3,6 +3,7 @@ package frame;
 import java.util.Objects;
 
 public class FrameNumber {
+    private static final int NEXT = 1;
     private final Integer number;
 
     public FrameNumber(Integer number) {
@@ -14,6 +15,10 @@ public class FrameNumber {
         if (number < 1 || number > 10) {
             throw new IllegalArgumentException(number + "는 올바르지 않은 프레임 번호입니다.");
         }
+    }
+
+    public Integer next() {
+        return number + NEXT;
     }
 
     @Override

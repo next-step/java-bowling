@@ -1,3 +1,5 @@
+package score;
+
 import java.util.Objects;
 
 public class PitchScore {

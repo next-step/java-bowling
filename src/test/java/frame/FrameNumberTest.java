@@ -1,5 +1,6 @@
 package frame;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -22,5 +23,12 @@ class FrameNumberTest {
         assertThatThrownBy(() -> new FrameNumber(number))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(number + "는 올바르지 않은 프레임 번호입니다.");
+    }
+
+    @Test
+    void 프레임다음번호_생성() {
+        int number = 1;
+        FrameNumber frameNumber = new FrameNumber(number);
+        assertThat(frameNumber.next()).isEqualTo(2);
     }
 }
