@@ -1,5 +1,6 @@
 package domain.bowlling;
 
+import domain.frame.result.FrameResult;
 import domain.phase.result.PhaseResult;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class BowlingGame {
 		this.bowlingBoard = new BowlingBoard();
 	}
 
-	public List<List<PhaseResult>> shoot(int fallenBowlingPins) {
+	public List<FrameResult> shoot(int fallenBowlingPins) {
 		validateCurrentFrame();
 		currentFrameIndex = bowlingBoard.shoot(currentFrameIndex, fallenBowlingPins);
 		return bowlingBoard.getPhaseResults();
