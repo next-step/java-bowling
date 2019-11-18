@@ -93,8 +93,9 @@ public class Balls {
     }
 
     private boolean isAddAbleAllPins() {
-        return (balls.size() < DEFAULT_BALL_SIZE && isStrike()) ||
-                (balls.size() == DEFAULT_BALL_SIZE && isAddAbleThirdBall());
+        int ballsSize = balls.size();
+        return (ballsSize < DEFAULT_BALL_SIZE && isStrike()) ||
+                (ballsSize == DEFAULT_BALL_SIZE && isAddAbleThirdBall());
     }
 
     public String getResult() {
