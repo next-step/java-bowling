@@ -22,8 +22,8 @@ class PitchCountTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = { "2,true,true", "2,false,false"})
-    void 마지막_프레임에서_조건만족후_3번째투구_가능한지_확인(int count,boolean isFinalAndTwoStrike, boolean pitchable) {
+    @CsvSource(value = {"2,true,true", "2,false,false"})
+    void 마지막_프레임에서_조건만족후_3번째투구_가능한지_확인(int count, boolean isFinalAndTwoStrike, boolean pitchable) {
         PitchCount pitchCount = new PitchCount(count);
 
         assertThat(pitchCount.isPitchable(isFinalAndTwoStrike)).isEqualTo(pitchable);
