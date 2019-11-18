@@ -2,11 +2,17 @@ package domain.phase.result;
 
 public enum NormalPhaseResult implements PhaseResult {
 
-	IN_PROGRESS,
-	STRIKE,
-	SPARE,
-	MISS,
-	GUTTER;
+	IN_PROGRESS("%s"),
+	STRIKE("X"),
+	SPARE("/"),
+	MISS("%s"),
+	GUTTER("-");
+
+	private final String format;
+
+	NormalPhaseResult(String format) {
+		this.format = format;
+	}
 
 	@Override
 	public boolean hasNextPhase(PhaseResult prevResult) {
@@ -16,6 +22,11 @@ public enum NormalPhaseResult implements PhaseResult {
 	@Override
 	public boolean shouldRestoreBowlingPins() {
 		return false;
+	}
+
+	@Override
+	public String toSign(int fallenBowlingPins) {
+		return String.format(format, fallenBowlingPins);
 	}
 
 }

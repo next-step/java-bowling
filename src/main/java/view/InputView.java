@@ -16,9 +16,8 @@ public class InputView {
 		return scanner.nextLine();
 	}
 
-	// TODO: 2019-11-18 BowlingPinsCount로 wraping, validation
+	// TODO: 2019-11-18 BowlingPinsCount로 wrapping, validation
 	public static int receiveFallenBowlingPins(int frameCount) {
-		System.out.println();
 		System.out.print(String.format("%s프레임 투구 : ", frameCount));
 		return scanner.nextInt();
 	}

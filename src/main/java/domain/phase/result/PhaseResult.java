@@ -6,4 +6,6 @@ public interface PhaseResult {
 
 	boolean shouldRestoreBowlingPins();
 
+	String toSign(int fallenBowlingPins);
+
 }
