@@ -29,9 +29,10 @@ public class FrameResult {
 	}
 
 	public PhaseResult getPrevResult() {
-		return phaseResults.stream()
-				.min(Collections.reverseOrder())
-				.orElse(null);
+		if (phaseResults.isEmpty()) {
+			return null;
+		}
+		return phaseResults.get(phaseResults.size() - 1);
 	}
 
 	@Override
