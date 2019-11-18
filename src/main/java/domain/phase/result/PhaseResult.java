@@ -2,6 +2,8 @@ package domain.phase.result;
 
 public interface PhaseResult {
 
-	boolean hasNextPhase();
+	boolean hasNextPhase(PhaseResult prevResult);
+
+	boolean shouldRestoreBowlingPins();
 
 }

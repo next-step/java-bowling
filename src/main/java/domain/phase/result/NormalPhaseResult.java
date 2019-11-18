@@ -2,7 +2,6 @@ package domain.phase.result;
 
 public enum NormalPhaseResult implements PhaseResult {
 
-	UNKNOWN,
 	IN_PROGRESS,
 	STRIKE,
 	SPARE,
@@ -10,8 +9,13 @@ public enum NormalPhaseResult implements PhaseResult {
 	GUTTER;
 
 	@Override
-	public boolean hasNextPhase() {
+	public boolean hasNextPhase(PhaseResult prevResult) {
 		return this == IN_PROGRESS;
+	}
+
+	@Override
+	public boolean shouldRestoreBowlingPins() {
+		return false;
 	}
 
 }

@@ -1,6 +1,5 @@
 package domain.phase;
 
-import domain.phase.Phase;
 import domain.phase.result.FinalPhaseResult;
 import domain.phase.result.PhaseResult;
 

@@ -1,6 +1,5 @@
 package domain.frame;
 
-import domain.phase.NormalPhase;
 import domain.phase.result.NormalPhaseResult;
 import domain.phase.result.PhaseResult;
 import org.junit.jupiter.api.Test;

@@ -12,12 +12,12 @@ public class FinalFrame extends Frame {
 	@Override
 	public PhaseResult getPhaseResult() {
 		PhaseResult result = phaseCollection.getFrameResult(remainBowlingPins);
-		restoreBallingPinsIfPhaseResultHasNextPhase(result);
+		restoreBowlingPinsIfPhaseResultHasNextPhase(result);
 		return result;
 	}
 
-	private void restoreBallingPinsIfPhaseResultHasNextPhase(PhaseResult result) {
-		if (result.hasNextPhase()) {
+	private void restoreBowlingPinsIfPhaseResultHasNextPhase(PhaseResult result) {
+		if (result.shouldRestoreBowlingPins()) {
 			super.restoreBallingPins();
 		}
 	}
