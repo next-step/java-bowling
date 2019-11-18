@@ -1,5 +1,8 @@
 package frame;
 
+import score.ScoreInfo;
+import score.ScoreInfoBundle;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -7,20 +10,21 @@ public class NormalFrame implements Frame {
     private static final int FIRST_FRAME_NUMBER = 1;
 
     private final FrameNumber frameNumber;
-    private final List<Integer> scores;
+    private final ScoreInfoBundle scores;
 
-    public static NormalFrame firstNormalFrame(List<Integer> scores) {
+    public static NormalFrame firstNormalFrame(List<ScoreInfo> scores) {
         return new NormalFrame(FIRST_FRAME_NUMBER, scores);
     }
 
-    NormalFrame(int frameNumber, List<Integer> scores) {
+    NormalFrame(int frameNumber, List<ScoreInfo> scores) {
         this.frameNumber = new FrameNumber(frameNumber);
-        this.scores = scores;
+        this.scores = new ScoreInfoBundle(scores);
     }
 
-    public NormalFrame nextNormalFrame(List<Integer> scores) {
+    public NormalFrame nextNormalFrame(List<ScoreInfo> scores) {
         return new NormalFrame(frameNumber.next(), scores);
     }
+
 
     @Override
     public boolean equals(Object o) {
