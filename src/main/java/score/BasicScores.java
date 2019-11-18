@@ -3,7 +3,7 @@ package score;
 import java.util.ArrayList;
 import java.util.List;
 
-import static score.Score.MAX_SCORE;
+import static score.ScoreType.MAX_SCORE;
 
 public class BasicScores implements Scores {
     private static final String SUM_OF_SCORES_OVER_TEN = "점수들의 합은 10을 넘길 수 없습니다.";

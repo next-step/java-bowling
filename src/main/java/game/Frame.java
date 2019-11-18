@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class Frame {
     private static final String BONUS_WITHOUT_FINAL_FRAME = "보너스 게임은 10번째 frame에서만 가능합니다";
+    private static final String ROLLING_COUNT_OVER_THREE = "한 프레임에 세번 이상 공을 던질 수 없습니다.";
     private final FrameType frameType;
     private BasicScores scores;
     private BonusScores bonus;
@@ -32,7 +33,7 @@ public class Frame {
 
     public void addScore(int score) {
         if (this.scores.size() > 1) {
-            throw new IllegalArgumentException("한 프레임에 세번 이상 공을 던질 수 없습니다.");
+            throw new IllegalArgumentException(ROLLING_COUNT_OVER_THREE);
         }
         this.scores.addScore(score);
     }

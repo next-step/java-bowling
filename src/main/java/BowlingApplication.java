@@ -4,7 +4,7 @@ import view.InputView;
 import view.ResultView;
 
 import static game.Frames.FINAL_FRAME;
-import static score.Score.MAX_SCORE;
+import static score.ScoreType.MAX_SCORE;
 
 public class BowlingApplication {
     public static void main(String[] args) {

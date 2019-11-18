@@ -5,7 +5,7 @@ import game.GameType;
 import java.util.ArrayList;
 import java.util.List;
 
-import static score.Score.MAX_SCORE;
+import static score.ScoreType.MAX_SCORE;
 
 public class BonusScores implements Scores {
     private static final String BONUS_WITH_MISS_GAME = "보너스 게임은 스트라이크/스페어에서만 발생합니다";

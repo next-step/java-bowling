@@ -13,13 +13,13 @@ import java.util.List;
 import static game.Frames.FINAL_FRAME;
 
 public class ResultView {
-    private static String INITIAL_LINE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static String SCORE_LINE_FORMAT = "|  %s |%s";
-    private static String DELIMITER = "|";
-    private static String FIRST_ROLLING_SCORE = "  %s   ";
-    private static String SECOND_ROLLING_SCORE = "  %s|%s ";
-    private static String THIRD_ROLLING_SCORE = " %s|%s|%s";
-    private static String GAME_TO_GO_FORMAT = "      ";
+    private static final String INITIAL_LINE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    private static final String SCORE_LINE_FORMAT = "|  %s |%s";
+    private static final String DELIMITER = "|";
+    private static final String FIRST_ROLLING_SCORE = "  %s   ";
+    private static final String SECOND_ROLLING_SCORE = "  %s|%s ";
+    private static final String THIRD_ROLLING_SCORE = " %s|%s|%s";
+    private static final String GAME_TO_GO_FORMAT = "      ";
 
     public static void printInitialScoreBoard(BowlingGame bowlingGame) {
         printInitialLine();
