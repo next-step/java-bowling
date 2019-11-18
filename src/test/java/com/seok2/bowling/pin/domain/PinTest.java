@@ -20,4 +20,14 @@ class PinTest {
     void exception(int felled) {
         assertThatIllegalArgumentException().isThrownBy(() -> Pin.of(felled));
     }
+
+    @Test
+    void add() {
+        assertThat(Pin.of(1).add(Pin.of(3))).isEqualTo(Pin.of(4));
+    }
+
+    @Test
+    void addException() {
+        assertThatIllegalArgumentException().isThrownBy(() -> Pin.of(9).add(Pin.of(3)));
+    }
 }
