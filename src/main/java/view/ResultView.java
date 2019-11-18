@@ -40,7 +40,8 @@ public class ResultView {
         for (Frame frame : bowlingGame.getFrames().getFrames()) {
             scoresByFrameString.add(scoreToString(frame));
         }
-        System.out.println(String.format(SCORE_LINE_FORMAT, bowlingGame.getName(), gameScoreToString(scoresByFrameString)));
+        System.out.println(String.format(SCORE_LINE_FORMAT,
+                bowlingGame.getName(), gameScoreToString(scoresByFrameString)));
         System.out.println();
     }
 
@@ -48,6 +49,10 @@ public class ResultView {
         if (frame.getBonus() == null) {
             return basicGameScoreToString(frame);
         }
+        return bonusGameScoreToString(frame);
+    }
+
+    private static String bonusGameScoreToString(Frame frame) {
         BonusScores bonusScores = frame.getBonus();
         if (frame.getGameType() == GameType.SPARE) {
             return String.format(THIRD_ROLLING_SCORE,
@@ -55,6 +60,7 @@ public class ResultView {
                     secondRollingScoreToString(frame),
                     bonusRollingScore(bonusScores.getScores().get(0)));
         }
+
         if (bonusScores.getScores().size() == 1) {
             return String.format(SECOND_ROLLING_SCORE,
                     firstRollingScore(frame),
@@ -72,11 +78,10 @@ public class ResultView {
         if (scores.size() == 1) {
             return String.format(FIRST_ROLLING_SCORE,
                     firstRollingScore(frame));
-        } else {
-            return String.format(SECOND_ROLLING_SCORE,
-                    firstRollingScore(frame),
-                    secondRollingScoreToString(frame));
         }
+        return String.format(SECOND_ROLLING_SCORE,
+                firstRollingScore(frame),
+                secondRollingScoreToString(frame));
     }
 
     private static String bonusRollingScore(Score bonus) {
@@ -98,6 +103,6 @@ public class ResultView {
         for (int index = scoresByFrameString.size(); index <= FINAL_FRAME; index++) {
             scoresByFrameString.add(GAME_TO_GO_FORMAT);
         }
-        return scoresByFrameString.stream().reduce((o1, o2) -> o1 + DELIMITER + o2).orElse("");
+        return scoresByFrameString.stream().reduce((o1, o2) -> o1 + DELIMITER + o2).orElse(null);
     }
 }
