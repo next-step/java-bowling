@@ -24,6 +24,10 @@ public abstract class Frame {
 	}
 
 	private void validateBowlingPinsCount(int fallenBowlingPins) {
+		if (fallenBowlingPins < 0) {
+			throw  new IllegalArgumentException(String.format("어떻게 음수(%s)의 볼링핀을 쓰러뜨리나요 ㄷ...", fallenBowlingPins));
+		}
+
 		if (remainBowlingPins < fallenBowlingPins) {
 			throw new IllegalArgumentException(String.format(
 					"서 있는 볼링핀(%s)보다 더 많은 볼링핀(%s)을 쓰러뜨릴 수는 없겠죠?", remainBowlingPins, fallenBowlingPins));

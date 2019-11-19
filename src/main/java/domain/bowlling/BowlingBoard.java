@@ -20,7 +20,8 @@ public class BowlingBoard {
 	private static final int NORMAL_PHASE_COUNT = 9;
 
 	private int currentFrameIndex;
-	// TODO: 2019-11-18 두 개를 합쳐야함
+	// TODO: 2019-11-18 List<FrameResult>와 List<Frame>을 가지고 있는 객체 만들고 책임 위임하기
+	//   점수 넣을 때 하자...
 	private List<FrameResult> frameResults = new ArrayList<>();
 	private List<Frame> frames = new ArrayList<>();
 
@@ -60,8 +61,12 @@ public class BowlingBoard {
 		return frameResults.get(currentFrameIndex).getPrevResult();
 	}
 
-	public List<FrameResult> getPhaseResults() {
-		return new ArrayList<>(frameResults);
+	public List<FrameResult> getNormalPhaseResults() {
+		return new ArrayList<>(frameResults.subList(START_FRAME_INDEX, FINAL_FRAME_INDEX));
+	}
+
+	public FrameResult getFinalPhaseResult() {
+		return frameResults.get(FINAL_FRAME_INDEX);
 	}
 
 	public int getCurrentFrameIndex() {

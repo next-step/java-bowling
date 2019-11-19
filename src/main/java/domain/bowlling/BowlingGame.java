@@ -1,5 +1,7 @@
 package domain.bowlling;
 
+import domain.UserName;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -10,7 +12,7 @@ public class BowlingGame {
 	private int gameTurnIndex;
 	private List<BowlingOnBoard> bowlingOnBoards;
 
-	public BowlingGame(String userName) {
+	public BowlingGame(UserName userName) {
 		this.gameTurnIndex = START_TURN_INDEX;
 		this.bowlingOnBoards = Collections.singletonList(new BowlingOnBoard(userName));
 	}
@@ -20,7 +22,7 @@ public class BowlingGame {
 	}
 
 	public boolean isNotEnd() {
-		// TODO: 2019-11-18 로직 고민
+		// TODO: 2019-11-18 여러명이 게임을 할 때가 되면 로직 고민
 		return bowlingOnBoards.get(bowlingOnBoards.size() - 1).getCurrentFrame() != 11;
 	}
 

@@ -1,5 +1,6 @@
 package domain.bowlling;
 
+import domain.UserName;
 import domain.frame.result.FrameResult;
 
 import java.util.List;
@@ -10,9 +11,9 @@ import java.util.List;
 public class BowlingOnBoard {
 
 	private final BowlingBoard bowlingBoard = new BowlingBoard();
-	private final String userName;
+	private final UserName userName;
 
-	BowlingOnBoard(String userName) {
+	BowlingOnBoard(UserName userName) {
 		this.userName = userName;
 	}
 
@@ -24,11 +25,15 @@ public class BowlingOnBoard {
 		return bowlingBoard.getCurrentFrameIndex() + 1;
 	}
 
-	public List<FrameResult> getFrameResults() {
-		return bowlingBoard.getPhaseResults();
+	public List<FrameResult> getNormalFrameResults() {
+		return bowlingBoard.getNormalPhaseResults();
 	}
 
-	public String getUserName() {
+	public FrameResult getFinalFrameResult() {
+		return bowlingBoard.getFinalPhaseResult();
+	}
+
+	public UserName getUserName() {
 		return userName;
 	}
 

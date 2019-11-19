@@ -1,5 +1,7 @@
 package view;
 
+import domain.UserName;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -11,12 +13,11 @@ public class InputView {
 	}
 
 	// TODO: 2019-11-18 UserName으로 wrapping, validation
-	public static String receiveUserName() {
+	public static UserName receiveUserName() {
 		System.out.print("플레이어 이름은(3 english letters)?: ");
-		return scanner.nextLine();
+		return UserName.of(scanner.nextLine());
 	}
 
-	// TODO: 2019-11-18 BowlingPinsCount로 wrapping, validation
 	public static int receiveFallenBowlingPins(int frameCount) {
 		System.out.print(String.format("%s프레임 투구 : ", frameCount));
 		return scanner.nextInt();

@@ -2,7 +2,9 @@ package domain.frame.result;
 
 import domain.phase.result.PhaseResult;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class FrameResult {
 
@@ -35,17 +37,12 @@ public class FrameResult {
 		return phaseResults.get(phaseResults.size() - 1);
 	}
 
-	// TODO: 2019-11-18 어딘가로 로직을 이동
-	// TODO: 2019-11-18 문자와 숫자를 적절히 출력.. 어떻게?
-	public String getPhaseResults() {
-		if (phaseResults.isEmpty()) {
-			return "   ";
+	public List<String> getPhaseResultSign() {
+		List<String> result = new ArrayList<>();
+		for (int i = 0, end = phaseResults.size(); i < end; i++) {
+			result.add(phaseResults.get(i).toSign(fallenBowlingPins.get(i)));
 		}
-		if (phaseResults.size() == 1) {
-			return String.format("%s  ", phaseResults.get(0).toSign(fallenBowlingPins.get(0)));
-		}
-		return String.format("%s|%s", phaseResults.get(0).toSign(fallenBowlingPins.get(0)),
-				phaseResults.get(1).toSign(fallenBowlingPins.get(1)));
+		return result;
 	}
 
 	@Override
