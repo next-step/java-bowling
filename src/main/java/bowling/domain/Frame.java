@@ -9,8 +9,8 @@ public class Frame {
         this.balls = new Balls(isLastFrame());
     }
 
-    public void addBall(int pin) {
-       balls.add(pin);
+    public void fallDown(int pin) {
+       balls.fallDown(pin);
     }
 
     private boolean isLastFrame() {
@@ -30,7 +30,7 @@ public class Frame {
     }
 
     public int addAblePinCount() {
-        return balls.addAblePinCount();
+        return balls.addAblePinCount(isLastFrame());
     }
 
     public String getResult() {

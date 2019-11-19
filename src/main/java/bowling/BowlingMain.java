@@ -21,7 +21,7 @@ public class BowlingMain {
     private static void playFrame(Player player, Frame frame) {
         while (frame.isAddAble()) {
             int pinCount = InputView.inputPinCount(frame);
-            frame.addBall(pinCount);
+            frame.fallDown(pinCount);
             OutputView.printDashBoard(player);
         }
     }

@@ -9,6 +9,7 @@ public class Balls {
     public static final int FIRST_BALL_LIMIT_INDEX = 1;
     public static final int SECOND_BALL_INDEX = 1;
     public static final int DEFAULT_BALL_SIZE = 2;
+    public static final int LAST_FRAME_BALL_SIZE = 3;
     public static final int NOT_ADD_ABLE_PINT_COUNT = 0;
     public static final String IS_NOT_ADD_ABLE_THIRD_BALL_MESSAGE = "한 프레임의 세번째 투구는 마지막 프레임에서 스트라이크 또는 스페어일때 가능 합니다.";
     public static final String IS_OVER_FLOW_BALL_COUNT = "마지막 프레임을 제외한 프레임에서는 최대 두번만 투구 할 수 있습니다.";
@@ -16,19 +17,30 @@ public class Balls {
     private static final String RESULT_DELIMITER = "|";
     private static final String SPARE_TEXT = "/";
     private List<Ball> balls;
-    private boolean isLastFrame;
 
-    public Balls(boolean lastFrame) {
+    public Balls(List<Ball> balls) {
+        this.balls = balls;
+    }
+
+    public Balls(boolean isLastFrame) {
         balls = new ArrayList<>();
-        this.isLastFrame = lastFrame;
+        int size = isLastFrame ? LAST_FRAME_BALL_SIZE : DEFAULT_BALL_SIZE;
+        for (int i = 0; i < size; i++) {
+            balls.add(new Ball());
+        }
     }
 
-    public void add(int pin) {
-        checkAddAble(pin, isLastFrame);
-        balls.add(new Ball(pin));
+    public void fallDown(int pin) {
+        checkAddAble(pin);
+        Ball nextBall = this.balls.stream()
+                .filter(Ball::isNotFallDown)
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
+        nextBall.fallDown(pin);
     }
 
-    private void checkAddAble(int pin, boolean isLastFrame) {
+    private void checkAddAble(int pin) {
+        boolean isLastFrame = isLastFrame();
         if (isLastFrame && isThirdBall() && isNotAddAbleThirdBall()) {
             throw new IllegalArgumentException(IS_NOT_ADD_ABLE_THIRD_BALL_MESSAGE);
         }
@@ -42,8 +54,12 @@ public class Balls {
         }
     }
 
+    private boolean isLastFrame() {
+        return this.balls.size() == LAST_FRAME_BALL_SIZE;
+    }
+
     private boolean isThirdBall() {
-        return balls.size() == DEFAULT_BALL_SIZE;
+        return fallDownSize() == DEFAULT_BALL_SIZE;
     }
 
     private boolean isNotAddAbleThirdBall() {
@@ -55,7 +71,7 @@ public class Balls {
     }
 
     private boolean isOverFlowPinCount(int pin) {
-        return score() + pin > Ball.ALL_PIN_COUNT;
+        return Ball.isOverFlowPinCount(score() + pin);
     }
 
     public boolean isStrike() {
@@ -76,26 +92,33 @@ public class Balls {
 
     public int score() {
         return balls.stream()
+                .filter(Ball::isFallDown)
                 .mapToInt(Ball::getPin)
                 .sum();
     }
 
-    public int addAblePinCount() {
+    public int addAblePinCount(boolean isLastFrame) {
         if (isLastFrame && isAddAbleAllPins()) {
             return Ball.ALL_PIN_COUNT;
         }
 
-        if (balls.size() == DEFAULT_BALL_SIZE) {
+        if (fallDownSize() == DEFAULT_BALL_SIZE) {
             return NOT_ADD_ABLE_PINT_COUNT;
         }
 
-        return Ball.ALL_PIN_COUNT - score();
+        return Ball.leftPinCount(score());
     }
 
     private boolean isAddAbleAllPins() {
-        int ballsSize = balls.size();
+        long ballsSize = fallDownSize();
         return (ballsSize < DEFAULT_BALL_SIZE && isStrike()) ||
                 (ballsSize == DEFAULT_BALL_SIZE && isAddAbleThirdBall());
+    }
+
+    private long fallDownSize() {
+        return balls.stream()
+                .filter(Ball::isFallDown)
+                .count();
     }
 
     public String getResult() {
