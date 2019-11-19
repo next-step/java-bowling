@@ -15,4 +15,9 @@ public class Miss extends Finished {
     public static State of(Pin first, Pin felled) {
         return new Miss(first, felled);
     }
+
+    @Override
+    public String view() {
+        return first + "|" + second;
+    }
 }

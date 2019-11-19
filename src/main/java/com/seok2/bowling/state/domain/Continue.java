@@ -17,12 +17,17 @@ public class Continue extends Running {
     @Override
     public State roll(Pin felled) {
         Pin sum = first.add(felled);
-        if(sum.isAllFelled()){
+        if (sum.isAllFelled()) {
             return Spare.of(first);
         }
-        if(sum.isFelledAtAll()){
+        if (sum.isFelledAtAll()) {
             return Gutter.of();
         }
-        return Miss.of(first,felled);
+        return Miss.of(first, felled);
+    }
+
+    @Override
+    public String view() {
+        return first.toString();
     }
 }

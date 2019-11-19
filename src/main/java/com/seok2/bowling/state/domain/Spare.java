@@ -31,4 +31,9 @@ public class Spare extends Finished {
     public int hashCode() {
         return Objects.hash(first);
     }
+
+    @Override
+    public String view() {
+        return first + "|/";
+    }
 }

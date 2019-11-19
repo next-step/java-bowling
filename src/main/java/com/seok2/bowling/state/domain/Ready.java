@@ -10,8 +10,14 @@ public class Ready extends Running {
 
     @Override
     public State roll(Pin felled) {
-        if(felled.isAllFelled())
+        if (felled.isAllFelled()) {
             return Strike.of();
+        }
         return Continue.of(felled);
+    }
+
+    @Override
+    public String view() {
+        return "";
     }
 }

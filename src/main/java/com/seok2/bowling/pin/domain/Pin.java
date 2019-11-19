@@ -56,5 +56,8 @@ public class Pin {
         return Objects.hash(felled);
     }
 
-
+    @Override
+    public String toString() {
+        return String.valueOf(felled);
+    }
 }
