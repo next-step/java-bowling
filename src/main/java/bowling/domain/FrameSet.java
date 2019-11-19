@@ -2,8 +2,8 @@ package bowling.domain;
 
 public class FrameSet {
 
-    int playCount = 2;
-    int remainPinCount = 10;
+    private int playCount = 2;
+    private int remainPinCount = 10;
 
     public Frame play(int hitCount) {
         playCount--;
