@@ -32,23 +32,43 @@ public class BallsTest {
         );
     }
 
-    @ParameterizedTest
-    @DisplayName("점수 반영시 에러 테스트")
-    @MethodSource(value = "providePinsAndException")
-    void addException(Ball[] balls, int nextPin, String errorMessage) {
+    @Test
+    @DisplayName("점수 반영시 핀 수 초과 에러 테스트")
+    void fallDownIsOverFlowPinCountException() {
+        Ball[] balls = new Ball[] {new Ball(10), new Ball()};
+        int nextPin = 10;
         Balls expectBalls = new Balls(Arrays.asList(balls));
+
         assertThatThrownBy(() -> {
             expectBalls.fallDown(nextPin);
         }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(errorMessage);
+                .hasMessage(Balls.IS_OVER_FLOW_PIN_COUNT);
     }
 
-    static Stream<Arguments> providePinsAndException() {
-        return Stream.of(
-                Arguments.of(new Ball[] {new Ball(10), new Ball()}, 10, Balls.IS_OVER_FLOW_PIN_COUNT),
-                Arguments.of(new Ball[] {new Ball(6), new Ball(3)}, 2, Balls.IS_OVER_FLOW_BALL_COUNT),
-                Arguments.of(new Ball[] {new Ball(6), new Ball(3), new Ball()}, 2, Balls.IS_NOT_ADD_ABLE_THIRD_BALL_MESSAGE)
-        );
+    @Test
+    @DisplayName("점수 반영시 쓰러트릴 수 있는 횟 수 초과 에러 테스트")
+    void fallDownIsOverFlowBallCountException() {
+        Ball[] balls = new Ball[] {new Ball(6), new Ball(3)};
+        int nextPin = 2;
+        Balls expectBalls = new Balls(Arrays.asList(balls));
+
+        assertThatThrownBy(() -> {
+            expectBalls.fallDown(nextPin);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(Balls.IS_OVER_FLOW_BALL_COUNT);
+    }
+
+    @Test
+    @DisplayName("마지막 프레임에서 스트라이크 또는 스페어가 아닐때 에러 테스트")
+    void fallDownIsNotAddAbleThirdBall() {
+        Ball[] balls = new Ball[] {new Ball(6), new Ball(3), new Ball()};
+        int nextPin = 2;
+        Balls expectBalls = new Balls(Arrays.asList(balls));
+
+        assertThatThrownBy(() -> {
+            expectBalls.fallDown(nextPin);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(Balls.IS_NOT_ADD_ABLE_THIRD_BALL_MESSAGE);
     }
 
     @Test
