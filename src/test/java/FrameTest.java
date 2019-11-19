@@ -66,32 +66,4 @@ public class FrameTest {
         assertThrows(IllegalArgumentException.class, () -> frame.addBonus(10));
     }
 
-    @Test
-    @DisplayName("프레임 연결")
-    void chainFrames() {
-        Frames frames = new Frames();
-
-        Frame first = Frame.of(10);
-        frames.addFrame(first);
-
-        Frame second = Frame.of(5);
-        frames.addFrame(second);
-        second.addScore(5);
-
-        Frame third = Frame.of(10);
-        frames.addFrame(third);
-        assertThat(first.getNextFrame()).isEqualTo(second);
-        assertThat(second.getNextFrame()).isEqualTo(third);
-    }
-
-    @Test
-    @DisplayName("마지막 프레임의 next추가시 에러")
-    void nextFrameWithFinalFrameException() {
-        Frames frames = new Frames();
-        Frame frame = Frame.finalOf(10);
-        frames.addFrame(frame);
-        assertThrows(IllegalArgumentException.class, () -> frames.addFrame(Frame.of(1)));
-
-    }
-
 }

@@ -94,4 +94,31 @@ public class Frame {
     public int hashCode() {
         return Objects.hash(frameType, scores, bonus, nextFrame);
     }
+
+    public int getScoreSum() {
+        int sum = sumScore();
+        GameType gameType = getGameType();
+        if ((gameType == GameType.STRIKE || gameType == GameType.SPARE)) {
+            if (frameType == FrameType.FINAL) {
+                sum += bonus.getScores().get(0).getScore();
+            } else {
+                sum += nextFrame.getScores().get(0).getScore();
+            }
+
+            if (gameType == GameType.STRIKE) {
+                if (frameType == FrameType.FINAL) {
+                    if (bonus.getScores().size() == 2) {
+                        sum += bonus.getScores().get(1).getScore();
+                    }
+                } else {
+                    if (nextFrame.getGameType() == GameType.STRIKE) {
+                        sum += nextFrame.nextFrame.sumScore();
+                    } else {
+                        sum += nextFrame.getScores().get(1).getScore();
+                    }
+                }
+            }
+        }
+        return sum;
+    }
 }
