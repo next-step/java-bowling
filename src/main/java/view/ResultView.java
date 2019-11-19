@@ -15,20 +15,26 @@ import static game.Frames.FINAL_FRAME;
 public class ResultView {
     private static final String INITIAL_LINE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String SCORE_LINE_FORMAT = "|  %s |%s";
+    private static final String TOTAL_SCORE_LINE_FORMAT = "|      |%s";
     private static final String DELIMITER = "|";
     private static final String FIRST_ROLLING_SCORE = "  %s   ";
     private static final String SECOND_ROLLING_SCORE = "  %s|%s ";
     private static final String THIRD_ROLLING_SCORE = " %s|%s|%s";
+    private static final String TOTAL_SCORE_SINGLE_DIGIT = "   %d  ";
+    private static final String TOTAL_SCORE_DOUBLE_DIGIT = "  %d  ";
+    private static final String TOTAL_SCORE_TRIPLE_DIGIT = "  %d ";
     private static final String GAME_TO_GO_FORMAT = "      ";
 
     public static void printInitialScoreBoard(BowlingGame bowlingGame) {
         printInitialLine();
         printScoreLine(bowlingGame);
+        printTotalScoreLine(bowlingGame);
     }
 
     public static void printScoreBoard(BowlingGame bowlingGame) {
         printInitialLine();
         printScoreLine(bowlingGame);
+        printTotalScoreLine(bowlingGame);
     }
 
     private static void printInitialLine() {
@@ -42,6 +48,27 @@ public class ResultView {
         }
         System.out.println(String.format(SCORE_LINE_FORMAT,
                 bowlingGame.getName(), gameScoreToString(scoresByFrameString)));
+    }
+
+    private static void printTotalScoreLine(BowlingGame bowlingGame) {
+        List<String> totalScoresByFrameString = new ArrayList<>();
+        int sum = 0;
+        for (Frame frame : bowlingGame.getFrames().getFrames()) {
+            int nextScore = frame.getScoreSum();
+            if (nextScore < 0) {
+                break;
+            }
+            sum += frame.getScoreSum();
+            if (sum / 10 == 0) {
+                totalScoresByFrameString.add(String.format(TOTAL_SCORE_SINGLE_DIGIT, sum));
+            } else if (sum / 10 >= 10) {
+                totalScoresByFrameString.add(String.format(TOTAL_SCORE_TRIPLE_DIGIT, sum));
+            } else {
+                totalScoresByFrameString.add(String.format(TOTAL_SCORE_DOUBLE_DIGIT, sum));
+            }
+        }
+        System.out.println(String.format(TOTAL_SCORE_LINE_FORMAT,
+                gameScoreToString(totalScoresByFrameString)));
         System.out.println();
     }
 

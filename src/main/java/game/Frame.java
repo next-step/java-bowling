@@ -22,17 +22,6 @@ public class Frame {
         this.frameType = frameType;
     }
 
-    public void setNextFrame(Frame nextFrame) {
-        if (this.frameType == FrameType.FINAL) {
-            throw new IllegalArgumentException(FRAMES_OVER_TEN);
-        }
-        this.nextFrame = nextFrame;
-    }
-
-    public Frame getNextFrame() {
-        return nextFrame;
-    }
-
     public static Frame of(int score) {
         Frame frame = new Frame(FrameType.NORMAL);
         frame.addScore(score);
@@ -43,6 +32,17 @@ public class Frame {
         Frame frame = new Frame(FrameType.FINAL);
         frame.addScore(score);
         return frame;
+    }
+
+    public Frame getNextFrame() {
+        return nextFrame;
+    }
+
+    public void setNextFrame(Frame nextFrame) {
+        if (this.frameType == FrameType.FINAL) {
+            throw new IllegalArgumentException(FRAMES_OVER_TEN);
+        }
+        this.nextFrame = nextFrame;
     }
 
     public void addScore(int score) {
@@ -96,29 +96,58 @@ public class Frame {
     }
 
     public int getScoreSum() {
-        int sum = sumScore();
         GameType gameType = getGameType();
-        if ((gameType == GameType.STRIKE || gameType == GameType.SPARE)) {
-            if (frameType == FrameType.FINAL) {
-                sum += bonus.getScores().get(0).getScore();
-            } else {
-                sum += nextFrame.getScores().get(0).getScore();
+        if (gameType == GameType.SPARE) {
+            int next = getNextScore(1);
+            if (next < 0) {
+                return -1;
             }
+            return sumScore() + getNextScore(1);
+        }
+        if (gameType == GameType.STRIKE) {
+            int next = getNextScore(2);
+            if (next < 0) {
+                return -1;
+            }
+            return sumScore() + getNextScore(2);
+        }
+        if (scores.size() < 2) {
+            return -1;
+        }
+        return sumScore();
+    }
 
-            if (gameType == GameType.STRIKE) {
-                if (frameType == FrameType.FINAL) {
-                    if (bonus.getScores().size() == 2) {
-                        sum += bonus.getScores().get(1).getScore();
+    private int getNextScore(int size) {
+        if (frameType == FrameType.FINAL) {
+            if (size == 1 && bonus != null) {
+                return bonus.getScores().get(0).getScore();
+            }
+            if (size == 2 && bonus != null) {
+                if (bonus.getScores().get(0).getScore() != 10) {
+                    return bonus.getScores().get(0).getScore();
+                }
+                if (bonus.getScores().size() == 2) {
+                    return bonus.sumScore();
+                }
+            }
+        } else {
+            Frame next = this.nextFrame;
+            if (size == 1 && next != null) {
+                return next.getScores().get(0).getScore();
+            }
+            if (size == 2 && next != null) {
+                if (next.getGameType() == GameType.STRIKE) {
+                    if (next.frameType == FrameType.FINAL && next.bonus != null) {
+                        return next.getScores().get(0).getScore() + next.bonus.getScores().get(0).getScore();
                     }
-                } else {
-                    if (nextFrame.getGameType() == GameType.STRIKE) {
-                        sum += nextFrame.nextFrame.sumScore();
-                    } else {
-                        sum += nextFrame.getScores().get(1).getScore();
+                    if (next.frameType == FrameType.NORMAL && next.nextFrame != null) {
+                        return next.getScores().get(0).getScore() + next.nextFrame.getScores().get(0).getScore();
                     }
+                } else if (next.getGameType() != GameType.STRIKE && next.getScores().size() > 1) {
+                    return next.sumScore();
                 }
             }
         }
-        return sum;
+        return -1;
     }
 }

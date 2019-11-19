@@ -1,5 +1,4 @@
 import game.Frame;
-import game.Frames;
 import game.GameType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,5 +64,4 @@ public class FrameTest {
         frame.addBonus(9);
         assertThrows(IllegalArgumentException.class, () -> frame.addBonus(10));
     }
-
 }

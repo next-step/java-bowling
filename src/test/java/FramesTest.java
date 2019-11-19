@@ -28,7 +28,6 @@ public class FramesTest {
         last.addScore(4);
     }
 
-
     @Test
     @DisplayName("프레임 연결")
     void chainFrames() {
@@ -43,7 +42,6 @@ public class FramesTest {
         Frame frame = Frame.finalOf(10);
         frames.addFrame(frame);
         assertThrows(IllegalArgumentException.class, () -> frames.addFrame(Frame.of(1)));
-
     }
 
     @Test
@@ -82,5 +80,4 @@ public class FramesTest {
         assertThat(third.getScoreSum()).isEqualTo(9);
         assertThat(last.getScoreSum()).isEqualTo(19);
     }
-
 }

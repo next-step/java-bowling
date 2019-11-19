@@ -17,6 +17,13 @@ public class BonusScores implements Scores {
         return this.bonusScores;
     }
 
+    @Override
+    public int sumScore() {
+        return bonusScores.stream()
+                .map(Score::getScore)
+                .reduce(Integer::sum).orElse(0);
+    }
+
     public void addScore(GameType gameType, int score) {
         validBonusGame(gameType);
         validBonusGameCount(gameType);
