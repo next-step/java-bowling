@@ -7,7 +7,6 @@ import com.seok2.bowling.frame.domain.Board;
 import com.seok2.bowling.frame.dto.BoardDTO;
 import com.seok2.bowling.frame.dto.FrameDTO;
 import com.seok2.bowling.user.dto.UserDTO;
-import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;

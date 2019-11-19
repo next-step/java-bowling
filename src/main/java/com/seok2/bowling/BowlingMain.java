@@ -12,7 +12,6 @@ import com.seok2.bowling.view.OutputView;
 public class BowlingMain {
 
     public static void main(String[] args) {
-
         Board board = Board.init();
         User user = User.of(InputView.getUserName());
         UserDTO userDTO = UserAssembler.assemble(user);
@@ -22,7 +21,6 @@ public class BowlingMain {
             board.roll(Pin.of(InputView.getFelled()));
             OutputView.print(userDTO, BoardAssembler.assemble(board));
         }
-
     }
 
 }
