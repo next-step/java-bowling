@@ -7,16 +7,32 @@ import score.Score;
 import java.util.List;
 import java.util.Objects;
 
+import static game.Frames.FRAMES_OVER_TEN;
+
 public class Frame {
     private static final String BONUS_WITHOUT_FINAL_FRAME = "보너스 게임은 10번째 frame에서만 가능합니다";
     private static final String ROLLING_COUNT_OVER_THREE = "한 프레임에 세번 이상 공을 던질 수 없습니다.";
     private final FrameType frameType;
     private BasicScores scores;
     private BonusScores bonus;
+    private Frame nextFrame;
 
     private Frame(FrameType frameType) {
         this.scores = new BasicScores();
         this.frameType = frameType;
+    }
+
+    public Frame getNextFrame() {
+        return nextFrame;
+    }
+
+    public static Frame nextOf(Frame previousFrame, int score) {
+        if (previousFrame.frameType == FrameType.FINAL) {
+            throw new IllegalArgumentException(FRAMES_OVER_TEN);
+        }
+        Frame frame = of(score);
+        previousFrame.nextFrame = frame;
+        return frame;
     }
 
     public static Frame of(int score) {
@@ -70,11 +86,14 @@ public class Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return Objects.equals(scores, frame.scores);
+        return frameType == frame.frameType &&
+                Objects.equals(scores, frame.scores) &&
+                Objects.equals(bonus, frame.bonus) &&
+                Objects.equals(nextFrame, frame.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(scores);
+        return Objects.hash(frameType, scores, bonus, nextFrame);
     }
 }
