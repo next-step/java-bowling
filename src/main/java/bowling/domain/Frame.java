@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.List;
+
 public class Frame {
     private int frameNumber;
     private Balls balls;
@@ -13,7 +15,7 @@ public class Frame {
        balls.fallDown(pin);
     }
 
-    private boolean isLastFrame() {
+    public boolean isLastFrame() {
         return frameNumber == Frames.LAST_FRAME;
     }
 
@@ -25,7 +27,7 @@ public class Frame {
         return frameNumber;
     }
 
-    public boolean isAddAble() {
+    public boolean isFallDownAble() {
         return addAblePinCount() > Ball.ZERO_PIN_COUNT;
     }
 
@@ -33,7 +35,11 @@ public class Frame {
         return balls.addAblePinCount(isLastFrame());
     }
 
-    public String getResult() {
-        return balls.getResult();
+    public boolean isSpare() {
+        return balls.isSpare();
+    }
+
+    public List<Ball> unmodifiableBalls() {
+        return balls.unmodifiableBalls();
     }
 }
