@@ -8,5 +8,6 @@ public class Main {
     public static void main(String[] args) {
 
         InputView.createUser();
+        InputView.createScore(1);
     }
 }
