@@ -1,4 +1,5 @@
 import game.Frame;
+import game.Frames;
 import game.GameType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,10 +69,17 @@ public class FrameTest {
     @Test
     @DisplayName("프레임 연결")
     void chainFrames() {
+        Frames frames = new Frames();
+
         Frame first = Frame.of(10);
-        Frame second = Frame.nextOf(first, 5);
+        frames.addFrame(first);
+
+        Frame second = Frame.of(5);
+        frames.addFrame(second);
         second.addScore(5);
-        Frame third = Frame.nextOf(second, 10);
+
+        Frame third = Frame.of(10);
+        frames.addFrame(third);
         assertThat(first.getNextFrame()).isEqualTo(second);
         assertThat(second.getNextFrame()).isEqualTo(third);
     }
@@ -79,8 +87,10 @@ public class FrameTest {
     @Test
     @DisplayName("마지막 프레임의 next추가시 에러")
     void nextFrameWithFinalFrameException() {
+        Frames frames = new Frames();
         Frame frame = Frame.finalOf(10);
-        assertThrows(IllegalArgumentException.class, () -> Frame.nextOf(frame, 3));
+        frames.addFrame(frame);
+        assertThrows(IllegalArgumentException.class, () -> frames.addFrame(Frame.of(1)));
 
     }
 

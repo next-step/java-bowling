@@ -22,17 +22,15 @@ public class Frame {
         this.frameType = frameType;
     }
 
-    public Frame getNextFrame() {
-        return nextFrame;
-    }
-
-    public static Frame nextOf(Frame previousFrame, int score) {
-        if (previousFrame.frameType == FrameType.FINAL) {
+    public void setNextFrame(Frame nextFrame) {
+        if (this.frameType == FrameType.FINAL) {
             throw new IllegalArgumentException(FRAMES_OVER_TEN);
         }
-        Frame frame = of(score);
-        previousFrame.nextFrame = frame;
-        return frame;
+        this.nextFrame = nextFrame;
+    }
+
+    public Frame getNextFrame() {
+        return nextFrame;
     }
 
     public static Frame of(int score) {

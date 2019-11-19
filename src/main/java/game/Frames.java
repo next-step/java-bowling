@@ -16,6 +16,11 @@ public class Frames {
         if (this.frames.size() >= FINAL_FRAME) {
             throw new IllegalArgumentException(FRAMES_OVER_TEN);
         }
+
+        if (frames.size() != 0) {
+            this.frames.get(frames.size()-1).setNextFrame(frame);
+        }
+
         this.frames.add(frame);
     }
 
