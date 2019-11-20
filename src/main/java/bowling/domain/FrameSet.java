@@ -34,10 +34,6 @@ public class FrameSet {
         return state.snapShot();
     }
 
-    public int getHitCount() {
-        return state.getHitCount();
-    }
-
     public boolean isEndedState() {
         return state.isEnd();
     }

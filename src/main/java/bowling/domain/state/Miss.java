@@ -2,14 +2,13 @@ package bowling.domain.state;
 
 public class Miss extends State {
 
-    public Miss(int remainPinCount) {
+    public Miss(int hitCount) {
         this.playCount = 2;
-        this.remainPinCount = remainPinCount;
+        this.hitCount = hitCount;
     }
 
     @Override
-    public State play(int hitCount) {
-        remainPinCount -= hitCount;
+    public State play(int newHitCount) {
         return this;
     }
 
@@ -20,6 +19,6 @@ public class Miss extends State {
 
     @Override
     public State snapShot() {
-        return new Miss(remainPinCount);
+        return new Miss(hitCount);
     }
 }

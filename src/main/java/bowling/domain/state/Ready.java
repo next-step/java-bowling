@@ -4,22 +4,20 @@ public class Ready extends State {
 
     public Ready() {
         this.playCount = 0;
-        this.remainPinCount = INIT_PIT_COUNT;
+        this.hitCount = 0;
     }
 
     @Override
-    public State play(int hitCount) {
-        remainPinCount -= hitCount;
-
-        if (hitCount == INIT_PIT_COUNT) {
+    public State play(int newHitCount) {
+        if (newHitCount == INIT_PIT_COUNT) {
             return new Strike();
         }
 
-        if (hitCount == 0) {
+        if (newHitCount == 0) {
             return new Gutter();
         }
 
-        return new Hit(remainPinCount);
+        return new Hit(newHitCount);
     }
 
     @Override

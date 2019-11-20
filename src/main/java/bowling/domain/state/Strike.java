@@ -4,12 +4,11 @@ public class Strike extends State {
 
     public Strike() {
         this.playCount = 1;
-        this.remainPinCount = 0;
+        this.hitCount = INIT_PIT_COUNT;
     }
 
     @Override
-    public State play(int hitCount) {
-        remainPinCount -= hitCount;
+    public State play(int newHitCount) {
         return this;
     }
 

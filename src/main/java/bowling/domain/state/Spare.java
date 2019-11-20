@@ -4,13 +4,11 @@ public class Spare extends State {
 
     public Spare() {
         this.playCount = 2;
-        this.remainPinCount = 0;
+        this.hitCount = INIT_PIT_COUNT;
     }
 
     @Override
-    public State play(int hitCount) {
-        remainPinCount -= hitCount;
-
+    public State play(int newHitCount) {
         return this;
     }
 

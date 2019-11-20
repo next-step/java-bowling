@@ -2,24 +2,22 @@ package bowling.domain.state;
 
 public class Hit extends State {
 
-    public Hit(int remainPinCount) {
+    public Hit(int hitCount) {
         this.playCount = 1;
-        this.remainPinCount = remainPinCount;
+        this.hitCount = hitCount;
     }
 
     @Override
-    public State play(int hitCount) {
-        remainPinCount -= hitCount;
-
-        if (hitCount == 0) {
+    public State play(int newHitCount) {
+        if (newHitCount == 0) {
             return new Gutter();
         }
 
-        if (remainPinCount == 0) {
+        if (hitCount + newHitCount == INIT_PIT_COUNT) {
             return new Spare();
         }
 
-        return new Miss(remainPinCount);
+        return new Miss(newHitCount);
     }
 
     @Override
@@ -29,6 +27,6 @@ public class Hit extends State {
 
     @Override
     public State snapShot() {
-        return new Hit(remainPinCount);
+        return new Hit(hitCount);
     }
 }
