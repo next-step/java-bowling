@@ -10,10 +10,19 @@ public class FrameAssembler {
 
     public static FrameDTO assemble(Frame frame) {
         if (frame instanceof NormalFrame) {
-            return new FrameDTO(((NormalFrame) frame).getState().view());
+            return assembleNormalFrame(frame);
         }
-        EndFrame f = (EndFrame) frame;
-        return new FrameDTO(f.getStates().view());
+        return assembleEndFrame(frame);
+    }
+
+    private static FrameDTO assembleEndFrame(Frame frame) {
+        EndFrame endFrame = (EndFrame) frame;
+        return new FrameDTO(endFrame.getStates().view());
+    }
+
+    private static FrameDTO assembleNormalFrame(Frame frame) {
+        NormalFrame normalFrame = (NormalFrame) frame;
+        return new FrameDTO(normalFrame.getState().view());
     }
 
 }

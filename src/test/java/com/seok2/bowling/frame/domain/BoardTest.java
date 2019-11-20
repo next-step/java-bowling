@@ -7,6 +7,7 @@ import com.seok2.bowling.pin.domain.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("볼링 게임판 테스트")
 class BoardTest {
 
     @Test
