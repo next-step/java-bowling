@@ -1,9 +1,10 @@
 package frame;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import static frame.FrameNumber.LAST_FRAME_NUMBER;
 
 public class Frames {
 
@@ -24,6 +25,10 @@ public class Frames {
         return frames.size();
     }
 
+    public boolean reachLast() {
+        return getNowFrameNumber() == LAST_FRAME_NUMBER;
+    }
+
     public Frame getNowFrame() {
         if (frames.isEmpty()) {
             frames.add(NormalFrame.firstNormalFrame());
@@ -41,9 +46,9 @@ public class Frames {
         return frames.get(lastIndex);
     }
 
-    public void add(int index, Frame nowFrame) {
-        this.frames.remove(index);
-        this.frames.add(index, nowFrame);
+    public void addLastFrame(LastFrame nowFrame) {
+        this.frames.remove(9);
+        this.frames.add(9, nowFrame);
     }
 
     public Frame findFrame(int i) {
@@ -53,8 +58,12 @@ public class Frames {
         return new NormalFrame(NOT_REAL, new ArrayList<>());
     }
 
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
+    public LastFrame getLastFrame() {
+        return frames.stream()
+                .filter(frame -> frame instanceof LastFrame)
+                .findFirst()
+                .map(frame -> (LastFrame) frame)
+                .orElse(LastFrame.init());
     }
 
     @Override

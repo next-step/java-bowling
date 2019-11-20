@@ -24,7 +24,7 @@ public class LastFrame implements Frame {
 
     @Override
     public void bowling(int score) {
-        if (scores.size() == 0 || scores.size() == 2) {
+        if (scores.size() == 0) {
             scores.addLast(ScoreInfo.firstScore(score));
             return;
         }

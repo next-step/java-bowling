@@ -1,48 +1,29 @@
-import board.Board;
-import frame.Frame;
+import board.Name;
+import frame.Frames;
 import frame.LastFrame;
 import view.InputView;
-import view.OutputView;
+
+import java.util.ArrayList;
 
 public class BowlingController {
 
     public static void main(String[] args) {
 
-        Board board = Board.initBoard(InputView.inputName());
+        Name name = new Name(InputView.inputName());
+        Frames frames = new Frames(new ArrayList<>());
 
-        while (!board.reachLastFrame()) {
-            Frame nowFrame = board.getNowFrame();
-            rollUntilLast(board, nowFrame);
+        while (!frames.reachLast()) {
+            BowlingService.rollUntilLast(name, frames);
         }
 
         //last frame
         LastFrame lastFrame = LastFrame.init();
-        board.addLast(lastFrame);
+        frames.addLastFrame(lastFrame);
 
         while (!lastFrame.isFull()) {
-            rollLast(board, lastFrame);
+            BowlingService.rollLast(name, frames);
         }
 
     }
 
-    private static void rollUntilLast(Board board, Frame nowFrame) {
-        if (board.reachLastFrame()) {
-            return;
-        }
-        nowFrame.bowling(InputView.inputScore(board.getNowFrameNumber()));
-        showBoard(board);
-    }
-
-    private static void rollLast(Board board, LastFrame lastFrame) {
-        lastFrame.bowling(InputView.inputScore(board.getNowFrameNumber()));
-        showBoard(board);
-    }
-
-    private static void showBoard(Board board) {
-        //show
-        OutputView.showBasic();
-        OutputView.showName(board.getName());
-        OutputView.showFrame(board.getFrames());
-        OutputView.showLastFrame(board.getLastFrame());
-    }
 }
