@@ -9,6 +9,7 @@ public class Strike extends State {
 
     @Override
     public State play(int hitCount) {
+        remainPinCount -= hitCount;
         return this;
     }
 

@@ -9,6 +9,8 @@ public class Spare extends State {
 
     @Override
     public State play(int hitCount) {
+        remainPinCount -= hitCount;
+
         return this;
     }
 

@@ -13,6 +13,8 @@ public class Gutter extends State {
 
     @Override
     public State play(int hitCount) {
+        remainPinCount -= hitCount;
+
         if (hitCount == 0) {
             return new Gutter(2);
         }

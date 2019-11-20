@@ -9,6 +9,8 @@ public class Ready extends State {
 
     @Override
     public State play(int hitCount) {
+        remainPinCount -= hitCount;
+
         if (hitCount == INIT_PIT_COUNT) {
             return new Strike();
         }
@@ -17,7 +19,7 @@ public class Ready extends State {
             return new Gutter();
         }
 
-        return new Hit(remainPinCount - hitCount);
+        return new Hit(remainPinCount);
     }
 
     @Override

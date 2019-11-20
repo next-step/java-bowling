@@ -9,15 +9,17 @@ public class Hit extends State {
 
     @Override
     public State play(int hitCount) {
+        remainPinCount -= hitCount;
+
         if (hitCount == 0) {
             return new Gutter();
         }
 
-        if (remainPinCount - hitCount == 0) {
+        if (remainPinCount == 0) {
             return new Spare();
         }
 
-        return new Miss(hitCount);
+        return new Miss(remainPinCount);
     }
 
     @Override

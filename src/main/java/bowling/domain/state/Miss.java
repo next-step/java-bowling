@@ -9,6 +9,7 @@ public class Miss extends State {
 
     @Override
     public State play(int hitCount) {
+        remainPinCount -= hitCount;
         return this;
     }
 
