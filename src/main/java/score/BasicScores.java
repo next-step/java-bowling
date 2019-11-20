@@ -13,6 +13,7 @@ public class BasicScores implements Scores {
         this.scores = new ArrayList<>();
     }
 
+    @Override
     public List<Score> getScores() {
         return scores;
     }
@@ -24,6 +25,7 @@ public class BasicScores implements Scores {
         this.scores.add(Score.of(score));
     }
 
+    @Override
     public int sumScore() {
         return scores.stream()
                 .map(Score::getScore)

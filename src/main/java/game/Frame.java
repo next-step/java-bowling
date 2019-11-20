@@ -99,60 +99,50 @@ public class Frame {
         }
     }
 
-    private int getNeedScoreCount() {
-        if (getGameType() == GameType.STRIKE) {
-            return 2;
-        }
-        if (getGameType() == GameType.SPARE) {
-            return 1;
-        }
-        return 2 - getScores().size();
-    }
-
     private void setScoreForFrame() {
-
-        // 이 전 것들 채우기
-        if (this.prevFrame != null) {
-            if (this.prevFrame.getNeedScoreCount() == 1) {
-                this.prevFrame.scoreForFrame
-                        = this.prevFrame.sumScore() + this.getScores().get(0).getScore();
-            }
-            if (this.prevFrame.getNeedScoreCount() == 2) {
-                if (this.getScores().size() == 2) {
-                    this.prevFrame.scoreForFrame
-                            = this.prevFrame.sumScore() + this.sumScore();
-                }
-                if (this.prevFrame.prevFrame != null && this.prevFrame.prevFrame.getNeedScoreCount() == 2) {
-                    this.prevFrame.prevFrame.scoreForFrame =
-                            this.prevFrame.prevFrame.sumScore()
-                                    + this.prevFrame.getScores().get(0).getScore()
-                                    + this.getScores().get(0).getScore();
-                }
-            }
-        }
-
-        if (this.getNeedScoreCount() == 0) {
+        GameType gameType = this.getGameType();
+        if (gameType == GameType.MISS) {
             this.scoreForFrame = sumScore();
         }
 
-        if (frameType == FrameType.FINAL) {
-            if (this.getNeedScoreCount() == 2 && this.bonus != null &&
-                    this.bonus.getNeedScoreCount() == 0) {
-                this.scoreForFrame = this.sumScore() + this.bonus.sumScore();
-            }
+        if (gameType == GameType.SPARE
+                && this.frameType == FrameType.FINAL
+                && this.bonus != null) {
+            this.scoreForFrame = this.sumScore() + this.bonus.sumScore();
+        }
 
-            if (this.getNeedScoreCount() == 1 && this.bonus != null) {
-                this.scoreForFrame = this.sumScore() + this.bonus.getScores().get(0).getScore();
-            }
+        if (gameType == GameType.STRIKE
+                && this.frameType == FrameType.FINAL
+                && this.bonus != null && this.bonus.getNeedScoreCount() == 0) {
+            this.scoreForFrame = this.sumScore() + this.bonus.sumScore();
+        }
 
-            if (this.prevFrame != null && this.prevFrame.getNeedScoreCount() == 2) {
-                if (this.scores.size() == 2) {
-                    this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.sumScore();
-                }
-                if (this.getNeedScoreCount() == 2 && this.bonus != null) {
-                    this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.getScores().get(0).getScore() + this.bonus.getScores().get(0).getScore();
-                }
-            }
+        if ((gameType == GameType.MISS || gameType == GameType.SPARE)
+                && this.frameType == FrameType.FINAL
+                && this.prevFrame != null && this.prevFrame.getGameType() == GameType.STRIKE) {
+            this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.sumScore();
+        }
+
+        if ((gameType == GameType.MISS || gameType == GameType.SPARE)
+                && this.prevFrame != null && this.prevFrame.getGameType() == GameType.STRIKE) {
+            this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.sumScore();
+        }
+
+        if (gameType == GameType.STRIKE
+                && this.frameType == FrameType.FINAL
+                && this.bonus != null
+                && this.prevFrame != null && this.prevFrame.getGameType() == GameType.STRIKE) {
+            this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.sumScore() + this.bonus.sumScore();
+        }
+
+        if (this.prevFrame != null && this.prevFrame.getGameType() == GameType.SPARE) {
+            this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.getScores().get(0).getScore();
+        }
+
+        if (this.prevFrame != null && this.prevFrame.getGameType() == GameType.STRIKE
+                && this.prevFrame.prevFrame != null && this.prevFrame.prevFrame.getGameType() == GameType.STRIKE) {
+            this.prevFrame.prevFrame.scoreForFrame = this.prevFrame.prevFrame.sumScore()
+                    + this.prevFrame.sumScore() + this.getScores().get(0).getScore();
         }
     }
 

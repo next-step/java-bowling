@@ -58,7 +58,7 @@ public class ResultView {
             if (nextScore < 0) {
                 break;
             }
-            sum += frame.getScoreSum();
+            sum += nextScore;
             totalScoresByFrameString.add(sumToString(sum));
         }
         System.out.println(String.format(TOTAL_SCORE_LINE_FORMAT,

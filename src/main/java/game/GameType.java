@@ -5,10 +5,10 @@ import java.util.Arrays;
 import static score.ScoreType.MAX_SCORE;
 
 public enum GameType {
-    STRIKE(1, MAX_SCORE), SPARE(2, MAX_SCORE), MISS(2),
+    STRIKE(1, MAX_SCORE), SPARE(2, MAX_SCORE), MISS(2), PENDING(1),
     ;
     private int size;
-    private int score;
+    private Integer score;
 
     GameType(int size) {
         this.size = size;
@@ -20,8 +20,9 @@ public enum GameType {
     }
 
     public static GameType get(int size, int score) {
-        return Arrays.stream(values()).filter(gameType -> gameType.size == size)
-                .filter(gameType -> gameType.score == score)
-                .findFirst().orElse(MISS);
+        return Arrays.stream(values())
+                .filter(gameType -> gameType.size == size)
+                .filter(gameType -> gameType.score == null ||  gameType.score == score)
+                .findFirst().orElse(PENDING);
     }
 }

@@ -13,6 +13,7 @@ public class BonusScores implements Scores {
     private static final String BONUS_OVER_TWO_TIMES_WITHOUT_DOUBLE = "세번 째 보너스 게임은 더블 스트라이크 시에만 가능합니다.";
     private List<Score> bonusScores = new ArrayList<>();
 
+    @Override
     public List<Score> getScores() {
         return this.bonusScores;
     }
@@ -31,7 +32,7 @@ public class BonusScores implements Scores {
     }
 
     private void validBonusGame(GameType gameType) {
-        if (gameType == GameType.MISS) {
+        if (gameType == GameType.MISS || gameType == GameType.PENDING) {
             throw new IllegalArgumentException(BONUS_WITH_MISS_GAME);
         }
     }
