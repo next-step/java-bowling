@@ -1,0 +1,12 @@
+package com.seok2.bowling.state.domain;
+
+import com.seok2.bowling.pin.domain.Pin;
+
+public interface State {
+
+    State roll(Pin felled);
+
+    boolean isEnd();
+
+    String view();
+}
