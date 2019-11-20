@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static frame.NormalFrame.LAST_FRAME_NUMBER;
+
 public class Board {
 
     private final Name name;
@@ -21,8 +23,16 @@ public class Board {
         this.frames = new Frames(frames);
     }
 
-    public Integer getNextFrameNumber() {
-        return frames.getNextFrameNumber();
+    public boolean reachLastFrame() {
+        return getNowFrameNumber() == LAST_FRAME_NUMBER;
+    }
+
+    public Integer getNowFrameNumber() {
+        return frames.getNowFrameNumber();
+    }
+
+    public Frame getNowFrame() {
+        return frames.getNowFrame();
     }
 
     @Override
@@ -39,7 +49,7 @@ public class Board {
         return Objects.hash(name, frames);
     }
 
-    public Frame getNowFrame() {
-        return frames.getNowFrame();
+    public void addFrame(Frame nowFrame) {
+        this.frames.add(nowFrame);
     }
 }

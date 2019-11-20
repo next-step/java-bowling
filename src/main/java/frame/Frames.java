@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Frames {
 
+
     private static final int PADDING = 1;
     private static final int NEXT_NUMBER = 2;
     private final List<Frame> frames;
@@ -14,24 +15,25 @@ public class Frames {
         this.frames = frames;
     }
 
-    public Integer getNextFrameNumber() {
+    public Integer getNowFrameNumber() {
         if (frames.isEmpty()) {
             return PADDING;
         }
-        return frames.size() + PADDING;
+        return frames.size();
     }
 
     public Frame getNowFrame() {
         if (frames.isEmpty()) {
             frames.add(NormalFrame.firstNormalFrame());
-            return frames.get(0);
         }
 
-        int lastIndex = frames.size() - 1;
+        int lastIndex = frames.size() - PADDING;
         Frame lastFrame = frames.get(lastIndex);
 
         if (lastFrame.isFull()) {
-            return new NormalFrame(lastIndex + NEXT_NUMBER, new ArrayList<>());
+            NormalFrame nextFrame = new NormalFrame(lastIndex + NEXT_NUMBER, new ArrayList<>());
+            frames.add(nextFrame);
+            return nextFrame;
         }
 
         return frames.get(lastIndex);
@@ -48,5 +50,9 @@ public class Frames {
     @Override
     public int hashCode() {
         return Objects.hash(frames);
+    }
+
+    public void add(Frame nowFrame) {
+        this.frames.add(nowFrame);
     }
 }

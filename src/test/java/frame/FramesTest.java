@@ -32,7 +32,7 @@ class FramesTest {
     @MethodSource("getFrames")
     void getNextFrameNumber(List<Frame> allFrames, int number) {
         Frames frames = new Frames(allFrames);
-        assertThat(frames.getNextFrameNumber()).isEqualTo(number);
+        assertThat(frames.getNowFrameNumber()).isEqualTo(number);
     }
 
     @Test

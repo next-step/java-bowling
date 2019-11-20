@@ -9,6 +9,8 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
     public static final int FIRST_FRAME_NUMBER = 1;
+    public static final int LAST_FRAME_NUMBER = 10;
+
     private static final int FULL_TRY = 2;
 
     private final FrameNumber frameNumber;
@@ -41,6 +43,11 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isFull() {
         return (this.scores.size() == FULL_TRY) || (scores.isStrike());
+    }
+
+    @Override
+    public int getFrameNumber() {
+        return frameNumber.getNumber();
     }
 
     @Override

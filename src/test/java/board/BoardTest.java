@@ -20,6 +20,6 @@ class BoardTest {
     void 다음_프레임번호_가져오기() {
         Board board = Board.initBoard("PCI");
 
-        assertThat(board.getNextFrameNumber()).isEqualTo(1);
+        assertThat(board.getNowFrameNumber()).isEqualTo(1);
     }
 }
