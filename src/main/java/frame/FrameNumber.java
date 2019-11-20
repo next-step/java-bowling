@@ -3,12 +3,17 @@ package frame;
 import java.util.Objects;
 
 public class FrameNumber {
+    public static final int LAST_FRAME_NUMBER = 10;
     private static final int NEXT = 1;
     private final Integer number;
 
     public FrameNumber(Integer number) {
         validateNumber(number);
         this.number = number;
+    }
+
+    public static FrameNumber last() {
+        return new FrameNumber(LAST_FRAME_NUMBER);
     }
 
     private void validateNumber(Integer number) {

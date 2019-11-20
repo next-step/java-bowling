@@ -21,9 +21,21 @@ public class ScoreInfoBundle {
         return scoreInfoBundle.get(FIRST);
     }
 
+    public boolean isStrikeOrStrikeOfLast() {
+        return getLast().isStrike() || getLast().isSpare();
+    }
+
+    public ScoreInfo getLast() {
+        return scoreInfoBundle.get(scoreInfoBundle.size() - 1);
+    }
+
     public void add(ScoreInfo scoreInfo) {
         scoreInfoBundle.add(scoreInfo);
         validate();
+    }
+
+    public void addLast(ScoreInfo scoreInfo) {
+        scoreInfoBundle.add(scoreInfo);
     }
 
     private void validate() {

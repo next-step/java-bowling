@@ -9,25 +9,19 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
     public static final int FIRST_FRAME_NUMBER = 1;
-    public static final int LAST_FRAME_NUMBER = 10;
 
     private static final int FULL_TRY = 2;
 
     private final FrameNumber frameNumber;
     private final ScoreInfoBundle scores;
 
-    public static NormalFrame firstNormalFrame() {
-        return new NormalFrame(FIRST_FRAME_NUMBER, new ArrayList<>());
-    }
-
     NormalFrame(int frameNumber, List<ScoreInfo> scores) {
         this.frameNumber = new FrameNumber(frameNumber);
         this.scores = new ScoreInfoBundle(scores);
     }
 
-    @Override
-    public NormalFrame nextFrame(List<ScoreInfo> scores) {
-        return new NormalFrame(frameNumber.next(), scores);
+    public static NormalFrame firstNormalFrame() {
+        return new NormalFrame(FIRST_FRAME_NUMBER, new ArrayList<>());
     }
 
     @Override
@@ -36,7 +30,8 @@ public class NormalFrame implements Frame {
             scores.add(ScoreInfo.firstScore(score));
             return;
         }
-        ScoreInfo scoreInfo = scores.getFirst().nextScore(score);
+        ScoreInfo scoreInfo = scores.getFirst()
+                .nextScore(score);
         scores.add(scoreInfo);
     }
 

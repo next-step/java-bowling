@@ -6,7 +6,7 @@ import score.Status;
 import java.util.Arrays;
 
 public enum FrontConverter {
-    STRIKE("", (status, score) -> "X"),
+    STRIKE("|", (status, score) -> "X"),
     SPARE("|", (status, score) -> "/"),
     MISS("|", (status, score) -> String.valueOf(score)),
     GUTTER("|", (status, score) -> String.valueOf(score)),
@@ -22,7 +22,7 @@ public enum FrontConverter {
     }
 
     public static String convert(ScoreInfo scoreInfo) {
-        if(scoreInfo == null){
+        if (scoreInfo == null) {
             return EMPTY;
         }
         FrontConverter converter = findByStatus(scoreInfo.getStatus());

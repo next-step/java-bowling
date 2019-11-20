@@ -7,6 +7,11 @@ public class ScoreInfo {
     private final Score score;
     private final Status status;
 
+    public ScoreInfo(int score, Status status) {
+        this.score = new Score(score);
+        this.status = status;
+    }
+
     public static ScoreInfo firstScore(int score) {
         return new ScoreInfo(score, Status.findStatus(score, INIT_SCORE));
     }
@@ -15,13 +20,12 @@ public class ScoreInfo {
         return new ScoreInfo(score, Status.findStatus(score, this.score.getScore()));
     }
 
-    public ScoreInfo(int score, Status status) {
-        this.score = new Score(score);
-        this.status = status;
-    }
-
     public boolean isStrike() {
         return status.equals(Status.STRIKE);
+    }
+
+    public boolean isSpare() {
+        return status.equals(Status.SPARE);
     }
 
     public Status getStatus() {

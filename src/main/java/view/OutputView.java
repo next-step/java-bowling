@@ -1,8 +1,10 @@
 package view;
 
+import dto.LastScoreDto;
 import dto.ScoreDto;
 import frame.Frame;
 import frame.Frames;
+import frame.LastFrame;
 import score.ScoreInfo;
 
 import java.util.List;
@@ -27,7 +29,8 @@ public class OutputView {
         }
     }
 
-    public static void showLastFrame() {
-        System.out.print("      |");
+    public static void showLastFrame(LastFrame lastFrame) {
+        LastScoreDto lastScoreDto = LastScoreDto.of(lastFrame.getScoreInfos());
+        System.out.println(String.format("%2s%2s%-2s|", lastScoreDto.get(0), lastScoreDto.get(1), lastScoreDto.get(2)));
     }
 }

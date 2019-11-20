@@ -5,28 +5,27 @@ import score.ScoreInfo;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ScoreDto {
+public class LastScoreDto {
     private static final String DELIMITER = "|";
     private static final int DELIMITER_INDEX = 1;
     private static final String EMPTY = "";
     private static final int FIRST = 0;
-    private static final int SECOND = 1;
 
-    private final String first;
-    private final String second;
+    private final List<String> scores;
 
-    public ScoreDto(List<String> scores) {
+    public LastScoreDto(List<String> scores) {
         supplyEmpty(scores);
-
-        this.first = deleteStartDelimiter(scores.get(FIRST));
-        this.second = scores.get(SECOND);
+        String first = deleteStartDelimiter(scores.get(FIRST));
+        scores.remove(FIRST);
+        scores.add(0, first);
+        this.scores = scores;
     }
 
-    public static ScoreDto of(List<ScoreInfo> scoreInfos) {
+    public static LastScoreDto of(List<ScoreInfo> scoreInfos) {
         List<String> scores = scoreInfos.stream()
                 .map(FrontConverter::convert)
                 .collect(Collectors.toList());
-        return new ScoreDto(scores);
+        return new LastScoreDto(scores);
     }
 
     private static String deleteStartDelimiter(String raw) {
@@ -37,17 +36,15 @@ public class ScoreDto {
     }
 
     private void supplyEmpty(List<String> scores) {
-        if (scores.size() < 2) {
+        if (scores.size() < 3) {
+            scores.add(EMPTY);
             scores.add(EMPTY);
             scores.add(EMPTY);
         }
     }
 
-    public String getFirst() {
-        return first;
+    public String get(int index) {
+        return scores.get(index);
     }
 
-    public String getSecond() {
-        return second;
-    }
 }

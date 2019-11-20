@@ -26,10 +26,6 @@ public enum Status {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상태값 입니다."));
     }
 
-    private boolean match(Integer score, Integer before) {
-        return matcher.match(score, before);
-    }
-
     private static boolean isStrike(Integer score, Integer before) {
         if (isNotFirstTry(before)) {
             return false;
@@ -54,5 +50,9 @@ public enum Status {
 
     private static boolean isNotFirstTry(Integer before) {
         return before != FIRST_BEFORE;
+    }
+
+    private boolean match(Integer score, Integer before) {
+        return matcher.match(score, before);
     }
 }
