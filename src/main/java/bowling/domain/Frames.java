@@ -1,11 +1,15 @@
 package bowling.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Frames {
     public static final int LAST_FRAME = 10;
+    public static final int NON_SCORE = -1;
+    private static final int SPARE_BONUS_SIZE = 1;
+    private static final int STRIKE_BONUS_SIZE = 2;
     private List<Frame> frames;
 
     public Frames(List<Frame> frames) {
@@ -24,7 +28,43 @@ public class Frames {
         return frames.get(index);
     }
 
-    public List<Frame> unmodifiableFrames() {
-        return Collections.unmodifiableList(frames);
+    public boolean isFallDownAble(int i) {
+        return frames.get(i).isFallDownAble();
+    }
+
+    public void fallDown(int index, int pinCount) {
+        frames.get(index).fallDown(pinCount);
+    }
+
+    public int getScore(int index) {
+        Frame frame = frames.get(index);
+        if (frame.isStrike() || frame.isSpare()) {
+            return sumBonusScore(frame);
+        }
+
+        if (!frame.isEnd()) {
+            return NON_SCORE;
+        }
+
+        return frame.getScore();
+    }
+
+    private int sumBonusScore(Frame frame) {
+        int nextBallsSize = frame.isStrike() ? STRIKE_BONUS_SIZE : SPARE_BONUS_SIZE;
+        Balls nextBalls = nextBalls(frame.getFrameNumber(), nextBallsSize);
+        if (nextBalls.isNotSameSize(nextBallsSize)) {
+            return NON_SCORE;
+        }
+        return frame.getScore() + nextBalls.score();
+    }
+
+    private Balls nextBalls(int start, int size) {
+        List<Ball> balls = IntStream.range(start, frames.size())
+                .mapToObj(i -> frames.get(i))
+                .flatMap(f -> f.unmodifiableBalls().stream())
+                .filter(Ball::isFallDown)
+                .limit(size)
+                .collect(Collectors.toList());
+        return new Balls(balls);
     }
 }

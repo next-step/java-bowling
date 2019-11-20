@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 public class Player {
     private String name;
     private Frames frames;
@@ -17,5 +15,17 @@ public class Player {
 
     public Frame frameByIndex(int index) {
         return frames.frameByIndex(index);
+    }
+
+    public boolean isFallDownAble(int i) {
+        return frames.isFallDownAble(i);
+    }
+
+    public void fallDown(int index, int pinCount) {
+        frames.fallDown(index, pinCount);
+    }
+
+    public int getScore(int index) {
+        return frames.getScore(index);
     }
 }

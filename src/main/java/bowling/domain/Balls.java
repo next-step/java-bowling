@@ -120,4 +120,8 @@ public class Balls {
     public List<Ball> unmodifiableBalls() {
         return Collections.unmodifiableList(this.balls);
     }
+
+    public boolean isNotSameSize(int size) {
+        return balls.size() != size;
+    }
 }

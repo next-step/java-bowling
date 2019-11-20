@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,19 +24,19 @@ public class BallsTest {
 
     static Stream<Arguments> providePinsAndScore() {
         return Stream.of(
-                Arguments.of(new Ball[] {new Ball(5)}, 5),
-                Arguments.of(new Ball[] {new Ball(10)}, 10),
-                Arguments.of(new Ball[] {new Ball(6), new Ball(4)}, 10),
-                Arguments.of(new Ball[] {new Ball(10), new Ball(10), new Ball(5)}, 25),
-                Arguments.of(new Ball[] {new Ball(6), new Ball(4), new Ball(5)}, 15),
-                Arguments.of(new Ball[] {new Ball(10), new Ball(10), new Ball(10)}, 30)
+                Arguments.of(new Ball[]{new Ball(5)}, 5),
+                Arguments.of(new Ball[]{new Ball(10)}, 10),
+                Arguments.of(new Ball[]{new Ball(6), new Ball(4)}, 10),
+                Arguments.of(new Ball[]{new Ball(10), new Ball(10), new Ball(5)}, 25),
+                Arguments.of(new Ball[]{new Ball(6), new Ball(4), new Ball(5)}, 15),
+                Arguments.of(new Ball[]{new Ball(10), new Ball(10), new Ball(10)}, 30)
         );
     }
 
     @Test
     @DisplayName("점수 반영시 핀 수 초과 에러 테스트")
     void fallDownIsOverFlowPinCountException() {
-        Ball[] balls = new Ball[] {new Ball(10), new Ball()};
+        Ball[] balls = new Ball[]{new Ball(10), new Ball()};
         int nextPin = 10;
         Balls expectBalls = new Balls(Arrays.asList(balls));
 
@@ -48,7 +49,7 @@ public class BallsTest {
     @Test
     @DisplayName("점수 반영시 쓰러트릴 수 있는 횟 수 초과 에러 테스트")
     void fallDownIsOverFlowBallCountException() {
-        Ball[] balls = new Ball[] {new Ball(6), new Ball(3)};
+        Ball[] balls = new Ball[]{new Ball(6), new Ball(3)};
         int nextPin = 2;
         Balls expectBalls = new Balls(Arrays.asList(balls));
 
@@ -61,7 +62,7 @@ public class BallsTest {
     @Test
     @DisplayName("마지막 프레임에서 스트라이크 또는 스페어가 아닐때 에러 테스트")
     void fallDownIsNotAddAbleThirdBall() {
-        Ball[] balls = new Ball[] {new Ball(6), new Ball(3), new Ball()};
+        Ball[] balls = new Ball[]{new Ball(6), new Ball(3), new Ball()};
         int nextPin = 2;
         Balls expectBalls = new Balls(Arrays.asList(balls));
 
@@ -84,27 +85,11 @@ public class BallsTest {
         assertThat(balls.addAblePinCount(false)).isEqualTo(0);
     }
 
-    @ParameterizedTest
-    @DisplayName("Balls의 결과를 확인 한다.")
-    @MethodSource(value = "providePinsAndResult")
-    void getResult(int[] pins, boolean isLastFrame, String result) {
-        Balls balls = new Balls(isLastFrame);
-        for (int pin : pins) {
-            balls.fallDown(pin);
-        }
-//        assertThat(balls.getResult()).isEqualTo(result);
-    }
-
-    static Stream<Arguments> providePinsAndResult() {
-        return Stream.of(
-                Arguments.of(new int[] {0}, false, "-"),
-                Arguments.of(new int[] {5}, false, "5"),
-                Arguments.of(new int[] {10}, false, "X"),
-                Arguments.of(new int[] {6, 1}, false, "6|1"),
-                Arguments.of(new int[] {6, 0}, false, "6|-"),
-                Arguments.of(new int[] {6, 4}, false, "6|/"),
-                Arguments.of(new int[] {6, 4, 5}, true, "6|/|5"),
-                Arguments.of(new int[] {10, 10, 10}, true, "X|X|X")
-        );
+    @Test
+    @DisplayName("size가 다른지 확인 한다.")
+    void isNotSame() {
+        List<Ball> ballList = Arrays.asList(new Ball(5), new Ball(5));
+        Balls balls = new Balls(ballList);
+        assertThat(balls.isNotSameSize(ballList.size() - 1)).isTrue();
     }
 }

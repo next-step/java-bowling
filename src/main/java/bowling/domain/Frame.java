@@ -6,6 +6,11 @@ public class Frame {
     private int frameNumber;
     private Balls balls;
 
+    public Frame(int frameNumber, Balls balls) {
+        this.frameNumber = frameNumber;
+        this.balls = balls;
+    }
+
     public Frame(int frameNumber) {
         this.frameNumber = frameNumber;
         this.balls = new Balls(isLastFrame());
@@ -27,6 +32,10 @@ public class Frame {
         return frameNumber;
     }
 
+    public boolean isEnd() {
+        return !isFallDownAble();
+    }
+
     public boolean isFallDownAble() {
         return addAblePinCount() > Ball.ZERO_PIN_COUNT;
     }
@@ -35,7 +44,17 @@ public class Frame {
         return balls.addAblePinCount(isLastFrame());
     }
 
+    public boolean isStrike() {
+        if (isLastFrame()) {
+            return false;
+        }
+        return balls.isStrike();
+    }
+
     public boolean isSpare() {
+        if (isLastFrame()) {
+            return false;
+        }
         return balls.isSpare();
     }
 
