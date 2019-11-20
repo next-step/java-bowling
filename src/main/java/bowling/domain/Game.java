@@ -2,9 +2,6 @@ package bowling.domain;
 
 import bowling.View;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Game {
 
     private Game() { }
@@ -13,14 +10,14 @@ public class Game {
         String playerName = view.getName();
 
         FrameSet frameSet = FrameSet.create(1);
-        List<FrameSet> playResults = new ArrayList<>();
+        FrameResults frameResults = new FrameResults();
 
         while (!frameSet.isEnd()) {
             int hitCountText = view.getHitCount(frameSet.getPlayCount());
             frameSet.play(hitCountText);
 
-            playResults.add(frameSet.snapShot());
-            view.showFrameSetResult(playerName, playResults);
+            frameResults.add(frameSet.snapShot());
+            view.showFrameSetResult(playerName, frameResults.getValue());
 
             frameSet = frameSet.readyNext();
         }
