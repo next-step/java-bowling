@@ -59,17 +59,21 @@ public class ResultView {
                 break;
             }
             sum += frame.getScoreSum();
-            if (sum / 10 == 0) {
-                totalScoresByFrameString.add(String.format(TOTAL_SCORE_SINGLE_DIGIT, sum));
-            } else if (sum / 10 >= 10) {
-                totalScoresByFrameString.add(String.format(TOTAL_SCORE_TRIPLE_DIGIT, sum));
-            } else {
-                totalScoresByFrameString.add(String.format(TOTAL_SCORE_DOUBLE_DIGIT, sum));
-            }
+            totalScoresByFrameString.add(sumToString(sum));
         }
         System.out.println(String.format(TOTAL_SCORE_LINE_FORMAT,
                 gameScoreToString(totalScoresByFrameString)));
         System.out.println();
+    }
+
+    private static String sumToString(int sum) {
+        if (sum / 10 == 0) {
+            return String.format(TOTAL_SCORE_SINGLE_DIGIT, sum);
+        }
+        if (sum / 10 >= 10) {
+            return String.format(TOTAL_SCORE_TRIPLE_DIGIT, sum);
+        }
+        return String.format(TOTAL_SCORE_DOUBLE_DIGIT, sum);
     }
 
     private static String scoreToString(Frame frame) {

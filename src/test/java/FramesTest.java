@@ -16,14 +16,14 @@ public class FramesTest {
         first = Frame.of(10);
         frames.addFrame(first);
 
-        second = Frame.of(5);
+        second = Frame.of(5, first);
         frames.addFrame(second);
         second.addScore(5);
 
-        third = Frame.of(10);
+        third = Frame.of(10, second);
         frames.addFrame(third);
 
-        last = Frame.finalOf(5);
+        last = Frame.finalOf(5, third);
         frames.addFrame(last);
         last.addScore(4);
     }
@@ -31,8 +31,8 @@ public class FramesTest {
     @Test
     @DisplayName("프레임 연결")
     void chainFrames() {
-        assertThat(first.getNextFrame()).isEqualTo(second);
-        assertThat(second.getNextFrame()).isEqualTo(third);
+        assertThat(second.getPrevFrame()).isEqualTo(first);
+        assertThat(third.getPrevFrame()).isEqualTo(second);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class FramesTest {
         Frames frames = new Frames();
         Frame frame = Frame.finalOf(10);
         frames.addFrame(frame);
-        assertThrows(IllegalArgumentException.class, () -> frames.addFrame(Frame.of(1)));
+        assertThrows(IllegalArgumentException.class, () -> frames.addFrame(Frame.of(1, frame)));
     }
 
     @Test
@@ -53,11 +53,11 @@ public class FramesTest {
         assertThat(last.getScoreSum()).isEqualTo(9);
 
         first = Frame.of(10);
-        second = Frame.of(5);
+        second = Frame.of(5, first);
         second.addScore(5);
-        third = Frame.of(8);
+        third = Frame.of(8, second);
         third.addScore(1);
-        last = Frame.finalOf(10);
+        last = Frame.finalOf(10, third);
         last.addBonus(10);
         last.addBonus(10);
 
@@ -72,7 +72,7 @@ public class FramesTest {
         assertThat(third.getScoreSum()).isEqualTo(9);
         assertThat(last.getScoreSum()).isEqualTo(30);
 
-        last = Frame.finalOf(10);
+        last = Frame.finalOf(10, third);
         last.addBonus(9);
 
         assertThat(first.getScoreSum()).isEqualTo(20);

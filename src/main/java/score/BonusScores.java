@@ -46,4 +46,14 @@ public class BonusScores implements Scores {
             throw new IllegalArgumentException(BONUS_OVER_TWO_TIMES_WITHOUT_DOUBLE);
         }
     }
+
+    public int getNeedScoreCount() {
+        if (this.bonusScores.size() == 1) {
+            if (this.bonusScores.get(0).getScore() == 10) {
+                return 1;
+            }
+            return 0;
+        }
+        return 0;
+    }
 }

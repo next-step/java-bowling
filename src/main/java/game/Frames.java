@@ -1,6 +1,6 @@
 package game;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Frames {
@@ -9,18 +9,16 @@ public class Frames {
     private List<Frame> frames;
 
     public Frames() {
-        this.frames = new ArrayList<>();
+        this.frames = new LinkedList<>();
     }
 
     public void addFrame(Frame frame) {
         if (this.frames.size() >= FINAL_FRAME) {
             throw new IllegalArgumentException(FRAMES_OVER_TEN);
         }
-
-        if (frames.size() != 0) {
-            this.frames.get(frames.size()-1).setNextFrame(frame);
+        if (this.frames.size() != 0 && this.frames.get(frames.size() - 1).getFrameType() == FrameType.FINAL) {
+            throw new IllegalArgumentException(FRAMES_OVER_TEN);
         }
-
         this.frames.add(frame);
     }
 
