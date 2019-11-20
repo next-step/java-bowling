@@ -15,13 +15,17 @@ public class ScoreInfo {
         return new ScoreInfo(score, Status.findStatus(score, this.score.getScore()));
     }
 
-    ScoreInfo(int score, Status status) {
+    public ScoreInfo(int score, Status status) {
         this.score = new Score(score);
         this.status = status;
     }
 
     public boolean isStrike() {
         return status.equals(Status.STRIKE);
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     @Override
@@ -44,5 +48,9 @@ public class ScoreInfo {
                 "score=" + score +
                 ", status=" + status +
                 '}';
+    }
+
+    public Integer getScore() {
+        return score.getScore();
     }
 }
