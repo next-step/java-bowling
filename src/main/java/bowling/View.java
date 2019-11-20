@@ -8,6 +8,17 @@ import java.util.Scanner;
 
 public class View {
 
+    private static final String PLAYER_NAME_QUESTION = "플레이어 이름은(3 english letters)?";
+    private static final String HIT_COUNT_QUESTION = "%d 프레임 투구";
+    private static final String SCORE_BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    private static final String SCORE_BOARD_FIRST_DIVIDER = "|  %s |  ";
+    private static final String SCORE_BOARD_FRAME_DIVIDER = " |  ";
+    private static final String SCORE_BOARD_STATE_DIVIDER = "|";
+    private static final String SCORE_BOARD_SET_DIVIDER = " |";
+    private static final String STRIKE = " X ";
+    private static final String SPARE = "/";
+    private static final String GUTTER = "-";
+
     private Scanner scanner;
 
     public View() {
@@ -15,21 +26,21 @@ public class View {
     }
 
     public String getName() {
-        showTextLine("플레이어 이름은(3 english letters)?");
+        showTextLine(PLAYER_NAME_QUESTION);
         return getLine();
     }
     public int getHitCount(int playCount) {
-        showTextLine(String.format("%d 프레임 투구", playCount));
+        showTextLine(String.format(HIT_COUNT_QUESTION, playCount));
         return getNumber();
     }
 
     public void showFrameSetResult(String playerName, List<FrameSet> results) {
-        showBoardTitle();
+        showBoardHeader();
         showScore(playerName, results);
     }
 
     private void showScore(String playerName, List<FrameSet> results) {
-        showText(String.format("|  %s |  ", playerName));
+        showText(String.format(SCORE_BOARD_FIRST_DIVIDER, playerName));
 
         for (FrameSet set : results) {
             showFrameScore(set.getState());
@@ -43,11 +54,11 @@ public class View {
         StringBuilder sb = new StringBuilder();
 
         if (state.getPlayCount() == 2) {
-            sb.append("|");
+            sb.append(SCORE_BOARD_STATE_DIVIDER);
         }
 
         if (state instanceof Strike) {
-            sb.append(" X ");
+            sb.append(STRIKE);
         }
 
         if (state instanceof Hit || state instanceof Miss) {
@@ -55,11 +66,11 @@ public class View {
         }
 
         if (state instanceof Gutter) {
-            sb.append("-");
+            sb.append(GUTTER);
         }
 
         if (state instanceof Spare) {
-            sb.append("/");
+            sb.append(SPARE);
         }
 
         showText(sb.toString());
@@ -67,14 +78,14 @@ public class View {
 
     private void showDividerIfPossible(FrameSet set) {
         if (set.isEnd()) {
-            showText(" |");
+            showText(SCORE_BOARD_SET_DIVIDER);
         } else if (set.isEndedState()) {
-            showText(" |  ");
+            showText(SCORE_BOARD_FRAME_DIVIDER);
         }
     }
 
-    private void showBoardTitle() {
-        showTextLine("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
+    private void showBoardHeader() {
+        showTextLine(SCORE_BOARD_HEADER);
     }
 
     private void nextLine() {
