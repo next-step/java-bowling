@@ -29,6 +29,7 @@ public class View {
         showTextLine(PLAYER_NAME_QUESTION);
         return getLine();
     }
+
     public int getHitCount(int playCount) {
         showTextLine(String.format(HIT_COUNT_QUESTION, playCount));
         return getNumber();

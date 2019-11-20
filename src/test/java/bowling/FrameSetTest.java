@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.FrameSet;
+import bowling.domain.NormalFrameSet;
 import bowling.domain.state.State;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ public class FrameSetTest {
 
     @Test
     void playTest() {
-        FrameSet firstFrameSet = FrameSet.create(1);
+        FrameSet firstFrameSet = NormalFrameSet.create(1);
         State lastState = firstFrameSet
                 .play(10) // Strike
                 .play(10) // Strike
@@ -21,7 +22,8 @@ public class FrameSetTest {
                 .play(10) // Strike
                 .play(10) // Strike
                 .play(10) // Strike
-                .play(10); // Strike
+                .play(10) // Strike
+                .play(10); // Strike (bonus)
 
         assertThat(lastState.isEnd()).isTrue();
 
@@ -36,7 +38,9 @@ public class FrameSetTest {
                 .play(10) // Strike
                 .play(10) // Strike
                 .play(10) // Strike
-                .play(10); // Strike
+                .play(1) // Hit
+                .play(9) // Spare
+                .play(10); // Strike (bonus)
 
         assertThat(lastState2.isEnd()).isTrue();
     }

@@ -4,12 +4,13 @@ import bowling.View;
 
 public class Game {
 
-    private Game() { }
+    private Game() {
+    }
 
     public static void play(View view) {
         String playerName = view.getName();
 
-        FrameSet frameSet = FrameSet.create(1);
+        FrameSet frameSet = NormalFrameSet.create(1);
         FrameResults frameResults = new FrameResults();
 
         while (!frameSet.isEnd()) {

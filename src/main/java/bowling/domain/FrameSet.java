@@ -1,18 +1,13 @@
 package bowling.domain;
 
-import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
-public class FrameSet {
+public abstract class FrameSet {
 
-    private final int playCount;
-    private State state;
+    protected final int playCount;
+    protected State state;
 
-    public static FrameSet create(int playCount) {
-        return new FrameSet(playCount, new Ready());
-    }
-
-    private FrameSet(int playCount, State state) {
+    protected FrameSet(int playCount, State state) {
         this.playCount = playCount;
         this.state = state;
     }
@@ -22,13 +17,11 @@ public class FrameSet {
         return state;
     }
 
-    public FrameSet readyNext() {
-        if (state.isEnd()) {
-            return FrameSet.create(playCount + 1);
-        }
+    public abstract FrameSet readyNext();
 
-        return this;
-    }
+    public abstract boolean isEnd();
+
+    public abstract FrameSet snapShot();
 
     public State getState() {
         return state.snapShot();
@@ -40,13 +33,5 @@ public class FrameSet {
 
     public int getPlayCount() {
         return playCount;
-    }
-
-    public boolean isEnd() {
-        return playCount > 10;
-    }
-
-    public FrameSet snapShot() {
-        return new FrameSet(playCount, state.snapShot());
     }
 }
