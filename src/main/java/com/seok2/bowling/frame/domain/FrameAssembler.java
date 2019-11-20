@@ -17,12 +17,12 @@ public class FrameAssembler {
 
     private static FrameDTO assembleEndFrame(Frame frame) {
         EndFrame endFrame = (EndFrame) frame;
-        return new FrameDTO(endFrame.getStates().view());
+        return new FrameDTO(endFrame.getStates().view(), FrameScoreAssembler.assemble(frame.getScore()));
     }
 
     private static FrameDTO assembleNormalFrame(Frame frame) {
         NormalFrame normalFrame = (NormalFrame) frame;
-        return new FrameDTO(normalFrame.getState().view());
+        return new FrameDTO(normalFrame.getState().view(), FrameScoreAssembler.assemble(frame.getScore()));
     }
 
 }

@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 class SpareTest {
 
     @Test
-    @DisplayName("Continue 상테에서 넘어진 핀과 같은 수의 넘어진 핀을 가진다.")
+    @DisplayName("Cover 상테에서 넘어진 핀과 같은 수의 넘어진 핀을 가진다.")
     void of() {
-        assertThat(Continue.of(Pin.of(7)).roll(Pin.of(3))).isEqualTo(Spare.of(Pin.of(7)));
+        assertThat(Cover.of(Pin.of(7)).roll(Pin.of(3))).isEqualTo(Spare.of(Pin.of(7)));
     }
 
     @Test

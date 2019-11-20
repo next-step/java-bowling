@@ -16,5 +16,6 @@ public interface Frame {
 
     boolean isEnd();
 
+    FrameScore getScore();
 
 }

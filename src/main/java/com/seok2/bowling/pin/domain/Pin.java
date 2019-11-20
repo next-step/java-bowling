@@ -1,5 +1,6 @@
 package com.seok2.bowling.pin.domain;
 
+import com.seok2.bowling.frame.domain.Score;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
@@ -37,6 +38,10 @@ public class Pin {
 
     public boolean isFelledAtAll() {
         return felled == MIN;
+    }
+
+    public Score toScore() {
+        return Score.of(felled);
     }
 
     @Override

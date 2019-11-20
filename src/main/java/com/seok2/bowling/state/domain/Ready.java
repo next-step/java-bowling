@@ -1,5 +1,6 @@
 package com.seok2.bowling.state.domain;
 
+import com.seok2.bowling.frame.domain.Score;
 import com.seok2.bowling.pin.domain.Pin;
 
 public class Ready extends Running {
@@ -13,7 +14,12 @@ public class Ready extends Running {
         if (felled.isAllFelled()) {
             return Strike.of();
         }
-        return Continue.of(felled);
+        return Cover.of(felled);
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ZERO;
     }
 
     @Override
