@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
     private static final int FIRST_FRAME_NUMBER = 1;
+    private static final int FULL_TRY = 2;
 
     private final FrameNumber frameNumber;
     private final ScoreInfoBundle scores;
@@ -21,8 +22,24 @@ public class NormalFrame implements Frame {
         this.scores = new ScoreInfoBundle(scores);
     }
 
+    @Override
     public NormalFrame nextFrame(List<ScoreInfo> scores) {
         return new NormalFrame(frameNumber.next(), scores);
+    }
+
+    @Override
+    public void bowling(int score) {
+        if (scores.size() == 0) {
+            scores.add(ScoreInfo.firstScore(score));
+            return;
+        }
+        ScoreInfo scoreInfo = scores.getFirst().nextScore(score);
+        scores.add(scoreInfo);
+    }
+
+    @Override
+    public boolean isFull() {
+        return this.scores.size() == FULL_TRY;
     }
 
     @Override
@@ -37,5 +54,13 @@ public class NormalFrame implements Frame {
     @Override
     public int hashCode() {
         return Objects.hash(frameNumber, scores);
+    }
+
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "frameNumber=" + frameNumber +
+                ", scores=" + scores +
+                '}';
     }
 }

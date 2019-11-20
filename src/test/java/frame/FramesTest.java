@@ -1,8 +1,10 @@
 package frame;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import score.ScoreInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,10 +26,33 @@ class FramesTest {
         return new NormalFrame(1, new ArrayList<>());
     }
 
+    private static
+
     @ParameterizedTest
     @MethodSource("getFrames")
     void getNextFrameNumber(List<Frame> allFrames, int number) {
         Frames frames = new Frames(allFrames);
         assertThat(frames.getNextFrameNumber()).isEqualTo(number);
+    }
+
+    @Test
+    void getNowFrame() {
+        Frames frames = new Frames(new ArrayList<>());
+        Frame nowFrame = frames.getNowFrame();
+        System.out.println(nowFrame);
+
+        assertThat(nowFrame).isEqualTo(new NormalFrame(1, new ArrayList<>()));
+
+        nowFrame.bowling(1);
+        nowFrame = frames.getNowFrame();
+        System.out.println(nowFrame);
+
+        assertThat(nowFrame).isEqualTo(new NormalFrame(1, Arrays.asList(ScoreInfo.firstScore(1))));
+
+        nowFrame.bowling(1);
+        nowFrame = frames.getNowFrame();
+        System.out.println(nowFrame);
+
+        assertThat(nowFrame).isEqualTo(new NormalFrame(2, new ArrayList<>()));
     }
 }

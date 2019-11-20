@@ -24,8 +24,8 @@ public class Score {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Score that = (Score) o;
-        return Objects.equals(score, that.score);
+        Score score1 = (Score) o;
+        return Objects.equals(score, score1.score);
     }
 
     @Override

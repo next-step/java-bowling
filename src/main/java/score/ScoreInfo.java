@@ -3,19 +3,20 @@ package score;
 import java.util.Objects;
 
 public class ScoreInfo {
+    private static final int INIT_SCORE = -1;
     private final Score score;
     private final Status status;
 
     public static ScoreInfo firstScore(int score) {
-        return new ScoreInfo(new Score(score), Status.findStatus(score, score));
+        return new ScoreInfo(score, Status.findStatus(score, INIT_SCORE));
     }
 
     public ScoreInfo nextScore(int score) {
-        return new ScoreInfo(new Score(score), Status.findStatus(score, this.score.getScore() + score));
+        return new ScoreInfo(score, Status.findStatus(score, this.score.getScore()));
     }
 
-    ScoreInfo(Score score, Status status) {
-        this.score = score;
+    ScoreInfo(int score, Status status) {
+        this.score = new Score(score);
         this.status = status;
     }
 
@@ -31,5 +32,13 @@ public class ScoreInfo {
     @Override
     public int hashCode() {
         return Objects.hash(score, status);
+    }
+
+    @Override
+    public String toString() {
+        return "ScoreInfo{" +
+                "score=" + score +
+                ", status=" + status +
+                '}';
     }
 }

@@ -38,4 +38,8 @@ public class Board {
     public int hashCode() {
         return Objects.hash(name, frames);
     }
+
+    public Frame getNowFrame() {
+        return frames.getNowFrame();
+    }
 }
