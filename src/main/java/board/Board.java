@@ -35,6 +35,10 @@ public class Board {
         return frames.getNowFrame();
     }
 
+    public String getName() {
+        return name.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,5 +55,9 @@ public class Board {
 
     public void addFrame(Frame nowFrame) {
         this.frames.add(nowFrame);
+    }
+
+    public Frames getFrames() {
+        return frames;
     }
 }

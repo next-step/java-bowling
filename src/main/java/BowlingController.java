@@ -1,6 +1,7 @@
 import board.Board;
 import frame.Frame;
 import view.InputView;
+import view.OutputView;
 
 public class BowlingController {
 
@@ -22,5 +23,9 @@ public class BowlingController {
         }
         nowFrame.bowling(InputView.inputScore(board.getNowFrameNumber()));
         //show
+        OutputView.showBasic();
+        OutputView.showName(board.getName());
+        OutputView.showFrame(board.getFrames());
+        OutputView.showLastFrame();
     }
 }
