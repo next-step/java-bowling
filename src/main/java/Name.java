@@ -8,6 +8,10 @@ public class Name {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private void validateName(String name) {
         if (name.length() > 3) {
             throw new IllegalArgumentException(name + "은 3글자보다 긴 이름입니다.");
