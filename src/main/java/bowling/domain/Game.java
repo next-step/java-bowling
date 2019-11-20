@@ -1,21 +1,26 @@
 package bowling.domain;
 
 import bowling.View;
-import bowling.domain.state.State;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
 
     private Game() { }
 
     public static void play(View view) {
-        FrameSet frameSet = FrameSet.createFirst();
+        FrameSet frameSet = FrameSet.create(1);
+        List<FrameSet> playResults = new ArrayList<>();
 
         while (!frameSet.isEnd()) {
             int hitCountText = view.getHitCount(frameSet.getPlayCount());
-            State currentState = frameSet.play(hitCountText);
-            view.showFrameSetResult(currentState);
+            frameSet.play(hitCountText);
 
-            frameSet = frameSet.readyNextSet();
+            playResults.add(frameSet.snapShot());
+            view.showFrameSetResult(playResults);
+
+            frameSet = frameSet.readyNext();
         }
     }
 }

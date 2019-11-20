@@ -24,4 +24,9 @@ public class Hit extends State {
     public boolean isEnd() {
         return false;
     }
+
+    @Override
+    public State snapShot() {
+        return new Hit(remainPinCount);
+    }
 }

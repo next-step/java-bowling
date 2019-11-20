@@ -24,4 +24,9 @@ public class Ready extends State {
     public boolean isEnd() {
         return false;
     }
+
+    @Override
+    public State snapShot() {
+        return new Ready();
+    }
 }

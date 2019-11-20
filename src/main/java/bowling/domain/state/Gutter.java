@@ -28,4 +28,9 @@ public class Gutter extends State {
     public boolean isEnd() {
         return playCount == 2;
     }
+
+    @Override
+    public State snapShot() {
+        return new Gutter(playCount);
+    }
 }

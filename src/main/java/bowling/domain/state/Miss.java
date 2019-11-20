@@ -16,4 +16,9 @@ public class Miss extends State {
     public boolean isEnd() {
         return true;
     }
+
+    @Override
+    public State snapShot() {
+        return new Miss(remainPinCount);
+    }
 }

@@ -16,4 +16,9 @@ public class Strike extends State {
     public boolean isEnd() {
         return true;
     }
+
+    @Override
+    public State snapShot() {
+        return new Strike();
+    }
 }

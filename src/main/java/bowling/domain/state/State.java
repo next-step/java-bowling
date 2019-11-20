@@ -14,4 +14,10 @@ public abstract class State {
     public int getHitCount() {
         return INIT_PIT_COUNT - remainPinCount;
     }
+
+    public int getPlayCount() {
+        return playCount;
+    }
+
+    public abstract State snapShot();
 }

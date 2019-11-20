@@ -10,7 +10,7 @@ public class FrameSetTest {
 
     @Test
     void playTest() {
-        FrameSet firstFrameSet = FrameSet.createFirst();
+        FrameSet firstFrameSet = FrameSet.create(1);
         State lastState = firstFrameSet
                 .play(10) // Strike
                 .play(10) // Strike
