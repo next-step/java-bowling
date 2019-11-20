@@ -27,8 +27,9 @@ public class EndFrame implements Frame {
 
     @Override
     public FrameScore getScore() {
-        if(!isEnd())
+        if (!isEnd()) {
             return FrameScore.PENDING;
+        }
         return states.getScore();
     }
 }

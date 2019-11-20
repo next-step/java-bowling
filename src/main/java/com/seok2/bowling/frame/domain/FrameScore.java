@@ -6,7 +6,11 @@ import com.seok2.bowling.state.domain.Strike;
 
 public class FrameScore implements Observer {
 
+
     public static final FrameScore PENDING = new FrameScore(null, Score.ZERO, 3);
+    public static final int REMAINING_ZERO = 0;
+    public static final int REMAINING_ONE = 1;
+    public static final int REMAINING_TWO = 2;
 
     private final ScorePublisher publisher;
     private Score score;
@@ -21,10 +25,17 @@ public class FrameScore implements Observer {
     private FrameScore(ScorePublisher publisher, State state) {
         this.publisher = publisher;
         this.score = state.getScore();
-        this.remaining = state instanceof Strike ? 2 : state instanceof Spare ? 1 : 0;
-        if (remaining > 0) {
+        this.remaining = getRemaining(state);
+        if (remaining > REMAINING_ZERO) {
             publisher.subscribe(this);
         }
+    }
+
+    private int getRemaining(State state) {
+         if(state instanceof Strike) {
+            return REMAINING_TWO;
+         }
+        return state instanceof Spare ? REMAINING_ONE : REMAINING_ZERO;
     }
 
     public static FrameScore of(ScorePublisher publisher, State state) {

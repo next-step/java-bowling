@@ -36,7 +36,7 @@ public class EndFrameStates {
             .map(State::getScore)
             .reduce(Score::add)
             .map(FrameScore::of)
-            .get();
+            .orElseThrow(IllegalAccessError::new);
     }
 
     public String view() {
@@ -45,7 +45,6 @@ public class EndFrameStates {
             .map(State::view)
             .collect(Collectors.joining("|"));
     }
-
 
 
 }

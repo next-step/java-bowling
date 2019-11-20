@@ -1,7 +1,6 @@
 package com.seok2.bowling.frame.domain;
 
 import com.seok2.bowling.pin.domain.Pin;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 

@@ -5,7 +5,7 @@ public class FrameDTO {
     private String record;
     private FrameScoreDTO frameScoreDTO;
 
-    public FrameDTO(String record , FrameScoreDTO frameScoreDTO) {
+    public FrameDTO(String record, FrameScoreDTO frameScoreDTO) {
         this.record = record;
         this.frameScoreDTO = frameScoreDTO;
     }

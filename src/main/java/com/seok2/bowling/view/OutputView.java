@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 import com.seok2.bowling.frame.domain.Board;
-import com.seok2.bowling.frame.domain.Score;
 import com.seok2.bowling.frame.dto.BoardDTO;
 import com.seok2.bowling.frame.dto.FrameDTO;
 import com.seok2.bowling.frame.dto.FrameScoreDTO;
@@ -56,7 +55,7 @@ public class OutputView {
     private static List<String> accumulate(List<Integer> list) {
         List<String> result = new ArrayList<>();
         int current = 0;
-        for (Integer score: list) {
+        for (Integer score : list) {
             current += score;
             result.add(String.format(STRING_FORMAT, current));
         }

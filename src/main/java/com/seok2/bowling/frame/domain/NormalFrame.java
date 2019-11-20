@@ -15,7 +15,7 @@ public class NormalFrame implements Frame {
     }
 
     public void createScore(ScorePublisher publisher) {
-        if(!isEnd()){
+        if (!isEnd()) {
             throw new IllegalArgumentException("아직 종료 되진 않은 프레임입니다.");
         }
         score = FrameScore.of(publisher, state);
