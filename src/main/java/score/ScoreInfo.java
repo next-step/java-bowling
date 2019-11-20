@@ -20,6 +20,10 @@ public class ScoreInfo {
         this.status = status;
     }
 
+    public boolean isStrike() {
+        return status.equals(Status.STRIKE);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

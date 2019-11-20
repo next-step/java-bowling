@@ -3,18 +3,19 @@ package frame;
 import score.ScoreInfo;
 import score.ScoreInfoBundle;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    private static final int FIRST_FRAME_NUMBER = 1;
+    public static final int FIRST_FRAME_NUMBER = 1;
     private static final int FULL_TRY = 2;
 
     private final FrameNumber frameNumber;
     private final ScoreInfoBundle scores;
 
-    public static NormalFrame firstNormalFrame(List<ScoreInfo> scores) {
-        return new NormalFrame(FIRST_FRAME_NUMBER, scores);
+    public static NormalFrame firstNormalFrame() {
+        return new NormalFrame(FIRST_FRAME_NUMBER, new ArrayList<>());
     }
 
     NormalFrame(int frameNumber, List<ScoreInfo> scores) {
@@ -39,7 +40,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFull() {
-        return this.scores.size() == FULL_TRY;
+        return (this.scores.size() == FULL_TRY) || (scores.isStrike());
     }
 
     @Override

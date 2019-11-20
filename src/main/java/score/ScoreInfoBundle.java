@@ -23,6 +23,11 @@ public class ScoreInfoBundle {
         scoreInfoBundle.add(scoreInfo);
     }
 
+    public boolean isStrike() {
+        return scoreInfoBundle.stream()
+                .anyMatch(ScoreInfo::isStrike);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

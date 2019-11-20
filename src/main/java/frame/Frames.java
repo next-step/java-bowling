@@ -23,7 +23,7 @@ public class Frames {
 
     public Frame getNowFrame() {
         if (frames.isEmpty()) {
-            frames.add(new NormalFrame(1, new ArrayList<>()));
+            frames.add(NormalFrame.firstNormalFrame());
             return frames.get(0);
         }
 
