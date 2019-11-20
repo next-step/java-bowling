@@ -10,6 +10,8 @@ public class Game {
     private Game() { }
 
     public static void play(View view) {
+        String playerName = view.getName();
+
         FrameSet frameSet = FrameSet.create(1);
         List<FrameSet> playResults = new ArrayList<>();
 
@@ -18,7 +20,7 @@ public class Game {
             frameSet.play(hitCountText);
 
             playResults.add(frameSet.snapShot());
-            view.showFrameSetResult(playResults);
+            view.showFrameSetResult(playerName, playResults);
 
             frameSet = frameSet.readyNext();
         }

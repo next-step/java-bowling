@@ -14,12 +14,16 @@ public class View {
         this.scanner = new Scanner(System.in);
     }
 
+    public String getName() {
+        showTextLine("플레이어 이름은(3 english letters)?");
+        return getLine();
+    }
     public int getHitCount(int playCount) {
         showTextLine(String.format("%d 프레임 투구", playCount));
         return getNumber();
     }
 
-    public void showFrameSetResult(List<FrameSet> results) {
+    public void showFrameSetResult(String playerName, List<FrameSet> results) {
         showText("|   ");
 
         for (FrameSet set : results) {
