@@ -1,3 +1,5 @@
+package board;
+
 import java.util.Objects;
 
 public class Name {

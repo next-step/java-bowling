@@ -21,10 +21,9 @@ public class NormalFrame implements Frame {
         this.scores = new ScoreInfoBundle(scores);
     }
 
-    public NormalFrame nextNormalFrame(List<ScoreInfo> scores) {
+    public NormalFrame nextFrame(List<ScoreInfo> scores) {
         return new NormalFrame(frameNumber.next(), scores);
     }
-
 
     @Override
     public boolean equals(Object o) {

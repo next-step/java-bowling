@@ -19,6 +19,6 @@ class NormalFrameTest {
     void nextNormalFrame() {
         NormalFrame firstFrame = NormalFrame.firstNormalFrame(new ArrayList<>());
 
-        assertThat(firstFrame.nextNormalFrame(new ArrayList<>())).isEqualTo(new NormalFrame(2, new ArrayList<>()));
+        assertThat(firstFrame.nextFrame(new ArrayList<>())).isEqualTo(new NormalFrame(2, new ArrayList<>()));
     }
 }
