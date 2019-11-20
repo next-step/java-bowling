@@ -24,30 +24,30 @@ public class View {
     }
 
     public void showFrameSetResult(String playerName, List<FrameSet> results) {
-        showText("|   ");
+        showBoardTitle();
+        showScore(playerName, results);
+    }
+
+    private void showScore(String playerName, List<FrameSet> results) {
+        showText(String.format("|  %s |  ", playerName));
 
         for (FrameSet set : results) {
-            showText(getFrameStateText(set.getState()));
-
-            if (set.isEnd()) {
-                showText("   |");
-            } else if (set.isEndedState()) {
-                showText("   |   ");
-            }
+            showFrameScore(set.getState());
+            showDividerIfPossible(set);
         }
 
         nextLine();
     }
 
-    private String getFrameStateText(State state) {
+    private void showFrameScore(State state) {
         StringBuilder sb = new StringBuilder();
 
         if (state.getPlayCount() == 2) {
-            sb.append(" | ");
+            sb.append("|");
         }
 
         if (state instanceof Strike) {
-            sb.append("  X ");
+            sb.append(" X ");
         }
 
         if (state instanceof Hit || state instanceof Miss) {
@@ -62,7 +62,19 @@ public class View {
             sb.append("/");
         }
 
-        return sb.toString();
+        showText(sb.toString());
+    }
+
+    private void showDividerIfPossible(FrameSet set) {
+        if (set.isEnd()) {
+            showText(" |");
+        } else if (set.isEndedState()) {
+            showText(" |  ");
+        }
+    }
+
+    private void showBoardTitle() {
+        showTextLine("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
     }
 
     private void nextLine() {
