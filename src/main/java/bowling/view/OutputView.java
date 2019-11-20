@@ -24,30 +24,32 @@ public class OutputView {
     private static final String EMPTY_TEXT = "";
     private static final int SECOND_BALL_INDEX = 1;
     private static final int NON_SCORE = -1;
+    private static final int ZERO_SCORE = 0;
 
     public static void printDashBoard(Player player) {
         printHeader();
         printPlayer(player);
     }
 
-    private static void printPlayer(Player player) {
-        List<String> status = new ArrayList<>();
-        List<String> score = new ArrayList<>();
-        status.add(frameFormat(player.getName()));
-        score.add(frameFormat(EMPTY_TEXT));
+    private static void printHeader() {
+        System.out.println(DASH_BOARD_HEADER);
+    }
 
-        int scoreSum = 0;
+    private static void printPlayer(Player player) {
+        printStatus(player);
+        printScore(player);
+    }
+
+    private static void printStatus(Player player) {
+        List<String> status = new ArrayList<>();
+        status.add(frameFormat(player.getName()));
+
         for (int i = 0; i < Frames.LAST_FRAME; i++) {
             Frame frame = player.frameByIndex(i);
             status.add(frameFormat(frameResult(frame)));
-            int frameScore = player.getScore(i);
-            scoreSum += frameScore == NON_SCORE ? 0 : frameScore;
-            String scoreString = frameScore == NON_SCORE ? EMPTY_TEXT : String.valueOf(scoreSum);
-            score.add(frameFormat(scoreString));
         }
 
         System.out.println(String.format(DASH_BOARD_FORMAT, String.join(DASH_BOARD_SEPARATOR, status)));
-        System.out.println(String.format(DASH_BOARD_FORMAT, String.join(DASH_BOARD_SEPARATOR, score)));
     }
 
     private static String frameResult(Frame frame) {
@@ -81,8 +83,19 @@ public class OutputView {
         return String.valueOf(ball.getPin());
     }
 
-    private static void printHeader() {
-        System.out.println(DASH_BOARD_HEADER);
+    private static void printScore(Player player) {
+        List<String> score = new ArrayList<>();
+        score.add(frameFormat(EMPTY_TEXT));
+
+        int scoreSum = 0;
+        for (int i = 0; i < Frames.LAST_FRAME; i++) {
+            int frameScore = player.getScore(i);
+            scoreSum += frameScore == NON_SCORE ? ZERO_SCORE : frameScore;
+            String scoreString = frameScore == NON_SCORE ? EMPTY_TEXT : String.valueOf(scoreSum);
+            score.add(frameFormat(scoreString));
+        }
+
+        System.out.println(String.format(DASH_BOARD_FORMAT, String.join(DASH_BOARD_SEPARATOR, score)));
     }
 
     private static String frameFormat(String result) {
