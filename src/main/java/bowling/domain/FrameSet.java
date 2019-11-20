@@ -8,16 +8,24 @@ public class FrameSet {
     private final int playCount;
     private State state = new Ready();
 
-    public FrameSet(int playCount) {
+    public static FrameSet createFirst() {
+        return new FrameSet(1);
+    }
+
+    private FrameSet(int playCount) {
         this.playCount = playCount;
     }
 
-    public FrameSet play(int hitCount) {
+    public State play(int hitCount) {
         state = state.play(hitCount);
+        return state;
+    }
 
+    public FrameSet readyNextSet() {
         if (state.isEnd()) {
             return new FrameSet(playCount + 1);
         }
+
         return this;
     }
 

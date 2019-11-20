@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.FrameSet;
+import bowling.domain.state.State;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,8 +10,8 @@ public class FrameSetTest {
 
     @Test
     void playTest() {
-        FrameSet firstFrameSet = new FrameSet(1);
-        FrameSet lastFrame = firstFrameSet
+        FrameSet firstFrameSet = FrameSet.createFirst();
+        State lastState = firstFrameSet
                 .play(10) // Strike
                 .play(10) // Strike
                 .play(10) // Strike
@@ -22,9 +23,9 @@ public class FrameSetTest {
                 .play(10) // Strike
                 .play(10); // Strike
 
-        assertThat(lastFrame.isEnd()).isTrue();
+        assertThat(lastState.isEnd()).isTrue();
 
-        FrameSet lastFrame2 = firstFrameSet
+        State lastState2 = firstFrameSet
                 .play(10) // Strike
                 .play(8) // Hit
                 .play(2) // Spare
@@ -37,6 +38,6 @@ public class FrameSetTest {
                 .play(10) // Strike
                 .play(10); // Strike
 
-        assertThat(lastFrame2.isEnd()).isTrue();
+        assertThat(lastState2.isEnd()).isTrue();
     }
 }

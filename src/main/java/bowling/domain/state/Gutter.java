@@ -8,7 +8,7 @@ public class Gutter extends State {
 
     public Gutter(int playCount) {
         this.playCount = playCount;
-        this.remainPinCount = 10;
+        this.remainPinCount = INIT_PIT_COUNT;
     }
 
     @Override
@@ -17,7 +17,7 @@ public class Gutter extends State {
             return new Gutter(2);
         }
 
-        if (hitCount == 10) {
+        if (hitCount == INIT_PIT_COUNT) {
             return new Spare();
         }
 
