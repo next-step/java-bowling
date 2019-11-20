@@ -1,10 +1,12 @@
 package score;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class ScoreInfoBundle {
     private static final int FIRST = 0;
+    private static final int MAX = 10;
     private final List<ScoreInfo> scoreInfoBundle;
 
     public ScoreInfoBundle(List<ScoreInfo> scoreInfoBundle) {
@@ -21,11 +23,26 @@ public class ScoreInfoBundle {
 
     public void add(ScoreInfo scoreInfo) {
         scoreInfoBundle.add(scoreInfo);
+        validate();
+    }
+
+    private void validate() {
+        Integer reduce = scoreInfoBundle.stream()
+                .map(ScoreInfo::getScore)
+                .reduce(0, Integer::sum);
+
+        if (reduce > MAX) {
+            throw new IllegalArgumentException("두 점수의 합이 10점을 넘었습니다.");
+        }
     }
 
     public boolean isStrike() {
         return scoreInfoBundle.stream()
                 .anyMatch(ScoreInfo::isStrike);
+    }
+
+    public List<ScoreInfo> getScoreInfoBundle() {
+        return Collections.unmodifiableList(scoreInfoBundle);
     }
 
     @Override

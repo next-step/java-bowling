@@ -20,6 +20,6 @@ class NameTest {
 
         assertThatThrownBy(() -> new Name(invalidName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(invalidName + "은 3글자보다 긴 이름입니다.");
+                .hasMessage(invalidName + "은 3글자가 아닙니다.");
     }
 }

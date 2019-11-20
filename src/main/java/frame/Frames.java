@@ -55,4 +55,11 @@ public class Frames {
     public void add(Frame nowFrame) {
         this.frames.add(nowFrame);
     }
+
+    public Frame findFrame(int i) {
+        if (frames.size() > i) {
+            return frames.get(i);
+        }
+        return new NormalFrame(999, new ArrayList<>());
+    }
 }

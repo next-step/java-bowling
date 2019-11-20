@@ -46,8 +46,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int getFrameNumber() {
-        return frameNumber.getNumber();
+    public List<ScoreInfo> getScoreInfos() {
+        return scores.getScoreInfoBundle();
     }
 
     @Override

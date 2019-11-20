@@ -12,7 +12,7 @@ public class FrameNumber {
     }
 
     private void validateNumber(Integer number) {
-        if (number < 1 || number > 10) {
+        if (number < 1) {
             throw new IllegalArgumentException(number + "는 올바르지 않은 프레임 번호입니다.");
         }
     }

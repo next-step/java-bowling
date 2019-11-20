@@ -12,6 +12,7 @@ public enum FrontConverter {
     GUTTER("|", (status, score) -> String.valueOf(score)),
     NONE("", (status, score) -> "");
 
+    public static final String EMPTY = "";
     private final String delimiter;
     private final ConvertStrategy convertStrategy;
 
@@ -21,14 +22,11 @@ public enum FrontConverter {
     }
 
     public static String convert(ScoreInfo scoreInfo) {
-        FrontConverter converter = findByStatus(scoreInfo.getStatus());
-        String converted = converter.delimiter + converter.convertStrategy.change(scoreInfo.getStatus(), scoreInfo.getScore());
-
-        if (converted.startsWith("|")) {
-            return converted.substring(1);
+        if(scoreInfo == null){
+            return EMPTY;
         }
-
-        return converted;
+        FrontConverter converter = findByStatus(scoreInfo.getStatus());
+        return converter.delimiter + converter.convertStrategy.change(scoreInfo.getStatus(), scoreInfo.getScore());
     }
 
     private static FrontConverter findByStatus(Status status) {
@@ -39,9 +37,6 @@ public enum FrontConverter {
     }
 
     private static boolean isEqualName(Status status, FrontConverter converter) {
-        if (status == null) {
-            return false;
-        }
         return converter.name().equals(status.name());
     }
 }

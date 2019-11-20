@@ -12,5 +12,5 @@ public interface Frame {
 
     boolean isFull();
 
-    int getFrameNumber();
+    List<ScoreInfo> getScoreInfos();
 }

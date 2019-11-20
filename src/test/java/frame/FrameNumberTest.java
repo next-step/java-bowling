@@ -17,12 +17,11 @@ class FrameNumberTest {
         assertThat(frameNumber).isEqualTo(new FrameNumber(number));
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {0, 11})
-    void 프레임_번호_올바르지_않을경우(int number) {
-        assertThatThrownBy(() -> new FrameNumber(number))
+    @Test
+    void 프레임_번호_올바르지_않을경우() {
+        assertThatThrownBy(() -> new FrameNumber(0))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(number + "는 올바르지 않은 프레임 번호입니다.");
+                .hasMessage(0 + "는 올바르지 않은 프레임 번호입니다.");
     }
 
     @Test

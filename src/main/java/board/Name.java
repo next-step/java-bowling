@@ -15,8 +15,8 @@ public class Name {
     }
 
     private void validateName(String name) {
-        if (name.length() > 3) {
-            throw new IllegalArgumentException(name + "은 3글자보다 긴 이름입니다.");
+        if (name.length() != 3) {
+            throw new IllegalArgumentException(name + "은 3글자가 아닙니다.");
         }
     }
 
