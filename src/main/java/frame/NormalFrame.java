@@ -25,6 +25,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public Frame nextFrame() {
+        return new NormalFrame(frameNumber.next(), new ArrayList<>());
+    }
+
+    @Override
     public void bowling(int score) {
         if (scores.size() == 0) {
             scores.add(ScoreInfo.firstScore(score));

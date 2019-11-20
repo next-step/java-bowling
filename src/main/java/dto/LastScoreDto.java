@@ -18,17 +18,17 @@ public class LastScoreDto {
         this.scores = scores;
     }
 
-    private void changeFirstScore(List<String> scores) {
-        String first = DelimiterUtil.deleteBar(scores.get(FIRST));
-        scores.remove(FIRST);
-        scores.add(FIRST, first);
-    }
-
     public static LastScoreDto of(List<ScoreInfo> scoreInfos) {
         List<String> scores = scoreInfos.stream()
                 .map(FrontConverter::convert)
                 .collect(Collectors.toList());
         return new LastScoreDto(scores);
+    }
+
+    private void changeFirstScore(List<String> scores) {
+        String first = DelimiterUtil.deleteBar(scores.get(FIRST));
+        scores.remove(FIRST);
+        scores.add(FIRST, first);
     }
 
     private void supplyEmpty(List<String> scores) {

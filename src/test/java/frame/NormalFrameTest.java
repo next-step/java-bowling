@@ -16,6 +16,13 @@ class NormalFrameTest {
     }
 
     @Test
+    void nextNormalFrame() {
+        NormalFrame firstFrame = NormalFrame.firstNormalFrame();
+
+        assertThat(firstFrame.nextFrame()).isEqualTo(new NormalFrame(2, new ArrayList<>()));
+    }
+
+    @Test
     void isFull_일반프레임_두번던지거나_스트라이크면넘어가기() {
         NormalFrame normalFrame = NormalFrame.firstNormalFrame();
         assertThat(normalFrame.isFull()).isFalse();

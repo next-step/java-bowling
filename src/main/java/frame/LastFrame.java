@@ -23,6 +23,11 @@ public class LastFrame implements Frame {
     }
 
     @Override
+    public Frame nextFrame() {
+        return null;
+    }
+
+    @Override
     public void bowling(int score) {
         if (scores.size() == 0) {
             scores.addLast(ScoreInfo.firstScore(score));

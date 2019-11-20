@@ -9,7 +9,6 @@ import static frame.FrameNumber.LAST_FRAME_NUMBER;
 public class Frames {
 
     private static final int PADDING = 1;
-    private static final int NEXT_NUMBER = 2;
     private static final int NOT_REAL = 999;
 
     private final List<Frame> frames;
@@ -38,7 +37,7 @@ public class Frames {
         Frame lastFrame = frames.get(lastIndex);
 
         if (lastFrame.isFull()) {
-            NormalFrame nextFrame = new NormalFrame(lastIndex + NEXT_NUMBER, new ArrayList<>());
+            Frame nextFrame = lastFrame.nextFrame();
             frames.add(nextFrame);
             return nextFrame;
         }

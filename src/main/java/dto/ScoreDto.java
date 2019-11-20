@@ -14,18 +14,18 @@ public class ScoreDto {
     private final String first;
     private final String second;
 
-    public static ScoreDto of(List<ScoreInfo> scoreInfos) {
-        List<String> scores = scoreInfos.stream()
-                .map(FrontConverter::convert)
-                .collect(Collectors.toList());
-        return new ScoreDto(scores);
-    }
-
     public ScoreDto(List<String> scores) {
         supplyEmpty(scores);
 
         this.first = DelimiterUtil.deleteBar(scores.get(FIRST));
         this.second = scores.get(SECOND);
+    }
+
+    public static ScoreDto of(List<ScoreInfo> scoreInfos) {
+        List<String> scores = scoreInfos.stream()
+                .map(FrontConverter::convert)
+                .collect(Collectors.toList());
+        return new ScoreDto(scores);
     }
 
     private void supplyEmpty(List<String> scores) {
