@@ -29,6 +29,14 @@ public class FrameSet {
         return this;
     }
 
+    public State getState() {
+        return state;
+    }
+
+    public int getPlayCount() {
+        return playCount;
+    }
+
     public boolean isEnd() {
         return playCount > 10;
     }
