@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.*;
+import bowling.domain.state.*;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,5 +35,21 @@ public class FrameStateTest {
         assertThat(new Gutter().play(7)).isInstanceOf(Miss.class);
         assertThat(new Gutter().play(8)).isInstanceOf(Miss.class);
         assertThat(new Gutter().play(9)).isInstanceOf(Miss.class);
+    }
+
+    @Test
+    void endGameTest() {
+        // 시작전
+        assertThat(new Ready().isEnd()).isFalse();
+
+        // 1회 플레이
+        assertThat(new Strike().isEnd()).isTrue();
+        assertThat(new Hit(5).isEnd()).isFalse();
+        assertThat(new Gutter(1).isEnd()).isFalse();
+
+        // 2회 플레이
+        assertThat(new Gutter(2).isEnd()).isTrue();
+        assertThat(new Miss(5).isEnd()).isTrue();
+        assertThat(new Spare().isEnd()).isTrue();
     }
 }

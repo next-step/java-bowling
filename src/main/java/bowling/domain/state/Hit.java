@@ -1,8 +1,9 @@
-package bowling.domain;
+package bowling.domain.state;
 
 public class Hit extends State {
 
     public Hit(int remainPinCount) {
+        this.playCount = 1;
         this.remainPinCount = remainPinCount;
     }
 
@@ -17,5 +18,10 @@ public class Hit extends State {
         }
 
         return new Miss(hitCount);
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
     }
 }
