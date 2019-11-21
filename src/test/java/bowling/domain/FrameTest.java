@@ -11,11 +11,11 @@ public class FrameTest {
     void addBall() {
         int frameNumber = 1;
         Frame frame = new Frame(frameNumber);
-        frame.addBall(5);
+        frame.fallDown(5);
 
         assertThat(frame.getScore()).isEqualTo(5);
 
-        frame.addBall(5);
+        frame.fallDown(5);
 
         assertThat(frame.getScore()).isEqualTo(10);
     }

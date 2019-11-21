@@ -1,6 +1,5 @@
 package bowling;
 
-import bowling.domain.Frame;
 import bowling.domain.Frames;
 import bowling.domain.Player;
 import bowling.view.InputView;
@@ -13,15 +12,14 @@ public class BowlingMain {
         OutputView.printDashBoard(player);
 
         for (int i = 0; i < Frames.LAST_FRAME; i++) {
-            Frame frame = player.frameByIndex(i);
-            playFrame(player, frame);
+            playFrame(player, i);
         }
     }
 
-    private static void playFrame(Player player, Frame frame) {
-        while (frame.isAddAble()) {
-            int pinCount = InputView.inputPinCount(frame);
-            frame.addBall(pinCount);
+    private static void playFrame(Player player, int index) {
+        while (player.isFallDownAble(index)) {
+            int pinCount = InputView.inputPinCount(player.frameByIndex(index));
+            player.fallDown(index, pinCount);
             OutputView.printDashBoard(player);
         }
     }

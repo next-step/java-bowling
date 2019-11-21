@@ -1,19 +1,26 @@
 package bowling.domain;
 
+import java.util.List;
+
 public class Frame {
     private int frameNumber;
     private Balls balls;
+
+    public Frame(int frameNumber, Balls balls) {
+        this.frameNumber = frameNumber;
+        this.balls = balls;
+    }
 
     public Frame(int frameNumber) {
         this.frameNumber = frameNumber;
         this.balls = new Balls(isLastFrame());
     }
 
-    public void addBall(int pin) {
-       balls.add(pin);
+    public void fallDown(int pin) {
+       balls.fallDown(pin);
     }
 
-    private boolean isLastFrame() {
+    public boolean isLastFrame() {
         return frameNumber == Frames.LAST_FRAME;
     }
 
@@ -25,15 +32,33 @@ public class Frame {
         return frameNumber;
     }
 
-    public boolean isAddAble() {
+    public boolean isEnd() {
+        return !isFallDownAble();
+    }
+
+    public boolean isFallDownAble() {
         return addAblePinCount() > Ball.ZERO_PIN_COUNT;
     }
 
     public int addAblePinCount() {
-        return balls.addAblePinCount();
+        return balls.addAblePinCount(isLastFrame());
     }
 
-    public String getResult() {
-        return balls.getResult();
+    public boolean isStrike() {
+        if (isLastFrame()) {
+            return false;
+        }
+        return balls.isStrike();
+    }
+
+    public boolean isSpare() {
+        if (isLastFrame()) {
+            return false;
+        }
+        return balls.isSpare();
+    }
+
+    public List<Ball> unmodifiableBalls() {
+        return balls.unmodifiableBalls();
     }
 }

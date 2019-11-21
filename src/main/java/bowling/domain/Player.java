@@ -1,8 +1,5 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player {
     private String name;
     private Frames frames;
@@ -12,15 +9,23 @@ public class Player {
         this.frames = new Frames();
     }
 
-    public List<String> getResult() {
-        List<String> result = new ArrayList<>();
-        result.add(name);
-        result.addAll(frames.getResult());
-
-        return result;
+    public String getName() {
+        return name;
     }
 
     public Frame frameByIndex(int index) {
         return frames.frameByIndex(index);
+    }
+
+    public boolean isFallDownAble(int i) {
+        return frames.isFallDownAble(i);
+    }
+
+    public void fallDown(int index, int pinCount) {
+        frames.fallDown(index, pinCount);
+    }
+
+    public int getScore(int index) {
+        return frames.getScore(index);
     }
 }
