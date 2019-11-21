@@ -1,5 +1,7 @@
 package frame;
 
+import score.ScoreInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +30,10 @@ public class Frames {
         return getNowFrameNumber() == LAST_FRAME_NUMBER;
     }
 
+    public boolean isNotLast() {
+        return !reachLast();
+    }
+
     public Frame getNowFrame() {
         if (frames.isEmpty()) {
             frames.add(NormalFrame.firstNormalFrame());
@@ -50,7 +56,12 @@ public class Frames {
         this.frames.add(9, nowFrame);
     }
 
-    public Frame findFrame(int i) {
+    public List<ScoreInfo> findScoreInfos(int index) {
+        Frame frame = findFrame(index);
+        return frame.getScoreInfos();
+    }
+
+    private Frame findFrame(int i) {
         if (frames.size() > i) {
             return frames.get(i);
         }

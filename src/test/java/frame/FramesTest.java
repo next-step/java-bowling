@@ -18,7 +18,7 @@ class FramesTest {
     private static Stream<Arguments> getFrames() {
         return Stream.of(
                 Arguments.of(new ArrayList<>(), 1),
-                Arguments.of(Arrays.asList(aMockNormalFrame(), aMockNormalFrame()), 3)
+                Arguments.of(Arrays.asList(aMockNormalFrame(), aMockNormalFrame()), 2)
         );
     }
 
@@ -26,7 +26,6 @@ class FramesTest {
         return new NormalFrame(1, new ArrayList<>());
     }
 
-    private static
 
     @ParameterizedTest
     @MethodSource("getFrames")

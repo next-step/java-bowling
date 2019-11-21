@@ -42,7 +42,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFull() {
-        return (this.scores.size() == FULL_TRY) || (scores.isStrike());
+        return (this.scores.size() == FULL_TRY) || (scores.hasStrike());
     }
 
     @Override

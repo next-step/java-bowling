@@ -21,8 +21,9 @@ public class ScoreInfoBundle {
         return scoreInfoBundle.get(FIRST);
     }
 
-    public boolean isStrikeOrStrikeOfLast() {
-        return getLast().isStrike() || getLast().isSpare();
+    public boolean isStrikeOrSpareOfLast() {
+        ScoreInfo last = getLast();
+        return last.isStrike() || last.isSpare();
     }
 
     public ScoreInfo getLast() {
@@ -34,7 +35,7 @@ public class ScoreInfoBundle {
         validate();
     }
 
-    public void addLast(ScoreInfo scoreInfo) {
+    public void addOnLast(ScoreInfo scoreInfo) {
         scoreInfoBundle.add(scoreInfo);
     }
 
@@ -48,7 +49,7 @@ public class ScoreInfoBundle {
         }
     }
 
-    public boolean isStrike() {
+    public boolean hasStrike() {
         return scoreInfoBundle.stream()
                 .anyMatch(ScoreInfo::isStrike);
     }

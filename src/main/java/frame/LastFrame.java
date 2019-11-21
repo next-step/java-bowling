@@ -24,22 +24,22 @@ public class LastFrame implements Frame {
 
     @Override
     public Frame nextFrame() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void bowling(int score) {
         if (scores.size() == 0) {
-            scores.addLast(ScoreInfo.firstScore(score));
+            scores.addOnLast(ScoreInfo.firstScore(score));
             return;
         }
-        if (scores.isStrikeOrStrikeOfLast()) {
-            scores.addLast(ScoreInfo.firstScore(score));
+        if (scores.isStrikeOrSpareOfLast()) {
+            scores.addOnLast(ScoreInfo.firstScore(score));
             return;
         }
         ScoreInfo scoreInfo = scores.getLast()
                 .nextScore(score);
-        scores.addLast(scoreInfo);
+        scores.addOnLast(scoreInfo);
     }
 
     @Override
@@ -52,11 +52,15 @@ public class LastFrame implements Frame {
             return false;
         }
 
-        if (scores.isStrike()) {
+        if (scores.hasStrike()) {
             return false;
         }
 
-        return !scores.isStrikeOrStrikeOfLast();
+        return !scores.isStrikeOrSpareOfLast();
+    }
+
+    public boolean isNotFull() {
+        return !isFull();
     }
 
     @Override

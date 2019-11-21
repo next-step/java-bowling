@@ -5,6 +5,8 @@ import view.InputView;
 
 import java.util.ArrayList;
 
+import static view.OutputView.showBoard;
+
 public class BowlingController {
 
     public static void main(String[] args) {
@@ -12,18 +14,26 @@ public class BowlingController {
         Name name = new Name(InputView.inputName());
         Frames frames = new Frames(new ArrayList<>());
 
-        while (!frames.reachLast()) {
-            BowlingService.rollUntilLast(name, frames);
+        while (frames.isNotLast()) {
+            BowlingService.rollUntilLast(frames);
+            showBoardUntilLast(name, frames);
         }
 
         //last frame
         LastFrame lastFrame = LastFrame.init();
         frames.addLastFrame(lastFrame);
 
-        while (!lastFrame.isFull()) {
-            BowlingService.rollLast(name, frames);
+        while (lastFrame.isNotFull()) {
+            BowlingService.rollLast(frames);
+            showBoard(name, frames);
         }
 
+    }
+
+    private static void showBoardUntilLast(Name name, Frames frames) {
+        if (frames.isNotLast()) {
+            showBoard(name, frames);
+        }
     }
 
 }
