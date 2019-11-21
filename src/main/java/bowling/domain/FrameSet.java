@@ -13,8 +13,16 @@ public abstract class FrameSet {
     }
 
     public State play(int hitCount) {
+        assertHitCount(hitCount);
+
         state = state.play(hitCount);
         return state;
+    }
+
+    private void assertHitCount(int hitCount) {
+        if (hitCount > State.INIT_PIT_COUNT || hitCount < 0) {
+            throw new IllegalArgumentException("넘어트린 핀의 개수가 올바르지 않습니다.");
+        }
     }
 
     public abstract FrameSet readyNext();

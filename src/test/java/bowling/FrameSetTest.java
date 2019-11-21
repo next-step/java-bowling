@@ -6,6 +6,7 @@ import bowling.domain.state.State;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class FrameSetTest {
 
@@ -43,5 +44,11 @@ public class FrameSetTest {
                 .play(10); // Strike (bonus)
 
         assertThat(lastState2.isEnd()).isTrue();
+    }
+
+    @Test
+    void throwTest() {
+        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrameSet.create(1).play(-1));
+        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrameSet.create(1).play(11));
     }
 }
