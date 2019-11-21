@@ -1,5 +1,6 @@
 package com.seok2.bowling.state.domain;
 
+import com.seok2.bowling.frame.domain.Score;
 import com.seok2.bowling.pin.domain.Pin;
 
 public class Miss extends Finished {
@@ -14,6 +15,11 @@ public class Miss extends Finished {
 
     public static State of(Pin first, Pin felled) {
         return new Miss(first, felled);
+    }
+
+    @Override
+    public Score getScore() {
+        return first.toScore().add(second.toScore());
     }
 
     @Override

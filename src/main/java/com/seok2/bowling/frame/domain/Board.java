@@ -8,8 +8,9 @@ import java.util.LinkedList;
 public class Board {
 
     public static final int END_FRAME_COUNT = 10;
-
     private static final int NORMAL_FRAME_COUNT = 9;
+
+    private final ScorePublisher publisher = new ScorePublisher();
     private final Deque<Frame> frames;
 
     private Board(Deque<Frame> frames) {
@@ -23,12 +24,14 @@ public class Board {
     public void roll(Pin felled) {
         Frame current = frames.getLast();
         current.roll(felled);
+        publisher.update(felled);
         if (current.isEnd() && !isGameOver()) {
             generate();
         }
     }
 
     private void generate() {
+        ((NormalFrame) frames.getLast()).createScore(publisher);
         if (frames.size() < NORMAL_FRAME_COUNT) {
             frames.add(Frame.normal());
             return;

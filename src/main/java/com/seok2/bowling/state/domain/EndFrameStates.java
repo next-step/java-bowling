@@ -1,6 +1,8 @@
 package com.seok2.bowling.state.domain;
 
 import com.seok2.bowling.frame.domain.EndFrameCount;
+import com.seok2.bowling.frame.domain.FrameScore;
+import com.seok2.bowling.frame.domain.Score;
 import com.seok2.bowling.pin.domain.Pin;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -27,6 +29,14 @@ public class EndFrameStates {
     public boolean isEnd() {
         State first = states.getFirst();
         return first instanceof Miss || first instanceof Gutter || count.isMax();
+    }
+
+    public FrameScore getScore() {
+        return states.stream()
+            .map(State::getScore)
+            .reduce(Score::add)
+            .map(FrameScore::of)
+            .orElseThrow(IllegalAccessError::new);
     }
 
     public String view() {
