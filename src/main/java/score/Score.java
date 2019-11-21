@@ -11,7 +11,6 @@ public class Score {
     private static final String SCORE_OVER_TEN = "점수는 10 점 이상이 될 수 없습니다.";
     private static final List<Score> scoreList = IntStream.rangeClosed(MIN_SCORE, MAX_SCORE).boxed()
             .map(Score::new).collect(toList());
-
     private int score;
 
     private Score(int score) {

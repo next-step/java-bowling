@@ -22,7 +22,7 @@ public enum GameType {
     public static GameType get(int size, int score) {
         return Arrays.stream(values())
                 .filter(gameType -> gameType.size == size)
-                .filter(gameType -> gameType.score == null ||  gameType.score == score)
+                .filter(gameType -> gameType.score == null || gameType.score == score)
                 .findFirst().orElse(PENDING);
     }
 }

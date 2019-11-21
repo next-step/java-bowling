@@ -13,18 +13,6 @@ public class BonusScores implements Scores {
     private static final String BONUS_OVER_TWO_TIMES_WITHOUT_DOUBLE = "세번 째 보너스 게임은 더블 스트라이크 시에만 가능합니다.";
     private List<Score> bonusScores = new ArrayList<>();
 
-    @Override
-    public List<Score> getScores() {
-        return this.bonusScores;
-    }
-
-    @Override
-    public int sumScore() {
-        return bonusScores.stream()
-                .map(Score::getScore)
-                .reduce(Integer::sum).orElse(0);
-    }
-
     public void addScore(GameType gameType, int score) {
         validBonusGame(gameType);
         validBonusGameCount(gameType);
@@ -49,12 +37,24 @@ public class BonusScores implements Scores {
     }
 
     public int getNeedScoreCount() {
-        if (this.bonusScores.size() == 1) {
-            if (this.bonusScores.get(0).getScore() == 10) {
-                return 1;
-            }
+        if (this.bonusScores.size() != 1) {
             return 0;
         }
+        if (this.bonusScores.get(0).getScore() == 10) {
+            return 1;
+        }
         return 0;
+    }
+
+    @Override
+    public List<Score> getScores() {
+        return this.bonusScores;
+    }
+
+    @Override
+    public int sumScore() {
+        return bonusScores.stream()
+                .map(Score::getScore)
+                .reduce(Integer::sum).orElse(0);
     }
 }

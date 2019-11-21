@@ -14,14 +14,14 @@ public enum ScoreType {
     EIGHT(8, "8"),
     NINE(9, "9"),
     TEN(10, "X");
-
     public static final int MAX_SCORE = Arrays.stream(ScoreType.values())
             .map(scoreType -> scoreType.number)
-            .max(Integer::compareTo).orElseThrow(IllegalArgumentException::new);
+            .max(Integer::compareTo)
+            .orElseThrow(IllegalArgumentException::new);
     public static final int MIN_SCORE = Arrays.stream(ScoreType.values())
             .map(scoreType -> scoreType.number)
-            .min(Integer::compareTo).orElseThrow(IllegalArgumentException::new);
-
+            .min(Integer::compareTo)
+            .orElseThrow(IllegalArgumentException::new);
     private int number;
     private String numberString;
 
@@ -31,7 +31,8 @@ public enum ScoreType {
     }
 
     public static String toString(int number) {
-        return Arrays.stream(values()).filter(scoreType -> scoreType.getNumber() == number)
+        return Arrays.stream(values())
+                .filter(scoreType -> scoreType.getNumber() == number)
                 .findFirst()
                 .map(ScoreType::getNumberString)
                 .orElseThrow(IllegalArgumentException::new);

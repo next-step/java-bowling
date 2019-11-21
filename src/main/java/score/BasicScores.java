@@ -13,11 +13,6 @@ public class BasicScores implements Scores {
         this.scores = new ArrayList<>();
     }
 
-    @Override
-    public List<Score> getScores() {
-        return scores;
-    }
-
     public void addScore(int score) {
         if (sumScore() + score > MAX_SCORE) {
             throw new IllegalArgumentException(SUM_OF_SCORES_OVER_TEN);
@@ -25,14 +20,19 @@ public class BasicScores implements Scores {
         this.scores.add(Score.of(score));
     }
 
+    public int size() {
+        return scores.size();
+    }
+
+    @Override
+    public List<Score> getScores() {
+        return scores;
+    }
+
     @Override
     public int sumScore() {
         return scores.stream()
                 .map(Score::getScore)
                 .reduce(Integer::sum).orElse(0);
-    }
-
-    public int size() {
-        return scores.size();
     }
 }
