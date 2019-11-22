@@ -3,12 +3,10 @@ package com.seok2.bowling.view;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-import com.seok2.bowling.frame.domain.Board;
 import com.seok2.bowling.frame.domain.Index;
 import com.seok2.bowling.frame.dto.BoardDTO;
 import com.seok2.bowling.frame.dto.FrameDTO;
 import com.seok2.bowling.frame.dto.ScoreDTO;
-import com.seok2.bowling.user.dto.UserDTO;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +31,8 @@ public class OutputView {
     }
 
     private static String[] toScoreArray(BoardDTO boardDTO) {
-        List<String> result = new ArrayList<>(Arrays.asList(String.format(STRING_FORMAT, boardDTO.getUser().getName())));
+        List<String> result = new ArrayList<>(
+            Arrays.asList(String.format(STRING_FORMAT, boardDTO.getUser().getName())));
         boardDTO.getBoardDTO().stream()
             .map(FrameDTO::getRecord)
             .map(view -> String.format(STRING_FORMAT, view))

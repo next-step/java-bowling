@@ -51,7 +51,7 @@ public class Pin {
     }
 
     public Score toComplementScore() {
-        return Score.of(MAX- felled);
+        return Score.of(MAX - felled);
     }
 
     @Override

@@ -15,11 +15,11 @@ public class BoardAssembler {
         List<FrameDTO> frames = new ArrayList<>();
         Frame current = board.getFirst();
         frames.add(FrameAssembler.assemble(current));
-        while(current.hasNext()) {
+        while (current.hasNext()) {
             current = current.next();
             frames.add(FrameAssembler.assemble(current));
         }
-        return new BoardDTO(UserAssembler.assemble(board.getUser()) ,frames);
+        return new BoardDTO(UserAssembler.assemble(board.getUser()), frames);
     }
 
 }

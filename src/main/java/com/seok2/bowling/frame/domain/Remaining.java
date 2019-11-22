@@ -22,7 +22,7 @@ public class Remaining {
     }
 
     public Remaining decrement() {
-        return of(remaining- DECREMENT_VALUE);
+        return of(remaining - DECREMENT_VALUE);
     }
 
     public boolean isZero() {

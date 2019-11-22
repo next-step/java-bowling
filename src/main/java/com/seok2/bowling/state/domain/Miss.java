@@ -20,8 +20,9 @@ public class Miss extends Finished {
     @Override
     public Score calculate(Score base) {
         base = base.add(first.toScore());
-        if(base.isPending())
+        if (base.isPending()) {
             base = base.add(second.toScore());
+        }
         return base;
     }
 

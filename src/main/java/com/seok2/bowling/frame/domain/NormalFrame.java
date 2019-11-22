@@ -55,7 +55,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score getScore() {
-        Score score  = state.getScore();
+        Score score = state.getScore();
         return calculate(score);
     }
 

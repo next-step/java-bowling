@@ -31,14 +31,14 @@ public class EndFrameStates {
     }
 
     public Score calculate(Score base) {
-        for (State state: states) {
+        for (State state : states) {
             base = state.calculate(base);
         }
         return base;
     }
 
     public Score getScore() {
-        if(!isEnd()){
+        if (!isEnd()) {
             return Score.ofPending();
         }
         return states.stream()

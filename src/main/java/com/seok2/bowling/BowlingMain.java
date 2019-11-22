@@ -4,8 +4,6 @@ import com.seok2.bowling.frame.domain.Board;
 import com.seok2.bowling.frame.domain.BoardAssembler;
 import com.seok2.bowling.pin.domain.Pin;
 import com.seok2.bowling.user.domain.User;
-import com.seok2.bowling.user.domain.UserAssembler;
-import com.seok2.bowling.user.dto.UserDTO;
 import com.seok2.bowling.view.InputView;
 import com.seok2.bowling.view.OutputView;
 

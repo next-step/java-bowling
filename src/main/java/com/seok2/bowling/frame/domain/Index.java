@@ -9,7 +9,7 @@ public class Index {
     private static final int MIN = 1;
     private static final int END_THRESHOLD = 9;
 
-    private int idx ;
+    private int idx;
 
     private Index(int idx) {
         this.idx = idx;
