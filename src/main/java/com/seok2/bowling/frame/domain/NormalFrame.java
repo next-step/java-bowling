@@ -28,9 +28,11 @@ public class NormalFrame implements Frame {
 
     private Frame generate() {
         if (idx.isThreshold()) {
-            return this.next = Frame.end();
+            this.next = Frame.end();
+            return this.next;
         }
-        return this.next = NormalFrame.of(idx.increment());
+        this.next = NormalFrame.of(idx.increment());
+        return this.next;
     }
 
     @Override

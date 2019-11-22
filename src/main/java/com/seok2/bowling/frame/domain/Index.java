@@ -31,6 +31,10 @@ public class Index {
         return idx == END_THRESHOLD;
     }
 
+    public int getIndex() {
+        return idx;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

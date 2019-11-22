@@ -2,6 +2,7 @@ package com.seok2.bowling;
 
 import com.seok2.bowling.frame.domain.Board;
 import com.seok2.bowling.frame.domain.BoardAssembler;
+import com.seok2.bowling.frame.domain.IndexAssembler;
 import com.seok2.bowling.pin.domain.Pin;
 import com.seok2.bowling.user.domain.User;
 import com.seok2.bowling.view.InputView;
@@ -14,6 +15,7 @@ public class BowlingMain {
         Board board = Board.init(user);
         OutputView.print(BoardAssembler.assemble(board));
         while (!board.isGameOver()) {
+            OutputView.printCurrentFrame(IndexAssembler.assemble(board.getLastIndex()));
             board.roll(Pin.of(InputView.getFelled()));
             OutputView.print(BoardAssembler.assemble(board));
         }

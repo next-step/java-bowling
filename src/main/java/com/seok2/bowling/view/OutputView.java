@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.toList;
 import com.seok2.bowling.frame.domain.Index;
 import com.seok2.bowling.frame.dto.BoardDTO;
 import com.seok2.bowling.frame.dto.FrameDTO;
+import com.seok2.bowling.frame.dto.IndexDTO;
 import com.seok2.bowling.frame.dto.ScoreDTO;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -69,8 +70,8 @@ public class OutputView {
         }
     }
 
-    public static void printCurrentFrame(int size) {
+    public static void printCurrentFrame(IndexDTO indexDTO) {
         System.out.println();
-        System.out.print(MessageFormat.format(CURRENT_FRAME_TXT, size));
+        System.out.print(MessageFormat.format(CURRENT_FRAME_TXT, indexDTO.getIdx()));
     }
 }
