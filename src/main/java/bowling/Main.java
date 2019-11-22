@@ -1,7 +1,9 @@
 package bowling;
 
 import bowling.domain.Frame;
+import bowling.domain.GameResult;
 import bowling.view.InputView;
+import bowling.view.ResultView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,25 +14,26 @@ public class Main {
 
     public static void main(String[] args) {
 
-        InputView.createUser();
+        String user = InputView.createUser();
 
-        GameFrames gameFrames = new GameFrames(createFrames());
+        GameResult gameFrames = new GameResult(createFrames(user));
 
     }
 
-    private static List<Frame> createFrames() {
+    private static List<Frame> createFrames(String user) {
         List<Frame> frames = new ArrayList<>();
         for (int i = 1; i <= FRAME_COUNT; i++) {
-            frames.add(createFrame(i));
+            frames.add(createFrame(frames, i, user));
         }
         return frames;
     }
 
-    private static Frame createFrame(int frameIndex) {
+    private static Frame createFrame(List<Frame> frames, int frameIndex, String user) {
         Frame frame = new Frame();
         while (!frame.isEnd()) {
             int score = InputView.createScore(frameIndex);
             frame.addScore(score);
+            ResultView.printScore(user, frame, frames);
         }
 
         return frame;
