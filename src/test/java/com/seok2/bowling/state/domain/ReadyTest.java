@@ -1,7 +1,6 @@
 package com.seok2.bowling.state.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.seok2.bowling.pin.domain.Pin;
 import org.junit.jupiter.api.DisplayName;
@@ -16,9 +15,9 @@ class ReadyTest {
     }
 
     @Test
-    @DisplayName("Ready 상태에서 10개 미만의 핀을 쓰러뜨리면 Continue 상태가 된다.")
+    @DisplayName("Ready 상태에서 10개 미만의 핀을 쓰러뜨리면 Cover 상태가 된다.")
     void Continue() {
-        assertThat(Ready.of().roll(Pin.of(0))).isInstanceOf(Continue.class);
+        assertThat(Ready.of().roll(Pin.of(0))).isInstanceOf(Cover.class);
     }
 
     @Test

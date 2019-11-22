@@ -1,17 +1,19 @@
 package com.seok2.bowling.state.domain;
 
+import com.seok2.bowling.frame.domain.Remaining;
+import com.seok2.bowling.frame.domain.Score;
 import com.seok2.bowling.pin.domain.Pin;
 
-public class Continue extends Running {
+public class Cover extends Running {
 
     private final Pin first;
 
-    private Continue(Pin first) {
+    private Cover(Pin first) {
         this.first = first;
     }
 
     public static State of(Pin felled) {
-        return new Continue(felled);
+        return new Cover(felled);
     }
 
     @Override
@@ -24,6 +26,16 @@ public class Continue extends Running {
             return Gutter.of();
         }
         return Miss.of(first, felled);
+    }
+
+    @Override
+    public Score calculate(Score base) {
+        return base.add(first.toScore());
+    }
+
+    @Override
+    public Score getScore() {
+        return first.toScore(Remaining.COVER);
     }
 
     @Override

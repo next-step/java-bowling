@@ -1,5 +1,6 @@
 package com.seok2.bowling.state.domain;
 
+import com.seok2.bowling.frame.domain.Score;
 import com.seok2.bowling.pin.domain.Pin;
 
 public interface State {
@@ -9,4 +10,8 @@ public interface State {
     boolean isEnd();
 
     String view();
+
+    Score calculate(Score base);
+
+    Score getScore();
 }
