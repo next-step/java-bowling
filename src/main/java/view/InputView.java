@@ -12,7 +12,6 @@ public class InputView {
 
 	}
 
-	// TODO: 2019-11-18 UserName으로 wrapping, validation
 	public static UserName receiveUserName() {
 		System.out.print("플레이어 이름은(3 english letters)?: ");
 		return UserName.of(scanner.nextLine());

@@ -10,17 +10,17 @@ public abstract class PhaseCollection {
 
 	private static final int START_INDEX = 0;
 
-	final List<Phase> phaseList;
+	final List<Phase> phases;
 	int currentPhaseIndex;
 
-	PhaseCollection(List<Phase> phaseList) {
-		this.phaseList = phaseList;
+	PhaseCollection(List<Phase> phases) {
+		this.phases = phases;
 		this.currentPhaseIndex = START_INDEX;
 	}
 
 	public PhaseResult getFrameResult(int remainBowlingPins) {
 		validateCurrentPhaseIndex();
-		return phaseList.get(currentPhaseIndex++).getFrameResult(remainBowlingPins);
+		return phases.get(currentPhaseIndex++).getFrameResult(remainBowlingPins);
 	}
 
 	abstract void validateCurrentPhaseIndex();
@@ -33,12 +33,12 @@ public abstract class PhaseCollection {
 		if (o == null || getClass() != o.getClass()) return false;
 		PhaseCollection that = (PhaseCollection) o;
 		return currentPhaseIndex == that.currentPhaseIndex &&
-				Objects.equals(phaseList, that.phaseList);
+				Objects.equals(phases, that.phases);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(phaseList, currentPhaseIndex);
+		return Objects.hash(phases, currentPhaseIndex);
 	}
 
 }

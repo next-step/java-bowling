@@ -20,7 +20,7 @@ public class FinalFramePhaseCollection extends PhaseCollection {
 
 	@Override
 	public void addThirdPhase() {
-		phaseList.add(FinalPhase.THIRD_PHASE);
+		phases.add(FinalPhase.THIRD_PHASE);
 	}
 
 }

@@ -25,7 +25,7 @@ class BowlingBoardTest {
 
 		// then
 		assertThat(board.getCurrentFrameIndex()).isEqualTo(1);
-		assertThat(board.getPhaseResults().get(0)).isEqualTo(new FrameResult(NormalPhaseResult.STRIKE, 10));
+		assertThat(board.getNormalPhaseResults().get(0)).isEqualTo(new FrameResult(NormalPhaseResult.STRIKE,	10));
 	}
 
 	@Test
@@ -42,7 +42,7 @@ class BowlingBoardTest {
 
 		// then
 		assertThat(board.getCurrentFrameIndex()).isEqualTo(1);
-		assertThat(board.getPhaseResults().get(0)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
+		assertThat(board.getNormalPhaseResults().get(0)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
 	}
 
 	@Test
@@ -59,7 +59,7 @@ class BowlingBoardTest {
 
 		// then
 		assertThat(board.getCurrentFrameIndex()).isEqualTo(1);
-		assertThat(board.getPhaseResults().get(0)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
+		assertThat(board.getNormalPhaseResults().get(0)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
 	}
 
 	@Test
@@ -76,7 +76,7 @@ class BowlingBoardTest {
 
 		// then
 		assertThat(board.getCurrentFrameIndex()).isEqualTo(1);
-		assertThat(board.getPhaseResults().get(0)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
+		assertThat(board.getNormalPhaseResults().get(0)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
 	}
 
 	@Test
@@ -94,7 +94,7 @@ class BowlingBoardTest {
 
 		// then
 		assertThat(board.getCurrentFrameIndex()).isEqualTo(10);
-		assertThat(board.getPhaseResults().get(9)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
+		assertThat(board.getFinalPhaseResult()).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
 	}
 
 
@@ -112,7 +112,7 @@ class BowlingBoardTest {
 
 		// then
 		assertThat(board.getCurrentFrameIndex()).isEqualTo(10);
-		assertThat(board.getPhaseResults().get(9)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
+		assertThat(board.getFinalPhaseResult()).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
 	}
 
 	@Test
@@ -129,7 +129,7 @@ class BowlingBoardTest {
 
 		// then
 		assertThat(board.getCurrentFrameIndex()).isEqualTo(10);
-		assertThat(board.getPhaseResults().get(9)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
+		assertThat(board.getFinalPhaseResult()).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
 	}
 
 }

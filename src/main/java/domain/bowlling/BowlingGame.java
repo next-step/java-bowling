@@ -7,6 +7,8 @@ import java.util.List;
 
 public class BowlingGame {
 
+	private static final int FRAME_AFTER_GAME = 11;
+
 	private static final int START_TURN_INDEX = 0;
 
 	private int gameTurnIndex;
@@ -23,7 +25,7 @@ public class BowlingGame {
 
 	public boolean isNotEnd() {
 		// TODO: 2019-11-18 여러명이 게임을 할 때가 되면 로직 고민
-		return bowlingOnBoards.get(bowlingOnBoards.size() - 1).getCurrentFrame() != 11;
+		return bowlingOnBoards.get(bowlingOnBoards.size() - 1).getCurrentFrame() != FRAME_AFTER_GAME;
 	}
 
 	public int getCurrentFrame() {
