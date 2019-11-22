@@ -1,13 +1,19 @@
 package com.seok2.bowling.frame.domain;
 
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Index {
 
     public static final int MAX = 10;
 
     private static final int MIN = 1;
+    private static final int INCREMENT_VALUE = 1;
     private static final int END_THRESHOLD = 9;
+    private static final Index [] CACHE = IntStream.rangeClosed(MIN,MAX)
+        .mapToObj(Index::new)
+        .toArray(Index[]::new);
+
 
     private int idx;
 
@@ -20,11 +26,15 @@ public class Index {
     }
 
     protected static Index of(int idx) {
-        return new Index(idx);
+        try{
+            return CACHE[--idx];
+        }catch (ArrayIndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("프레임 인덱스의 범위는 1보다 작거나 10보다 클 수 없습니다.");
+        }
     }
 
     public Index increment() {
-        return of(++idx);
+        return of(idx + INCREMENT_VALUE);
     }
 
     public boolean isThreshold() {
