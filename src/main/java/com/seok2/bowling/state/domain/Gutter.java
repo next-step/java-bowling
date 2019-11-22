@@ -9,12 +9,21 @@ public class Gutter extends Finished {
     }
 
     @Override
-    public Score getScore() {
-        return Score.ZERO;
+    public String view() {
+        return "-";
     }
 
     @Override
-    public String view() {
-        return "-";
+    public Score calculate(Score base) {
+        base = base.add(Score.ofGutter());
+        if (base.isPending()) {
+            base = base.add(Score.ofGutter());
+        }
+        return base;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofGutter();
     }
 }

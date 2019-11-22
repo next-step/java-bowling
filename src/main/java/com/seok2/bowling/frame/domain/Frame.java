@@ -4,18 +4,27 @@ import com.seok2.bowling.pin.domain.Pin;
 
 public interface Frame {
 
-    static Frame normal() {
-        return NormalFrame.of();
+    static Frame init() {
+        return NormalFrame.of(Index.first());
     }
 
     static Frame end() {
         return EndFrame.of();
     }
 
-    void roll(Pin felled);
+    Frame roll(Pin felled);
 
     boolean isEnd();
 
-    FrameScore getScore();
+    boolean hasNext();
+
+    Frame next();
+
+    Index getIndex();
+
+    Score getScore();
+
+    Score calculateScore(Score base);
+
 
 }

@@ -17,6 +17,25 @@ public class Spare extends Finished {
     }
 
     @Override
+    public String view() {
+        return first + "|/";
+    }
+
+    @Override
+    public Score calculate(Score base) {
+        base = base.add(first.toScore());
+        if (base.isPending()) {
+            base = base.add(first.toComplementScore());
+        }
+        return base;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofSpare();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -31,15 +50,5 @@ public class Spare extends Finished {
     @Override
     public int hashCode() {
         return Objects.hash(first);
-    }
-
-    @Override
-    public Score getScore() {
-        return Score.TEN;
-    }
-
-    @Override
-    public String view() {
-        return first + "|/";
     }
 }

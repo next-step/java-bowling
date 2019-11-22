@@ -9,12 +9,17 @@ public class Strike extends Finished {
     }
 
     @Override
-    public Score getScore() {
-        return Score.TEN;
+    public String view() {
+        return "X";
     }
 
     @Override
-    public String view() {
-        return "X";
+    public Score calculate(Score base) {
+        return base.add(Score.ofStrike());
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofStrike();
     }
 }

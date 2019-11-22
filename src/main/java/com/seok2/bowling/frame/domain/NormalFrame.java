@@ -3,40 +3,98 @@ package com.seok2.bowling.frame.domain;
 import com.seok2.bowling.pin.domain.Pin;
 import com.seok2.bowling.state.domain.Ready;
 import com.seok2.bowling.state.domain.State;
-import java.util.Optional;
+import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
-    private State state = Ready.of();
-    private FrameScore score;
+    private final Index idx;
+    private State state;
+    private Frame next;
 
-    public static Frame of() {
-        return new NormalFrame();
+    public NormalFrame(Index idx) {
+        this.idx = idx;
+        this.state = Ready.of();
     }
 
-    public void createScore(ScorePublisher publisher) {
-        if (!isEnd()) {
-            throw new IllegalArgumentException("아직 종료 되진 않은 프레임입니다.");
-        }
-        score = FrameScore.of(publisher, state);
+    public static Frame of(Index idx) {
+        return new NormalFrame(idx);
     }
 
     @Override
-    public void roll(Pin felled) {
+    public Frame roll(Pin felled) {
         this.state = state.roll(felled);
+        return state.isEnd() ? generate() : this;
+    }
+
+    private Frame generate() {
+        if (idx.isThreshold()) {
+            this.next = Frame.end();
+            return this.next;
+        }
+        this.next = NormalFrame.of(idx.increment());
+        return this.next;
     }
 
     @Override
     public boolean isEnd() {
-        return state.isEnd();
+        return false;
     }
 
     @Override
-    public FrameScore getScore() {
-        return Optional.ofNullable(score).orElse(FrameScore.PENDING);
+    public boolean hasNext() {
+        return next != null;
+    }
+
+    @Override
+    public Frame next() {
+        return this.next;
+    }
+
+    @Override
+    public Index getIndex() {
+        return idx;
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = state.getScore();
+        return calculate(score);
+    }
+
+    @Override
+    public Score calculateScore(Score base) {
+        Score score = state.calculate(base);
+        return calculate(score);
+    }
+
+    private Score calculate(Score score) {
+        if (score.isPending()) {
+            return next == null ? score : next.calculateScore(score);
+        }
+        return score;
     }
 
     protected State getState() {
         return state;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof NormalFrame)) {
+            return false;
+        }
+        NormalFrame that = (NormalFrame) o;
+        return Objects.equals(idx, that.idx) &&
+            Objects.equals(getState(), that.getState()) &&
+            Objects.equals(next, that.next);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idx, getState(), next);
+    }
+
 }
