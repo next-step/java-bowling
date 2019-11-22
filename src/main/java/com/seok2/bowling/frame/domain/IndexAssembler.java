@@ -1,6 +1,5 @@
 package com.seok2.bowling.frame.domain;
 
-import com.seok2.bowling.frame.dto.FrameDTO;
 import com.seok2.bowling.frame.dto.IndexDTO;
 
 public class IndexAssembler {
