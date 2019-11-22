@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Frame {
+public abstract class Frame {
 
-    private List<Integer> scores = new ArrayList<>();
-    private boolean isEnd;
-    private boolean isSpare;
+    public static final int FRAME_MAX_SCORE = 10;
+    public static final int SPARE_CHECK_SIZE = 2;
 
+    public List<Integer> scores = new ArrayList<>();
+    public boolean isEnd;
+    public boolean isSpare;
 
     public void addScore(int score) {
         this.scores.add(score);
@@ -17,43 +19,24 @@ public class Frame {
         checkIsSpare();
     }
 
-    private void checkIsSpare() {
-        if (scores.size() < 2) {
+    public abstract boolean isEndCondition(int score);
+
+    public void checkIsSpare() {
+        if (scores.size() != SPARE_CHECK_SIZE) {
             return;
         }
 
-        isSpare = scores.get(0) + scores.get(1) == 10;
+        isSpare = scores.get(0) + scores.get(1) == FRAME_MAX_SCORE;
     }
 
-    private boolean isEndCondition(int score) {
-        return this.scores.size() > 1 || score == 10;
+    public boolean hasSize(int size) {
+        return scores.size() == size;
     }
 
-    public boolean isEnd() {
-        return isEnd;
-    }
+    public abstract String getScoreFormat();
 
-    public List<Integer> getScores() {
-        return scores;
-
-    }
-
-    public boolean hasOneScore() {
-        return scores.size() == 1;
-    }
-
-    public String getScoreFormat() {
-        String format = String.format("%3s", findFirstScoreFormat());
-
-        if (this.hasOneScore()) {
-            return format + "   ";
-        }
-
-        return format + String.format("%s%-2s", "|", findSecondScoreFormat());
-    }
-
-    private String findFirstScoreFormat() {
-        int score = this.scores.get(0);
+    public String findScoreFormat(int index) {
+        int score = this.scores.get(index);
 
         Optional<FrameType> frameType = FrameType.findByScore(score);
         if (frameType.isPresent()) {
@@ -62,7 +45,7 @@ public class Frame {
         return String.valueOf(score);
     }
 
-    private String findSecondScoreFormat() {
+    public String findSecondScoreFormat() {
         int score = this.scores.get(1);
         if (isSpare) {
             return FrameType.SPARE.getCode();
@@ -76,4 +59,15 @@ public class Frame {
         return String.valueOf(score);
     }
 
+    public List<Integer> getScores() {
+        return scores;
+    }
+
+    public boolean isSpare() {
+        return isSpare;
+    }
+
+    public boolean isEnd() {
+        return isEnd;
+    }
 }

@@ -10,7 +10,7 @@ public class GameResult {
 
     private String user;
     private boolean isEnd;
-    private List<Frame> frames = new ArrayList<>();
+    private List<NormalFrame> frames = new ArrayList<>();
     private FinalFrame finalFrame = new FinalFrame();
 
     public GameResult(String user) {
@@ -27,7 +27,7 @@ public class GameResult {
 
     public void createFrame(int score) {
         if (this.frames.size() == NO_FRAME_SIZE) {
-            Frame frame = new Frame();
+            NormalFrame frame = new NormalFrame();
             frame.addScore(score);
             this.frames.add(frame);
             return;
@@ -43,7 +43,7 @@ public class GameResult {
             return;
         }
 
-        Frame frame = new Frame();
+        NormalFrame frame = new NormalFrame();
         frame.addScore(score);
         this.frames.add(frame);
     }
@@ -55,7 +55,7 @@ public class GameResult {
         }
     }
 
-    private Frame getCurrentFrame() {
+    private NormalFrame getCurrentFrame() {
         return this.frames.get(frames.size() - 1);
     }
 
@@ -63,7 +63,7 @@ public class GameResult {
         return user;
     }
 
-    public List<Frame> getFrames() {
+    public List<NormalFrame> getFrames() {
         return frames;
     }
 

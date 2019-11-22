@@ -6,7 +6,6 @@ import bowling.view.ResultView;
 
 public class Main {
 
-    private static final int FRAME_COUNT = 9;
 
     public static void main(String[] args) {
 

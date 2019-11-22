@@ -1,8 +1,11 @@
 package bowling.view;
 
-import bowling.domain.FinalFrame;
-import bowling.domain.Frame;
 import bowling.domain.GameResult;
+import bowling.domain.NormalFrame;
+
+import java.util.List;
+
+import static bowling.domain.GameResult.MAX_FRAME_SIZE;
 
 public class ResultView {
 
@@ -19,15 +22,22 @@ public class ResultView {
         format.append(String.format("%5s", gameResult.getUser())).append(SPACE);
         format.append(SCORE_SEPERATE_LINE);
 
-        for (Frame frame1 : gameResult.getFrames()) {
-            format.append(frame1.getScoreFormat());
-            format.append(SCORE_SEPERATE_LINE);
-        }
+        format.append(makeFrameFormat(gameResult.getFrames()));
 
         format.append(makeFinalFrameFormat(gameResult));
         format.append(makeEmptyScoreFormat(gameResult.getFrames().size()));
 
         System.out.println(format);
+    }
+
+    private static String makeFrameFormat(List<NormalFrame> frames) {
+        StringBuilder format = new StringBuilder();
+        for (NormalFrame frame : frames) {
+            format.append(frame.getScoreFormat());
+            format.append(SCORE_SEPERATE_LINE);
+        }
+
+        return format.toString();
     }
 
     private static String makeFinalFrameFormat(GameResult gameResult) {
@@ -39,7 +49,7 @@ public class ResultView {
     }
 
     private static String makeEmptyScoreFormat(int size) {
-        int count = 9 - size;
+        int count = MAX_FRAME_SIZE - size;
         StringBuilder format = new StringBuilder();
         for (int i = 0; i < count; i++) {
             format.append(EMPTY_SCORE_FORMAT);
