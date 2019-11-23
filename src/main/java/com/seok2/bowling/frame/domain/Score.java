@@ -32,8 +32,8 @@ public class Score {
         if (!(o instanceof Score)) {
             return false;
         }
-        Score score1 = (Score) o;
-        return score == score1.score;
+        Score that = (Score) o;
+        return score == that.score;
     }
 
     @Override

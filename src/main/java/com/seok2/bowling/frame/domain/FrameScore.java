@@ -32,9 +32,9 @@ public class FrameScore implements Observer {
     }
 
     private int getRemaining(State state) {
-         if(state instanceof Strike) {
+        if (state instanceof Strike) {
             return REMAINING_TWO;
-         }
+        }
         return state instanceof Spare ? REMAINING_ONE : REMAINING_ZERO;
     }
 

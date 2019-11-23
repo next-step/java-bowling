@@ -18,17 +18,4 @@ public class Gutter extends Finished {
         return "-";
     }
 
-    @Override
-    public Score calculate(Score base) {
-        base = base.add(Score.ofGutter());
-        if (base.isPending()) {
-            base = base.add(Score.ofGutter());
-        }
-        return base;
-    }
-
-    @Override
-    public Score getScore() {
-        return Score.ofGutter();
-    }
 }

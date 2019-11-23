@@ -10,7 +10,7 @@ public class Index {
     private static final int MIN = 1;
     private static final int INCREMENT_VALUE = 1;
     private static final int END_THRESHOLD = 9;
-    private static final Index [] CACHE = IntStream.rangeClosed(MIN,MAX)
+    private static final Index[] CACHE = IntStream.rangeClosed(MIN, MAX)
         .mapToObj(Index::new)
         .toArray(Index[]::new);
 
@@ -26,9 +26,9 @@ public class Index {
     }
 
     protected static Index of(int idx) {
-        try{
+        try {
             return CACHE[--idx];
-        }catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException e) {
             throw new IllegalArgumentException("프레임 인덱스의 범위는 1보다 작거나 10보다 클 수 없습니다.");
         }
     }

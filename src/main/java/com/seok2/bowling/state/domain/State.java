@@ -9,11 +9,7 @@ public interface State {
 
     boolean isEnd();
 
-    Score getScore();
-
     String view();
-
-    Score calculate(Score base);
 
     Score getScore();
 }
