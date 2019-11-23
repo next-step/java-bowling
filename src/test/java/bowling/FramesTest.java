@@ -25,7 +25,6 @@ public class FramesTest {
         frames.roll(10);
         frames.roll(10);
         frames.roll(10);
-
         last = frames.roll(5);
         last = frames.roll(4);
     }

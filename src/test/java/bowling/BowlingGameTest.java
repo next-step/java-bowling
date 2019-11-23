@@ -17,11 +17,11 @@ public class BowlingGameTest {
     void createBowlingGameException() {
         BowlingGame bowlingGame = new BowlingGame("테스트");
         for (int i = 1; i <= 10; i++) {
-            bowlingGame.addFrame(10);
+            bowlingGame.roll(10);
         }
-        bowlingGame.addFrame(10);
-        bowlingGame.addFrame(10);
-        assertThrows(IllegalArgumentException.class, () -> bowlingGame.addFrame(10
+        bowlingGame.roll(10);
+        bowlingGame.roll(10);
+        assertThrows(IllegalArgumentException.class, () -> bowlingGame.roll(10
         ));
     }
 }

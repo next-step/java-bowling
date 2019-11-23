@@ -18,7 +18,7 @@ public class Frames {
 
     public Frame roll(int pins) {
         if (frames.size() == 0) {
-            Frame frame = Frame.of(pins);
+            Frame frame = Frame.initialOf(pins);
             frames.add(frame);
             return frame;
         }
@@ -67,7 +67,7 @@ public class Frames {
             return frames.size();
         }
         FrameType frameType = frame.getFrameType();
-        if (frameType == FrameType.NORMAL || frameScoreType == FrameScoreType.MISS) {
+        if (frameType != FrameType.FINAL || frameScoreType == FrameScoreType.MISS) {
             return frames.size() + 1;
         }
         if (frame.getBonus() == null || frame.getBonus().getNeedScoreCount() > 0) {

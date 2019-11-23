@@ -8,37 +8,34 @@ import java.util.List;
 public class Frame {
     private static final String BONUS_WITHOUT_FINAL_FRAME_EXCEPTION = "보너스 게임은 10번째 frame에서만 가능합니다";
     private final FrameType frameType;
-    private FrameScore frameScore;
     private Frame prevFrame;
-    private Integer scoreForFrame;
+    private FrameScore frameScore;
 
-    private Frame(FrameType frameType) {
+    private Frame() {
         this.frameScore = new FrameScore();
-        this.frameType = frameType;
+        this.frameType = FrameType.INITIAL;
     }
 
-    public static Frame of(int score) {
-        Frame frame = new Frame(FrameType.NORMAL);
+    private Frame(FrameType frameType, Frame prevFrame) {
+        this.frameScore = new FrameScore();
+        this.frameType = frameType;
+        this.prevFrame = prevFrame;
+    }
+
+    public static Frame initialOf(int score) {
+        Frame frame = new Frame();
         frame.addScore(score);
         return frame;
     }
 
     public static Frame of(int score, Frame prevFrame) {
-        Frame frame = new Frame(FrameType.NORMAL);
-        frame.prevFrame = prevFrame;
-        frame.addScore(score);
-        return frame;
-    }
-
-    public static Frame finalOf(int score) {
-        Frame frame = new Frame(FrameType.FINAL);
+        Frame frame = new Frame(FrameType.NORMAL, prevFrame);
         frame.addScore(score);
         return frame;
     }
 
     public static Frame finalOf(int score, Frame prevFrame) {
-        Frame frame = new Frame(FrameType.FINAL);
-        frame.prevFrame = prevFrame;
+        Frame frame = new Frame(FrameType.FINAL, prevFrame);
         frame.addScore(score);
         return frame;
     }
@@ -57,7 +54,7 @@ public class Frame {
     }
 
     public void addBonus(int bonusScore) {
-        if (frameType == FrameType.NORMAL) {
+        if (frameType != FrameType.FINAL) {
             throw new IllegalArgumentException(BONUS_WITHOUT_FINAL_FRAME_EXCEPTION);
         }
         this.frameScore.addBonus(bonusScore);
@@ -76,11 +73,12 @@ public class Frame {
         return this.frameScore.getScores();
     }
 
+    public Integer getScore(int index) {
+        return this.frameScore.getScores().get(index).getScore();
+    }
+
     public Integer getScoreSum() {
-        if (this.scoreForFrame == null) {
-            return -1;
-        }
-        return scoreForFrame;
+        return this.frameScore.getScoreSum();
     }
 
     public int sumScore() {
@@ -89,68 +87,36 @@ public class Frame {
 
     private void setScoreForFrame() {
         FrameScoreType frameScoreType = this.getFrameScoreType();
-        setThisFrameScore(frameScoreType);
+        this.frameScore.setThisFrameScore(frameScoreType);
 
-        if (this.prevFrame == null) {
-            return;
+        if (frameType == FrameType.NORMAL) {
+            setScoreForFrameWithNormalFrame(frameScoreType);
         }
 
-        setPreviousFrame(frameScoreType);
-        if (this.prevFrame.prevFrame != null) {
-            setPreviousOfPreviousFrameScore();
-        }
-    }
-
-    private void setThisFrameScore(FrameScoreType frameScoreType) {
-        if (frameScoreType == FrameScoreType.MISS) {
-            this.scoreForFrame = frameScore.sumScore();
-            return;
-        }
-
-        if (this.frameType != FrameType.FINAL || this.getBonus() == null) {
-            return;
-        }
-
-        if (frameScoreType == FrameScoreType.SPARE) {
-            this.scoreForFrame = frameScore.sumScore() + frameScore.sumBonus();
-        }
-
-        if (frameScoreType == FrameScoreType.STRIKE
-                && this.getBonus().getNeedScoreCount() == 0) {
-            this.scoreForFrame = this.sumScore() + this.frameScore.sumBonus();
+        if (frameType == FrameType.FINAL) {
+            setScoreForFrameWithFinalFrame(frameScoreType);
         }
     }
 
-    private void setPreviousFrame(FrameScoreType frameScoreType) {
-        if ((frameScoreType == FrameScoreType.MISS || frameScoreType == FrameScoreType.SPARE)
-                && this.frameType == FrameType.FINAL
-                && this.prevFrame.getFrameScoreType() == FrameScoreType.STRIKE) {
-            this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.sumScore();
-        }
+    private void setScoreForFrameWithNormalFrame(FrameScoreType frameScoreType) {
+        Frame before = this.prevFrame;
+        before.frameScore.setPreviousFrame(frameScoreType, before.getFrameScoreType(), this);
 
-        if ((frameScoreType == FrameScoreType.MISS || frameScoreType == FrameScoreType.SPARE)
-                && this.prevFrame.getFrameScoreType() == FrameScoreType.STRIKE) {
-            this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.sumScore();
-        }
-
-        if (frameScoreType == FrameScoreType.STRIKE
-                && this.frameType == FrameType.FINAL
-                && this.getBonus() != null
-                && this.prevFrame.getFrameScoreType() == FrameScoreType.STRIKE) {
-            this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.sumScore()
-                    + frameScore.getBonus().getRollings().get(0).getScore();
-        }
-
-        if (this.prevFrame.getFrameScoreType() == FrameScoreType.SPARE) {
-            this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.getScores().get(0).getScore();
+        Frame before2 = this.prevFrame.prevFrame;
+        if (before2 != null) {
+            before2.frameScore.setPreviousOfPreviousFrameScore
+                    (before.getFrameScoreType(), before2.getFrameScoreType(), this, before);
         }
     }
 
-    private void setPreviousOfPreviousFrameScore() {
-        if (this.prevFrame.getFrameScoreType() == FrameScoreType.STRIKE
-                && this.prevFrame.prevFrame.getFrameScoreType() == FrameScoreType.STRIKE) {
-            this.prevFrame.prevFrame.scoreForFrame = this.prevFrame.prevFrame.sumScore()
-                    + this.prevFrame.sumScore() + this.getScores().get(0).getScore();
+    private void setScoreForFrameWithFinalFrame(FrameScoreType frameScoreType) {
+        Frame before = this.prevFrame;
+        if (before.getFrameScoreType() == FrameScoreType.STRIKE) {
+            before.frameScore.setPreviousFrameWithFinal(frameScoreType, this);
         }
+
+        Frame before2 = this.prevFrame.prevFrame;
+        before2.frameScore.setPreviousOfPreviousFrameScore
+                (before.getFrameScoreType(), before2.getFrameScoreType(), this, before);
     }
 }

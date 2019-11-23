@@ -1,5 +1,5 @@
 package bowling.frame;
 
 public enum FrameType {
-    NORMAL, FINAL
+    INITIAL, NORMAL, FINAL
 }

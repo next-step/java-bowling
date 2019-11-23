@@ -17,7 +17,7 @@ public class BowlingGame {
         this.frames = new Frames();
     }
 
-    public Frame addFrame(int pins) {
+    public Frame roll(int pins) {
         return frames.roll(pins);
     }
 

@@ -12,7 +12,7 @@ public class BowlingApplication {
         int frameIndex = 1;
         while (frameIndex <= FRAME_COUNT) {
             int score = InputView.inputFrame(frameIndex);
-            bowlingGame.addFrame(score);
+            bowlingGame.roll(score);
             frameIndex = bowlingGame.getFrames().lastOfFrames();
             ResultView.printScoreBoard(bowlingGame);
         }
