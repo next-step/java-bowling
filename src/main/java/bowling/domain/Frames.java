@@ -51,20 +51,20 @@ public class Frames {
 
     private int sumBonusScore(Frame frame) {
         int nextBallsSize = frame.isStrike() ? STRIKE_BONUS_SIZE : SPARE_BONUS_SIZE;
-        Balls nextBalls = nextBalls(frame.getFrameNumber(), nextBallsSize);
-        if (nextBalls.isNotSameSize(nextBallsSize)) {
+        Pins nextPins = nextBalls(frame.getFrameNumber(), nextBallsSize);
+        if (nextPins.isNotSameSize(nextBallsSize)) {
             return NON_SCORE;
         }
-        return frame.getScore() + nextBalls.score();
+        return frame.getScore() + nextPins.score();
     }
 
-    private Balls nextBalls(int start, int size) {
-        List<Ball> balls = IntStream.range(start, frames.size())
+    private Pins nextBalls(int start, int size) {
+        List<Pin> Pins = IntStream.range(start, frames.size())
                 .mapToObj(i -> frames.get(i))
                 .flatMap(f -> f.unmodifiableBalls().stream())
-                .filter(Ball::isFallDown)
+                .filter(Pin::isFallDown)
                 .limit(size)
                 .collect(Collectors.toList());
-        return new Balls(balls);
+        return new Pins(Pins);
     }
 }

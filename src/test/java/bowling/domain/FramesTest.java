@@ -26,8 +26,8 @@ public class FramesTest {
     @Test
     @DisplayName("해당 index의 프레임이 더 핀을 쓰러트릴 수 있는 지 확인한다.")
     void isFallDownAble() {
-        Balls balls = new Balls(Collections.singletonList(new Ball(10)));
-        Frame fallDownNotAbleFrame = new Frame(2, balls);
+        Pins pins = new Pins(Collections.singletonList(new Pin(10)));
+        Frame fallDownNotAbleFrame = new Frame(2, pins);
         List<Frame> frameList = Arrays.asList(new Frame(1), fallDownNotAbleFrame);
         Frames frames = new Frames(frameList);
 
@@ -56,10 +56,10 @@ public class FramesTest {
     }
 
     static Stream<Arguments> provideFrameAndScore() {
-        Frame strikeFrame = new Frame(1, new Balls(Collections.singletonList(new Ball(10))));
-        Frame spareFrame = new Frame(1, new Balls(Arrays.asList(new Ball(5), new Ball(5))));
-        Frame firstFallDown = new Frame(2, new Balls(Arrays.asList(new Ball(5), new Ball())));
-        Frame secondFallDown = new Frame(2, new Balls(Arrays.asList(new Ball(5), new Ball(4))));
+        Frame strikeFrame = new Frame(1, new Pins(Collections.singletonList(new Pin(10))));
+        Frame spareFrame = new Frame(1, new Pins(Arrays.asList(new Pin(5), new Pin(5))));
+        Frame firstFallDown = new Frame(2, new Pins(Arrays.asList(new Pin(5), new Pin())));
+        Frame secondFallDown = new Frame(2, new Pins(Arrays.asList(new Pin(5), new Pin(4))));
 
         return Stream.of(
                 Arguments.of(Collections.singletonList(firstFallDown), 0, -1),

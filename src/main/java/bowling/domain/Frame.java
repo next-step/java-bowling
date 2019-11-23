@@ -4,20 +4,20 @@ import java.util.List;
 
 public class Frame {
     private int frameNumber;
-    private Balls balls;
+    private Pins pins;
 
-    public Frame(int frameNumber, Balls balls) {
+    public Frame(int frameNumber, Pins pins) {
         this.frameNumber = frameNumber;
-        this.balls = balls;
+        this.pins = pins;
     }
 
     public Frame(int frameNumber) {
         this.frameNumber = frameNumber;
-        this.balls = new Balls(isLastFrame());
+        this.pins = new Pins(isLastFrame());
     }
 
     public void fallDown(int pin) {
-       balls.fallDown(pin);
+       pins.fallDown(pin);
     }
 
     public boolean isLastFrame() {
@@ -25,7 +25,7 @@ public class Frame {
     }
 
     public int getScore() {
-        return balls.score();
+        return pins.score();
     }
 
     public int getFrameNumber() {
@@ -37,28 +37,28 @@ public class Frame {
     }
 
     public boolean isFallDownAble() {
-        return addAblePinCount() > Ball.ZERO_PIN_COUNT;
+        return addAblePinCount() > Pin.ZERO_PIN_COUNT;
     }
 
     public int addAblePinCount() {
-        return balls.addAblePinCount(isLastFrame());
+        return pins.addAblePinCount(isLastFrame());
     }
 
     public boolean isStrike() {
         if (isLastFrame()) {
             return false;
         }
-        return balls.isStrike();
+        return pins.isStrike();
     }
 
     public boolean isSpare() {
         if (isLastFrame()) {
             return false;
         }
-        return balls.isSpare();
+        return pins.isSpare();
     }
 
-    public List<Ball> unmodifiableBalls() {
-        return balls.unmodifiableBalls();
+    public List<Pin> unmodifiableBalls() {
+        return pins.unmodifiableBalls();
     }
 }

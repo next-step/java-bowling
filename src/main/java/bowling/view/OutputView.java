@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Ball;
+import bowling.domain.Pin;
 import bowling.domain.Frame;
 import bowling.domain.Frames;
 import bowling.domain.Player;
@@ -53,34 +53,34 @@ public class OutputView {
     }
 
     private static String frameResult(Frame frame) {
-        List<Ball> balls = frame.unmodifiableBalls();
-        return IntStream.range(0, balls.size())
-                .mapToObj(i -> getBallText(frame, balls, i))
+        List<Pin> Pins = frame.unmodifiableBalls();
+        return IntStream.range(0, Pins.size())
+                .mapToObj(i -> getBallText(frame, Pins, i))
                 .filter(result -> !EMPTY_TEXT.equals(result))
                 .collect(Collectors.joining(RESULT_DELIMITER));
     }
 
-    private static String getBallText(Frame frame, List<Ball> balls, int i) {
+    private static String getBallText(Frame frame, List<Pin> Pins, int i) {
         if (i == SECOND_BALL_INDEX && frame.isSpare()) {
             return SPARE_TEXT;
         }
-        return convertBallText(balls.get(i));
+        return convertBallText(Pins.get(i));
     }
 
-    private static String convertBallText(Ball ball) {
-        if (ball.getPin() == Ball.ALL_PIN_COUNT) {
+    private static String convertBallText(Pin pin) {
+        if (pin.getPin() == pin.ALL_PIN_COUNT) {
             return STRIKE_TEXT;
         }
 
-        if (ball.getPin() == Ball.ZERO_PIN_COUNT) {
+        if (pin.getPin() == pin.ZERO_PIN_COUNT) {
             return ZERO_TEXT;
         }
 
-        if (ball.getPin() == Ball.DEFAULT_PIN) {
+        if (pin.getPin() == pin.DEFAULT_PIN) {
             return EMPTY_TEXT;
         }
 
-        return String.valueOf(ball.getPin());
+        return String.valueOf(pin.getPin());
     }
 
     private static void printScore(Player player) {
