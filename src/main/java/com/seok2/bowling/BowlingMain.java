@@ -1,7 +1,7 @@
 package com.seok2.bowling;
 
-import com.seok2.bowling.frame.game.domain.BowlingGame;
-import com.seok2.bowling.frame.game.domain.BowlingGameAssembler;
+import com.seok2.bowling.game.domain.BowlingGame;
+import com.seok2.bowling.game.domain.BowlingGameAssembler;
 import com.seok2.bowling.pin.domain.Pin;
 import com.seok2.bowling.user.domain.UserAssembler;
 import com.seok2.bowling.view.InputView;

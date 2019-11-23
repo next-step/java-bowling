@@ -1,7 +1,6 @@
-package com.seok2.bowling.frame.game.domain;
+package com.seok2.bowling.game.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.seok2.bowling.pin.domain.Pin;
 import com.seok2.bowling.user.domain.User;

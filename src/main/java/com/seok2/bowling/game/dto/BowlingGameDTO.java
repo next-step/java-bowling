@@ -1,4 +1,4 @@
-package com.seok2.bowling.frame.game.domain;
+package com.seok2.bowling.game.dto;
 
 import com.seok2.bowling.frame.dto.BoardDTO;
 import java.util.List;

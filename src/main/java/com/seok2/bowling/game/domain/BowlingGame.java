@@ -1,4 +1,4 @@
-package com.seok2.bowling.frame.game.domain;
+package com.seok2.bowling.game.domain;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
