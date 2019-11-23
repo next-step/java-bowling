@@ -18,7 +18,7 @@ public class Remaining {
         return new Remaining(remaining);
     }
 
-    public static Remaining zero() {
+    public static Remaining ofZero() {
         return of(ZERO_VALUE);
     }
 

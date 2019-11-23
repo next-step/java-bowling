@@ -31,7 +31,7 @@ public class FrameScore implements Observer {
         if (state instanceof Strike) {
             return Remaining.ofStrike();
         }
-        return state instanceof Spare ? Remaining.ofSpare() : Remaining.zero();
+        return state instanceof Spare ? Remaining.ofSpare() : Remaining.ofZero();
     }
 
     public static FrameScore of(ScorePublisher publisher, State state) {
@@ -39,7 +39,7 @@ public class FrameScore implements Observer {
     }
 
     public static FrameScore of(Score score) {
-        return new FrameScore(null, score, Remaining.zero());
+        return new FrameScore(null, score, Remaining.ofZero());
     }
 
     public boolean isCalculated() {
