@@ -32,7 +32,8 @@ public class OutputView {
     }
 
     private static String[] toScoreArray(UserDTO userDTO, BoardDTO boardDTO) {
-        List<String> result = new ArrayList<>(Arrays.asList(String.format(STRING_FORMAT, userDTO.getName())));
+        List<String> result = new ArrayList<>(
+            Arrays.asList(String.format(STRING_FORMAT, boardDTO.getUserDTO().getName())));
         boardDTO.getBoardDTO().stream()
             .map(FrameDTO::getRecord)
             .map(view -> String.format(STRING_FORMAT, view))

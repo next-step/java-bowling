@@ -12,8 +12,8 @@ import com.seok2.bowling.view.OutputView;
 public class BowlingMain {
 
     public static void main(String[] args) {
-        Board board = Board.init();
         User user = User.of(InputView.getUserName());
+        Board board = Board.init(user);
         UserDTO userDTO = UserAssembler.assemble(user);
         OutputView.print(userDTO, BoardAssembler.assemble(board));
         while (!board.isGameOver()) {
