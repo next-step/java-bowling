@@ -36,9 +36,9 @@ public class PinsTest {
     @Test
     @DisplayName("점수 반영시 핀 수 초과 에러 테스트")
     void fallDownIsOverFlowPinCountException() {
-        Pin[] Pins = new Pin[]{new Pin(10), new Pin()};
+        Pin[] tetPins = new Pin[]{new Pin(10), new Pin()};
         int nextPin = 10;
-        Pins expectPins = new Pins(Arrays.asList(Pins));
+        Pins expectPins = new Pins(Arrays.asList(tetPins));
 
         assertThatThrownBy(() -> {
             expectPins.fallDown(nextPin);
@@ -49,9 +49,9 @@ public class PinsTest {
     @Test
     @DisplayName("점수 반영시 쓰러트릴 수 있는 횟 수 초과 에러 테스트")
     void fallDownIsOverFlowBallCountException() {
-        Pin[] Pins = new Pin[]{new Pin(6), new Pin(3)};
+        Pin[] tetPins = new Pin[]{new Pin(6), new Pin(3)};
         int nextPin = 2;
-        Pins expectPins = new Pins(Arrays.asList(Pins));
+        Pins expectPins = new Pins(Arrays.asList(tetPins));
 
         assertThatThrownBy(() -> {
             expectPins.fallDown(nextPin);
@@ -62,9 +62,9 @@ public class PinsTest {
     @Test
     @DisplayName("마지막 프레임에서 스트라이크 또는 스페어가 아닐때 에러 테스트")
     void fallDownIsNotAddAbleThirdBall() {
-        Pin[] Pins = new Pin[]{new Pin(6), new Pin(3), new Pin()};
+        Pin[] tetPins = new Pin[]{new Pin(6), new Pin(3), new Pin()};
         int nextPin = 2;
-        Pins expectPins = new Pins(Arrays.asList(Pins));
+        Pins expectPins = new Pins(Arrays.asList(tetPins));
 
         assertThatThrownBy(() -> {
             expectPins.fallDown(nextPin);

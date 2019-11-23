@@ -51,7 +51,7 @@ public class Frames {
 
     private int sumBonusScore(Frame frame) {
         int nextBallsSize = frame.isStrike() ? STRIKE_BONUS_SIZE : SPARE_BONUS_SIZE;
-        Pins nextPins = nextBalls(frame.getFrameNumber(), nextBallsSize);
+        Pins nextPins = nextBalls(frame.getFrameNumber().getNumber(), nextBallsSize);
         if (nextPins.isNotSameSize(nextBallsSize)) {
             return NON_SCORE;
         }
