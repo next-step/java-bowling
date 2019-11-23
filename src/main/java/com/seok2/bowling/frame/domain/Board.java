@@ -2,6 +2,7 @@ package com.seok2.bowling.frame.domain;
 
 import com.seok2.bowling.pin.domain.Pin;
 import com.seok2.bowling.user.domain.User;
+import java.util.Comparator;
 
 public class Board {
 
