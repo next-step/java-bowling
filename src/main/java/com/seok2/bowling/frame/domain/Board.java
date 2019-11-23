@@ -58,7 +58,7 @@ public class Board {
         return this.frames;
     }
 
-    protected User getUser() {
+    public User getUser() {
         return this.user;
     }
 }
