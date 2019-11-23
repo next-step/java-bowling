@@ -1,5 +1,5 @@
-import game.Frame;
-import game.GameType;
+import bowling.frame.Frame;
+import bowling.frame.FrameScoreType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,14 +12,14 @@ public class FrameTest {
     void checkScore() {
         Frame frame = Frame.of(9);
         frame.addScore(1);
-        assertThat(frame.getGameType()).isEqualTo(GameType.SPARE);
+        assertThat(frame.getGameType()).isEqualTo(FrameScoreType.SPARE);
 
         frame = Frame.of(10);
-        assertThat(frame.getGameType()).isEqualTo(GameType.STRIKE);
+        assertThat(frame.getGameType()).isEqualTo(FrameScoreType.STRIKE);
 
         frame = Frame.of(4);
         frame.addScore(4);
-        assertThat(frame.getGameType()).isEqualTo(GameType.MISS);
+        assertThat(frame.getGameType()).isEqualTo(FrameScoreType.MISS);
     }
 
     @Test

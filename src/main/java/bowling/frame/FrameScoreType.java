@@ -1,25 +1,25 @@
-package game;
+package bowling.frame;
 
 import java.util.Arrays;
 
-import static score.ScoreType.MAX_SCORE;
+import static bowling.score.rollling.Pin.MAX_PIN_NUMBER;
 
-public enum GameType {
-    STRIKE(1, MAX_SCORE), SPARE(2, MAX_SCORE), MISS(2), PENDING(1),
+public enum FrameScoreType {
+    STRIKE(1, MAX_PIN_NUMBER), SPARE(2, MAX_PIN_NUMBER), MISS(2), PENDING(1),
     ;
     private int size;
     private Integer score;
 
-    GameType(int size) {
+    FrameScoreType(int size) {
         this.size = size;
     }
 
-    GameType(int size, int score) {
+    FrameScoreType(int size, int score) {
         this.size = size;
         this.score = score;
     }
 
-    public static GameType get(int size, int score) {
+    public static FrameScoreType get(int size, int score) {
         return Arrays.stream(values())
                 .filter(gameType -> gameType.size == size)
                 .filter(gameType -> gameType.score == null || gameType.score == score)

@@ -1,5 +1,5 @@
-import game.Frame;
-import game.Frames;
+import bowling.Frames;
+import bowling.frame.Frame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

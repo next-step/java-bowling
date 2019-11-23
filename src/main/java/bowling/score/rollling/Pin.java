@@ -1,8 +1,8 @@
-package score;
+package bowling.score.rollling;
 
 import java.util.Arrays;
 
-public enum ScoreType {
+public enum Pin {
     ZERO(0, "-"),
     OME(1, "1"),
     TWO(2, "2"),
@@ -14,18 +14,18 @@ public enum ScoreType {
     EIGHT(8, "8"),
     NINE(9, "9"),
     TEN(10, "X");
-    public static final int MAX_SCORE = Arrays.stream(ScoreType.values())
+    public static final int MAX_PIN_NUMBER = Arrays.stream(Pin.values())
             .map(scoreType -> scoreType.number)
             .max(Integer::compareTo)
             .orElseThrow(IllegalArgumentException::new);
-    public static final int MIN_SCORE = Arrays.stream(ScoreType.values())
+    public static final int MIN_PIN_NUMBER = Arrays.stream(Pin.values())
             .map(scoreType -> scoreType.number)
             .min(Integer::compareTo)
             .orElseThrow(IllegalArgumentException::new);
     private int number;
     private String numberString;
 
-    ScoreType(int number, String numberString) {
+    Pin(int number, String numberString) {
         this.number = number;
         this.numberString = numberString;
     }
@@ -34,7 +34,7 @@ public enum ScoreType {
         return Arrays.stream(values())
                 .filter(scoreType -> scoreType.getNumber() == number)
                 .findFirst()
-                .map(ScoreType::getNumberString)
+                .map(Pin::getNumberString)
                 .orElseThrow(IllegalArgumentException::new);
     }
 

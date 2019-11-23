@@ -1,20 +1,19 @@
-package game;
+package bowling.frame;
 
-import score.BonusScores;
-import score.FrameScores;
-import score.Score;
+import bowling.score.BonusScore;
+import bowling.score.rollling.Rolling;
 
 import java.util.List;
 
 public class Frame {
-    private static final String BONUS_WITHOUT_FINAL_FRAME = "보너스 게임은 10번째 frame에서만 가능합니다";
+    private static final String BONUS_WITHOUT_FINAL_FRAME_EXCEPTION = "보너스 게임은 10번째 frame에서만 가능합니다";
     private final FrameType frameType;
-    private FrameScores frameScores;
+    private FrameScore frameScore;
     private Frame prevFrame;
     private Integer scoreForFrame;
 
     private Frame(FrameType frameType) {
-        this.frameScores = new FrameScores();
+        this.frameScore = new FrameScore();
         this.frameType = frameType;
     }
 
@@ -53,28 +52,28 @@ public class Frame {
     }
 
     public void addScore(int score) {
-        this.frameScores.addScore(score);
+        this.frameScore.addScore(score);
         setScoreForFrame();
     }
 
     public void addBonus(int bonusScore) {
         if (frameType == FrameType.NORMAL) {
-            throw new IllegalArgumentException(BONUS_WITHOUT_FINAL_FRAME);
+            throw new IllegalArgumentException(BONUS_WITHOUT_FINAL_FRAME_EXCEPTION);
         }
-        this.frameScores.addBonus(bonusScore);
+        this.frameScore.addBonus(bonusScore);
         setScoreForFrame();
     }
 
-    public BonusScores getBonus() {
-        return this.frameScores.getBonus();
+    public BonusScore getBonus() {
+        return this.frameScore.getBonus();
     }
 
-    public GameType getGameType() {
-        return this.frameScores.getGameType();
+    public FrameScoreType getGameType() {
+        return this.frameScore.getGameType();
     }
 
-    public List<Score> getScores() {
-        return this.frameScores.getScores();
+    public List<Rolling> getScores() {
+        return this.frameScore.getScores();
     }
 
     public Integer getScoreSum() {
@@ -85,26 +84,26 @@ public class Frame {
     }
 
     private int sumScore() {
-        return frameScores.sumScore();
+        return frameScore.sumScore();
     }
 
     private void setScoreForFrame() {
-        GameType gameType = this.getGameType();
-        setThisFrameScore(gameType);
+        FrameScoreType frameScoreType = this.getGameType();
+        setThisFrameScore(frameScoreType);
 
         if (this.prevFrame == null) {
             return;
         }
 
-        setPreviousFrame(gameType);
+        setPreviousFrame(frameScoreType);
         if (this.prevFrame.prevFrame != null) {
             setPreviousOfPreviousFrameScore();
         }
     }
 
-    private void setThisFrameScore(GameType gameType) {
-        if (gameType == GameType.MISS) {
-            this.scoreForFrame = frameScores.sumScore();
+    private void setThisFrameScore(FrameScoreType frameScoreType) {
+        if (frameScoreType == FrameScoreType.MISS) {
+            this.scoreForFrame = frameScore.sumScore();
             return;
         }
 
@@ -112,43 +111,43 @@ public class Frame {
             return;
         }
 
-        if (gameType == GameType.SPARE) {
-            this.scoreForFrame = frameScores.sumScore() + frameScores.sumBonus();
+        if (frameScoreType == FrameScoreType.SPARE) {
+            this.scoreForFrame = frameScore.sumScore() + frameScore.sumBonus();
         }
 
-        if (gameType == GameType.STRIKE
+        if (frameScoreType == FrameScoreType.STRIKE
                 && this.getBonus().getNeedScoreCount() == 0) {
-            this.scoreForFrame = this.sumScore() + this.frameScores.sumBonus();
+            this.scoreForFrame = this.sumScore() + this.frameScore.sumBonus();
         }
     }
 
-    private void setPreviousFrame(GameType gameType) {
-        if ((gameType == GameType.MISS || gameType == GameType.SPARE)
+    private void setPreviousFrame(FrameScoreType frameScoreType) {
+        if ((frameScoreType == FrameScoreType.MISS || frameScoreType == FrameScoreType.SPARE)
                 && this.frameType == FrameType.FINAL
-                && this.prevFrame.getGameType() == GameType.STRIKE) {
+                && this.prevFrame.getGameType() == FrameScoreType.STRIKE) {
             this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.sumScore();
         }
 
-        if ((gameType == GameType.MISS || gameType == GameType.SPARE)
-                && this.prevFrame.getGameType() == GameType.STRIKE) {
+        if ((frameScoreType == FrameScoreType.MISS || frameScoreType == FrameScoreType.SPARE)
+                && this.prevFrame.getGameType() == FrameScoreType.STRIKE) {
             this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.sumScore();
         }
 
-        if (gameType == GameType.STRIKE
+        if (frameScoreType == FrameScoreType.STRIKE
                 && this.frameType == FrameType.FINAL
                 && this.getBonus() != null
-                && this.prevFrame.getGameType() == GameType.STRIKE) {
-            this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.sumScore() + frameScores.sumBonus();
+                && this.prevFrame.getGameType() == FrameScoreType.STRIKE) {
+            this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.sumScore() + frameScore.sumBonus();
         }
 
-        if (this.prevFrame.getGameType() == GameType.SPARE) {
+        if (this.prevFrame.getGameType() == FrameScoreType.SPARE) {
             this.prevFrame.scoreForFrame = this.prevFrame.sumScore() + this.getScores().get(0).getScore();
         }
     }
 
     private void setPreviousOfPreviousFrameScore() {
-        if (this.prevFrame.getGameType() == GameType.STRIKE
-                && this.prevFrame.prevFrame.getGameType() == GameType.STRIKE) {
+        if (this.prevFrame.getGameType() == FrameScoreType.STRIKE
+                && this.prevFrame.prevFrame.getGameType() == FrameScoreType.STRIKE) {
             this.prevFrame.prevFrame.scoreForFrame = this.prevFrame.prevFrame.sumScore()
                     + this.prevFrame.sumScore() + this.getScores().get(0).getScore();
         }
