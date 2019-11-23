@@ -6,17 +6,13 @@ import com.seok2.bowling.state.domain.Strike;
 
 public class FrameScore implements Observer {
 
-
-    public static final FrameScore PENDING = new FrameScore(null, Score.ZERO, 3);
-    public static final int REMAINING_ZERO = 0;
-    public static final int REMAINING_ONE = 1;
-    public static final int REMAINING_TWO = 2;
+    public static final FrameScore PENDING = new FrameScore(null, Score.ZERO, Remaining.ofInfinity());
 
     private final ScorePublisher publisher;
     private Score score;
-    private int remaining;
+    private Remaining remaining;
 
-    private FrameScore(ScorePublisher publisher, Score score, int remaining) {
+    private FrameScore(ScorePublisher publisher, Score score, Remaining remaining) {
         this.publisher = publisher;
         this.score = score;
         this.remaining = remaining;
@@ -26,16 +22,16 @@ public class FrameScore implements Observer {
         this.publisher = publisher;
         this.score = state.getScore();
         this.remaining = getRemaining(state);
-        if (remaining > REMAINING_ZERO) {
+        if (!remaining.isZero()) {
             publisher.subscribe(this);
         }
     }
 
-    private int getRemaining(State state) {
+    private Remaining getRemaining(State state) {
         if (state instanceof Strike) {
-            return REMAINING_TWO;
+            return Remaining.ofStrike();
         }
-        return state instanceof Spare ? REMAINING_ONE : REMAINING_ZERO;
+        return state instanceof Spare ? Remaining.ofSpare() : Remaining.zero();
     }
 
     public static FrameScore of(ScorePublisher publisher, State state) {
@@ -43,11 +39,11 @@ public class FrameScore implements Observer {
     }
 
     public static FrameScore of(Score score) {
-        return new FrameScore(null, score, 0);
+        return new FrameScore(null, score, Remaining.zero());
     }
 
     public boolean isCalculated() {
-        return remaining == 0;
+        return remaining.isZero();
     }
 
     public Score getScore() {
@@ -56,9 +52,9 @@ public class FrameScore implements Observer {
 
     @Override
     public void update(Score score) {
-        this.remaining--;
+        this.remaining.decrement();
         this.score = this.score.add(score);
-        if (remaining == 0) {
+        if (isCalculated()) {
             this.publisher.unsubscribe(this);
         }
     }

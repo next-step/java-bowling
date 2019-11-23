@@ -34,6 +34,6 @@ public class Cover extends Running {
 
     @Override
     public String view() {
-        return first.toString();
+        return first.isFelledAtAll() ? "-" : first.toString();
     }
 }
