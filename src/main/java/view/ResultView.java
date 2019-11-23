@@ -20,7 +20,7 @@ public class ResultView {
     private static final String FIRST_ROLLING_SCORE = "  %s   ";
     private static final String SECOND_ROLLING_SCORE = "  %s|%s ";
     private static final String THIRD_ROLLING_SCORE = " %s|%s|%s";
-    private static final String TOTAL_SCORE_DOUBLE_DIGIT = "%4d ";
+    private static final String TOTAL_SCORE_DOUBLE_DIGIT = "%4d  ";
     private static final String GAME_TO_GO_FORMAT = "      ";
 
     public static void printInitialScoreBoard(BowlingGame bowlingGame) {
@@ -77,7 +77,7 @@ public class ResultView {
 
     private static String bonusGameScoreToString(Frame frame) {
         BonusScore bonusScore = frame.getBonus();
-        if (frame.getGameType() == FrameScoreType.SPARE) {
+        if (frame.getFrameScoreType() == FrameScoreType.SPARE) {
             return String.format(THIRD_ROLLING_SCORE,
                     firstRollingScore(frame),
                     secondRollingScoreToString(frame),
@@ -112,7 +112,7 @@ public class ResultView {
     }
 
     private static String secondRollingScoreToString(Frame frame) {
-        if (frame.getGameType() == FrameScoreType.SPARE) {
+        if (frame.getFrameScoreType() == FrameScoreType.SPARE) {
             return "/";
         }
         return Pin.toString(frame.getScores().get(1).getScore());

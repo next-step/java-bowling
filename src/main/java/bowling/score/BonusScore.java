@@ -38,7 +38,7 @@ public class BonusScore implements Score {
     }
 
     public int getNeedScoreCount() {
-        if (this.bonusRollings.size() != 1) {
+        if (this.bonusRollings.size() == 2) {
             return 0;
         }
         if (this.bonusRollings.get(0).getScore() == 10) {

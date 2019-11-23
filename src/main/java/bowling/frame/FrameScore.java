@@ -23,7 +23,6 @@ public class FrameScore {
     }
 
     public void addBonus(int bonusScore) {
-
         if (this.bonus == null) {
             this.bonus = new BonusScore();
         }

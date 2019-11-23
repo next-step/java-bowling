@@ -17,8 +17,8 @@ public class BowlingGame {
         this.frames = new Frames();
     }
 
-    public void addFrame(Frame frame) {
-        this.frames.addFrame(frame);
+    public Frame addFrame(int pins) {
+        return frames.roll(pins);
     }
 
     public String getUser() {
