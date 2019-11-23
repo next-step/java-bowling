@@ -46,7 +46,7 @@ class BowlingGameTest {
     @DisplayName("현재 순서의 보드를 리턴한다. 동일한 순서일 경우 리스트 순서가 빠른 보드를 리턴")
     void getCurrent() {
         BowlingGame game = BowlingGame.of(Arrays.asList("LJS", "JHJ"));
-
+        assertThat(game.getCurrentUser()).isEqualTo(User.of("LJS"));
     }
 
     @Test
