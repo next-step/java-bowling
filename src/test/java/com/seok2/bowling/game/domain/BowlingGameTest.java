@@ -12,10 +12,6 @@ import org.junit.jupiter.api.Test;
 class BowlingGameTest {
 
     @Test
-    void of() {
-    }
-
-    @Test
     @DisplayName("차례대로 공을 투구 할 수 있다. - Cover 의 경우 계속 차례가 유지된다.")
     void rollCover() {
         BowlingGame game = BowlingGame.of(Arrays.asList("LJS", "JHJ"));
