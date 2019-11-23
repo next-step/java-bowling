@@ -15,7 +15,6 @@ public class InputView {
     private static final String COUNT_OF_PLAYER = "How many people?";
     private static final String NAME_OF_PLAYER = "플레이어 {0}의 이름은(3 english letters)?:";
     private static final Scanner scanner = new Scanner(System.in);
-    private static final Scanner scanner2 = new Scanner(System.in);
 
     public static List<String> getUserNames() {
         System.out.print(COUNT_OF_PLAYER);
@@ -26,9 +25,8 @@ public class InputView {
 
     private static String getUserName(int count) {
         System.out.print(MessageFormat.format(NAME_OF_PLAYER, count));
-        return scanner2.nextLine();
+        return scanner.nextLine();
     }
-
 
     public static int getFelled() {
         return scanner.nextInt();
