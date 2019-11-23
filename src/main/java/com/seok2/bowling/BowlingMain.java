@@ -14,12 +14,11 @@ public class BowlingMain {
     public static void main(String[] args) {
         User user = User.of(InputView.getUserName());
         Board board = Board.init(user);
-        UserDTO userDTO = UserAssembler.assemble(user);
-        OutputView.print(userDTO, BoardAssembler.assemble(board));
+        OutputView.print(BoardAssembler.assemble(board));
         while (!board.isGameOver()) {
             OutputView.printCurrentFrame(board.size());
             board.roll(Pin.of(InputView.getFelled()));
-            OutputView.print(userDTO, BoardAssembler.assemble(board));
+            OutputView.print(BoardAssembler.assemble(board));
         }
     }
 
