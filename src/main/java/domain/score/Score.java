@@ -8,13 +8,13 @@ public class Score {
 	private int score;
 	private int left;
 
-	private Score(int score) {
+	private Score(int score, int left) {
 		this.score = score;
-		this.left = -1;
+		this.left = left;
 	}
 
-	public static Score of(int score) {
-		return new Score(score);
+	public static Score of(int score, int left) {
+		return new Score(score, left);
 	}
 
 	public void initialize(int score) {

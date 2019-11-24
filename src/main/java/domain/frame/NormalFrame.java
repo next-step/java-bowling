@@ -19,7 +19,7 @@ public class NormalFrame implements Frame {
 	}
 
 	public static NormalFrame newInstance() {
-		return new NormalFrame(NormalFrameStates.newInstance(), Score.of(0));
+		return new NormalFrame(NormalFrameStates.newInstance(), Score.of(0, -1));
 	}
 
 	@Override

@@ -7,4 +7,6 @@ public interface FrameStates {
 
 	State roll(BowlingPins fallenPins);
 
+	boolean isEndFrame();
+
 }

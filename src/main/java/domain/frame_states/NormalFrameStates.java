@@ -46,6 +46,11 @@ public class NormalFrameStates implements FrameStates {
 	}
 
 	@Override
+	public boolean isEndFrame() {
+		return states.isEndFrame();
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
