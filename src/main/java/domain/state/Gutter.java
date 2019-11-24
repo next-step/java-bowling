@@ -1,18 +1,37 @@
 package domain.state;
 
+import java.util.Objects;
+
 public class Gutter implements State {
 
-	private int bowlingPins;
+	private static final Gutter cachingGutter = new Gutter(0);
+	private int bowlingPinsCount;
 
-	private Gutter(int bowlingPins) {
-		this.bowlingPins = bowlingPins;
+
+	private Gutter(int bowlingPinsCount) {
+		this.bowlingPinsCount = bowlingPinsCount;
 	}
 
-	public static Gutter of(int bowlingPins) {
-		if (bowlingPins != 0) {
-			throw new IllegalArgumentException("GUTTER는 0개를 쓰러뜨린 경우 입니다");
-		}
-		return new Gutter(bowlingPins);
+	public static Gutter getInstance() {
+		return cachingGutter;
+	}
+
+	@Override
+	public State nextState(int fallenPinsCount) {
+		throw new UnsupportedOperationException("GUTTER는 마지막 상태입니다");
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Gutter gutter = (Gutter) o;
+		return bowlingPinsCount == gutter.bowlingPinsCount;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(bowlingPinsCount);
 	}
 
 }

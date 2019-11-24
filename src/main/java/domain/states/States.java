@@ -2,6 +2,6 @@ package domain.states;
 
 public interface States {
 
-	void roll(BowlingPins fallenPins);
+	void addNewState(int remainPins);
 
 }
