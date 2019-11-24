@@ -15,7 +15,7 @@ public class FramesTest {
     @BeforeEach
     void setUp() {
         // give
-        frames = new Frames();
+        frames = Frames.init();
     }
 
     @Test

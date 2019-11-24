@@ -5,18 +5,21 @@ import java.util.List;
 
 public class Frames {
 
+    private static final int FIRST_FRAME_INDEX = 0;
+    private static final int LAST_FRAME_INDEX = 10;
+
     private List<Frame> frames;
 
-    public Frames() {
-        this.frames = prepareFrames();
+    private Frames(List<Frame> frames) {
+        this.frames = frames;
     }
 
-    private List<Frame> prepareFrames() {
+    public static Frames init() {
         List<Frame> frames = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = FIRST_FRAME_INDEX; i < LAST_FRAME_INDEX; i++) {
             frames.add(Frame.ready(i));
         }
-        return frames;
+        return new Frames(frames);
     }
 
     public List<Frame> getFrames() {

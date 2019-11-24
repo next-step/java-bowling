@@ -45,5 +45,4 @@ public class Frame {
     public int hashCode() {
         return Objects.hash(position, score);
     }
-
 }
