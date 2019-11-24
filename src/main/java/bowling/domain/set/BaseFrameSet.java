@@ -2,8 +2,6 @@ package bowling.domain.set;
 
 import bowling.domain.state.State;
 
-import java.util.Objects;
-
 import static bowling.domain.FrameConstants.*;
 
 public class BaseFrameSet implements FrameSet {

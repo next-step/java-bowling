@@ -3,7 +3,6 @@ package bowling;
 import bowling.domain.set.*;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
-import com.sun.xml.internal.rngom.parse.host.Base;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
