@@ -2,9 +2,11 @@ package bowling.domain.state;
 
 public class Strike implements State {
 
+    public static final String TEXT = "X";
+
     @Override
     public State play(int newHitCount) {
-        throw new IllegalStateException("Strike 에서 더이상 진행할 수 없습니다.");
+        throw new IllegalStateException("Strike 이므로 해당 세트에서 더이상 진행할 수 없습니다.");
     }
 
     @Override
@@ -24,6 +26,6 @@ public class Strike implements State {
 
     @Override
     public String getString() {
-        return "X";
+        return Strike.TEXT;
     }
 }

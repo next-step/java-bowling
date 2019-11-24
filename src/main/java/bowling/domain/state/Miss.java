@@ -10,7 +10,7 @@ public class Miss implements State {
 
     @Override
     public State play(int newHitCount) {
-        return this;
+        throw new IllegalStateException("Miss 이므로 해당 세트에서 더이상 진행할 수 없습니다.");
     }
 
     @Override

@@ -2,11 +2,9 @@ package bowling.domain.set;
 
 import bowling.domain.state.State;
 
-public class BaseFrameSet implements FrameSet {
+import static bowling.domain.FrameConstants.*;
 
-    private static final int MIN_PLAY_COUNT = 1;
-    private static final int MIN_HIT_COUNT = 0;
-    private static final int MAX_HIT_COUNT = 10;
+public class BaseFrameSet implements FrameSet {
 
     private final int playCount;
     private State state;

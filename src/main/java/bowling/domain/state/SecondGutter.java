@@ -1,6 +1,9 @@
 package bowling.domain.state;
 
 public class SecondGutter implements State {
+
+    public static final String TEXT = "-";
+
     @Override
     public State play(int newHitCount) {
         throw new IllegalStateException("Second Gutter 에서 더이상 진행할 수 없습니다.");
@@ -23,6 +26,6 @@ public class SecondGutter implements State {
 
     @Override
     public String getString() {
-        return "-";
+        return SecondGutter.TEXT;
     }
 }

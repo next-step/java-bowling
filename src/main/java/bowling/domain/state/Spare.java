@@ -2,9 +2,11 @@ package bowling.domain.state;
 
 public class Spare implements State {
 
+    public static final String TEXT = "/";
+
     @Override
     public State play(int newHitCount) {
-        throw new IllegalStateException("Spare 에서 더이상 진행할 수 없습니다.");
+        throw new IllegalStateException("Spare 이므로 해당 세트에서 더이상 진행할 수 없습니다.");
     }
 
     @Override
@@ -24,6 +26,6 @@ public class Spare implements State {
 
     @Override
     public String getString() {
-        return "/";
+        return Spare.TEXT;
     }
 }

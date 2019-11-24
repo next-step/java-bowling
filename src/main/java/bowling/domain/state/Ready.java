@@ -1,10 +1,12 @@
 package bowling.domain.state;
 
+import static bowling.domain.FrameConstants.MAX_HIT_COUNT;
+
 public class Ready implements State {
 
     @Override
     public State play(int newHitCount) {
-        if (newHitCount == INIT_PIT_COUNT) {
+        if (newHitCount == MAX_HIT_COUNT) {
             return new Strike();
         }
 

@@ -1,14 +1,19 @@
 package bowling.domain.state;
 
+import static bowling.domain.FrameConstants.MAX_HIT_COUNT;
+import static bowling.domain.FrameConstants.MIN_HIT_COUNT;
+
 public class FirstGutter implements State {
+
+    public static final String TEXT = "-";
 
     @Override
     public State play(int newHitCount) {
-        if (newHitCount == 0) {
+        if (newHitCount == MIN_HIT_COUNT) {
             return new SecondGutter();
         }
 
-        if (newHitCount == INIT_PIT_COUNT) {
+        if (newHitCount == MAX_HIT_COUNT) {
             return new Spare();
         }
 
@@ -32,6 +37,6 @@ public class FirstGutter implements State {
 
     @Override
     public String getString() {
-        return "-";
+        return FirstGutter.TEXT;
     }
 }

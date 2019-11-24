@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import static bowling.domain.FrameConstants.MAX_HIT_COUNT;
+
 public class Hit implements State {
 
     private final int hitCount;
@@ -10,11 +12,13 @@ public class Hit implements State {
 
     @Override
     public State play(int newHitCount) {
+        assertNewHitCount(newHitCount);
+
         if (newHitCount == 0) {
             return new SecondGutter();
         }
 
-        if (hitCount + newHitCount == INIT_PIT_COUNT) {
+        if (hitCount + newHitCount == MAX_HIT_COUNT) {
             return new Spare();
         }
 
@@ -39,5 +43,11 @@ public class Hit implements State {
     @Override
     public String getString() {
         return String.valueOf(hitCount);
+    }
+
+    private void assertNewHitCount(int newHitCount) {
+        if (hitCount + newHitCount > MAX_HIT_COUNT) {
+            throw new IllegalArgumentException();
+        }
     }
 }
