@@ -1,5 +1,12 @@
 package domain;
 
+import domain.state.InProgress;
+import domain.state.Miss;
+import domain.state.Spare;
+import domain.state.Strike;
+import domain.states.BowlingPins;
+import domain.states.NormalStates;
+import domain.states.States;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,71 +32,58 @@ class StatesTest {
 	@Test
 	void 처음에_10개를_치면_스트라이크이다() {
 		// given
-		States states = new NormalStates();
+		States states = NormalStates.newInstance();
 
 		// when
 		states.roll(BowlingPins.of(10));
 
 		// then
-		assertThat(states).isEqualTo(states.of(0, Strike.of(10)));
+		assertThat(states).isEqualTo(NormalStates.of(0, Strike.of(10)));
 	}
 
 	@Test
 	void 처음에_4개_그다음_6개를_치면_스페어이다() {
 		// given
-		States states = new NormalStates();
+		States states = NormalStates.newInstance();
 
 		// when
 		states.roll(BowlingPins.of(4));
 		states.roll(BowlingPins.of(6));
 
 		// then
-		assertThat(states).isEqualTo(states.of(0, InProgress,of(4), Spare.of(6) ));
+		assertThat(states).isEqualTo(NormalStates.of(0, InProgress.of(4), Spare.of(6)));
 	}
 
 	@Test
 	void 처음에_5개_그다음_4개를_치면_미스이다() {
 		// given
-		States states = new NormalStates();
+		States states = NormalStates.newInstance();
 
 		// when
 		states.roll(BowlingPins.of(5));
 		states.roll(BowlingPins.of(4));
 
 		// then
-		assertThat(states).isEqualTo(states.of(0, InProgress,of(5), Miss.of(4) ));
+		assertThat(states).isEqualTo(NormalStates.of(0, InProgress.of(5), Miss.of(4)));
 	}
 
 	@Test
 	void 처음에_0개_그다음_0개를_치면_거터이다() {
 		// given
-		States states = new NormalStates();
+		States states = NormalStates.newInstance();
 
 		// when
 		states.roll(BowlingPins.of(5));
 		states.roll(BowlingPins.of(4));
 
 		// then
-		assertThat(states).isEqualTo(states.of(0, InProgress,of(5), Miss.of(4) ));
-	}
-
-	@Test
-	void 처음에_5개_그다음_4개를_치면_미스이다() {
-		// given
-		States states = new NormalStates();
-
-		// when
-		states.roll(BowlingPins.of(5));
-		states.roll(BowlingPins.of(4));
-
-		// then
-		assertThat(states).isEqualTo(states.of(0, InProgress,of(5), Miss.of(4) ));
+		assertThat(states).isEqualTo(NormalStates.of(0, InProgress.of(5), Miss.of(4)));
 	}
 
 	@Test
 	void 스트라이크를_친_이후에_더_공을_칠_수_없다() {
 		// given
-		States states = new NormalStates();
+		States states = NormalStates.newInstance();
 		states.roll(BowlingPins.of(10));
 
 		// when & then
@@ -102,7 +96,7 @@ class StatesTest {
 	@Test
 	void 두_번_친_이후에_더_공을_칠_수_없다() {
 		// given
-		States states = new NormalStates();
+		States states = NormalStates.newInstance();
 		states.roll(BowlingPins.of(4));
 		states.roll(BowlingPins.of(5));
 
@@ -116,7 +110,7 @@ class StatesTest {
 	@Test
 	void 존재하는_핀보다_많은_핀을_칠_수_없다() {
 		// given
-		States states = new NormalStates();
+		States states = NormalStates.newInstance();
 		states.roll(BowlingPins.of(4));
 
 		// when & then
