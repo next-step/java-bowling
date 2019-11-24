@@ -17,6 +17,11 @@ public class SecondGutter implements State {
     }
 
     @Override
+    public boolean isBonusPlayableState() {
+        return false;
+    }
+
+    @Override
     public String getString() {
         return "-";
     }

@@ -3,13 +3,17 @@ package bowling.domain;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
-public class NormalFrameSet extends FrameSet {
+public class NormalFrameSet implements FrameSet {
 
     private static final int FIRST_GAME_PLAY_COUNT = 1;
     private static final int END_NORMAL_FRAME_COUNT = 9;
 
+    private final int playCount;
+    private State state;
+
     private NormalFrameSet(int playCount, State state) {
-        super(playCount, state);
+        this.playCount = playCount;
+        this.state = state;
     }
 
     public static FrameSet createFirst() {
@@ -18,6 +22,11 @@ public class NormalFrameSet extends FrameSet {
 
     public static FrameSet create(int playCount) {
         return new NormalFrameSet(playCount, new Ready());
+    }
+
+    @Override
+    public void play(int hitCount) {
+        state = state.play(hitCount);
     }
 
     @Override
@@ -41,5 +50,15 @@ public class NormalFrameSet extends FrameSet {
     @Override
     public FrameSet snapShot() {
         return new NormalFrameSet(playCount, state.snapShot());
+    }
+
+    @Override
+    public State getState() {
+        return state;
+    }
+
+    @Override
+    public int getPlayCount() {
+        return playCount;
     }
 }

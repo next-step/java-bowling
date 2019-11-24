@@ -10,5 +10,7 @@ public interface State {
 
     public State snapShot();
 
+    public boolean isBonusPlayableState();
+
     public String getString();
 }

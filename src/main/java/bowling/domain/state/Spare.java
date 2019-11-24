@@ -18,6 +18,11 @@ public class Spare implements State {
     }
 
     @Override
+    public boolean isBonusPlayableState() {
+        return true;
+    }
+
+    @Override
     public String getString() {
         return "/";
     }

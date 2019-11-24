@@ -63,7 +63,7 @@ public class View {
     private void showDividerIfPossible(FrameSet set) {
         if (set.isEnd()) {
             showText(SCORE_BOARD_SET_DIVIDER);
-        } else if (set.isEndedState()) {
+        } else if (set.getState().isEnd()) {
             showText(SCORE_BOARD_FRAME_DIVIDER);
         }
     }

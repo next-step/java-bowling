@@ -18,6 +18,11 @@ public class Strike implements State {
     }
 
     @Override
+    public boolean isBonusPlayableState() {
+        return true;
+    }
+
+    @Override
     public String getString() {
         return "X";
     }
