@@ -11,10 +11,9 @@ public class View {
     private static final String PLAYER_NAME_QUESTION = "플레이어 이름은(3 english letters)?";
     private static final String HIT_COUNT_QUESTION = "%d 프레임 투구";
     private static final String SCORE_BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String SCORE_BOARD_FIRST_DIVIDER = "|  %s |  ";
-    private static final String SCORE_BOARD_FRAME_DIVIDER = " |  ";
-    private static final String SCORE_BOARD_STATE_DIVIDER = "|";
-    private static final String SCORE_BOARD_SET_DIVIDER = " |";
+    private static final String DIVIDER = "|";
+
+    private static final int SCORE_TEXT_LENGTH = 6;
 
     private Scanner scanner;
 
@@ -37,34 +36,38 @@ public class View {
         showScore(playerName, results);
     }
 
-    private void showScore(String playerName, List<FrameSet> results) {
-        showText(String.format(SCORE_BOARD_FIRST_DIVIDER, playerName));
+    private void showScore(String playerName, List<FrameSet> resultSets) {
+        showPlayerName(playerName);
 
-        for (FrameSet set : results) {
-            showFrameScore(set.getState());
-            showDividerIfPossible(set);
+        int lastIndex = resultSets.size() - 1;
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i <= lastIndex; i++) {
+
+            addFrameScoreText(sb, resultSets.get(i).getState());
+
+            if (resultSets.get(i).getState().isEnd() || i == lastIndex) {
+                showText(StringUtils.addBlank(sb, SCORE_TEXT_LENGTH));
+                showText(DIVIDER);
+
+                sb = new StringBuilder();
+            }
         }
 
         nextLine();
     }
 
-    private void showFrameScore(State state) {
-        StringBuilder sb = new StringBuilder();
+    private void showPlayerName(String playerName) {
+        showText(DIVIDER);
+        showText(StringUtils.addBlank(playerName, 6));
+        showText(DIVIDER);
+    }
 
+    private void addFrameScoreText(StringBuilder sb, State state) {
         sb.append(state.getString());
 
         if (!state.isEnd()) {
-            sb.append(SCORE_BOARD_STATE_DIVIDER);
-        }
-
-        showText(sb.toString());
-    }
-
-    private void showDividerIfPossible(FrameSet set) {
-        if (set.isEnd()) {
-            showText(SCORE_BOARD_SET_DIVIDER);
-        } else if (set.getState().isEnd()) {
-            showText(SCORE_BOARD_FRAME_DIVIDER);
+            sb.append(DIVIDER);
         }
     }
 
