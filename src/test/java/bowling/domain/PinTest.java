@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class pinTest {
+public class PinTest {
 
     @Test
     @DisplayName("Ball은 10까지만 pin을 가질 수 있다.")
