@@ -2,6 +2,8 @@ package bowling.domain.set;
 
 import bowling.domain.state.State;
 
+import java.util.Objects;
+
 import static bowling.domain.FrameConstants.*;
 
 public class BaseFrameSet implements FrameSet {
@@ -23,7 +25,7 @@ public class BaseFrameSet implements FrameSet {
     }
 
     @Override
-    public FrameSet readyNext() {
+    public FrameSet next() {
         return this;
     }
 

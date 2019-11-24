@@ -6,7 +6,7 @@ public interface FrameSet {
 
     public void play(int hitCount);
 
-    public FrameSet readyNext();
+    public FrameSet next();
 
     public boolean isEnd();
 

@@ -23,7 +23,7 @@ public class BonusFrameSet implements FrameSet {
     }
 
     @Override
-    public FrameSet readyNext() {
+    public FrameSet next() {
         return this;
     }
 

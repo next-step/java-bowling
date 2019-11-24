@@ -24,7 +24,7 @@ public class Game {
             frameResults.add(frameSet.snapShot());
             view.showFrameSetResult(player.getName(), frameResults.getValue());
 
-            frameSet = frameSet.readyNext();
+            frameSet = frameSet.next();
         }
     }
 }

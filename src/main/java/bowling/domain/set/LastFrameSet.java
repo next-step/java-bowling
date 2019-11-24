@@ -23,7 +23,7 @@ public class LastFrameSet implements FrameSet {
     }
 
     @Override
-    public FrameSet readyNext() {
+    public FrameSet next() {
         if (getState().isBonusPlayableState()) {
             return BonusFrameSet.create();
         }

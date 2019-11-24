@@ -11,6 +11,7 @@ public class NormalFrameSet implements FrameSet {
     private final FrameSet frameSet;
 
     private NormalFrameSet(int playCount, State state) {
+        assertPlayCount(playCount);
         this.frameSet = BaseFrameSet.create(playCount, state);
     }
 
@@ -28,7 +29,7 @@ public class NormalFrameSet implements FrameSet {
     }
 
     @Override
-    public FrameSet readyNext() {
+    public FrameSet next() {
         if (getPlayCount() == NormalFrameSet.END_SET_PLAY_COUNT) {
             return LastFrameSet.create();
         }
@@ -58,5 +59,11 @@ public class NormalFrameSet implements FrameSet {
     @Override
     public int getPlayCount() {
         return frameSet.getPlayCount();
+    }
+
+    private void assertPlayCount(int playCount) {
+        if (playCount > END_SET_PLAY_COUNT) {
+            throw new IllegalArgumentException("일반 세트는 더이상 진행할 수 없습니다.");
+        }
     }
 }
