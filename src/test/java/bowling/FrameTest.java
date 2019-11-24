@@ -12,8 +12,8 @@ public class FrameTest {
     @DisplayName("같은 값일 때 생성자 테스트")
     void equalConstructorTest() {
         // give
-        Frame frame = Frame.first(1, 10);
-        Frame frame2 = Frame.first(1, 10);
+        Frame frame = Frame.ready(1);
+        Frame frame2 = Frame.of(1, null);
         // when
         boolean isSame = frame.equals(frame2);
         // then
@@ -24,10 +24,11 @@ public class FrameTest {
     @DisplayName("프레임에서 스코어 점수 확인")
     void getPointByScoreTest() {
         // give
-        Frame frame = Frame.first(0, 5).second(4);
+        Frame frame = Frame.ready(0).first(5);
+        Frame frame1 = frame.second(4);
         // when
-        int firstPoint = frame.getFirstScore();
-        int secondPoint = frame.getSecondScore();
+        int firstPoint = frame.getPoint();
+        int secondPoint = frame1.getPoint();
         // then
         assertThat(firstPoint).isEqualTo(5);
         assertThat(secondPoint).isEqualTo(4);

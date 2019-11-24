@@ -13,23 +13,23 @@ public class Frame {
     }
 
     public static Frame ready(int position) {
-        return new Frame(position, null);
+        return of(position, null);
     }
 
-    public static Frame first(int position, int point) {
-        return new Frame(position, Score.first(point));
+    public Frame first(int point) {
+        return of(position, Score.first(point));
     }
 
     public Frame second(int point) {
-        return new Frame(this.position, this.score.second(point));
+        return of(position, score.second(point));
     }
 
-    public int getFirstScore() {
-        return this.score.getFirstPoint();
+    public static Frame of(int position, Score score) {
+        return new Frame(position, score);
     }
 
-    public int getSecondScore() {
-        return this.score.getSecondPoint();
+    public int getPoint() {
+        return score.getPoint();
     }
 
     @Override
