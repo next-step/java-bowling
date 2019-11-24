@@ -1,10 +1,12 @@
 package domain.states;
 
+import domain.state.State;
+
 public interface States {
 
 	boolean isEndFrame();
 
-	void addNewState(int remainPins);
+	State addNewState(int remainPins);
 
 	boolean shouldRestorePins();
 

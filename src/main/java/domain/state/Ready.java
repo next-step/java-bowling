@@ -14,6 +14,11 @@ public class Ready implements State {
 	}
 
 	@Override
+	public int getFallenBowlingPins() {
+		return 0;
+	}
+
+	@Override
 	public State nextState(int fallenPinsCount) {
 		if (fallenPinsCount == STRIKE_PINS) {
 			return Strike.getInstance();

@@ -40,14 +40,15 @@ public class FinalStates implements States {
 			return true;
 		}
 
-		return states.get(MIDDLE_PHASE_INDEX).isLastState();
+		return states.get(MIDDLE_PHASE_INDEX).isLastStateInFinalFrame();
 	}
 
 	@Override
-	public void addNewState(int fallenPinsCount) {
+	public State addNewState(int fallenPinsCount) {
 		State nexState = getNextState(fallenPinsCount);
 		deleteReadyState();
 		states.add(nexState);
+		return nexState;
 	}
 
 	private State getNextState(int fallenPinsCount) {

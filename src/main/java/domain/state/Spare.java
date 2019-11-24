@@ -26,6 +26,21 @@ public class Spare implements State {
 	}
 
 	@Override
+	public int getFallenBowlingPins() {
+		return bowlingPinsCount;
+	}
+
+	@Override
+	public int getLeftStatesToCalculateScore() {
+		return 1;
+	}
+
+	@Override
+	public boolean isLastStateToDecideScoreLeft() {
+		return true;
+	}
+
+	@Override
 	public boolean isRestoredState() {
 		return true;
 	}

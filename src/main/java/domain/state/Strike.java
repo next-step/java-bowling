@@ -1,16 +1,12 @@
 package domain.state;
 
-import java.util.Objects;
-
 public class Strike implements State {
 
-	private static final int FIX_BOWLING_PINS = 10;
-	private static final Strike cachingStrike = new Strike(FIX_BOWLING_PINS);
+	private static final int BOWLING_PINS = 10;
+	private static final Strike cachingStrike = new Strike();
 
-	private int bowlingPins;
+	private Strike() {
 
-	private Strike(int bowlingPins) {
-		this.bowlingPins = bowlingPins;
 	}
 
 	public static Strike getInstance() {
@@ -31,16 +27,17 @@ public class Strike implements State {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Strike strike = (Strike) o;
-		return bowlingPins == strike.bowlingPins;
+	public int getFallenBowlingPins() {
+		return BOWLING_PINS;
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(bowlingPins);
+	public boolean isLastStateToDecideScoreLeft() {
+		return true;
 	}
 
+	@Override
+	public int getLeftStatesToCalculateScore() {
+		return 2;
+	}
 }

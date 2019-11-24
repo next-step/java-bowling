@@ -45,10 +45,11 @@ public class NormalStates implements States {
 	}
 
 	@Override
-	public void addNewState(int fallenPinsCount) {
+	public State addNewState(int fallenPinsCount) {
 		State nexState = getNextState(fallenPinsCount);
 		deleteReadyState();
 		states.add(nexState);
+		return nexState;
 	}
 
 	private State getNextState(int fallenPinsCount) {

@@ -34,6 +34,16 @@ public class InProgress implements State {
 	}
 
 	@Override
+	public int getFallenBowlingPins() {
+		return bowlingPinsCount;
+	}
+
+	@Override
+	public int getLeftStatesToCalculateScore() {
+		return 1;
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;

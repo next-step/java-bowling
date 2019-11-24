@@ -23,7 +23,17 @@ public class Miss implements State {
 	}
 
 	@Override
-	public boolean isLastState() {
+	public boolean isLastStateInFinalFrame() {
+		return true;
+	}
+
+	@Override
+	public int getFallenBowlingPins() {
+		return bowlingPins;
+	}
+
+	@Override
+	public boolean isLastStateToDecideScoreLeft() {
 		return true;
 	}
 

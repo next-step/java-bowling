@@ -1,15 +1,13 @@
 package domain.state;
 
-import java.util.Objects;
-
 public class Gutter implements State {
 
-	private static final Gutter cachingGutter = new Gutter(0);
-	private int bowlingPinsCount;
+	private static final int BOWLING_PINS = 0;
+	private static final Gutter cachingGutter = new Gutter();
 
 
-	private Gutter(int bowlingPinsCount) {
-		this.bowlingPinsCount = bowlingPinsCount;
+	private Gutter() {
+
 	}
 
 	public static Gutter getInstance() {
@@ -22,21 +20,13 @@ public class Gutter implements State {
 	}
 
 	@Override
-	public boolean isLastState() {
+	public int getFallenBowlingPins() {
+		return BOWLING_PINS;
+	}
+
+	@Override
+	public boolean isLastStateInFinalFrame() {
 		return true;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Gutter gutter = (Gutter) o;
-		return bowlingPinsCount == gutter.bowlingPinsCount;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(bowlingPinsCount);
 	}
 
 }

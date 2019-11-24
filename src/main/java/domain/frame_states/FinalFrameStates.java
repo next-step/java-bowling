@@ -33,11 +33,12 @@ public class FinalFrameStates implements FrameStates {
 	}
 
 	@Override
-	public void roll(BowlingPins fallenPins) {
+	public State roll(BowlingPins fallenPins) {
 		validateFrame();
 		int fallenPinsCount = pins.roll(fallenPins);
-		states.addNewState(fallenPinsCount);
+		State state = states.addNewState(fallenPinsCount);
 		restorePinsIfNotEnd();
+		return state;
 	}
 
 	private void validateFrame() {

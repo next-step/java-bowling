@@ -40,6 +40,10 @@ public class BowlingPins {
 		pins = 10;
 	}
 
+	public int getPins() {
+		return pins;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

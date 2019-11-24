@@ -33,10 +33,10 @@ public class NormalFrameStates implements FrameStates {
 	}
 
 	@Override
-	public void roll(BowlingPins fallenPins) {
+	public State roll(BowlingPins fallenPins) {
 		validateFrame();
 		int fallenPinsCount = pins.roll(fallenPins);
-		states.addNewState(fallenPinsCount);
+		return states.addNewState(fallenPinsCount);
 	}
 
 	private void validateFrame() {

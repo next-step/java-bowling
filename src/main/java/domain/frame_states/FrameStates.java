@@ -1,9 +1,10 @@
 package domain.frame_states;
 
+import domain.state.State;
 import domain.states.BowlingPins;
 
 public interface FrameStates {
 
-	void roll(BowlingPins fallenPins);
+	State roll(BowlingPins fallenPins);
 
 }
