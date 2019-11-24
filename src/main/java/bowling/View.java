@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.FrameSet;
+import bowling.domain.set.FrameSet;
 import bowling.domain.state.*;
 
 import java.util.List;

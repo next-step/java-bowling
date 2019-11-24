@@ -1,6 +1,8 @@
 package bowling.domain;
 
 import bowling.View;
+import bowling.domain.set.FrameSet;
+import bowling.domain.set.NormalFrameSet;
 
 public class Game {
 

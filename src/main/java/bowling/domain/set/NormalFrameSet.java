@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.set;
 
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;

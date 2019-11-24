@@ -1,7 +1,7 @@
 package bowling;
 
-import bowling.domain.FrameSet;
-import bowling.domain.NormalFrameSet;
+import bowling.domain.set.FrameSet;
+import bowling.domain.set.NormalFrameSet;
 import bowling.domain.state.State;
 import org.junit.jupiter.api.Test;
 
