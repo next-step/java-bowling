@@ -1,4 +1,4 @@
-package domain;
+package domain.frame_states;
 
 import domain.frame_states.FrameStates;
 import domain.frame_states.NormalFrameStates;

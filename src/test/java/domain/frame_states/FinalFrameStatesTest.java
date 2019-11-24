@@ -1,8 +1,7 @@
-package domain;
+package domain.frame_states;
 
 import domain.frame_states.FinalFrameStates;
 import domain.frame_states.FrameStates;
-import domain.frame_states.NormalFrameStates;
 import domain.state.*;
 import domain.states.BowlingPins;
 import org.junit.jupiter.api.Test;
