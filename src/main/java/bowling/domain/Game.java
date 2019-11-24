@@ -10,7 +10,7 @@ public class Game {
     }
 
     public static void play(View view) {
-        String playerName = view.getName();
+        Player player = Player.create(view.getName());
 
         FrameSet frameSet = NormalFrameSet.createFirst();
         FrameResults frameResults = new FrameResults();
@@ -20,7 +20,7 @@ public class Game {
             frameSet.play(hitCount);
 
             frameResults.add(frameSet.snapShot());
-            view.showFrameSetResult(playerName, frameResults.getValue());
+            view.showFrameSetResult(player.getName(), frameResults.getValue());
 
             frameSet = frameSet.readyNext();
         }
