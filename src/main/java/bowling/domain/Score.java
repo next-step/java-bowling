@@ -39,6 +39,21 @@ public class Score {
         }
     }
 
+    public boolean isSpare() {
+        return this.firstPoint + this.secondPoint == 10;
+    }
+
+    public boolean isStrike() {
+        return this.firstPoint == 10;
+    }
+
+    public boolean isMiss() {
+        return this.firstPoint + this.secondPoint < 10;
+    }
+
+    public boolean isGutter() {
+        return this.firstPoint != 10 && this.secondPoint == 0;
+    }
 
     public int getFirstPoint() {
         return this.firstPoint;

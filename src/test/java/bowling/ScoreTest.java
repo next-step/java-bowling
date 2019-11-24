@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.Score;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class ScoreTest {
+
+    private Score score;
+
+    @BeforeEach
+    void setUp() {
+        score = Score.first(5).second(5);
+    }
 
     @Test
     @DisplayName("첫 구 점수 테스트")
@@ -44,5 +52,14 @@ public class ScoreTest {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             Score score = Score.first(5).second(6);
         });
+    }
+
+    @Test
+    @DisplayName("스코어별 상태 체크")
+    void checkStatusByScorePoints() {
+        // when
+        boolean status = score.isSpare();
+        // then
+        assertThat(status).isTrue();
     }
 }
