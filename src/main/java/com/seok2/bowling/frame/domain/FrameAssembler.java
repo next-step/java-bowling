@@ -9,12 +9,20 @@ public class FrameAssembler {
     }
 
     public static FrameDTO assemble(Frame frame) {
-
         if (frame instanceof NormalFrame) {
-            return new FrameDTO(((NormalFrame) frame).getState().view(), ScoreAssembler.assemble(frame.getScore()));
+            return assembleNormalFrame(frame);
         }
+        return assembleEndFrame(frame);
+    }
+
+    private static FrameDTO assembleEndFrame(Frame frame) {
         EndFrame endFrame = (EndFrame) frame;
-        return new FrameDTO(endFrame.getStates().view(), ScoreAssembler.assemble(frame.getScore()));
+        return new FrameDTO(endFrame.getStates().view(), FrameScoreAssembler.assemble(frame.getScore()));
+    }
+
+    private static FrameDTO assembleNormalFrame(Frame frame) {
+        NormalFrame normalFrame = (NormalFrame) frame;
+        return new FrameDTO(normalFrame.getState().view(), FrameScoreAssembler.assemble(frame.getScore()));
     }
 
 }

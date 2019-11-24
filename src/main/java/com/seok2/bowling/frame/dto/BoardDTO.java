@@ -5,19 +5,19 @@ import java.util.List;
 
 public class BoardDTO {
 
-    private final UserDTO user;
-    private final List<FrameDTO> frames;
+    private final UserDTO userDTO;
+    private final List<FrameDTO> boardDTO;
 
-    public BoardDTO(UserDTO user, List<FrameDTO> frames) {
-        this.user = user;
-        this.frames = frames;
-    }
-
-    public UserDTO getUser() {
-        return user;
+    public BoardDTO(UserDTO userDTO, List<FrameDTO> boardDTO) {
+        this.userDTO = userDTO;
+        this.boardDTO = boardDTO;
     }
 
     public List<FrameDTO> getBoardDTO() {
-        return frames;
+        return boardDTO;
+    }
+
+    public UserDTO getUserDTO() {
+        return userDTO;
     }
 }

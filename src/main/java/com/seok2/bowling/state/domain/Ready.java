@@ -18,17 +18,12 @@ public class Ready extends Running {
     }
 
     @Override
+    public Score getScore() {
+        return Score.ZERO;
+    }
+
+    @Override
     public String view() {
         return "";
-    }
-
-    @Override
-    public Score calculate(Score base) {
-        return base;
-    }
-
-    @Override
-    public Score getScore() {
-        return Score.ofReady();
     }
 }

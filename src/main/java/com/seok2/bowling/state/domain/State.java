@@ -11,7 +11,5 @@ public interface State {
 
     String view();
 
-    Score calculate(Score base);
-
     Score getScore();
 }

@@ -4,13 +4,10 @@ import java.util.Objects;
 
 public class Remaining {
 
-    private static final int DECREMENT_VALUE = 1;
-    public static final Remaining INFINITY = Remaining.of(3);
-    public static final Remaining STRIKE = Remaining.of(2);
-    public static final Remaining SPARE = Remaining.of(1);
-    public static final Remaining COVER = Remaining.of(1);
-    public static final Remaining ZERO = Remaining.of(0);
-
+    private static final int ZERO_VALUE = 0;
+    private static final int SPARE = 1;
+    private static final int STRIKE = 2;
+    private static final int MAX = 3;
     private int remaining;
 
     private Remaining(int remaining) {
@@ -21,24 +18,35 @@ public class Remaining {
         return new Remaining(remaining);
     }
 
-    public Remaining decrement() {
-        return of(remaining - DECREMENT_VALUE);
+    public static Remaining ofZero() {
+        return of(ZERO_VALUE);
+    }
+
+    public static Remaining ofSpare() {
+        return of(SPARE);
+    }
+    public static Remaining ofStrike() {
+        return of(STRIKE);
+    }
+
+    public static Remaining ofInfinity() {
+        return of(MAX);
+    }
+
+    public void decrement() {
+        this.remaining--;
     }
 
     public boolean isZero() {
-        return this.equals(ZERO);
+        return remaining == ZERO_VALUE;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Remaining)) {
-            return false;
-        }
-        Remaining that = (Remaining) o;
-        return remaining == that.remaining;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Remaining remaining1 = (Remaining) o;
+        return remaining == remaining1.remaining;
     }
 
     @Override

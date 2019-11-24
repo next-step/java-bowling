@@ -16,9 +16,8 @@ public class EndFrame implements Frame {
     }
 
     @Override
-    public Frame roll(Pin felled) {
+    public void roll(Pin felled) {
         states.roll(felled);
-        return this;
     }
 
     @Override
@@ -27,27 +26,10 @@ public class EndFrame implements Frame {
     }
 
     @Override
-    public boolean hasNext() {
-        return false;
-    }
-
-    @Override
-    public Frame next() {
-        throw new IllegalArgumentException("마지막 프레임 입니다.");
-    }
-
-    @Override
-    public Index getIndex() {
-        return Index.of(Index.MAX);
-    }
-
-    @Override
-    public Score getScore() {
+    public FrameScore getScore() {
+        if (!isEnd()) {
+            return FrameScore.PENDING;
+        }
         return states.getScore();
-    }
-
-    @Override
-    public Score calculateScore(Score base) {
-        return states.calculate(base);
     }
 }

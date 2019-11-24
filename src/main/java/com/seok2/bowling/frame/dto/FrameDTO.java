@@ -2,19 +2,21 @@ package com.seok2.bowling.frame.dto;
 
 public class FrameDTO {
 
-    private final String record;
-    private final ScoreDTO scoreDTO;
+    private String record;
+    private FrameScoreDTO frameScoreDTO;
 
-    public FrameDTO(String record, ScoreDTO scoreDTO) {
+    public FrameDTO(String record, FrameScoreDTO frameScoreDTO) {
         this.record = record;
-        this.scoreDTO = scoreDTO;
+        this.frameScoreDTO = frameScoreDTO;
     }
 
     public String getRecord() {
         return record;
     }
 
-    public ScoreDTO getScoreDTO() {
-        return scoreDTO;
+    public FrameScoreDTO getFrameScoreDTO() {
+        return frameScoreDTO;
     }
+
+
 }

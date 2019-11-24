@@ -1,6 +1,5 @@
 package com.seok2.bowling.pin.domain;
 
-import com.seok2.bowling.frame.domain.Remaining;
 import com.seok2.bowling.frame.domain.Score;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -12,7 +11,6 @@ public class Pin {
     private static final Pin[] CACHE = IntStream.rangeClosed(MIN, MAX)
         .mapToObj(Pin::new)
         .toArray(Pin[]::new);
-
     private final int felled;
 
     private Pin(int felled) {
@@ -46,14 +44,6 @@ public class Pin {
         return Score.of(felled);
     }
 
-    public Score toScore(Remaining remaining) {
-        return Score.of(felled, remaining);
-    }
-
-    public Score toComplementScore() {
-        return Score.of(MAX - felled);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -75,6 +65,4 @@ public class Pin {
     public String toString() {
         return String.valueOf(felled);
     }
-
-
 }

@@ -46,7 +46,7 @@ class EndFrameTest {
         frame.roll(Pin.of(10));
         frame.roll(Pin.of(10));
         frame.roll(Pin.of(10));
-        assertThat(frame.getScore()).isEqualTo(Score.of(30));
+        assertThat(frame.getScore().getScore()).isEqualTo(Score.of(30));
     }
 
 
@@ -57,7 +57,7 @@ class EndFrameTest {
         frame.roll(Pin.of(9));
         frame.roll(Pin.of(1));
         frame.roll(Pin.of(10));
-        assertThat(frame.getScore()).isEqualTo(Score.of(20));
+        assertThat(frame.getScore().getScore()).isEqualTo(Score.of(20));
     }
 
     @Test
@@ -66,7 +66,7 @@ class EndFrameTest {
         Frame frame = EndFrame.of();
         frame.roll(Pin.of(8));
         frame.roll(Pin.of(1));
-        assertThat(frame.getScore()).isEqualTo(Score.of(9));
+        assertThat(frame.getScore().getScore()).isEqualTo(Score.of(9));
     }
 
 }

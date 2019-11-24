@@ -1,6 +1,5 @@
 package com.seok2.bowling.state.domain;
 
-import com.seok2.bowling.frame.domain.Remaining;
 import com.seok2.bowling.frame.domain.Score;
 import com.seok2.bowling.pin.domain.Pin;
 
@@ -29,17 +28,12 @@ public class Cover extends Running {
     }
 
     @Override
-    public Score calculate(Score base) {
-        return base.add(first.toScore());
-    }
-
-    @Override
     public Score getScore() {
-        return first.toScore(Remaining.COVER);
+        return first.toScore();
     }
 
     @Override
     public String view() {
-        return first.toString();
+        return first.isFelledAtAll() ? "-" : first.toString();
     }
 }
