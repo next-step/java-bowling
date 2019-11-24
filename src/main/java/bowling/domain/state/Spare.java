@@ -1,15 +1,10 @@
 package bowling.domain.state;
 
-public class Spare extends State {
-
-    public Spare() {
-        this.playCount = 2;
-        this.hitCount = INIT_PIT_COUNT;
-    }
+public class Spare implements State {
 
     @Override
     public State play(int newHitCount) {
-        return this;
+        throw new IllegalStateException("Spare 에서 더이상 진행할 수 없습니다.");
     }
 
     @Override
@@ -20,5 +15,10 @@ public class Spare extends State {
     @Override
     public State snapShot() {
         return new Spare();
+    }
+
+    @Override
+    public String getString() {
+        return "/";
     }
 }

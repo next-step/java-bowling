@@ -1,16 +1,17 @@
 package bowling.domain.state;
 
-public class Hit extends State {
+public class Hit implements State {
+
+    private final int hitCount;
 
     public Hit(int hitCount) {
-        this.playCount = 1;
         this.hitCount = hitCount;
     }
 
     @Override
     public State play(int newHitCount) {
         if (newHitCount == 0) {
-            return new Gutter();
+            return new SecondGutter();
         }
 
         if (hitCount + newHitCount == INIT_PIT_COUNT) {
@@ -28,5 +29,10 @@ public class Hit extends State {
     @Override
     public State snapShot() {
         return new Hit(hitCount);
+    }
+
+    @Override
+    public String getString() {
+        return String.valueOf(hitCount);
     }
 }

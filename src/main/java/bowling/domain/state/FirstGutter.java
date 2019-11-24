@@ -1,20 +1,11 @@
 package bowling.domain.state;
 
-public class Gutter extends State {
-
-    public Gutter() {
-        this(1);
-    }
-
-    public Gutter(int playCount) {
-        this.playCount = playCount;
-        this.hitCount = 0;
-    }
+public class FirstGutter implements State {
 
     @Override
     public State play(int newHitCount) {
         if (newHitCount == 0) {
-            return new Gutter(2);
+            return new SecondGutter();
         }
 
         if (newHitCount == INIT_PIT_COUNT) {
@@ -26,11 +17,16 @@ public class Gutter extends State {
 
     @Override
     public boolean isEnd() {
-        return playCount == 2;
+        return false;
     }
 
     @Override
     public State snapShot() {
-        return new Gutter(playCount);
+        return new FirstGutter();
+    }
+
+    @Override
+    public String getString() {
+        return "-";
     }
 }

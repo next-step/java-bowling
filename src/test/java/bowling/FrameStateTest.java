@@ -11,30 +11,15 @@ public class FrameStateTest {
     void playTest() {
         assertThat(new Ready().play(10)).isInstanceOf(Strike.class);
         assertThat(new Ready().play(5)).isInstanceOf(Hit.class);
-        assertThat(new Ready().play(0)).isInstanceOf(Gutter.class);
+        assertThat(new Ready().play(0)).isInstanceOf(FirstGutter.class);
 
-        assertThat(new Hit(9).play(9)).isInstanceOf(Spare.class);
-        assertThat(new Hit(9).play(8)).isInstanceOf(Miss.class);
-        assertThat(new Hit(9).play(7)).isInstanceOf(Miss.class);
-        assertThat(new Hit(9).play(6)).isInstanceOf(Miss.class);
-        assertThat(new Hit(9).play(5)).isInstanceOf(Miss.class);
-        assertThat(new Hit(9).play(4)).isInstanceOf(Miss.class);
-        assertThat(new Hit(9).play(3)).isInstanceOf(Miss.class);
-        assertThat(new Hit(9).play(2)).isInstanceOf(Miss.class);
-        assertThat(new Hit(9).play(1)).isInstanceOf(Miss.class);
-        assertThat(new Hit(9).play(0)).isInstanceOf(Gutter.class);
+        assertThat(new Hit(9).play(1)).isInstanceOf(Spare.class);
+        assertThat(new Hit(9).play(0)).isInstanceOf(SecondGutter.class);
 
-        assertThat(new Gutter().play(0)).isInstanceOf(Gutter.class);
-        assertThat(new Gutter().play(10)).isInstanceOf(Spare.class);
-        assertThat(new Gutter().play(1)).isInstanceOf(Miss.class);
-        assertThat(new Gutter().play(2)).isInstanceOf(Miss.class);
-        assertThat(new Gutter().play(3)).isInstanceOf(Miss.class);
-        assertThat(new Gutter().play(4)).isInstanceOf(Miss.class);
-        assertThat(new Gutter().play(5)).isInstanceOf(Miss.class);
-        assertThat(new Gutter().play(6)).isInstanceOf(Miss.class);
-        assertThat(new Gutter().play(7)).isInstanceOf(Miss.class);
-        assertThat(new Gutter().play(8)).isInstanceOf(Miss.class);
-        assertThat(new Gutter().play(9)).isInstanceOf(Miss.class);
+        assertThat(new FirstGutter().play(0)).isInstanceOf(SecondGutter.class);
+        assertThat(new FirstGutter().play(10)).isInstanceOf(Spare.class);
+        assertThat(new FirstGutter().play(1)).isInstanceOf(Miss.class);
+        assertThat(new FirstGutter().play(9)).isInstanceOf(Miss.class);
     }
 
     @Test
@@ -45,10 +30,10 @@ public class FrameStateTest {
         // 1회 플레이
         assertThat(new Strike().isEnd()).isTrue();
         assertThat(new Hit(5).isEnd()).isFalse();
-        assertThat(new Gutter(1).isEnd()).isFalse();
+        assertThat(new FirstGutter().isEnd()).isFalse();
 
         // 2회 플레이
-        assertThat(new Gutter(2).isEnd()).isTrue();
+        assertThat(new SecondGutter().isEnd()).isTrue();
         assertThat(new Miss(5).isEnd()).isTrue();
         assertThat(new Spare().isEnd()).isTrue();
     }

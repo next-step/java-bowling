@@ -1,11 +1,6 @@
 package bowling.domain.state;
 
-public class Ready extends State {
-
-    public Ready() {
-        this.playCount = 0;
-        this.hitCount = 0;
-    }
+public class Ready implements State {
 
     @Override
     public State play(int newHitCount) {
@@ -14,7 +9,7 @@ public class Ready extends State {
         }
 
         if (newHitCount == 0) {
-            return new Gutter();
+            return new FirstGutter();
         }
 
         return new Hit(newHitCount);
@@ -28,5 +23,10 @@ public class Ready extends State {
     @Override
     public State snapShot() {
         return new Ready();
+    }
+
+    @Override
+    public String getString() {
+        return "";
     }
 }

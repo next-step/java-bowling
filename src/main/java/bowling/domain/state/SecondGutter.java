@@ -1,10 +1,9 @@
 package bowling.domain.state;
 
-public class Strike implements State {
-
+public class SecondGutter implements State {
     @Override
     public State play(int newHitCount) {
-        throw new IllegalStateException("Strike 에서 더이상 진행할 수 없습니다.");
+        throw new IllegalStateException("Second Gutter 에서 더이상 진행할 수 없습니다.");
     }
 
     @Override
@@ -14,11 +13,11 @@ public class Strike implements State {
 
     @Override
     public State snapShot() {
-        return new Strike();
+        return new SecondGutter();
     }
 
     @Override
     public String getString() {
-        return "X";
+        return "-";
     }
 }

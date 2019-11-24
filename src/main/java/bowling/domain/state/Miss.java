@@ -1,9 +1,10 @@
 package bowling.domain.state;
 
-public class Miss extends State {
+public class Miss implements State {
+
+    private final int hitCount;
 
     public Miss(int hitCount) {
-        this.playCount = 2;
         this.hitCount = hitCount;
     }
 
@@ -20,5 +21,10 @@ public class Miss extends State {
     @Override
     public State snapShot() {
         return new Miss(hitCount);
+    }
+
+    @Override
+    public String getString() {
+        return String.valueOf(hitCount);
     }
 }

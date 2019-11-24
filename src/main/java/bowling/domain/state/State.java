@@ -1,23 +1,14 @@
 package bowling.domain.state;
 
-public abstract class State {
+public interface State {
 
-    public static final int INIT_PIT_COUNT = 10;
+    int INIT_PIT_COUNT = 10;
 
-    protected int playCount;
-    protected int hitCount;
+    public State play(int newHitCount);
 
-    public abstract State play(int newHitCount);
+    public boolean isEnd();
 
-    public abstract boolean isEnd();
+    public State snapShot();
 
-    public int getHitCount() {
-        return hitCount;
-    }
-
-    public int getPlayCount() {
-        return playCount;
-    }
-
-    public abstract State snapShot();
+    public String getString();
 }

@@ -15,9 +15,6 @@ public class View {
     private static final String SCORE_BOARD_FRAME_DIVIDER = " |  ";
     private static final String SCORE_BOARD_STATE_DIVIDER = "|";
     private static final String SCORE_BOARD_SET_DIVIDER = " |";
-    private static final String STRIKE = " X ";
-    private static final String SPARE = "/";
-    private static final String GUTTER = "-";
 
     private Scanner scanner;
 
@@ -54,24 +51,10 @@ public class View {
     private void showFrameScore(State state) {
         StringBuilder sb = new StringBuilder();
 
-        if (state.getPlayCount() == 2) {
+        sb.append(state.getString());
+
+        if (!state.isEnd()) {
             sb.append(SCORE_BOARD_STATE_DIVIDER);
-        }
-
-        if (state instanceof Strike) {
-            sb.append(STRIKE);
-        }
-
-        if (state instanceof Hit || state instanceof Miss) {
-            sb.append(state.getHitCount());
-        }
-
-        if (state instanceof Gutter) {
-            sb.append(GUTTER);
-        }
-
-        if (state instanceof Spare) {
-            sb.append(SPARE);
         }
 
         showText(sb.toString());
