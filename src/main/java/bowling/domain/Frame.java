@@ -12,6 +12,10 @@ public class Frame {
         this.score = score;
     }
 
+    public static Frame ready(int position) {
+        return new Frame(position, null);
+    }
+
     public static Frame first(int position, int point) {
         return new Frame(position, Score.first(point));
     }
