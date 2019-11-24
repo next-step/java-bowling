@@ -10,7 +10,7 @@ public class Game {
     public static void play(View view) {
         String playerName = view.getName();
 
-        FrameSet frameSet = NormalFrameSet.create(1);
+        FrameSet frameSet = NormalFrameSet.createFirst();
         FrameResults frameResults = new FrameResults();
 
         while (!frameSet.isEnd()) {

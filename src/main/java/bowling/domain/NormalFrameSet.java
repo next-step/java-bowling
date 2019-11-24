@@ -5,8 +5,15 @@ import bowling.domain.state.State;
 
 public class NormalFrameSet extends FrameSet {
 
+    private static final int FIRST_GAME_PLAY_COUNT = 1;
+    private static final int END_NORMAL_FRAME_COUNT = 9;
+
     private NormalFrameSet(int playCount, State state) {
         super(playCount, state);
+    }
+
+    public static FrameSet createFirst() {
+        return create(FIRST_GAME_PLAY_COUNT);
     }
 
     public static FrameSet create(int playCount) {
@@ -15,7 +22,7 @@ public class NormalFrameSet extends FrameSet {
 
     @Override
     public FrameSet readyNext() {
-        if (playCount == 9) {
+        if (playCount == END_NORMAL_FRAME_COUNT) {
             return LastFrameSet.create();
         }
 
