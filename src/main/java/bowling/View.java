@@ -38,28 +38,32 @@ public class View {
 
     private void showScore(String playerName, List<FrameSet> resultSets) {
         showPlayerName(playerName);
-
-        int lastIndex = resultSets.size() - 1;
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i <= lastIndex; i++) {
-
-            addFrameScoreText(sb, resultSets.get(i).getState());
-
-            if (resultSets.get(i).getState().isEnd() || i == lastIndex) {
-                showText(StringUtils.addBlank(sb, SCORE_TEXT_LENGTH));
-                showText(DIVIDER);
-
-                sb = new StringBuilder();
-            }
-        }
-
+        showFrameSetsText(resultSets);
         nextLine();
     }
 
     private void showPlayerName(String playerName) {
         showText(DIVIDER);
         showText(StringUtils.addBlank(playerName, 6));
+        showText(DIVIDER);
+    }
+
+    private void showFrameSetsText(List<FrameSet> resultSets) {
+        int lastIndex = resultSets.size() - 1;
+        StringBuilder frameScoreTextBuilder = new StringBuilder();
+
+        for (int i = 0; i <= lastIndex; i++) {
+            addFrameScoreText(frameScoreTextBuilder, resultSets.get(i).getState());
+
+            if (resultSets.get(i).getState().isEnd() || i == lastIndex) {
+                showFrameSetText(frameScoreTextBuilder.toString());
+                frameScoreTextBuilder = new StringBuilder();
+            }
+        }
+    }
+
+    private void showFrameSetText(String frameScore) {
+        showText(StringUtils.addBlank(frameScore, SCORE_TEXT_LENGTH));
         showText(DIVIDER);
     }
 
