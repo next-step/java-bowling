@@ -20,10 +20,6 @@ public class Board {
         this.user = user;
     }
 
-    public static Board init(String user) {
-        return init(User.of(user));
-    }
-
     public static Board init(User user) {
         return new Board(user, new LinkedList<>(Arrays.asList(Frame.normal())));
     }
