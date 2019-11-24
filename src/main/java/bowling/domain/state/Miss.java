@@ -1,10 +1,13 @@
 package bowling.domain.state;
 
+import static bowling.domain.FrameConstants.MIN_HIT_COUNT;
+
 public class Miss implements State {
 
     private final int hitCount;
 
     public Miss(int hitCount) {
+        assertHitCount(hitCount);
         this.hitCount = hitCount;
     }
 
@@ -31,5 +34,11 @@ public class Miss implements State {
     @Override
     public String getString() {
         return String.valueOf(hitCount);
+    }
+
+    private void assertHitCount(int hitCount) {
+        if (hitCount <= MIN_HIT_COUNT) {
+            throw new IllegalArgumentException("올바르지 않은 상태 입니다. : MISS");
+        }
     }
 }
