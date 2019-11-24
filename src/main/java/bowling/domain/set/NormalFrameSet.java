@@ -5,19 +5,17 @@ import bowling.domain.state.State;
 
 public class NormalFrameSet implements FrameSet {
 
-    private static final int FIRST_GAME_PLAY_COUNT = 1;
-    private static final int END_NORMAL_FRAME_COUNT = 9;
+    public static final int START_SET_PLAY_COUNT = 1;
+    public static final int END_SET_PLAY_COUNT = 9;
 
-    private final int playCount;
-    private State state;
+    private final FrameSet frameSet;
 
     private NormalFrameSet(int playCount, State state) {
-        this.playCount = playCount;
-        this.state = state;
+        this.frameSet = BaseFrameSet.create(playCount, state);
     }
 
     public static FrameSet createFirst() {
-        return create(FIRST_GAME_PLAY_COUNT);
+        return create(START_SET_PLAY_COUNT);
     }
 
     public static FrameSet create(int playCount) {
@@ -26,17 +24,17 @@ public class NormalFrameSet implements FrameSet {
 
     @Override
     public void play(int hitCount) {
-        state = state.play(hitCount);
+        frameSet.play(hitCount);
     }
 
     @Override
     public FrameSet readyNext() {
-        if (playCount == END_NORMAL_FRAME_COUNT) {
+        if (getPlayCount() == NormalFrameSet.END_SET_PLAY_COUNT) {
             return LastFrameSet.create();
         }
 
-        if (state.isEnd()) {
-            return create(playCount + 1);
+        if (getState().isEnd()) {
+            return create(getPlayCount() + 1);
         }
 
         return this;
@@ -49,16 +47,16 @@ public class NormalFrameSet implements FrameSet {
 
     @Override
     public FrameSet snapShot() {
-        return new NormalFrameSet(playCount, state.snapShot());
+        return frameSet.snapShot();
     }
 
     @Override
     public State getState() {
-        return state;
+        return frameSet.getState();
     }
 
     @Override
     public int getPlayCount() {
-        return playCount;
+        return frameSet.getPlayCount();
     }
 }

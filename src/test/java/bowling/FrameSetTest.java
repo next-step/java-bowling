@@ -12,7 +12,7 @@ public class FrameSetTest {
 
     @Test
     void playTest() {
-        FrameSet firstFrameSet = NormalFrameSet.create(1);
+        /*FrameSet firstFrameSet = NormalFrameSet.create(1);
         State lastState = firstFrameSet
                 .play(10) // Strike
                 .play(10) // Strike
@@ -43,12 +43,13 @@ public class FrameSetTest {
                 .play(9) // Spare
                 .play(10); // Strike (bonus)
 
-        assertThat(lastState2.isEnd()).isTrue();
+        assertThat(lastState2.isEnd()).isTrue();*/
     }
 
     @Test
     void throwTest() {
-        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrameSet.create(1).play(-1));
-        assertThatIllegalArgumentException().isThrownBy(() -> NormalFrameSet.create(1).play(11));
+        FrameSet frameSet = NormalFrameSet.createFirst();
+        assertThatIllegalArgumentException().isThrownBy(() -> frameSet.play(-1));
+        assertThatIllegalArgumentException().isThrownBy(() -> frameSet.play(11));
     }
 }

@@ -5,11 +5,12 @@ import bowling.domain.state.State;
 
 public class LastFrameSet implements FrameSet {
 
-    private static final int PLAY_COUNT = 10;
-    private State state;
+    public static final int PLAY_COUNT = 10;
+
+    private final FrameSet frameSet;
 
     private LastFrameSet(State state) {
-        this.state = state;
+        this.frameSet = BaseFrameSet.create(LastFrameSet.PLAY_COUNT, state);
     }
 
     public static FrameSet create() {
@@ -18,12 +19,12 @@ public class LastFrameSet implements FrameSet {
 
     @Override
     public void play(int hitCount) {
-        state = state.play(hitCount);
+        frameSet.play(hitCount);
     }
 
     @Override
     public FrameSet readyNext() {
-        if (state.isBonusPlayableState()) {
+        if (getState().isBonusPlayableState()) {
             return BonusFrameSet.create();
         }
 
@@ -32,17 +33,17 @@ public class LastFrameSet implements FrameSet {
 
     @Override
     public boolean isEnd() {
-        return state.isEnd();
+        return getState().isEnd();
     }
 
     @Override
     public FrameSet snapShot() {
-        return new LastFrameSet(state.snapShot());
+        return frameSet.snapShot();
     }
 
     @Override
     public State getState() {
-        return state;
+        return frameSet.getState();
     }
 
     @Override
