@@ -46,4 +46,8 @@ public class Pin {
     public boolean isStrike() {
         return pin == ALL_PIN_COUNT;
     }
+
+    public boolean isZero() {
+        return pin == ALL_PIN_COUNT;
+    }
 }

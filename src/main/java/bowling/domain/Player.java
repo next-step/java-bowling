@@ -26,6 +26,6 @@ public class Player {
     }
 
     public int getScore(int index) {
-        return frames.getScore(index);
+        return frames.getScore(index).getScore();
     }
 }

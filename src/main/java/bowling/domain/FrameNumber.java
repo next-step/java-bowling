@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.Objects;
 
 public class FrameNumber {
+    public static final int LAST_FRAME = 10;
     private int number;
 
     public FrameNumber(int frameNumber) {
@@ -10,11 +11,7 @@ public class FrameNumber {
     }
 
     public boolean isLastFrame() {
-        return number == Frames.LAST_FRAME;
-    }
-
-    public int getNumber() {
-        return number;
+        return number == LAST_FRAME;
     }
 
     @Override
@@ -28,5 +25,10 @@ public class FrameNumber {
     @Override
     public int hashCode() {
         return Objects.hash(number);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(number);
     }
 }

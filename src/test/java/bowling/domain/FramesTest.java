@@ -52,7 +52,7 @@ public class FramesTest {
     @DisplayName("해당 index의 프레임의 score을 구한다.")
     void getScore(List<Frame> frameList, int index, int expectScore) {
         Frames frames = new Frames(frameList);
-        assertThat(frames.getScore(index)).isEqualTo(expectScore);
+        assertThat(frames.getScore(index).getScore()).isEqualTo(expectScore);
     }
 
     static Stream<Arguments> provideFrameAndScore() {

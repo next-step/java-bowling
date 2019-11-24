@@ -117,7 +117,7 @@ public class Pins {
                 .count();
     }
 
-    public List<Pin> unmodifiableBalls() {
+    public List<Pin> unmodifiablePins() {
         return Collections.unmodifiableList(this.Pins);
     }
 

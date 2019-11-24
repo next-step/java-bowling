@@ -24,6 +24,22 @@ public class Frame {
         return pins.score();
     }
 
+    public Score getScore(int totalScore) {
+        if (!isEnd()) {
+            return Score.ofNoneScore();
+        }
+
+        if (isStrike()) {
+            return Score.ofStrike(totalScore, getScore());
+        }
+
+        if (isSpare()) {
+            return Score.ofSpare(totalScore, getScore());
+        }
+
+        return Score.of(totalScore, getScore());
+    }
+
     public FrameNumber getFrameNumber() {
         return frameNumber;
     }
@@ -54,7 +70,23 @@ public class Frame {
         return pins.isSpare();
     }
 
-    public List<Pin> unmodifiableBalls() {
-        return pins.unmodifiableBalls();
+    public List<Pin> unmodifiablePins() {
+        return pins.unmodifiablePins();
+    }
+
+    public Score addBonus(Score score) {
+        for (Pin pin : pins.unmodifiablePins()) {
+            score = addBonus(score, pin);
+        }
+
+        return score;
+    }
+
+    private Score addBonus(Score score, Pin pin) {
+        if (pin.isNotFallDown() || score.isNotLeft()) {
+            return score;
+        }
+
+        return score.addBonus(pin.getPin());
     }
 }

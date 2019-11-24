@@ -1,14 +1,13 @@
 package bowling.view;
 
-import bowling.domain.Pin;
-import bowling.domain.Frame;
-import bowling.domain.Frames;
-import bowling.domain.Player;
+import bowling.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static bowling.domain.FrameNumber.LAST_FRAME;
 
 public class OutputView {
     private static final String DASH_BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
@@ -44,7 +43,7 @@ public class OutputView {
         List<String> status = new ArrayList<>();
         status.add(frameFormat(player.getName()));
 
-        for (int i = 0; i < Frames.LAST_FRAME; i++) {
+        for (int i = 0; i < LAST_FRAME; i++) {
             Frame frame = player.frameByIndex(i);
             status.add(frameFormat(frameResult(frame)));
         }
@@ -53,7 +52,7 @@ public class OutputView {
     }
 
     private static String frameResult(Frame frame) {
-        List<Pin> Pins = frame.unmodifiableBalls();
+        List<Pin> Pins = frame.unmodifiablePins();
         return IntStream.range(0, Pins.size())
                 .mapToObj(i -> getBallText(frame, Pins, i))
                 .filter(result -> !EMPTY_TEXT.equals(result))
@@ -68,15 +67,15 @@ public class OutputView {
     }
 
     private static String convertBallText(Pin pin) {
-        if (pin.getPin() == pin.ALL_PIN_COUNT) {
+        if (pin.isStrike()) {
             return STRIKE_TEXT;
         }
 
-        if (pin.getPin() == pin.ZERO_PIN_COUNT) {
+        if (pin.isZero()) {
             return ZERO_TEXT;
         }
 
-        if (pin.getPin() == pin.DEFAULT_PIN) {
+        if (pin.isNotFallDown()) {
             return EMPTY_TEXT;
         }
 
@@ -84,18 +83,16 @@ public class OutputView {
     }
 
     private static void printScore(Player player) {
-        List<String> score = new ArrayList<>();
-        score.add(frameFormat(EMPTY_TEXT));
+        List<String> scoreResults = new ArrayList<>();
+        scoreResults.add(frameFormat(EMPTY_TEXT));
 
-        int scoreSum = 0;
-        for (int i = 0; i < Frames.LAST_FRAME; i++) {
-            int frameScore = player.getScore(i);
-            scoreSum += frameScore == NON_SCORE ? ZERO_SCORE : frameScore;
-            String scoreString = frameScore == NON_SCORE ? EMPTY_TEXT : String.valueOf(scoreSum);
-            score.add(frameFormat(scoreString));
+        for (int i = 0; i < LAST_FRAME; i++) {
+            int score = player.getScore(i);
+            String scoreString = score == NON_SCORE ? EMPTY_TEXT : String.valueOf(score);
+            scoreResults.add(frameFormat(scoreString));
         }
 
-        System.out.println(String.format(DASH_BOARD_FORMAT, String.join(DASH_BOARD_SEPARATOR, score)));
+        System.out.println(String.format(DASH_BOARD_FORMAT, String.join(DASH_BOARD_SEPARATOR, scoreResults)));
     }
 
     private static String frameFormat(String result) {
