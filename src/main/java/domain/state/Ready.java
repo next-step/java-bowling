@@ -16,7 +16,7 @@ public class Ready implements State {
 	@Override
 	public State nextState(int fallenPinsCount) {
 		if (fallenPinsCount == STRIKE_PINS) {
-			return Strike.newInstance();
+			return Strike.getInstance();
 		}
 		return InProgress.of(fallenPinsCount);
 	}

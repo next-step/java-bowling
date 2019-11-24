@@ -1,5 +1,6 @@
 package domain;
 
+import domain.frame_states.FinalFrameStates;
 import domain.frame_states.FrameStates;
 import domain.frame_states.NormalFrameStates;
 import domain.state.*;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * - 3개 6개 처럼 10개가 안되게 볼링핀을 쓰러뜨리면 IN_PROGRESS, MISS / 끝
  * - 0개, 0개 이면 IN_PROGRESS, GUTTER / 끝
  *
- * 제일 끝에는 무조건 MISS로 생각한다
+ * 제일 끝에는 STRIKE 또는 MISS이다
  */
 @SuppressWarnings("NonAsciiCharacters")
 class FinalFrameStatesTest {
@@ -34,8 +35,10 @@ class FinalFrameStatesTest {
 		frameStates.roll(BowlingPins.of(3));
 
 		// then
+		System.out.println(frameStates);
 		assertThat(frameStates).isEqualTo(FinalFrameStates.of(3,
-				Strike.of(10), InProgress.of(4), Miss.of(3)));
+				Strike.getInstance(), InProgress.of(4), Miss.of(3)));
+		System.out.println("HERE");
 	}
 
 	@Test

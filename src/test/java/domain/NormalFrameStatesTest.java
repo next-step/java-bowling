@@ -35,7 +35,7 @@ class NormalFrameStatesTest {
 		frameStates.roll(BowlingPins.of(10));
 
 		// then
-		assertThat(frameStates).isEqualTo(NormalFrameStates.of(0, Strike.of(10)));
+		assertThat(frameStates).isEqualTo(NormalFrameStates.of(0, Strike.getInstance()));
 	}
 
 	@Test
@@ -87,7 +87,7 @@ class NormalFrameStatesTest {
 		assertThatThrownBy(() -> {
 			frameStates.roll(BowlingPins.of(3));
 		})
-		.isInstanceOf(IllegalArgumentException.class);
+		.isInstanceOf(IllegalStateException.class);
 	}
 
 	@Test

@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Strike implements State {
 
 	private static final int FIX_BOWLING_PINS = 10;
+	private static final Strike cachingStrike = new Strike(FIX_BOWLING_PINS);
 
 	private int bowlingPins;
 
@@ -12,20 +13,21 @@ public class Strike implements State {
 		this.bowlingPins = bowlingPins;
 	}
 
-	public static Strike newInstance() {
-		return new Strike(FIX_BOWLING_PINS);
-	}
-
-	public static Strike of(int bowlingPins) {
-		if (bowlingPins != FIX_BOWLING_PINS) {
-			throw new IllegalArgumentException("Strike는 10개를 쓰러뜨린 경우입니다");
-		}
-		return new Strike(bowlingPins);
+	public static Strike getInstance() {
+		return cachingStrike;
 	}
 
 	@Override
 	public State nextState(int fallenPinsCount) {
-		throw new UnsupportedOperationException("STRIKE는 마지막 상태입니다");
+		if (fallenPinsCount == 10) {
+			return Strike.getInstance();
+		}
+		return InProgress.of(fallenPinsCount);
+	}
+
+	@Override
+	public boolean isRestoredState() {
+		return true;
 	}
 
 	@Override

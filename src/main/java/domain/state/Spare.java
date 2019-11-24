@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class Spare implements State {
 
-	private int bowlingPins;
+	private int bowlingPinsCount;
 
 	private Spare(int bowlingPins) {
-		this.bowlingPins = bowlingPins;
+		this.bowlingPinsCount = bowlingPins;
 	}
 
 	public static Spare of(int bowlingPins) {
@@ -19,7 +19,15 @@ public class Spare implements State {
 
 	@Override
 	public State nextState(int fallenPinsCount) {
-		throw new UnsupportedOperationException("SPARE는 마지막 상태입니다");
+		if (fallenPinsCount == 10) {
+			return Strike.getInstance();
+		}
+		return Miss.of(fallenPinsCount);
+	}
+
+	@Override
+	public boolean isRestoredState() {
+		return true;
 	}
 
 	@Override
@@ -27,12 +35,12 @@ public class Spare implements State {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Spare spare = (Spare) o;
-		return bowlingPins == spare.bowlingPins;
+		return bowlingPinsCount == spare.bowlingPinsCount;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(bowlingPins);
+		return Objects.hash(bowlingPinsCount);
 	}
 
 }

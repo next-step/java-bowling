@@ -1,39 +1,38 @@
 package domain.states;
 
-import domain.state.Ready;
-import domain.state.State;
-import domain.state.Strike;
+import domain.state.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class NormalStates implements States {
+public class FinalStates implements States {
 
-	private final static int MAX_STATES_SIZE = 2;
+	private final static int MIDDLE_PHASE_INDEX = 1;
+	private final static int MAX_STATES_SIZE = 3;
 
 	private final List<State> states;
 
-	private NormalStates(List<State> states) {
+	private FinalStates(List<State> states) {
 		this.states = new ArrayList<>(states);
 	}
 
-	public static NormalStates of(List<State> states) {
-		return new NormalStates(states);
+	public static FinalStates of(List<State> states) {
+		return new FinalStates(states);
 	}
 
-	public static NormalStates newInstance() {
-		return new NormalStates(Collections.singletonList(Ready.getInstance()));
+	public static FinalStates newInstance() {
+		return new FinalStates(Collections.singletonList(Ready.getInstance()));
 	}
 
 	/**
-	 * NormalFrame 은 스트라이크 한 번 혹은
-	 * 기타 State 두 번에 끝난다.
+	 * FinalFrame은
+	 * 세 번의 state가 있거나 두 번째 State가 Gutter 이거나 Miss이면 끝이다
 	 */
 	@Override
 	public boolean isEndFrame() {
-		if (states.isEmpty()) {
+		if (states.isEmpty() || states.size() == 1) {
 			return false;
 		}
 
@@ -41,7 +40,7 @@ public class NormalStates implements States {
 			return true;
 		}
 
-		return states.equals(Collections.singletonList(Strike.getInstance()));
+		return states.get(MIDDLE_PHASE_INDEX).isLastState();
 	}
 
 	@Override
@@ -65,14 +64,14 @@ public class NormalStates implements States {
 
 	@Override
 	public boolean shouldRestorePins() {
-		return false;
+		return states.get(getLastIndex()).isRestoredState();
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		NormalStates that = (NormalStates) o;
+		FinalStates that = (FinalStates) o;
 		return Objects.equals(states, that.states);
 	}
 
