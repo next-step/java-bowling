@@ -2,7 +2,6 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class Frame {
 
@@ -12,6 +11,7 @@ public abstract class Frame {
     public List<Integer> scores = new ArrayList<>();
     public boolean isEnd;
     public boolean isSpare;
+
 
     public void addScore(int score) {
         this.scores.add(score);
@@ -31,32 +31,6 @@ public abstract class Frame {
 
     public boolean hasSize(int size) {
         return scores.size() == size;
-    }
-
-    public abstract String getScoreFormat();
-
-    public String findScoreFormat(int index) {
-        int score = this.scores.get(index);
-
-        Optional<FrameType> frameType = FrameType.findByScore(score);
-        if (frameType.isPresent()) {
-            return frameType.get().getCode();
-        }
-        return String.valueOf(score);
-    }
-
-    public String findSecondScoreFormat() {
-        int score = this.scores.get(1);
-        if (isSpare) {
-            return FrameType.SPARE.getCode();
-        }
-
-        Optional<FrameType> frameType = FrameType.findByScore(score);
-        if (frameType.isPresent()) {
-            return frameType.get().getCode();
-        }
-
-        return String.valueOf(score);
     }
 
     public List<Integer> getScores() {

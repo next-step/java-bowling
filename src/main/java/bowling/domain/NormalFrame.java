@@ -2,20 +2,26 @@ package bowling.domain;
 
 public class NormalFrame extends Frame {
 
-    @Override
-    public boolean isEndCondition(int score) {
-        return this.scores.size() > 1 || score == FRAME_MAX_SCORE;
+    public static NormalFrame first(int score) {
+        return new NormalFrame(score);
+    }
+
+    public NormalFrame next(int score) {
+        if (isEnd) {
+            return first(score);
+        }
+
+        addScore(score);
+        return this;
+    }
+
+    public NormalFrame(int score) {
+        addScore(score);
     }
 
     @Override
-    public String getScoreFormat() {
-        String format = String.format("%3s", findScoreFormat(0));
-
-        if (this.hasSize(1)) {
-            return format + "   ";
-        }
-
-        return format + String.format("%s%-2s", "|", findSecondScoreFormat());
+    public boolean isEndCondition(int score) {
+        return this.scores.size() > 1 || score == FRAME_MAX_SCORE;
     }
 
 }

@@ -1,11 +1,14 @@
 package bowling.view;
 
-import bowling.domain.GameResult;
+import bowling.domain.Frame;
+import bowling.domain.FrameType;
+import bowling.domain.GameRecord;
 import bowling.domain.NormalFrame;
 
 import java.util.List;
+import java.util.Optional;
 
-import static bowling.domain.GameResult.MAX_FRAME_SIZE;
+import static bowling.domain.NormalFrames.MAX_FRAME_SIZE;
 
 public class ResultView {
 
@@ -15,17 +18,16 @@ public class ResultView {
     private static final String SPACE = " ";
 
 
-    public static void printScore(GameResult gameResult) {
+    public static void printScore(GameRecord gameRecord) {
         System.out.println(BOWLING_SCORE_TOP_FORMAT);
 
         StringBuilder format = new StringBuilder(SCORE_SEPERATE_LINE);
-        format.append(String.format("%5s", gameResult.getUser())).append(SPACE);
+        format.append(String.format("%5s", gameRecord.getUser())).append(SPACE);
         format.append(SCORE_SEPERATE_LINE);
 
-        format.append(makeFrameFormat(gameResult.getFrames()));
-
-        format.append(makeFinalFrameFormat(gameResult));
-        format.append(makeEmptyScoreFormat(gameResult.getFrames().size()));
+        format.append(makeFrameFormat(gameRecord.getNormalFrames()));
+        format.append(makeFinalFrameFormat(gameRecord));
+        format.append(makeEmptyScoreFormat(gameRecord.getNormalFrames().size()));
 
         System.out.println(format);
     }
@@ -33,19 +35,19 @@ public class ResultView {
     private static String makeFrameFormat(List<NormalFrame> frames) {
         StringBuilder format = new StringBuilder();
         for (NormalFrame frame : frames) {
-            format.append(frame.getScoreFormat());
+            format.append(getNormalScoreFormat(frame));
             format.append(SCORE_SEPERATE_LINE);
         }
 
         return format.toString();
     }
 
-    private static String makeFinalFrameFormat(GameResult gameResult) {
-        if (gameResult.hasNotFinalFrame()) {
+    private static String makeFinalFrameFormat(GameRecord gameRecord) {
+        if (gameRecord.hasNotFinalFrame()) {
             return EMPTY_SCORE_FORMAT;
         }
 
-        return gameResult.getFinalScoreFormat() + SCORE_SEPERATE_LINE;
+        return getFinalScoreFormat(gameRecord.getFinalFrame()) + SCORE_SEPERATE_LINE;
     }
 
     private static String makeEmptyScoreFormat(int size) {
@@ -57,5 +59,52 @@ public class ResultView {
         return format.toString();
     }
 
+    public static String getNormalScoreFormat(Frame frame) {
+        String format = String.format("%3s", findScoreFormat(frame, 0));
+
+        if (frame.hasSize(1)) {
+            return format + "   ";
+        }
+
+        return format + String.format("%s%-2s", "|", findSecondScoreFormat(frame));
+    }
+
+    public static String getFinalScoreFormat(Frame frame) {
+        String format = String.format("%3s", findScoreFormat(frame, 0));
+
+        if (frame.hasSize(1)) {
+            return format + "   ";
+        }
+
+        if (frame.hasSize(2)) {
+            return format + String.format("%s%-2s", "|", findSecondScoreFormat(frame));
+        }
+
+        return String.format("%2s|%s|%s", findScoreFormat(frame, 0), findSecondScoreFormat(frame), findScoreFormat(frame, 2));
+    }
+
+    public static String findScoreFormat(Frame frame, int index) {
+        int score = frame.getScores().get(index);
+
+        Optional<FrameType> frameType = FrameType.findByScore(score);
+        if (frameType.isPresent()) {
+            return frameType.get().getCode();
+        }
+        return String.valueOf(score);
+    }
+
+    public static String findSecondScoreFormat(Frame frame) {
+        int score = frame.getScores().get(1);
+        if (frame.isSpare()) {
+            return FrameType.SPARE.getCode();
+        }
+
+        Optional<FrameType> frameType = FrameType.findByScore(score);
+        if (frameType.isPresent()) {
+            return frameType.get().getCode();
+        }
+
+        return String.valueOf(score);
+    }
 
 }
