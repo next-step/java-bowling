@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.Game;
+import bowling.controller.Game;
 
 public class Main {
 

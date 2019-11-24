@@ -1,6 +1,8 @@
-package bowling.domain;
+package bowling.controller;
 
 import bowling.View;
+import bowling.domain.FrameResults;
+import bowling.domain.Player;
 import bowling.domain.set.FrameSet;
 import bowling.domain.set.NormalFrameSet;
 
