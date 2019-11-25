@@ -4,6 +4,12 @@ import java.util.Objects;
 
 public class Score {
 
+    private static final int MAX_POINT = 10;
+    private static final int MIN_POINT = 0;
+    private static final int MAX_COUNT = 1;
+    private static final int MIN_COUNT = 0;
+    private static final int INDEX = 1;
+
     private int point;
     private int count;
 
@@ -18,37 +24,37 @@ public class Score {
     }
 
     public static Score first(int point) {
-        return of(point, 1);
+        return of(point, MAX_COUNT);
     }
 
     public Score second(int point) {
-        return of(this.point + point, count - 1);
+        return of(this.point + point, count - INDEX);
     }
 
     private void validatePoint(int point, int count) {
-        if (point > 10 || point < 0) {
+        if (point > MAX_POINT || point < MIN_POINT) {
             throw new IllegalArgumentException();
         }
 
-        if (count < 0) {
+        if (count < MIN_COUNT) {
             throw new IllegalArgumentException();
         }
     }
 
     public boolean isSpare() {
-        return point == 0 && count == 0;
+        return point == MIN_POINT && count == MIN_COUNT;
     }
 
     public boolean isStrike() {
-        return point == 10 && count == 1;
+        return point == MAX_POINT && count == MAX_COUNT;
     }
 
     public boolean isMiss() {
-        return point != 0 && count == 0;
+        return point != MIN_POINT && count == MIN_COUNT;
     }
 
     public boolean isGutter() {
-        return point == 10;
+        return point == MIN_POINT;
     }
 
     public int getPoint() {
@@ -56,7 +62,7 @@ public class Score {
     }
 
     public boolean isCount() {
-        return count != 0;
+        return count != MIN_COUNT;
     }
 
     @Override

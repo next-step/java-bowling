@@ -6,6 +6,12 @@ import java.util.Map;
 
 public class ResultView {
 
+    private static final String NAME_TITLE = "| NAME |";
+    private static final String RIGHT_BOUNDARY = "  |";
+    private static final String LEFT_BOUNDARY = "| ";
+    private static final String PRETTY_EMPTY = "  ";
+    private static final String CORRECTION_ZERO = "0";
+
     public static void printTemplate() {
         System.out.print(headTitle());
         for (Map.Entry<Integer, Object> entry : Template.getTEMPLATE().entrySet()) {
@@ -25,24 +31,24 @@ public class ResultView {
     }
 
     private static String headTitle() {
-        return "| NAME |";
+        return NAME_TITLE;
     }
 
     private static String headValue() {
-        return "|  " + Template.getTEMPLATE().get(0) + " |";
+        return LEFT_BOUNDARY + Template.getTEMPLATE().get(0) + RIGHT_BOUNDARY;
     }
 
     private static String printTitle(Integer key) {
         if (key < 10 && key > 0) {
-            return "  0" + key + "  |";
+            return PRETTY_EMPTY+ CORRECTION_ZERO + key + RIGHT_BOUNDARY;
         }
-        return "  " + key + "  |";
+        return PRETTY_EMPTY + key + RIGHT_BOUNDARY;
     }
 
     private static String printValue(Frames value) {
         if (value == null) {
-            return "  " + "  " + "  |";
+            return PRETTY_EMPTY + PRETTY_EMPTY + RIGHT_BOUNDARY;
         }
-        return "  " + value + "  |";
+        return PRETTY_EMPTY + value + RIGHT_BOUNDARY;
     }
 }

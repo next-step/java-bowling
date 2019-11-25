@@ -6,7 +6,7 @@ import java.util.List;
 public class Frames {
 
     private static final int FIRST_FRAME_INDEX = 0;
-    private static final int LAST_FRAME_INDEX = 10;
+    private static final int INDEX = 1;
 
     private List<Frame> frames;
 
@@ -14,21 +14,13 @@ public class Frames {
         this.frames = frames;
     }
 
-    public static Frames of(List<Frame> frames) {
+    private static Frames of(List<Frame> frames) {
         return new Frames(frames);
-    }
-
-    public static Frames init() {
-        List<Frame> frames = new ArrayList<>();
-        for (int i = FIRST_FRAME_INDEX; i < LAST_FRAME_INDEX; i++) {
-            frames.add(Frame.ready(i));
-        }
-        return Frames.of(frames);
     }
 
     public static Frames initiate(int score) {
         List<Frame> frames = new ArrayList<>();
-        frames.add(Frame.first(0, score));
+        frames.add(Frame.first(FIRST_FRAME_INDEX, score));
         return Frames.of(frames);
     }
 
@@ -39,29 +31,25 @@ public class Frames {
     }
 
     public Frames nextSecond(int score) {
-        Frame recentlyFrame = frames.get(frames.size() - 1);
+        Frame recentlyFrame = frames.get(frames.size() - INDEX);
         if (recentlyFrame.isRemain()) {
             Frame frame = recentlyFrame.second(score);
-            frames.set(frames.size() - 1, frame);
+            frames.set(frames.size() - INDEX, frame);
         }
         return Frames.of(frames);
     }
 
     public boolean isRemain() {
-        Frame recentlyFrame = frames.get(frames.size() - 1);
+        Frame recentlyFrame = frames.get(frames.size() - INDEX);
         return recentlyFrame.isRemain();
     }
 
-    public int getScoreByCurrentPosition() {
-        return frames.get(frames.size() - 1).getPoint();
-    }
-
     public int getLastFramePosition() {
-        Frame recentlyFrame = frames.get(frames.size() - 1);
+        Frame recentlyFrame = frames.get(frames.size() - INDEX);
         if (recentlyFrame.isRemain()) {
             return recentlyFrame.getPosition();
         }
-        return recentlyFrame.getPosition() + 1;
+        return recentlyFrame.getPosition() + INDEX;
     }
 
     public int size() {
