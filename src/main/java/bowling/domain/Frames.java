@@ -2,7 +2,6 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Frames {
 
@@ -53,13 +52,16 @@ public class Frames {
         return recentlyFrame.isRemain();
     }
 
-    public int getRemainScore() {
-        Frame recentlyFrame = frames.get(frames.size() - 1);
-        return recentlyFrame.getPoint();
+    public int getScoreByCurrentPosition() {
+        return frames.get(frames.size() - 1).getPoint();
     }
 
-    public List<Frame> getFrames() {
-        return new ArrayList<>(frames);
+    public int getLastFramePosition() {
+        Frame recentlyFrame = frames.get(frames.size() - 1);
+        if (recentlyFrame.isRemain()) {
+            return recentlyFrame.getPosition();
+        }
+        return recentlyFrame.getPosition() + 1;
     }
 
     public int size() {

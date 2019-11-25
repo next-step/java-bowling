@@ -28,6 +28,10 @@ public class Frame {
         return new Frame(position, score);
     }
 
+    public int getPosition() {
+        return position;
+    }
+
     public int getPoint() {
         return score.getPoint();
     }

@@ -39,7 +39,7 @@ public class FramesTest {
         int size = nextFrame.size();
         // then
         assertThat(isSame).isFalse();
-        assertThat(size).isEqualTo(2);
+        assertThat(size).isEqualTo(3);
     }
 
     @Test

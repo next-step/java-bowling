@@ -40,7 +40,7 @@ public class ScoreTest {
 
         // then
         assertThat(firstPoint).isEqualTo(5);
-        assertThat(secondPoint).isEqualTo(3);
+        assertThat(secondPoint).isEqualTo(8);
     }
 
     @Test
