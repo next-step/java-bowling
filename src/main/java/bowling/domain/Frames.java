@@ -34,9 +34,15 @@ public class Frames {
         Frame recentlyFrame = frames.get(frames.size() - INDEX);
         if (recentlyFrame.isRemain()) {
             Frame frame = recentlyFrame.second(score);
-            frames.set(frames.size() - INDEX, frame);
+            frames.add(frame);
+//            frames.set(frames.size() - INDEX, frame);
         }
         return Frames.of(frames);
+    }
+
+    public int getValue() {
+        Frame recentlyFrame = frames.get(frames.size() - INDEX);
+        return recentlyFrame.getPoint();
     }
 
     public boolean isRemain() {
@@ -50,6 +56,10 @@ public class Frames {
             return recentlyFrame.getPosition();
         }
         return recentlyFrame.getPosition() + INDEX;
+    }
+
+    public List<Frame> getFrames() {
+        return new ArrayList<>(frames);
     }
 
     public int size() {

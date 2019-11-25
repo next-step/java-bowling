@@ -1,16 +1,18 @@
 package bowling;
 
 import bowling.view.ResultView;
-import bowling.view.Template;
+import bowling.domain.Header;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class TemplateTest {
+import java.util.ArrayList;
+
+public class HeaderTest {
 
     @Test
     @DisplayName("템플릿 전역 변수 생성 테스트")
     void templateStaticVariable() {
-        Template.register("KSJ");
-        ResultView.printTemplate();
+        Header.register("KSJ");
+        ResultView.printFrames(new ArrayList<>());
     }
 }
