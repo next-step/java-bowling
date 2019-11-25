@@ -22,4 +22,18 @@ class FrameScoreTest {
 
         assertThat(addedFrameScore).isEqualTo(new FrameScore(2, 0));
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"1,1,''", "1,0,1"})
+    void getCalculated(int score, int count, String answer) {
+        FrameScore frameScore = new FrameScore(score, count);
+
+        assertThat(frameScore.getCalculated(score)).isEqualTo(answer);
+    }
+
+    @Test
+    void getSumScore() {
+        FrameScore frameScore = new FrameScore(1, 1);
+        assertThat(frameScore.getSumScore(1)).isEqualTo(2);
+    }
 }

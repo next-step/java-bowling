@@ -28,6 +28,10 @@ public class ScoreInfoBundle {
         return last.isStrike() || last.isSpare();
     }
 
+    public boolean isNormalOfLast() {
+        return !isStrikeOrSpareOfLast();
+    }
+
     public ScoreInfo getLast() {
         return scoreInfoBundle.get(scoreInfoBundle.size() - 1);
     }
@@ -87,6 +91,19 @@ public class ScoreInfoBundle {
         return before;
     }
 
+    public FrameScore calculateLast(int index) {
+        ScoreInfo startScoreInfo = scoreInfoBundle.get(index);
+        Status status = startScoreInfo.getStatus();
+
+        FrameScore frameScore = new FrameScore(startScoreInfo.getScore(), status.getAddCount());
+
+        for (int i = index + 1; i < scoreInfoBundle.size(); i++) {
+            frameScore = addScore(frameScore, scoreInfoBundle.get(i));
+        }
+
+        return frameScore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,10 +117,4 @@ public class ScoreInfoBundle {
         return Objects.hash(scoreInfoBundle);
     }
 
-    @Override
-    public String toString() {
-        return "ScoreInfoBundle{" +
-                "scoreInfoBundle=" + scoreInfoBundle +
-                '}';
-    }
 }

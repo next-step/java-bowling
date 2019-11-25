@@ -1,6 +1,7 @@
 package frame;
 
 import score.ScoreInfo;
+import score.framescore.FrameScore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class Frames {
         Frame lastFrame = frames.get(lastIndex);
 
         if (lastFrame.isFull()) {
-            Frame nextFrame = lastFrame.nextFrame();
+            Frame nextFrame = getNextFrame(lastFrame);
             frames.add(nextFrame);
             return nextFrame;
         }
@@ -50,14 +51,16 @@ public class Frames {
         return frames.get(lastIndex);
     }
 
-    public void addLastFrame(LastFrame nowFrame) {
-        this.frames.remove(9);
-        this.frames.add(9, nowFrame);
+    private Frame getNextFrame(Frame lastFrame) {
+        Frame nextFrame = lastFrame.nextFrame();
+        if (nextFrame.getFrameNumber() == LAST_FRAME_NUMBER) {
+            return lastFrame.getLastFrame();
+        }
+        return nextFrame;
     }
 
     public List<ScoreInfo> findScoreInfos(int index) {
-        Frame frame = findFrame(index);
-        return frame.getScoreInfos();
+        return findFrame(index).getScoreInfos();
     }
 
     private Frame findFrame(int i) {
@@ -73,5 +76,14 @@ public class Frames {
                 .findFirst()
                 .map(frame -> (LastFrame) frame)
                 .orElse(LastFrame.init());
+    }
+
+    public int size() {
+        return this.frames.size();
+    }
+
+    public FrameScore getFrameScore(int index) {
+        return this.frames.get(index)
+                .getFrameScore();
     }
 }

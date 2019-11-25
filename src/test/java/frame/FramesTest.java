@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import score.ScoreInfo;
+import score.Status;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,5 +65,36 @@ class FramesTest {
         Frames frames = new Frames(allFrame);
         assertThat(frames.reachLast()).isEqualTo(answer);
         assertThat(frames.isNotLast()).isNotEqualTo(answer);
+    }
+
+    @Test
+    void size() {
+        List<Frame> allFrame = new ArrayList<>();
+        Frames frames = new Frames(allFrame);
+        assertThat(frames.size()).isEqualTo(0);
+
+        allFrame.add(NormalFrame.firstNormalFrame());
+        assertThat(frames.size()).isEqualTo(1);
+    }
+
+    @Test
+    void getLastFrame() {
+        List<Frame> allFrame = new ArrayList<>();
+        Frames frames = new Frames(allFrame);
+
+        assertThat(frames.getLastFrame()).isEqualTo(LastFrame.init());
+    }
+
+    @Test
+    void findScoreInfos() {
+        Frames frames = new Frames(new ArrayList<>());
+
+        assertThat(frames.findScoreInfos(0)).isEqualTo(new ArrayList<>());
+
+        NormalFrame normalFrame = NormalFrame.firstNormalFrame();
+        normalFrame.bowling(1);
+        frames = new Frames(Arrays.asList(normalFrame));
+
+        assertThat(frames.findScoreInfos(0)).isEqualTo(Arrays.asList(new ScoreInfo(1, Status.MISS)));
     }
 }

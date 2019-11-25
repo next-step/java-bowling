@@ -4,9 +4,11 @@ import frame.info.FrameNumber;
 import score.ScoreInfo;
 import score.ScoreInfoBundle;
 import score.framescore.FrameScore;
+import score.framescore.LastFrameScores;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static frame.info.FrameNumber.LAST_FRAME_NUMBER;
 
@@ -58,7 +60,7 @@ public class LastFrame implements Frame {
             return false;
         }
 
-        return !scores.isStrikeOrSpareOfLast();
+        return scores.isNormalOfLast();
     }
 
     public boolean isNotFull() {
@@ -72,11 +74,40 @@ public class LastFrame implements Frame {
 
     @Override
     public FrameScore getFrameScore() {
-        return null;
+        LastFrameScores lastFrameScores = new LastFrameScores();
+        lastFrameScores.addFirst(scores);
+        lastFrameScores.addSecond(scores);
+        lastFrameScores.addThird(scores);
+
+        return lastFrameScores.sum();
     }
 
     @Override
     public FrameScore addNextScore(FrameScore before) {
-        return null;
+        return scores.addScore(before);
+    }
+
+    @Override
+    public int getFrameNumber() {
+        return frameNumber.getNumber();
+    }
+
+    @Override
+    public Frame getLastFrame() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LastFrame lastFrame = (LastFrame) o;
+        return Objects.equals(frameNumber, lastFrame.frameNumber) &&
+                Objects.equals(scores, lastFrame.scores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber, scores);
     }
 }

@@ -51,4 +51,8 @@ public class FrameInfo {
     public int hashCode() {
         return Objects.hash(frameNumber, nextFrame);
     }
+
+    public int getNumber() {
+        return frameNumber.getNumber();
+    }
 }

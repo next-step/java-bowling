@@ -42,4 +42,8 @@ public class FrameNumber {
                 "number=" + number +
                 '}';
     }
+
+    public int getNumber() {
+        return this.number;
+    }
 }

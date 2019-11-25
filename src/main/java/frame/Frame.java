@@ -9,6 +9,8 @@ public interface Frame {
 
     Frame nextFrame();
 
+    Frame getLastFrame();
+
     void bowling(int score);
 
     boolean isFull();
@@ -18,4 +20,6 @@ public interface Frame {
     FrameScore getFrameScore();
 
     FrameScore addNextScore(FrameScore before);
+
+    int getFrameNumber();
 }

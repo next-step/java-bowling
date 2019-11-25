@@ -24,8 +24,7 @@ public class BowlingController {
         }
 
         //last frame
-        LastFrame lastFrame = LastFrame.init();
-        frames.addLastFrame(lastFrame);
+        LastFrame lastFrame = frames.getLastFrame();
 
         while (lastFrame.isNotFull()) {
             BowlingService.rollLast(frames);
