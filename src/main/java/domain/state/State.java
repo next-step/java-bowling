@@ -22,4 +22,6 @@ public interface State {
 		return 0;
 	}
 
+	String toSign();
+
 }

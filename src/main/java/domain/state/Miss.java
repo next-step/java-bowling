@@ -38,6 +38,11 @@ public class Miss implements State {
 	}
 
 	@Override
+	public String toSign() {
+		return String.valueOf(bowlingPins);
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;

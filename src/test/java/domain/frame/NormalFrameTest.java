@@ -1,6 +1,6 @@
 package domain.frame;
 
-import domain.states.BowlingPins;
+import domain.BowlingPins;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

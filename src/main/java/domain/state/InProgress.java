@@ -44,6 +44,11 @@ public class InProgress implements State {
 	}
 
 	@Override
+	public String toSign() {
+		return String.valueOf(bowlingPinsCount);
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;

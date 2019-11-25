@@ -1,7 +1,7 @@
 package domain.frame_states;
 
 import domain.state.State;
-import domain.states.BowlingPins;
+import domain.BowlingPins;
 import domain.states.NormalStates;
 import domain.states.States;
 
@@ -48,6 +48,11 @@ public class NormalFrameStates implements FrameStates {
 	@Override
 	public boolean isEndFrame() {
 		return states.isEndFrame();
+	}
+
+	@Override
+	public States getStates() {
+		return states;
 	}
 
 	@Override

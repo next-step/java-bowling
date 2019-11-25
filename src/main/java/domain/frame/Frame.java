@@ -1,6 +1,7 @@
 package domain.frame;
 
-import domain.states.BowlingPins;
+import domain.BowlingPins;
+import domain.states.States;
 
 import java.util.Optional;
 
@@ -17,5 +18,7 @@ public interface Frame {
 	boolean isScoreCalculationEnd();
 
 	boolean isEnd();
+
+	States getStates();
 
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class NormalStates implements States {
 
@@ -67,6 +68,13 @@ public class NormalStates implements States {
 	@Override
 	public boolean shouldRestorePins() {
 		return false;
+	}
+
+	@Override
+	public List<String> getPhaseResultSign() {
+		return states.stream()
+				.map(State::toSign)
+				.collect(Collectors.toList());
 	}
 
 	@Override

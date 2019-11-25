@@ -1,9 +1,7 @@
 package domain.frame_states;
 
-import domain.frame_states.FinalFrameStates;
-import domain.frame_states.FrameStates;
 import domain.state.*;
-import domain.states.BowlingPins;
+import domain.BowlingPins;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

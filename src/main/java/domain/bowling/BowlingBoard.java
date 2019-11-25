@@ -4,7 +4,8 @@ import domain.frame.FinalFrame;
 import domain.frame.Frame;
 import domain.frame.FrameStore;
 import domain.frame.NormalFrame;
-import domain.states.BowlingPins;
+import domain.BowlingPins;
+import domain.states.States;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,9 +58,18 @@ public class BowlingBoard {
 		}
 	}
 
-
-	public boolean isEnd() {
+	boolean isEnd() {
 		return currentFrameIndex == FINAL_FRAME_INDEX;
+	}
+
+	int getCurrentFrameIndex() {
+		return currentFrameIndex;
+	}
+
+	public List<States> getStates() {
+		return frames.stream()
+				.map(Frame::getStates)
+				.collect(Collectors.toList());
 	}
 
 	public List<Optional<Integer>> getScores() {

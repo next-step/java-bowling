@@ -1,7 +1,7 @@
 package domain.bowling;
 
 import domain.frame.FrameStore;
-import domain.states.BowlingPins;
+import domain.BowlingPins;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

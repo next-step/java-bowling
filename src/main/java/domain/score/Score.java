@@ -1,7 +1,7 @@
 package domain.score;
 
 import domain.state.State;
-import domain.states.BowlingPins;
+import domain.BowlingPins;
 
 public class Score {
 

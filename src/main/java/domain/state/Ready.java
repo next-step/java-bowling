@@ -26,4 +26,9 @@ public class Ready implements State {
 		return InProgress.of(fallenPinsCount);
 	}
 
+	@Override
+	public String toSign() {
+		return " ";
+	}
+
 }

@@ -1,4 +1,4 @@
-package domain.states;
+package domain;
 
 import java.util.Objects;
 

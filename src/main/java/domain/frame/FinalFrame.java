@@ -4,7 +4,8 @@ import domain.frame_states.FinalFrameStates;
 import domain.frame_states.FrameStates;
 import domain.score.Score;
 import domain.state.State;
-import domain.states.BowlingPins;
+import domain.BowlingPins;
+import domain.states.States;
 
 import java.util.Optional;
 
@@ -59,4 +60,8 @@ public class FinalFrame implements Frame {
 		return frameStates.isEndFrame();
 	}
 
+	@Override
+	public States getStates() {
+		return frameStates.getStates();
+	}
 }

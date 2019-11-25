@@ -40,4 +40,10 @@ public class Strike implements State {
 	public int getLeftStatesToCalculateScore() {
 		return 2;
 	}
+
+	@Override
+	public String toSign() {
+		return "X";
+	}
+
 }

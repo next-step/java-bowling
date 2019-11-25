@@ -34,4 +34,9 @@ public class Gutter implements State {
 		return true;
 	}
 
+	@Override
+	public String toSign() {
+		return String.valueOf(BOWLING_PINS);
+	}
+
 }
