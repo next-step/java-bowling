@@ -17,10 +17,6 @@ public class Score {
 		return new Score(score, left);
 	}
 
-	public void initialize(int score) {
-		this.score = score;
-	}
-
 	public void reflect(State state) {
 		score += state.getFallenBowlingPins();
 		if (state.isLastStateToDecideScoreLeft()) {
@@ -31,8 +27,13 @@ public class Score {
 	public void reflect(BowlingPins pins) {
 		if (left != 0) {
 			score += pins.getPins();
-			left --;
+			left--;
 		}
+	}
+
+	public void reflect(Score prevScore) {
+		this.score += prevScore.score;
+		this.left += prevScore.left;
 	}
 
 	public boolean canCalculateScore() {

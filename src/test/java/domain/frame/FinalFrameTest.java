@@ -23,7 +23,7 @@ class FinalFrameTest {
 		frame.roll(BowlingPins.of(3));
 
 		// then
-		assertThat(frame.getScore()).isEqualTo(Optional.empty());
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.empty());
 	}
 
 	@Test
@@ -36,7 +36,7 @@ class FinalFrameTest {
 		frame.roll(BowlingPins.of(6));
 
 		// then
-		assertThat(frame.getScore()).isEqualTo(Optional.of(9));
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(9));
 	}
 
 	@Test
@@ -50,7 +50,7 @@ class FinalFrameTest {
 		frame.roll(BowlingPins.of(10));
 
 		// then
-		assertThat(frame.getScore()).isEqualTo(Optional.of(20));
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(20));
 	}
 
 	@Test
@@ -64,7 +64,7 @@ class FinalFrameTest {
 		frame.roll(BowlingPins.of(8));
 
 		// then
-		assertThat(frame.getScore()).isEqualTo(Optional.of(28));
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(28));
 	}
 
 }

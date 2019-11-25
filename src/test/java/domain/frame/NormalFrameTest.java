@@ -23,7 +23,7 @@ class NormalFrameTest {
 		frame.roll(BowlingPins.of(3));
 
 		// then
-		assertThat(frame.getScore()).isEqualTo(Optional.empty());
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.empty());
 	}
 
 	@Test
@@ -36,7 +36,7 @@ class NormalFrameTest {
 		frame.roll(BowlingPins.of(6));
 
 		// then
-		assertThat(frame.getScore()).isEqualTo(Optional.of(9));
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(9));
 	}
 
 	@Test
@@ -47,10 +47,10 @@ class NormalFrameTest {
 		// when
 		frame.roll(BowlingPins.of(3));
 		frame.roll(BowlingPins.of(7));
-		frame.addScore(BowlingPins.of(4));
+		frame.addNextFrameScore(BowlingPins.of(4));
 
 		// then
-		assertThat(frame.getScore()).isEqualTo(Optional.of(14));
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(14));
 	}
 
 	@Test
@@ -60,11 +60,11 @@ class NormalFrameTest {
 
 		// when
 		frame.roll(BowlingPins.of(10));
-		frame.addScore(BowlingPins.of(10));
-		frame.addScore(BowlingPins.of(8));
+		frame.addNextFrameScore(BowlingPins.of(10));
+		frame.addNextFrameScore(BowlingPins.of(8));
 
 		// then
-		assertThat(frame.getScore()).isEqualTo(Optional.of(28));
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(28));
 	}
 
 }

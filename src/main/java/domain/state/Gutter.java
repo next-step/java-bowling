@@ -29,4 +29,9 @@ public class Gutter implements State {
 		return true;
 	}
 
+	@Override
+	public boolean isLastStateToDecideScoreLeft() {
+		return true;
+	}
+
 }

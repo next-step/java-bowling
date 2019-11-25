@@ -9,10 +9,14 @@ public interface Frame {
 
 	void roll(BowlingPins pins);
 
-	void initializeScore(Score score);
+	Optional<Integer> getOptionalScore();
 
-	Optional<Integer> getScore();
+	Score getScore();
 
-	void addScore(BowlingPins pins);
+	void addNextFrameScore(BowlingPins pins);
+
+	void addPreviousScore(Score prevScore);
+
+	boolean isEnd();
 
 }

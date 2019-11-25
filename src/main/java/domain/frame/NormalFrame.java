@@ -29,12 +29,7 @@ public class NormalFrame implements Frame {
 	}
 
 	@Override
-	public void initializeScore(Score score) {
-		score.initialize(score.getScore());
-	}
-
-	@Override
-	public Optional<Integer> getScore() {
+	public Optional<Integer> getOptionalScore() {
 		if (score.canCalculateScore()) {
 			return Optional.of(score.getScore());
 		}
@@ -42,8 +37,23 @@ public class NormalFrame implements Frame {
 	}
 
 	@Override
-	public void addScore(BowlingPins pins) {
+	public Score getScore() {
+		return score;
+	}
+
+	@Override
+	public void addNextFrameScore(BowlingPins pins) {
 		score.reflect(pins);
+	}
+
+	@Override
+	public void addPreviousScore(Score prevScore) {
+		score.reflect(prevScore);
+	}
+
+	@Override
+	public boolean isEnd() {
+		return frameStates.isEndFrame();
 	}
 
 }
