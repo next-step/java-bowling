@@ -32,26 +32,26 @@ public class FinalFrame implements Frame {
 	}
 
 	@Override
+	public void addNextFrameScore(BowlingPins pins) {
+		score.reflect(pins);
+	}
+
+	@Override
+	public void addPreviousScore(int prevScore) {
+		score.reflect(prevScore);
+	}
+
+	@Override
 	public Optional<Integer> getOptionalScore() {
-		if (score.canCalculateScore()) {
+		if (score.isEndCalculation()) {
 			return Optional.of(score.getScore());
 		}
 		return Optional.empty();
 	}
 
 	@Override
-	public Score getScore() {
-		return score;
-	}
-
-	@Override
-	public void addNextFrameScore(BowlingPins pins) {
-		throw new UnsupportedOperationException("마지막 프레임에서는 다른 프레임으로부터 점수를 더할 수 없습니다");
-	}
-
-	@Override
-	public void addPreviousScore(Score prevScore) {
-		score.reflect(prevScore);
+	public boolean isScoreCalculationEnd() {
+		return score.isEndCalculation();
 	}
 
 	@Override

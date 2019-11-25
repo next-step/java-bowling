@@ -31,12 +31,11 @@ public class Score {
 		}
 	}
 
-	public void reflect(Score prevScore) {
-		this.score += prevScore.score;
-		this.left += prevScore.left;
+	public void reflect(int prevScore) {
+		score += prevScore;
 	}
 
-	public boolean canCalculateScore() {
+	public boolean isEndCalculation() {
 		return left == 0;
 	}
 

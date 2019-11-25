@@ -2,6 +2,7 @@ package domain.bowling;
 
 import domain.frame.FinalFrame;
 import domain.frame.Frame;
+import domain.frame.FrameStore;
 import domain.frame.NormalFrame;
 import domain.states.BowlingPins;
 
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
 public class BowlingBoard {
 
 	private final static int NORMAL_FRAME_COUNT = 9;
+	private final static int FINAL_FRAME_INDEX = 10;
+
 	private final List<Frame> frames;
 	private int currentFrameIndex;
 
@@ -34,37 +37,29 @@ public class BowlingBoard {
 	}
 
 	public void roll(BowlingPins pins) {
-		addScoreOnPreviousFrames(pins);
-		Frame currentFrame = getCurrentFrame();
+		FrameStore.plusAdditionalScores(pins);
+		Frame currentFrame = frames.get(currentFrameIndex);
 		currentFrame.roll(pins);
+		enrollFrameAndAddIndexIfEnds(currentFrame);
+		plusFinalScoreIfBowlingEnds();
+	}
+
+	private void enrollFrameAndAddIndexIfEnds(Frame currentFrame) {
 		if (currentFrame.isEnd()) {
-			addPreviousScoreIfExist();
+			FrameStore.enroll(currentFrame);
 			currentFrameIndex++;
 		}
 	}
 
-	private void addScoreOnPreviousFrames(BowlingPins pins) {
-		for (int i = 0; i < currentFrameIndex; i++) {
-			frames.get(i).addNextFrameScore(pins);
+	private void plusFinalScoreIfBowlingEnds() {
+		if (isEnd()) {
+			FrameStore.plusAdditionalScores(BowlingPins.of(0));
 		}
 	}
 
-	private Frame getCurrentFrame() {
-		return frames.get(currentFrameIndex);
-	}
-
-	private void addPreviousScoreIfExist() {
-		if (currentFrameIndex > 0) {
-			getCurrentFrame().addPreviousScore(getPrevFrame().getScore());
-		}
-	}
-
-	private Frame getPrevFrame() {
-		return frames.get(currentFrameIndex - 1);
-	}
 
 	public boolean isEnd() {
-		return currentFrameIndex == 10;
+		return currentFrameIndex == FINAL_FRAME_INDEX;
 	}
 
 	public List<Optional<Integer>> getScores() {
