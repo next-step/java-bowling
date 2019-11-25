@@ -3,20 +3,22 @@ package score;
 import java.util.Arrays;
 
 public enum Status {
-    GUTTER(Status::isGutter),
-    STRIKE(Status::isStrike),
-    SPARE(Status::isSpare),
-    MISS(Status::isMiss),
-    NONE((score, before) -> false);
+    GUTTER(Status::isGutter, 0),
+    STRIKE(Status::isStrike, 2),
+    SPARE(Status::isSpare, 1),
+    MISS(Status::isMiss, 0),
+    NONE((score, before) -> false, 0);
 
     private static final int STRIKE_SCORE = 10;
     private static final int GUTTER_SCORE = 0;
     private static final int FIRST_BEFORE = -1;
 
     private StatusMatcher matcher;
+    private int addCount;
 
-    Status(StatusMatcher matcher) {
+    Status(StatusMatcher matcher, int addCount) {
         this.matcher = matcher;
+        this.addCount = addCount;
     }
 
     public static Status findStatus(Integer score, Integer before) {
@@ -38,6 +40,10 @@ public enum Status {
             return score + before == STRIKE_SCORE;
         }
         return false;
+    }
+
+    public int getAddCount() {
+        return addCount;
     }
 
     private static boolean isGutter(Integer score, Integer before) {

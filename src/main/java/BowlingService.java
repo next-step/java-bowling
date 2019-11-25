@@ -10,13 +10,14 @@ public class BowlingService {
         if (frames.reachLast()) {
             return;
         }
-        nowFrame.bowling(InputView.inputScore(frames.getNowFrameNumber()));
+        int score = InputView.inputScore(frames.getNowFrameNumber());
+        nowFrame.bowling(score);
     }
 
     public static void rollLast(Frames frames) {
         LastFrame lastFrame = frames.getLastFrame();
-        lastFrame.bowling(InputView.inputScore(frames.getNowFrameNumber()));
+        int score = InputView.inputScore(frames.getNowFrameNumber());
+        lastFrame.bowling(score);
     }
-
 
 }

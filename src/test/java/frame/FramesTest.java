@@ -3,6 +3,7 @@ package frame;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import score.ScoreInfo;
 
@@ -50,5 +51,18 @@ class FramesTest {
         nowFrame = frames.getNowFrame();
 
         assertThat(nowFrame).isEqualTo(new NormalFrame(2, new ArrayList<>()));
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"0,false", "9,false", "10,true"})
+    void reachLast(int size, boolean answer) {
+        List<Frame> allFrame = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            allFrame.add(NormalFrame.firstNormalFrame());
+        }
+
+        Frames frames = new Frames(allFrame);
+        assertThat(frames.reachLast()).isEqualTo(answer);
+        assertThat(frames.isNotLast()).isNotEqualTo(answer);
     }
 }

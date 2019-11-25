@@ -1,5 +1,7 @@
 package score;
 
+import score.framescore.FrameScore;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -56,6 +58,33 @@ public class ScoreInfoBundle {
 
     public List<ScoreInfo> getScoreInfoBundle() {
         return Collections.unmodifiableList(scoreInfoBundle);
+    }
+
+    public Status getStatus() {
+        if (scoreInfoBundle.isEmpty()) {
+            return Status.NONE;
+        }
+        return getLast().getStatus();
+    }
+
+    public int getSum() {
+        return scoreInfoBundle.stream()
+                .mapToInt(ScoreInfo::getScore)
+                .sum();
+    }
+
+    public FrameScore addScore(FrameScore frameScore) {
+        for (ScoreInfo scoreInfo : scoreInfoBundle) {
+            frameScore = addScore(frameScore, scoreInfo);
+        }
+        return frameScore;
+    }
+
+    private FrameScore addScore(FrameScore before, ScoreInfo scoreInfo) {
+        if (before.getAddCount() > 0) {
+            return before.addScore(scoreInfo.getScore());
+        }
+        return before;
     }
 
     @Override

@@ -4,9 +4,8 @@ import score.ScoreInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import static frame.FrameNumber.LAST_FRAME_NUMBER;
+import static frame.info.FrameNumber.LAST_FRAME_NUMBER;
 
 public class Frames {
 
@@ -74,18 +73,5 @@ public class Frames {
                 .findFirst()
                 .map(frame -> (LastFrame) frame)
                 .orElse(LastFrame.init());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Frames frames1 = (Frames) o;
-        return Objects.equals(frames, frames1.frames);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(frames);
     }
 }

@@ -14,6 +14,10 @@ public class BowlingController {
         Name name = new Name(InputView.inputName());
         Frames frames = new Frames(new ArrayList<>());
 
+        //first rolling
+        BowlingService.rollUntilLast(frames);
+        showBoardUntilLast(name, frames);
+
         while (frames.isNotLast()) {
             BowlingService.rollUntilLast(frames);
             showBoardUntilLast(name, frames);

@@ -1,12 +1,14 @@
 package frame;
 
+import frame.info.FrameNumber;
 import score.ScoreInfo;
 import score.ScoreInfoBundle;
+import score.framescore.FrameScore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static frame.FrameNumber.LAST_FRAME_NUMBER;
+import static frame.info.FrameNumber.LAST_FRAME_NUMBER;
 
 public class LastFrame implements Frame {
 
@@ -66,5 +68,15 @@ public class LastFrame implements Frame {
     @Override
     public List<ScoreInfo> getScoreInfos() {
         return scores.getScoreInfoBundle();
+    }
+
+    @Override
+    public FrameScore getFrameScore() {
+        return null;
+    }
+
+    @Override
+    public FrameScore addNextScore(FrameScore before) {
+        return null;
     }
 }

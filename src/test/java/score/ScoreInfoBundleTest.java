@@ -18,7 +18,7 @@ class ScoreInfoBundleTest {
         return new ScoreInfo(score, status);
     }
 
-    private static Stream<Arguments> getForSizeTest() {
+    private static Stream<Arguments> sourceForSizeTest() {
         return Stream.of(
                 Arguments.of(new ScoreInfoBundle(new ArrayList<>()), 0),
                 Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS))), 1),
@@ -26,14 +26,14 @@ class ScoreInfoBundleTest {
         );
     }
 
-    private static Stream<Arguments> getForFirst() {
+    private static Stream<Arguments> sourceForFirst() {
         return Stream.of(
                 Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS))), aScoreInfo(1, Status.MISS)),
                 Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(0, Status.GUTTER))), aScoreInfo(0, Status.GUTTER))
         );
     }
 
-    private static Stream<Arguments> getForIsStrikeOrSpareOfLast() {
+    private static Stream<Arguments> sourceForIsStrikeOrSpareOfLast() {
         return Stream.of(
                 Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS))), false),
                 Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(10, Status.STRIKE), aScoreInfo(1, Status.MISS))), false),
@@ -43,14 +43,14 @@ class ScoreInfoBundleTest {
         );
     }
 
-    private static Stream<Arguments> getForLast() {
+    private static Stream<Arguments> sourceForLast() {
         return Stream.of(
                 Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS))), aScoreInfo(1, Status.MISS)),
                 Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS), aScoreInfo(0, Status.GUTTER))), aScoreInfo(0, Status.GUTTER))
         );
     }
 
-    private static Stream<Arguments> getForAdd() {
+    private static Stream<Arguments> sourceForAdd() {
         return Stream.of(
                 Arguments.of(
                         new ScoreInfoBundle(new ArrayList<>()),
@@ -60,7 +60,7 @@ class ScoreInfoBundleTest {
         );
     }
 
-    private static Stream<Arguments> getForAddOnLast() {
+    private static Stream<Arguments> sourceForAddOnLast() {
         return Stream.of(
                 Arguments.of(
                         new ScoreInfoBundle(new ArrayList<>()),
@@ -71,7 +71,7 @@ class ScoreInfoBundleTest {
         );
     }
 
-    private static Stream<Arguments> getForHasStrike() {
+    private static Stream<Arguments> sourceForHasStrike() {
         ScoreInfo gutter = aScoreInfo(0, Status.GUTTER);
         ScoreInfo miss = aScoreInfo(1, Status.MISS);
         ScoreInfo spare = aScoreInfo(5, Status.SPARE);
@@ -84,43 +84,39 @@ class ScoreInfoBundleTest {
         );
     }
 
+    private static Stream<Arguments> sourceForGetStatus() {
+        return Stream.of(
+                Arguments.of(new ScoreInfoBundle(new ArrayList<>()), Status.NONE),
+                Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS))), Status.MISS),
+                Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS), aScoreInfo(9, Status.SPARE))), Status.SPARE),
+                Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS), aScoreInfo(9, Status.SPARE), aScoreInfo(10, Status.STRIKE))), Status.STRIKE)
+        );
+    }
+
+    private static Stream<Arguments> sourceForGetSum() {
+        return Stream.of(
+                Arguments.of(new ScoreInfoBundle(new ArrayList<>()), 0),
+                Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS))), 1),
+                Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS), aScoreInfo(9, Status.SPARE))), 10)
+        );
+    }
+
     @ParameterizedTest
-    @MethodSource("getForSizeTest")
+    @MethodSource("sourceForSizeTest")
     void size(ScoreInfoBundle scoreInfoBundle, int size) {
         assertThat(scoreInfoBundle.size()).isEqualTo(size);
     }
 
     @ParameterizedTest
-    @MethodSource("getForFirst")
+    @MethodSource("sourceForFirst")
     void getFirst(ScoreInfoBundle scoreInfoBundle, ScoreInfo firstScoreInfo) {
         assertThat(scoreInfoBundle.getFirst()).isEqualTo(firstScoreInfo);
     }
 
     @ParameterizedTest
-    @MethodSource("getForIsStrikeOrSpareOfLast")
+    @MethodSource("sourceForIsStrikeOrSpareOfLast")
     void isStrikeOrStrikeOfLast(ScoreInfoBundle scoreInfoBundle, boolean isStrikeOrSpareOfLast) {
         assertThat(scoreInfoBundle.isStrikeOrSpareOfLast()).isEqualTo(isStrikeOrSpareOfLast);
-    }
-
-    @ParameterizedTest
-    @MethodSource("getForLast")
-    void getLast(ScoreInfoBundle scoreInfoBundle, ScoreInfo last) {
-        assertThat(scoreInfoBundle.getLast()).isEqualTo(last);
-    }
-
-    @ParameterizedTest
-    @MethodSource("getForAdd")
-    void add(ScoreInfoBundle empty, ScoreInfoBundle addOne, ScoreInfoBundle addTwo) {
-        ScoreInfoBundle scoreInfoBundle = new ScoreInfoBundle(new ArrayList<>());
-        assertThat(scoreInfoBundle).isEqualTo(empty);
-
-        ScoreInfo miss1 = aScoreInfo(1, Status.MISS);
-        scoreInfoBundle.add(miss1);
-        assertThat(scoreInfoBundle).isEqualTo(addOne);
-
-        ScoreInfo spare = aScoreInfo(9, Status.SPARE);
-        scoreInfoBundle.add(spare);
-        assertThat(scoreInfoBundle).isEqualTo(addTwo);
     }
 
     @Test
@@ -137,7 +133,28 @@ class ScoreInfoBundleTest {
     }
 
     @ParameterizedTest
-    @MethodSource("getForAddOnLast")
+    @MethodSource("sourceForLast")
+    void getLast(ScoreInfoBundle scoreInfoBundle, ScoreInfo last) {
+        assertThat(scoreInfoBundle.getLast()).isEqualTo(last);
+    }
+
+    @ParameterizedTest
+    @MethodSource("sourceForAdd")
+    void add(ScoreInfoBundle empty, ScoreInfoBundle addOne, ScoreInfoBundle addTwo) {
+        ScoreInfoBundle scoreInfoBundle = new ScoreInfoBundle(new ArrayList<>());
+        assertThat(scoreInfoBundle).isEqualTo(empty);
+
+        ScoreInfo miss1 = aScoreInfo(1, Status.MISS);
+        scoreInfoBundle.add(miss1);
+        assertThat(scoreInfoBundle).isEqualTo(addOne);
+
+        ScoreInfo spare = aScoreInfo(9, Status.SPARE);
+        scoreInfoBundle.add(spare);
+        assertThat(scoreInfoBundle).isEqualTo(addTwo);
+    }
+
+    @ParameterizedTest
+    @MethodSource("sourceForAddOnLast")
     void addOnLast(ScoreInfoBundle empty, ScoreInfoBundle addOne, ScoreInfoBundle addTwo, ScoreInfoBundle addThree) {
         ScoreInfoBundle scoreInfoBundle = new ScoreInfoBundle(new ArrayList<>());
         assertThat(scoreInfoBundle).isEqualTo(empty);
@@ -156,9 +173,20 @@ class ScoreInfoBundleTest {
     }
 
     @ParameterizedTest
-    @MethodSource("getForHasStrike")
+    @MethodSource("sourceForHasStrike")
     void hasStrike(ScoreInfoBundle scoreInfoBundle, boolean hasStrike) {
         assertThat(scoreInfoBundle.hasStrike()).isEqualTo(hasStrike);
     }
 
+    @ParameterizedTest
+    @MethodSource("sourceForGetStatus")
+    void getStatus(ScoreInfoBundle scoreInfoBundle, Status status) {
+        assertThat(scoreInfoBundle.getStatus()).isEqualTo(status);
+    }
+
+    @ParameterizedTest
+    @MethodSource("sourceForGetSum")
+    void getSum(ScoreInfoBundle scoreInfoBundle, int sum) {
+        assertThat(scoreInfoBundle.getSum()).isEqualTo(sum);
+    }
 }
