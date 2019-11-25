@@ -24,7 +24,7 @@ public class FrameTest {
     @DisplayName("프레임에서 스코어 점수 확인")
     void getPointByScoreTest() {
         // give
-        Frame frame = Frame.ready(0).first(5);
+        Frame frame = Frame.first(5, 5);
         Frame frame1 = frame.second(4);
         // when
         int firstPoint = frame.getPoint();

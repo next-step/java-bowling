@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Frames {
 
@@ -26,15 +27,22 @@ public class Frames {
         return Frames.of(frames);
     }
 
-//    public Frames next(int position) {
-//        if (position == 10) {
-//            frames.add(Frame.ready(position).first(10));
-//        }
-//        return
-//    }
+    public static Frames initiate() {
+        List<Frame> frames = new ArrayList<>();
+        frames.add(Frame.first(0, new Random().nextInt(5)));
+        return Frames.of(frames);
+    }
 
-    public void shot(int position, int score) {
-        this.frames.set(position, Frame.ready(position).first(score));
+    public Frames next() {
+        Frame recentlyFrame = frames.get(frames.size() - 1);
+        if (recentlyFrame.isRemain()) {
+            Frame frame = recentlyFrame.second(new Random().nextInt(5));
+            frames.set(frames.size() - 1, frame);
+            return Frames.of(frames);
+        }
+        Frame frameWithScore = Frame.first(frames.size(), new Random().nextInt(5));
+        frames.add(frameWithScore);
+        return Frames.of(frames);
     }
 
     public List<Frame> getFrames() {

@@ -16,7 +16,7 @@ public class Frame {
         return of(position, null);
     }
 
-    public Frame first(int point) {
+    public static Frame first(int position, int point) {
         return of(position, Score.first(point));
     }
 
@@ -30,6 +30,10 @@ public class Frame {
 
     public int getPoint() {
         return score.getPoint();
+    }
+
+    public boolean isRemain() {
+        return score.isCount();
     }
 
     @Override

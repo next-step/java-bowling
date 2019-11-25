@@ -26,4 +26,20 @@ public class FramesTest {
         // then
         assertThat(size).isEqualTo(10);
     }
+
+    @Test
+    @DisplayName("스코어를 포함한 프레임")
+    void checkScoreOfFrames() {
+        // give
+        Frames frames = Frames.initiate();
+        Frames reFrames = frames.next();
+        Frames nextFrame = frames.next();
+
+        // when
+        boolean isSame = frames.equals(reFrames);
+        int size = nextFrame.size();
+        // then
+        assertThat(isSame).isFalse();
+        assertThat(size).isEqualTo(2);
+    }
 }

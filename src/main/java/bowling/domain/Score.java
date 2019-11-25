@@ -36,27 +36,27 @@ public class Score {
     }
 
     public boolean isSpare() {
-        return this.point == 10;
+        return point == 0 && count == 0;
     }
 
     public boolean isStrike() {
-        return this.point == 10 && this.count == 1;
+        return point == 0 && count == 1;
     }
 
     public boolean isMiss() {
-        return this.point + this.count < 10;
+        return point != 0 && count == 0;
     }
 
     public boolean isGutter() {
-        return this.point != 10 && this.count == 0;
+        return point == 10;
     }
 
     public int getPoint() {
         return this.point;
     }
 
-    public int getcount() {
-        return this.count;
+    public boolean isCount() {
+        return count != 0;
     }
 
     @Override
