@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.Frame;
 import bowling.domain.Frames;
 import bowling.domain.Header;
+import bowling.domain.Score;
 
 import java.util.List;
 
@@ -23,8 +24,15 @@ public class ResultView {
         System.out.println();
 
         System.out.print(headValue());
+
+
         for (Frame frame : frames) {
-            System.out.print(printFrame(frame.getPosition(), frame.getPoint()));
+            int last = frames.get(frames.size() - 1).getPosition();
+            if (last == frame.getPosition() && frames.size() != 1) {
+                System.out.print(printFrameBySamePosition(frame.getPoint(), frames.get(frames.size() - 1).getPoint()));
+            } else {
+                System.out.print(printFrame(frame.getPosition(), frame.getPoint()));
+            }
         }
 
         for (int i = 0; i < 10 - frames.size(); i++) {
@@ -37,10 +45,13 @@ public class ResultView {
         return PRETTY_EMPTY + point + RIGHT_BOUNDARY;
     }
 
+    private static String printFrameBySamePosition(int first, int second) {
+        return PRETTY_EMPTY + first + "|" + second +RIGHT_BOUNDARY;
+    }
+
     private static String printTitle() {
         return PRETTY_EMPTY + PRETTY_EMPTY + RIGHT_BOUNDARY;
     }
-
 
     private static String headTitle() {
         return NAME_TITLE;

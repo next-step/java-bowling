@@ -25,7 +25,8 @@ public class Frames {
     }
 
     public Frames next(int score) {
-        Frame frameWithScore = Frame.first(frames.size(), score);
+        Frame recentlyFrame = frames.get(frames.size() - INDEX);
+        Frame frameWithScore = Frame.first(recentlyFrame.getPosition() + 1, score);
         frames.add(frameWithScore);
         return Frames.of(frames);
     }
@@ -35,7 +36,6 @@ public class Frames {
         if (recentlyFrame.isRemain()) {
             Frame frame = recentlyFrame.second(score);
             frames.add(frame);
-//            frames.set(frames.size() - INDEX, frame);
         }
         return Frames.of(frames);
     }

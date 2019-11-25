@@ -28,7 +28,7 @@ public class Score {
     }
 
     public Score second(int point) {
-        return of(this.point + point, count - INDEX);
+        return of(point, count - INDEX);
     }
 
     private void validatePoint(int point, int count) {
@@ -63,6 +63,10 @@ public class Score {
 
     public boolean isCount() {
         return count != MIN_COUNT;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     @Override
