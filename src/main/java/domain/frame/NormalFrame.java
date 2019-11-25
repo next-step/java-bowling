@@ -19,8 +19,12 @@ public class NormalFrame implements Frame {
 		this.score = score;
 	}
 
+	public static NormalFrame of(boolean reflectedPrevious) {
+		return new NormalFrame(NormalFrameStates.newInstance(), Score.of(0, -1, reflectedPrevious));
+	}
+
 	public static NormalFrame newInstance() {
-		return new NormalFrame(NormalFrameStates.newInstance(), Score.of(0, -1));
+		return new NormalFrame(NormalFrameStates.newInstance(), Score.of(0, -1, true));
 	}
 
 	@Override
@@ -36,12 +40,12 @@ public class NormalFrame implements Frame {
 
 	@Override
 	public void addPreviousScore(int prevScore) {
-		score.reflect(prevScore);
+		score.reflectPrevScore(prevScore);
 	}
 
 	@Override
 	public Optional<Integer> getOptionalScore() {
-		if (score.isEndCalculation()) {
+		if (score.canShowScore()) {
 			return Optional.of(score.getScore());
 		}
 		return Optional.empty();

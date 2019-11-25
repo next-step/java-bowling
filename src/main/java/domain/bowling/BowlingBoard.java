@@ -25,8 +25,9 @@ public class BowlingBoard {
 
 	private BowlingBoard() {
 		List<Frame> frames = new ArrayList<>();
-		for (int i = 0; i < NORMAL_FRAME_COUNT; i++) {
-			frames.add(NormalFrame.newInstance());
+		frames.add(NormalFrame.of(true));
+		for (int i = 1; i < NORMAL_FRAME_COUNT; i++) {
+			frames.add(NormalFrame.of(false));
 		}
 		frames.add(FinalFrame.newInstance());
 		this.frames = frames;

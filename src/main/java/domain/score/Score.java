@@ -6,37 +6,42 @@ import domain.BowlingPins;
 public class Score {
 
 	private int score;
-	private int left;
+	private final ScoreState scoreState;
 
-	private Score(int score, int left) {
+	private Score(int score, ScoreState scoreState) {
 		this.score = score;
-		this.left = left;
+		this.scoreState = scoreState;
 	}
 
-	public static Score of(int score, int left) {
-		return new Score(score, left);
+	public static Score of(int score, int left, boolean reflectedPrevious) {
+		return new Score(score, ScoreState.of(left, reflectedPrevious));
 	}
 
 	public void reflect(State state) {
 		score += state.getFallenBowlingPins();
 		if (state.isLastStateToDecideScoreLeft()) {
-			left = state.getLeftStatesToCalculateScore();
+			scoreState.initializeLeft(state.getLeftStatesToCalculateScore());
 		}
 	}
 
 	public void reflect(BowlingPins pins) {
-		if (left != 0) {
+		if (scoreState.canReflect()) {
 			score += pins.getPins();
-			left--;
+			scoreState.minusOneLeft();
 		}
 	}
 
-	public void reflect(int prevScore) {
+	public void reflectPrevScore(int prevScore) {
 		score += prevScore;
+		scoreState.reflected();
 	}
 
 	public boolean isEndCalculation() {
-		return left == 0;
+		return !scoreState.canReflect();
+	}
+
+	public boolean canShowScore() {
+		return scoreState.canShowScore();
 	}
 
 	public int getScore() {

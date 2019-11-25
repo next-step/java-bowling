@@ -20,7 +20,7 @@ public class FinalFrame implements Frame {
 	}
 
 	public static FinalFrame newInstance() {
-		return new FinalFrame(FinalFrameStates.newInstance(), Score.of(0, -1));
+		return new FinalFrame(FinalFrameStates.newInstance(), Score.of(0, -1, false));
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class FinalFrame implements Frame {
 		State state = frameStates.roll(pins);
 		score.reflect(state);
 		if (frameStates.isEndFrame()) {
-			score = Score.of(score.getScore(), 0);
+			score = Score.of(score.getScore(), 0, true);
 		}
 	}
 
@@ -39,12 +39,12 @@ public class FinalFrame implements Frame {
 
 	@Override
 	public void addPreviousScore(int prevScore) {
-		score.reflect(prevScore);
+		score.reflectPrevScore(prevScore);
 	}
 
 	@Override
 	public Optional<Integer> getOptionalScore() {
-		if (score.isEndCalculation()) {
+		if (score.canShowScore()) {
 			return Optional.of(score.getScore());
 		}
 		return Optional.empty();
