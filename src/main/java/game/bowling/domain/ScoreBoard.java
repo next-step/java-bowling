@@ -37,9 +37,9 @@ public class ScoreBoard {
                 .collect(toList());
     }
 
-    public List<String> getStatusLine() {
+    public List<Score> getScores() {
         return frames.stream()
-                .map(Frame::getStatus)
+                .map(Frame::getScore)
                 .collect(toList());
     }
 
@@ -48,6 +48,9 @@ public class ScoreBoard {
     }
 
     public boolean hasNextFrame() {
+        if (currentFrameIndex == frames.size() - 1) {
+            return !frames.get(currentFrameIndex).isFinish();
+        }
         return currentFrameIndex < frames.size();
     }
 

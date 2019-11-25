@@ -3,7 +3,6 @@ package game.bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static game.bowling.domain.FrameResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -21,10 +20,9 @@ class FinalFrameTest {
         // when
         finalFrame.bowl(1);
         finalFrame.bowl(2);
-        System.out.println(finalFrame.getResult());
+        System.out.println(finalFrame.getScore());
 
         // then
-        assertThat(finalFrame.getResult()).isEqualTo(MISS);
         assertThat(finalFrame.isFinish()).isTrue();
     }
 
@@ -37,10 +35,9 @@ class FinalFrameTest {
 
         // when
         finalFrame.bowl(10);
-        System.out.println(finalFrame.getResult());
+        System.out.println(finalFrame.getScore());
 
         // then
-        assertThat(finalFrame.getResult()).isEqualTo(STRIKE);
         assertThat(finalFrame.isFinish()).isFalse();
     }
 
@@ -54,10 +51,9 @@ class FinalFrameTest {
         // when
         finalFrame.bowl(10);
         finalFrame.bowl(10);
-        System.out.println(finalFrame.getResult());
+        System.out.println(finalFrame.getScore());
 
         // then
-        assertThat(finalFrame.getResult()).isEqualTo(STRIKE);
         assertThat(finalFrame.isFinish()).isFalse();
     }
 
@@ -72,10 +68,9 @@ class FinalFrameTest {
         finalFrame.bowl(10);
         finalFrame.bowl(10);
         finalFrame.bowl(10);
-        System.out.println(finalFrame.getResult());
+        System.out.println(finalFrame.getScore());
 
         // then
-        assertThat(finalFrame.getResult()).isEqualTo(STRIKE);
         assertThat(finalFrame.isFinish()).isTrue();
     }
 
@@ -89,10 +84,26 @@ class FinalFrameTest {
         // when
         finalFrame.bowl(9);
         finalFrame.bowl(1);
-        System.out.println(finalFrame.getResult());
+        System.out.println(finalFrame.getScore());
 
         // then
-        assertThat(finalFrame.getResult()).isEqualTo(SPARE);
         assertThat(finalFrame.isFinish()).isFalse();
+    }
+
+    @DisplayName("2투구 스페어-스트라이크")
+    @Test
+    void secondThrowSpareStrike() {
+
+        // given
+        FinalFrame finalFrame = new FinalFrame(10);
+
+        // when
+        finalFrame.bowl(9);
+        finalFrame.bowl(1);
+        finalFrame.bowl(10);
+        System.out.println(finalFrame.getScore());
+
+        // then
+        assertThat(finalFrame.isFinish()).isTrue();
     }
 }

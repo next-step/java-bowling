@@ -3,7 +3,6 @@ package game.bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static game.bowling.domain.FrameResult.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -20,25 +19,26 @@ class NormalFrameTest {
 
         // when
         normalFrame.bowl(10);
-        System.out.println(normalFrame.getResult());
+        System.out.println(normalFrame.getScore());
 
         // then
-        assertThat(normalFrame.getResult()).isEqualTo(STRIKE);
+        assertThat(normalFrame.isFinish()).isTrue();
+        assertThat(normalFrame.getScore().getFirstScore()).isEqualTo(10);
     }
 
     @DisplayName("두번째 던져야 하는 상태")
     @Test
-    void name() {
+    void secondThrow() {
 
         // given
         NormalFrame normalFrame = NormalFrame.first();
 
         // when
         normalFrame.bowl(0);
-        System.out.println(normalFrame.getResult());
+        System.out.println(normalFrame.getScore());
 
         // then
-        assertThat(normalFrame.getResult()).isEqualTo(THROWING);
+        assertThat(normalFrame.isFinish()).isFalse();
     }
 
     @DisplayName("스페어")
@@ -51,10 +51,10 @@ class NormalFrameTest {
         // when
         normalFrame.bowl(1);
         normalFrame.bowl(9);
-        System.out.println(normalFrame.getResult());
+        System.out.println(normalFrame.getScore());
 
         // then
-        assertThat(normalFrame.getResult()).isEqualTo(SPARE);
+        assertThat(normalFrame.isFinish()).isTrue();
     }
 
     @DisplayName("프레임 오픈 상태")
@@ -67,10 +67,10 @@ class NormalFrameTest {
         // when
         normalFrame.bowl(1);
         normalFrame.bowl(1);
-        System.out.println(normalFrame.getResult());
+        System.out.println(normalFrame.getScore());
 
         // then
-        assertThat(normalFrame.getResult()).isEqualTo(MISS);
+        assertThat(normalFrame.isFinish()).isTrue();
     }
 
     @DisplayName("아무 핀도 못쓰러뜨린 상태")
@@ -83,9 +83,9 @@ class NormalFrameTest {
         // when
         normalFrame.bowl(0);
         normalFrame.bowl(0);
-        System.out.println(normalFrame.getResult());
+        System.out.println(normalFrame.getScore());
 
         // then
-        assertThat(normalFrame.getResult()).isEqualTo(GUTTER);
+        assertThat(normalFrame.isFinish()).isTrue();
     }
 }

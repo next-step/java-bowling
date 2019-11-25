@@ -7,9 +7,9 @@ public interface Frame {
 
     int getFrameNo();
 
-    String getStatus();
-
     void bowl(int score);
 
     boolean isFinish();
+
+    Score getScore();
 }

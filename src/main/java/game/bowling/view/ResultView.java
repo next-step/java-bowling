@@ -1,5 +1,7 @@
 package game.bowling.view;
 
+import game.bowling.domain.FinalScore;
+import game.bowling.domain.Score;
 import game.bowling.domain.ScoreBoard;
 
 import java.io.PrintStream;
@@ -38,11 +40,42 @@ public class ResultView {
     }
 
     private void renderStatusLine(ScoreBoard scoreBoard) {
+        List<Score> scores = scoreBoard.getScores();
+        int length = scores.size();
         renderFrame(scoreBoard.getPlayerName());
-        for (String status : scoreBoard.getStatusLine()) {
-            renderFrame(status);
+        for (int i = 0; i < length; i++) {
+            renderFrame(convertStatus(scores.get(i)));
         }
         out.println(FRAME_DELIMITER);
+    }
+
+    private String convertStatus(Score score) {
+        if (score.isEmpty()) {
+            return EMPTY_STATUS;
+        }
+
+        if (score.isThrowing()) {
+            return getSymbol(score.getFirstScore());
+        }
+
+        if (score.isFinal()) {
+            String finalSymbol = getFinalSymbol(score);
+            return String.join("|", FrameResult.getFormat(score), finalSymbol);
+        }
+
+        return FrameResult.getFormat(score);
+    }
+
+    private String getSymbol(int score) {
+        if (score == 0) {
+            return "-";
+        }
+        return score != 10 ? String.valueOf(score) : "X";
+    }
+
+    private String getFinalSymbol(Score score) {
+        FinalScore finalScore = (FinalScore) score;
+        return getSymbol(finalScore.getThirdScore());
     }
 
     private void renderFrame(String frameContent) {
