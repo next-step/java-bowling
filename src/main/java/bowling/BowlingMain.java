@@ -1,9 +1,10 @@
 package bowling;
 
-import bowling.domain.Frames;
 import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.OutputView;
+
+import static bowling.domain.FrameNumber.LAST_FRAME;
 
 public class BowlingMain {
     public static void main(String[] args) {
@@ -11,7 +12,7 @@ public class BowlingMain {
         Player player = new Player(playerName);
         OutputView.printDashBoard(player);
 
-        for (int i = 0; i < Frames.LAST_FRAME; i++) {
+        for (int i = 0; i < LAST_FRAME; i++) {
             playFrame(player, i);
         }
     }

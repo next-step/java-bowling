@@ -3,32 +3,44 @@ package bowling.domain;
 import java.util.List;
 
 public class Frame {
-    private int frameNumber;
-    private Balls balls;
+    private FrameNumber frameNumber;
+    private Pins pins;
 
-    public Frame(int frameNumber, Balls balls) {
-        this.frameNumber = frameNumber;
-        this.balls = balls;
+    public Frame(int frameNumber, Pins pins) {
+        this.frameNumber = new FrameNumber(frameNumber);
+        this.pins = pins;
     }
 
     public Frame(int frameNumber) {
-        this.frameNumber = frameNumber;
-        this.balls = new Balls(isLastFrame());
+        this.frameNumber = new FrameNumber(frameNumber);
+        this.pins = new Pins(this.frameNumber.isLastFrame());
     }
 
     public void fallDown(int pin) {
-       balls.fallDown(pin);
-    }
-
-    public boolean isLastFrame() {
-        return frameNumber == Frames.LAST_FRAME;
+       pins.fallDown(pin);
     }
 
     public int getScore() {
-        return balls.score();
+        return pins.score();
     }
 
-    public int getFrameNumber() {
+    public Score getScore(int totalScore) {
+        if (!isEnd()) {
+            return Score.ofNoneScore();
+        }
+
+        if (isStrike()) {
+            return Score.ofStrike(totalScore, getScore());
+        }
+
+        if (isSpare()) {
+            return Score.ofSpare(totalScore, getScore());
+        }
+
+        return Score.of(totalScore, getScore());
+    }
+
+    public FrameNumber getFrameNumber() {
         return frameNumber;
     }
 
@@ -37,28 +49,44 @@ public class Frame {
     }
 
     public boolean isFallDownAble() {
-        return addAblePinCount() > Ball.ZERO_PIN_COUNT;
+        return addAblePinCount() > Pin.ZERO_PIN_COUNT;
     }
 
     public int addAblePinCount() {
-        return balls.addAblePinCount(isLastFrame());
+        return pins.addAblePinCount(frameNumber.isLastFrame());
     }
 
     public boolean isStrike() {
-        if (isLastFrame()) {
+        if (frameNumber.isLastFrame()) {
             return false;
         }
-        return balls.isStrike();
+        return pins.isStrike();
     }
 
     public boolean isSpare() {
-        if (isLastFrame()) {
+        if (frameNumber.isLastFrame()) {
             return false;
         }
-        return balls.isSpare();
+        return pins.isSpare();
     }
 
-    public List<Ball> unmodifiableBalls() {
-        return balls.unmodifiableBalls();
+    public List<Pin> unmodifiablePins() {
+        return pins.unmodifiablePins();
+    }
+
+    public Score addBonus(Score score) {
+        for (Pin pin : pins.unmodifiablePins()) {
+            score = addBonus(score, pin);
+        }
+
+        return score;
+    }
+
+    private Score addBonus(Score score, Pin pin) {
+        if (pin.isNotFallDown() || score.isNotLeft()) {
+            return score;
+        }
+
+        return score.addBonus(pin.getPin());
     }
 }
