@@ -11,8 +11,13 @@ public class NormalFrames {
     private List<NormalFrame> normalFrames = new ArrayList<>();
 
     public void createFrame(int score) {
-        if (this.normalFrames.size() == NO_FRAME_SIZE || getCurrentFrame().isEnd) {
+        if (this.normalFrames.size() == NO_FRAME_SIZE) {
             this.normalFrames.add(NormalFrame.first(score));
+            return;
+        }
+
+        if (this.getCurrentFrame().isEnd()) {
+            this.normalFrames.add(getCurrentFrame().next(score));
             return;
         }
 

@@ -53,4 +53,5 @@ public class GameRecord {
     public boolean isEnd() {
         return isEnd;
     }
+
 }
