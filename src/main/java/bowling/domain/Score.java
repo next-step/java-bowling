@@ -40,7 +40,7 @@ public class Score {
     }
 
     public boolean isStrike() {
-        return point == 0 && count == 1;
+        return point == 10 && count == 1;
     }
 
     public boolean isMiss() {

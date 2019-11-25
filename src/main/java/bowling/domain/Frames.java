@@ -27,22 +27,35 @@ public class Frames {
         return Frames.of(frames);
     }
 
-    public static Frames initiate() {
+    public static Frames initiate(int score) {
         List<Frame> frames = new ArrayList<>();
-        frames.add(Frame.first(0, new Random().nextInt(5)));
+        frames.add(Frame.first(0, score));
         return Frames.of(frames);
     }
 
-    public Frames next() {
-        Frame recentlyFrame = frames.get(frames.size() - 1);
-        if (recentlyFrame.isRemain()) {
-            Frame frame = recentlyFrame.second(new Random().nextInt(5));
-            frames.set(frames.size() - 1, frame);
-            return Frames.of(frames);
-        }
-        Frame frameWithScore = Frame.first(frames.size(), new Random().nextInt(5));
+    public Frames next(int score) {
+        Frame frameWithScore = Frame.first(frames.size(), score);
         frames.add(frameWithScore);
         return Frames.of(frames);
+    }
+
+    public Frames nextSecond(int score) {
+        Frame recentlyFrame = frames.get(frames.size() - 1);
+        if (recentlyFrame.isRemain()) {
+            Frame frame = recentlyFrame.second(score);
+            frames.set(frames.size() - 1, frame);
+        }
+        return Frames.of(frames);
+    }
+
+    public boolean isRemain() {
+        Frame recentlyFrame = frames.get(frames.size() - 1);
+        return recentlyFrame.isRemain();
+    }
+
+    public int getRemainScore() {
+        Frame recentlyFrame = frames.get(frames.size() - 1);
+        return recentlyFrame.getPoint();
     }
 
     public List<Frame> getFrames() {

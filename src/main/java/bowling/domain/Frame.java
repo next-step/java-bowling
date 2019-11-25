@@ -33,7 +33,7 @@ public class Frame {
     }
 
     public boolean isRemain() {
-        return score.isCount();
+        return score.isCount() && !score.isStrike();
     }
 
     @Override
