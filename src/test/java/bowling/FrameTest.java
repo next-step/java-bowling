@@ -31,6 +31,6 @@ public class FrameTest {
         int secondPoint = frame1.getPoint();
         // then
         assertThat(firstPoint).isEqualTo(5);
-        assertThat(secondPoint).isEqualTo(4);
+        assertThat(secondPoint).isEqualTo(9);
     }
 }

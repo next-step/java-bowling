@@ -18,11 +18,11 @@ public class Score {
     }
 
     public static Score first(int point) {
-        return of(10 - point, 1);
+        return of(point, 1);
     }
 
     public Score second(int point) {
-        return of(this.point - point, count - 1);
+        return of(this.point + point, count - 1);
     }
 
     private void validatePoint(int point, int count) {
