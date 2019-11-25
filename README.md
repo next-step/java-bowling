@@ -7,3 +7,8 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## 요구사항
+* 역할에 맞게 Player, Game, Frame 클래스로 분리
+* Frame 인터페이스를 활용하여 1-9 프레임 과 10 프레임을 같이 다룰 것
+* 3개 이상의 인스턴스 변수를 가진 클래스를 쓰지 않는다.
