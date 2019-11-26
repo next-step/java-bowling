@@ -1,5 +1,9 @@
 package bowling.domain;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class Player {
     private String name;
     private Frames frames;
@@ -25,7 +29,9 @@ public class Player {
         frames.fallDown(index, pinCount);
     }
 
-    public int getScore(int index) {
-        return frames.getScore(index).getScore();
+    public List<Integer> getScore() {
+        return IntStream.range(0, FrameNumber.LAST_FRAME)
+                .mapToObj(i -> frames.getScore(i).getScore())
+                .collect(Collectors.toList());
     }
 }

@@ -23,7 +23,6 @@ public class OutputView {
     private static final String EMPTY_TEXT = "";
     private static final int SECOND_BALL_INDEX = 1;
     private static final int NON_SCORE = -1;
-    private static final int ZERO_SCORE = 0;
 
     public static void printDashBoard(Player player) {
         printHeader();
@@ -85,14 +84,15 @@ public class OutputView {
     private static void printScore(Player player) {
         List<String> scoreResults = new ArrayList<>();
         scoreResults.add(frameFormat(EMPTY_TEXT));
-
-        for (int i = 0; i < LAST_FRAME; i++) {
-            int score = player.getScore(i);
-            String scoreString = score == NON_SCORE ? EMPTY_TEXT : String.valueOf(score);
-            scoreResults.add(frameFormat(scoreString));
-        }
+        scoreResults.addAll(player.getScore().stream()
+                .map(score -> frameFormat(convertScoreText(score)))
+                .collect(Collectors.toList()));
 
         System.out.println(String.format(DASH_BOARD_FORMAT, String.join(DASH_BOARD_SEPARATOR, scoreResults)));
+    }
+
+    private static String convertScoreText(Integer score) {
+        return score == NON_SCORE ? EMPTY_TEXT : String.valueOf(score);
     }
 
     private static String frameFormat(String result) {
