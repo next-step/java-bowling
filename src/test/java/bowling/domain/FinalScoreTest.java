@@ -10,10 +10,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class FinalScoreTest {
 
+    private Frame frame = new Frame(10);
+
     @Test
     public void 생성() {
-        Score score = new FinalScore();
-        assertThat(score).isEqualTo(new FinalScore());
+        assertThat(frame.getScore()).isEqualTo(new FinalScore());
     }
 
     @ParameterizedTest
@@ -21,37 +22,34 @@ class FinalScoreTest {
             , "10,0,10,STRIKE,GUTTER,SPARE", "10,0,0,STRIKE,GUTTER,GUTTER"
             , "0,10,10,GUTTER,SPARE,STRIKE", "0,10,0,GUTTER,SPARE,GUTTER"})
     public void Symbol_STRIKE_SPARE_정합성(int p1, int p2, int p3, Symbol s1, Symbol s2, Symbol s3) {
-        FinalScore score = new FinalScore();
-        score.bowl(p1);
-        score.bowl(p2);
-        score.bowl(p3);
-        assertThat(score.getSymbols()).isEqualTo(Arrays.asList(s1, s2, s3));
+        frame.bowl(p1);
+        frame.bowl(p2);
+        frame.bowl(p3);
+        assertThat(frame.getScore().getSymbols()).isEqualTo(Arrays.asList(s1, s2, s3));
     }
 
     @Test
     public void finished_False() {
-        FinalScore score = new FinalScore();
-        assertThat(score.isFinished()).isFalse();
+        assertThat(frame.isFinished()).isFalse();
 
-        score.bowl(10);
-        assertThat(score.isFinished()).isFalse();
+        frame.bowl(10);
+        assertThat(frame.isFinished()).isFalse();
 
-        score.bowl(0);
-        assertThat(score.isFinished()).isFalse();
+        frame.bowl(0);
+        assertThat(frame.isFinished()).isFalse();
     }
 
     @Test
     public void finished_True() {
-        FinalScore score = new FinalScore();
-        score.bowl(9);
-        score.bowl(0);
-        assertThat(score.isFinished()).isTrue();
+        frame.bowl(9);
+        frame.bowl(0);
+        assertThat(frame.isFinished()).isTrue();
 
-        FinalScore score2 = new FinalScore();
-        score2.bowl(9);
-        score2.bowl(1);
-        score2.bowl(0);
-        assertThat(score.isFinished()).isTrue();
+        frame = new Frame(10);
+        frame.bowl(9);
+        frame.bowl(1);
+        frame.bowl(0);
+        assertThat(frame.isFinished()).isTrue();
     }
 
 }

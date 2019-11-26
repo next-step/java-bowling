@@ -11,11 +11,11 @@ public class FinalScore implements Score {
 
     @Override
     public Score ofNext(int pin) {
-        throw new IllegalArgumentException("unable to get next Score at Final");
+        addScore(pin);
+        return this;
     }
 
-    @Override
-    public void bowl(int pin) {
+    private void addScore(int pin) {
         Symbol symbol = canBeStrike() ? Symbol.findByPin(pin) : Symbol.findByPins(getLatestPin(), pin);
 
         pins.add(pin);
@@ -54,6 +54,11 @@ public class FinalScore implements Score {
     }
 
     @Override
+    public List<Symbol> getSymbols() {
+        return symbols;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -67,7 +72,4 @@ public class FinalScore implements Score {
         return Objects.hash(pins, symbols);
     }
 
-    public List<Symbol> getSymbols(){
-        return this.symbols;
-    }
 }

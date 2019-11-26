@@ -23,7 +23,6 @@ class FrameTest {
         assertThat(frame.getScore()).isEqualTo(score);
     }
 
-
     @Test
     public void Normal_생성() {
         Frame frame = new Frame(1);
@@ -51,7 +50,7 @@ class FrameTest {
     }
 
     @Test
-    public void Final_생성(){
+    public void Final_생성() {
         Frame frame = new Frame(10);
         assertThat(frame.getScore()).isEqualTo(new FinalScore());
     }

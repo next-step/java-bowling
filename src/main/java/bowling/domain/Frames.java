@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Frames {
 
@@ -16,14 +17,10 @@ public class Frames {
     }
 
     public boolean hasNext() {
-        return !(frames.size() == FINAL_FRAME && getLatestFrame().isFinished());
+        return getThisTurn() <= FINAL_FRAME;
     }
 
-    private Frame getLatestFrame() {
-        return frames.get(frames.size() - 1);
-    }
-
-    public int getNeedBallTurn() {
+    public int getThisTurn() {
         return frames.size();
     }
 
@@ -35,5 +32,22 @@ public class Frames {
         }
     }
 
+    private Frame getLatestFrame() {
+        return frames.get(frames.size() - 1);
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return FIRST_FRAME == frames1.FIRST_FRAME &&
+                FINAL_FRAME == frames1.FINAL_FRAME &&
+                Objects.equals(frames, frames1.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(FIRST_FRAME, FINAL_FRAME, frames);
+    }
 }

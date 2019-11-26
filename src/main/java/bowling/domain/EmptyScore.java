@@ -11,12 +11,11 @@ public class EmptyScore implements Score {
 
     @Override
     public Score ofNext(int pin) {
-        bowl(pin);
+        addScore(pin);
         return (isStrike(pin)) ? new StrikeScore(pins, symbols) : new NormalScore(pins, symbols);
     }
 
-    @Override
-    public void bowl(int pin) {
+    private void addScore(int pin) {
         pins.add(pin);
         symbols.add(Symbol.findByPin(pin));
     }
@@ -28,6 +27,11 @@ public class EmptyScore implements Score {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public List<Symbol> getSymbols() {
+        return symbols;
     }
 
     @Override

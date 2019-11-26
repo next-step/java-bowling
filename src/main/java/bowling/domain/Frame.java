@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class Frame {
 
     private Frame next;
@@ -8,7 +10,7 @@ public class Frame {
 
     public Frame(int order) {
         this.order = order;
-        this.score = (order == 10)? new FinalScore() : new EmptyScore();
+        this.score = (order == 10) ? new FinalScore() : new EmptyScore();
     }
 
     public Frame ofNext() {
@@ -25,8 +27,22 @@ public class Frame {
         score = score.ofNext(pin);
     }
 
-    public Score getScore(){
+    public Score getScore() {
         return score;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frame frame = (Frame) o;
+        return order == frame.order &&
+                Objects.equals(next, frame.next) &&
+                Objects.equals(score, frame.score);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(next, score, order);
+    }
 }

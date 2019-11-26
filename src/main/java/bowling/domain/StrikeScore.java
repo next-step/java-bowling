@@ -19,13 +19,13 @@ public class StrikeScore implements Score {
     }
 
     @Override
-    public void bowl(int pin) {
-        throw new IllegalArgumentException("unable to add pin at Strike");
+    public boolean isFinished() {
+        return true;
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public List<Symbol> getSymbols() {
+        return symbols;
     }
 
     @Override

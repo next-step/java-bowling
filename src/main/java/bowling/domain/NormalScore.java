@@ -15,12 +15,11 @@ public class NormalScore implements Score {
 
     @Override
     public Score ofNext(int pin) {
-        bowl(pin);
+        addScore(pin);
         return (isSpare(pin)) ? new SpareScore(pins, symbols) : new MissScore(pins, symbols);
     }
 
-    @Override
-    public void bowl(int pin) {
+    private void addScore(int pin) {
         Symbol symbol = Symbol.findByPins(pins.get(0), pin);
 
         pins.add(pin);
@@ -34,6 +33,11 @@ public class NormalScore implements Score {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public List<Symbol> getSymbols() {
+        return symbols;
     }
 
     @Override
