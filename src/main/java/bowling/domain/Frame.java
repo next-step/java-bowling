@@ -7,12 +7,12 @@ public class Frame {
     private Pins pins;
 
     public Frame(int frameNumber, Pins pins) {
-        this.frameNumber = new FrameNumber(frameNumber);
+        this.frameNumber = FrameNumber.of(frameNumber);
         this.pins = pins;
     }
 
     public Frame(int frameNumber) {
-        this.frameNumber = new FrameNumber(frameNumber);
+        this.frameNumber = FrameNumber.of(frameNumber);
         this.pins = new Pins(this.frameNumber.isLastFrame());
     }
 

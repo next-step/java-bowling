@@ -20,7 +20,7 @@ public class FramesTest {
         Frames frames = new Frames();
         Frame frame = frames.frameByIndex(0);
 
-        assertThat(frame.getFrameNumber()).isEqualTo(new FrameNumber(1));
+        assertThat(frame.getFrameNumber()).isEqualTo(FrameNumber.of(1));
     }
 
     @Test
