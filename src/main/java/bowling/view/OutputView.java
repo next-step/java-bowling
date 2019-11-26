@@ -24,16 +24,11 @@ public class OutputView {
     private static final int SECOND_BALL_INDEX = 1;
     private static final int NON_SCORE = -1;
 
-    public static void printDashBoard(Player player) {
-        printHeader();
-        printPlayer(player);
-    }
-
-    private static void printHeader() {
+    public static void printHeader() {
         System.out.println(DASH_BOARD_HEADER);
     }
 
-    private static void printPlayer(Player player) {
+    public static void printPlayer(Player player) {
         printStatus(player);
         printScore(player);
     }
@@ -41,11 +36,9 @@ public class OutputView {
     private static void printStatus(Player player) {
         List<String> status = new ArrayList<>();
         status.add(frameFormat(player.getName()));
-
-        for (int i = 0; i < LAST_FRAME; i++) {
-            Frame frame = player.frameByIndex(i);
-            status.add(frameFormat(frameResult(frame)));
-        }
+        status.addAll(player.getFrames().stream()
+                .map(frame -> frameFormat(frameResult(frame)))
+                .collect(Collectors.toList()));
 
         System.out.println(String.format(DASH_BOARD_FORMAT, String.join(DASH_BOARD_SEPARATOR, status)));
     }
@@ -91,7 +84,7 @@ public class OutputView {
         System.out.println(String.format(DASH_BOARD_FORMAT, String.join(DASH_BOARD_SEPARATOR, scoreResults)));
     }
 
-    private static String convertScoreText(Integer score) {
+    private static String convertScoreText(int score) {
         return score == NON_SCORE ? EMPTY_TEXT : String.valueOf(score);
     }
 

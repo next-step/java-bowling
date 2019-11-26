@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static bowling.domain.FrameNumber.LAST_FRAME;
@@ -49,5 +50,9 @@ public class Frames {
             score = nextFrame.addBonus(score);
         }
         return score;
+    }
+
+    public List<Frame> unmodifiableFrames() {
+        return Collections.unmodifiableList(frames);
     }
 }

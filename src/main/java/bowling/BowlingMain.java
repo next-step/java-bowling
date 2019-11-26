@@ -1,27 +1,44 @@
 package bowling;
 
 import bowling.domain.Player;
+import bowling.domain.Players;
 import bowling.view.InputView;
 import bowling.view.OutputView;
+
+import java.util.List;
 
 import static bowling.domain.FrameNumber.LAST_FRAME;
 
 public class BowlingMain {
     public static void main(String[] args) {
-        String playerName = InputView.inputPlayerName();
-        Player player = new Player(playerName);
-        OutputView.printDashBoard(player);
+        int playerCount = InputView.inputPlayerCount();
+        List<String> playerNames = InputView.inputPlayerNames(playerCount);
+        Players players = Players.of(playerNames);
+        printDashBoard(players);
 
         for (int i = 0; i < LAST_FRAME; i++) {
-            playFrame(player, i);
+            playPlayer(players, i);
         }
     }
 
-    private static void playFrame(Player player, int index) {
+    private static void printDashBoard(Players players) {
+        OutputView.printHeader();
+        for (int i = 0; i < players.size(); i++) {
+            OutputView.printPlayer(players.playerByIndex(i));
+        }
+    }
+
+    private static void playPlayer(Players players, int frameIndex) {
+        for (int i = 0; i < players.size(); i++) {
+            playFrame(players, players.playerByIndex(i), frameIndex);
+        }
+    }
+
+    private static void playFrame(Players players, Player player, int index) {
         while (player.isFallDownAble(index)) {
-            int pinCount = InputView.inputPinCount(player.frameByIndex(index));
+            int pinCount = InputView.inputPinCount(player.getName(), player.frameByIndex(index));
             player.fallDown(index, pinCount);
-            OutputView.printDashBoard(player);
+            printDashBoard(players);
         }
     }
 }
