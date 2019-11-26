@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class Pin {
     public static final int ZERO_PIN_COUNT = 0;
     public static final int ALL_PIN_COUNT = 10;
@@ -15,14 +17,6 @@ public class Pin {
         this.pin = DEFAULT_PIN;
     }
 
-    public static boolean isOverFlowPinCount(int pin) {
-        return pin > ALL_PIN_COUNT;
-    }
-
-    public static int leftPinCount(int score) {
-        return ALL_PIN_COUNT - score;
-    }
-
     public void fallDown(int pin) {
         if (pin > ALL_PIN_COUNT) {
             throw new IllegalArgumentException(PIN_SIZE_ERROR_MESSAGE);
@@ -35,10 +29,6 @@ public class Pin {
         return pin;
     }
 
-    public boolean isFallDown() {
-        return this.pin > DEFAULT_PIN;
-    }
-
     public boolean isNotFallDown() {
         return this.pin == DEFAULT_PIN;
     }
@@ -49,5 +39,18 @@ public class Pin {
 
     public boolean isZero() {
         return pin == ALL_PIN_COUNT;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pin pin1 = (Pin) o;
+        return pin == pin1.pin;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pin);
     }
 }

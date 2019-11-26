@@ -1,92 +1,50 @@
 package bowling.domain;
 
+import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
+import bowling.domain.state.State;
+
 import java.util.List;
 
 public class Frame {
     private FrameNumber frameNumber;
-    private Pins pins;
+    private State state;
 
-    public Frame(int frameNumber, Pins pins) {
+    public Frame(int frameNumber, State state) {
         this.frameNumber = FrameNumber.of(frameNumber);
-        this.pins = pins;
+        this.state = state;
     }
 
     public Frame(int frameNumber) {
         this.frameNumber = FrameNumber.of(frameNumber);
-        this.pins = new Pins(this.frameNumber.isLastFrame());
+        this.state = new Ready();
     }
 
     public void fallDown(int pin) {
-       pins.fallDown(pin);
-    }
-
-    public int getScore() {
-        return pins.score();
+        state = state.bowl(pin, frameNumber.isLastFrame());
     }
 
     public Score getScore(int totalScore) {
-        if (!isEnd()) {
-            return Score.ofNoneScore();
-        }
-
-        if (isStrike()) {
-            return Score.ofStrike(totalScore, getScore());
-        }
-
-        if (isSpare()) {
-            return Score.ofSpare(totalScore, getScore());
-        }
-
-        return Score.of(totalScore, getScore());
+        return state.getScore(totalScore);
     }
 
     public FrameNumber getFrameNumber() {
         return frameNumber;
     }
 
-    public boolean isEnd() {
-        return !isFallDownAble();
-    }
-
-    public boolean isFallDownAble() {
-        return addAblePinCount() > Pin.ZERO_PIN_COUNT;
-    }
-
-    public int addAblePinCount() {
-        return pins.addAblePinCount(frameNumber.isLastFrame());
-    }
-
-    public boolean isStrike() {
-        if (frameNumber.isLastFrame()) {
-            return false;
-        }
-        return pins.isStrike();
-    }
-
-    public boolean isSpare() {
-        if (frameNumber.isLastFrame()) {
-            return false;
-        }
-        return pins.isSpare();
+    public Score addBonus(Score score) {
+        return state.addBonus(score);
     }
 
     public List<Pin> unmodifiablePins() {
-        return pins.unmodifiablePins();
+        return state.getPins();
     }
 
-    public Score addBonus(Score score) {
-        for (Pin pin : pins.unmodifiablePins()) {
-            score = addBonus(score, pin);
-        }
-
-        return score;
+    public boolean isSpare() {
+        return state instanceof Spare;
     }
 
-    private Score addBonus(Score score, Pin pin) {
-        if (pin.isNotFallDown() || score.isNotLeft()) {
-            return score;
-        }
-
-        return score.addBonus(pin.getPin());
+    public boolean isFallDownAble() {
+        return !state.isEnd();
     }
 }
