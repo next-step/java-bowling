@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FinalScore implements Score {
 
@@ -41,7 +42,7 @@ public class FinalScore implements Score {
 
     @Override
     public boolean isFinished() {
-        return (yetFinishedTwoTurn() || haveThirdTurn());
+        return !(yetFinishedTwoTurn() || haveThirdTurn());
     }
 
     private boolean yetFinishedTwoTurn() {
@@ -52,4 +53,21 @@ public class FinalScore implements Score {
         return pins.size() == 2 && pins.get(0) + pins.get(1) >= 10;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FinalScore that = (FinalScore) o;
+        return Objects.equals(pins, that.pins) &&
+                Objects.equals(symbols, that.symbols);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pins, symbols);
+    }
+
+    public List<Symbol> getSymbols(){
+        return this.symbols;
+    }
 }

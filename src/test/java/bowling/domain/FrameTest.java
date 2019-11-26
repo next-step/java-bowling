@@ -51,6 +51,12 @@ class FrameTest {
     }
 
     @Test
+    public void Final_생성(){
+        Frame frame = new Frame(10);
+        assertThat(frame.getScore()).isEqualTo(new FinalScore());
+    }
+
+    @Test
     public void Strike_추가공_실패() {
         Frame frame = new Frame(1);
         frame.bowl(10);
