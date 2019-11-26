@@ -62,6 +62,16 @@ public class Frames {
         return new ArrayList<>(frames);
     }
 
+    public void applyScore() {
+        for (Frame frame : frames) {
+            if (ScoreBoard.hasKey(frame.getPosition()) && ScoreBoard.getValue(frame.getPosition()) != null) {
+                ScoreBoard.applySecond(frame.getPosition(), frame.getPoint());
+            } else {
+                ScoreBoard.apply(frame.getPosition(), frame.getPoint());
+            }
+        }
+    }
+
     public int size() {
         return frames.size();
     }
