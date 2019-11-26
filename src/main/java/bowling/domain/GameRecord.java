@@ -8,6 +8,7 @@ public class GameRecord {
     private boolean isEnd;
     private NormalFrames normalFrames;
     private FinalFrame finalFrame = new FinalFrame();
+    private int result;
 
     public GameRecord(String user) {
         this.user = user;

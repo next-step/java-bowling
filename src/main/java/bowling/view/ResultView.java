@@ -28,8 +28,19 @@ public class ResultView {
         format.append(makeFrameFormat(gameRecord.getNormalFrames()));
         format.append(makeFinalFrameFormat(gameRecord));
         format.append(makeEmptyScoreFormat(gameRecord.getNormalFrames().size()));
+        format.append(makeResultFormat(gameRecord.getNormalFrames()));
 
         System.out.println(format);
+    }
+
+    private static String makeResultFormat(List<NormalFrame> normalFrames) {
+        StringBuilder format = new StringBuilder();
+        for (NormalFrame frame : normalFrames) {
+            format.append(getNormalScoreFormat(frame));
+            format.append(SCORE_SEPERATE_LINE);
+        }
+
+        return format.toString();
     }
 
     private static String makeFrameFormat(List<NormalFrame> frames) {
