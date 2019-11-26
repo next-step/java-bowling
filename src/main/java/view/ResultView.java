@@ -1,7 +1,10 @@
 package view;
 
-import domain.bowlling.BowlingOnBoard;
-import domain.frame.result.FrameResult;
+import domain.bowling.BowlingOnBoard;
+import domain.states.States;
+
+import java.util.List;
+import java.util.Optional;
 
 public class ResultView {
 
@@ -10,22 +13,49 @@ public class ResultView {
 	}
 
 	public static void printCurrentScore(BowlingOnBoard bowlingOnBoards) {
-		System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |   10     |");
+		System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |   10    |");
 		printFrameResults(bowlingOnBoards);
+		printScores(bowlingOnBoards);
 		System.out.println();
 	}
 
 	private static void printFrameResults(BowlingOnBoard bowlingOnBoards) {
 		StringBuilder stringBuilder = new StringBuilder(String.format("|  %s |", bowlingOnBoards.getUserName()));
-		for (FrameResult frameResult : bowlingOnBoards.getNormalFrameResults()) {
-			stringBuilder.append(String.format("  %-3s |", getFrameResult(frameResult)));
+		List<States> statesList = bowlingOnBoards.getStates();
+		for (int i = 0, end = statesList.size(); i < end; i++) {
+			appendResult(stringBuilder, i, getFrameResult(statesList.get(i)));
 		}
-		stringBuilder.append(String.format("  %-5s  |", getFrameResult(bowlingOnBoards.getFinalFrameResult())));
 		System.out.println(stringBuilder.toString());
 	}
 
-	private static String getFrameResult(FrameResult frameResult) {
-		return String.join("|", frameResult.getPhaseResultSign());
+	private static void appendResult(StringBuilder stringBuilder, int index, String target) {
+		if (index != 9) {
+			stringBuilder.append(String.format("  %-3s |", target));
+		} else {
+			stringBuilder.append(String.format("  %-5s  |", target));
+		}
+	}
+
+	private static String getFrameResult(States states) {
+		return String.join("|", states.getPhaseResultSign());
+	}
+
+	private static void printScores(BowlingOnBoard bowlingOnBoard) {
+		StringBuilder stringBuilder = new StringBuilder("|      |");
+		List<Optional<Integer>> scores = bowlingOnBoard.getScores();
+		for (int i = 0, end = scores.size(); i < end; i++) {
+			appendScore(stringBuilder, i, scores.get(i));
+		}
+		System.out.println(stringBuilder.toString());
+	}
+
+	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+	private static void appendScore(StringBuilder stringBuilder, int i, Optional<Integer> score) {
+		if (score.isPresent()) {
+			appendResult(stringBuilder, i, String.valueOf(score.get()));
+		} else {
+			appendResult(stringBuilder, i, " ");
+		}
 	}
 
 }

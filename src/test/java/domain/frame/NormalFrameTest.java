@@ -1,76 +1,70 @@
 package domain.frame;
 
-import domain.phase.result.NormalPhaseResult;
-import domain.phase.result.PhaseResult;
+import domain.BowlingPins;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+/**
+ * NormalFrame : NormalFrameStates 와 Score 를 가지고 있다.
+ *
+ */
 @SuppressWarnings("NonAsciiCharacters")
 class NormalFrameTest {
 
 	@Test
-	void 처음에_10개를_모두치면_스트라이크이다() {
+	void 끝나지않은_점수는_계산할_수_없다() {
 		// given
-		NormalFrame frame = new NormalFrame();
+		Frame frame = NormalFrame.newInstance();
 
 		// when
-		PhaseResult result = frame.shoot(10);
+		frame.roll(BowlingPins.of(3));
 
 		// then
-		assertThat(result).isEqualTo(NormalPhaseResult.STRIKE);
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.empty());
 	}
 
 	@Test
-	void 두번째에_남아있는_볼링핀을_모두치면_스페어이다() {
+	void 미스는_바로_점수가_계산된다() {
 		// given
-		NormalFrame frame = new NormalFrame();
+		Frame frame = NormalFrame.newInstance();
 
 		// when
-		frame.shoot(4);
-		PhaseResult result = frame.shoot(6);
+		frame.roll(BowlingPins.of(3));
+		frame.roll(BowlingPins.of(6));
 
 		// then
-		assertThat(result).isEqualTo(NormalPhaseResult.SPARE);
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(9));
 	}
 
 	@Test
-	void 두번째에도_남아있는_볼링핀을_모두_못치면_미스이다() {
+	void 스페어는_점수를_한_번_더해야_한다() {
 		// given
-		NormalFrame frame = new NormalFrame();
+		Frame frame = NormalFrame.newInstance();
 
 		// when
-		frame.shoot(4);
-		PhaseResult result = frame.shoot(5);
+		frame.roll(BowlingPins.of(3));
+		frame.roll(BowlingPins.of(7));
+		frame.addNextFrameScore(BowlingPins.of(4));
 
 		// then
-		assertThat(result).isEqualTo(NormalPhaseResult.MISS);
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(14));
 	}
 
 	@Test
-	void 하나의_핀도_못치면_거터이다() {
+	void 스트라이크는_점수를_두_번_더해야_한다() {
 		// given
-		NormalFrame frame = new NormalFrame();
+		Frame frame = NormalFrame.newInstance();
 
 		// when
-		frame.shoot(0);
-		PhaseResult result = frame.shoot(0);
+		frame.roll(BowlingPins.of(10));
+		frame.addNextFrameScore(BowlingPins.of(10));
+		frame.addNextFrameScore(BowlingPins.of(8));
 
 		// then
-		assertThat(result).isEqualTo(NormalPhaseResult.GUTTER);
-	}
-
-	@Test
-	void 존재하는_핀보다_더많은_핀을_넘어뜨릴수_없다() {
-		// given
-		NormalFrame frame = new NormalFrame();
-
-		// when & then
-		assertThatThrownBy(() -> {
-			frame.shoot(11);
-		})
-		.isInstanceOf(IllegalArgumentException.class);
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(28));
 	}
 
 }

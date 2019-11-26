@@ -1,135 +1,136 @@
 package domain.bowling;
 
-import domain.bowlling.BowlingBoard;
-import domain.frame.result.FrameResult;
-import domain.phase.result.FinalPhaseResult;
-import domain.phase.result.NormalPhaseResult;
-import domain.phase.result.PhaseResult;
+import domain.frame.FrameStore;
+import domain.BowlingPins;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("NonAsciiCharacters")
 class BowlingBoardTest {
 
-	@Test
-	void 노말_프레임에서_스트라이크를_하면_결과가_저장되고_다음_페이즈_인덱스가_반환된다() {
-		// given
-		BowlingBoard board = new BowlingBoard();
-
-		// when
-		board.shoot( 10);
-
-		// then
-		assertThat(board.getCurrentFrameIndex()).isEqualTo(1);
-		assertThat(board.getNormalPhaseResults().get(0)).isEqualTo(new FrameResult(NormalPhaseResult.STRIKE,	10));
+	@AfterEach
+	void clean() {
+		FrameStore.clean();
 	}
 
 	@Test
-	void 노말_프레임에서_스페어를_하면_결과가_저장되고_다음_페이즈_인덱스가_반환된다() {
+	void 프레임의_점수가_연이어_계산된다1() {
 		// given
-		BowlingBoard board = new BowlingBoard();
-		List<PhaseResult> expectedResults = Arrays.asList(NormalPhaseResult.IN_PROGRESS,
-				NormalPhaseResult.SPARE);
-		List<Integer> expectedFallenBowlingPins = Arrays.asList(4, 6);
+		BowlingBoard bowlingBoard = BowlingBoard.newInstance();
 
 		// when
-		board.shoot(4);
-		board.shoot(6);
+		// 1프레임 - 스트라이크 20
+		bowlingBoard.roll(BowlingPins.of(10));
+
+		// 2프레임 - 스페어 35
+		bowlingBoard.roll(BowlingPins.of(8));
+		bowlingBoard.roll(BowlingPins.of(2));
+
+		// 3프레임 - 미스 44
+		bowlingBoard.roll(BowlingPins.of(5));
+		bowlingBoard.roll(BowlingPins.of(4));
+
+		// 4프레임 - 거터 44
+		bowlingBoard.roll(BowlingPins.of(0));
+		bowlingBoard.roll(BowlingPins.of(0));
+
+		// 5프레임 - 스트라이크 71
+		bowlingBoard.roll(BowlingPins.of(10));
+
+		// 6프레임 - 스트라이크 91
+		bowlingBoard.roll(BowlingPins.of(10));
+
+		// 7프레임 - 스페어 103
+		bowlingBoard.roll(BowlingPins.of(7));
+		bowlingBoard.roll(BowlingPins.of(3));
+
+		// 7프레임 - 미스 106
+		bowlingBoard.roll(BowlingPins.of(2));
+		bowlingBoard.roll(BowlingPins.of(1));
+
+		// 7프레임 - 미스 113
+		bowlingBoard.roll(BowlingPins.of(4));
+		bowlingBoard.roll(BowlingPins.of(3));
+
+		// 10프레임 - 30점 획득 143
+		bowlingBoard.roll(BowlingPins.of(10));
+		bowlingBoard.roll(BowlingPins.of(10));
+		bowlingBoard.roll(BowlingPins.of(10));
 
 		// then
-		assertThat(board.getCurrentFrameIndex()).isEqualTo(1);
-		assertThat(board.getNormalPhaseResults().get(0)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
+		assertThat(bowlingBoard.getScores()).isEqualTo(Arrays.asList(
+				Optional.of(20),
+				Optional.of(35),
+				Optional.of(44),
+				Optional.of(44),
+				Optional.of(71),
+				Optional.of(91),
+				Optional.of(103),
+				Optional.of(106),
+				Optional.of(113),
+				Optional.of(143)));
 	}
 
 	@Test
-	void 노말_프레임에서_미스를_하면_결과가_저장되고_다음_페이즈_인덱스가_반환된다() {
+	void 프레임의_점수가_연이어_계산된다2() {
 		// given
-		BowlingBoard board = new BowlingBoard();
-		List<PhaseResult> expectedResults = Arrays.asList(NormalPhaseResult.IN_PROGRESS,
-				NormalPhaseResult.MISS);
-		List<Integer> expectedFallenBowlingPins = Arrays.asList(4, 4);
+		BowlingBoard bowlingBoard = BowlingBoard.newInstance();
 
 		// when
-		board.shoot(4);
-		board.shoot(4);
+		// 1프레임 - 스페어 20
+		bowlingBoard.roll(BowlingPins.of(4));
+		bowlingBoard.roll(BowlingPins.of(6));
+
+		// 2프레임 - 스트라이크 50
+		bowlingBoard.roll(BowlingPins.of(10));
+
+		// 3프레임 - 스트라이크 74
+		bowlingBoard.roll(BowlingPins.of(10));
+
+		// 4프레임 - 스트라이크 91
+		bowlingBoard.roll(BowlingPins.of(10));
+
+		// 5프레임 - 미스 98
+		bowlingBoard.roll(BowlingPins.of(4));
+		bowlingBoard.roll(BowlingPins.of(3));
+
+		// 6프레임 - 미스 105
+		bowlingBoard.roll(BowlingPins.of(4));
+		bowlingBoard.roll(BowlingPins.of(3));
+
+		// 7프레임 - 미스 112
+		bowlingBoard.roll(BowlingPins.of(4));
+		bowlingBoard.roll(BowlingPins.of(3));
+
+		// 8프레임 - 미스 115
+		bowlingBoard.roll(BowlingPins.of(2));
+		bowlingBoard.roll(BowlingPins.of(1));
+
+		// 9프레임 - 미스 122
+		bowlingBoard.roll(BowlingPins.of(4));
+		bowlingBoard.roll(BowlingPins.of(3));
+
+		// 10프레임 - 9점 획득 131
+		bowlingBoard.roll(BowlingPins.of(6));
+		bowlingBoard.roll(BowlingPins.of(3));
 
 		// then
-		assertThat(board.getCurrentFrameIndex()).isEqualTo(1);
-		assertThat(board.getNormalPhaseResults().get(0)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
-	}
-
-	@Test
-	void 노말_프레임에서_거터를_하면_결과가_저장되고_다음_페이즈_인덱스가_반환된다() {
-		// given
-		BowlingBoard board = new BowlingBoard();
-		List<PhaseResult> expectedResults = Arrays.asList(NormalPhaseResult.IN_PROGRESS,
-				NormalPhaseResult.GUTTER);
-		List<Integer> expectedFallenBowlingPins = Arrays.asList(0, 0);
-
-		// when
-		board.shoot(0);
-		board.shoot(0);
-
-		// then
-		assertThat(board.getCurrentFrameIndex()).isEqualTo(1);
-		assertThat(board.getNormalPhaseResults().get(0)).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
-	}
-
-	@Test
-	void 마지막_프레임에서_스트라이크를_하면_두_번을_추가로칠_수_있다() {
-		// given
-		BowlingBoard board = new BowlingBoard(9);
-		List<PhaseResult> expectedResults = Arrays.asList(FinalPhaseResult.STRIKE,
-				FinalPhaseResult.GUTTER, FinalPhaseResult.LAST_SCORE);
-		List<Integer> expectedFallenBowlingPins = Arrays.asList(10, 0, 4);
-
-		// when
-		board.shoot(10);
-		board.shoot(0);
-		board.shoot(4);
-
-		// then
-		assertThat(board.getCurrentFrameIndex()).isEqualTo(10);
-		assertThat(board.getFinalPhaseResult()).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
-	}
-
-
-	@Test
-	void 마지막_프레임에서_미스를_내면_끝나게_된다() {
-		// given
-		BowlingBoard board = new BowlingBoard(9);
-		List<PhaseResult> expectedResults = Arrays.asList(FinalPhaseResult.IN_PROGRESS,
-				FinalPhaseResult.MISS);
-		List<Integer> expectedFallenBowlingPins = Arrays.asList(3, 4);
-
-		// when
-		board.shoot(3);
-		board.shoot(4);
-
-		// then
-		assertThat(board.getCurrentFrameIndex()).isEqualTo(10);
-		assertThat(board.getFinalPhaseResult()).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
-	}
-
-	@Test
-	void 마지막_프레임에서_거터를_내면_끝나게_된다() {
-		// given
-		BowlingBoard board = new BowlingBoard(9);
-		List<PhaseResult> expectedResults = Arrays.asList(FinalPhaseResult.IN_PROGRESS,
-				FinalPhaseResult.GUTTER);
-		List<Integer> expectedFallenBowlingPins = Arrays.asList(0, 0);
-
-		// when
-		board.shoot(0);
-		board.shoot(0);
-
-		// then
-		assertThat(board.getCurrentFrameIndex()).isEqualTo(10);
-		assertThat(board.getFinalPhaseResult()).isEqualTo(new FrameResult(expectedResults, expectedFallenBowlingPins));
+		assertThat(bowlingBoard.getScores()).isEqualTo(Arrays.asList(
+				Optional.of(20),
+				Optional.of(50),
+				Optional.of(74),
+				Optional.of(91),
+				Optional.of(98),
+				Optional.of(105),
+				Optional.of(112),
+				Optional.of(115),
+				Optional.of(122),
+				Optional.of(131)));
 	}
 
 }

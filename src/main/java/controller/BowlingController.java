@@ -1,6 +1,6 @@
 package controller;
 
-import domain.bowlling.BowlingGame;
+import domain.bowling.BowlingGame;
 import view.InputView;
 import view.ResultView;
 
@@ -15,13 +15,10 @@ public class BowlingController {
 		BowlingGame newGame = new BowlingGame(InputView.receiveUserName());
 
 		while (newGame.isNotEnd()) {
-			newGame.shoot(InputView.receiveFallenBowlingPins(currentFrame));
-			currentFrame = newGame.getCurrentFrame();
+			newGame.roll(InputView.receiveFallenBowlingPins(currentFrame));
+			currentFrame = newGame.getCurrentFrameIndex();
 			ResultView.printCurrentScore(newGame.getBowlingOnBoard());
 		}
-
-
 	}
-
 
 }

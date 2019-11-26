@@ -1,58 +1,24 @@
 package domain.frame;
 
-import domain.phase.PhaseCollection;
-import domain.phase.result.PhaseResult;
+import domain.BowlingPins;
+import domain.states.States;
 
-import java.util.Objects;
+import java.util.Optional;
 
-public abstract class Frame {
+public interface Frame {
 
-	private static final int START_BOWLING_PINS = 10;
+	void roll(BowlingPins pins);
 
-	final PhaseCollection phaseCollection;
-	int remainBowlingPins;
+	void addNextFrameScore(BowlingPins pins);
 
-	Frame(PhaseCollection phaseCollection) {
-		this.phaseCollection = phaseCollection;
-		this.remainBowlingPins = START_BOWLING_PINS;
-	}
+	void addPreviousScore(int prevScore);
 
-	public PhaseResult shoot(int fallenBowlingPins) {
-		validateBowlingPinsCount(fallenBowlingPins);
-		remainBowlingPins -= fallenBowlingPins;
-		return getPhaseResult();
-	}
+	Optional<Integer> getOptionalScore();
 
-	private void validateBowlingPinsCount(int fallenBowlingPins) {
-		if (fallenBowlingPins < 0) {
-			throw  new IllegalArgumentException(String.format("어떻게 음수(%s)의 볼링핀을 쓰러뜨리나요 ㄷ...", fallenBowlingPins));
-		}
+	boolean isScoreCalculationEnd();
 
-		if (remainBowlingPins < fallenBowlingPins) {
-			throw new IllegalArgumentException(String.format(
-					"서 있는 볼링핀(%s)보다 더 많은 볼링핀(%s)을 쓰러뜨릴 수는 없겠죠?", remainBowlingPins, fallenBowlingPins));
-		}
-	}
+	boolean isEnd();
 
-	public abstract PhaseResult getPhaseResult();
-
-	void restoreBallingPins() {
-		remainBowlingPins = START_BOWLING_PINS;
-		phaseCollection.addThirdPhase();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Frame frame = (Frame) o;
-		return remainBowlingPins == frame.remainBowlingPins &&
-				Objects.equals(phaseCollection, frame.phaseCollection);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(phaseCollection, remainBowlingPins);
-	}
+	States getStates();
 
 }

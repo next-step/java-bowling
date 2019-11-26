@@ -1,17 +1,20 @@
-package domain.bowlling;
+package domain.bowling;
 
+import domain.BowlingPins;
 import domain.UserName;
 
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 볼링 게임 하나를 의미
+ */
 public class BowlingGame {
-
-	private static final int FRAME_AFTER_GAME = 11;
 
 	private static final int START_TURN_INDEX = 0;
 
 	private int gameTurnIndex;
+	// TODO: 2019-11-25 일급 컬렉션
 	private List<BowlingOnBoard> bowlingOnBoards;
 
 	public BowlingGame(UserName userName) {
@@ -19,17 +22,21 @@ public class BowlingGame {
 		this.bowlingOnBoards = Collections.singletonList(new BowlingOnBoard(userName));
 	}
 
-	public void shoot(int fallenBowlingPins) {
-		bowlingOnBoards.get(gameTurnIndex).shoot(fallenBowlingPins);
+	public void roll(BowlingPins pins) {
+		bowlingOnBoards.get(gameTurnIndex).roll(pins);
 	}
 
+	// TODO: 2019-11-25 이중 들여쓰기를 없앨 수 있을까?
 	public boolean isNotEnd() {
-		// TODO: 2019-11-18 여러명이 게임을 할 때가 되면 로직 고민
-		return bowlingOnBoards.get(bowlingOnBoards.size() - 1).getCurrentFrame() != FRAME_AFTER_GAME;
+		for (BowlingOnBoard bowlingOnBoard : bowlingOnBoards) {
+			if (bowlingOnBoard.isNotEnd()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public int getCurrentFrame() {
-		// TODO: 2019-11-18 여러명이 게임을 하는 요구사항이 있을 때 점검
+	public int getCurrentFrameIndex() {
 		return bowlingOnBoards.get(gameTurnIndex).getCurrentFrame();
 	}
 

@@ -1,5 +1,6 @@
 package view;
 
+import domain.BowlingPins;
 import domain.UserName;
 
 import java.util.Scanner;
@@ -17,9 +18,9 @@ public class InputView {
 		return UserName.of(scanner.nextLine());
 	}
 
-	public static int receiveFallenBowlingPins(int frameCount) {
+	public static BowlingPins receiveFallenBowlingPins(int frameCount) {
 		System.out.print(String.format("%s프레임 투구 : ", frameCount));
-		return scanner.nextInt();
+		return BowlingPins.of(scanner.nextInt());
 	}
 
 }

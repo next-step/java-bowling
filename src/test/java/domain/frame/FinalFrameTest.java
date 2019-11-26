@@ -1,71 +1,70 @@
 package domain.frame;
 
-import domain.phase.result.FinalPhaseResult;
-import domain.phase.result.PhaseResult;
+import domain.BowlingPins;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+/**
+ * FinalFrame : FinalFrameStates 와 Score 를 가지고 있다.
+ *
+ */
 @SuppressWarnings("NonAsciiCharacters")
 class FinalFrameTest {
 
 	@Test
-	void 두번째_페이즈에서_스페어를_처리하면_세번째_페이즈까지_칠_수_있다() {
+	void 끝나지않은_점수는_계산할_수_없다() {
 		// given
-		FinalFrame finalFrame = new FinalFrame();
+		Frame frame = FinalFrame.newInstance();
 
 		// when
-		finalFrame.shoot(4);
-		finalFrame.shoot(6);
-		PhaseResult result = finalFrame.shoot(8);
+		frame.roll(BowlingPins.of(3));
 
 		// then
-		assertThat(result).isEqualTo(FinalPhaseResult.LAST_SCORE);
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.empty());
 	}
 
 	@Test
-	void 첫_번째_페이즈에서_스트라이크를_치면_세번째_페이즈까지_칠_수_있다() {
+	void 미스는_바로_점수가_계산된다() {
 		// given
-		FinalFrame finalFrame = new FinalFrame();
+		Frame frame = FinalFrame.newInstance();
 
 		// when
-		finalFrame.shoot(10);
-		finalFrame.shoot(6);
-		PhaseResult result = finalFrame.shoot(3);
+		frame.roll(BowlingPins.of(3));
+		frame.roll(BowlingPins.of(6));
 
 		// then
-		assertThat(result).isEqualTo(FinalPhaseResult.LAST_SCORE);
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(9));
 	}
 
 	@Test
-	void 연달아_스트라이크를_치면_세번째_페이즈까지_칠_수_있다() {
+	void 스페어는_점수를_한_번_더하고_결과가_나와야_한다() {
 		// given
-		FinalFrame finalFrame = new FinalFrame();
+		Frame frame = FinalFrame.newInstance();
 
 		// when
-		finalFrame.shoot(10);
-		finalFrame.shoot(10);
-		PhaseResult result = finalFrame.shoot(6);
+		frame.roll(BowlingPins.of(3));
+		frame.roll(BowlingPins.of(7));
+		frame.roll(BowlingPins.of(10));
 
 		// then
-		assertThat(result).isEqualTo(FinalPhaseResult.LAST_SCORE);
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(20));
 	}
 
 	@Test
-	void 두번째_페이즈까지_스페어를_못치면_세번째_페이즈를_갈_수_없다() {
+	void 스트라이크는_점수를_두_번_더하고_결과가_나와야_한다() {
 		// given
-		FinalFrame finalFrame = new FinalFrame();
+		Frame frame = FinalFrame.newInstance();
 
 		// when
-		finalFrame.shoot(4);
-		finalFrame.shoot(5);
+		frame.roll(BowlingPins.of(10));
+		frame.roll(BowlingPins.of(10));
+		frame.roll(BowlingPins.of(8));
 
 		// then
-		assertThatThrownBy(() -> {
-			finalFrame.shoot(6);
-		})
-		.isInstanceOf(IllegalArgumentException.class);
+		assertThat(frame.getOptionalScore()).isEqualTo(Optional.of(28));
 	}
 
 }
