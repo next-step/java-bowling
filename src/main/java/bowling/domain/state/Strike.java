@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Strike implements State {
-    private int first;
+    private Pin first;
 
     public Strike() {
-        this.first = Pin.ALL_PIN_COUNT;
+        this.first = Pin.ofAllPin();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Strike implements State {
 
     @Override
     public List<Pin> getPins() {
-        return Arrays.asList(new Pin(first), new Pin(Pin.DEFAULT_PIN));
+        return Arrays.asList(first, Pin.ofDefault());
     }
 
     @Override

@@ -28,7 +28,7 @@ public class Ready implements State {
 
     @Override
     public List<Pin> getPins() {
-        return Arrays.asList(new Pin(Pin.DEFAULT_PIN), new Pin(Pin.DEFAULT_PIN));
+        return Arrays.asList(Pin.ofDefault(), Pin.ofDefault());
     }
 
     @Override

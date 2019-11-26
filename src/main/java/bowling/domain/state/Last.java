@@ -8,14 +8,18 @@ import java.util.List;
 import java.util.Objects;
 
 public class Last implements State {
-    private int first;
-    private int second;
-    private int third;
+    private Pin first;
+    private Pin second;
+    private Pin third;
 
     public Last(int first, int second, int third) {
+        this(Pin.of(first), Pin.of(second), third);
+    }
+
+    public Last(Pin first, Pin second, int third) {
         this.first = first;
         this.second = second;
-        this.third = third;
+        this.third = Pin.of(third);
     }
 
     @Override
@@ -25,7 +29,7 @@ public class Last implements State {
 
     @Override
     public Score getScore(int totalScore) {
-        return Score.of(totalScore, first + second + third);
+        return Score.of(totalScore, first.sum(second, third));
     }
 
     @Override
@@ -37,7 +41,7 @@ public class Last implements State {
 
     @Override
     public List<Pin> getPins() {
-        return Arrays.asList(new Pin(first), new Pin(second), new Pin(third));
+        return Arrays.asList(first, second, third);
     }
 
     @Override

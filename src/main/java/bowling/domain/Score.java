@@ -51,11 +51,11 @@ public class Score {
         return !isLeft();
     }
 
-    public Score addBonus(int pin) {
+    public Score addBonus(Pin pin) {
         if (left == 0) {
             return this;
         }
-        return new Score(score + pin, left - 1);
+        return new Score(pin.sum(score), left - 1);
     }
 
     @Override

@@ -1,20 +1,37 @@
 package bowling.domain;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Pin {
-    public static final int ZERO_PIN_COUNT = 0;
     public static final int ALL_PIN_COUNT = 10;
     public static final int DEFAULT_PIN = -1;
     private static final String PIN_SIZE_ERROR_MESSAGE = "Ball은 10개 이하의 pin만 갖을 수 있습니다.";
+    private static final Map<Integer, Pin> cache;
     private int pin;
 
-    public Pin(int pin) {
+    static {
+        cache = new HashMap<>();
+        for (int i = DEFAULT_PIN; i <= ALL_PIN_COUNT; i++) {
+            cache.put(i, new Pin(i));
+        }
+    }
+
+    private Pin(int pin) {
         this.pin = pin;
     }
 
-    public Pin() {
-        this.pin = DEFAULT_PIN;
+    public static Pin of(int pin) {
+        return cache.get(pin);
+    }
+
+    public static Pin ofDefault() {
+        return cache.get(DEFAULT_PIN);
+    }
+
+    public static Pin ofAllPin() {
+        return cache.get(ALL_PIN_COUNT);
     }
 
     public void fallDown(int pin) {
@@ -39,6 +56,19 @@ public class Pin {
 
     public boolean isZero() {
         return pin == ALL_PIN_COUNT;
+    }
+
+    public int sum(int other) {
+        return pin + other;
+    }
+
+    public int sum(Pin... pins) {
+        int sum = pin;
+        for (Pin pin : pins) {
+            sum += pin.pin;
+        }
+
+        return sum;
     }
 
     @Override

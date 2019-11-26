@@ -2,11 +2,8 @@ package bowling.domain;
 
 import bowling.domain.state.FirstBowl;
 import bowling.domain.state.Miss;
-import bowling.domain.state.Spare;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

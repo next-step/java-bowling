@@ -8,15 +8,19 @@ import java.util.List;
 import java.util.Objects;
 
 public class FirstBowl implements State {
-    private int first;
+    private Pin first;
 
     public FirstBowl(int first) {
+        this(Pin.of(first));
+    }
+
+    public FirstBowl(Pin first) {
         this.first = first;
     }
 
     @Override
     public State bowl(int countOfPin, boolean isLastFrame) {
-        int sum = this.first + countOfPin;
+        int sum = this.first.sum(countOfPin);
 
         if (isLastFrame) {
             return new SecondBowl(this.first, countOfPin);
@@ -41,7 +45,7 @@ public class FirstBowl implements State {
 
     @Override
     public List<Pin> getPins() {
-        return Arrays.asList(new Pin(first), new Pin(Pin.DEFAULT_PIN));
+        return Arrays.asList(first, Pin.ofDefault());
     }
 
     @Override

@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class Spare implements State {
-    private int first;
-    private int second;
+    private Pin first;
+    private Pin second;
 
     public Spare(int first, int second) {
+        this(Pin.of(first), second);
+    }
+
+    public Spare(Pin first, int second) {
         this.first = first;
-        this.second = second;
+        this.second = Pin.of(second);
     }
 
     @Override
@@ -34,7 +38,7 @@ public class Spare implements State {
 
     @Override
     public List<Pin> getPins() {
-        return Arrays.asList(new Pin(first), new Pin(second));
+        return Arrays.asList(first, second);
     }
 
     @Override

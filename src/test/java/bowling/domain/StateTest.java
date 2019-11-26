@@ -96,13 +96,13 @@ public class StateTest {
     @Test
     @DisplayName("State별 getPins값을 확인 한다.")
     void getPins() {
-        assertThat((ready).getPins()).containsExactly(new Pin(Pin.DEFAULT_PIN), new Pin(Pin.DEFAULT_PIN));
-        assertThat((firstBowl).getPins()).containsExactly(new Pin(5), new Pin(Pin.DEFAULT_PIN));
-        assertThat((secondBowl).getPins()).containsExactly(new Pin(5), new Pin(5));
-        assertThat((strike).getPins()).containsExactly(new Pin(Pin.ALL_PIN_COUNT), new Pin(Pin.DEFAULT_PIN));
-        assertThat((spare).getPins()).containsExactly(new Pin(5), new Pin(5));
-        assertThat((miss).getPins()).containsExactly(new Pin(5), new Pin(4));
-        assertThat((last).getPins()).containsExactly(new Pin(5), new Pin(5), new Pin(5));
+        assertThat((ready).getPins()).containsExactly(Pin.ofDefault(), Pin.ofDefault());
+        assertThat((firstBowl).getPins()).containsExactly(Pin.of(5), Pin.ofDefault());
+        assertThat((secondBowl).getPins()).containsExactly(Pin.of(5), Pin.of(5));
+        assertThat((strike).getPins()).containsExactly(Pin.ofAllPin(), Pin.ofDefault());
+        assertThat((spare).getPins()).containsExactly(Pin.of(5), Pin.of(5));
+        assertThat((miss).getPins()).containsExactly(Pin.of(5), Pin.of(4));
+        assertThat((last).getPins()).containsExactly(Pin.of(5), Pin.of(5), Pin.of(5));
     }
 
     @Test

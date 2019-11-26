@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class Miss implements State {
-    private int first;
-    private int second;
+    private Pin first;
+    private Pin second;
 
     public Miss(int first, int second) {
+        this(Pin.of(first), second);
+    }
+
+    public Miss(Pin first, int second) {
         this.first = first;
-        this.second = second;
+        this.second = Pin.of(second);
     }
 
     @Override
@@ -23,7 +27,7 @@ public class Miss implements State {
 
     @Override
     public Score getScore(int totalScore) {
-        return Score.of(totalScore, first + second);
+        return Score.of(totalScore, first.sum(second));
     }
 
     @Override
@@ -34,7 +38,7 @@ public class Miss implements State {
 
     @Override
     public List<Pin> getPins() {
-        return Arrays.asList(new Pin(first), new Pin(second));
+        return Arrays.asList(first, second);
     }
 
     @Override

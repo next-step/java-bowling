@@ -23,8 +23,8 @@ public class ScoreTest {
         Score spare = Score.ofSpare(0);
         Score miss = Score.of(0, 8);
 
-        assertThat(strike.addBonus(10)).isEqualTo(new Score(20, 1));
-        assertThat(spare.addBonus(10)).isEqualTo(new Score(20, 0));
-        assertThat(miss.addBonus(10)).isEqualTo(new Score(8, 0));
+        assertThat(strike.addBonus(Pin.ofAllPin())).isEqualTo(new Score(20, 1));
+        assertThat(spare.addBonus(Pin.ofAllPin())).isEqualTo(new Score(20, 0));
+        assertThat(miss.addBonus(Pin.ofAllPin())).isEqualTo(new Score(8, 0));
     }
 }
