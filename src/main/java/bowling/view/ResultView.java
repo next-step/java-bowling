@@ -8,44 +8,51 @@ public class ResultView {
     private static final String RIGHT_BOUNDARY = "  |";
     private static final String LEFT_BOUNDARY = "|  ";
     private static final String PRETTY_EMPTY = "  ";
-    private static final String VALUE_EMPTY = " ";
     private static final String VALUE_BAR = "|";
     private static final String CORRECTION_ZERO = "0";
 
     public static void printFrames(Frames frames) {
-        System.out.print(headTitle());
+        printRound();
+        for (Frame frame : frames.getFrames()) {
+            System.out.print(VALUE_BAR);
+            if (frame.isRemain()) {
+                System.out.print(PRETTY_EMPTY);
+            }
+            System.out.print(printFrame(frame));
+        }
+        for (int i = 0; i < 10 - frames.getLastFramePosition() ; i++) {
+            if (i == 0) {
+                System.out.print(PRETTY_EMPTY+printTitle());
+            } else {
+                System.out.print(printTitle());
+            }
+        }
+        System.out.println();
+    }
 
+    private static String printFrame(Frame frame) {
+        return ScoreBoard.convertScore(frame.getPosition(), frame.getCount());
+    }
+
+    public static void printInitial() {
+        printRound();
+        for (int i = 0; i < 10 ; i++) {
+            System.out.print(printTitle() + PRETTY_EMPTY + PRETTY_EMPTY + PRETTY_EMPTY);
+        }
+        System.out.println(VALUE_BAR);
+    }
+
+    private static void printRound() {
+        System.out.print(headTitle());
         for (int i = 1; i < 11; i++) {
             System.out.print(printTitle(i));
         }
         System.out.println();
         System.out.print(headValue());
-
-
-        for (Frame frame : frames.getFrames()) {
-            if (frame.isNext()) {
-                System.out.print(LEFT_BOUNDARY);
-//                System.out.print(ScoreBoard.getValue(frame.getPosition()).getFirst());
-                System.out.print(ScoreBoard.convertScore(frame.getPosition(), frame.getCount()));
-            } else {
-                System.out.print(VALUE_BAR);
-                System.out.print(ScoreBoard.convertScore(frame.getPosition(), frame.getCount()));
-//                System.out.print(ScoreBoard.getValue(frame.getPosition()).getSecond());
-            }
-        }
-
-        for (int i = 0; i < 10 - frames.getLastFramePosition() ; i++) {
-            if (i == 0) {
-                System.out.print(PRETTY_EMPTY);
-            }
-            System.out.print(printTitle());
-        }
-        System.out.println(VALUE_BAR);
-        System.out.println();
     }
 
     private static String printTitle() {
-        return LEFT_BOUNDARY + PRETTY_EMPTY + PRETTY_EMPTY;
+        return VALUE_BAR;
     }
 
     private static String headTitle() {
@@ -53,7 +60,7 @@ public class ResultView {
     }
 
     private static String headValue() {
-        return LEFT_BOUNDARY + ScoreBoard.getTEMPLATE().get("NAME") + VALUE_EMPTY;
+        return LEFT_BOUNDARY + ScoreBoard.getTEMPLATE().get("NAME") + " ";
     }
 
     private static String printTitle(Integer key) {

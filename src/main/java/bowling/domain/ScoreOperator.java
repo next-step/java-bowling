@@ -29,4 +29,19 @@ public class ScoreOperator {
     public Integer getSecond() {
         return second;
     }
+
+    public boolean isSpike() {
+        return this.first == 10;
+    }
+
+    public boolean isGutter() {
+        return this.first == 0 && this.second == null;
+    }
+
+    public boolean isSpare() {
+        if (this.second != null) {
+            return this.first + this.second == 10;
+        }
+        return false;
+    }
 }

@@ -40,9 +40,14 @@ public class Frames {
         return Frames.of(frames);
     }
 
-    public int getValue() {
-        Frame recentlyFrame = frames.get(frames.size() - INDEX);
-        return recentlyFrame.getPoint();
+    public void applyScore() {
+        for (Frame frame : frames) {
+            if (ScoreBoard.hasKey(frame.getPosition()) && ScoreBoard.getValue(frame.getPosition()) != null) {
+                ScoreBoard.applySecond(frame.getPosition(), frame.getPoint());
+            } else {
+                ScoreBoard.apply(frame.getPosition(), frame.getPoint());
+            }
+        }
     }
 
     public boolean isRemain() {
@@ -58,18 +63,12 @@ public class Frames {
         return recentlyFrame.getPosition() + INDEX;
     }
 
-    public List<Frame> getFrames() {
-        return new ArrayList<>(frames);
+    public boolean isLastFrameSpikeOrSpare() {
+        return ScoreBoard.getValue(9).isSpike() || ScoreBoard.getValue(9).isSpare() ;
     }
 
-    public void applyScore() {
-        for (Frame frame : frames) {
-            if (ScoreBoard.hasKey(frame.getPosition()) && ScoreBoard.getValue(frame.getPosition()) != null) {
-                ScoreBoard.applySecond(frame.getPosition(), frame.getPoint());
-            } else {
-                ScoreBoard.apply(frame.getPosition(), frame.getPoint());
-            }
-        }
+    public List<Frame> getFrames() {
+        return new ArrayList<>(frames);
     }
 
     public int size() {

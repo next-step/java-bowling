@@ -19,7 +19,7 @@ public class Score {
         this.count = count;
     }
 
-    public static Score of(int point, int count) {
+    private static Score of(int point, int count) {
         return new Score(point, count);
     }
 
@@ -41,20 +41,8 @@ public class Score {
         }
     }
 
-    public boolean isSpare() {
-        return point == MIN_POINT && count == MIN_COUNT;
-    }
-
     public boolean isStrike() {
         return point == MAX_POINT && count == MAX_COUNT;
-    }
-
-    public boolean isMiss() {
-        return point != MIN_POINT && count == MIN_COUNT;
-    }
-
-    public boolean isGutter() {
-        return point == MIN_POINT;
     }
 
     public int getPoint() {

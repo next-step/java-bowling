@@ -57,10 +57,10 @@ public class ScoreBoard {
     public static String convertScore(int position, int count) {
 
         if (count == 1) {
-            if (OPERATOR.get(position).getFirst() == 10) {
+            if (OPERATOR.get(position).isSpike()) {
                 return "X";
             }
-            else if (OPERATOR.get(position).getFirst() == 0 && OPERATOR.get(position).getSecond() == null) {
+            else if (OPERATOR.get(position).isGutter()) {
                 return "-";
             } else {
                 return String.valueOf(OPERATOR.get(position).getFirst());

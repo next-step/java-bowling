@@ -44,10 +44,6 @@ public class Frame {
         return score.isCount() && !score.isStrike();
     }
 
-    public boolean isNext() {
-        return score.isCount();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

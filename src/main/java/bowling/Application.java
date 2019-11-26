@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.controller.BowlingController;
+import bowling.domain.Frame;
 import bowling.domain.Frames;
 import bowling.domain.ScoreBoard;
 import bowling.view.InputView;
@@ -16,7 +17,7 @@ public class Application {
 
         String inputName = InputView.inputName();
         ScoreBoard.register(inputName);
-//        ResultView.printFrames();
+        ResultView.printInitial();
 
         int score = InputView.inputFrameShot(INIT_INDEX);
         Frames frames = bowlingController.start(score);
@@ -27,6 +28,11 @@ public class Application {
             score = InputView.inputFrameShot(frames.getLastFramePosition());
             frames = bowlingController.execute(frames, score);
             position = frames.getLastFramePosition();
+            ResultView.printFrames(frames);
+        }
+        if (frames.isLastFrameSpikeOrSpare()) {
+            score = InputView.inputFrameShot(frames.getLastFramePosition() - 1);
+            bowlingController.finish(frames, score);
             ResultView.printFrames(frames);
         }
     }

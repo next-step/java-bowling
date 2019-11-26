@@ -21,4 +21,10 @@ public class BowlingController {
         frames.applyScore();
         return framesWithScore;
     }
+
+    public Frames finish(Frames frames, int score) {
+        Frames framesWithScore = frames.nextSecond(score);
+        frames.applyScore();
+        return framesWithScore;
+    }
 }
