@@ -32,4 +32,9 @@ public class User {
     public int hashCode() {
         return Objects.hash(ONLY_3WORDS_ENG_PATTERN, name);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

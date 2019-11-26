@@ -42,5 +42,8 @@ public enum Symbol {
         return findByPin(second);
     }
 
-
+    @Override
+    public String toString() {
+        return symbol;
+    }
 }

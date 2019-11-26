@@ -17,7 +17,7 @@ public class Frames {
     }
 
     public boolean hasNext() {
-        return getThisTurn() <= FINAL_FRAME;
+        return !isFinalFrameFinished();
     }
 
     public int getThisTurn() {
@@ -27,13 +27,17 @@ public class Frames {
     public void bowl(int pin) {
         Frame latest = getLatestFrame();
         latest.bowl(pin);
-        if (latest.isFinished()) {
+        if (latest.isFinished() && !isFinalFrameFinished()) {
             frames.add(latest.ofNext());
         }
     }
 
     private Frame getLatestFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    private boolean isFinalFrameFinished(){
+        return frames.size() == FINAL_FRAME && getLatestFrame().isFinished();
     }
 
     @Override
@@ -49,5 +53,9 @@ public class Frames {
     @Override
     public int hashCode() {
         return Objects.hash(FIRST_FRAME, FINAL_FRAME, frames);
+    }
+
+    public List<Frame> getFrames() {
+        return this.frames;
     }
 }
