@@ -9,7 +9,7 @@ public class User {
     private String name;
 
     public User(String name) {
-        if(!isValid(name)){
+        if (!isValid(name)) {
             throw new IllegalArgumentException("플레이어 이름은 영문 3자리어야 합니다");
         }
         this.name = name;

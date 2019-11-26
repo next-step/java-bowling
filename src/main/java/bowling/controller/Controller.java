@@ -13,7 +13,7 @@ public class Controller {
         Game game = new Game(input.getName());
         output.printTable(game.getTable());
 
-        while(game.hasNext()){
+        while (game.hasNext()) {
             int next = game.getNext();
             game.bowl(input.getBowl(next));
             output.printTable(game.getTable());

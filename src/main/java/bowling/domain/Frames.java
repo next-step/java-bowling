@@ -36,7 +36,7 @@ public class Frames {
         return frames.get(frames.size() - 1);
     }
 
-    private boolean isFinalFrameFinished(){
+    private boolean isFinalFrameFinished() {
         return frames.size() == FINAL_FRAME && getLatestFrame().isFinished();
     }
 
