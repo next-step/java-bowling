@@ -1,5 +1,7 @@
 package bowling.domain.status;
 
+import bowling.domain.score.Score;
+
 public abstract class FrameStatus {
 
     protected int firstCountOfPin;
@@ -23,5 +25,7 @@ public abstract class FrameStatus {
     public boolean isEnd() {
         return false;
     }
+
+    abstract public Score findScore();
 
 }

@@ -1,5 +1,7 @@
 package bowling.domain.status;
 
+import bowling.domain.score.Score;
+
 public class FinalSecondBowl extends FrameStatus {
 
     private boolean isEnd;
@@ -20,6 +22,11 @@ public class FinalSecondBowl extends FrameStatus {
             throw new IllegalArgumentException("더 이상 투구할 수 없습니다.");
         }
         return new FinalThirdBowl(firstCountOfPin, secondCountOfPin, countOfPin);
+    }
+
+    @Override
+    public Score findScore() {
+        return Score.ofMiss(secondCountOfPin);
     }
 
     public boolean isEnd() {

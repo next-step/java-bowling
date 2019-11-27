@@ -1,5 +1,7 @@
 package bowling.domain.status;
 
+import bowling.domain.score.Score;
+
 public class FirstBowl extends FrameStatus {
 
     FirstBowl(int countOfPin) {
@@ -15,4 +17,8 @@ public class FirstBowl extends FrameStatus {
         return new Miss(this.firstCountOfPin, countOfPin);
     }
 
+    @Override
+    public Score findScore() {
+        return new Score(firstCountOfPin,0);
+    }
 }

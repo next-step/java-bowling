@@ -1,5 +1,7 @@
 package bowling.domain.status;
 
+import bowling.domain.score.Score;
+
 public class FinalThirdBowl extends FrameStatus {
 
     public FinalThirdBowl(int firstCountOfPin, int secondCountOfPin, int thirdCountOfPin) {
@@ -13,4 +15,8 @@ public class FinalThirdBowl extends FrameStatus {
         return null;
     }
 
+    @Override
+    public Score findScore() {
+        return Score.ofMiss(thirdCountOfPin);
+    }
 }

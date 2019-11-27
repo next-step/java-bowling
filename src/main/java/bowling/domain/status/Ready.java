@@ -1,5 +1,7 @@
 package bowling.domain.status;
 
+import bowling.domain.score.Score;
+
 public class Ready extends FrameStatus{
 
     private boolean isFinal;
@@ -21,4 +23,8 @@ public class Ready extends FrameStatus{
         return new FirstBowl(countOfPin);
     }
 
+    @Override
+    public Score findScore() {
+        return new Score(0,0);
+    }
 }

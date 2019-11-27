@@ -18,7 +18,7 @@ public class Main {
         while (!gameRecord.isEnd()) {
             int frameNumber = gameRecord.getCurrentFrameIndex();
             bowlingGame.bowl(InputView.createScore(frameNumber));
-            ResultView.printScore(gameRecord);
+            ResultView.printScoreBoard(gameRecord);
         }
     }
 

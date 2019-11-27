@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 public class Score {
 
@@ -10,25 +10,29 @@ public class Score {
         this.left = left;
     }
 
+    public static Score of(Score score) {
+        return new Score(score.score, score.left);
+    }
+
     public Score bowl(int countOfPins) {
         return new Score(score += countOfPins, left - 1);
     }
 
-    public Score ofMiss(int score) {
+    public static Score ofMiss(int score) {
         return new Score(score, 0);
     }
 
-    public Score ofSpare() {
+    public static Score ofSpare() {
         return new Score(10, 1);
     }
 
-    public Score ofStrike() {
+    public static Score ofStrike() {
         return new Score(10, 2);
     }
 
     public int getScore() {
         if (!canCalucateScore()) {
-            throw new IllegalArgumentException();
+            return 0;
         }
         return this.score;
     }
@@ -36,4 +40,6 @@ public class Score {
     public boolean canCalucateScore() {
         return left == 0;
     }
+
+
 }

@@ -16,7 +16,7 @@ public class ResultView {
     private static final String SPACE = " ";
 
 
-    public static void printScore(GameRecord gameRecord) {
+    public static void printScoreBoard(GameRecord gameRecord) {
         System.out.println(BOWLING_SCORE_TOP_FORMAT);
 
         StringBuilder format = new StringBuilder(SCORE_SEPERATE_LINE);
@@ -28,6 +28,8 @@ public class ResultView {
         format.append(makeEmptyScoreFormat(gameRecord.getNormalFrames().size()));
 
         System.out.println(format);
+
+        printScore(gameRecord);
     }
 
     private static String makeFrameFormat(List<NormalFrame> frames) {
@@ -61,6 +63,17 @@ public class ResultView {
             format.append(EMPTY_SCORE_FORMAT);
         }
         return format.toString();
+    }
+
+    private static void printScore(GameRecord gameRecord) {
+
+        StringBuilder format = new StringBuilder(SCORE_SEPERATE_LINE).append(EMPTY_SCORE_FORMAT);
+        ScoreCollection collection = new ScoreCollection(gameRecord);
+        for (ScoreDto dto : collection.getScores()) {
+            format.append(String.format("%5s", dto.getScore()));
+            format.append(SPACE).append(SCORE_SEPERATE_LINE);
+        }
+        System.out.println(format);
     }
 
 }

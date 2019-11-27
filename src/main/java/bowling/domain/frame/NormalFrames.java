@@ -10,7 +10,7 @@ public class NormalFrames {
 
     private List<NormalFrame> normalFrames = new ArrayList<>();
 
-    public void createFrame(int score) {
+    public void bowl(int score) {
         if (this.normalFrames.size() == NO_FRAME_SIZE) {
             this.normalFrames.add(NormalFrame.first(score));
             return;
@@ -24,7 +24,7 @@ public class NormalFrames {
         getCurrentFrame().next(score);
     }
 
-    private NormalFrame getCurrentFrame() {
+    public NormalFrame getCurrentFrame() {
         return this.normalFrames.get(normalFrames.size() - 1);
     }
 

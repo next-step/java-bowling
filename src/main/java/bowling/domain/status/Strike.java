@@ -1,5 +1,7 @@
 package bowling.domain.status;
 
+import bowling.domain.score.Score;
+
 public class Strike extends FrameStatus {
 
     @Override
@@ -9,5 +11,10 @@ public class Strike extends FrameStatus {
         }
 
         return new Miss(10, countOfPin);
+    }
+
+    @Override
+    public Score findScore() {
+        return Score.ofStrike();
     }
 }

@@ -29,7 +29,7 @@ public class GameRecord {
             return;
         }
 
-        normalFrames.createFrame(score);
+        normalFrames.bowl(score);
     }
 
     private void addFinalFrameScore(int score) {
