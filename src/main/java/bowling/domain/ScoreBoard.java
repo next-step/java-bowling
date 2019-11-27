@@ -40,10 +40,6 @@ public class ScoreBoard {
         return new HashMap<>(TEMPLATE);
     }
 
-    public static Map<Integer, ScoreOperator> getOperator() {
-        return new HashMap<>(OPERATOR);
-    }
-
     public static void apply(int position, int point) {
         OPERATOR.put(position, ScoreOperator.first(point));
     }
