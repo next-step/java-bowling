@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,14 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FinalFrameTest {
 
     @Test
-    @DisplayName("Spare 인지 확인한다.")
+    @DisplayName("Spare 처리하면 한번 더 투구 할 수 있다.")
     void checkIsSpare() {
         FinalFrame finalFrame = new FinalFrame();
 
-        finalFrame.addScore(8);
-        finalFrame.addScore(2);
+        finalFrame.bowl(8);
+        finalFrame.bowl(2);
 
-        assertThat(finalFrame.isSpare()).isTrue();
+        assertThat(finalFrame.isEnd()).isFalse();
     }
 
     @Test
@@ -23,8 +24,8 @@ class FinalFrameTest {
     void isEnd() {
         FinalFrame finalFrame = new FinalFrame();
 
-        finalFrame.addScore(6);
-        finalFrame.addScore(2);
+        finalFrame.bowl(6);
+        finalFrame.bowl(2);
 
         assertThat(finalFrame.isEnd()).isTrue();
     }

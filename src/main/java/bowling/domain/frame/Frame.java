@@ -1,20 +1,18 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.List;
 
 public interface Frame {
 
-    void addScore(int score);
+    void bowl(int score);
 
     boolean isEndCondition(int score);
-
-    void checkIsSpare();
 
     boolean hasSize(int size);
 
     List<Integer> getScores();
 
-    boolean isSpare();
-
     boolean isEnd();
+
+
 }

@@ -1,5 +1,9 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.frame.NormalFrames;
+
 import java.util.List;
 
 public class GameRecord {
@@ -29,7 +33,7 @@ public class GameRecord {
     }
 
     private void addFinalFrameScore(int score) {
-        this.finalFrame.addScore(score);
+        this.finalFrame.bowl(score);
         if (finalFrame.isEnd()) {
             this.isEnd = true;
         }

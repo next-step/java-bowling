@@ -1,53 +1,46 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.Score;
+import bowling.domain.status.FrameStatus;
+import bowling.domain.status.Ready;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NormalFrame implements Frame {
     public static final int FRAME_MAX_SCORE = 10;
-    public static final int SPARE_CHECK_SIZE = 2;
 
     public int index;
     public List<Integer> scores = new ArrayList<>();
+    public Score score;
     public boolean isEnd;
-    public boolean isSpare;
     public NormalFrame nextFrame;
-    public int result;
+    public FrameStatus status;
 
-    public NormalFrame(int result, int index, int score) {
-        this.result = result;
+    public NormalFrame(int index, int score) {
+        this.status = new Ready(false);
         this.index = index;
-        addScore(score);
+        bowl(score);
     }
 
     public static NormalFrame first(int score) {
-        return new NormalFrame(0,0, score);
+        return new NormalFrame(0, score);
     }
 
     public NormalFrame next(int score) {
         if (isEnd) {
-            nextFrame = new NormalFrame(result, index + 1, score);
+            nextFrame = new NormalFrame(index + 1, score);
             return nextFrame;
         }
 
-        addScore(score);
+        bowl(score);
         return this;
     }
 
-    public void addScore(int score) {
-        this.result += score;
+    public void bowl(int score) {
         this.scores.add(score);
         this.isEnd = isEndCondition(score);
-        checkIsSpare();
-    }
-
-    @Override
-    public void checkIsSpare() {
-        if (scores.size() != SPARE_CHECK_SIZE) {
-            return;
-        }
-
-        isSpare = scores.get(0) + scores.get(1) == FRAME_MAX_SCORE;
+        this.status = status.bowl(score);
     }
 
     @Override
@@ -57,10 +50,6 @@ public class NormalFrame implements Frame {
 
     public List<Integer> getScores() {
         return scores;
-    }
-
-    public boolean isSpare() {
-        return isSpare;
     }
 
     public boolean isEnd() {
@@ -73,4 +62,7 @@ public class NormalFrame implements Frame {
         return this.scores.size() > 1 || score == FRAME_MAX_SCORE;
     }
 
+    public FrameStatus getStatus() {
+        return status;
+    }
 }
