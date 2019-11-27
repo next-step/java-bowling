@@ -23,15 +23,4 @@ class NormalFrameTest {
         assertThat(frame.isEnd()).isFalse();
     }
 
-    @Test
-    @DisplayName("점수를 계산한다.")
-    void getScore() {
-
-        NormalFrame frame = NormalFrame.first(10);
-        frame.next(8);
-        frame.next(2);
-        int score = frame.getScore();
-
-        assertThat(score).isEqualTo(20);
-    }
 }

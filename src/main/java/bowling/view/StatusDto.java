@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.status.*;
+import bowling.util.StringUtils;
 
 public class StatusDto {
 
@@ -42,11 +43,11 @@ public class StatusDto {
         if (status instanceof FinalFirstBowl) {
             return finalFirstToDto(status);
         }
-        
+
         if (status instanceof FinalSecondBowl) {
             return finalSecondToDto(status);
         }
-        
+
         if (status instanceof FinalThirdBowl) {
             return finalThirdToDto(status);
         }
@@ -86,6 +87,10 @@ public class StatusDto {
     }
 
     private static String getSinglePinFormat(int firstCountOfPin) {
+        if (firstCountOfPin == 0) {
+            return "-";
+        }
+
         if (firstCountOfPin == 10) {
             return "X";
         }
@@ -95,6 +100,10 @@ public class StatusDto {
     }
 
     private static String getPinFormat(int firstCountOfPin, int secondCountOfPin) {
+        if (secondCountOfPin == 0) {
+            return "-";
+        }
+
         if (secondCountOfPin == 10) {
             return "X";
         }
@@ -119,11 +128,11 @@ public class StatusDto {
     public String getFinalScoreFormat() {
         String format = String.format("%3s", firstScore);
 
-        if ("".equals(secondScore)) {
+        if (StringUtils.isEmpty(secondScore)) {
             return format + "   ";
         }
 
-        if ("".equals(thirdScore)) {
+        if (StringUtils.isEmpty(thirdScore)){
             return format + String.format("%s%-2s", "|", secondScore);
         }
 
