@@ -2,20 +2,26 @@ package domain.score;
 
 public class ScoreState {
 
-	private int left;
-	private boolean reflectedPrevious;
+	private static final int PHASE_ALIVE_LEFT = -1;
+
+	private final int left;
+	private final boolean reflectedPrevious;
 
 	private ScoreState(int left, boolean reflectedPrevious) {
 		this.left = left;
 		this.reflectedPrevious = reflectedPrevious;
 	}
 
-	public static ScoreState of(int left, boolean reflectedPrevious) {
+	public static ScoreState of(boolean reflectedPrevious) {
+		return new ScoreState(PHASE_ALIVE_LEFT, reflectedPrevious);
+	}
+
+	public static ScoreState of (int left, boolean reflectedPrevious) {
 		return new ScoreState(left, reflectedPrevious);
 	}
 
-	void initializeLeft(int left) {
-		this.left = left;
+	ScoreState initializeLeft(int left) {
+		return ScoreState.of(left, reflectedPrevious);
 	}
 
 	boolean canReflect() {
@@ -26,12 +32,12 @@ public class ScoreState {
 		return !canReflect() && reflectedPrevious;
 	}
 
-	void minusOneLeft() {
-		left--;
+	ScoreState minusOneLeft() {
+		return ScoreState.of(left - 1, reflectedPrevious);
 	}
 
-	void reflected() {
-		reflectedPrevious = true;
+	ScoreState reflected() {
+		return ScoreState.of(left, true);
 	}
 
 }

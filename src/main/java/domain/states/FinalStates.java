@@ -27,21 +27,21 @@ public class FinalStates implements States {
 		return new FinalStates(Collections.singletonList(Ready.getInstance()));
 	}
 
-	/**
-	 * FinalFrame은
-	 * 세 번의 state가 있거나 두 번째 State가 Gutter 이거나 Miss이면 끝이다
-	 */
 	@Override
 	public boolean isEndFrame() {
-		if (states.isEmpty() || states.size() == 1) {
-			return false;
-		}
+		return !notRollingOrFirstRolling() && (isMaxState() || isGutterOrMissInSecondState());
+	}
 
-		if (states.size() == MAX_STATES_SIZE) {
-			return true;
-		}
+	private boolean notRollingOrFirstRolling() {
+		return states.isEmpty() || states.size() == 1;
+	}
 
+	private boolean isGutterOrMissInSecondState() {
 		return states.get(MIDDLE_PHASE_INDEX).isLastStateInFinalFrame();
+	}
+
+	private boolean isMaxState() {
+		return states.size() == MAX_STATES_SIZE;
 	}
 
 	@Override

@@ -35,13 +35,13 @@ public class FrameStore {
 	}
 
 	private static void plusScoreToNextFrameIfCalculationEnd(int index) {
-		if (IsFrameCalculationEnd(index) && hasNextFrame(index)) {
+		if (isFrameCalculationEnd(index) && hasNextFrame(index)) {
 			frames.get(index + 1).addPreviousScore(frames.get(index).getOptionalScore().orElse(0));
 			isAddedToNextFrame.set(index, true);
 		}
 	}
 
-	private static boolean IsFrameCalculationEnd(int index) {
+	private static boolean isFrameCalculationEnd(int index) {
 		return frames.get(index).isScoreCalculationEnd() && !isAddedToNextFrame.get(index);
 	}
 

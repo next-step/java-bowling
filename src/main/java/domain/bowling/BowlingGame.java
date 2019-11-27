@@ -26,14 +26,9 @@ public class BowlingGame {
 		bowlingOnBoards.get(gameTurnIndex).roll(pins);
 	}
 
-	// TODO: 2019-11-25 이중 들여쓰기를 없앨 수 있을까?
 	public boolean isNotEnd() {
-		for (BowlingOnBoard bowlingOnBoard : bowlingOnBoards) {
-			if (bowlingOnBoard.isNotEnd()) {
-				return true;
-			}
-		}
-		return false;
+		return bowlingOnBoards.stream()
+				.anyMatch(BowlingOnBoard::isNotEnd);
 	}
 
 	public int getCurrentFrameIndex() {

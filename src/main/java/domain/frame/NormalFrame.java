@@ -1,7 +1,7 @@
 package domain.frame;
 
-import domain.frame_states.FrameStates;
-import domain.frame_states.NormalFrameStates;
+import domain.frame.states.FrameStates;
+import domain.frame.states.NormalFrameStates;
 import domain.score.Score;
 import domain.state.State;
 import domain.BowlingPins;
@@ -12,7 +12,7 @@ import java.util.Optional;
 public class NormalFrame implements Frame {
 
 	private final FrameStates frameStates;
-	private final Score score;
+	private Score score;
 
 	private NormalFrame(FrameStates frameStates, Score score) {
 		this.frameStates = frameStates;
@@ -20,27 +20,27 @@ public class NormalFrame implements Frame {
 	}
 
 	public static NormalFrame of(boolean reflectedPrevious) {
-		return new NormalFrame(NormalFrameStates.newInstance(), Score.of(0, -1, reflectedPrevious));
+		return new NormalFrame(NormalFrameStates.newInstance(), Score.of(reflectedPrevious));
 	}
 
 	public static NormalFrame newInstance() {
-		return new NormalFrame(NormalFrameStates.newInstance(), Score.of(0, -1, true));
+		return new NormalFrame(NormalFrameStates.newInstance(), Score.of(true));
 	}
 
 	@Override
 	public void roll(BowlingPins pins) {
 		State state = frameStates.roll(pins);
-		score.reflect(state);
+		score = score.reflect(state);
 	}
 
 	@Override
 	public void addNextFrameScore(BowlingPins pins) {
-		score.reflect(pins);
+		score = score.reflect(pins);
 	}
 
 	@Override
 	public void addPreviousScore(int prevScore) {
-		score.reflectPrevScore(prevScore);
+		score = score.reflectPrevScore(prevScore);
 	}
 
 	@Override

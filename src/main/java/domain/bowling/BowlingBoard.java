@@ -8,6 +8,7 @@ import domain.BowlingPins;
 import domain.states.States;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,9 +69,9 @@ public class BowlingBoard {
 	}
 
 	public List<States> getStates() {
-		return frames.stream()
+		return Collections.unmodifiableList(frames.stream()
 				.map(Frame::getStates)
-				.collect(Collectors.toList());
+				.collect(Collectors.toList()));
 	}
 
 	public List<Optional<Integer>> getScores() {

@@ -3,14 +3,13 @@ package domain.state;
 public class Strike implements State {
 
 	private static final int BOWLING_PINS = 10;
-	private static final Strike cachingStrike = new Strike();
 
 	private Strike() {
 
 	}
 
 	public static Strike getInstance() {
-		return cachingStrike;
+		return LazyHolder.INSTANCE;
 	}
 
 	@Override
@@ -44,6 +43,10 @@ public class Strike implements State {
 	@Override
 	public String toSign() {
 		return "X";
+	}
+
+	private static class LazyHolder {
+		private static final Strike INSTANCE = new Strike();
 	}
 
 }

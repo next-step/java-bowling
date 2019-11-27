@@ -14,7 +14,7 @@ public class InProgress implements State {
 	}
 
 	public static InProgress of(int bowlingPins) {
-		if (bowlingPins == 10) {
+		if (bowlingPins == SPARE_PINS) {
 			throw new IllegalArgumentException("InProgress에서 10개를 쓰러뜨릴 수 없습니다");
 		}
 		return new InProgress(bowlingPins);
