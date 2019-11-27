@@ -1,8 +1,9 @@
-package frame;
+package frame.info;
 
 import java.util.Objects;
 
 public class FrameNumber {
+    public static final int FIRST_FRAME_NUMBER = 1;
     public static final int LAST_FRAME_NUMBER = 10;
     private static final int NEXT = 1;
     private final Integer number;
@@ -10,10 +11,6 @@ public class FrameNumber {
     public FrameNumber(Integer number) {
         validateNumber(number);
         this.number = number;
-    }
-
-    public static FrameNumber last() {
-        return new FrameNumber(LAST_FRAME_NUMBER);
     }
 
     private void validateNumber(Integer number) {
@@ -24,10 +21,6 @@ public class FrameNumber {
 
     public Integer next() {
         return number + NEXT;
-    }
-
-    public Integer getNumber() {
-        return number;
     }
 
     @Override
@@ -48,5 +41,9 @@ public class FrameNumber {
         return "FrameNumber{" +
                 "number=" + number +
                 '}';
+    }
+
+    public int getNumber() {
+        return this.number;
     }
 }

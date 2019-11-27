@@ -1,9 +1,12 @@
 package frame;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import score.framescore.FrameScore;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -34,6 +37,41 @@ class LastFrameTest {
             lastFrame.bowling(score);
         }
         assertThat(lastFrame.isFull()).isEqualTo(answer);
+        assertThat(lastFrame.isNotFull()).isNotEqualTo(answer);
     }
 
+
+    @Test
+    void addNextScore() {
+        //given
+        NormalFrame normalFrame = new NormalFrame(9, new ArrayList<>());
+        normalFrame.bowling(10);
+
+        Frame lastFrame = normalFrame.getLastFrame();
+        assertThat(normalFrame.getFrameScore()).isEqualTo(new FrameScore(10, 2));
+
+        lastFrame.bowling(10);
+        assertThat(normalFrame.getFrameScore()).isEqualTo(new FrameScore(20, 1));
+
+        lastFrame.bowling(10);
+        assertThat(normalFrame.getFrameScore()).isEqualTo(new FrameScore(30, 0));
+    }
+
+    @Test
+    void getFrameScore() {
+        LastFrame lastFrame = LastFrame.init();
+
+        assertThat(lastFrame.getFrameScore()).isEqualTo(new FrameScore(0, 1));
+        System.out.println();
+        lastFrame.bowling(10);
+        assertThat(lastFrame.getFrameScore()).isEqualTo(new FrameScore(10, 2));
+        System.out.println();
+
+        lastFrame.bowling(1);
+        assertThat(lastFrame.getFrameScore()).isEqualTo(new FrameScore(12, 1));
+        System.out.println();
+
+        lastFrame.bowling(9);
+        assertThat(lastFrame.getFrameScore()).isEqualTo(new FrameScore(30, 0));
+    }
 }

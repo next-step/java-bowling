@@ -1,23 +1,26 @@
 package frame;
 
+import frame.info.FrameInfo;
 import score.ScoreInfo;
 import score.ScoreInfoBundle;
+import score.Status;
+import score.framescore.FrameScore;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NormalFrame implements Frame {
-    public static final int FIRST_FRAME_NUMBER = 1;
+import static frame.info.FrameNumber.FIRST_FRAME_NUMBER;
 
+public class NormalFrame implements Frame {
     private static final int FULL_TRY = 2;
 
-    private final FrameNumber frameNumber;
     private final ScoreInfoBundle scores;
+    private FrameInfo frameInfo;
 
-    NormalFrame(int frameNumber, List<ScoreInfo> scores) {
-        this.frameNumber = new FrameNumber(frameNumber);
+    public NormalFrame(int frameNumber, List<ScoreInfo> scores) {
         this.scores = new ScoreInfoBundle(scores);
+        this.frameInfo = FrameInfo.make(frameNumber);
     }
 
     public static NormalFrame firstNormalFrame() {
@@ -26,7 +29,16 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame nextFrame() {
-        return new NormalFrame(frameNumber.next(), new ArrayList<>());
+        NormalFrame nextFrame = new NormalFrame(frameInfo.nextNumber(), new ArrayList<>());
+        frameInfo = frameInfo.makeWithNext(nextFrame);
+        return nextFrame;
+    }
+
+    @Override
+    public Frame getLastFrame() {
+        Frame lastFrame = LastFrame.init();
+        frameInfo = frameInfo.makeWithNext(lastFrame);
+        return lastFrame;
     }
 
     @Override
@@ -42,7 +54,11 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFull() {
-        return (this.scores.size() == FULL_TRY) || (scores.isStrike());
+        return (this.scores.size() == FULL_TRY) || (scores.hasStrike());
+    }
+
+    private boolean isNotFull() {
+        return !isFull();
     }
 
     @Override
@@ -51,24 +67,52 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public FrameScore getFrameScore() {
+        FrameScore frameScore = makeFrameScore();
+
+        if (frameScore.canAdd()) {
+            return frameInfo.calculateNext(frameScore);
+        }
+
+        return frameScore;
+    }
+
+    @Override
+    public int getFrameNumber() {
+        return frameInfo.getNumber();
+    }
+
+    private FrameScore makeFrameScore() {
+        if (isNotFull()) {
+            return new FrameScore(scores.getSum(), 1);
+        }
+
+        Status status = scores.getStatus();
+        return new FrameScore(scores.getSum(), status.getAddCount());
+    }
+
+    @Override
+    public FrameScore addNextScore(FrameScore before) {
+        FrameScore frameScore = scores.addScore(before);
+
+        if (frameScore.canAdd()) {
+            return frameInfo.calculateNext(frameScore);
+        }
+
+        return frameScore;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(frameNumber, that.frameNumber) &&
+        return Objects.equals(frameInfo, that.frameInfo) &&
                 Objects.equals(scores, that.scores);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNumber, scores);
-    }
-
-    @Override
-    public String toString() {
-        return "NormalFrame{" +
-                "frameNumber=" + frameNumber +
-                ", scores=" + scores +
-                '}';
+        return Objects.hash(frameInfo, scores);
     }
 }

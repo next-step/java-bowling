@@ -1,10 +1,12 @@
 package frame;
 
+import score.ScoreInfo;
+import score.framescore.FrameScore;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import static frame.FrameNumber.LAST_FRAME_NUMBER;
+import static frame.info.FrameNumber.LAST_FRAME_NUMBER;
 
 public class Frames {
 
@@ -28,6 +30,10 @@ public class Frames {
         return getNowFrameNumber() == LAST_FRAME_NUMBER;
     }
 
+    public boolean isNotLast() {
+        return !reachLast();
+    }
+
     public Frame getNowFrame() {
         if (frames.isEmpty()) {
             frames.add(NormalFrame.firstNormalFrame());
@@ -37,7 +43,7 @@ public class Frames {
         Frame lastFrame = frames.get(lastIndex);
 
         if (lastFrame.isFull()) {
-            Frame nextFrame = lastFrame.nextFrame();
+            Frame nextFrame = getNextFrame(lastFrame);
             frames.add(nextFrame);
             return nextFrame;
         }
@@ -45,12 +51,19 @@ public class Frames {
         return frames.get(lastIndex);
     }
 
-    public void addLastFrame(LastFrame nowFrame) {
-        this.frames.remove(9);
-        this.frames.add(9, nowFrame);
+    private Frame getNextFrame(Frame lastFrame) {
+        Frame nextFrame = lastFrame.nextFrame();
+        if (nextFrame.getFrameNumber() == LAST_FRAME_NUMBER) {
+            return lastFrame.getLastFrame();
+        }
+        return nextFrame;
     }
 
-    public Frame findFrame(int i) {
+    public List<ScoreInfo> findScoreInfos(int index) {
+        return findFrame(index).getScoreInfos();
+    }
+
+    private Frame findFrame(int i) {
         if (frames.size() > i) {
             return frames.get(i);
         }
@@ -65,16 +78,12 @@ public class Frames {
                 .orElse(LastFrame.init());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Frames frames1 = (Frames) o;
-        return Objects.equals(frames, frames1.frames);
+    public int size() {
+        return this.frames.size();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(frames);
+    public FrameScore getFrameScore(int index) {
+        return this.frames.get(index)
+                .getFrameScore();
     }
 }

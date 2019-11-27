@@ -1,5 +1,7 @@
 package score;
 
+import score.framescore.FrameScore;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -21,8 +23,13 @@ public class ScoreInfoBundle {
         return scoreInfoBundle.get(FIRST);
     }
 
-    public boolean isStrikeOrStrikeOfLast() {
-        return getLast().isStrike() || getLast().isSpare();
+    public boolean isStrikeOrSpareOfLast() {
+        ScoreInfo last = getLast();
+        return last.isStrike() || last.isSpare();
+    }
+
+    public boolean isNormalOfLast() {
+        return !isStrikeOrSpareOfLast();
     }
 
     public ScoreInfo getLast() {
@@ -34,7 +41,7 @@ public class ScoreInfoBundle {
         validate();
     }
 
-    public void addLast(ScoreInfo scoreInfo) {
+    public void addOnLast(ScoreInfo scoreInfo) {
         scoreInfoBundle.add(scoreInfo);
     }
 
@@ -48,13 +55,53 @@ public class ScoreInfoBundle {
         }
     }
 
-    public boolean isStrike() {
+    public boolean hasStrike() {
         return scoreInfoBundle.stream()
                 .anyMatch(ScoreInfo::isStrike);
     }
 
     public List<ScoreInfo> getScoreInfoBundle() {
         return Collections.unmodifiableList(scoreInfoBundle);
+    }
+
+    public Status getStatus() {
+        if (scoreInfoBundle.isEmpty()) {
+            return Status.NONE;
+        }
+        return getLast().getStatus();
+    }
+
+    public int getSum() {
+        return scoreInfoBundle.stream()
+                .mapToInt(ScoreInfo::getScore)
+                .sum();
+    }
+
+    public FrameScore addScore(FrameScore frameScore) {
+        for (ScoreInfo scoreInfo : scoreInfoBundle) {
+            frameScore = addScore(frameScore, scoreInfo);
+        }
+        return frameScore;
+    }
+
+    private FrameScore addScore(FrameScore before, ScoreInfo scoreInfo) {
+        if (before.getAddCount() > 0) {
+            return before.addScore(scoreInfo.getScore());
+        }
+        return before;
+    }
+
+    public FrameScore calculateLast(int index) {
+        ScoreInfo startScoreInfo = scoreInfoBundle.get(index);
+        Status status = startScoreInfo.getStatus();
+
+        FrameScore frameScore = new FrameScore(startScoreInfo.getScore(), status.getAddCount());
+
+        for (int i = index + 1; i < scoreInfoBundle.size(); i++) {
+            frameScore = addScore(frameScore, scoreInfoBundle.get(i));
+        }
+
+        return frameScore;
     }
 
     @Override
@@ -70,10 +117,4 @@ public class ScoreInfoBundle {
         return Objects.hash(scoreInfoBundle);
     }
 
-    @Override
-    public String toString() {
-        return "ScoreInfoBundle{" +
-                "scoreInfoBundle=" + scoreInfoBundle +
-                '}';
-    }
 }

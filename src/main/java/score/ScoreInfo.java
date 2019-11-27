@@ -54,7 +54,7 @@ public class ScoreInfo {
                 '}';
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return score.getScore();
     }
 }

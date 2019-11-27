@@ -3,20 +3,20 @@ package score;
 import java.util.Objects;
 
 public class Score {
-    private final Integer score;
+    private final int score;
 
-    public Score(Integer score) {
+    public Score(int score) {
         validateScore(score);
         this.score = score;
     }
 
-    private void validateScore(Integer score) {
+    private void validateScore(int score) {
         if (score < 0 || 10 < score) {
             throw new IllegalArgumentException(score + "는 올바른 점수가 아닙니다.");
         }
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return score;
     }
 
@@ -25,7 +25,7 @@ public class Score {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score1 = (Score) o;
-        return Objects.equals(score, score1.score);
+        return score == score1.score;
     }
 
     @Override
