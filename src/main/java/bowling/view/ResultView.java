@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.GameRecord;
 import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 
 import java.util.List;
@@ -43,7 +42,7 @@ public class ResultView {
     }
 
     private static String makeFinalFrameFormat(GameRecord gameRecord) {
-        if (gameRecord.hasNotFinalFrame()) {
+        if (gameRecord.notStartFinalFrame()) {
             return EMPTY_SCORE_FORMAT;
         }
 

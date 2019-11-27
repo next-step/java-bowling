@@ -1,17 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.Score;
-import bowling.domain.status.FrameStatus;
-import bowling.domain.status.Ready;
-
-import java.util.ArrayList;
-import java.util.List;
+import bowling.domain.status.*;
 
 public class NormalFrame implements Frame {
     public static final int FRAME_MAX_SCORE = 10;
 
     public int index;
-    public List<Integer> scores = new ArrayList<>();
     public Score score;
     public boolean isEnd;
     public NormalFrame nextFrame;
@@ -38,18 +33,8 @@ public class NormalFrame implements Frame {
     }
 
     public void bowl(int score) {
-        this.scores.add(score);
-        this.isEnd = isEndCondition(score);
         this.status = status.bowl(score);
-    }
-
-    @Override
-    public boolean hasSize(int size) {
-        return scores.size() == size;
-    }
-
-    public List<Integer> getScores() {
-        return scores;
+        this.isEnd = isEndCondition(score);
     }
 
     public boolean isEnd() {
@@ -59,7 +44,9 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isEndCondition(int score) {
-        return this.scores.size() > 1 || score == FRAME_MAX_SCORE;
+        return this.status instanceof Strike ||
+                this.status instanceof Spare ||
+                this.status instanceof Miss;
     }
 
     public FrameStatus getStatus() {

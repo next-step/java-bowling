@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.status.FinalFirstBowl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -52,7 +53,7 @@ class GameRecordTest {
 
         gameRecord.recordFrame(9);
 
-        assertThat(gameRecord.getFinalFrame().getScores()).hasSize(1);
+        assertThat(gameRecord.getFinalFrame().getStatus() instanceof FinalFirstBowl).isTrue();
         assertThat(gameRecord.getFinalFrame().isEnd()).isFalse();
 
     }

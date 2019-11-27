@@ -3,6 +3,7 @@ package bowling.domain;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.NormalFrames;
+import bowling.domain.status.Ready;
 
 import java.util.List;
 
@@ -12,7 +13,6 @@ public class GameRecord {
     private boolean isEnd;
     private NormalFrames normalFrames;
     private FinalFrame finalFrame = new FinalFrame();
-    private int result;
 
     public GameRecord(String user) {
         this.user = user;
@@ -51,12 +51,11 @@ public class GameRecord {
         return finalFrame;
     }
 
-    public boolean hasNotFinalFrame() {
-        return finalFrame.hasNotFinalFrame();
-    }
-
     public boolean isEnd() {
         return isEnd;
     }
 
+    public boolean notStartFinalFrame() {
+        return finalFrame.getStatus() instanceof Ready;
+    }
 }
