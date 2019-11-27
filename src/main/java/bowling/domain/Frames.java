@@ -7,6 +7,7 @@ public class Frames {
 
     private static final int FIRST_FRAME_INDEX = 0;
     private static final int INDEX = 1;
+    private static final int LAST_FRAME_INDEX = 9;
 
     private List<Frame> frames;
 
@@ -64,7 +65,7 @@ public class Frames {
     }
 
     public boolean isLastFrameSpikeOrSpare() {
-        return ScoreBoard.getValue(9).isSpike() || ScoreBoard.getValue(9).isSpare() ;
+        return ScoreBoard.getValue(LAST_FRAME_INDEX).isSpike() || ScoreBoard.getValue(LAST_FRAME_INDEX).isSpare() ;
     }
 
     public List<Frame> getFrames() {

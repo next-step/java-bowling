@@ -36,12 +36,12 @@ public class Frame {
         return score.getPoint();
     }
 
-    public int getCount() {
-        return score.getCount();
-    }
-
     public boolean isRemain() {
         return score.isCount() && !score.isStrike();
+    }
+
+    public boolean isCountRemain() {
+        return score.isCount();
     }
 
     @Override

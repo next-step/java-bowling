@@ -35,7 +35,7 @@ public class ScoreOperator {
     }
 
     public boolean isGutter() {
-        return this.first == 0 && this.second == null;
+        return this.first == 0 && this.second == null || this.first == 0 && this.second == 0;
     }
 
     public boolean isSpare() {

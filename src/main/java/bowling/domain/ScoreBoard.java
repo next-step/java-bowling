@@ -7,6 +7,11 @@ public class ScoreBoard {
 
     private static final Map<String, String> TEMPLATE;
     private static final Map<Integer, ScoreOperator> OPERATOR;
+    private static final int GUTTER_PIN = 0;
+    private static final int ALL_PIN = 10;
+    private static final String STRIKE = "X";
+    private static final String GUTTER = "-";
+    private static final String SPARE = "/";
 
     static {
         TEMPLATE = new HashMap<>();
@@ -34,6 +39,7 @@ public class ScoreBoard {
     public static Map<String, String> getTEMPLATE() {
         return new HashMap<>(TEMPLATE);
     }
+
     public static Map<Integer, ScoreOperator> getOperator() {
         return new HashMap<>(OPERATOR);
     }
@@ -54,31 +60,25 @@ public class ScoreBoard {
         return OPERATOR.get(position);
     }
 
-    public static String convertScore(int position, int count) {
-
-        if (count == 1) {
-            if (OPERATOR.get(position).isSpike()) {
-                return "X";
-            }
-            else if (OPERATOR.get(position).isGutter()) {
-                return "-";
-            } else {
-                return String.valueOf(OPERATOR.get(position).getFirst());
-            }
+    public static String convertScoreByCountRemain(int position) {
+        if (OPERATOR.get(position).isSpike()) {
+            return STRIKE;
+        } else if (OPERATOR.get(position).isGutter()) {
+            return GUTTER;
         } else {
-            if (OPERATOR.get(position).getFirst() + OPERATOR.get(position).getSecond() == 10) {
-                return "/";
-            }
+            return String.valueOf(OPERATOR.get(position).getFirst());
+        }
+    }
 
-            else if (OPERATOR.get(position).getFirst() + OPERATOR.get(position).getSecond() < 10) {
-                return String.valueOf(OPERATOR.get(position).getSecond());
-            }
-
-            else if (OPERATOR.get(position).getSecond() == 0) {
-                return "-";
-            } else {
-                return String.valueOf(OPERATOR.get(position).getSecond());
-            }
+    public static String convertScore(int position) {
+        if (OPERATOR.get(position).getFirst() + OPERATOR.get(position).getSecond() == ALL_PIN) {
+            return SPARE;
+        } else if (OPERATOR.get(position).getSecond() == GUTTER_PIN || OPERATOR.get(position).getFirst() == GUTTER_PIN) {
+            return GUTTER;
+        } else if (OPERATOR.get(position).getFirst() + OPERATOR.get(position).getSecond() < ALL_PIN) {
+            return String.valueOf(OPERATOR.get(position).getSecond());
+        } else {
+            return String.valueOf(OPERATOR.get(position).getSecond());
         }
     }
 }

@@ -31,7 +31,10 @@ public class ResultView {
     }
 
     private static String printFrame(Frame frame) {
-        return ScoreBoard.convertScore(frame.getPosition(), frame.getCount());
+        if (frame.isCountRemain()) {
+            return ScoreBoard.convertScoreByCountRemain(frame.getPosition());
+        }
+        return ScoreBoard.convertScore(frame.getPosition());
     }
 
     public static void printInitial() {
