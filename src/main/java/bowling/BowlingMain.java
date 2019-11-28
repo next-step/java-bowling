@@ -22,7 +22,8 @@ public class BowlingMain {
     }
 
     private static void playPlayer(Players players, int frameIndex) {
-        for (int i = 0; i < players.size(); i++) {
+        int playersSize = players.size();
+        for (int i = 0; i < playersSize; i++) {
             playFrame(players, players.playerByIndex(i), frameIndex);
         }
     }

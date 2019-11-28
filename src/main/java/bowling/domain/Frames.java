@@ -45,7 +45,8 @@ public class Frames {
     }
 
     private Score addBonusScore(Score score, int index) {
-        while (score.isLeft() && index < frames.size() - 1) {
+        int maxIndex = frames.size() - 1;
+        while (score.isLeft() && index < maxIndex) {
             Frame nextFrame = frames.get(++index);
             score = nextFrame.addBonus(score);
         }

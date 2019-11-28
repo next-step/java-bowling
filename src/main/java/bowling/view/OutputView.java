@@ -26,7 +26,9 @@ public class OutputView {
 
     public static void printDashBoard(Players players) {
         printHeader();
-        for (int i = 0; i < players.size(); i++) {
+
+        int playersSize = players.size();
+        for (int i = 0; i < playersSize; i++) {
             printPlayer(players.playerByIndex(i));
         }
     }
