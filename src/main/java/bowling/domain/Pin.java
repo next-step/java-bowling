@@ -62,15 +62,6 @@ public class Pin {
         return pin + other;
     }
 
-    public int sum(Pin... pins) {
-        int sum = pin;
-        for (Pin pin : pins) {
-            sum += pin.pin;
-        }
-
-        return sum;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -96,10 +96,10 @@ public class StateTest {
     @Test
     @DisplayName("State별 getPins값을 확인 한다.")
     void getPins() {
-        assertThat((ready).getPins()).containsExactly(Pin.ofDefault(), Pin.ofDefault());
-        assertThat((firstBowl).getPins()).containsExactly(Pin.of(5), Pin.ofDefault());
+        assertThat((ready).getPins()).isEmpty();
+        assertThat((firstBowl).getPins()).containsExactly(Pin.of(5));
         assertThat((secondBowl).getPins()).containsExactly(Pin.of(5), Pin.of(5));
-        assertThat((strike).getPins()).containsExactly(Pin.ofAllPin(), Pin.ofDefault());
+        assertThat((strike).getPins()).containsExactly(Pin.ofAllPin());
         assertThat((spare).getPins()).containsExactly(Pin.of(5), Pin.of(5));
         assertThat((miss).getPins()).containsExactly(Pin.of(5), Pin.of(4));
         assertThat((last).getPins()).containsExactly(Pin.of(5), Pin.of(5), Pin.of(5));

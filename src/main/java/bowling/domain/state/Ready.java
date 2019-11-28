@@ -1,49 +1,14 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
-import bowling.domain.Score;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class Ready implements State {
+public class Ready extends BowlAbleState {
     @Override
     public State bowl(int countOfPin, boolean isLastFrame) {
         if (!isLastFrame && countOfPin == Pin.ALL_PIN_COUNT) {
             return new Strike();
         }
 
-        return new FirstBowl(countOfPin);
-    }
-
-    @Override
-    public Score getScore(int totalScore) {
-        return Score.ofNoneScore();
-    }
-
-    @Override
-    public Score addBonus(Score score) {
-        return score;
-    }
-
-    @Override
-    public List<Pin> getPins() {
-        return Arrays.asList(Pin.ofDefault(), Pin.ofDefault());
-    }
-
-    @Override
-    public boolean isEnd() {
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        return o != null && getClass() == o.getClass();
+        return new FirstBowl(nextPins(countOfPin));
     }
 }

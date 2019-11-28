@@ -10,6 +10,8 @@ public interface State {
 
     Score getScore(int totalStore);
 
+    int sum();
+
     Score addBonus(Score score);
 
     List<Pin> getPins();
