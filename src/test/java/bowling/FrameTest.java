@@ -17,4 +17,13 @@ public class FrameTest {
 
         assertThat(frame).isEqualTo(frame1);
     }
+
+    @Test
+    @DisplayName("적중한 핀 객체 비교")
+    void compareWithPinByFrame() {
+        Frame frame = new Frame(new Pin(4), 1);
+        Pin pin = new Pin(4);
+
+        assertThat(frame.hit()).isEqualTo(pin);
+    }
 }

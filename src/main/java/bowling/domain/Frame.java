@@ -12,6 +12,10 @@ public class Frame {
         this.countOfRemain = countOfRemain;
     }
 
+    public Pin hit() {
+        return pin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
