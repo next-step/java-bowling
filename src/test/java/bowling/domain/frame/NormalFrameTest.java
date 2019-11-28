@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,8 +10,7 @@ class NormalFrameTest {
     @Test
     @DisplayName("스트라이크 치면 1Frame 종료된다.")
     void isEndByStrike() {
-        NormalFrame frame = new NormalFrame();
-        frame.addScore(10);
+        NormalFrame frame = new NormalFrame(1, 10);
 
         assertThat(frame.isEnd()).isTrue();
     }
@@ -19,9 +18,9 @@ class NormalFrameTest {
     @Test
     @DisplayName("스트라이크가 아닌 투구는 종료되지 않는다.")
     void isEndByTwoStep() {
-        NormalFrame frame = new NormalFrame();
-        frame.addScore(8);
+        NormalFrame frame = new NormalFrame(1, 8);
 
         assertThat(frame.isEnd()).isFalse();
     }
+
 }

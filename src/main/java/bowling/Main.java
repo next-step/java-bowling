@@ -1,6 +1,7 @@
 package bowling;
 
-import bowling.domain.GameResult;
+import bowling.domain.BowlingGame;
+import bowling.domain.GameRecord;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -11,12 +12,13 @@ public class Main {
 
         String user = InputView.createUser();
 
-        GameResult gameResult = new GameResult(user);
+        GameRecord gameRecord = new GameRecord(user);
+        BowlingGame bowlingGame = new BowlingGame(gameRecord);
 
-        while (!gameResult.isEnd()) {
-            int frameNumber = gameResult.getCurrentFrameIndex();
-            gameResult.createFrame(InputView.createScore(frameNumber));
-            ResultView.printScore(gameResult);
+        while (!gameRecord.isEnd()) {
+            int frameNumber = gameRecord.getCurrentFrameIndex();
+            bowlingGame.bowl(InputView.createScore(frameNumber));
+            ResultView.printScoreBoard(gameRecord);
         }
     }
 
