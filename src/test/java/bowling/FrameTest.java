@@ -12,8 +12,8 @@ public class FrameTest {
     @Test
     @DisplayName("객체 비교")
     void compareWithFrameObjectTest() {
-        Frame frame = new Frame(new Pin(1), 1);
-        Frame frame1 = new Frame(new Pin(1), 1);
+        Frame frame = new Frame(1, 1);
+        Frame frame1 = new Frame(1, 1);
 
         assertThat(frame).isEqualTo(frame1);
     }
@@ -21,7 +21,7 @@ public class FrameTest {
     @Test
     @DisplayName("적중한 핀 객체 비교")
     void compareWithPinByFrame() {
-        Frame frame = new Frame(new Pin(4), 1);
+        Frame frame = new Frame(4, 1);
         Pin pin = new Pin(4);
 
         assertThat(frame.hit()).isEqualTo(pin);

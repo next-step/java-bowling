@@ -7,8 +7,8 @@ public class Frame {
     private Pin pin;
     private int countOfRemain;
 
-    public Frame(Pin pin, int countOfRemain) {
-        this.pin = pin;
+    public Frame(int countOfHit, int countOfRemain) {
+        this.pin = new Pin(countOfHit);
         this.countOfRemain = countOfRemain;
     }
 
