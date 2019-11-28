@@ -24,11 +24,18 @@ public class OutputView {
     private static final int SECOND_BALL_INDEX = 1;
     private static final int NON_SCORE = -1;
 
-    public static void printHeader() {
+    public static void printDashBoard(Players players) {
+        printHeader();
+        for (int i = 0; i < players.size(); i++) {
+            printPlayer(players.playerByIndex(i));
+        }
+    }
+
+    private static void printHeader() {
         System.out.println(DASH_BOARD_HEADER);
     }
 
-    public static void printPlayer(Player player) {
+    private static void printPlayer(Player player) {
         printStatus(player);
         printScore(player);
     }

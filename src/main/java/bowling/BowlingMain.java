@@ -14,17 +14,10 @@ public class BowlingMain {
         int playerCount = InputView.inputPlayerCount();
         List<String> playerNames = InputView.inputPlayerNames(playerCount);
         Players players = Players.of(playerNames);
-        printDashBoard(players);
+        OutputView.printDashBoard(players);
 
         for (int i = 0; i < LAST_FRAME; i++) {
             playPlayer(players, i);
-        }
-    }
-
-    private static void printDashBoard(Players players) {
-        OutputView.printHeader();
-        for (int i = 0; i < players.size(); i++) {
-            OutputView.printPlayer(players.playerByIndex(i));
         }
     }
 
@@ -38,7 +31,7 @@ public class BowlingMain {
         while (player.isFallDownAble(index)) {
             int pinCount = InputView.inputPinCount(player.getName(), player.frameByIndex(index));
             player.fallDown(index, pinCount);
-            printDashBoard(players);
+            OutputView.printDashBoard(players);
         }
     }
 }
