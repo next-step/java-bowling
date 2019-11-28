@@ -20,12 +20,12 @@ public class FrameNumberTest {
     void boundError() {
         assertThatThrownBy(() -> {
             FrameNumber.of(0);
-        }).isInstanceOf(RuntimeException.class)
+        }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(FrameNumber.FRAME_NUMBER_BOUND_ERROR_MESSAGE);
 
         assertThatThrownBy(() -> {
             FrameNumber.of(11);
-        }).isInstanceOf(RuntimeException.class)
+        }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(FrameNumber.FRAME_NUMBER_BOUND_ERROR_MESSAGE);
     }
 }

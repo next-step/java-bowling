@@ -25,7 +25,7 @@ public class FrameNumber {
 
     public static FrameNumber of(int frameNumber) {
         if (frameNumber < FIRST_FRAME || LAST_FRAME < frameNumber) {
-            throw new RuntimeException(FRAME_NUMBER_BOUND_ERROR_MESSAGE);
+            throw new IllegalArgumentException(FRAME_NUMBER_BOUND_ERROR_MESSAGE);
         }
 
         return cache.get(frameNumber);
