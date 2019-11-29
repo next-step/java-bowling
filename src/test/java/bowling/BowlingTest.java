@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class BowlingTest {
 
@@ -14,7 +15,29 @@ public class BowlingTest {
     void containsFrameByBowlingTest() {
         Bowling bowling = new Bowling();
         bowling.go(5);
-        Frame frame = new Frame(5, 1);
+        Frame frame = Frame.firstFrame(5);
         assertThat(bowling.isContains(frame)).isTrue();
+    }
+
+    @Test
+    @DisplayName("다음 프레임 생성 테스트")
+    void createNextFrameTest() {
+        Bowling bowling = new Bowling();
+        bowling.go(10);
+        bowling.go(10);
+        bowling.go(5);
+        bowling.go(3);
+
+        assertThat(bowling.getFrameSize()).isEqualTo(4);
+    }
+
+    @Test
+    @DisplayName("두번째 투구에서 점수가 10보다 클 때 예외 처리")
+    void validateCreateFrameByOverHitPinTest() {
+        Bowling bowling = new Bowling();
+        bowling.go(7);
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            bowling.go(4);
+        });
     }
 }

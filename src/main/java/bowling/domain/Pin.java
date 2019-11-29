@@ -21,6 +21,13 @@ public class Pin {
         }
     }
 
+    public boolean isAvailable(int count) {
+        if (countOfHit + count > 10) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -7,9 +7,28 @@ public class Frame {
     private Pin pin;
     private int countOfRemain;
 
-    public Frame(int countOfHit, int countOfRemain) {
+    private Frame(int countOfHit, int countOfRemain) {
         this.pin = new Pin(countOfHit);
         this.countOfRemain = countOfRemain;
+    }
+
+    private static Frame of(int countOfHit, int countOfRemain) {
+        return new Frame(countOfHit, countOfRemain);
+    }
+
+    public static Frame firstFrame(int countOfHit) {
+        return of(countOfHit, 1);
+    }
+
+    public Frame nextFrame(int countOfHit) {
+        if (pin.isAvailable(countOfHit)) {
+            return of(countOfHit, countOfRemain - 1);
+        }
+        throw new IllegalArgumentException("잘 못된 점수 입니다.");
+    }
+
+    public boolean isNext() {
+        return countOfRemain == 1 && !pin.equals(new Pin(10));
     }
 
     public Pin hit() {
