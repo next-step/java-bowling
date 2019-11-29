@@ -33,7 +33,7 @@ public class ScoreTest {
         Frame frame = Frame.firstFrame(5);
         Frame frame1 = frame.nextFrame(4);
 
-        assertThat(frame.getScore()).isEqualTo("5");
-        assertThat(frame1.getScore()).isEqualTo("4");
+        assertThat(frame.getScore(0)).isEqualTo("5");
+        assertThat(frame1.getScore(0)).isEqualTo("4");
     }
 }

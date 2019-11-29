@@ -25,11 +25,12 @@ public class Pin {
         return countOfHit;
     }
 
+    public boolean isMiss(int count) {
+        return countOfHit + count != 10;
+    }
+
     public boolean isAvailable(int count) {
-        if (countOfHit + count > 10) {
-            return false;
-        }
-        return true;
+        return countOfHit + count <= 10;
     }
 
     @Override

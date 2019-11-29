@@ -27,11 +27,26 @@ public class Frame {
         throw new IllegalArgumentException("잘 못된 점수 입니다.");
     }
 
-    public String getScore() {
-        return new Score(pin.getCountOfHit(), countOfRemain).getScore();
+    public String getScore(int score) {
+        if (isSecond()) {
+            return new Score(pin.getCountOfHit() + score, countOfRemain).getScore();
+        } else {
+            return getScoreFirst(score);
+        }
     }
 
-    public boolean isNext() {
+    private String getScoreFirst(int score) {
+        if (pin.isMiss(score)) {
+            return new Score(pin.getCountOfHit(), countOfRemain).getScore();
+        }
+        return new Score(pin.getCountOfHit() + score, countOfRemain).getScore();
+    }
+
+    public int getCountOfHit() {
+        return pin.getCountOfHit();
+    }
+
+    public boolean isSecond() {
         return countOfRemain == 1 && !pin.equals(new Pin(10));
     }
 

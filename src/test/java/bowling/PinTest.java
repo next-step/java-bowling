@@ -29,4 +29,19 @@ public class PinTest {
             Pin pin = new Pin(-1);
         });
     }
+
+    @Test
+    @DisplayName("핀의 합이 10이 안될 때")
+    void countOfHitLessThenTenTest() {
+        Pin pin = new Pin(5);
+        assertThat(pin.isMiss(4)).isTrue();
+    }
+
+    @Test
+    @DisplayName("두 번째 던질 때 핀의 갯수 체")
+    void validatePinBySecondShotTest() {
+        Pin pin = new Pin(6);
+        assertThat(pin.isAvailable(5)).isFalse();
+        assertThat(pin.isAvailable(4)).isTrue();
+    }
 }

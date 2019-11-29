@@ -18,11 +18,15 @@ public class Bowling {
     private Frame create(int countOfHit) {
         if (frames.size() > 0) {
             Frame frame = frames.get(frames.size() - 1);
-            if (frame.isNext()) {
+            if (frame.isSecond()) {
                 return frame.nextFrame(countOfHit);
             }
         }
         return Frame.firstFrame(countOfHit);
+    }
+
+    public List<Frame> getFrames() {
+        return new ArrayList<>(frames);
     }
 
     public int getFrameSize() {

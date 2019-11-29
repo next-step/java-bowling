@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.Bowling;
 import bowling.domain.Frame;
+import bowling.view.ResultView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,11 +25,16 @@ public class BowlingTest {
     void createNextFrameTest() {
         Bowling bowling = new Bowling();
         bowling.go(10);
-        bowling.go(10);
         bowling.go(5);
         bowling.go(3);
-
-        assertThat(bowling.getFrameSize()).isEqualTo(4);
+        bowling.go(6);
+        bowling.go(4);
+        bowling.go(2);
+        bowling.go(0);
+        bowling.go(0);
+        bowling.go(0);
+        ResultView.printBowling(bowling);
+        assertThat(bowling.getFrameSize()).isEqualTo(9);
     }
 
     @Test
