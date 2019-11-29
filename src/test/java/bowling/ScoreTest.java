@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.Frame;
 import bowling.domain.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,5 +25,15 @@ public class ScoreTest {
         assertThat(gutter2.getScore()).isEqualTo("-");
         assertThat(miss.getScore()).isEqualTo("7");
         assertThat(miss2.getScore()).isEqualTo("2");
+    }
+
+    @Test
+    @DisplayName("프레임 객체에 따른 스코어 테스트")
+    void checkScoreByFrameObjectTest() {
+        Frame frame = Frame.firstFrame(5);
+        Frame frame1 = frame.nextFrame(4);
+
+        assertThat(frame.getScore()).isEqualTo("5");
+        assertThat(frame1.getScore()).isEqualTo("4");
     }
 }

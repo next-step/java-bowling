@@ -21,6 +21,10 @@ public class Pin {
         }
     }
 
+    public int getCountOfHit() {
+        return countOfHit;
+    }
+
     public boolean isAvailable(int count) {
         if (countOfHit + count > 10) {
             return false;

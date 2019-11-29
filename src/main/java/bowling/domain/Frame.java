@@ -27,6 +27,10 @@ public class Frame {
         throw new IllegalArgumentException("잘 못된 점수 입니다.");
     }
 
+    public String getScore() {
+        return new Score(pin.getCountOfHit(), countOfRemain).getScore();
+    }
+
     public boolean isNext() {
         return countOfRemain == 1 && !pin.equals(new Pin(10));
     }
