@@ -1,8 +1,6 @@
 package domain.bowling;
 
-import domain.frame.FrameStore;
 import domain.BowlingPins;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -12,11 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("NonAsciiCharacters")
 class BowlingBoardTest {
-
-	@AfterEach
-	void clean() {
-		FrameStore.clean();
-	}
 
 	@Test
 	void 프레임의_점수가_연이어_계산된다1() {

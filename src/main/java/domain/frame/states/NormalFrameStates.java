@@ -1,4 +1,4 @@
-package domain.frame_states;
+package domain.frame.states;
 
 import domain.state.State;
 import domain.BowlingPins;

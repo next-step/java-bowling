@@ -3,14 +3,13 @@ package domain.state;
 public class Ready implements State {
 
 	private static final int STRIKE_PINS = 10;
-	private static Ready cachingReady = new Ready();
 
 	private Ready() {
 
 	}
 
 	public static Ready getInstance() {
-		return cachingReady;
+		return LazyHolder.INSTANCE;
 	}
 
 	@Override
@@ -29,6 +28,10 @@ public class Ready implements State {
 	@Override
 	public String toSign() {
 		return " ";
+	}
+
+	private static class LazyHolder {
+		private static final Ready INSTANCE = new Ready();
 	}
 
 }

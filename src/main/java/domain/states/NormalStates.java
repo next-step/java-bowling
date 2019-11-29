@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class NormalStates implements States {
 
-	private final static int MAX_STATES_SIZE = 2;
+	private static final int MAX_STATES_SIZE = 2;
 
 	private final List<State> states;
 
@@ -28,20 +28,20 @@ public class NormalStates implements States {
 		return new NormalStates(Collections.singletonList(Ready.getInstance()));
 	}
 
-	/**
-	 * NormalFrame 은 스트라이크 한 번 혹은
-	 * 기타 State 두 번에 끝난다.
-	 */
 	@Override
 	public boolean isEndFrame() {
-		if (states.isEmpty()) {
-			return false;
-		}
+		return !notRolling() && (isMaxState() || isStrike());
+	}
 
-		if (states.size() == MAX_STATES_SIZE) {
-			return true;
-		}
+	private boolean notRolling() {
+		return states.isEmpty();
+	}
 
+	private boolean isMaxState() {
+		return states.size() == MAX_STATES_SIZE;
+	}
+
+	private boolean isStrike() {
 		return states.equals(Collections.singletonList(Strike.getInstance()));
 	}
 

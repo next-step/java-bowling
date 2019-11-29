@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public class ResultView {
 
+	private static final int LAST_FRAME_INDEX = 9;
+
 	private ResultView() {
 
 	}
@@ -29,11 +31,11 @@ public class ResultView {
 	}
 
 	private static void appendResult(StringBuilder stringBuilder, int index, String target) {
-		if (index != 9) {
+		if (index != LAST_FRAME_INDEX) {
 			stringBuilder.append(String.format("  %-3s |", target));
-		} else {
-			stringBuilder.append(String.format("  %-5s  |", target));
+			return;
 		}
+		stringBuilder.append(String.format("  %-5s  |", target));
 	}
 
 	private static String getFrameResult(States states) {

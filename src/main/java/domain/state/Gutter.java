@@ -3,15 +3,13 @@ package domain.state;
 public class Gutter implements State {
 
 	private static final int BOWLING_PINS = 0;
-	private static final Gutter cachingGutter = new Gutter();
-
 
 	private Gutter() {
 
 	}
 
 	public static Gutter getInstance() {
-		return cachingGutter;
+		return LazyHolder.INSTANCE;
 	}
 
 	@Override
@@ -37,6 +35,10 @@ public class Gutter implements State {
 	@Override
 	public String toSign() {
 		return String.valueOf(BOWLING_PINS);
+	}
+
+	private static class LazyHolder {
+		private static final Gutter INSTANCE = new Gutter();
 	}
 
 }

@@ -5,7 +5,9 @@ import domain.BowlingPins;
 
 public class Score {
 
-	private int score;
+	private static final int INITIAL_SCORE = 0;
+
+	private final int score;
 	private final ScoreState scoreState;
 
 	private Score(int score, ScoreState scoreState) {
@@ -17,23 +19,27 @@ public class Score {
 		return new Score(score, ScoreState.of(left, reflectedPrevious));
 	}
 
-	public void reflect(State state) {
-		score += state.getFallenBowlingPins();
+	public static Score of(boolean reflectedPrevious) {
+		return new Score(INITIAL_SCORE, ScoreState.of(reflectedPrevious));
+	}
+
+	public Score reflect(State state) {
+		ScoreState newScoreState = scoreState;
 		if (state.isLastStateToDecideScoreLeft()) {
-			scoreState.initializeLeft(state.getLeftStatesToCalculateScore());
+			newScoreState = scoreState.initializeLeft(state.getLeftStatesToCalculateScore());
 		}
+		return new Score(score + state.getFallenBowlingPins(), newScoreState);
 	}
 
-	public void reflect(BowlingPins pins) {
+	public Score reflect(BowlingPins pins) {
 		if (scoreState.canReflect()) {
-			score += pins.getPins();
-			scoreState.minusOneLeft();
+			return new Score(score + pins.getPins(), scoreState.minusOneLeft());
 		}
+		return this;
 	}
 
-	public void reflectPrevScore(int prevScore) {
-		score += prevScore;
-		scoreState.reflected();
+	public Score reflectPrevScore(int prevScore) {
+		return new Score(score + prevScore, scoreState.reflected());
 	}
 
 	public boolean isEndCalculation() {
