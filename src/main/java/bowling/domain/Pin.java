@@ -4,6 +4,9 @@ import java.util.Objects;
 
 public class Pin {
 
+    private static final int MIN_HIT_COUNT = 0;
+    private static final int MAX_HIT_COUNT = 10;
+
     private int countOfHit;
 
     public Pin(int countOfHit) {
@@ -12,11 +15,11 @@ public class Pin {
     }
 
     private void validate() {
-        if (countOfHit < 0) {
+        if (countOfHit < MIN_HIT_COUNT) {
             throw new IllegalArgumentException("적중한 볼링핀의 갯수는 0 미만이 될 수 없습니다.");
         }
 
-        if (countOfHit > 10) {
+        if (countOfHit > MAX_HIT_COUNT) {
             throw new IllegalArgumentException("적중한 볼링핀의 갯수는 10 초과가 될 수 없습니다.");
         }
     }
@@ -26,11 +29,11 @@ public class Pin {
     }
 
     public boolean isMiss(int count) {
-        return countOfHit + count != 10;
+        return countOfHit + count != MAX_HIT_COUNT;
     }
 
     public boolean isAvailable(int count) {
-        return countOfHit + count <= 10;
+        return countOfHit + count <= MAX_HIT_COUNT;
     }
 
     @Override

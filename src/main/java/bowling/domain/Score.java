@@ -2,6 +2,14 @@ package bowling.domain;
 
 public class Score {
 
+    private static final int MIN_HIT_COUNT = 0;
+    private static final int MAX_HIT_COUNT = 10;
+    private static final int MORE_REMAIN = 1;
+    private static final int NO_REMAIN = 0;
+    private static final String STRIKE = "X";
+    private static final String GUTTER = "-";
+    private static final String SPARE = "/";
+
     private int countOfHit;
     private int countOfRemain;
 
@@ -11,26 +19,18 @@ public class Score {
     }
 
     public String getScore() {
-        if (countOfHit == 10 && countOfRemain == 1) {
-            return " X |";
+        if (countOfHit == MAX_HIT_COUNT && countOfRemain == MORE_REMAIN) {
+            return STRIKE;
         }
 
-        if (countOfHit == 10 && countOfRemain == 0) {
-            return "|/"+" |";
+        if (countOfHit == MAX_HIT_COUNT && countOfRemain == NO_REMAIN) {
+            return SPARE;
         }
 
-        if (countOfHit == 0 && countOfRemain == 0) {
-            return "|-"+" |";
+        if (countOfHit == MIN_HIT_COUNT) {
+            return GUTTER;
         }
 
-        if (countOfHit == 0 && countOfRemain == 1) {
-            return " -";
-        }
-
-        if (countOfRemain == 0) {
-            return "|"+String.valueOf(countOfHit)+" |";
-        }
-
-        return " "+String.valueOf(countOfHit);
+        return String.valueOf(countOfHit);
     }
 }

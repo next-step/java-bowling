@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Bowling {
 
+    private static final int MIN_SIZE = 0;
+    private static final int CORRECTION_VALUE = 1;
+
     private List<Frame> frames;
 
     public Bowling() {
@@ -16,8 +19,8 @@ public class Bowling {
     }
 
     private Frame create(int countOfHit) {
-        if (frames.size() > 0) {
-            Frame frame = frames.get(frames.size() - 1);
+        if (frames.size() > MIN_SIZE) {
+            Frame frame = frames.get(frames.size() - CORRECTION_VALUE);
             if (frame.isSecond()) {
                 return frame.nextFrame(countOfHit);
             }

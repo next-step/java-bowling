@@ -12,10 +12,15 @@ public class ResultView {
         for (Frame frame : bowling.getFrames()) {
             isSecond = frame.isSecond();
             if (isSecond) {
-                System.out.print(frame.getScore(sum));
+                System.out.print(" "+frame.getScore(sum));
                 sum += frame.getCountOfHit();
             } else {
-                System.out.print(frame.getScore(sum));
+                if (frame.isStrike()) {
+                    System.out.print(" "+frame.getScore(sum)+" |");
+                } else {
+
+                    System.out.print("|"+frame.getScore(sum)+" |");
+                }
                 sum = 0;
             }
         }

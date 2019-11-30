@@ -4,6 +4,10 @@ import java.util.Objects;
 
 public class Frame {
 
+    private static final int DECREASING_INDEX = 1;
+    private static final int INIT_REMAIN_COUNT = 1;
+    private static final int MAX_PIN_COUNT = 10;
+
     private Pin pin;
     private int countOfRemain;
 
@@ -17,12 +21,12 @@ public class Frame {
     }
 
     public static Frame firstFrame(int countOfHit) {
-        return of(countOfHit, 1);
+        return of(countOfHit, INIT_REMAIN_COUNT);
     }
 
     public Frame nextFrame(int countOfHit) {
         if (pin.isAvailable(countOfHit)) {
-            return of(countOfHit, countOfRemain - 1);
+            return of(countOfHit, countOfRemain - DECREASING_INDEX);
         }
         throw new IllegalArgumentException("잘 못된 점수 입니다.");
     }
@@ -47,11 +51,15 @@ public class Frame {
     }
 
     public boolean isSecond() {
-        return countOfRemain == 1 && !pin.equals(new Pin(10));
+        return countOfRemain == INIT_REMAIN_COUNT && !pin.equals(new Pin(MAX_PIN_COUNT));
     }
 
     public boolean isRemain() {
-        return countOfRemain == 1;
+        return countOfRemain == INIT_REMAIN_COUNT;
+    }
+
+    public boolean isStrike() {
+        return pin.equals(new Pin(MAX_PIN_COUNT));
     }
 
     public Pin hit() {
