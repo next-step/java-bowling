@@ -16,8 +16,7 @@ public class Frame {
     }
 
     public Frame(int frameNumber) {
-        this.frameNumber = FrameNumber.of(frameNumber);
-        this.state = new Ready();
+        this(frameNumber, new Ready());
     }
 
     public void fallDown(int pin) {

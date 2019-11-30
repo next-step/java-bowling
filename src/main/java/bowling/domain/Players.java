@@ -7,7 +7,7 @@ public class Players {
     private List<Player> players;
 
     public Players(List<Player> players) {
-        this.players = players;
+        this.players = new ArrayList<>(players);
     }
 
     public static Players of(List<String> playerNames) {

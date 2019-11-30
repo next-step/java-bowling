@@ -10,7 +10,7 @@ public class Frames {
     private List<Frame> frames;
 
     public Frames(List<Frame> frames) {
-        this.frames = frames;
+        this.frames = new ArrayList<>(frames);
     }
 
     public Frames() {
