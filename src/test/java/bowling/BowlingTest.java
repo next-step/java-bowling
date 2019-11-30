@@ -33,7 +33,7 @@ public class BowlingTest {
         bowling.go(0);
         bowling.go(0);
         bowling.go(0);
-        ResultView.printBowling(bowling);
+        ResultView.printBowling(bowling, "KSJ");
         assertThat(bowling.getFrameSize()).isEqualTo(9);
     }
 
