@@ -1,5 +1,9 @@
 package bowling.domain;
 
+import bowling.domain.state.FirstBowl;
+import bowling.domain.state.Miss;
+import bowling.domain.state.Spare;
+import bowling.domain.state.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,14 +24,13 @@ public class FramesTest {
         Frames frames = new Frames();
         Frame frame = frames.frameByIndex(0);
 
-        assertThat(frame.getFrameNumber()).isEqualTo(new FrameNumber(1));
+        assertThat(frame.getFrameNumber()).isEqualTo(FrameNumber.of(1));
     }
 
     @Test
     @DisplayName("해당 index의 프레임이 더 핀을 쓰러트릴 수 있는 지 확인한다.")
     void isFallDownAble() {
-        Pins pins = new Pins(Collections.singletonList(new Pin(10)));
-        Frame fallDownNotAbleFrame = new Frame(2, pins);
+        Frame fallDownNotAbleFrame = new Frame(2, new Strike());
         List<Frame> frameList = Arrays.asList(new Frame(1), fallDownNotAbleFrame);
         Frames frames = new Frames(frameList);
 
@@ -44,7 +47,7 @@ public class FramesTest {
         int pin = 5;
         frames.fallDown(index, pin);
 
-        assertThat(frameList.get(index).getScore()).isEqualTo(pin);
+        assertThat(frameList.get(index).getScore(0)).isEqualTo((new FirstBowl(5)).getScore(0));
     }
 
     @ParameterizedTest
@@ -56,10 +59,10 @@ public class FramesTest {
     }
 
     static Stream<Arguments> provideFrameAndScore() {
-        Frame strikeFrame = new Frame(1, new Pins(Collections.singletonList(new Pin(10))));
-        Frame spareFrame = new Frame(1, new Pins(Arrays.asList(new Pin(5), new Pin(5))));
-        Frame firstFallDown = new Frame(2, new Pins(Arrays.asList(new Pin(5), new Pin())));
-        Frame secondFallDown = new Frame(2, new Pins(Arrays.asList(new Pin(5), new Pin(4))));
+        Frame strikeFrame = new Frame(1, new Strike());
+        Frame spareFrame = new Frame(1, new Spare(5, 5));
+        Frame firstFallDown = new Frame(2, new FirstBowl(5));
+        Frame secondFallDown = new Frame(2, new Miss(5, 4));
 
         return Stream.of(
                 Arguments.of(Collections.singletonList(firstFallDown), 0, -1),

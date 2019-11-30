@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static bowling.domain.FrameNumber.LAST_FRAME;
-
 public class OutputView {
     private static final String DASH_BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String DASH_BOARD_FORMAT = "|%s|";
@@ -23,11 +21,13 @@ public class OutputView {
     private static final String EMPTY_TEXT = "";
     private static final int SECOND_BALL_INDEX = 1;
     private static final int NON_SCORE = -1;
-    private static final int ZERO_SCORE = 0;
 
-    public static void printDashBoard(Player player) {
+    public static void printDashBoard(List<Player> players) {
         printHeader();
-        printPlayer(player);
+
+        for (Player player : players) {
+            printPlayer(player);
+        }
     }
 
     private static void printHeader() {
@@ -42,11 +42,9 @@ public class OutputView {
     private static void printStatus(Player player) {
         List<String> status = new ArrayList<>();
         status.add(frameFormat(player.getName()));
-
-        for (int i = 0; i < LAST_FRAME; i++) {
-            Frame frame = player.frameByIndex(i);
-            status.add(frameFormat(frameResult(frame)));
-        }
+        status.addAll(player.getFrames().stream()
+                .map(frame -> frameFormat(frameResult(frame)))
+                .collect(Collectors.toList()));
 
         System.out.println(String.format(DASH_BOARD_FORMAT, String.join(DASH_BOARD_SEPARATOR, status)));
     }
@@ -85,14 +83,15 @@ public class OutputView {
     private static void printScore(Player player) {
         List<String> scoreResults = new ArrayList<>();
         scoreResults.add(frameFormat(EMPTY_TEXT));
-
-        for (int i = 0; i < LAST_FRAME; i++) {
-            int score = player.getScore(i);
-            String scoreString = score == NON_SCORE ? EMPTY_TEXT : String.valueOf(score);
-            scoreResults.add(frameFormat(scoreString));
-        }
+        scoreResults.addAll(player.getScore().stream()
+                .map(score -> frameFormat(convertScoreText(score)))
+                .collect(Collectors.toList()));
 
         System.out.println(String.format(DASH_BOARD_FORMAT, String.join(DASH_BOARD_SEPARATOR, scoreResults)));
+    }
+
+    private static String convertScoreText(int score) {
+        return score == NON_SCORE ? EMPTY_TEXT : String.valueOf(score);
     }
 
     private static String frameFormat(String result) {

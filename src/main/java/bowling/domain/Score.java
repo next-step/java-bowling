@@ -20,12 +20,12 @@ public class Score {
         return new Score(totalScore + currentScore, DEFAULT_LEFT_COUNT);
     }
 
-    public static Score ofStrike(int totalScore, int currentScore) {
-        return new Score(totalScore + currentScore, STRIKE_LEFT_COUNT);
+    public static Score ofStrike(int totalScore) {
+        return new Score(totalScore + Pin.ALL_PIN_COUNT, STRIKE_LEFT_COUNT);
     }
 
-    public static Score ofSpare(int totalScore, int currentScore) {
-        return new Score(totalScore + currentScore, SPARE_LEFT_COUNT);
+    public static Score ofSpare(int totalScore) {
+        return new Score(totalScore + Pin.ALL_PIN_COUNT, SPARE_LEFT_COUNT);
     }
 
     public static Score ofNoneScore() {
@@ -51,11 +51,11 @@ public class Score {
         return !isLeft();
     }
 
-    public Score addBonus(int pin) {
+    public Score addBonus(Pin pin) {
         if (left == 0) {
             return this;
         }
-        return new Score(score + pin, left - 1);
+        return new Score(pin.sum(score), left - 1);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static bowling.domain.FrameNumber.LAST_FRAME;
@@ -9,7 +10,7 @@ public class Frames {
     private List<Frame> frames;
 
     public Frames(List<Frame> frames) {
-        this.frames = frames;
+        this.frames = new ArrayList<>(frames);
     }
 
     public Frames() {
@@ -44,10 +45,15 @@ public class Frames {
     }
 
     private Score addBonusScore(Score score, int index) {
-        while (score.isLeft() && index < frames.size() - 1) {
+        int maxIndex = frames.size() - 1;
+        while (score.isLeft() && index < maxIndex) {
             Frame nextFrame = frames.get(++index);
             score = nextFrame.addBonus(score);
         }
         return score;
+    }
+
+    public List<Frame> unmodifiableFrames() {
+        return Collections.unmodifiableList(frames);
     }
 }
