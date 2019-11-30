@@ -33,6 +33,12 @@ public class Bowling {
         return frames.size();
     }
 
+    public long getCurrentFrame() {
+        return frames.stream()
+                .filter(Frame::isRemain)
+                .count();
+    }
+
     public boolean isContains(Frame frame) {
         return frames.contains(frame);
     }

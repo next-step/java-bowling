@@ -50,6 +50,10 @@ public class Frame {
         return countOfRemain == 1 && !pin.equals(new Pin(10));
     }
 
+    public boolean isRemain() {
+        return countOfRemain == 1;
+    }
+
     public Pin hit() {
         return pin;
     }

@@ -12,17 +12,25 @@ public class Score {
 
     public String getScore() {
         if (countOfHit == 10 && countOfRemain == 1) {
-            return "X";
+            return " X |";
         }
 
         if (countOfHit == 10 && countOfRemain == 0) {
-            return "/";
+            return "|/"+" |";
         }
 
-        if (countOfHit == 0) {
-            return "-";
+        if (countOfHit == 0 && countOfRemain == 0) {
+            return "|-"+" |";
         }
 
-        return String.valueOf(countOfHit);
+        if (countOfHit == 0 && countOfRemain == 1) {
+            return " -";
+        }
+
+        if (countOfRemain == 0) {
+            return "|"+String.valueOf(countOfHit)+" |";
+        }
+
+        return " "+String.valueOf(countOfHit);
     }
 }

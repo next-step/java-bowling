@@ -25,13 +25,21 @@ public class BowlingTest {
     void createNextFrameTest() {
         Bowling bowling = new Bowling();
         bowling.go(10);
+        ResultView.printBowling(bowling);
         bowling.go(5);
+        ResultView.printBowling(bowling);
         bowling.go(3);
+        ResultView.printBowling(bowling);
         bowling.go(6);
+        ResultView.printBowling(bowling);
         bowling.go(4);
+        ResultView.printBowling(bowling);
         bowling.go(2);
+        ResultView.printBowling(bowling);
         bowling.go(0);
+        ResultView.printBowling(bowling);
         bowling.go(0);
+        ResultView.printBowling(bowling);
         bowling.go(0);
         ResultView.printBowling(bowling);
         assertThat(bowling.getFrameSize()).isEqualTo(9);
