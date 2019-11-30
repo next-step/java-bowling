@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static bowling.domain.FrameNumber.LAST_FRAME;
-
 public class OutputView {
     private static final String DASH_BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String DASH_BOARD_FORMAT = "|%s|";
@@ -24,12 +22,11 @@ public class OutputView {
     private static final int SECOND_BALL_INDEX = 1;
     private static final int NON_SCORE = -1;
 
-    public static void printDashBoard(Players players) {
+    public static void printDashBoard(List<Player> players) {
         printHeader();
 
-        int playersSize = players.size();
-        for (int i = 0; i < playersSize; i++) {
-            printPlayer(players.playerByIndex(i));
+        for (Player player : players) {
+            printPlayer(player);
         }
     }
 

@@ -14,7 +14,7 @@ public class BowlingMain {
         int playerCount = InputView.inputPlayerCount();
         List<String> playerNames = InputView.inputPlayerNames(playerCount);
         Players players = Players.of(playerNames);
-        OutputView.printDashBoard(players);
+        OutputView.printDashBoard(players.unmodifiablePlayers());
 
         for (int i = 0; i < LAST_FRAME; i++) {
             playPlayer(players, i);
@@ -32,7 +32,7 @@ public class BowlingMain {
         while (player.isFallDownAble(index)) {
             int pinCount = InputView.inputPinCount(player.getName(), player.frameByIndex(index));
             player.fallDown(index, pinCount);
-            OutputView.printDashBoard(players);
+            OutputView.printDashBoard(players.unmodifiablePlayers());
         }
     }
 }
