@@ -44,15 +44,13 @@ public class FrameTest {
     void checkStrikeByNormalFrameTest() {
         Frame frame = Frame.normalFrame(10);
         assertThat(frame.isStrike()).isTrue();
-        assertThat(frame.isSecond()).isFalse();
+        assertThat(frame.isRemain() && !frame.isStrike()).isFalse();
     }
 
     @Test
     @DisplayName("마지막 프레임 스트라이크 프레임 테스트")
     void checkStrikeByFinalFrameTest() {
         Frame frame = Frame.finalFrame(10);
-        // 노말 프레임, 스트라이크 프레임 분리 원인
-        // 체크하는 메소드가 다름
         assertThat(frame.isRemain()).isTrue();
     }
 

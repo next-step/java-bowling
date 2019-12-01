@@ -40,7 +40,7 @@ public class Bowling {
     private Frame createNormalFrame(int countOfHit) {
         if (frames.size() > MIN_SIZE) {
             Frame frame = frames.get(frames.size() - CORRECTION_VALUE);
-            if (frame.isSecond()) {
+            if (frame.isRemain() && !frame.isStrike()) {
                 return frame.nextFrame(countOfHit);
             }
         }

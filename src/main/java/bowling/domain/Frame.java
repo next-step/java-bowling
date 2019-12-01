@@ -6,6 +6,7 @@ public class Frame {
 
     private static final int DECREASING_INDEX = 1;
     private static final int INIT_REMAIN_COUNT = 1;
+    private static final int MIN_REMAIN_COUNT = 0;
     private static final int INIT_FINAL_FRAME_REMAIN_COUNT = 2;
     private static final int MAX_PIN_COUNT = 10;
     private static final String STRIKE = "X";
@@ -66,12 +67,8 @@ public class Frame {
         return String.valueOf(pin.getCountOfHit());
     }
 
-    public boolean isSecond() {
-        return countOfRemain > 0 && !pin.equals(new Pin(MAX_PIN_COUNT));
-    }
-
     public boolean isRemain() {
-        return countOfRemain > 0;
+        return countOfRemain > MIN_REMAIN_COUNT;
     }
 
     public boolean isBonus(int countOfHit) {

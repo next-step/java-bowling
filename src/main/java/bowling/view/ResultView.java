@@ -11,7 +11,7 @@ public class ResultView {
         int sum = 0;
         boolean isSecond = false;
         for (Frame frame : bowling.getFrames()) {
-            isSecond = frame.isSecond();
+            isSecond = frame.isRemain() && !frame.isStrike();
             if (isSecond) {
                 System.out.print("  "+frame.getScore(sum));
                 sum += frame.getCountOfHit();
