@@ -33,8 +33,21 @@ public class BowlingTest {
         bowling.go(0);
         bowling.go(0);
         bowling.go(0);
+        bowling.go(0);
+        bowling.go(0);
+        bowling.go(0);
+        bowling.go(0);
+        bowling.go(0);
+        bowling.go(0);
+        bowling.go(1);
+        bowling.go(2);
+        bowling.go(3);
+        bowling.go(7);
+        bowling.go(5);
+
+
         ResultView.printBowling(bowling, "KSJ");
-        assertThat(bowling.getFrameSize()).isEqualTo(9);
+        assertThat(bowling.getCurrentFrame()).isEqualTo(9);
     }
 
     @Test

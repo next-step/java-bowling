@@ -6,7 +6,7 @@ public class Frame {
 
     private static final int DECREASING_INDEX = 1;
     private static final int INIT_REMAIN_COUNT = 1;
-    private static final int INIT_FINAL_FRAME_REMAIN_COUNT = 1;
+    private static final int INIT_FINAL_FRAME_REMAIN_COUNT = 2;
     private static final int MAX_PIN_COUNT = 10;
     private static final String STRIKE = "X";
     private static final String GUTTER = "-";
@@ -50,12 +50,12 @@ public class Frame {
         return of(countOfHit, countOfRemain - DECREASING_INDEX);
     }
 
-    public String getScore(int score) {
+    public String getScore(int previousScore) {
         if (pin.isStrike()) {
             return STRIKE;
         }
 
-        if (pin.isSpare(score)) {
+        if (pin.isSpare(previousScore)) {
             return SPARE;
         }
 
@@ -66,34 +66,24 @@ public class Frame {
         return String.valueOf(pin.getCountOfHit());
     }
 
-
-    public int getCountOfHit() {
-        return pin.getCountOfHit();
-    }
-
     public boolean isSecond() {
-        return countOfRemain == INIT_REMAIN_COUNT && !pin.equals(new Pin(MAX_PIN_COUNT));
+        return countOfRemain > 0 && !pin.equals(new Pin(MAX_PIN_COUNT));
     }
 
     public boolean isRemain() {
-        return countOfRemain == INIT_REMAIN_COUNT;
-    }
-
-    public boolean isRemainLastFrame() {
-        return countOfRemain == 2;
+        return countOfRemain > 0;
     }
 
     public boolean isBonus(int countOfHit) {
-        System.out.println(getScore(countOfHit));
-        return isStrike() || getScore(countOfHit).equals("/");
+        return isStrike() || getScore(countOfHit).equals(SPARE);
     }
 
     public boolean isStrike() {
         return pin.equals(new Pin(MAX_PIN_COUNT));
     }
 
-    public Pin hit() {
-        return pin;
+    public int getCountOfHit() {
+        return pin.getCountOfHit();
     }
 
     @Override

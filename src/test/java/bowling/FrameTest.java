@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.filter;
 
 public class FrameTest {
 
@@ -25,7 +24,7 @@ public class FrameTest {
         Frame frame = Frame.normalFrame(4);
         Pin pin = new Pin(4);
 
-        assertThat(frame.hit()).isEqualTo(pin);
+        assertThat(frame.getCountOfHit()).isEqualTo(pin.getCountOfHit());
     }
 
     @Test
@@ -33,9 +32,28 @@ public class FrameTest {
     void checkScoreByFrameObjectTest() {
         Frame frame = Frame.normalFrame(5);
         Frame frame1 = frame.nextFrame(5);
+        Frame strikeFrame = Frame.normalFrame(10);
 
         assertThat(frame.getScore(0)).isEqualTo("5");
         assertThat(frame1.getScore(5)).isEqualTo("/");
+        assertThat(strikeFrame.getScore(0)).isEqualTo("X");
+    }
+
+    @Test
+    @DisplayName("노말 프레임 스트라이크 프레임 테스트")
+    void checkStrikeByNormalFrameTest() {
+        Frame frame = Frame.normalFrame(10);
+        assertThat(frame.isStrike()).isTrue();
+        assertThat(frame.isSecond()).isFalse();
+    }
+
+    @Test
+    @DisplayName("마지막 프레임 스트라이크 프레임 테스트")
+    void checkStrikeByFinalFrameTest() {
+        Frame frame = Frame.finalFrame(10);
+        // 노말 프레임, 스트라이크 프레임 분리 원인
+        // 체크하는 메소드가 다름
+        assertThat(frame.isRemain()).isTrue();
     }
 
     @Test

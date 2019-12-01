@@ -25,7 +25,18 @@ public class ResultView {
             }
         }
 
-        for (int i = 0; i < 10 - bowling.getCurrentFrame(); i ++) {
+        int size = bowling.getFinalFrames().size();
+        System.out.print(" ");
+        for (Frame frame : bowling.getFinalFrames()) {
+            System.out.print(frame.getScore(sum)+"|");
+            sum += frame.getCountOfHit();
+        }
+        if (size == 2) {
+            System.out.println(" |");
+        }
+
+
+        for (int i = 0; i < 9 - bowling.getCurrentFrame(); i ++) {
             if (isSecond) {
                 System.out.print("   |");
                 isSecond = false;
