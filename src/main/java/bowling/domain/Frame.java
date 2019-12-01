@@ -6,7 +6,11 @@ public class Frame {
 
     private static final int DECREASING_INDEX = 1;
     private static final int INIT_REMAIN_COUNT = 1;
+    private static final int INIT_FINAL_FRAME_REMAIN_COUNT = 1;
     private static final int MAX_PIN_COUNT = 10;
+    private static final String STRIKE = "X";
+    private static final String GUTTER = "-";
+    private static final String SPARE = "/";
 
     private Pin pin;
     private int countOfRemain;
@@ -20,7 +24,7 @@ public class Frame {
         return new Frame(countOfHit, countOfRemain);
     }
 
-    public static Frame firstFrame(int countOfHit) {
+    public static Frame normalFrame(int countOfHit) {
         return of(countOfHit, INIT_REMAIN_COUNT);
     }
 
@@ -31,20 +35,37 @@ public class Frame {
         throw new IllegalArgumentException("잘 못된 점수 입니다.");
     }
 
-    public String getScore(int score) {
-        if (isSecond()) {
-            return new Score(pin.getCountOfHit() + score, countOfRemain).getScore();
-        } else {
-            return getScoreFirst(score);
-        }
+    public static Frame finalFrame(int countOfHit) {
+        return of(countOfHit, INIT_FINAL_FRAME_REMAIN_COUNT);
     }
 
-    private String getScoreFirst(int score) {
-        if (pin.isMiss(score)) {
-            return new Score(pin.getCountOfHit(), countOfRemain).getScore();
+    public Frame nextFinalFrame(int countOfHit) {
+        if (pin.isAvailableLastFrame(countOfHit)) {
+            return of(countOfHit, countOfRemain - DECREASING_INDEX);
         }
-        return new Score(pin.getCountOfHit() + score, countOfRemain).getScore();
+        throw new IllegalArgumentException("잘 못된 점수 입니다.");
     }
+
+    public Frame bonusFrame(int countOfHit) {
+        return of(countOfHit, countOfRemain - DECREASING_INDEX);
+    }
+
+    public String getScore(int score) {
+        if (pin.isStrike()) {
+            return STRIKE;
+        }
+
+        if (pin.isSpare(score)) {
+            return SPARE;
+        }
+
+        if (pin.isGutter()) {
+            return GUTTER;
+        }
+
+        return String.valueOf(pin.getCountOfHit());
+    }
+
 
     public int getCountOfHit() {
         return pin.getCountOfHit();
@@ -56,6 +77,15 @@ public class Frame {
 
     public boolean isRemain() {
         return countOfRemain == INIT_REMAIN_COUNT;
+    }
+
+    public boolean isRemainLastFrame() {
+        return countOfRemain == 2;
+    }
+
+    public boolean isBonus(int countOfHit) {
+        System.out.println(getScore(countOfHit));
+        return isStrike() || getScore(countOfHit).equals("/");
     }
 
     public boolean isStrike() {

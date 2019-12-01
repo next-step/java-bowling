@@ -15,17 +15,41 @@ public class Bowling {
     }
 
     public void go(int countOfHit) {
-        frames.add(create(countOfHit));
+        if (getCurrentFrame() < 10) {
+            frames.add(createNormalFrame(countOfHit));
+        } else {
+            Frame frame = createFinalFrame(countOfHit);
+            if (frame.isBonus(countOfHit)) {
+                if (frame.isRemainLastFrame()) {
+                    frames.add(createFinalFrame(countOfHit));
+                } else {
+                    frames.add(bonusFrame(countOfHit));
+                }
+            }
+        }
     }
 
-    private Frame create(int countOfHit) {
+    private Frame createNormalFrame(int countOfHit) {
         if (frames.size() > MIN_SIZE) {
             Frame frame = frames.get(frames.size() - CORRECTION_VALUE);
             if (frame.isSecond()) {
                 return frame.nextFrame(countOfHit);
             }
         }
-        return Frame.firstFrame(countOfHit);
+        return Frame.normalFrame(countOfHit);
+    }
+
+    private Frame createFinalFrame(int countOfHit) {
+        Frame frame = frames.get(frames.size() - CORRECTION_VALUE);
+        if (frame.isRemainLastFrame()) {
+            return frame.nextFinalFrame(countOfHit);
+        }
+        return Frame.finalFrame(countOfHit);
+    }
+
+    private Frame bonusFrame(int countOfHit) {
+        Frame frame = frames.get(frames.size() - CORRECTION_VALUE);
+        return frame.bonusFrame(countOfHit);
     }
 
     public List<Frame> getFrames() {

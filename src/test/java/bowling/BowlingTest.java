@@ -16,7 +16,7 @@ public class BowlingTest {
     void containsFrameByBowlingTest() {
         Bowling bowling = new Bowling();
         bowling.go(5);
-        Frame frame = Frame.firstFrame(5);
+        Frame frame = Frame.normalFrame(5);
         assertThat(bowling.isContains(frame)).isTrue();
     }
 
