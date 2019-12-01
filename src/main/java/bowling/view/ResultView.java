@@ -3,50 +3,36 @@ package bowling.view;
 import bowling.domain.Bowling;
 import bowling.domain.Frame;
 
+import java.util.List;
+
 public class ResultView {
 
     public static void printBowling(Bowling bowling, String name) {
         printBowlingFrameByOrder();
         printPlayerFrameByName(name);
-        int sum = 0;
+
+        int previousScore = 0;
         boolean isSecond = false;
+
         for (Frame frame : bowling.getFrames()) {
             isSecond = frame.isRemain() && !frame.isStrike();
-            if (isSecond) {
-                System.out.print("  "+frame.getScore(sum));
-                sum += frame.getCountOfHit();
-            } else {
-                if (frame.isStrike()) {
-                    System.out.print("  "+frame.getScore(sum)+"   |");
-                } else {
-                    System.out.print("|"+frame.getScore(sum)+" |");
-                }
-                sum = 0;
-            }
+            previousScore = printFrameByNormal(frame, previousScore);
         }
 
-        int size = bowling.getFinalFrames().size();
-        System.out.print(" ");
-        for (Frame frame : bowling.getFinalFrames()) {
-            System.out.print(frame.getScore(sum)+"|");
-            sum += frame.getCountOfHit();
-        }
-        if (size == 2) {
-            System.out.println(" |");
+        if (bowling.getFinalFrames().size() > 0) {
+            printFinalFrame(bowling.getFinalFrames(), previousScore);
+        } else {
+            System.out.print(printEmptyFrame(isSecond));
         }
 
-
-        for (int i = 0; i < 9 - bowling.getCurrentFrame(); i ++) {
-            if (isSecond) {
-                System.out.print("   |");
-                isSecond = false;
-            }
-            System.out.print("      |");
+        if (bowling.getFinalFrames().size() == 2) {
+            System.out.print(" |");
         }
-        System.out.println();
+
+        printEmptyFrameByNormalFrame(bowling.getCurrentFrame());
     }
 
-    public static void printBowlingFrameByOrder() {
+    private static void printBowlingFrameByOrder() {
         System.out.print("| NAME |");
         for (int i = 1; i < 11; i++) {
             if (i < 10) {
@@ -61,5 +47,49 @@ public class ResultView {
     public static void printPlayerFrameByName(String name) {
         System.out.print("|  "+name+" |");
     }
+    
+    private static int printFrameByNormal(Frame frame, int previousScore) {
+        if (frame.isRemain() && !frame.isStrike()) {
+            System.out.print("  "+frame.getScore(previousScore));
+            return frame.getCountOfHit();
+        }
+        System.out.print(printScoreByFirst(frame, previousScore));
+        return 0;
+    }
 
+    private static String printScoreByFirst(Frame frame, int previousScore) {
+        if (frame.isStrike()) {
+            return "  "+frame.getScore(previousScore)+"   |";
+        }
+        return "|"+frame.getScore(previousScore)+" |";
+    }
+
+    private static void printFinalFrame(List<Frame> frames, int previousScore) {
+        System.out.print(" ");
+        for (Frame frame : frames) {
+            System.out.print(printFrameByFinalFrame(frame.getScore(previousScore), frames.size()));
+            previousScore += frame.getCountOfHit();
+        }
+    }
+
+    private static void printEmptyFrameByNormalFrame(long currentFrame) {
+        for (int i = 0; i < 9 - currentFrame; i ++) {
+            System.out.print("      |");
+        }
+        System.out.println();
+    }
+
+    private static String printFrameByFinalFrame(String score, int size) {
+        if (size == 1) {
+            return score + "    |";
+        }
+        return score +"|";
+    }
+
+    private static String printEmptyFrame(boolean isValue) {
+        if (isValue) {
+            return "   |";
+        }
+        return "      |";
+    }
 }
