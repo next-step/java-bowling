@@ -42,7 +42,7 @@ public class BowlingTest {
         bowling.go(1);
         bowling.go(2);
         bowling.go(5);
-        bowling.go(4);
+        bowling.go(5);
         bowling.go(10);
 
         ResultView.printBowling(bowling, "KSJ");
