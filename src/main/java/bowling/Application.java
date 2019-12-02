@@ -14,13 +14,13 @@ public class Application {
         ResultView.printBowling(bowling, name);
 
         while (bowling.isFinal()) {
-            int pitching = InputView.inputPitching(bowling.getCurrentFrame() + CORRECTION_VALUE);
+            int pitching = InputView.inputPitching(bowling.getCurrentFrameNumber() + CORRECTION_VALUE);
             bowling.go(pitching);
             ResultView.printBowling(bowling, name);
         }
 
         if (bowling.isBonus()) {
-            int pitching = InputView.inputPitching(bowling.getCurrentFrame() + CORRECTION_VALUE);
+            int pitching = InputView.inputPitching(bowling.getCurrentFrameNumber() + CORRECTION_VALUE);
             bowling.go(pitching);
             ResultView.printBowling(bowling, name);
         }

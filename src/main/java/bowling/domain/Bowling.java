@@ -16,7 +16,7 @@ public class Bowling {
     }
 
     public void go(int countOfHit) {
-        if (getCurrentFrame() <= 8) {
+        if (getCurrentFrameNumber() <= 8) {
             normalFrames.next(countOfHit);
             return;
         }
@@ -31,8 +31,8 @@ public class Bowling {
         return new ArrayList<>(finalFrames.getFrames());
     }
 
-    public long getCurrentFrame() {
-        return normalFrames.getCurrentFrame();
+    public long getCurrentFrameNumber() {
+        return normalFrames.getCurrentFrameNumber();
     }
 
     public boolean isFinal() {

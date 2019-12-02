@@ -37,7 +37,7 @@ public class ResultView {
             System.out.print(FRAME_RIGHT_BOUNDARY);
         }
 
-        printEmptyFrameByNormalFrame(bowling.getCurrentFrame());
+        printEmptyFrameByNormalFrame(bowling.getCurrentFrameNumber());
     }
 
     private static void printPlayerFrameByName(String name) {

@@ -46,7 +46,7 @@ public class BowlingTest {
         bowling.go(10);
 
         ResultView.printBowling(bowling, "KSJ");
-        assertThat(bowling.getCurrentFrame()).isEqualTo(9);
+        assertThat(bowling.getCurrentFrameNumber()).isEqualTo(9);
     }
 
     @Test
@@ -63,12 +63,12 @@ public class BowlingTest {
     @DisplayName("현재 프레임 테스트")
     void checkOfCurrentFrame() {
         Bowling bowling = new Bowling();
-        assertThat(bowling.getCurrentFrame()).isEqualTo(0);
+        assertThat(bowling.getCurrentFrameNumber()).isEqualTo(0);
         bowling.go(10);
-        assertThat(bowling.getCurrentFrame()).isEqualTo(1L);
+        assertThat(bowling.getCurrentFrameNumber()).isEqualTo(1L);
 
         bowling.go(5);
         bowling.go(4);
-        assertThat(bowling.getCurrentFrame()).isEqualTo(2L);
+        assertThat(bowling.getCurrentFrameNumber()).isEqualTo(2L);
     }
 }

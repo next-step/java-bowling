@@ -78,6 +78,10 @@ public class Frame {
         return String.valueOf(pin.getCountOfHit());
     }
 
+    public boolean isCompleteNormalFrame() {
+        return isStrike() || !isRemain();
+    }
+
     public boolean isRemain() {
         return countOfRemain > MIN_REMAIN_COUNT;
     }

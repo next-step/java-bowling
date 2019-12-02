@@ -32,9 +32,9 @@ public class NormalFrames {
         return Frame.frame(countOfHit);
     }
 
-    public long getCurrentFrame() {
+    public long getCurrentFrameNumber() {
         return frames.stream()
-                .filter(frame -> frame.isStrike() || !frame.isRemain())
+                .filter(Frame::isCompleteNormalFrame)
                 .count();
     }
 

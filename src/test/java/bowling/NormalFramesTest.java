@@ -33,9 +33,9 @@ public class NormalFramesTest {
         normalFrames.next(5);
         normalFrames.next(4);
         normalFrames.next(3);
-        assertThat(normalFrames.getCurrentFrame()).isEqualTo(1);
+        assertThat(normalFrames.getCurrentFrameNumber()).isEqualTo(1);
         // 현재 프레임 종료
         normalFrames.next(2);
-        assertThat(normalFrames.getCurrentFrame()).isEqualTo(2);
+        assertThat(normalFrames.getCurrentFrameNumber()).isEqualTo(2);
     }
 }
