@@ -26,10 +26,12 @@ public class BowlingBoard {
 		return new BowlingBoard();
 	}
 
-	public void roll(BowlingPins pins) {
+	public boolean roll(BowlingPins pins) {
 		frameStore.plusAdditionalScores(pins);
-		enrollFrameAndAddIndexIfEnds(frames.roll(pins));
+		Frame currentFrame = frames.roll(pins);
+		enrollFrameAndAddIndexIfEnds(currentFrame);
 		plusFinalScoreIfBowlingEnds();
+		return currentFrame.isEnd();
 	}
 
 	private void enrollFrameAndAddIndexIfEnds(Frame currentFrame) {

@@ -1,5 +1,6 @@
 package controller;
 
+import domain.UserNumber;
 import domain.bowling.BowlingGame;
 import view.InputView;
 import view.ResultView;
@@ -11,12 +12,14 @@ public class BowlingController {
 	}
 
 	public static void start() {
-		int currentFrame = 1;
-		BowlingGame newGame = new BowlingGame(InputView.receiveUserName());
+		UserNumber userNumber = InputView.receiveUserNumber();
+		BowlingGame newGame = new BowlingGame(userNumber);
+		for (int i = 0, end = userNumber.getUserNumber(); i < end; i++) {
+			newGame.enroll(InputView.receiveUserName());
+		}
 
 		while (newGame.isNotEnd()) {
-			newGame.roll(InputView.receiveFallenBowlingPins(currentFrame));
-			currentFrame = newGame.getCurrentFrameIndex();
+			newGame.roll(InputView.receiveFallenBowlingPins(newGame.getUserName()));
 			ResultView.printCurrentScore(newGame.getBowlingOnBoard());
 		}
 	}

@@ -14,10 +14,12 @@ public class ResultView {
 
 	}
 
-	public static void printCurrentScore(BowlingOnBoard bowlingOnBoards) {
+	public static void printCurrentScore(List<BowlingOnBoard> bowlingOnBoards) {
 		System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |   10    |");
-		printFrameResults(bowlingOnBoards);
-		printScores(bowlingOnBoards);
+		for (BowlingOnBoard bowlingOnBoard : bowlingOnBoards) {
+			printFrameResults(bowlingOnBoard);
+			printScores(bowlingOnBoard);
+		}
 		System.out.println();
 	}
 

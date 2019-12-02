@@ -2,8 +2,8 @@ package domain.bowling;
 
 import domain.BowlingPins;
 import domain.UserName;
+import domain.UserNumber;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -14,29 +14,31 @@ public class BowlingGame {
 	private static final int START_TURN_INDEX = 0;
 
 	private int gameTurnIndex;
-	// TODO: 2019-11-25 일급 컬렉션
-	private List<BowlingOnBoard> bowlingOnBoards;
+	private BowlingOnBoards bowlingOnBoards;
 
-	public BowlingGame(UserName userName) {
+	public BowlingGame(UserNumber userNumber) {
 		this.gameTurnIndex = START_TURN_INDEX;
-		this.bowlingOnBoards = Collections.singletonList(new BowlingOnBoard(userName));
+		this.bowlingOnBoards = new BowlingOnBoards(userNumber);
+	}
+
+	public void enroll(UserName userName) {
+		bowlingOnBoards.enroll(userName);
 	}
 
 	public void roll(BowlingPins pins) {
-		bowlingOnBoards.get(gameTurnIndex).roll(pins);
+		gameTurnIndex = bowlingOnBoards.roll(pins, gameTurnIndex);
 	}
 
 	public boolean isNotEnd() {
-		return bowlingOnBoards.stream()
-				.anyMatch(BowlingOnBoard::isNotEnd);
+		return bowlingOnBoards.isNotEnd();
 	}
 
-	public int getCurrentFrameIndex() {
-		return bowlingOnBoards.get(gameTurnIndex).getCurrentFrame();
+	public UserName getUserName() {
+		return bowlingOnBoards.getUserName(gameTurnIndex);
 	}
 
-	public BowlingOnBoard getBowlingOnBoard() {
-		return bowlingOnBoards.get(gameTurnIndex);
+	public List<BowlingOnBoard> getBowlingOnBoard() {
+		return bowlingOnBoards.getBowlingOnBoard();
 	}
 
 }
