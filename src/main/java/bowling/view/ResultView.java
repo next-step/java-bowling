@@ -50,7 +50,7 @@ public class ResultView {
     
     private static int printFrameByNormal(Frame frame, int previousScore) {
         if (frame.isRemain() && !frame.isStrike()) {
-            System.out.print("  "+frame.getScore(previousScore));
+            System.out.print("  "+frame.getScoreByNormalFrame(previousScore));
             return frame.getCountOfHit();
         }
         System.out.print(printScoreByFirst(frame, previousScore));
@@ -59,15 +59,15 @@ public class ResultView {
 
     private static String printScoreByFirst(Frame frame, int previousScore) {
         if (frame.isStrike()) {
-            return "  "+frame.getScore(previousScore)+"   |";
+            return "  "+frame.getScoreByNormalFrame(previousScore)+"   |";
         }
-        return "|"+frame.getScore(previousScore)+" |";
+        return "|"+frame.getScoreByNormalFrame(previousScore)+" |";
     }
 
     private static void printFinalFrame(List<Frame> frames, int previousScore) {
         System.out.print(" ");
         for (Frame frame : frames) {
-            System.out.print(printFrameByFinalFrame(frame.getScore(previousScore), frames.size()));
+            System.out.print(printFrameByFinalFrame(frame.getScoreByFinalFrame(previousScore), frames.size()));
             previousScore += frame.getCountOfHit();
         }
     }

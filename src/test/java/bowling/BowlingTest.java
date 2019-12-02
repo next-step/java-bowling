@@ -16,8 +16,8 @@ public class BowlingTest {
     void containsFrameByBowlingTest() {
         Bowling bowling = new Bowling();
         bowling.go(5);
-        Frame frame = Frame.normalFrame(5);
-        assertThat(bowling.isContains(frame)).isTrue();
+        Frame frame = Frame.frame(5);
+        assertThat(bowling.getFrames().contains(frame)).isTrue();
     }
 
     @Test
@@ -41,9 +41,9 @@ public class BowlingTest {
         bowling.go(0);
         bowling.go(1);
         bowling.go(2);
-        bowling.go(3);
-        bowling.go(7);
         bowling.go(5);
+        bowling.go(4);
+        bowling.go(10);
 
         ResultView.printBowling(bowling, "KSJ");
         assertThat(bowling.getCurrentFrame()).isEqualTo(9);
@@ -62,5 +62,13 @@ public class BowlingTest {
     @Test
     @DisplayName("현재 프레임 테스트")
     void checkOfCurrentFrame() {
+        Bowling bowling = new Bowling();
+        assertThat(bowling.getCurrentFrame()).isEqualTo(0);
+        bowling.go(10);
+        assertThat(bowling.getCurrentFrame()).isEqualTo(1L);
+
+        bowling.go(5);
+        bowling.go(4);
+        assertThat(bowling.getCurrentFrame()).isEqualTo(2L);
     }
 }

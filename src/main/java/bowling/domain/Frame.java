@@ -7,7 +7,6 @@ public class Frame {
     private static final int DECREASING_INDEX = 1;
     private static final int INIT_REMAIN_COUNT = 1;
     private static final int MIN_REMAIN_COUNT = 0;
-    private static final int INIT_FINAL_FRAME_REMAIN_COUNT = 2;
     private static final int MAX_PIN_COUNT = 10;
     private static final String STRIKE = "X";
     private static final String GUTTER = "-";
@@ -25,7 +24,7 @@ public class Frame {
         return new Frame(countOfHit, countOfRemain);
     }
 
-    public static Frame normalFrame(int countOfHit) {
+    public static Frame frame(int countOfHit) {
         return of(countOfHit, INIT_REMAIN_COUNT);
     }
 
@@ -36,10 +35,6 @@ public class Frame {
         throw new IllegalArgumentException("잘 못된 점수 입니다.");
     }
 
-    public static Frame finalFrame(int countOfHit) {
-        return of(countOfHit, INIT_FINAL_FRAME_REMAIN_COUNT);
-    }
-
     public Frame nextFinalFrame(int countOfHit) {
         if (pin.isAvailableLastFrame(countOfHit)) {
             return of(countOfHit, countOfRemain - DECREASING_INDEX);
@@ -48,11 +43,27 @@ public class Frame {
     }
 
     public Frame bonusFrame(int countOfHit) {
-        return of(countOfHit, countOfRemain - DECREASING_INDEX);
+        return of(countOfHit, INIT_REMAIN_COUNT);
     }
 
-    public String getScore(int previousScore) {
+    public String getScoreByNormalFrame(int previousScore) {
         if (pin.isStrike() && countOfRemain >= 1) {
+            return STRIKE;
+        }
+
+        if (pin.isSpare(previousScore)) {
+            return SPARE;
+        }
+
+        if (pin.isGutter()) {
+            return GUTTER;
+        }
+
+        return String.valueOf(pin.getCountOfHit());
+    }
+
+    public String getScoreByFinalFrame(int previousScore) {
+        if (pin.isStrike()) {
             return STRIKE;
         }
 
@@ -72,7 +83,7 @@ public class Frame {
     }
 
     public boolean isBonus(int countOfHit) {
-        return isStrike() || getScore(countOfHit).equals(SPARE);
+        return isStrike() || getScoreByFinalFrame(countOfHit).equals(SPARE);
     }
 
     public boolean isStrike() {
