@@ -10,4 +10,9 @@ public class InputView {
         System.out.print("플레이어 이름은(3 english letters)?:");
         return SCANNER.nextLine();
     }
+
+    public static Integer inputPitching(long currentFrame) {
+        System.out.print(currentFrame+"프레임 투구 : ");
+        return Integer.parseInt(SCANNER.nextLine());
+    }
 }

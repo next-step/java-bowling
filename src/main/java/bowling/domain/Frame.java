@@ -52,7 +52,7 @@ public class Frame {
     }
 
     public String getScore(int previousScore) {
-        if (pin.isStrike()) {
+        if (pin.isStrike() && countOfRemain >= 1) {
             return STRIKE;
         }
 
@@ -76,7 +76,7 @@ public class Frame {
     }
 
     public boolean isStrike() {
-        return pin.equals(new Pin(MAX_PIN_COUNT));
+        return pin.equals(new Pin(MAX_PIN_COUNT)) && countOfRemain >= INIT_REMAIN_COUNT ;
     }
 
     public int getCountOfHit() {
