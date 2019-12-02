@@ -24,11 +24,11 @@ public class Bowling {
     }
 
     public List<Frame> getFrames() {
-        return normalFrames.getFrames();
+        return new ArrayList<>(normalFrames.getFrames());
     }
 
     public List<Frame> getFinalFrames() {
-        return finalFrames.getFrames();
+        return new ArrayList<>(finalFrames.getFrames());
     }
 
     public long getCurrentFrame() {
