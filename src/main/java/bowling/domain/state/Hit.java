@@ -21,7 +21,7 @@ public class Hit implements State {
         }
 
         if (hitCount + newHitCount == MAX_HIT_COUNT) {
-            return new Spare();
+            return new Spare(newHitCount);
         }
 
         return new Miss(newHitCount);

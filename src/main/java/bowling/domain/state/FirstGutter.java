@@ -16,7 +16,7 @@ public class FirstGutter implements State {
         }
 
         if (newHitCount == MAX_HIT_COUNT) {
-            return new Spare();
+            return new Spare(newHitCount);
         }
 
         return new Miss(newHitCount);

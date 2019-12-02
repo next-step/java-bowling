@@ -33,12 +33,13 @@ public class View {
 
     public void showFrameSetResult(String playerName, List<FrameSet> results) {
         showBoardHeader();
-        showScore(playerName, results);
+        showState(playerName, results);
+        showScore(results);
     }
 
-    private void showScore(String playerName, List<FrameSet> resultSets) {
+    private void showState(String playerName, List<FrameSet> resultSets) {
         showPlayerName(playerName);
-        showFrameSetsText(resultSets);
+        showFrameState(resultSets);
         nextLine();
     }
 
@@ -48,22 +49,42 @@ public class View {
         showText(DIVIDER);
     }
 
-    private void showFrameSetsText(List<FrameSet> resultSets) {
+    private void showFrameState(List<FrameSet> resultSets) {
         for (FrameSet frameSet : resultSets) {
-            showFrameSetText(frameSet);
+            showFrameSetState(frameSet);
         }
     }
 
-    private void showFrameSetText(FrameSet frameSet) {
+    private void showScore(List<FrameSet> resultSets) {
+        showEmptyBlock();
+
+        for (FrameSet frameSet : resultSets) {
+            showScore(frameSet);
+        }
+        nextLine();
+    }
+
+    private void showScore(FrameSet frameSet) {
+        showText(StringUtils.addBlank(String.valueOf(frameSet.getScore()), 6));
+        showText(DIVIDER);
+    }
+
+    private void showEmptyBlock() {
+        showText(DIVIDER);
+        showText(StringUtils.addBlank("", 6));
+        showText(DIVIDER);
+    }
+
+    private void showFrameSetState(FrameSet frameSet) {
         StringBuilder frameScoreTextBuilder = new StringBuilder();
         for (State state : frameSet.getHistory()) {
             addFrameScoreText(frameScoreTextBuilder, state);
         }
 
-        showFrameSetText(frameScoreTextBuilder.toString());
+        showFrameSetState(frameScoreTextBuilder.toString());
     }
 
-    private void showFrameSetText(String frameScore) {
+    private void showFrameSetState(String frameScore) {
         showText(StringUtils.addBlank(frameScore, SCORE_TEXT_LENGTH));
         showText(DIVIDER);
     }

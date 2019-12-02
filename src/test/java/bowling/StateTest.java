@@ -33,7 +33,7 @@ public class StateTest {
         assertThatIllegalStateException().isThrownBy(() -> new Miss(4).play(0));
         assertThatIllegalStateException().isThrownBy(() -> new SecondGutter().play(0));
         assertThatIllegalStateException().isThrownBy(() -> new Strike().play(0));
-        assertThatIllegalStateException().isThrownBy(() -> new Spare().play(0));
+        assertThatIllegalStateException().isThrownBy(() -> new Spare(1).play(0));
     }
 
     @Test
