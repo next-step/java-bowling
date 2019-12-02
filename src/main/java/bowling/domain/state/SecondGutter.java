@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.FrameConstants;
+
 public class SecondGutter implements State {
 
     public static final String TEXT = "-";
@@ -27,5 +29,10 @@ public class SecondGutter implements State {
     @Override
     public String getString() {
         return SecondGutter.TEXT;
+    }
+
+    @Override
+    public int getScore() {
+        return FrameConstants.MIN_HIT_COUNT;
     }
 }

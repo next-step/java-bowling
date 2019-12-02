@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.FrameConstants;
+
 public class Spare implements State {
 
     public static final String TEXT = "/";
@@ -27,5 +29,10 @@ public class Spare implements State {
     @Override
     public String getString() {
         return Spare.TEXT;
+    }
+
+    @Override
+    public int getScore() {
+        return FrameConstants.MAX_HIT_COUNT;
     }
 }

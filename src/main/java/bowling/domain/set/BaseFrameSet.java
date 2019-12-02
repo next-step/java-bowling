@@ -60,6 +60,16 @@ public class BaseFrameSet implements FrameSet {
     }
 
     @Override
+    public int getScore() {
+        int totalScore = 0;
+
+        for (State state : stateHistory) {
+            totalScore += state.getScore();
+        }
+        return totalScore;
+    }
+
+    @Override
     public List<State> getHistory() {
         return stateHistory;
     }

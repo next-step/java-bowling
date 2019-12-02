@@ -11,4 +11,6 @@ public interface State {
     public boolean isBonusPlayableState();
 
     public String getString();
+
+    public int getScore();
 }

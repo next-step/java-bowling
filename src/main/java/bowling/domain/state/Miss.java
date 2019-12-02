@@ -36,6 +36,11 @@ public class Miss implements State {
         return String.valueOf(hitCount);
     }
 
+    @Override
+    public int getScore() {
+        return hitCount;
+    }
+
     private void assertHitCount(int hitCount) {
         if (hitCount <= MIN_HIT_COUNT) {
             throw new IllegalArgumentException("올바르지 않은 상태 입니다. : MISS");
