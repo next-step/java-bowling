@@ -52,16 +52,16 @@ public class FrameSetTest {
     @Test
     void isGameEnd() {
         FrameSet normalSet = NormalFrameSet.create(NormalFrameSet.END_SET_PLAY_COUNT);
-        assertThat(normalSet.isEnd()).isFalse();
+        assertThat(normalSet.isEndedGame()).isFalse();
 
         FrameSet lastMissSet = LastFrameSet.create();
         lastMissSet.play(4);
         lastMissSet.play(5);
-        assertThat(lastMissSet.isEnd()).isTrue();
+        assertThat(lastMissSet.isEndedGame()).isTrue();
 
         FrameSet bonusSet = BonusFrameSet.create();
         bonusSet.play(10);
-        assertThat(bonusSet.isEnd()).isTrue();
+        assertThat(bonusSet.isEndedGame()).isTrue();
     }
 
     @Test

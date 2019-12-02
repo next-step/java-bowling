@@ -3,6 +3,9 @@ package bowling.domain.set;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
+import java.util.List;
+import java.util.Objects;
+
 public class BonusFrameSet implements FrameSet {
 
     public static final int PLAY_COUNT = 11;
@@ -28,7 +31,12 @@ public class BonusFrameSet implements FrameSet {
     }
 
     @Override
-    public boolean isEnd() {
+    public boolean isEndedFrame() {
+        return true;
+    }
+
+    @Override
+    public boolean isEndedGame() {
         return !(getState() instanceof Ready);
     }
 
@@ -45,5 +53,28 @@ public class BonusFrameSet implements FrameSet {
     @Override
     public int getPlayCount() {
         return BonusFrameSet.PLAY_COUNT;
+    }
+
+    @Override
+    public int getScore() {
+        return frameSet.getScore();
+    }
+
+    @Override
+    public List<State> getHistory() {
+        return frameSet.getHistory();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BonusFrameSet that = (BonusFrameSet) o;
+        return Objects.equals(frameSet, that.frameSet);
+    }
+
+    @Override
+    public int hashCode() {
+        return frameSet.hashCode();
     }
 }

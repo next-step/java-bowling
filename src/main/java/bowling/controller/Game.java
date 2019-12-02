@@ -17,7 +17,7 @@ public class Game {
         FrameSet frameSet = NormalFrameSet.createFirst();
         FrameResults frameResults = new FrameResults();
 
-        while (!frameSet.isEnd()) {
+        while (!frameSet.isEndedGame()) {
             int hitCount = view.getHitCount(frameSet.getPlayCount());
             frameSet.play(hitCount);
 

@@ -49,17 +49,18 @@ public class View {
     }
 
     private void showFrameSetsText(List<FrameSet> resultSets) {
-        int lastIndex = resultSets.size() - 1;
-        StringBuilder frameScoreTextBuilder = new StringBuilder();
-
-        for (int i = 0; i <= lastIndex; i++) {
-            addFrameScoreText(frameScoreTextBuilder, resultSets.get(i).getState());
-
-            if (resultSets.get(i).getState().isEnd() || i == lastIndex) {
-                showFrameSetText(frameScoreTextBuilder.toString());
-                frameScoreTextBuilder = new StringBuilder();
-            }
+        for (FrameSet frameSet : resultSets) {
+            showFrameSetText(frameSet);
         }
+    }
+
+    private void showFrameSetText(FrameSet frameSet) {
+        StringBuilder frameScoreTextBuilder = new StringBuilder();
+        for (State state : frameSet.getHistory()) {
+            addFrameScoreText(frameScoreTextBuilder, state);
+        }
+
+        showFrameSetText(frameScoreTextBuilder.toString());
     }
 
     private void showFrameSetText(String frameScore) {
