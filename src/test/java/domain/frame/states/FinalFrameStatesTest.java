@@ -32,10 +32,8 @@ class FinalFrameStatesTest {
 		frameStates.roll(BowlingPins.of(3));
 
 		// then
-		System.out.println(frameStates);
 		assertThat(frameStates).isEqualTo(FinalFrameStates.of(3,
 				Strike.getInstance(), InProgress.of(4), Miss.of(3)));
-		System.out.println("HERE");
 	}
 
 	@Test

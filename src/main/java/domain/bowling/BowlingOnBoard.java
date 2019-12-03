@@ -20,8 +20,8 @@ public class BowlingOnBoard {
 		this.userName = userName;
 	}
 
-	void roll(BowlingPins pins) {
-		bowlingBoard.roll(pins);
+	boolean roll(BowlingPins pins) {
+		return bowlingBoard.roll(pins);
 	}
 
 	int getCurrentFrame() {
