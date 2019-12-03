@@ -98,6 +98,11 @@ public class LastFrame implements Frame {
     }
 
     @Override
+    public boolean isLastFrame() {
+        return true;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

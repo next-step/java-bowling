@@ -8,8 +8,8 @@ import frame.LastFrame;
 import score.framescore.FrameScore;
 
 public class OutputView {
-    public static void showBoard(Name name, Frames frames) {
-        //show
+
+    public static void showFrames(Name name, Frames frames) {
         OutputView.showBasic(name.getName());
         OutputView.showFrame(frames);
         OutputView.showFrameScore(frames);

@@ -92,6 +92,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean isLastFrame() {
+        return frameInfo.isLastNumber();
+    }
+
+    @Override
     public FrameScore addNextScore(FrameScore before) {
         FrameScore frameScore = scores.addScore(before);
 

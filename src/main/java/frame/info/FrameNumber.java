@@ -23,6 +23,14 @@ public class FrameNumber {
         return number + NEXT;
     }
 
+    public int getNumber() {
+        return this.number;
+    }
+
+    public boolean isLastNumber() {
+        return number.equals(LAST_FRAME_NUMBER);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,9 +49,5 @@ public class FrameNumber {
         return "FrameNumber{" +
                 "number=" + number +
                 '}';
-    }
-
-    public int getNumber() {
-        return this.number;
     }
 }

@@ -9,6 +9,7 @@ import java.util.Objects;
 public class ScoreInfoBundle {
     private static final int FIRST = 0;
     private static final int MAX = 10;
+
     private final List<ScoreInfo> scoreInfoBundle;
 
     public ScoreInfoBundle(List<ScoreInfo> scoreInfoBundle) {
@@ -100,8 +101,7 @@ public class ScoreInfoBundle {
         for (int i = index + 1; i < scoreInfoBundle.size(); i++) {
             frameScore = addScore(frameScore, scoreInfoBundle.get(i));
         }
-
-        return frameScore;
+        return new FrameScore(startScoreInfo.getScore(), frameScore.getAddCount());
     }
 
     @Override
