@@ -53,7 +53,7 @@ public class Frames {
 
     private Frame getNextFrame(Frame lastFrame) {
         Frame nextFrame = lastFrame.nextFrame();
-        if (nextFrame.getFrameNumber() == LAST_FRAME_NUMBER) {
+        if (nextFrame.isLastFrame()) {
             return lastFrame.getLastFrame();
         }
         return nextFrame;
@@ -85,5 +85,12 @@ public class Frames {
     public FrameScore getFrameScore(int index) {
         return this.frames.get(index)
                 .getFrameScore();
+    }
+
+    public boolean isFull() {
+        if (isNotLast()) {
+            return false;
+        }
+        return getLastFrame().isFull();
     }
 }

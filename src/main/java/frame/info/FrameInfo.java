@@ -9,11 +9,6 @@ public class FrameInfo {
     private final FrameNumber frameNumber;
     private final Frame nextFrame;
 
-    private FrameInfo(FrameNumber frameNumber, Frame nextFrame) {
-        this.frameNumber = frameNumber;
-        this.nextFrame = nextFrame;
-    }
-
     private FrameInfo(int number, Frame nextFrame) {
         this.frameNumber = new FrameNumber(number);
         this.nextFrame = nextFrame;
@@ -24,7 +19,7 @@ public class FrameInfo {
     }
 
     public FrameInfo makeWithNext(Frame nextFrame) {
-        return new FrameInfo(frameNumber, nextFrame);
+        return new FrameInfo(frameNumber.getNumber(), nextFrame);
     }
 
     public Integer nextNumber() {
@@ -36,6 +31,10 @@ public class FrameInfo {
             return frameScore;
         }
         return nextFrame.addNextScore(frameScore);
+    }
+
+    public boolean isLastNumber() {
+        return frameNumber.isLastNumber();
     }
 
     @Override
@@ -50,9 +49,5 @@ public class FrameInfo {
     @Override
     public int hashCode() {
         return Objects.hash(frameNumber, nextFrame);
-    }
-
-    public int getNumber() {
-        return frameNumber.getNumber();
     }
 }

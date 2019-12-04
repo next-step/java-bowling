@@ -42,14 +42,6 @@ public class FrameScore {
         return Objects.hash(score, addCount);
     }
 
-    @Override
-    public String toString() {
-        return "FrameScore{" +
-                "score=" + score +
-                ", addCount=" + addCount +
-                '}';
-    }
-
     public String getCalculated(int sumScore) {
         if (canAdd()) {
             return "";

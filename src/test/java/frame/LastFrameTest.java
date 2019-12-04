@@ -62,16 +62,13 @@ class LastFrameTest {
         LastFrame lastFrame = LastFrame.init();
 
         assertThat(lastFrame.getFrameScore()).isEqualTo(new FrameScore(0, 1));
-        System.out.println();
         lastFrame.bowling(10);
-        assertThat(lastFrame.getFrameScore()).isEqualTo(new FrameScore(10, 2));
-        System.out.println();
+        assertThat(lastFrame.getFrameScore()).isEqualTo(new FrameScore(10, 1));
 
         lastFrame.bowling(1);
-        assertThat(lastFrame.getFrameScore()).isEqualTo(new FrameScore(12, 1));
-        System.out.println();
+        assertThat(lastFrame.getFrameScore()).isEqualTo(new FrameScore(11, 0));
 
         lastFrame.bowling(9);
-        assertThat(lastFrame.getFrameScore()).isEqualTo(new FrameScore(30, 0));
+        assertThat(lastFrame.getFrameScore()).isEqualTo(new FrameScore(20, 0));
     }
 }

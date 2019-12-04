@@ -9,7 +9,6 @@ class ScoreInfoTest {
     @Test
     void firstScore() {
         ScoreInfo strike = ScoreInfo.firstScore(10);
-        System.out.println(strike.toString());
         assertThat(strike).isEqualTo(new ScoreInfo(10, Status.STRIKE));
     }
 

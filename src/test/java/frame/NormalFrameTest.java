@@ -16,6 +16,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalFrameTest {
 
+    private static Stream<Arguments> sourceForAddNextScore() {
+        NormalFrame emptyFrame = NormalFrame.firstNormalFrame();
+
+        NormalFrame normalFrame = new NormalFrame(1, Arrays.asList(new ScoreInfo(1, Status.MISS)));
+
+        NormalFrame fullFrame = new NormalFrame(1, Arrays.asList(new ScoreInfo(1, Status.MISS), new ScoreInfo(5, Status.MISS)));
+
+        NormalFrame hasNextFrame = new NormalFrame(2, Arrays.asList(new ScoreInfo(1, Status.MISS)));
+        Frame frame = hasNextFrame.nextFrame();
+        frame.bowling(1);
+
+        return Stream.of(
+                Arguments.of(emptyFrame, new FrameScore(1, 0), new FrameScore(1, 0)),
+                Arguments.of(emptyFrame, new FrameScore(1, 1), new FrameScore(1, 1)),
+                Arguments.of(normalFrame, new FrameScore(1, 1), new FrameScore(2, 0)),
+                Arguments.of(normalFrame, new FrameScore(1, 2), new FrameScore(2, 1)),
+                Arguments.of(fullFrame, new FrameScore(1, 2), new FrameScore(7, 0)),
+                Arguments.of(hasNextFrame, new FrameScore(1, 2), new FrameScore(3, 0))
+        );
+    }
+
     @Test
     void 첫번째_프레임만들기() {
         NormalFrame firstFrame = NormalFrame.firstNormalFrame();
@@ -44,27 +65,6 @@ class NormalFrameTest {
         NormalFrame strikeFrame = NormalFrame.firstNormalFrame();
         strikeFrame.bowling(10);
         assertThat(strikeFrame.isFull()).isTrue();
-    }
-
-    private static Stream<Arguments> sourceForAddNextScore() {
-        NormalFrame emptyFrame = NormalFrame.firstNormalFrame();
-
-        NormalFrame normalFrame = new NormalFrame(1, Arrays.asList(new ScoreInfo(1, Status.MISS)));
-
-        NormalFrame fullFrame = new NormalFrame(1, Arrays.asList(new ScoreInfo(1, Status.MISS), new ScoreInfo(5, Status.MISS)));
-
-        NormalFrame hasNextFrame = new NormalFrame(2, Arrays.asList(new ScoreInfo(1, Status.MISS)));
-        Frame frame = hasNextFrame.nextFrame();
-        frame.bowling(1);
-
-        return Stream.of(
-                Arguments.of(emptyFrame, new FrameScore(1, 0), new FrameScore(1, 0)),
-                Arguments.of(emptyFrame, new FrameScore(1, 1), new FrameScore(1, 1)),
-                Arguments.of(normalFrame, new FrameScore(1, 1), new FrameScore(2, 0)),
-                Arguments.of(normalFrame, new FrameScore(1, 2), new FrameScore(2, 1)),
-                Arguments.of(fullFrame, new FrameScore(1, 2), new FrameScore(7, 0)),
-                Arguments.of(hasNextFrame, new FrameScore(1, 2), new FrameScore(3, 0))
-        );
     }
 
     @ParameterizedTest
