@@ -4,7 +4,6 @@ import frame.info.FrameNumber;
 import score.ScoreInfo;
 import score.ScoreInfoBundle;
 import score.framescore.FrameScore;
-import score.framescore.LastFrameScores;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +25,10 @@ public class LastFrame implements Frame {
         return new LastFrame(LAST_FRAME_NUMBER, new ArrayList<>());
     }
 
+    public boolean isNotFull() {
+        return !isFull();
+    }
+
     @Override
     public Frame nextFrame() {
         throw new UnsupportedOperationException();
@@ -33,7 +36,7 @@ public class LastFrame implements Frame {
 
     @Override
     public void bowling(int score) {
-        if (scores.size() == 0) {
+        if (scores.isEmpty()) {
             scores.addOnLast(ScoreInfo.firstScore(score));
             return;
         }
@@ -41,8 +44,7 @@ public class LastFrame implements Frame {
             scores.addOnLast(ScoreInfo.firstScore(score));
             return;
         }
-        ScoreInfo scoreInfo = scores.getLast()
-                .nextScore(score);
+        ScoreInfo scoreInfo = scores.nextScore(score);
         scores.addOnLast(scoreInfo);
     }
 
@@ -63,10 +65,6 @@ public class LastFrame implements Frame {
         return scores.isNormalOfLast();
     }
 
-    public boolean isNotFull() {
-        return !isFull();
-    }
-
     @Override
     public List<ScoreInfo> getScoreInfos() {
         return scores.getScoreInfoBundle();
@@ -74,22 +72,29 @@ public class LastFrame implements Frame {
 
     @Override
     public FrameScore getFrameScore() {
-        LastFrameScores lastFrameScores = new LastFrameScores();
-        lastFrameScores.addFirst(scores);
-        lastFrameScores.addSecond(scores);
-        lastFrameScores.addThird(scores);
+        int sum = scores.getSum();
+        if (scores.isEmpty()) {
+            return new FrameScore(0, 1);
+        }
+        if (scores.hasOne()) {
+            return new FrameScore(sum, 1);
+        }
+        if (scores.hasTwo()) {
+            return getSecondScore(sum);
+        }
+        return new FrameScore(sum, 0);
+    }
 
-        return lastFrameScores.sum();
+    private FrameScore getSecondScore(int sum) {
+        if (sum == 10) {
+            return new FrameScore(sum, 1);
+        }
+        return new FrameScore(sum, 0);
     }
 
     @Override
     public FrameScore addNextScore(FrameScore before) {
         return scores.addScore(before);
-    }
-
-    @Override
-    public int getFrameNumber() {
-        return frameNumber.getNumber();
     }
 
     @Override

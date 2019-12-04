@@ -44,10 +44,4 @@ public class FrameNumber {
         return Objects.hash(number);
     }
 
-    @Override
-    public String toString() {
-        return "FrameNumber{" +
-                "number=" + number +
-                '}';
-    }
 }

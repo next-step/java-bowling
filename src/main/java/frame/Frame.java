@@ -21,7 +21,5 @@ public interface Frame {
 
     FrameScore addNextScore(FrameScore before);
 
-    int getFrameNumber();
-
     boolean isLastFrame();
 }

@@ -9,7 +9,7 @@ public enum FrontConverter {
     STRIKE("|", (status, score) -> "X"),
     SPARE("|", (status, score) -> "/"),
     MISS("|", (status, score) -> String.valueOf(score)),
-    GUTTER("|", (status, score) -> String.valueOf(score)),
+    GUTTER("|", (status, score) -> "-"),
     NONE("", (status, score) -> "");
 
     public static final String EMPTY = "";

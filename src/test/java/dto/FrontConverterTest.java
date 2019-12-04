@@ -17,7 +17,7 @@ class FrontConverterTest {
                 Arguments.of(new ScoreInfo(10, Status.STRIKE), "|X"),
                 Arguments.of(new ScoreInfo(5, Status.SPARE), "|/"),
                 Arguments.of(new ScoreInfo(3, Status.MISS), "|3"),
-                Arguments.of(new ScoreInfo(0, Status.GUTTER), "|0"),
+                Arguments.of(new ScoreInfo(0, Status.GUTTER), "|-"),
                 Arguments.of(null, "")
         );
     }

@@ -32,6 +32,10 @@ public class ScoreInfo {
         return status;
     }
 
+    public int getScore() {
+        return score.getScore();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,15 +50,4 @@ public class ScoreInfo {
         return Objects.hash(score, status);
     }
 
-    @Override
-    public String toString() {
-        return "ScoreInfo{" +
-                "score=" + score +
-                ", status=" + status +
-                '}';
-    }
-
-    public int getScore() {
-        return score.getScore();
-    }
 }

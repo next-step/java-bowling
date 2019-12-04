@@ -14,18 +14,18 @@ public class BowlingGame {
     private final Frames frames = new Frames(new ArrayList<>());
     private final Name name;
 
+    private BowlingGame(Name name) {
+        this.name = name;
+    }
+
     public static BowlingGame newGame() {
         String name = InputView.inputName();
         return new BowlingGame(new Name(name));
     }
 
-    private BowlingGame(Name name) {
-        this.name = name;
-    }
-
     public void start() {
         while (isNotEnd()) {
-            Frames frames = rolling();
+            rolling();
             showFrames(name, frames);
         }
     }
@@ -34,30 +34,28 @@ public class BowlingGame {
         return !frames.isFull();
     }
 
-    private Frames rolling() {
+    private void rolling() {
         if (frames.isFull()) {
-            return frames;
+            return;
         }
-        return roll();
+        roll();
     }
 
-    private Frames roll() {
+    private void roll() {
         Frame nowFrame = frames.getNowFrame();
 
         if (frames.reachLast()) {
-            return rollingLast();
+            rollingLast();
+            return;
         }
 
         int score = InputView.inputScore(frames.getNowFrameNumber());
         nowFrame.bowling(score);
-        return frames;
     }
 
-    private Frames rollingLast() {
+    private void rollingLast() {
         LastFrame lastFrame = frames.getLastFrame();
         int score = InputView.inputScore(frames.getNowFrameNumber());
         lastFrame.bowling(score);
-
-        return frames;
     }
 }

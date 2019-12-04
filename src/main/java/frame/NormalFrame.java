@@ -43,12 +43,11 @@ public class NormalFrame implements Frame {
 
     @Override
     public void bowling(int score) {
-        if (scores.size() == 0) {
+        if (scores.isEmpty()) {
             scores.add(ScoreInfo.firstScore(score));
             return;
         }
-        ScoreInfo scoreInfo = scores.getFirst()
-                .nextScore(score);
+        ScoreInfo scoreInfo = scores.nextScore(score);
         scores.add(scoreInfo);
     }
 
@@ -75,11 +74,6 @@ public class NormalFrame implements Frame {
         }
 
         return frameScore;
-    }
-
-    @Override
-    public int getFrameNumber() {
-        return frameInfo.getNumber();
     }
 
     private FrameScore makeFrameScore() {

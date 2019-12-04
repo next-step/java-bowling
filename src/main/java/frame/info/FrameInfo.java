@@ -33,10 +33,6 @@ public class FrameInfo {
         return nextFrame.addNextScore(frameScore);
     }
 
-    public int getNumber() {
-        return frameNumber.getNumber();
-    }
-
     public boolean isLastNumber() {
         return frameNumber.isLastNumber();
     }

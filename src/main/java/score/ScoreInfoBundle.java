@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class ScoreInfoBundle {
-    private static final int FIRST = 0;
     private static final int MAX = 10;
 
     private final List<ScoreInfo> scoreInfoBundle;
@@ -20,10 +19,6 @@ public class ScoreInfoBundle {
         return scoreInfoBundle.size();
     }
 
-    public ScoreInfo getFirst() {
-        return scoreInfoBundle.get(FIRST);
-    }
-
     public boolean isStrikeOrSpareOfLast() {
         ScoreInfo last = getLast();
         return last.isStrike() || last.isSpare();
@@ -33,7 +28,11 @@ public class ScoreInfoBundle {
         return !isStrikeOrSpareOfLast();
     }
 
-    public ScoreInfo getLast() {
+    public ScoreInfo nextScore(int score){
+        return getLast().nextScore(score);
+    }
+
+    private ScoreInfo getLast() {
         return scoreInfoBundle.get(scoreInfoBundle.size() - 1);
     }
 
@@ -92,16 +91,16 @@ public class ScoreInfoBundle {
         return before;
     }
 
-    public FrameScore calculateLast(int index) {
-        ScoreInfo startScoreInfo = scoreInfoBundle.get(index);
-        Status status = startScoreInfo.getStatus();
+    public boolean isEmpty() {
+        return scoreInfoBundle.isEmpty();
+    }
 
-        FrameScore frameScore = new FrameScore(startScoreInfo.getScore(), status.getAddCount());
+    public boolean hasOne() {
+        return scoreInfoBundle.size() == 1;
+    }
 
-        for (int i = index + 1; i < scoreInfoBundle.size(); i++) {
-            frameScore = addScore(frameScore, scoreInfoBundle.get(i));
-        }
-        return new FrameScore(startScoreInfo.getScore(), frameScore.getAddCount());
+    public boolean hasTwo() {
+        return scoreInfoBundle.size() == 2;
     }
 
     @Override
@@ -116,5 +115,4 @@ public class ScoreInfoBundle {
     public int hashCode() {
         return Objects.hash(scoreInfoBundle);
     }
-
 }

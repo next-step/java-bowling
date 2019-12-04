@@ -42,20 +42,20 @@ public enum Status {
         return false;
     }
 
-    public int getAddCount() {
-        return addCount;
-    }
-
     private static boolean isGutter(Integer score, Integer before) {
         return score == GUTTER_SCORE;
     }
 
     private static boolean isMiss(Integer score, Integer before) {
-        return true;
+        return score + before != STRIKE_SCORE;
     }
 
     private static boolean isNotFirstTry(Integer before) {
         return before != FIRST_BEFORE;
+    }
+
+    public int getAddCount() {
+        return addCount;
     }
 
     private boolean match(Integer score, Integer before) {

@@ -26,13 +26,6 @@ class ScoreInfoBundleTest {
         );
     }
 
-    private static Stream<Arguments> sourceForFirst() {
-        return Stream.of(
-                Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS))), aScoreInfo(1, Status.MISS)),
-                Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(0, Status.GUTTER))), aScoreInfo(0, Status.GUTTER))
-        );
-    }
-
     private static Stream<Arguments> sourceForIsStrikeOrSpareOfLast() {
         return Stream.of(
                 Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS))), false),
@@ -40,13 +33,6 @@ class ScoreInfoBundleTest {
                 Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(10, Status.SPARE), aScoreInfo(0, Status.GUTTER))), false),
                 Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(10, Status.MISS), aScoreInfo(10, Status.STRIKE))), true),
                 Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(10, Status.MISS), aScoreInfo(10, Status.SPARE))), true)
-        );
-    }
-
-    private static Stream<Arguments> sourceForLast() {
-        return Stream.of(
-                Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS))), aScoreInfo(1, Status.MISS)),
-                Arguments.of(new ScoreInfoBundle(Arrays.asList(aScoreInfo(1, Status.MISS), aScoreInfo(0, Status.GUTTER))), aScoreInfo(0, Status.GUTTER))
         );
     }
 
@@ -108,12 +94,6 @@ class ScoreInfoBundleTest {
     }
 
     @ParameterizedTest
-    @MethodSource("sourceForFirst")
-    void getFirst(ScoreInfoBundle scoreInfoBundle, ScoreInfo firstScoreInfo) {
-        assertThat(scoreInfoBundle.getFirst()).isEqualTo(firstScoreInfo);
-    }
-
-    @ParameterizedTest
     @MethodSource("sourceForIsStrikeOrSpareOfLast")
     void isStrikeOrStrikeOfLast(ScoreInfoBundle scoreInfoBundle, boolean isStrikeOrSpareOfLast) {
         assertThat(scoreInfoBundle.isStrikeOrSpareOfLast()).isEqualTo(isStrikeOrSpareOfLast);
@@ -130,12 +110,6 @@ class ScoreInfoBundleTest {
         assertThatThrownBy(() -> scoreInfoBundle.add(strike))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("두 점수의 합이 10점을 넘었습니다.");
-    }
-
-    @ParameterizedTest
-    @MethodSource("sourceForLast")
-    void getLast(ScoreInfoBundle scoreInfoBundle, ScoreInfo last) {
-        assertThat(scoreInfoBundle.getLast()).isEqualTo(last);
     }
 
     @ParameterizedTest
