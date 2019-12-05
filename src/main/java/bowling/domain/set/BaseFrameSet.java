@@ -91,7 +91,7 @@ public class BaseFrameSet implements FrameSet {
     }
 
     @Override
-    public int calculateAdditionalScore(Score score){
+    public int calculateAdditionalScore(Score score) {
         for (State state : stateHistory.getValue()) {
             score.addBonusPoint(state.getHitCount());
 

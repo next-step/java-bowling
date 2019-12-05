@@ -9,6 +9,12 @@ public class Spare implements State, LastState {
 
     public static final String TEXT = "/";
 
+    private int hitCount;
+
+    public Spare(int hitCount) {
+        this.hitCount = hitCount;
+    }
+
     @Override
     public State play(int newHitCount) {
         throw new IllegalStateException("Spare 이므로 해당 세트에서 더이상 진행할 수 없습니다.");
@@ -21,7 +27,7 @@ public class Spare implements State, LastState {
 
     @Override
     public State snapShot() {
-        return new Spare();
+        return new Spare(hitCount);
     }
 
     @Override
@@ -36,7 +42,7 @@ public class Spare implements State, LastState {
 
     @Override
     public int getHitCount() {
-        return MAX_HIT_COUNT;
+        return hitCount;
     }
 
     private void assertHitCount(int hitCount) {

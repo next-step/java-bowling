@@ -1,7 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.FrameConstants;
-
 import static bowling.domain.FrameConstants.MAX_HIT_COUNT;
 import static bowling.domain.FrameConstants.MIN_HIT_COUNT;
 
@@ -16,7 +14,7 @@ public class FirstGutter implements State {
         }
 
         if (newHitCount == MAX_HIT_COUNT) {
-            return new Spare();
+            return new Spare(newHitCount);
         }
 
         return new Miss(0, newHitCount);

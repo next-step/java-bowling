@@ -23,12 +23,14 @@ public class Histories {
         return Collections.unmodifiableList(values);
     }
 
-    private int getScore(List<Integer> scores, int score) {
-        int previousTotalScore = scores.stream()
-                .reduce(Integer::sum)
-                .orElse(0);
+    private void addNextScore(List<Integer> scores, int score) {
+        if (scores.isEmpty()) {
+            scores.add(score);
+            return;
+        }
 
-        return previousTotalScore + score;
+        int nextScore = scores.get(scores.size() - 1) + score;
+        scores.add(nextScore);
     }
 
     public List<Integer> getScores() {
@@ -38,7 +40,7 @@ public class Histories {
             if (frameSet.getTotalScore() == NOT_CALCULATED_SCORE) {
                 break;
             }
-            scores.add(getScore(scores, frameSet.getTotalScore()));
+            addNextScore(scores, frameSet.getTotalScore());
         }
 
         return scores;
