@@ -21,10 +21,10 @@ public class Hit implements State {
         }
 
         if (hitCount + newHitCount == MAX_HIT_COUNT) {
-            return new Spare(newHitCount);
+            return new Spare();
         }
 
-        return new Miss(newHitCount);
+        return new Miss(hitCount, newHitCount);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Hit implements State {
     }
 
     @Override
-    public int getScore() {
+    public int getHitCount() {
         return hitCount;
     }
 

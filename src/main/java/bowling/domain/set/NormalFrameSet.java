@@ -1,8 +1,11 @@
 package bowling.domain.set;
 
+import bowling.domain.History;
+import bowling.domain.score.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,7 +14,7 @@ public class NormalFrameSet implements FrameSet {
     public static final int START_SET_PLAY_COUNT = 1;
     public static final int END_SET_PLAY_COUNT = 9;
 
-    private final FrameSet frameSet;
+    private final BaseFrameSet frameSet;
 
     private NormalFrameSet(int playCount, State state) {
         assertPlayCount(playCount);
@@ -32,12 +35,11 @@ public class NormalFrameSet implements FrameSet {
     }
 
     @Override
-    public FrameSet next() {
-        if (isEndedFrame()) {
-            return createNextFrame(getPlayCount());
-        }
+    public FrameSet getNext() {
+        FrameSet nextFrameSet = createNextFrame(getPlayCount());
+        frameSet.setNextFrameSet(nextFrameSet);
 
-        return this;
+        return nextFrameSet;
     }
 
     private FrameSet createNextFrame(int playCount) {
@@ -74,13 +76,18 @@ public class NormalFrameSet implements FrameSet {
     }
 
     @Override
-    public int getScore() {
-        return frameSet.getScore();
+    public int getTotalScore() {
+        return frameSet.getTotalScore();
     }
 
     @Override
-    public List<State> getHistory() {
+    public History getHistory() {
         return frameSet.getHistory();
+    }
+
+    @Override
+    public int calculateAdditionalScore(Score score) {
+        return frameSet.calculateAdditionalScore(score);
     }
 
     private void assertPlayCount(int playCount) {
@@ -99,6 +106,6 @@ public class NormalFrameSet implements FrameSet {
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameSet);
+        return frameSet.hashCode();
     }
 }

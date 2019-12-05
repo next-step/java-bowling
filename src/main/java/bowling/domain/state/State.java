@@ -12,5 +12,5 @@ public interface State {
 
     public String getString();
 
-    public int getScore();
+    public int getHitCount();
 }

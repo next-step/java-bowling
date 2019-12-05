@@ -32,7 +32,7 @@ public class SecondGutter implements State {
     }
 
     @Override
-    public int getScore() {
+    public int getHitCount() {
         return FrameConstants.MIN_HIT_COUNT;
     }
 }

@@ -1,5 +1,7 @@
 package bowling.domain.set;
 
+import bowling.domain.History;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 
 import java.util.List;
@@ -8,7 +10,7 @@ public interface FrameSet {
 
     public void play(int hitCount);
 
-    public FrameSet next();
+    public FrameSet getNext();
 
     public boolean isEndedFrame();
 
@@ -20,7 +22,9 @@ public interface FrameSet {
 
     public int getPlayCount();
 
-    public int getScore();
+    public int getTotalScore();
 
-    public List<State> getHistory();
+    public History getHistory();
+
+    public int calculateAdditionalScore(Score score);
 }

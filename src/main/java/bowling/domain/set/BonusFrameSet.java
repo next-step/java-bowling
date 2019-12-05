@@ -1,5 +1,7 @@
 package bowling.domain.set;
 
+import bowling.domain.History;
+import bowling.domain.score.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
@@ -26,7 +28,7 @@ public class BonusFrameSet implements FrameSet {
     }
 
     @Override
-    public FrameSet next() {
+    public FrameSet getNext() {
         return this;
     }
 
@@ -56,13 +58,18 @@ public class BonusFrameSet implements FrameSet {
     }
 
     @Override
-    public int getScore() {
-        return frameSet.getScore();
+    public int getTotalScore() {
+        return frameSet.getTotalScore();
     }
 
     @Override
-    public List<State> getHistory() {
+    public History getHistory() {
         return frameSet.getHistory();
+    }
+
+    @Override
+    public int calculateAdditionalScore(Score score) {
+        return frameSet.calculateAdditionalScore(score);
     }
 
     @Override

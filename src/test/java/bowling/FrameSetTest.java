@@ -34,7 +34,7 @@ public class FrameSetTest {
     void toLastSet() {
         FrameSet frameSet = NormalFrameSet.create(NormalFrameSet.END_SET_PLAY_COUNT);
         frameSet.play(10);
-        assertThat(frameSet.next()).isInstanceOf(LastFrameSet.class);
+        assertThat(frameSet.getNext()).isInstanceOf(LastFrameSet.class);
     }
 
     @Test
@@ -42,11 +42,11 @@ public class FrameSetTest {
         FrameSet spareSet = LastFrameSet.create();
         spareSet.play(1);
         spareSet.play(9);
-        assertThat(spareSet.next()).isInstanceOf(BonusFrameSet.class);
+        assertThat(spareSet.getNext()).isInstanceOf(BonusFrameSet.class);
 
         FrameSet strikeSet = LastFrameSet.create();
         strikeSet.play(10);
-        assertThat(strikeSet.next()).isInstanceOf(BonusFrameSet.class);
+        assertThat(strikeSet.getNext()).isInstanceOf(BonusFrameSet.class);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class FrameSetTest {
         FrameSet firstSet = NormalFrameSet.create(1);
         firstSet.play(10);
 
-        FrameSet nextSet = firstSet.next();
+        FrameSet nextSet = firstSet.getNext();
         assertThat(nextSet.getPlayCount()).isEqualTo(2);
     }
 
@@ -79,7 +79,7 @@ public class FrameSetTest {
         firstSet.play(1);
         firstSet.play(0);
 
-        FrameSet nextSet = firstSet.next();
+        FrameSet nextSet = firstSet.getNext();
         assertThat(nextSet.getPlayCount()).isEqualTo(2);
     }
 }

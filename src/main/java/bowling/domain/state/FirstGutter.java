@@ -16,10 +16,10 @@ public class FirstGutter implements State {
         }
 
         if (newHitCount == MAX_HIT_COUNT) {
-            return new Spare(newHitCount);
+            return new Spare();
         }
 
-        return new Miss(newHitCount);
+        return new Miss(0, newHitCount);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class FirstGutter implements State {
     }
 
     @Override
-    public int getScore() {
-        return FrameConstants.MIN_HIT_COUNT;
+    public int getHitCount() {
+        return MIN_HIT_COUNT;
     }
 }

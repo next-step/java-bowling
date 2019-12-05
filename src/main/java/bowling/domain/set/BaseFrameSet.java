@@ -1,5 +1,8 @@
 package bowling.domain.set;
 
+import bowling.domain.History;
+import bowling.domain.score.Score;
+import bowling.domain.state.LastState;
 import bowling.domain.state.State;
 
 import java.util.ArrayList;
@@ -12,9 +15,14 @@ public class BaseFrameSet implements FrameSet {
 
     private final int playCount;
     private State state;
-    private final List<State> stateHistory;
+    private final History stateHistory;
+    private FrameSet nextFrameSet;
 
-    private BaseFrameSet(int playCount, State state, List<State> stateHistory) {
+    private BaseFrameSet(int playCount, State state, History stateHistory) {
+        this(playCount, state, stateHistory, null);
+    }
+
+    private BaseFrameSet(int playCount, State state, History stateHistory, FrameSet nextFrameSet) {
         assertPlayCount(playCount);
 
         this.playCount = playCount;
@@ -30,7 +38,7 @@ public class BaseFrameSet implements FrameSet {
     }
 
     @Override
-    public FrameSet next() {
+    public FrameSet getNext() {
         return this;
     }
 
@@ -46,7 +54,7 @@ public class BaseFrameSet implements FrameSet {
 
     @Override
     public FrameSet snapShot() {
-        return new BaseFrameSet(playCount, state, stateHistory);
+        return new BaseFrameSet(playCount, state, stateHistory, nextFrameSet);
     }
 
     @Override
@@ -60,22 +68,52 @@ public class BaseFrameSet implements FrameSet {
     }
 
     @Override
-    public int getScore() {
-        int totalScore = 0;
-
-        for (State state : stateHistory) {
-            totalScore += state.getScore();
+    public int getTotalScore() {
+        if (!isEndedFrame()) {
+            return NOT_CALCULATED_SCORE;
         }
-        return totalScore;
+
+        Score score = ((LastState) state).createScore();
+
+        if (score.isEnd()) {
+            return score.getPoint();
+        }
+
+        if (nextFrameSet == null) {
+            return NOT_CALCULATED_SCORE;
+        }
+
+        return nextFrameSet.calculateAdditionalScore(score);
+    }
+
+    void setNextFrameSet(FrameSet nextFrameSet) {
+        this.nextFrameSet = nextFrameSet;
     }
 
     @Override
-    public List<State> getHistory() {
+    public int calculateAdditionalScore(Score score){
+        for (State state : stateHistory.getValue()) {
+            score.addBonusPoint(state.getHitCount());
+
+            if (score.isEnd()) {
+                return score.getPoint();
+            }
+        }
+
+        if (nextFrameSet == null) {
+            return NOT_CALCULATED_SCORE;
+        }
+
+        return nextFrameSet.calculateAdditionalScore(score);
+    }
+
+    @Override
+    public History getHistory() {
         return stateHistory;
     }
 
     public static BaseFrameSet create(int playCount, State state) {
-        return new BaseFrameSet(playCount, state, new ArrayList<>());
+        return new BaseFrameSet(playCount, state, new History());
     }
 
     private void assertPlayCount(int playCount) {

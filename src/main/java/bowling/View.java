@@ -31,10 +31,10 @@ public class View {
         return getNumber();
     }
 
-    public void showFrameSetResult(String playerName, List<FrameSet> results) {
+    public void showFrameSetResult(String playerName, List<FrameSet> results, List<Integer> scores) {
         showBoardHeader();
         showState(playerName, results);
-        showScore(results);
+        showScore(scores);
     }
 
     private void showState(String playerName, List<FrameSet> resultSets) {
@@ -55,17 +55,17 @@ public class View {
         }
     }
 
-    private void showScore(List<FrameSet> resultSets) {
+    private void showScore(List<Integer> scores) {
         showEmptyBlock();
 
-        for (FrameSet frameSet : resultSets) {
-            showScore(frameSet);
+        for (Integer score : scores) {
+            showScore(score);
         }
         nextLine();
     }
 
-    private void showScore(FrameSet frameSet) {
-        showText(StringUtils.addBlank(String.valueOf(frameSet.getScore()), 6));
+    private void showScore(int score) {
+        showText(StringUtils.addBlank(String.valueOf(score), 6));
         showText(DIVIDER);
     }
 
@@ -77,7 +77,7 @@ public class View {
 
     private void showFrameSetState(FrameSet frameSet) {
         StringBuilder frameScoreTextBuilder = new StringBuilder();
-        for (State state : frameSet.getHistory()) {
+        for (State state : frameSet.getHistory().getValue()) {
             addFrameScoreText(frameScoreTextBuilder, state);
         }
 
