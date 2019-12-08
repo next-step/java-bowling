@@ -1,8 +1,19 @@
 package bowling.domain.state;
 
-public class Spare implements State {
+import bowling.domain.score.Score;
+
+import static bowling.domain.FrameConstants.MAX_HIT_COUNT;
+import static bowling.domain.FrameConstants.MIN_HIT_COUNT;
+
+public class Spare implements State, LastState {
 
     public static final String TEXT = "/";
+
+    private int hitCount;
+
+    public Spare(int hitCount) {
+        this.hitCount = hitCount;
+    }
 
     @Override
     public State play(int newHitCount) {
@@ -16,7 +27,7 @@ public class Spare implements State {
 
     @Override
     public State snapShot() {
-        return new Spare();
+        return new Spare(hitCount);
     }
 
     @Override
@@ -27,5 +38,21 @@ public class Spare implements State {
     @Override
     public String getString() {
         return Spare.TEXT;
+    }
+
+    @Override
+    public int getHitCount() {
+        return hitCount;
+    }
+
+    private void assertHitCount(int hitCount) {
+        if (hitCount <= MIN_HIT_COUNT) {
+            throw new IllegalArgumentException("올바르지 않은 상태 입니다. : Spare");
+        }
+    }
+
+    @Override
+    public Score createScore() {
+        return new Score(10, 1);
     }
 }

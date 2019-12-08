@@ -30,7 +30,7 @@ public class StateTest {
 
     @Test
     void playFromEndedState() {
-        assertThatIllegalStateException().isThrownBy(() -> new Miss(4).play(0));
+        assertThatIllegalStateException().isThrownBy(() -> new Miss(3, 4).play(0));
         assertThatIllegalStateException().isThrownBy(() -> new SecondGutter().play(0));
         assertThatIllegalStateException().isThrownBy(() -> new Strike().play(0));
         assertThatIllegalStateException().isThrownBy(() -> new Spare().play(0));
@@ -39,7 +39,7 @@ public class StateTest {
     @Test
     void hitCountWhenIsInvalid() {
         assertThatIllegalArgumentException().isThrownBy(() -> new Hit(0));
-        assertThatIllegalArgumentException().isThrownBy(() -> new Miss(0));
+        assertThatIllegalArgumentException().isThrownBy(() -> new Miss(0, 4));
     }
 
     @Test

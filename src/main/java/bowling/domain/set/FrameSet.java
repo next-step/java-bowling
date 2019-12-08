@@ -1,18 +1,30 @@
 package bowling.domain.set;
 
+import bowling.domain.History;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
+
+import java.util.List;
 
 public interface FrameSet {
 
     public void play(int hitCount);
 
-    public FrameSet next();
+    public FrameSet getNext();
 
-    public boolean isEnd();
+    public boolean isEndedFrame();
+
+    public boolean isEndedGame();
 
     public FrameSet snapShot();
 
     public State getState();
 
     public int getPlayCount();
+
+    public int getTotalScore();
+
+    public History getHistory();
+
+    public int calculateAdditionalScore(Score score);
 }

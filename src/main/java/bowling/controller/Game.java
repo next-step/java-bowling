@@ -1,7 +1,7 @@
 package bowling.controller;
 
 import bowling.View;
-import bowling.domain.FrameResults;
+import bowling.domain.Histories;
 import bowling.domain.Player;
 import bowling.domain.set.FrameSet;
 import bowling.domain.set.NormalFrameSet;
@@ -15,16 +15,23 @@ public class Game {
         Player player = Player.create(view.getName());
 
         FrameSet frameSet = NormalFrameSet.createFirst();
-        FrameResults frameResults = new FrameResults();
+        Histories histories = new Histories();
 
-        while (!frameSet.isEnd()) {
+        while (true) {
             int hitCount = view.getHitCount(frameSet.getPlayCount());
             frameSet.play(hitCount);
 
-            frameResults.add(frameSet.snapShot());
-            view.showFrameSetResult(player.getName(), frameResults.getValue());
+            histories.add(frameSet);
 
-            frameSet = frameSet.next();
+            view.showFrameSetResult(player.getName(), histories.getValue(), histories.getScores());
+
+            if (frameSet.isEndedGame()) {
+                break;
+            }
+
+            if (frameSet.isEndedFrame()) {
+                frameSet = frameSet.getNext();
+            }
         }
     }
 }

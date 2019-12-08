@@ -31,14 +31,15 @@ public class View {
         return getNumber();
     }
 
-    public void showFrameSetResult(String playerName, List<FrameSet> results) {
+    public void showFrameSetResult(String playerName, List<FrameSet> results, List<Integer> scores) {
         showBoardHeader();
-        showScore(playerName, results);
+        showState(playerName, results);
+        showScore(scores);
     }
 
-    private void showScore(String playerName, List<FrameSet> resultSets) {
+    private void showState(String playerName, List<FrameSet> resultSets) {
         showPlayerName(playerName);
-        showFrameSetsText(resultSets);
+        showFrameState(resultSets);
         nextLine();
     }
 
@@ -48,21 +49,42 @@ public class View {
         showText(DIVIDER);
     }
 
-    private void showFrameSetsText(List<FrameSet> resultSets) {
-        int lastIndex = resultSets.size() - 1;
-        StringBuilder frameScoreTextBuilder = new StringBuilder();
-
-        for (int i = 0; i <= lastIndex; i++) {
-            addFrameScoreText(frameScoreTextBuilder, resultSets.get(i).getState());
-
-            if (resultSets.get(i).getState().isEnd() || i == lastIndex) {
-                showFrameSetText(frameScoreTextBuilder.toString());
-                frameScoreTextBuilder = new StringBuilder();
-            }
+    private void showFrameState(List<FrameSet> resultSets) {
+        for (FrameSet frameSet : resultSets) {
+            showFrameSetState(frameSet);
         }
     }
 
-    private void showFrameSetText(String frameScore) {
+    private void showScore(List<Integer> scores) {
+        showEmptyBlock();
+
+        for (Integer score : scores) {
+            showScore(score);
+        }
+        nextLine();
+    }
+
+    private void showScore(int score) {
+        showText(StringUtils.addBlank(String.valueOf(score), 6));
+        showText(DIVIDER);
+    }
+
+    private void showEmptyBlock() {
+        showText(DIVIDER);
+        showText(StringUtils.addBlank("", 6));
+        showText(DIVIDER);
+    }
+
+    private void showFrameSetState(FrameSet frameSet) {
+        StringBuilder frameScoreTextBuilder = new StringBuilder();
+        for (State state : frameSet.getHistory().getValue()) {
+            addFrameScoreText(frameScoreTextBuilder, state);
+        }
+
+        showFrameSetState(frameScoreTextBuilder.toString());
+    }
+
+    private void showFrameSetState(String frameScore) {
         showText(StringUtils.addBlank(frameScore, SCORE_TEXT_LENGTH));
         showText(DIVIDER);
     }

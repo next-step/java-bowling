@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import static bowling.domain.FrameConstants.MAX_HIT_COUNT;
+import static bowling.domain.FrameConstants.MIN_HIT_COUNT;
 
 public class Ready implements State {
 
@@ -35,5 +36,10 @@ public class Ready implements State {
     @Override
     public String getString() {
         return "";
+    }
+
+    @Override
+    public int getHitCount() {
+        return MIN_HIT_COUNT;
     }
 }

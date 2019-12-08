@@ -1,7 +1,12 @@
 package bowling.domain.set;
 
+import bowling.domain.History;
+import bowling.domain.score.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
+
+import java.util.List;
+import java.util.Objects;
 
 public class BonusFrameSet implements FrameSet {
 
@@ -23,12 +28,17 @@ public class BonusFrameSet implements FrameSet {
     }
 
     @Override
-    public FrameSet next() {
+    public FrameSet getNext() {
         return this;
     }
 
     @Override
-    public boolean isEnd() {
+    public boolean isEndedFrame() {
+        return true;
+    }
+
+    @Override
+    public boolean isEndedGame() {
         return !(getState() instanceof Ready);
     }
 
@@ -45,5 +55,33 @@ public class BonusFrameSet implements FrameSet {
     @Override
     public int getPlayCount() {
         return BonusFrameSet.PLAY_COUNT;
+    }
+
+    @Override
+    public int getTotalScore() {
+        return frameSet.getTotalScore();
+    }
+
+    @Override
+    public History getHistory() {
+        return frameSet.getHistory();
+    }
+
+    @Override
+    public int calculateAdditionalScore(Score score) {
+        return frameSet.calculateAdditionalScore(score);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BonusFrameSet that = (BonusFrameSet) o;
+        return Objects.equals(frameSet, that.frameSet);
+    }
+
+    @Override
+    public int hashCode() {
+        return frameSet.hashCode();
     }
 }

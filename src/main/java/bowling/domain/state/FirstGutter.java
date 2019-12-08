@@ -14,10 +14,10 @@ public class FirstGutter implements State {
         }
 
         if (newHitCount == MAX_HIT_COUNT) {
-            return new Spare();
+            return new Spare(newHitCount);
         }
 
-        return new Miss(newHitCount);
+        return new Miss(0, newHitCount);
     }
 
     @Override
@@ -38,5 +38,10 @@ public class FirstGutter implements State {
     @Override
     public String getString() {
         return FirstGutter.TEXT;
+    }
+
+    @Override
+    public int getHitCount() {
+        return MIN_HIT_COUNT;
     }
 }
