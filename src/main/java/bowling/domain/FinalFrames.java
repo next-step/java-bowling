@@ -65,7 +65,7 @@ public class FinalFrames {
         return frames.size();
     }
 
-    public List<Frame> getFrames() {
+    List<Frame> getFrames() {
         return frames;
     }
 

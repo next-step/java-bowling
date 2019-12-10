@@ -78,7 +78,7 @@ public class Frame {
         return String.valueOf(pin.getCountOfHit());
     }
 
-    public boolean isCompleteNormalFrame() {
+    boolean isCompleteNormalFrame() {
         return isStrike() || !isRemain();
     }
 
