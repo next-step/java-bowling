@@ -90,6 +90,11 @@ public class NormalFrameSet implements FrameSet {
         return frameSet.calculateAdditionalScore(score);
     }
 
+    @Override
+    public boolean canCalculateScore() {
+        return frameSet.canCalculateScore();
+    }
+
     private void assertPlayCount(int playCount) {
         if (playCount > END_SET_PLAY_COUNT) {
             throw new IllegalArgumentException("일반 세트는 더이상 진행할 수 없습니다.");

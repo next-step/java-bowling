@@ -108,6 +108,11 @@ public class BaseFrameSet implements FrameSet {
     }
 
     @Override
+    public boolean canCalculateScore() {
+        return getTotalScore() != NOT_CALCULATED_SCORE;
+    }
+
+    @Override
     public History getHistory() {
         return stateHistory;
     }

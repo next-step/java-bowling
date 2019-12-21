@@ -37,7 +37,7 @@ public class Histories {
         List<Integer> scores = new ArrayList<>();
 
         for (FrameSet frameSet : histories) {
-            if (frameSet.getTotalScore() == NOT_CALCULATED_SCORE) {
+            if (!frameSet.canCalculateScore()) {
                 break;
             }
             addNextScore(scores, frameSet.getTotalScore());

@@ -73,6 +73,11 @@ public class BonusFrameSet implements FrameSet {
     }
 
     @Override
+    public boolean canCalculateScore() {
+        return frameSet.canCalculateScore();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

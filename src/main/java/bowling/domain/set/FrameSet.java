@@ -4,8 +4,6 @@ import bowling.domain.History;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
 
-import java.util.List;
-
 public interface FrameSet {
 
     public void play(int hitCount);
@@ -27,4 +25,6 @@ public interface FrameSet {
     public History getHistory();
 
     public int calculateAdditionalScore(Score score);
+
+    public boolean canCalculateScore();
 }
