@@ -17,17 +17,13 @@ public class Game {
         FrameSet frameSet = NormalFrameSet.createFirst();
         Histories histories = new Histories();
 
-        while (true) {
+        while (!frameSet.isEndedGame()) {
             int hitCount = view.getHitCount(frameSet.getPlayCount());
+            
             frameSet.play(hitCount);
-
             histories.add(frameSet);
 
             view.showFrameSetResult(player.getName(), histories.getValue(), histories.getScores());
-
-            if (frameSet.isEndedGame()) {
-                break;
-            }
 
             if (frameSet.isEndedFrame()) {
                 frameSet = frameSet.getNext();
