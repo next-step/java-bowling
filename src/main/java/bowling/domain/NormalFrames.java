@@ -6,6 +6,7 @@ public class NormalFrames {
 
     private static final int MIN_SIZE = 0;
     private static final int CORRECTION_VALUE = 1;
+    private static final int ZERO = 0;
 
     private List<Frame> frames;
 
@@ -36,6 +37,13 @@ public class NormalFrames {
         return frames.stream()
                 .filter(Frame::isCompleteNormalFrame)
                 .count();
+    }
+
+    public Integer getScore() {
+        return frames.stream()
+                .map(Frame::getCountOfHit)
+                .reduce(Integer::sum)
+                .orElse(ZERO);
     }
 
     public List<Frame> getFrames() {

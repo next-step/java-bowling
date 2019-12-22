@@ -56,4 +56,13 @@ public class NormalFramesTest {
         normalFrames2.next(4);
         assertThat(normalFrames2.getCurrentFrameNumber()).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("현재 점수 계산")
+    void calculateByCurrentFrame() {
+        normalFrames.next(5);
+        normalFrames.next(4);
+        normalFrames.next(3);
+        assertThat(normalFrames.getScore()).isEqualTo(12);
+    }
 }
