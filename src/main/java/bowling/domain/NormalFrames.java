@@ -38,7 +38,7 @@ public class NormalFrames {
                 .count();
     }
 
-    List<Frame> getFrames() {
+    public List<Frame> getFrames() {
         return frames;
     }
 

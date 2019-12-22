@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.Frame;
 import bowling.domain.NormalFrames;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,5 +38,22 @@ public class NormalFramesTest {
         // 현재 프레임 종료
         normalFrames.next(2);
         assertThat(normalFrames.getCurrentFrameNumber()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("점수 계산을 위한 현재 프레임 체크")
+    void checkCurrentFrameIndexForScoreCalculate() {
+        NormalFrames normalFrames = NormalFrames.of(new ArrayList<>());
+        normalFrames.next(10);
+        assertThat(normalFrames.getCurrentFrameNumber()).isEqualTo(1);
+
+        NormalFrames normalFrames1 = NormalFrames.of(new ArrayList<>());
+        normalFrames1.next(5);
+        assertThat(normalFrames1.getCurrentFrameNumber()).isEqualTo(0);
+
+        NormalFrames normalFrames2 = NormalFrames.of(new ArrayList<>());
+        normalFrames2.next(3);
+        normalFrames2.next(4);
+        assertThat(normalFrames2.getCurrentFrameNumber()).isEqualTo(1);
     }
 }
