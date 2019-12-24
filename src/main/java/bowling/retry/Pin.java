@@ -1,5 +1,7 @@
 package bowling.retry;
 
+import java.util.Objects;
+
 public class Pin {
 
     private static final int MIN_HIT_COUNT = 0;
@@ -24,5 +26,18 @@ public class Pin {
 
     public int getCountOfHit() {
         return countOfHit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pin pin = (Pin) o;
+        return countOfHit == pin.countOfHit;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(countOfHit);
     }
 }

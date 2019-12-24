@@ -10,10 +10,10 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 public class PinTest {
 
     @Test
-    @DisplayName("핀의 값이 같을 때는 다른 객체")
+    @DisplayName("핀의 객체 값 비교")
     void checkObjectValueTest() {
         Pin pin = new Pin(5);
-        assertThat(pin).isNotEqualTo(new Pin(5));
+        assertThat(pin).isEqualTo(new Pin(5));
     }
 
     @Test
