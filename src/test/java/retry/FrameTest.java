@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class FrameTest {
 
@@ -41,5 +42,25 @@ public class FrameTest {
         frame.bowl(3);
 
         assertThat(frame.getScore()).isEqualTo(8);
+    }
+
+    @Test
+    @DisplayName("남은 기회")
+    void getChanceCount() {
+        Frame frame = new Frame(0);
+        frame.bowl(5);
+
+        assertThat(frame.getChanceCount()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("던질 수 있는 투구 유효성 검사")
+    void validateBowl() {
+        Frame frame = new Frame(0);
+        frame.bowl(1);
+        frame.bowl(2);
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            frame.bowl(5);
+        });
     }
 }

@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class Frame {
 
+    private static final int CHANCE_COUNT = 2;
     private static final int INIT_VALUE = 0;
 
     private int index;
@@ -16,7 +17,14 @@ public class Frame {
     }
 
     public void bowl(int countOfHit) {
+        validate();
         pins.offer(new Pin(countOfHit));
+    }
+
+    private void validate() {
+        if (getChanceCount() == 0) {
+            throw new IllegalArgumentException("남은 기회가 없습니다.");
+        }
     }
 
     public int getScore() {
@@ -25,6 +33,10 @@ public class Frame {
                 .reduce(Integer::sum)
                 .orElse(INIT_VALUE)
                 ;
+    }
+
+    public int getChanceCount() {
+        return CHANCE_COUNT - pins.size();
     }
 
     @Override
