@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.FrameResults;
 import bowling.domain.set.FrameSet;
 import bowling.domain.state.*;
 
@@ -31,10 +32,10 @@ public class View {
         return getNumber();
     }
 
-    public void showFrameSetResult(String playerName, List<FrameSet> results, List<Integer> scores) {
+    public void showFrameSetResult(String playerName, FrameResults frameResults) {
         showBoardHeader();
-        showState(playerName, results);
-        showScore(scores);
+        showState(playerName, frameResults.getFrameSets());
+        showScore(frameResults.getScores());
     }
 
     private void showState(String playerName, List<FrameSet> resultSets) {
