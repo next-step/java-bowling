@@ -27,6 +27,14 @@ public class Frame {
         }
     }
 
+    public boolean isNext() {
+        return isStrike() || getChanceCount() == 0;
+    }
+
+    private boolean isStrike() {
+        return getScore() == 10 && getChanceCount() == 1;
+    }
+
     public int getScore() {
         return pins.stream()
                 .map(Pin::getCountOfHit)

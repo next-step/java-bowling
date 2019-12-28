@@ -63,4 +63,26 @@ public class FrameTest {
             frame.bowl(5);
         });
     }
+
+    @Test
+    @DisplayName("다음 프레임 여부")
+    void checkNextFrame() {
+        Frame frame = new Frame(0);
+        assertThat(frame.isNext()).isFalse();
+
+        frame.bowl(1);
+        assertThat(frame.isNext()).isFalse();
+
+        frame.bowl(5);
+        assertThat(frame.isNext()).isTrue();
+
+        Frame frame1 = new Frame(1);
+        frame1.bowl(5);
+        frame1.bowl(5);
+        assertThat(frame1.isNext()).isTrue();
+
+        Frame frame2 = new Frame(2);
+        frame2.bowl(10);
+        assertThat(frame2.isNext()).isTrue();
+    }
 }
