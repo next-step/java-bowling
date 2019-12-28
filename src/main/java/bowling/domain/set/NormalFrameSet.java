@@ -61,11 +61,6 @@ public class NormalFrameSet implements FrameSet {
     }
 
     @Override
-    public FrameSet snapShot() {
-        return frameSet.snapShot();
-    }
-
-    @Override
     public State getState() {
         return frameSet.getState();
     }

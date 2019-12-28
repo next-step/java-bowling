@@ -14,8 +14,6 @@ public interface FrameSet {
 
     public boolean isEndedGame();
 
-    public FrameSet snapShot();
-
     public State getState();
 
     public int getPlayCount();
