@@ -53,11 +53,6 @@ public class BaseFrameSet implements FrameSet {
     }
 
     @Override
-    public FrameSet snapShot() {
-        return new BaseFrameSet(playCount, state, stateHistory, nextFrameSet);
-    }
-
-    @Override
     public State getState() {
         return state;
     }
@@ -105,6 +100,11 @@ public class BaseFrameSet implements FrameSet {
         }
 
         return nextFrameSet.calculateAdditionalScore(score);
+    }
+
+    @Override
+    public boolean canCalculateScore() {
+        return getTotalScore() != NOT_CALCULATED_SCORE;
     }
 
     @Override

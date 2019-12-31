@@ -61,11 +61,6 @@ public class NormalFrameSet implements FrameSet {
     }
 
     @Override
-    public FrameSet snapShot() {
-        return frameSet.snapShot();
-    }
-
-    @Override
     public State getState() {
         return frameSet.getState();
     }
@@ -88,6 +83,11 @@ public class NormalFrameSet implements FrameSet {
     @Override
     public int calculateAdditionalScore(Score score) {
         return frameSet.calculateAdditionalScore(score);
+    }
+
+    @Override
+    public boolean canCalculateScore() {
+        return frameSet.canCalculateScore();
     }
 
     private void assertPlayCount(int playCount) {

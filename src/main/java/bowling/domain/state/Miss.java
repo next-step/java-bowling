@@ -10,7 +10,7 @@ public class Miss implements State, LastState {
     private final int currentHitCount;
 
     public Miss(int previousHitCount, int currentHitCount) {
-        assertHitCount(currentHitCount);
+        assertHitCount(previousHitCount, currentHitCount);
         this.previousHitCount = previousHitCount;
         this.currentHitCount = currentHitCount;
     }
@@ -45,8 +45,8 @@ public class Miss implements State, LastState {
         return currentHitCount;
     }
 
-    private void assertHitCount(int hitCount) {
-        if (hitCount <= MIN_HIT_COUNT) {
+    private void assertHitCount(int previousHitCount, int currentHitCount) {
+        if (previousHitCount <= MIN_HIT_COUNT || currentHitCount <= MIN_HIT_COUNT) {
             throw new IllegalArgumentException("올바르지 않은 상태 입니다. : MISS");
         }
     }
