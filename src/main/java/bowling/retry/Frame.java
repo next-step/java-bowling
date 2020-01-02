@@ -31,7 +31,7 @@ public class Frame {
         return isStrike() || getChanceCount() == 0;
     }
 
-    private boolean isStrike() {
+    public boolean isStrike() {
         return getScore() == 10 && getChanceCount() == 1;
     }
 
