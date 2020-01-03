@@ -19,7 +19,7 @@ public class FrameStatusTest {
 
         FrameStatus frameStatus = new FrameStatus(pins);
 
-        assertThat(frameStatus.getStatus()).isEqualTo("  X  |");
+        assertThat(frameStatus.getStatus()).isEqualTo("  X    |");
     }
 
     @Test
@@ -40,7 +40,7 @@ public class FrameStatusTest {
         pins.offer(new Pin(0));
 
         FrameStatus frameStatus = new FrameStatus(pins);
-        assertThat(frameStatus.getStatus()).isEqualTo("  -  |");
+        assertThat(frameStatus.getStatus()).isEqualTo("  -    |");
     }
 
     @Test
@@ -52,5 +52,22 @@ public class FrameStatusTest {
 
         FrameStatus frameStatus = new FrameStatus(pins);
         assertThat(frameStatus.getStatus()).isEqualTo("  -|-  |");
+    }
+
+    @Test
+    @DisplayName("프레임 상태 체크")
+    void getFrameStatus() {
+        LinkedList<Pin> pins = new LinkedList<>();
+        pins.offer(new Pin(5));
+        pins.offer(new Pin(0));
+
+        FrameStatus frameStatus = new FrameStatus(pins);
+        assertThat(frameStatus.getStatus()).isEqualTo("  5|-  |");
+
+        LinkedList<Pin> pins1 = new LinkedList<>();
+        pins1.offer(new Pin(5));
+
+        FrameStatus frameStatus1 = new FrameStatus(pins1);
+        assertThat(frameStatus1.getStatus()).isEqualTo("  5    |");
     }
 }
