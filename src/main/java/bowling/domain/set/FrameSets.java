@@ -39,6 +39,10 @@ public class FrameSets {
         return frameResults;
     }
 
+    public FrameResults getCurrentFrameResults() {
+        return new FrameResults(Collections.unmodifiableList(frameSets));
+    }
+
     private FrameSet getCurrentFrameSet() {
         return frameSets.get(frameSets.size() - 1);
     }

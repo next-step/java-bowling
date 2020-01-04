@@ -1,4 +1,8 @@
-package bowling.domain;
+package bowling.domain.player;
+
+import bowling.domain.FrameResults;
+import bowling.domain.set.FrameSet;
+import bowling.domain.set.FrameSets;
 
 import java.util.Objects;
 
@@ -7,6 +11,7 @@ public class Player {
     public static final int MIN_NAME_LENGTH = 3;
 
     private final String name;
+    private final FrameSets frameSets;
 
     public static Player create(String name) {
         return new Player(name);
@@ -15,10 +20,23 @@ public class Player {
     private Player(String name) {
         assertNameLength(name);
         this.name = name;
+        this.frameSets = FrameSets.create();
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getPlayCount() {
+        return frameSets.getCurrentPlayCount();
+    }
+
+    public void play(int hitCount) {
+        frameSets.play(hitCount);
+    }
+
+    public FrameResults getCurrentResult() {
+        return frameSets.getCurrentFrameResults();
     }
 
     @Override
