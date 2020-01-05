@@ -43,6 +43,10 @@ public class Frame {
                 ;
     }
 
+    public String getStatus() {
+        return new FrameStatus(pins).getStatus();
+    }
+
     public int getChanceCount() {
         return CHANCE_COUNT - pins.size();
     }

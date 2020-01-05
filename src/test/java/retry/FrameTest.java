@@ -85,4 +85,39 @@ public class FrameTest {
         frame2.bowl(10);
         assertThat(frame2.isNext()).isTrue();
     }
+
+    @Test
+    @DisplayName("프레임 스트라이크일 때 상태")
+    void getFrameStatusByStrike() {
+        Frame frame = new Frame(0);
+        frame.bowl(10);
+        assertThat(frame.getStatus()).isEqualTo("  X    |");
+    }
+
+    @Test
+    @DisplayName("프레임 스페어일 때 상태")
+    void getFrameStatusBySpare() {
+        Frame frame = new Frame(0);
+        frame.bowl(4);
+        frame.bowl(6);
+        assertThat(frame.getStatus()).isEqualTo("  4|/  |");
+    }
+
+    @Test
+    @DisplayName("프레임 거터일 때 상태")
+    void getFrameStatusByGutter() {
+        Frame frame = new Frame(0);
+        frame.bowl(0);
+        assertThat(frame.getStatus()).isEqualTo("  -    |");
+
+        Frame frame1 = new Frame(1);
+        frame1.bowl(0);
+        frame1.bowl(2);
+        assertThat(frame1.getStatus()).isEqualTo("  -|2  |");
+
+        Frame frame2 = new Frame(2);
+        frame2.bowl(0);
+        frame2.bowl(0);;
+        assertThat(frame2.getStatus()).isEqualTo("  -|-  |");
+    }
 }
