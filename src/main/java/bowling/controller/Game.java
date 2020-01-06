@@ -1,9 +1,8 @@
 package bowling.controller;
 
 import bowling.View;
-import bowling.domain.FrameResults;
 import bowling.domain.player.Player;
-import bowling.domain.set.FrameSets;
+import bowling.domain.player.Players;
 
 public class Game {
 
@@ -11,14 +10,34 @@ public class Game {
     }
 
     public static void play(View view) {
-        Player player = Player.create(view.getName());
-        FrameSets frameSets = FrameSets.create();
+        Players players = new Players();
+        applyPlayer(view, players, 3);
 
-        while (frameSets.hasNext()) {
-            int hitCount = view.getHitCount(frameSets.getCurrentPlayCount());
-            FrameResults frameResults = frameSets.play(hitCount);
+        while(players.hasPlayablePlayer()) {
+            playEach(view, players);
+        }
+    }
 
-            view.showFrameSetResult(player.getName(), frameResults);
+    private static void applyPlayer(View view, Players players, int count) {
+        for (int i = 0; i < count; i++) {
+            players.add(Player.create(view.getName()));
+        }
+    }
+
+    private static void playEach(View view, Players players) {
+        for (Player player : players.getValue()) {
+            play(view, players, player);
+        }
+    }
+
+    private static void play(View view, Players players, Player targetPlayer) {
+        int lastPlayCount = targetPlayer.getPlayCount();
+
+        while (targetPlayer.getPlayCount() == lastPlayCount) {
+            int hitCount = view.getHitCount(targetPlayer.getName(), lastPlayCount);
+
+            targetPlayer.play(hitCount);
+            view.showFrameSetResult(players.getValue());
         }
     }
 }
