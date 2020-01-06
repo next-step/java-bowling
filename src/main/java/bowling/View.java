@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class View {
 
+    private static final String PLAYER_COUNT_QUESTION = "플레이할 사람의 숫자는?";
     private static final String PLAYER_NAME_QUESTION = "플레이어 이름은(3 english letters)?";
     private static final String HIT_COUNT_QUESTION = "\n%s 차례 - [%d 프레임] 투구 : ";
     private static final String SCORE_BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
@@ -27,6 +28,11 @@ public class View {
     public String getName() {
         showTextLine(PLAYER_NAME_QUESTION);
         return getLine();
+    }
+
+    public int getPlayerCount() {
+        showTextLine(PLAYER_COUNT_QUESTION);
+        return getNumber();
     }
 
     public int getHitCount(String playerName, int playCount) {
