@@ -12,7 +12,13 @@ public class Players {
     }
 
     public boolean hasPlayablePlayer() {
-        return true;
+        for (Player player : players) {
+            if (!player.isEnd()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public List<Player> getValue() {

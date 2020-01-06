@@ -29,7 +29,7 @@ public class BonusFrameSet implements FrameSet {
 
     @Override
     public FrameSet getNext() {
-        return this;
+        return null;
     }
 
     @Override

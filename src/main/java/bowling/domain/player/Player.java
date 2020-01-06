@@ -39,6 +39,10 @@ public class Player {
         return frameSets.getCurrentFrameResults();
     }
 
+    public boolean isEnd() {
+        return frameSets.isEnd();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

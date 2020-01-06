@@ -32,8 +32,12 @@ public class FrameSets {
 
         FrameResults frameResults = new FrameResults(Collections.unmodifiableList(frameSets));
 
-        if (frameSet.isEndedFrame()) {
-            frameSets.add(frameSet.getNext());
+        if (frameSet.isEndedFrame() && !frameSet.isEndedGame()) {
+            FrameSet nextSet = frameSet.getNext();
+
+            if (nextSet != null) {
+                frameSets.add(frameSet.getNext());
+            }
         }
 
         return frameResults;
@@ -41,6 +45,10 @@ public class FrameSets {
 
     public FrameResults getCurrentFrameResults() {
         return new FrameResults(Collections.unmodifiableList(frameSets));
+    }
+
+    public boolean isEnd() {
+        return getCurrentFrameSet().isEndedGame();
     }
 
     private FrameSet getCurrentFrameSet() {

@@ -44,11 +44,15 @@ public class Game {
     private static void play(View view, Players players, Player targetPlayer) {
         int lastPlayCount = targetPlayer.getPlayCount();
 
-        while (targetPlayer.getPlayCount() == lastPlayCount) {
+        while (canPlayNext(targetPlayer, lastPlayCount)) {
             int hitCount = view.getHitCount(targetPlayer.getName(), lastPlayCount);
 
             targetPlayer.play(hitCount);
             view.showFrameSetResult(players.getValue());
         }
+    }
+
+    private static boolean canPlayNext(Player player, int lastPlayCount) {
+        return player.getPlayCount() == lastPlayCount && !player.isEnd();
     }
 }
