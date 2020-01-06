@@ -2,7 +2,7 @@ package bowling.controller;
 
 import bowling.View;
 import bowling.domain.FrameResults;
-import bowling.domain.Player;
+import bowling.domain.player.Player;
 import bowling.domain.set.FrameSets;
 
 public class Game {

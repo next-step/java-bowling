@@ -16,10 +16,6 @@ public class Hit implements State {
     public State play(int newHitCount) {
         assertNewHitCount(newHitCount);
 
-        if (newHitCount == 0) {
-            return new SecondGutter();
-        }
-
         if (hitCount + newHitCount == MAX_HIT_COUNT) {
             return new Spare(newHitCount);
         }

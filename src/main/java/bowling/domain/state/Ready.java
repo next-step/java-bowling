@@ -12,7 +12,7 @@ public class Ready implements State {
         }
 
         if (newHitCount == 0) {
-            return new FirstGutter();
+            return new Gutter();
         }
 
         return new Hit(newHitCount);

@@ -37,7 +37,7 @@ public class Miss implements State, LastState {
 
     @Override
     public String getString() {
-        return String.valueOf(currentHitCount);
+        return currentHitCount == 0 ? Gutter.TEXT : String.valueOf(currentHitCount);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Miss implements State, LastState {
     }
 
     private void assertHitCount(int previousHitCount, int currentHitCount) {
-        if (previousHitCount <= MIN_HIT_COUNT || currentHitCount <= MIN_HIT_COUNT) {
+        if (previousHitCount < MIN_HIT_COUNT || currentHitCount < MIN_HIT_COUNT) {
             throw new IllegalArgumentException("올바르지 않은 상태 입니다. : MISS");
         }
     }
