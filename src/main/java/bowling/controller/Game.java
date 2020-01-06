@@ -9,12 +9,19 @@ public class Game {
     private Game() {
     }
 
-    public static void play(View view) {
-        Players players = new Players();
-        applyPlayer(view, players, 3);
+    public static void start(View view) {
+        try {
+            Players players = new Players();
+            applyPlayer(view, players, view.getPlayerCount());
 
-        while(players.hasPlayablePlayer()) {
-            playEach(view, players);
+            while (players.hasPlayablePlayer()) {
+                playEach(view, players);
+            }
+        } catch(Exception exception) {
+            view.showErrorMessage(exception.getMessage());
+            view.showRestartMessage();
+
+            start(view);
         }
     }
 
