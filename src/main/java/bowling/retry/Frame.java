@@ -5,14 +5,25 @@ import java.util.Objects;
 
 public class Frame {
 
-    private static final int CHANCE_COUNT = 2;
     private static final int INIT_VALUE = 0;
 
     private int index;
+    private int chanceOfCount;
     private LinkedList<Pin> pins;
 
     public Frame(int index) {
         this.index = index;
+        this.chanceOfCount = 2;
+        createPins();
+    }
+
+    public Frame() {
+        this.index = 9;
+        this.chanceOfCount = 3;
+        createPins();
+    }
+
+    private void createPins() {
         this.pins = new LinkedList<>();
     }
 
@@ -44,11 +55,15 @@ public class Frame {
     }
 
     public String getStatus() {
-        return new FrameStatus(pins).getStatus();
+        if (index < 9) {
+            return new FrameStatus(pins).getStatus();
+        }
+        return new FinalFrameStatus(pins).getStatus();
+
     }
 
     public int getChanceCount() {
-        return CHANCE_COUNT - pins.size();
+        return chanceOfCount - pins.size();
     }
 
     @Override
