@@ -1,24 +1,58 @@
 package bowling.controller;
 
 import bowling.View;
-import bowling.domain.FrameResults;
-import bowling.domain.Player;
-import bowling.domain.set.FrameSets;
+import bowling.domain.player.Player;
+import bowling.domain.player.Players;
 
 public class Game {
 
     private Game() {
     }
 
-    public static void play(View view) {
-        Player player = Player.create(view.getName());
-        FrameSets frameSets = FrameSets.create();
+    public static void start(View view) {
+        try {
+            Players players = new Players();
+            applyPlayer(view, players, view.getPlayerCount());
 
-        while (frameSets.hasNext()) {
-            int hitCount = view.getHitCount(frameSets.getCurrentPlayCount());
-            FrameResults frameResults = frameSets.play(hitCount);
+            while (players.hasPlayablePlayer()) {
+                playEach(view, players);
+            }
+        } catch(Exception exception) {
+            view.showErrorMessage(exception.getMessage());
+            view.showRestartMessage();
 
-            view.showFrameSetResult(player.getName(), frameResults);
+            start(view);
         }
+    }
+
+    private static void applyPlayer(View view, Players players, int count) {
+        if (count <= 0) {
+            throw new IllegalArgumentException("Player 는 최소 1명 이상이어야 합니다.");
+        }
+
+        for (int i = 0; i < count; i++) {
+            players.add(Player.create(view.getName()));
+        }
+    }
+
+    private static void playEach(View view, Players players) {
+        for (Player player : players.getValue()) {
+            play(view, players, player);
+        }
+    }
+
+    private static void play(View view, Players players, Player targetPlayer) {
+        int lastPlayCount = targetPlayer.getPlayCount();
+
+        while (canPlayNext(targetPlayer, lastPlayCount)) {
+            int hitCount = view.getHitCount(targetPlayer.getName(), lastPlayCount);
+
+            targetPlayer.play(hitCount);
+            view.showFrameSetResult(players.getValue());
+        }
+    }
+
+    private static boolean canPlayNext(Player player, int lastPlayCount) {
+        return player.getPlayCount() == lastPlayCount && !player.isEnd();
     }
 }

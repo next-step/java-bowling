@@ -12,7 +12,7 @@ public class LastFrameSet implements FrameSet {
 
     public static final int PLAY_COUNT = 10;
 
-    private final FrameSet frameSet;
+    private final BaseFrameSet frameSet;
 
     private LastFrameSet(State state) {
         this.frameSet = BaseFrameSet.create(LastFrameSet.PLAY_COUNT, state);
@@ -30,10 +30,13 @@ public class LastFrameSet implements FrameSet {
     @Override
     public FrameSet getNext() {
         if (isEndedFrame() && getState().isBonusPlayableState()) {
-            return BonusFrameSet.create();
+            FrameSet bonusSet = BonusFrameSet.create();
+            frameSet.setNextFrameSet(bonusSet);
+
+            return bonusSet;
         }
 
-        return this;
+        return null;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class LastFrameSet implements FrameSet {
 
     @Override
     public boolean isEndedGame() {
-        return getState().isEnd();
+        return getState().isEnd() && !getState().isBonusPlayableState();
     }
 
     @Override

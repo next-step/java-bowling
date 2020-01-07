@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.Player;
+import bowling.domain.player.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
