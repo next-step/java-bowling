@@ -32,21 +32,21 @@ public class FrameStatus {
 
     private String getStrike() {
         if (isStrike()) {
-            return "  X    |";
+            return "  X   |";
         }
         return getGutterByFirstStatus();
     }
 
     private String getGutterByFirstStatus() {
         if (firstHitOfCount == 0) {
-            return "  -    |";
+            return "  -   |";
         }
-        return "  " + firstHitOfCount + "    |";
+        return "  " + firstHitOfCount + "   |";
     }
 
     private String getSpare() {
         if (isSpare()) {
-            return "  "+firstHitOfCount+"|/  |";
+            return "  "+firstHitOfCount+"|/ |";
         }
         return getGutterBySecondStatus();
     }
@@ -59,9 +59,9 @@ public class FrameStatus {
 
         if (secondHitOfCount == 0) {
 
-            return "  "+firstHit+"|-  |";
+            return "  "+firstHit+"|- |";
         }
-        return "  "+firstHit+"|"+secondHitOfCount+"  |";
+        return "  "+firstHit+"|"+secondHitOfCount+" |";
 
     }
 
