@@ -1,4 +1,4 @@
-package bowling.retry;
+package bowling.domain;
 
 public class Spare implements FrameStatus {
 

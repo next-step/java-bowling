@@ -1,6 +1,5 @@
-package retry;
+package bowling.domain;
 
-import bowling.retry.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

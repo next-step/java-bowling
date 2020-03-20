@@ -28,30 +28,6 @@ public class Pin {
         return countOfHit;
     }
 
-    public boolean isMiss(int count) {
-        return countOfHit + count != MAX_HIT_COUNT;
-    }
-
-    public boolean isGutter() {
-        return countOfHit == MIN_HIT_COUNT;
-    }
-
-    public boolean isStrike() {
-        return countOfHit == MAX_HIT_COUNT;
-    }
-
-    public boolean isSpare(int score) {
-        return countOfHit + score == MAX_HIT_COUNT;
-    }
-
-    public boolean isAvailable(int count) {
-        return countOfHit + count <= MAX_HIT_COUNT;
-    }
-
-    public boolean isAvailableLastFrame(int count) {
-        return countOfHit == MAX_HIT_COUNT || isAvailable(count);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
