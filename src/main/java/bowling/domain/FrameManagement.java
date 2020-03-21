@@ -26,7 +26,7 @@ public class FrameManagement {
 
     private FrameStatus getStatusByFirstNonStrike() {
         if (score == 0) {
-            return new Gutter();
+            return new Gutter(score);
         }
         return new Miss(score);
     }
@@ -40,9 +40,10 @@ public class FrameManagement {
 
     private FrameStatus getStatusBySecondNonSpare() {
         if (score == 0) {
-            return new Gutter();
+            return new Gutter(preScore, score);
         }
-        return new Miss(preScore + score);
+//        return new Miss(preScore + score);
+        return new Miss(preScore, score);
     }
 
     public FrameStatus getFrameStatus() {

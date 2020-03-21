@@ -13,16 +13,15 @@ public class Bowling {
     }
 
     public void bowl(int hit) {
-
         if (size() == 0) {
-            System.out.println(size());
             createFrame(hit);
             return;
         }
 
-        NormalFrame frame = (NormalFrame) defaultFrames.getFirst();
+        NormalFrame frame = getRecentFrame();
         if (frame.getFrameStatus() instanceof Strike) {
             createFrame(hit);
+            return;
         }
 
         if (frame.size() < 2) {
@@ -37,6 +36,10 @@ public class Bowling {
         NormalFrame normalFrame = new NormalFrame(++frameNumber);
         normalFrame.bowl(hit);
         defaultFrames.push(normalFrame);
+    }
+
+    private NormalFrame getRecentFrame() {
+        return (NormalFrame) defaultFrames.getFirst();
     }
 
     private int size() {
