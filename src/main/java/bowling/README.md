@@ -59,7 +59,7 @@
 
 필요한 클래스
 player
-frame -> frames(bowling)
+normalFrame -> frames(bowling)
 pin
 score (점수 체크)
 
