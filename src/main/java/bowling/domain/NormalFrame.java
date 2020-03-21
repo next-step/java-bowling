@@ -37,6 +37,10 @@ public class NormalFrame implements Frame {
         return frameStatus;
     }
 
+    public int size() {
+        return pins.size();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
