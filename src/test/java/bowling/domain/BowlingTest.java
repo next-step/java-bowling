@@ -12,7 +12,7 @@ class BowlingTest {
 
     @BeforeEach
     void setUp() {
-        Bowling bowling = new Bowling();
+        bowling = new Bowling();
         bowling.bowl(10);
         bowling.bowl(4);
         bowling.bowl(6);
@@ -38,5 +38,16 @@ class BowlingTest {
         String display = normalFrame.getFrameStatus().display();
         // then
         assertThat(display).isEqualTo("|  X   ");
+    }
+
+    @Test
+    @DisplayName("다음 프레임 번호 확인")
+    void getFrameNumber() {
+        // give
+        int current = bowling.getFrameNumber();
+        // when
+        int next = current + 1;
+        // then
+        assertThat(next).isEqualTo(5);
     }
 }

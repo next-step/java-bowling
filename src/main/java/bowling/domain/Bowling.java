@@ -46,6 +46,10 @@ public class Bowling {
         return defaultFrames.size();
     }
 
+    public int getFrameNumber() {
+        return frameNumber;
+    }
+
     public LinkedList<Frame> getDefaultFrames() {
         return new LinkedList<>(defaultFrames);
     }
