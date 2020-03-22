@@ -56,13 +56,12 @@ public class NormalFrame implements Frame {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NormalFrame normalFrame = (NormalFrame) o;
-        return frameNo == normalFrame.frameNo &&
-                Objects.equals(pins, normalFrame.pins);
+        NormalFrame that = (NormalFrame) o;
+        return frameNo == that.frameNo;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNo, pins);
+        return Objects.hash(frameNo);
     }
 }
