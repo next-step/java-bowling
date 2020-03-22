@@ -22,6 +22,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public void bowl(int countOfHit) {
+        validate(countOfHit);
         if (pins.size() == 0) {
             frameStatus = new FrameManagement(countOfHit).getFrameStatus();
             pins.add(new Pin(countOfHit));
@@ -29,6 +30,12 @@ public class NormalFrame implements Frame {
         }
         frameStatus = new FrameManagement(getCurrentHit(), countOfHit).getFrameStatus();
         pins.add(new Pin(countOfHit));
+    }
+
+    private void validate(int count) {
+        if (getCurrentHit() + count > 10) {
+            throw new IllegalArgumentException("잘 못된 투구 입니다.");
+        }
     }
 
     private int getCurrentHit() {

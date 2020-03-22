@@ -3,6 +3,10 @@ package bowling.application;
 import bowling.domain.Bowling;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.framestatus.FrameStatus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Response {
 
@@ -12,13 +16,17 @@ public class Response {
         this.bowling = bowling;
     }
 
-    public String view() {
-        StringBuilder frames = new StringBuilder();
+    public List<FrameStatus> getFrameStatuses() {
+        List<FrameStatus> frameStatuses = new ArrayList<>();
         for (Frame defaultFrame : bowling.getDefaultFrames()) {
             NormalFrame normalFrame = (NormalFrame) defaultFrame;
-            frames.append(normalFrame.getFrameStatus().display());
+            frameStatuses.add(normalFrame.getFrameStatus());
         }
-        return frames.toString();
+        return frameStatuses;
+    }
+
+    public String displayPlayer() {
+        return bowling.displayPlayer();
     }
 
 }
