@@ -11,17 +11,24 @@ public class Miss implements FrameStatus {
 
     public Miss(int score) {
         this.score = score;
-        this.display = String.format(MISS_FIRST, score);
+        this.display = String.format(MISS_FIRST, this.score);
     }
 
     public Miss(int preScore, int score) {
         this.preScore = preScore;
         this.score = score;
-        this.display = String.format(MISS_SECOND, preScore, score);
+        this.display = String.format(MISS_SECOND, checkGutter(this.preScore), this.score);
     }
 
     @Override
     public String display() {
         return display;
+    }
+
+    private String checkGutter(int score) {
+        if (score == 0) {
+            return "-";
+        }
+        return String.valueOf(score);
     }
 }

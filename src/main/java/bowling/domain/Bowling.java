@@ -35,11 +35,11 @@ public class Bowling {
     private void createFrame(int hit) {
         NormalFrame normalFrame = new NormalFrame(++frameNumber);
         normalFrame.bowl(hit);
-        defaultFrames.push(normalFrame);
+        defaultFrames.add(normalFrame);
     }
 
     private NormalFrame getRecentFrame() {
-        return (NormalFrame) defaultFrames.getFirst();
+        return (NormalFrame) defaultFrames.getLast();
     }
 
     private int size() {
