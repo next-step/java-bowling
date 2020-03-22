@@ -1,5 +1,9 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.framestatus.Strike;
+
 import java.util.LinkedList;
 
 public class Bowling {

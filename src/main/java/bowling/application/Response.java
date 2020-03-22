@@ -1,8 +1,8 @@
 package bowling.application;
 
 import bowling.domain.Bowling;
-import bowling.domain.Frame;
-import bowling.domain.NormalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 
 public class Response {
 

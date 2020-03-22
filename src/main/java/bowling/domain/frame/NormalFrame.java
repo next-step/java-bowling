@@ -1,4 +1,8 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.framestatus.Empty;
+import bowling.domain.framestatus.FrameManagement;
+import bowling.domain.framestatus.FrameStatus;
 
 import java.util.ArrayList;
 import java.util.List;

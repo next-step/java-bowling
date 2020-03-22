@@ -1,5 +1,10 @@
 package bowling.domain;
 
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.framestatus.Gutter;
+import bowling.domain.framestatus.Miss;
+import bowling.domain.framestatus.Spare;
+import bowling.domain.framestatus.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

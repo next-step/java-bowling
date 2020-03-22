@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.framestatus;
 
 public class Spare implements FrameStatus {
 
