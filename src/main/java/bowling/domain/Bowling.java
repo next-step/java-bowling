@@ -25,6 +25,14 @@ public class Bowling {
     }
 
     public void bowl(int hit) {
+        if (frameNumber < 10) {
+            createNormalFrame(hit);
+            return;
+        }
+        createFinalFrame(hit);
+    }
+
+    private void createNormalFrame(int hit) {
         if (size() == 0) {
             createFrame(hit);
             return;
@@ -42,6 +50,10 @@ public class Bowling {
         }
 
         createFrame(hit);
+    }
+
+    private void createFinalFrame(int hit) {
+
     }
 
     private void createFrame(int hit) {

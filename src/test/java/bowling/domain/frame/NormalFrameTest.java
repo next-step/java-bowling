@@ -1,6 +1,5 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.domain.frame.NormalFrame;
 import bowling.domain.framestatus.Gutter;
 import bowling.domain.framestatus.Miss;
 import bowling.domain.framestatus.Spare;
