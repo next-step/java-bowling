@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,13 +21,20 @@ class BowlingTest {
         bowling.bowl(6);
         bowling.bowl(10);
         bowling.bowl(10);
+        bowling.bowl(10);
+        bowling.bowl(10);
+        bowling.bowl(10);
+        bowling.bowl(10);
+        bowling.bowl(10);
+        bowling.bowl(10);
+        bowling.bowl(10);
+        bowling.bowl(10);
     }
 
     @Test
     @DisplayName("볼링 프레임 생성 테스트")
     void createFrameByBowling() {
-
-        assertThat(bowling.getDefaultFrames().size()).isEqualTo(4);
+        assertThat(bowling.getDefaultFrames().size()).isEqualTo(10);
     }
 
     @Test
@@ -49,6 +58,6 @@ class BowlingTest {
         // when
         int next = current + 1;
         // then
-        assertThat(next).isEqualTo(5);
+        assertThat(next).isEqualTo(11);
     }
 }

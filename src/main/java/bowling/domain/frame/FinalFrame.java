@@ -1,8 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.framestatus.Empty;
-import bowling.domain.framestatus.FinalFrameManagement;
-import bowling.domain.framestatus.FrameStatus;
+import bowling.domain.framestatus.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,21 +11,32 @@ public class FinalFrame implements Frame {
     private int frameNo;
     private List<Pin> pins;
     private FrameStatus frameStatus;
+    private boolean bonus;
 
     public FinalFrame(int frameNo) {
         this.frameNo = frameNo;
+        this.bonus = false;
         this.pins = new ArrayList<>();
         this.frameStatus = new Empty();
     }
 
     @Override
     public void bowl(int countOfHit) {
+        validate();
         if (pins.size() == 0) {
             frameStatus = new FinalFrameManagement(countOfHit).getFrameStatus();
+            validateBonus(frameStatus);
             pins.add(new Pin(countOfHit));
             return;
         }
         frameStatus = new FinalFrameManagement(getCurrentHit(), countOfHit).getFrameStatus();
+        validateBonus(frameStatus);
+        pins.add(new Pin(countOfHit));
+    }
+
+    public void bowlByBonus(int countOfHit) {
+        validate();
+        frameStatus = new FinalFrameManagement(countOfHit).getFrameStatus();
         pins.add(new Pin(countOfHit));
     }
 
@@ -35,6 +44,30 @@ public class FinalFrame implements Frame {
         return pins.stream()
                 .mapToInt(Pin::getCountOfHit)
                 .sum();
+    }
+
+    private void validate() {
+        if (pins.size() > 3) {
+            throw new IllegalArgumentException("잘 못된 투구 입니다.");
+        }
+    }
+
+    private void validateBonus(FrameStatus frameStatus) {
+        if (frameStatus instanceof StrikeFinalFrame) {
+            this.bonus = true;
+        }
+
+        if (frameStatus instanceof SpareFinalFrame) {
+            this.bonus = true;
+        }
+    }
+
+    public boolean isBonus() {
+        return bonus;
+    }
+
+    public int size() {
+        return pins.size();
     }
 
     public FrameStatus getFrameStatus() {

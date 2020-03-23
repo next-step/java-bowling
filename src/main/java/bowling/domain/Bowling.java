@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.framestatus.Strike;
@@ -25,7 +26,7 @@ public class Bowling {
     }
 
     public void bowl(int hit) {
-        if (frameNumber < 10) {
+        if (frameNumber < 9) {
             createNormalFrame(hit);
             return;
         }
@@ -53,7 +54,23 @@ public class Bowling {
     }
 
     private void createFinalFrame(int hit) {
+        if (defaultFrames.getLast() instanceof FinalFrame) {
+            FinalFrame finalFrame1 = getRecentFinalFrame();
+            if (finalFrame1.size() == 2) {
+                finalFrame1.bowlByBonus(hit);
+                return;
+            }
+            finalFrame1.bowl(hit);
+            return;
+        }
+        createFrameByFinal(hit);
 
+    }
+
+    private void createFrameByFinal(int hit) {
+        FinalFrame finalFrame = new FinalFrame(++frameNumber);
+        finalFrame.bowl(hit);
+        defaultFrames.add(finalFrame);
     }
 
     private void createFrame(int hit) {
@@ -64,6 +81,10 @@ public class Bowling {
 
     private NormalFrame getRecentFrame() {
         return (NormalFrame) defaultFrames.getLast();
+    }
+
+    private FinalFrame getRecentFinalFrame() {
+        return (FinalFrame) defaultFrames.getLast();
     }
 
     private int size() {
