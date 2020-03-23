@@ -1,25 +1,25 @@
 package bowling.domain.framestatus;
 
-public class FrameManagement {
+public class FinalFrameManagement {
 
     private int score;
     private int preScore;
     private FrameStatus frameStatus;
 
-    public FrameManagement(int score) {
+    public FinalFrameManagement(int score) {
         this.score = score;
-        frameStatus = getStatusByFirst();
+        this.frameStatus = getStatusByFirst();
     }
 
-    public FrameManagement(int preScore, int score) {
-        this.preScore = preScore;
+    public FinalFrameManagement(int score, int preScore) {
         this.score = score;
-        frameStatus = getStatusBySecond();
+        this.preScore = preScore;
+        this.frameStatus = getStatusBySecond();
     }
 
     private FrameStatus getStatusByFirst() {
         if (score == 10) {
-            return new Strike();
+            return new StrikeFinalFrame(score);
         }
         return getStatusByFirstNonStrike();
     }
@@ -32,8 +32,12 @@ public class FrameManagement {
     }
 
     private FrameStatus getStatusBySecond() {
+        if (preScore == 10 && score == 10) {
+            return new StrikeFinalFrame(preScore, score);
+        }
+
         if (preScore + score == 10) {
-            return new Spare(preScore, score);
+            return new SpareFinalFrame(preScore, score);
         }
         return getStatusBySecondNonSpare();
     }
