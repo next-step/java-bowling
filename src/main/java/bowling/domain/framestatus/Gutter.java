@@ -11,17 +11,30 @@ public class Gutter implements FrameStatus {
 
     public Gutter(int score) {
         this.score = score;
+        this.preScore = 0;
         this.display = String.format(GUTTER_FIRST, "-");
     }
 
-    public Gutter(int score, int preScore) {
-        this.score = score;
+    public Gutter(int preScore, int score) {
         this.preScore = preScore;
-        this.display = String.format(GUTTER_SECOND, "-", "-");
+        this.score = score;
+        this.display = String.format(GUTTER_SECOND, convert(preScore), "-");
+    }
+
+    private String convert(int value) {
+        if (value == 0) {
+            return "-";
+        }
+        return String.valueOf(value);
     }
 
     @Override
     public String display() {
         return display;
+    }
+
+    @Override
+    public int getScore() {
+        return preScore + score;
     }
 }

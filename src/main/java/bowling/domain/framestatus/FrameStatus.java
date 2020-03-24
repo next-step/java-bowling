@@ -4,4 +4,6 @@ public interface FrameStatus {
 
     String display();
 
+    int getScore();
+
 }

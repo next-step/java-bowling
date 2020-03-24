@@ -25,6 +25,11 @@ public class Miss implements FrameStatus {
         return display;
     }
 
+    @Override
+    public int getScore() {
+        return this.score;
+    }
+
     private String checkGutter(int score) {
         if (score == 0) {
             return "-";

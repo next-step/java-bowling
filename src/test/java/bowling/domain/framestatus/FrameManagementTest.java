@@ -19,7 +19,7 @@ class FrameManagementTest {
     @Test
     @DisplayName("스페어 프레임 상태 확인")
     void checkSpareFrameStatus() {
-        FrameManagement spareFrameManagement = new FrameManagement(8, 2);
+        FrameManagement spareFrameManagement = new FrameManagement(8, new Miss(2));
         FrameStatus frameStatus = spareFrameManagement.getFrameStatus();
         assertThat(frameStatus).isInstanceOf(Spare.class);
     }
@@ -31,7 +31,7 @@ class FrameManagementTest {
         FrameStatus frameStatus = gutterFrameManagement.getFrameStatus();
         assertThat(frameStatus).isInstanceOf(Gutter.class);
 
-        FrameManagement gutterFrameManagement2 = new FrameManagement(0, 0);
+        FrameManagement gutterFrameManagement2 = new FrameManagement(0, new Gutter(0));
         FrameStatus frameStatus2 = gutterFrameManagement2.getFrameStatus();
         assertThat(frameStatus2).isInstanceOf(Gutter.class);
     }
@@ -43,7 +43,7 @@ class FrameManagementTest {
         FrameStatus frameStatus = missFrameManagement.getFrameStatus();
         assertThat(frameStatus).isInstanceOf(Miss.class);
 
-        FrameManagement missFrameManagement2 = new FrameManagement(1, 3);
+        FrameManagement missFrameManagement2 = new FrameManagement(1, new Miss(2));
         FrameStatus frameStatus2 = missFrameManagement2.getFrameStatus();
         assertThat(frameStatus2).isInstanceOf(Miss.class);
     }

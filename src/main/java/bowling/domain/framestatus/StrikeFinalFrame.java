@@ -35,4 +35,9 @@ public class StrikeFinalFrame implements FrameStatus{
     public String display() {
         return display;
     }
+
+    @Override
+    public int getScore() {
+        return this.score;
+    }
 }

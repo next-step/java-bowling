@@ -3,7 +3,6 @@ package bowling.domain.framestatus;
 public class FinalFrameManagement {
 
     private int score;
-    private int preScore;
     private FrameStatus frameStatus;
 
     public FinalFrameManagement(int score) {
@@ -11,15 +10,32 @@ public class FinalFrameManagement {
         this.frameStatus = getStatusByFirst();
     }
 
-    public FinalFrameManagement(int score, int preScore) {
+    public FinalFrameManagement(FrameStatus frameStatus, int score) {
         this.score = score;
-        this.preScore = preScore;
-        this.frameStatus = getStatusBySecond();
+        this.frameStatus = getStatus(frameStatus);
+    }
+
+    private FrameStatus getStatus(FrameStatus frameStatus) {
+        if (frameStatus instanceof Strike) {
+            if (score == 10) {
+                return new Strike(frameStatus.getScore(), score);
+            }
+        }
+
+        if (frameStatus.getScore() + score == 10) {
+            return new Spare(frameStatus.getScore(), score);
+        }
+
+        if (score == 0) {
+            return new Gutter(frameStatus.getScore(), score);
+        }
+
+        return new Miss(frameStatus.getScore(), score);
     }
 
     private FrameStatus getStatusByFirst() {
         if (score == 10) {
-            return new StrikeFinalFrame(score);
+            return new Strike(score);
         }
         return getStatusByFirstNonStrike();
     }
@@ -31,23 +47,6 @@ public class FinalFrameManagement {
         return new Miss(score);
     }
 
-    private FrameStatus getStatusBySecond() {
-        if (preScore == 10 && score == 10) {
-            return new StrikeFinalFrame(preScore, score);
-        }
-
-        if (preScore + score == 10) {
-            return new SpareFinalFrame(preScore, score);
-        }
-        return getStatusBySecondNonSpare();
-    }
-
-    private FrameStatus getStatusBySecondNonSpare() {
-        if (score == 0) {
-            return new Gutter(preScore, score);
-        }
-        return new Miss(preScore, score);
-    }
 
     public FrameStatus getFrameStatus() {
         return frameStatus;

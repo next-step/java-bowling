@@ -12,20 +12,18 @@ class FinalFrameManagementTest {
     void checkFinalFrameStatus() {
         FinalFrameManagement finalFrameManagement = new FinalFrameManagement(10);
         FrameStatus frameStatus = finalFrameManagement.getFrameStatus();
-        assertThat(frameStatus).isInstanceOf(StrikeFinalFrame.class);
+        assertThat(frameStatus).isInstanceOf(Strike.class);
 
-        FinalFrameManagement doubleStrike = new FinalFrameManagement(10, 10);
+        FinalFrameManagement doubleStrike = new FinalFrameManagement(new Strike(10), 10);
         FrameStatus frameStatus1 = doubleStrike.getFrameStatus();
-        assertThat(frameStatus1).isInstanceOf(StrikeFinalFrame.class);
-        assertThat(frameStatus1.display()).isEqualTo("|X|X");
+        assertThat(frameStatus1).isInstanceOf(Strike.class);
     }
 
     @Test
     @DisplayName("마지막 프레임 확인 - 스페어")
     void checkFinalFrameSpareStatus() {
-        FinalFrameManagement finalFrameManagement = new FinalFrameManagement(7, 3);
+        FinalFrameManagement finalFrameManagement = new FinalFrameManagement(new Miss(7), 3);
         FrameStatus frameStatus = finalFrameManagement.getFrameStatus();
-        assertThat(frameStatus).isInstanceOf(SpareFinalFrame.class);
-        assertThat(frameStatus.display()).isEqualTo("|3|/");
+        assertThat(frameStatus).isInstanceOf(Spare.class);
     }
 }

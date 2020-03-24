@@ -29,7 +29,7 @@ public class FinalFrame implements Frame {
             pins.add(new Pin(countOfHit));
             return;
         }
-        frameStatus = new FinalFrameManagement(getCurrentHit(), countOfHit).getFrameStatus();
+        frameStatus = new FinalFrameManagement(getFrameStatus(), countOfHit).getFrameStatus();
         validateBonus(frameStatus);
         pins.add(new Pin(countOfHit));
     }
@@ -38,12 +38,6 @@ public class FinalFrame implements Frame {
         validate();
         frameStatus = new FinalFrameManagement(countOfHit).getFrameStatus();
         pins.add(new Pin(countOfHit));
-    }
-
-    private int getCurrentHit() {
-        return pins.stream()
-                .mapToInt(Pin::getCountOfHit)
-                .sum();
     }
 
     private void validate() {

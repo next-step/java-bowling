@@ -28,7 +28,7 @@ public class NormalFrame implements Frame {
             pins.add(new Pin(countOfHit));
             return;
         }
-        frameStatus = new FrameManagement(getCurrentHit(), countOfHit).getFrameStatus();
+        frameStatus = new FrameManagement(countOfHit, getFrameStatus()).getFrameStatus();
         pins.add(new Pin(countOfHit));
     }
 
