@@ -39,7 +39,7 @@ public class Bowling {
             return;
         }
 
-        NormalFrame frame = getRecentFrame();
+        Frame frame = getRecentFrame();
         if (frame.getFrameStatus() instanceof Strike) {
             createFrame(hit);
             return;
@@ -79,8 +79,8 @@ public class Bowling {
         defaultFrames.add(normalFrame);
     }
 
-    private NormalFrame getRecentFrame() {
-        return (NormalFrame) defaultFrames.getLast();
+    private Frame getRecentFrame() {
+        return defaultFrames.getLast();
     }
 
     private FinalFrame getRecentFinalFrame() {

@@ -66,10 +66,12 @@ public class FinalFrame implements Frame {
         return bonus;
     }
 
+    @Override
     public int size() {
         return pins.size();
     }
 
+    @Override
     public FrameStatus getFrameStatus() {
         return frameStatus;
     }

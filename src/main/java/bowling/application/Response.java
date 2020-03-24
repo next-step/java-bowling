@@ -1,6 +1,7 @@
 package bowling.application;
 
 import bowling.domain.Bowling;
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.framestatus.FrameStatus;
@@ -19,8 +20,7 @@ public class Response {
     public List<FrameStatus> getFrameStatuses() {
         List<FrameStatus> frameStatuses = new ArrayList<>();
         for (Frame defaultFrame : bowling.getDefaultFrames()) {
-            NormalFrame normalFrame = (NormalFrame) defaultFrame;
-            frameStatuses.add(normalFrame.getFrameStatus());
+            frameStatuses.add(defaultFrame.getFrameStatus());
         }
         return frameStatuses;
     }

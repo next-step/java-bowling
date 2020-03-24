@@ -1,8 +1,8 @@
 package bowling.domain.framestatus;
 
 public class StrikeFinalFrame implements FrameStatus{
-    private static final String STRIKE = "|X";
-    private static final String DOUBLE_STRIKE = "|X|X";
+    private static final String STRIKE = "|X     ";
+    private static final String DOUBLE_STRIKE = "|X|X   ";
 
     private int preScore;
     private int score;

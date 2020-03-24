@@ -44,10 +44,12 @@ public class NormalFrame implements Frame {
                 .sum();
     }
 
+    @Override
     public FrameStatus getFrameStatus() {
         return frameStatus;
     }
 
+    @Override
     public int size() {
         return pins.size();
     }
