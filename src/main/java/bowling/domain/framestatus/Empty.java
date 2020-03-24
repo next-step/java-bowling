@@ -7,7 +7,17 @@ public class Empty implements FrameStatus {
     }
 
     @Override
-    public int getScore() {
+    public int getPreScore() {
         return 0;
+    }
+
+    @Override
+    public int getCurrentScore() {
+        return 0;
+    }
+
+    @Override
+    public boolean isBonus() {
+        return false;
     }
 }

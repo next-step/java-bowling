@@ -4,6 +4,10 @@ public interface FrameStatus {
 
     String display();
 
-    int getScore();
+    int getPreScore();
+
+    int getCurrentScore();
+
+    boolean isBonus();
 
 }

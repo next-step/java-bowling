@@ -7,40 +7,45 @@ public class FinalFrameManagement {
 
     public FinalFrameManagement(int score) {
         this.score = score;
-        this.frameStatus = getStatusByFirst();
+        this.frameStatus = applyStatus();
     }
 
     public FinalFrameManagement(FrameStatus frameStatus, int score) {
         this.score = score;
-        this.frameStatus = getStatus(frameStatus);
+        this.frameStatus = applyStatusByFrameStatus(frameStatus);
     }
 
-    private FrameStatus getStatus(FrameStatus frameStatus) {
-        if (frameStatus instanceof Strike) {
-            if (score == 10) {
-                return new Strike(frameStatus.getScore(), score);
+    private FrameStatus applyStatusByFrameStatus(FrameStatus frameStatus) {
+        if (frameStatus.isBonus()) {
+            if (frameStatus instanceof Strike) {
+                return new Strike(frameStatus.getPreScore(), frameStatus.getCurrentScore(), score);
             }
+            return new Spare(frameStatus.getPreScore(), frameStatus.getCurrentScore(), score);
         }
 
-        if (frameStatus.getScore() + score == 10) {
-            return new Spare(frameStatus.getScore(), score);
+        if (frameStatus instanceof Strike) {
+            return new Strike(frameStatus.getCurrentScore(), score);
+        }
+
+        if (frameStatus.getCurrentScore() + score == 10) {
+            return new Spare(frameStatus.getCurrentScore(), score);
         }
 
         if (score == 0) {
-            return new Gutter(frameStatus.getScore(), score);
+            return new Gutter(frameStatus.getCurrentScore(), score);
         }
 
-        return new Miss(frameStatus.getScore(), score);
+        return new Miss(frameStatus.getCurrentScore(), score);
     }
 
-    private FrameStatus getStatusByFirst() {
+    private FrameStatus applyStatus() {
         if (score == 10) {
             return new Strike(score);
         }
-        return getStatusByFirstNonStrike();
+        return applyStatusNonStrike();
     }
 
-    private FrameStatus getStatusByFirstNonStrike() {
+    private FrameStatus applyStatusNonStrike() {
         if (score == 0) {
             return new Gutter(score);
         }

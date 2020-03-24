@@ -3,6 +3,7 @@ package bowling.domain;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ class BowlingTest {
 
     @BeforeEach
     void setUp() {
-        bowling = new Bowling();
+        bowling = new Bowling(new Player("KSJ"));
         bowling.bowl(10);
         bowling.bowl(4);
         bowling.bowl(6);
@@ -41,7 +42,7 @@ class BowlingTest {
     @DisplayName("볼링 점수 별 상태 값 확인")
     void checkDisplayByFrameStatus() {
         // give
-        Bowling bowling = new Bowling();
+        Bowling bowling = new Bowling(new Player("KSJ"));
         bowling.bowl(10);
         NormalFrame normalFrame = (NormalFrame) bowling.getDefaultFrames().getFirst();
         // when

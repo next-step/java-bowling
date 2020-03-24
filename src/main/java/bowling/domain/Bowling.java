@@ -14,11 +14,6 @@ public class Bowling {
     private int frameNumber;
     private Player player;
 
-    public Bowling() {
-        defaultFrames = new LinkedList<>();
-        frameNumber = 0;
-    }
-
     public Bowling(Player player) {
         this.player = player;
         defaultFrames = new LinkedList<>();
@@ -26,20 +21,12 @@ public class Bowling {
     }
 
     public void bowl(int hit) {
-        if (frameNumber < 9) {
-            createNormalFrame(hit);
-            return;
-        }
-        createFinalFrame(hit);
-    }
-
-    private void createNormalFrame(int hit) {
         if (size() == 0) {
             createFrame(hit);
             return;
         }
 
-        Frame frame = getRecentFrame();
+        Frame frame = defaultFrames.getLast();
         if (frame.getFrameStatus() instanceof Strike) {
             createFrame(hit);
             return;
@@ -50,13 +37,17 @@ public class Bowling {
             return;
         }
 
-        createFrame(hit);
+        if (frameNumber < 9) {
+            createFrame(hit);
+            return;
+        }
+        createFinalFrame(hit);
     }
 
     private void createFinalFrame(int hit) {
         if (defaultFrames.getLast() instanceof FinalFrame) {
-            FinalFrame finalFrame1 = getRecentFinalFrame();
-            if (finalFrame1.size() == 2) {
+            FinalFrame finalFrame1 = (FinalFrame) defaultFrames.getLast();
+            if (finalFrame1.isBonus()) {
                 finalFrame1.bowlByBonus(hit);
                 return;
             }
@@ -64,27 +55,18 @@ public class Bowling {
             return;
         }
         createFrameByFinal(hit);
-
     }
 
     private void createFrameByFinal(int hit) {
-        FinalFrame finalFrame = new FinalFrame(++frameNumber);
+        Frame finalFrame = new FinalFrame(++frameNumber);
         finalFrame.bowl(hit);
         defaultFrames.add(finalFrame);
     }
 
     private void createFrame(int hit) {
-        NormalFrame normalFrame = new NormalFrame(++frameNumber);
+        Frame normalFrame = new NormalFrame(++frameNumber);
         normalFrame.bowl(hit);
         defaultFrames.add(normalFrame);
-    }
-
-    private Frame getRecentFrame() {
-        return defaultFrames.getLast();
-    }
-
-    private FinalFrame getRecentFinalFrame() {
-        return (FinalFrame) defaultFrames.getLast();
     }
 
     private int size() {

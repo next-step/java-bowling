@@ -11,11 +11,9 @@ public class FinalFrame implements Frame {
     private int frameNo;
     private List<Pin> pins;
     private FrameStatus frameStatus;
-    private boolean bonus;
 
     public FinalFrame(int frameNo) {
         this.frameNo = frameNo;
-        this.bonus = false;
         this.pins = new ArrayList<>();
         this.frameStatus = new Empty();
     }
@@ -23,41 +21,33 @@ public class FinalFrame implements Frame {
     @Override
     public void bowl(int countOfHit) {
         validate();
-        if (pins.size() == 0) {
+        if (size() == 0) {
             frameStatus = new FinalFrameManagement(countOfHit).getFrameStatus();
-            validateBonus(frameStatus);
             pins.add(new Pin(countOfHit));
             return;
         }
         frameStatus = new FinalFrameManagement(getFrameStatus(), countOfHit).getFrameStatus();
-        validateBonus(frameStatus);
         pins.add(new Pin(countOfHit));
     }
 
     public void bowlByBonus(int countOfHit) {
         validate();
-        frameStatus = new FinalFrameManagement(countOfHit).getFrameStatus();
+        frameStatus = new FinalFrameManagement(getFrameStatus(), countOfHit).getFrameStatus();
         pins.add(new Pin(countOfHit));
     }
 
     private void validate() {
-        if (pins.size() > 3) {
+        if (size() > 3) {
             throw new IllegalArgumentException("잘 못된 투구 입니다.");
         }
     }
 
-    private void validateBonus(FrameStatus frameStatus) {
-        if (frameStatus instanceof StrikeFinalFrame) {
-            this.bonus = true;
-        }
-
-        if (frameStatus instanceof SpareFinalFrame) {
-            this.bonus = true;
-        }
-    }
-
     public boolean isBonus() {
-        return bonus;
+        if (size() == 2) {
+            return frameStatus instanceof Strike || frameStatus instanceof Spare;
+        }
+        return false;
+
     }
 
     @Override

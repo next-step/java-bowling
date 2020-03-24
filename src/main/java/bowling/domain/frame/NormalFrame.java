@@ -23,7 +23,7 @@ public class NormalFrame implements Frame {
     @Override
     public void bowl(int countOfHit) {
         validate(countOfHit);
-        if (pins.size() == 0) {
+        if (size() == 0) {
             frameStatus = new FrameManagement(countOfHit).getFrameStatus();
             pins.add(new Pin(countOfHit));
             return;
