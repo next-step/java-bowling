@@ -33,15 +33,9 @@ public class NormalFrame implements Frame {
     }
 
     private void validate(int count) {
-        if (getCurrentHit() + count > 10) {
+        if (frameStatus.getCurrentScore() + count > 10) {
             throw new IllegalArgumentException("잘 못된 투구 입니다.");
         }
-    }
-
-    private int getCurrentHit() {
-        return pins.stream()
-                .mapToInt(Pin::getCountOfHit)
-                .sum();
     }
 
     @Override
@@ -52,6 +46,11 @@ public class NormalFrame implements Frame {
     @Override
     public int size() {
         return pins.size();
+    }
+
+    @Override
+    public int getScore() {
+        return frameStatus.getPreScore() + frameStatus.getCurrentScore();
     }
 
     @Override

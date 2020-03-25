@@ -29,18 +29,18 @@ public class NormalFrameTest {
     @DisplayName("프레임 상태 확인")
     void bowlTest() {
         // give
-        NormalFrame strikeNormalFrame = new NormalFrame(1);
+        Frame strikeNormalFrame = new NormalFrame(1);
         strikeNormalFrame.bowl(10);
 
-        NormalFrame spareNormalFrame = new NormalFrame(2);
+        Frame spareNormalFrame = new NormalFrame(2);
         spareNormalFrame.bowl(2);
         spareNormalFrame.bowl(8);
 
-        NormalFrame missNormalFrame = new NormalFrame(3);
+        Frame missNormalFrame = new NormalFrame(3);
         missNormalFrame.bowl(2);
         missNormalFrame.bowl(3);
 
-        NormalFrame gutterNormalFrame = new NormalFrame(4);
+        Frame gutterNormalFrame = new NormalFrame(4);
         gutterNormalFrame.bowl(0);
         gutterNormalFrame.bowl(0);
 
@@ -49,5 +49,16 @@ public class NormalFrameTest {
         assertThat(spareNormalFrame.getFrameStatus()).isInstanceOf(Spare.class);
         assertThat(missNormalFrame.getFrameStatus()).isInstanceOf(Miss.class);
         assertThat(gutterNormalFrame.getFrameStatus()).isInstanceOf(Gutter.class);
+    }
+
+    @Test
+    @DisplayName("프레임 점수 가져오기")
+    void getScore() {
+        Frame frame = new NormalFrame(2);
+        frame.bowl(2);
+        frame.bowl(8);
+
+        assertThat(frame.getScore()).isEqualTo(10);
+
     }
 }

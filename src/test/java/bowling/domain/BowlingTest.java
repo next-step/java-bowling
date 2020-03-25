@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.player.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,8 +55,7 @@ class BowlingTest {
         // give
         int current = bowling.getFrameNumber();
         // when
-        int next = current + 1;
         // then
-        assertThat(next).isEqualTo(11);
+        assertThat(current).isEqualTo(10);
     }
 }

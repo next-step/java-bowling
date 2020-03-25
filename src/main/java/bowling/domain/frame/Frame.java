@@ -8,4 +8,6 @@ public interface Frame {
     FrameStatus getFrameStatus();
 
     int size();
+
+    int getScore();
 }

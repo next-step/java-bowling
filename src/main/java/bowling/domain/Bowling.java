@@ -26,6 +26,36 @@ public class Bowling {
             return;
         }
 
+        if (!isFinal()) {
+            bowlByNormalFrame(hit);
+            return;
+        }
+        bowlByFinalFrame(hit);
+    }
+
+    private boolean isFinal() {
+        Frame frame = defaultFrames.getLast();
+        if (size() >= 9) {
+            return isNormalFrame(frame);
+        }
+        return false;
+    }
+
+    private boolean isNormalFrame(Frame frame) {
+        if (frame instanceof NormalFrame) {
+            return isNextByNormalFrame(frame);
+        }
+        return true;
+    }
+
+    private boolean isNextByNormalFrame(Frame frame) {
+        if (frame.getFrameStatus() instanceof Strike) {
+            return true;
+        }
+        return frame.size() > 1;
+    }
+
+    private void bowlByNormalFrame(int hit) {
         Frame frame = defaultFrames.getLast();
         if (frame.getFrameStatus() instanceof Strike) {
             createFrame(hit);
@@ -36,15 +66,10 @@ public class Bowling {
             frame.bowl(hit);
             return;
         }
-
-        if (frameNumber < 9) {
-            createFrame(hit);
-            return;
-        }
-        createFinalFrame(hit);
+        createFrame(hit);
     }
 
-    private void createFinalFrame(int hit) {
+    private void bowlByFinalFrame(int hit) {
         if (defaultFrames.getLast() instanceof FinalFrame) {
             FinalFrame finalFrame1 = (FinalFrame) defaultFrames.getLast();
             if (finalFrame1.isBonus()) {

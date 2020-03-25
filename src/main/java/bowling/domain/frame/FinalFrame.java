@@ -43,16 +43,24 @@ public class FinalFrame implements Frame {
     }
 
     public boolean isBonus() {
-        if (size() == 2) {
+        if (size() >= 2) {
             return frameStatus instanceof Strike || frameStatus instanceof Spare;
         }
         return false;
-
     }
 
     @Override
     public int size() {
         return pins.size();
+    }
+
+    @Override
+    public int getScore() {
+        if (isBonus()) {
+            int bonusScore = pins.get(size() - 1).getCountOfHit();
+            return getFrameStatus().getPreScore() + getFrameStatus().getCurrentScore() + bonusScore;
+        }
+        return getFrameStatus().getPreScore() + getFrameStatus().getCurrentScore();
     }
 
     @Override
