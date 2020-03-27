@@ -12,7 +12,7 @@ public class NextReady implements State{
     @Override
     public State bowl(int pins) {
         if (fallenPins + pins == 10) {
-            return new Spare();
+            return new Spare(fallenPins, pins);
         }
         return null;
     }
