@@ -26,4 +26,13 @@ class NextReadyTest {
 
         assertThat(checkState instanceof Spare).isTrue();
     }
+
+    @Test
+    @DisplayName("미스 상태 확인")
+    void checkNextReadyToMiss() {
+        State state = new NextReady(3);
+        State checkState = state.bowl(2);
+
+        assertThat(checkState instanceof Miss).isTrue();
+    }
 }

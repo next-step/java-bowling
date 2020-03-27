@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import java.util.Objects;
 
-public class NextReady implements State{
+public class NextReady implements State {
     private int fallenPins;
 
     public NextReady(int fallenPins) {
@@ -14,7 +14,7 @@ public class NextReady implements State{
         if (fallenPins + pins == 10) {
             return new Spare(fallenPins, pins);
         }
-        return null;
+        return new Miss(fallenPins, pins);
     }
 
     @Override
