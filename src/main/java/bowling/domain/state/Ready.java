@@ -7,6 +7,6 @@ public class Ready implements State{
         if (pins == 10) {
             return new Strike();
         }
-        return null;
+        return new NextReady(pins);
     }
 }

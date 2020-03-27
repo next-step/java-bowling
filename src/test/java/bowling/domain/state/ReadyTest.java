@@ -26,4 +26,13 @@ class ReadyTest {
 
         assertThat(strike instanceof Strike).isTrue();
     }
+
+    @Test
+    @DisplayName("다음 투구 준비 상태")
+    void checkReadyToNextReady() {
+        State state = new Ready();
+        State nextState = state.bowl(7);
+
+        assertThat(nextState instanceof NextReady).isTrue();
+    }
 }
