@@ -6,4 +6,9 @@ public class Strike implements State {
     public State bowl(int pins) {
         return null;
     }
+
+    @Override
+    public boolean isFinish() {
+        return true;
+    }
 }

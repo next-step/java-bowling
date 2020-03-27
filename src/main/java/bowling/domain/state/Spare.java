@@ -17,6 +17,11 @@ public class Spare implements State {
     }
 
     @Override
+    public boolean isFinish() {
+        return false;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

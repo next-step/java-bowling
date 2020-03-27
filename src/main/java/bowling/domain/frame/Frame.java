@@ -1,16 +1,26 @@
 package bowling.domain.frame;
 
+import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
 import java.util.Objects;
 
 public class Frame {
 
-    private int frameNumber;
+    private final int frameNumber;
     private State state;
 
     public Frame(int frameNumber) {
         this.frameNumber = frameNumber;
+        this.state = new Ready();
+    }
+
+    public Frame bowl(int pins) {
+        state = state.bowl(pins);
+        if (state.isFinish()) {
+            return new Frame(frameNumber + 1);
+        }
+        return this;
     }
 
     @Override

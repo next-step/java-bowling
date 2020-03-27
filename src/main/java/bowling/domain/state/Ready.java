@@ -9,4 +9,9 @@ public class Ready implements State {
         }
         return new NextReady(pins);
     }
+
+    @Override
+    public boolean isFinish() {
+        return false;
+    }
 }
