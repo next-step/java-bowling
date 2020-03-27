@@ -23,6 +23,10 @@ public class Frame {
         return this;
     }
 
+    public State getState() {
+        return state;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
