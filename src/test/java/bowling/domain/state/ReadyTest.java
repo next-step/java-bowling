@@ -17,4 +17,13 @@ class ReadyTest {
 
         assertThat(same).isFalse();
     }
+
+    @Test
+    @DisplayName("스트라이크 상태 확인")
+    void checkReadyToStrike() {
+        State state = new Ready();
+        State strike = state.bowl(10);
+
+        assertThat(strike instanceof Strike).isTrue();
+    }
 }
