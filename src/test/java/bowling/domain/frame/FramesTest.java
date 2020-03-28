@@ -33,8 +33,8 @@ class FramesTest {
     }
 
     @Test
-    @DisplayName("마지막 프레임 확")
-    void name() {
+    @DisplayName("마지막 프레임 확인")
+    void checkFinalFrameStatus() {
         LinkedList<Frame> framesData = new LinkedList<>();
         framesData.add(new Frame(1));
         Frames frames = new Frames(framesData);
