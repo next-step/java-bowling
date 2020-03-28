@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.state.Ready;
+import bowling.domain.state.ReadyFinal;
 import bowling.domain.state.State;
 
 import java.util.Objects;
@@ -16,6 +17,12 @@ public class Frame {
     }
 
     public State bowl(int pins) {
+        this.state = state.bowl(pins);
+        return state;
+    }
+
+    public State bowlByFinal(int pins) {
+        this.state = new ReadyFinal();
         this.state = state.bowl(pins);
         return state;
     }
@@ -37,12 +44,11 @@ public class Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return frameNumber == frame.frameNumber &&
-                Objects.equals(state, frame.state);
+        return frameNumber == frame.frameNumber;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNumber, state);
+        return Objects.hash(frameNumber);
     }
 }

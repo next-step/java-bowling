@@ -18,7 +18,7 @@ public class Spare implements State {
 
     @Override
     public boolean isFinish() {
-        return false;
+        return true;
     }
 
     @Override

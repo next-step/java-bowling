@@ -14,6 +14,12 @@ public class Frames {
         Frame preFrame = frames.getLast();
         if (preFrame.isFinish()) {
             Frame frame = new Frame(preFrame.getFrameNumber() + 1);
+
+            if (frame.getFrameNumber() == 10) {
+                frame.bowlByFinal(pins);
+                frames.addLast(frame);
+                return;
+            }
             frame.bowl(pins);
             frames.addLast(frame);
             return;

@@ -31,4 +31,27 @@ class FramesTest {
         assertThat(frame.getFrameNumber()).isEqualTo(4);
         assertThat(frames.getFrames().size()).isEqualTo(4);
     }
+
+    @Test
+    @DisplayName("마지막 프레임 확")
+    void name() {
+        LinkedList<Frame> framesData = new LinkedList<>();
+        framesData.add(new Frame(1));
+        Frames frames = new Frames(framesData);
+        frames.bowl(10);
+        frames.bowl(10);
+        frames.bowl(10);
+        frames.bowl(10);
+        frames.bowl(10);
+        frames.bowl(10);
+        frames.bowl(10);
+        frames.bowl(10);
+        frames.bowl(10);
+        // 마지막 프레임
+        frames.bowl(3);
+        frames.bowl(7);
+        Frame finalFrame = frames.getFrames().getLast();
+        assertThat(finalFrame.getState()).isInstanceOf(Spare.class);
+        assertThat(finalFrame.isFinish()).isTrue();
+    }
 }
