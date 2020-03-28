@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.state.NextReady;
+import bowling.domain.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,11 +24,11 @@ class FrameTest {
     @DisplayName("bowl 이후 생성되는 상태 비교")
     void compareToStateByAfterBowl() {
         Frame frame = new Frame(1);
-        Frame expectedFrame = frame.bowl(2);
+        State expectedFrame = frame.bowl(2);
 
-        boolean same = frame.equals(expectedFrame);
+        boolean same = frame.getState().equals(expectedFrame);
 
         assertThat(same).isTrue();
-        assertThat(expectedFrame.getState() instanceof NextReady).isTrue();
+        assertThat(expectedFrame instanceof NextReady).isTrue();
     }
 }

@@ -15,16 +15,21 @@ public class Frame {
         this.state = new Ready();
     }
 
-    public Frame bowl(int pins) {
-        state = state.bowl(pins);
-        if (state.isFinish()) {
-            return new Frame(frameNumber + 1);
-        }
-        return this;
+    public State bowl(int pins) {
+        this.state = state.bowl(pins);
+        return state;
     }
 
     public State getState() {
         return state;
+    }
+
+    public boolean isFinish() {
+        return state.isFinish();
+    }
+
+    public int getFrameNumber() {
+        return frameNumber;
     }
 
     @Override
