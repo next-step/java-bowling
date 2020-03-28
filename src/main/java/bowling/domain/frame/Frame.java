@@ -39,6 +39,10 @@ public class Frame {
         return frameNumber;
     }
 
+    public String display() {
+        return state.display();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
