@@ -17,4 +17,11 @@ class MissTest {
 
         assertThat(same).isTrue();
     }
+
+    @Test
+    @DisplayName("화면 표시")
+    void display() {
+        State miss = new Miss(3, 2);
+        assertThat(miss.display()).isEqualTo("3|2");
+    }
 }

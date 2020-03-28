@@ -17,4 +17,11 @@ class SpareTest {
 
         assertThat(same).isTrue();
     }
+
+    @Test
+    @DisplayName("화면 표시")
+    void display() {
+        State spare = new Spare(7, 3);
+        assertThat(spare.display()).isEqualTo("7|/");
+    }
 }

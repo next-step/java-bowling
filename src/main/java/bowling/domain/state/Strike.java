@@ -11,4 +11,9 @@ public class Strike implements State {
     public boolean isFinish() {
         return true;
     }
+
+    @Override
+    public String display() {
+        return null;
+    }
 }

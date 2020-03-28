@@ -35,4 +35,11 @@ class NextReadyTest {
 
         assertThat(checkState instanceof Miss).isTrue();
     }
+
+    @Test
+    @DisplayName("화면 표시")
+    void display() {
+        State nextReady = new NextReady(3);
+        assertThat(nextReady.display()).isEqualTo("3");
+    }
 }
