@@ -31,6 +31,10 @@ public class Frame {
         return state;
     }
 
+    public Score calculateByBeforeScore(Score score) {
+        return state.calculateByBeforeScore(score);
+    }
+
     public void updateState(State state) {
         this.state = state;
     }

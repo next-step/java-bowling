@@ -9,7 +9,7 @@ public class ReadyFinal implements State {
         if (pins == 10) {
             return new Strike(pins);
         }
-        return new NextReady(pins);
+        return new NextReadyFinal(pins);
     }
 
     @Override

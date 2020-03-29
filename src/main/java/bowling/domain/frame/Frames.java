@@ -47,7 +47,7 @@ public class Frames {
 
         for (Frame frame : frames) {
             if (!firstScore.isCalculation()) {
-                firstScore = frame.getState().calculateByBeforeScore(firstScore);
+                firstScore = frame.calculateByBeforeScore(firstScore);
                 firstState.renewScore(firstScore);
                 firstFrame.updateState(firstState);
             }

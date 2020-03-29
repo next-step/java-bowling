@@ -7,27 +7,40 @@ import java.util.Objects;
 public class Spare implements State {
     private int fistFallenPins;
     private int secondFallenPins;
+    private boolean finish;
     private Score score;
 
     public Spare(int fistFallenPins, int secondFallenPins) {
+        this(fistFallenPins, secondFallenPins, true, new Score(fistFallenPins + secondFallenPins, 1));
+    }
+
+    public Spare(int fistFallenPins, int secondFallenPins, boolean finish) {
+        this(fistFallenPins, secondFallenPins, finish, new Score(fistFallenPins + secondFallenPins, 1));
+    }
+
+    public Spare(int fistFallenPins, int secondFallenPins, boolean finish, Score score) {
         this.fistFallenPins = fistFallenPins;
         this.secondFallenPins = secondFallenPins;
-        this.score = new Score(this.fistFallenPins + this.secondFallenPins, 1);
+        this.finish = finish;
+        this.score = score;
     }
 
     @Override
     public State bowl(int pins) {
-        return null;
+        if (pins == 10) {
+            new Strike();
+        }
+        return new Miss(pins, 0);
     }
 
     @Override
     public boolean isFinish() {
-        return true;
+        return finish;
     }
 
     @Override
     public String display() {
-        return this.fistFallenPins+ "|" +"/";
+        return this.fistFallenPins + "|" + "/";
     }
 
     @Override

@@ -45,7 +45,7 @@ public class Miss implements State {
 
     @Override
     public String display() {
-        return this.fistFallenPins+"|"+this.secondFallenPins;
+        return this.fistFallenPins + "|" + this.secondFallenPins;
     }
 
     @Override
