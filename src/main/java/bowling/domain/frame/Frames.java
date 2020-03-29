@@ -15,17 +15,20 @@ public class Frames {
     public void bowl(int pins) {
         Frame preFrame = frames.getLast();
         if (preFrame.isFinish()) {
-            Frame frame = new Frame(preFrame.getFrameNumber() + 1);
-            if (frame.getFrameNumber() == 10) {
-                frame.bowlByFinal(pins);
-                frames.addLast(frame);
-                return;
-            }
-            frame.bowl(pins);
-            frames.addLast(frame);
+            frames.addLast(getFrame(preFrame, pins));
             return;
         }
         preFrame.bowl(pins);
+    }
+
+    private Frame getFrame(Frame preFrame, int pins) {
+        Frame frame = new Frame(preFrame.getFrameNumber() + 1);
+        if (frame.getFrameNumber() == 10) {
+            frame.bowlByFinal(pins);
+            return frame;
+        }
+        frame.bowl(pins);
+        return frame;
     }
 
     public LinkedList<Frame> getFramesByCalculationScore() {
