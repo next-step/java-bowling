@@ -27,18 +27,28 @@ public class Bonus implements State {
 
     private String convert(int firstFallenPins, int secondFallenPins) {
         String first = String.valueOf(firstFallenPins);
-        String second = String.valueOf(secondFallenPins);
+        String second;
         if (firstFallenPins == 10) {
-            first = "X";
-            if (secondFallenPins == 10) {
-                second = "X";
-            }
-        } else {
-            if (firstFallenPins + secondFallenPins == 10) {
-                second = "/";
-            }
+            first = convertByPins(firstFallenPins);
+            second = convertByPins(secondFallenPins);
+            return String.format("%s|%s", first, second);
         }
+        second = convertBySpare(firstFallenPins, secondFallenPins);
         return String.format("%s|%s", first, second);
+    }
+
+    private String convertByPins(int pins) {
+        if (pins == 10) {
+            return "X";
+        }
+        return String.valueOf(pins);
+    }
+
+    private String convertBySpare(int firstFallenPins, int secondFallenPins) {
+        if (firstFallenPins + secondFallenPins == 10) {
+            return  "/";
+        }
+        return String.valueOf(secondFallenPins);
     }
 
     private String convert(int bonus) {
