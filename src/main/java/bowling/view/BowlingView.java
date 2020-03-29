@@ -7,6 +7,9 @@ class BowlingView {
     private static final String FINISH_FRAME = " %s  |";
     private static final String EMPTY_FRAME = "      |";
     private static final String FINAL_FINISH_FRAME = " %s|";
+    private static final String SCORE_SINGLE_DIGIT = "  %s   |";
+    private static final String SCORE_DOUBLE_DIGIT = "  %s  |";
+    private static final String SCORE_THREE_DIGIT = "  %s |";
 
     static void getReadyFrame(String display) {
         System.out.print(String.format(READY_FRAME, display));
@@ -30,5 +33,19 @@ class BowlingView {
             System.out.print(EMPTY_FRAME);
         }
         System.out.println();
+    }
+
+    static void getScoreFrame(int score) {
+        if (score < 10) {
+            System.out.print(String.format(SCORE_SINGLE_DIGIT, score));
+        } else if (score < 100) {
+            System.out.print(String.format(SCORE_DOUBLE_DIGIT, score));
+        } else {
+            System.out.print(String.format(SCORE_THREE_DIGIT, score));
+        }
+    }
+
+    static void getScoreFrameByEmpty() {
+        System.out.print(EMPTY_FRAME);
     }
 }

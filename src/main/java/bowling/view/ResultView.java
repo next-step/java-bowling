@@ -11,9 +11,34 @@ public class ResultView {
     public static void view(Response response) {
         BowlingView.getRoundBoard();
         List<Frame> frames = response.getFrames();
+        getFrameBoard(frames);
+        getScore(frames);
+        System.out.println();
+        System.out.println();
+    }
+
+    private static void getFrameBoard(List<Frame> frames) {
         System.out.print("| NAME |");
         for (Frame frame : frames) {
             getFrame(frame);
+        }
+        BowlingView.getCollectFrame(frames.size());
+    }
+
+    private static void getScore(List<Frame> frames) {
+        System.out.print("| SCORE|");
+        int sum = 0;
+        for (Frame frame : frames) {
+            if (frame.isFinish()) {
+                if (frame.isCalculation()) {
+                    sum += frame.getScore();
+                    BowlingView.getScoreFrame(sum);
+                } else {
+                    BowlingView.getScoreFrameByEmpty();
+                }
+            } else {
+                BowlingView.getScoreFrameByEmpty();
+            }
         }
         BowlingView.getCollectFrame(frames.size());
     }
