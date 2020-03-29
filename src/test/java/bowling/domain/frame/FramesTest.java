@@ -52,7 +52,7 @@ class FramesTest {
         frames.bowl(7);
         Frame finalFrame = frames.getFrames().getLast();
         assertThat(finalFrame.getState()).isInstanceOf(Spare.class);
-        assertThat(finalFrame.isFinish()).isTrue();
+        assertThat(finalFrame.isFinish()).isFalse();
     }
 
     @Test
