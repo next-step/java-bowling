@@ -43,6 +43,14 @@ public class Frame {
         return state.isFinish();
     }
 
+    public boolean isCalculation() {
+        return state.getScore().isCalculation();
+    }
+
+    public int getScore() {
+        return state.getScore().getScore();
+    }
+
     public int getFrameNumber() {
         return frameNumber;
     }
