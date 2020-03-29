@@ -24,7 +24,7 @@ public class NextReadyFinal implements State {
 
     @Override
     public String display() {
-        return String.valueOf(fallenPins);
+        return " "+fallenPins +"   ";
     }
 
     @Override

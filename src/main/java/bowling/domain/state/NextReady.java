@@ -36,10 +36,6 @@ public class NextReady implements State {
 
     @Override
     public Score calculateByBeforeScore(Score before) {
-        before = before.bowl(this.fallenPins);
-        if (before.isCalculation()) {
-            return before;
-        }
         return before;
     }
 

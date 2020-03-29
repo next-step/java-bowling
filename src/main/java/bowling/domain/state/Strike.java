@@ -4,30 +4,23 @@ import bowling.domain.frame.Score;
 
 public class Strike implements State {
 
-    private int fistFallenPins;
-    private int secondFallenPins;
+    private int firstFallenPins;
     private String display;
     private boolean finish;
     private Score score;
 
-    public Strike(int fistFallenPins) {
-        this.fistFallenPins = fistFallenPins;
-        this.display = "X";
+    public Strike(int firstFallenPins) {
+        this.firstFallenPins = firstFallenPins;
+        this.display = "X    ";
         this.finish = false;
-    }
-
-    public Strike(int fistFallenPins, int secondFallenPins) {
-        this.fistFallenPins = fistFallenPins;
-        this.secondFallenPins = secondFallenPins;
-        this.display = String.format("X|%s", convert(secondFallenPins));
-        this.finish = true;
+        this.score = new Score(firstFallenPins, 2);
     }
 
     public Strike() {
-        this.fistFallenPins = 10;
-        this.display = "X";
+        this.firstFallenPins = 10;
+        this.display = " X ";
         this.finish = true;
-        this.score = new Score(fistFallenPins, 2);
+        this.score = new Score(firstFallenPins, 2);
     }
 
     @Override
@@ -37,7 +30,7 @@ public class Strike implements State {
 
     @Override
     public Score calculateByBeforeScore(Score before) {
-        before = before.bowl(this.fistFallenPins);
+        before = before.bowl(this.firstFallenPins);
         if (before.isCalculation()) {
             return before;
         }
@@ -58,7 +51,7 @@ public class Strike implements State {
 
     @Override
     public State bowl(int pins) {
-        return new Strike(this.fistFallenPins, pins);
+        return new Bonus(firstFallenPins, pins);
     }
 
     @Override

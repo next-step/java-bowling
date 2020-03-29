@@ -5,14 +5,14 @@ import bowling.domain.frame.Score;
 import java.util.Objects;
 
 public class Miss implements State {
-    private int fistFallenPins;
+    private int firstFallenPins;
     private int secondFallenPins;
     private Score score;
 
-    public Miss(int fistFallenPins, int secondFallenPins) {
-        this.fistFallenPins = fistFallenPins;
+    public Miss(int firstFallenPins, int secondFallenPins) {
+        this.firstFallenPins = firstFallenPins;
         this.secondFallenPins = secondFallenPins;
-        this.score = new Score(this.fistFallenPins + this.secondFallenPins, 0);
+        this.score = new Score(this.firstFallenPins + this.secondFallenPins, 0);
     }
 
     public Score getScore() {
@@ -20,7 +20,7 @@ public class Miss implements State {
     }
 
     public Score calculateByBeforeScore(Score before) {
-        before = before.bowl(this.fistFallenPins);
+        before = before.bowl(this.firstFallenPins);
         if (before.isCalculation()) {
             return before;
         }
@@ -45,7 +45,7 @@ public class Miss implements State {
 
     @Override
     public String display() {
-        return this.fistFallenPins + "|" + this.secondFallenPins;
+        return this.firstFallenPins + "|" + this.secondFallenPins;
     }
 
     @Override
@@ -53,12 +53,12 @@ public class Miss implements State {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Miss miss = (Miss) o;
-        return fistFallenPins == miss.fistFallenPins &&
+        return firstFallenPins == miss.firstFallenPins &&
                 secondFallenPins == miss.secondFallenPins;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fistFallenPins, secondFallenPins);
+        return Objects.hash(firstFallenPins, secondFallenPins);
     }
 }
