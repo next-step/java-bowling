@@ -31,6 +31,10 @@ public class Frame {
         return state;
     }
 
+    public void updateState(State state) {
+        this.state = state;
+    }
+
     public boolean isFinish() {
         return state.isFinish();
     }

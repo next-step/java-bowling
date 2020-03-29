@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Score;
+
 public class Ready implements State {
 
     @Override
@@ -18,5 +20,19 @@ public class Ready implements State {
     @Override
     public String display() {
         return null;
+    }
+
+    @Override
+    public Score getScore() {
+        return null;
+    }
+
+    @Override
+    public Score calculateByBeforeScore(Score before) {
+        return null;
+    }
+
+    @Override
+    public void renewScore(Score score) {
     }
 }

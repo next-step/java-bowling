@@ -54,4 +54,29 @@ class FramesTest {
         assertThat(finalFrame.getState()).isInstanceOf(Spare.class);
         assertThat(finalFrame.isFinish()).isTrue();
     }
+
+    @Test
+    @DisplayName("프레임 점수 계산")
+    void calculateByFrame() {
+        LinkedList<Frame> framesData = new LinkedList<>();
+        framesData.add(new Frame(1));
+        Frames frames = new Frames(framesData);
+        frames.bowl(3);
+        frames.bowl(6);
+
+        frames.bowl(5);
+        frames.bowl(5);
+
+        frames.bowl(2);
+        frames.bowl(8);
+
+        frames.bowl(10);
+
+        frames.bowl(10);
+
+        frames.bowl(8);
+        frames.bowl(1);
+
+        assertThat(frames.getFramesByCalculationScore().size()).isEqualTo(6);
+    }
 }

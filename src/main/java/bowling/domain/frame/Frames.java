@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.state.State;
+
 import java.util.LinkedList;
 
 public class Frames {
@@ -25,6 +27,32 @@ public class Frames {
             return;
         }
         preFrame.bowl(pins);
+    }
+
+    public LinkedList<Frame> getFramesByCalculationScore() {
+        LinkedList<Frame> framesBeforeCalculation = getFrames();
+        LinkedList<Frame> frames = new LinkedList<>();
+
+        while (framesBeforeCalculation.size() != 0) {
+            Frame frame = calculateScore(framesBeforeCalculation);
+            frames.addLast(frame);
+        }
+        return frames;
+    }
+
+    private Frame calculateScore(LinkedList<Frame> frames) {
+        Frame firstFrame = frames.removeFirst();
+        State firstState = firstFrame.getState();
+        Score firstScore = firstState.getScore();
+
+        for (Frame frame : frames) {
+            if (!firstScore.isCalculation()) {
+                firstScore = frame.getState().calculateByBeforeScore(firstScore);
+                firstState.renewScore(firstScore);
+                firstFrame.updateState(firstState);
+            }
+        }
+        return firstFrame;
     }
 
     public LinkedList<Frame> getFrames() {

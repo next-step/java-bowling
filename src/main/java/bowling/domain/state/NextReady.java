@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Score;
+
 import java.util.Objects;
 
 public class NextReady implements State {
@@ -25,6 +27,24 @@ public class NextReady implements State {
     @Override
     public String display() {
         return String.valueOf(fallenPins);
+    }
+
+    @Override
+    public Score getScore() {
+        return null;
+    }
+
+    @Override
+    public Score calculateByBeforeScore(Score before) {
+        before = before.bowl(this.fallenPins);
+        if (before.isCalculation()) {
+            return before;
+        }
+        return before;
+    }
+
+    @Override
+    public void renewScore(Score score) {
     }
 
     @Override
