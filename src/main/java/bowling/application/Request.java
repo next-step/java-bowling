@@ -5,23 +5,27 @@ import java.util.Objects;
 public class Request {
 
     private final String name;
-    private int fallenPins;
+    private Integer fallenPins;
 
     public Request(String name) {
         this.name = name;
     }
 
-    private Request(String name, int fallenPins) {
+    private Request(String name, Integer fallenPins) {
         this.name = name;
         this.fallenPins = fallenPins;
     }
 
-    public Request bowlFallenPins(int fallenPins) {
+    public Request bowlFallenPins(Integer fallenPins) {
         return new Request(this.name, fallenPins);
     }
 
-    public int getFallenPins() {
+    public Integer getFallenPins() {
         return fallenPins;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

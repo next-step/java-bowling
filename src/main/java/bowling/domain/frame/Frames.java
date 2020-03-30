@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.player.Player;
 import bowling.domain.state.State;
 
 import java.util.LinkedList;
@@ -7,9 +8,15 @@ import java.util.LinkedList;
 public class Frames {
 
     private LinkedList<Frame> frames;
+    private Player player;
 
     public Frames(LinkedList<Frame> frames) {
         this.frames = frames;
+    }
+
+    public Frames(LinkedList<Frame> frames, Player player) {
+        this.frames = frames;
+        this.player = player;
     }
 
     public void bowl(int pins) {
@@ -55,6 +62,14 @@ public class Frames {
             }
         }
         return firstFrame;
+    }
+
+    public String getName() {
+        return player.getName();
+    }
+
+    public int getFrameNumber() {
+        return frames.getLast().getFrameNumber();
     }
 
     public LinkedList<Frame> getFrames() {

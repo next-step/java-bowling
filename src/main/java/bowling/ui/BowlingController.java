@@ -1,10 +1,9 @@
 package bowling.ui;
 
 import bowling.application.BowlingService;
+import bowling.application.Request;
 import bowling.application.Response;
-import bowling.domain.frame.Frame;
-
-import java.util.List;
+import bowling.domain.frame.Frames;
 
 public class BowlingController {
 
@@ -14,8 +13,8 @@ public class BowlingController {
         this.bowlingService = bowlingService;
     }
 
-    public Response bowl(int pins) {
-        List<Frame> frames = bowlingService.bowl(pins);
+    public Response bowl(Request request) {
+        Frames frames = bowlingService.bowl(request);
         return new Response(frames);
     }
 }

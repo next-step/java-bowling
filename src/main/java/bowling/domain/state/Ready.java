@@ -3,6 +3,7 @@ package bowling.domain.state;
 import bowling.domain.frame.Score;
 
 public class Ready implements State {
+    private static final String EMPTY_FRAME = " ";
 
     @Override
     public State bowl(int pins) {
@@ -19,7 +20,7 @@ public class Ready implements State {
 
     @Override
     public String display() {
-        return null;
+        return EMPTY_FRAME;
     }
 
     @Override

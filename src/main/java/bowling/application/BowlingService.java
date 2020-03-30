@@ -2,9 +2,10 @@ package bowling.application;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.player.Player;
 
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Objects;
 
 public class BowlingService {
 
@@ -15,9 +16,11 @@ public class BowlingService {
         this.bowlFrames.add(new Frame(1));
     }
 
-    public List<Frame> bowl(int pins) {
-        Frames frames = new Frames(bowlFrames);
-        frames.bowl(pins);
-        return frames.getFramesByCalculationScore();
+    public Frames bowl(Request request) {
+        Frames frames = new Frames(bowlFrames, new Player(request.getName()));
+        if (Objects.nonNull(request.getFallenPins())) {
+            frames.bowl(request.getFallenPins());
+        }
+        return frames;
     }
 }

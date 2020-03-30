@@ -29,7 +29,7 @@ class BowlingView {
 
     static void getCollectFrame(int frameSize) {
         int size = 10 - frameSize;
-        for (int i = 0; i < size ; i++) {
+        for (int i = 0; i < size; i++) {
             System.out.print(EMPTY_FRAME);
         }
         System.out.println();
