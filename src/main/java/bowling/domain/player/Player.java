@@ -8,6 +8,17 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
+        validate();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    private void validate() {
+        if (name.length() > 3) {
+            throw new IllegalArgumentException("길이가 너무 깁니다.");
+        }
     }
 
     @Override
