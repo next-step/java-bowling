@@ -18,9 +18,10 @@ public class Application {
         Response response = bowlingController.bowl(request);
         ResultView.view(response);
 
-        Request request1 = request.bowlFallenPins(InputView.inputBowl(response.getFrameNumber()));
-        Response response1 = bowlingController.bowl(request1);
-        ResultView.view(response1);
-
+        while (response.getFrameNumber() <= 10) {
+            request = request.bowlFallenPins(InputView.inputBowl(response.getFrameNumber()));
+            response = bowlingController.bowl(request);
+            ResultView.view(response);
+        }
     }
 }

@@ -11,14 +11,14 @@ public class ResultView {
     public static void view(Response response) {
         BowlingView.getRoundBoard();
         List<Frame> frames = response.getFrames();
-        getFrameBoard(frames);
+        getFrameBoard(frames, response.getName());
         getScore(frames);
         System.out.println();
         System.out.println();
     }
 
-    private static void getFrameBoard(List<Frame> frames) {
-        System.out.print("| NAME |");
+    private static void getFrameBoard(List<Frame> frames, String name) {
+        System.out.print(String.format("|  %s |", name));
         for (Frame frame : frames) {
             getFrame(frame);
         }

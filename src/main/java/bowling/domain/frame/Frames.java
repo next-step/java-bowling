@@ -69,6 +69,9 @@ public class Frames {
     }
 
     public int getFrameNumber() {
+        if (frames.getLast().isFinish()) {
+            return frames.getLast().getFrameNumber() + 1;
+        }
         return frames.getLast().getFrameNumber();
     }
 
