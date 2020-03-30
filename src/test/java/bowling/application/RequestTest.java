@@ -11,11 +11,21 @@ class RequestTest {
     @DisplayName("요청 객체 비교")
     void equalsToRequest() {
         // give
-        Request request = new Request("KSJ", 10);
-        Request expectedRequest = new Request("KSJ", 10);
+        Request request = new Request("KSJ");
+        Request expectedRequest = new Request("KSJ");
         // when
         boolean same = request.equals(expectedRequest);
         // then
         assertThat(same).isTrue();
+    }
+
+    @Test
+    @DisplayName("볼링핀 데이터 담기")
+    void requestPins() {
+        Request request = new Request("KSJ").bowlFallenPins(10);
+        Request nextRequest = request.bowlFallenPins(3);
+
+        assertThat(request.getFallenPins()).isEqualTo(10);
+        assertThat(nextRequest.getFallenPins()).isEqualTo(3);
     }
 }
