@@ -11,6 +11,7 @@ public class Application {
 
         BowlingController bowlingController = new BowlingController(new BowlingService());
 
+
         ResultView.view(bowlingController.bowl(1));
         ResultView.view(bowlingController.bowl(2));
 
