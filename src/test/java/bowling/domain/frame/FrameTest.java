@@ -31,4 +31,39 @@ class FrameTest {
         assertThat(same).isTrue();
         assertThat(expectedFrame instanceof NextReady).isTrue();
     }
+
+    @Test
+    @DisplayName("프레임 상태 체크 - 미스")
+    void checkMissByFrameStatus() {
+        Frame frame = new Frame(1);
+        frame.bowl(2);
+        frame.bowl(2);
+
+        boolean miss = frame.isMiss();
+
+        assertThat(miss).isTrue();
+    }
+
+    @Test
+    @DisplayName("프레임 상태 체크 - 스페어")
+    void checkSpareByFrameStatus() {
+        Frame frame = new Frame(1);
+        frame.bowl(2);
+        frame.bowl(8);
+
+        boolean spare = frame.isSpare();
+
+        assertThat(spare).isTrue();
+    }
+
+    @Test
+    @DisplayName("프레임 상태 체크 - 스트라이크")
+    void checkStrikeByFrameStatus() {
+        Frame frame = new Frame(1);
+        frame.bowl(10);
+
+        boolean strike = frame.isStrike();
+
+        assertThat(strike).isTrue();
+    }
 }
