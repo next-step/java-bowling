@@ -1,12 +1,13 @@
 package bowling.domain.frame;
 
 import bowling.domain.player.Player;
-import bowling.domain.state.State;
 
 import java.util.LinkedList;
 import java.util.Objects;
 
 public class Frames {
+    private static final int MAX_FRAME_SIZE = 10;
+    private static final int MIN_FRAME_SIZE = 0;
 
     private LinkedList<Frame> frames;
     private Player player;
@@ -45,7 +46,7 @@ public class Frames {
         LinkedList<Frame> framesBeforeCalculation = getFrames();
         LinkedList<Frame> frames = new LinkedList<>();
 
-        while (framesBeforeCalculation.size() != 0) {
+        while (framesBeforeCalculation.size() != MIN_FRAME_SIZE) {
             Frame frame = calculateScore(framesBeforeCalculation);
             frames.addLast(frame);
         }
@@ -69,7 +70,7 @@ public class Frames {
         if (frames.getLast().isBonus()) {
             return true;
         }
-        return frames.getLast().isMiss() && frames.size() == 10;
+        return frames.getLast().isMiss() && frames.size() == MAX_FRAME_SIZE;
     }
 
     public String getName() {

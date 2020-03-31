@@ -5,6 +5,7 @@ import bowling.domain.state.*;
 import java.util.Objects;
 
 public class Frame {
+    private static final int MAX_FRAME_SIZE = 10;
 
     private final int frameNumber;
     private State state;
@@ -63,7 +64,7 @@ public class Frame {
     }
 
     public boolean isFinalFrame() {
-        return getFrameNumber() >= 10;
+        return getFrameNumber() >= MAX_FRAME_SIZE;
     }
 
     public int getScore() {

@@ -3,6 +3,7 @@ package bowling.domain.player;
 import java.util.Objects;
 
 public class Player {
+    private static final int MAX_NAME_LENGTH = 3;
 
     private String name;
 
@@ -16,7 +17,7 @@ public class Player {
     }
 
     private void validate() {
-        if (name.length() > 3) {
+        if (name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("길이가 너무 깁니다.");
         }
     }
