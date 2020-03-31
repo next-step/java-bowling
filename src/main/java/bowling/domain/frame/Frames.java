@@ -30,7 +30,7 @@ public class Frames {
 
     private Frame getFrame(Frame preFrame, int pins) {
         Frame frame = new Frame(preFrame.getFrameNumber() + 1);
-        if (frame.getFrameNumber() == 10) {
+        if (frame.isLastFrame()) {
             frame.bowlByFinal(pins);
             return frame;
         }

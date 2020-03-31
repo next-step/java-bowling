@@ -47,6 +47,10 @@ public class Frame {
         return state.getScore().isCalculation();
     }
 
+    public boolean isLastFrame() {
+        return frameNumber == 10;
+    }
+
     public int getScore() {
         return state.getScore().getScore();
     }

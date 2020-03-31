@@ -25,4 +25,8 @@ public class Response {
     public int getFrameNumber() {
         return frames.getFrameNumber();
     }
+
+    public boolean isLastFrame() {
+        return getFrameNumber() <= 10;
+    }
 }
