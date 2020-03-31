@@ -4,7 +4,7 @@ import bowling.domain.frame.Score;
 
 import java.util.Objects;
 
-public class Spare implements State {
+public class Spare extends Finished {
     private int firstFallenPins;
     private int secondFallenPins;
     private Score score;

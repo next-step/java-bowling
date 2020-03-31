@@ -4,7 +4,7 @@ import bowling.domain.frame.Score;
 
 import java.util.Objects;
 
-public class Miss implements State {
+public class Miss extends Finished {
     private int firstFallenPins;
     private int secondFallenPins;
     private Score score;
@@ -31,11 +31,6 @@ public class Miss implements State {
     @Override
     public void renewScore(Score score) {
         this.score = score;
-    }
-
-    @Override
-    public State bowl(int pins) {
-        return null;
     }
 
     @Override

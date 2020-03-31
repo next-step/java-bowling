@@ -4,7 +4,7 @@ import bowling.domain.frame.Score;
 
 import java.util.Objects;
 
-public class Strike implements State {
+public class Strike extends Finished {
     private static final int MAX_FALLEN_PINS = 10;
 
     private int firstFallenPins;

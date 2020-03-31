@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.frame.Score;
 
-public class Bonus implements State {
+public class Bonus extends Finished {
     private static final int MAX_FALLEN_PINS = 10;
     private static final int MIN_FALLEN_PINS = 0;
 
@@ -83,10 +83,5 @@ public class Bonus implements State {
             return before;
         }
         return before;
-    }
-
-    @Override
-    public void renewScore(Score score) {
-
     }
 }
