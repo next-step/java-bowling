@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.application.Response;
 import bowling.domain.frame.Frame;
-import bowling.domain.state.Bonus;
 
 import java.util.List;
 
@@ -60,8 +59,8 @@ public class ResultView {
     }
 
     private static void getBonusFrame(Frame frame) {
-        if (frame.getState() instanceof Bonus) {
-            BowlingView.getFinalFinishFrame(frame.display());
+        if (frame.isBonus()) {
+            BowlingView.getFinalBonusFrame(frame.display());
             return;
         }
         BowlingView.getFinishFrame(frame.display());

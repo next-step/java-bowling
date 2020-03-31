@@ -4,6 +4,7 @@ import bowling.domain.player.Player;
 import bowling.domain.state.State;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Frames {
 
@@ -21,8 +22,14 @@ public class Frames {
 
     public void bowl(int pins) {
         Frame preFrame = frames.getLast();
+        if (preFrame.isFinalFrame()) {
+            if (preFrame.isSpare() || preFrame.isStrike()) {
+                preFrame.bowl(pins);
+                return;
+            }
+        }
         if (preFrame.isFinish()) {
-            frames.addLast(getFrame(preFrame, pins));
+            frames.add(getFrame(preFrame, pins));
             return;
         }
         preFrame.bowl(pins);
@@ -30,10 +37,6 @@ public class Frames {
 
     private Frame getFrame(Frame preFrame, int pins) {
         Frame frame = new Frame(preFrame.getFrameNumber() + 1);
-        if (frame.isLastFrame()) {
-            frame.bowlByFinal(pins);
-            return frame;
-        }
         frame.bowl(pins);
         return frame;
     }
@@ -51,17 +54,22 @@ public class Frames {
 
     private Frame calculateScore(LinkedList<Frame> frames) {
         Frame firstFrame = frames.removeFirst();
-        State firstState = firstFrame.getState();
-        Score firstScore = firstState.getScore();
+        Score firstScore = firstFrame.getScoreByState();
 
         for (Frame frame : frames) {
-            if (!firstScore.isCalculation()) {
+            if (Objects.nonNull(firstScore) && !firstScore.isCalculation()) {
                 firstScore = frame.calculateByBeforeScore(firstScore);
-                firstState.renewScore(firstScore);
-                firstFrame.updateState(firstState);
+                firstFrame.renewScore(firstScore);
             }
         }
         return firstFrame;
+    }
+
+    public boolean isEnd() {
+        if (frames.getLast().isBonus()) {
+            return true;
+        }
+        return frames.getLast().isMiss() && frames.size() == 10;
     }
 
     public String getName() {

@@ -3,32 +3,23 @@ package bowling.domain.state;
 import bowling.domain.frame.Score;
 
 public class Bonus implements State {
+    private static final int MAX_FALLEN_PINS = 10;
+    private static final int MIN_FALLEN_PINS = 0;
 
     private int firstFallenPins;
     private int secondFallenPins;
     private int bonus;
-    private boolean finish;
-    private String display;
-
-    public Bonus(int firstFallenPins, int secondFallenPins) {
-        this.firstFallenPins = firstFallenPins;
-        this.secondFallenPins = secondFallenPins;
-        this.finish = false;
-        this.display = convert(firstFallenPins, secondFallenPins)+"  ";
-    }
 
     public Bonus(int firstFallenPins, int secondFallenPins, int bonus) {
         this.firstFallenPins = firstFallenPins;
         this.secondFallenPins = secondFallenPins;
-        this.finish = true;
         this.bonus = bonus;
-        this.display = convert(firstFallenPins, secondFallenPins)+"|"+convert(bonus);
     }
 
     private String convert(int firstFallenPins, int secondFallenPins) {
         String first = String.valueOf(firstFallenPins);
         String second;
-        if (firstFallenPins == 10) {
+        if (firstFallenPins == MAX_FALLEN_PINS) {
             first = convertByPins(firstFallenPins);
             second = convertByPins(secondFallenPins);
             return String.format("%s|%s", first, second);
@@ -38,28 +29,28 @@ public class Bonus implements State {
     }
 
     private String convertByPins(int pins) {
-        if (pins == 10) {
+        if (pins == MAX_FALLEN_PINS) {
             return "X";
         }
         return String.valueOf(pins);
     }
 
     private String convertBySpare(int firstFallenPins, int secondFallenPins) {
-        if (firstFallenPins + secondFallenPins == 10) {
-            return  "/";
+        if (firstFallenPins + secondFallenPins == MAX_FALLEN_PINS) {
+            return "/";
         }
         return String.valueOf(secondFallenPins);
     }
 
     private String convert(int bonus) {
-        if (bonus == 10) {
+        if (bonus == MAX_FALLEN_PINS) {
             return "X";
         }
         return convertByMiss(bonus);
     }
 
     private String convertByMiss(int bonus) {
-        if (bonus == 0) {
+        if (bonus == MIN_FALLEN_PINS) {
             return "-";
         }
         return String.valueOf(bonus);
@@ -67,17 +58,17 @@ public class Bonus implements State {
 
     @Override
     public State bowl(int pins) {
-        return new Bonus(firstFallenPins, secondFallenPins, pins);
+        return null;
     }
 
     @Override
     public boolean isFinish() {
-        return this.finish;
+        return true;
     }
 
     @Override
     public String display() {
-        return this.display;
+        return convert(firstFallenPins, secondFallenPins) + "|" + convert(bonus);
     }
 
     @Override

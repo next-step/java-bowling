@@ -2,24 +2,26 @@ package bowling.domain.state;
 
 import bowling.domain.frame.Score;
 
+import java.util.Objects;
+
 public class Strike implements State {
+    private static final int MAX_FALLEN_PINS = 10;
 
     private int firstFallenPins;
+    private Integer secondFallenPins;
     private String display;
-    private boolean finish;
     private Score score;
 
-    public Strike(int firstFallenPins) {
+    public Strike(int firstFallenPins, int secondFallenPins) {
         this.firstFallenPins = firstFallenPins;
-        this.display = "X    ";
-        this.finish = false;
+        this.secondFallenPins = secondFallenPins;
+        this.display = String.format("X|%s", convert(secondFallenPins));
         this.score = new Score(firstFallenPins, 2);
     }
 
     public Strike() {
-        this.firstFallenPins = 10;
+        this.firstFallenPins = MAX_FALLEN_PINS;
         this.display = " X ";
-        this.finish = true;
         this.score = new Score(firstFallenPins, 2);
     }
 
@@ -43,7 +45,7 @@ public class Strike implements State {
     }
 
     private String convert(int number) {
-        if (number == 10) {
+        if (number == MAX_FALLEN_PINS) {
             return "X";
         }
         return String.valueOf(number);
@@ -51,12 +53,15 @@ public class Strike implements State {
 
     @Override
     public State bowl(int pins) {
-        return new Bonus(firstFallenPins, pins);
+        if (Objects.nonNull(secondFallenPins)) {
+            return new Bonus(firstFallenPins, secondFallenPins, pins);
+        }
+        return new Strike(firstFallenPins, pins);
     }
 
     @Override
     public boolean isFinish() {
-        return this.finish;
+        return true;
     }
 
     @Override

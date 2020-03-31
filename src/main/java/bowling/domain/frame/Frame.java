@@ -1,8 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.Ready;
-import bowling.domain.state.ReadyFinal;
-import bowling.domain.state.State;
+import bowling.domain.state.*;
 
 import java.util.Objects;
 
@@ -21,22 +19,20 @@ public class Frame {
         return state;
     }
 
-    public State bowlByFinal(int pins) {
-        this.state = new ReadyFinal();
-        this.state = state.bowl(pins);
-        return state;
-    }
-
     public State getState() {
         return state;
     }
 
-    public Score calculateByBeforeScore(Score score) {
-        return state.calculateByBeforeScore(score);
+    public void renewScore(Score score) {
+        state.renewScore(score);
     }
 
-    public void updateState(State state) {
-        this.state = state;
+    public Score getScoreByState() {
+        return state.getScore();
+    }
+
+    public Score calculateByBeforeScore(Score score) {
+        return state.calculateByBeforeScore(score);
     }
 
     public boolean isFinish() {
@@ -44,11 +40,30 @@ public class Frame {
     }
 
     public boolean isCalculation() {
+        if (Objects.isNull(state.getScore())) {
+            return false;
+        }
         return state.getScore().isCalculation();
     }
 
-    public boolean isLastFrame() {
-        return frameNumber == 10;
+    public boolean isSpare() {
+        return state instanceof Spare;
+    }
+
+    public boolean isStrike() {
+        return state instanceof Strike;
+    }
+
+    public boolean isMiss() {
+        return state instanceof Miss;
+    }
+
+    public boolean isBonus() {
+        return state instanceof Bonus;
+    }
+
+    public boolean isFinalFrame() {
+        return getFrameNumber() >= 10;
     }
 
     public int getScore() {

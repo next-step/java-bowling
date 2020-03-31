@@ -6,7 +6,8 @@ class BowlingView {
     private static final String READY_FRAME = "  %s   |";
     private static final String FINISH_FRAME = " %s  |";
     private static final String EMPTY_FRAME = "      |";
-    private static final String FINAL_FINISH_FRAME = " %s|";
+    private static final String FINAL_FINISH_FRAME = "  %s   |";
+    private static final String FINAL_BONUS_FRAME = " %s|";
     private static final String SCORE_SINGLE_DIGIT = "  %s   |";
     private static final String SCORE_DOUBLE_DIGIT = "  %s  |";
     private static final String SCORE_THREE_DIGIT = "  %s |";
@@ -21,6 +22,10 @@ class BowlingView {
 
     static void getFinalFinishFrame(String display) {
         System.out.print(String.format(FINAL_FINISH_FRAME, display));
+    }
+
+    static void getFinalBonusFrame(String display) {
+        System.out.print(String.format(FINAL_BONUS_FRAME, display));
     }
 
     static void getRoundBoard() {

@@ -8,6 +8,9 @@ import java.util.List;
 
 public class Response {
 
+    private static final int BONUS_FRAME_NUMBER = 11;
+    private static final int FINAL_FRAME_NUMBER = 10;
+
     private Frames frames;
 
     public Response(Frames frames) {
@@ -23,10 +26,13 @@ public class Response {
     }
 
     public int getFrameNumber() {
+        if (frames.getFrameNumber() == BONUS_FRAME_NUMBER) {
+            return FINAL_FRAME_NUMBER;
+        }
         return frames.getFrameNumber();
     }
 
     public boolean isLastFrame() {
-        return getFrameNumber() <= 10;
+        return frames.isEnd();
     }
 }

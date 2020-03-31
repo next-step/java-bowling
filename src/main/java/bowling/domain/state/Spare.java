@@ -7,24 +7,12 @@ import java.util.Objects;
 public class Spare implements State {
     private int firstFallenPins;
     private int secondFallenPins;
-    private boolean finish;
     private Score score;
-    private String display;
 
     public Spare(int firstFallenPins, int secondFallenPins) {
-        this(firstFallenPins, secondFallenPins, true, new Score(firstFallenPins + secondFallenPins, 1), firstFallenPins + "|" + "/");
-    }
-
-    public Spare(int firstFallenPins, int secondFallenPins, boolean finish) {
-        this(firstFallenPins, secondFallenPins, finish, new Score(firstFallenPins + secondFallenPins, 1), firstFallenPins + "|" + "/  ");
-    }
-
-    public Spare(int firstFallenPins, int secondFallenPins, boolean finish, Score score, String display) {
         this.firstFallenPins = firstFallenPins;
         this.secondFallenPins = secondFallenPins;
-        this.finish = finish;
-        this.score = score;
-        this.display = display;
+        this.score = new Score(firstFallenPins + secondFallenPins, 1);
     }
 
     @Override
@@ -34,12 +22,12 @@ public class Spare implements State {
 
     @Override
     public boolean isFinish() {
-        return finish;
+        return true;
     }
 
     @Override
     public String display() {
-        return this.display;
+        return this.firstFallenPins + "|" + "/";
     }
 
     @Override

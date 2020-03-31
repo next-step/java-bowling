@@ -3,11 +3,12 @@ package bowling.domain.state;
 import bowling.domain.frame.Score;
 
 public class Ready implements State {
+    private static final int MAX_FALLEN_PINS = 10;
     private static final String EMPTY_FRAME = " ";
 
     @Override
     public State bowl(int pins) {
-        if (pins == 10) {
+        if (pins == MAX_FALLEN_PINS) {
             return new Strike();
         }
         return new NextReady(pins);

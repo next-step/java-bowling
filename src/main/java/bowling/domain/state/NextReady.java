@@ -5,6 +5,8 @@ import bowling.domain.frame.Score;
 import java.util.Objects;
 
 public class NextReady implements State {
+    private static final int MAX_FALLEN_PINS = 10;
+
     private int fallenPins;
 
     public NextReady(int fallenPins) {
@@ -13,7 +15,7 @@ public class NextReady implements State {
 
     @Override
     public State bowl(int pins) {
-        if (fallenPins + pins == 10) {
+        if (fallenPins + pins == MAX_FALLEN_PINS) {
             return new Spare(fallenPins, pins);
         }
         return new Miss(fallenPins, pins);
