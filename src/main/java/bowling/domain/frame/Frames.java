@@ -8,6 +8,8 @@ import java.util.Objects;
 public class Frames {
     private static final int MAX_FRAME_SIZE = 10;
     private static final int MIN_FRAME_SIZE = 0;
+    private static final int BONUS_FRAME_NUMBER = 11;
+    private static final int FINAL_FRAME_NUMBER = 10;
 
     private LinkedList<Frame> frames;
     private Player player;
@@ -78,6 +80,13 @@ public class Frames {
     }
 
     public int getFrameNumber() {
+        if (getFrameNumberByFrames() == BONUS_FRAME_NUMBER) {
+            return FINAL_FRAME_NUMBER;
+        }
+        return getFrameNumberByFrames();
+    }
+
+    private int getFrameNumberByFrames() {
         if (frames.getLast().isFinish()) {
             return frames.getLast().getFrameNumber() + 1;
         }
