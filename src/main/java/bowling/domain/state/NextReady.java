@@ -4,7 +4,7 @@ import bowling.domain.frame.Score;
 
 import java.util.Objects;
 
-public class NextReady implements State {
+public class NextReady extends Playing {
     private static final int MAX_FALLEN_PINS = 10;
 
     private int fallenPins;
@@ -32,18 +32,9 @@ public class NextReady implements State {
     }
 
     @Override
-    public Score getScore() {
-        return null;
-    }
-
-    @Override
     public Score calculateByBeforeScore(Score before) {
         before = before.bowl(this.fallenPins);
         return before;
-    }
-
-    @Override
-    public void renewScore(Score score) {
     }
 
     @Override
