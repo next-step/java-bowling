@@ -4,15 +4,15 @@ import java.util.Scanner;
 
 public class InputView {
 
-    private static final Scanner SCANNER = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public static String inputPlayerName() {
+    public static String inputName() {
         System.out.print("플레이어 이름은(3 english letters)?:");
-        return SCANNER.nextLine();
+        return scanner.nextLine();
     }
 
-    public static Integer inputPitching(long currentFrame) {
-        System.out.print(currentFrame+"프레임 투구 : ");
-        return Integer.parseInt(SCANNER.nextLine());
+    public static int inputBowl(int frameNumber) {
+        System.out.print(String.format("%s프레임 투구 : ", frameNumber));
+        return Integer.parseInt(scanner.nextLine());
     }
 }

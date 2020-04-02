@@ -1,28 +1,27 @@
 package bowling;
 
-import bowling.domain.Bowling;
+
+import bowling.application.BowlingService;
+import bowling.application.Request;
+import bowling.application.Response;
+import bowling.ui.BowlingController;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class Application {
 
-    private static final int CORRECTION_VALUE = 1;
-
     public static void main(String[] args) {
-        String name = InputView.inputPlayerName();
-        Bowling bowling = new Bowling();
-        ResultView.printBowling(bowling, name);
+        Request request = new Request(InputView.inputName());
 
-        while (bowling.isFinal()) {
-            int pitching = InputView.inputPitching(bowling.getCurrentFrameNumber() + CORRECTION_VALUE);
-            bowling.go(pitching);
-            ResultView.printBowling(bowling, name);
-        }
+        BowlingController bowlingController = new BowlingController(new BowlingService());
 
-        if (bowling.isBonus()) {
-            int pitching = InputView.inputPitching(bowling.getCurrentFrameNumber() + CORRECTION_VALUE);
-            bowling.go(pitching);
-            ResultView.printBowling(bowling, name);
+        Response response = bowlingController.bowl(request);
+        ResultView.view(response);
+
+        while (!response.isLastFrame()) {
+            request = request.bowlFallenPins(InputView.inputBowl(response.getFrameNumber()));
+            response = bowlingController.bowl(request);
+            ResultView.view(response);
         }
     }
 }

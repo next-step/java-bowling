@@ -1,10 +1,9 @@
-package bowling.domain;
+package bowling.domain.player;
 
 import java.util.Objects;
 
 public class Player {
-
-    private static final int NAME_LENGTH = 3;
+    private static final int MAX_NAME_LENGTH = 3;
 
     private String name;
 
@@ -13,9 +12,13 @@ public class Player {
         validate();
     }
 
+    public String getName() {
+        return name;
+    }
+
     private void validate() {
-        if (name.length() != NAME_LENGTH) {
-            throw new IllegalArgumentException("플레이어 이름의 길이가 적절하지 않습니다.");
+        if (name.length() > MAX_NAME_LENGTH) {
+            throw new IllegalArgumentException("길이가 너무 깁니다.");
         }
     }
 
