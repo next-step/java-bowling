@@ -1,8 +1,10 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Frame2;
 import bowling.domain.frame.Score;
 
 public class Playing implements State {
+
     @Override
     public State bowl(int pins) {
         return null;
@@ -32,4 +34,11 @@ public class Playing implements State {
     public void renewScore(Score score) {
 
     }
+
+    @Override
+    public Frame2 frame(int frameNumber) {
+        return new Frame2(frameNumber);
+    }
+
+
 }

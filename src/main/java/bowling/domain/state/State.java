@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Frame2;
 import bowling.domain.frame.Score;
 
 public interface State {
@@ -15,4 +16,6 @@ public interface State {
     Score calculateByBeforeScore(Score before);
 
     void renewScore(Score score);
+
+    Frame2 frame(int frameNumber);
 }

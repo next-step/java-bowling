@@ -4,6 +4,9 @@ public class Ready extends Playing {
     private static final int MAX_FALLEN_PINS = 10;
     private static final String EMPTY_FRAME = " ";
 
+    public Ready() {
+    }
+
     @Override
     public State bowl(int pins) {
         if (pins == MAX_FALLEN_PINS) {
