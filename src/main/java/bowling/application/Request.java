@@ -7,23 +7,23 @@ import java.util.Objects;
 public class Request {
 
     private final String name;
-    private Pin fallenPins;
+    private Pin pin;
 
     public Request(String name) {
         this.name = name;
     }
 
-    private Request(String name, Pin fallenPins) {
+    private Request(String name, Pin pin) {
         this.name = name;
-        this.fallenPins = fallenPins;
+        this.pin = pin;
     }
 
-    public Request bowlFallenPins(Pin fallenPins) {
-        return new Request(this.name, fallenPins);
+    public Request bowlFallenPins(Pin pin) {
+        return new Request(this.name, pin);
     }
 
-    public Pin getFallenPins() {
-        return fallenPins;
+    public Pin getPin() {
+        return pin;
     }
 
     public String getName() {
@@ -35,12 +35,12 @@ public class Request {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Request request = (Request) o;
-        return fallenPins == request.fallenPins &&
+        return pin == request.pin &&
                 Objects.equals(name, request.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, fallenPins);
+        return Objects.hash(name, pin);
     }
 }
