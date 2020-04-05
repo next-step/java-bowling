@@ -4,6 +4,7 @@ package bowling;
 import bowling.application.BowlingService;
 import bowling.application.Request;
 import bowling.application.Response;
+import bowling.domain.state.Pin;
 import bowling.ui.BowlingController;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -17,6 +18,13 @@ public class Application {
 
         Response response = bowlingController.bowl(request);
         ResultView.view(response);
+
+        while (true) {
+            Pin pin = new Pin(InputView.inputBowl(response.getFrameNumberLast()));
+            request = request.bowlFallenPins(pin);
+            response = bowlingController.bowl(request);
+            ResultView.view(response);
+        }
 
     }
 }

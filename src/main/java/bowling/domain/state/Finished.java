@@ -4,6 +4,8 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.Score;
 
 public class Finished implements State {
+    protected Frame frame;
+
     @Override
     public State bowl(Pin pins) {
         return null;
@@ -35,8 +37,13 @@ public class Finished implements State {
     }
 
     @Override
-    public Frame frame(int frameNumber) {
-        return new Frame(frameNumber);
+    public void frame(int frameNumber) {
+        frame = new Frame(frameNumber);
+    }
+
+    @Override
+    public Frame getFrame() {
+        return frame;
     }
 
 }

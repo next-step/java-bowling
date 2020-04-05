@@ -26,7 +26,7 @@ class RequestTest {
         Request request = new Request("KSJ").bowlFallenPins(new Pin(10));
         Request nextRequest = request.bowlFallenPins(new Pin(3));
 
-        assertThat(request.getFallenPins().getFallenPins()).isEqualTo(10);
-        assertThat(nextRequest.getFallenPins().getFallenPins()).isEqualTo(3);
+        assertThat(request.getPin().getFallenPins()).isEqualTo(10);
+        assertThat(nextRequest.getPin().getFallenPins()).isEqualTo(3);
     }
 }

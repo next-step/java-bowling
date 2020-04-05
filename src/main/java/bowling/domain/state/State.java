@@ -17,5 +17,7 @@ public interface State {
 
     void renewScore(Score score);
 
-    Frame frame(int frameNumber);
+    void frame(int frameNumber);
+
+    Frame getFrame();
 }

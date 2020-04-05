@@ -21,4 +21,8 @@ public class Response {
     public String getName() {
         return bowling.getName();
     }
+
+    public int getFrameNumberLast() {
+        return bowling.getFrameNumberLast();
+    }
 }

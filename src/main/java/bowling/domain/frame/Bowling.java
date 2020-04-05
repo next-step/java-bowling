@@ -9,10 +9,11 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class Bowling {
+    private static final int START_FRAME_NUMBER = 1;
+    private static final int READY_FRAME = 0;
 
     private LinkedList<State> states;
     private Player player;
-    private int frameNumber = 1;
 
     public Bowling() {
         states = new LinkedList<>();
@@ -24,9 +25,9 @@ public class Bowling {
     }
 
     public void bowl(Pin fallenPins) {
-        if (states.size() == 0) {
+        if (states.size() == READY_FRAME) {
             State ready = new Ready().bowl(fallenPins);
-            ready.frame(frameNumber);
+            ready.frame(START_FRAME_NUMBER);
             states.add(ready);
             return;
         }
@@ -38,16 +39,17 @@ public class Bowling {
         if (state.isFinish()) {
             return createStateByFinalBowling(state, fallenPins);
         }
-        return state.bowl(fallenPins);
+        State state1 = state.bowl(fallenPins);
+        state1.frame(state.getFrame().getFrameNumber());
+        return state1;
     }
 
     private State createStateByFinalBowling(State state, Pin fallenPins) {
-        if (frameNumber == 10) {
+        if (state.getFrame().getFrameNumber() == 10) {
             return state.bowl(fallenPins);
         }
         State ready = new Ready().bowl(fallenPins);
-        Frame frame = ready.frame(frameNumber + 1);
-        increaseFrame(frame.getFrameNumber());
+        ready.frame(state.getFrame().getFrameNumber() + 1);
         return ready;
     }
 
@@ -55,7 +57,7 @@ public class Bowling {
         LinkedList<State> statesBeforeCalculation = new LinkedList<>(this.states);
         LinkedList<State> states = new LinkedList<>();
 
-        while (statesBeforeCalculation.size() != 0) {
+        while (statesBeforeCalculation.size() != READY_FRAME) {
             states.add(calculate(statesBeforeCalculation));
         }
         return states;
@@ -76,8 +78,16 @@ public class Bowling {
         return first.getScore();
     }
 
-    private void increaseFrame(int frameNumber) {
-        this.frameNumber = frameNumber;
+    public int getFrameNumberLast() {
+        if (states.size() == READY_FRAME) {
+            return START_FRAME_NUMBER;
+        }
+
+        State state = states.getLast();
+        if (state.isFinish()) {
+            return state.getFrame().getFrameNumber() + 1;
+        }
+        return state.getFrame().getFrameNumber();
     }
 
     public String getName() {
