@@ -24,4 +24,8 @@ public class Response {
     public int getFrameNumberLast() {
         return bowling.getFrameNumberLast();
     }
+
+    public boolean isEnd() {
+        return bowling.isEnd();
+    }
 }

@@ -19,12 +19,11 @@ public class Application {
         Response response = bowlingController.bowl(request);
         ResultView.view(response);
 
-        while (true) {
+        while (!response.isEnd()) {
             Pin pin = new Pin(InputView.inputBowl(response.getFrameNumberLast()));
             request = request.bowlFallenPins(pin);
             response = bowlingController.bowl(request);
             ResultView.view(response);
         }
-
     }
 }

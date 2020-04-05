@@ -1,9 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.player.Player;
-import bowling.domain.state.Pin;
-import bowling.domain.state.Ready;
-import bowling.domain.state.State;
+import bowling.domain.state.*;
 
 import java.util.LinkedList;
 import java.util.Objects;
@@ -75,6 +73,20 @@ public class Bowling {
             return loopState.calculateByBeforeScore(first.getScore());
         }
         return first.getScore();
+    }
+
+    public boolean isEnd() {
+        if (states.size() > 0) {
+            return isEndByState(states.getLast());
+        }
+        return false;
+    }
+
+    private boolean isEndByState(State state) {
+        if (state instanceof Bonus) {
+            return true;
+        }
+        return state.getFrame().getFrameNumber() == 10 && state instanceof Miss;
     }
 
     public int getFrameNumberLast() {
