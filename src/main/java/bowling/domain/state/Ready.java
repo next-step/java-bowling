@@ -9,10 +9,11 @@ public class Ready extends Playing {
 
     @Override
     public State bowl(int pins) {
+        Pin fallenPin = new Pin(pins);
         if (pins == MAX_FALLEN_PINS) {
             return new Strike();
         }
-        return new NextReady(pins);
+        return new NextReady(fallenPin);
     }
 
     @Override

@@ -7,18 +7,19 @@ import java.util.Objects;
 public class NextReady extends Playing {
     private static final int MAX_FALLEN_PINS = 10;
 
-    private int fallenPins;
+    private Pin fallenPins;
 
-    public NextReady(int fallenPins) {
+    public NextReady(Pin fallenPins) {
         this.fallenPins = fallenPins;
     }
 
     @Override
     public State bowl(int pins) {
-        if (fallenPins + pins == MAX_FALLEN_PINS) {
-            return new Spare(fallenPins, pins);
+        Pin pin = new Pin(pins);
+        if (fallenPins.getFallenPins() + pins == MAX_FALLEN_PINS) {
+            return new Spare(fallenPins, pin);
         }
-        return new Miss(fallenPins, pins);
+        return new Miss(fallenPins, pin);
     }
 
     @Override
@@ -28,12 +29,12 @@ public class NextReady extends Playing {
 
     @Override
     public String display() {
-        return String.valueOf(fallenPins);
+        return String.valueOf(fallenPins.getFallenPins());
     }
 
     @Override
     public Score calculateByBeforeScore(Score before) {
-        before = before.bowl(this.fallenPins);
+        before = before.bowl(fallenPins.getFallenPins());
         return before;
     }
 

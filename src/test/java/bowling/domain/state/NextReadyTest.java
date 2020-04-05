@@ -10,8 +10,9 @@ class NextReadyTest {
     @Test
     @DisplayName("객체 생성 비교")
     void compareToNextReady() {
-        State state = new NextReady(7);
-        State state2 = new NextReady(7);
+        Pin sevenFallenOfAll = new Pin(7);
+        State state = new NextReady(sevenFallenOfAll);
+        State state2 = new NextReady(sevenFallenOfAll);
 
         boolean same = state.equals(state2);
 
@@ -21,7 +22,8 @@ class NextReadyTest {
     @Test
     @DisplayName("스페어 상태 확인")
     void checkNextReadyToSpare() {
-        State state = new NextReady(7);
+        Pin sevenFallenOfAll = new Pin(7);
+        State state = new NextReady(sevenFallenOfAll);
         State checkState = state.bowl(3);
 
         assertThat(checkState instanceof Spare).isTrue();
@@ -30,7 +32,8 @@ class NextReadyTest {
     @Test
     @DisplayName("미스 상태 확인")
     void checkNextReadyToMiss() {
-        State state = new NextReady(3);
+        Pin threeFallenOfRemain = new Pin(3);
+        State state = new NextReady(threeFallenOfRemain);
         State checkState = state.bowl(2);
 
         assertThat(checkState instanceof Miss).isTrue();
@@ -39,7 +42,8 @@ class NextReadyTest {
     @Test
     @DisplayName("화면 표시")
     void display() {
-        State nextReady = new NextReady(3);
+        Pin threeFallenOfRemain = new Pin(3);
+        State nextReady = new NextReady(threeFallenOfRemain);
         assertThat(nextReady.display()).isEqualTo("3");
     }
 }

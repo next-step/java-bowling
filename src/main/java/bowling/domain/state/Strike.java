@@ -7,20 +7,20 @@ import java.util.Objects;
 public class Strike extends Finished {
     private static final int MAX_FALLEN_PINS = 10;
 
-    private int firstFallenPins;
-    private Integer secondFallenPins;
+    private Pin firstFallenPins;
+    private Pin secondFallenPins;
     private String display;
     private Score score;
 
-    public Strike(int firstFallenPins, int secondFallenPins) {
+    public Strike(Pin firstFallenPins, Pin secondFallenPins) {
         this.firstFallenPins = firstFallenPins;
         this.secondFallenPins = secondFallenPins;
-        this.display = String.format("X|%s", convert(secondFallenPins));
+        this.display = String.format("X|%s", convert(secondFallenPins.getFallenPins()));
         this.score = Score.ofStrike();
     }
 
     public Strike() {
-        this.firstFallenPins = MAX_FALLEN_PINS;
+        this.firstFallenPins = new Pin(MAX_FALLEN_PINS);
         this.display = " X ";
         this.score = Score.ofStrike();
     }
@@ -32,7 +32,7 @@ public class Strike extends Finished {
 
     @Override
     public Score calculateByBeforeScore(Score before) {
-        before = before.bowl(this.firstFallenPins);
+        before = before.bowl(firstFallenPins.getFallenPins());
         if (before.isCalculation()) {
             return before;
         }
@@ -53,10 +53,11 @@ public class Strike extends Finished {
 
     @Override
     public State bowl(int pins) {
+        Pin bonusPin = new Pin(pins);
         if (Objects.nonNull(secondFallenPins)) {
-            return new Bonus(firstFallenPins, secondFallenPins, pins);
+            return new Bonus(firstFallenPins, secondFallenPins, bonusPin);
         }
-        return new Strike(firstFallenPins, pins);
+        return new Strike(firstFallenPins, bonusPin);
     }
 
     @Override

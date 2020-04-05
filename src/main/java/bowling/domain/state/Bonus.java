@@ -6,11 +6,11 @@ public class Bonus extends Finished {
     private static final int MAX_FALLEN_PINS = 10;
     private static final int MIN_FALLEN_PINS = 0;
 
-    private int firstFallenPins;
-    private int secondFallenPins;
-    private int bonus;
+    private Pin firstFallenPins;
+    private Pin secondFallenPins;
+    private Pin bonus;
 
-    public Bonus(int firstFallenPins, int secondFallenPins, int bonus) {
+    public Bonus(Pin firstFallenPins, Pin secondFallenPins, Pin bonus) {
         this.firstFallenPins = firstFallenPins;
         this.secondFallenPins = secondFallenPins;
         this.bonus = bonus;
@@ -68,17 +68,17 @@ public class Bonus extends Finished {
 
     @Override
     public String display() {
-        return convert(firstFallenPins, secondFallenPins) + "|" + convert(bonus);
+        return convert(firstFallenPins.getFallenPins(), secondFallenPins.getFallenPins()) + "|" + convert(bonus.getFallenPins());
     }
 
     @Override
     public Score getScore() {
-        return Score.ofMiss(this.firstFallenPins + this.secondFallenPins + bonus);
+        return Score.ofMiss(firstFallenPins.getFallenPins() + secondFallenPins.getFallenPins() + bonus.getFallenPins());
     }
 
     @Override
     public Score calculateByBeforeScore(Score before) {
-        before = before.bowl(this.firstFallenPins);
+        before = before.bowl(firstFallenPins.getFallenPins());
         if (before.isCalculation()) {
             return before;
         }
