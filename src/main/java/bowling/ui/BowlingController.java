@@ -3,6 +3,7 @@ package bowling.ui;
 import bowling.application.BowlingService;
 import bowling.application.Request;
 import bowling.application.Response;
+import bowling.domain.frame.Bowling;
 import bowling.domain.frame.Frames;
 
 public class BowlingController {
@@ -16,5 +17,10 @@ public class BowlingController {
     public Response bowl(Request request) {
         Frames frames = bowlingService.bowl(request);
         return new Response(frames);
+    }
+
+    public Response bowl2(Request request) {
+        Bowling bowling = bowlingService.bowl2(request);
+        return new Response(bowling);
     }
 }

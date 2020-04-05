@@ -1,5 +1,6 @@
 package bowling.application;
 
+import bowling.domain.frame.Bowling;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
@@ -22,5 +23,11 @@ public class BowlingService {
             frames.bowl(request.getFallenPins());
         }
         return frames;
+    }
+
+    public Bowling bowl2(Request request) {
+        Bowling bowling = new Bowling(new Player(request.getName()));
+        bowling.bowl(request.getFallenPins());
+        return bowling;
     }
 }

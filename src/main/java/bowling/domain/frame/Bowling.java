@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.player.Player;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
@@ -8,11 +9,16 @@ import java.util.Objects;
 
 public class Bowling {
 
-    LinkedList<State> states;
+    private LinkedList<State> states;
+    private Player player;
     private int frameNumber = 1;
 
     public Bowling() {
         states = new LinkedList<>();
+    }
+
+    public Bowling(Player player) {
+        this.player = player;
     }
 
     public void bowl(int fallenPins) {
@@ -53,9 +59,9 @@ public class Bowling {
         return states;
     }
 
-    private State calculate(LinkedList<State> aaa) {
-        State first = aaa.removeFirst();
-        for (State state : aaa) {
+    private State calculate(LinkedList<State> states) {
+        State first = states.removeFirst();
+        for (State state : states) {
             first.renewScore(calculateByScore(first, state));
         }
         return first;
