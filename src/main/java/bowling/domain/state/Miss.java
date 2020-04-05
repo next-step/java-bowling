@@ -12,7 +12,7 @@ public class Miss extends Finished {
     public Miss(int firstFallenPins, int secondFallenPins) {
         this.firstFallenPins = firstFallenPins;
         this.secondFallenPins = secondFallenPins;
-        this.score = new Score(this.firstFallenPins + this.secondFallenPins, 0);
+        this.score = Score.ofMiss(firstFallenPins + secondFallenPins);
     }
 
     public Score getScore() {

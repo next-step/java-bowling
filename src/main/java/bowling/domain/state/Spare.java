@@ -12,7 +12,7 @@ public class Spare extends Finished {
     public Spare(int firstFallenPins, int secondFallenPins) {
         this.firstFallenPins = firstFallenPins;
         this.secondFallenPins = secondFallenPins;
-        this.score = new Score(firstFallenPins + secondFallenPins, 1);
+        this.score = Score.ofSpare();
     }
 
     @Override

@@ -16,13 +16,13 @@ public class Strike extends Finished {
         this.firstFallenPins = firstFallenPins;
         this.secondFallenPins = secondFallenPins;
         this.display = String.format("X|%s", convert(secondFallenPins));
-        this.score = new Score(firstFallenPins, 2);
+        this.score = Score.ofStrike();
     }
 
     public Strike() {
         this.firstFallenPins = MAX_FALLEN_PINS;
         this.display = " X ";
-        this.score = new Score(firstFallenPins, 2);
+        this.score = Score.ofStrike();
     }
 
     @Override

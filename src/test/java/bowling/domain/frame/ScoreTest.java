@@ -11,8 +11,8 @@ class ScoreTest {
     @Test
     @DisplayName("스코어 객체 생성")
     void create() {
-        Score spare = new Score(10, 1);
-        Score expectedSpare = new Score(10, 1);
+        Score spare = Score.ofSpare();
+        Score expectedSpare = Score.ofSpare();
 
         boolean same = spare.equals(expectedSpare);
 
@@ -23,7 +23,7 @@ class ScoreTest {
     @DisplayName("스코어 계산 예외처리")
     void exceptCalculation() {
         // give
-        Score strike = new Score(10, 2);
+        Score strike = Score.ofStrike();
         strike.bowl(3);
         // when then
         assertThatIllegalArgumentException().isThrownBy(strike::getScore);
@@ -33,7 +33,7 @@ class ScoreTest {
     @DisplayName("미스 - 스코어 계산 값 가져오기")
     void calculatedByMiss() {
         // give
-        Score miss = new Score(7, 0);
+        Score miss = Score.ofMiss(7);
         // when
         int actualScore = miss.getScore();
         // then
@@ -44,7 +44,7 @@ class ScoreTest {
     @DisplayName("스페어 - 스코어 계산 값 가져오기")
     void calculatedBySpare() {
         // give
-        Score spare = new Score(10, 1);
+        Score spare = Score.ofSpare();
         // when
         int actualScore = spare.bowl(3).getScore();
         // then
@@ -52,10 +52,10 @@ class ScoreTest {
     }
 
     @Test
-    @DisplayName("스트라이 - 스코어 계산 값 가져오기")
+    @DisplayName("스트라이크 - 스코어 계산 값 가져오기")
     void calculatedByStrike() {
         // give
-        Score spare = new Score(10, 2);
+        Score spare = Score.ofStrike();
         // when
         int actualScore = spare.bowl(3).bowl(6).getScore();
         // then

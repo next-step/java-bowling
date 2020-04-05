@@ -73,7 +73,7 @@ public class Bonus extends Finished {
 
     @Override
     public Score getScore() {
-        return new Score(this.firstFallenPins + this.secondFallenPins + bonus, 0);
+        return Score.ofMiss(this.firstFallenPins + this.secondFallenPins + bonus);
     }
 
     @Override

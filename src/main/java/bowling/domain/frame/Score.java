@@ -6,9 +6,21 @@ public class Score {
     private int score;
     private int left;
 
-    public Score(int score, int left) {
+    private Score(int score, int left) {
         this.score = score;
         this.left = left;
+    }
+
+    public static Score ofMiss(int score) {
+        return new Score(score, 0);
+    }
+
+    public static Score ofSpare() {
+        return new Score(10, 1);
+    }
+
+    public static Score ofStrike() {
+        return new Score(10, 2);
     }
 
     public Score bowl(int fallenPins) {
