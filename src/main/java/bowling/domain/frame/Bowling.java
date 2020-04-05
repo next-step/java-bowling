@@ -81,7 +81,6 @@ public class Bowling {
         if (states.size() == READY_FRAME) {
             return START_FRAME_NUMBER;
         }
-
         State state = states.getLast();
         if (state.isFinish()) {
             if (state.getFrame().getFrameNumber() >= FINAL_FRAME_NUMBER) {

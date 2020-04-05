@@ -3,8 +3,6 @@ package bowling.domain.state;
 import java.util.Objects;
 
 public class NextReady extends Playing {
-    private static final int MAX_FALLEN_PINS = 10;
-
     private Pin fallenPins;
 
     public NextReady(Pin fallenPins) {
@@ -13,7 +11,7 @@ public class NextReady extends Playing {
 
     @Override
     public State bowl(Pin pins) {
-        if (fallenPins.getFallenPins() + pins.getFallenPins() == MAX_FALLEN_PINS) {
+        if (fallenPins.isSpare(pins)) {
             return new Spare(fallenPins, pins);
         }
         return new Miss(fallenPins, pins);
@@ -28,7 +26,6 @@ public class NextReady extends Playing {
     public String display() {
         return String.valueOf(fallenPins.getFallenPins());
     }
-
 
     @Override
     public boolean equals(Object o) {

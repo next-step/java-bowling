@@ -67,7 +67,11 @@ public class Bonus extends Finished {
     }
 
     @Override
-    public Score getScore() {
-        return Score.ofMiss(MIN_FALLEN_PINS);
+    public Score calculateByBeforeScore(Score before) {
+        before = before.bowl(bonus.getFallenPins());
+        if (before.isCalculation()) {
+            return before;
+        }
+        return before;
     }
 }

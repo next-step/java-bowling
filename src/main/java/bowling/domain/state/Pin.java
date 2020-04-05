@@ -29,6 +29,14 @@ public class Pin {
         return fallenPins;
     }
 
+    public boolean isStrike() {
+        return fallenPins == MAX_PINS;
+    }
+
+    public boolean isSpare(Pin pin) {
+        return this.fallenPins + pin.getFallenPins() == MAX_PINS;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
