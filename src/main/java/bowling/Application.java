@@ -18,10 +18,5 @@ public class Application {
         Response response = bowlingController.bowl(request);
         ResultView.view(response);
 
-        while (!response.isLastFrame()) {
-            request = request.bowlFallenPins(InputView.inputBowl(response.getFrameNumber()));
-            response = bowlingController.bowl(request);
-            ResultView.view(response);
-        }
     }
 }

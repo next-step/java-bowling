@@ -1,7 +1,7 @@
 package bowling.view;
 
 import bowling.application.Response;
-import bowling.domain.frame.Frame;
+import bowling.domain.state.State;
 
 import java.util.List;
 
@@ -9,61 +9,32 @@ public class ResultView {
 
     public static void view(Response response) {
         BowlingView.getRoundBoard();
-        List<Frame> frames = response.getFrames();
-        getFrameBoard(frames, response.getName());
-        getScore(frames);
+        List<State> states = response.getState();
+        getFrameBoard(states, response.getName());
+        getScore(states);
         System.out.println();
         System.out.println();
     }
 
-    private static void getFrameBoard(List<Frame> frames, String name) {
+    private static void getFrameBoard(List<State> states, String name) {
         System.out.print(String.format("|  %s |", name));
-        for (Frame frame : frames) {
-            getFrame(frame);
+        for (State frame : states) {
+
         }
-        BowlingView.getCollectFrame(frames.size());
+        BowlingView.getCollectFrame(states.size());
     }
 
-    private static void getScore(List<Frame> frames) {
+    private static void getScore(List<State> states) {
         System.out.print("| SCORE|");
         int sum = 0;
-        for (Frame frame : frames) {
+        for (State frame : states) {
             if (frame.isFinish()) {
-                if (frame.isCalculation()) {
-                    sum += frame.getScore();
-                    BowlingView.getScoreFrame(sum);
-                } else {
-                    BowlingView.getScoreFrameByEmpty();
-                }
+
             } else {
                 BowlingView.getScoreFrameByEmpty();
             }
         }
-        BowlingView.getCollectFrame(frames.size());
-    }
-
-    private static void getFrame(Frame frame) {
-        if (frame.isFinish()) {
-            getBonusFrame(frame);
-            return;
-        }
-        getReadyFrame(frame);
-    }
-
-    private static void getReadyFrame(Frame frame) {
-        if (frame.getFrameNumber() == 10) {
-            BowlingView.getFinalFinishFrame(frame.display());
-            return;
-        }
-        BowlingView.getReadyFrame(frame.display());
-    }
-
-    private static void getBonusFrame(Frame frame) {
-        if (frame.isBonus()) {
-            BowlingView.getFinalBonusFrame(frame.display());
-            return;
-        }
-        BowlingView.getFinishFrame(frame.display());
+        BowlingView.getCollectFrame(states.size());
     }
 
 }

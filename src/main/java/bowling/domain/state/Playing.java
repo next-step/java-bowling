@@ -1,12 +1,12 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.Frame2;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Score;
 
 public class Playing implements State {
 
     @Override
-    public State bowl(int pins) {
+    public State bowl(Pin pins) {
         return null;
     }
 
@@ -36,8 +36,8 @@ public class Playing implements State {
     }
 
     @Override
-    public Frame2 frame(int frameNumber) {
-        return new Frame2(frameNumber);
+    public Frame frame(int frameNumber) {
+        return new Frame(frameNumber);
     }
 
 

@@ -24,7 +24,7 @@ class NextReadyTest {
     void checkNextReadyToSpare() {
         Pin sevenFallenOfAll = new Pin(7);
         State state = new NextReady(sevenFallenOfAll);
-        State checkState = state.bowl(3);
+        State checkState = state.bowl(new Pin(3));
 
         assertThat(checkState instanceof Spare).isTrue();
     }
@@ -34,7 +34,7 @@ class NextReadyTest {
     void checkNextReadyToMiss() {
         Pin threeFallenOfRemain = new Pin(3);
         State state = new NextReady(threeFallenOfRemain);
-        State checkState = state.bowl(2);
+        State checkState = state.bowl(new Pin(2));
 
         assertThat(checkState instanceof Miss).isTrue();
     }

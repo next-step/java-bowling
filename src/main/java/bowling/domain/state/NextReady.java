@@ -14,12 +14,11 @@ public class NextReady extends Playing {
     }
 
     @Override
-    public State bowl(int pins) {
-        Pin pin = new Pin(pins);
-        if (fallenPins.getFallenPins() + pins == MAX_FALLEN_PINS) {
-            return new Spare(fallenPins, pin);
+    public State bowl(Pin pins) {
+        if (fallenPins.getFallenPins() + pins.getFallenPins() == MAX_FALLEN_PINS) {
+            return new Spare(fallenPins, pins);
         }
-        return new Miss(fallenPins, pin);
+        return new Miss(fallenPins, pins);
     }
 
     @Override

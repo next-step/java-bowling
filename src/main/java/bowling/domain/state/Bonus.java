@@ -57,7 +57,7 @@ public class Bonus extends Finished {
     }
 
     @Override
-    public State bowl(int pins) {
+    public State bowl(Pin pins) {
         return null;
     }
 

@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.state.Pin;
 import bowling.domain.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,11 +16,11 @@ class BowlingTest {
     void getSizeTest() {
 
         Bowling bowling = new Bowling();
-        bowling.bowl(5);
-        bowling.bowl(2);
+        bowling.bowl(new Pin(5));
+        bowling.bowl(new Pin(2));
 
-        bowling.bowl(2);
-        bowling.bowl(3);
+        bowling.bowl(new Pin(2));
+        bowling.bowl(new Pin(3));
 
         LinkedList<State> bowlingStates = bowling.getStates();
         assertThat(bowlingStates.size()).isEqualTo(4);

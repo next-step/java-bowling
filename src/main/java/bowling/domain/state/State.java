@@ -1,11 +1,11 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.Frame2;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Score;
 
 public interface State {
 
-    State bowl(int pins);
+    State bowl(Pin pins);
 
     boolean isFinish();
 
@@ -17,5 +17,5 @@ public interface State {
 
     void renewScore(Score score);
 
-    Frame2 frame(int frameNumber);
+    Frame frame(int frameNumber);
 }

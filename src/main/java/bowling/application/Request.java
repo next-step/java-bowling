@@ -1,26 +1,28 @@
 package bowling.application;
 
+import bowling.domain.state.Pin;
+
 import java.util.Objects;
 
 public class Request {
 
     private final String name;
-    private Integer fallenPins;
+    private Pin fallenPins;
 
     public Request(String name) {
         this.name = name;
     }
 
-    private Request(String name, Integer fallenPins) {
+    private Request(String name, Pin fallenPins) {
         this.name = name;
         this.fallenPins = fallenPins;
     }
 
-    public Request bowlFallenPins(Integer fallenPins) {
+    public Request bowlFallenPins(Pin fallenPins) {
         return new Request(this.name, fallenPins);
     }
 
-    public Integer getFallenPins() {
+    public Pin getFallenPins() {
         return fallenPins;
     }
 

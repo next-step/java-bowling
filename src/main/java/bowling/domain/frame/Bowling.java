@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.player.Player;
+import bowling.domain.state.Pin;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
@@ -17,11 +18,12 @@ public class Bowling {
         states = new LinkedList<>();
     }
 
-    public Bowling(Player player) {
+    public Bowling(LinkedList<State> states, Player player) {
+        this.states = states;
         this.player = player;
     }
 
-    public void bowl(int fallenPins) {
+    public void bowl(Pin fallenPins) {
         if (states.size() == 0) {
             State ready = new Ready().bowl(fallenPins);
             ready.frame(frameNumber);
@@ -32,19 +34,19 @@ public class Bowling {
         states.add(createStateByBowling(state, fallenPins));
     }
 
-    private State createStateByBowling(State state, int fallenPins) {
+    private State createStateByBowling(State state, Pin fallenPins) {
         if (state.isFinish()) {
             return createStateByFinalBowling(state, fallenPins);
         }
         return state.bowl(fallenPins);
     }
 
-    private State createStateByFinalBowling(State state, int fallenPins) {
+    private State createStateByFinalBowling(State state, Pin fallenPins) {
         if (frameNumber == 10) {
             return state.bowl(fallenPins);
         }
         State ready = new Ready().bowl(fallenPins);
-        Frame2 frame = ready.frame(frameNumber + 1);
+        Frame frame = ready.frame(frameNumber + 1);
         increaseFrame(frame.getFrameNumber());
         return ready;
     }
@@ -76,6 +78,10 @@ public class Bowling {
 
     private void increaseFrame(int frameNumber) {
         this.frameNumber = frameNumber;
+    }
+
+    public String getName() {
+        return player.getName();
     }
 
 }

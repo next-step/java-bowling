@@ -52,12 +52,11 @@ public class Strike extends Finished {
     }
 
     @Override
-    public State bowl(int pins) {
-        Pin bonusPin = new Pin(pins);
+    public State bowl(Pin pins) {
         if (Objects.nonNull(secondFallenPins)) {
-            return new Bonus(firstFallenPins, secondFallenPins, bonusPin);
+            return new Bonus(firstFallenPins, secondFallenPins, pins);
         }
-        return new Strike(firstFallenPins, bonusPin);
+        return new Strike(firstFallenPins, pins);
     }
 
     @Override

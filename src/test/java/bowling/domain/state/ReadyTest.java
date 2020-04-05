@@ -22,7 +22,7 @@ class ReadyTest {
     @DisplayName("스트라이크 상태 확인")
     void checkReadyToStrike() {
         State state = new Ready();
-        State strike = state.bowl(10);
+        State strike = state.bowl(new Pin(10));
 
         assertThat(strike instanceof Strike).isTrue();
     }
@@ -31,7 +31,7 @@ class ReadyTest {
     @DisplayName("다음 투구 준비 상태")
     void checkReadyToNextReady() {
         State state = new Ready();
-        State nextState = state.bowl(7);
+        State nextState = state.bowl(new Pin(7));
 
         assertThat(nextState instanceof NextReady).isTrue();
     }
