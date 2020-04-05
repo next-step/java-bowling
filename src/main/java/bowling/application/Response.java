@@ -3,8 +3,7 @@ package bowling.application;
 import bowling.domain.frame.Bowling;
 import bowling.domain.state.State;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedList;
 
 public class Response {
 
@@ -14,8 +13,8 @@ public class Response {
         this.bowling = bowling;
     }
 
-    public List<State> getState() {
-        return Collections.unmodifiableList(bowling.getStates());
+    public LinkedList<State> getState() {
+        return new LinkedList<>(bowling.getStates());
     }
 
     public String getName() {

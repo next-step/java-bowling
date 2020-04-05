@@ -9,15 +9,12 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class Bowling {
+    private static final int FINAL_FRAME_NUMBER = 10;
     private static final int START_FRAME_NUMBER = 1;
     private static final int READY_FRAME = 0;
 
     private LinkedList<State> states;
     private Player player;
-
-    public Bowling() {
-        states = new LinkedList<>();
-    }
 
     public Bowling(LinkedList<State> states, Player player) {
         this.states = states;
@@ -39,14 +36,16 @@ public class Bowling {
         if (state.isFinish()) {
             return createStateByFinalBowling(state, fallenPins);
         }
-        State state1 = state.bowl(fallenPins);
-        state1.frame(state.getFrame().getFrameNumber());
-        return state1;
+        State nextState = state.bowl(fallenPins);
+        nextState.frame(state.getFrame().getFrameNumber());
+        return nextState;
     }
 
     private State createStateByFinalBowling(State state, Pin fallenPins) {
-        if (state.getFrame().getFrameNumber() == 10) {
-            return state.bowl(fallenPins);
+        if (state.getFrame().getFrameNumber() >= FINAL_FRAME_NUMBER) {
+            State nextState = state.bowl(fallenPins);
+            nextState.frame(FINAL_FRAME_NUMBER);
+            return nextState;
         }
         State ready = new Ready().bowl(fallenPins);
         ready.frame(state.getFrame().getFrameNumber() + 1);
@@ -85,6 +84,9 @@ public class Bowling {
 
         State state = states.getLast();
         if (state.isFinish()) {
+            if (state.getFrame().getFrameNumber() >= FINAL_FRAME_NUMBER) {
+                return FINAL_FRAME_NUMBER;
+            }
             return state.getFrame().getFrameNumber() + 1;
         }
         return state.getFrame().getFrameNumber();

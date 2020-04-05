@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.player.Player;
 import bowling.domain.state.Pin;
 import bowling.domain.state.State;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,7 @@ class BowlingTest {
     @DisplayName("볼링 상태 사이즈")
     void getSizeTest() {
 
-        Bowling bowling = new Bowling();
+        Bowling bowling = new Bowling(new LinkedList<>(), new Player("KSJ"));
         bowling.bowl(new Pin(5));
         bowling.bowl(new Pin(2));
 

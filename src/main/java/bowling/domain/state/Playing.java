@@ -28,7 +28,7 @@ public class Playing implements State {
 
     @Override
     public Score calculateByBeforeScore(Score before) {
-        return null;
+        return before;
     }
 
     @Override

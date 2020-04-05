@@ -32,7 +32,7 @@ public class Strike extends Finished {
 
     @Override
     public Score calculateByBeforeScore(Score before) {
-        before = before.bowl(firstFallenPins.getFallenPins());
+        before = before.bowl(MAX_FALLEN_PINS);
         if (before.isCalculation()) {
             return before;
         }

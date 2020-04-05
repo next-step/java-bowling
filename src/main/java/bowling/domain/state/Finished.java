@@ -8,7 +8,7 @@ public class Finished implements State {
 
     @Override
     public State bowl(Pin pins) {
-        return null;
+        throw new IllegalArgumentException("게임이 종료되었습니다.");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class Finished implements State {
 
     @Override
     public Score calculateByBeforeScore(Score before) {
-        return null;
+        return before;
     }
 
     @Override

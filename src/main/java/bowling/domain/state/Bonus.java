@@ -57,11 +57,6 @@ public class Bonus extends Finished {
     }
 
     @Override
-    public State bowl(Pin pins) {
-        return null;
-    }
-
-    @Override
     public boolean isFinish() {
         return true;
     }
@@ -73,15 +68,6 @@ public class Bonus extends Finished {
 
     @Override
     public Score getScore() {
-        return Score.ofMiss(firstFallenPins.getFallenPins() + secondFallenPins.getFallenPins() + bonus.getFallenPins());
-    }
-
-    @Override
-    public Score calculateByBeforeScore(Score before) {
-        before = before.bowl(firstFallenPins.getFallenPins());
-        if (before.isCalculation()) {
-            return before;
-        }
-        return before;
+        return Score.ofMiss(MIN_FALLEN_PINS);
     }
 }
