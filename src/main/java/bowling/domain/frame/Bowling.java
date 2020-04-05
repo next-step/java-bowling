@@ -76,7 +76,7 @@ public class Bowling {
     }
 
     public boolean isEnd() {
-        if (states.size() > 0) {
+        if (states.size() > READY_FRAME) {
             return isEndByState(states.getLast());
         }
         return false;
@@ -86,7 +86,7 @@ public class Bowling {
         if (state instanceof Bonus) {
             return true;
         }
-        return state.getFrame().getFrameNumber() == 10 && state instanceof Miss;
+        return state.getFrame().getFrameNumber() == FINAL_FRAME_NUMBER && state instanceof Miss;
     }
 
     public int getFrameNumberLast() {
