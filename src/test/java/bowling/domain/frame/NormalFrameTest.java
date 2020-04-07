@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FrameTest {
+class NormalFrameTest {
 
     @Test
     @DisplayName("프레임 객체 비교")
     void equalsToFrame() {
-        Frame frame = new Frame(1);
-        Frame expectedFrame = new Frame(1);
+        NormalFrame normalFrame = new NormalFrame(1);
+        NormalFrame expectedNormalFrame = new NormalFrame(1);
 
-        boolean same = frame.equals(expectedFrame);
+        boolean same = normalFrame.equals(expectedNormalFrame);
 
         assertThat(same).isTrue();
     }

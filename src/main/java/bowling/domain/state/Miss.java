@@ -29,11 +29,6 @@ public class Miss extends Finished {
     }
 
     @Override
-    public void renewScore(Score score) {
-        this.score = score;
-    }
-
-    @Override
     public boolean isFinish() {
         return true;
     }

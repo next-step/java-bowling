@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.player.Player;
 import bowling.domain.state.Pin;
-import bowling.domain.state.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +22,7 @@ class BowlingTest {
         bowling.bowl(new Pin(2));
         bowling.bowl(new Pin(3));
 
-        LinkedList<State> bowlingStates = bowling.getStates();
-        assertThat(bowlingStates.size()).isEqualTo(4);
+        LinkedList<Frame> bowlingStates = bowling.getFrames();
+        assertThat(bowlingStates.size()).isEqualTo(3);
     }
 }

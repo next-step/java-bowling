@@ -1,6 +1,7 @@
 package bowling.application;
 
 import bowling.domain.frame.Bowling;
+import bowling.domain.frame.Frame;
 import bowling.domain.state.State;
 
 import java.util.LinkedList;
@@ -13,8 +14,8 @@ public class Response {
         this.bowling = bowling;
     }
 
-    public LinkedList<State> getState() {
-        return new LinkedList<>(bowling.getStates());
+    public LinkedList<Frame> getState() {
+        return new LinkedList<>(bowling.getFrames());
     }
 
     public String getName() {
@@ -22,10 +23,10 @@ public class Response {
     }
 
     public int getFrameNumberLast() {
-        return bowling.getFrameNumberLast();
+        return 1;
     }
 
     public boolean isEnd() {
-        return bowling.isEnd();
+        return true;
     }
 }

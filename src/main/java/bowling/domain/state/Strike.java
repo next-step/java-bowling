@@ -39,11 +39,6 @@ public class Strike extends Finished {
         return before;
     }
 
-    @Override
-    public void renewScore(Score score) {
-        this.score = score;
-    }
-
     private String convert(int number) {
         if (number == MAX_FALLEN_PINS) {
             return "X";

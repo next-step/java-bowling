@@ -24,9 +24,7 @@ class FrameBoardView {
     }
 
     private static void getFrame(State state) {
-        if (state.getFrame().getFrameNumber() < MAX_FRAME_SIZE) {
-            getFrameByFinish(state);
-        }
+        getFrameByFinish(state);
     }
 
     private static void getFrameByFinish(State state) {
@@ -42,9 +40,7 @@ class FrameBoardView {
     }
 
     private static void getFinalFrameBoardByLastState(State state) {
-        if (state.getFrame().getFrameNumber() >= MAX_FRAME_SIZE) {
-            getFinalFrameCheck(state);
-        }
+        getFinalFrameCheck(state);
     }
 
     private static void getFinalFrameCheck(State state) {
@@ -79,7 +75,6 @@ class FrameBoardView {
         int size = MIN_FRAME_SIZE;
         if (states.size() > MIN_FRAME_SIZE) {
             State state = states.getLast();
-            size = state.getFrame().getFrameNumber();
         }
         return size;
     }

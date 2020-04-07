@@ -1,29 +1,13 @@
 package bowling.domain.frame;
 
-import java.util.Objects;
+import bowling.domain.state.Pin;
+import bowling.domain.state.State;
 
-public class Frame {
+public interface Frame {
 
-    private final int frameNumber;
+    Frame bowl(Pin fallenPins);
 
-    public Frame(int frameNumber) {
-        this.frameNumber = frameNumber;
-    }
+    Score calculateByBeforeScore(State beforeState);
 
-    public int getFrameNumber() {
-        return frameNumber;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Frame frame = (Frame) o;
-        return frameNumber == frame.frameNumber;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(frameNumber);
-    }
+    State getState();
 }
