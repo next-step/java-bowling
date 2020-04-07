@@ -16,11 +16,6 @@ public class Spare extends Finished {
     }
 
     @Override
-    public State bowl(Pin pins) {
-        return new Bonus(firstFallenPins, secondFallenPins, pins);
-    }
-
-    @Override
     public String display() {
         return firstFallenPins.display(secondFallenPins);
     }

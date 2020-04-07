@@ -1,6 +1,5 @@
 package bowling.view;
 
-import bowling.domain.state.Bonus;
 import bowling.domain.state.State;
 
 import java.util.LinkedList;
@@ -13,9 +12,6 @@ public class ScoreBoardView {
         int sum = 0;
         int count = 0;
         for (State state : states) {
-            if (state instanceof Bonus) {
-                break;
-            }
 
             if (Objects.nonNull(state.getScore()) && state.getScore().isCalculation()) {
                 if (state.isFinish()) {

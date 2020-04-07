@@ -1,9 +1,6 @@
 package bowling.view;
 
-import bowling.domain.state.Bonus;
-import bowling.domain.state.Spare;
 import bowling.domain.state.State;
-import bowling.domain.state.Strike;
 
 import java.util.LinkedList;
 
@@ -45,17 +42,6 @@ class FrameBoardView {
 
     private static void getFinalFrameCheck(State state) {
         if (state.isFinish()) {
-            getFinalFrame(state);
-        }
-    }
-
-    private static void getFinalFrame(State state) {
-        if (state instanceof Strike || state instanceof Spare) {
-            BowlingFrameView.getFinalFinishFrame(state.display());
-        } else if (state instanceof Bonus) {
-            BowlingFrameView.getFinalBonusFrame(state.display());
-        } else {
-            BowlingFrameView.getFinishFrame(state.display());
         }
     }
 
