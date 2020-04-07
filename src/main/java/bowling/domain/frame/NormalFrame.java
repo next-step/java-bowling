@@ -7,6 +7,8 @@ import bowling.domain.state.State;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
+    private static final int FINAL_FRAME_NUMBER = 10;
+
     private int frameNumber;
     private State state;
 
@@ -25,7 +27,7 @@ public class NormalFrame implements Frame {
     }
 
     private Frame createFrame() {
-        if (frameNumber + 1 == 10) {
+        if (frameNumber + 1 == FINAL_FRAME_NUMBER) {
             return new FinalFrame();
         }
         return new NormalFrame(frameNumber + 1);

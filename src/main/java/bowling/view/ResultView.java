@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.application.Response;
 import bowling.domain.frame.Frame;
-import bowling.domain.state.State;
 
 import java.util.LinkedList;
 
@@ -12,7 +11,6 @@ public class ResultView {
         BowlingFrameView.getRoundBoard();
 
         LinkedList<Frame> states = response.getState();
-
 //        FrameBoardView.getFrameBoard(states, response.getName());
 //        ScoreBoardView.getScore(states);
 

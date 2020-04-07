@@ -6,10 +6,6 @@ import bowling.domain.state.Pin;
 import java.util.LinkedList;
 
 public class Bowling {
-    private static final int FINAL_FRAME_NUMBER = 10;
-    private static final int START_FRAME_NUMBER = 1;
-    private static final int READY_FRAME = 0;
-
     private LinkedList<Frame> frames;
     private Player player;
 
@@ -19,12 +15,6 @@ public class Bowling {
     }
 
     public void bowl(Pin fallenPins) {
-        if (frames.size() == READY_FRAME) {
-            Frame frame = new NormalFrame(START_FRAME_NUMBER);
-            frame.bowl(fallenPins);
-            frames.add(frame);
-            return;
-        }
         Frame frame = frames.getLast();
         validateNextFrame(frame, fallenPins);
     }
@@ -37,7 +27,7 @@ public class Bowling {
     }
 
     public LinkedList<Frame> getFrames() {
-        return frames;
+        return new LinkedList<>(frames);
     }
 
     public String getName() {

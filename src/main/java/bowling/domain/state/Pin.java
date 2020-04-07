@@ -45,14 +45,14 @@ public class Pin {
         if (isStrike()) {
             return "X";
         }
-        return fallenPins + " | ";
+        return String.valueOf(fallenPins);
     }
 
     String display(Pin pin) {
         if (isSpare(pin)) {
-            return fallenPins + "| /";
+            return fallenPins + "|/";
         }
-        return fallenPins + " | " + pin.getFallenPins();
+        return fallenPins + "|" + pin.getFallenPins();
     }
 
     @Override
