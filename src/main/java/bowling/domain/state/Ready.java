@@ -1,10 +1,7 @@
 package bowling.domain.state;
 
 public class Ready extends Playing {
-    private static final String EMPTY_FRAME = " ";
-
-    public Ready() {
-    }
+    private static final String EMPTY_FRAME = "";
 
     @Override
     public State bowl(Pin pins) {

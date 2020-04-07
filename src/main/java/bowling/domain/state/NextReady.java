@@ -24,7 +24,7 @@ public class NextReady extends Playing {
 
     @Override
     public String display() {
-        return String.valueOf(fallenPins.getFallenPins());
+        return fallenPins.display();
     }
 
     @Override

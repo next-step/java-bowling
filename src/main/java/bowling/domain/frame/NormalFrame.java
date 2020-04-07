@@ -44,6 +44,7 @@ public class NormalFrame implements Frame {
         return this.state;
     }
 
+    @Override
     public int getFrameNumber() {
         return frameNumber;
     }

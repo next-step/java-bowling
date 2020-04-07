@@ -10,4 +10,6 @@ public interface Frame {
     Score calculateByBeforeScore(State beforeState);
 
     State getState();
+
+    int getFrameNumber();
 }

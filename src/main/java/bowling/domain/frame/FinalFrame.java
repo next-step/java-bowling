@@ -4,6 +4,8 @@ import bowling.domain.state.Pin;
 import bowling.domain.state.State;
 
 public class FinalFrame implements Frame {
+    private static final int FINAL_FRAME_NUMBER = 10;
+
     @Override
     public Frame bowl(Pin fallenPins) {
         return null;
@@ -17,5 +19,10 @@ public class FinalFrame implements Frame {
     @Override
     public State getState() {
         return null;
+    }
+
+    @Override
+    public int getFrameNumber() {
+        return FINAL_FRAME_NUMBER;
     }
 }
