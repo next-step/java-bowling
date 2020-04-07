@@ -27,7 +27,7 @@ public class Spare extends Finished {
 
     @Override
     public String display() {
-        return firstFallenPins.getFallenPins() + "|" + "/";
+        return firstFallenPins.display(secondFallenPins);
     }
 
     @Override

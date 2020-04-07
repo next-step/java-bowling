@@ -35,7 +35,7 @@ public class Miss extends Finished {
 
     @Override
     public String display() {
-        return firstFallenPins.getFallenPins() + "|" + secondFallenPins.getFallenPins();
+        return firstFallenPins.display(secondFallenPins);
     }
 
     @Override

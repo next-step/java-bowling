@@ -29,12 +29,30 @@ public class Pin {
         return fallenPins;
     }
 
-    public boolean isStrike() {
+    boolean isStrike() {
         return fallenPins == MAX_PINS;
     }
 
-    public boolean isSpare(Pin pin) {
+    boolean isSpare(Pin pin) {
         return this.fallenPins + pin.getFallenPins() == MAX_PINS;
+    }
+
+    boolean isMiss(Pin pin) {
+        return this.fallenPins + pin.getFallenPins() < MAX_PINS;
+    }
+
+    String display() {
+        if (isStrike()) {
+            return "X";
+        }
+        return fallenPins + " | ";
+    }
+
+    String display(Pin pin) {
+        if (isSpare(pin)) {
+            return fallenPins + "| /";
+        }
+        return fallenPins + " | " + pin.getFallenPins();
     }
 
     @Override
