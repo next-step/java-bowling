@@ -57,11 +57,6 @@ public class Bonus extends Finished {
     }
 
     @Override
-    public boolean isFinish() {
-        return true;
-    }
-
-    @Override
     public String display() {
         return convert(firstFallenPins.getFallenPins(), secondFallenPins.getFallenPins()) + "|" + convert(bonus.getFallenPins());
     }

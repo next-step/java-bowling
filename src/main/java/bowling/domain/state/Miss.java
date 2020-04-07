@@ -29,11 +29,6 @@ public class Miss extends Finished {
     }
 
     @Override
-    public boolean isFinish() {
-        return true;
-    }
-
-    @Override
     public String display() {
         return firstFallenPins.display(secondFallenPins);
     }
