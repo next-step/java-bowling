@@ -88,8 +88,8 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public Answers getAnswers() {
+        return new Answers(answers);
     }
 
     @Override
