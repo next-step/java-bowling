@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
@@ -7,7 +8,14 @@ import qna.CannotDeleteException;
 import static org.assertj.core.api.Assertions.*;
 
 public class AnswerTest {
-    public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+    private Question question;
+    private Answer answer;
+
+    @BeforeEach
+    void setUp() {
+        question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        answer = new Answer(UserTest.JAVAJIGI, question, "Answers Contents1");
+    }
 
     @DisplayName("로그인 유저가 쓰지 않았다면 예외를 반환한다. ")
     @Test
@@ -15,7 +23,7 @@ public class AnswerTest {
         User loginUser = UserTest.SANJIGI;
 
         assertThatThrownBy(() -> {
-            A1.delete(loginUser);
+            answer.delete(loginUser);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
@@ -25,7 +33,7 @@ public class AnswerTest {
         User loginUSer = UserTest.JAVAJIGI;
 
         assertThatCode(() -> {
-            A1.delete(loginUSer);
+            answer.delete(loginUSer);
         }).doesNotThrowAnyException();
     }
 
@@ -36,10 +44,10 @@ public class AnswerTest {
         User loginUser = UserTest.JAVAJIGI;
 
         //when
-        A1.delete(loginUser);
+        answer.delete(loginUser);
 
         //then
-        assertThat(A1.isDeleted()).isTrue();
+        assertThat(answer.isDeleted()).isTrue();
     }
 
     @DisplayName("Answer가 삭제되면 DeleteHistory 객체를 반환한다.")
@@ -49,7 +57,7 @@ public class AnswerTest {
         User loginUser = UserTest.JAVAJIGI;
 
         //when
-        DeleteHistory deleteHistory = A1.delete(loginUser);
+        DeleteHistory deleteHistory = answer.delete(loginUser);
 
         //then
         assertThat(deleteHistory.getDeletedBy()).isEqualTo(loginUser);
