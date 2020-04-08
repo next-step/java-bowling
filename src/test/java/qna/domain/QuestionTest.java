@@ -9,9 +9,9 @@ public class QuestionTest {
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
     @Test
-    void deleteTest() {
+    void deleteTest() throws CannotDeleteException {
         assertThat(Q1.isDeleted()).isFalse();
-        assertThat(Q1.delete().isDeleted()).isTrue();
+        assertThat(Q1.delete(Q1.getWriter()).isDeleted()).isTrue();
     }
 
     @Test
