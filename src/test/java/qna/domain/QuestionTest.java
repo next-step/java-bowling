@@ -48,13 +48,16 @@ public class QuestionTest {
     @Test
     void changeDeletedStateQuestionAndAnswersWhenLoginUserIsWriter() throws CannotDeleteException {
         //given
-        User loginUser = UserTest.JAVAJIGI;
+        User loginUser = UserTest.SANJIGI;
+        Q2.addAnswer(AnswersTest.A3);
+        Q2.addAnswer(AnswersTest.A4);
 
         //when
-        Q1.delete(loginUser);
+        Q2.delete(loginUser);
 
         //then
-        assertThat(Q1.isDeleted()).isTrue();
-        assertThat(A1.isDeleted()).isTrue();
+        assertThat(Q2.isDeleted()).isTrue();
+        assertThat(AnswersTest.A3.isDeleted()).isTrue();
+        assertThat(AnswersTest.A4.isDeleted()).isTrue();
     }
 }
