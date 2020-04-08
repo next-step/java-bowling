@@ -2,8 +2,10 @@ package qna.domain;
 
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Answers {
     private static final String CANNOT_DELETE_MESSAGE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
@@ -18,13 +20,14 @@ public class Answers {
         return answers;
     }
 
-    public Boolean delete(final User user) {
+    public DeleteHistories delete(final User user) {
         checkDeletable(user);
         for (Answer answer : answers) {
             answer.delete();
         }
         return answers.stream()
-                      .allMatch(Answer::isDeleted);
+                      .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+                      .collect(Collectors.collectingAndThen(Collectors.toList(), DeleteHistories::new));
     }
 
     private void checkDeletable(final User user) {
