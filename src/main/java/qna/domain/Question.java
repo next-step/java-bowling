@@ -40,24 +40,6 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -72,15 +54,6 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
     public List<Answer> getAnswers() {
         return answers;
     }
@@ -89,7 +62,16 @@ public class Question extends AbstractEntity {
         return new Answers(answers);
     }
 
-    public void checkSameWriter(final User loginUser) {
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void delete(final User loginUser) {
+        checkSameWriter(loginUser);
+        deleted = true;
+    }
+
+    private void checkSameWriter(final User loginUser) {
         if (!writer.isSelf(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
