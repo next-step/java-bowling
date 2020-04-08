@@ -6,11 +6,9 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.*;
 
 class AnswersTest {
     private Answers answersA1;

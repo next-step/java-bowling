@@ -2,8 +2,6 @@ package qna.domain;
 
 import qna.CannotDeleteException;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
