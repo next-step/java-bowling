@@ -2,18 +2,12 @@ package qna.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.util.Optionals;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.domain.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service("qnaService")
 public class QnAService {
@@ -35,19 +29,13 @@ public class QnAService {
     }
 
     @Transactional
-    public void deleteQuestion(User loginUser, long questionId){
+    public void deleteQuestion(User loginUser, long questionId) {
         Question question = findQuestionById(questionId);
 
         question.deleteWithValidation(loginUser);
+        question.getAnswers().stream()
+                .forEach(a -> a.setDeleted(true));
 
-//        List<DeleteHistory> deleteHistories = new ArrayList<>();
-//        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-//        for (Answer answer : answers) {
-//            answer.setDeleted(true);
-//            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-//        }
-//        deleteHistoryService.saveAll(deleteHistories);
+        deleteHistoryService.saveAll(new DeleteHistories(question).getDeleteHistories());
     }
-
-
 }
