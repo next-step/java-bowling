@@ -27,4 +27,19 @@ public class QuestionTest {
         assertThatCode(() -> Q1.delete()).doesNotThrowAnyException();
         assertThat(Q1.isDeleted()).isTrue();
     }
+
+    @DisplayName("질문이 삭제 가능한지 테스트")
+    @Test
+    void checkRemovable() {
+        Q1.addAnswer(AnswerTest.A1);
+        assertThatCode(() -> Q1.checkRemovable(UserTest.JAVAJIGI)).doesNotThrowAnyException();
+    }
+
+    @DisplayName("질문이 삭제 불가능할때 에러")
+    @Test
+    void checkRemovable() {
+        Q1.addAnswer(AnswerTest.A1);
+        Q1.addAnswer(AnswerTest.A2);
+        assertThatIllegalArgumentException().isThrownBy(() -> Q1.checkRemovable(UserTest.JAVAJIGI));
+    }
 }
