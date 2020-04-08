@@ -4,7 +4,9 @@ import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -62,16 +64,26 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public void delete(final User loginUser) {
+    public DeleteHistories delete(final User loginUser) {
         checkSameWriter(loginUser);
-        deleted = true;
-        getAnswers().delete(loginUser);
+        DeleteHistories questionHistory = new DeleteHistories(Arrays.asList(deleteQuestion()));
+        DeleteHistories answerHistory = deleteAnswers(loginUser);
+        return questionHistory.merge(answerHistory);
     }
 
     private void checkSameWriter(final User loginUser) {
         if (!writer.isSelf(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
+    }
+
+    private DeleteHistory deleteQuestion() {
+        deleted = true;
+        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+    }
+
+    private DeleteHistories deleteAnswers(final User loginUser) {
+        return getAnswers().delete(loginUser);
     }
 
     @Override
