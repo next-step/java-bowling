@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class QuestionTest {
@@ -59,5 +61,20 @@ public class QuestionTest {
         assertThat(Q2.isDeleted()).isTrue();
         assertThat(AnswersTest.A3.isDeleted()).isTrue();
         assertThat(AnswersTest.A4.isDeleted()).isTrue();
+    }
+
+    @DisplayName("답변이 삭제될 때, 질문과 답변의 DeleteHistories가 반환된다.")
+    @Test
+    void returnDeleteHistoriesWhendelete() throws CannotDeleteException {
+        //given
+        User loginUser = UserTest.SANJIGI;
+        Q2.addAnswer(AnswersTest.A3);
+        Q2.addAnswer(AnswersTest.A4);
+
+        //when
+        List<DeleteHistory> deleteHistories = Q2.delete(loginUser);
+
+        //then
+        assertThat(deleteHistories).hasSize(3);
     }
 }

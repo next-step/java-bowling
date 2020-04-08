@@ -94,10 +94,11 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateCanDelete(loginUser);
         deleteAnswers(loginUser);
         this.deleted = true;
+        return null;
     }
 
     private void deleteAnswers(User loginUser) throws CannotDeleteException {
