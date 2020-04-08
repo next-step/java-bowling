@@ -86,7 +86,7 @@ public class User extends AbstractEntity {
     }
 
     boolean isSelf(User loginUser) {
-        return this.userId.equals(loginUser.userId);
+        return userId.equals(loginUser.userId);
     }
 
     public boolean matchPassword(String targetPassword) {
@@ -116,5 +116,19 @@ public class User extends AbstractEntity {
     @Override
     public String toString() {
         return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        final User user = (User) o;
+        return Objects.equals(userId, user.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), userId);
     }
 }
