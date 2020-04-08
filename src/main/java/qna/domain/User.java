@@ -73,7 +73,7 @@ public class User extends AbstractEntity {
     }
 
     public void update(User loginUser, User target) {
-        if (!matchUserId(loginUser.getUserId())) {
+        if (!isSelf(loginUser)) {
             throw new UnAuthorizedException();
         }
 
@@ -83,10 +83,6 @@ public class User extends AbstractEntity {
 
         this.name = target.name;
         this.email = target.email;
-    }
-
-    private boolean matchUserId(String userId) {
-        return this.userId.equals(userId);
     }
 
     boolean isSelf(User loginUser) {
