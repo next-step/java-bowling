@@ -35,10 +35,20 @@ class AnswersTest {
     @DisplayName("질문자와 답변글의 모든 답변자가 같지 않으면 예외를 발생한다.")
     @Test
     void throwCannotDeleteException() {
-        Answers answers = new Answers(Arrays.asList(answer, answer));
+        Answers answers = new Answers(Arrays.asList(answer, otherAnswer));
 
         assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(
-                () -> answers.checkDeletable(User.GUEST_USER)
+                () -> answers.delete(javajigi)
         );
+    }
+
+    @DisplayName("답변글을 삭제할 수 있다.")
+    @Test
+    void delete() {
+        Answers answers = new Answers(Arrays.asList(answer, answer));
+
+        boolean actual = answers.delete(javajigi);
+
+        assertThat(actual).isTrue();
     }
 }
