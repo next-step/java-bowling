@@ -4,8 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -29,5 +28,18 @@ public class QuestionTest {
         assertThatThrownBy(() -> {
             Q1.delete(loginUser);
         }).isInstanceOf(CannotDeleteException.class);
+    }
+
+    @DisplayName("로그인 유저가 질문 작성자라면 deleted 상태가 true로 바뀐다.")
+    @Test
+    void changeDeletedStateWhenLoginUserIsWriter() throws CannotDeleteException {
+        //given
+        User loginUser = UserTest.JAVAJIGI;
+
+        //when
+        Q1.delete(loginUser);
+
+        //then
+        assertThat(Q1.isDeleted()).isTrue();
     }
 }
