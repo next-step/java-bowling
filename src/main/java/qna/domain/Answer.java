@@ -31,11 +31,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -76,15 +76,16 @@ public class Answer extends AbstractEntity {
 
     public void delete(User loginUser) throws CannotDeleteException {
         validateCanDelete(loginUser);
+        this.deleted = true;
     }
 
     private void validateCanDelete(User loginUser) throws CannotDeleteException {
-        if(!isWriter(loginUser)){
+        if (!isWriter(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
 
-    private boolean isWriter(User loginUser){
+    private boolean isWriter(User loginUser) {
         return this.writer.equalsNameAndEmail(loginUser);
     }
 }
