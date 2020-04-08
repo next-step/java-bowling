@@ -23,10 +23,11 @@ class DeleteHistoriesTest {
         answers = new Answers(Arrays.asList(answer));
     }
 
-    @DisplayName("삭제 히스토리 일급 객체를 생성할 수 있다.")
+    @DisplayName("질문을 삭제하면 삭제 히스토리 일급 객체를 생성할 수 있다.")
     @Test
     void create() {
-        DeleteHistories deleteHistories = DeleteHistories.of(question, answers);
+        question.addAnswer(answer);
+        DeleteHistories deleteHistories = question.delete(user);
 
         final List<DeleteHistory> actual = deleteHistories.getDeleteHistories();
 
