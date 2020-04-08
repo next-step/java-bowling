@@ -3,7 +3,6 @@ package bowling.domain.frame;
 public class Result {
     private String display;
     private int score;
-    private int totalScore = 0;
 
     public Result(String display, int score) {
         this.display = display;
@@ -14,11 +13,11 @@ public class Result {
         if (this.score == -1) {
             return this.score;
         }
-        return this.totalScore = beforeScore + score;
+        return beforeScore + score;
     }
 
-    public int getTotalScore() {
-        return totalScore;
+    public boolean isCalculation() {
+        return this.score != -1;
     }
 
     @Override

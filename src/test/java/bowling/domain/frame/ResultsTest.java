@@ -35,4 +35,15 @@ class ResultsTest {
         List<Result> results = resultsWithFrameInfo.getResults();
         assertThat(results.size()).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("프레임 결과 값 총 스코어")
+    void getTotalScoreByResults() {
+        // give
+        Results resultsWithFrameInfo = new Results(bowlingStates);
+        int actualTotalScore = resultsWithFrameInfo.getTotalScore();
+        int expectedTotalScore = 5+2+2+3;
+
+        assertThat(actualTotalScore).isEqualTo(expectedTotalScore);
+    }
 }

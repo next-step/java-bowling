@@ -7,6 +7,7 @@ import java.util.List;
 public class Results {
     private static final int READY_FRAME = 0;
 
+    private int totalScore = 0;
     private List<Result> results;
 
     public Results(LinkedList<Frame> frames) {
@@ -19,7 +20,11 @@ public class Results {
 
         while (framesBeforeCalculation.size() != READY_FRAME) {
             Frame frame = calculate(framesBeforeCalculation);
-            results.add(frame.getFrameResult());
+            Result result = frame.getFrameResult();
+            if (result.isCalculation()) {
+                totalScore = result.totalScore(totalScore);
+            }
+            results.add(result);
         }
         return results;
     }
@@ -34,5 +39,9 @@ public class Results {
 
     public List<Result> getResults() {
         return new ArrayList<>(results);
+    }
+
+    public int getTotalScore() {
+        return totalScore;
     }
 }
