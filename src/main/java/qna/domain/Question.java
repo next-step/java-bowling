@@ -54,11 +54,7 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public Answers getAnswers2() {
+    public Answers getAnswers() {
         return new Answers(answers);
     }
 
