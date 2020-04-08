@@ -25,4 +25,9 @@ public class FinalFrame implements Frame {
     public int getFrameNumber() {
         return FINAL_FRAME_NUMBER;
     }
+
+    @Override
+    public Result getFrameResult() {
+        return null;
+    }
 }

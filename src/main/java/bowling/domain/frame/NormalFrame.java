@@ -52,6 +52,17 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public Result getFrameResult() {
+        if (!state.isFinish()) {
+            return new Result(state.display(), -1);
+        }
+        if (Objects.nonNull(state.getScore()) && state.getScore().isCalculation()) {
+            return new Result(state.display(), state.getScore().getScore());
+        }
+        return new Result(state.display(), -1);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

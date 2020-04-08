@@ -12,4 +12,6 @@ public interface Frame {
     State getState();
 
     int getFrameNumber();
+
+    Result getFrameResult();
 }
