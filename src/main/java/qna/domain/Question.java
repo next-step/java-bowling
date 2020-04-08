@@ -66,7 +66,7 @@ public class Question extends AbstractEntity {
 
     public DeleteHistories delete(final User loginUser) {
         checkSameWriter(loginUser);
-        DeleteHistories questionHistory = new DeleteHistories(Arrays.asList(deleteQuestion()));
+        DeleteHistories questionHistory = deleteQuestion();
         DeleteHistories answerHistory = deleteAnswers(loginUser);
         return questionHistory.merge(answerHistory);
     }
@@ -77,9 +77,10 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private DeleteHistory deleteQuestion() {
+    private DeleteHistories deleteQuestion() {
         deleted = true;
-        return new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+        return new DeleteHistories(Arrays.asList(deleteHistory));
     }
 
     private DeleteHistories deleteAnswers(final User loginUser) {
