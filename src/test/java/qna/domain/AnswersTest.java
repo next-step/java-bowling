@@ -4,6 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
+import qna.domain.deletehistory.DeleteHistory;
+import qna.domain.qna.answer.Answer;
+import qna.domain.qna.answer.Answers;
+import qna.domain.qna.question.Question;
+import qna.domain.user.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +32,6 @@ public class AnswersTest {
         answer2 = new Answer(UserTest.SANJIGI, question1, "Answers Contents2");
         answer3 = new Answer(UserTest.SANJIGI, question2, "Answers Contents3");
         answer4 = new Answer(UserTest.SANJIGI, question2, "Answers Contents4");
-
     }
 
     @DisplayName("답변 목록 중에 로그인 유저가 쓰지 않은 답변이 있으면 예외를 반환한다. ")

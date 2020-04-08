@@ -1,4 +1,4 @@
-package qna.domain;
+package qna.domain.qna;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

@@ -4,6 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
+import qna.domain.deletehistory.DeleteHistory;
+import qna.domain.qna.answer.Answer;
+import qna.domain.qna.question.Question;
+import qna.domain.user.User;
 
 import static org.assertj.core.api.Assertions.*;
 

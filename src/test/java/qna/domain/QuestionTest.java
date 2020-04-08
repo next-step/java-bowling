@@ -4,6 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
+import qna.domain.deletehistory.DeleteHistory;
+import qna.domain.qna.answer.Answer;
+import qna.domain.qna.question.Question;
+import qna.domain.user.User;
 
 import java.util.List;
 
@@ -12,7 +16,6 @@ import static org.assertj.core.api.Assertions.*;
 public class QuestionTest {
     private Question question1;
     private Question question2;
-    private Answer answer1;
     private Answer answer3;
     private Answer answer4;
 
@@ -20,7 +23,6 @@ public class QuestionTest {
     void setUp() {
         question1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         question2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
-        answer1 = new Answer(UserTest.JAVAJIGI, question1, "Answers Contents1");
         answer3 = new Answer(UserTest.SANJIGI, question2, "Answers Contents3");
         answer4 = new Answer(UserTest.SANJIGI, question2, "Answers Contents4");
     }
