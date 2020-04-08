@@ -16,7 +16,7 @@ public class QuestionTest {
         User loginUser = new User();
         loginUser.setUserId("1L");
         assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(
-                () -> Q1.checkSameWriter(loginUser)
+                () -> Q1.delete(loginUser)
         );
     }
 }
