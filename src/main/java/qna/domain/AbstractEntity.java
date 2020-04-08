@@ -32,6 +32,10 @@ public class AbstractEntity {
         return id;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
     public AbstractEntity setId(Long id) {
         this.id = id;
         return this;

@@ -21,7 +21,7 @@ public class AnswerTest {
 
     @DisplayName("로그인 유저가 답변 작성자라면 아무런 예외를 발생하지 않는다.")
     @Test
-    void validateCanDeleteWhenLoginUserIsWriter(){
+    void validateCanDeleteWhenLoginUserIsWriter() {
         User loginUSer = UserTest.JAVAJIGI;
 
         assertThatCode(() -> {
@@ -40,5 +40,18 @@ public class AnswerTest {
 
         //then
         assertThat(A1.isDeleted()).isTrue();
+    }
+
+    @DisplayName("Answer가 삭제되면 DeleteHistory 객체를 반환한다.")
+    @Test
+    void returnDeleteHistoryWhenDelete() throws CannotDeleteException {
+        //given
+        User loginUser = UserTest.JAVAJIGI;
+
+        //when
+        DeleteHistory deleteHistory = A1.delete(loginUser);
+
+        //then
+        assertThat(deleteHistory.getDeletedBy()).isEqualTo(loginUser);
     }
 }
