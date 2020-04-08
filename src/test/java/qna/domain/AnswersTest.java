@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -39,5 +40,19 @@ public class AnswersTest {
         //then
         assertThat(A3.isDeleted()).isTrue();
         assertThat(A4.isDeleted()).isTrue();
+    }
+
+    @DisplayName("delete 메소드가 실행되면, 답변 목록의 DeleteHistory 목록을 반환한다.")
+    @Test
+    void returnDeleteHistoriesWhenDelete() throws CannotDeleteException {
+        //given
+        Answers answers = new Answers(Arrays.asList(A3, A4));
+        User loginUser = UserTest.SANJIGI;
+
+        //when
+        List<DeleteHistory> deleteHistories = answers.delete(loginUser);
+
+        //then
+        assertThat(deleteHistories).hasSize(2);
     }
 }

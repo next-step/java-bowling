@@ -16,9 +16,10 @@ public class Answers {
         return answers;
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         for (Answer answer : answers) {
             answer.delete(loginUser);
         }
+        return null;
     }
 }
