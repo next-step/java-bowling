@@ -65,7 +65,7 @@ public class QuestionTest {
 
     @DisplayName("답변이 삭제될 때, 질문과 답변의 DeleteHistories가 반환된다.")
     @Test
-    void returnDeleteHistoriesWhendelete() throws CannotDeleteException {
+    void returnDeleteHistoriesWhenDelete() throws CannotDeleteException {
         //given
         User loginUser = UserTest.SANJIGI;
         Q2.addAnswer(AnswersTest.A3);
