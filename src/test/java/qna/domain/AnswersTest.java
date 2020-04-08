@@ -11,13 +11,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class AnswersTest {
+    private User javajigi;
+    private User sanjigi;
     private Answer answer;
     private Answer otherAnswer;
 
     @BeforeEach
     void setUp() {
-        answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-        otherAnswer = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+        javajigi = new User(1L, "javajigi", "password", "name", "javajigi@slipp.net");
+        sanjigi = new User(2L, "sanjigi", "password", "name", "sanjigi@slipp.net");
+        answer = new Answer(javajigi, QuestionTest.Q1, "Answers Contents1");
+        otherAnswer = new Answer(sanjigi, QuestionTest.Q1, "Answers Contents2");
     }
 
     @DisplayName("답변자 객체를 생성할 수 있다.")
