@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
@@ -12,9 +13,11 @@ public class QuestionTest {
 
     @Test
     @DisplayName("로그인 사용자와 질문한 사람이 같은 경우 삭제 가능하다.")
-    void isDeletableWithLoginUserTest() throws CannotDeleteException {
+    void isDeletableWithLoginUserTest() {
         Q1.addAnswer(AnswerTest.A1);
-        Q1.deleteWithValidation(UserTest.JAVAJIGI);
+        assertThatCode(
+                () -> Q1.deleteWithValidation(UserTest.JAVAJIGI)
+        ).doesNotThrowAnyException();
     }
 
     @Test
@@ -27,18 +30,22 @@ public class QuestionTest {
 
     @Test
     @DisplayName("답변이 없는 경우 삭제가 가능하다.")
-    void isDeletableWithAnswerNotExistTest() throws CannotDeleteException {
-        Q1.deleteWithValidation(UserTest.JAVAJIGI);
+    void isDeletableWithAnswerNotExistTest() {
+        assertThatCode(
+                () -> Q1.deleteWithValidation(UserTest.JAVAJIGI)
+        ).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("질문자와 답변글의 모든답변자가 같은 경우 삭제가 가능하다.")
-    void isDeletableWithWriterSameAllAnswerTest() throws CannotDeleteException {
+    void isDeletableWithWriterSameAllAnswerTest() {
         Q1.addAnswer(AnswerTest.A1);
         Q1.addAnswer(AnswerTest.A1);
         Q1.addAnswer(AnswerTest.A1);
         Q1.addAnswer(AnswerTest.A1);
-        Q1.deleteWithValidation(UserTest.JAVAJIGI);
+        assertThatCode(
+                () -> Q1.deleteWithValidation(UserTest.JAVAJIGI)
+        ).doesNotThrowAnyException();
     }
 
     @Test
