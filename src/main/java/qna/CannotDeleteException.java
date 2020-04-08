@@ -1,6 +1,6 @@
 package qna;
 
-public class CannotDeleteException extends RuntimeException {
+public class CannotDeleteException extends Exception {
     private static final long serialVersionUID = 1L;
 
     public CannotDeleteException(String message) {

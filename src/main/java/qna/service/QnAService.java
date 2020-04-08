@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.domain.*;
 
@@ -29,7 +30,7 @@ public class QnAService {
     }
 
     @Transactional
-    public void deleteQuestion(User loginUser, long questionId) {
+    public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
 
         question.deleteWithValidation(loginUser);
