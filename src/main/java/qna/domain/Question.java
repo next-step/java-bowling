@@ -94,10 +94,17 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void delete(User loginUser) {
+    public void delete(User loginUser) throws CannotDeleteException {
+        validateCanDelete(loginUser);
+    }
+
+    private void validateCanDelete(User loginUser) throws CannotDeleteException {
+        if(!isWriter(loginUser)){
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
     }
 
     private boolean isWriter(User loginUser){
-        return this.writer == loginUser;
+        return this.writer.equalsNameAndEmail(loginUser);
     }
 }
