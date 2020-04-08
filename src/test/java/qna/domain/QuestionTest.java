@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class QuestionTest {
@@ -17,5 +18,16 @@ public class QuestionTest {
         assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(
                 () -> Q1.delete(loginUser)
         );
+    }
+
+    @DisplayName("질문글을 삭제할 수 있다.")
+    @Test
+    void delete() {
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.delete(UserTest.JAVAJIGI);
+
+        boolean actual = question.isDeleted();
+
+        assertThat(actual).isTrue();
     }
 }
