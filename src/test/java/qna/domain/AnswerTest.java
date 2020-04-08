@@ -29,4 +29,17 @@ public class AnswerTest {
             A1.delete(loginUSer);
         }).doesNotThrowAnyException();
     }
+
+    @DisplayName("로그인 유저가 답변 작성자라면 답변의 deleted 상태는 true로 바뀐다.")
+    @Test
+    void changeDeletedStateWhenCanDelete() throws CannotDeleteException {
+        //given
+        User loginUser = UserTest.JAVAJIGI;
+
+        //when
+        A1.delete(loginUser);
+
+        //then
+        assertThat(A1.isDeleted()).isTrue();
+    }
 }
