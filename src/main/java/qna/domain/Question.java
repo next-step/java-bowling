@@ -96,6 +96,7 @@ public class Question extends AbstractEntity {
 
     public void delete(User loginUser) throws CannotDeleteException {
         validateCanDelete(loginUser);
+        this.deleted = true;
     }
 
     private void validateCanDelete(User loginUser) throws CannotDeleteException {
