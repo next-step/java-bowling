@@ -44,9 +44,8 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public void delete() {
+        deleted = Boolean.TRUE;
     }
 
     public boolean isDeleted() {
@@ -59,10 +58,6 @@ public class Answer extends AbstractEntity {
 
     public User getWriter() {
         return writer;
-    }
-
-    public String getContents() {
-        return contents;
     }
 
     public void toQuestion(Question question) {
