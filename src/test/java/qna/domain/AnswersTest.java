@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -47,8 +48,9 @@ class AnswersTest {
     void delete() {
         Answers answers = new Answers(Arrays.asList(answer, answer));
 
-        boolean actual = answers.delete(javajigi);
+        DeleteHistories deleteHistories = answers.delete(javajigi);
+        List<DeleteHistory> actual = deleteHistories.getDeleteHistories();
 
-        assertThat(actual).isTrue();
+        assertThat(actual).hasSize(2);
     }
 }
