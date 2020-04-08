@@ -65,6 +65,7 @@ public class Question extends AbstractEntity {
     public void delete(final User loginUser) {
         checkSameWriter(loginUser);
         deleted = true;
+        getAnswers().delete(loginUser);
     }
 
     private void checkSameWriter(final User loginUser) {
