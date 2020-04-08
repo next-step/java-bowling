@@ -20,8 +20,7 @@ public class Answers {
         return answers;
     }
 
-    public DeleteHistories delete(final User user) {
-        checkDeletable(user);
+    public DeleteHistories delete() {
         for (Answer answer : answers) {
             answer.delete();
         }
@@ -30,7 +29,7 @@ public class Answers {
                       .collect(Collectors.collectingAndThen(Collectors.toList(), DeleteHistories::new));
     }
 
-    private void checkDeletable(final User user) {
+    public void checkDeletable(final User user) {
         if (hasSomethingElse(user)) {
             throw new CannotDeleteException(CANNOT_DELETE_MESSAGE);
         }
