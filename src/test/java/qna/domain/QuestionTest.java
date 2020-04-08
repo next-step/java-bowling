@@ -91,4 +91,17 @@ public class QuestionTest {
         //then
         assertThat(deleteHistories).hasSize(3);
     }
+
+    @DisplayName("답변이 없는 경우도 삭제가능")
+    @Test
+    void canDeleteWhenNoAnswer() throws CannotDeleteException {
+        //given
+        User loginUser = UserTest.JAVAJIGI;
+
+        //when
+        List<DeleteHistory> deleteHistories = question1.delete(loginUser);
+
+        //then
+        assertThat(deleteHistories).hasSize(1);
+    }
 }
