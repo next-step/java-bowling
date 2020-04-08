@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -17,5 +18,15 @@ public class QuestionTest {
         assertThatCode(() -> {
             Q1.delete(loginUser);
         }).doesNotThrowAnyException();
+    }
+
+    @DisplayName("로그인 유저가 질문 작성자가 아니면 예외 발생")
+    @Test
+    void validateCanDeleteWhenLoginUserIsNotWriter(){
+        User loginUser = UserTest.SANJIGI;
+
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            Q1.delete(loginUser);
+        });
     }
 }

@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -94,6 +95,9 @@ public class Question extends AbstractEntity {
     }
 
     public void delete(User loginUser) {
+    }
 
+    private boolean isWriter(User loginUser){
+        return this.writer == loginUser;
     }
 }
