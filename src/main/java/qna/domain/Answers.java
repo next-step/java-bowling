@@ -18,7 +18,16 @@ public class Answers {
         return answers;
     }
 
-    public void checkDeletable(final User user) {
+    public Boolean delete(final User user) {
+        checkDeletable(user);
+        for (Answer answer : answers) {
+            answer.delete();
+        }
+        return answers.stream()
+                      .allMatch(Answer::isDeleted);
+    }
+
+    private void checkDeletable(final User user) {
         if (hasSomethingElse(user)) {
             throw new CannotDeleteException(CANNOT_DELETE_MESSAGE);
         }
