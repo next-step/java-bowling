@@ -18,8 +18,8 @@ public class QuestionTest {
     }
 
     @Test
-    void getDeleteHistory() {
-        DeleteHistory deleteHistory = Q1.getDeleteHistory();
+    void toDeleteHistory() {
+        DeleteHistory deleteHistory = Q1.toDeleteHistory();
 
         assertThat(deleteHistory).isEqualTo(new DeleteHistory(ContentType.QUESTION, 1l, JAVAJIGI, LocalDateTime.now()));
     }
