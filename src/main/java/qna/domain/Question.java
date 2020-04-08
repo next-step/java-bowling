@@ -33,6 +33,12 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
+    public Question(long id, String title, String contents) {
+        super(id);
+        this.title = title;
+        this.contents = contents;
+    }
+
     public String getTitle() {
         return title;
     }
