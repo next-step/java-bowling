@@ -36,8 +36,8 @@ public class Answers {
 
     public List<DeleteHistory> getDeleteHistories() {
         return answers.stream()
-                .filter(answer -> answer.isDeleted())
-                .map(answer -> answer.toDeleteHistory())
+                .filter(Answer::isDeleted)
+                .map(Answer::toDeleteHistory)
                 .collect(Collectors.toList());
     }
 }
