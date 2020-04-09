@@ -12,6 +12,11 @@ public class DeleteHistories {
                 new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
     }
 
+    public void addDeleteHistoryForAnswer(Answer answer) {
+        deleteHistories.add(
+                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+    }
+
     public List<DeleteHistory> getDeleteHistories() {
         return deleteHistories;
     }

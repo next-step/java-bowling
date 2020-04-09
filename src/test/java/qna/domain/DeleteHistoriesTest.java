@@ -9,9 +9,11 @@ import org.junit.jupiter.api.Test;
 class DeleteHistoriesTest {
     private Question question;
     private Answer answer;
+    DeleteHistories deleteHistories;
 
     @BeforeEach
     void setUp() {
+        deleteHistories = new DeleteHistories();
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         question.addAnswer(answer);
@@ -19,9 +21,15 @@ class DeleteHistoriesTest {
 
     @DisplayName("question에 대한 deleteHistory 를 추가한다.")
     @Test
-    void addDeleteHistory() {
-        DeleteHistories deleteHistories = new DeleteHistories();
+    void addDeleteHistoryForQuestion() {
         deleteHistories.addDeleteHistoryForQuestion(question.getId(), question);
+        assertThat(deleteHistories.getDeleteHistories()).hasSize(1);
+    }
+
+    @DisplayName("answer에 대한 deleteHistory 를 추가한다.")
+    @Test
+    void addDeleteHistoryForAnswer() {
+        deleteHistories.addDeleteHistoryForAnswer(answer);
         assertThat(deleteHistories.getDeleteHistories()).hasSize(1);
     }
 }
