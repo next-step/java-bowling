@@ -4,7 +4,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
@@ -56,5 +59,20 @@ public class QuestionTest {
         assertThatThrownBy(
                 () -> Q1.deleteWithValidation(UserTest.JAVAJIGI)
         ).isInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    @DisplayName("답변들 삭제 테스트")
+    void deleteAnswersTest() {
+        Q1.addAnswer(AnswerTest.A1);
+        Q1.addAnswer(AnswerTest.A1);
+        Q1.addAnswer(AnswerTest.A1);
+
+        assertThatCode(
+                () -> Q1.deleteWithValidation(UserTest.JAVAJIGI)
+        ).doesNotThrowAnyException();
+
+        assertThat(Q1.getAnswers().stream()
+                .anyMatch(a -> a.isDeleted() == false)).isFalse();
     }
 }
