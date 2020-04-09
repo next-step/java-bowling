@@ -2,6 +2,7 @@ package qna.domain;
 
 import qna.CannotDeleteException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,14 @@ public class Answers {
 
     public Answers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public Answers() {
+        this.answers = new ArrayList<>();
+    }
+
+    public void addAnswer(Answer answer) {
+        this.answers.add(answer);
     }
 
     public void checkRemovable(User user) throws CannotDeleteException {

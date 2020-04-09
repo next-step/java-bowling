@@ -38,14 +38,14 @@ public class QnAService {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        Answers answers = question.getAnswers();
-        answers.checkRemovable(loginUser);
+        question.checkAnswersRemovable();
+
+        question.deleteAnswers();
+        question.delete();
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.delete();
-        deleteHistories.add(question.toDeleteHistory());
-        answers.delete();
-        deleteHistories.addAll(answers.getDeleteHistories());
+        deleteHistories.add(question.toQuestionDeleteHistory());
+        deleteHistories.addAll(question.toAnswersDeleteHistories());
         deleteHistoryService.saveAll(deleteHistories);
     }
 }
