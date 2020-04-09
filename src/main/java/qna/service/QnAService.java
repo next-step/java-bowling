@@ -9,7 +9,6 @@ import qna.NotFoundException;
 import qna.domain.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("qnaService")
@@ -40,12 +39,7 @@ public class QnAService {
 
         question.checkAnswersRemovable();
 
-        question.deleteAnswers();
-        question.delete();
-
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(question.toQuestionDeleteHistory());
-        deleteHistories.addAll(question.toAnswersDeleteHistories());
+        List<DeleteHistory> deleteHistories = question.delete();
         deleteHistoryService.saveAll(deleteHistories);
     }
 }

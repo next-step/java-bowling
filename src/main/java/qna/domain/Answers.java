@@ -30,11 +30,13 @@ public class Answers {
         }
     }
 
-    public void delete() {
+    public List<DeleteHistory> delete() {
         answers.forEach(Answer::delete);
+
+        return getDeleteHistories();
     }
 
-    public List<DeleteHistory> getDeleteHistories() {
+    private List<DeleteHistory> getDeleteHistories() {
         return answers.stream()
                 .filter(Answer::isDeleted)
                 .map(Answer::toDeleteHistory)
