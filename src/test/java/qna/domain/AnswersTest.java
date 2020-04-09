@@ -31,15 +31,8 @@ public class AnswersTest {
     void delete() {
         Answers answers = new Answers(Arrays.asList(A1));
 
-        answers.delete();
-    }
+        List<DeleteHistory> deleteHistories = answers.delete();
 
-    @Test
-    void getDeleteHistories() {
-        Answers answers = new Answers(Arrays.asList(A1));
-
-        List<DeleteHistory> deleteHistoryList = answers.getDeleteHistories();
-
-        assertThat(deleteHistoryList).hasSize(1);
+        assertThat(deleteHistories).hasSize(1);
     }
 }
