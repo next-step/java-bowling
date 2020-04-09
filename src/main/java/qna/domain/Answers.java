@@ -15,6 +15,12 @@ public class Answers {
         for (Answer answer : answers) {
             answer.validateAnswer(user);
         }
+    }
 
+    public List<Answer> deleteAnswers() {
+        for (Answer answer : answers) {
+            answer.deleteAnswer();
+        }
+        return answers;
     }
 }
