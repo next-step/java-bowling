@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import qna.CannotDeleteException;
+
 @Entity
 public class Question extends AbstractEntity {
     @Column(length = 100, nullable = false)
@@ -37,6 +39,12 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
+    }
+
+    public void validateOwner(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다");
+        }
     }
 
     public String getTitle() {
@@ -71,6 +79,10 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
+    public void deleteQuestion() {
+        deleted = true;
+    }
+
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
@@ -92,4 +104,5 @@ public class Question extends AbstractEntity {
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
+
 }
