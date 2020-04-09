@@ -31,7 +31,7 @@ public class Answers {
     }
 
     public void delete() {
-        answers.forEach(answer -> answer.delete());
+        answers.forEach(Answer::delete);
     }
 
     public List<DeleteHistory> getDeleteHistories() {
