@@ -1,7 +1,9 @@
 package qna.domain;
 
+import org.springframework.util.CollectionUtils;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,19 +14,23 @@ public class Answers {
         this.answers = Collections.unmodifiableList(answers);
     }
 
-    public void checkRemovable(User writer) throws CannotDeleteException {
-        boolean result = answers.stream()
-                .allMatch(answer -> answer.isOwner(writer));
-        if (!result) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void delete(User writer, List<DeleteHistory> deleteHistories) throws CannotDeleteException {
+        checkRemovable(writer);
+        for (Answer answer : answers) {
+            answer.delete();
+            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
     }
 
-    public DeleteHistories delete(DeleteHistories deleteHistories) {
-        for (Answer answer : answers) {
-            answer.delete();
-            deleteHistories = deleteHistories.addAnswer(answer);
+    private void checkRemovable(User writer) throws CannotDeleteException {
+        boolean result = answers.stream()
+                .anyMatch(answer -> !answer.isOwner(writer));
+        if (result) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
-        return deleteHistories;
     }
 }
