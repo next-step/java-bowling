@@ -92,9 +92,8 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateDeletable(loginUser);
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        List<DeleteHistory> deleteHistories = deleteAnswers();
         deleteHistories.add(deleteQuestion());
-        deleteHistories.addAll(deleteAnswers());
         return deleteHistories;
     }
 
@@ -115,10 +114,7 @@ public class Question extends AbstractEntity {
 
     private List<DeleteHistory> deleteAnswers() {
         return this.answers.stream()
-                .map(a -> {
-                    a.setDeleted(true);
-                    return DeleteHistory.newAnswer(a.getId(), a.getWriter());
-                })
+                .map(a -> a.delete())
                 .collect(Collectors.toList());
     }
 
