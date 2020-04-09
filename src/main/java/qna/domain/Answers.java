@@ -17,9 +17,10 @@ public class Answers {
         }
     }
 
-    public List<Answer> deleteAnswers() {
+    public List<Answer> deleteAnswers(DeleteHistories deleteHistories) {
         for (Answer answer : answers) {
             answer.deleteAnswer();
+            deleteHistories.addDeleteHistoryForAnswer(answer);
         }
         return answers;
     }

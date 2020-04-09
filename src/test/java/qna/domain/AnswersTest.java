@@ -34,7 +34,8 @@ class AnswersTest {
     @DisplayName("답변들 중에 삭제 시킬 수 있는 것을 삭제를 지시한다.")
     @Test
     void deleteAnswer() {
-        List<Answer> answerList = answers.deleteAnswers();
+        DeleteHistories deleteHistories = new DeleteHistories();
+        List<Answer> answerList = answers.deleteAnswers(deleteHistories);
         assertThat(answerList.get(0).isDeleted()).isTrue();
         assertThat(answerList.get(1).isDeleted()).isTrue();
     }
