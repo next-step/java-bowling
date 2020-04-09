@@ -13,14 +13,14 @@ public class AnswerTest {
     public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
     @Test
-    @DisplayName("잘 삭제 됐는지")
+    @DisplayName("answer 삭제 테스트")
     void deleteAnswerTest() throws CannotDeleteException {
         assertThat(A1.delete(UserTest.JAVAJIGI))
                 .isEqualTo(new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now()));
     }
 
     @Test
-    @DisplayName("요청자가 다를 때 삭제 되지 않는지")
+    @DisplayName("answer 삭제 실패 테스트")
     void deleteAnswerFailTest() {
         assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class);
