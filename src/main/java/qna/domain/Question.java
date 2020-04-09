@@ -96,21 +96,18 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
-        if (isNotDeletable(loginUser)) {
+        Answers answers = new Answers(getAnswers());
+        if (isNotDeletable(loginUser, answers)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
         setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers) {
-            deleteHistories.add(answer.delete(loginUser));
-        }
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), loginUser, LocalDateTime.now()));
+        deleteHistories.addAll(answers.delete(loginUser));
         return deleteHistories;
     }
 
-    private boolean isNotDeletable(User loginUser) {
-        return !isOwner(loginUser) || answers.stream()
-                .anyMatch(answer -> !answer.isOwner(loginUser));
+    private boolean isNotDeletable(User loginUser, Answers answers) {
+        return !isOwner(loginUser) || answers.isNotDeletable(loginUser);
     }
 }

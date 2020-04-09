@@ -16,14 +16,14 @@ public class QuestionTest {
     @Test
     @DisplayName("question 삭제 테스트")
     void deleteTest() throws CannotDeleteException {
-        assertThat(Q1.delete(UserTest.JAVAJIGI))
+        assertThat(Q1.delete(Q1.getWriter()))
                 .containsAnyOf(new DeleteHistory(ContentType.QUESTION, Q1.getId(), UserTest.JAVAJIGI, LocalDateTime.now()));
     }
 
     @Test
     @DisplayName("question 삭제 실패 테스트")
     void deleteFailedTest() {
-        assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
+        assertThatThrownBy(() -> Q1.delete(Q2.getWriter()))
                 .isInstanceOf(CannotDeleteException.class);
     }
 }
