@@ -58,7 +58,8 @@ public class QuestionTest {
             List<DeleteHistory> deleteHistories = question1.delete(UserTest.JAVAJIGI);
             assertAll(
                     () -> assertThat(deleteHistories).hasSize(1),
-                    () -> assertThat(deleteHistories).extracting("contentType").contains(ContentType.QUESTION)
+                    () -> assertThat(deleteHistories).extracting("contentType").contains(ContentType.QUESTION),
+                    () -> assertThat(deleteHistories).extracting("contentType").doesNotContain(ContentType.ANSWER)
             );
         }
     }
