@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -25,13 +26,13 @@ class AnswersTest {
     @DisplayName("삭제 유저가 답변들의 작성자일때 정상동작")
     @Test
     void removableSuccess() {
-        assertThatCode(() -> answersA1.checkRemovable(UserTest.JAVAJIGI)).doesNotThrowAnyException();
-        assertThatCode(() -> answersA2.checkRemovable(UserTest.SANJIGI)).doesNotThrowAnyException();
+        assertThatCode(() -> answersA1.delete(UserTest.JAVAJIGI, new ArrayList<>())).doesNotThrowAnyException();
+        assertThatCode(() -> answersA2.delete(UserTest.SANJIGI, new ArrayList<>())).doesNotThrowAnyException();
     }
 
     @DisplayName("삭제 유저가 답변들의 작성자가 아닐 때 throws CannotDeleteException")
     @Test
     void removableFail() {
-        assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(() -> answersA1AndA2.checkRemovable(UserTest.JAVAJIGI));
+        assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(() -> answersA1AndA2.delete(UserTest.JAVAJIGI, new ArrayList<>()));
     }
 }
