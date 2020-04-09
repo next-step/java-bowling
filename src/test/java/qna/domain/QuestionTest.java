@@ -19,7 +19,7 @@ public class QuestionTest {
     void isDeletableWithLoginUserTest() {
         Q1.addAnswer(AnswerTest.A1);
         assertThatCode(
-                () -> Q1.deleteWithValidation(UserTest.JAVAJIGI)
+                () -> Q1.delete(UserTest.JAVAJIGI)
         ).doesNotThrowAnyException();
     }
 
@@ -27,7 +27,7 @@ public class QuestionTest {
     @DisplayName("로그인 사용자와 질문한 사람이 같지 않은 경우 삭제 불가능하다.")
     void isNotDeletableWithLoginUserTest() {
         assertThatThrownBy(
-                () -> Q1.deleteWithValidation(UserTest.SANJIGI)
+                () -> Q1.delete(UserTest.SANJIGI)
         ).isInstanceOf(CannotDeleteException.class);
     }
 
@@ -35,7 +35,7 @@ public class QuestionTest {
     @DisplayName("답변이 없는 경우 삭제가 가능하다.")
     void isDeletableWithAnswerNotExistTest() {
         assertThatCode(
-                () -> Q1.deleteWithValidation(UserTest.JAVAJIGI)
+                () -> Q1.delete(UserTest.JAVAJIGI)
         ).doesNotThrowAnyException();
     }
 
@@ -47,7 +47,7 @@ public class QuestionTest {
         Q1.addAnswer(AnswerTest.A1);
         Q1.addAnswer(AnswerTest.A1);
         assertThatCode(
-                () -> Q1.deleteWithValidation(UserTest.JAVAJIGI)
+                () -> Q1.delete(UserTest.JAVAJIGI)
         ).doesNotThrowAnyException();
     }
 
@@ -57,7 +57,7 @@ public class QuestionTest {
         Q1.addAnswer(AnswerTest.A1);
         Q1.addAnswer(AnswerTest.A2);
         assertThatThrownBy(
-                () -> Q1.deleteWithValidation(UserTest.JAVAJIGI)
+                () -> Q1.delete(UserTest.JAVAJIGI)
         ).isInstanceOf(CannotDeleteException.class);
     }
 
@@ -69,7 +69,7 @@ public class QuestionTest {
         Q1.addAnswer(AnswerTest.A1);
 
         assertThatCode(
-                () -> Q1.deleteWithValidation(UserTest.JAVAJIGI)
+                () -> Q1.delete(UserTest.JAVAJIGI)
         ).doesNotThrowAnyException();
 
         assertThat(Q1.getAnswers().stream()

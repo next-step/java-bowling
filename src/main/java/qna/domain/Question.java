@@ -6,6 +6,7 @@ import qna.CannotDeleteException;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -89,7 +90,15 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public void deleteWithValidation(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        validateDeletable(loginUser);
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(deleteQuestion());
+        deleteHistories.addAll(deleteAnswers());
+        return deleteHistories;
+    }
+
+    private void validateDeletable(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
@@ -97,13 +106,20 @@ public class Question extends AbstractEntity {
                 .anyMatch(a -> !a.isOwner(loginUser))) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
-        this.deleted = true;
-        deleteAnswers();
     }
 
-    private void deleteAnswers() {
-        this.getAnswers().stream()
-                .forEach(a -> a.setDeleted(true));
+    private DeleteHistory deleteQuestion() {
+        this.deleted = true;
+        return DeleteHistory.newQuestion(this.getId(), this.getWriter());
+    }
+
+    private List<DeleteHistory> deleteAnswers() {
+        return this.answers.stream()
+                .map(a -> {
+                    a.setDeleted(true);
+                    return DeleteHistory.newAnswer(a.getId(), a.getWriter());
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
