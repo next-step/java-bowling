@@ -32,11 +32,15 @@ public class DeleteHistory {
     }
 
     public static DeleteHistory ofQuestion(Long contentId, User deletedBy) {
-        return new DeleteHistory(ContentType.QUESTION, contentId, deletedBy, LocalDateTime.now());
+        return of(ContentType.QUESTION, contentId, deletedBy);
     }
 
     public static DeleteHistory ofAnswer(Long contentId, User deletedBy) {
-        return new DeleteHistory(ContentType.ANSWER, contentId, deletedBy, LocalDateTime.now());
+        return of(ContentType.ANSWER, contentId, deletedBy);
+    }
+
+    private static DeleteHistory of(ContentType type, Long contentId, User deletedBy) {
+        return new DeleteHistory(type, contentId, deletedBy, LocalDateTime.now());
     }
 
     @Override
