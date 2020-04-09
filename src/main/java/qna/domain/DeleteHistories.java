@@ -7,11 +7,11 @@ public class DeleteHistories {
     private final List<DeleteHistory> deleteHistories = new ArrayList<>();
 
     public DeleteHistories(Question question, Answers answers) {
-        deleteQuestiin(question);
+        deleteQuestion(question);
         deleteAnswer(answers);
     }
 
-    private void deleteQuestiin(Question question) {
+    private void deleteQuestion(Question question) {
         deleteHistories.add(new DeleteHistory(question));
     }
 
