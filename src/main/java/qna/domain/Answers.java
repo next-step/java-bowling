@@ -9,21 +9,33 @@ public class Answers {
     private List<Answer> answers = new ArrayList<>();
 
     public Answers(Question question) {
-        answers = question.getAnswers();
-    }
-
-    public Answers() {
+        answers = (List<Answer>) question.getAnswers();
     }
 
     public void checkUser(User loginUser) throws CannotDeleteException {
-        int otherPersonCount = (int)answers.stream().filter(answer -> !answer.isOwner(loginUser)).count();
-        if (otherPersonCount > 0 ){
+        if (isOtherPersonWrite(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
         return;
     }
 
+    private boolean isOtherPersonWrite(User loginUser) {
+        return answers.stream()
+                .noneMatch(answer -> answer.isOwner(loginUser));
+    }
+
     public void add(Answer answer) {
         answers.add(answer);
+    }
+
+    public void delete() {
+        answers.forEach(answer -> answer.delete());
+    }
+
+    public void deleteHistory(List<DeleteHistory> deleteHistories) {
+        for (int i = 0; i < answers.size(); i++) {
+            DeleteHistory answerDeleteHistory = DeleteHistory.deleteAnswer(answers.get(i));
+            deleteHistories.add(answerDeleteHistory);
+        }
     }
 }
