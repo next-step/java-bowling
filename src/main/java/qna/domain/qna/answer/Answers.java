@@ -24,11 +24,11 @@ public class Answers {
     }
 
     public Answers(List<Answer> answers) {
-        this.answers = Collections.unmodifiableList(answers);
+        this.answers = new ArrayList<>(answers);
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return Collections.unmodifiableList(answers);
     }
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
