@@ -16,6 +16,8 @@ public class QuestionTest {
     @Test
     void delete() {
         q1.delete();
+
+        assertThat(q1.isDeleted()).isTrue();
     }
 
     @Test
