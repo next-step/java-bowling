@@ -1,4 +1,4 @@
-package qna.domain;
+package qna.domain.qna;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -30,6 +30,10 @@ public class AbstractEntity {
 
     public Long getId() {
         return id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public AbstractEntity setId(Long id) {

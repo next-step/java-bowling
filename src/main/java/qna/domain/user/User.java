@@ -1,6 +1,7 @@
-package qna.domain;
+package qna.domain.user;
 
 import qna.UnAuthorizedException;
+import qna.domain.qna.AbstractEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,36 +41,16 @@ public class User extends AbstractEntity {
         return userId;
     }
 
-    public User setUserId(String userId) {
-        this.userId = userId;
-        return this;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public User setName(String name) {
-        this.name = name;
-        return this;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
     }
 
     public void update(User loginUser, User target) {

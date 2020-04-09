@@ -8,6 +8,11 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import qna.CannotDeleteException;
 import qna.domain.*;
+import qna.domain.deletehistory.DeleteHistory;
+import qna.domain.qna.answer.Answer;
+import qna.domain.qna.ContentType;
+import qna.domain.qna.question.Question;
+import qna.domain.qna.question.QuestionRepository;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -36,7 +41,7 @@ public class QnaServiceTest {
     @Before
     public void setUp() throws Exception {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        answer = new Answer(11L, UserTest.JAVAJIGI, question, "Answers Contents1");
         question.addAnswer(answer);
     }
 
@@ -82,8 +87,9 @@ public class QnaServiceTest {
 
     private void verifyDeleteHistories() {
         List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()),
+                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now())
+                );
         verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }
