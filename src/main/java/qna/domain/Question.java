@@ -89,7 +89,7 @@ public class Question extends AbstractEntity {
     }
 
     public DeleteHistory toQuestionDeleteHistory() {
-        return new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
+        return DeleteHistory.ofQuestion(this.getId(), this.writer);
     }
 
     public List<DeleteHistory> toAnswersDeleteHistories() {
