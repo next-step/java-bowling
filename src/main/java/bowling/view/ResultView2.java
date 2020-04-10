@@ -7,7 +7,6 @@ import bowling.domain.point.Ordinal;
 
 import java.util.stream.IntStream;
 
-import static bowling.domain.frame.FrameResult.*;
 import static bowling.domain.point.Ordinal.*;
 
 public class ResultView2 {
@@ -46,12 +45,11 @@ public class ResultView2 {
         }
     }
 
-    private static void printFrameResultWhen(Ordinal ordinal,
-                                             PlayerName playerName, Frames frames, Frame frame) {
+    private static void printFrameResultWhen(Ordinal ordinal, PlayerName playerName, Frames frames, Frame frame) {
         if (frame.containsOrdinal(ordinal)) {
             printFrameId(frame);
             print(" : ");
-            System.out.println(frame.getPointAtOrdinal(ordinal));
+            println(frame.getPointAtOrdinal(ordinal));
 
             printPlayInformation();
             printName(playerName.getName());
@@ -59,106 +57,58 @@ public class ResultView2 {
                     .subList(0, frame.getFrameId() - 1)
                     .forEach(frame1 -> printFrame(frame1));
 
-            printFrameOrdinal(frame, ordinal);
+            printFrameByOrdinal(frame, ordinal);
             printThreeLineSeparators();
         }
     }
 
-    private static void printFrameOrdinal(Frame frame, Ordinal ordinal) {
-        if (frame.findResult().equals(STRIKE)) {
-            if (ordinal.equals(FIRST)) {
-                printFrameFirstWhenStrike(frame);
-            }
-
-            if (ordinal.equals(THIRD)) {
-                printFrameThirdWhenStrike(frame);
-            }
-        }
-
-        if (frame.findResult().equals(SPARE)) {
-            if (ordinal.equals(FIRST)) {
-                printFrameFirstWhenSpare(frame);
-            }
-
-            if (ordinal.equals(SECOND)) {
-                printFrameFirstWhenSpare(frame);
-                printFrameSecondWhenSpare(frame);
-            }
-
-            if (ordinal.equals(THIRD)) {
-                printFrameFirstWhenSpare(frame);
-                printFrameSecondWhenSpare(frame);
-                printFrameThirdWhenSpare(frame);
-            }
-        }
-
-        if (frame.findResult().equals(MISS)) {
-            if (ordinal.equals(FIRST)) {
-                printFrameFirstWhenMiss(frame);
-            }
-
-            if (ordinal.equals(SECOND)) {
-                printFrameSecondWhenMiss(frame);
-            }
-        }
-
-        if (frame.findResult().equals(GUTTER)) {
-            if (ordinal.equals(FIRST)) {
-
-            }
-        }
-    }
-
-    private static void printFrameFirstWhenSpare(Frame frame) {
-        print(BLANK_FOUR);
-        System.out.print(frame.getPoints().getFirstPoint());
-    }
-
-    private static void printFrameSecondWhenSpare(Frame frame) {
-        print(BLOCK_BORDER);
-        print(DELIMITER_SPARE);
-    }
-
-    private static void printFrameThirdWhenSpare(Frame frame) {
-        print(BLOCK_BORDER);
-        System.out.print(frame.getPoints().getThirdPoint());
-        print(BLANK_ONE);
-        printBlockBorder();
-    }
-
-    private static void printFrameFirstWhenMiss(Frame frame) {
-        print(BLANK_FOUR);
-        System.out.print(frame.getPoints().getFirstPoint());
-    }
-
-    private static void printFrameSecondWhenMiss(Frame frame) {
-        print(BLANK_FOUR);
-        System.out.print(frame.getPoints().getFirstPoint());
-        print(BLOCK_BORDER);
-        System.out.print(frame.getPoints().getSecondPoint());
-        print(BLANK_THREE);
-        printBlockBorder();
-    }
-
     private static void printFrame(Frame frame) {
-        if (STRIKE.equals(frame.findResult())) {
-            printFrameFirstWhenStrike(frame);
+        if (frame.isStrike()) {
+            printFrameFirstWhenStrike();
         }
 
-        if (SPARE.equals(frame.findResult())) {
+        if (frame.isSpare()) {
             printSpare(frame);
         }
 
-        if (GUTTER.equals(frame.findResult())) {
-            printGutter(frame);
+        if (frame.isMiss()) {
+            printFrameSecondWhenMiss(frame);
         }
 
-        if (MISS.equals(frame.findResult())) {
-            printMiss(frame);
+        if (frame.isGutter()) {
+            printGutter();
         }
     }
 
-    private static void printFrameFirstWhenStrike(Frame frame) {
+    private static void printFrameByOrdinal(Frame frame, Ordinal ordinal) {
+        if (frame.isStrike()) {
+            printStrikeByOrdinal(frame, ordinal);
+        }
+
+        if (frame.isSpare()) {
+            printSpareByOrdinal(frame, ordinal);
+        }
+
+        if (frame.isMiss()) {
+            printMissByOrdinal(frame, ordinal);
+        }
+
+        if (frame.isGutter()) {
+            printGutter();
+        }
+    }
+
+    private static void printStrikeByOrdinal(Frame frame, Ordinal ordinal) {
+        if (FIRST.equals(ordinal)) {
+            printFrameFirstWhenStrike();
+        }
+
+        if (THIRD.equals(ordinal)) {
+            printFrameThirdWhenStrike(frame);
+        }
+    }
+
+    private static void printFrameFirstWhenStrike() {
         print(BLANK_FIVE);
         print(SYMBOL_STRIKE);
         print(BLANK_FOUR);
@@ -174,25 +124,72 @@ public class ResultView2 {
         printBlockBorder();
     }
 
+    private static void printSpareByOrdinal(Frame frame, Ordinal ordinal) {
+        if (FIRST.equals(ordinal)) {
+            printFrameFirstWhenSpare(frame);
+        }
+
+        if (SECOND.equals(ordinal)) {
+            printFrameFirstWhenSpare(frame);
+            printFrameSecondWhenSpare(frame);
+        }
+
+        if (THIRD.equals(ordinal)) {
+            printFrameFirstWhenSpare(frame);
+            printFrameSecondWhenSpare(frame);
+            printFrameThirdWhenSpare(frame);
+        }
+    }
+
     private static void printSpare(Frame frame) {
+        printFrameFirstWhenSpare(frame);
+        printFrameSecondWhenSpare(frame);
+        print(BLANK_THREE);
+        printBlockBorder();
+    }
+
+    private static void printFrameFirstWhenSpare(Frame frame) {
         print(BLANK_FOUR);
-        System.out.print(frame.getPoints().getFirstPoint());
+        System.out.print(frame.getFirstPoint());
+    }
+
+    private static void printFrameSecondWhenSpare(Frame frame) {
         print(BLOCK_BORDER);
         print(DELIMITER_SPARE);
-        print(BLANK_THREE);
-        printBlockBorder();
     }
 
-    private static void printMiss(Frame frame) {
-        print(BLANK_FOUR);
-        System.out.print(frame.getPoints().getFirstPoint());
+    private static void printFrameThirdWhenSpare(Frame frame) {
         print(BLOCK_BORDER);
-        System.out.print(frame.getPoints().getSecondPoint());
+        System.out.print(frame.getThirdPoint());
+        print(BLANK_ONE);
+        printBlockBorder();
+    }
+
+    private static void printMissByOrdinal(Frame frame, Ordinal ordinal) {
+        if (FIRST.equals(ordinal)) {
+            printFrameFirstWhenMiss(frame);
+        }
+
+        if (SECOND.equals(ordinal)) {
+            printFrameSecondWhenMiss(frame);
+        }
+    }
+
+    private static void printFrameFirstWhenMiss(Frame frame) {
+        print(BLANK_FOUR);
+        System.out.print(frame.getFirstPoint());
+    }
+
+    private static void printFrameSecondWhenMiss(Frame frame) {
+        print(BLANK_FOUR);
+        System.out.print(frame.getFirstPoint());
+        print(BLOCK_BORDER);
+        System.out.print(frame.getSecondPoint());
         print(BLANK_THREE);
         printBlockBorder();
     }
 
-    private static void printGutter(Frame frame) {
+    private static void printGutter() {
         print(BLANK_FIVE);
         print(SYMBOL_GUTTER);
         print(BLANK_FOUR);
@@ -228,10 +225,6 @@ public class ResultView2 {
         printBlockBorder();
     }
 
-    private static void print(String message) {
-        System.out.print(message);
-    }
-
     private static String convertFrameNumberToString(int number) {
         String stringNumber
                 = (number >= 10) ? String.valueOf(BLANK_ONE + number + BLANK_ONE) : " 0" + number + BLANK_ONE;
@@ -242,7 +235,7 @@ public class ResultView2 {
         System.out.print(BLOCK_BORDER);
     }
 
-    private static void printThreeLineSeparators(){
+    private static void printThreeLineSeparators() {
         printLineSeparator();
         printLineSeparator();
         printLineSeparator();
@@ -250,5 +243,13 @@ public class ResultView2 {
 
     private static void printLineSeparator() {
         System.out.println();
+    }
+
+    private static void print(String message) {
+        System.out.print(message);
+    }
+
+    private static void println(int message) {
+        System.out.println(message);
     }
 }

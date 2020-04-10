@@ -80,12 +80,36 @@ public class Frame {
         return points;
     }
 
+    public int getFirstPoint() {
+        return points.getFirstPoint();
+    }
+
+    public int getSecondPoint() {
+        return points.getSecondPoint();
+    }
+
+    public int getThirdPoint() {
+        return points.getThirdPoint();
+    }
+
     public FrameResult findResult() {
         return points.findResult();
     }
 
     public boolean isStrike(){
         return FrameResult.STRIKE.equals(points.findResult());
+    }
+
+    public boolean isSpare(){
+        return FrameResult.SPARE.equals(points.findResult());
+    }
+
+    public boolean isMiss(){
+        return FrameResult.MISS.equals(points.findResult());
+    }
+
+    public boolean isGutter(){
+        return FrameResult.GUTTER.equals(points.findResult());
     }
 
     public int getPointAtOrdinal(Ordinal ordinal){
