@@ -16,7 +16,6 @@ public class Answers {
         if (isOtherPersonWrite(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        return;
     }
 
     private boolean isOtherPersonWrite(User loginUser) {
@@ -32,10 +31,15 @@ public class Answers {
         answers.forEach(answer -> answer.delete());
     }
 
-    public void deleteHistory(List<DeleteHistory> deleteHistories) {
+    public void deleteHistory(DeleteHistories  deleteHistories) {
         for (int i = 0; i < answers.size(); i++) {
             DeleteHistory answerDeleteHistory = DeleteHistory.deleteAnswer(answers.get(i));
             deleteHistories.add(answerDeleteHistory);
         }
+    }
+
+    public void deleteAfterCheck(User loginUser) throws CannotDeleteException {
+        checkUser(loginUser);
+        delete();
     }
 }
