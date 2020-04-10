@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnswerTest {
@@ -19,8 +21,10 @@ public class AnswerTest {
     @DisplayName("답변글을 삭제할 수 있다.")
     @Test
     void delete() {
-        answer.delete();
+        DeleteHistory expect = new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
+        DeleteHistory actual = answer.delete();
 
         assertThat(answer.isDeleted()).isTrue();
+        assertThat(actual).isEqualTo(expect);
     }
 }
