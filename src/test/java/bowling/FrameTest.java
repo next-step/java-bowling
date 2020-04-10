@@ -1,7 +1,7 @@
 package bowling;
 
-import bowling.domain.Frame;
-import bowling.domain.Frames;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 import bowling.domain.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

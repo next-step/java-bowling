@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.point;
+
+import bowling.domain.frame.FrameResult;
 
 import java.util.Collections;
 import java.util.HashMap;

@@ -29,4 +29,8 @@ public class PlayerName {
             throw new IllegalArgumentException(WARNING_PLAYERNAME_MUST_ENGLISH);
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }

@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.FrameResult;
+import bowling.domain.frame.FrameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

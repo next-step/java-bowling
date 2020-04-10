@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.point;
 
 public enum Ordinal {
     FIRST,

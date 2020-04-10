@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.Point;
+import bowling.domain.point.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

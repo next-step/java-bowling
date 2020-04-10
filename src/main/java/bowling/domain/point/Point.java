@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.point;
 
 import static bowling.Messages.WARNING_SCORE_NOT_ALLOWED_RANGE;
 
