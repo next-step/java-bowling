@@ -34,65 +34,30 @@ public class ResultView2 {
     }
 
     private static void printFrameResultSoFar(PlayerName playerName, Frames frames, Frame frame) {
-        if (frame.findResult().equals(STRIKE)) {
-            printFrameResultFirst(playerName, frames, frame);
-            printFrameResultThird(playerName, frames, frame);
+        if (frame.isStrike()) {
+            printFrameResultWhen(FIRST, playerName, frames, frame);
+            printFrameResultWhen(THIRD, playerName, frames, frame);
         }
 
-        if (!frame.findResult().equals(STRIKE)) {
-            printFrameResultFirst(playerName, frames, frame);
-            printFrameResultSecond(playerName, frames, frame);
-            printFrameResultThird(playerName, frames, frame);
+        if (!frame.isStrike()) {
+            printFrameResultWhen(FIRST, playerName, frames, frame);
+            printFrameResultWhen(SECOND, playerName, frames, frame);
+            printFrameResultWhen(THIRD, playerName, frames, frame);
         }
     }
 
-    private static void printFrameResultFirst(PlayerName playerName, Frames frames, Frame frame) {
-        if (frame.getPoints().getPoints().keySet().contains(FIRST)) {
+    private static void printFrameResultWhen(Ordinal ordinal,
+                                             PlayerName playerName, Frames frames, Frame frame) {
+        if (frame.getPoints().getPoints().keySet().contains(ordinal)) {
             printFrameId(frame);
             print(" : ");
-            System.out.println(frame.getPoints().getFirstPoint());
+            System.out.println(frame.getPointAtOrdinal(ordinal));
             printPlayInformation();
             printName(playerName.getName());
             frames.getFrames()
                     .subList(0, frame.getFrameId() - 1)
                     .forEach(frame1 -> printFrame(frame1));
-            printFrameOrdinal(frame, FIRST);
-            printLineSeparator();
-            printLineSeparator();
-            printLineSeparator();
-        }
-    }
-
-    private static void printFrameResultSecond(PlayerName playerName, Frames frames, Frame frame) {
-        if (frame.getPoints().getPoints().keySet().contains(SECOND)) {
-            printFrameId(frame);
-            print(" : ");
-            System.out.println(frame.getPoints().getSecondPoint());
-            printPlayInformation();
-            printName(playerName.getName());
-            frames.getFrames()
-                    .subList(0, frame.getFrameId() - 1)
-                    .forEach(frame1 -> printFrame(frame1));
-            printFrameOrdinal(frame, SECOND);
-
-            printLineSeparator();
-            printLineSeparator();
-            printLineSeparator();
-        }
-    }
-
-    private static void printFrameResultThird(PlayerName playerName, Frames frames, Frame frame) {
-        if (frame.getPoints().getPoints().keySet().contains(THIRD)) {
-            printFrameId(frame);
-            print(" : ");
-            System.out.println(frame.getPoints().getThirdPoint());
-            printPlayInformation();
-            printName(playerName.getName());
-            frames.getFrames()
-                    .subList(0, frame.getFrameId() - 1)
-                    .forEach(frame1 -> printFrame(frame1));
-            printFrameOrdinal(frame, THIRD);
-
+            printFrameOrdinal(frame, ordinal);
             printLineSeparator();
             printLineSeparator();
             printLineSeparator();

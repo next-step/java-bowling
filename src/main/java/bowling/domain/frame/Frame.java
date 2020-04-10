@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.point.Ordinal;
 import bowling.domain.point.Point;
 import bowling.domain.point.Points;
 import bowling.domain.RandomGenerator;
@@ -81,5 +82,21 @@ public class Frame {
 
     public FrameResult findResult() {
         return points.findResult();
+    }
+
+    public boolean isStrike(){
+        return FrameResult.STRIKE.equals(points.findResult());
+    }
+
+    public int getPointAtOrdinal(Ordinal ordinal){
+        if(Ordinal.SECOND.equals(ordinal)){
+            return points.getSecondPoint();
+        }
+
+        if(Ordinal.THIRD.equals(ordinal)){
+            return points.getThirdPoint();
+        }
+
+        return points.getFirstPoint();
     }
 }
