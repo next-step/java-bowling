@@ -86,15 +86,22 @@ public class FrameTest {
         }
     }
 
-    @DisplayName("10프레임이 스페어 또는 스트라이크면, 투구 횟수 1회가 추가된 frame을 리턴한다.")
+    @DisplayName("10프레임이 스트라이크면, 투구 횟수 1회가 추가된 frame을 리턴한다.")
     @Test
-    void createTenthFramesWhenTenthIsSpareOrStrike() {
-        //given
-        RandomGenerator randomGenerator = new RandomGenerator();
-        int prevFrameId = 9;
-
+    void createTenthFrameWhenTenthIsStrike() {
         //when
         Frame tenthFrame = new Frame(9, 10, 0);
+
+        //then
+        assertThat(tenthFrame.getPoints().getPointSize()).isEqualTo(3);
+    }
+
+    @DisplayName("10프레임이 스페어이면, 투구 횟수가 1회 추가된 frame을 리턴한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"8:2", "9:1", "0:10"}, delimiter = ':')
+    void createTenthFrameWhenTenthIsSpare(int firstPoint, int secondPoint){
+        //when
+        Frame tenthFrame = new Frame(9, firstPoint, secondPoint);
 
         //then
         assertThat(tenthFrame.getPoints().getPointSize()).isEqualTo(3);

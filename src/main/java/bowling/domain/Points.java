@@ -44,4 +44,8 @@ public class Points {
     public void addThirdPoint(Point point){
         this.points.put(Ordinal.THIRD, point);
     }
+
+    public boolean isStrikeOrSpare(){
+        return findResult().equals(FrameResult.SPARE) || findResult().equals(FrameResult.STRIKE);
+    }
 }

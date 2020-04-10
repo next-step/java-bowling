@@ -25,7 +25,7 @@ public class Frame {
         points = Points.of(firstPoint, secondPoint);
         this.frameId = prevFrameId + 1;
         if(frameId == 10){
-            if(points.findResult().equals(FrameResult.STRIKE)){
+            if(points.isStrikeOrSpare()){
                 points.addThirdPoint(Point.of(RandomGenerator.getThirdPoint()));
             }
         }
