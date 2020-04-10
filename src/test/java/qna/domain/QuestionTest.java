@@ -6,6 +6,9 @@ import org.mockito.Mock;
 import qna.CannotDeleteException;
 import qna.service.DeleteHistoryService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -41,8 +44,9 @@ public class QuestionTest {
     @Test
     @DisplayName("삭제히스토리저장테스트")
     public void historyTest() {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        Q1.deleteQuestionHistory(deleteHistories);
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistory deleteHistory = Q1.deleteQuestionHistory();
+        deleteHistories.add(deleteHistory);
         assertThat(deleteHistories.size()).isEqualTo(1);
     }
 }

@@ -31,11 +31,13 @@ public class Answers {
         answers.forEach(answer -> answer.delete());
     }
 
-    public void deleteHistory(DeleteHistories  deleteHistories) {
+    public List<DeleteHistory> deleteHistory() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (int i = 0; i < answers.size(); i++) {
             DeleteHistory answerDeleteHistory = DeleteHistory.deleteAnswer(answers.get(i));
             deleteHistories.add(answerDeleteHistory);
         }
+        return deleteHistories;
     }
 
     public void deleteAfterCheck(User loginUser) throws CannotDeleteException {

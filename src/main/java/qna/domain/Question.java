@@ -109,17 +109,18 @@ public class Question extends AbstractEntity {
         Answers answers = new Answers(this);
         answers.deleteAfterCheck(loginUser);
         delete();
-        return getDeleteHistories(answers);
+        List<DeleteHistory> deleteHistories = deleteHistory(answers);
+        return deleteHistories;
     }
 
-    private List<DeleteHistory> getDeleteHistories(Answers answers) {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        deleteQuestionHistory(deleteHistories);
-        answers.deleteHistory(deleteHistories);
-        return deleteHistories.getDeleteHistoryLies();
+    private List<DeleteHistory> deleteHistory(Answers answers) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(deleteQuestionHistory());
+        deleteHistories.addAll(answers.deleteHistory());
+        return deleteHistories;
     }
 
-    public void deleteQuestionHistory(DeleteHistories deleteHistories) {
-        deleteHistories.deleteHistory(this);
+    public DeleteHistory deleteQuestionHistory() {
+        return DeleteHistory.deleteQuestion(this);
     }
 }
