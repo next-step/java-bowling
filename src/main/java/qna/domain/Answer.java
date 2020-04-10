@@ -50,7 +50,7 @@ public class Answer extends AbstractEntity {
         }
     }
 
-    public void deleteAnswer() {
+    public void delete() {
         deleted = true;
     }
 

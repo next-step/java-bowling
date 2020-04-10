@@ -20,7 +20,7 @@ public class Answers {
 
     public List<Answer> deleteAnswers(DeleteHistories deleteHistories) {
         for (Answer answer : answers) {
-            answer.deleteAnswer();
+            answer.delete();
             deleteHistories.addDeleteHistoryForAnswer(answer);
         }
         return answers;
