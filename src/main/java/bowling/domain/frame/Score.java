@@ -26,7 +26,7 @@ public class Score {
     }
 
     public Score bowl(int fallenPins) {
-        return new Score(this.score += fallenPins, this.left - 1);
+        return new Score(this.score + fallenPins, this.left - 1);
     }
 
     public int getScore() {
