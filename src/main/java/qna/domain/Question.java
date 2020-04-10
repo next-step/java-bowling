@@ -46,7 +46,8 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다");
         }
     }
-    public void deleteQuestion() {
+    
+    public void delete() {
         deleted = true;
     }
 

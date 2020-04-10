@@ -24,7 +24,7 @@ public class QuestionTest {
     @DisplayName("질문을 삭제하라는 메세지를 주고 삭제 할 수 있는 객체인지 확인 해본다.")
     @Test
     void deleteQuestion() {
-        Q1.deleteQuestion();
+        Q1.delete();
         boolean deleted = Q1.isDeleted();
         assertThat(deleted).isTrue();
     }
