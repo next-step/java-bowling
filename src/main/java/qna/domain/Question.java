@@ -109,7 +109,7 @@ public class Question extends AbstractEntity {
         Answers answers = new Answers(this);
         answers.deleteAfterCheck(loginUser);
         delete();
-        List<DeleteHistory> deleteHistories = ㅎ(answers);
+        List<DeleteHistory> deleteHistories = deleteHistory(answers);
         return deleteHistories;
     }
 
