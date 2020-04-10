@@ -29,4 +29,8 @@ public class Points {
     public Map<Ordinal, Point> getPoints() {
         return points;
     }
+
+    public int getPointSize(){
+        return this.points.size();
+    }
 }

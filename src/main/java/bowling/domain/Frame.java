@@ -42,6 +42,8 @@ public class Frame {
         return frames;
     }
 
+
+
     public Frame createNextFrame(RandomGenerator randomGenerator) {
         return new Frame(this.frameId, randomGenerator.getFirstPoint(), randomGenerator.getSecondPoint());
     }
@@ -60,5 +62,9 @@ public class Frame {
 
     public int getFrameId() {
         return frameId;
+    }
+
+    public Points getPoints() {
+        return points;
     }
 }

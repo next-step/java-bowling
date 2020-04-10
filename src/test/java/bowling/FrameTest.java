@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.Frame;
+import bowling.domain.Ordinal;
 import bowling.domain.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -82,5 +83,25 @@ public class FrameTest {
         for (int i = 0; i < 10; i++) {
             assertThat(tenFrames.get(i).getFrameId()).isEqualTo(i + 1);
         }
+    }
+
+    @DisplayName("10프레임이 스페어 또는 스트라이크면, 투구 횟수 1회가 추가된 frame을 리턴한다.")
+    @Test
+    void createTenthFramesWhenTenthIsSpareOrStrike() {
+        //given
+        RandomGenerator randomGenerator = new RandomGenerator();
+        int prevFrameId = 10;
+        Frame tenthFrame = new Frame(prevFrameId, 10, 10);
+
+        //when
+        Frame nextFrame = tenthFrame.createNextFrame(randomGenerator);
+
+        //then
+        assertThat(nextFrame.getFrameId()).isEqualTo(10);
+        assertThat(nextFrame.getPoints().getPointSize()).isEqualTo(3);
+        assertThat(nextFrame.getPoints().getPoints().get(Ordinal.FIRST))
+                .isEqualTo(tenthFrame.getPoints().getPoints().get(Ordinal.FIRST));
+        assertThat(nextFrame.getPoints().getPoints().get(Ordinal.SECOND))
+                .isEqualTo(tenthFrame.getPoints().getPoints().get(Ordinal.SECOND));
     }
 }
