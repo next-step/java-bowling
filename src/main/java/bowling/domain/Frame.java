@@ -17,6 +17,10 @@ public class Frame {
         this.secondPoint = Point.of(secondPoint);
     }
 
+    public static Frame create(RandomGenerator randomGenerator) {
+        return null;
+    }
+
     private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {
         if (firstPoint == SCORE_TEN && secondPoint != SCORE_ZERO) {
             throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SECOND_WHEN_STRIKE);

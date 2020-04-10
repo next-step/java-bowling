@@ -1,10 +1,14 @@
 package bowling;
 
 import bowling.domain.Frame;
+import bowling.domain.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -35,5 +39,16 @@ public class FrameTest {
         assertThatIllegalArgumentException().isThrownBy(() -> {
            new Frame(firstPoint, secondPoint);
         });
+    }
+
+    @DisplayName("RandomGenerator를 이용해 Frame 객체 생성")
+    @Test
+    void createWithRandomGenerator(){
+        RandomGenerator randomGenerator = new RandomGenerator();
+
+        IntStream.range(0, 1000)
+                .forEach(it -> assertThatCode(() -> {
+                    Frame.create(randomGenerator);
+                }).doesNotThrowAnyException());
     }
 }
