@@ -9,12 +9,12 @@ public class RandomGenerator {
     private static int firstPoint;
     private static int boundForSecond = firstPoint + 1;
 
-    public static int getFirstPoint() {
+    public int getFirstPoint() {
         firstPoint = RANDOM.nextInt(BOUND_FIRST_POINT);
         return firstPoint;
     }
 
-    public static int getSecondPoint() {
+    public int getSecondPoint() {
         return RANDOM.nextInt(boundForSecond);
     }
 }

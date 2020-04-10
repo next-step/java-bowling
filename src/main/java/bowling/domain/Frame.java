@@ -18,7 +18,7 @@ public class Frame {
     }
 
     public static Frame create(RandomGenerator randomGenerator) {
-        return null;
+        return new Frame(randomGenerator.getFirstPoint(), randomGenerator.getSecondPoint());
     }
 
     private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {
