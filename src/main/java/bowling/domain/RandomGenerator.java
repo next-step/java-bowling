@@ -9,4 +9,8 @@ public class RandomGenerator {
     public static int getFirstPoint() {
         return RANDOM.nextInt(BOUND_FIRST_POINT);
     }
+
+    public static int getSecondPoint() {
+        return 0;
+    }
 }
