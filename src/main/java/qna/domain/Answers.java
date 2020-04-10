@@ -19,13 +19,14 @@ public class Answers {
         return answers;
     }
 
-    public DeleteHistories delete() {
+    public DeleteHistories delete(final User user) {
+        checkDeletable(user);
         return answers.stream()
                       .map(Answer::delete)
                       .collect(Collectors.collectingAndThen(Collectors.toList(), DeleteHistories::new));
     }
 
-    public void checkDeletable(final User user) {
+    private void checkDeletable(final User user) {
         if (isWriterDifferent(user)) {
             throw new CannotDeleteException(CANNOT_DELETE_MESSAGE);
         }
