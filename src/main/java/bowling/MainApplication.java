@@ -1,9 +1,9 @@
 package bowling;
 
-import bowling.view.InputView;
+import bowling.controller.BowlingGame;
 
 public class MainApplication {
     public static void main(String[] args) {
-        InputView.getPlayerName();
+        BowlingGame.start();
     }
 }

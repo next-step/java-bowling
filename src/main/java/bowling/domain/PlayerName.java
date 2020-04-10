@@ -14,6 +14,10 @@ public class PlayerName {
         this.name = name;
     }
 
+    public static PlayerName of(String name){
+        return new PlayerName(name);
+    }
+
     private void validateNameLength(String name) {
         if (name.length() != CRITERIA_NAME_LENGTH) {
             throw new IllegalArgumentException(WARNING_PLAYERNAME_NOT_ALLOWED_LENGTH);
