@@ -66,10 +66,8 @@ public class Question extends AbstractEntity {
 
     public DeleteHistories delete(final User loginUser) {
         checkSameWriter(loginUser);
-        getAnswers().checkDeletable(loginUser);
-
         DeleteHistories deleteHistories = deleteQuestion();
-        return deleteHistories.addAll(deleteAnswers());
+        return deleteHistories.addAll(deleteAnswers(loginUser));
     }
 
     private void checkSameWriter(final User loginUser) {
@@ -84,8 +82,8 @@ public class Question extends AbstractEntity {
         return new DeleteHistories(Arrays.asList(deleteHistory));
     }
 
-    private DeleteHistories deleteAnswers() {
-        return getAnswers().delete();
+    private DeleteHistories deleteAnswers(final User user) {
+        return getAnswers().delete(user);
     }
 
     @Override
