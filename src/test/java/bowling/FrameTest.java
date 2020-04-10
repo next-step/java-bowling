@@ -57,12 +57,14 @@ public class FrameTest {
     void createNextFrame() {
         //given
         RandomGenerator randomGenerator = new RandomGenerator();
-        Frame frame = Frame.create(randomGenerator);
+        Frame frame1 = Frame.create(randomGenerator);
 
         //when
-        Frame nextFrame = frame.createNextFrame(randomGenerator);
+        Frame frame2 = frame1.createNextFrame(randomGenerator);
+        Frame frame3 = frame2.createNextFrame(randomGenerator);
 
         //then
-        assertThat(nextFrame.getFrameId()).isEqualTo(frame.getFrameId() + 1);
+        assertThat(frame2.getFrameId()).isEqualTo(frame1.getFrameId() + 1);
+        assertThat(frame3.getFrameId()).isEqualTo(frame2.getFrameId() + 1);
     }
 }
