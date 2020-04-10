@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public enum FrameResult {
     STRIKE(true, true, true, false),
+    SPARE,
     MISS;
 
     private boolean isFirstTen;
