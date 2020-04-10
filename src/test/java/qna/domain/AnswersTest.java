@@ -16,11 +16,9 @@ import qna.CannotDeleteException;
 
 class AnswersTest {
     private Answers answers;
-    private DeleteHistories deleteHistories;
 
     @BeforeEach
     void setUp() {
-        deleteHistories = new DeleteHistories();
         answers = new Answers(Stream.of(AnswerTest.A1, AnswerTest.A2).collect(Collectors.toList()));
     }
 
@@ -28,7 +26,7 @@ class AnswersTest {
     @Test
     void checkAnswers() {
         assertThatThrownBy(() -> {
-            answers.deleteAnswers(UserTest.JAVAJIGI, deleteHistories);
+            answers.deleteAnswers(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
@@ -36,7 +34,7 @@ class AnswersTest {
     @Test
     void deleteAnswer() throws CannotDeleteException {
         answers = new Answers(Stream.of(AnswerTest.A1).collect(Collectors.toList()));
-        List<Answer> answerList = answers.deleteAnswers(UserTest.JAVAJIGI, deleteHistories);
+        List<Answer> answerList = answers.deleteAnswers(UserTest.JAVAJIGI);
         assertThat(answerList.get(0).isDeleted()).isTrue();
     }
 }
