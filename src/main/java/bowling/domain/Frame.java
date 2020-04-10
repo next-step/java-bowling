@@ -9,14 +9,14 @@ public class Frame {
     private Point firstPoint;
     private Point secondPoint;
 
-    public Frame(int firstScore, int secondScore) {
-        validateSecondWhenFirstTen(firstScore, secondScore);
-        this.firstPoint = Point.of(firstScore);
-        this.secondPoint = Point.of(secondScore);
+    public Frame(int firstPoint, int secondPoint) {
+        validateSecondWhenFirstTen(firstPoint, secondPoint);
+        this.firstPoint = Point.of(firstPoint);
+        this.secondPoint = Point.of(secondPoint);
     }
 
-    private void validateSecondWhenFirstTen(int firstScore, int secondScore) {
-        if (isFirstTen(firstScore) && secondScore != SCORE_ZERO) {
+    private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {
+        if (isFirstTen(firstPoint) && secondPoint != SCORE_ZERO) {
             throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SECOND_WHEN_STRIKE);
         }
     }
