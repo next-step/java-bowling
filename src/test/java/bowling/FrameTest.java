@@ -70,7 +70,7 @@ public class FrameTest {
 
     @DisplayName("1부터 10까지 순차적으로 frameId로 가지는 10개의 frame 생성하기")
     @Test
-    void createTenFrames(){
+    void createTenFrames() {
         //given
         RandomGenerator randomGenerator = new RandomGenerator();
 
@@ -78,8 +78,9 @@ public class FrameTest {
         List<Frame> tenFrames = Frame.createTenFrames(randomGenerator);
 
         //then
-        for(int i=1; i<11; i++){
-            assertThat(tenFrames.get(i).getFrameId()).isEqualTo(i);
+        assertThat(tenFrames).hasSize(10);
+        for (int i = 0; i < 10; i++) {
+            assertThat(tenFrames.get(i).getFrameId()).isEqualTo(i + 1);
         }
     }
 }

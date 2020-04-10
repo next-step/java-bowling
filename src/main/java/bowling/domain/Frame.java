@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static bowling.Messages.WARNING_FRAME_NOT_ALLOWED_SECOND_WHEN_STRIKE;
@@ -30,7 +31,15 @@ public class Frame {
     }
 
     public static List<Frame> createTenFrames(RandomGenerator randomGenerator) {
-        return null;
+        List<Frame> frames = new ArrayList<>();
+        Frame currentFrame = Frame.create(randomGenerator);
+
+        for (int i=0; i<10; i++){
+            frames.add(currentFrame);
+            currentFrame = currentFrame.createNextFrame(randomGenerator);
+        }
+
+        return frames;
     }
 
     public Frame createNextFrame(RandomGenerator randomGenerator) {
