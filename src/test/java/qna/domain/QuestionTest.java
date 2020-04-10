@@ -14,18 +14,18 @@ public class QuestionTest {
 
     @DisplayName("질문을 삭제할 권한이 있는지 채크한다. 없으면 exception 발생")
     @Test
-    void validateOwner() throws CannotDeleteException {
+    void validateOwner(){
         assertThatThrownBy(() -> {
-            Q1.validateOwner(UserTest.SANJIGI);
+            Q1.delete(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
 
     }
 
     @DisplayName("질문을 삭제하라는 메세지를 주고 삭제 할 수 있는 객체인지 확인 해본다.")
     @Test
-    void deleteQuestion() {
-        Q1.delete();
-        boolean deleted = Q1.isDeleted();
+    void deleteQuestion() throws CannotDeleteException {
+        Q2.delete(UserTest.SANJIGI);
+        boolean deleted = Q2.isDeleted();
         assertThat(deleted).isTrue();
     }
 }
