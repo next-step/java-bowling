@@ -9,6 +9,7 @@ import static bowling.Messages.WARNING_FRAME_NOT_ALLOWED_SUM;
 public class Frame {
     private static final int SCORE_TEN = 10;
     private static final int SCORE_ZERO = 0;
+    private static final int LAST_FRAME_ID = 10;
 
     private int frameId = 1;
     private Points points;
@@ -51,7 +52,7 @@ public class Frame {
     }
 
     private boolean doesNeedOneMorePoint(){
-        return frameId == 10 && points.isStrikeOrSpare();
+        return frameId == LAST_FRAME_ID && points.isStrikeOrSpare();
     }
 
     private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {
