@@ -2,7 +2,9 @@ package qna.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,5 +21,19 @@ public class AnswerTest {
         //then
         assertFalse(A1.isDeleted());
         assertTrue(answer.isDeleted());
+    }
+
+    @DisplayName("삭제 가능한 유저인지 체크")
+    @Test
+    public void validateDeleteAble() throws Exception {
+        A1.validateDeleteAble(UserTest.JAVAJIGI);
+    }
+
+    @DisplayName("삭제 가능한 유저 아닐경우 체크")
+    @Test
+    public void validateDeleteAble_fail() throws Exception {
+        assertThatThrownBy(
+                () -> A1.validateDeleteAble(UserTest.SANJIGI)
+        ).isInstanceOf(CannotDeleteException.class);
     }
 }
