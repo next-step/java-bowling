@@ -28,4 +28,13 @@ public class PlayerNameTest {
             new PlayerName(name);
         });
     }
+
+    @DisplayName("플레이어 이름이 영문이 아니면 예외 발생")
+    @ParameterizedTest
+    @ValueSource(strings = {"@@@", "123", "홍홍홍"})
+    void throwExceptionWhenNotEnglishName(String name) {
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            new PlayerName(name);
+        });
+    }
 }
