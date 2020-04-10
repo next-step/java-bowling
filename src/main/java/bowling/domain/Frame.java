@@ -35,7 +35,7 @@ public class Frame {
         return new Frame(randomGenerator.getFirstPoint(), randomGenerator.getSecondPoint());
     }
 
-    public static List<Frame> createTenFrames(RandomGenerator randomGenerator) {
+    public static Frames createTenFrames(RandomGenerator randomGenerator) {
         List<Frame> frames = new ArrayList<>();
         Frame currentFrame = Frame.create(randomGenerator);
 
@@ -44,7 +44,7 @@ public class Frame {
             currentFrame = currentFrame.createNextFrame(randomGenerator);
         }
 
-        return frames;
+        return new Frames(frames);
     }
 
     public Frame createNextFrame(RandomGenerator randomGenerator) {

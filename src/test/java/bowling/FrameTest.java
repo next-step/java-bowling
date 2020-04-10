@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.Frame;
+import bowling.domain.Frames;
 import bowling.domain.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.*;
@@ -75,12 +75,12 @@ public class FrameTest {
         RandomGenerator randomGenerator = new RandomGenerator();
 
         //when
-        List<Frame> tenFrames = Frame.createTenFrames(randomGenerator);
+        Frames tenFrames = Frame.createTenFrames(randomGenerator);
 
         //then
-        assertThat(tenFrames).hasSize(10);
+        assertThat(tenFrames.getFrames()).hasSize(10);
         for (int i = 0; i < 10; i++) {
-            assertThat(tenFrames.get(i).getFrameId()).isEqualTo(i + 1);
+            assertThat(tenFrames.getFrameId(i)).isEqualTo(i + 1);
         }
     }
 
