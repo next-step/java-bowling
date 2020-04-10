@@ -13,8 +13,8 @@ class DeleteHistoriesTest {
 
     @BeforeEach
     void setUp() {
-        deleteHistories = new DeleteHistories();
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        deleteHistories = new DeleteHistories(question);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         question.addAnswer(answer);
     }
@@ -22,14 +22,14 @@ class DeleteHistoriesTest {
     @DisplayName("question에 대한 deleteHistory 를 추가한다.")
     @Test
     void addDeleteHistoryForQuestion() {
-        deleteHistories.addDeleteHistoryForQuestion(question.getId(), question);
+        deleteHistories.addDeleteHistoryForQuestion();
         assertThat(deleteHistories.getDeleteHistories()).hasSize(1);
     }
 
-    @DisplayName("answer에 대한 deleteHistory 를 추가한다.")
+    @DisplayName("answers 대한 deleteHistory 를 추가한다.")
     @Test
-    void addDeleteHistoryForAnswer() {
-        deleteHistories.addDeleteHistoryForAnswer(answer);
+    void addDeleteHistoryForAnswers() {
+        deleteHistories.addDeleteHistoryForAnswers();
         assertThat(deleteHistories.getDeleteHistories()).hasSize(1);
     }
 }

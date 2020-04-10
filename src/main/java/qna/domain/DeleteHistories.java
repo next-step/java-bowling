@@ -6,13 +6,29 @@ import java.util.List;
 
 public class DeleteHistories {
     List<DeleteHistory> deleteHistories = new ArrayList<>();
+    Question question;
 
-    public void addDeleteHistoryForQuestion(long questionId, Question question) {
-        deleteHistories.add(
-                new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
+    public DeleteHistories() {
     }
 
-    public void addDeleteHistoryForAnswer(Answer answer) {
+    public DeleteHistories(Question question) {
+        this.question = question;
+    }
+
+    public void addDeleteHistoryForQuestion() {
+        deleteHistories.add(
+                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(),
+                                  LocalDateTime.now()));
+    }
+
+    public void addDeleteHistoryForAnswers() {
+        List<Answer> answers = question.getAnswers();
+        for (Answer answer : answers) {
+            addDeleteHistoryForAnswer(answer);
+        }
+    }
+
+    private void addDeleteHistoryForAnswer(Answer answer) {
         deleteHistories.add(
                 new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
     }
