@@ -1,7 +1,11 @@
 package bowling.domain;
 
 public class Frame {
-    public Frame(int firstScore, int secondScore) {
+    private Score firstScore;
+    private Score secondScore;
 
+    public Frame(int firstScore, int secondScore) {
+        this.firstScore = Score.of(firstScore);
+        this.secondScore = Score.of(secondScore);
     }
 }

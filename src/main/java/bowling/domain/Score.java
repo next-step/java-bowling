@@ -13,6 +13,10 @@ public class Score {
         this.score = score;
     }
 
+    public static Score of(int score){
+        return new Score(score);
+    }
+
     private void validateRange(int score) {
         if (score > RANGE_MAX || score < RANGE_MIN) {
             throw new IllegalArgumentException(WARNING_SCORE_NOT_ALLOWED_RANGE);
