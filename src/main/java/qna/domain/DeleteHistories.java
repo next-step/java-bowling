@@ -11,7 +11,7 @@ public class DeleteHistories {
         this.deleteHistories = Collections.unmodifiableList(deleteHistories);
     }
 
-    public DeleteHistories merge(final DeleteHistories other) {
+    public DeleteHistories addAll(final DeleteHistories other) {
         List<DeleteHistory> source = new ArrayList<>();
         source.addAll(deleteHistories);
         source.addAll(other.deleteHistories);
