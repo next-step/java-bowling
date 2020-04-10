@@ -30,22 +30,17 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
         this.writer = writer;
         this.question = question;
         this.contents = contents;
-    }
-
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
     }
 
     public boolean isDeleted() {
@@ -66,6 +61,16 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    public DeleteHistory delete() {
+        this.deleted = true;
+        return DeleteHistory.newAnswer(this.getId(), this.getWriter());
+    }
+
+    private Answer setDeleted() {
+        this.deleted = true;
+        return this;
     }
 
     @Override
