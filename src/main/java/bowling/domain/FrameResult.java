@@ -32,6 +32,7 @@ public enum FrameResult {
         return Arrays.stream(values())
                 .filter(value -> value.isFirstTen == isFirstTen(firstPoint))
                 .filter(value -> value.isSecondZero == isSecondZero(secondPoint))
+                .filter(value -> value.isSumTen == isSumTen(firstPoint, secondPoint))
                 .findFirst()
                 .orElse(MISS);
     }
@@ -42,5 +43,9 @@ public enum FrameResult {
 
     private static boolean isSecondZero(int secondPoint) {
         return secondPoint == 0;
+    }
+
+    private static boolean isSumTen(int firstPoint, int secondPoint){
+        return (firstPoint + secondPoint) == 10;
     }
 }
