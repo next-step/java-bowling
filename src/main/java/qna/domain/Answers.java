@@ -2,7 +2,6 @@ package qna.domain;
 
 import qna.CannotDeleteException;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,11 +20,8 @@ public class Answers {
     }
 
     public DeleteHistories delete() {
-        for (Answer answer : answers) {
-            answer.delete();
-        }
         return answers.stream()
-                      .map(answer -> new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()))
+                      .map(Answer::delete)
                       .collect(Collectors.collectingAndThen(Collectors.toList(), DeleteHistories::new));
     }
 
