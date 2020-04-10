@@ -2,8 +2,6 @@ package qna.domain;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class QuestionTest {
@@ -14,9 +12,15 @@ public class QuestionTest {
     void delete() {
         Q1.delete();
 
-        List<Answer> answerList = Q1.getAnswers();
+        Answers answerList = Q1.getAnswers();
         for(Answer answer: answerList) {
-            assertThat(answer.isDeleted()).isEqualTo(true);
+            assertThat(answer.isDeleted()).isTrue();
         }
+    }
+
+    @Test
+    void isDeletable() {
+        Q1.addAnswer(AnswerTest.A2);
+        assertThat(Q1.isDeletable(UserTest.JAVAJIGI)).isFalse();
     }
 }
