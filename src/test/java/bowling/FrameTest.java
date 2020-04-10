@@ -27,4 +27,13 @@ public class FrameTest {
             new Frame(10, secondPoint);
         });
     }
+
+    @DisplayName("첫번째 포인트와 두번째 포인트의 합이 10 초과이면 예외 발생")
+    @ParameterizedTest
+    @CsvSource(value = {"8:3", "9:2", "10:9"}, delimiter = ':')
+    void throwExceptionWhenSumIsGreaterThanTen(int firstPoint, int secondPoint){
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+           new Frame(firstPoint, secondPoint);
+        });
+    }
 }
