@@ -35,21 +35,7 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
-        question.validateDeleteAble(loginUser);
-//        if (!question.isOwner(loginUser)) {
-//            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-//        }
-
-        Answers answers = question.getAnswers();
-        answers.validateDeletedAble(loginUser);
-
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-
-        List<DeleteHistory> deleteHistories1 = answers.changeDeletedAll();
-        deleteHistories.addAll(deleteHistories1);
-
+        List<DeleteHistory> deleteHistories = question.delete(loginUser, questionId);
         deleteHistoryService.saveAll(deleteHistories);
     }
 }
