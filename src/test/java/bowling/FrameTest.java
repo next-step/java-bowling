@@ -1,8 +1,6 @@
 package bowling;
 
 import bowling.domain.Frame;
-import bowling.domain.FrameResult;
-import bowling.domain.Ordinal;
 import bowling.domain.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -99,7 +97,7 @@ public class FrameTest {
     @DisplayName("10프레임이 스페어이면, 투구 횟수가 1회 추가된 frame을 리턴한다.")
     @ParameterizedTest
     @CsvSource(value = {"8:2", "9:1", "0:10"}, delimiter = ':')
-    void createTenthFrameWhenTenthIsSpare(int firstPoint, int secondPoint){
+    void createTenthFrameWhenTenthIsSpare(int firstPoint, int secondPoint) {
         //when
         Frame tenthFrame = new Frame(9, firstPoint, secondPoint);
 
