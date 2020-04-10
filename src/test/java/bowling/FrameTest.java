@@ -8,10 +8,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 
 public class FrameTest {
     @DisplayName("0이상 10 이하의 숫자 두 개로 Frame 객체 생성")
@@ -26,7 +26,7 @@ public class FrameTest {
     @DisplayName("첫번째 포인트가 10일 때, 두 번째 포인트가 0이 아니면 예외 발생")
     @ParameterizedTest
     @ValueSource(ints = {1, 5, 10})
-    void throwExceptionWhenFirstScoreTenAndSecondNotZero(int secondPoint){
+    void throwExceptionWhenFirstScoreTenAndSecondNotZero(int secondPoint) {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             new Frame(10, secondPoint);
         });
@@ -35,20 +35,33 @@ public class FrameTest {
     @DisplayName("첫번째 포인트와 두번째 포인트의 합이 10 초과이면 예외 발생")
     @ParameterizedTest
     @CsvSource(value = {"8:3", "9:2", "10:9"}, delimiter = ':')
-    void throwExceptionWhenSumIsGreaterThanTen(int firstPoint, int secondPoint){
+    void throwExceptionWhenSumIsGreaterThanTen(int firstPoint, int secondPoint) {
         assertThatIllegalArgumentException().isThrownBy(() -> {
-           new Frame(firstPoint, secondPoint);
+            new Frame(firstPoint, secondPoint);
         });
     }
 
     @DisplayName("RandomGenerator를 이용해 Frame 객체 생성")
     @Test
-    void createWithRandomGenerator(){
+    void createWithRandomGenerator() {
         RandomGenerator randomGenerator = new RandomGenerator();
 
         IntStream.range(0, 1000)
                 .forEach(it -> assertThatCode(() -> {
                     Frame.create(randomGenerator);
                 }).doesNotThrowAnyException());
+    }
+
+    @DisplayName("Frame 10개 생성하기")
+    @Test
+    void createTenFrames() {
+        //given
+        RandomGenerator randomGenerator = new RandomGenerator();
+
+        //when
+        List<Frame> tenFrames = Frame.createTenFrames(randomGenerator);
+
+        //then
+        assertThat(tenFrames).hasSize(10);
     }
 }
