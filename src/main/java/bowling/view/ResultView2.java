@@ -48,19 +48,19 @@ public class ResultView2 {
 
     private static void printFrameResultWhen(Ordinal ordinal,
                                              PlayerName playerName, Frames frames, Frame frame) {
-        if (frame.getPoints().getPoints().keySet().contains(ordinal)) {
+        if (frame.containsOrdinal(ordinal)) {
             printFrameId(frame);
             print(" : ");
             System.out.println(frame.getPointAtOrdinal(ordinal));
+
             printPlayInformation();
             printName(playerName.getName());
             frames.getFrames()
                     .subList(0, frame.getFrameId() - 1)
                     .forEach(frame1 -> printFrame(frame1));
+
             printFrameOrdinal(frame, ordinal);
-            printLineSeparator();
-            printLineSeparator();
-            printLineSeparator();
+            printThreeLineSeparators();
         }
     }
 
@@ -240,6 +240,12 @@ public class ResultView2 {
 
     private static void printBlockBorder() {
         System.out.print(BLOCK_BORDER);
+    }
+
+    private static void printThreeLineSeparators(){
+        printLineSeparator();
+        printLineSeparator();
+        printLineSeparator();
     }
 
     private static void printLineSeparator() {

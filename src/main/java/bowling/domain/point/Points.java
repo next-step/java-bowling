@@ -62,4 +62,8 @@ public class Points {
     public int getThirdPoint(){
         return points.get(Ordinal.THIRD).getScore();
     }
+
+    public boolean containsOrdinal(Ordinal ordinal){
+        return points.keySet().contains(ordinal);
+    }
 }

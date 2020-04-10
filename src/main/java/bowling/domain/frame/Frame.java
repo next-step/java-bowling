@@ -99,4 +99,8 @@ public class Frame {
 
         return points.getFirstPoint();
     }
+
+    public boolean containsOrdinal(Ordinal ordinal){
+        return points.containsOrdinal(ordinal);
+    }
 }
