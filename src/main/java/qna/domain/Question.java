@@ -95,13 +95,12 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser, long questionId) {
         validateDeleteAble(loginUser);
-        answers.validateDeletedAble(loginUser);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, getWriter(), LocalDateTime.now()));
 
-        List<DeleteHistory> deleteHistories1 = answers.changeDeletedAll();
+        List<DeleteHistory> deleteHistories1 = answers.changeDeletedAll(loginUser);
         deleteHistories.addAll(deleteHistories1);
 
         return deleteHistories;

@@ -23,20 +23,14 @@ public class Answers {
         this.answers = new ArrayList<>(answers);
     }
 
-    public void validateDeletedAble(User loginUser) {
-        for (Answer answer : answers) {
-            answer.validateDeleteAble(loginUser);
-        }
-    }
-
     public List<Answer> getAnswers() {
         return answers;
     }
 
-    public List<DeleteHistory> changeDeletedAll() {
+    public List<DeleteHistory> changeDeletedAll(User loginUser) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
-            answer.deleted(true);
+            answer.deleted(true, loginUser);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
         return deleteHistories;

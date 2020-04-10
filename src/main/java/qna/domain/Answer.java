@@ -52,7 +52,8 @@ public class Answer extends AbstractEntity {
         this.question = answer.question;
     }
 
-    public Answer deleted(boolean deleted) {
+    public Answer deleted(boolean deleted, User loginUser) {
+        validateDeleteAble(loginUser);
         this.deleted = deleted;
         return this;
     }
@@ -77,7 +78,7 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public void validateDeleteAble(User user) {
+    private void validateDeleteAble(User user) {
         if (!writer.equals(user)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AnswerTest {
@@ -16,24 +15,23 @@ public class AnswerTest {
     @Test
     public void setDeleted_success() throws Exception {
         //given
-        Answer answer = A1.deleted(true);
+        Answer answer = A1.deleted(true, UserTest.JAVAJIGI);
 
         //then
-        assertFalse(A1.isDeleted());
         assertTrue(answer.isDeleted());
     }
 
     @DisplayName("삭제 가능한 유저인지 체크")
     @Test
     public void validateDeleteAble() throws Exception {
-        A1.validateDeleteAble(UserTest.JAVAJIGI);
+        A1.deleted(true, UserTest.JAVAJIGI);
     }
 
     @DisplayName("삭제 가능한 유저 아닐경우 체크")
     @Test
     public void validateDeleteAble_fail() throws Exception {
         assertThatThrownBy(
-                () -> A1.validateDeleteAble(UserTest.SANJIGI)
+                () -> A1.deleted(true, UserTest.SANJIGI)
         ).isInstanceOf(CannotDeleteException.class);
     }
 }
