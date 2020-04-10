@@ -22,7 +22,7 @@ public class PlayerNameTest {
 
     @DisplayName("플레이어 이름의 길이가 3이 아니면 예외 발생")
     @ParameterizedTest
-    @ValueSource(strings = {"Soojin, Yuqi, Soyeon"})
+    @ValueSource(strings = {"Soojin", "Yuqi", "Soyeon"})
     void throwExceptionWhenGreaterThanThree(String name) {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             new PlayerName(name);
