@@ -9,6 +9,10 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    private static final String HAVE_NOT_PERMISSION_ERROR_MESSAGE =
+            "질문을 삭제할 권한이 없습니다.";
+    private static final String OTHER_ANSWER_EXIST_ERROR_MESSAGE =
+            "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -92,11 +96,11 @@ public class Question extends AbstractEntity {
 
     private void checkDeletable(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+            throw new CannotDeleteException(HAVE_NOT_PERMISSION_ERROR_MESSAGE);
         }
 
         if (answers.hasOtherAnswers(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            throw new CannotDeleteException(OTHER_ANSWER_EXIST_ERROR_MESSAGE);
         }
     }
 
