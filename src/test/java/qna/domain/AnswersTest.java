@@ -39,7 +39,7 @@ class AnswersTest {
         Answers answers = new Answers(Arrays.asList(answer, otherAnswer));
 
         assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(
-                () -> answers.checkDeletable(javajigi)
+                () -> answers.delete(javajigi)
         );
     }
 
@@ -48,7 +48,7 @@ class AnswersTest {
     void delete() {
         Answers answers = new Answers(Arrays.asList(answer, answer));
 
-        DeleteHistories deleteHistories = answers.delete();
+        DeleteHistories deleteHistories = answers.delete(javajigi);
         List<DeleteHistory> actual = deleteHistories.getDeleteHistories();
 
         assertThat(actual).hasSize(2);
