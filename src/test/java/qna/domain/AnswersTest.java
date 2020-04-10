@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +17,7 @@ class AnswersTest {
     private User sanjigi;
     private Answer answer;
     private Answer otherAnswer;
+    private LocalDateTime now;
 
     @BeforeEach
     void setUp() {
@@ -23,6 +25,7 @@ class AnswersTest {
         sanjigi = new User(2L, "sanjigi", "password", "name", "sanjigi@slipp.net");
         answer = new Answer(javajigi, QuestionTest.Q1, "Answers Contents1");
         otherAnswer = new Answer(sanjigi, QuestionTest.Q1, "Answers Contents2");
+        now = LocalDateTime.of(2019, 4, 11, 1, 52);
     }
 
     @DisplayName("답변자 객체를 생성할 수 있다.")
@@ -39,7 +42,7 @@ class AnswersTest {
         Answers answers = new Answers(Arrays.asList(answer, otherAnswer));
 
         assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(
-                () -> answers.delete(javajigi)
+                () -> answers.delete(javajigi, now)
         );
     }
 
@@ -48,7 +51,7 @@ class AnswersTest {
     void delete() {
         Answers answers = new Answers(Arrays.asList(answer, answer));
 
-        DeleteHistories deleteHistories = answers.delete(javajigi);
+        DeleteHistories deleteHistories = answers.delete(javajigi, now);
         List<DeleteHistory> actual = deleteHistories.getDeleteHistories();
 
         assertThat(actual).hasSize(2);
