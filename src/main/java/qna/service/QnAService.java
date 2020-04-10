@@ -49,10 +49,7 @@ public class QnAService {
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
 
         List<DeleteHistory> deleteHistories1 = answers_rfc.changeDeletedAll();
-        deleteHistories1.addAll(deleteHistories);
-        for (Answer answer : answers) {
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
+        deleteHistories.addAll(deleteHistories1);
         deleteHistoryService.saveAll(deleteHistories);
     }
 }
