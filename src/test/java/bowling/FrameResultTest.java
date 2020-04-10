@@ -19,7 +19,7 @@ public class FrameResultTest {
         assertThat(result).isEqualTo(FrameResult.STRIKE);
     }
 
-    @DisplayName("스트라이크가 아닐 떄, 첫번째 포인트와 두번째 포인트의 합이 0이면 스페어 반환")
+    @DisplayName("스트라이크가 아닐 떄, 첫번째 포인트와 두번째 포인트의 합이 10이면 스페어 반환")
     @ParameterizedTest
     @CsvSource(value = {"8:2", "9:1", "0:10"}, delimiter = ':')
     void returnWhenSumIsTenAndNotStrike(int firstPoint, int secondPoint) {
@@ -28,5 +28,14 @@ public class FrameResultTest {
 
         //then
         assertThat(result).isEqualTo(FrameResult.SPARE);
+    }
+
+    @DisplayName("첫번째, 두번째 포인트 합이 0이면 거터 반환")
+    @Test
+    void findFrameResultWhenGutter() {
+        //when
+        FrameResult result = FrameResult.findResult(0, 0);
+
+        assertThat(result).isEqualTo(FrameResult.GUTTER);
     }
 }
