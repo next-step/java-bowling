@@ -25,7 +25,7 @@ public class RandomGeneratorTest {
         RandomGenerator randomGenerator = new RandomGenerator();
 
         IntStream.range(0, 1000)
-                .forEach(it -> assertThat(randomGenerator.getSecondPoint())
-                        .isLessThanOrEqualTo(10 - randomGenerator.getFirstPoint()));
+                .forEach(it -> assertThat(randomGenerator.getFirstPoint() + randomGenerator.getSecondPoint())
+                        .isLessThanOrEqualTo(10));
     }
 }

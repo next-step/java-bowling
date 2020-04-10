@@ -6,7 +6,6 @@ import bowling.domain.PlayerName;
 import bowling.domain.RandomGenerator;
 import bowling.view.InputView;
 import bowling.view.ResultView;
-import bowling.view.ResultView2;
 
 public class BowlingGame {
     public static void start() {
@@ -14,6 +13,6 @@ public class BowlingGame {
         PlayerName playerName = PlayerName.of(InputView.getPlayerName());
         Frames tenFrames = Frame.createTenFrames(randomGenerator);
 
-        ResultView2.print(playerName, tenFrames);
+        ResultView.print(playerName, tenFrames);
     }
 }
