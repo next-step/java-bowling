@@ -6,6 +6,7 @@ import qna.CannotDeleteException;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +37,12 @@ public class Answers {
         return answers;
     }
 
-    public void changeDeletedAll() {
+    public List<DeleteHistory> changeDeletedAll() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : answers) {
-            answer.setDeleted(true);
+            answer = answer.setDeleted(true);
+//            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         }
+        return deleteHistories;
     }
 }
