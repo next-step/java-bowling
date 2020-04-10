@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.ScannerUtil;
+import bowling.util.ScannerUtil;
 
 public class InputView {
     public static String getPlayerName() {
