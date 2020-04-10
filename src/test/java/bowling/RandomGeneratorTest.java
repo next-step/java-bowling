@@ -18,7 +18,7 @@ public class RandomGeneratorTest {
 
     @DisplayName("두 번째 포인트는 '10-첫번째 포인트' 값 보다 같거나 작아야 한다.")
     @Test
-    void generateSecondPoint(){
+    void generateSecondPoint() {
         IntStream.range(0, 1000)
                 .forEach(it -> assertThat(RandomGenerator.getSecondPoint())
                         .isLessThanOrEqualTo(10 - RandomGenerator.getFirstPoint()));
