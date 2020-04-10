@@ -33,4 +33,11 @@ public class Points {
     public int getPointSize(){
         return this.points.size();
     }
+
+    public FrameResult findResult(){
+        Point first = points.get(Ordinal.FIRST);
+        Point second = points.get(Ordinal.SECOND);
+
+        return FrameResult.findResult(first.getScore(), second.getScore());
+    }
 }

@@ -22,4 +22,8 @@ public class Point {
             throw new IllegalArgumentException(WARNING_SCORE_NOT_ALLOWED_RANGE);
         }
     }
+
+    public int getScore() {
+        return score;
+    }
 }

@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.Frame;
+import bowling.domain.FrameResult;
 import bowling.domain.Ordinal;
 import bowling.domain.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
@@ -90,18 +91,13 @@ public class FrameTest {
     void createTenthFramesWhenTenthIsSpareOrStrike() {
         //given
         RandomGenerator randomGenerator = new RandomGenerator();
-        int prevFrameId = 10;
-        Frame tenthFrame = new Frame(prevFrameId, 10, 10);
+        int prevFrameId = 9;
+        Frame ninethFrame = new Frame(prevFrameId, 2, 1);
 
-        //when
-        Frame nextFrame = tenthFrame.createNextFrame(randomGenerator);
-
-        //then
-        assertThat(nextFrame.getFrameId()).isEqualTo(10);
-        assertThat(nextFrame.getPoints().getPointSize()).isEqualTo(3);
-        assertThat(nextFrame.getPoints().getPoints().get(Ordinal.FIRST))
-                .isEqualTo(tenthFrame.getPoints().getPoints().get(Ordinal.FIRST));
-        assertThat(nextFrame.getPoints().getPoints().get(Ordinal.SECOND))
-                .isEqualTo(tenthFrame.getPoints().getPoints().get(Ordinal.SECOND));
+        //when, then
+        IntStream.range(0, 1000)
+                .mapToObj(it -> ninethFrame.createNextFrame(randomGenerator))
+                .filter(it -> FrameResult.STRIKE.equals(it) || FrameResult.SPARE.equals(it))
+                .forEach(it -> assertThat(it.getPoints().getPointSize()).isEqualTo(3));
     }
 }
