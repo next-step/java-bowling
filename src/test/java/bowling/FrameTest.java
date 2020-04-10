@@ -67,4 +67,19 @@ public class FrameTest {
         assertThat(frame2.getFrameId()).isEqualTo(frame1.getFrameId() + 1);
         assertThat(frame3.getFrameId()).isEqualTo(frame2.getFrameId() + 1);
     }
+
+    @DisplayName("1부터 10까지 순차적으로 frameId로 가지는 10개의 frame 생성하기")
+    @Test
+    void createTenFrames(){
+        //given
+        RandomGenerator randomGenerator = new RandomGenerator();
+
+        //when
+        List<Frame> tenFrames = Frame.createTenFrames(randomGenerator);
+
+        //then
+        for(int i=1; i<11; i++){
+            assertThat(tenFrames.get(i).getFrameId()).isEqualTo(i);
+        }
+    }
 }
