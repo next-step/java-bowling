@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class ScoreTest {
     @DisplayName("스코어는 0 이상 10 이하의 숫자로 생성")
@@ -15,5 +16,14 @@ public class ScoreTest {
         assertThatCode(() -> {
             new Score(score);
         }).doesNotThrowAnyException();
+    }
+
+    @DisplayName("0 미만 또는 10 초과 숫자가 들어오면 예외 발생")
+    @ParameterizedTest
+    @ValueSource(ints = {-10, -1, 11, 15})
+    void throwExceptionWhenNotInZeroToTen(int score) {
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            new Score(score);
+        });
     }
 }
