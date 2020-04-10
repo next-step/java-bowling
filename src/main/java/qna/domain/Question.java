@@ -68,9 +68,8 @@ public class Question extends AbstractEntity {
         checkSameWriter(loginUser);
         getAnswers().checkDeletable(loginUser);
 
-        DeleteHistories questionHistory = deleteQuestion();
-        DeleteHistories answerHistory = deleteAnswers();
-        return questionHistory.merge(answerHistory);
+        DeleteHistories deleteHistories = deleteQuestion();
+        return deleteHistories.addAll(deleteAnswers());
     }
 
     private void checkSameWriter(final User loginUser) {
