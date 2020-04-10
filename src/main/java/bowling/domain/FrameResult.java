@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum FrameResult {
     STRIKE(true, true, true, false),
-    SPARE,
+    SPARE(false, true, false),
     MISS;
 
     private boolean isFirstTen;
@@ -13,6 +13,12 @@ public enum FrameResult {
     private boolean isAllZero;
 
     FrameResult() {
+    }
+
+    FrameResult(boolean isFirstTen, boolean isSumTen, boolean isAllZero) {
+        this.isFirstTen = isFirstTen;
+        this.isSumTen = isSumTen;
+        this.isAllZero = isAllZero;
     }
 
     FrameResult(boolean isFirstTen, boolean isSecondZero, boolean isSumTen, boolean isAllZero) {
