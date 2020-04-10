@@ -26,12 +26,12 @@ public class Answers {
     }
 
     public void checkDeletable(final User user) {
-        if (hasSomethingElse(user)) {
+        if (isWriterDifferent(user)) {
             throw new CannotDeleteException(CANNOT_DELETE_MESSAGE);
         }
     }
 
-    private boolean hasSomethingElse(final User user) {
+    private boolean isWriterDifferent(final User user) {
         return answers.stream()
                       .anyMatch(answer -> !answer.isOwner(user));
     }
