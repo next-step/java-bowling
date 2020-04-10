@@ -11,8 +11,14 @@ import static bowling.domain.frame.FrameResult.*;
 public class ResultView {
     private static final String BLANK_ONE = " ";
     private static final String BLANK_THREE = "   ";
+    private static final String BLANK_FOUR = "    ";
+    private static final String BLANK_FIVE = "     ";
     private static final String BLOCK_BORDER = "|";
     private static final String LABEL_NAME = "NAME";
+    private static final String SYMBOL_STRIKE = "X";
+    private static final String SYMBOL_GUTTER = "-";
+    private static final String DELIMITER_SPARE = "/";
+
 
     public static void print(PlayerName playerName, Frames frames){
         printPlayInformation();
@@ -31,39 +37,52 @@ public class ResultView {
     }
 
     private static void printFrame(Frame frame){
-        printMessage(BLANK_ONE);
-
         if(STRIKE.equals(frame.findResult())){
-            printThreeBlankBlock();
-            printMessage(" X ");
-            printMessage(BLANK_ONE);
+            printStrike();
         }
 
         if(SPARE.equals(frame.findResult())){
-            printThreeBlankBlock();
-            System.out.print(frame.getPoints().getFirstPoint());
-            System.out.print(BLOCK_BORDER);
-            System.out.print("/");
-            printMessage(BLANK_ONE);
-            printMessage(BLANK_ONE);
+            printSpare(frame);
         }
 
         if(GUTTER.equals(frame.findResult())){
-            printThreeBlankBlock();
-            printMessage(" - ");
-            printMessage(BLANK_ONE);
-            printMessage(BLANK_ONE);
+            printGutter();
         }
 
         if(MISS.equals(frame.findResult())){
-            printThreeBlankBlock();
-            System.out.print(frame.getPoints().getFirstPoint());
-            System.out.print(BLOCK_BORDER);
-            System.out.print(frame.getPoints().getSecondPoint());
-            System.out.print(" ");
-            printMessage(BLANK_ONE);
+            printMiss(frame);
         }
-        printMessage(BLANK_ONE);
+    }
+
+    private static void printStrike(){
+        printMessage(BLANK_FIVE);
+        printMessage(SYMBOL_STRIKE);
+        printMessage(BLANK_FOUR);
+        printBlockBorder();
+    }
+
+    private static void printSpare(Frame frame){
+        printMessage(BLANK_FOUR);
+        System.out.print(frame.getPoints().getFirstPoint());
+        System.out.print(BLOCK_BORDER);
+        System.out.print(DELIMITER_SPARE);
+        printMessage(BLANK_THREE);
+        printBlockBorder();
+    }
+
+    private static void printMiss(Frame frame){
+        printMessage(BLANK_FOUR);
+        System.out.print(frame.getPoints().getFirstPoint());
+        System.out.print(BLOCK_BORDER);
+        System.out.print(frame.getPoints().getSecondPoint());
+        printMessage(BLANK_THREE);
+        printBlockBorder();
+    }
+
+    private static void printGutter(){
+        printMessage(BLANK_FIVE);
+        printMessage(SYMBOL_GUTTER);
+        printMessage(BLANK_FOUR);
         printBlockBorder();
     }
 
