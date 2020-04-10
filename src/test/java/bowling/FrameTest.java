@@ -52,16 +52,17 @@ public class FrameTest {
                 }).doesNotThrowAnyException());
     }
 
-    @DisplayName("Frame 10개 생성하기")
+    @DisplayName("next frame 생성할 때 frameId 1씩 증가하기")
     @Test
-    void createTenFrames() {
+    void createNextFrame() {
         //given
         RandomGenerator randomGenerator = new RandomGenerator();
+        Frame frame = Frame.create(randomGenerator);
 
         //when
-        List<Frame> tenFrames = Frame.createTenFrames(randomGenerator);
+        Frame nextFrame = frame.createNextFrame(randomGenerator);
 
         //then
-        assertThat(tenFrames).hasSize(10);
+        assertThat(nextFrame.getFrameId()).isEqualTo(frame.getFrameId() + 1);
     }
 }

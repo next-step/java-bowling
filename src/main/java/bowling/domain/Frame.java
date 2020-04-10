@@ -9,6 +9,7 @@ public class Frame {
     private static final int SCORE_TEN = 10;
     private static final int SCORE_ZERO = 0;
 
+    private int frameId;
     private Points points;
 
     public Frame(int firstPoint, int secondPoint) {
@@ -21,10 +22,6 @@ public class Frame {
         return new Frame(randomGenerator.getFirstPoint(), randomGenerator.getSecondPoint());
     }
 
-    public static List<Frame> createTenFrames(RandomGenerator randomGenerator) {
-        return null;
-    }
-
     private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {
         if (firstPoint == SCORE_TEN && secondPoint != SCORE_ZERO) {
             throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SECOND_WHEN_STRIKE);
@@ -35,5 +32,17 @@ public class Frame {
         if(firstPoint + secondPoint > SCORE_TEN){
             throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SUM);
         }
+    }
+
+    public Frame createNextFrame(RandomGenerator randomGenerator) {
+        return null;
+    }
+
+    public int getFrameId() {
+        return frameId;
+    }
+
+    public Points getPoints() {
+        return points;
     }
 }
