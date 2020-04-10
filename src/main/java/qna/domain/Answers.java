@@ -31,7 +31,14 @@ public class Answers {
         }
     }
 
+
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public void changeDeletedAll() {
+        for (Answer answer : answers) {
+            answer.setDeleted(true);
+        }
     }
 }
