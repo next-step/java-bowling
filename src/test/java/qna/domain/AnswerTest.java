@@ -16,7 +16,7 @@ public class AnswerTest {
     @Test
     public void setDeleted_success() throws Exception {
         //given
-        Answer answer = A1.setDeleted(true);
+        Answer answer = A1.deleted(true);
 
         //then
         assertFalse(A1.isDeleted());

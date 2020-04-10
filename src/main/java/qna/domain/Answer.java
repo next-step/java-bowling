@@ -52,12 +52,9 @@ public class Answer extends AbstractEntity {
         this.question = answer.question;
     }
 
-    public Answer setDeleted(boolean deleted) {
+    public Answer deleted(boolean deleted) {
         this.deleted = deleted;
         return this;
-//        Answer answer = new Answer(this);
-//        answer.deleted = deleted;
-//        return answer;
     }
 
     public boolean isDeleted() {
