@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswersTest {
 
-    @DisplayName("Answers 생성 테스트")
+/*    @DisplayName("Answers 생성 테스트")
     @Test
     public void generateAnswersTest() {
         assertThatCode(Answers.newInstance(AnswerTest.A1, AnswerTest.A2)).doesNotThrowAnyException();
@@ -24,5 +24,5 @@ public class AnswersTest {
         Answers cannotDeleteAnswers = Answers.newInstance(AnswerTest.A1, AnswerTest.A2);
         assertThatThrownBy(answers.deleteAll(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class);
-    }
+    }*/
 }

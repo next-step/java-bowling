@@ -14,9 +14,9 @@ public class QuestionTest {
     @DisplayName("Question 삭제 테스트")
     @Test
     public void deleteQuestionTest() {
-        assertThatCode(AnswerTest.A1.deleteByUser(UserTest.JAVAJIGI)).doesNotThrowAnyException();
+        assertThatCode(() -> Q1.deleteByUser(UserTest.JAVAJIGI)).doesNotThrowAnyException();
 
-        assertThatThrownBy(AnswerTest.A2.deleteByUser(UserTest.SANJIGI))
+        assertThatThrownBy(() -> Q2.deleteByUser(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class);
     }
 }
