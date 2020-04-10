@@ -1,9 +1,7 @@
 package qna.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import qna.CannotDeleteException;
 
 import java.util.Arrays;
 
@@ -28,7 +26,7 @@ class AnswersTest {
         Answers answers = new Answers(Arrays.asList(answer1, answer2, answer3));
 
         //when
-        answers.changeDeletedAll(UserTest.JAVAJIGI);
+        answers.deletedAll(UserTest.JAVAJIGI);
 
         //then
         assertTrue(answers.getAnswers().get(0).isDeleted());

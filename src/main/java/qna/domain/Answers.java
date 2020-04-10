@@ -27,8 +27,9 @@ public class Answers {
         return answers;
     }
 
-    public List<DeleteHistory> changeDeletedAll(User loginUser) {
+    public List<DeleteHistory> deletedAll(User loginUser) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
+
         for (Answer answer : answers) {
             answer.deleted(true, loginUser);
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
