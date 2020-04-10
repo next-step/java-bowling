@@ -1,9 +1,12 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -84,8 +87,26 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public Answers getAnswers() {
+        return new Answers(answers);
+    }
+
+    public List<DeleteHistory> delete(User owner) throws CannotDeleteException {
+        checkRemovable(owner);
+        deleted = true;
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+
+        Answers answers = new Answers(this.answers);
+        answers.delete(owner, deleteHistories);
+        return deleteHistories;
+    }
+
+    private void checkRemovable(User owner) throws CannotDeleteException {
+        if (!writer.equals(owner)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
     }
 
     @Override
