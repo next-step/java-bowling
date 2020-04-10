@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ public class AnswerTest {
     public static final Answer A2 =
             new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
+    @DisplayName("삭제")
     @Test
     void delete() {
         DeleteHistory deleteHistory = A1.delete();
