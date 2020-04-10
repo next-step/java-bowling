@@ -2,19 +2,19 @@ package bowling.domain;
 
 import static bowling.Messages.WARNING_SCORE_NOT_ALLOWED_RANGE;
 
-public class Score {
+public class Point {
     private static final int RANGE_MAX = 10;
     private static final int RANGE_MIN = 0;
 
     private int score;
 
-    public Score(int score) {
+    public Point(int score) {
         validateRange(score);
         this.score = score;
     }
 
-    public static Score of(int score){
-        return new Score(score);
+    public static Point of(int score){
+        return new Point(score);
     }
 
     private void validateRange(int score) {

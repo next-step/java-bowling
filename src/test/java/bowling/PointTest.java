@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.Score;
+import bowling.domain.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -8,13 +8,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-public class ScoreTest {
+public class PointTest {
     @DisplayName("스코어는 0 이상 10 이하의 숫자로 생성")
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 5, 9, 10})
     void createTest(int score) {
         assertThatCode(() -> {
-            new Score(score);
+            new Point(score);
         }).doesNotThrowAnyException();
     }
 
@@ -23,7 +23,7 @@ public class ScoreTest {
     @ValueSource(ints = {-10, -1, 11, 15})
     void throwExceptionWhenNotInZeroToTen(int score) {
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Score(score);
+            new Point(score);
         });
     }
 }
