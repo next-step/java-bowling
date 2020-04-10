@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import static bowling.Messages.WARNING_FRAME_NOT_ALLOWED_SECOND_WHEN_STRIKE;
+import static bowling.Messages.WARNING_FRAME_NOT_ALLOWED_SUM;
 
 public class Frame {
     private static final int SCORE_TEN = 10;
@@ -11,17 +12,20 @@ public class Frame {
 
     public Frame(int firstPoint, int secondPoint) {
         validateSecondWhenFirstTen(firstPoint, secondPoint);
+        validateSumIsLessThanTen(firstPoint, secondPoint);
         this.firstPoint = Point.of(firstPoint);
         this.secondPoint = Point.of(secondPoint);
     }
 
     private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {
-        if (isFirstTen(firstPoint) && secondPoint != SCORE_ZERO) {
+        if (firstPoint == SCORE_TEN && secondPoint != SCORE_ZERO) {
             throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SECOND_WHEN_STRIKE);
         }
     }
 
-    private boolean isFirstTen(int firstScore) {
-        return firstScore == SCORE_TEN;
+    private void validateSumIsLessThanTen(int firstPoint, int secondPoint){
+        if(firstPoint + secondPoint > SCORE_TEN){
+            throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SUM);
+        }
     }
 }
