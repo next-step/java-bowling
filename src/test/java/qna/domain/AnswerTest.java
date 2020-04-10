@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
@@ -27,5 +28,16 @@ public class AnswerTest {
         answers.add(A1);
         answers.checkUser(UserTest.JAVAJIGI);
         answers.delete();
+        assertThat(A1.isDeleted()).isTrue();
+    }
+
+    @Test
+    @DisplayName("삭제히스토리 테스트")
+    public void deleteHistoryTest() throws CannotDeleteException {
+        Answers answers = new Answers(QuestionTest.Q2);
+        answers.add(A2);
+        answers.checkUser(UserTest.SANJIGI);
+        answers.delete();
+        assertThat(answers.deleteHistory().size()).isEqualTo(1);
     }
 }
