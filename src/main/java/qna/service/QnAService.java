@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.domain.*;
-import sun.awt.util.IdentityLinkedList;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -40,16 +39,16 @@ public class QnAService {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
-        List<Answer> answers = question.getAnswers();
-        Answers answers_rfc = question.getAnswers_rfc();
-        answers_rfc.validateDeletedAble(loginUser);
+        Answers answers = question.getAnswers();
+        answers.validateDeletedAble(loginUser);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         question.setDeleted(true);
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
 
-        List<DeleteHistory> deleteHistories1 = answers_rfc.changeDeletedAll();
+        List<DeleteHistory> deleteHistories1 = answers.changeDeletedAll();
         deleteHistories.addAll(deleteHistories1);
+
         deleteHistoryService.saveAll(deleteHistories);
     }
 }

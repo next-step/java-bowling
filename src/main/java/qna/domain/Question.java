@@ -1,9 +1,6 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -81,11 +78,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers.getAnswers();
-    }
-
-    public Answers getAnswers_rfc() {
+    public Answers getAnswers() {
         return answers;
     }
 
