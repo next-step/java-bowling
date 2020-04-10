@@ -14,16 +14,16 @@ public class AnswerTest {
 
     @DisplayName("답변을 삭제할 수있는지 체크하고, 삭제 할 수 없다면 예외를 발생시킨다.")
     @Test
-    void validateAnswer() throws CannotDeleteException {
+    void validateAnswer() {
         assertThatThrownBy(() -> {
-            A1.validateAnswer(UserTest.SANJIGI);
+            A1.delete(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
     @DisplayName("답변 삭제하라는 메세지를 주고 삭제 할 수 있는 객체인지 확인 해본다.")
     @Test
-    void deleteAnswer() {
-        A1.delete();
+    void deleteAnswer() throws CannotDeleteException {
+        A1.delete(UserTest.JAVAJIGI);
         boolean deleted = A1.isDeleted();
         assertThat(deleted).isTrue();
     }

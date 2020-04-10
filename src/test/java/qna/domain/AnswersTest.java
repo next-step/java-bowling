@@ -16,27 +16,27 @@ import qna.CannotDeleteException;
 
 class AnswersTest {
     private Answers answers;
+    private DeleteHistories deleteHistories;
 
     @BeforeEach
     void setUp() {
+        deleteHistories = new DeleteHistories();
         answers = new Answers(Stream.of(AnswerTest.A1, AnswerTest.A2).collect(Collectors.toList()));
     }
 
     @DisplayName("답변들 중에 다른사람이 쓴 답변이 있다면 삭제시킬 수 없다")
     @Test
-    void checkAnswers() throws CannotDeleteException {
-
+    void checkAnswers() {
         assertThatThrownBy(() -> {
-            answers.checkDeleteAnswers(UserTest.SANJIGI);
+            answers.deleteAnswers(UserTest.JAVAJIGI, deleteHistories);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
     @DisplayName("답변들 중에 삭제 시킬 수 있는 것을 삭제를 지시한다.")
     @Test
-    void deleteAnswer() {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        List<Answer> answerList = answers.deleteAnswers(deleteHistories);
+    void deleteAnswer() throws CannotDeleteException {
+        answers = new Answers(Stream.of(AnswerTest.A1).collect(Collectors.toList()));
+        List<Answer> answerList = answers.deleteAnswers(UserTest.JAVAJIGI, deleteHistories);
         assertThat(answerList.get(0).isDeleted()).isTrue();
-        assertThat(answerList.get(1).isDeleted()).isTrue();
     }
 }

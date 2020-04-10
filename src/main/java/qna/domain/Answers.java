@@ -12,15 +12,9 @@ public class Answers {
         this.answers = Collections.unmodifiableList(answers);
     }
 
-    public void checkDeleteAnswers(User user) throws CannotDeleteException {
+    public List<Answer> deleteAnswers(User user, DeleteHistories deleteHistories) throws CannotDeleteException {
         for (Answer answer : answers) {
-            answer.validateAnswer(user);
-        }
-    }
-
-    public List<Answer> deleteAnswers(DeleteHistories deleteHistories) {
-        for (Answer answer : answers) {
-            answer.delete();
+            answer.delete(user);
             deleteHistories.addDeleteHistoryForAnswer(answer);
         }
         return answers;
