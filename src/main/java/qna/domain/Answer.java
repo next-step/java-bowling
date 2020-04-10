@@ -44,11 +44,6 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
@@ -75,7 +70,7 @@ public class Answer extends AbstractEntity {
     }
 
     public DeleteHistory delete() {
-        setDeleted(true);
+        this.deleted = true;
         return new DeleteHistory(ContentType.ANSWER, getId(), writer,
                 LocalDateTime.now());
     }

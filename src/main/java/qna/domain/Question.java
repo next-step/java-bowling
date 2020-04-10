@@ -73,28 +73,19 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public Answers getAnswers() {
-        return answers;
     }
 
     public List<DeleteHistory> delete(User loginUser)
             throws CannotDeleteException {
         checkDeletable(loginUser);
 
-        setDeleted(true);
+        this.deleted = true;
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(),
-                getWriter(), LocalDateTime.now()));
+                writer, LocalDateTime.now()));
         deleteHistories.addAll(answers.deleteAll());
         return deleteHistories;
     }
@@ -114,6 +105,4 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" +
                 contents + ", writer=" + writer + "]";
     }
-
-
 }
