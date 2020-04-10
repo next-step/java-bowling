@@ -7,7 +7,6 @@ public class RandomGenerator {
     private static final int BOUND_FIRST_POINT = 11;
 
     private static int firstPoint;
-    private static int boundForSecond = firstPoint + 1;
 
     public int getFirstPoint() {
         firstPoint = RANDOM.nextInt(BOUND_FIRST_POINT);
