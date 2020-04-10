@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -30,7 +29,7 @@ public class QuestionTest {
 
         assertThatThrownBy(() -> question.deleteBy(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class)
-                .withFailMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+                .withFailMessage("다른 사람이 쓴 답변은 삭제할 수 없습니다.");
     }
 
     @Test
@@ -56,9 +55,9 @@ public class QuestionTest {
 
         question.addAnswer(answer);
 
-        List<DeleteHistory> deleteHistories = question.deleteBy(writer);
+        DeleteHistories deleteHistories = question.deleteBy(writer);
 
-        assertThat(deleteHistories).containsExactly(
+        assertThat(deleteHistories.getHistories()).containsExactly(
                 new DeleteHistory(ContentType.QUESTION, 1L, UserTest.JAVAJIGI, LocalDateTime.now()),
                 new DeleteHistory(ContentType.ANSWER, 1L, writer, LocalDateTime.now())
         );
