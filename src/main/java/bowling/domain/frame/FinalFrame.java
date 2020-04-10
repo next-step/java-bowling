@@ -12,7 +12,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Score calculateByBeforeScore(State beforeState) {
+    public Score calculateByBeforeScore(Score beforeScore) {
         return null;
     }
 
@@ -24,6 +24,11 @@ public class FinalFrame implements Frame {
     @Override
     public int getFrameNumber() {
         return FINAL_FRAME_NUMBER;
+    }
+
+    @Override
+    public void updateScore(Score score) {
+
     }
 
     @Override

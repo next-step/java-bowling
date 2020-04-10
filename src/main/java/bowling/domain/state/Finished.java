@@ -28,4 +28,8 @@ public class Finished implements State {
     public Score calculateByBeforeScore(Score before) {
         return before;
     }
+
+    @Override
+    public void updateScore(Score score) {
+    }
 }

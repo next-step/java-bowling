@@ -7,11 +7,13 @@ public interface Frame {
 
     Frame bowl(Pin fallenPins);
 
-    Score calculateByBeforeScore(State beforeState);
+    Score calculateByBeforeScore(Score beforeScore);
 
     State getState();
 
     int getFrameNumber();
+
+    void updateScore(Score score);
 
     Result getFrameResult();
 }

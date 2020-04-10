@@ -29,4 +29,9 @@ public class Playing implements State {
         return before;
     }
 
+    @Override
+    public void updateScore(Score score) {
+
+    }
+
 }

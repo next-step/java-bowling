@@ -36,6 +36,11 @@ public class Spare extends Finished {
     }
 
     @Override
+    public void updateScore(Score score) {
+        this.score = score;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

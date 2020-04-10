@@ -1,10 +1,10 @@
 package bowling.application;
 
 import bowling.domain.frame.Bowling;
-import bowling.domain.frame.Frame;
-import bowling.domain.state.State;
+import bowling.domain.frame.Result;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Response {
 
@@ -14,8 +14,12 @@ public class Response {
         this.bowling = bowling;
     }
 
-    public LinkedList<Frame> getState() {
-        return new LinkedList<>(bowling.getFrames());
+    public List<Result> getResults() {
+        return new ArrayList<>(bowling.getResults());
+    }
+
+    public int getTotalScore() {
+        return bowling.getTotalScore();
     }
 
     public String getName() {

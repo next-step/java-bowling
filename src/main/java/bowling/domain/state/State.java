@@ -13,4 +13,6 @@ public interface State {
     Score getScore();
 
     Score calculateByBeforeScore(Score before);
+
+    void updateScore(Score score);
 }

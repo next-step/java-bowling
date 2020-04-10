@@ -19,7 +19,13 @@ public class Strike extends Finished {
     }
 
     @Override
+    public void updateScore(Score score) {
+        this.score = score;
+    }
+
+    @Override
     public Score calculateByBeforeScore(Score before) {
+        System.out.println(before);
         before = before.bowl(MAX_FALLEN_PINS);
         if (before.isCalculation()) {
             return before;

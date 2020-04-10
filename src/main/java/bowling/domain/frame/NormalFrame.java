@@ -34,11 +34,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Score calculateByBeforeScore(State beforeState) {
-        if (Objects.nonNull(state.getScore()) && !state.getScore().isCalculation()) {
-            return beforeState.calculateByBeforeScore(state.getScore());
-        }
-        return state.getScore();
+    public Score calculateByBeforeScore(Score beforeScore) {
+        return state.calculateByBeforeScore(beforeScore);
     }
 
     @Override
@@ -49,6 +46,11 @@ public class NormalFrame implements Frame {
     @Override
     public int getFrameNumber() {
         return frameNumber;
+    }
+
+    @Override
+    public void updateScore(Score score) {
+        state.updateScore(score);
     }
 
     @Override

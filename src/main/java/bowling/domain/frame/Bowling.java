@@ -4,6 +4,7 @@ import bowling.domain.player.Player;
 import bowling.domain.state.Pin;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Bowling {
     private LinkedList<Frame> frames;
@@ -28,6 +29,14 @@ public class Bowling {
 
     public LinkedList<Frame> getFrames() {
         return new LinkedList<>(frames);
+    }
+
+    public List<Result> getResults() {
+        return new Results(getFrames()).getResults();
+    }
+
+    public int getTotalScore() {
+        return new Results(getFrames()).getTotalScore();
     }
 
     public String getName() {
