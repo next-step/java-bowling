@@ -17,4 +17,8 @@ public class RandomGenerator {
     public int getSecondPoint() {
         return RANDOM.nextInt(boundForSecond);
     }
+
+    public static int getThirdPoint(){
+        return RANDOM.nextInt(BOUND_FIRST_POINT);
+    }
 }

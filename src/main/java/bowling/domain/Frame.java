@@ -24,11 +24,11 @@ public class Frame {
         validateSumIsLessThanTen(firstPoint, secondPoint);
         points = Points.of(firstPoint, secondPoint);
         this.frameId = prevFrameId + 1;
-    }
-
-    public Frame(int prevFrameId, int firstPoint, int secondPoint, int thirdPoint) {
-        points = Points.of(firstPoint, secondPoint, thirdPoint);
-        this.frameId = prevFrameId + 1;
+        if(frameId == 10){
+            if(points.findResult().equals(FrameResult.STRIKE)){
+                points.addThirdPoint(Point.of(RandomGenerator.getThirdPoint()));
+            }
+        }
     }
 
     public static Frame create(RandomGenerator randomGenerator) {
@@ -48,20 +48,7 @@ public class Frame {
     }
 
     public Frame createNextFrame(RandomGenerator randomGenerator) {
-        if(doesNeedOneMorePoint()){
-            return new Frame(this.frameId - 1, this.points.getPoints().get(Ordinal.FIRST).getScore(),
-                    this.points.getPoints().get(Ordinal.SECOND).getScore(), randomGenerator.getFirstPoint());
-        }
-
         return new Frame(this.frameId, randomGenerator.getFirstPoint(), randomGenerator.getSecondPoint());
-    }
-
-    private boolean doesNeedOneMorePoint(){
-        return (frameId == 10) && (findResult().equals(FrameResult.SPARE) || findResult().equals(FrameResult.STRIKE));
-    }
-
-    public FrameResult findResult(){
-        return points.findResult();
     }
 
     private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {

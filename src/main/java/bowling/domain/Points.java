@@ -8,7 +8,7 @@ public class Points {
     private Map<Ordinal, Point> points;
 
     public Points(Map<Ordinal, Point> points) {
-        this.points = Collections.unmodifiableMap(points);
+        this.points = points;
     }
 
     public static Points of(int firstPoint, int secondPoint){
@@ -27,7 +27,7 @@ public class Points {
     }
 
     public Map<Ordinal, Point> getPoints() {
-        return points;
+        return Collections.unmodifiableMap(points);
     }
 
     public int getPointSize(){
@@ -39,5 +39,9 @@ public class Points {
         Point second = points.get(Ordinal.SECOND);
 
         return FrameResult.findResult(first.getScore(), second.getScore());
+    }
+
+    public void addThirdPoint(Point point){
+        this.points.put(Ordinal.THIRD, point);
     }
 }

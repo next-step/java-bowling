@@ -92,12 +92,11 @@ public class FrameTest {
         //given
         RandomGenerator randomGenerator = new RandomGenerator();
         int prevFrameId = 9;
-        Frame ninethFrame = new Frame(prevFrameId, 2, 1);
 
-        //when, then
-        IntStream.range(0, 1000)
-                .mapToObj(it -> ninethFrame.createNextFrame(randomGenerator))
-                .filter(it -> FrameResult.STRIKE.equals(it) || FrameResult.SPARE.equals(it))
-                .forEach(it -> assertThat(it.getPoints().getPointSize()).isEqualTo(3));
+        //when
+        Frame tenthFrame = new Frame(9, 10, 0);
+
+        //then
+        assertThat(tenthFrame.getPoints().getPointSize()).isEqualTo(3);
     }
 }
