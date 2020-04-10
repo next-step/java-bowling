@@ -31,6 +31,7 @@ public class ResultView {
     }
 
     private static void printPointResultSoFar(PlayerName playerName, Frames frames, Frame frame) {
+        printFrameId(frame);
         printPlayInformation();
         printName(playerName.getName());
         frames.getFrames()
@@ -43,7 +44,7 @@ public class ResultView {
 
     private static void printFrame(Frame frame) {
         if (STRIKE.equals(frame.findResult())) {
-            printStrike();
+            printStrike(frame);
         }
 
         if (SPARE.equals(frame.findResult())) {
@@ -51,7 +52,7 @@ public class ResultView {
         }
 
         if (GUTTER.equals(frame.findResult())) {
-            printGutter();
+            printGutter(frame);
         }
 
         if (MISS.equals(frame.findResult())) {
@@ -59,7 +60,7 @@ public class ResultView {
         }
     }
 
-    private static void printStrike() {
+    private static void printStrike(Frame frame) {
         print(BLANK_FIVE);
         print(SYMBOL_STRIKE);
         print(BLANK_FOUR);
@@ -84,11 +85,15 @@ public class ResultView {
         printBlockBorder();
     }
 
-    private static void printGutter() {
+    private static void printGutter(Frame frame) {
         print(BLANK_FIVE);
         print(SYMBOL_GUTTER);
         print(BLANK_FOUR);
         printBlockBorder();
+    }
+
+    private static void printFrameId(Frame frame){
+        System.out.println(frame.getFrameId() + "프레임 투구");
     }
 
     private static void printPlayInformation() {
@@ -121,7 +126,8 @@ public class ResultView {
     }
 
     private static String convertFrameNumberToString(int number) {
-        String stringNumber = (number >= 10) ? String.valueOf(" " + number + " ") : " 0" + number + " ";
+        String stringNumber
+                = (number >= 10) ? String.valueOf(BLANK_ONE + number + BLANK_ONE) : " 0" + number + BLANK_ONE;
         return stringNumber;
     }
 
