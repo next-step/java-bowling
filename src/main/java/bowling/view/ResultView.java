@@ -121,7 +121,7 @@ public class ResultView {
         print(BLANK_FIVE);
         print(SYMBOL_STRIKE);
         print(BLOCK_BORDER);
-        System.out.print(frame.getPoints().getThirdPoint());
+        print(frame.getThirdPoint());
         print(BLANK_TWO);
         printBlockBorder();
     }
@@ -145,7 +145,7 @@ public class ResultView {
 
     private static void printFrameFirstWhenSpare(Frame frame) {
         print(BLANK_FOUR);
-        System.out.print(frame.getFirstPoint());
+        print(frame.getFirstPoint());
     }
 
     private static void printFrameSecondWhenSpare(Frame frame) {
@@ -155,7 +155,7 @@ public class ResultView {
 
     private static void printFrameThirdWhenSpare(Frame frame) {
         print(BLOCK_BORDER);
-        System.out.print(frame.getThirdPoint());
+        print(frame.getThirdPoint());
         print(BLANK_ONE);
         printBlockBorder();
     }
@@ -172,14 +172,14 @@ public class ResultView {
 
     private static void printFrameFirstWhenMiss(Frame frame) {
         print(BLANK_FOUR);
-        System.out.print(frame.getFirstPoint());
+        print(frame.getFirstPoint());
     }
 
     private static void printFrameSecondWhenMiss(Frame frame) {
         print(BLANK_FOUR);
-        System.out.print(frame.getFirstPoint());
+        print(frame.getFirstPoint());
         print(BLOCK_BORDER);
-        System.out.print(frame.getSecondPoint());
+        print(frame.getSecondPoint());
         print(BLANK_THREE);
         printBlockBorder();
     }
@@ -192,7 +192,7 @@ public class ResultView {
     }
 
     private static void printFrameId(Frame frame) {
-        System.out.print(frame.getFrameId() + "프레임 투구");
+        print(frame.getFrameId() + "프레임 투구");
     }
 
     private static void printPlayInformation() {
@@ -227,7 +227,7 @@ public class ResultView {
     }
 
     private static void printBlockBorder() {
-        System.out.print(BLOCK_BORDER);
+        print(BLOCK_BORDER);
     }
 
     private static void printThreeLineSeparators() {
@@ -242,6 +242,10 @@ public class ResultView {
 
     private static void print(String message) {
         System.out.print(message);
+    }
+
+    private static void print(int number) {
+        System.out.print(number);
     }
 
     private static void println(int message) {
