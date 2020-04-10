@@ -39,6 +39,8 @@ public enum FrameResult {
                 .orElse(MISS);
     }
 
+
+
     private static boolean isFirstTen(int firstPoint) {
         return firstPoint == 10;
     }

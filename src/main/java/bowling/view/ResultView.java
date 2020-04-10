@@ -1,9 +1,12 @@
 package bowling.view;
 
 import bowling.domain.PlayerName;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
 import java.util.stream.IntStream;
+
+import static bowling.domain.frame.FrameResult.*;
 
 public class ResultView {
     private static final String BLANK_ONE = " ";
@@ -19,8 +22,50 @@ public class ResultView {
 
     private static void printResult(PlayerName playerName, Frames frames){
         printName(playerName.getName());
+        printPointResult(frames);
     }
 
+    private static void printPointResult(Frames frames){
+        frames.getFrames().stream()
+                .forEach(frame -> printFrame(frame));
+    }
+
+    private static void printFrame(Frame frame){
+        printMessage(BLANK_ONE);
+
+        if(STRIKE.equals(frame.findResult())){
+            printThreeBlankBlock();
+            printMessage(" X ");
+            printMessage(BLANK_ONE);
+        }
+
+        if(SPARE.equals(frame.findResult())){
+            printThreeBlankBlock();
+            System.out.print(frame.getPoints().getFirstPoint());
+            System.out.print(BLOCK_BORDER);
+            System.out.print("/");
+            printMessage(BLANK_ONE);
+            printMessage(BLANK_ONE);
+        }
+
+        if(GUTTER.equals(frame.findResult())){
+            printThreeBlankBlock();
+            printMessage(" - ");
+            printMessage(BLANK_ONE);
+            printMessage(BLANK_ONE);
+        }
+
+        if(MISS.equals(frame.findResult())){
+            printThreeBlankBlock();
+            System.out.print(frame.getPoints().getFirstPoint());
+            System.out.print(BLOCK_BORDER);
+            System.out.print(frame.getPoints().getSecondPoint());
+            System.out.print(" ");
+            printMessage(BLANK_ONE);
+        }
+        printMessage(BLANK_ONE);
+        printBlockBorder();
+    }
 
     private static void printPlayInformation(){
         printNameColumn(LABEL_NAME);
@@ -37,13 +82,12 @@ public class ResultView {
         printBlockBorder();
         printMessage(BLANK_ONE);
         printOneBlockWith(name);
-        printMessage(BLANK_ONE);
     }
 
     private static void printOneBlockWith(String message){
-        printBlankBlock();
+        printThreeBlankBlock();
         printMessage(message);
-        printBlankBlock();
+        printThreeBlankBlock();
         printBlockBorder();
     }
 
@@ -52,11 +96,11 @@ public class ResultView {
     }
 
     private static String convertFrameNumberToString(int number){
-        String stringNumber = (number >= 10) ? String.valueOf(number) : "0"+ number;
+        String stringNumber = (number >= 10) ? String.valueOf(" " + number + " ") : " 0"+ number + " ";
         return stringNumber;
     }
 
-    private static void printBlankBlock(){
+    private static void printThreeBlankBlock(){
         System.out.print(BLANK_THREE);
     }
 

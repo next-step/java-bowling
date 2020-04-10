@@ -50,4 +50,16 @@ public class Points {
     public boolean isStrikeOrSpare() {
         return findResult().equals(FrameResult.SPARE) || findResult().equals(FrameResult.STRIKE);
     }
+
+    public int getFirstPoint(){
+        return points.get(Ordinal.FIRST).getScore();
+    }
+
+    public int getSecondPoint(){
+        return points.get(Ordinal.SECOND).getScore();
+    }
+
+    public int getThirdPoint(){
+        return points.get(Ordinal.THIRD).getScore();
+    }
 }

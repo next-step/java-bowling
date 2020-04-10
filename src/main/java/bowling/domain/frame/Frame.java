@@ -30,7 +30,7 @@ public class Frame {
         points = Points.of(firstPoint, secondPoint);
         this.frameId = prevFrameId + 1;
 
-        if(doesNeedOneMorePoint()){
+        if (doesNeedOneMorePoint()) {
             points.addThirdPoint(Point.of(RandomGenerator.getThirdPoint()));
         }
     }
@@ -43,7 +43,7 @@ public class Frame {
         List<Frame> frames = new ArrayList<>();
         Frame currentFrame = Frame.create(randomGenerator);
 
-        for (int i=0; i<10; i++){
+        for (int i = 0; i < 10; i++) {
             frames.add(currentFrame);
             currentFrame = currentFrame.createNextFrame(randomGenerator);
         }
@@ -55,7 +55,7 @@ public class Frame {
         return new Frame(this.frameId, randomGenerator.getFirstPoint(), randomGenerator.getSecondPoint());
     }
 
-    private boolean doesNeedOneMorePoint(){
+    private boolean doesNeedOneMorePoint() {
         return frameId == LAST_FRAME_ID && points.isStrikeOrSpare();
     }
 
@@ -77,5 +77,9 @@ public class Frame {
 
     public Points getPoints() {
         return points;
+    }
+
+    public FrameResult findResult() {
+        return points.findResult();
     }
 }
