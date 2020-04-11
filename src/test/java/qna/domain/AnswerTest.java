@@ -11,9 +11,9 @@ public class AnswerTest {
     public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
     public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
-    @DisplayName("삭제 상태로 변경후 반환")
+    @DisplayName("삭제 하고 delete 상태 변경")
     @Test
-    public void setDeleted_success() throws Exception {
+    public void deleted_success() throws Exception {
         //given
         Answer answer = A1.deleted(true, UserTest.JAVAJIGI);
 
@@ -21,15 +21,15 @@ public class AnswerTest {
         assertTrue(answer.isDeleted());
     }
 
-    @DisplayName("삭제 가능한 유저인지 체크")
+    @DisplayName("삭제 가능한 유저인지 체크 하고 삭제")
     @Test
-    public void validateDeleteAble() throws Exception {
+    public void delete_success_checkUser() throws Exception {
         A1.deleted(true, UserTest.JAVAJIGI);
     }
 
     @DisplayName("삭제 가능한 유저 아닐경우 체크")
     @Test
-    public void validateDeleteAble_fail() throws Exception {
+    public void delete_fail_checkUser() throws Exception {
         assertThatThrownBy(
                 () -> A1.deleted(true, UserTest.SANJIGI)
         ).isInstanceOf(CannotDeleteException.class);
