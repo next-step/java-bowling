@@ -25,12 +25,8 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Question() {
-    }
-
     public Question(String title, String contents) {
-        this.title = title;
-        this.contents = contents;
+        this(0, title, contents);
     }
 
     public Question(long id, String title, String contents) {
@@ -43,18 +39,8 @@ public class Question extends AbstractEntity {
         return title;
     }
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
     public String getContents() {
         return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
     }
 
     public User getWriter() {
@@ -75,8 +61,8 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public Question delete() {
+        this.deleted = true;
         return this;
     }
 
