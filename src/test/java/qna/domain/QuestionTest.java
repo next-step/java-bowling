@@ -31,7 +31,7 @@ public class QuestionTest {
     @Test
     @DisplayName("Question의 삭제 히스토리를 1개 생성하여 잘 생성되었는지 테스트한다.")
     void questionHistory() {
-        assertThat(Q1.makeDeleteHistory()).isNotNull();
+        assertThat(Q1.getDeleteQuestionHistory()).isNotNull();
     }
 
     @Test

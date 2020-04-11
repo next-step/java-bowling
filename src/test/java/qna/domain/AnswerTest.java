@@ -40,7 +40,7 @@ public class AnswerTest {
     @Test
     @DisplayName("Answer의 삭제 히스토리를 1개 생성하여 잘 생성되었는지 테스트한다.")
     void answerHistory() {
-        assertThat(A1.makeDeleteHistory()).isNotNull();
+        assertThat(A1.getDeleteAnswerHistory()).isNotNull();
     }
 
     @Test
