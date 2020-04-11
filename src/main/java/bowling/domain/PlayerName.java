@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.InvalidNameException;
 import bowling.exception.NameLengthOverException;
 
 import java.util.Objects;
@@ -10,8 +11,15 @@ public class PlayerName {
     private final String name;
 
     public PlayerName(final String name) {
+        validName(name);
         validNameLength(name);
         this.name = name;
+    }
+
+    private void validName(final String name) {
+        if (Objects.isNull(name) || name.trim().isEmpty()) {
+            throw new InvalidNameException(name);
+        }
     }
 
     private void validNameLength(final String name) {
