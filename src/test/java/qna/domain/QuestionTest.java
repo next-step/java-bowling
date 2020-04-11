@@ -52,7 +52,7 @@ public class QuestionTest {
                 new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
 
         //when
-        List<DeleteHistory> history = question.deleteAll(UserTest.JAVAJIGI, 11L);
+        List<DeleteHistory> history = question.deleteAll(UserTest.JAVAJIGI);
 
         //then
         assertThat(history.size()).isEqualTo(compare.size());
