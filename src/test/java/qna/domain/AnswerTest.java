@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class AnswerTest {
@@ -17,5 +18,12 @@ public class AnswerTest {
             A1.assertUser(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class)
                 .hasMessage(Answer.NO_DELETE_AUTHORITY_ANSWER_ERROR);
+    }
+
+    @Test
+    @DisplayName("Answer를 삭제하면 deleted의 상태가 true로 변경되어야 한다.")
+    void deleteAnswer() {
+        A1.delete(UserTest.JAVAJIGI);
+        assertThat(A1.isDeleted()).isTrue();
     }
 }
