@@ -2,36 +2,39 @@ package bowling.domain;
 
 import bowling.domain.exception.OutOfRangeArgumentException;
 
-import java.util.Objects;
-
-public class NormalFrame {
+public class NormalFrame implements Frame {
+    private static final int MAX_PIN_COUNT_SIZE = 2;
     private static final int MAX_PIN_COUNT = 10;
     private static final String OUT_OF_RANGE_ERROR_MESSAGE =
             "핀 카운트는 %d 를 넘을 수 없습니다.";
-    private PinCount firstPinCount;
-    private PinCount secondPinCount;
 
-    public NormalFrame(PinCount firstPinCount) {
-        this.firstPinCount = firstPinCount;
+    private PinCounts pinCounts;
+    private Frame next;
+
+    public NormalFrame() {
+        pinCounts = new PinCounts(MAX_PIN_COUNT_SIZE);
     }
 
-    public void addPinCount(PinCount secondPinCount) {
-        if (firstPinCount.add(secondPinCount) > MAX_PIN_COUNT) {
+    public void addPinCount(PinCount pinCount) {
+        if (pinCount.add(pinCounts.getPintCountTotal()) > MAX_PIN_COUNT) {
             throw new OutOfRangeArgumentException(
                     String.format(OUT_OF_RANGE_ERROR_MESSAGE, MAX_PIN_COUNT));
         }
-        this.secondPinCount = secondPinCount;
+
+        if (!isDone()) {
+            pinCounts.add(pinCount);
+        }
     }
 
     public int getScore() {
-        return firstPinCount.add(secondPinCount);
+        return pinCounts.getPintCountTotal();
     }
 
     public boolean isDone() {
-        if (!Objects.isNull(firstPinCount) && !Objects.isNull(secondPinCount)) {
+        if (pinCounts.isFull()) {
             return true;
         }
-        assert firstPinCount != null;
-        return firstPinCount.equals(new PinCount(MAX_PIN_COUNT));
+
+        return pinCounts.getPintCountTotal() == MAX_PIN_COUNT;
     }
 }
