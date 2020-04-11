@@ -4,35 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
-    private static final int SIZE = 10;
     private List<Frame> frameList;
     private Frame currentFrame;
 
-    public Frames() {
+    public Frames(int size) {
         frameList = new ArrayList<>();
-        initFrameList();
+        initFrameList(size);
 
     }
 
-    private void initFrameList() {
+    private void initFrameList(int size) {
         NormalFrame firstFrame = new NormalFrame();
 
         frameList.add(firstFrame);
         currentFrame = firstFrame;
 
         NormalFrame frame = firstFrame;
-        for (int i = 0, sizeWithoutLast = SIZE - 2; i < sizeWithoutLast; i++) {
+        for (int i = 0, sizeWithoutLast = size - 2; i < sizeWithoutLast; i++) {
             frame = frame.createNext();
             frameList.add(frame);
         }
         frameList.add(frame.createFinal());
     }
 
-    public void add(int pinCount) {
+    public Frames add(int pinCount) {
+        if (!isAddable()) {
+            return this;
+        }
+
         currentFrame.addPinCount(pinCount);
-        if (currentFrame.isDone()) {
+        if (currentFrame.isDone() && !currentFrame.isLast()) {
             currentFrame = currentFrame.getNext();
         }
+
+        return this;
     }
 
     public int getCurrentFrameIndex() {
@@ -41,5 +46,9 @@ public class Frames {
 
     public boolean isLast() {
         return currentFrame.isLast();
+    }
+
+    public boolean isAddable() {
+        return !currentFrame.isLast() || !currentFrame.isDone();
     }
 }
