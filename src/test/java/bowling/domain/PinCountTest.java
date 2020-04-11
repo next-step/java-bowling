@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class PinCountTest {
     public static final PinCount PIN_COUNT_1 = new PinCount(1);
+    public static final PinCount PIN_COUNT_2 = new PinCount(2);
     public static final PinCount PIN_COUNT_3 = new PinCount(3);
     public static final PinCount PIN_COUNT_8 = new PinCount(8);
     public static final PinCount PIN_COUNT_10 = new PinCount(10);
@@ -39,7 +40,7 @@ public class PinCountTest {
     @DisplayName("다른 PinCount 와 더했을때 최대치를 넘지 않아야 한다.")
     @Test
     void isAddable() {
-        assertThat(PIN_COUNT_8.isAddable(PIN_COUNT_3)).isFalse();
-        assertThat(PIN_COUNT_8.isAddable(PIN_COUNT_1)).isTrue();
+        assertThat(PIN_COUNT_8.isOverMaxAfterAdd(PIN_COUNT_3)).isFalse();
+        assertThat(PIN_COUNT_8.isOverMaxAfterAdd(PIN_COUNT_1)).isTrue();
     }
 }

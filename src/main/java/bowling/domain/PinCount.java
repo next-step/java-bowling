@@ -27,7 +27,7 @@ public class PinCount {
         return this.pinCount + pinCount;
     }
 
-    public boolean isAddable(PinCount pinCount) {
+    public boolean isOverMaxAfterAdd(PinCount pinCount) {
         return add(pinCount) <= MAX;
     }
 

@@ -32,7 +32,7 @@ public class NormalFrame implements Frame {
         if(firstPinCount.isMax()) {
             return false;
         }
-        return firstPinCount.isAddable(pinCount);
+        return firstPinCount.isOverMaxAfterAdd(pinCount);
     }
 
     @Override public int getScore() {
