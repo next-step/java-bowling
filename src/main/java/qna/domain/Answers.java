@@ -12,7 +12,7 @@ public class Answers {
         this.answers = answers;
     }
 
-    public void delete(User loginUser, List<DeleteHistory> deleteHistories) throws CannotDeleteException {
+    public void delete(User loginUser) throws CannotDeleteException {
         for(Answer answer : answers) {
              answer.delete(loginUser);
         }

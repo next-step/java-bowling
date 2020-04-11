@@ -42,11 +42,10 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
         assertUser(loginUser);
 
         Answers answers = new Answers(this.answers);
-        answers.delete(loginUser, deleteHistories);
+        answers.delete(loginUser);
 
         this.deleted = true;
 
