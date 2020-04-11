@@ -20,7 +20,7 @@ public class PlayerTests {
     @DisplayName("Player 생성 오류 테스트")
     @ParameterizedTest
     @EmptySource
-    @ValueSource(strings = {"ABCD"})
+    @ValueSource(strings = {"ABCD", "=-=", "123"})
     public void generatePlayerAbnormalTest(final String name) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Player.newInstance(name))
