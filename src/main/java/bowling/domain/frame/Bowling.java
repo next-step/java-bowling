@@ -35,10 +35,6 @@ public class Bowling {
         return new Results(getFrames()).getResults();
     }
 
-    public int getTotalScore() {
-        return new Results(getFrames()).getTotalScore();
-    }
-
     public String getName() {
         return player.getName();
     }

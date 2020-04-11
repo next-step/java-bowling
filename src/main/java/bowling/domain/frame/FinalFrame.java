@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NUMBER = 10;
+    private static final int NON_SCORE = -1;
+
     private LinkedList<State> states = new LinkedList<>();
 
     public FinalFrame() {
@@ -93,13 +95,13 @@ public class FinalFrame implements Frame {
     @Override
     public Result getFrameResult() {
         if (!states.getLast().isFinish()) {
-            return new Result(display(), -1);
+            return new Result(display(), NON_SCORE);
         }
 
         try {
             return new Result(display(), getScore().getScore());
         } catch (IllegalArgumentException e) {
-            return new Result(display(), -1);
+            return new Result(display(), NON_SCORE);
         }
 
     }

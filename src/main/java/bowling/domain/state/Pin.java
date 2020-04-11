@@ -37,10 +37,6 @@ public class Pin {
         return this.fallenPins + pin.getFallenPins() == MAX_PINS;
     }
 
-    boolean isMiss(Pin pin) {
-        return this.fallenPins + pin.getFallenPins() < MAX_PINS;
-    }
-
     String display() {
         if (isStrike()) {
             return "X";

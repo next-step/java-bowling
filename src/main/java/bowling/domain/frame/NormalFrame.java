@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
     private static final int FINAL_FRAME_NUMBER = 10;
+    private static final int NON_SCORE = -1;
 
     private int frameNumber;
     private State state;
@@ -56,12 +57,12 @@ public class NormalFrame implements Frame {
     @Override
     public Result getFrameResult() {
         if (!state.isFinish()) {
-            return new Result(state.display(), -1);
+            return new Result(state.display(), NON_SCORE);
         }
         if (Objects.nonNull(state.getScore()) && state.getScore().isCalculation()) {
             return new Result(state.display(), state.getScore().getScore());
         }
-        return new Result(state.display(), -1);
+        return new Result(state.display(), NON_SCORE);
     }
 
     @Override

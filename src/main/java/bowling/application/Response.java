@@ -19,10 +19,6 @@ public class Response {
         return new ArrayList<>(bowling.getResults());
     }
 
-    public int getTotalScore() {
-        return bowling.getTotalScore();
-    }
-
     public String getName() {
         return bowling.getName();
     }
