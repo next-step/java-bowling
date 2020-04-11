@@ -43,4 +43,8 @@ public class Bowling {
         return player.getName();
     }
 
+    public int getFrameNumber() {
+        return frames.getLast().getFrameNumber();
+    }
+
 }

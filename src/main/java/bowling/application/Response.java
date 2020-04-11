@@ -1,6 +1,7 @@
 package bowling.application;
 
 import bowling.domain.frame.Bowling;
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Result;
 
 import java.util.ArrayList;
@@ -27,10 +28,14 @@ public class Response {
     }
 
     public int getFrameNumberLast() {
-        return 1;
+        return bowling.getFrameNumber();
     }
 
     public boolean isEnd() {
-        return false;
+        if (bowling.getFrameNumber() < 10) {
+            return false;
+        }
+        FinalFrame finalFrame = (FinalFrame) bowling.getFrames().getLast();
+        return finalFrame.isEnd();
     }
 }
