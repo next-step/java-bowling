@@ -1,20 +1,24 @@
 package bowling.domain;
 
+import bowling.domain.exception.OutOfRangeArgumentException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class FramesTest {
-    public static final Frames FINISHED_FRAMES = (new Frames(1)).add(1).add(2);
-
+    public static final Frames FINISHED_FRAMES =
+            (new Frames(2)).add(10).add(1).add(2);
+    
     private Frames frames;
 
     @BeforeEach
     void setUp() {
         frames = new Frames(2);
     }
+
     @DisplayName("프레임에 쓰러트린 핀 갯수를 저장할 수 있다")
     @Test
     void init() {
@@ -30,11 +34,18 @@ public class FramesTest {
 
     @DisplayName("현재 프레임이 마지막인지 여부를 체크한다")
     @Test
-    void lastFrame(){
+    void lastFrame() {
         int dummyPinCount = 10;
         frames.add(dummyPinCount);
         assertThat(frames.isLast()).isFalse();
         frames.add(dummyPinCount);
         assertThat(frames.isLast()).isTrue();
+    }
+
+    @DisplayName("프레임 갯수는 최소 2 이상이여야 한다")
+    @Test
+    void minError() {
+        assertThatExceptionOfType(OutOfRangeArgumentException.class)
+                .isThrownBy(() -> new Frames(1));
     }
 }
