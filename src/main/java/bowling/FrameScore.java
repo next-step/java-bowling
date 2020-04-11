@@ -44,16 +44,16 @@ public class FrameScore {
         return scores.size() == fullPitchCount - 1 && extraOverCondition;
     }
 
-    public boolean isStrikeOrSpare() {
+    public boolean canThrowThirdPitching() {
         return scores.stream()
-                .anyMatch(Score::isStrike) || isSpare();
+                .anyMatch(Score::isStrike) || isSpareForTwoScores();
     }
 
-    public boolean isStrike() {
+    public boolean isStrikeAtFirstScore() {
         return scores.size() == 1 && sum() == 10;
     }
 
-    public boolean isSpare() {
+    public boolean isSpareForTwoScores() {
         return scores.size() == 2 && sum() == 10;
     }
 }

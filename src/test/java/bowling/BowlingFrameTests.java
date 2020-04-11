@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @DisplayName("BowlingFrame 테스트")
 public class BowlingFrameTests {
@@ -41,11 +40,12 @@ public class BowlingFrameTests {
     }
 
     @DisplayName("BowlingFrame 두번째 투구 추가 테스트 - 10 프레임")
-    @Test
-    public void addSecondPitchFrameScoreLastFrameTest() {
+    @ParameterizedTest
+    @CsvSource(value = {"10,4", "6,4"})
+    public void addSecondPitchFrameScoreLastFrameTest(final int firstPitch, final int secondPitch) {
         BowlingFrame bowlingFrame = BowlingFrame.newInstance(true);
-        bowlingFrame.pitch(10);
-        assertThatCode(() -> bowlingFrame.pitch(4));
+        bowlingFrame.pitch(firstPitch);
+        assertThatCode(() -> bowlingFrame.pitch(secondPitch));
     }
 
     @DisplayName("BowlingFrame 두번째 투구 추가 오류 테스트")
@@ -59,17 +59,18 @@ public class BowlingFrameTests {
     }
 
     @DisplayName("BowlingFrame 세번째 투구 추가 테스트")
-    @Test
-    public void addThirdPitchBowlingFrameTest() {
+    @ParameterizedTest
+    @CsvSource(value = {"10,3,7", "8,2,3", "0,10,2"})
+    public void addThirdPitchBowlingFrameTest(final int firstPitch, final int secondPitch, final int thirdPitch) {
         BowlingFrame bowlingFrame = BowlingFrame.newInstance(true);
-        bowlingFrame.pitch(5);
-        bowlingFrame.pitch(5);
-        assertThatCode(() -> bowlingFrame.pitch(4));
+        bowlingFrame.pitch(firstPitch);
+        bowlingFrame.pitch(secondPitch);
+        assertThatCode(() -> bowlingFrame.pitch(thirdPitch));
     }
 
     @DisplayName("BowlingFrame 세번째 투구 추가 오류 테스트")
     @ParameterizedTest
-    @CsvSource(value = {"10,3,8", "8,1,3"})
+    @CsvSource(value = {"10,3,8", "8,1,3", "0,0,2"})
     public void addThirdPitchBowlingFrameAbnormalTest(final int firstPitch, final int secondPitch, final int thirdPitch) {
         BowlingFrame bowlingFrame = BowlingFrame.newInstance(true);
         bowlingFrame.pitch(firstPitch);

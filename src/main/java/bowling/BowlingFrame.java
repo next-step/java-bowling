@@ -31,9 +31,9 @@ public class BowlingFrame {
 
     public boolean isOver() {
         if (isLastFrame) {
-            return frameScore.isOver(LAST_FRAME_FULL_PITCH_COUNT, !frameScore.isStrikeOrSpare());
+            return frameScore.isOver(LAST_FRAME_FULL_PITCH_COUNT, !frameScore.canThrowThirdPitching());
         }
 
-        return frameScore.isOver(COMMON_FRAME_FULL_PITCH_COUNT, frameScore.isStrike());
+        return frameScore.isOver(COMMON_FRAME_FULL_PITCH_COUNT, frameScore.isStrikeAtFirstScore());
     }
 }
