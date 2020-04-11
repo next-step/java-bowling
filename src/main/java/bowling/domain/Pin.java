@@ -9,6 +9,10 @@ public class Pin {
         this.isKnockOver = isKnockOver;
     }
 
+    public Pin knockOver() {
+        return new Pin(Boolean.TRUE);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
