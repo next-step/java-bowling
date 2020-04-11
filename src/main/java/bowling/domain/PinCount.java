@@ -9,13 +9,17 @@ public class PinCount {
             "점수는 %d에서 %d 사이여야 합니다.";
     private static final int MIN = 0;
     private static final int MAX = 10;
+    private static final PinCount[] cache = new PinCount[11];
+
+    static {
+        for(int i = MIN; i <= MAX; i++) {
+            cache[i] = new PinCount(i);
+        }
+    }
+
     private int pinCount;
 
-    public PinCount(int pinCount) {
-        if (pinCount < MIN || pinCount > MAX) {
-            throw new OutOfRangeArgumentException(
-                    String.format(OUT_OF_RANGE_ERROR_MESSAGE, MIN, MAX));
-        }
+    private PinCount(int pinCount) {
         this.pinCount = pinCount;
     }
 
@@ -40,7 +44,16 @@ public class PinCount {
     }
 
     public static PinCount empty() {
-        return new PinCount(0);
+        return cache[0];
+    }
+
+    public static PinCount valueOf(int pinCount) {
+        if (pinCount < MIN || pinCount > MAX) {
+            throw new OutOfRangeArgumentException(
+                    String.format(OUT_OF_RANGE_ERROR_MESSAGE, MIN, MAX));
+        }
+
+        return cache[pinCount];
     }
 
     @Override public boolean equals(Object o) {
