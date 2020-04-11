@@ -49,16 +49,14 @@ public class QuestionTest {
     @DisplayName("Question 삭제 처리 및 히스토리 확인")
     @Test
     public void deleteAll_success() throws Exception {
-        //given
-        List<DeleteHistory> compare = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question1.getId(), question1.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        question1.addAnswer(answer);
+        question1.addAnswer(answer);
 
         //when
         List<DeleteHistory> history = question1.deleteAll(UserTest.JAVAJIGI);
 
         //then
-        assertThat(history.size()).isEqualTo(compare.size());
+        assertThat(history.size()).isEqualTo(4);
     }
 
     @DisplayName("Question이 삭제 되면 deleted가 true로 변경")
