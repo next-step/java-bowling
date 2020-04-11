@@ -5,16 +5,8 @@ import java.util.Objects;
 public class Pin {
     private final PinState pinState;
 
-    private Pin(final PinState pinState) {
+    Pin(final PinState pinState) {
         this.pinState = pinState;
-    }
-
-    public static Pin of() {
-        return new Pin(PinState.STANDING);
-    }
-
-    public static Pin of(final PinState pinState) {
-        return new Pin(pinState);
     }
 
     public Pin knockOver() {
