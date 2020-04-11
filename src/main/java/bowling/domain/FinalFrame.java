@@ -7,7 +7,6 @@ import java.util.List;
 public class FinalFrame implements Frame {
     private static final int MAX_PIN_COUNT_SIZE = 3;
     private static final int MIN_PIN_COUNT_FOR_THIRD = 10;
-    private static final int MAX_PIN_COUNT = 30;
     private static final String OUT_OF_RANGE_ERROR_MESSAGE =
             "잘못된 핀 카운트 입니다.";
 
@@ -17,7 +16,11 @@ public class FinalFrame implements Frame {
         pinCounts = new PinCounts(MAX_PIN_COUNT_SIZE);
     }
 
-    @Override public void addPinCount(PinCount pinCount) {
+    @Override public void addPinCount(int nextPinCount) {
+        addPinCount(new PinCount(nextPinCount));
+    }
+
+    public void addPinCount(PinCount pinCount) {
         if (!isAddable(pinCount)) {
             throw new OutOfRangeArgumentException(OUT_OF_RANGE_ERROR_MESSAGE);
         }
@@ -34,7 +37,7 @@ public class FinalFrame implements Frame {
         PinCount firstPinCount = pinCounts.getFirst()
                 .orElse(PinCount.empty());
 
-        if(firstPinCount.isMax()) {
+        if (firstPinCount.isMax()) {
             return true;
         }
         return firstPinCount.isOverMaxAfterAdd(pinCount);
@@ -54,5 +57,17 @@ public class FinalFrame implements Frame {
 
     @Override public List<Integer> getPinCounts() {
         return pinCounts.getPinCountList();
+    }
+
+    @Override public Frame createNext() {
+        return null;
+    }
+
+    @Override public Frame getNext() {
+        return null;
+    }
+
+    @Override public boolean isLast() {
+        return true;
     }
 }
