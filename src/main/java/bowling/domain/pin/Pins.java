@@ -3,26 +3,14 @@ package bowling.domain.pin;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Pins {
     public static final int MAX_COUNT = 10;
 
     private final List<Pin> pins;
 
-    private Pins(final List<Pin> pins) {
+    Pins(final List<Pin> pins) {
         this.pins = Collections.unmodifiableList(pins);
-    }
-
-    public static Pins of(final PinGenerator pinGenerator) {
-        return new Pins(createPins(pinGenerator));
-    }
-
-    private static List<Pin> createPins(final PinGenerator pinGenerator) {
-        return IntStream.range(0, MAX_COUNT)
-                        .mapToObj(count -> PinFactory.create(pinGenerator))
-                        .collect(Collectors.toList());
     }
 
     @Override
