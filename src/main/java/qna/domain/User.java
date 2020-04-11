@@ -36,40 +36,12 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public String getUserId() {
+    private String getUserId() {
         return userId;
     }
 
-    public User setUserId(String userId) {
-        this.userId = userId;
-        return this;
-    }
-
-    public String getPassword() {
+    private String getPassword() {
         return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public User setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
     }
 
     public void update(User loginUser, User target) {
