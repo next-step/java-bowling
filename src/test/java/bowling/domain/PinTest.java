@@ -9,10 +9,10 @@ class PinTest {
     @DisplayName("핀을 생성할 수 있다.")
     @Test
     void create() {
-        boolean isKnockOver = false;
-        Pin expect = new Pin(isKnockOver);
+        PinState standing = PinState.STANDING;
+        Pin expect = Pin.of(standing);
 
-        Pin actual = new Pin(isKnockOver);
+        Pin actual = Pin.of(standing);
 
         assertThat(actual).isEqualTo(expect);
     }
@@ -20,10 +20,10 @@ class PinTest {
     @DisplayName("핀을 넘어트릴 수 있다.")
     @Test
     void knockOver() {
-        boolean isKnockOver = false;
-        Pin expect = new Pin(true);
+        PinState standing = PinState.STANDING;
+        Pin expect = Pin.of(PinState.KNOCK_OVER);
 
-        Pin actual = new Pin(isKnockOver).knockOver();
+        Pin actual = Pin.of(standing).knockOver();
 
         assertThat(actual).isEqualTo(expect);
     }
