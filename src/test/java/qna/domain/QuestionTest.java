@@ -12,7 +12,7 @@ public class QuestionTest {
 
     @Test
     @DisplayName("내가 쓰지 않은 질문을 삭제하려고 할 경우, Exception을 반환해야 한다.")
-    void assertIsDeleteOtherUsersQuestion() {
+    void assertIsOtherUsersQuestion() {
         assertThatThrownBy(() -> {
             Q1.assertUser(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class)
