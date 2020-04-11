@@ -25,11 +25,13 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
+    public Question(){}
+
     public Question(String title, String contents) {
-        this(0, title, contents);
+        this(null, title, contents);
     }
 
-    public Question(long id, String title, String contents) {
+    public Question(Long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
