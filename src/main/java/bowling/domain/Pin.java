@@ -3,14 +3,22 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Pin {
-    private final boolean isKnockOver;
+    private final PinState pinState;
 
-    public Pin(final boolean isKnockOver) {
-        this.isKnockOver = isKnockOver;
+    private Pin(final PinState pinState) {
+        this.pinState = pinState;
+    }
+
+    public static Pin of() {
+        return new Pin(PinState.STANDING);
+    }
+
+    public static Pin of(final PinState pinState) {
+        return new Pin(pinState);
     }
 
     public Pin knockOver() {
-        return new Pin(Boolean.TRUE);
+        return new Pin(PinState.KNOCK_OVER);
     }
 
     @Override
@@ -18,11 +26,11 @@ public class Pin {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Pin pin = (Pin) o;
-        return isKnockOver == pin.isKnockOver;
+        return pinState == pin.pinState;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isKnockOver);
+        return Objects.hash(pinState);
     }
 }
