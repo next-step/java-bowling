@@ -14,26 +14,21 @@
         * 플레이어 이름은 영문 세글자여야 한다.
 * BowlingGame
     * 볼링 게임을 관리한다.
-    * 프레임 리스트를 관리한다.
+    * Player와 BowlingFrames를 관리한다.
+* BowlingFrames
+    * BowlingFrame 목록을 관리한다.
     * 최종 프레임 리스트는 10개여야 한다.
 * BowlingFrame
     * 볼링 게임의 프레임을 관리한다.
-    * Player의 Score를 관리한다.
-    * 다음 프레임을 생성할 수 있다.
-    * 마지막 프레임을 생성할 수 있다.
+    * FrameScore와 마지막 프레임 유무를 관리한다.
 * FrameScore
     * 볼링 프레임의 점수를 관리한다.
     * Score 리스트를 관리한다.
     * Score 의 합을 반환한다.
     * 남은 투구 기회가 있는지 반환한다.
-* CommonFrameScore
-    * FrameScore의 구현체
     * 남은 투구 기회 판단은 다음과 같다.
         * 1-9 프레임 경우, 첫번째 투구가 스트라이크면 프레임 종료
         * 1-9 프레임 경우, 두번째 투구가 끝나면 프레임 종료
-* LastFrameScore
-    * FrameScore의 구현체
-    * 남은 투구 기회 판단은 다음과 같다.
         * 10 프레임 경우, 두번째 투구까지 score 합이 10이나 20이 아니면 프레임 종료 
         * 10 프레임 경우, 세번째 투구가 끝나면 프레임 종료
 * FrameScoreResult
