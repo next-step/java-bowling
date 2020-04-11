@@ -32,12 +32,11 @@ public class PinCounts {
 
     public int getPintCountTotal() {
         return pinCountList.stream()
-                .reduce(new PinCount(0), (p1, p2) -> new PinCount(p1.add(p2)))
-                .add(new PinCount(0));
+                .reduce(0, (p1, p2) -> p2.add(p1), Integer::sum);
     }
 
     public Optional<PinCount> getFirst() {
-        if(pinCountList.isEmpty()) {
+        if (pinCountList.isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(pinCountList.get(0));
