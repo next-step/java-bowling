@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.domain.PlayerName;
+
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -16,8 +18,8 @@ public class InputView {
         this.scanner = new Scanner(inputStream);
     }
 
-    public String inputPlayerName() {
+    public PlayerName inputPlayerName() {
         System.out.print(WHAT_IS_YOUR_NAME);
-        return scanner.nextLine();
+        return new PlayerName(scanner.nextLine());
     }
 }
