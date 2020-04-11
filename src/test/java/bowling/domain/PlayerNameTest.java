@@ -18,9 +18,9 @@ class PlayerNameTest {
     @Test
     void create() {
         String name = "otk";
-        PlayerName expect = new PlayerName(name);
+        PlayerName expect = PlayerName.of(name);
 
-        PlayerName actual = new PlayerName(name);
+        PlayerName actual = PlayerName.of(name);
 
         assertThat(actual).isEqualTo(expect);
     }
@@ -30,7 +30,7 @@ class PlayerNameTest {
     @MethodSource("invalidNames")
     void validName(String name) {
         assertThatExceptionOfType(InvalidNameException.class).isThrownBy(
-                () -> new PlayerName(name)
+                () -> PlayerName.of(name)
         );
     }
 
@@ -38,7 +38,7 @@ class PlayerNameTest {
     @Test
     void validNameLength() {
         assertThatExceptionOfType(NameLengthOverException.class).isThrownBy(
-                () -> new PlayerName("ohta")
+                () -> PlayerName.of("ohta")
         );
     }
 

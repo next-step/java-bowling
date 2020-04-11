@@ -11,9 +11,9 @@ class PlayerTest {
     @Test
     void inputPlayerName() {
         String name = "otk";
-        Player expect = new Player(name);
+        Player expect = Player.of(name);
 
-        Player actual = new Player(name);
+        Player actual = Player.of(name);
 
         assertThat(actual).isEqualTo(expect);
     }

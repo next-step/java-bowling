@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.PlayerName;
+import bowling.domain.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,10 +16,10 @@ class InputViewTest {
     @Test
     void inputPlayerName() {
         String name = "otk";
-        PlayerName expect = new PlayerName(name);
+        Player expect = Player.of(name);
         inputView = new InputView(createInputStream(name));
 
-        PlayerName actual = inputView.inputPlayerName();
+        Player actual = inputView.inputPlayerName();
 
         assertThat(actual).isEqualTo(expect);
     }
