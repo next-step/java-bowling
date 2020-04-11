@@ -3,6 +3,9 @@ package bowling;
 import java.util.List;
 
 public class Score {
+
+    public static final int STRIKE_COUNT = 10;
+
     private final int score;
 
     private Score(final int score) {

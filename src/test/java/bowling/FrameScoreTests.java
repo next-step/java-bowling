@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -47,7 +46,7 @@ public class FrameScoreTests {
         frameScore.pitch(firstPitch, false);
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> frameScore.pitch(secondPitch, false))
-                .withMessageContaining("can not pitch second bowl. overflow maximum frame score");
+                .withMessageContaining("Sum of first, second pitching score must be greater than zero and lower than 10.");
     }
 
     @DisplayName("FrameScore 세번째 투구 추가 테스트")
@@ -74,25 +73,25 @@ public class FrameScoreTests {
     @DisplayName("FrameScore 합 테스트")
     @Test
     public void generateFrameScoreSumTest() {
-        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(Score.of(5), Score.of(4)));
+        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(5, 4));
         assertThat(frameScore.sum()).isEqualTo(9);
     }
 
     @DisplayName("FrameScore 종료 테스트")
     @ParameterizedTest
     @MethodSource("generateFrameScoreOverTestCases")
-    public void generateFrameScoreOverTest(List<Score> scores, boolean isLastFrame, boolean expectedResult) {
+    public void generateFrameScoreOverTest(List<Integer> scores, boolean isLastFrame, boolean expectedResult) {
         FrameScore frameScore = FrameScore.newInstance(scores);
         assertThat(frameScore.isOver(isLastFrame)).isEqualTo(expectedResult);
     }
 
     private static Stream<Arguments> generateFrameScoreOverTestCases() {
         return Stream.of(
-                Arguments.of(Collections.singletonList(Score.of(5)), false, false),
-                Arguments.of(Arrays.asList(Score.of(5), Score.of(4)), false, true),
-                Arguments.of(Arrays.asList(Score.of(5), Score.of(5)), false, true),
-                Arguments.of(Arrays.asList(Score.of(5), Score.of(5)), true, false),
-                Arguments.of(Arrays.asList(Score.of(5), Score.of(5), Score.of(5)), true, true)
+                Arguments.of(Collections.singletonList(5), false, false),
+                Arguments.of(Arrays.asList(5, 4), false, true),
+                Arguments.of(Arrays.asList(5, 5), false, true),
+                Arguments.of(Arrays.asList(5, 5), true, false),
+                Arguments.of(Arrays.asList(5, 5, 5), true, true)
         );
     }
 }
