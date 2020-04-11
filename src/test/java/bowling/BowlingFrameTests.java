@@ -28,11 +28,11 @@ public class BowlingFrameTests {
     @ParameterizedTest
     @MethodSource("generateBowlingFrameOverTestCases")
     public void generateBowlingFrameOverTest(List<Integer> scores, boolean isLastFrame, boolean expectedResult) {
-        FrameScore frameScore = FrameScore.newInstance(scores, isLastFrame);
-        assertThat(frameScore.isOver()).isEqualTo(expectedResult);
+        BowlingFrame bowlingFrame = BowlingFrame.newInstance(scores, isLastFrame);
+        assertThat(bowlingFrame.isOver()).isEqualTo(expectedResult);
     }
 
-    private static Stream<Arguments> generateFrameScoreOverTestCases() {
+    private static Stream<Arguments> generateBowlingFrameOverTestCases() {
         return Stream.of(
                 Arguments.of(Collections.singletonList(5), false, false),
                 Arguments.of(Collections.singletonList(10), false, true),
@@ -40,7 +40,7 @@ public class BowlingFrameTests {
                 Arguments.of(Arrays.asList(5, 4), false, true),
                 Arguments.of(Arrays.asList(5, 5), false, true),
                 Arguments.of(Arrays.asList(5, 5), true, false),
-                Arguments.of(Arrays.asList(10, 5), true, true),
+                Arguments.of(Arrays.asList(10, 5), true, false),
                 Arguments.of(Arrays.asList(5, 5, 5), true, true)
         );
     }

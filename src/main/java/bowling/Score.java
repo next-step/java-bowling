@@ -32,6 +32,10 @@ public class Score {
     }
 
     public Score secondPitching(final int score) {
+        if (this.score == 10) {
+            return new Score(score);
+        }
+
         validateSecondPitching(score);
         return new Score(score);
     }

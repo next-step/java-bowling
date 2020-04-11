@@ -36,7 +36,7 @@ public class ScoreTests {
 
     @DisplayName("Score 두번째 투구 생성 오류 테스트")
     @ParameterizedTest
-    @CsvSource(value = {"5,-1", "5,6", "5,11", "10,0", "10,11"})
+    @CsvSource(value = {"5,-1", "5,6", "5,11", "10,11"})
     public void generateSecondPitchingAbnormalTest(final int firstPitching, final int secondPitching) {
         Score firstScore = Score.of(firstPitching);
         assertThatIllegalArgumentException()
