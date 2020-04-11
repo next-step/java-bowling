@@ -46,6 +46,12 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
+    public void delete(User loginUser) throws CannotDeleteException {
+        assertUser(loginUser);
+        deleted = true;
+        //TODO: Answer History
+    }
+
     public void assertUser(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException(NO_DELETE_AUTHORITY_ANSWER_ERROR);

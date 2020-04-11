@@ -22,7 +22,7 @@ public class AnswerTest {
 
     @Test
     @DisplayName("Answer를 삭제하면 deleted의 상태가 true로 변경되어야 한다.")
-    void deleteAnswer() {
+    void deleteAnswer() throws CannotDeleteException {
         A1.delete(UserTest.JAVAJIGI);
         assertThat(A1.isDeleted()).isTrue();
     }
