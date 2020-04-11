@@ -23,6 +23,10 @@ public class PinCount {
         return this.pinCount + pinCount.pinCount;
     }
 
+    public int add(int pinCount) {
+        return this.pinCount + pinCount;
+    }
+
     @Override public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
