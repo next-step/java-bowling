@@ -10,19 +10,23 @@ public class PlayerName {
 
     private final String name;
 
-    public PlayerName(final String name) {
-        validName(name);
-        validNameLength(name);
+    private PlayerName(final String name) {
         this.name = name;
     }
 
-    private void validName(final String name) {
+    public static PlayerName of(final String name) {
+        validName(name);
+        validNameLength(name);
+        return new PlayerName(name);
+    }
+
+    private static void validName(final String name) {
         if (Objects.isNull(name) || name.trim().isEmpty()) {
             throw new InvalidNameException(name);
         }
     }
 
-    private void validNameLength(final String name) {
+    private static void validNameLength(final String name) {
         if (name.length() > NAME_MAX_LENGTH) {
             throw new NameLengthOverException(name);
         }

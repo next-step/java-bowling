@@ -5,8 +5,12 @@ import java.util.Objects;
 public class Player {
     private final PlayerName playerName;
 
-    public Player(final String name) {
-        this.playerName = new PlayerName(name);
+    private Player(final PlayerName playerNmae) {
+        this.playerName = playerNmae;
+    }
+
+    public static Player of(final String name) {
+        return new Player(PlayerName.of(name));
     }
 
     @Override
