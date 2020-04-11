@@ -31,6 +31,6 @@ public class QuestionTest {
     @Test
     @DisplayName("질문이 삭제가 잘 되었다면 삭제 히스토리가 1개 반환되어야 한다.")
     void questionHistory() throws CannotDeleteException {
-        assertThat(Q3.delete(UserTest.JAVAJIGI).length()).isEqualTo(1);
+        assertThat(Q3.delete(UserTest.JAVAJIGI).size()).isEqualTo(1);
     }
 }

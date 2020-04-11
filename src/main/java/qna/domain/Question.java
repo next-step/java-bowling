@@ -4,6 +4,7 @@ import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,21 +43,30 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         assertUser(loginUser);
-
-        //TODO: 댓글 목록 삭제 가능 여부 검증 및 삭제
-        //TODO: 댓글 삭제 히스토리 생성
 
         this.deleted = true;
 
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(makeDeleteHistory());
+
+
+        //TODO: 댓글 목록 삭제 가능 여부 검증 및 삭제
+        //TODO: 댓글 삭제 히스토리 생성
         //TODO: 질문 삭제 히스토리 생성
+
+        return deleteHistories;
     }
 
     public void assertUser(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException(NO_DELETE_AUTHORITY_QUESTION_ERROR);
         }
+    }
+
+    private DeleteHistory makeDeleteHistory() {
+        return new DeleteHistory(ContentType.QUESTION, super.getId(), writer, LocalDateTime.now());
     }
 
     public String getTitle() {
