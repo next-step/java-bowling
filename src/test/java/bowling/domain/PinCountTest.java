@@ -11,6 +11,11 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 
 public class PinCountTest {
+    public static final PinCount PIN_COUNT_1 = new PinCount(1);
+    public static final PinCount PIN_COUNT_3 = new PinCount(3);
+    public static final PinCount PIN_COUNT_8 = new PinCount(8);
+    public static final PinCount PIN_COUNT_10 = new PinCount(10);
+
     @DisplayName("점수를 저장할 수 있다.")
     @Test
     void init() {
