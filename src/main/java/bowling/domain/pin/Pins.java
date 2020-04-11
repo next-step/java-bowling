@@ -15,13 +15,13 @@ public class Pins {
         this.pins = Collections.unmodifiableList(pins);
     }
 
-    public static Pins of() {
-        return new Pins(createPins());
+    public static Pins of(final PinGenerator pinGenerator) {
+        return new Pins(createPins(pinGenerator));
     }
 
-    private static List<Pin> createPins() {
+    private static List<Pin> createPins(final PinGenerator pinGenerator) {
         return IntStream.range(0, MAX_COUNT)
-                        .mapToObj(count -> Pin.of(PinState.STANDING))
+                        .mapToObj(count -> PinFactory.create(pinGenerator))
                         .collect(Collectors.toList());
     }
 
