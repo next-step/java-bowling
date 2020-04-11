@@ -17,12 +17,16 @@ public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
+    public Question question1;
+    public Question question2;
     private Answer answer;
 
     @BeforeEach
     public void setUp() throws Exception {
+        question1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-        Q1.addAnswer(answer);
+        question1.addAnswer(answer);
     }
 
     @DisplayName("로그인 유저가 질문 삭제 가능한지 체크")
@@ -37,7 +41,7 @@ public class QuestionTest {
     public void delete_fail() throws Exception {
         //given
         assertThatThrownBy(
-                () -> Q1.deleteAll(UserTest.SANJIGI)
+                () -> question1.deleteAll(UserTest.SANJIGI)
         ).isInstanceOf(CannotDeleteException.class);
     }
 
@@ -46,11 +50,11 @@ public class QuestionTest {
     public void deleteAll_success() throws Exception {
         //given
         List<DeleteHistory> compare = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now()),
+                new DeleteHistory(ContentType.QUESTION, question1.getId(), question1.getWriter(), LocalDateTime.now()),
                 new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
 
         //when
-        List<DeleteHistory> history = Q1.deleteAll(UserTest.JAVAJIGI);
+        List<DeleteHistory> history = question1.deleteAll(UserTest.JAVAJIGI);
 
         //then
         assertThat(history.size()).isEqualTo(compare.size());
