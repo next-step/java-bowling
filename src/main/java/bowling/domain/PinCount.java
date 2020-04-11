@@ -27,6 +27,18 @@ public class PinCount {
         return this.pinCount + pinCount;
     }
 
+    public boolean isAddable(PinCount pinCount) {
+        return add(pinCount) <= MAX;
+    }
+
+    public boolean isMax() {
+        return pinCount == MAX;
+    }
+
+    public static PinCount empty() {
+        return new PinCount(0);
+    }
+
     @Override public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

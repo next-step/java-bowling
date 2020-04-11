@@ -19,8 +19,7 @@ public class PinCountTest {
     @DisplayName("점수를 저장할 수 있다.")
     @Test
     void init() {
-        int score = 10;
-        assertThat(new PinCount(score)).isEqualTo(new PinCount(score));
+        assertThat(PIN_COUNT_10).isEqualTo(new PinCount(10));
     }
 
     @DisplayName("범위 밖의 점수를 입력하면 에러")
@@ -29,5 +28,18 @@ public class PinCountTest {
     void error(int score) {
         assertThatExceptionOfType(OutOfRangeArgumentException.class)
                 .isThrownBy(() -> new PinCount(score));
+    }
+
+    @DisplayName("최대 허용 갯수까지 저장되었는지 확인한다.")
+    @Test
+    void max(){
+        assertThat(PIN_COUNT_10.isMax()).isTrue();
+    }
+
+    @DisplayName("다른 PinCount 와 더했을때 최대치를 넘지 않아야 한다.")
+    @Test
+    void isAddable() {
+        assertThat(PIN_COUNT_8.isAddable(PIN_COUNT_3)).isFalse();
+        assertThat(PIN_COUNT_8.isAddable(PIN_COUNT_1)).isTrue();
     }
 }
