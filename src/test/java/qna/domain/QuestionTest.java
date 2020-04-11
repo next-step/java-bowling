@@ -29,8 +29,14 @@ public class QuestionTest {
     }
 
     @Test
-    @DisplayName("질문이 삭제가 잘 되었다면 삭제 히스토리가 1개 반환되어야 한다.")
-    void questionHistory() throws CannotDeleteException {
+    @DisplayName("Question의 삭제 히스토리를 1개 생성하여 잘 생성되었는지 테스트한다.")
+    void questionHistory() {
+        assertThat(Q1.makeDeleteHistory()).isNotNull();
+    }
+
+    @Test
+    @DisplayName("댓글이 없는 질문이 삭제가 잘 되었다면 삭제 히스토리가 1개 반환되어야 한다.")
+    void questionDeleteHistory() throws CannotDeleteException {
         assertThat(Q3.delete(UserTest.JAVAJIGI).size()).isEqualTo(1);
     }
 }
