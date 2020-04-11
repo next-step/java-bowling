@@ -42,6 +42,17 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
+    public void delete(User loginUser) throws CannotDeleteException {
+        assertUser(loginUser);
+
+        //TODO: 댓글 목록 삭제 가능 여부 검증 및 삭제
+        //TODO: 댓글 삭제 히스토리 생성
+
+        this.deleted = true;
+
+        //TODO: 질문 삭제 히스토리 생성
+    }
+
     public void assertUser(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException(NO_DELETE_AUTHORITY_QUESTION_ERROR);

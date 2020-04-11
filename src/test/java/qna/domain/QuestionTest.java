@@ -22,8 +22,8 @@ public class QuestionTest {
 
     @Test
     @DisplayName("질문이 삭제가 잘 되었다면 deleted의 상태가 true가 되어야 한다.")
-    void deleteQuestion() {
-        Q1.delete();
+    void deleteQuestion() throws CannotDeleteException {
+        Q1.delete(UserTest.JAVAJIGI);
         assertThat(Q1.isDeleted()).isTrue();
     }
 }
