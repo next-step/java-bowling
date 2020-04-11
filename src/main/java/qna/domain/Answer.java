@@ -1,5 +1,6 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -7,6 +8,8 @@ import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {
+    public static final String NO_DELETE_AUTHORITY_ANSWER_ERROR = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -41,6 +44,12 @@ public class Answer extends AbstractEntity {
         this.writer = writer;
         this.question = question;
         this.contents = contents;
+    }
+
+    public void assertUser(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(NO_DELETE_AUTHORITY_ANSWER_ERROR);
+        }
     }
 
     public Answer setDeleted(boolean deleted) {
