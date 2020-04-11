@@ -31,7 +31,7 @@ public class ScoreTests {
     @CsvSource(value = {"5,5,false", "10,5,true", "3,7,true"})
     public void generateSecondPitchingTest(final int firstPitching, final int secondPitching, final boolean isLastFrame) {
         Score score = Score.of(firstPitching);
-        assertThatCode(() -> score.secondPitching(secondPitching, isLastFrame);
+        assertThatCode(() -> score.secondPitching(secondPitching, isLastFrame));
     }
 
     @DisplayName("Score 두번째 투구 생성 오류 테스트")

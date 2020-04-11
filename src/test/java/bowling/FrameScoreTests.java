@@ -71,7 +71,7 @@ public class FrameScoreTests {
     @DisplayName("FrameScore 합 테스트")
     @Test
     public void generateFrameScoreSumTest() {
-        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(5, 4));
+        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(5, 4), false);
         assertThat(frameScore.sum()).isEqualTo(9);
     }
 
@@ -79,7 +79,7 @@ public class FrameScoreTests {
     @ParameterizedTest
     @MethodSource("generateFrameScoreOverTestCases")
     public void generateFrameScoreOverTest(List<Integer> scores, boolean isLastFrame, boolean expectedResult) {
-        FrameScore frameScore = FrameScore.newInstance(scores);
+        FrameScore frameScore = FrameScore.newInstance(scores, isLastFrame);
         assertThat(frameScore.isOver(isLastFrame)).isEqualTo(expectedResult);
     }
 

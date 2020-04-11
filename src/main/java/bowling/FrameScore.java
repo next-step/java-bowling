@@ -3,8 +3,6 @@ package bowling;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bowling.Score.STRIKE_COUNT;
-
 public class FrameScore {
 
     private static final int COMMON_FRAME_FULL_PITCH_COUNT = 2;
@@ -16,30 +14,25 @@ public class FrameScore {
         this.scores = new ArrayList<>();
     }
 
-    public static FrameScore newInstance(final List<Integer> scores) {
+    public static FrameScore newInstance(final List<Integer> scores, final boolean isLastFrame) {
         FrameScore frameScore = new FrameScore();
-        scores.forEach(frameScore::pitch);
+        scores.forEach(score -> frameScore.pitch(score, isLastFrame));
 
         return frameScore;
     }
 
-    public void pitch(final int score, final boolean isLastFrame) {
-        if (!isOver(isLastFrame)) {
-            pitch(score);
-        }
-    }
-
-    private void pitch(final int scoreCount) {
+    public void pitch(final int scoreCount, final boolean isLastFrame) {
         Score score = Score.of(scoreCount);
         if (scores.size() == 1) {
-            score = secondPitchingScore(scores.get(0), scoreCount);
+            score = secondPitchingScore(scoreCount, isLastFrame);
         }
 
         scores.add(score);
     }
 
-    private Score secondPitchingScore(final Score firstScore, final int scoreCount) {
-        return firstScore.secondPitching(scoreCount);
+    private Score secondPitchingScore(final int scoreCount, final boolean isLastFrame) {
+        Score firstScore = scores.get(0);
+        return firstScore.secondPitching(scoreCount, isLastFrame);
     }
 
     public int sum() {
@@ -56,11 +49,11 @@ public class FrameScore {
     }
 
     private boolean isOver(final int fullScoreSize) {
-        if(scores.size() == fullScoreSize) {
+        if (scores.size() == fullScoreSize) {
             return true;
         }
 
-        if((scores.size() == fullScoreSize - 1) && Score.sum(scores) % 10 != 0) {
+        if ((scores.size() == fullScoreSize - 1) && Score.sum(scores) % 10 != 0) {
             return true;
         }
 
