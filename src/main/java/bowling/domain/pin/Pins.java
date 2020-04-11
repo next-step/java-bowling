@@ -15,8 +15,8 @@ public class Pins {
 
     public long knockOverCount() {
         return pins.stream()
-                .filter(Pin::isKnockOver)
-                .count();
+                   .filter(Pin::isKnockOver)
+                   .count();
     }
 
     @Override
