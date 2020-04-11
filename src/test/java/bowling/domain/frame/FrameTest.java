@@ -10,7 +10,7 @@ class FrameTest {
     @DisplayName("Frame은 숫자를 가진다.")
     @Test
     void create() {
-        int frameNumber = 1;
+        FrameNumber frameNumber = new FrameNumber(1);
         Frame expect = new Frame(frameNumber);
 
         Frame actual = new Frame(frameNumber);
