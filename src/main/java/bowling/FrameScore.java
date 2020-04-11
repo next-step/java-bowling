@@ -47,12 +47,25 @@ public class FrameScore {
     }
 
     public boolean isOver(final boolean isLastFrame) {
-        return (isLastFrame && isOverStatus(LAST_FRAME_FULL_PITCH_COUNT)) || isOverStatus(COMMON_FRAME_FULL_PITCH_COUNT);
+        int frameFullPitchCount = COMMON_FRAME_FULL_PITCH_COUNT;
+        if (isLastFrame) {
+            frameFullPitchCount = LAST_FRAME_FULL_PITCH_COUNT;
+        }
+
+        return isOver(frameFullPitchCount);
     }
 
-    private boolean isOverStatus(final int fullScoreSize) {
-        int canPitchScoreSize = fullScoreSize - 1;
+    private boolean isOver(final int fullScoreSize) {
+        if(scores.size() == fullScoreSize) {
+            return true;
+        }
 
-        return (scores.size() == canPitchScoreSize && scores.get(canPitchScoreSize - 1).isEqualsTo(STRIKE_COUNT)) || scores.size() == fullScoreSize;
+        if((scores.size() == fullScoreSize - 1) && Score.sum(scores) % 10 != 0) {
+            return true;
+        }
+
+        return false;
     }
+
+
 }

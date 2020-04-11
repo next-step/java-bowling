@@ -45,8 +45,7 @@ public class FrameScoreTests {
         FrameScore frameScore = new FrameScore();
         frameScore.pitch(firstPitch, false);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> frameScore.pitch(secondPitch, false))
-                .withMessageContaining("Sum of first, second pitching score must be greater than zero and lower than 10.");
+                .isThrownBy(() -> frameScore.pitch(secondPitch, false));
     }
 
     @DisplayName("FrameScore 세번째 투구 추가 테스트")
@@ -66,8 +65,7 @@ public class FrameScoreTests {
         frameScore.pitch(firstPitch, true);
         frameScore.pitch(secondPitch, true);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> frameScore.pitch(thirdPitch, true))
-                .withMessageContaining("can not pitch third bowl. overflow maximum frame score");
+                .isThrownBy(() -> frameScore.pitch(thirdPitch, true));
     }
 
     @DisplayName("FrameScore 합 테스트")
@@ -88,9 +86,12 @@ public class FrameScoreTests {
     private static Stream<Arguments> generateFrameScoreOverTestCases() {
         return Stream.of(
                 Arguments.of(Collections.singletonList(5), false, false),
+                Arguments.of(Collections.singletonList(10), false, true),
+                Arguments.of(Collections.singletonList(10), true, false),
                 Arguments.of(Arrays.asList(5, 4), false, true),
                 Arguments.of(Arrays.asList(5, 5), false, true),
                 Arguments.of(Arrays.asList(5, 5), true, false),
+                Arguments.of(Arrays.asList(10, 5), true, true),
                 Arguments.of(Arrays.asList(5, 5, 5), true, true)
         );
     }

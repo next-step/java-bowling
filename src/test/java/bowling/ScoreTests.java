@@ -3,6 +3,7 @@ package bowling;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -22,24 +23,23 @@ public class ScoreTests {
     @ValueSource(ints = {-1, 11})
     public void generateFirstPitchingAbnormalTest(final int score) {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Score.of(score))
-                .withMessageContaining("Score must be greater than zero and lower than 10.");
+                .isThrownBy(() -> Score.of(score));
     }
 
     @DisplayName("Score 두번째 투구 생성 테스트")
-    @Test
-    public void generateSecondPitchingTest() {
-        Score score = Score.of(5);
-        assertThatCode(() -> score.secondPitching(5));
+    @ParameterizedTest
+    @CsvSource(value = {"5,5,false", "10,5,true", "3,7,true"})
+    public void generateSecondPitchingTest(final int firstPitching, final int secondPitching, final boolean isLastFrame) {
+        Score score = Score.of(firstPitching);
+        assertThatCode(() -> score.secondPitching(secondPitching, isLastFrame);
     }
 
     @DisplayName("Score 두번째 투구 생성 오류 테스트")
     @ParameterizedTest
-    @ValueSource(ints = {-1, 6, 11})
-    public void generateSecondPitchingAbnormalTest(final int score) {
-        Score firstScore = Score.of(5);
+    @CsvSource(value = {"5,-1,false", "5,6,false", "5,11,false", "10,0,false", "10,11,true"})
+    public void generateSecondPitchingAbnormalTest(final int firstPitching, final int secondPitching, final boolean isLastFrame) {
+        Score firstScore = Score.of(firstPitching);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> firstScore.secondPitching(score))
-                .withMessageContaining("must be greater than zero and lower than 10.");
+                .isThrownBy(() -> firstScore.secondPitching(secondPitching, isLastFrame));
     }
 }
