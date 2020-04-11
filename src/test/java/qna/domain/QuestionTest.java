@@ -46,7 +46,7 @@ public class QuestionTest {
         ).isInstanceOf(CannotDeleteException.class);
     }
 
-    @DisplayName("Question 삭제 처리")
+    @DisplayName("Question 삭제 처리 및 히스토리 확인")
     @Test
     public void deleteAll_success() throws Exception {
         //given
