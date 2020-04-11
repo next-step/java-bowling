@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.pin;
 
+import bowling.domain.pin.Pin;
+import bowling.domain.pin.PinState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
