@@ -35,6 +35,10 @@ public class PinCount {
         return pinCount == MAX;
     }
 
+    public int getPinCount() {
+        return pinCount;
+    }
+
     public static PinCount empty() {
         return new PinCount(0);
     }

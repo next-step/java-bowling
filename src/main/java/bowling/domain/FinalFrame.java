@@ -2,6 +2,8 @@ package bowling.domain;
 
 import bowling.domain.exception.OutOfRangeArgumentException;
 
+import java.util.List;
+
 public class FinalFrame implements Frame {
     private static final int MAX_PIN_COUNT_SIZE = 3;
     private static final int MIN_PIN_COUNT_FOR_THIRD = 10;
@@ -47,6 +49,10 @@ public class FinalFrame implements Frame {
             return true;
         }
         return pinCounts.size() == 2 &&
-                pinCounts.getPintCountTotal() < MIN_PIN_COUNT_FOR_THIRD;
+                pinCounts.getPinCountTotal() < MIN_PIN_COUNT_FOR_THIRD;
+    }
+
+    @Override public List<Integer> getPinCounts() {
+        return pinCounts.getPinCountList();
     }
 }

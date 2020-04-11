@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class PinCounts {
     private List<PinCount> pinCountList;
@@ -40,5 +41,11 @@ public class PinCounts {
             return Optional.empty();
         }
         return Optional.of(pinCountList.get(0));
+    }
+
+    public List<Integer> getPinCountList() {
+        return pinCountList.stream()
+                .map(PinCount::getPinCount)
+                .collect(Collectors.toList());
     }
 }
