@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.Assert.assertTrue;
 
 public class QuestionTest {
 
@@ -58,5 +59,42 @@ public class QuestionTest {
 
         //then
         assertThat(history.size()).isEqualTo(compare.size());
+    }
+
+    @DisplayName("Question이 삭제 되면 deleted가 true로 변경")
+    @Test
+    public void deleteAll_success_checkDeleted() throws Exception {
+        //given
+        List<DeleteHistory> compare = Arrays.asList(
+                new DeleteHistory(ContentType.QUESTION, question1.getId(), question1.getWriter(), LocalDateTime.now()),
+                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+
+        //when
+        question1.deleteAll(UserTest.JAVAJIGI);
+
+        //then
+        assertTrue(question1.isDeleted());
+    }
+
+    @DisplayName("답변이 없을경우 삭제 가능")
+    @Test
+    public void deleteAll_success_noAnswer() throws Exception {
+        //when
+        question2.deleteAll(UserTest.SANJIGI);
+
+        //then
+        assertTrue(question2.isDeleted());
+    }
+
+    @DisplayName("질문자와 답변자가 다른 경우 삭제 불가능")
+    @Test
+    public void deleteAll_fail_answerWriteAnother() throws Exception {
+        //given
+        question2.addAnswer(answer);
+
+        //then
+        assertThatThrownBy(
+                () -> question2.deleteAll(UserTest.SANJIGI)
+        ).isInstanceOf(CannotDeleteException.class);
     }
 }
