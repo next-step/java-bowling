@@ -1,13 +1,10 @@
 package qna.domain;
 
-import org.hibernate.sql.Delete;
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 public class Answer extends AbstractEntity {
