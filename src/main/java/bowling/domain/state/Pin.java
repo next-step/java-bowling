@@ -29,7 +29,7 @@ public class Pin {
         return fallenPins;
     }
 
-    boolean isStrike() {
+    public boolean isStrike() {
         return fallenPins == MAX_PINS;
     }
 

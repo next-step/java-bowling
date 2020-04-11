@@ -1,9 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.Pin;
-import bowling.domain.state.Ready;
-import bowling.domain.state.State;
-import bowling.domain.state.Strike;
+import bowling.domain.state.*;
 
 import java.util.LinkedList;
 import java.util.stream.Collectors;
@@ -18,16 +15,35 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame bowl(Pin fallenPins) {
-        State state = states.getLast();
+        if (isEnd()) {
+            throw new IllegalArgumentException("게임 끝");
+        }
 
+        State state = states.getLast();
         if (state.isFinish()) {
-            states.add(new Ready().bowl(fallenPins));
-            return this;
+            return createBonus(fallenPins);
         }
 
         states.removeLast();
         states.add(state.bowl(fallenPins));
         return this;
+    }
+
+    private Frame createBonus(Pin fallenPins) {
+        if (fallenPins.isStrike()) {
+            states.add(new Ready().bowl(fallenPins));
+            return this;
+        }
+        states.add(new Miss(fallenPins));
+        return this;
+    }
+
+    public boolean isEnd() {
+        try {
+            return getScore().isCalculation();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

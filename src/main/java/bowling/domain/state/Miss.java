@@ -15,6 +15,11 @@ public class Miss extends Finished {
         this.score = Score.ofMiss(firstFallenPins.getFallenPins() + secondFallenPins.getFallenPins());
     }
 
+    public Miss(Pin firstFallenPins) {
+        this.firstFallenPins = firstFallenPins;
+        this.score = Score.ofMiss(firstFallenPins.getFallenPins());
+    }
+
     public Score getScore() {
         return this.score;
     }
@@ -30,6 +35,9 @@ public class Miss extends Finished {
 
     @Override
     public String display() {
+        if (Objects.isNull(secondFallenPins)) {
+            return firstFallenPins.display();
+        }
         return firstFallenPins.display(secondFallenPins);
     }
 
