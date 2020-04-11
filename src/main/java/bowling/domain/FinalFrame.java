@@ -39,7 +39,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override public int getScore() {
-        return pinCounts.getPintCountTotal();
+        return pinCounts.getPinCountTotal();
     }
 
     @Override public boolean isDone() {

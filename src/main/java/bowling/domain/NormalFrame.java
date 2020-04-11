@@ -36,7 +36,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override public int getScore() {
-        return pinCounts.getPintCountTotal();
+        return pinCounts.getPinCountTotal();
     }
 
     @Override public boolean isDone() {
@@ -44,15 +44,15 @@ public class NormalFrame implements Frame {
             return true;
         }
 
-        return pinCounts.getPintCountTotal() == MAX_PIN_COUNT;
+        return pinCounts.getPinCountTotal() == MAX_PIN_COUNT;
     }
 
-    public Frame addNext() {
+    public Frame createNext() {
         next = new NormalFrame();
         return next;
     }
 
-    public Frame addFinal() {
+    public Frame createFinal() {
         next = new FinalFrame();
         return next;
     }

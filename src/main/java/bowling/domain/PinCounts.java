@@ -30,7 +30,7 @@ public class PinCounts {
         return pinCountList.size();
     }
 
-    public int getPintCountTotal() {
+    public int getPinCountTotal() {
         return pinCountList.stream()
                 .reduce(0, (p1, p2) -> p2.add(p1), Integer::sum);
     }

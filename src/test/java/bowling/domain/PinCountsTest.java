@@ -21,7 +21,7 @@ public class PinCountsTest {
         PinCounts pinCounts = new PinCounts(2);
         pinCounts.add(PinCountTest.PIN_COUNT_8);
         pinCounts.add(PinCountTest.PIN_COUNT_1);
-        assertThat(pinCounts.getPintCountTotal()).isEqualTo(9);
+        assertThat(pinCounts.getPinCountTotal()).isEqualTo(9);
     }
 
     @DisplayName("첫번째 핀 갯수를 구할 수 있다.")
