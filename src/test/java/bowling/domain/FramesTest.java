@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 public class FramesTest {
     public static final Frames FINISHED_FRAMES =
             (new Frames(2)).add(10).add(1).add(2);
-    
+
     private Frames frames;
 
     @BeforeEach
@@ -36,10 +36,10 @@ public class FramesTest {
     @Test
     void lastFrame() {
         int dummyPinCount = 10;
-        frames.add(dummyPinCount);
         assertThat(frames.isLast()).isFalse();
         frames.add(dummyPinCount);
         assertThat(frames.isLast()).isTrue();
+        frames.add(dummyPinCount);
     }
 
     @DisplayName("프레임 갯수는 최소 2 이상이여야 한다")
