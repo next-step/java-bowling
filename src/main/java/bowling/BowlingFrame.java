@@ -3,8 +3,6 @@ package bowling;
 import java.util.List;
 
 public class BowlingFrame {
-    private static final int COMMON_FRAME_FULL_PITCH_COUNT = 2;
-    private static final int LAST_FRAME_FULL_PITCH_COUNT = 3;
 
     private final FrameScore frameScore;
     private final boolean isLastFrame;
@@ -31,9 +29,9 @@ public class BowlingFrame {
 
     public boolean isOver() {
         if (isLastFrame) {
-            return frameScore.isOver(LAST_FRAME_FULL_PITCH_COUNT, !frameScore.canThrowThirdPitching());
+            return frameScore.isOverLastFrame();
         }
 
-        return frameScore.isOver(COMMON_FRAME_FULL_PITCH_COUNT, frameScore.isStrikeAtFirstScore());
+        return frameScore.isOverCommonFrame();
     }
 }

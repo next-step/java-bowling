@@ -5,6 +5,9 @@ import java.util.List;
 
 public class FrameScore {
 
+    private static final int COMMON_FRAME_FULL_PITCH_COUNT = 2;
+    private static final int LAST_FRAME_FULL_PITCH_COUNT = 3;
+
     private final List<Score> scores;
 
     public FrameScore() {
@@ -28,20 +31,28 @@ public class FrameScore {
     }
 
     private Score nextScore(final int scoreCount) {
-        Score firstScore = scores.get(scores.size() - 1);
-        return firstScore.next(scoreCount);
+        Score lastScore = scores.get(scores.size() - 1);
+        return lastScore.next(scoreCount);
     }
 
     public int sum() {
         return Score.sum(scores);
     }
 
-    public boolean isOver(final int fullPitchCount, final boolean extraOverCondition) {
-        if (scores.size() == fullPitchCount) {
+    public boolean isOverLastFrame() {
+        if (scores.size() == LAST_FRAME_FULL_PITCH_COUNT) {
             return true;
         }
 
-        return scores.size() == fullPitchCount - 1 && extraOverCondition;
+        return scores.size() == LAST_FRAME_FULL_PITCH_COUNT - 1 && !canThrowThirdPitching();
+    }
+
+    public boolean isOverCommonFrame() {
+        if (scores.size() == COMMON_FRAME_FULL_PITCH_COUNT) {
+            return true;
+        }
+
+        return scores.size() == COMMON_FRAME_FULL_PITCH_COUNT - 1 && isStrikeAtFirstScore();
     }
 
     public boolean canThrowThirdPitching() {
