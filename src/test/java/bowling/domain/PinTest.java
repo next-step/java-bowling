@@ -16,4 +16,15 @@ class PinTest {
 
         assertThat(actual).isEqualTo(expect);
     }
+
+    @DisplayName("핀을 넘어트릴 수 있다.")
+    @Test
+    void knockOver() {
+        boolean isKnockOver = false;
+        Pin expect = new Pin(true);
+
+        Pin actual = new Pin(isKnockOver).knockOver();
+
+        assertThat(actual).isEqualTo(expect);
+    }
 }
