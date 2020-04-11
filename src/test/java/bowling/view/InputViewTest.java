@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.PlayerName;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +15,11 @@ class InputViewTest {
     @DisplayName("이름을 입력받을 수 있다.")
     @Test
     void inputPlayerName() {
-        String expect = "otk";
-        inputView = new InputView(createInputStream(expect));
+        String name = "otk";
+        PlayerName expect = new PlayerName(name);
+        inputView = new InputView(createInputStream(name));
 
-        String actual = inputView.inputPlayerName();
+        PlayerName actual = inputView.inputPlayerName();
 
         assertThat(actual).isEqualTo(expect);
     }
