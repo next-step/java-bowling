@@ -55,16 +55,16 @@ public class FrameScore {
         return scores.size() == COMMON_FRAME_FULL_PITCH_COUNT - 1 && isStrikeAtFirstScore();
     }
 
-    public boolean canThrowThirdPitching() {
+    private boolean canThrowThirdPitching() {
         return scores.stream()
                 .anyMatch(Score::isStrike) || isSpareForTwoScores();
     }
 
-    public boolean isStrikeAtFirstScore() {
+    private boolean isStrikeAtFirstScore() {
         return scores.size() == 1 && sum() == 10;
     }
 
-    public boolean isSpareForTwoScores() {
+    private boolean isSpareForTwoScores() {
         return scores.size() == 2 && sum() == 10;
     }
 }
