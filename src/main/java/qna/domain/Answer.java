@@ -1,10 +1,13 @@
 package qna.domain;
 
+import org.hibernate.sql.Delete;
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -46,16 +49,22 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser, List<DeleteHistory> deleteHistories) throws CannotDeleteException {
         assertUser(loginUser);
         deleted = true;
-        //TODO: Answer History
+        deleteHistories.add(makeDeleteHistory());
+
+        return deleteHistories;
     }
 
     public void assertUser(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException(NO_DELETE_AUTHORITY_ANSWER_ERROR);
         }
+    }
+
+    public DeleteHistory makeDeleteHistory() {
+        return new DeleteHistory(ContentType.ANSWER, super.getId(), writer, LocalDateTime.now());
     }
 
     public Answer setDeleted(boolean deleted) {
