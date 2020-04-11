@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.List;
 
 public class Game {
+    private static final int ONE = 1;
     private static final int DEFAULT_FRAME_SIZE = 10;
     private Player player;
     private Frames frames;
@@ -32,5 +33,9 @@ public class Game {
 
     public List<Integer> getFramePinCount(int index) {
         return frames.getFramePinCount(index);
+    }
+
+    public int getCurrentFrame() {
+        return frames.getCurrentFrameIndex() + ONE;
     }
 }

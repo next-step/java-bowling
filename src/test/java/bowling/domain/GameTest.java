@@ -39,4 +39,13 @@ public class GameTest {
 
         assertThat(game.getFramePinCount(0)).containsExactly(first, second);
     }
+
+    @DisplayName("현재 프레임 정보를 얻어온다")
+    @Test
+    void getCurrentFrame() {
+        Game game = new Game(name, 3);
+        game.addPin(10);
+
+        assertThat(game.getCurrentFrame()).isEqualTo(2);
+    }
 }
