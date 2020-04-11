@@ -18,13 +18,20 @@ public class BowlingFrame {
         return new BowlingFrame(new FrameScore(), isLastFrame);
     }
 
-    public static BowlingFrame newInstance(final List<Integer> frameScore, final boolean isLastFrame) {
-        return new BowlingFrame(FrameScore.newInstance(frameScore), isLastFrame);
+    public static BowlingFrame newInstance(final List<Integer> scoreNumbers, final boolean isLastFrame) {
+        return new BowlingFrame(FrameScore.newInstance(scoreNumbers), isLastFrame);
+    }
+
+    public void pitch(final int scoreCount) {
+        if (isOver()) {
+            throw new RuntimeException("can not pitch the bowl at this frame.");
+        }
+        frameScore.add(scoreCount);
     }
 
     public boolean isOver() {
         if (isLastFrame) {
-            return frameScore.isOver(LAST_FRAME_FULL_PITCH_COUNT, !frameScore.hasStrikeOrSpare());
+            return frameScore.isOver(LAST_FRAME_FULL_PITCH_COUNT, !frameScore.isStrikeOrSpare());
         }
 
         return frameScore.isOver(COMMON_FRAME_FULL_PITCH_COUNT, frameScore.isStrike());

@@ -31,7 +31,7 @@ public class ScoreTests {
     @CsvSource(value = {"5,5,false", "10,5,true", "3,7,true"})
     public void generateSecondPitchingTest(final int firstPitching, final int secondPitching) {
         Score score = Score.of(firstPitching);
-        assertThatCode(() -> score.secondPitching(secondPitching));
+        assertThatCode(() -> score.next(secondPitching));
     }
 
     @DisplayName("Score 두번째 투구 생성 오류 테스트")
@@ -40,6 +40,6 @@ public class ScoreTests {
     public void generateSecondPitchingAbnormalTest(final int firstPitching, final int secondPitching) {
         Score firstScore = Score.of(firstPitching);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> firstScore.secondPitching(secondPitching));
+                .isThrownBy(() -> firstScore.next(secondPitching));
     }
 }

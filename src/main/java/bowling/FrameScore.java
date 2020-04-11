@@ -11,30 +11,29 @@ public class FrameScore {
         this.scores = new ArrayList<>();
     }
 
-    public static FrameScore newInstance(final List<Integer> scores) {
+    public static FrameScore newInstance(final List<Integer> scoreNumbers) {
         FrameScore frameScore = new FrameScore();
-        scores.forEach(frameScore::pitch);
+        scoreNumbers.forEach(frameScore::add);
 
         return frameScore;
     }
 
-    public void pitch(int scoreCount) {
+    public void add(final int scoreCount) {
         Score score = Score.of(scoreCount);
-
-        if (scores.size() == 1) {
-            score = secondPitchingScore(scoreCount);
+        if (scores.size() >= 1) {
+            score = nextScore(scoreCount);
         }
 
         scores.add(score);
     }
 
-    public int sum() {
-        return Score.sum(scores);
+    private Score nextScore(final int scoreCount) {
+        Score firstScore = scores.get(scores.size() - 1);
+        return firstScore.next(scoreCount);
     }
 
-    private Score secondPitchingScore(final int scoreCount) {
-        Score firstScore = scores.get(0);
-        return firstScore.secondPitching(scoreCount);
+    public int sum() {
+        return Score.sum(scores);
     }
 
     public boolean isOver(final int fullPitchCount, final boolean extraOverCondition) {
@@ -45,7 +44,7 @@ public class FrameScore {
         return scores.size() == fullPitchCount - 1 && extraOverCondition;
     }
 
-    public boolean hasStrikeOrSpare() {
+    public boolean isStrikeOrSpare() {
         return scores.stream()
                 .anyMatch(Score::isStrike) || isSpare();
     }

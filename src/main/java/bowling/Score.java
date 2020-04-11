@@ -19,7 +19,7 @@ public class Score {
         }
     }
 
-    private void validateSecondPitching(final int score) {
+    private void validateNext(final int score) {
         int remainScores = STRIKE_COUNT - this.score;
 
         if (remainScores == 0 || remainScores < score) {
@@ -31,12 +31,12 @@ public class Score {
         return new Score(score);
     }
 
-    public Score secondPitching(final int score) {
+    public Score next(final int score) {
         if (this.score == 10) {
             return new Score(score);
         }
 
-        validateSecondPitching(score);
+        validateNext(score);
         return new Score(score);
     }
 
