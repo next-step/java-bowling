@@ -6,14 +6,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class PlayerTests {
 
     @DisplayName("Player 생성 테스트")
     @Test
     public void generatePlayerTest() {
-        assertThat(Player.newInstance("ABC"));
+        assertThatCode(() -> Player.newInstance("ABC"));
     }
 
     @DisplayName("Player 생성 오류 테스트")
@@ -21,6 +21,8 @@ public class PlayerTests {
     @NullAndEmptySource
     @ValueSource(strings = {"ABCD"})
     public void generatePlayerAbnormalTest(final String name) {
-        assertThat(Player.newInstance(name));
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Player.newInstance(name))
+                .withMessageContaining("Player name must be three english character");
     }
 }
