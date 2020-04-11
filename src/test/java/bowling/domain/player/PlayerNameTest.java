@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.player;
 
+import bowling.domain.player.PlayerName;
 import bowling.exception.InvalidNameException;
 import bowling.exception.NameLengthOverException;
 import org.junit.jupiter.api.DisplayName;
