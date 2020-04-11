@@ -3,9 +3,9 @@ package bowling.domain.frame;
 import java.util.Objects;
 
 public class Frame {
-    private final int frameNumber;
+    private final FrameNumber frameNumber;
 
-    public Frame(final int frameNumber) {
+    public Frame(final FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
     }
 
@@ -14,7 +14,7 @@ public class Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Frame frame = (Frame) o;
-        return frameNumber == frame.frameNumber;
+        return Objects.equals(frameNumber, frame.frameNumber);
     }
 
     @Override
