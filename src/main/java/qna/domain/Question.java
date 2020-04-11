@@ -51,10 +51,10 @@ public class Question extends AbstractEntity {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(makeDeleteHistory());
 
-
-        //TODO: 댓글 목록 삭제 가능 여부 검증 및 삭제
-        //TODO: 댓글 삭제 히스토리 생성
-        //TODO: 질문 삭제 히스토리 생성
+        for(Answer answer : answers) {
+            answer.assertUser(loginUser);
+            deleteHistories = answer.delete(loginUser, deleteHistories);
+        }
 
         return deleteHistories;
     }
