@@ -3,14 +3,9 @@ package bowling;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -74,26 +69,5 @@ public class FrameScoreTests {
     public void generateFrameScoreSumTest() {
         FrameScore frameScore = CommonFrameScore.newInstance(Arrays.asList(5, 4));
         assertThat(frameScore.sum()).isEqualTo(9);
-    }
-
-    @DisplayName("FrameScore 종료 테스트")
-    @ParameterizedTest
-    @MethodSource("generateFrameScoreOverTestCases")
-    public void generateFrameScoreOverTest(List<Integer> scores, boolean isLastFrame, boolean expectedResult) {
-        FrameScore frameScore = isLastFrame ? LastFrameScore.newInstance(scores) : CommonFrameScore.newInstance(scores);
-        assertThat(frameScore.isOver()).isEqualTo(expectedResult);
-    }
-
-    private static Stream<Arguments> generateFrameScoreOverTestCases() {
-        return Stream.of(
-                Arguments.of(Collections.singletonList(5), false, false),
-                Arguments.of(Collections.singletonList(10), false, true),
-                Arguments.of(Collections.singletonList(10), true, false),
-                Arguments.of(Arrays.asList(5, 4), false, true),
-                Arguments.of(Arrays.asList(5, 5), false, true),
-                Arguments.of(Arrays.asList(5, 5), true, false),
-                Arguments.of(Arrays.asList(10, 5), true, true),
-                Arguments.of(Arrays.asList(5, 5, 5), true, true)
-        );
     }
 }
