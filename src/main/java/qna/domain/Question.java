@@ -76,7 +76,7 @@ public class Question extends AbstractEntity {
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
-    
+
     public boolean isDeleted() {
         return deleted;
     }
@@ -98,7 +98,7 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
         if (this.answers.stream()
-                .anyMatch(a -> !a.isOwner(loginUser))) {
+                .anyMatch(answer -> !answer.isOwner(loginUser))) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
@@ -110,7 +110,7 @@ public class Question extends AbstractEntity {
 
     private List<DeleteHistory> deleteAnswers() {
         return this.answers.stream()
-                .map(a -> a.delete())
+                .map(Answer::delete)
                 .collect(Collectors.toList());
     }
 
