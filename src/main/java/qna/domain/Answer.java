@@ -49,12 +49,9 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public List<DeleteHistory> delete(User loginUser, List<DeleteHistory> deleteHistories) throws CannotDeleteException {
+    public void delete(User loginUser) throws CannotDeleteException {
         assertUser(loginUser);
         deleted = true;
-        deleteHistories.add(getDeleteAnswerHistory());
-
-        return deleteHistories;
     }
 
     public void assertUser(User loginUser) throws CannotDeleteException {

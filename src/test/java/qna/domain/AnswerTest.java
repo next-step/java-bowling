@@ -33,7 +33,7 @@ public class AnswerTest {
     @Test
     @DisplayName("Answer를 삭제하면 deleted의 상태가 true로 변경되어야 한다.")
     void deleteAnswer() throws CannotDeleteException {
-        A1.delete(UserTest.JAVAJIGI, deleteHistories);
+        A1.delete(UserTest.JAVAJIGI);
         assertThat(A1.isDeleted()).isTrue();
     }
 
@@ -41,11 +41,5 @@ public class AnswerTest {
     @DisplayName("Answer의 삭제 히스토리를 1개 생성하여 잘 생성되었는지 테스트한다.")
     void answerHistory() {
         assertThat(A1.getDeleteAnswerHistory()).isNotNull();
-    }
-
-    @Test
-    @DisplayName("댓글이 삭제가 잘 되었다면 삭제 히스토리가 1개 반환되어야 한다.")
-    void answerDeleteHistory() throws CannotDeleteException {
-        assertThat(A1.delete(UserTest.JAVAJIGI, deleteHistories).size()).isEqualTo(1);
     }
 }
