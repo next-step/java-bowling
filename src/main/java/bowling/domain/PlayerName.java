@@ -1,12 +1,23 @@
 package bowling.domain;
 
+import bowling.exception.NameLengthOverException;
+
 import java.util.Objects;
 
 public class PlayerName {
+    private static final int NAME_MAX_LENGTH = 3;
+
     private final String name;
 
     public PlayerName(final String name) {
+        validNameLength(name);
         this.name = name;
+    }
+
+    private void validNameLength(final String name) {
+        if (name.length() > NAME_MAX_LENGTH) {
+            throw new NameLengthOverException(name);
+        }
     }
 
     @Override
