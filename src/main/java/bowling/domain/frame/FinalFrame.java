@@ -43,6 +43,7 @@ public class FinalFrame implements Frame {
         return score;
     }
 
+    @Override
     public Score getScore() {
         Score score = states.getFirst().getScore();
         for (int i = 1; i < states.size(); i++) {

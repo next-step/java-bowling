@@ -65,6 +65,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public Score getScore() {
+        return state.getScore();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

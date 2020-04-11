@@ -39,8 +39,8 @@ public class Results {
     private Frame calculate(LinkedList<Frame> frames) {
         Frame first = frames.removeFirst();
         for (Frame frame : frames) {
-            if (Objects.nonNull(first.getState().getScore()) && !first.getState().getScore().isCalculation()) {
-                Score score = frame.calculateByBeforeScore(first.getState().getScore());
+            if (Objects.nonNull(first.getScore()) && !first.getScore().isCalculation()) {
+                Score score = frame.calculateByBeforeScore(first.getScore());
                 first.updateScore(score);
             }
         }
