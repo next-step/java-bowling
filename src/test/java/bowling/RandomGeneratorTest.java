@@ -16,10 +16,11 @@ public class RandomGeneratorTest {
 
         IntStream.range(0, 1000)
                 .forEach(it -> assertThat(randomGenerator.getFirstPoint())
-                        .isLessThanOrEqualTo(10));
+                        .isLessThanOrEqualTo(10)
+                        .isGreaterThanOrEqualTo(0));
     }
 
-    @DisplayName("두 번째 포인트는 '10-첫번째 포인트' 값 보다 같거나 작아야 한다.")
+    @DisplayName("첫 번째 포인트와 두 번째 포인트의 합은 10이거나 10보다 작아야 한다.")
     @Test
     void generateSecondPoint() {
         RandomGenerator randomGenerator = new RandomGenerator();
