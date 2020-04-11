@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
@@ -12,29 +13,62 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("FrameScoreTests")
 public class FrameScoreTests {
-    /*
-     * FrameScore
-     * 볼링 프레임의 점수를 관리한다.
-     * Score 리스트를 관리한다.
-     * Score 의 합을 반환한다.
-     * 남은 투구 기회가 있는지 반환한다.
-     */
 
     @DisplayName("FrameScore 생성 테스트")
     @Test
     public void generateFrameScoreTest() {
-        assertThatCode(() -> FrameScore.newInstance(Arrays.asList(Score.of(5), Score.of(4))));
+        assertThatCode(FrameScore::new);
     }
 
-    @DisplayName("FrameScore 생성 테스트")
-    @NullAndEmptySource
+    @DisplayName("FrameScore 첫번째 투구 추가 테스트")
     @Test
-    public void generateFrameScoreAbnormalTest(List<Score> scores) {
-        assertThatCode(() -> FrameScore.newInstance(scores)));
+    public void addFirstPitchFrameScoreTest() {
+        FrameScore frameScore = new FrameScore();
+        assertThatCode(() -> frameScore.pitch(5, false));
+    }
+
+    @DisplayName("FrameScore 두번째 투구 추가 테스트")
+    @Test
+    public void addSecondPitchFrameScoreTest() {
+        FrameScore frameScore = new FrameScore();
+        frameScore.pitch(5, false);
+        assertThatCode(() -> frameScore.pitch(4, false));
+    }
+
+    @DisplayName("FrameScore 두번째 투구 추가 오류 테스트")
+    @ParameterizedTest
+    @CsvSource(value = {"5,6", "10,4"})
+    public void addSecondPitchFrameScoreAbnormalTest(final int firstPitch, final int secondPitch) {
+        FrameScore frameScore = new FrameScore();
+        frameScore.pitch(firstPitch, false);
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> frameScore.pitch(secondPitch, false))
+                .withMessageContaining("can not pitch second bowl. overflow maximum frame score");
+    }
+
+    @DisplayName("FrameScore 세번째 투구 추가 테스트")
+    @Test
+    public void addThirdPitchFrameScoreTest() {
+        FrameScore frameScore = new FrameScore();
+        frameScore.pitch(5, true);
+        frameScore.pitch(5, true);
+        assertThatCode(() -> frameScore.pitch(4, true));
+    }
+
+    @DisplayName("FrameScore 세번째 투구 추가 오류 테스트")
+    @ParameterizedTest
+    @CsvSource(value = {"10,3,8", "8,1,3"})
+    public void addThirdPitchFrameScoreAbnormalTest(final int firstPitch, final int secondPitch, final int thirdPitch) {
+        FrameScore frameScore = new FrameScore();
+        frameScore.pitch(firstPitch, true);
+        frameScore.pitch(secondPitch, true);
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> frameScore.pitch(thirdPitch, true))
+                .withMessageContaining("can not pitch third bowl. overflow maximum frame score");
     }
 
     @DisplayName("FrameScore 합 테스트")
@@ -49,7 +83,7 @@ public class FrameScoreTests {
     @MethodSource("generateFrameScoreOverTestCases")
     public void generateFrameScoreOverTest(List<Score> scores, boolean isLastFrame, boolean expectedResult) {
         FrameScore frameScore = FrameScore.newInstance(scores);
-        assertThat(frameScore.isOver(isLastFrame)).isEqualsTo(expectedResult);
+        assertThat(frameScore.isOver(isLastFrame)).isEqualTo(expectedResult);
     }
 
     private static Stream<Arguments> generateFrameScoreOverTestCases() {

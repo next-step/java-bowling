@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.List;
+
 public class Score {
     private final int score;
 
@@ -31,4 +33,13 @@ public class Score {
         return new Score(score);
     }
 
+    public static int sum(final List<Score> scores) {
+        return scores.stream()
+                .mapToInt(score -> score.score)
+                .sum();
+    }
+
+    public boolean isEqualsTo(final int score) {
+        return this.score == score;
+    }
 }
