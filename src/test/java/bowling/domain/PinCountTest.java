@@ -10,12 +10,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 
-public class ScoreTest {
+public class PinCountTest {
     @DisplayName("점수를 저장할 수 있다.")
     @Test
     void init() {
         int score = 10;
-        assertThat(new Score(score)).isEqualTo(new Score(score));
+        assertThat(new PinCount(score)).isEqualTo(new PinCount(score));
     }
 
     @DisplayName("범위 밖의 점수를 입력하면 에러")
@@ -23,6 +23,6 @@ public class ScoreTest {
     @ValueSource(ints = {-1, 11})
     void error(int score) {
         assertThatExceptionOfType(OutOfRangeArgumentException.class)
-                .isThrownBy(() -> new Score(score));
+                .isThrownBy(() -> new PinCount(score));
     }
 }

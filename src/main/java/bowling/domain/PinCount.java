@@ -4,29 +4,33 @@ import bowling.domain.exception.OutOfRangeArgumentException;
 
 import java.util.Objects;
 
-public class Score {
+public class PinCount {
     private static final String OUT_OF_RANGE_ERROR_MESSAGE =
             "점수는 %d에서 %d 사이여야 합니다.";
     private static final int MIN = 0;
     private static final int MAX = 10;
-    private int score;
+    private int pinCount;
 
-    public Score(int score) {
-        if (score < MIN || score > MAX) {
+    public PinCount(int pinCount) {
+        if (pinCount < MIN || pinCount > MAX) {
             throw new OutOfRangeArgumentException(
                     String.format(OUT_OF_RANGE_ERROR_MESSAGE, MIN, MAX));
         }
-        this.score = score;
+        this.pinCount = pinCount;
+    }
+
+    public int add(PinCount pinCount) {
+        return this.pinCount + pinCount.pinCount;
     }
 
     @Override public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Score score1 = (Score) o;
-        return score == score1.score;
+        PinCount pinCount1 = (PinCount) o;
+        return pinCount == pinCount1.pinCount;
     }
 
     @Override public int hashCode() {
-        return Objects.hash(score);
+        return Objects.hash(pinCount);
     }
 }
