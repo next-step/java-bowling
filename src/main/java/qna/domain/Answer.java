@@ -68,11 +68,6 @@ public class Answer extends AbstractEntity {
         return DeleteHistory.newAnswer(this.getId(), this.getWriter());
     }
 
-    private Answer setDeleted() {
-        this.deleted = true;
-        return this;
-    }
-
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";

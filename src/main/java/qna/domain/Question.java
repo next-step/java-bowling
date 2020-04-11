@@ -76,12 +76,7 @@ public class Question extends AbstractEntity {
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
-
-    private Question setDeleted() {
-        this.deleted = true;
-        return this;
-    }
-
+    
     public boolean isDeleted() {
         return deleted;
     }
@@ -92,8 +87,9 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateDeletable(loginUser);
-        List<DeleteHistory> deleteHistories = deleteAnswers();
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(deleteQuestion());
+        deleteHistories.addAll(deleteAnswers());
         return deleteHistories;
     }
 
