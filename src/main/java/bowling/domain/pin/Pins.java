@@ -13,6 +13,12 @@ public class Pins {
         this.pins = Collections.unmodifiableList(pins);
     }
 
+    public long knockOverCount() {
+        return pins.stream()
+                .filter(Pin::isKnockOver)
+                .count();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
