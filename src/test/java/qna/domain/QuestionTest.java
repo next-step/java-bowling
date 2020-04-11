@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    public static final Question Q3 = new Question("title3", "this question has no answer").writeBy(UserTest.JAVAJIGI);
 
     @Test
     @DisplayName("내가 쓰지 않은 질문을 삭제하려고 할 경우, Exception을 반환해야 한다.")
@@ -25,5 +26,11 @@ public class QuestionTest {
     void deleteQuestion() throws CannotDeleteException {
         Q1.delete(UserTest.JAVAJIGI);
         assertThat(Q1.isDeleted()).isTrue();
+    }
+
+    @Test
+    @DisplayName("질문이 삭제가 잘 되었다면 삭제 히스토리가 1개 반환되어야 한다.")
+    void questionHistory() throws CannotDeleteException {
+        assertThat(Q3.delete(UserTest.JAVAJIGI).length()).isEqualTo(1);
     }
 }
