@@ -15,8 +15,8 @@ public class NormalFrame implements Frame {
         pinCounts = new PinCounts(MAX_PIN_COUNT_SIZE);
     }
 
-    public void addPinCount(PinCount pinCount) {
-        if (pinCount.add(pinCounts.getPintCountTotal()) > MAX_PIN_COUNT) {
+    @Override public void addPinCount(PinCount pinCount) {
+        if (!isAddable(pinCount)) {
             throw new OutOfRangeArgumentException(
                     String.format(OUT_OF_RANGE_ERROR_MESSAGE, MAX_PIN_COUNT));
         }
@@ -26,15 +26,34 @@ public class NormalFrame implements Frame {
         }
     }
 
-    public int getScore() {
+    private boolean isAddable(PinCount pinCount) {
+        PinCount firstPinCount = pinCounts.getFirst()
+                .orElse(PinCount.empty());
+        if(firstPinCount.isMax()) {
+            return false;
+        }
+        return firstPinCount.isAddable(pinCount);
+    }
+
+    @Override public int getScore() {
         return pinCounts.getPintCountTotal();
     }
 
-    public boolean isDone() {
+    @Override public boolean isDone() {
         if (pinCounts.isFull()) {
             return true;
         }
 
         return pinCounts.getPintCountTotal() == MAX_PIN_COUNT;
+    }
+
+    public Frame addNext() {
+        next = new NormalFrame();
+        return next;
+    }
+
+    public Frame addFinal() {
+        next = new FinalFrame();
+        return next;
     }
 }
