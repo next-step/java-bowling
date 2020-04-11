@@ -39,8 +39,6 @@ public enum FrameResult {
                 .orElse(MISS);
     }
 
-
-
     private static boolean isFirstTen(int firstPoint) {
         return firstPoint == 10;
     }
@@ -49,11 +47,11 @@ public enum FrameResult {
         return secondPoint == 0;
     }
 
-    private static boolean isSumTen(int firstPoint, int secondPoint){
+    private static boolean isSumTen(int firstPoint, int secondPoint) {
         return (firstPoint + secondPoint) == 10;
     }
 
-    private static boolean isAllZero(int firstPoint, int secondPoint){
+    private static boolean isAllZero(int firstPoint, int secondPoint) {
         return (firstPoint == 0 && secondPoint == 0);
     }
 }
