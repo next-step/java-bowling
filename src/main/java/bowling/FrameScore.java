@@ -40,25 +40,26 @@ public class FrameScore {
     }
 
     public boolean isOver(final boolean isLastFrame) {
-        int frameFullPitchCount = COMMON_FRAME_FULL_PITCH_COUNT;
         if (isLastFrame) {
-            frameFullPitchCount = LAST_FRAME_FULL_PITCH_COUNT;
+            return isOverWhenLastFrame();
         }
-
-        return isOver(frameFullPitchCount);
+        return isOverWhenCommonFrame();
     }
 
-    private boolean isOver(final int fullScoreSize) {
-        if (scores.size() == fullScoreSize) {
+    private boolean isOverWhenLastFrame() {
+        if (scores.size() == LAST_FRAME_FULL_PITCH_COUNT) {
             return true;
         }
 
-        if ((scores.size() == fullScoreSize - 1) && Score.sum(scores) % 10 != 0) {
+        return scores.size() == LAST_FRAME_FULL_PITCH_COUNT - 1 && Score.sum(scores) % 10 != 0;
+    }
+
+    private boolean isOverWhenCommonFrame() {
+        if (scores.size() == COMMON_FRAME_FULL_PITCH_COUNT) {
             return true;
         }
 
-        return false;
+        return scores.size() == COMMON_FRAME_FULL_PITCH_COUNT - 1 && Score.sum(scores) == 10;
     }
-
 
 }
