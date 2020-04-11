@@ -20,7 +20,8 @@ public class FrameScoreTests {
     @DisplayName("FrameScore 생성 테스트")
     @Test
     public void generateFrameScoreTest() {
-        assertThatCode(FrameScore::new);
+        assertThatCode(CommonFrameScore::new);
+        assertThatCode(LastFrameScore::new);
     }
 
     @DisplayName("FrameScore 첫번째 투구 추가 테스트")
@@ -44,7 +45,7 @@ public class FrameScoreTests {
     public void addSecondPitchFrameScoreAbnormalTest(final int firstPitch, final int secondPitch) {
         FrameScore frameScore = new CommonFrameScore();
         frameScore.pitch(firstPitch);
-        assertThatIllegalArgumentException()
+        assertThatExceptionOfType(Exception.class)
                 .isThrownBy(() -> frameScore.pitch(secondPitch));
     }
 
@@ -64,14 +65,14 @@ public class FrameScoreTests {
         FrameScore frameScore = new LastFrameScore();
         frameScore.pitch(firstPitch);
         frameScore.pitch(secondPitch);
-        assertThatIllegalArgumentException()
+        assertThatExceptionOfType(RuntimeException.class)
                 .isThrownBy(() -> frameScore.pitch(thirdPitch));
     }
 
     @DisplayName("FrameScore 합 테스트")
     @Test
     public void generateFrameScoreSumTest() {
-        FrameScore frameScore = CommonFrameScore.newInstance(Arrays.asList(5, 4);
+        FrameScore frameScore = CommonFrameScore.newInstance(Arrays.asList(5, 4));
         assertThat(frameScore.sum()).isEqualTo(9);
     }
 
@@ -80,7 +81,7 @@ public class FrameScoreTests {
     @MethodSource("generateFrameScoreOverTestCases")
     public void generateFrameScoreOverTest(List<Integer> scores, boolean isLastFrame, boolean expectedResult) {
         FrameScore frameScore = isLastFrame ? LastFrameScore.newInstance(scores) : CommonFrameScore.newInstance(scores);
-        assertThat(frameScore.isOver(isLastFrame)).isEqualTo(expectedResult);
+        assertThat(frameScore.isOver()).isEqualTo(expectedResult);
     }
 
     private static Stream<Arguments> generateFrameScoreOverTestCases() {

@@ -29,17 +29,17 @@ public class ScoreTests {
     @DisplayName("Score 두번째 투구 생성 테스트")
     @ParameterizedTest
     @CsvSource(value = {"5,5,false", "10,5,true", "3,7,true"})
-    public void generateSecondPitchingTest(final int firstPitching, final int secondPitching, final boolean isLastFrame) {
+    public void generateSecondPitchingTest(final int firstPitching, final int secondPitching) {
         Score score = Score.of(firstPitching);
-        assertThatCode(() -> score.secondPitching(secondPitching, isLastFrame));
+        assertThatCode(() -> score.secondPitching(secondPitching));
     }
 
     @DisplayName("Score 두번째 투구 생성 오류 테스트")
     @ParameterizedTest
-    @CsvSource(value = {"5,-1,false", "5,6,false", "5,11,false", "10,0,false", "10,11,true"})
-    public void generateSecondPitchingAbnormalTest(final int firstPitching, final int secondPitching, final boolean isLastFrame) {
+    @CsvSource(value = {"5,-1", "5,6", "5,11", "10,0", "10,11"})
+    public void generateSecondPitchingAbnormalTest(final int firstPitching, final int secondPitching) {
         Score firstScore = Score.of(firstPitching);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> firstScore.secondPitching(secondPitching, isLastFrame));
+                .isThrownBy(() -> firstScore.secondPitching(secondPitching));
     }
 }

@@ -19,10 +19,10 @@ public class Score {
         }
     }
 
-    private void validateSecondPitching(final int score, final boolean isLastFrame) {
+    private void validateSecondPitching(final int score) {
         int remainScores = STRIKE_COUNT - this.score;
 
-        if ((remainScores == 0 && !isLastFrame) || remainScores < score) {
+        if (remainScores == 0 || remainScores < score) {
             throw new IllegalArgumentException("Sum of first, second pitching score must be greater than zero and lower than 10.");
         }
     }
@@ -31,8 +31,8 @@ public class Score {
         return new Score(score);
     }
 
-    public Score secondPitching(final int score, final boolean isLastFrame) {
-        validateSecondPitching(score, isLastFrame);
+    public Score secondPitching(final int score) {
+        validateSecondPitching(score);
         return new Score(score);
     }
 
@@ -42,7 +42,7 @@ public class Score {
                 .sum();
     }
 
-    public boolean isEqualsTo(final int score) {
-        return this.score == score;
+    public boolean isStrike() {
+        return this.score == STRIKE_COUNT;
     }
 }
