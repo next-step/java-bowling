@@ -9,6 +9,12 @@ import java.util.List;
 public class OutputView {
     private static final String SCORE_BOARD_SUBJECT = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String SCORE_BOARD_CONTENTS = "|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|\n";
+    private static final String STRIKE = "X";
+    private static final String GUTTER = "-";
+    private static final String SEPARATOR = "|";
+
+    private static final int ZERO = 0;
+    private static final int MAX_FAME_COUNT = 10;
 
     public static void printScoreBoard(String playerName, Frames frames) {
         List<String> values = new ArrayList<>();
@@ -29,15 +35,15 @@ public class OutputView {
             RoundsStatus status = frameRounds.getStatus();
 
             if (status == RoundsStatus.STRIKE) {
-                value += "X";
+                value += STRIKE;
                 values.add(value);
 
                 continue;
             }
 
             for (FrameRound frameRound : frameRounds.getFrameRounds()) {
-                if (frameRound.getRoundIndex() != 0) {
-                    value += "|";
+                if (frameRound.getRoundIndex() != ZERO) {
+                    value += SEPARATOR;
                 }
 
                 value += convertClearPinCount(frameRound.getClearPinCount());
@@ -45,7 +51,7 @@ public class OutputView {
             values.add(value);
         }
 
-        for (int i = 0, end = 10 - values.size(); i < end; i++) {
+        for (int i = ZERO, end = MAX_FAME_COUNT - values.size(); i < end; i++) {
             values.add("");
         }
 
@@ -53,8 +59,8 @@ public class OutputView {
     }
 
     private static String convertClearPinCount(int clearPinCount) {
-        if (clearPinCount == 0) {
-            return "-";
+        if (clearPinCount == ZERO) {
+            return GUTTER;
         }
 
         return String.valueOf(clearPinCount);
