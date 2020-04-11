@@ -1,0 +1,31 @@
+package bowling;
+
+import bowling.domain.BowlingGame;
+import bowling.view.InputView;
+import bowling.view.OutputView;
+
+public class Application {
+    public static void main(String[] args) {
+        InputView inputView = new InputView();
+
+        String playerName = inputView.inputPlayerName();
+
+        BowlingGame bowlingGame = new BowlingGame(playerName);
+
+        OutputView.printScoreBoard(bowlingGame.getBowling().getPlayerName(), bowlingGame.getBowling().getFrames());
+
+        while (true) {
+            int lastFrameNumber = bowlingGame.getLastFrameNumber();
+
+            int clearPinCount = inputView.inputClearPin(lastFrameNumber);
+
+            bowlingGame.play(clearPinCount);
+
+            OutputView.printScoreBoard(bowlingGame.getBowling().getPlayerName(), bowlingGame.getBowling().getFrames());
+
+            if (bowlingGame.isEnd()) {
+                break;
+            }
+        }
+    }
+}
