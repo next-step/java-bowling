@@ -15,7 +15,7 @@ public class PlayerTests {
     @DisplayName("Player 생성 테스트")
     @Test
     public void generatePlayerTest() {
-        assertThatCode(() -> Player.newInstance("ABC"));
+        assertThatCode(() -> Player.of("ABC"));
     }
 
     @DisplayName("Player 생성 오류 테스트")
@@ -24,6 +24,6 @@ public class PlayerTests {
     @ValueSource(strings = {"ABCD", "=-=", "123"})
     public void generatePlayerAbnormalTest(final String name) {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Player.newInstance(name));
+                .isThrownBy(() -> Player.of(name));
     }
 }

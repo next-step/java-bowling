@@ -15,7 +15,7 @@ public class Player {
         this.name = name;
     }
 
-    public static Player newInstance(final String name) {
+    public static Player of(final String name) {
         validate(name);
         return new Player(name);
     }

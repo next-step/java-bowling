@@ -11,7 +11,11 @@ public class BowlingGame {
     }
 
     public static BowlingGame newInstance(final String name) {
-        return new BowlingGame(Player.newInstance(name));
+        return new BowlingGame(Player.of(name));
+    }
+
+    public static BowlingGame newInstance(final Player player) {
+        return new BowlingGame(player);
     }
 
     public void bowl(final int pinCount) {
