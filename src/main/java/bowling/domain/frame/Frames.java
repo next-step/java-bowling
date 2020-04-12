@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Frames {
+    private static final int FINAL_FRAME_ID = 10;
+
     private List<Frame> frames;
 
     public Frames(List<Frame> frames) {
@@ -38,8 +40,11 @@ public class Frames {
     }
 
     private int findFrameScoreWhenStrike(Frame currentFrame) {
-        Frame nextFrame = getNextFrameByCurrentId(currentFrame.getFrameId());
+        if (currentFrame.getFrameId() == FINAL_FRAME_ID) {
+            return (currentFrame.getFirstPoint() + currentFrame.getThirdPoint() + currentFrame.getFourthPoint());
+        }
 
+        Frame nextFrame = getNextFrameByCurrentId(currentFrame.getFrameId());
         if (nextFrame.isStrike()) {
             int firstOfNext = nextFrame.getFirstPoint();
             int firstOfNextOfNext = getNextFrameByCurrentId(nextFrame.getFrameId()).getFirstPoint();

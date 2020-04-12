@@ -7,7 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -83,10 +86,13 @@ public class FramesTest {
     void returnFrameScoreWhenTenthIsStrike() {
         //given
         Frame tenthFrame = new Frame(9, 10, 0);
-        Frames frames = new Frames(Arrays.asList(tenthFrame));
+        List<Frame> frames = new ArrayList<>();
+        IntStream.range(0, 10)
+                .forEach(it -> frames.add(tenthFrame));
+        Frames framesForResult = new Frames(frames);
 
         //when
-        int frameScore = frames.getFrameScore(tenthFrame.getFrameId());
+        int frameScore = framesForResult.getFrameScore(tenthFrame.getFrameId());
 
         //then
         assertThat(frameScore).isEqualTo(10 + tenthFrame.getThirdPoint() + tenthFrame.getFourthPoint());
