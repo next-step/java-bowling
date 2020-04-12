@@ -30,10 +30,24 @@ public class Frames {
             return (frame.getFirstPoint() + frame.getSecondPoint() + firstPointOfNextFrame);
         }
 
+        if(frame.isStrike()){
+            return findFrameScoreWhenStrike(frame);
+        }
+
         return 0;
     }
 
     private Frame getNextFrameByCurrentId(int currentFrameId){
         return frames.get(currentFrameId);
+    }
+
+    private int findFrameScoreWhenStrike(Frame currentFrame){
+        Frame nextFrame = getNextFrameByCurrentId(currentFrame.getFrameId());
+        if(!nextFrame.isStrike()){
+            int firstOfNext = nextFrame.getFirstPoint();
+            int secondOfNext = nextFrame.getSecondPoint();
+            return (currentFrame.getFirstPoint() + firstOfNext + secondOfNext);
+        }
+        return 0;
     }
 }

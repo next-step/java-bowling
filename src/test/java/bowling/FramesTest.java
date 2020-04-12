@@ -49,7 +49,7 @@ public class FramesTest {
     void returnFrameScoreWhenStrikeAndNextFirstIsNotStrike(int nextFirstPoint, int nextSecondPoint) {
         //given
         Frame frame = new Frame(0, 10, 0);
-        Frame nextFrame = new Frame(1, nextFirstPoint, nextSecondPoint;
+        Frame nextFrame = new Frame(1, nextFirstPoint, nextSecondPoint);
         Frames frames = new Frames(Arrays.asList(frame, nextFrame));
 
         //when
