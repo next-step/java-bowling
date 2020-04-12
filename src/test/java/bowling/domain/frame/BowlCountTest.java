@@ -9,14 +9,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-class FrameBowlCountTest {
+class BowlCountTest {
     @DisplayName("투구수를 생성할 수 있다.")
     @Test
     void create() {
         int count = 0;
-        FrameBowlCount expect = new FrameBowlCount(count);
+        BowlCount expect = new BowlCount(count);
 
-        FrameBowlCount actual = new FrameBowlCount(count);
+        BowlCount actual = new BowlCount(count);
 
         assertThat(actual).isEqualTo(expect);
     }
@@ -26,7 +26,7 @@ class FrameBowlCountTest {
     @ValueSource(ints = {-1, 11})
     void validRange(int count) {
         assertThatExceptionOfType(FrameBowlCountOutOfRangeException.class).isThrownBy(
-                () -> new FrameBowlCount(count)
+                () -> new BowlCount(count)
         );
     }
 }

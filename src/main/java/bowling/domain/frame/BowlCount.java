@@ -4,14 +4,23 @@ import bowling.exception.FrameBowlCountOutOfRangeException;
 
 import java.util.Objects;
 
-public class FrameBowlCount {
+public class BowlCount {
     private static final int MIN_BOWL_COUNT = 0;
     private static final int MAX_BOWL_COUNT = 10;
-    private final int count;
 
-    public FrameBowlCount(final int count) {
-        validRange(count);
-        this.count = count;
+    private final int bowlCount;
+
+    public BowlCount(final int bowlCount) {
+        validRange(bowlCount);
+        this.bowlCount = bowlCount;
+    }
+
+    public int count() {
+        return bowlCount;
+    }
+
+    public boolean isGreaterThan(final long count) {
+        return this.bowlCount < count;
     }
 
     private void validRange(final int count) {
@@ -24,12 +33,12 @@ public class FrameBowlCount {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final FrameBowlCount that = (FrameBowlCount) o;
-        return count == that.count;
+        final BowlCount that = (BowlCount) o;
+        return bowlCount == that.bowlCount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(count);
+        return Objects.hash(bowlCount);
     }
 }
