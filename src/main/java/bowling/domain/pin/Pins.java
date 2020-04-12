@@ -1,6 +1,7 @@
 package bowling.domain.pin;
 
 import bowling.domain.frame.BowlCount;
+import bowling.exception.BowlCountOverThanPinsException;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +18,7 @@ public class Pins {
     }
 
     public Pins knockOver(final BowlCount bowlCount) {
+        checkKnockOver(bowlCount);
         return pins.stream()
                    .skip(bowlCount.count())
                    .collect(Collectors.collectingAndThen(Collectors.toList(), Pins::new));
@@ -24,6 +26,12 @@ public class Pins {
 
     public int standingCount() {
         return pins.size();
+    }
+
+    private void checkKnockOver(final BowlCount bowlCount) {
+        if (bowlCount.isGreaterThan(standingCount())) {
+            throw new BowlCountOverThanPinsException(bowlCount.count());
+        }
     }
 
     @Override
