@@ -23,6 +23,10 @@ public class Frames {
     public int getFrameScore(int frameId) {
         Frame frame = frames.get(frameId - 1);
 
+        if (frameId == FINAL_FRAME_ID) {
+            return findFinalFrameScore(frame);
+        }
+
         if (frame.isStrike()) {
             return findFrameScoreWhenStrike(frame);
         }
@@ -40,10 +44,6 @@ public class Frames {
     }
 
     private int findFrameScoreWhenStrike(Frame currentFrame) {
-        if (currentFrame.getFrameId() == FINAL_FRAME_ID) {
-            return (currentFrame.getFirstPoint() + currentFrame.getThirdPoint() + currentFrame.getFourthPoint());
-        }
-
         Frame nextFrame = getNextFrameByCurrentId(currentFrame.getFrameId());
         if (nextFrame.isStrike()) {
             int firstOfNext = nextFrame.getFirstPoint();
@@ -52,5 +52,13 @@ public class Frames {
         }
 
         return (currentFrame.getFirstPoint() + nextFrame.getFirstPoint() + nextFrame.getSecondPoint());
+    }
+
+    private int findFinalFrameScore(Frame currentFrame) {
+        if (currentFrame.isStrike()) {
+            return (currentFrame.getFirstPoint() + currentFrame.getThirdPoint() + currentFrame.getFourthPoint());
+        }
+
+        return 0;
     }
 }
