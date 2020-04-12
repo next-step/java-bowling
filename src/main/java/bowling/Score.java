@@ -1,6 +1,7 @@
 package bowling;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Score {
 
@@ -48,5 +49,18 @@ public class Score {
 
     public boolean isStrike() {
         return this.score == STRIKE_COUNT;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Score)) return false;
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

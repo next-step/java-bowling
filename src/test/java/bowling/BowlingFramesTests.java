@@ -14,7 +14,7 @@ public class BowlingFramesTests {
      * 최종 프레임 리스트는 10개여야 한다.
      */
 
-    @DisplayName("생성 테스트")
+/*    @DisplayName("생성 테스트")
     @Test
     public void generateBowlingFramesTest() {
         assertThatCode(() -> BowlingFrames.newInstance()).doesNotThrowAnyException();
@@ -25,5 +25,5 @@ public class BowlingFramesTests {
     public void checkBowlingFramesSizeTest() {
         BowlingFrames bowlingFrames = BowlingFrames.newInstance();
         assertThat(bowlingFrames).size(10);
-    }
+    }*/
 }
