@@ -2,15 +2,15 @@ package qna.domain;
 
 import qna.CannotDeleteException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Answers {
 
     private final List<Answer> answers;
-    private final User loginUser;
 
-    private Answers(List<Answer> answers, User loginUser) {
+    public Answers(List<Answer> answers) {
         this.answers = answers;
         this.loginUser = loginUser;
     }
@@ -29,16 +29,11 @@ public class Answers {
         return answers;
     }
 
-    public List<Answer> delete() throws CannotDeleteException {
-        canDelete();
-        return answers.stream()
-                .map(Answer::delete)
-                .collect(Collectors.toList());
+    public List<DeleteHistory> deleteAnswer(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        for (Answer answer: answers) {
+            deleteHistories.add(answer.deleteAnswer(loginUser));
+        }
+        return deleteHistories;
     }
-
-//    public Answers delete2() {
-//        return answers.stream()
-//                .map(Answer::delete)
-//                .collect(Collector.of(Answers.of(answers,loginUser)));
-//    }
 }

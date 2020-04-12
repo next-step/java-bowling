@@ -5,7 +5,7 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -55,6 +55,11 @@ public class Answer extends AbstractEntity {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
         return true;
+    }
+
+    public DeleteHistory deleteAnswer(User loginUser) throws CannotDeleteException {
+        this.deleted = canDelete(loginUser);
+        return new DeleteHistory(ContentType.ANSWER, this.getId(), loginUser, LocalDateTime.now());
     }
 
     public boolean isDeleted() {
