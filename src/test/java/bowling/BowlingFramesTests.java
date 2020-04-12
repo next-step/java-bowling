@@ -11,6 +11,6 @@ public class BowlingFramesTests {
     @DisplayName("생성 테스트")
     @Test
     public void generateTest() {
-        assertThatCode(() -> BowlingFrames.newInstance()).doesNotThrowAnyException();
+        assertThatCode(BowlingFrames::new).doesNotThrowAnyException();
     }
 }
