@@ -97,4 +97,22 @@ public class FramesTest {
         //then
         assertThat(frameScore).isEqualTo(10 + tenthFrame.getThirdPoint() + tenthFrame.getFourthPoint());
     }
+
+    @DisplayName("10회 투구가 Spare일 때, 프레임의 점수를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"9:1", "8:2", "0:10"}, delimiter = ':')
+    void returnFrameScoreWhenTenthIsSpare(int firstPoint, int secondPoint) {
+        //given
+        Frame tenthFrame = new Frame(9, firstPoint, secondPoint);
+        List<Frame> frames = new ArrayList<>();
+        IntStream.range(0, 10)
+                .forEach(it -> frames.add(tenthFrame));
+        Frames framesForResult = new Frames(frames);
+
+        //when
+        int frameScore = framesForResult.getFrameScore(tenthFrame.getFrameId());
+
+        //then
+        assertThat(frameScore).isEqualTo(firstPoint + secondPoint + tenthFrame.getThirdPoint());
+    }
 }
