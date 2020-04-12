@@ -1,9 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.RandomGenerator;
 import bowling.domain.point.Ordinal;
 import bowling.domain.point.Point;
 import bowling.domain.point.Points;
-import bowling.domain.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ public class Frame {
     private static final int SCORE_TEN = 10;
     private static final int SCORE_ZERO = 0;
     private static final int LAST_FRAME_ID = 10;
+    private static final int FIRST_FRAME_ID = 1;
 
     private int frameId = 1;
     private Points points;
@@ -44,7 +45,7 @@ public class Frame {
         List<Frame> frames = new ArrayList<>();
         Frame currentFrame = Frame.create(randomGenerator);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = FIRST_FRAME_ID; i <= LAST_FRAME_ID; i++) {
             frames.add(currentFrame);
             currentFrame = currentFrame.createNextFrame(randomGenerator);
         }
@@ -96,35 +97,35 @@ public class Frame {
         return points.findResult();
     }
 
-    public boolean isStrike(){
+    public boolean isStrike() {
         return FrameResult.STRIKE.equals(points.findResult());
     }
 
-    public boolean isSpare(){
+    public boolean isSpare() {
         return FrameResult.SPARE.equals(points.findResult());
     }
 
-    public boolean isMiss(){
+    public boolean isMiss() {
         return FrameResult.MISS.equals(points.findResult());
     }
 
-    public boolean isGutter(){
+    public boolean isGutter() {
         return FrameResult.GUTTER.equals(points.findResult());
     }
 
-    public int getPointAtOrdinal(Ordinal ordinal){
-        if(Ordinal.SECOND.equals(ordinal)){
+    public int getPointAtOrdinal(Ordinal ordinal) {
+        if (Ordinal.SECOND.equals(ordinal)) {
             return points.getSecondPoint();
         }
 
-        if(Ordinal.THIRD.equals(ordinal)){
+        if (Ordinal.THIRD.equals(ordinal)) {
             return points.getThirdPoint();
         }
 
         return points.getFirstPoint();
     }
 
-    public boolean containsOrdinal(Ordinal ordinal){
+    public boolean containsOrdinal(Ordinal ordinal) {
         return points.containsOrdinal(ordinal);
     }
 }
