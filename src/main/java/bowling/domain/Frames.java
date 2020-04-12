@@ -60,7 +60,11 @@ public class Frames {
         return !currentFrame.isLast() || !currentFrame.isDone();
     }
 
-    public List<Integer> getFramePinCount(int index) {
+    public List<PinCount> getFramePinCounts(int index) {
         return frameList.get(index).getPinCounts();
+    }
+
+    public int size() {
+        return frameList.size();
     }
 }

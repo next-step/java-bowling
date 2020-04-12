@@ -49,7 +49,7 @@ public class NormalFrame implements Frame {
         return pinCounts.getPinCountTotal() == MAX_PIN_COUNT;
     }
 
-    @Override public List<Integer> getPinCounts() {
+    @Override public List<PinCount> getPinCounts() {
         return pinCounts.getPinCountList();
     }
 

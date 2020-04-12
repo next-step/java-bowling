@@ -51,7 +51,7 @@ public class FinalFrame implements Frame {
                 pinCounts.getPinCountTotal() < MIN_PIN_COUNT_FOR_THIRD;
     }
 
-    @Override public List<Integer> getPinCounts() {
+    @Override public List<PinCount> getPinCounts() {
         return pinCounts.getPinCountList();
     }
 

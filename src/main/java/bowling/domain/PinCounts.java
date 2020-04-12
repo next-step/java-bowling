@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,9 +69,9 @@ public class PinCounts {
         return pinCountList.size() - 1;
     }
 
-    public List<Integer> getPinCountList() {
+    public List<PinCount> getPinCountList() {
         return pinCountList.stream()
-                .map(PinCount::getPinCount)
+                .map(PinCount::new)
                 .collect(Collectors.toList());
     }
 }
