@@ -59,6 +59,10 @@ public class Frames {
             return (currentFrame.getFirstPoint() + currentFrame.getThirdPoint() + currentFrame.getFourthPoint());
         }
 
+        if (currentFrame.isSpare()) {
+            return (currentFrame.getFirstPoint() + currentFrame.getSecondPoint() + currentFrame.getThirdPoint());
+        }
+
         return 0;
     }
 }
