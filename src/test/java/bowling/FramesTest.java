@@ -58,4 +58,22 @@ public class FramesTest {
         //then
         assertThat(frameScore).isEqualTo(10 + nextFirstPoint + nextSecondPoint);
     }
+
+    @DisplayName("프레임의 결과가 Strike이고 다음 투구의 첫 포인트가 Strike일 때,프레임의 점수를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"10:0", "8:2", "7:2", "0:0"}, delimiter = ':')
+    void returnFrameScoreWhenStrikeAndNextFirstIsStrike(int firstOfThirdFrame, int secondOfThirdFrame) {
+        //given
+        Frame firstFrame = new Frame(0, 10, 0);
+        Frame secondFrame = new Frame(1, 10, 0);
+        Frame thirdFrame = new Frame(2, firstOfThirdFrame, secondOfThirdFrame);
+
+        Frames frames = new Frames(Arrays.asList(firstFrame, secondFrame, thirdFrame));
+
+        //when
+        int frameScore = frames.getFrameScore(firstFrame.getFrameId());
+
+        //then
+        assertThat(frameScore).isEqualTo(10 + 10 + firstOfThirdFrame);
+    }
 }
