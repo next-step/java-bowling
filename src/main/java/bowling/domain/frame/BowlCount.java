@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.exception.FrameBowlCountOutOfRangeException;
+import bowling.exception.BowlCountOutOfRangeException;
 
 import java.util.Objects;
 
@@ -20,12 +20,12 @@ public class BowlCount {
     }
 
     public boolean isGreaterThan(final long count) {
-        return this.bowlCount < count;
+        return this.bowlCount > count;
     }
 
     private void validRange(final int count) {
         if (count < MIN_BOWL_COUNT || count > MAX_BOWL_COUNT) {
-            throw new FrameBowlCountOutOfRangeException(count);
+            throw new BowlCountOutOfRangeException(count);
         }
     }
 

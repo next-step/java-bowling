@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.exception.FrameBowlCountOutOfRangeException;
+import bowling.exception.BowlCountOutOfRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +25,7 @@ class BowlCountTest {
     @ParameterizedTest
     @ValueSource(ints = {-1, 11})
     void validRange(int count) {
-        assertThatExceptionOfType(FrameBowlCountOutOfRangeException.class).isThrownBy(
+        assertThatExceptionOfType(BowlCountOutOfRangeException.class).isThrownBy(
                 () -> new BowlCount(count)
         );
     }
