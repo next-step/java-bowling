@@ -1,6 +1,6 @@
-package bowling.domain.game.dto;
+package bowling.game.dto;
 
-import bowling.domain.frame.domain.Frames;
+import bowling.frame.domain.Frames;
 
 public class BowlingGameDto {
 

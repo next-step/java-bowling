@@ -1,6 +1,6 @@
-package bowling.domain.game.domain;
+package bowling.game.domain;
 
-import bowling.domain.game.dto.BowlingGameDto;
+import bowling.game.dto.BowlingGameDto;
 
 public class BowlingGameAssembler {
 
