@@ -8,10 +8,6 @@ public class Player {
         return name;
     }
 
-    public Frames getFrames() {
-        return frames;
-    }
-
     public Player(String name) {
         checkLetter(name);
         this.name = name;
@@ -45,9 +41,12 @@ public class Player {
         return frames.isEndNormalFrame();
     }
 
-
     public boolean isEndFinalFrame(FinalFrame finalFrame) {
         addFrame(finalFrame);
+        return frames.isEndFinalFrame();
+    }
+
+    public boolean isEndFinalFrame() {
         return frames.isEndFinalFrame();
     }
 

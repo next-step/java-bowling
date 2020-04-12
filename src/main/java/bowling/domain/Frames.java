@@ -33,7 +33,6 @@ public class Frames {
     }
 
     public boolean isEndFinalFrame() {
-        addFinalFrame(finalFrame);
         return finalFrame.isEndFinalFrame();
     }
 

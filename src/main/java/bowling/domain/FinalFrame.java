@@ -26,4 +26,8 @@ public class FinalFrame {
                 "scores=" + scores +
                 '}';
     }
+
+    public void add(Scores scores) {
+        this.scores = scores;
+    }
 }

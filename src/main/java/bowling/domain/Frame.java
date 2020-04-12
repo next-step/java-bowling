@@ -1,11 +1,13 @@
 package bowling.domain;
 
-import java.util.Objects;
+public class Frame {
+    public Scores getScores() {
+        return scores;
+    }
 
-public class NormalFrame  {
     private Scores scores;
 
-    public NormalFrame() {
+    public Frame() {
         this.scores = new Scores();
     }
 
@@ -17,19 +19,20 @@ public class NormalFrame  {
         this.scores.add(score);
     }
 
-    public void add(int numberOfPin) {
+    public void addNormalFrame(int numberOfPin) {
         this.scores.checkBeforeAddNormal(numberOfPin);
+        this.scores.add(new Score(numberOfPin));
+    }
+
+    public void addFinalFrame(int numberOfPin) {
+        this.scores.checkBeforeAddFinal(numberOfPin);
         this.scores.add(new Score(numberOfPin));
     }
 
     @Override
     public String toString() {
-        return "NormalFrame{" +
+        return "Frame{" +
                 "scores=" + scores +
                 '}';
-    }
-
-    public void add(Scores scores) {
-        this.scores = scores;
     }
 }
