@@ -47,8 +47,20 @@ public class Points {
         this.points.put(Ordinal.THIRD, point);
     }
 
+    public void addFourthPoint(Point point) {
+        this.points.put(Ordinal.FOURTH, point);
+    }
+
     public boolean isStrikeOrSpare() {
         return findResult().equals(FrameResult.SPARE) || findResult().equals(FrameResult.STRIKE);
+    }
+
+    public boolean isStrike() {
+        return findResult().equals(FrameResult.STRIKE);
+    }
+
+    public boolean isSpare() {
+        return findResult().equals(FrameResult.SPARE);
     }
 
     public int getFirstPoint(){
@@ -61,6 +73,10 @@ public class Points {
 
     public int getThirdPoint(){
         return points.get(Ordinal.THIRD).getScore();
+    }
+
+    public int getFourthPoint(){
+        return points.get(Ordinal.FOURTH).getScore();
     }
 
     public boolean containsOrdinal(Ordinal ordinal){

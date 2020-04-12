@@ -12,6 +12,7 @@ import static bowling.Messages.WARNING_FRAME_NOT_ALLOWED_SECOND_WHEN_STRIKE;
 import static bowling.Messages.WARNING_FRAME_NOT_ALLOWED_SUM;
 
 public class Frame {
+    private static final RandomGenerator RANDOM_GENERATOR = new RandomGenerator();
     private static final int SCORE_TEN = 10;
     private static final int SCORE_ZERO = 0;
     private static final int LAST_FRAME_ID = 10;
@@ -33,7 +34,12 @@ public class Frame {
         this.frameId = prevFrameId + 1;
 
         if (doesNeedOneMorePoint()) {
-            points.addThirdPoint(Point.of(RandomGenerator.getThirdPoint()));
+            points.addThirdPoint(Point.of(RANDOM_GENERATOR.getThirdPoint()));
+        }
+
+        if (doesNeedTwoMorePoint()) {
+            points.addThirdPoint(Point.of(RANDOM_GENERATOR.getThirdPointForStrike()));
+            points.addFourthPoint(Point.of(RANDOM_GENERATOR.getFourthPointForStrike()));
         }
     }
 
@@ -58,7 +64,11 @@ public class Frame {
     }
 
     private boolean doesNeedOneMorePoint() {
-        return frameId == LAST_FRAME_ID && points.isStrikeOrSpare();
+        return frameId == LAST_FRAME_ID && points.isSpare();
+    }
+
+    private boolean doesNeedTwoMorePoint() {
+        return frameId == LAST_FRAME_ID && points.isStrike();
     }
 
     private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {
@@ -93,6 +103,10 @@ public class Frame {
         return points.getThirdPoint();
     }
 
+    public int getFourthPoint() {
+        return points.getFourthPoint();
+    }
+
     public FrameResult findResult() {
         return points.findResult();
     }
@@ -120,6 +134,10 @@ public class Frame {
 
         if (Ordinal.THIRD.equals(ordinal)) {
             return points.getThirdPoint();
+        }
+
+        if (Ordinal.FOURTH.equals(ordinal)) {
+            return points.getFourthPoint();
         }
 
         return points.getFirstPoint();

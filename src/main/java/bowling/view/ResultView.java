@@ -36,6 +36,7 @@ public class ResultView {
         if (frame.isStrike()) {
             printFrameResultWhen(FIRST, playerName, frames, frame);
             printFrameResultWhen(THIRD, playerName, frames, frame);
+            printFrameResultWhen(FOURTH, playerName, frames, frame);
         }
 
         if (!frame.isStrike()) {
@@ -108,6 +109,10 @@ public class ResultView {
         if (THIRD.equals(ordinal)) {
             printFrameThirdWhenStrike(frame);
         }
+
+        if(FOURTH.equals(ordinal)){
+            printFrameFourthWhenStrike(frame);
+        }
     }
 
     private static void printFrameFirstWhenStrike() {
@@ -122,7 +127,13 @@ public class ResultView {
         print(SYMBOL_STRIKE);
         print(BLOCK_BORDER);
         print(frame.getThirdPoint());
-        print(BLANK_TWO);
+    }
+
+    private static void printFrameFourthWhenStrike(Frame frame){
+        printFrameThirdWhenStrike(frame);
+        print(BLOCK_BORDER);
+        print(frame.getFourthPoint());
+        print(BLANK_ONE);
         printBlockBorder();
     }
 
