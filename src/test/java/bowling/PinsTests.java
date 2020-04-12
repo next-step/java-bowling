@@ -28,7 +28,7 @@ public class PinsTests {
     public void dropPinsTest() {
         Pins pins = new Pins();
 
-        assertThat(pins.drop(5)).isEqualTo(Score.of(5));
+        assertThat(pins.drop(5)).isEqualTo(5);
     }
 
     @DisplayName("핀 쓰러트리기 에러 테스트 ")

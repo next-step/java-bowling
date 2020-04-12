@@ -15,16 +15,16 @@ public class Pins {
     }
 
     public int drop(final int dropPinCount) {
-        return changePins(dropPinCount);
+        changePins(dropPinCount);
+        return dropPinCount;
     }
 
-    private int changePins(final int dropPinCount) {
+    private void changePins(final int dropPinCount) {
         if (pinCount < dropPinCount) {
             throw new RuntimeException("Remain pin count must be greater than dropping pin count.");
         }
 
         pinCount -= dropPinCount;
-        return pinCount;
     }
 
     public void reset() {

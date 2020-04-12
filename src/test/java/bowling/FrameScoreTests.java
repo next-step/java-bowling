@@ -47,7 +47,7 @@ public class FrameScoreTests {
         FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
         assertTrue(frameScore.isStrike());
 
-        FrameScore frameScore2 = FrameScore.newInstance(Arrays.asList(5, 7));
+        FrameScore frameScore2 = FrameScore.newInstance(Arrays.asList(3, 7));
         assertFalse(frameScore2.isStrike());
     }
 
@@ -57,7 +57,7 @@ public class FrameScoreTests {
         FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
         assertFalse(frameScore.isSpare());
 
-        FrameScore frameScore2 = FrameScore.newInstance(Arrays.asList(5, 3));
+        FrameScore frameScore2 = FrameScore.newInstance(Arrays.asList(3, 7));
         assertTrue(frameScore2.isSpare());
     }
 

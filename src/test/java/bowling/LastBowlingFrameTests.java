@@ -31,16 +31,17 @@ public class LastBowlingFrameTests {
     }
 
     @DisplayName("두번째 투구 테스트")
-    @Test
-    public void addSecondBowlTest() {
+    @ParameterizedTest
+    @CsvSource(value = {"10,4", "6,4"})
+    public void addSecondBowlTest(final int firstBowl, final int secondBowl) {
         LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
-        bowlingFrame.bowl(5);
-        assertThatCode(() -> bowlingFrame.bowl(4));
+        bowlingFrame.bowl(firstBowl);
+        assertThatCode(() -> bowlingFrame.bowl(secondBowl));
     }
 
     @DisplayName("두번째 투구 오류 테스트")
     @ParameterizedTest
-    @CsvSource(value = {"5,6", "10,4"})
+    @CsvSource(value = {"5,6", "9,2"})
     public void addSecondBowlAbnormalTest(final int firstBowl, final int secondBowl) {
         LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
         bowlingFrame.bowl(firstBowl);

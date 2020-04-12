@@ -28,6 +28,10 @@ public class Score {
                 .sum();
     }
 
+    public boolean isEqualsTo(final int pinCount) {
+        return score == pinCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

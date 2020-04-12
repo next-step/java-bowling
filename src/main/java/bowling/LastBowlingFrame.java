@@ -17,6 +17,10 @@ public class LastBowlingFrame implements BowlingFrame {
 
     @Override
     public void bowl(int scoreCount) {
+        if(frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT - 1) && !hasStrikeOrSpareInTwoScores()) {
+            throw new RuntimeException("Can not bowl the third.");
+        }
+
         frameScore.add(pins.drop(scoreCount));
 
         if (!frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT) && pins.isRemain(0)) {
@@ -26,7 +30,8 @@ public class LastBowlingFrame implements BowlingFrame {
 
     @Override
     public boolean isOver() {
-        return hasStrikeOrSpareInTwoScores() || frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT);
+        boolean test = hasStrikeOrSpareInTwoScores();
+        return !hasStrikeOrSpareInTwoScores() || frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT);
     }
 
     @Override
