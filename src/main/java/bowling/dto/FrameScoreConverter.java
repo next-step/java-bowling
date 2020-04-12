@@ -29,7 +29,6 @@ public class FrameScoreConverter {
         return String.join(SCORE_DELIMITER, scoresString);
     }
 
-    // TODO: 2020-04-12
     private static String convertTo(final Score preScore, final Score nowScore) {
         if ((!Objects.isNull(preScore) && !preScore.isEqualsTo(MIN_PIN_COUNT)) && Score.sum(Arrays.asList(preScore, nowScore)) == MAX_PIN_COUNT) {
             return SCORE_SPARE;

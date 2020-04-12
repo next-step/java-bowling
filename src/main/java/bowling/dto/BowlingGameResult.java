@@ -19,7 +19,9 @@ public class BowlingGameResult {
 
     public static BowlingGameResult newInstance(final BowlingGame bowlingGame) {
         Player player = bowlingGame.getPlayer();
+
         BowlingFrames bowlingFrames = bowlingGame.getBowlingFrames();
+
         List<FrameScoreResult> frameScoreResults = bowlingFrames.getFrames()
                 .stream()
                 .map(bowlingFrame -> FrameScoreResult.newInstance(bowlingFrame.getFrameScore()))

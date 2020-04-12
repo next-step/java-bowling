@@ -25,6 +25,7 @@ public class OutputView {
         List<String> frames = IntStream.range(0, MAX_BOWLING_FRAME_SIZE)
                 .mapToObj(number -> String.format(GAME_FIRST_ROW_FRAME_NUMBER_FORMAT, number + 1))
                 .collect(Collectors.toList());
+
         GAME_FIRST_ROW = makeGameRow(GAME_FIRST_ROW_NAME_FORMAT, frames);
     }
 
@@ -32,6 +33,7 @@ public class OutputView {
         List<String> frameWords = new ArrayList<>();
         frameWords.add(name);
         frameWords.addAll(frames);
+
         return GAME_ROW_PREFIX + String.join(FRAME_DELIMITER, frameWords) + GAME_ROW_SUFFIX;
     }
 
