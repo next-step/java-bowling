@@ -37,7 +37,9 @@ public class GameTest {
         game.addPin(first);
         game.addPin(second);
 
-        assertThat(game.getFramePinCount(0)).containsExactly(first, second);
+        assertThat(game.getFramePinCounts(0))
+                .containsExactly(PinCountTest.PIN_COUNT_1,
+                        PinCountTest.PIN_COUNT_2);
     }
 
     @DisplayName("현재 프레임 정보를 얻어온다")
@@ -46,6 +48,6 @@ public class GameTest {
         Game game = new Game(name, 3);
         game.addPin(10);
 
-        assertThat(game.getCurrentFrame()).isEqualTo(2);
+        assertThat(game.getCurrentFrameIndex()).isEqualTo(2);
     }
 }

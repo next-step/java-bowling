@@ -15,8 +15,8 @@ public class Game {
     }
 
     protected Game(String playerName, int frameSize) {
-       this.player = new Player(playerName);
-       this.frames = new Frames(frameSize);
+        this.player = new Player(playerName);
+        this.frames = new Frames(frameSize);
     }
 
     public Game(String playerName) {
@@ -31,11 +31,19 @@ public class Game {
         frames.add(count);
     }
 
-    public List<Integer> getFramePinCount(int index) {
-        return frames.getFramePinCount(index);
+    public List<PinCount> getFramePinCounts(int index) {
+        return frames.getFramePinCounts(index);
     }
 
-    public int getCurrentFrame() {
+    public int getCurrentFrameIndex() {
         return frames.getCurrentFrameIndex() + ONE;
+    }
+
+    public int getFrameTotal() {
+        return frames.size();
+    }
+
+    public String getPlayerName() {
+        return player.getName();
     }
 }
