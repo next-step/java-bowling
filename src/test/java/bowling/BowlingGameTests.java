@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @DisplayName("볼링 게임 테스트")
 public class BowlingGameTests {
@@ -25,20 +24,8 @@ public class BowlingGameTests {
         assertThatCode(() -> bowlingGame.bowl(10)).doesNotThrowAnyException();
     }
 
-    @DisplayName("게임 종료 테스트")
-    @Test
-    public void overTest() {
-        BowlingGame bowlingGame = BowlingGame.newInstance("ABC");
-        IntStream.range(0, 11)
-                .forEach(i -> bowlingGame.bowl(10));
 
-        assertFalse(bowlingGame.isOver());
-
-        bowlingGame.bowl(10);
-        assertTrue(bowlingGame.isOver());
-    }
-
-    @DisplayName("게임 종료 테스트 - 에러")
+    @DisplayName("게임 투구 테스트 - 에러")
     @Test
     public void bowlAbnormalTest() {
         BowlingGame bowlingGame = BowlingGame.newInstance("ABC");

@@ -22,7 +22,7 @@ public class BowlingGame {
         bowlingFrames.bowl(pinCount);
     }
 
-    public boolean isOver() {
+    private boolean isOver() {
         return bowlingFrames.isAllFrameOver();
     }
 }
