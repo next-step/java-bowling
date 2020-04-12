@@ -33,7 +33,15 @@ public class LastBowlingFrame implements BowlingFrame {
 
     @Override
     public boolean isOver() {
-        return !hasStrikeOrSpareInTwoScores() || frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT);
+        if(frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT)) {
+            return true;
+        }
+
+        if(frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT - 1)) {
+            return !hasStrikeOrSpareInTwoScores();
+        }
+
+        return false;
     }
 
     @Override

@@ -15,6 +15,14 @@ public class BowlingGame {
     }
 
     public void bowl(final int pinCount) {
+        if (isOver()) {
+            throw new RuntimeException("The bowling Game is Over.");
+        }
+
         bowlingFrames.bowl(pinCount);
+    }
+
+    public boolean isOver() {
+        return bowlingFrames.isAllFrameOver();
     }
 }

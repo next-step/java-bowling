@@ -14,33 +14,28 @@ public class BowlingFrames {
         frames.add(CommonBowlingFrame.newInstance());
     }
 
-    private BowlingFrames(final List<BowlingFrame> frames) {
-        this.frames = Collections.unmodifiableList(frames);
-    }
-
-    public int overFrameSize() {
+    public boolean isAllFrameOver() {
         if (lastBowledFrame().isOver()) {
-            return frames.size();
+            return frames.size() == MAX_BOWLING_FRAME_SIZE;
         }
 
-        return frames.size() - 1;
+        return false;
     }
 
     public void bowl(final int pinCount) {
         BowlingFrame bowlingFrame = lastBowledFrame();
         bowlingFrame.bowl(pinCount);
 
-        if (bowlingFrame.isOver()) {
-            addNextFrame();
+        if (bowlingFrame.isOver() && frames.size() < MAX_BOWLING_FRAME_SIZE) {
+            frames.add(nextFrame());
         }
     }
 
-    private void addNextFrame() {
+    private BowlingFrame nextFrame() {
         if (frames.size() == MAX_BOWLING_FRAME_SIZE - 1) {
-            frames.add(LastBowlingFrame.newInstance());
-            return;
+            return LastBowlingFrame.newInstance();
         }
-        frames.add(CommonBowlingFrame.newInstance());
+        return CommonBowlingFrame.newInstance();
     }
 
     private BowlingFrame lastBowledFrame() {

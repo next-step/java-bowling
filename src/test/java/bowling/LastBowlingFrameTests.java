@@ -91,6 +91,7 @@ public class LastBowlingFrameTests {
 
     private static Stream<Arguments> overTestCases() {
         return Stream.of(
+                Arguments.of(Collections.EMPTY_LIST, false),
                 Arguments.of(Collections.singletonList(10), false),
                 Arguments.of(Arrays.asList(5, 5), false),
                 Arguments.of(Arrays.asList(10, 5), false),
