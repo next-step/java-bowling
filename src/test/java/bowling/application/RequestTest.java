@@ -1,5 +1,6 @@
 package bowling.application;
 
+import bowling.domain.state.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,10 +23,10 @@ class RequestTest {
     @Test
     @DisplayName("볼링핀 데이터 담기")
     void requestPins() {
-        Request request = new Request("KSJ").bowlFallenPins(10);
-        Request nextRequest = request.bowlFallenPins(3);
+        Request request = new Request("KSJ").bowlFallenPins(new Pin(10));
+        Request nextRequest = request.bowlFallenPins(new Pin(3));
 
-        assertThat(request.getFallenPins()).isEqualTo(10);
-        assertThat(nextRequest.getFallenPins()).isEqualTo(3);
+        assertThat(request.getPin().getFallenPins()).isEqualTo(10);
+        assertThat(nextRequest.getPin().getFallenPins()).isEqualTo(3);
     }
 }

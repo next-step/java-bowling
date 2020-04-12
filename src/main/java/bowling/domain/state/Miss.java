@@ -5,14 +5,19 @@ import bowling.domain.frame.Score;
 import java.util.Objects;
 
 public class Miss extends Finished {
-    private int firstFallenPins;
-    private int secondFallenPins;
+    private Pin firstFallenPins;
+    private Pin secondFallenPins;
     private Score score;
 
-    public Miss(int firstFallenPins, int secondFallenPins) {
+    public Miss(Pin firstFallenPins, Pin secondFallenPins) {
         this.firstFallenPins = firstFallenPins;
         this.secondFallenPins = secondFallenPins;
-        this.score = new Score(this.firstFallenPins + this.secondFallenPins, 0);
+        this.score = Score.ofMiss(firstFallenPins.getFallenPins() + secondFallenPins.getFallenPins());
+    }
+
+    public Miss(Pin firstFallenPins) {
+        this.firstFallenPins = firstFallenPins;
+        this.score = Score.ofMiss(firstFallenPins.getFallenPins());
     }
 
     public Score getScore() {
@@ -20,27 +25,20 @@ public class Miss extends Finished {
     }
 
     public Score calculateByBeforeScore(Score before) {
-        before = before.bowl(this.firstFallenPins);
+        before = before.bowl(firstFallenPins.getFallenPins());
         if (before.isCalculation()) {
             return before;
         }
-        before = before.bowl(this.secondFallenPins);
+        before = before.bowl(secondFallenPins.getFallenPins());
         return before;
     }
 
     @Override
-    public void renewScore(Score score) {
-        this.score = score;
-    }
-
-    @Override
-    public boolean isFinish() {
-        return true;
-    }
-
-    @Override
     public String display() {
-        return this.firstFallenPins + "|" + this.secondFallenPins;
+        if (Objects.isNull(secondFallenPins)) {
+            return firstFallenPins.display();
+        }
+        return firstFallenPins.display(secondFallenPins);
     }
 
     @Override
@@ -48,12 +46,13 @@ public class Miss extends Finished {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Miss miss = (Miss) o;
-        return firstFallenPins == miss.firstFallenPins &&
-                secondFallenPins == miss.secondFallenPins;
+        return Objects.equals(firstFallenPins, miss.firstFallenPins) &&
+                Objects.equals(secondFallenPins, miss.secondFallenPins) &&
+                Objects.equals(score, miss.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstFallenPins, secondFallenPins);
+        return Objects.hash(firstFallenPins, secondFallenPins, score);
     }
 }

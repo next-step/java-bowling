@@ -10,8 +10,10 @@ class SpareTest {
     @Test
     @DisplayName("스페어 객체 비교")
     void compareToSpare() {
-        State state = new Spare(7, 3);
-        State compareState = new Spare(7, 3);
+        Pin sevenFallenOfAll = new Pin(7);
+        Pin threeFallenOfRemain = new Pin(3);
+        State state = new Spare(sevenFallenOfAll, threeFallenOfRemain);
+        State compareState = new Spare(sevenFallenOfAll, threeFallenOfRemain);
 
         boolean same = state.equals(compareState);
 
@@ -21,7 +23,9 @@ class SpareTest {
     @Test
     @DisplayName("화면 표시")
     void display() {
-        State spare = new Spare(7, 3);
+        Pin sevenFallenOfAll = new Pin(7);
+        Pin threeFallenOfRemain = new Pin(3);
+        State spare = new Spare(sevenFallenOfAll, threeFallenOfRemain);
         assertThat(spare.display()).isEqualTo("7|/");
     }
 }

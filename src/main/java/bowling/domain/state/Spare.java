@@ -5,29 +5,19 @@ import bowling.domain.frame.Score;
 import java.util.Objects;
 
 public class Spare extends Finished {
-    private int firstFallenPins;
-    private int secondFallenPins;
+    private Pin firstFallenPins;
+    private Pin secondFallenPins;
     private Score score;
 
-    public Spare(int firstFallenPins, int secondFallenPins) {
+    public Spare(Pin firstFallenPins, Pin secondFallenPins) {
         this.firstFallenPins = firstFallenPins;
         this.secondFallenPins = secondFallenPins;
-        this.score = new Score(firstFallenPins + secondFallenPins, 1);
-    }
-
-    @Override
-    public State bowl(int pins) {
-        return new Bonus(firstFallenPins, secondFallenPins, pins);
-    }
-
-    @Override
-    public boolean isFinish() {
-        return true;
+        this.score = Score.ofSpare();
     }
 
     @Override
     public String display() {
-        return this.firstFallenPins + "|" + "/";
+        return firstFallenPins.display(secondFallenPins);
     }
 
     @Override
@@ -37,16 +27,16 @@ public class Spare extends Finished {
 
     @Override
     public Score calculateByBeforeScore(Score before) {
-        before = before.bowl(this.firstFallenPins);
+        before = before.bowl(firstFallenPins.getFallenPins());
         if (before.isCalculation()) {
             return before;
         }
-        before = before.bowl(this.secondFallenPins);
+        before = before.bowl(secondFallenPins.getFallenPins());
         return before;
     }
 
     @Override
-    public void renewScore(Score score) {
+    public void updateScore(Score score) {
         this.score = score;
     }
 

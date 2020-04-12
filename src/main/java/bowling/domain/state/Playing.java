@@ -3,8 +3,9 @@ package bowling.domain.state;
 import bowling.domain.frame.Score;
 
 public class Playing implements State {
+
     @Override
-    public State bowl(int pins) {
+    public State bowl(Pin pins) {
         return null;
     }
 
@@ -25,11 +26,12 @@ public class Playing implements State {
 
     @Override
     public Score calculateByBeforeScore(Score before) {
-        return null;
+        return before;
     }
 
     @Override
-    public void renewScore(Score score) {
+    public void updateScore(Score score) {
 
     }
+
 }

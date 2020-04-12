@@ -1,69 +1,32 @@
 package bowling.view;
 
 import bowling.application.Response;
-import bowling.domain.frame.Frame;
-
-import java.util.List;
+import bowling.domain.frame.Result;
 
 public class ResultView {
 
     public static void view(Response response) {
-        BowlingView.getRoundBoard();
-        List<Frame> frames = response.getFrames();
-        getFrameBoard(frames, response.getName());
-        getScore(frames);
-        System.out.println();
-        System.out.println();
-    }
+        BowlingFrameView.getRoundBoard();
+        BowlingFrameView.getName(response.getName());
 
-    private static void getFrameBoard(List<Frame> frames, String name) {
-        System.out.print(String.format("|  %s |", name));
-        for (Frame frame : frames) {
-            getFrame(frame);
-        }
-        BowlingView.getCollectFrame(frames.size());
-    }
-
-    private static void getScore(List<Frame> frames) {
-        System.out.print("| SCORE|");
-        int sum = 0;
-        for (Frame frame : frames) {
-            if (frame.isFinish()) {
-                if (frame.isCalculation()) {
-                    sum += frame.getScore();
-                    BowlingView.getScoreFrame(sum);
-                } else {
-                    BowlingView.getScoreFrameByEmpty();
-                }
+        for (Result result : response.getResults()) {
+            int length = result.getDisplay().length();
+            if (length > 1) {
+                BowlingFrameView.getFinishFrame(result.getDisplay());
             } else {
-                BowlingView.getScoreFrameByEmpty();
+                BowlingFrameView.getReadyFrame(result.getDisplay());
             }
-        }
-        BowlingView.getCollectFrame(frames.size());
-    }
 
-    private static void getFrame(Frame frame) {
-        if (frame.isFinish()) {
-            getBonusFrame(frame);
-            return;
         }
-        getReadyFrame(frame);
-    }
+        BowlingFrameView.getCollectFrame(response.getResults().size());
 
-    private static void getReadyFrame(Frame frame) {
-        if (frame.getFrameNumber() == 10) {
-            BowlingView.getFinalFinishFrame(frame.display());
-            return;
+        BowlingFrameView.getName("   ");
+        for (Result result : response.getResults()) {
+            BowlingFrameView.getScoreFrame(result.getTotalScore());
         }
-        BowlingView.getReadyFrame(frame.display());
-    }
 
-    private static void getBonusFrame(Frame frame) {
-        if (frame.isBonus()) {
-            BowlingView.getFinalBonusFrame(frame.display());
-            return;
-        }
-        BowlingView.getFinishFrame(frame.display());
+        BowlingFrameView.getCollectFrame(response.getResults().size());
+        System.out.println();
+        System.out.println();
     }
-
 }

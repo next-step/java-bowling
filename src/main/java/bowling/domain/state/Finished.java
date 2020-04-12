@@ -3,9 +3,10 @@ package bowling.domain.state;
 import bowling.domain.frame.Score;
 
 public class Finished implements State {
+
     @Override
-    public State bowl(int pins) {
-        return null;
+    public State bowl(Pin pins) {
+        throw new IllegalArgumentException("게임이 종료되었습니다.");
     }
 
     @Override
@@ -25,11 +26,10 @@ public class Finished implements State {
 
     @Override
     public Score calculateByBeforeScore(Score before) {
-        return null;
+        return before;
     }
 
     @Override
-    public void renewScore(Score score) {
-
+    public void updateScore(Score score) {
     }
 }

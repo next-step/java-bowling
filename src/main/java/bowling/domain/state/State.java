@@ -4,7 +4,7 @@ import bowling.domain.frame.Score;
 
 public interface State {
 
-    State bowl(int pins);
+    State bowl(Pin pins);
 
     boolean isFinish();
 
@@ -14,5 +14,5 @@ public interface State {
 
     Score calculateByBeforeScore(Score before);
 
-    void renewScore(Score score);
+    void updateScore(Score score);
 }

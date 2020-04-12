@@ -10,8 +10,8 @@ class MissTest {
     @Test
     @DisplayName("미스 객체 비교")
     void compareToMiss() {
-        State state = new Miss(3, 2);
-        State compareState = new Miss(3, 2);
+        State state = new Miss(new Pin(3), new Pin(2));
+        State compareState = new Miss(new Pin(3), new Pin(2));
 
         boolean same = state.equals(compareState);
 
@@ -21,7 +21,7 @@ class MissTest {
     @Test
     @DisplayName("화면 표시")
     void display() {
-        State miss = new Miss(3, 2);
+        State miss = new Miss(new Pin(3), new Pin(2));
         assertThat(miss.display()).isEqualTo("3|2");
     }
 }

@@ -1,12 +1,11 @@
 package bowling.domain.state;
 
 public class Ready extends Playing {
-    private static final int MAX_FALLEN_PINS = 10;
     private static final String EMPTY_FRAME = " ";
 
     @Override
-    public State bowl(int pins) {
-        if (pins == MAX_FALLEN_PINS) {
+    public State bowl(Pin pins) {
+        if (pins.isStrike()) {
             return new Strike();
         }
         return new NextReady(pins);

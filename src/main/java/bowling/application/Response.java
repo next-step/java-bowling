@@ -1,32 +1,37 @@
 package bowling.application;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
+import bowling.domain.frame.Bowling;
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Result;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Response {
 
-    private final Frames frames;
+    private Bowling bowling;
 
-    public Response(Frames frames) {
-        this.frames = frames;
+    public Response(Bowling bowling) {
+        this.bowling = bowling;
     }
 
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames.getFramesByCalculationScore());
+    public List<Result> getResults() {
+        return new ArrayList<>(bowling.getResults());
     }
 
     public String getName() {
-        return frames.getName();
+        return bowling.getName();
     }
 
-    public int getFrameNumber() {
-        return frames.getFrameNumber();
+    public int getFrameNumberLast() {
+        return bowling.getFrameNumber();
     }
 
-    public boolean isLastFrame() {
-        return frames.isEnd();
+    public boolean isEnd() {
+        if (bowling.getFrameNumber() < 10) {
+            return false;
+        }
+        FinalFrame finalFrame = (FinalFrame) bowling.getFrames().getLast();
+        return finalFrame.isEnd();
     }
 }

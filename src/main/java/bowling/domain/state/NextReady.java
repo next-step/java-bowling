@@ -1,21 +1,17 @@
 package bowling.domain.state;
 
-import bowling.domain.frame.Score;
-
 import java.util.Objects;
 
 public class NextReady extends Playing {
-    private static final int MAX_FALLEN_PINS = 10;
+    private Pin fallenPins;
 
-    private int fallenPins;
-
-    public NextReady(int fallenPins) {
+    public NextReady(Pin fallenPins) {
         this.fallenPins = fallenPins;
     }
 
     @Override
-    public State bowl(int pins) {
-        if (fallenPins + pins == MAX_FALLEN_PINS) {
+    public State bowl(Pin pins) {
+        if (fallenPins.isSpare(pins)) {
             return new Spare(fallenPins, pins);
         }
         return new Miss(fallenPins, pins);
@@ -28,13 +24,7 @@ public class NextReady extends Playing {
 
     @Override
     public String display() {
-        return String.valueOf(fallenPins);
-    }
-
-    @Override
-    public Score calculateByBeforeScore(Score before) {
-        before = before.bowl(this.fallenPins);
-        return before;
+        return fallenPins.display();
     }
 
     @Override

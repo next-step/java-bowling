@@ -3,16 +3,30 @@ package bowling.domain.frame;
 import java.util.Objects;
 
 public class Score {
+    private static final int MAX_SCORE = 10;
+    private static final int MIN_SCORE = 0;
     private int score;
     private int left;
 
-    public Score(int score, int left) {
+    private Score(int score, int left) {
         this.score = score;
         this.left = left;
     }
 
+    public static Score ofMiss(int score) {
+        return new Score(score, 0);
+    }
+
+    public static Score ofSpare() {
+        return new Score(MAX_SCORE, 1);
+    }
+
+    public static Score ofStrike() {
+        return new Score(MAX_SCORE, 2);
+    }
+
     public Score bowl(int fallenPins) {
-        return new Score(this.score += fallenPins, this.left - 1);
+        return new Score(this.score + fallenPins, this.left - 1);
     }
 
     public int getScore() {
@@ -23,7 +37,7 @@ public class Score {
     }
 
     public boolean isCalculation() {
-        return left == 0;
+        return left == MIN_SCORE;
     }
 
     @Override
