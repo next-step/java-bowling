@@ -24,14 +24,4 @@ class PinTest {
 
         assertThat(actual).isEqualTo(expect);
     }
-
-    @DisplayName("핀을 넘어트릴 수 있다.")
-    @Test
-    void knockOver() {
-        Pin expect = pinGenerator.generate().knockOver();
-
-        Pin actual = pinGenerator.generate().knockOver();
-
-        assertThat(actual).isEqualTo(expect);
-    }
 }

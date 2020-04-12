@@ -9,10 +9,6 @@ public class Pin {
         this.pinState = pinState;
     }
 
-    public Pin knockOver() {
-        return new Pin(PinState.KNOCK_OVER);
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
