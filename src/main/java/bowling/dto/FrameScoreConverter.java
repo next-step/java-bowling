@@ -22,12 +22,12 @@ public class FrameScoreConverter {
 
     // TODO: 2020-04-12
     private static String convertTo(final Score preScore, final Score nowScore) {
-        if ((Objects.isNull(preScore) || preScore.isEqualsTo(10)) && nowScore.isEqualsTo(10)) {
-            return "X";
-        }
-
         if ((!Objects.isNull(preScore) && !preScore.isEqualsTo(0)) && Score.sum(Arrays.asList(preScore, nowScore)) == 10) {
             return "/";
+        }
+
+        if (nowScore.isEqualsTo(10)) {
+            return "X";
         }
 
         if (nowScore.isEqualsTo(0)) {
