@@ -1,26 +1,19 @@
-package bowling.domain.frame.domain;
+package bowling.frame.domain;
 
-import bowling.domain.state.State;
-import bowling.domain.state.ready.First;
+import bowling.state.State;
+import bowling.state.finish.LastFrameState;
 
 public class LastFrame implements Frame {
-    private static final int SCORE_ZERO = 0;
 
-    private State state = First.of();
-    private final Remains remains;
-
-    private LastFrame() {
-        this.remains = Remains.three();
-    }
+    private State state = LastFrameState.init();
 
     static Frame of() {
         return new LastFrame();
     }
 
-
     @Override
-    public void bowl(int felledPin) {
-        state = state.bowl(felledPin);
+    public void bowl(int felledPins) {
+        state = state.bowl(felledPins);
     }
 
     @Override

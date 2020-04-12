@@ -1,4 +1,4 @@
-package bowling.domain.frame.domain;
+package bowling.frame.domain;
 
 public interface Frame {
 
@@ -10,7 +10,7 @@ public interface Frame {
         return LastFrame.of();
     }
 
-    void bowl(int felledPin);
+    void bowl(int felledPins);
 
     boolean isFinished();
 

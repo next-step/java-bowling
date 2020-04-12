@@ -1,6 +1,6 @@
-package bowling.domain.frame.domain;
+package bowling.frame.domain;
 
-import bowling.domain.player.domain.Player;
+import bowling.player.domain.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,9 +23,9 @@ public class Frames {
         return new Frames(player, new ArrayList<>(Collections.singletonList(Frame.normal())));
     }
 
-    public void bowl(int felledPin) {
+    public void bowl(int felledPins) {
         Frame current = getCurrent();
-        current.bowl(felledPin);
+        current.bowl(felledPins);
         if (current.isFinished() && !isDone()) {
             generate();
         }

@@ -1,15 +1,13 @@
-package bowling.domain.frame.domain;
+package bowling.frame.domain;
 
-import bowling.domain.state.State;
-import bowling.domain.state.ready.First;
+import bowling.state.State;
+import bowling.state.ready.First;
 
 public class NormalFrame implements Frame {
 
     private State state = First.of();
-    private final Remains remains;
 
     private NormalFrame() {
-        this.remains = Remains.two();
     }
 
     static Frame of() {
@@ -17,8 +15,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public void bowl(int felledPin) {
-        state = state.bowl(felledPin);
+    public void bowl(int felledPins) {
+        state = state.bowl(felledPins);
     }
 
     @Override
