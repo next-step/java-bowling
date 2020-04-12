@@ -1,9 +1,8 @@
-package bowling.state.last;
+package bowling.state.finish;
 
 public class LastFrameCount {
     private static final int MIN = 0;
     private static final int MAX = 3;
-    private static final int INCREMENT_VALUE = 1;
 
     private int count;
 
@@ -19,12 +18,18 @@ public class LastFrameCount {
         return new LastFrameCount(count);
     }
 
-    public LastFrameCount increase() {
-        return of(count + INCREMENT_VALUE);
+    public void increase() {
+        count++;
+        if (count > MAX) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public boolean isMax() {
         return count == MAX;
     }
 
+    public int getCount() {
+        return count;
+    }
 }

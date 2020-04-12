@@ -1,44 +1,57 @@
-package bowling.state.last;
+package bowling.state.finish;
 
 import bowling.state.State;
-import bowling.state.finish.Gutter;
-import bowling.state.finish.Miss;
 import bowling.state.ready.First;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class LastFrameState {
+public class LastFrameState extends Finished {
 
     private static final int FIRST_INDEX = 0;
     private static final int DEFAULT_VALUE = 1;
 
-    private final List<State> states = new ArrayList<>(Collections.singleton(First.of()));
+    private final List<State> states = new ArrayList<>();
     private final LastFrameCount count = LastFrameCount.of();
 
     private LastFrameState() {
+        setUp();
     }
 
-    public static LastFrameState init() {
+    public static State init() {
         return new LastFrameState();
     }
 
-    public void bowl(int felledPins) {
+    @Override
+    public State bowl(int felledPins) {
         count.increase();
-        bowlAndReplace(felledPins);
-        if (getCurrentFrameState().isFinished()) {
-            states.add(First.of());
+        if (isCurrentFrameStateFinished()) {
+            setUp();
         }
+        bowlAndReplace(felledPins);
+        return this;
     }
 
+    @Override
     public boolean isFinished() {
         State state = states.get(FIRST_INDEX);
         return state instanceof Gutter || state instanceof Miss || count.isMax();
     }
 
+    @Override
     public String view() {
-        return null;
+        return states.stream()
+                .map(State::view)
+                .collect(Collectors.joining(DELIMITER));
+    }
+
+    private void setUp() {
+        states.add(First.of());
+    }
+
+    private boolean isCurrentFrameStateFinished() {
+        return getCurrentFrameState().isFinished();
     }
 
     private void bowlAndReplace(int felledPins) {
