@@ -1,6 +1,7 @@
 package bowling.domain.pin;
 
 import bowling.domain.DomainGenerator;
+import bowling.domain.frame.BowlCount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,13 +21,17 @@ class PinsTest {
         assertThat(actual).isEqualTo(expect);
     }
 
-    @DisplayName("넘어져있는 3개의 핀의 갯수를 구할 수 있다.")
+    @DisplayName("핀을 넘어트려 서있는 핀을 구할 수 있다.")
     @Test
-    void knockOverCount() {
-        pinsGenerator = new FakeThreePinsGenerator();
+    void getStandingPins() {
+        pinsGenerator = new PinsGenerator();
+        Pins pins = pinsGenerator.generate();
+        BowlCount bowlCount = new BowlCount(3);
+        final int expect = 7;
 
-        Pins expect = pinsGenerator.generate();
+        final Pins standingPins = pins.knockOver(bowlCount);
+        final int actual = standingPins.standingCount();
 
-        assertThat(expect.knockOverCount()).isEqualTo(3);
+        assertThat(actual).isEqualTo(expect);
     }
 }
