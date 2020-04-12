@@ -3,6 +3,7 @@ package bowling;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -75,5 +76,19 @@ public class FramesTest {
 
         //then
         assertThat(frameScore).isEqualTo(10 + 10 + firstOfThirdFrame);
+    }
+
+    @DisplayName("10회 첫 투구가 Strike일 때, 프레임의 점수를 반환한다.")
+    @Test
+    void returnFrameScoreWhenTenthIsStrike() {
+        //given
+        Frame tenthFrame = new Frame(9, 10, 0);
+        Frames frames = new Frames(Arrays.asList(tenthFrame));
+
+        //when
+        int frameScore = frames.getFrameScore(tenthFrame.getFrameId());
+
+        //then
+        assertThat(frameScore).isEqualTo(10 + tenthFrame.getThirdPoint() + tenthFrame.getFourthPoint());
     }
 }
