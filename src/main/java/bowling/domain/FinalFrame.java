@@ -16,11 +16,7 @@ public class FinalFrame implements Frame {
         pinCounts = new PinCounts(MAX_PIN_COUNT_SIZE);
     }
 
-    @Override public void addPinCount(int nextPinCount) {
-        addPinCount(PinCount.valueOf(nextPinCount));
-    }
-
-    public void addPinCount(PinCount pinCount) {
+    @Override public void addPinCount(int pinCount) {
         if (!isAddable(pinCount)) {
             throw new OutOfRangeArgumentException(OUT_OF_RANGE_ERROR_MESSAGE);
         }
@@ -30,7 +26,7 @@ public class FinalFrame implements Frame {
         }
     }
 
-    private boolean isAddable(PinCount pinCount) {
+    private boolean isAddable(int pinCount) {
         if (pinCounts.size() != 1) {
             return true;
         }

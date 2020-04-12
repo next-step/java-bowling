@@ -17,11 +17,7 @@ public class NormalFrame implements Frame {
         pinCounts = new PinCounts(MAX_PIN_COUNT_SIZE);
     }
 
-    @Override public void addPinCount(int nextPinCount) {
-        addPinCount(PinCount.valueOf(nextPinCount));
-    }
-
-    public void addPinCount(PinCount pinCount) {
+    @Override public void addPinCount(int pinCount) {
         if (!isAddable(pinCount)) {
             throw new OutOfRangeArgumentException(
                     String.format(OUT_OF_RANGE_ERROR_MESSAGE, MAX_PIN_COUNT));
@@ -32,7 +28,7 @@ public class NormalFrame implements Frame {
         }
     }
 
-    private boolean isAddable(PinCount pinCount) {
+    private boolean isAddable(int pinCount) {
         PinCount firstPinCount = pinCounts.getFirst()
                 .orElse(PinCount.empty());
         if (firstPinCount.isMax()) {

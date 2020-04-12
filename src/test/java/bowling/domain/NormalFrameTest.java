@@ -12,8 +12,8 @@ public class NormalFrameTest {
     @Test
     void init() {
         NormalFrame normalFrame = new NormalFrame();
-        normalFrame.addPinCount(PinCountTest.PIN_COUNT_8);
-        normalFrame.addPinCount(PinCountTest.PIN_COUNT_1);
+        normalFrame.addPinCount(8);
+        normalFrame.addPinCount(1);
 
         assertThat(normalFrame.getScore()).isEqualTo(9);
     }
@@ -24,8 +24,8 @@ public class NormalFrameTest {
         assertThatExceptionOfType(OutOfRangeArgumentException.class)
                 .isThrownBy(() -> {
                     NormalFrame normalFrame = new NormalFrame();
-                    normalFrame.addPinCount(PinCountTest.PIN_COUNT_8);
-                    normalFrame.addPinCount(PinCountTest.PIN_COUNT_3);
+                    normalFrame.addPinCount(8);
+                    normalFrame.addPinCount(3);
                 });
     }
 
@@ -33,9 +33,9 @@ public class NormalFrameTest {
     @Test
     void done() {
         NormalFrame normalFrame = new NormalFrame();
-        normalFrame.addPinCount(PinCountTest.PIN_COUNT_8);
+        normalFrame.addPinCount(8);
         assertThat(normalFrame.isDone()).isFalse();
-        normalFrame.addPinCount(PinCountTest.PIN_COUNT_1);
+        normalFrame.addPinCount(1);
         assertThat(normalFrame.isDone()).isTrue();
     }
 
@@ -43,7 +43,7 @@ public class NormalFrameTest {
     @Test
     void strikeDone() {
         NormalFrame normalFrame = new NormalFrame();
-        normalFrame.addPinCount(PinCountTest.PIN_COUNT_10);
+        normalFrame.addPinCount(10);
         assertThat(normalFrame.isDone()).isTrue();
     }
 }

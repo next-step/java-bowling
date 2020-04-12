@@ -12,15 +12,21 @@ public class PinCount {
     private static final PinCount[] cache = new PinCount[11];
 
     static {
-        for(int i = MIN; i <= MAX; i++) {
+        for (int i = MIN; i <= MAX; i++) {
             cache[i] = new PinCount(i);
         }
     }
 
     private int pinCount;
+    private boolean isSpare;
 
-    private PinCount(int pinCount) {
+    private PinCount(int pinCount, boolean isSpare) {
         this.pinCount = pinCount;
+        this.isSpare = isSpare;
+    }
+
+    public PinCount(int pinCount) {
+        this(pinCount, false);
     }
 
     public int add(PinCount pinCount) {
@@ -35,6 +41,10 @@ public class PinCount {
         return add(pinCount) <= MAX;
     }
 
+    public boolean isOverMaxAfterAdd(int pinCount) {
+        return add(pinCount) <= MAX;
+    }
+
     public boolean isMax() {
         return pinCount == MAX;
     }
@@ -45,6 +55,25 @@ public class PinCount {
 
     public static PinCount empty() {
         return cache[0];
+    }
+
+    public boolean isStrike() {
+        return pinCount == MAX;
+    }
+
+    public boolean isSpare() {
+        return isSpare;
+    }
+
+    public boolean isGutter() {
+        return pinCount == MIN;
+    }
+
+    public PinCount next(int pinCount) {
+        if (add(pinCount) == MAX) {
+            return new PinCount(pinCount, true);
+        }
+        return new PinCount(pinCount);
     }
 
     public static PinCount valueOf(int pinCount) {
@@ -66,4 +95,6 @@ public class PinCount {
     @Override public int hashCode() {
         return Objects.hash(pinCount);
     }
+
+
 }
