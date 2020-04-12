@@ -39,6 +39,14 @@ public class Frames {
         return (frame.getFirstPoint() + frame.getSecondPoint());
     }
 
+    public int getTotalPointUntil(Frame currentFrame) {
+        int sum = 0;
+        for (int i = 0; i < currentFrame.getFrameId(); i++) {
+            sum += new Frames(frames).getFrameScore(i + 1);
+        }
+        return sum;
+    }
+
     private Frame getNextFrameByCurrentId(int currentFrameId) {
         return frames.get(currentFrameId);
     }

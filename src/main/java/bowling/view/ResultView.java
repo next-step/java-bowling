@@ -15,6 +15,7 @@ public class ResultView {
     private static final String BLANK_THREE = "   ";
     private static final String BLANK_FOUR = "    ";
     private static final String BLANK_FIVE = "     ";
+    private static final String BLANK_SIX = "      ";
     private static final String BLOCK_BORDER = "|";
     private static final String LABEL_NAME = "NAME";
     private static final String SYMBOL_STRIKE = "X";
@@ -59,8 +60,44 @@ public class ResultView {
                     .forEach(frame1 -> printFrame(frame1));
 
             printFrameByOrdinal(frame, ordinal);
-            printThreeLineSeparators();
+            System.out.println();
+
+            printFrameScoreSoFar(frames, frame);
+            System.out.println();
         }
+    }
+
+    private static void printFrameScoreSoFar(Frames frames, Frame frame) {
+        if (frame.isStrike()) {
+            printName(BLANK_THREE);
+            frames.getFrames()
+                    .subList(0, frame.getFrameId() - 1)
+                    .forEach(frame1 -> printFrameScore(frames, frame1));
+        }
+
+        if (!frame.isStrike()) {
+            printName(BLANK_THREE);
+            frames.getFrames()
+                    .subList(0, frame.getFrameId())
+                    .forEach(frame1 -> printFrameScore(frames, frame1));
+        }
+
+        printThreeLineSeparators();
+    }
+
+    private static void printFrameScore(Frames frames, Frame frame) {
+        print(BLANK_FIVE);
+        print(frames.getTotalPointUntil(frame));
+
+        if (frames.getTotalPointUntil(frame) >= 10) {
+            print(BLANK_THREE);
+        }
+
+        if (frames.getTotalPointUntil(frame) < 10) {
+            print(BLANK_FOUR);
+        }
+
+        printBlockBorder();
     }
 
     private static void printFrame(Frame frame) {
@@ -70,8 +107,6 @@ public class ResultView {
 
         if (frame.isSpare()) {
             printSpareByOrdinal(frame, SECOND);
-            print(BLANK_THREE);
-            printBlockBorder();
         }
 
         if (frame.isMiss()) {
@@ -110,7 +145,7 @@ public class ResultView {
             printFrameThirdWhenStrike(frame);
         }
 
-        if(FOURTH.equals(ordinal)){
+        if (FOURTH.equals(ordinal)) {
             printFrameFourthWhenStrike(frame);
         }
     }
@@ -129,7 +164,7 @@ public class ResultView {
         print(frame.getThirdPoint());
     }
 
-    private static void printFrameFourthWhenStrike(Frame frame){
+    private static void printFrameFourthWhenStrike(Frame frame) {
         printFrameThirdWhenStrike(frame);
         print(BLOCK_BORDER);
         print(frame.getFourthPoint());
@@ -143,13 +178,10 @@ public class ResultView {
         }
 
         if (SECOND.equals(ordinal)) {
-            printFrameFirstWhenSpare(frame);
             printFrameSecondWhenSpare(frame);
         }
 
         if (THIRD.equals(ordinal)) {
-            printFrameFirstWhenSpare(frame);
-            printFrameSecondWhenSpare(frame);
             printFrameThirdWhenSpare(frame);
         }
     }
@@ -157,16 +189,30 @@ public class ResultView {
     private static void printFrameFirstWhenSpare(Frame frame) {
         print(BLANK_FOUR);
         print(frame.getFirstPoint());
+
+        print(BLANK_TWO);
+        print(BLANK_THREE);
+        printBlockBorder();
     }
 
     private static void printFrameSecondWhenSpare(Frame frame) {
+        print(BLANK_FOUR);
+        print(frame.getFirstPoint());
+
         print(BLOCK_BORDER);
         print(DELIMITER_SPARE);
+
+        print(BLANK_THREE);
+        printBlockBorder();
     }
 
     private static void printFrameThirdWhenSpare(Frame frame) {
+        print(BLANK_FOUR);
+        print(frame.getFirstPoint());
+
         print(BLOCK_BORDER);
         print(frame.getThirdPoint());
+
         print(BLANK_ONE);
         printBlockBorder();
     }
@@ -184,6 +230,10 @@ public class ResultView {
     private static void printFrameFirstWhenMiss(Frame frame) {
         print(BLANK_FOUR);
         print(frame.getFirstPoint());
+
+        print(BLANK_TWO);
+        print(BLANK_THREE);
+        printBlockBorder();
     }
 
     private static void printFrameSecondWhenMiss(Frame frame) {
