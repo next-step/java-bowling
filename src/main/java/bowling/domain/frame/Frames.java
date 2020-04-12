@@ -25,6 +25,15 @@ public class Frames {
             return (frame.getFirstPoint() + frame.getSecondPoint());
         }
 
+        if (frame.isSpare()) {
+            int firstPointOfNextFrame = getNextFrameByCurrentId(frameId).getFirstPoint();
+            return (frame.getFirstPoint() + frame.getSecondPoint() + firstPointOfNextFrame);
+        }
+
         return 0;
+    }
+
+    private Frame getNextFrameByCurrentId(int currentFrameId){
+        return frames.get(currentFrameId);
     }
 }
