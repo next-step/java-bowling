@@ -1,8 +1,11 @@
 package bowling.domain.pin;
 
+import bowling.domain.frame.BowlCount;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Pins {
     public static final int MAX_COUNT = 10;
@@ -13,10 +16,14 @@ public class Pins {
         this.pins = Collections.unmodifiableList(pins);
     }
 
-    public long knockOverCount() {
+    public Pins knockOver(final BowlCount bowlCount) {
         return pins.stream()
-                   .filter(Pin::isKnockOver)
-                   .count();
+                   .skip(bowlCount.count())
+                   .collect(Collectors.collectingAndThen(Collectors.toList(), Pins::new));
+    }
+
+    public int standingCount() {
+        return pins.size();
     }
 
     @Override
