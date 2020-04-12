@@ -15,6 +15,14 @@ public class FrameNumber {
         this.frameNumber = frameNumber;
     }
 
+    public FrameNumber increase() {
+        return new FrameNumber(frameNumber + MIN_NUMBER);
+    }
+
+    public boolean isFinal() {
+        return frameNumber == MAX_NUMBER;
+    }
+
     private void validRange(final int frameNumber) {
         if (frameNumber < MIN_NUMBER || frameNumber > MAX_NUMBER) {
             throw new FrameNumberOutOfRangeException(frameNumber);
