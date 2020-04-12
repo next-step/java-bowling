@@ -34,16 +34,8 @@ public class PinCount {
         this.isSpare = pinCount.isSpare;
     }
 
-    public int add(PinCount pinCount) {
-        return this.count + pinCount.count;
-    }
-
     public int add(int pinCount) {
         return this.count + pinCount;
-    }
-
-    public boolean isOverMaxAfterAdd(PinCount pinCount) {
-        return add(pinCount) <= MAX;
     }
 
     public boolean isOverMaxAfterAdd(int pinCount) {

@@ -11,7 +11,7 @@ public class PinCountsTest {
     @Test
     void init() {
         PinCounts pinCounts = new PinCounts(1);
-        pinCounts.add(PinCountTest.PIN_COUNT_1);
+        pinCounts.add(1);
         assertThat(pinCounts.isFull()).isTrue();
     }
 
@@ -19,8 +19,8 @@ public class PinCountsTest {
     @Test
     void getTotal() {
         PinCounts pinCounts = new PinCounts(2);
-        pinCounts.add(PinCountTest.PIN_COUNT_8);
-        pinCounts.add(PinCountTest.PIN_COUNT_1);
+        pinCounts.add(8);
+        pinCounts.add(1);
         assertThat(pinCounts.getPinCountTotal()).isEqualTo(9);
     }
 
@@ -29,7 +29,7 @@ public class PinCountsTest {
     void getFirst() {
         PinCounts pinCounts = new PinCounts(1);
         assertThat(pinCounts.getFirst().isPresent()).isFalse();
-        pinCounts.add(PinCountTest.PIN_COUNT_1);
+        pinCounts.add(1);
         assertThat(pinCounts.getFirst().isPresent()).isTrue();
     }
 }

@@ -41,8 +41,8 @@ public class PinCountTest {
     @DisplayName("다른 PinCount 와 더했을때 최대치를 넘지 않아야 한다.")
     @Test
     void isAddable() {
-        assertThat(PIN_COUNT_8.isOverMaxAfterAdd(PIN_COUNT_3)).isFalse();
-        assertThat(PIN_COUNT_8.isOverMaxAfterAdd(PIN_COUNT_1)).isTrue();
+        assertThat(PIN_COUNT_8.isOverMaxAfterAdd(3)).isFalse();
+        assertThat(PIN_COUNT_8.isOverMaxAfterAdd(1)).isTrue();
     }
 
     @DisplayName("스트라이크 여부를 알 수 있다.")

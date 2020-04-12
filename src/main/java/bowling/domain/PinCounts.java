@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,15 +12,6 @@ public class PinCounts {
     public PinCounts(int maxSize) {
         this.maxSize = maxSize;
         this.pinCountList = new ArrayList<>();
-    }
-
-    public boolean add(PinCount pinCount) {
-        if (isFull()) {
-            return false;
-        }
-
-        pinCountList.add(pinCount);
-        return true;
     }
 
     public boolean add(int pinCount) {
