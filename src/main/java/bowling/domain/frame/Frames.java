@@ -46,8 +46,6 @@ public class Frames {
             return (currentFrame.getFirstPoint() + firstOfNext + firstOfNextOfNext);
         }
 
-        int firstOfNext = nextFrame.getFirstPoint();
-        int secondOfNext = nextFrame.getSecondPoint();
-        return (currentFrame.getFirstPoint() + firstOfNext + secondOfNext);
+        return (currentFrame.getFirstPoint() + nextFrame.getFirstPoint() + nextFrame.getSecondPoint());
     }
 }
