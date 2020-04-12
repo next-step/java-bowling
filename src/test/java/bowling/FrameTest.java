@@ -84,14 +84,20 @@ public class FrameTest {
         }
     }
 
-    @DisplayName("10프레임이 스트라이크면, 투구 횟수 1회가 추가된 frame을 리턴한다.")
+    /*
+    각 프레임의 첫 투구가 스트라이크면 두 번째 투구는 0으로 설정했기 때문에,
+    본 코드에서는 10프레임의 첫 투구가 스트라이크일 경우,
+    코드 상으로는 총 4회의 투구가 진행되며, 외관상으로는 3회의 투구가 진행되는 것처럼 보인다.
+
+     */
+    @DisplayName("10프레임이 스트라이크면, 투구 횟수 2회가 추가된 frame을 리턴한다.")
     @Test
     void createTenthFrameWhenTenthIsStrike() {
         //when
         Frame tenthFrame = new Frame(9, 10, 0);
 
         //then
-        assertThat(tenthFrame.getPoints().getPointSize()).isEqualTo(3);
+        assertThat(tenthFrame.getPoints().getPointSize()).isEqualTo(4);
     }
 
     @DisplayName("10프레임이 스페어이면, 투구 횟수가 1회 추가된 frame을 리턴한다.")
