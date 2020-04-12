@@ -40,7 +40,7 @@ public class FrameScore {
     }
 
     public boolean isStrike() {
-        if(scores.size() >= 1) {
+        if (scores.size() >= 1) {
             Score firstScore = scores.get(0);
             return firstScore.isEqualsTo(MAX_PIN_COUNT);
         }
