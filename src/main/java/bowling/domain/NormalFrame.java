@@ -16,7 +16,7 @@ public class NormalFrame {
     }
 
     public void add(int numberOfPin) {
-        this.scores.checkNormalSum(numberOfPin);
+        this.scores.checkBeforeAddNormal(numberOfPin);
         this.scores.add(new Score(numberOfPin));
     }
 

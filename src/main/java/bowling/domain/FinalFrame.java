@@ -16,7 +16,7 @@ public class FinalFrame {
     }
 
     public void add(int numberOfPin) {
-        this.scores.checkFinalSum(numberOfPin);
+        this.scores.checkBeforeAddFinal(numberOfPin);
         this.scores.add(new Score(numberOfPin));
     }
 

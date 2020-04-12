@@ -8,6 +8,7 @@ public class Scores {
     private static final int FINAL_MAX_SCORE = 20;
     private static final int NORMAL_TRY_NUMBER = 2;
     private static final int FINAL_TRY_NUMBER = 3;
+    private static final int ZERO = 0;
     private List<Score> scores = new ArrayList<>();
 
     public Scores(Score score) {
@@ -38,11 +39,19 @@ public class Scores {
     }
 
     public boolean nextFrame() {
-        return isStrike();
+        return isStrike() || numberOfTry() == NORMAL_TRY_NUMBER;
     }
 
     private boolean isStrike() {
-        return sum() == FRAME_MAX_SCORE;
+        return numberOfTry() == 1 && sum() == FRAME_MAX_SCORE;
+    }
+
+    private boolean isSpare() {
+        return numberOfTry() == NORMAL_TRY_NUMBER && sum() == FRAME_MAX_SCORE;
+    }
+
+    private boolean isGutter() {
+        return sum() == ZERO;
     }
 
     private boolean isMiss() {
@@ -56,7 +65,7 @@ public class Scores {
                 '}';
     }
 
-    public void checkNormalSum(int numberOfPin) {
+    public void checkBeforeAddNormal(int numberOfPin) {
         if (sumUntilThisValue(numberOfPin) > FRAME_MAX_SCORE) {
             throw new IllegalArgumentException(FRAME_MAX_SCORE + "을 넘으면 안됩니다.");
         }
@@ -77,7 +86,7 @@ public class Scores {
     }
 
 
-    public void checkFinalSum(int numberOfPin) {
+    public void checkBeforeAddFinal(int numberOfPin) {
         //처음에스트라이크가 아닌경우
         if (numberOfTry() == 1 && !isStrike() && sumUntilThisValue(numberOfPin) > FRAME_MAX_SCORE) {
             throw new IllegalArgumentException(FRAME_MAX_SCORE + "을 넘으면 안됩니다.");

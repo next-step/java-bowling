@@ -46,7 +46,8 @@ public class Player {
     }
 
 
-    public boolean isEndFinalFrame() {
+    public boolean isEndFinalFrame(FinalFrame finalFrame) {
+        addFrame(finalFrame);
         return frames.isEndFinalFrame();
     }
 

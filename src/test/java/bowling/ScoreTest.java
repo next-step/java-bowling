@@ -20,7 +20,7 @@ public class ScoreTest {
     public void checkScoresTest() {
         Scores scores = new Scores(new Score(5));
         assertThat(scores.size()).isEqualTo(1);
-        assertThatThrownBy(() -> scores.checkNormalSum(6)).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("10을 넘으면 안됩니다.");
+        assertThatThrownBy(() -> scores.checkBeforeAddNormal(6)).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("10을 넘으면 안됩니다.");
     }
 
     @Test
