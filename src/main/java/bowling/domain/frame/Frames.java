@@ -21,8 +21,8 @@ public class Frames {
     public int getFrameScore(int frameId) {
         Frame frame = frames.get(frameId - 1);
 
-        if (frame.isGutter() || frame.isMiss()) {
-            return (frame.getFirstPoint() + frame.getSecondPoint());
+        if (frame.isStrike()) {
+            return findFrameScoreWhenStrike(frame);
         }
 
         if (frame.isSpare()) {
@@ -30,11 +30,7 @@ public class Frames {
             return (frame.getFirstPoint() + frame.getSecondPoint() + firstPointOfNextFrame);
         }
 
-        if (frame.isStrike()) {
-            return findFrameScoreWhenStrike(frame);
-        }
-
-        return 0;
+        return (frame.getFirstPoint() + frame.getSecondPoint());
     }
 
     private Frame getNextFrameByCurrentId(int currentFrameId) {
