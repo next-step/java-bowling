@@ -17,24 +17,29 @@ public class PinCount {
         }
     }
 
-    private int pinCount;
+    private int count;
     private boolean isSpare;
 
-    private PinCount(int pinCount, boolean isSpare) {
-        this.pinCount = pinCount;
+    private PinCount(int count, boolean isSpare) {
+        this.count = count;
         this.isSpare = isSpare;
     }
 
-    public PinCount(int pinCount) {
-        this(pinCount, false);
+    public PinCount(int count) {
+        this(count, false);
+    }
+
+    public PinCount(PinCount pinCount) {
+        this.count = pinCount.count;
+        this.isSpare = pinCount.isSpare;
     }
 
     public int add(PinCount pinCount) {
-        return this.pinCount + pinCount.pinCount;
+        return this.count + pinCount.count;
     }
 
     public int add(int pinCount) {
-        return this.pinCount + pinCount;
+        return this.count + pinCount;
     }
 
     public boolean isOverMaxAfterAdd(PinCount pinCount) {
@@ -46,11 +51,11 @@ public class PinCount {
     }
 
     public boolean isMax() {
-        return pinCount == MAX;
+        return count == MAX;
     }
 
-    public int getPinCount() {
-        return pinCount;
+    public int getCount() {
+        return count;
     }
 
     public static PinCount empty() {
@@ -58,7 +63,7 @@ public class PinCount {
     }
 
     public boolean isStrike() {
-        return pinCount == MAX;
+        return count == MAX;
     }
 
     public boolean isSpare() {
@@ -66,7 +71,7 @@ public class PinCount {
     }
 
     public boolean isGutter() {
-        return pinCount == MIN;
+        return count == MIN;
     }
 
     public PinCount next(int pinCount) {
@@ -88,13 +93,12 @@ public class PinCount {
     @Override public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PinCount pinCount1 = (PinCount) o;
-        return pinCount == pinCount1.pinCount;
+        PinCount pinCount = (PinCount) o;
+        return count == pinCount.count &&
+                isSpare == pinCount.isSpare;
     }
 
     @Override public int hashCode() {
-        return Objects.hash(pinCount);
+        return Objects.hash(count, isSpare);
     }
-
-
 }
