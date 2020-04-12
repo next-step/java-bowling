@@ -1,14 +1,14 @@
 package bowling.domain;
 
-public class NormalFrame {
+public class FinalFrame {
     private Scores scores;
 
-    public NormalFrame() {
+    public FinalFrame() {
         this.scores = new Scores();
     }
 
-    public boolean isNextFrame() {
-        return this.scores.nextFrame();
+    public boolean isEnd() {
+        return this.scores.isEndFinalFrame();
     }
 
     public void add(Score score) {
@@ -16,13 +16,13 @@ public class NormalFrame {
     }
 
     public void add(int numberOfPin) {
-        this.scores.checkNormalSum(numberOfPin);
+        this.scores.checkFinalSum(numberOfPin);
         this.scores.add(new Score(numberOfPin));
     }
 
     @Override
     public String toString() {
-        return "NormalFrame{" +
+        return "FinalFrame{" +
                 "scores=" + scores +
                 '}';
     }

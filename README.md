@@ -30,15 +30,27 @@
   거터 : -      : 각 투구 0일때듯
   
 ##프로그램목록
-* InputView - 플레이어 / 프레임투 
-* Player - 플레이어정보 (name) / 이름벨리데이션 / 
+* InputView - 플레이어 / 프레임
+* Player - 플레이어정보 (name) / 이름벨리데이션 / Game정보생성(Frame, NormalFrame, FinalFrame, Scores, Score, 현재프레임)
 * Frame - 프레임정보  / 총10프레임 / 투구횟수체크 / 스코어체크
 * NormalFrame - 1~9프레임 / 각 프레임당 투구 max 2 / 스코어 합 max 10 / 
 * FinalFrame - 10프레임  / 각 프레임당 투구 max 2 ~ 3 / 스코어 합 max 30 / 
-* Score - 점수정보 (List<Integer> ) / 스코어 체크
-* OutputView구 - 점수판 / 첫번째 줄 (이름, 프레임수) / 
+* Scores - 점수정보 (List<Integer> ) / 스코어 체크
+* OutputView - 점수판 / 첫번째 줄 (이름, 프레임수) / 
                         두번째줄 (이름, 점수[X , N|/, N|N, N|- )
                         
+                        
+                        
+사용자이름을입력받는다.
+플레이어생성한다 
+게임을생성한다. - 프레임정보 - 스코어즈정보 - 스코어정보 (5,5)
+1구던질때 score생성, scores생성, normalFrame생성
+2구던질때 score생성, scores.add 
+=======다음프레임 ========
+1구던질때 score생성, scores생성, normalFrame.add
+2구던질때 score생성, scores.add 
+
+
 
   
                                

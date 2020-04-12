@@ -1,6 +1,9 @@
 package bowling.domain;
 
-import java.util.List;
+//스코어 : 0 ~ 10
+//스코어 : 같은 프레임의 스코어 합이 10을넘으면안됨
+
+
 
 public class Score {
     private static final int FRAME_MAX_SCORE = 10;
@@ -30,17 +33,10 @@ public class Score {
         return score == FRAME_MIN_SCORE;
     }
 
-    public void checkScore(List<Score> scores) {
-        int scoresSum = getScoresSum(scores);
-        if(scoresSum > FRAME_MAX_SCORE){
-            System.out.println(scoresSum);
-            throw new IllegalArgumentException(FRAME_MAX_SCORE + "을 넘으면 안됩니다.");
-        }
-    }
-
-    private int getScoresSum(List<Score> scores) {
-        return scores.stream()
-                    .mapToInt(Score::getScore)
-                    .sum();
+    @Override
+    public String toString() {
+        return "Score{" +
+                "score=" + score +
+                '}';
     }
 }
