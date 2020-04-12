@@ -2,7 +2,6 @@ package bowling;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-import bowling.domain.RandomGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +18,7 @@ public class FrameTest {
     @CsvSource(value = {"0:10", "1:5", "8:2"}, delimiter = ':')
     void createTest(int firstPoint, int secondPoint) {
         assertThatCode(() -> {
-            new Frame(firstPoint, secondPoint);
+            new Frame(0, firstPoint, secondPoint);
         }).doesNotThrowAnyException();
     }
 
@@ -28,7 +27,7 @@ public class FrameTest {
     @ValueSource(ints = {1, 5, 10})
     void throwExceptionWhenFirstScoreTenAndSecondNotZero(int secondPoint) {
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Frame(10, secondPoint);
+            new Frame(0, 10, secondPoint);
         });
     }
 
@@ -37,18 +36,16 @@ public class FrameTest {
     @CsvSource(value = {"8:3", "9:2", "10:9"}, delimiter = ':')
     void throwExceptionWhenSumIsGreaterThanTen(int firstPoint, int secondPoint) {
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Frame(firstPoint, secondPoint);
+            new Frame(0, firstPoint, secondPoint);
         });
     }
 
     @DisplayName("RandomGenerator를 이용해 Frame 객체 생성")
     @Test
     void createWithRandomGenerator() {
-        RandomGenerator randomGenerator = new RandomGenerator();
-
         IntStream.range(0, 1000)
                 .forEach(it -> assertThatCode(() -> {
-                    Frame.create(randomGenerator);
+                    Frame.create();
                 }).doesNotThrowAnyException());
     }
 
@@ -56,12 +53,11 @@ public class FrameTest {
     @Test
     void createNextFrame() {
         //given
-        RandomGenerator randomGenerator = new RandomGenerator();
-        Frame frame1 = Frame.create(randomGenerator);
+        Frame frame1 = Frame.create();
 
         //when
-        Frame frame2 = frame1.createNextFrame(randomGenerator);
-        Frame frame3 = frame2.createNextFrame(randomGenerator);
+        Frame frame2 = frame1.createNextFrame();
+        Frame frame3 = frame2.createNextFrame();
 
         //then
         assertThat(frame2.getFrameId()).isEqualTo(frame1.getFrameId() + 1);
@@ -71,11 +67,8 @@ public class FrameTest {
     @DisplayName("1부터 10까지 순차적으로 frameId로 가지는 10개의 frame 생성하기")
     @Test
     void createTenFrames() {
-        //given
-        RandomGenerator randomGenerator = new RandomGenerator();
-
         //when
-        Frames tenFrames = Frame.createTenFrames(randomGenerator);
+        Frames tenFrames = Frame.createTenFrames();
 
         //then
         assertThat(tenFrames.getFrames()).hasSize(10);

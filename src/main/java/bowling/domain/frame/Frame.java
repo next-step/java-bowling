@@ -17,15 +17,10 @@ public class Frame {
     private static final int SCORE_ZERO = 0;
     private static final int LAST_FRAME_ID = 10;
     private static final int FIRST_FRAME_ID = 1;
+    private static final int FRAME_ID_ZERO = 0;
 
-    private int frameId = 1;
+    private int frameId;
     private Points points;
-
-    public Frame(int firstPoint, int secondPoint) {
-        validateSecondWhenFirstTen(firstPoint, secondPoint);
-        validateSumIsLessThanTen(firstPoint, secondPoint);
-        points = Points.of(firstPoint, secondPoint);
-    }
 
     public Frame(int prevFrameId, int firstPoint, int secondPoint) {
         validateSecondWhenFirstTen(firstPoint, secondPoint);
@@ -33,34 +28,28 @@ public class Frame {
         points = Points.of(firstPoint, secondPoint);
         this.frameId = prevFrameId + 1;
 
-        if (doesNeedOneMorePoint()) {
-            points.addThirdPoint(Point.of(RANDOM_GENERATOR.getThirdPoint()));
-        }
-
-        if (doesNeedTwoMorePoint()) {
-            points.addThirdPoint(Point.of(RANDOM_GENERATOR.getThirdPointForStrike()));
-            points.addFourthPoint(Point.of(RANDOM_GENERATOR.getFourthPointForStrike()));
-        }
+        addPointForSpare();
+        addPointsForStrike();
     }
 
-    public static Frame create(RandomGenerator randomGenerator) {
-        return new Frame(randomGenerator.getFirstPoint(), randomGenerator.getSecondPoint());
+    public static Frame create() {
+        return new Frame(FRAME_ID_ZERO, RANDOM_GENERATOR.getFirstPoint(), RANDOM_GENERATOR.getSecondPoint());
     }
 
-    public static Frames createTenFrames(RandomGenerator randomGenerator) {
+    public static Frames createTenFrames() {
         List<Frame> frames = new ArrayList<>();
-        Frame currentFrame = Frame.create(randomGenerator);
+        Frame currentFrame = Frame.create();
 
         for (int i = FIRST_FRAME_ID; i <= LAST_FRAME_ID; i++) {
             frames.add(currentFrame);
-            currentFrame = currentFrame.createNextFrame(randomGenerator);
+            currentFrame = currentFrame.createNextFrame();
         }
 
         return new Frames(frames);
     }
 
-    public Frame createNextFrame(RandomGenerator randomGenerator) {
-        return new Frame(this.frameId, randomGenerator.getFirstPoint(), randomGenerator.getSecondPoint());
+    public Frame createNextFrame() {
+        return new Frame(this.frameId, RANDOM_GENERATOR.getFirstPoint(), RANDOM_GENERATOR.getSecondPoint());
     }
 
     private boolean doesNeedOneMorePoint() {
@@ -80,6 +69,19 @@ public class Frame {
     private void validateSumIsLessThanTen(int firstPoint, int secondPoint) {
         if (firstPoint + secondPoint > SCORE_TEN) {
             throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SUM);
+        }
+    }
+
+    private void addPointForSpare() {
+        if (doesNeedOneMorePoint()) {
+            points.addThirdPoint(Point.of(RANDOM_GENERATOR.getThirdPoint()));
+        }
+    }
+
+    private void addPointsForStrike() {
+        if (doesNeedTwoMorePoint()) {
+            points.addThirdPoint(Point.of(RANDOM_GENERATOR.getThirdPointForStrike()));
+            points.addFourthPoint(Point.of(RANDOM_GENERATOR.getFourthPointForStrike()));
         }
     }
 
