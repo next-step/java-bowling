@@ -1,4 +1,4 @@
-package bowling.state.finished;
+package bowling.state.finish;
 
 import bowling.state.State;
 

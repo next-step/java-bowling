@@ -1,4 +1,4 @@
-package bowling.state.finished;
+package bowling.state.finish;
 
 import bowling.state.State;
 
@@ -12,13 +12,19 @@ public class Miss extends Finished {
     }
 
     public static State of(int firstFelledPins, int secondFelledPins) {
+        if (firstFelledPins + secondFelledPins == FELLED_ALL_PINS) {
+            throw new IllegalArgumentException("스페어처리 된 상태는 미스상태가 될 수 없습니다.");
+        }
         return new Miss(firstFelledPins, secondFelledPins);
     }
 
     @Override
     public String view() {
         if (secondFelledPins == FELLED_ZERO_PINS) {
-            return firstFelledPins + DELIMITER + State.GUTTER;
+            return firstFelledPins + DELIMITER + GUTTER;
+        }
+        if (firstFelledPins == FELLED_ZERO_PINS) {
+            return GUTTER + DELIMITER + secondFelledPins;
         }
         return firstFelledPins + DELIMITER + secondFelledPins;
     }

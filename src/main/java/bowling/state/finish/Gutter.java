@@ -1,4 +1,4 @@
-package bowling.state.finished;
+package bowling.state.finish;
 
 import bowling.state.State;
 
@@ -13,6 +13,6 @@ public class Gutter extends Finished {
 
     @Override
     public String view() {
-        return State.GUTTER;
+        return GUTTER;
     }
 }
