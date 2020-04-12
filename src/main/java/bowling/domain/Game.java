@@ -31,11 +31,11 @@ public class Game {
         frames.add(count);
     }
 
-    public List<PinCount> getFramePinCounts(int index) {
-        return frames.getFramePinCounts(index);
+    public List<PinCount> getFramePinCounts(int frameIndex) {
+        return frames.getFramePinCounts(frameIndex);
     }
 
-    public int getCurrentFrameIndex() {
+    public int getCurrentFrame() {
         return frames.getCurrentFrameIndex() + ONE;
     }
 

@@ -48,6 +48,6 @@ public class GameTest {
         Game game = new Game(name, 3);
         game.addPin(10);
 
-        assertThat(game.getCurrentFrameIndex()).isEqualTo(2);
+        assertThat(game.getCurrentFrame()).isEqualTo(2);
     }
 }
