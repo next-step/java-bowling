@@ -19,6 +19,12 @@ public class Frames {
     }
 
     public int getFrameScore(int frameId) {
+        Frame frame = frames.get(frameId - 1);
+
+        if (frame.isGutter() || frame.isMiss()) {
+            return (frame.getFirstPoint() + frame.getSecondPoint());
+        }
+
         return 0;
     }
 }
