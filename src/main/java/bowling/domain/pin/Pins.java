@@ -1,6 +1,5 @@
 package bowling.domain.pin;
 
-import bowling.domain.frame.BowlCount;
 import bowling.exception.BowlCountOverThanPinsException;
 
 import java.util.Collections;

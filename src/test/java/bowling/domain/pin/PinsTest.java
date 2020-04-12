@@ -1,7 +1,6 @@
 package bowling.domain.pin;
 
 import bowling.domain.DomainGenerator;
-import bowling.domain.frame.BowlCount;
 import bowling.exception.BowlCountOverThanPinsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

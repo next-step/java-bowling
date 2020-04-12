@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.BowlCount;
 import bowling.exception.BowlCountOutOfRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
