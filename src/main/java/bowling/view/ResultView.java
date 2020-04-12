@@ -43,15 +43,16 @@ public class ResultView {
         String stringPinCounts = pinCounts.stream()
                 .map(ResultView::getSymbol)
                 .collect(Collectors.joining(PIN_DELIMITER));
-        System.out.print(String.format(PIN_COUNT_FORMAT, stringPinCounts) + DELIMITER);
+        System.out.print(String.format(PIN_COUNT_FORMAT, stringPinCounts) +
+                DELIMITER);
     }
 
     private static String getSymbol(PinCount pinCount) {
-        if(pinCount.isStrike()) {
+        if (pinCount.isStrike()) {
             return STRIKE;
-        } else if(pinCount.isSpare()) {
+        } else if (pinCount.isSpare()) {
             return SPARE;
-        } else if(pinCount.isGutter()) {
+        } else if (pinCount.isGutter()) {
             return GUTTER;
         }
         return Integer.toString(pinCount.getCount());

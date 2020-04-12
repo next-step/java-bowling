@@ -8,7 +8,7 @@ public class BowlingController {
     public static void start() {
         String name = InputView.getName();
         Game game = new Game(name);
-        while(!game.isFinished()) {
+        while (!game.isFinished()) {
             int pinCount = InputView.getPitching(game.getCurrentFrameIndex());
             game.addPin(pinCount);
             ResultView.displayGameBoard(game);
