@@ -2,7 +2,7 @@ package bowling;
 
 public class Pins {
 
-    private static final int MAX_PIN_COUNT = 10;
+    public static final int MAX_PIN_COUNT = 10;
 
     private int pinCount;
 
@@ -14,8 +14,8 @@ public class Pins {
         return pinCount == count;
     }
 
-    public Score drop(final int dropPinCount) {
-        return Score.of(changePins(dropPinCount));
+    public int drop(final int dropPinCount) {
+        return changePins(dropPinCount);
     }
 
     private int changePins(final int dropPinCount) {

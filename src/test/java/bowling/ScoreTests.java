@@ -3,7 +3,6 @@ package bowling;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -12,34 +11,17 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 @DisplayName("Score 테스트")
 public class ScoreTests {
 
-    @DisplayName("Score 첫번째 투구 생성 테스트")
+    @DisplayName("Score 투구 생성 테스트")
     @Test
     public void generateFirstPitchingTest() {
         assertThatCode(() -> Score.of(5));
     }
 
-    @DisplayName("Score 첫번째 투구 생성 오류 테스트")
+    @DisplayName("Score 투구 생성 오류 테스트")
     @ParameterizedTest
     @ValueSource(ints = {-1, 11})
     public void generateFirstPitchingAbnormalTest(final int score) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Score.of(score));
-    }
-
-    @DisplayName("Score 두번째 투구 생성 테스트")
-    @ParameterizedTest
-    @CsvSource(value = {"5,5,false", "10,5,true", "3,7,true"})
-    public void generateSecondPitchingTest(final int firstPitching, final int secondPitching) {
-        Score score = Score.of(firstPitching);
-        assertThatCode(() -> score.next(secondPitching));
-    }
-
-    @DisplayName("Score 두번째 투구 생성 오류 테스트")
-    @ParameterizedTest
-    @CsvSource(value = {"5,-1", "5,6", "5,11", "10,11"})
-    public void generateSecondPitchingAbnormalTest(final int firstPitching, final int secondPitching) {
-        Score firstScore = Score.of(firstPitching);
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> firstScore.next(secondPitching));
     }
 }

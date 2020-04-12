@@ -1,37 +1,16 @@
 package bowling;
 
-import java.util.List;
+public interface BowlingFrame {
+    /*
+     * 볼링 게임의 프레임을 관리한다.
+     * FrameScore와 Pins를 관리한다.
+     * 쓰러트린 볼링 핀수를 입력받아 FrameScore과 Pins를 갱신한다.
+     */
 
-public class BowlingFrame {
+    void bowl(int scoreCount);
 
-    private final FrameScore frameScore;
-    private final boolean isLastFrame;
+    boolean isOver();
 
-    private BowlingFrame(final FrameScore frameScore, final boolean isLastFrame) {
-        this.frameScore = frameScore;
-        this.isLastFrame = isLastFrame;
-    }
+    int sum();
 
-    public static BowlingFrame newInstance(final boolean isLastFrame) {
-        return new BowlingFrame(new FrameScore(), isLastFrame);
-    }
-
-    public static BowlingFrame newInstance(final List<Integer> scoreNumbers, final boolean isLastFrame) {
-        return new BowlingFrame(FrameScore.newInstance(scoreNumbers), isLastFrame);
-    }
-
-    public void pitch(final int scoreCount) {
-        if (isOver()) {
-            throw new RuntimeException("can not pitch the bowl at this frame.");
-        }
-        frameScore.add(scoreCount);
-    }
-
-    public boolean isOver() {
-        if (isLastFrame) {
-            return frameScore.isOverLastFrame();
-        }
-
-        return frameScore.isOverCommonFrame();
-    }
 }
