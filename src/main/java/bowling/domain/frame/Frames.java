@@ -63,6 +63,6 @@ public class Frames {
             return (currentFrame.getFirstPoint() + currentFrame.getSecondPoint() + currentFrame.getThirdPoint());
         }
 
-        return 0;
+        return (currentFrame.getFirstPoint() + currentFrame.getSecondPoint());
     }
 }
