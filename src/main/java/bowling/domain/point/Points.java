@@ -20,18 +20,6 @@ public class Points {
         return new Points(points);
     }
 
-    public static Points of(int firstPoint, int secondPoint, int thirdPoint) {
-        Map<Ordinal, Point> points = new HashMap<>();
-        points.put(Ordinal.FIRST, Point.of(firstPoint));
-        points.put(Ordinal.SECOND, Point.of(secondPoint));
-        points.put(Ordinal.THIRD, Point.of(thirdPoint));
-        return new Points(points);
-    }
-
-    public Map<Ordinal, Point> getPoints() {
-        return Collections.unmodifiableMap(points);
-    }
-
     public int getPointSize() {
         return this.points.size();
     }
@@ -45,10 +33,16 @@ public class Points {
 
     public void addThirdPoint(Point point) {
         this.points.put(Ordinal.THIRD, point);
+        points = Collections.unmodifiableMap(points);
     }
 
-    public void addFourthPoint(Point point) {
+    public void addThirdPointForStrike(Point point){
+        this.points.put(Ordinal.THIRD, point);
+    }
+
+    public void addFourthPointForStrike(Point point) {
         this.points.put(Ordinal.FOURTH, point);
+        points = Collections.unmodifiableMap(points);
     }
 
     public boolean isStrikeOrSpare() {

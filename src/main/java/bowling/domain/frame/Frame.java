@@ -80,8 +80,8 @@ public class Frame {
 
     private void addPointsForStrike() {
         if (doesNeedTwoMorePoint()) {
-            points.addThirdPoint(Point.of(RANDOM_GENERATOR.getThirdPointForStrike()));
-            points.addFourthPoint(Point.of(RANDOM_GENERATOR.getFourthPointForStrike()));
+            points.addThirdPointForStrike(Point.of(RANDOM_GENERATOR.getThirdPointForStrike()));
+            points.addFourthPointForStrike(Point.of(RANDOM_GENERATOR.getFourthPointForStrike()));
         }
     }
 
