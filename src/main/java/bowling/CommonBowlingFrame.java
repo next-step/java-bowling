@@ -29,4 +29,9 @@ public class CommonBowlingFrame implements BowlingFrame {
     public int sum() {
         return frameScore.sum();
     }
+
+    @Override
+    public FrameScore getFrameScore() {
+        return frameScore;
+    }
 }

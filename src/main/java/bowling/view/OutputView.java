@@ -16,7 +16,7 @@ public class OutputView {
 
     static {
         List<String> frames = IntStream.range(0, 10)
-                .mapToObj(number -> String.format(" %02d ", number))
+                .mapToObj(number -> String.format(" %02d ", number + 1))
                 .collect(Collectors.toList());
         GAME_FIRST_ROW = makeGameRow("NAME", frames);
     }
@@ -33,16 +33,17 @@ public class OutputView {
 
         List<String> scores = bowlingGameResult.getFrameScores()
                 .stream()
-                .map(Object::toString)
+                .map(frameScoreResult -> String.format("%-4s", frameScoreResult.getScoreResult()))
                 .collect(Collectors.toList());
 
-        System.out.println(makeGameRow(bowlingGameResult.getName(), makeScoreWithBlank(scores)));
+        System.out.println(makeGameRow(" " + bowlingGameResult.getName(), makeScoreWithBlank(scores)));
+        System.out.println();
     }
 
     private static List<String> makeScoreWithBlank(final List<String> scores) {
         List<String> scoresWithBlank = new ArrayList<>(scores);
         IntStream.range(0, 10 - scores.size())
-                .forEach(i -> scoresWithBlank.add("   "));
+                .forEach(i -> scoresWithBlank.add("    "));
 
         return scoresWithBlank;
     }

@@ -33,11 +33,11 @@ public class LastBowlingFrame implements BowlingFrame {
 
     @Override
     public boolean isOver() {
-        if(frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT)) {
+        if (frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT)) {
             return true;
         }
 
-        if(frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT - 1)) {
+        if (frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT - 1)) {
             return !hasStrikeOrSpareInTwoScores();
         }
 
@@ -51,5 +51,10 @@ public class LastBowlingFrame implements BowlingFrame {
 
     private boolean hasStrikeOrSpareInTwoScores() {
         return frameScore.isStrike() || frameScore.isSpare();
+    }
+
+    @Override
+    public FrameScore getFrameScore() {
+        return frameScore;
     }
 }

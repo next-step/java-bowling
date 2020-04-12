@@ -51,4 +51,8 @@ public class FrameScore {
     public boolean isSpare() {
         return isCount(2) && sum() == MAX_PIN_COUNT;
     }
+
+    public List<Score> getScores() {
+        return scores;
+    }
 }

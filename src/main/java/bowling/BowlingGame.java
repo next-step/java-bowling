@@ -26,7 +26,19 @@ public class BowlingGame {
         bowlingFrames.bowl(pinCount);
     }
 
-    private boolean isOver() {
+    public boolean isOver() {
         return bowlingFrames.isAllFrameOver();
+    }
+
+    public int getFrameCount() {
+        return bowlingFrames.count();
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public BowlingFrames getBowlingFrames() {
+        return bowlingFrames;
     }
 }

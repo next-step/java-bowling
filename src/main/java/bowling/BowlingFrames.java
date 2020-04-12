@@ -1,7 +1,6 @@
 package bowling;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BowlingFrames {
@@ -40,5 +39,13 @@ public class BowlingFrames {
 
     private BowlingFrame lastBowledFrame() {
         return frames.get(frames.size() - 1);
+    }
+
+    public int count() {
+        return frames.size();
+    }
+
+    public List<BowlingFrame> getFrames() {
+        return frames;
     }
 }

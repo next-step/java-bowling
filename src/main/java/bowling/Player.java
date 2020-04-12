@@ -35,4 +35,8 @@ public class Player {
             throw new IllegalArgumentException("Player name must be three english character");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
