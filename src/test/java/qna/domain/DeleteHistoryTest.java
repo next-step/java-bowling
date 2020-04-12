@@ -1,9 +1,11 @@
 package qna.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
+import qna.CannotDeleteException;
 
 import java.util.Arrays;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 public class DeleteHistoryTest {
@@ -13,10 +15,8 @@ public class DeleteHistoryTest {
     public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
     @Test
-    void deleteHistoryCreateTest() {
-        Answers answers = Answers.of(Arrays.asList(A1, A2), A1.getWriter());
-
-        DeleteHistories deleteHistories = new DeleteHistories(Q1,answers);
-        assertThat(deleteHistories.getDeleteHistories().size()).isEqualTo(3);
+    void deleteHistoryDeleteTest()  {
+        Answers answers = new Answers(Arrays.asList(A1, A2));
+        assertThatThrownBy(() -> answers.deleteAnswer(A1.getWriter())).isInstanceOf(CannotDeleteException.class);
     }
 }

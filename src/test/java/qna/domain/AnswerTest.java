@@ -18,8 +18,8 @@ public class AnswerTest {
 
     @Test
     void answersCanDeleteTest() {
-        Answers answers = Answers.of(Arrays.asList(A1, A2), A1.getWriter());
-        assertThatThrownBy(() ->answers.canDelete())
+        Answers answers = new Answers(Arrays.asList(A1, A2));
+        assertThatThrownBy(() ->answers.deleteAnswer( A1.getWriter()))
                 .isInstanceOf(CannotDeleteException.class);
     }
 
