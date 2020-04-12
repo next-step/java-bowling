@@ -7,18 +7,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static bowling.BowlingFrames.MAX_BOWLING_FRAME_SIZE;
+
 public class OutputView {
 
     private static final String FRAME_DELIMITER = " | ";
     private static final String GAME_ROW_PREFIX = "| ";
     private static final String GAME_ROW_SUFFIX = " |";
+    private static final String GAME_ROW_BLANK = " ";
+    private static final String GAME_FIRST_ROW_FRAME_NUMBER_FORMAT = " %02d ";
+    private static final String GAME_FIRST_ROW_NAME_FORMAT = "NAME";
+    private static final String GAME_FRAME_SCORE_FORMAT = "%-4s";
+    private static final String GAME_FRAME_SCORE_EMPTY_FORMAT = "    ";
     private static final String GAME_FIRST_ROW;
 
     static {
-        List<String> frames = IntStream.range(0, 10)
-                .mapToObj(number -> String.format(" %02d ", number + 1))
+        List<String> frames = IntStream.range(0, MAX_BOWLING_FRAME_SIZE)
+                .mapToObj(number -> String.format(GAME_FIRST_ROW_FRAME_NUMBER_FORMAT, number + 1))
                 .collect(Collectors.toList());
-        GAME_FIRST_ROW = makeGameRow("NAME", frames);
+        GAME_FIRST_ROW = makeGameRow(GAME_FIRST_ROW_NAME_FORMAT, frames);
     }
 
     private static String makeGameRow(final String name, final List<String> frames) {
@@ -33,17 +40,17 @@ public class OutputView {
 
         List<String> scores = bowlingGameResult.getFrameScores()
                 .stream()
-                .map(frameScoreResult -> String.format("%-4s", frameScoreResult.getScoreResult()))
+                .map(frameScoreResult -> String.format(GAME_FRAME_SCORE_FORMAT, frameScoreResult.getScoreResult()))
                 .collect(Collectors.toList());
 
-        System.out.println(makeGameRow(" " + bowlingGameResult.getName(), makeScoreWithBlank(scores)));
+        System.out.println(makeGameRow(GAME_ROW_BLANK + bowlingGameResult.getName(), makeScoreWithBlank(scores)));
         System.out.println();
     }
 
     private static List<String> makeScoreWithBlank(final List<String> scores) {
         List<String> scoresWithBlank = new ArrayList<>(scores);
-        IntStream.range(0, 10 - scores.size())
-                .forEach(i -> scoresWithBlank.add("    "));
+        IntStream.range(0, MAX_BOWLING_FRAME_SIZE - scores.size())
+                .forEach(i -> scoresWithBlank.add(GAME_FRAME_SCORE_EMPTY_FORMAT));
 
         return scoresWithBlank;
     }

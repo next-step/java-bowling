@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Score {
+    private static final int MIN_SCORE = 0;
+    private static final int MAX_SCORE = 10;
 
     private final int score;
 
@@ -13,7 +15,7 @@ public class Score {
     }
 
     private static void validate(final int score) {
-        if (score < 0 || score > 10) {
+        if (score < MIN_SCORE || score > MAX_SCORE) {
             throw new IllegalArgumentException("Score must be greater than zero and lower than 10.");
         }
     }

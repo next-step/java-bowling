@@ -1,5 +1,7 @@
 package bowling;
 
+import static bowling.Pins.MIN_PIN_COUNT;
+
 public class CommonBowlingFrame implements BowlingFrame {
     private static final int MAX_COMMON_FRAME_BOWL_COUNT = 2;
 
@@ -22,7 +24,7 @@ public class CommonBowlingFrame implements BowlingFrame {
 
     @Override
     public boolean isOver() {
-        return pins.isRemain(0) || frameScore.isCount(MAX_COMMON_FRAME_BOWL_COUNT);
+        return pins.isRemain(MIN_PIN_COUNT) || frameScore.isCount(MAX_COMMON_FRAME_BOWL_COUNT);
     }
 
     @Override

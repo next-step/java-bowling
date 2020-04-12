@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BowlingFrames {
-    private static final int MAX_BOWLING_FRAME_SIZE = 10;
+    public static final int MAX_BOWLING_FRAME_SIZE = 10;
 
     private final List<BowlingFrame> frames;
 

@@ -3,10 +3,19 @@ package bowling.dto;
 import bowling.FrameScore;
 import bowling.Score;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+import static bowling.Pins.MAX_PIN_COUNT;
+import static bowling.Pins.MIN_PIN_COUNT;
 
 public class FrameScoreConverter {
     private static final String SCORE_DELIMITER = "|";
+    private static final String SCORE_STRIKE = "X";
+    private static final String SCORE_SPARE = "/";
+    private static final String SCORE_GUTTER = "-";
 
     public static String joinFrameScoreString(FrameScore frameScore) {
         List<String> scoresString = new ArrayList<>();
@@ -22,16 +31,16 @@ public class FrameScoreConverter {
 
     // TODO: 2020-04-12
     private static String convertTo(final Score preScore, final Score nowScore) {
-        if ((!Objects.isNull(preScore) && !preScore.isEqualsTo(0)) && Score.sum(Arrays.asList(preScore, nowScore)) == 10) {
-            return "/";
+        if ((!Objects.isNull(preScore) && !preScore.isEqualsTo(MIN_PIN_COUNT)) && Score.sum(Arrays.asList(preScore, nowScore)) == MAX_PIN_COUNT) {
+            return SCORE_SPARE;
         }
 
-        if (nowScore.isEqualsTo(10)) {
-            return "X";
+        if (nowScore.isEqualsTo(MAX_PIN_COUNT)) {
+            return SCORE_STRIKE;
         }
 
-        if (nowScore.isEqualsTo(0)) {
-            return "-";
+        if (nowScore.isEqualsTo(MIN_PIN_COUNT)) {
+            return SCORE_GUTTER;
         }
 
         return Integer.toString(nowScore.getScore());

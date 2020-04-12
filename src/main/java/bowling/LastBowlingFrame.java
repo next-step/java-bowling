@@ -1,5 +1,7 @@
 package bowling;
 
+import static bowling.Pins.MIN_PIN_COUNT;
+
 public class LastBowlingFrame implements BowlingFrame {
     private static final int MAX_LAST_FRAME_BOWL_COUNT = 3;
 
@@ -20,7 +22,7 @@ public class LastBowlingFrame implements BowlingFrame {
         validateBowl();
         frameScore.add(pins.drop(scoreCount));
 
-        if (!frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT) && pins.isRemain(0)) {
+        if (!frameScore.isCount(MAX_LAST_FRAME_BOWL_COUNT) && pins.isRemain(MIN_PIN_COUNT)) {
             pins.reset();
         }
     }
