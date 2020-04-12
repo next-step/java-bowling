@@ -36,11 +36,12 @@ public class Pins {
         return pins.size();
     }
 
-    public boolean isStrike() {
-        final long count = pins.stream()
-                               .filter(Pin::isKnockOver)
-                               .count();
-        return count == pins.size();
+    public boolean isNotExist() {
+        return pins.size() == 0;
+    }
+
+    public boolean isGutter() {
+        return MAX_COUNT == pins.size();
     }
 
     private static List<Pin> create() {
