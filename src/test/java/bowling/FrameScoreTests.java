@@ -1,13 +1,9 @@
 package bowling;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -16,17 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("FrameScoreTests")
 public class FrameScoreTests {
-
-    private final List<FrameScore> frameScores = new ArrayList<>();
-
-    @Before
-    public void init() {
-        frameScores.add(FrameScore.newInstance(Arrays.asList(5, 5)));
-        frameScores.add(FrameScore.newInstance(Arrays.asList(10, 5, 5)));
-        frameScores.add(FrameScore.newInstance(Collections.singletonList(10)));
-        frameScores.add(FrameScore.newInstance(Arrays.asList(10, 10, 10)));
-        frameScores.add(FrameScore.newInstance(Collections.singletonList(2)));
-    }
 
     @DisplayName("FrameScore 생성 테스트")
     @Test
@@ -49,22 +34,31 @@ public class FrameScoreTests {
         assertThat(frameScore.sum()).isEqualTo(3);
     }
 
-    @DisplayName("FrameScore 종료 테스트 - 마지막 프레임")
+    @DisplayName("FrameScore count 테스트")
     @Test
-    public void isOverLastFrameTest() {
-        assertFalse(frameScores.get(0).isOverLastFrame());
-        assertTrue(frameScores.get(1).isOverLastFrame());
-        assertFalse(frameScores.get(2).isOverLastFrame());
-        assertTrue(frameScores.get(3).isOverLastFrame());
+    public void countFrameScoreTest() {
+        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(1, 2));
+        assertTrue(frameScore.isCount(2));
     }
 
-    @DisplayName("FrameScore 종료 테스트 - 1~9 프레임")
+    @DisplayName("FrameScore strike 테스트")
     @Test
-    public void isOverCommonFrameTest() {
-        assertTrue(frameScores.get(0).isOverCommonFrame());
-        assertTrue(frameScores.get(2).isOverCommonFrame());
-        assertFalse(frameScores.get(4).isOverCommonFrame());
+    public void checkStrikeTest() {
+        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
+        assertTrue(frameScore.isStrike());
+
+        FrameScore frameScore2 = FrameScore.newInstance(Arrays.asList(5, 7));
+        assertFalse(frameScore2.isStrike());
     }
 
+    @DisplayName("FrameScore spare 테스트")
+    @Test
+    public void checkSpareTest() {
+        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
+        assertFalse(frameScore.isSpare());
+
+        FrameScore frameScore2 = FrameScore.newInstance(Arrays.asList(5, 3));
+        assertTrue(frameScore2.isSpare());
+    }
 
 }
