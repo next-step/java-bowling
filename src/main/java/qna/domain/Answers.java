@@ -4,7 +4,6 @@ import qna.CannotDeleteException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Answers {
 
@@ -12,17 +11,6 @@ public class Answers {
 
     public Answers(List<Answer> answers) {
         this.answers = answers;
-        this.loginUser = loginUser;
-    }
-
-    public static Answers of(List<Answer> answers, User loginUser) {
-        return new Answers(answers,loginUser);
-    }
-
-    public void canDelete() throws CannotDeleteException {
-        for (Answer answer : this.answers) {
-            answer.canDelete(loginUser);
-        }
     }
 
     public List<Answer> getAnswers() {
