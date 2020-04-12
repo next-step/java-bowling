@@ -1,9 +1,10 @@
-package bowling.domain.player.domain;
+package bowling.player.domain;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Player {
-    private static final int NAME_LENGTH = 3;
+    private static final Pattern pattern = Pattern.compile("^[a-zA-Z]{3}$");
 
     private final String name;
 
@@ -17,7 +18,7 @@ public class Player {
     }
 
     private void validate(String name) {
-        if (Objects.isNull(name) || name.length() != NAME_LENGTH) {
+        if (Objects.isNull(name) || !pattern.matcher(name).find()) {
             throw new IllegalArgumentException("이름은 3글자로 입력해야 합니다.");
         }
     }
