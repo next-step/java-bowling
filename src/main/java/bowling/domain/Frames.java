@@ -20,8 +20,12 @@ public class Frames {
         normalFrames.add(normalFrame);
     }
 
+    public void addFinalFrame(FinalFrame finalFrame) {
+        this.finalFrame = finalFrame;
+    }
+
     public boolean isNextFrame() {
-        return normalFrames.get(currentFrame()-1).isNextFrame();
+        return normalFrames.get(currentFrame() - 1).isNextFrame();
     }
 
     public boolean isEndNormalFrame() {
@@ -29,7 +33,7 @@ public class Frames {
     }
 
     public boolean isEndFinalFrame() {
-        return finalFrame.isEnd();
+        return finalFrame.isEndFinalFrame();
     }
 
     @Override
@@ -40,8 +44,5 @@ public class Frames {
                 '}';
     }
 
-    public void addFinalFrame(FinalFrame finalFrame) {
-        this.finalFrame = finalFrame;
-    }
 }
 

@@ -24,13 +24,13 @@ public class Player {
     }
 
     public void checkLetter(String name) {
-        if (name.length() > 3){
+        if (name.length() > 3) {
             throw new IllegalArgumentException("3글자까지만 입력가능합니다.");
         }
     }
 
     public int currentFrame() {
-        return frames.currentFrame()+1;
+        return frames.currentFrame() + 1;
     }
 
     public void addFrame(NormalFrame normalFrame) {

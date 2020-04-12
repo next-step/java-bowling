@@ -7,7 +7,7 @@ public class FinalFrame {
         this.scores = new Scores();
     }
 
-    public boolean isEnd() {
+    public boolean isEndFinalFrame() {
         return this.scores.isEndFinalFrame();
     }
 
