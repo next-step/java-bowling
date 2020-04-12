@@ -10,6 +10,10 @@ public class BowlCount {
 
     private final int bowlCount;
 
+    public BowlCount(final String bowlCount) {
+        this(Integer.valueOf(bowlCount));
+    }
+
     public BowlCount(final int bowlCount) {
         validRange(bowlCount);
         this.bowlCount = bowlCount;
