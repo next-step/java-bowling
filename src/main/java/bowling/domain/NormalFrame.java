@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.Objects;
-
 public class NormalFrame  {
     private Scores scores;
 
@@ -10,7 +8,7 @@ public class NormalFrame  {
     }
 
     public NormalFrame(Frame frame) {
-        add(frame.getScores());
+        this.scores = frame.getScores();
     }
 
     public boolean isNextFrame() {
@@ -28,12 +26,6 @@ public class NormalFrame  {
 
     @Override
     public String toString() {
-        return "NormalFrame{" +
-                "scores=" + scores +
-                '}';
-    }
-
-    public void add(Scores scores) {
-        this.scores = scores;
+        return scores.toString();
     }
 }

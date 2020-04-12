@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Scores {
     private static final int FRAME_MAX_SCORE = 10;
@@ -9,18 +10,51 @@ public class Scores {
     private static final int NORMAL_TRY_NUMBER = 2;
     private static final int FINAL_TRY_NUMBER = 3;
     private static final int ZERO = 0;
+    private static final String STRIKE_SIGN = "X";
+    private static final String SPARE_SIGN = "/";
+    private static final String GUTTER_SIGN = "-";
     private List<Score> scores = new ArrayList<>();
-
-    public Scores(Score score) {
-        this.scores.add(score);
-    }
+    private List<String> signs = new ArrayList<>();
 
     public Scores() {
         this.scores = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "Scores{" +
+                "scores=" + scores +
+                ", signs=" + signs +
+                '}';
+    }
+
     public void add(Score score) {
         this.scores.add(score);
+        String sign = makeSign(score);
+        this.signs.add(sign);
+    }
+
+    private String makeSign(Score score) {
+        String sign = "";
+        if (isStrike()) {
+            sign = STRIKE_SIGN;
+        }
+        if (isSpare()) {
+            sign = SPARE_SIGN;
+        }
+        if (score.getScore() == 0) {
+            sign = GUTTER_SIGN;
+        }
+        if ("".equals(sign)) {
+            sign = score.toString();
+        }
+        return sign;
+    }
+
+    public String getSigns() {
+        return this.signs.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining("|"));
     }
 
     public int size() {
@@ -56,13 +90,6 @@ public class Scores {
 
     private boolean isMiss() {
         return sum() < FRAME_MAX_SCORE;
-    }
-
-    @Override
-    public String toString() {
-        return "Scores{" +
-                "scores=" + scores +
-                '}';
     }
 
     public void checkBeforeAddNormal(int numberOfPin) {

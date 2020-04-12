@@ -1,10 +1,10 @@
 package bowling;
 
-import bowling.domain.*;
+import bowling.domain.NormalFrame;
+import bowling.domain.Player;
+import bowling.domain.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -21,7 +21,7 @@ public class PlayerTest {
     @DisplayName("자릿수테스트")
     public void checkLettersTest() {
         String name = "1234";
-        assertThatThrownBy(() -> new Player(name) )
+        assertThatThrownBy(() -> new Player(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("3글자까지만 입력가능합니다.");
     }

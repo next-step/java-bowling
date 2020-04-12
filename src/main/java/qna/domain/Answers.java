@@ -33,7 +33,6 @@ public class Answers {
     }
 
     public List<DeleteHistory> deleteHistory() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
         return answers.stream()
                 .map(answer->DeleteHistory.deleteAnswer(answer))
                 .collect(Collectors.toList());

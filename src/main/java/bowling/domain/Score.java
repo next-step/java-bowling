@@ -22,8 +22,6 @@ public class Score {
 
     @Override
     public String toString() {
-        return "Score{" +
-                "score=" + score +
-                '}';
+        return String.valueOf(score);
     }
 }

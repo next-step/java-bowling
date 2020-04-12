@@ -14,11 +14,6 @@ public class Player {
         this.frames = new Frames();
     }
 
-    @Override
-    public String toString() {
-        return name.toString();
-    }
-
     public void checkLetter(String name) {
         if (name.length() > 3) {
             throw new IllegalArgumentException("3글자까지만 입력가능합니다.");
@@ -52,5 +47,14 @@ public class Player {
 
     public void addFrame(FinalFrame finalFrame) {
         frames.addFinalFrame(finalFrame);
+    }
+
+    public Frames getFrames() {
+        return frames;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -32,7 +32,7 @@ public class Game {
 
     private void playNormal(int numberOfPin) {
         frame.addNormalFrame(numberOfPin);
-        if(!player.isEndNormalFrame() && frame.isNextFrame()){
+        if (!player.isEndNormalFrame() && frame.isNextFrame()) {
             NormalFrame normalFrame = new NormalFrame(frame);
             player.addFrame(normalFrame);
             frame = new Frame();

@@ -8,7 +8,7 @@ public class FinalFrame {
     }
 
     public FinalFrame(Frame frame) {
-        add(frame.getScores());
+        this.scores = frame.getScores();
     }
 
     public boolean isEndFinalFrame() {
@@ -29,9 +29,5 @@ public class FinalFrame {
         return "FinalFrame{" +
                 "scores=" + scores +
                 '}';
-    }
-
-    public void add(Scores scores) {
-        this.scores = scores;
     }
 }
