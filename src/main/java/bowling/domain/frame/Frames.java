@@ -17,4 +17,8 @@ public class Frames {
     public int getFrameId(int index) {
         return frames.get(index).getFrameId();
     }
+
+    public int getFrameScore(int frameId) {
+        return 0;
+    }
 }
