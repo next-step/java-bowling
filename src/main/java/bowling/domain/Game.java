@@ -14,19 +14,26 @@ public class Game {
     }
 
     public void play(int numberOfPin) {
-        if (player.isEndNormalFrame()){
-            if (!player.isEndFinalFrame()) {
-                frame.addFinalFrame(numberOfPin);
-                FinalFrame finalFrame = new FinalFrame();
-                finalFrame.add(frame.getScores());
-                player.addFrame(finalFrame);
-            }
+        if (playFinal(numberOfPin)) {
             return;
         }
+        playNormal(numberOfPin);
+    }
+
+    private boolean playFinal(int numberOfPin) {
+        if (player.isEndNormalFrame() && !player.isEndFinalFrame()) {
+            frame.addFinalFrame(numberOfPin);
+            FinalFrame finalFrame = new FinalFrame(frame);
+            player.addFrame(finalFrame);
+            return true;
+        }
+        return false;
+    }
+
+    private void playNormal(int numberOfPin) {
         frame.addNormalFrame(numberOfPin);
         if(!player.isEndNormalFrame() && frame.isNextFrame()){
-            NormalFrame normalFrame = new NormalFrame();
-            normalFrame.add(frame.getScores());
+            NormalFrame normalFrame = new NormalFrame(frame);
             player.addFrame(normalFrame);
             frame = new Frame();
         }

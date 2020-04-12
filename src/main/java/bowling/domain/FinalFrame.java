@@ -7,6 +7,10 @@ public class FinalFrame {
         this.scores = new Scores();
     }
 
+    public FinalFrame(Frame frame) {
+        add(frame.getScores());
+    }
+
     public boolean isEndFinalFrame() {
         return this.scores.isEndFinalFrame();
     }

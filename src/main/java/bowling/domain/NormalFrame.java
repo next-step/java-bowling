@@ -9,6 +9,10 @@ public class NormalFrame  {
         this.scores = new Scores();
     }
 
+    public NormalFrame(Frame frame) {
+        add(frame.getScores());
+    }
+
     public boolean isNextFrame() {
         return this.scores.nextFrame();
     }
