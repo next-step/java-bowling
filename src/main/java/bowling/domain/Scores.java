@@ -52,7 +52,7 @@ public class Scores {
         if (isFinalFrameSpare(score)) {
             sign = SPARE_SIGN;
         }
-        if (score.getScore() == 0) {
+        if (score.getScore() == ZERO) {
             sign = GUTTER_SIGN;
         }
         if ("".equals(sign)) {
@@ -62,9 +62,16 @@ public class Scores {
     }
 
     private boolean isFinalFrameSpare(Score score) {
-        // x,0,/    0,/,X  , 2,/,X
-        return numberOfTry() == FINAL_TRY_NUMBER && sum() == FINAL_MAX_SCORE
-                && scores.get(FINAL_TRY_NUMBER-2).getScore() + score.getScore() == FRAME_MAX_SCORE;
+        return isFinalFrame() && sum() == FINAL_MAX_SCORE
+                && sumBeforeAndNow(score);
+    }
+
+    private boolean sumBeforeAndNow(Score score) {
+        return scores.get(FINAL_TRY_NUMBER - 2).getScore() + score.getScore() == FRAME_MAX_SCORE;
+    }
+
+    private boolean isFinalFrame() {
+        return numberOfTry() == FINAL_TRY_NUMBER;
     }
 
     public int size() {
@@ -116,7 +123,7 @@ public class Scores {
         if (numberOfTry() == NORMAL_TRY_NUMBER && isMiss()) {
             return true;
         }
-        if (numberOfTry() == FINAL_TRY_NUMBER) {
+        if (isFinalFrame()) {
             return true;
         }
         return false;
