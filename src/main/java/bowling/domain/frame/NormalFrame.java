@@ -41,6 +41,16 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean isEnd() {
+        return state.isTurnOver();
+    }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
+
+    @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

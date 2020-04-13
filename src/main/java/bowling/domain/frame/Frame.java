@@ -8,4 +8,6 @@ public interface Frame {
     Optional<Frame> getNext();
 
     void bowl(Pins pins);
+
+    boolean isEnd();
 }
