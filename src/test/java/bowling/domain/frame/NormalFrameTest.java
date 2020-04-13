@@ -66,7 +66,6 @@ class NormalFrameTest {
 
         frame.bowl(pins);
 
-        assertThat(frame.toString()).isEqualTo("X");
         assertThat(frame.isEnd()).isTrue();
     }
 
@@ -79,7 +78,6 @@ class NormalFrameTest {
         frame.bowl(first);
         frame.bowl(second);
 
-        assertThat(frame.toString()).isEqualTo("5|/");
         assertThat(frame.isEnd()).isTrue();
     }
 
@@ -92,7 +90,6 @@ class NormalFrameTest {
         frame.bowl(first);
         frame.bowl(second);
 
-        assertThat(frame.toString()).isEqualTo("9");
         assertThat(frame.isEnd()).isTrue();
     }
 
@@ -106,7 +103,6 @@ class NormalFrameTest {
         frame.bowl(first);
         frame.bowl(second);
 
-        assertThat(frame.toString()).isEqualTo("-");
         assertThat(frame.isEnd()).isTrue();
     }
 }

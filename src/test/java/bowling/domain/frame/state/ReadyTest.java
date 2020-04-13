@@ -33,6 +33,6 @@ class ReadyTest {
 
         State actual = new Ready().roll(remains);
 
-        assertThat(actual).isInstanceOf(Running.class);
+        assertThat(actual).isInstanceOf(FirstBowl.class);
     }
 }

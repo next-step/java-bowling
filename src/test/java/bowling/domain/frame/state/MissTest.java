@@ -11,10 +11,12 @@ class MissTest {
     @DisplayName("MISS 점수를 갖고올 수 있다.")
     @Test
     void spare() {
+        String expect = "4|4";
         Pins first = Pins.of().knockOver(new BowlCount(4));
         Pins second = Pins.of().knockOver(new BowlCount(4));
-        State miss = new Miss(first, second);
 
-        assertThat(miss.toString()).isEqualTo("8");
+        State actual = new Miss(first, second);
+
+        assertThat(actual.toResult()).isEqualTo(expect);
     }
 }

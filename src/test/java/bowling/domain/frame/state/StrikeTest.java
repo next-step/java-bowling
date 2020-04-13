@@ -9,8 +9,10 @@ class StrikeTest {
     @DisplayName("STRIKE 점수를 갖고올 수 있다.")
     @Test
     void strike() {
-        State strike = new Strike();
+        String expect = "X";
 
-        assertThat(strike.toString()).isEqualTo("X");
+        State actual = new Strike();
+
+        assertThat(actual.toResult()).isEqualTo(expect);
     }
 }

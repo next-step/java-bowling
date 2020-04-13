@@ -7,15 +7,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RunningTest {
+class FirstBowlTest {
     @DisplayName("두번째 투구에 남은 핀들을 넘어트리면 SPARE를 반환한다.")
     @Test
     void spare() {
         Pins first = createPins(5);
         Pins second = createPins(5);
-        Running running = new Running(first);
+        FirstBowl firstBowl = new FirstBowl(first);
 
-        State actual = running.roll(second);
+        State actual = firstBowl.roll(second);
 
         assertThat(actual).isInstanceOf(Spare.class);
     }
@@ -25,9 +25,9 @@ class RunningTest {
     void miss() {
         Pins first = createPins(5);
         Pins second = createPins(4);
-        Running running = new Running(first);
+        FirstBowl firstBowl = new FirstBowl(first);
 
-        State actual = running.roll(second);
+        State actual = firstBowl.roll(second);
 
         assertThat(actual).isInstanceOf(Miss.class);
     }
@@ -37,9 +37,9 @@ class RunningTest {
     void gutter() {
         Pins first = createPins(0);
         Pins second = createPins(0);
-        Running running = new Running(first);
+        FirstBowl firstBowl = new FirstBowl(first);
 
-        State actual = running.roll(second);
+        State actual = firstBowl.roll(second);
 
         assertThat(actual).isInstanceOf(Gutter.class);
     }
