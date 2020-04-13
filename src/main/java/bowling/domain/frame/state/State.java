@@ -6,4 +6,6 @@ public interface State {
     String DELIMITER = "|";
 
     State roll(Pins knockOverPins);
+
+    boolean isTurnOver();
 }

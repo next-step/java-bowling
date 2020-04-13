@@ -17,6 +17,11 @@ public class Miss implements State {
     }
 
     @Override
+    public boolean isTurnOver() {
+        return Boolean.TRUE;
+    }
+
+    @Override
     public String toString() {
         return String.valueOf(first.count() + second.count());
     }

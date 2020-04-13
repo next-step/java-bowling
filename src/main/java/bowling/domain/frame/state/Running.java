@@ -14,7 +14,7 @@ public class Running implements State{
         Pins second = first.add(knockOverPins);
 
         if (second.isSpare()) {
-            return new Spare(second);
+            return new Spare(first);
         }
 
         if (second.isGutter()) {
@@ -22,5 +22,10 @@ public class Running implements State{
         }
 
         return new Miss(first, knockOverPins);
+    }
+
+    @Override
+    public boolean isTurnOver() {
+        return Boolean.FALSE;
     }
 }

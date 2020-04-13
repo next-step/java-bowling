@@ -16,6 +16,11 @@ public class Spare implements State {
     }
 
     @Override
+    public boolean isTurnOver() {
+        return Boolean.TRUE;
+    }
+
+    @Override
     public String toString() {
         return pins.count() + State.DELIMITER + EXPRESSION;
     }

@@ -11,6 +11,11 @@ public class Gutter implements State {
     }
 
     @Override
+    public boolean isTurnOver() {
+        return Boolean.TRUE;
+    }
+
+    @Override
     public String toString() {
         return EXPRESSION;
     }

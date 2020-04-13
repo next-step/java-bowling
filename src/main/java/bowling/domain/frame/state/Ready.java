@@ -13,4 +13,9 @@ public class Ready implements State {
         }
         return new Running(knockOverPins);
     }
+
+    @Override
+    public boolean isTurnOver() {
+        return Boolean.FALSE;
+    }
 }
