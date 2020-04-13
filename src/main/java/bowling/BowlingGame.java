@@ -8,6 +8,7 @@ import bowling.domain.frame.Frames;
 public class BowlingGame {
     private static final int FRAME_INDEX_NINE = 9;
     private static final int ZERO = 0;
+    private static final int ONE = 1;
 
     public static void play(Frame defaultFrame, int score) {
         defaultFrame.addScore(score);
@@ -23,12 +24,12 @@ public class BowlingGame {
             return;
         }
 
-        int lastFrameIndex = frames.size() - 1;
+        int currentIndex = frames.size() - ONE;
         if (isLast(frames)) {
-            frames.add(((DefaultFrame) frames.getLast()).nextFrame(lastFrameIndex));
+            frames.add(((DefaultFrame) frames.getLast()).nextFrame(currentIndex));
             return;
         }
-        frames.add(((DefaultFrame) frames.getLast()).lastFrame(lastFrameIndex));
+        frames.add(((DefaultFrame) frames.getLast()).lastFrame(currentIndex));
     }
 
     private static boolean isLast(Frames frames) {
