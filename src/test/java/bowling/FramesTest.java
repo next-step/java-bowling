@@ -131,6 +131,27 @@ public class FramesTest {
                 .isEqualTo(tenthFrame.getFirstPoint() + tenthFrame.getSecondPoint());
     }
 
+    @DisplayName("모든 프레임이 스트라이크일 때, 총점은 300점을 반환한다.")
+    @Test
+    void returnSumPointsWhenAllStrike() {
+        //given
+        Frames frames = new Frames(createTenStrikeFrames());
+
+        //when
+        int totalPointUntil = frames.getTotalPointUntil(frames.getFrames().get(9));
+
+        //then
+        assertThat(totalPointUntil).isEqualTo(300);
+    }
+
+    private List<Frame> createTenStrikeFrames() {
+        List<Frame> frames = new ArrayList<>();
+        IntStream.range(0, 9)
+                .forEach(it -> frames.add(new Frame(it, 10, 0)));
+        frames.add(new Frame(9, 10, 0, 10, 10));
+        return frames;
+    }
+
     private List<Frame> createTenFramesWithOneFrame(Frame frame) {
         List<Frame> frames = new ArrayList<>();
         IntStream.range(0, 10)

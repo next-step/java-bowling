@@ -32,6 +32,16 @@ public class Frame {
         addPointsForStrike();
     }
 
+    public Frame(int prevFrameId, int firstPoint, int secondPoint, int thirdPoint, int fourthPoint){
+        validateSecondWhenFirstTen(firstPoint, secondPoint);
+        validateSumIsLessThanTen(firstPoint, secondPoint);
+        points = Points.of(firstPoint, secondPoint);
+        this.frameId = prevFrameId + 1;
+
+        points.addThirdPointForStrike(Point.of(thirdPoint));
+        points.addFourthPointForStrike(Point.of(fourthPoint));
+    }
+
     public static Frame create() {
         return new Frame(FRAME_ID_ZERO, RANDOM_GENERATOR.getFirstPoint(), RANDOM_GENERATOR.getSecondPoint());
     }
