@@ -52,6 +52,7 @@ public class ScoreTest {
         Scores scores = new Scores();
         scores.add(new Score(4));
         scores.add(new Score(6));
+
         assertThat(scores.getSigns()).isEqualTo("4|/");
     }
 

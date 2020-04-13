@@ -8,6 +8,10 @@ public class Frames {
     private List<NormalFrame> normalFrames;
     private FinalFrame finalFrame = new FinalFrame();
 
+    public List<NormalFrame> getNormalFrames() {
+        return normalFrames;
+    }
+
     public Frames() {
         this.normalFrames = new ArrayList<>();
     }
@@ -34,14 +38,6 @@ public class Frames {
 
     public boolean isEndFinalFrame() {
         return finalFrame.isEndFinalFrame();
-    }
-
-    @Override
-    public String toString() {
-        return "Frames{" +
-                "normalFrames=" + normalFrames +
-                ", finalFrame=" + finalFrame +
-                '}';
     }
 }
 

@@ -5,6 +5,10 @@ public class Frame {
         return scores;
     }
 
+    public String getSigns() {
+        return getScores().getSigns();
+    }
+
     private Scores scores;
 
     public Frame() {
@@ -31,8 +35,6 @@ public class Frame {
 
     @Override
     public String toString() {
-        return "Frame{" +
-                "scores=" + scores +
-                '}';
+        return scores.toString();
     }
 }

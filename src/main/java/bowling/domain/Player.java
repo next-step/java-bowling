@@ -1,8 +1,15 @@
 package bowling.domain;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Player {
     private String name = "";
     private Frames frames;
+
+    public Frames getFrames() {
+        return frames;
+    }
 
     public String getName() {
         return name;
@@ -49,12 +56,14 @@ public class Player {
         frames.addFinalFrame(finalFrame);
     }
 
-    public Frames getFrames() {
-        return frames;
-    }
-
     @Override
     public String toString() {
         return name;
+    }
+
+    public List<String> getSigns() {
+        return frames.getNormalFrames().stream()
+                .map(n->n.getSigns())
+                .collect(Collectors.toList());
     }
 }

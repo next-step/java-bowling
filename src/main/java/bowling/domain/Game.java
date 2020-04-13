@@ -14,20 +14,13 @@ public class Game {
     }
 
     public void play(int numberOfPin) {
-        if (playFinal(numberOfPin)) {
-            return;
-        }
-        playNormal(numberOfPin);
-    }
-
-    private boolean playFinal(int numberOfPin) {
         if (player.isEndNormalFrame() && !player.isEndFinalFrame()) {
             frame.addFinalFrame(numberOfPin);
             FinalFrame finalFrame = new FinalFrame(frame);
             player.addFrame(finalFrame);
-            return true;
+            return;
         }
-        return false;
+        playNormal(numberOfPin);
     }
 
     private void playNormal(int numberOfPin) {
@@ -39,11 +32,11 @@ public class Game {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                "player=" + player +
-                ", frame=" + frame +
-                '}';
+    public Player getPlay() {
+        return this.player;
+    }
+
+    public Frame getFrame() {
+        return frame;
     }
 }

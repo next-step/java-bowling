@@ -23,11 +23,4 @@ public class FinalFrame {
         this.scores.checkBeforeAddFinal(numberOfPin);
         this.scores.add(new Score(numberOfPin));
     }
-
-    @Override
-    public String toString() {
-        return "FinalFrame{" +
-                "scores=" + scores +
-                '}';
-    }
 }

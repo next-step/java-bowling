@@ -16,8 +16,16 @@ public class Scores {
     private List<Score> scores = new ArrayList<>();
     private List<String> signs = new ArrayList<>();
 
+
+
     public Scores() {
         this.scores = new ArrayList<>();
+    }
+
+    public void add(Score score) {
+        this.scores.add(score);
+        String sign = makeSign(score);
+        signs.add(sign);
     }
 
     @Override
@@ -28,10 +36,10 @@ public class Scores {
                 '}';
     }
 
-    public void add(Score score) {
-        this.scores.add(score);
-        String sign = makeSign(score);
-        this.signs.add(sign);
+    public String getSigns() {
+        return this.signs.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining("|"));
     }
 
     private String makeSign(Score score) {
@@ -49,12 +57,6 @@ public class Scores {
             sign = score.toString();
         }
         return sign;
-    }
-
-    public String getSigns() {
-        return this.signs.stream()
-                .map(Object::toString)
-                .collect(Collectors.joining("|"));
     }
 
     public int size() {
