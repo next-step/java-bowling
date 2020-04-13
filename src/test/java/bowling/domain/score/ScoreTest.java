@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
@@ -33,7 +33,7 @@ public class ScoreTest {
     }
 
     @Nested
-    @DisplayName("일반 프레임")
+    @DisplayName("일반 프레임 점수")
     class defaultFrame {
 
         @DisplayName("스트라이크 생성")
@@ -73,7 +73,7 @@ public class ScoreTest {
     }
 
     @Nested
-    @DisplayName("마지막 프레임")
+    @DisplayName("마지막 프레임 점수")
     class lastFrame {
 
         @DisplayName("스트라이크 생성")

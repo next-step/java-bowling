@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.domain.frame.DefaultFrame;
 import bowling.domain.score.ScoreType;
@@ -45,7 +45,7 @@ class DefaultFrameTest {
     @DisplayName("점수 추가")
     @ParameterizedTest
     @MethodSource("points")
-    void createNextFrame(List<Integer> values) {
+    void addPoint(List<Integer> values) {
         DefaultFrame defaultFrame = DefaultFrame.first();
 
         assertThatCode(
@@ -61,6 +61,28 @@ class DefaultFrameTest {
         return Stream.of(
                 arguments(Arrays.asList(1, 2)),
                 arguments(Arrays.asList(4, 5))
+        );
+    }
+
+    @DisplayName("프레임 점수가 10점이 넘을 경우 throws Exception")
+    @ParameterizedTest
+    @MethodSource("overPoints")
+    void addPointFailByOverPoint(List<Integer> values) {
+        DefaultFrame defaultFrame = DefaultFrame.first();
+
+        assertThatIllegalArgumentException().isThrownBy(
+                () -> {
+                    for (Integer value : values) {
+                        defaultFrame.addScore(value);
+                    }
+                }
+        );
+    }
+
+    static Stream<Arguments> overPoints() {
+        return Stream.of(
+                arguments(Arrays.asList(9, 2)),
+                arguments(Arrays.asList(11, 2))
         );
     }
 
