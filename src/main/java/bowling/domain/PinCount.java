@@ -38,8 +38,11 @@ public class PinCount {
         return this.count + pinCount;
     }
 
+    public boolean isOverOrSameMaxAfterAdd(int pinCount) {
+        return add(pinCount) >= MAX;
+    }
     public boolean isOverMaxAfterAdd(int pinCount) {
-        return add(pinCount) <= MAX;
+        return add(pinCount) > MAX;
     }
 
     public boolean isMax() {

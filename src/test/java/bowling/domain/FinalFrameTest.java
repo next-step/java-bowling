@@ -53,7 +53,7 @@ public class FinalFrameTest {
         assertThat(finalFrame.isDone()).isTrue();
     }
 
-    @DisplayName("첫번째 시도에서 스페어 처리 되면 한번의 기회를 얻는다")
+    @DisplayName("두번째 시도에서 스페어 처리 되면 한번의 기회를 얻는다")
     @Test
     void getThirdOpportunityWhenSpare() {
         finalFrame.addPinCount(8);

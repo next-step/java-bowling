@@ -1,8 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.exception.OutOfRangeArgumentException;
-
 import java.util.List;
+import java.util.Optional;
 
 public class NormalFrame implements Frame {
     private static final int MAX_PIN_COUNT_SIZE = 2;
@@ -32,12 +31,10 @@ public class NormalFrame implements Frame {
         if (isPinCountsFull()) {
             return false;
         }
-        PinCount firstPinCount = pinCounts.getFirst()
-                .orElse(PinCount.empty());
-        if (firstPinCount.isMax()) {
-            return false;
-        }
-        return firstPinCount.isOverMaxAfterAdd(pinCount);
+
+        Optional<PinCount> firstPinCount = pinCounts.getFirst();
+        return firstPinCount.map(count -> !count.isOverOrSameMaxAfterAdd(pinCount))
+                .orElse(true);
     }
 
     public FinalFrame createFinal() {

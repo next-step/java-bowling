@@ -25,18 +25,31 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isAddable(int pinCount) {
-        if (isPinCountsFull()) {
+        if (isDone()) {
             return false;
-        } else if (pinCounts.size() != 1) {
+        } else if (pinCounts.isEmpty()) {
             return true;
         }
+
         PinCount firstPinCount = pinCounts.getFirst()
                 .orElse(PinCount.empty());
 
-        if (firstPinCount.isMax()) {
+        if (hasThirdChance(pinCount)) {
             return true;
         }
-        return firstPinCount.isOverMaxAfterAdd(pinCount);
+
+        return !firstPinCount.isOverMaxAfterAdd(pinCount);
+    }
+
+    private boolean hasThirdChance(int pinCount) {
+        PinCount firstPinCount = pinCounts.getFirst()
+                .orElse(PinCount.empty());
+        PinCount secondPinCount = pinCounts.getSecond()
+                .orElse(PinCount.empty());
+
+        if (pinCounts.size() >= 1 && firstPinCount.isStrike()) {
+            return !secondPinCount.isOverMaxAfterAdd(pinCount);
+        } else return pinCounts.size() == 2 && secondPinCount.isSpare();
     }
 
     private boolean isPinCountsFull() {

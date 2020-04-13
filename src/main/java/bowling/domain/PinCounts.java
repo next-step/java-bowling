@@ -6,6 +6,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PinCounts {
+    private static final int FIRST_INDEX = 0;
+    private static final int SECOND_INDEX = 1;
+
     private List<PinCount> pinCounts;
 
     public PinCounts() {
@@ -25,6 +28,10 @@ public class PinCounts {
         return pinCounts.size();
     }
 
+    public boolean isEmpty() {
+        return pinCounts.isEmpty();
+    }
+
     public int getPinCountTotal() {
         return pinCounts.stream()
                 .reduce(0, (p1, p2) -> p2.add(p1), Integer::sum);
@@ -34,7 +41,14 @@ public class PinCounts {
         if (pinCounts.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(pinCounts.get(0));
+        return Optional.of(pinCounts.get(FIRST_INDEX));
+    }
+
+    public Optional<PinCount> getSecond() {
+        if (pinCounts.size() <= SECOND_INDEX) {
+            return Optional.empty();
+        }
+        return Optional.of(pinCounts.get(SECOND_INDEX));
     }
 
     private Optional<PinCount> getLast() {
