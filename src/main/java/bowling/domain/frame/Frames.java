@@ -2,8 +2,10 @@ package bowling.domain.frame;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Frames {
+    private static final int FIRST_FRAME_ID = 1;
     private static final int FINAL_FRAME_ID = 10;
 
     private List<Frame> frames;
@@ -40,15 +42,13 @@ public class Frames {
     }
 
     public int getTotalPointUntil(Frame currentFrame) {
-        int sum = 0;
-        for (int i = 1; i <= currentFrame.getFrameId(); i++) {
-            sum += new Frames(frames).getFrameScore(i);
-        }
-        return sum;
+        return IntStream.rangeClosed(FIRST_FRAME_ID, currentFrame.getFrameId())
+                .map(it -> new Frames(frames).getFrameScore(it))
+                .sum();
     }
 
-    public Frame getPreviousFrame(Frame currentFrame){
-        if(currentFrame.getFrameId() != 1){
+    public Frame getPreviousFrame(Frame currentFrame) {
+        if (currentFrame.getFrameId() != 1) {
             return frames.get(currentFrame.getFrameId() - 2);
         }
 
@@ -61,10 +61,20 @@ public class Frames {
 
     private int findFrameScoreWhenStrike(Frame currentFrame) {
         Frame nextFrame = getNextFrameByCurrentId(currentFrame.getFrameId());
-        if (nextFrame.isStrike()) {
+        if (currentFrame.getFrameId() == FINAL_FRAME_ID) {
+            return (currentFrame.getFirstPoint() + currentFrame.getThirdPoint() + currentFrame.getFourthPoint());
+        }
+
+        if (nextFrame.isStrike() && currentFrame.getFrameId() != 9) {
             int firstOfNext = nextFrame.getFirstPoint();
             int firstOfNextOfNext = getNextFrameByCurrentId(nextFrame.getFrameId()).getFirstPoint();
             return (currentFrame.getFirstPoint() + firstOfNext + firstOfNextOfNext);
+        }
+
+        if (nextFrame.isStrike() && currentFrame.getFrameId() == 9) {
+            int firstOfNext = nextFrame.getFirstPoint();
+            int secondOfNext = nextFrame.getThirdPoint();
+            return currentFrame.getFirstPoint() + firstOfNext + secondOfNext;
         }
 
         return (currentFrame.getFirstPoint() + nextFrame.getFirstPoint() + nextFrame.getSecondPoint());
