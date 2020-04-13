@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class FinalFrame extends NormalFrame {
     private int bonusCount = 0;
     private Pin bonusPin;
@@ -25,5 +27,19 @@ public class FinalFrame extends NormalFrame {
 
     public Pin getBonusPin() {
         return bonusPin;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (!(o instanceof FinalFrame)) { return false; }
+        if (!super.equals(o)) { return false; }
+        final FinalFrame that = (FinalFrame) o;
+        return Objects.equals(getBonusPin(), that.getBonusPin());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getBonusPin());
     }
 }

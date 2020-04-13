@@ -39,4 +39,20 @@ class NormalFrameTest {
         Pin pin = frame.getPin();
         assertThat(pin).isEqualTo(new Pin(10));
     }
+
+    @DisplayName("다음 프레임 생성시 NormalFrame 을 생성 할 경우")
+    @Test
+    void createNextNomarFrame() {
+        NormalFrame frame = new NormalFrame(2);
+        NormalFrame nextFrame = frame.createNextFrame(true);
+        assertThat(nextFrame).isEqualTo(new NormalFrame(3));
+    }
+
+    @DisplayName("다음 프레임 생성시 FinalFrame 을 생성 할 경우")
+    @Test
+    void createNextFinalFrame() {
+        NormalFrame frame = new NormalFrame(9);
+        NormalFrame nextFrame = frame.createNextFrame(true);
+        assertThat(nextFrame).isEqualTo(new FinalFrame(10, true));
+    }
 }

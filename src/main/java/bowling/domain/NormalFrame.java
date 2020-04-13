@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class NormalFrame {
     private static final int MIN_FRAME_NUM = 1;
     private static final int MAX_FRAME_NUM = 10;
@@ -36,6 +38,14 @@ public class NormalFrame {
         return falledPins;
     }
 
+    public NormalFrame createNextFrame(boolean bonusFlag) {
+        int createFrameNum = frameNum + 1;
+        if (frameNum < MAX_FRAME_NUM) {
+            return new NormalFrame(createFrameNum);
+        }
+        return new FinalFrame(createFrameNum, bonusFlag);
+    }
+
     private void setPin(int falledPins) {
         --bowlCount;
         pin = Pin.of(falledPins);
@@ -43,5 +53,19 @@ public class NormalFrame {
 
     public Pin getPin() {
         return pin;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (!(o instanceof NormalFrame)) { return false; }
+        final NormalFrame that = (NormalFrame) o;
+        return frameNum == that.frameNum &&
+               Objects.equals(getPin(), that.getPin());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNum, getPin());
     }
 }
