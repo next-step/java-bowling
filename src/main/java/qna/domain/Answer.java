@@ -30,11 +30,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -48,13 +48,13 @@ public class Answer extends AbstractEntity {
         return this;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public Answer setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
     }
 
     public boolean isOwner(User writer) {
