@@ -21,6 +21,10 @@ public class DeleteHistory {
 
     private LocalDateTime createDate = LocalDateTime.now();
 
+    public static DeleteHistory of(ContentType contentType, Long questionId, User writer) {
+        return new DeleteHistory(contentType, questionId, writer, LocalDateTime.now());
+    }
+
     public DeleteHistory() {
     }
 
