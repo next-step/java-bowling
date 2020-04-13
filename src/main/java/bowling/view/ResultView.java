@@ -1,16 +1,12 @@
 package bowling.view;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.Static;
-
 public class ResultView {
     private static final String NAME = "NAME";
     private static final int FRAME_NUM = 10;
-    private static final int COLUMN_LENGTH = 6;
     private static final String VERTICAL = "|";
     private static final String BLANK = " ";
     private static final String NEW_LINE = "\n";
-    private static final String SPARE = "/";
-    private static final String STRIKE = "/";
+
 
     private static ResultView resultView = new ResultView();
 
