@@ -1,0 +1,73 @@
+package bowling.domain.frame;
+
+import bowling.domain.bonusscore.BonusScore;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreType;
+import bowling.domain.score.Scores;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
+
+/**
+ * 마지막 프레임을 나타내기 위한 객체
+ * 마지막 프레임에서 스트라이크, 스페어 일 경우 1구를 더 진행한다.
+ */
+public class LastFrame implements Frame {
+    private Scores scores;
+    private List<BonusScore> bonusScores;
+
+    public LastFrame(List<BonusScore> bonusScores) {
+        this.scores = new Scores();
+        this.bonusScores = bonusScores;
+    }
+
+    @Override
+    public void addScore(int point) {
+        validateScore(point);
+        this.scores.add(Score.lastScore(scores, point));
+        addBonusScore(point);
+    }
+
+    private void validateScore(int point) {
+        if (CollectionUtils.isEmpty(scores.getScores())) {
+            return;
+        }
+        if (scores.size() == 1 && !scores.isStrike(0) && scores.currentPoint() + point > 10) {
+            throw new IllegalArgumentException("1구와 2구의 포인트합은 10점을 넘을수 없습니다.");
+        }
+    }
+
+    private void addBonusScore(int point) {
+        bonusScores.stream()
+                .filter(BonusScore::isAddable)
+                .forEach(bonusScore -> bonusScore.add(point));
+    }
+
+    @Override
+    public String getScore(int scoreIndex) {
+        return scores.pointToScore(scoreIndex);
+    }
+
+    @Override
+    public boolean isPlayable() {
+        if (CollectionUtils.isEmpty(scores.getScores())) {
+            return false;
+        }
+        if (scores.size() < 2) {
+            return true;
+        }
+
+        return scores.size() < 3 && hasStrikeOrSpare();
+    }
+
+    private boolean hasStrikeOrSpare() {
+        return scores.getScores().stream()
+                .anyMatch(score -> score.isEqualScoreType(ScoreType.STRIKE)
+                        || score.isEqualScoreType(ScoreType.SPARE));
+    }
+
+    @Override
+    public int scoreSize() {
+        return scores.size();
+    }
+}
