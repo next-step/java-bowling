@@ -34,4 +34,8 @@ public class Response {
         FinalFrame finalFrame = (FinalFrame) bowling.getFrames().getLast();
         return finalFrame.isEnd();
     }
+
+    public boolean isFinish() {
+        return bowling.getFrames().getFirst().getState().isFinish();
+    }
 }
