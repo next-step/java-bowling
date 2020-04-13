@@ -27,7 +27,8 @@ public class FramesTest {
         int frameScore = frames.getFrameScore(frame.getFrameId());
 
         //then
-        assertThat(frameScore).isEqualTo(firstPoint + secondPoint);
+        assertThat(frameScore)
+                .isEqualTo(firstPoint + secondPoint);
     }
 
     @DisplayName("프레임의 결과가 Spare일 때, 프레임의 점수는 다음 투구의 첫 번째 포인트를 합산해 반환한다.")
@@ -60,7 +61,8 @@ public class FramesTest {
         int frameScore = frames.getFrameScore(frame.getFrameId());
 
         //then
-        assertThat(frameScore).isEqualTo(10 + nextFirstPoint + nextSecondPoint);
+        assertThat(frameScore)
+                .isEqualTo(10 + nextFirstPoint + nextSecondPoint);
     }
 
     @DisplayName("프레임의 결과가 Strike이고 다음 투구의 첫 포인트가 Strike일 때,프레임의 점수를 반환한다.")
@@ -78,7 +80,8 @@ public class FramesTest {
         int frameScore = frames.getFrameScore(firstFrame.getFrameId());
 
         //then
-        assertThat(frameScore).isEqualTo(10 + 10 + firstOfThirdFrame);
+        assertThat(frameScore)
+                .isEqualTo(10 + 10 + firstOfThirdFrame);
     }
 
     @DisplayName("10회 첫 투구가 Strike일 때, 프레임의 점수를 반환한다.")
@@ -86,16 +89,14 @@ public class FramesTest {
     void returnFrameScoreWhenTenthIsStrike() {
         //given
         Frame tenthFrame = new Frame(9, 10, 0);
-        List<Frame> frames = new ArrayList<>();
-        IntStream.range(0, 10)
-                .forEach(it -> frames.add(tenthFrame));
-        Frames framesForResult = new Frames(frames);
+        Frames framesForResult = new Frames(createTenFramesWithOneFrame(tenthFrame));
 
         //when
         int frameScore = framesForResult.getFrameScore(tenthFrame.getFrameId());
 
         //then
-        assertThat(frameScore).isEqualTo(10 + tenthFrame.getThirdPoint() + tenthFrame.getFourthPoint());
+        assertThat(frameScore)
+                .isEqualTo(10 + tenthFrame.getThirdPoint() + tenthFrame.getFourthPoint());
     }
 
     @DisplayName("10회 투구가 Spare일 때, 프레임의 점수를 반환한다.")
@@ -104,16 +105,14 @@ public class FramesTest {
     void returnFrameScoreWhenTenthIsSpare(int firstPoint, int secondPoint) {
         //given
         Frame tenthFrame = new Frame(9, firstPoint, secondPoint);
-        List<Frame> frames = new ArrayList<>();
-        IntStream.range(0, 10)
-                .forEach(it -> frames.add(tenthFrame));
-        Frames framesForResult = new Frames(frames);
+        Frames framesForResult = new Frames(createTenFramesWithOneFrame(tenthFrame));
 
         //when
         int frameScore = framesForResult.getFrameScore(tenthFrame.getFrameId());
 
         //then
-        assertThat(frameScore).isEqualTo(firstPoint + secondPoint + tenthFrame.getThirdPoint());
+        assertThat(frameScore)
+                .isEqualTo(firstPoint + secondPoint + tenthFrame.getThirdPoint());
     }
 
     @DisplayName("10회 투구가 Miss 또는 Gutter 일 때, 프레임의 점수를 반환한다.")
@@ -122,15 +121,21 @@ public class FramesTest {
     void returnFrameScoreWhenTenthIsGutterOrMiss(int firstPoint, int secondPoint) {
         //given
         Frame tenthFrame = new Frame(9, firstPoint, secondPoint);
-        List<Frame> frames = new ArrayList<>();
-        IntStream.range(0, 10)
-                .forEach(it -> frames.add(tenthFrame));
-        Frames framesForResult = new Frames(frames);
+        Frames framesForResult = new Frames(createTenFramesWithOneFrame(tenthFrame));
 
         //when
         int frameScore = framesForResult.getFrameScore(tenthFrame.getFrameId());
 
         //then
-        assertThat(frameScore).isEqualTo(tenthFrame.getFirstPoint() + tenthFrame.getSecondPoint());
+        assertThat(frameScore)
+                .isEqualTo(tenthFrame.getFirstPoint() + tenthFrame.getSecondPoint());
+    }
+
+    private List<Frame> createTenFramesWithOneFrame(Frame frame) {
+        List<Frame> frames = new ArrayList<>();
+        IntStream.range(0, 10)
+                .forEach(it -> frames.add(frame));
+
+        return frames;
     }
 }
