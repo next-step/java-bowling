@@ -45,6 +45,13 @@ public class Points {
         points = Collections.unmodifiableMap(points);
     }
 
+    public int sum(){
+        return points.values().stream()
+                .map(it -> points.get(it))
+                .mapToInt(Point::getScore)
+                .sum();
+    }
+
     public boolean isStrikeOrSpare() {
         return findResult().equals(FrameResult.SPARE) || findResult().equals(FrameResult.STRIKE);
     }

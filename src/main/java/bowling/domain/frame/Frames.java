@@ -60,11 +60,11 @@ public class Frames {
     }
 
     private int findFrameScoreWhenStrike(Frame currentFrame) {
-        Frame nextFrame = getNextFrameByCurrentId(currentFrame.getFrameId());
-        if (currentFrame.getFrameId() == FINAL_FRAME_ID) {
-            return (currentFrame.getFirstPoint() + currentFrame.getThirdPoint() + currentFrame.getFourthPoint());
+        if (currentFrame.isFinalFrame()) {
+            return currentFrame.getPointSumOnlyThisFrame();
         }
 
+        Frame nextFrame = getNextFrameByCurrentId(currentFrame.getFrameId());
         if (nextFrame.isStrike() && currentFrame.getFrameId() != 9) {
             int firstOfNext = nextFrame.getFirstPoint();
             int firstOfNextOfNext = getNextFrameByCurrentId(nextFrame.getFrameId()).getFirstPoint();
@@ -72,9 +72,7 @@ public class Frames {
         }
 
         if (nextFrame.isStrike() && currentFrame.getFrameId() == 9) {
-            int firstOfNext = nextFrame.getFirstPoint();
-            int secondOfNext = nextFrame.getThirdPoint();
-            return currentFrame.getFirstPoint() + firstOfNext + secondOfNext;
+            return (currentFrame.getFirstPoint() + nextFrame.getFirstPoint() + nextFrame.getThirdPoint());
         }
 
         return (currentFrame.getFirstPoint() + nextFrame.getFirstPoint() + nextFrame.getSecondPoint());

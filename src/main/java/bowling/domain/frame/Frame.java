@@ -62,6 +62,14 @@ public class Frame {
         return new Frame(this.frameId, RANDOM_GENERATOR.getFirstPoint(), RANDOM_GENERATOR.getSecondPoint());
     }
 
+    public boolean isFinalFrame(){
+        return frameId == LAST_FRAME_ID;
+    }
+
+    public int getPointSumOnlyThisFrame(){
+        return points.sum();
+    }
+
     private boolean doesNeedOneMorePoint() {
         return frameId == LAST_FRAME_ID && points.isSpare();
     }
