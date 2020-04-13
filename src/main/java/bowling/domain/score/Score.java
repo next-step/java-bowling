@@ -3,7 +3,6 @@ package bowling.domain.score;
 /**
  * 점수를 나타내는 객체 쓰러트린 볼링핀 개수와 점수 타입을 가진다.
  * 10점을 넘을 수 없다.
- *
  */
 public class Score {
     private static final int STRIKE_POINT = 10;

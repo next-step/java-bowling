@@ -4,7 +4,6 @@ import bowling.domain.Player;
 import bowling.domain.frame.DefaultFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-import bowling.domain.frame.LastFrame;
 
 public class BowlingGame {
     private static final int FRAME_INDEX_NINE = 9;

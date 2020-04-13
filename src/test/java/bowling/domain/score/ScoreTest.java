@@ -1,8 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.score.Score;
-import bowling.domain.score.ScoreType;
-import bowling.domain.score.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

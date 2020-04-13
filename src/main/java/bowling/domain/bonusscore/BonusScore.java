@@ -5,5 +5,6 @@ package bowling.domain.bonusscore;
  */
 public interface BonusScore {
     void add(int score);
+
     boolean isAddable();
 }

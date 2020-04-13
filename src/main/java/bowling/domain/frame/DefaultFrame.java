@@ -4,7 +4,8 @@ import bowling.domain.bonusscore.BonusScore;
 import bowling.domain.bonusscore.NoneBonus;
 import bowling.domain.bonusscore.SpareBonus;
 import bowling.domain.bonusscore.StrikeBonus;
-import bowling.domain.score.*;
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -91,7 +92,7 @@ public class DefaultFrame implements Frame {
     }
 
     @Override
-    public int scoreSize(){
+    public int scoreSize() {
         return scores.size();
     }
 }

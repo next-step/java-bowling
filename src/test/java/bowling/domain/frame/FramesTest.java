@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.*;
 
 class FramesTest {
     @DisplayName("프레임 리스트 생성")
@@ -19,7 +18,7 @@ class FramesTest {
 
     @DisplayName("프레임 추가")
     @ParameterizedTest
-    @ValueSource(ints = {1,2,3,4,5,6,7,8,9,10})
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void add(int size) {
         Frames frames = Frames.of(new Player("LDC"));
         for (int i = 0; i < size; i++) {

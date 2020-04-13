@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import bowling.domain.Player;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

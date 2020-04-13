@@ -1,6 +1,5 @@
 package bowling.view;
 
-import bowling.domain.frame.DefaultFrame;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
