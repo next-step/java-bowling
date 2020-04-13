@@ -14,7 +14,7 @@ public class Application {
 
         OutputView.printScoreBoard(bowlingGame.getBowling().getPlayerName(), bowlingGame.getBowling().getFrames());
 
-        while (true) {
+        do {
             int lastFrameNumber = bowlingGame.getLastFrameNumber();
 
             int clearPinCount = inputView.inputClearPin(lastFrameNumber);
@@ -22,10 +22,6 @@ public class Application {
             bowlingGame.play(clearPinCount);
 
             OutputView.printScoreBoard(bowlingGame.getBowling().getPlayerName(), bowlingGame.getBowling().getFrames());
-
-            if (bowlingGame.isEnd()) {
-                break;
-            }
-        }
+        }while (!bowlingGame.isEnd());
     }
 }
