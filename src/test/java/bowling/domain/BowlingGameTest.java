@@ -32,7 +32,7 @@ public class BowlingGameTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10:true", "8:false"}, delimiter = ':')
+    @CsvSource(value = {"10:false", "12:true"}, delimiter = ':')
     void isEnd(int value, boolean expected) {
         BowlingGame bowlingGame = new BowlingGame("PES");
         for (int i = 0; i < value; i++) {
