@@ -87,6 +87,6 @@ public class Frames {
     }
 
     private Frame getPrevFrameByCurrentId(int currentId) {
-        return frames.get(currentId - (OFFSET * 2));
+        return frames.get(currentId - (OFFSET * DOUBLE));
     }
 }
