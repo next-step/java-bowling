@@ -18,6 +18,7 @@ public class Frame {
     private static final int LAST_FRAME_ID = 10;
     private static final int FIRST_FRAME_ID = 1;
     private static final int FRAME_ID_ZERO = 0;
+    private static final int FRAME_ID_NINETH = 9;
 
     private int frameId;
     private Points points;
@@ -60,10 +61,6 @@ public class Frame {
 
     public Frame createNextFrame() {
         return new Frame(this.frameId, RANDOM_GENERATOR.getFirstPoint(), RANDOM_GENERATOR.getSecondPoint());
-    }
-
-    public boolean isFinalFrame(){
-        return frameId == LAST_FRAME_ID;
     }
 
     public int getPointSumOnlyThisFrame(){
@@ -165,5 +162,9 @@ public class Frame {
 
     public boolean containsOrdinal(Ordinal ordinal) {
         return points.containsOrdinal(ordinal);
+    }
+
+    public boolean isNineth(){
+        return frameId == FRAME_ID_NINETH;
     }
 }

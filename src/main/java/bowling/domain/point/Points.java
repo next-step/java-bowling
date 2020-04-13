@@ -46,7 +46,8 @@ public class Points {
     }
 
     public int sum(){
-        return points.values().stream()
+        return points.keySet().stream()
+                .filter(it -> Ordinal.values() != null)
                 .map(it -> points.get(it))
                 .mapToInt(Point::getScore)
                 .sum();

@@ -7,11 +7,17 @@ import java.util.stream.IntStream;
 public class Frames {
     private static final int FIRST_FRAME_ID = 1;
     private static final int FINAL_FRAME_ID = 10;
+    private static final int MAX_POINT = 10;
+    private static final int DOUBLE = 2;
 
     private List<Frame> frames;
 
     public Frames(List<Frame> frames) {
         this.frames = Collections.unmodifiableList(frames);
+    }
+
+    public static Frames of(List<Frame> frames) {
+        return new Frames(frames);
     }
 
     public List<Frame> getFrames() {
@@ -23,10 +29,10 @@ public class Frames {
     }
 
     public int getFrameScore(int frameId) {
-        Frame frame = frames.get(frameId - 1);
+        Frame frame = getPrevFrameByCurrentFrameId(frameId);
 
         if (frameId == FINAL_FRAME_ID) {
-            return findFinalFrameScore(frame);
+            return frame.getPointSumOnlyThisFrame();
         }
 
         if (frame.isStrike()) {
@@ -35,21 +41,21 @@ public class Frames {
 
         if (frame.isSpare()) {
             int firstPointOfNextFrame = getNextFrameByCurrentId(frameId).getFirstPoint();
-            return (frame.getFirstPoint() + frame.getSecondPoint() + firstPointOfNextFrame);
+            return (frame.getPointSumOnlyThisFrame() + firstPointOfNextFrame);
         }
 
-        return (frame.getFirstPoint() + frame.getSecondPoint());
+        return frame.getPointSumOnlyThisFrame();
     }
 
     public int getTotalPointUntil(Frame currentFrame) {
         return IntStream.rangeClosed(FIRST_FRAME_ID, currentFrame.getFrameId())
-                .map(it -> new Frames(frames).getFrameScore(it))
+                .map(it -> Frames.of(frames).getFrameScore(it))
                 .sum();
     }
 
     public Frame getPreviousFrame(Frame currentFrame) {
-        if (currentFrame.getFrameId() != 1) {
-            return frames.get(currentFrame.getFrameId() - 2);
+        if (currentFrame.getFrameId() != FIRST_FRAME_ID) {
+            return getPrevFrameByCurrentFrameId(currentFrame.getFrameId());
         }
 
         return currentFrame;
@@ -60,33 +66,27 @@ public class Frames {
     }
 
     private int findFrameScoreWhenStrike(Frame currentFrame) {
-        if (currentFrame.isFinalFrame()) {
-            return currentFrame.getPointSumOnlyThisFrame();
-        }
-
         Frame nextFrame = getNextFrameByCurrentId(currentFrame.getFrameId());
-        if (nextFrame.isStrike() && currentFrame.getFrameId() != 9) {
-            int firstOfNext = nextFrame.getFirstPoint();
-            int firstOfNextOfNext = getNextFrameByCurrentId(nextFrame.getFrameId()).getFirstPoint();
-            return (currentFrame.getFirstPoint() + firstOfNext + firstOfNextOfNext);
+
+        if (nextFrame.isStrike()) {
+            return findFrameScoreWhenCurrentAndNextAreStrike(currentFrame);
         }
 
-        if (nextFrame.isStrike() && currentFrame.getFrameId() == 9) {
+        return (MAX_POINT + nextFrame.getPointSumOnlyThisFrame());
+    }
+
+    private int findFrameScoreWhenCurrentAndNextAreStrike(Frame currentFrame) {
+        Frame nextFrame = getNextFrameByCurrentId(currentFrame.getFrameId());
+
+        if (currentFrame.isNineth()) {
             return (currentFrame.getFirstPoint() + nextFrame.getFirstPoint() + nextFrame.getThirdPoint());
         }
 
-        return (currentFrame.getFirstPoint() + nextFrame.getFirstPoint() + nextFrame.getSecondPoint());
+        int firstOfNextOfNext = getNextFrameByCurrentId(nextFrame.getFrameId()).getFirstPoint();
+        return (MAX_POINT * DOUBLE) + firstOfNextOfNext;
     }
 
-    private int findFinalFrameScore(Frame currentFrame) {
-        if (currentFrame.isStrike()) {
-            return (currentFrame.getFirstPoint() + currentFrame.getThirdPoint() + currentFrame.getFourthPoint());
-        }
-
-        if (currentFrame.isSpare()) {
-            return (currentFrame.getFirstPoint() + currentFrame.getSecondPoint() + currentFrame.getThirdPoint());
-        }
-
-        return (currentFrame.getFirstPoint() + currentFrame.getSecondPoint());
+    private Frame getPrevFrameByCurrentFrameId(int currentId) {
+        return frames.get(currentId - FIRST_FRAME_ID);
     }
 }
