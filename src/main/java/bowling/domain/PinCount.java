@@ -18,11 +18,11 @@ public class PinCount {
     }
 
     private int count;
-    private boolean isSpare;
+    private boolean spare;
 
-    private PinCount(int count, boolean isSpare) {
+    private PinCount(int count, boolean spare) {
         this.count = count;
-        this.isSpare = isSpare;
+        this.spare = spare;
     }
 
     public PinCount(int count) {
@@ -31,7 +31,7 @@ public class PinCount {
 
     public PinCount(PinCount pinCount) {
         this.count = pinCount.count;
-        this.isSpare = pinCount.isSpare;
+        this.spare = pinCount.spare;
     }
 
     public int add(int pinCount) {
@@ -59,7 +59,7 @@ public class PinCount {
     }
 
     public boolean isSpare() {
-        return isSpare;
+        return spare;
     }
 
     public boolean isGutter() {
@@ -87,10 +87,10 @@ public class PinCount {
         if (o == null || getClass() != o.getClass()) return false;
         PinCount pinCount = (PinCount) o;
         return count == pinCount.count &&
-                isSpare == pinCount.isSpare;
+                spare == pinCount.spare;
     }
 
     @Override public int hashCode() {
-        return Objects.hash(count, isSpare);
+        return Objects.hash(count, spare);
     }
 }
