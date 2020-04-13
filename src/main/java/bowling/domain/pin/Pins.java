@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 public class Pins {
     public static final int ZERO = 0;
     public static final int MAX_COUNT = 10;
+    public static final Pins GUTTER_PINS = new Pins(Collections.emptyList());
 
     private final List<Pin> pins;
 
@@ -56,6 +57,14 @@ public class Pins {
         return knockOverCount() == ZERO;
     }
 
+    public boolean isMiss() {
+        return knockOverCount() < MAX_COUNT;
+    }
+
+    public boolean isAllStanding() {
+        return pins.size() == ZERO;
+    }
+
     public Pins add(final Pins knockOverPins) {
         List<Pin> all = new ArrayList<>();
         all.addAll(pins);
@@ -91,5 +100,4 @@ public class Pins {
     public int hashCode() {
         return Objects.hash(pins);
     }
-
 }

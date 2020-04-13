@@ -6,6 +6,7 @@ import bowling.exception.NameLengthOverException;
 import java.util.Objects;
 
 public class PlayerName {
+    private static final String NAME_FORMAT = "%5s ";
     private static final int NAME_MAX_LENGTH = 3;
 
     private final String name;
@@ -30,6 +31,11 @@ public class PlayerName {
         if (name.length() > NAME_MAX_LENGTH) {
             throw new NameLengthOverException(name);
         }
+    }
+
+    @Override
+    public String toString() {
+        return String.format(NAME_FORMAT, name);
     }
 
     @Override

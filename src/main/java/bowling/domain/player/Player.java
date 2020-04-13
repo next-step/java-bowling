@@ -13,6 +13,10 @@ public class Player {
         return new Player(PlayerName.of(name));
     }
 
+    public String name() {
+        return playerName.toString();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
