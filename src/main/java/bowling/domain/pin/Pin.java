@@ -13,12 +13,16 @@ public class Pin {
         return new Pin(PinState.STANDING);
     }
 
-    public static Pin valueOf(final PinState pinState) {
-        return new Pin(pinState);
+    public Pin knockOver() {
+        return new Pin(PinState.KNOCK_OVER);
     }
 
     public boolean isKnockOver() {
         return pinState.equals(PinState.KNOCK_OVER);
+    }
+
+    public boolean isStanding() {
+        return pinState.equals(PinState.STANDING);
     }
 
     @Override

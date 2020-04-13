@@ -2,6 +2,7 @@ package bowling.domain.pin;
 
 import bowling.exception.BowlCountOverThanPinsException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Pins {
+    public static final int ZERO = 0;
     public static final int MAX_COUNT = 10;
 
     private final List<Pin> pins;
@@ -21,31 +23,52 @@ public class Pins {
         return new Pins(create());
     }
 
-    public static Pins valueOf(final List<Pin> pins) {
-        return new Pins(pins);
-    }
-
     public Pins knockOver(final BowlCount bowlCount) {
         checkKnockOver(bowlCount);
         return pins.stream()
-                   .skip(bowlCount.count())
+                   .filter(Pin::isStanding)
+                   .limit(bowlCount.count())
+                   .map(Pin::knockOver)
                    .collect(Collectors.collectingAndThen(Collectors.toList(), Pins::new));
     }
 
-    public int standingCount() {
-        return pins.size();
+    public long knockOverCount() {
+        return pins.stream()
+                   .filter(Pin::isKnockOver)
+                   .count();
     }
 
-    public boolean isNotExist() {
-        return pins.size() == 0;
+    public long standingCount() {
+        return pins.stream()
+                   .filter(Pin::isStanding)
+                   .count();
+    }
+
+    public boolean isStrike() {
+        return knockOverCount() == MAX_COUNT;
+    }
+
+    public boolean isSpare() {
+        return knockOverCount() == MAX_COUNT;
     }
 
     public boolean isGutter() {
-        return MAX_COUNT == pins.size();
+        return knockOverCount() == ZERO;
+    }
+
+    public Pins add(final Pins knockOverPins) {
+        List<Pin> all = new ArrayList<>();
+        all.addAll(pins);
+        all.addAll(knockOverPins.pins);
+        return new Pins(all);
+    }
+
+    public int count() {
+        return pins.size();
     }
 
     private static List<Pin> create() {
-        return IntStream.range(0, MAX_COUNT)
+        return IntStream.range(ZERO, MAX_COUNT)
                         .mapToObj(count -> Pin.of())
                         .collect(Collectors.toList());
     }
@@ -68,4 +91,5 @@ public class Pins {
     public int hashCode() {
         return Objects.hash(pins);
     }
+
 }
