@@ -1,6 +1,7 @@
 package bowling.domain;
 
 public class Player {
+    private static final int PLAYER_NAME_LENGTH = 3;
     private final String name;
 
     public Player(String name) {
@@ -9,7 +10,7 @@ public class Player {
     }
 
     private void validateName(String name) {
-        if (name.length() != 3) {
+        if (name.length() != PLAYER_NAME_LENGTH) {
             throw new IllegalArgumentException("플레이어 이름은 3글자 입니다.");
         }
     }

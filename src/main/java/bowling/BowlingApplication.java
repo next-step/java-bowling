@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.Player;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.LastFrame;
 import bowling.view.InputView;
@@ -21,8 +22,9 @@ public class BowlingApplication {
     }
 
     private static void playBowling(Player player, Frames frames) {
-        while (frames.isPlayableFrame()) {
-            BowlingGame.play(frames.getLast(), InputView.relaseBowling(frames.size() - ONE));
+        Frame frame = frames.getLast();
+        while (frame.isPlayable()) {
+            BowlingGame.play(frame, InputView.relaseBowling(frames.size() - ONE));
             ResultView.printBowlingScore(player, frames);
         }
     }

@@ -1,13 +1,16 @@
 package bowling.domain.score;
 
-import java.util.List;
-
 /**
  * 점수를 나타내는 객체 쓰러트린 볼링핀 개수와 점수 타입을 가진다.
  * 10점을 넘을 수 없다.
  *
  */
 public class Score {
+    private static final int STRIKE_POINT = 10;
+    private static final int ZERO_POINT = 0;
+    private static final int FIRST_PLAY = 0;
+    private static final int SECOND_PLAY = 1;
+
     private ScoreType scoreType;
     private int point;
 
@@ -19,11 +22,11 @@ public class Score {
     }
 
     private void validatePoint(int point) {
-        if (point > 10) {
+        if (point > STRIKE_POINT) {
             throw new IllegalArgumentException("점수는 10점을 넘을수 없습니다.");
         }
 
-        if (point < 0) {
+        if (point < ZERO_POINT) {
             throw new IllegalArgumentException("점수는 0점이상이어야 합니다.");
         }
     }
@@ -33,7 +36,7 @@ public class Score {
     }
 
     private static ScoreType generateDefaultScoreType(Scores scores, int point) {
-        if (scores.size() == 0 && point == 10) {
+        if (scores.size() == FIRST_PLAY && point == STRIKE_POINT) {
             return ScoreType.STRIKE;
         }
         return getSpareOrGutterType(scores, point);
@@ -44,17 +47,17 @@ public class Score {
     }
 
     private static ScoreType generateLastScoreType(Scores scores, int point) {
-        if (point == 10) {
+        if (point == STRIKE_POINT) {
             return ScoreType.STRIKE;
         }
         return getSpareOrGutterType(scores, point);
     }
 
     private static ScoreType getSpareOrGutterType(Scores scores, int point) {
-        if (scores.size() == 1 && scores.currentPoint() + point == 10) {
+        if (scores.size() == SECOND_PLAY && scores.currentPoint() + point == STRIKE_POINT) {
             return ScoreType.SPARE;
         }
-        if (point == 0) {
+        if (point == ZERO_POINT) {
             return ScoreType.GUTTER;
         }
         return ScoreType.MISS;
@@ -69,6 +72,6 @@ public class Score {
     }
 
     public String pointToScore() {
-        return scoreType.getScore(point);
+        return scoreType.pointToScore(point);
     }
 }
