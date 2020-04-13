@@ -21,7 +21,6 @@ public class DefaultFrame implements Frame {
     private static final int FIRST_PLAY = 0;
     private static final int SECOND_PLAY = 1;
 
-
     private Scores scores;
     private List<BonusScore> bonusScores;
 

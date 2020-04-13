@@ -15,7 +15,6 @@ public class BowlingGame {
 
     public static Frames startGame(Player player) {
         return Frames.of(player);
-
     }
 
     public static void nexrFrame(Frames frames) {

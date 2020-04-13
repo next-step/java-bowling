@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class InputView {
     private static final int ONE = 1;
-
     private static final Scanner scanner = new Scanner(System.in);
 
     public static String inputPlayer() {
