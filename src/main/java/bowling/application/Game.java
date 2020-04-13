@@ -3,6 +3,8 @@ package bowling.application;
 import bowling.domain.state.Pin;
 import bowling.ui.BowlingController;
 
+import java.util.Objects;
+
 public class Game {
 
     private Request request;
@@ -24,7 +26,20 @@ public class Game {
         return response;
     }
 
-    public boolean isFinish() {
-        return this.response.isFinish();
+    public int getFrameNumber() {
+        return this.response.getFrameNumberLast();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return Objects.equals(request, game.request);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(request);
     }
 }

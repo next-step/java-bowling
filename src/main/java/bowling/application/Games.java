@@ -9,6 +9,7 @@ public class Games {
 
     private List<Game> games;
     private List<Response> responses;
+    private int currentFrameNumber = 1;
 
     public Games(List<Game> games) {
         this.games = games;
@@ -16,12 +17,21 @@ public class Games {
 
     public void bowl(Pin pin) {
         for (Game game : games) {
-            if (isFinish()) {
-                continue;
+            if (isSameByFrameNumber(game.getFrameNumber())) {
+                game.bowl(pin);
+                return;
             }
-            game.bowl(pin);
-            return;
         }
+        games.get(0).bowl(pin);
+        increaseNumber();
+    }
+
+    private boolean isSameByFrameNumber(int frameNumber) {
+        return currentFrameNumber == frameNumber;
+    }
+
+    private void increaseNumber() {
+        this.currentFrameNumber = currentFrameNumber + 1;
     }
 
     public List<Response> getResponses() {
@@ -30,15 +40,5 @@ public class Games {
             responses.add(game.getResponse());
         }
         return responses;
-    }
-
-    public boolean isFinish() {
-        boolean finish = true;
-        for (Game game : games) {
-            if (!game.isFinish()) {
-                finish = false;
-            }
-        }
-        return finish;
     }
 }

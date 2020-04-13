@@ -2,6 +2,7 @@ package bowling.application;
 
 import bowling.domain.frame.Bowling;
 import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Result;
 
 import java.util.ArrayList;
@@ -33,9 +34,5 @@ public class Response {
         }
         FinalFrame finalFrame = (FinalFrame) bowling.getFrames().getLast();
         return finalFrame.isEnd();
-    }
-
-    public boolean isFinish() {
-        return bowling.getFrames().getFirst().getState().isFinish();
     }
 }
