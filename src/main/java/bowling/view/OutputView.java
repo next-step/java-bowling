@@ -18,6 +18,9 @@ public class OutputView {
     private static final int ZERO = 0;
     private static final int ONE = 1;
 
+    private OutputView() {
+    }
+
     public static void printScoreBoard(String playerName, Frames frames) {
 
         Map<Integer, String> scoreMap = makeScore(frames);
