@@ -12,7 +12,7 @@ public class Application {
 
         BowlingGame bowlingGame = new BowlingGame(playerName);
 
-        OutputView.printScoreBoard(bowlingGame.getBowling().getPlayerName(), bowlingGame.getBowling().getFrames());
+        OutputView.printScoreBoard(playerName, bowlingGame.getBowling().getFrames());
 
         do {
             int lastFrameNumber = bowlingGame.getLastFrameNumber();
@@ -21,7 +21,7 @@ public class Application {
 
             bowlingGame.play(clearPinCount);
 
-            OutputView.printScoreBoard(bowlingGame.getBowling().getPlayerName(), bowlingGame.getBowling().getFrames());
-        }while (!bowlingGame.isEnd());
+            OutputView.printScoreBoard(playerName, bowlingGame.getBowling().getFrames());
+        } while (!bowlingGame.isEnd());
     }
 }
