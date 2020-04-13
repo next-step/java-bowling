@@ -9,8 +9,8 @@ public class Frames {
     private static final String OUT_OF_RANGE_ERROR_MESSAGE =
             "프레임 갯수는 최소 %d 이상이여야 합니다.";
     private static final int MIN = 2;
+    private static final int FIRST_INDEX = 0;
     private List<Frame> frames;
-    private Frame currentFrame;
 
     public Frames(int size) {
         if (size < MIN) {
@@ -25,8 +25,6 @@ public class Frames {
         NormalFrame firstFrame = new NormalFrame();
 
         frames.add(firstFrame);
-        currentFrame = firstFrame;
-
         NormalFrame frame = firstFrame;
         for (int i = 0, sizeWithoutLast = size - 2; i < sizeWithoutLast; i++) {
             frame = frame.createNext();
@@ -35,29 +33,8 @@ public class Frames {
         frames.add(frame.createFinal());
     }
 
-    public Frames add(int pinCount) {
-        if (!isAddable()) {
-            return this;
-        }
-
-        currentFrame.addPinCount(pinCount);
-        if (currentFrame.isDone() && !currentFrame.isLast()) {
-            currentFrame = currentFrame.getNext();
-        }
-
-        return this;
-    }
-
-    public int getCurrentFrameIndex() {
-        return frames.indexOf(currentFrame);
-    }
-
-    public boolean isLast() {
-        return currentFrame.isLast();
-    }
-
-    public boolean isAddable() {
-        return !currentFrame.isLast() || !currentFrame.isDone();
+    public int getCurrentFrameIndex(Frame frame) {
+        return frames.indexOf(frame);
     }
 
     public List<PinCount> getFramePinCounts(int index) {
@@ -66,5 +43,9 @@ public class Frames {
 
     public int size() {
         return frames.size();
+    }
+
+    public Frame getFirstFrame() {
+        return frames.get(FIRST_INDEX);
     }
 }

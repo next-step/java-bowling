@@ -7,16 +7,19 @@ public class Game {
     private static final int DEFAULT_FRAME_SIZE = 10;
     private Player player;
     private Frames frames;
+    private Frame currentFrame;
 
 
     protected Game(String playerName, Frames frames) {
         this.player = new Player(playerName);
         this.frames = frames;
+        this.currentFrame = frames.getFirstFrame();
     }
 
     protected Game(String playerName, int frameSize) {
         this.player = new Player(playerName);
         this.frames = new Frames(frameSize);
+        this.currentFrame = frames.getFirstFrame();
     }
 
     public Game(String playerName) {
@@ -24,11 +27,20 @@ public class Game {
     }
 
     public boolean isFinished() {
-        return !frames.isAddable();
+        return !isAddable();
     }
 
-    public void addPin(int count) {
-        frames.add(count);
+    public Game addPin(int count) {
+        if (!isAddable()) {
+            return this;
+        }
+
+        currentFrame.addPinCount(count);
+        if (currentFrame.isDone() && !currentFrame.isLast()) {
+            currentFrame = currentFrame.getNext();
+        }
+
+        return this;
     }
 
     public List<PinCount> getFramePinCounts(int frameIndex) {
@@ -36,7 +48,7 @@ public class Game {
     }
 
     public int getCurrentFrame() {
-        return frames.getCurrentFrameIndex() + ONE;
+        return frames.getCurrentFrameIndex(currentFrame) + ONE;
     }
 
     public int getFrameTotal() {
@@ -45,5 +57,9 @@ public class Game {
 
     public String getPlayerName() {
         return player.getName();
+    }
+
+    private boolean isAddable() {
+        return !currentFrame.isLast() || !currentFrame.isDone();
     }
 }

@@ -33,7 +33,7 @@ public class NormalFrame implements Frame {
         }
 
         Optional<PinCount> firstPinCount = pinCounts.getFirst();
-        return firstPinCount.map(count -> !count.isOverOrSameMaxAfterAdd(pinCount))
+        return firstPinCount.map(count -> !count.isOverMaxAfterAdd(pinCount))
                 .orElse(true);
     }
 
