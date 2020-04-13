@@ -41,10 +41,18 @@ public class Frames {
 
     public int getTotalPointUntil(Frame currentFrame) {
         int sum = 0;
-        for (int i = 0; i < currentFrame.getFrameId(); i++) {
-            sum += new Frames(frames).getFrameScore(i + 1);
+        for (int i = 1; i <= currentFrame.getFrameId(); i++) {
+            sum += new Frames(frames).getFrameScore(i);
         }
         return sum;
+    }
+
+    public Frame getPreviousFrame(Frame currentFrame){
+        if(currentFrame.getFrameId() != 1){
+            return frames.get(currentFrame.getFrameId() - 2);
+        }
+
+        return currentFrame;
     }
 
     private Frame getNextFrameByCurrentId(int currentFrameId) {
