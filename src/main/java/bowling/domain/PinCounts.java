@@ -6,61 +6,61 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PinCounts {
-    private List<PinCount> pinCountList;
+    private List<PinCount> pinCounts;
     private int maxSize;
 
     public PinCounts(int maxSize) {
         this.maxSize = maxSize;
-        this.pinCountList = new ArrayList<>();
+        this.pinCounts = new ArrayList<>();
     }
 
     public boolean add(int pinCount) {
         if (isFull()) {
             return false;
         }
-        if (pinCountList.isEmpty()) {
-            pinCountList.add(PinCount.valueOf(pinCount));
+        if (pinCounts.isEmpty()) {
+            pinCounts.add(PinCount.valueOf(pinCount));
             return true;
         }
 
-        getLast().ifPresent(p -> pinCountList.add(p.next(pinCount)));
+        getLast().ifPresent(p -> pinCounts.add(p.next(pinCount)));
         return true;
     }
 
     public boolean isFull() {
-        return pinCountList.size() == maxSize;
+        return pinCounts.size() == maxSize;
     }
 
     public int size() {
-        return pinCountList.size();
+        return pinCounts.size();
     }
 
     public int getPinCountTotal() {
-        return pinCountList.stream()
+        return pinCounts.stream()
                 .reduce(0, (p1, p2) -> p2.add(p1), Integer::sum);
     }
 
     public Optional<PinCount> getFirst() {
-        if (pinCountList.isEmpty()) {
+        if (pinCounts.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(pinCountList.get(0));
+        return Optional.of(pinCounts.get(0));
     }
 
     private Optional<PinCount> getLast() {
-        if (pinCountList.isEmpty()) {
+        if (pinCounts.isEmpty()) {
             return Optional.empty();
         }
 
-        return Optional.of(pinCountList.get(getLastIndex()));
+        return Optional.of(pinCounts.get(getLastIndex()));
     }
 
     private int getLastIndex() {
-        return pinCountList.size() - 1;
+        return pinCounts.size() - 1;
     }
 
-    public List<PinCount> getPinCountList() {
-        return pinCountList.stream()
+    public List<PinCount> getPinCounts() {
+        return pinCounts.stream()
                 .map(PinCount::new)
                 .collect(Collectors.toList());
     }

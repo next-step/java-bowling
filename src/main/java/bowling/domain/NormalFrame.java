@@ -50,7 +50,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override public List<PinCount> getPinCounts() {
-        return pinCounts.getPinCountList();
+        return pinCounts.getPinCounts();
     }
 
     @Override public Frame getNext() {

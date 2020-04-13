@@ -52,7 +52,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override public List<PinCount> getPinCounts() {
-        return pinCounts.getPinCountList();
+        return pinCounts.getPinCounts();
     }
 
     @Override public Frame createNext() {
