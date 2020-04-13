@@ -10,6 +10,7 @@ public class Frames {
             "프레임 갯수는 최소 %d 이상이여야 합니다.";
     private static final int MIN = 2;
     private static final int FIRST_INDEX = 0;
+
     private List<Frame> frames;
 
     public Frames(int size) {
@@ -17,6 +18,7 @@ public class Frames {
             throw new OutOfRangeArgumentException(
                     String.format(OUT_OF_RANGE_ERROR_MESSAGE, MIN));
         }
+
         frames = new ArrayList<>();
         initFrameList(size);
     }

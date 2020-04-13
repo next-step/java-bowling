@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-
 public class PinCountTest {
     public static final PinCount PIN_COUNT_0 = PinCount.valueOf(0);
     public static final PinCount PIN_COUNT_1 = PinCount.valueOf(1);

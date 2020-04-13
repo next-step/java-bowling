@@ -70,5 +70,4 @@ public class GameTest {
         game.addPin(2);
         assertThat(game.isFinished()).isTrue();
     }
-
 }

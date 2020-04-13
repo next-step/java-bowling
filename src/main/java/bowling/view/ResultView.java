@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.Game;
 import bowling.domain.PinCount;
-import bowling.domain.PinCounts;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +24,7 @@ public class ResultView {
 
     private static void displayHeader(int maxFrame) {
         System.out.print(NAME_TITLE);
+
         for (int i = 1; i <= maxFrame; i++) {
             System.out.print(String.format(FRAME_FORMAT, i) + DELIMITER);
         }
@@ -33,6 +33,7 @@ public class ResultView {
 
     private static void displayBody(Game game) {
         System.out.print(String.format(NAME_VALUE, game.getPlayerName()));
+
         for (int i = 0, maxFrame = game.getFrameTotal(); i < maxFrame; i++) {
             displayPinCounts(game.getFramePinCounts(i));
         }
@@ -43,6 +44,7 @@ public class ResultView {
         String stringPinCounts = pinCounts.stream()
                 .map(ResultView::getSymbol)
                 .collect(Collectors.joining(PIN_DELIMITER));
+
         System.out.print(String.format(PIN_COUNT_FORMAT, stringPinCounts) +
                 DELIMITER);
     }

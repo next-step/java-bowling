@@ -9,15 +9,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class FramesTest {
-
-
     private Frames frames;
 
     @BeforeEach
     void setUp() {
         frames = new Frames(2);
     }
-
 
 
     @DisplayName("프레임 갯수는 최소 2 이상이여야 한다")

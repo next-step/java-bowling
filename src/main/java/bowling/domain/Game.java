@@ -5,16 +5,10 @@ import java.util.List;
 public class Game {
     private static final int ONE = 1;
     private static final int DEFAULT_FRAME_SIZE = 10;
+
     private Player player;
     private Frames frames;
     private Frame currentFrame;
-
-
-    protected Game(String playerName, Frames frames) {
-        this.player = new Player(playerName);
-        this.frames = frames;
-        this.currentFrame = frames.getFirstFrame();
-    }
 
     protected Game(String playerName, int frameSize) {
         this.player = new Player(playerName);

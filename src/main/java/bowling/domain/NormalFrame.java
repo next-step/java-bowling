@@ -21,7 +21,6 @@ public class NormalFrame implements Frame {
 
         if (isDone()) {
             return false;
-
         }
 
         return pinCounts.add(pinCount);
