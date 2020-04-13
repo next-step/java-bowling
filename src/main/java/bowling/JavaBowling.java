@@ -12,7 +12,7 @@ public class JavaBowling {
         Player player = new Player(name);
         Game game = new Game(player);
         OutputView outputView = new OutputView();
-        outputView.drawStart(player);
+        outputView.drawStart(game);
         do{
             int numberOfPin = inputView.askNumberOfPin(game.currentFrame());
             game.play(numberOfPin);

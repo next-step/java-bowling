@@ -1,6 +1,8 @@
 package bowling.domain;
 
 public class NormalFrame  {
+    private Scores scores;
+
     public Scores getScores() {
         return scores;
     }
@@ -8,8 +10,6 @@ public class NormalFrame  {
     public String getSigns() {
         return getScores().getSigns();
     }
-
-    private Scores scores;
 
     public NormalFrame() {
         this.scores = new Scores();

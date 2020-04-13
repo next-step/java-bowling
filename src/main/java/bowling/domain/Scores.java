@@ -17,7 +17,6 @@ public class Scores {
     private List<String> signs = new ArrayList<>();
 
 
-
     public Scores() {
         this.scores = new ArrayList<>();
     }

@@ -7,10 +7,6 @@ public class Player {
     private String name = "";
     private Frames frames;
 
-    public Frames getFrames() {
-        return frames;
-    }
-
     public String getName() {
         return name;
     }
@@ -63,7 +59,7 @@ public class Player {
 
     public List<String> getSigns() {
         return frames.getNormalFrames().stream()
-                .map(n->n.getSigns())
+                .map(n -> n.getSigns())
                 .collect(Collectors.toList());
     }
 }
