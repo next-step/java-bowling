@@ -1,13 +1,18 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import org.hibernate.sql.Delete;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    public static final String NO_DELETE_AUTHORITY_QUESTION_ERROR = "질문을 삭제할 권한이 없습니다.";
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -25,9 +30,6 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Question() {
-    }
-
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
@@ -39,22 +41,34 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        assertUser(loginUser);
+
+        Answers answers = new Answers(this.answers);
+        answers.delete(loginUser);
+
+        this.deleted = true;
+
+        return makeDeleteHistories(answers);
     }
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
+    public void assertUser(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(NO_DELETE_AUTHORITY_QUESTION_ERROR);
+        }
     }
 
-    public String getContents() {
-        return contents;
+    private List<DeleteHistory> makeDeleteHistories(Answers answers) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+        deleteHistories.add(getDeleteQuestionHistory());
+        deleteHistories.addAll(answers.getDeleteAnswersHistory());
+
+        return deleteHistories;
     }
 
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
+    public DeleteHistory getDeleteQuestionHistory() {
+        return DeleteHistory.makeDeleteQuestionHistory(this);
     }
 
     public User getWriter() {
@@ -75,17 +89,8 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
