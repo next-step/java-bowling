@@ -43,10 +43,13 @@ public class Scores {
 
     private String makeSign(Score score) {
         String sign = "";
-        if (isStrike()) {
+        if (score.getScore() == FRAME_MAX_SCORE) { //10개쳤을 경우 스트라이크표시 후 아래에서 보정작업진행( 0 / 10 같은경우)
             sign = STRIKE_SIGN;
         }
         if (isSpare()) {
+            sign = SPARE_SIGN;
+        }
+        if (isFinalFrameSpare(score)) {
             sign = SPARE_SIGN;
         }
         if (score.getScore() == 0) {
@@ -56,6 +59,12 @@ public class Scores {
             sign = score.toString();
         }
         return sign;
+    }
+
+    private boolean isFinalFrameSpare(Score score) {
+        // x,0,/    0,/,X  , 2,/,X
+        return numberOfTry() == FINAL_TRY_NUMBER && sum() == FINAL_MAX_SCORE
+                && scores.get(FINAL_TRY_NUMBER-2).getScore() + score.getScore() == FRAME_MAX_SCORE;
     }
 
     public int size() {
