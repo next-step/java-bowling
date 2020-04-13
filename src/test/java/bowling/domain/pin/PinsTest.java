@@ -19,17 +19,15 @@ class PinsTest {
         assertThat(actual).isEqualTo(expect);
     }
 
-    @DisplayName("핀을 넘어트려 서있는 핀을 구할 수 있다.")
+    @DisplayName("핀을 넘어트릴 수 있다.")
     @Test
     void getStandingPins() {
         Pins pins = Pins.of();
         BowlCount bowlCount = new BowlCount(3);
-        final int expect = 7;
 
-        final Pins standingPins = pins.knockOver(bowlCount);
-        final int actual = standingPins.standingCount();
+        final Pins actual = pins.knockOver(bowlCount);
 
-        assertThat(actual).isEqualTo(expect);
+        assertThat(actual.knockOverCount()).isEqualTo(3);
     }
 
     @DisplayName("투구수가 핀의 갯수보다 많을경우 예외를 발생한다.")
