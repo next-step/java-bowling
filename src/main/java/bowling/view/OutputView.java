@@ -2,64 +2,75 @@ package bowling.view;
 
 import bowling.domain.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OutputView {
-    private static final String SCORE_BOARD_SUBJECT = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String SCORE_BOARD_CONTENTS = "|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|\n";
+    private static final String SCORE_BOARD_NAME = "| NAME |";
+    private static final String SCORE_BOARD_NAME_CONTENTS = "|  %s |";
+    private static final String ADD_SCORE_BOARD_SUBJECT = "   %02d   |";
+    private static final String ADD_SCORE_BOARD_CONTENTS = "%8s|";
     private static final String STRIKE_SIGN = "X";
     private static final String GUTTER_SIGN = "-";
     private static final String SEPARATOR = "|";
+    private static final String BLANK = "";
 
     private static final int ZERO = 0;
-    private static final int MAX_FAME_COUNT = 10;
+    private static final int ONE = 1;
 
     public static void printScoreBoard(String playerName, Frames frames) {
-        List<String> values = new ArrayList<>();
-        values.add(playerName);
-        values.addAll(makeScore(frames));
 
-        System.out.println(SCORE_BOARD_SUBJECT);
-        System.out.printf(SCORE_BOARD_CONTENTS, Arrays.asList(values.stream().toArray(String[]::new)).toArray());
+        Map<Integer, String> scoreMap = makeScore(frames);
+
+        String subject = SCORE_BOARD_NAME;
+        String contents = String.format(SCORE_BOARD_NAME_CONTENTS, playerName);
+
+        for (Map.Entry<Integer, String> scoreEntry : scoreMap.entrySet()) {
+            subject += String.format(ADD_SCORE_BOARD_SUBJECT, scoreEntry.getKey());
+            contents += String.format(ADD_SCORE_BOARD_CONTENTS, scoreEntry.getValue());
+        }
+
+        System.out.println(subject);
+        System.out.println(contents);
     }
 
-    private static List<String> makeScore(Frames frames) {
-        List<String> values = new ArrayList<>();
+    private static Map<Integer, String> makeScore(Frames frames) {
+        Map<Integer, String> scoreMap = new HashMap<>();
 
         for (Frame frame : frames.getFrames()) {
-            addScoreBoardValue(frame, values);
+            scoreMap.putAll(addScoreBoardValue(frame));
         }
 
-        for (int i = ZERO, end = MAX_FAME_COUNT - values.size(); i < end; i++) {
-            values.add("");
+        for (int i = scoreMap.size() + ONE, end = Frame.MAX_FRAME_NUMBER; i <= end; i++) {
+            scoreMap.put(i, BLANK);
         }
 
-        return values;
+        return scoreMap;
     }
 
-    private static void addScoreBoardValue(Frame frame, List<String> values) {
+    private static Map<Integer, String> addScoreBoardValue(Frame frame) {
+        Map<Integer, String> scoreMap = new HashMap<>();
+
         FrameRounds frameRounds = frame.getFrameRounds();
-        RoundsStatus status = frameRounds.getStatus();
 
-        String value = "";
-
-        if (status == RoundsStatus.STRIKE) {
-            value += STRIKE_SIGN;
-            values.add(value);
-
-            return;
-        }
+        String value = BLANK;
 
         for (FrameRound frameRound : frameRounds.getFrameRounds()) {
-            value += getScourValue(frameRound);
+            value += getScourValue(frameRound.getRoundIndex(), frameRounds.getStatus(), frameRound);
         }
-        values.add(value);
+
+        scoreMap.put(frame.getFrameIndex() + ONE, value);
+
+        return scoreMap;
     }
 
-    private static String getScourValue(FrameRound frameRound) {
-        String value = "";
+    private static String getScourValue(int roundIndex, RoundsStatus status, FrameRound frameRound) {
+        if (roundIndex == ZERO && RoundsStatus.isStrike(status)) {
+            return STRIKE_SIGN;
+        }
+
+        String value = BLANK;
+
         if (frameRound.getRoundIndex() != ZERO) {
             value += SEPARATOR;
         }

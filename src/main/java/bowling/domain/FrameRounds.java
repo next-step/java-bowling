@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FrameRounds {
+    private static final int MAX_ROUND_SIZE = 3;
     @Getter
     private RoundsStatus status;
     @Getter
@@ -19,7 +20,9 @@ public class FrameRounds {
     public void play(int clearCount) {
         frameRounds.add(new FrameRound(this.frameRounds.size(), clearCount));
 
-        this.status = RoundsStatus.getRoundStatus(totalClearPinCount());
+        if (RoundsStatus.isNone(this.status)) {
+            this.status = RoundsStatus.getRoundStatus(totalClearPinCount());
+        }
     }
 
     public static FrameRounds of(int clearPinCount) {
@@ -30,7 +33,13 @@ public class FrameRounds {
         return new FrameRounds(frameRounds, status);
     }
 
-    public boolean isEnd() {
+    public boolean isEnd(boolean isLastFrame) {
+        if (isLastFrame
+                && RoundsStatus.isStrike(this.status)
+                && !isMaxRoundSize(this.frameRounds.size())) {
+            return false;
+        }
+
         return this.status != RoundsStatus.NONE;
     }
 
@@ -38,5 +47,9 @@ public class FrameRounds {
         return frameRounds.stream()
                 .mapToInt(FrameRound::getClearPinCount)
                 .sum();
+    }
+
+    private boolean isMaxRoundSize(int size) {
+        return size == MAX_ROUND_SIZE;
     }
 }

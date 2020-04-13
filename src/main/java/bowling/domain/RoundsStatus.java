@@ -22,13 +22,19 @@ public enum RoundsStatus {
     }
 
     public static RoundsStatus getRoundStatus(int totalClearPinCount) {
-        validClearPinCount(totalClearPinCount);
-
         if (totalClearPinCount == STRIKE_PIN_COUNT) {
             return SPARE;
         }
 
         return MISS;
+    }
+
+    public static boolean isStrike(RoundsStatus status) {
+        return status == STRIKE;
+    }
+
+    public static boolean isNone(RoundsStatus status) {
+        return status == NONE;
     }
 
     private static void validClearPinCount(int clearPinCount) {
