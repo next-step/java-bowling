@@ -11,11 +11,16 @@ public class Ready implements State {
         if (knockOverPins.isStrike()) {
             return new Strike();
         }
-        return new Running(knockOverPins);
+        return new FirstBowl(knockOverPins);
     }
 
     @Override
     public boolean isTurnOver() {
         return Boolean.FALSE;
+    }
+
+    @Override
+    public String toResult() {
+        return "";
     }
 }

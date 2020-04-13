@@ -6,7 +6,7 @@ public class Miss implements State {
     private final Pins first;
     private final Pins second;
 
-    public Miss(final Pins first, final Pins second) {
+    Miss(final Pins first, final Pins second) {
         this.first = first;
         this.second = second;
     }
@@ -22,7 +22,7 @@ public class Miss implements State {
     }
 
     @Override
-    public String toString() {
-        return String.valueOf(first.count() + second.count());
+    public String toResult() {
+        return first.count() + State.DELIMITER + second.count();
     }
 }

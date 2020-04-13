@@ -17,7 +17,7 @@ public class Strike implements State {
     }
 
     @Override
-    public String toString() {
-        return EXPRESSION;
+    public String toResult() {
+        return  EXPRESSION;
     }
 }

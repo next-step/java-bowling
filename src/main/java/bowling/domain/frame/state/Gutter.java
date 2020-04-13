@@ -5,9 +5,17 @@ import bowling.domain.pin.Pins;
 public class Gutter implements State {
     private static final String EXPRESSION = "-";
 
+    private final Pins first;
+    private final Pins second;
+
+    Gutter(final Pins first, final Pins second) {
+        this.first = first;
+        this.second = second;
+    }
+
     @Override
     public State roll(final Pins knockOverPins) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -16,7 +24,18 @@ public class Gutter implements State {
     }
 
     @Override
-    public String toString() {
+    public String toResult() {
+        if (first.isGutter() && second.isGutter()) {
+            return EXPRESSION + State.DELIMITER + EXPRESSION;
+        }
+
+        if (first.isGutter()) {
+            return EXPRESSION + State.DELIMITER + second.count();
+        }
+
+        if (second.isGutter()) {
+            return first.count() + State.DELIMITER + EXPRESSION;
+        }
         return EXPRESSION;
     }
 }
