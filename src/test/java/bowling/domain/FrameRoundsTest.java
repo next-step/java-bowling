@@ -27,10 +27,10 @@ public class FrameRoundsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10:TRUE", "8:FALSE"}, delimiter = ':')
-    void isEnd(int value, boolean expected) {
-        FrameRounds frameRounds = FrameRounds.of(value);
+    @CsvSource(value = {"10:TRUE:FALSE", "10:FALSE:TRUE", "8:FALSE:FALSE"}, delimiter = ':')
+    void isEnd(int clearPinCount, boolean lastFrame, boolean expected) {
+        FrameRounds frameRounds = FrameRounds.of(clearPinCount);
 
-        assertThat(frameRounds.isEnd()).isEqualTo(expected);
+        assertThat(frameRounds.isEnd(lastFrame)).isEqualTo(expected);
     }
 }
