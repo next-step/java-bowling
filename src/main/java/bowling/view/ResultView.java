@@ -25,6 +25,8 @@ public class ResultView {
     private static final int FRAME_ID_FINAL = 10;
     private static final int MIN_NUMBER_FOR_THREE_DIGITS = 100;
     private static final int MIN_NUMBER_FOR_TWO_DIGITS = 10;
+    private static final int OFFSET = -1;
+    private static final int OFFSET_DOUBLE = -2;
 
     public static void print(PlayerName playerName, Frames frames) {
         printLineSeparator();
@@ -59,7 +61,7 @@ public class ResultView {
             printPlayInformation();
             printName(playerName.getName());
             frames.getFrames()
-                    .subList(0, frame.getFrameId() - 1)
+                    .subList(0, frame.getFrameId() + OFFSET)
                     .forEach(frame1 -> printFrame(frame1));
 
             printFrameByOrdinal(frame, ordinal);
@@ -77,21 +79,21 @@ public class ResultView {
     private static void printFrameScoreSoFar(Frames frames, Frame frame, Ordinal ordinal) {
         printName(BLANK_THREE);
 
-        if (!frames.getPreviousFrame(frame).isStrike()) {
+        if (!frames.getPreviousFrame(frame).isStrike() && !frame.isFirstFrame()) {
             frames.getFrames()
-                    .subList(0, frame.getFrameId() - 1)
+                    .subList(0, frame.getFrameId() + OFFSET)
                     .forEach(frame1 -> printFrameScore(frames, frame1));
         }
 
         if (frames.getPreviousFrame(frame).isStrike() && FIRST.equals(ordinal)) {
             frames.getFrames()
-                    .subList(0, frame.getFrameId() - 2)
+                    .subList(0, frame.getFrameId() + (OFFSET_DOUBLE))
                     .forEach(frame1 -> printFrameScore(frames, frame1));
         }
 
         if (frames.getPreviousFrame(frame).isStrike() && !FIRST.equals(ordinal)) {
             frames.getFrames()
-                    .subList(0, frame.getFrameId() - 1)
+                    .subList(0, frame.getFrameId() + OFFSET)
                     .forEach(frame1 -> printFrameScore(frames, frame1));
         }
     }
@@ -107,11 +109,11 @@ public class ResultView {
     private static void printCurrentFrameScore(Frames frames, Frame frame, Ordinal ordinal) {
         print(BLANK_FOUR);
 
-        if (frame.getFrameId() != FRAME_ID_FINAL) {
+        if (!frame.isFinalFrame()) {
             printNormalFrameScore(frames, frame, ordinal);
         }
 
-        if (frame.getFrameId() == FRAME_ID_FINAL) {
+        if (frame.isFinalFrame()) {
             printFinalFrameScore(frames, frame, ordinal);
         }
 
@@ -124,12 +126,12 @@ public class ResultView {
             print(BLANK_THREE);
         }
 
-        if (SECOND.equals(ordinal) && (frame.isGutter() || frame.isMiss()) && frame.getFrameId() != FRAME_ID_FIRST) {
+        if (SECOND.equals(ordinal) && frame.isGutterOrMiss() && !frame.isFirstFrame()) {
             print(frames.getTotalPointUntil(frame));
             print(BLANK_ONE);
         }
 
-        if (SECOND.equals(ordinal) && frame.getFrameId() == FRAME_ID_FIRST) {
+        if (SECOND.equals(ordinal) && frame.isFirstFrame() && !frame.isSpare()) {
             print(BLANK_SIX);
             print(BLOCK_BORDER);
             print(BLANK_FOUR);

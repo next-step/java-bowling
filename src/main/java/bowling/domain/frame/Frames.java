@@ -6,9 +6,9 @@ import java.util.stream.IntStream;
 
 public class Frames {
     private static final int FIRST_FRAME_ID = 1;
-    private static final int FINAL_FRAME_ID = 10;
     private static final int MAX_POINT = 10;
     private static final int DOUBLE = 2;
+    private static final int OFFSET = 1;
 
     private List<Frame> frames;
 
@@ -29,9 +29,9 @@ public class Frames {
     }
 
     public int getFrameScore(int frameId) {
-        Frame frame = getPrevFrameByCurrentFrameId(frameId);
+        Frame frame = frames.get(frameId - OFFSET);
 
-        if (frameId == FINAL_FRAME_ID) {
+        if (frame.isFinalFrame()) {
             return frame.getPointSumOnlyThisFrame();
         }
 
@@ -54,8 +54,8 @@ public class Frames {
     }
 
     public Frame getPreviousFrame(Frame currentFrame) {
-        if (currentFrame.getFrameId() != FIRST_FRAME_ID) {
-            return getPrevFrameByCurrentFrameId(currentFrame.getFrameId());
+        if (!currentFrame.isFirstFrame()) {
+            return getPrevFrameByCurrentId(currentFrame.getFrameId());
         }
 
         return currentFrame;
@@ -86,7 +86,7 @@ public class Frames {
         return (MAX_POINT * DOUBLE) + firstOfNextOfNext;
     }
 
-    private Frame getPrevFrameByCurrentFrameId(int currentId) {
-        return frames.get(currentId - FIRST_FRAME_ID);
+    private Frame getPrevFrameByCurrentId(int currentId) {
+        return frames.get(currentId - (OFFSET * 2));
     }
 }

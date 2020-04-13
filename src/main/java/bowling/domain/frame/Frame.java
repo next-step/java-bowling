@@ -33,7 +33,7 @@ public class Frame {
         addPointsForStrike();
     }
 
-    public Frame(int prevFrameId, int firstPoint, int secondPoint, int thirdPoint, int fourthPoint){
+    public Frame(int prevFrameId, int firstPoint, int secondPoint, int thirdPoint, int fourthPoint) {
         validateSecondWhenFirstTen(firstPoint, secondPoint);
         validateSumIsLessThanTen(firstPoint, secondPoint);
         points = Points.of(firstPoint, secondPoint);
@@ -63,8 +63,20 @@ public class Frame {
         return new Frame(this.frameId, RANDOM_GENERATOR.getFirstPoint(), RANDOM_GENERATOR.getSecondPoint());
     }
 
-    public int getPointSumOnlyThisFrame(){
+    public int getPointSumOnlyThisFrame() {
         return points.sum();
+    }
+
+    public boolean isFirstFrame() {
+        return frameId == FIRST_FRAME_ID;
+    }
+
+    public boolean isFinalFrame() {
+        return frameId == LAST_FRAME_ID;
+    }
+
+    public boolean isGutterOrMiss() {
+        return (findResult() == FrameResult.GUTTER) || (findResult() == FrameResult.MISS);
     }
 
     private boolean doesNeedOneMorePoint() {
@@ -164,7 +176,7 @@ public class Frame {
         return points.containsOrdinal(ordinal);
     }
 
-    public boolean isNineth(){
+    public boolean isNineth() {
         return frameId == FRAME_ID_NINETH;
     }
 }
