@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findByDeletedFalse();
 
-    @Query("select q from Question q join fetch q.answers")
+    @Query("SELECT q FROM Question q JOIN FETCH q.answers WHERE q.id = :id AND q.deleted = FALSE")
     Optional<Question> findByIdAndDeletedFalse(Long id);
 }
