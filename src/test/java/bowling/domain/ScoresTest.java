@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.frame.DefaultFrame;
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,34 +18,57 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class ScoresTest {
-    @DisplayName("볼링 점수 생성")
+    @DisplayName("프레임 점수 생성")
     @Test
     void create() {
         assertThatCode(() -> new Scores());
     }
 
-    @DisplayName("점수 저장")
+    @DisplayName("프레임 점수 저장")
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
-    void addScore(int expected) {
+    @MethodSource("points")
+    void addScore(List<Integer> values) {
         Scores scores = new Scores();
-        scores.add(expected);
-        assertThat(scores.getTotalScore()).isEqualTo(expected);
+        for (Integer value : values) {
+            scores.add(Score.defaultScore(scores, value));
+        }
+        int currentPoint = values.stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+        assertThat(scores.currentPoint()).isEqualTo(currentPoint);
     }
 
-    @DisplayName("점수의 합이 10이 넘을 경우 throws Exception")
-    @ParameterizedTest
-    @MethodSource("scoreValues")
-    void addScoreFailByInvalidTotal(List<Integer> values) {
-        Scores scores = new Scores();
-        scores.add(values.get(0));
-        assertThatIllegalArgumentException().isThrownBy(() -> scores.add(values.get(1)));
-    }
-
-    static Stream<Arguments> scoreValues() {
+    static Stream<Arguments> points() {
         return Stream.of(
-                arguments(Arrays.asList(5, 6)),
-                arguments(Arrays.asList(10, 1))
+                arguments(Arrays.asList(1, 2)),
+                arguments(Arrays.asList(4, 5))
         );
+    }
+
+    @DisplayName("초구 스트라이크 확인")
+    @Test
+    void isStrike() {
+        Scores socres = strikeScores();
+        assertThat(socres.isStrike(0)).isTrue();
+    }
+
+    private Scores strikeScores() {
+        Scores scores = new Scores();
+        scores.add(Score.defaultScore(scores, 10));
+        return scores;
+    }
+
+    @DisplayName("스페어 확인")
+    @Test
+    void isSpare() {
+        Scores socres = spareScores();
+        assertThat(socres.isSpare(1)).isTrue();
+    }
+
+    private Scores spareScores() {
+        Scores scores = new Scores();
+        scores.add(Score.defaultScore(scores, 1));
+        scores.add(Score.defaultScore(scores, 9));
+        return scores;
     }
 }
