@@ -7,27 +7,18 @@ import java.util.stream.Collectors;
 
 public class PinCounts {
     private List<PinCount> pinCounts;
-    private int maxSize;
 
-    public PinCounts(int maxSize) {
-        this.maxSize = maxSize;
+    public PinCounts() {
         this.pinCounts = new ArrayList<>();
     }
 
     public boolean add(int pinCount) {
-        if (isFull()) {
-            return false;
-        }
         if (pinCounts.isEmpty()) {
             return pinCounts.add(PinCount.valueOf(pinCount));
         }
 
-        getLast().ifPresent(p -> pinCounts.add(p.next(pinCount)));
-        return true;
-    }
-
-    public boolean isFull() {
-        return pinCounts.size() == maxSize;
+        return getLast().filter(count -> pinCounts.add(count.next(pinCount)))
+                .isPresent();
     }
 
     public int size() {

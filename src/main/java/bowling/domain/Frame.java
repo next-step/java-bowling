@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.List;
 
 public interface Frame {
-    void addPinCount(int nextPinCount);
+    boolean addPinCount(int nextPinCount);
 
     int getScore();
 

@@ -1,12 +1,10 @@
 package bowling.domain;
 
-import bowling.domain.exception.OutOfRangeArgumentException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class FinalFrameTest {
     private FinalFrame finalFrame;
@@ -23,14 +21,20 @@ public class FinalFrameTest {
         assertThat(finalFrame.getScore()).isEqualTo(1);
     }
 
+    @DisplayName("한 프레임에서 세번 이상 투구할 수 없다.")
+    @Test
+    void overThreePitch() {
+        assertThat(finalFrame.addPinCount(10)).isTrue();
+        assertThat(finalFrame.addPinCount(1)).isTrue();
+        assertThat(finalFrame.addPinCount(1)).isTrue();
+        assertThat(finalFrame.addPinCount(1)).isFalse();
+    }
+
     @DisplayName("첫번째 시도가 스트라이크가 아닐경우, 두번째 시도의 핀 갯수와 첫번째 시도의 핀 갯수가 10을 넘을 수 없다")
     @Test
     void error() {
-        assertThatExceptionOfType(OutOfRangeArgumentException.class)
-                .isThrownBy(() -> {
-                    finalFrame.addPinCount(8);
-                    finalFrame.addPinCount(3);
-                });
+        assertThat(finalFrame.addPinCount(8)).isTrue();
+        assertThat(finalFrame.addPinCount(3)).isFalse();
     }
 
     @DisplayName("첫번째 시도가 스트라크일 경우, 두번째 핀의 갯수는 아무거나 관계 없다")

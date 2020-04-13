@@ -1,33 +1,33 @@
 package bowling.domain;
 
-import bowling.domain.exception.OutOfRangeArgumentException;
-
 import java.util.List;
 
 public class FinalFrame implements Frame {
     private static final int MAX_PIN_COUNT_SIZE = 3;
     private static final int MIN_PIN_COUNT_FOR_THIRD = 10;
-    private static final String OUT_OF_RANGE_ERROR_MESSAGE =
-            "잘못된 핀 카운트 입니다.";
 
     private PinCounts pinCounts;
 
     public FinalFrame() {
-        pinCounts = new PinCounts(MAX_PIN_COUNT_SIZE);
+        pinCounts = new PinCounts();
     }
 
-    @Override public void addPinCount(int pinCount) {
+    @Override public boolean addPinCount(int pinCount) {
         if (!isAddable(pinCount)) {
-            throw new OutOfRangeArgumentException(OUT_OF_RANGE_ERROR_MESSAGE);
+            return false;
         }
 
-        if (!isDone()) {
-            pinCounts.add(pinCount);
+        if (isDone()) {
+            return false;
         }
+
+        return pinCounts.add(pinCount);
     }
 
     private boolean isAddable(int pinCount) {
-        if (pinCounts.size() != 1) {
+        if (isPinCountsFull()) {
+            return false;
+        } else if (pinCounts.size() != 1) {
             return true;
         }
         PinCount firstPinCount = pinCounts.getFirst()
@@ -39,12 +39,16 @@ public class FinalFrame implements Frame {
         return firstPinCount.isOverMaxAfterAdd(pinCount);
     }
 
+    private boolean isPinCountsFull() {
+        return pinCounts.size() == MAX_PIN_COUNT_SIZE;
+    }
+
     @Override public int getScore() {
         return pinCounts.getPinCountTotal();
     }
 
     @Override public boolean isDone() {
-        if (pinCounts.isFull()) {
+        if (isPinCountsFull()) {
             return true;
         }
         return pinCounts.size() == 2 &&
