@@ -19,8 +19,7 @@ public class PinCounts {
             return false;
         }
         if (pinCounts.isEmpty()) {
-            pinCounts.add(PinCount.valueOf(pinCount));
-            return true;
+            return pinCounts.add(PinCount.valueOf(pinCount));
         }
 
         getLast().ifPresent(p -> pinCounts.add(p.next(pinCount)));
