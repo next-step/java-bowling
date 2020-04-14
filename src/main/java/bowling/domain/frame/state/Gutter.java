@@ -25,21 +25,21 @@ public class Gutter implements State {
 
     @Override
     public String toResult() {
-        if (isLeft()) {
+        if (isFirstGutter()) {
             return EXPRESSION + State.DELIMITER + second.count();
         }
 
-        if (isLight()) {
+        if (isRightGutter()) {
             return first.count() + State.DELIMITER + EXPRESSION;
         }
         return EXPRESSION;
     }
 
-    private boolean isLeft() {
+    private boolean isFirstGutter() {
         return first.isGutter() && !second.isGutter();
     }
 
-    private boolean isLight() {
+    private boolean isRightGutter() {
         return !first.isGutter() && second.isGutter();
     }
 }
