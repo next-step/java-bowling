@@ -39,7 +39,7 @@ public class Scores {
     }
 
     public List<Score> getScores() {
-        return scores;
+        return new ArrayList<>(scores);
     }
 
     public boolean hasStrikeOrSpare() {

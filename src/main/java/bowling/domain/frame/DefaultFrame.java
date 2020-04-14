@@ -87,7 +87,7 @@ public class DefaultFrame implements Frame {
 
     @Override
     public List<Score> getScores() {
-        return scores.getScores();
+        return new ArrayList<>(scores.getScores());
     }
 
     @Override

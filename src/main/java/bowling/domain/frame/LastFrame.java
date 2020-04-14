@@ -5,6 +5,7 @@ import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,7 +84,7 @@ public class LastFrame implements Frame {
 
     @Override
     public List<Score> getScores() {
-        return scores.getScores();
+        return new ArrayList<>(scores.getScores());
     }
 
     @Override
