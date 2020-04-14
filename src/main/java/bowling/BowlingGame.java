@@ -19,24 +19,6 @@ public class BowlingGame {
     }
 
     public static void nexrFrame(Frames frames) {
-        if (isFrist(frames)) {
-            frames.add(DefaultFrame.first());
-            return;
-        }
-
-        int currentIndex = frames.size() - ONE;
-        if (isLast(frames)) {
-            frames.add(((DefaultFrame) frames.getLast()).nextFrame(currentIndex));
-            return;
-        }
-        frames.add(((DefaultFrame) frames.getLast()).lastFrame(currentIndex));
-    }
-
-    private static boolean isLast(Frames frames) {
-        return frames.size() != FRAME_INDEX_NINE;
-    }
-
-    private static boolean isFrist(Frames frames) {
-        return frames.size() == ZERO;
+        frames.nextFrame();
     }
 }

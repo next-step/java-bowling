@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class Frames {
     private static final int BOWLING_FRAME_SIZE = 10;
+    private static final int FRAME_INDEX_NINE = 9;
+    private static final int ZERO = 0;
     private static final int ONE = 1;
 
     private final List<Frame> frames;
@@ -48,5 +50,27 @@ public class Frames {
 
     public List<Frame> getFrames() {
         return frames;
+    }
+
+    public void nextFrame() {
+        if (isFrist()) {
+            frames.add(DefaultFrame.first());
+            return;
+        }
+
+        int currentIndex = frames.size() - ONE;
+        if (isLast()) {
+            frames.add(((DefaultFrame) getLast()).lastFrame(currentIndex));
+            return;
+        }
+        frames.add(((DefaultFrame) getLast()).nextFrame(currentIndex));
+    }
+
+    private boolean isLast() {
+        return frames.size() == FRAME_INDEX_NINE;
+    }
+
+    private boolean isFrist() {
+        return frames.size() == ZERO;
     }
 }
