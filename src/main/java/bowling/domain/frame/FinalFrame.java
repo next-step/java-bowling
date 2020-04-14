@@ -11,14 +11,15 @@ public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NO = 10;
 
     private State state;
-    private final List<State> stateHistory = new ArrayList<>();
+    private final StateHistory stateHistory;
 
-    private FinalFrame(State state) {
+    private FinalFrame(State state, StateHistory stateHistory) {
         this.state = state;
+        this.stateHistory = stateHistory;
     }
 
     public static Frame create() {
-        return new FinalFrame(new Ready());
+        return new FinalFrame(new Ready(), new StateHistory());
     }
 
     public void play(int felledPin) {
@@ -54,7 +55,7 @@ public class FinalFrame implements Frame {
     }
 
     private int getBowledCount() {
-        return stateHistory.size();
+        return stateHistory.getSize();
     }
 
     private boolean isEndedFrameBowledOnce() {
@@ -83,7 +84,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<State> getStateHistory() {
+    public StateHistory getStateHistory() {
         return stateHistory;
     }
 

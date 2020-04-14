@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
+import bowling.domain.state.StateHistory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,16 +15,17 @@ public class NormalFrame implements Frame {
 
     private int frameNumber;
     private State state;
-    private final List<State> stateHistory = new ArrayList<>();
+    private final StateHistory stateHistory;
 
-    private NormalFrame(int frameNumber, State state) {
+    private NormalFrame(int frameNumber, State state, StateHistory stateHistory) {
         assertFrameNo(frameNumber);
         this.frameNumber = frameNumber;
         this.state = state;
+        this.stateHistory = stateHistory;
     }
 
     public static Frame create(int frameNumber) {
-        return new NormalFrame(frameNumber, new Ready());
+        return new NormalFrame(frameNumber, new Ready(), new StateHistory());
     }
 
     public void play(int felledPin) {
@@ -61,7 +63,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public List<State> getStateHistory() {
+    public StateHistory getStateHistory() {
         return stateHistory;
     }
 

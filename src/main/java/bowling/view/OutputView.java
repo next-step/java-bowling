@@ -45,7 +45,7 @@ public class OutputView {
     private void showStateHistory(Frame frame) {
         StringBuilder builder = new StringBuilder();
 
-        for(State state : frame.getStateHistory()) {
+        for(State state : frame.getStateHistory().getValue()) {
             appendStateContent(builder, state);
         }
 
