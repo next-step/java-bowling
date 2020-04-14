@@ -31,17 +31,19 @@ public class DefaultFrame implements Frame {
     }
 
     public DefaultFrame nextFrame(int frameIndex) {
-        if (scores.hasStrikeOrSpare()) {
-            bonusScores.add(createBonusScore(frameIndex));
-        }
+        checkHasStrikeOrSpare(frameIndex);
         return new DefaultFrame(validateBonusScores());
     }
 
     public LastFrame lastFrame(int frameIndex) {
+        checkHasStrikeOrSpare(frameIndex);
+        return new LastFrame(validateBonusScores());
+    }
+
+    private void checkHasStrikeOrSpare(int frameIndex) {
         if (scores.hasStrikeOrSpare()) {
             bonusScores.add(createBonusScore(frameIndex));
         }
-        return new LastFrame(validateBonusScores());
     }
 
     private BonusScore createBonusScore(int frameIndex) {
@@ -62,7 +64,7 @@ public class DefaultFrame implements Frame {
         if (scores.currentPoint() + point > STRIKE_POINT) {
             throw new IllegalArgumentException("한 프레임의 포인트는 10점을 넘을수 없습니다.");
         }
-        this.scores.add(Score.defaultScore(scores, point));
+        scores.add(Score.defaultScore(scores, point));
         addBonusScore(point);
     }
 
@@ -104,28 +106,24 @@ public class DefaultFrame implements Frame {
         if (isPlayable()) {
             return false;
         }
-        BonusScore bonusScore = findBonusScore(frameIndex);
-        if (scores.hasStrikeOrSpare() && Objects.isNull(bonusScore)) {
+        if (scores.hasStrikeOrSpare() && !isExistBonusScore(frameIndex)) {
             return false;
         }
-        if (!Objects.isNull(bonusScore) && bonusScore.isAddable()) {
+        if (findBonusScore(frameIndex).isAddable()) {
             return false;
         }
         return true;
     }
 
-    private BonusScore findBonusScore(int frameIndex) {
-        BonusScore findBonusScore = null;
-        for (BonusScore bonusScore : bonusScores) {
-            findBonusScore = getBonusScore(frameIndex, bonusScore);
-        }
-        return findBonusScore;
+    private boolean isExistBonusScore(int frameIndex) {
+        return bonusScores.stream()
+                .anyMatch(bonusScore -> bonusScore.isEqualFrameIndex(frameIndex));
     }
 
-    private BonusScore getBonusScore(int frameIndex, BonusScore bonusScore) {
-        if (bonusScore.isEqualFrameIndex(frameIndex)) {
-            return bonusScore;
-        }
-        return null;
+    private BonusScore findBonusScore(int frameIndex) {
+        return bonusScores.stream()
+                .filter(bonusScore -> bonusScore.isEqualFrameIndex(frameIndex))
+                .findFirst()
+                .orElse(BonusScore.noneBonus(frameIndex));
     }
 }
