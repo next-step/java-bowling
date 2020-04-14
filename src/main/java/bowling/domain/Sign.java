@@ -28,7 +28,7 @@ public enum Sign {
         if (numberOfTry == FINAL_TRY_NUMBER && sum == FINAL_MAX_SCORE && score != ZERO) {
             return SPARE;
         }
-        if (score == FRAME_MAX_SCORE ) {
+        if (score == FRAME_MAX_SCORE) {
             return STRIKE;
         }
         return MISS;

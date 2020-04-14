@@ -22,13 +22,13 @@ public class FramesTest {
     }
 
     @Test
-    @DisplayName("9프레임여부테스트")
+    @DisplayName("스트라이크처리후 다음프레임여부")
     public void frameOrderTest() {
         Frames frames = new Frames();
         NormalFrame normalFrame = new NormalFrame();
         normalFrame.add(10);
         frames.addNormalFrame(normalFrame);
-        assertThat(frames.isEndNormalFrame()).isFalse();
+        assertThat(frames.isNextFrame()).isTrue();
     }
 
     @Test
@@ -53,7 +53,7 @@ public class FramesTest {
     }
 
     @Test
-    @DisplayName("스페어처리하면종료안됨")
+    @DisplayName("미스하면종료됨")
     public void finalFrameNotSpareTest() {
         Frames frames = new Frames();
         FinalFrame finalFrame = new FinalFrame();

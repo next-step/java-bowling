@@ -7,12 +7,8 @@ public class Game {
         this.player = player;
     }
 
-    public int currentFrame() {
-        return player.currentFrame();
-    }
-
     public void play(int numberOfPin) {
-        if (player.isEndNormalFrame() && !player.isEndFinalFrame()){
+        if (player.isFinal()){
             player.addFinalFrame(numberOfPin);
             return;
         }

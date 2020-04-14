@@ -76,6 +76,10 @@ public class Player {
                 .collect(Collectors.toList());
     }
 
+    public boolean isFinal() {
+        return isEndNormalFrame() && !isEndFinalFrame();
+    }
+
     public Frame getFrame() {
         return frame;
     }

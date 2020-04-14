@@ -39,7 +39,7 @@ public class OutputView {
         List<String> scores = new ArrayList<>();
         Player player = game.getPlay();
         scores.add(player.getName());
-        List<String> values = new ArrayList<>();
+        List<String> values;
         Frame frame = player.getFrame();
         values = player.getSigns(); //이전프레임성적
         values = getThisScore(scores, frame, values); //이번던진투구

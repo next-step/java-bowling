@@ -4,6 +4,10 @@ public class Frame {
     private static final int TOTAL_FRAME = 10;
     private Scores scores;
 
+    public Frame() {
+        this.scores = new Scores();
+    }
+
     public Scores getScores() {
         return scores;
     }
@@ -16,16 +20,17 @@ public class Frame {
         return getScores().size();
     }
 
-    public Frame() {
-        this.scores = new Scores();
-    }
-
     public boolean isNextFrame() {
         return this.scores.nextFrame();
     }
 
     public void add(Score score) {
         this.scores.add(score);
+    }
+
+    public void add(int numberOfPin) {
+        this.scores.checkBeforeAddNormal(numberOfPin);
+        this.scores.add(new Score(numberOfPin));
     }
 
     public void addFrame(int numberOfPin, int currentFrame) {

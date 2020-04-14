@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
-    private static final int NORMAL_FRAME_END = 9;
     private List<NormalFrame> normalFrames;
     private FinalFrame finalFrame = new FinalFrame();
 
@@ -30,10 +29,6 @@ public class Frames {
 
     public boolean isNextFrame() {
         return normalFrames.get(currentFrame() - 1).isNextFrame();
-    }
-
-    public boolean isEndNormalFrame() {
-        return currentFrame() == NORMAL_FRAME_END;
     }
 
     public boolean isEndFinalFrame() {

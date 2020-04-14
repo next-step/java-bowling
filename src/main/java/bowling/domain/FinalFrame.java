@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public class FinalFrame {
+public class FinalFrame extends Frame{
     private Scores scores;
 
     public FinalFrame() {
@@ -13,14 +13,5 @@ public class FinalFrame {
 
     public boolean isEndFinalFrame() {
         return this.scores.isEndFinalFrame();
-    }
-
-    public void add(Score score) {
-        this.scores.add(score);
-    }
-
-    public void add(int numberOfPin) {
-        this.scores.checkBeforeAddFinal(numberOfPin);
-        this.scores.add(new Score(numberOfPin));
     }
 }

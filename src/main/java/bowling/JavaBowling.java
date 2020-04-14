@@ -14,7 +14,7 @@ public class JavaBowling {
         OutputView outputView = new OutputView();
         outputView.drawStart(game);
         do{
-            int numberOfPin = inputView.askNumberOfPin(game.currentFrame());
+            int numberOfPin = inputView.askNumberOfPin(player.currentFrame());
             game.play(numberOfPin);
             outputView.drawPlay(game);
         }while(!player.isEndNormalFrame() || !player.isEndFinalFrame());
