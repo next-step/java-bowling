@@ -13,12 +13,12 @@ import static bowling.Messages.WARNING_FRAME_NOT_ALLOWED_SUM;
 
 public class Frame {
     private static final RandomGenerator RANDOM_GENERATOR = new RandomGenerator();
-    private static final int SCORE_TEN = 10;
     private static final int SCORE_ZERO = 0;
-    private static final int LAST_FRAME_ID = 10;
-    private static final int FIRST_FRAME_ID = 1;
+    private static final int SCORE_TEN = 10;
     private static final int FRAME_ID_ZERO = 0;
+    private static final int FRAME_ID_FIRST = 1;
     private static final int FRAME_ID_NINETH = 9;
+    private static final int FRAME_ID_FINAL = 10;
     private static final int INCREMENT_FOR_NEXT_ID = 1;
 
     private int frameId;
@@ -42,7 +42,7 @@ public class Frame {
         List<Frame> frames = new ArrayList<>();
         Frame currentFrame = Frame.create();
 
-        for (int i = FIRST_FRAME_ID; i <= LAST_FRAME_ID; i++) {
+        for (int i = FRAME_ID_FIRST; i <= FRAME_ID_FINAL; i++) {
             frames.add(currentFrame);
             currentFrame = currentFrame.createNextFrame();
         }
@@ -59,11 +59,11 @@ public class Frame {
     }
 
     public boolean isFirstFrame() {
-        return frameId == FIRST_FRAME_ID;
+        return frameId == FRAME_ID_FIRST;
     }
 
     public boolean isFinalFrame() {
-        return frameId == LAST_FRAME_ID;
+        return frameId == FRAME_ID_FINAL;
     }
 
     public boolean isGutterOrMiss() {

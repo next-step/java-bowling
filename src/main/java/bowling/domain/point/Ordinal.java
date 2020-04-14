@@ -5,4 +5,8 @@ public enum Ordinal {
     SECOND,
     THIRD,
     FOURTH;
+
+    public int getPoint(Ordinal first, Points points) {
+        return 0;
+    }
 }
