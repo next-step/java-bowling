@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.turn.Turn;
+import bowling.domain.turn.Turns;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +16,7 @@ class NormalFrameTest {
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     public void validate_success(int number) throws Exception {
         //then
-        new NormalFrame(Turn.from(), number, null);
+        new NormalFrame(new Turns(Turn.from()), number, null);
     }
 
     @DisplayName("1~10번 외의 프레임 까지만 등록시 exception")
@@ -24,7 +25,7 @@ class NormalFrameTest {
     public void validate_fail(int number) throws Exception {
         //then
         assertThatThrownBy(
-                () -> new NormalFrame(Turn.from(), number, null)
+                () -> new NormalFrame(new Turns(Turn.from()), number, null)
         ).isInstanceOf(BowlingException.class);
     }
 

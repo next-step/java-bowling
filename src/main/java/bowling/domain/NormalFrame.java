@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.turn.Turn;
+import bowling.domain.turn.Turns;
 import bowling.exception.BowlingException;
 
 public class NormalFrame implements Frame {
@@ -10,19 +11,19 @@ public class NormalFrame implements Frame {
     private static final int MIN_FRAME_NUMBER = 1;
     private static final int MAX_FRAME_NUMBER = 10;
 
-    private final Turn turn;
+    private final Turns turns;
     private final int frameNumber;
     private final Frame nextFrame;
 
-    public NormalFrame(Turn turn, int frameNumber, Frame nextFrame) {
+    public NormalFrame(Turns turns, int frameNumber, Frame nextFrame) {
         validateFrameNumber(frameNumber);
-        this.turn = turn;
+        this.turns = turns;
         this.frameNumber = frameNumber;
         this.nextFrame = nextFrame;
     }
 
     public static NormalFrame from() {
-        return new NormalFrame(Turn.from(), ZERO, null);
+        return new NormalFrame(new Turns(Turn.from()), ZERO, null);
     }
 
     public void validateFrameNumber(int frameNumber) {
