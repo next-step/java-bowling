@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,8 +28,9 @@ class NormalFrameTest {
     void bowl() {
         NormalFrame frame = new NormalFrame(1);
         frame.bowl(8);
-        Pin pin = frame.getPin();
-        assertThat(pin).isEqualTo(new Pin(8));
+        Rolls rolls = frame.getRolls();
+        assertThat(rolls).isEqualTo(new Rolls(Arrays.asList(new Pin(8))));
+        assertThat(frame.getFalledPins()).isEqualTo(8);
     }
 
     @DisplayName("프레임에 공을 두번 투구한다.")
@@ -36,8 +39,9 @@ class NormalFrameTest {
         NormalFrame frame = new NormalFrame(1);
         frame.bowl(8);
         frame.bowl(2);
-        Pin pin = frame.getPin();
-        assertThat(pin).isEqualTo(new Pin(10));
+        Rolls rolls = frame.getRolls();
+        assertThat(rolls).isEqualTo(new Rolls(Arrays.asList(new Pin(8), new Pin(2))));
+        assertThat(frame.getFalledPins()).isEqualTo(10);
     }
 
     @DisplayName("다음 프레임 생성시 NormalFrame 을 생성 할 경우")

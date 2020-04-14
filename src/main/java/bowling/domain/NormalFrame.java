@@ -3,13 +3,20 @@ package bowling.domain;
 import java.util.Objects;
 
 public class NormalFrame {
+    private int falledPins = 0;
+
     private int frameNum;
-    private int bowlCount = 2;
-    private Pin pin;
+    private Rolls rolls;
 
     public NormalFrame(int frameNum) {
         validateFrameNum(frameNum);
         this.frameNum = frameNum;
+        this.rolls = new Rolls();
+    }
+
+    public NormalFrame(int frameNum, Rolls rolls) {
+        this(frameNum);
+        this.rolls = rolls;
     }
 
     public void validateFrameNum(int frameNum) {
@@ -23,15 +30,7 @@ public class NormalFrame {
     }
 
     public int bowl(int falledPins) {
-        if (bowlCount == 2) {
-            setPin(falledPins);
-            return falledPins;
-        }
-
-        int existFalledPins = pin.getFalledPins();
-        falledPins += existFalledPins;
         setPin(falledPins);
-
         return falledPins;
     }
 
@@ -44,12 +43,20 @@ public class NormalFrame {
     }
 
     private void setPin(int falledPins) {
-        --bowlCount;
-        pin = Pin.of(falledPins);
+        this.falledPins += falledPins;
+        rolls.add(Pin.of(falledPins));
     }
 
-    public Pin getPin() {
-        return pin;
+    public int getFalledPins() {
+        return falledPins;
+    }
+
+    public int getFrameNum() {
+        return frameNum;
+    }
+
+    public Rolls getRolls() {
+        return rolls;
     }
 
     @Override
@@ -57,12 +64,12 @@ public class NormalFrame {
         if (this == o) { return true; }
         if (!(o instanceof NormalFrame)) { return false; }
         final NormalFrame that = (NormalFrame) o;
-        return frameNum == that.frameNum &&
-               Objects.equals(getPin(), that.getPin());
+        return getFrameNum() == that.getFrameNum() &&
+               Objects.equals(rolls, that.rolls);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNum, getPin());
+        return Objects.hash(getFrameNum(), rolls);
     }
 }
