@@ -56,7 +56,7 @@ public class NormalFrame implements Frame {
             frame = NormalFrame.from(frameNumber + 1);
         }
 
-        return new NormalFrame(turns, frameNumber, null, next);
+        return new NormalFrame(turns, frameNumber, frame, next);
     }
 
     public Turns getTurns() {
