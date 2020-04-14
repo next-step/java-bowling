@@ -46,6 +46,16 @@ public class FrameTest {
     }
 
     @Test
+    @DisplayName("Frame을 처음 생성할 시에 Ready 상태를 가진다.")
+    void frameFirstState() {
+        Frame normalFrame = new NormalFrame(1);
+        Frame finalFrame = new FinalFrame();
+
+        assertThat(normalFrame.getStatus()).isInstanceOf(Ready.class);
+        assertThat(finalFrame.getStatus()).isInstanceOf(Ready.class);
+    }
+
+    @Test
     @DisplayName("9프레임이 안채워졌을 경우 다음 프레임은 일반 Frame을 생성해야 한다.")
     void getNextNormalFrame() {
         Frame frame = new NormalFrame(2);
