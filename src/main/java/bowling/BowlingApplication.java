@@ -16,15 +16,15 @@ public class BowlingApplication {
         Frames frames = BowlingGame.startGame(player);
         while (!frames.isOver()) {
             BowlingGame.nexrFrame(frames);
-            playBowling(player, frames);
+            playBowling(frames);
         }
     }
 
-    private static void playBowling(Player player, Frames frames) {
+    private static void playBowling(Frames frames) {
         Frame frame = frames.getLast();
         while (frame.isPlayable()) {
             BowlingGame.play(frame, InputView.relaseBowling(frames.size() - ONE));
-            ResultView.printBowlingScore(player, frames);
+            ResultView.printBowlingScore(frames);
         }
     }
 }

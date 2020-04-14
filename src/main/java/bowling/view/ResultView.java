@@ -21,8 +21,9 @@ public class ResultView {
         System.out.println(String.format(DEFAULT_SCORE_FRAME, player.getName()));
     }
 
-    public static void printBowlingScore(Player player, Frames frames) {
+    public static void printBowlingScore(Frames frames) {
         System.out.println(BOWLING_FRAME);
+        Player player = frames.getPlayer();
 
         StringBuilder result = new StringBuilder(FRAME_LINE);
         result.append(String.format(NAME_FORMAT, player.getName()));

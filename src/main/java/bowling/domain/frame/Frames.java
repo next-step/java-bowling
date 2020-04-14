@@ -32,26 +32,6 @@ public class Frames {
         frames.add(frame);
     }
 
-    public Frame getLast() {
-        return frames.get(lastIndex());
-    }
-
-    private int lastIndex() {
-        return frames.size() - ONE;
-    }
-
-    public boolean isOver() {
-        return frames.size() == BOWLING_FRAME_SIZE;
-    }
-
-    public int size() {
-        return frames.size();
-    }
-
-    public List<Frame> getFrames() {
-        return frames;
-    }
-
     public void nextFrame() {
         if (isFrist()) {
             frames.add(DefaultFrame.first());
@@ -72,5 +52,29 @@ public class Frames {
 
     private boolean isFrist() {
         return frames.size() == ZERO;
+    }
+
+    public Frame getLast() {
+        return frames.get(lastIndex());
+    }
+
+    private int lastIndex() {
+        return frames.size() - ONE;
+    }
+
+    public boolean isOver() {
+        return frames.size() == BOWLING_FRAME_SIZE;
+    }
+
+    public int size() {
+        return frames.size();
+    }
+
+    public List<Frame> getFrames() {
+        return frames;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
