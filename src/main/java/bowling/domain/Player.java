@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Player {
+    private static final int TOTAL_FRAME = 10;
     private static final int LIMIT_OF_LENGTH = 3;
     private String name;
     private Frames frames;
@@ -33,8 +34,12 @@ public class Player {
         frames.addNormalFrame(normalFrame);
     }
 
+    public void addFrame(FinalFrame finalFrame) {
+        frames.addFinalFrame(finalFrame);
+    }
+
     public void addNormalFrame(int numberOfPin) {
-        frame.addNormalFrame(numberOfPin);
+        frame.addFrame(numberOfPin, currentFrame());
         if (!isEndNormalFrame() && frame.isNextFrame()) {
             NormalFrame normalFrame = new NormalFrame(frame);
             addFrame(normalFrame);
@@ -43,7 +48,7 @@ public class Player {
     }
 
     public void addFinalFrame(int numberOfPin) {
-        frame.addFinalFrame(numberOfPin);
+        frame.addFrame(numberOfPin, currentFrame());
         FinalFrame finalFrame = new FinalFrame(frame);
         addFrame(finalFrame);
     }
@@ -53,15 +58,11 @@ public class Player {
     }
 
     public boolean isEndNormalFrame() {
-        return frames.isEndNormalFrame();
+        return currentFrame() == TOTAL_FRAME;
     }
 
     public boolean isEndFinalFrame() {
         return frames.isEndFinalFrame();
-    }
-
-    public void addFrame(FinalFrame finalFrame) {
-        frames.addFinalFrame(finalFrame);
     }
 
     @Override

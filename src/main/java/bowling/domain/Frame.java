@@ -1,6 +1,7 @@
 package bowling.domain;
 
 public class Frame {
+    private static final int TOTAL_FRAME = 10;
     private Scores scores;
 
     public Scores getScores() {
@@ -27,13 +28,13 @@ public class Frame {
         this.scores.add(score);
     }
 
-    public void addNormalFrame(int numberOfPin) {
-        this.scores.checkBeforeAddNormal(numberOfPin);
-        this.scores.add(new Score(numberOfPin));
-    }
-
-    public void addFinalFrame(int numberOfPin) {
-        this.scores.checkBeforeAddFinal(numberOfPin);
+    public void addFrame(int numberOfPin, int currentFrame) {
+        if (currentFrame < TOTAL_FRAME) {
+            this.scores.checkBeforeAddNormal(numberOfPin);
+        }
+        if (currentFrame == TOTAL_FRAME) {
+            this.scores.checkBeforeAddFinal(numberOfPin);
+        }
         this.scores.add(new Score(numberOfPin));
     }
 

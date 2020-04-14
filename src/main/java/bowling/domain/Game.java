@@ -16,10 +16,6 @@ public class Game {
             player.addFinalFrame(numberOfPin);
             return;
         }
-        playNormal(numberOfPin);
-    }
-
-    private void playNormal(int numberOfPin) {
         player.addNormalFrame(numberOfPin);
     }
 

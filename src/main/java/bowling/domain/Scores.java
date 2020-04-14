@@ -9,7 +9,6 @@ public class Scores {
     private static final int FINAL_MAX_SCORE = 20;
     private static final int NORMAL_TRY_NUMBER = 2;
     private static final int FINAL_TRY_NUMBER = 3;
-    private static final int ZERO = 0;
     private List<Score> scores;
     private List<String> signs = new ArrayList<>();
 
