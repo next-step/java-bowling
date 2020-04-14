@@ -3,6 +3,8 @@ package bowling.domain;
 import bowling.domain.turn.TurnState;
 import bowling.exception.BowlingException;
 
+import java.util.Objects;
+
 public class Pins {
 
     private static final String PINS_COUNT_RANGE = "핀은 0~10 사이여야 합니다.";
@@ -35,11 +37,28 @@ public class Pins {
         return current.addScore(pinScore);
     }
 
+    public Score getScore() {
+        return new Score(getDownPin());
+    }
+
     public Result getResultState(TurnState turnState) {
         return Result.getResultState(turnState, pins);
     }
 
     private int getDownPin() {
         return MAX_PIN - this.pins;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pins pins1 = (Pins) o;
+        return pins == pins1.pins;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pins);
     }
 }

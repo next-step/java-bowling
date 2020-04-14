@@ -51,7 +51,21 @@ class PinsTest {
 
     @DisplayName("넘어뜨린 핀만큼 점수를 계산한다.")
     @Test
-    public void getScore_success() throws Exception {
+    public void getScore_success_current() throws Exception {
+        //given
+        Pins pins = Pins.from();
+
+        //when
+        pins = pins.bowl(5);
+        Score score = pins.getScore();
+
+        //then
+        assertThat(score).isEqualTo(new Score(5));
+    }
+
+    @DisplayName("이전 점수와 더하여 넘어뜨린 핀만큼 점수를 계산한다.")
+    @Test
+    public void getScore_success_sum() throws Exception {
         //given
         Pins pins = Pins.from();
 
