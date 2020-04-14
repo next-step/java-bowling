@@ -13,7 +13,7 @@ public class Scores {
     private static final String STRIKE_SIGN = "X";
     private static final String SPARE_SIGN = "/";
     private static final String GUTTER_SIGN = "-";
-    private List<Score> scores = new ArrayList<>();
+    private List<Score> scores;
     private List<String> signs = new ArrayList<>();
 
 

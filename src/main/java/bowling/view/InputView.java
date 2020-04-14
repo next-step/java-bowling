@@ -14,7 +14,7 @@ public class InputView {
     }
 
     public int askNumberOfPin(int currentFrame){
-        System.out.print(currentFrame + PIN_QUESTION);
+        System.out.println(currentFrame + PIN_QUESTION);
         scanner = new Scanner(System.in);
         return scanner.nextInt();
     }

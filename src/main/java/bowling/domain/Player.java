@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Player {
-    private String name = "";
+    private static final int LIMIT_OF_LENGTH = 3;
+    private String name;
     private Frames frames;
 
     public String getName() {
@@ -18,7 +19,7 @@ public class Player {
     }
 
     public void checkLetter(String name) {
-        if (name.length() > 3) {
+        if (name.length() > LIMIT_OF_LENGTH) {
             throw new IllegalArgumentException("3글자까지만 입력가능합니다.");
         }
     }
