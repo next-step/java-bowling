@@ -1,23 +1,19 @@
 package bowling.dto;
 
-import bowling.domain.NormalFrame;
-
-import java.util.List;
-
 public class PlayerDto {
     private final String name;
-    private final List<NormalFrame> frames;
+    private final FramesDto frames;
 
-    public PlayerDto(String name, List<NormalFrame> frames) {
+    public PlayerDto(String name, FramesDto framesDto) {
         this.name = name;
-        this.frames = frames;
+        this.frames = framesDto;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<NormalFrame> getFrames() {
+    public FramesDto getFrames() {
         return frames;
     }
 }

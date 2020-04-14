@@ -1,8 +1,11 @@
 package bowling.domain;
 
+import bowling.dto.FrameDto;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NormalFrame {
     private static final int SHOT_LIMIT = 2;
@@ -34,13 +37,15 @@ public class NormalFrame {
         shotScores.add(shotScores.get(0).next(shot));
     }
 
-    boolean isFrameClosed(){
-        return shotScores.size() == SHOT_LIMIT || shotScores.stream()
-                .map(ShotScore::getScoreType)
-                .anyMatch(ScoreType.STRIKE::equals);
+    boolean isFrameClosed() {
+        return shotScores.size() == SHOT_LIMIT ||
+                shotScores.stream()
+                        .anyMatch(ShotScore::isStrike);
     }
 
-    public List<ShotScore> getShotScores() {
-        return shotScores;
+    public FrameDto getDto() {
+        return new FrameDto(shotScores.stream()
+                .map(ShotScore::getDto)
+                .collect(Collectors.toList()));
     }
 }

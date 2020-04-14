@@ -20,11 +20,11 @@ class NormalFrameTest {
     void shot() {
         NormalFrame normalFrame = NormalFrame.init();
         normalFrame.shot(4);
-        assertThat(normalFrame.getShotScores())
+        assertThat(normalFrame.getDto())
                 .contains(ShotScore.of(4));
 
         normalFrame.shot(6);
-        assertThat(normalFrame.getShotScores())
+        assertThat(normalFrame.getDto())
                 .contains(ShotScore.of(4).next(6));
 
         assertThatThrownBy(() -> normalFrame.shot(5))

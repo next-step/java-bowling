@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.dto.ShotScoreDto;
+
 import java.util.Objects;
 
 public class ShotScore {
@@ -43,12 +45,12 @@ public class ShotScore {
         return of(nextScore);
     }
 
-    int getScore() {
-        return score;
+    boolean isStrike(){
+        return ScoreType.STRIKE.equals(scoreType);
     }
 
-    ScoreType getScoreType() {
-        return scoreType;
+    public ShotScoreDto getDto() {
+        return new ShotScoreDto(scoreType, score);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package bowling.domain;
 
+import bowling.dto.FramesDto;
 import bowling.dto.PlayerDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Player {
     private final String name;
@@ -35,7 +37,10 @@ public class Player {
             frames.add(NormalFrame.init());
         }
         frames.get(frames.size() - 1).shot(shot);
-        return new PlayerDto(name, frames);
+        return new PlayerDto(name,
+                new FramesDto(frames.stream()
+                        .map(NormalFrame::getDto)
+                        .collect(Collectors.toList())));
     }
 
     private boolean isCurrentFrameDone() {
