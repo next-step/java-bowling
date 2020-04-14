@@ -42,34 +42,39 @@ public class FinalFrame<state> implements Frame {
         return FINAL_FRAME_NO;
     }
 
-    /**
-     * 첫번째 시도라면 firstState가 모두 null이다.
-     * 두번째 시도라면 secondState만 null이다.
-     * 세번째 시도라면 두 값 모두 not null이다.
-     */
     @Override
     public boolean isEndedFrame() {
-        if(stateHistoryCount() == 1) {
-            if(state instanceof Strike) {
-                return false;
-            }
-            return state.isEndedState();
+        if(getBowledCount() == 1) {
+            return isEndedFrameBowledOnce();
         }
-        if(stateHistoryCount() == 2) {
-            State firstState = stateHistory.get(0);
-            if(firstState instanceof Strike) {
-                return false;
-            }
-            if(state instanceof Spare) {
-                return false;
-            }
-            return true;
+        if(getBowledCount() == 2) {
+            return isEndedFrameBowledTwice();
         }
         return state.isEndedState();
     }
 
-    private int stateHistoryCount() {
+    private int getBowledCount() {
         return stateHistory.size();
+    }
+
+    private boolean isEndedFrameBowledOnce() {
+        if(state instanceof Strike) {
+            return false;
+        }
+        return state.isEndedState();
+    }
+
+    private boolean isEndedFrameBowledTwice() {
+        State firstState = stateHistory.get(0);
+
+        if(firstState instanceof Strike) {
+            return false;
+        }
+
+        if(state instanceof Spare) {
+            return false;
+        }
+        return true;
     }
 
     @Override
