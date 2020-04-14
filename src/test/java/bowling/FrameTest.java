@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.point.Ordinal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +11,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.IntStream;
 
+import static bowling.domain.point.Ordinal.FIRST;
+import static bowling.domain.point.Ordinal.SECOND;
 import static org.assertj.core.api.Assertions.*;
 
 public class FrameTest {
@@ -101,5 +104,21 @@ public class FrameTest {
 
         //then
         assertThat(tenthFrame.getPoints().getPointSize()).isEqualTo(3);
+    }
+
+    @DisplayName("프레임의 Points와 몇 번째 프레임인지 인자로 주면, point를 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"10:0", "9:1", "7:2", "0:0"}, delimiter = ':')
+    void returnPointWhenPointsAndOrdinalAreProvided(int firstPoint, int secondPoint){
+        //given
+        Frame frame = new Frame (1, firstPoint, secondPoint);
+
+        //when
+        int first = frame.getPointAtOrdinal(FIRST);
+        int second = frame.getPointAtOrdinal(SECOND);
+
+        //then
+        assertThat(first).isEqualTo(firstPoint);
+        assertThat(second).isEqualTo(secondPoint);
     }
 }
