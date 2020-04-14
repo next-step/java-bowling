@@ -61,5 +61,4 @@ public class Player {
             throw new IllegalArgumentException(PLAYER_NAME_ERROR);
         }
     }
-
 }

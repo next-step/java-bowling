@@ -26,4 +26,9 @@ public class Gutter implements State {
     public String getString() {
         return TEXT;
     }
+
+    @Override
+    public boolean canAdditionalFrame() {
+        return false;
+    }
 }

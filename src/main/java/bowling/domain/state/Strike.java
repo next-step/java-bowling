@@ -19,4 +19,9 @@ public class Strike implements State {
     public String getString() {
         return TEXT;
     }
+
+    @Override
+    public boolean canAdditionalFrame() {
+        return true;
+    }
 }

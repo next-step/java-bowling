@@ -143,6 +143,8 @@ https://www.bowlinggenius.com/ 참고
 * FinalFrame: Frame 을 구현하는 Concrete 클래스  
     * 10 프레임을 가진다.  
     * 3개의 처리는 어떻게 하면 좋을지 고민 필요 
+* AdditionalFrame: FinalFrame에서 Spare나 Strike가 나올 경우 생성된다.  
+    * 
 * FrameResult: 각 Frame 의 결과를 가진다.  
 * Board: 점수판 객체  
     * FrameResult를 통해 점수판을 만든다.     

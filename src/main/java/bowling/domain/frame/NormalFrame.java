@@ -17,7 +17,7 @@ public class NormalFrame implements Frame {
     private State state;
     private final List<State> stateHistory = new ArrayList<>();
 
-    public NormalFrame(int frameNumber, State state) {
+    private NormalFrame(int frameNumber, State state) {
         assertFrameNo(frameNumber);
         this.frameNumber = frameNumber;
         this.state = state;

@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.frame.AdditionalFrame;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
@@ -70,6 +71,23 @@ public class FrameTest {
         Frame frame = NormalFrame.create(9);
 
         assertThat(frame.getNext()).isInstanceOf(FinalFrame.class);
+    }
+
+    @Test
+    @DisplayName("마지막 프레임(FinalFrame)에서 Spare가 나오면 다음 프레임으로 AdditionalFrame이 생성되어야 한다.")
+    void getNextFinalFrameSpare() {
+        Frame frame = FinalFrame.create();
+        frame.play(1);
+        frame.play(9);
+        assertThat(frame.getNext()).isInstanceOf(AdditionalFrame.class);
+    }
+
+    @Test
+    @DisplayName("마지막 프레임(FinalFrame)에서 Spare가 나오면 다음 프레임으로 AdditionalFrame이 생성되어야 한다.")
+    void getNextFinalFrameStrike() {
+        Frame frame = FinalFrame.create();
+        frame.play(10);
+        assertThat(frame.getNext()).isInstanceOf(AdditionalFrame.class);
     }
 
     @Test

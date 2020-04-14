@@ -8,20 +8,21 @@ import java.util.List;
 
 import static bowling.Constants.*;
 
-public class FinalFrame implements Frame {
-    private static final int FINAL_FRAME_NO = 10;
+public class AdditionalFrame implements Frame {
+    private static final int ADDITIONAL_FRAME_NO = 11;
 
     private State state;
     private final List<State> stateHistory = new ArrayList<>();
 
-    private FinalFrame(State state) {
+    private AdditionalFrame(State state) {
         this.state = state;
     }
 
     public static Frame create() {
-        return new FinalFrame(new Ready());
+        return new AdditionalFrame(new Ready());
     }
 
+    @Override
     public void play(int felledPin) {
         assertFelledPin(felledPin);
         state = state.play(felledPin);
@@ -35,27 +36,22 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame getNext() {
-        if(isEndedFrame() && getState().canAdditionalFrame()) {
-            Frame additionalFrame = AdditionalFrame.create();
-
-            return additionalFrame;
-        }
         return null;
     }
 
     @Override
     public int getFrameNumber() {
-        return FINAL_FRAME_NO;
+        return ADDITIONAL_FRAME_NO;
     }
 
     @Override
     public boolean isEndedFrame() {
-        return state.isEndedState();
+        return true;
     }
 
     @Override
     public boolean isLastFrame() {
-        return state.isEndedState() && !getState().canAdditionalFrame();
+        return !(getState() instanceof  Ready);
     }
 
     @Override

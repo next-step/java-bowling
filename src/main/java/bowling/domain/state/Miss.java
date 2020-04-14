@@ -4,11 +4,11 @@ public class Miss implements State {
     public static final String MISS_CAN_NOT_PLAY_ERROR = "Miss 상태입니다. 프레임이 종료되어 플레이할 수 없습니다.";
 
     private int lastPlayPoint;
-    private int currntPlayPoint;
+    private int currentPlayPoint;
 
     public Miss(int felledPin, int newFelledPin) {
         this.lastPlayPoint = felledPin;
-        this.currntPlayPoint = newFelledPin;
+        this.currentPlayPoint = newFelledPin;
     }
 
     @Override
@@ -23,6 +23,11 @@ public class Miss implements State {
 
     @Override
     public String getString() {
-        return currntPlayPoint == 0 ? Gutter.TEXT : String.valueOf(currntPlayPoint);
+        return currentPlayPoint == 0 ? Gutter.TEXT : String.valueOf(currentPlayPoint);
+    }
+
+    @Override
+    public boolean canAdditionalFrame() {
+        return false;
     }
 }

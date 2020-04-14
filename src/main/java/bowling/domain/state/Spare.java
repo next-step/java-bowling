@@ -27,4 +27,9 @@ public class Spare implements State {
     public String getString() {
         return TEXT;
     }
+
+    @Override
+    public boolean canAdditionalFrame() {
+        return true;
+    }
 }

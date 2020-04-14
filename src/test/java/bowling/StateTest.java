@@ -53,4 +53,6 @@ public class StateTest {
             new Playing(8).play(10);
         }).withMessage(WRONG_FELLED_PIN);
     }
+
+
 }
