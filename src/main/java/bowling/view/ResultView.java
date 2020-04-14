@@ -14,7 +14,7 @@ public class ResultView {
     private static final String NAME_FORMAT = "  %s |";
     private static final String MULTI_SCORE_FORMAT = "  %s |";
     private static final String SINGLE_SCORE_FORMAT = "  %s   |";
-    private static final String BLANK_FRMAE_FORMAT = "      |";
+    private static final String BLANK_FRAME_FORMAT = "      |";
 
     public static void printBowlingFrame(Player player) {
         System.out.println(BOWLING_FRAME);
@@ -48,8 +48,8 @@ public class ResultView {
     }
 
     private static void addBlankFrame(Frames frames, StringBuilder result) {
-        for (int i = 0; i < 10 - frames.size(); i++) {
-            result.append(BLANK_FRMAE_FORMAT);
+        for (int i = 0, frameSize = frames.size(); i < 10 - frameSize; i++) {
+            result.append(BLANK_FRAME_FORMAT);
         }
     }
 }
