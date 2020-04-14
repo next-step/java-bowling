@@ -10,6 +10,7 @@ import java.util.List;
 
 import static bowling.Messages.WARNING_FRAME_NOT_ALLOWED_SECOND_WHEN_STRIKE;
 import static bowling.Messages.WARNING_FRAME_NOT_ALLOWED_SUM;
+import static bowling.domain.frame.FrameResult.*;
 
 public class Frame {
     private static final RandomGenerator RANDOM_GENERATOR = new RandomGenerator();
@@ -67,27 +68,11 @@ public class Frame {
     }
 
     public boolean isGutterOrMiss() {
-        return (isMiss() || isGutter());
+        return (isResult(MISS) || isResult(GUTTER));
     }
 
     public boolean isResult(FrameResult frameResult){
         return frameResult.equals(points.findResult());
-    }
-
-    public boolean isStrike() {
-        return FrameResult.STRIKE.equals(points.findResult());
-    }
-
-    public boolean isSpare() {
-        return FrameResult.SPARE.equals(points.findResult());
-    }
-
-    public boolean isMiss() {
-        return FrameResult.MISS.equals(points.findResult());
-    }
-
-    public boolean isGutter() {
-        return FrameResult.GUTTER.equals(points.findResult());
     }
 
     public int getPointAtOrdinal(Ordinal ordinal) {
@@ -127,11 +112,11 @@ public class Frame {
     }
 
     private boolean doesNeedOneMorePoint() {
-        return (isFinalFrame() && isSpare());
+        return (isFinalFrame() && isResult(SPARE));
     }
 
     private boolean doesNeedTwoMorePoint() {
-        return (isFinalFrame() && isStrike());
+        return (isFinalFrame() && isResult(STRIKE));
     }
 
     private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {

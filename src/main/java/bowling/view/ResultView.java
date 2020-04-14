@@ -2,11 +2,13 @@ package bowling.view;
 
 import bowling.domain.PlayerName;
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.FrameResult;
 import bowling.domain.frame.Frames;
 import bowling.domain.point.Ordinal;
 
 import java.util.stream.IntStream;
 
+import static bowling.domain.frame.FrameResult.*;
 import static bowling.domain.point.Ordinal.*;
 
 public class ResultView {
@@ -39,13 +41,13 @@ public class ResultView {
     }
 
     private static void printFrameResultSoFar(PlayerName playerName, Frames frames, Frame frame) {
-        if (frame.isStrike()) {
+        if (frame.isResult(STRIKE)) {
             printFrameResultWhen(FIRST, playerName, frames, frame);
             printFrameResultWhen(THIRD, playerName, frames, frame);
             printFrameResultWhen(FOURTH, playerName, frames, frame);
         }
 
-        if (!frame.isStrike()) {
+        if (!frame.isResult(STRIKE)) {
             printFrameResultWhen(FIRST, playerName, frames, frame);
             printFrameResultWhen(SECOND, playerName, frames, frame);
             printFrameResultWhen(THIRD, playerName, frames, frame);
@@ -79,19 +81,19 @@ public class ResultView {
     private static void printFrameScoreSoFar(Frames frames, Frame frame, Ordinal ordinal) {
         printName(BLANK_THREE);
 
-        if (!frames.getPreviousFrame(frame).isStrike() && !frame.isFirstFrame()) {
+        if (!frames.getPreviousFrame(frame).isResult(STRIKE) && !frame.isFirstFrame()) {
             frames.getFrames()
                     .subList(0, frame.getFrameId() + OFFSET)
                     .forEach(frame1 -> printFrameScore(frames, frame1));
         }
 
-        if (frames.getPreviousFrame(frame).isStrike() && FIRST.equals(ordinal)) {
+        if (frames.getPreviousFrame(frame).isResult(STRIKE) && FIRST.equals(ordinal)) {
             frames.getFrames()
                     .subList(0, frame.getFrameId() + (OFFSET_DOUBLE))
                     .forEach(frame1 -> printFrameScore(frames, frame1));
         }
 
-        if (frames.getPreviousFrame(frame).isStrike() && !FIRST.equals(ordinal)) {
+        if (frames.getPreviousFrame(frame).isResult(STRIKE) && !FIRST.equals(ordinal)) {
             frames.getFrames()
                     .subList(0, frame.getFrameId() + OFFSET)
                     .forEach(frame1 -> printFrameScore(frames, frame1));
@@ -122,7 +124,7 @@ public class ResultView {
     }
 
     private static void printNormalFrameScore(Frames frames, Frame frame, Ordinal ordinal) {
-        if (frame.isStrike() || frame.isSpare() || FIRST.equals(ordinal)) {
+        if (frame.isResult(STRIKE) || frame.isResult(SPARE) || FIRST.equals(ordinal)) {
             print(BLANK_THREE);
         }
 
@@ -131,7 +133,7 @@ public class ResultView {
             print(BLANK_ONE);
         }
 
-        if (SECOND.equals(ordinal) && frame.isFirstFrame() && !frame.isSpare()) {
+        if (SECOND.equals(ordinal) && frame.isFirstFrame() && !frame.isResult(SPARE)) {
             print(BLANK_SIX);
             print(BLOCK_BORDER);
             print(BLANK_FOUR);
@@ -149,11 +151,11 @@ public class ResultView {
             print(frames.getTotalPointUntil(frame));
         }
 
-        if ((THIRD.equals(ordinal) && frame.isSpare())) {
+        if ((THIRD.equals(ordinal) && frame.isResult(SPARE))) {
             print(frames.getTotalPointUntil(frame));
         }
 
-        if (FOURTH.equals(ordinal) && frame.isStrike()) {
+        if (FOURTH.equals(ordinal) && frame.isResult(STRIKE)) {
             print(frames.getTotalPointUntil(frame));
         }
     }
@@ -173,37 +175,37 @@ public class ResultView {
     }
 
     private static void printFrame(Frame frame) {
-        if (frame.isStrike()) {
+        if (frame.isResult(STRIKE)) {
             printStrikeByOrdinal(frame, FIRST);
         }
 
-        if (frame.isSpare()) {
+        if (frame.isResult(SPARE)) {
             printSpareByOrdinal(frame, SECOND);
         }
 
-        if (frame.isMiss()) {
+        if (frame.isResult(MISS)) {
             printMissByOrdinal(frame, SECOND);
         }
 
-        if (frame.isGutter()) {
+        if (frame.isResult(GUTTER)) {
             printGutter();
         }
     }
 
     private static void printFrameByOrdinal(Frame frame, Ordinal ordinal) {
-        if (frame.isStrike()) {
+        if (frame.isResult(STRIKE)) {
             printStrikeByOrdinal(frame, ordinal);
         }
 
-        if (frame.isSpare()) {
+        if (frame.isResult(SPARE)) {
             printSpareByOrdinal(frame, ordinal);
         }
 
-        if (frame.isMiss()) {
+        if (frame.isResult(MISS)) {
             printMissByOrdinal(frame, ordinal);
         }
 
-        if (frame.isGutter()) {
+        if (frame.isResult(GUTTER)) {
             printGutter();
         }
     }

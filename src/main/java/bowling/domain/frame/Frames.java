@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static bowling.domain.frame.FrameResult.SPARE;
+import static bowling.domain.frame.FrameResult.STRIKE;
+
 public class Frames {
     private static final int FIRST_FRAME_ID = 1;
     private static final int MAX_POINT = 10;
@@ -35,11 +38,11 @@ public class Frames {
             return frame.getPointSumOnlyThisFrame();
         }
 
-        if (frame.isStrike()) {
+        if (frame.isResult(STRIKE)) {
             return findFrameScoreWhenStrike(frame);
         }
 
-        if (frame.isSpare()) {
+        if (frame.isResult(SPARE)) {
             int firstPointOfNextFrame = getNextFrameByCurrentId(frameId).getFirstPoint();
             return (frame.getPointSumOnlyThisFrame() + firstPointOfNextFrame);
         }
@@ -68,7 +71,7 @@ public class Frames {
     private int findFrameScoreWhenStrike(Frame currentFrame) {
         Frame nextFrame = getNextFrameByCurrentId(currentFrame.getFrameId());
 
-        if (nextFrame.isStrike()) {
+        if (nextFrame.isResult(STRIKE)) {
             return findFrameScoreWhenCurrentAndNextAreStrike(currentFrame);
         }
 
