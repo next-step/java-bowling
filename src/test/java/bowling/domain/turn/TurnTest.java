@@ -14,7 +14,7 @@ class TurnTest {
     public void from_success() throws Exception {
         //given
         Turn init = Turn.from(3);
-        Turn expect = new Turn(new Score(3), new Pins(7), TurnState.FIRST);
+        Turn expect = new Turn(new Score(3), new Pins(7));
 
         //then
         assertTrue(init.equals(expect));
@@ -26,7 +26,7 @@ class TurnTest {
     public void bowl_success() throws Exception {
         //given
         Turn init = Turn.from(3);
-        Turn expect = new Turn(new Score(6), new Pins(4), TurnState.SECOND);
+        Turn expect = new Turn(new Score(6), new Pins(4));
 
         //when
         init = init.bowl(3);

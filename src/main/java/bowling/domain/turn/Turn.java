@@ -9,27 +9,24 @@ public class Turn {
 
     private final Score score;
     private final Pins pins;
-    private final TurnState turnState;
 
-    public Turn(final Score score, final Pins pins, final TurnState turnState) {
+    public Turn(final Score score, final Pins pins) {
         this.score = score;
         this.pins = pins;
-        this.turnState = turnState;
     }
 
     public static Turn from(final int pinCount) {
         Pins pin = Pins.from()
                 .bowl(pinCount);
 
-        return new Turn(pin.getScore(), pin, TurnState.FIRST);
+        return new Turn(pin.getScore(), pin);
     }
 
     public Turn bowl(final int pinCount) {
         Pins pin = pins.bowl(pinCount);
         Score score = pin.getScore();
-        TurnState nextTurnState = turnState.getNextTurnState();
 
-        return new Turn(score, pin, nextTurnState);
+        return new Turn(score, pin);
     }
 
     @Override
@@ -38,12 +35,11 @@ public class Turn {
         if (o == null || getClass() != o.getClass()) return false;
         Turn turn = (Turn) o;
         return Objects.equals(score, turn.score) &&
-                Objects.equals(pins, turn.pins) &&
-                turnState == turn.turnState;
+                Objects.equals(pins, turn.pins);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, pins, turnState);
+        return Objects.hash(score, pins);
     }
 }
