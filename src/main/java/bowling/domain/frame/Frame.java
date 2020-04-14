@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.RandomGenerator;
 import bowling.domain.point.Ordinal;
-import bowling.domain.point.Point;
 import bowling.domain.point.Points;
 
 import java.util.ArrayList;
@@ -25,14 +24,10 @@ public class Frame {
     private int frameId;
     private Points points;
 
-    public Frame(int prevFrameId, int firstPoint, int secondPoint) {
-        validateSecondWhenFirstTen(firstPoint, secondPoint);
-        validateSumIsLessThanTen(firstPoint, secondPoint);
-        points = Points.of(firstPoint, secondPoint);
+    public Frame(int prevFrameId, int first, int second) {
+        validate(first, second);
         this.frameId = prevFrameId + INCREMENT_FOR_NEXT_ID;
-
-        addPointForSpare();
-        addPointsForStrike();
+        points = Points.of(first, second, needOnePoint(first, second), needTwoPoints(first, second));
     }
 
     public static Frame create() {
@@ -71,7 +66,7 @@ public class Frame {
         return (isResult(MISS) || isResult(GUTTER));
     }
 
-    public boolean isResult(FrameResult frameResult){
+    public boolean isResult(FrameResult frameResult) {
         return frameResult.equals(points.findResult());
     }
 
@@ -111,12 +106,17 @@ public class Frame {
         return points.getFourthPoint();
     }
 
-    private boolean doesNeedOneMorePoint() {
-        return (isFinalFrame() && isResult(SPARE));
+    private boolean needOnePoint(int first, int second) {
+        return (isFinalFrame() && SPARE.equals(FrameResult.findResult(first, second)));
     }
 
-    private boolean doesNeedTwoMorePoint() {
-        return (isFinalFrame() && isResult(STRIKE));
+    private boolean needTwoPoints(int first, int second) {
+        return (isFinalFrame() && STRIKE.equals(FrameResult.findResult(first, second)));
+    }
+
+    private void validate(int firstPoint, int secondPoint) {
+        validateSecondWhenFirstTen(firstPoint, secondPoint);
+        validateSumIsLessThanTen(firstPoint, secondPoint);
     }
 
     private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {
@@ -128,19 +128,6 @@ public class Frame {
     private void validateSumIsLessThanTen(int firstPoint, int secondPoint) {
         if (firstPoint + secondPoint > SCORE_TEN) {
             throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SUM);
-        }
-    }
-
-    private void addPointForSpare() {
-        if (doesNeedOneMorePoint()) {
-            points.addThirdPoint(Point.of(RANDOM_GENERATOR.getThirdPoint()));
-        }
-    }
-
-    private void addPointsForStrike() {
-        if (doesNeedTwoMorePoint()) {
-            points.addThirdPointForStrike(Point.of(RANDOM_GENERATOR.getThirdPointForStrike()));
-            points.addFourthPointForStrike(Point.of(RANDOM_GENERATOR.getFourthPointForStrike()));
         }
     }
 }
