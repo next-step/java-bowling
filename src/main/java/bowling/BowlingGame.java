@@ -17,8 +17,10 @@ public class BowlingGame {
         Player player = Player.of(inputView.getPlayer());
         outputView.printFrame(player.getDto());
 
-        player.shot(inputView.getShot(player.getCurrentFrameNumber()));
-        outputView.printFrame(player.getDto());
+        while(!player.isGameSet()) {
+            player.shot(inputView.getShot(player.getCurrentFrameNumber()));
+            outputView.printFrame(player.getDto());
+        }
     }
 
     public static void main(String[] args){
