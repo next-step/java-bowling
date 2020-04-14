@@ -24,4 +24,8 @@ public class Pins {
             throw new BowlingException(PINS_COUNT_RANGE);
         }
     }
+
+    public Pins bowl(final int count) {
+        return new Pins(this.pins - count);
+    }
 }

@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -22,6 +23,27 @@ class PinsTest {
     public void validate_fail(int count) throws Exception {
         assertThatThrownBy(
                 () -> new Pins(count)
+        ).isInstanceOf(BowlingException.class);
+    }
+
+    @DisplayName("주어진 수만큼 핀을 쓰러뜨린다")
+    @Test
+    public void bowl_success() throws Exception {
+        //given
+        Pins pins = new Pins();
+
+        pins = pins.bowl(5);
+    }
+
+    @DisplayName("남은 핀보다 많은 핀을 넘어뜨리려 하면 exception")
+    @Test
+    public void bowl_fail() throws Exception {
+        //given
+        Pins pins = new Pins(5);
+
+        //then
+        assertThatThrownBy(
+                () -> pins.bowl(10)
         ).isInstanceOf(BowlingException.class);
     }
 }
