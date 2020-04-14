@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class PlayerTest {
-
     @Test
     @DisplayName("플레이어의 이름은 3글자여야 한다.")
     void assertPlayerName() {
