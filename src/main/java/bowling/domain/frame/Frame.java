@@ -58,7 +58,7 @@ public class Frame {
             currentFrame = currentFrame.createNextFrame();
         }
 
-        return new Frames(frames);
+        return Frames.of(frames);
     }
 
     public Frame createNextFrame() {
