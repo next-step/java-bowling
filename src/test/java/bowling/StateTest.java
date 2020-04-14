@@ -4,8 +4,8 @@ import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static bowling.Constants.WRONG_FELLED_PIN;
+import static org.assertj.core.api.Assertions.*;
 
 public class StateTest {
     @Test
@@ -44,5 +44,13 @@ public class StateTest {
         assertThatIllegalStateException().isThrownBy(() -> {
             new Miss(3, 4).play(0);
         }).withMessage(Miss.MISS_CAN_NOT_PLAY_ERROR);
+    }
+
+    @Test
+    @DisplayName("프레임의 두번째 투구는 첫번째 투구와 합하여 10 이상이 될 수 없다.")
+    void assertSecondFelledPin() {
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            new Playing(8).play(10);
+        }).withMessage(WRONG_FELLED_PIN);
     }
 }
