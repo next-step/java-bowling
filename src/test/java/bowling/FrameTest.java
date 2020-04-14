@@ -1,6 +1,5 @@
 package bowling;
 
-import bowling.domain.frame.AdditionalFrame;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
@@ -74,23 +73,6 @@ public class FrameTest {
     }
 
     @Test
-    @DisplayName("마지막 프레임(FinalFrame)에서 Spare가 나오면 다음 프레임으로 AdditionalFrame이 생성되어야 한다.")
-    void getNextFinalFrameSpare() {
-        Frame frame = FinalFrame.create();
-        frame.play(1);
-        frame.play(9);
-        assertThat(frame.getNext()).isInstanceOf(AdditionalFrame.class);
-    }
-
-    @Test
-    @DisplayName("마지막 프레임(FinalFrame)에서 Spare가 나오면 다음 프레임으로 AdditionalFrame이 생성되어야 한다.")
-    void getNextFinalFrameStrike() {
-        Frame frame = FinalFrame.create();
-        frame.play(10);
-        assertThat(frame.getNext()).isInstanceOf(AdditionalFrame.class);
-    }
-
-    @Test
     @DisplayName("Strike 했을 시 한번만 투구했어도 새로운 Frame을 생성한다.")
     void playStrike() {
         Frame frame = NormalFrame.create(1);
@@ -111,5 +93,35 @@ public class FrameTest {
 
         Frame nextFrame = frame.getNext();
         assertThat(nextFrame.getFrameNumber()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("마지막 프레임(FinalFrame)의 경우, Spare가 나올 경우 isEndedFrame은 false이다. 후에 1번의 투구를 더 할 수 있다.")
+    void isEndedFrameSpare() {
+        Frame frame = FinalFrame.create();
+
+        frame.play(5);
+        frame.play(5);
+
+        assertThat(frame.isEndedFrame()).isFalse();
+
+        frame.play(10);
+
+        assertThat(frame.isEndedFrame()).isTrue();
+    }
+
+    @Test
+    @DisplayName("마지막 프레임(FinalFrame)의 경우, Strike 나올 경우 isEndedFrame은 false이다. 후에 2번의 투구를 더 할 수 있다.")
+    void isEndedFrameStrike() {
+        Frame frame = FinalFrame.create();
+
+        frame.play(10);
+
+        assertThat(frame.isEndedFrame()).isFalse();
+
+        frame.play(2);
+        frame.play(8);
+
+        assertThat(frame.isEndedFrame()).isTrue();
     }
 }

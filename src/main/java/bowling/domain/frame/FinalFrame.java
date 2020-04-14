@@ -35,11 +35,6 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame getNext() {
-        if(isEndedFrame() && getState().canAdditionalFrame()) {
-            Frame additionalFrame = AdditionalFrame.create();
-
-            return additionalFrame;
-        }
         return null;
     }
 

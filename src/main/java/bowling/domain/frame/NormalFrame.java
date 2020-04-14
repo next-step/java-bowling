@@ -38,7 +38,7 @@ public class NormalFrame implements Frame {
         if(frameNumber == MAX_NORMAL_FRAME_COUNT) {
             return FinalFrame.create();
         }
-        return NormalFrame.create(frameNumber);
+        return NormalFrame.create(frameNumber + 1);
     }
 
     @Override

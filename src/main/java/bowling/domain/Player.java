@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 
@@ -29,15 +30,18 @@ public class Player {
 
         if(!frame.isLastFrame() && frame.isEndedFrame()) {
             Frame nextFrame = frame.getNext();
+            addFrame(nextFrame);
+        }
+    }
 
-            if(frame != null) {
-                frames.add(nextFrame);
-            }
+    private void addFrame(Frame frame) {
+        if(frame != null) {
+            frames.add(frame);
         }
     }
 
     public boolean isEnd() {
-        return frames.size() == MAX_FRAME_NUMBER;
+        return getCurrentFrame().isLastFrame();
     }
 
     public Frame getCurrentFrame() {
