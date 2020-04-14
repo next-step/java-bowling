@@ -7,6 +7,7 @@ public class Player {
     private static final int LIMIT_OF_LENGTH = 3;
     private String name;
     private Frames frames;
+    private Frame frame = new Frame();
 
     public String getName() {
         return name;
@@ -32,17 +33,27 @@ public class Player {
         frames.addNormalFrame(normalFrame);
     }
 
+    public void addNormalFrame(int numberOfPin) {
+        frame.addNormalFrame(numberOfPin);
+        if (!isEndNormalFrame() && frame.isNextFrame()) {
+            NormalFrame normalFrame = new NormalFrame(frame);
+            addFrame(normalFrame);
+            frame = new Frame();
+        }
+    }
+
+    public void addFinalFrame(int numberOfPin) {
+        frame.addFinalFrame(numberOfPin);
+        FinalFrame finalFrame = new FinalFrame(frame);
+        addFrame(finalFrame);
+    }
+
     public boolean isNextFrame() {
         return frames.isNextFrame();
     }
 
     public boolean isEndNormalFrame() {
         return frames.isEndNormalFrame();
-    }
-
-    public boolean isEndFinalFrame(FinalFrame finalFrame) {
-        addFrame(finalFrame);
-        return frames.isEndFinalFrame();
     }
 
     public boolean isEndFinalFrame() {
@@ -62,5 +73,9 @@ public class Player {
         return frames.getNormalFrames().stream()
                 .map(n -> n.getSigns())
                 .collect(Collectors.toList());
+    }
+
+    public Frame getFrame() {
+        return frame;
     }
 }

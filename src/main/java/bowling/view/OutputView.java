@@ -40,7 +40,7 @@ public class OutputView {
         Player player = game.getPlay();
         scores.add(player.getName());
         List<String> values = new ArrayList<>();
-        Frame frame = game.getFrame();
+        Frame frame = player.getFrame();
         values = player.getSigns(); //이전프레임성적
         values = getThisScore(scores, frame, values); //이번던진투구
         printData(scores, values);
