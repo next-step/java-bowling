@@ -9,7 +9,9 @@ public interface Frame {
 
     boolean isPlayable();
 
+    boolean isCalculatableFrame(int frameIndex);
+
     List<Score> getScores();
 
-    String getTotalPoint(int frameIndex);
+    int getTotalPoint(int frameIndex);
 }

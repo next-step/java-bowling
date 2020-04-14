@@ -7,6 +7,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -17,8 +18,8 @@ public class DefaultFrame implements Frame {
     private static final int DEFAULT_PLAY_COUNT = 2;
     private static final int FIRST_PLAY = 0;
 
-    private Scores scores;
-    private List<BonusScore> bonusScores;
+    private final Scores scores;
+    private final List<BonusScore> bonusScores;
 
     private DefaultFrame(List<BonusScore> bonusScores) {
         this.scores = new Scores();
@@ -88,13 +89,43 @@ public class DefaultFrame implements Frame {
     }
 
     @Override
-    public String getTotalPoint(int frameIndex) {
-        int sum = bonusScores.stream()
-                .mapToInt(bonusScore -> bonusScore.getBonusPoint(frameIndex))
-                .sum();
-        if (sum == 0) {
-            return "";
+    public int getTotalPoint(int frameIndex) {
+        BonusScore bonusScore = findBonusScore(frameIndex);
+        int totalPoint = scores.currentPoint();
+        if (!Objects.isNull(bonusScore)) {
+            return bonusScore.totalBonusPoint() + totalPoint;
         }
-        return Integer.toString(sum + scores.currentPoint());
+
+        return totalPoint;
+    }
+
+    @Override
+    public boolean isCalculatableFrame(int frameIndex) {
+        if (isPlayable()) {
+            return false;
+        }
+        BonusScore bonusScore = findBonusScore(frameIndex);
+        if (scores.hasStrikeOrSpare() && Objects.isNull(bonusScore)) {
+            return false;
+        }
+        if (!Objects.isNull(bonusScore) && bonusScore.isAddable()) {
+            return false;
+        }
+        return true;
+    }
+
+    private BonusScore findBonusScore(int frameIndex) {
+        BonusScore findBonusScore = null;
+        for (BonusScore bonusScore : bonusScores) {
+            findBonusScore = getBonusScore(frameIndex, bonusScore);
+        }
+        return findBonusScore;
+    }
+
+    private BonusScore getBonusScore(int frameIndex, BonusScore bonusScore) {
+        if (bonusScore.isEqualFrameIndex(frameIndex)) {
+            return bonusScore;
+        }
+        return null;
     }
 }

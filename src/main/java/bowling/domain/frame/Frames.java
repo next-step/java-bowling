@@ -54,6 +54,17 @@ public class Frames {
         return frames.size() == ZERO;
     }
 
+    public String getFramePoint(int frameIndex) {
+        int totalPoint = 0;
+        for (int i = 0; i < frameIndex + 1; i++) {
+            if (!frames.get(i).isCalculatableFrame(i)) {
+                return "";
+            }
+            totalPoint +=frames.get(i).getTotalPoint(i);
+        }
+        return Integer.toString(totalPoint);
+    }
+
     public Frame getLast() {
         return frames.get(lastIndex());
     }
@@ -70,8 +81,8 @@ public class Frames {
         return frames.size();
     }
 
-    public List<Frame> getFrames() {
-        return frames;
+    public Frame get(int index) {
+        return frames.get(index);
     }
 
     public Player getPlayer() {

@@ -6,6 +6,7 @@ import bowling.domain.score.Scores;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 마지막 프레임을 나타내기 위한 객체
@@ -72,13 +73,17 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public String getTotalPoint(int frameIndex) {
-        int sum = bonusScores.stream()
-                .mapToInt(bonusScore -> bonusScore.getBonusPoint(frameIndex))
-                .sum();
-        if (sum == 0) {
-            return "";
+    public int getTotalPoint(int frameIndex) {
+        int totalPoint = scores.currentPoint();
+
+        return totalPoint;
+    }
+
+    @Override
+    public boolean isCalculatableFrame(int frameIndex) {
+        if (isPlayable()) {
+            return false;
         }
-        return Integer.toString(sum + scores.currentPoint());
+        return true;
     }
 }
