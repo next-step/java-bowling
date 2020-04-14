@@ -12,6 +12,6 @@ public class FrameTest {
         int no = 11;
         assertThatIllegalArgumentException().isThrownBy(() -> {
             new Frame(no);
-        }).withMessage("Frame은 최대 10개까지만 생성됩니다.");
+        }).withMessage(Frame.OVER_FRAME_NO_ERROR);
     }
 }
