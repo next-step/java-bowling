@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TurnsTest {
@@ -26,5 +27,17 @@ class TurnsTest {
 
         //then
         assertTrue(turns.equals(expect));
+    }
+
+    @DisplayName("턴이 2회보다 많을 경우 true, 아니면 false")
+    @Test
+    public void isMoreTwice() throws Exception {
+        //given
+        Turns less = new Turns(Arrays.asList(Turn.from(), Turn.from()));
+        Turns more = new Turns(Arrays.asList(Turn.from(), Turn.from(), Turn.from()));
+
+        //then
+        assertFalse(less.isMoreTwice());
+        assertTrue(more.isMoreTwice());
     }
 }

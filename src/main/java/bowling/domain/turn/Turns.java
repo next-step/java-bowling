@@ -28,6 +28,10 @@ public class Turns {
         return new Turns(merge);
     }
 
+    public boolean isMoreTwice() {
+        return turns.size() > 2;
+    }
+
     private int getLastIndex() {
         return turns.size() - 1;
     }
