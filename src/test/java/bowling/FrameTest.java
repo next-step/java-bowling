@@ -1,12 +1,14 @@
 package bowling;
 
+import bowling.domain.FinalFrame;
 import bowling.domain.Frame;
+import bowling.domain.NormalFrame;
+import bowling.domain.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.text.Normalizer;
-
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class FrameTest {
     @Test
@@ -14,8 +16,8 @@ public class FrameTest {
     void assertNormalFrameNumber() {
         int no = 10;
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            new NomalFrame(no);
-        }).withMessage(NomalFrame.OVER_FRAME_NO_ERROR);
+            new NormalFrame(no);
+        }).withMessage(NormalFrame.OVER_NORMAL_FRAME_NO_ERROR);
     }
 
     @Test
@@ -24,23 +26,23 @@ public class FrameTest {
         int no = 2;
         assertThatIllegalArgumentException().isThrownBy(() -> {
             new FinalFrame(no);
-        }).withMessage(FinalFrame.OVER_FRAME_NO_ERROR);
+        }).withMessage(FinalFrame.OVER_FINAL_FRAME_NO_ERROR);
     }
 
     @Test
     @DisplayName("프레임의 첫 투구 점수는 0이상 10 이하여야 한다.")
-    void assertFirstBowl() {
+    void assertFirstFalledPin() {
         Frame frame = new NormalFrame(1);
         int falledPin = 11;
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
             frame.play(falledPin);
-        }).withMessage("넘어뜨린 핀의 개수가 알맞지 않습니다.");
+        }).withMessage(Frame.WRONG_FALLED_PIN);
     }
 
     @Test
     @DisplayName("프레임의 두번째 투구는 첫번째 투구와 합하여 10 이하여야 한다.")
-    void assertSecondBowl() {
+    void assertSecondFalledPinl() {
         Frame frame = new NormalFrame(1);
         int firstFalledPin = 2;
 
@@ -55,14 +57,14 @@ public class FrameTest {
     @Test
     @DisplayName("Frame 생성시 첫 상태는 Ready 이다.")
     void firstFrameState() {
-        Frame frame = new NomalFrame(1);
+        Frame frame = new NormalFrame(1);
         assertThat(frame.getStatus()).isEqualTo(new Ready());
     }
 
     @Test
     @DisplayName("다음 Frame을 생성한다. 생성된 프레임은 이전 Frame보다 no가 1이 크다 다 ")
     void nextFrame() {
-        Frame frame = new NomalFrame(1);
+        Frame frame = new NormalFrame(1);
         assertThat(frame.nextFrame().getNo()).isEqualTo(2);
     }
 
@@ -70,9 +72,9 @@ public class FrameTest {
     @DisplayName("Strike 했을 시 한번만 투구했어도 새로운 Frame을 생성한다.")
     void playStrike() {
         Frame frame = new NormalFrame(1);
-        Frame secondFrame = frame.play(10);
+        Frame next = frame.play(10);
 
-        assertThat(secondFrame.getNo()).isEqualTo(2);
+        assertThat(next.getNo()).isEqualTo(2);
     }
 
     @Test
@@ -81,8 +83,8 @@ public class FrameTest {
         Frame frame = new NormalFrame(1);
 
         Frame next = frame.play(1);
-        assertThat(secondFrame.getNo()).isEqualTo(1);
-        next = secondFrame.play(0);
-        assertThat(secondFrame.getNo()).isEqualTo(2);
+        assertThat(next.getNo()).isEqualTo(1);
+        next = next.play(0);
+        assertThat(next.getNo()).isEqualTo(2);
     }
 }
