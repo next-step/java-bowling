@@ -13,10 +13,12 @@ class TurnStateTest {
     @Test
     public void getNextTurnState_success() throws Exception {
         //given
+        TurnState ready = TurnState.READY;
         TurnState first = TurnState.FIRST;
         TurnState second = TurnState.SECOND;
 
         //then
+        assertThat(ready.getNextTurnState()).isEqualTo(TurnState.FIRST);
         assertThat(first.getNextTurnState()).isEqualTo(TurnState.SECOND);
         assertThat(second.getNextTurnState()).isEqualTo(TurnState.THIRD);
     }

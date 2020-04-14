@@ -3,11 +3,15 @@ package bowling.domain.turn;
 import bowling.exception.BowlingException;
 
 public enum TurnState {
-    FIRST, SECOND, THIRD;
+    READY, FIRST, SECOND, THIRD;
 
     private static final String NOT_FOUND = "상태를 찾을 수 없습니다.";
 
     public TurnState getNextTurnState() {
+        if (this.equals(TurnState.READY)) {
+            return TurnState.FIRST;
+        }
+
         if (this.equals(TurnState.FIRST)) {
             return TurnState.SECOND;
         }
