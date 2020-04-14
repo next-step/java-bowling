@@ -11,11 +11,16 @@ public class FinalFrame implements Frame {
     private int thirdFalledPin;
     private State state;
 
-    public FinalFrame() {
+    public FinalFrame(State state) {
         this.bowlCount = Constants.ZERO;
         this.firstFalledPin = Constants.ZERO;
         this.secondFalledPin = Constants.ZERO;
         this.thirdFalledPin = Constants.ZERO;
+        this.state = state;
+    }
+
+    public static Frame create() {
+        return new FinalFrame(new Ready());
     }
 
     public void play(int falledPin) {

@@ -10,14 +10,20 @@ public class NormalFrame implements Frame {
     private int bowlCount;
     private int firstFalledPin;         // TODO: State 내에서 관리해보자
     private int secondFalledPin;
+    private State state;
 
-    public NormalFrame(int frameNumber) {
+    public NormalFrame(int frameNumber, State state) {
         assertFrameNo(frameNumber);
         this.frameNumber = frameNumber;
         this.bowlCount = Constants.ZERO;
         this.firstFalledPin = Constants.ZERO;
         this.secondFalledPin = Constants.ZERO;
-}
+        this.state = state;
+    }
+
+    public static Frame create(int frameNumber) {
+        return new NormalFrame(frameNumber, new Ready());
+    }
 
     public void play(int falledPin) {
         assertFalledPin(falledPin);
@@ -35,14 +41,14 @@ public class NormalFrame implements Frame {
     @Override
     public Frame getNext() {
         if(frameNumber == MAX_NORMAL_FRAME_COUNT) {
-            return new FinalFrame();
+            return FinalFrame.create();
         }
-        return new NormalFrame(frameNumber + 1);
+        return NormalFrame.create(frameNumber + 1);
     }
 
     @Override
     public State getStatus() {
-        return null;
+        return state;
     }
 
     @Override
