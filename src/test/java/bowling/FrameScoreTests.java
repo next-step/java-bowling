@@ -45,20 +45,20 @@ public class FrameScoreTests {
     @Test
     public void checkStrikeTest() {
         FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
-        assertTrue(frameScore.isStrike());
+        assertThat(frameScore.getResult()).isEqualTo(FrameScoreResult.STRIKE);
 
         FrameScore frameScore2 = FrameScore.newInstance(Arrays.asList(3, 7));
-        assertFalse(frameScore2.isStrike());
+        assertThat(frameScore2.getResult()).isNotEqualTo(FrameScoreResult.STRIKE);
     }
 
     @DisplayName("FrameScore spare 테스트")
     @Test
     public void checkSpareTest() {
         FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
-        assertFalse(frameScore.isSpare());
+        assertThat(frameScore.getResult()).isNotEqualTo(FrameScoreResult.SPARE);
 
         FrameScore frameScore2 = FrameScore.newInstance(Arrays.asList(3, 7));
-        assertTrue(frameScore2.isSpare());
+        assertThat(frameScore2.getResult()).isEqualTo(FrameScoreResult.SPARE);
     }
 
 }

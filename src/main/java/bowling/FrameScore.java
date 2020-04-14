@@ -5,10 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static bowling.Pins.MAX_PIN_COUNT;
-
 public class FrameScore {
-    private static final int SPARE_CHECK_FRAME_COUNT = 2;
 
     private final List<Score> scores;
 
@@ -40,17 +37,8 @@ public class FrameScore {
         return scores.size() == count;
     }
 
-    public boolean isStrike() {
-        if (scores.size() >= 1) {
-            Score firstScore = scores.get(0);
-            return firstScore.isEqualsTo(MAX_PIN_COUNT);
-        }
-
-        return false;
-    }
-
-    public boolean isSpare() {
-        return isCount(SPARE_CHECK_FRAME_COUNT) && sum() == MAX_PIN_COUNT;
+    public FrameScoreResult getResult() {
+        return FrameScoreResult.of(scores);
     }
 
     public List<Score> getScores() {
