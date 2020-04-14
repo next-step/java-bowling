@@ -31,7 +31,7 @@ class ScoreTest {
     @Test
     public void addScore_success() throws Exception {
         //given
-        Score current = new Score();
+        Score current = Score.from();
         Score added = new Score(5);
 
         //when

@@ -31,7 +31,7 @@ class PinsTest {
     @Test
     public void bowl_success() throws Exception {
         //given
-        Pins pins = new Pins();
+        Pins pins = Pins.from();
 
         pins = pins.bowl(5);
     }
@@ -52,7 +52,7 @@ class PinsTest {
     @Test
     public void getScore_success() throws Exception {
         //given
-        Pins pins = new Pins();
+        Pins pins = Pins.from();
 
         //when
         pins = pins.bowl(5);

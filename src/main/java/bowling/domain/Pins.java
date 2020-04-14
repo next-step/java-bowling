@@ -10,13 +10,13 @@ public class Pins {
 
     private final int pins;
 
-    public Pins() {
-        this(MAX_PIN);
-    }
-
     public Pins(int pins) {
         validatePinesCount(pins);
         this.pins = pins;
+    }
+
+    public static Pins from() {
+        return new Pins(MAX_PIN);
     }
 
     private void validatePinesCount(int pins) {

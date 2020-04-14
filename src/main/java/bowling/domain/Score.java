@@ -12,13 +12,13 @@ public class Score {
 
     private final int score;
 
-    public Score() {
-        this(MIN_SCORE);
-    }
-
     public Score(int score) {
         validateScoreRange(score);
         this.score = score;
+    }
+
+    public static Score from() {
+        return new Score(MIN_SCORE);
     }
 
     private void validateScoreRange(int score) {
