@@ -18,30 +18,43 @@ public class OutputView {
         showState(player.getName(), player.getFrames());
     }
 
+    private void showBoardHeader() {
+        ViewUtils.printLine(BOARD_HEADER);
+    }
+
     private void showState(String name, List<Frame> frames) {
         showPlayerName(name);
 
-        StringBuilder builder = new StringBuilder();
         for(Frame frame : frames) {
-
-            for(State state : frame.getStateHistory()) {
-                builder.append(state.getString());
-
-                if(!state.isEndedState()) {
-                    builder.append(VERTICAL_LINE);
-                }
-            }
-
-            ViewUtils.printLine(appendSpaces(builder.toString(), SPACE_PER_FRAME));
-            ViewUtils.printLine(VERTICAL_LINE);
+            showStateHistory(frame);
         }
     }
-
     private void showPlayerName(String playerName) {
         showVerticalLine();
+
         int spaceCount = SPACE_PER_FRAME - playerName.length();
         ViewUtils.printLine(appendSpaces(playerName, spaceCount));
+
         showVerticalLine();
+    }
+
+    private void showStateHistory(Frame frame) {
+        StringBuilder builder = new StringBuilder();
+
+        for(State state : frame.getStateHistory()) {
+            appendStateContent(builder, state);
+        }
+
+        ViewUtils.printLine(appendSpaces(builder.toString(), SPACE_PER_FRAME));
+        ViewUtils.printLine(VERTICAL_LINE);
+    }
+
+    private void appendStateContent(StringBuilder builder, State state) {
+        builder.append(state.getString());
+
+        if(!state.isEndedState()) {
+            builder.append(VERTICAL_LINE);
+        }
     }
 
     private String appendSpaces(String content, int spaceCount) {
@@ -56,9 +69,5 @@ public class OutputView {
 
     private void showVerticalLine() {
         ViewUtils.printLine(VERTICAL_LINE);
-    }
-
-    private void showBoardHeader() {
-        ViewUtils.printLine(BOARD_HEADER);
     }
 }

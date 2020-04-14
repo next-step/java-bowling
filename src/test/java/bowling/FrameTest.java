@@ -52,8 +52,8 @@ public class FrameTest {
         Frame normalFrame = NormalFrame.create(1);
         Frame finalFrame = FinalFrame.create();
 
-        assertThat(normalFrame.getStatus()).isInstanceOf(Ready.class);
-        assertThat(finalFrame.getStatus()).isInstanceOf(Ready.class);
+        assertThat(normalFrame.getState()).isInstanceOf(Ready.class);
+        assertThat(finalFrame.getState()).isInstanceOf(Ready.class);
     }
 
     @Test
