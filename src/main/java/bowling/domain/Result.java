@@ -4,7 +4,7 @@ import bowling.exception.BowlingException;
 
 import java.util.function.Function;
 
-public enum State {
+public enum Result {
 
     READY((count) -> count),
     STRIKE((count) -> "X"),
@@ -16,7 +16,7 @@ public enum State {
 
     private Function<Integer, String> showStateDisplay;
 
-    State(Function showStateDisplay) {
+    Result(Function showStateDisplay) {
         this.showStateDisplay = showStateDisplay;
     }
 
@@ -24,22 +24,22 @@ public enum State {
         return String.valueOf(showStateDisplay.apply(count));
     }
 
-    public static State checkStatue(Tern tern, int pinCount) {
+    public static Result checkStatue(Tern tern, int pinCount) {
         if (tern == Tern.FIRST && pinCount == 0) {
-            return State.STRIKE;
+            return Result.STRIKE;
         }
 
         if (tern == Tern.SECOND && pinCount == 0) {
-            return State.SPARE;
+            return Result.SPARE;
         }
 
         if (tern == Tern.SECOND && pinCount == 10) {
-            return State.GUTTER;
+            return Result.GUTTER;
         }
 
         if ((tern == Tern.FIRST || tern == Tern.SECOND)
                 && (pinCount < 10 && pinCount > 0)) {
-            return State.MISS;
+            return Result.MISS;
         }
 
         throw new BowlingException(MISS_STATE);

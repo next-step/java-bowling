@@ -14,17 +14,17 @@ public class NormalFrame implements Frame {
     private final Frame nextFrame;
     private final Score score;
     private final Pins pins;
-    private final State state;
+    private final Result result;
 
     public NormalFrame(Tern tern, int frameNumber, Frame nextFrame,
-                       Score score, Pins pins, State state) {
+                       Score score, Pins pins, Result result) {
         validateFrameNumber(frameNumber);
         this.tern = tern;
         this.frameNumber = frameNumber;
         this.nextFrame = nextFrame;
         this.score = score;
         this.pins = pins;
-        this.state = state;
+        this.result = result;
     }
 
     public static NormalFrame from() {
@@ -33,7 +33,7 @@ public class NormalFrame implements Frame {
                 null,
                 Score.from(),
                 Pins.from(),
-                State.READY);
+                Result.READY);
     }
 
     public void validateFrameNumber(int frameNumber) {

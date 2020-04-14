@@ -15,7 +15,7 @@ class NormalFrameTest {
     public void validate_success(int number) throws Exception {
         //then
         new NormalFrame(Tern.FIRST, number, null,
-                Score.from(), Pins.from(), State.READY);
+                Score.from(), Pins.from(), Result.READY);
     }
 
     @DisplayName("1~10번 외의 프레임 까지만 등록시 exception")
@@ -25,7 +25,7 @@ class NormalFrameTest {
         //then
         assertThatThrownBy(
                 () -> new NormalFrame(Tern.FIRST, number, null,
-                        Score.from(), Pins.from(), State.READY)
+                        Score.from(), Pins.from(), Result.READY)
         ).isInstanceOf(BowlingException.class);
     }
 

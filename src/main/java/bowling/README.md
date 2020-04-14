@@ -11,7 +11,7 @@
 ### Bowl
 1. 핀을 쓰러뜨린다
 
-### state
+### result
 1. ready, strike, spare, miss, gutter
 
 ### Tern

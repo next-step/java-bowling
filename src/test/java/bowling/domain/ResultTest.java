@@ -5,23 +5,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StateTest {
+class ResultTest {
 
-    private State strike = State.checkStatue(Tern.FIRST, 0);
-    private State spare = State.checkStatue(Tern.SECOND, 0);
-    private State miss1 = State.checkStatue(Tern.FIRST, 5);
-    private State miss2 = State.checkStatue(Tern.SECOND, 5);
-    private State gutter = State.checkStatue(Tern.SECOND, 10);
+    private Result strike = Result.checkStatue(Tern.FIRST, 0);
+    private Result spare = Result.checkStatue(Tern.SECOND, 0);
+    private Result miss1 = Result.checkStatue(Tern.FIRST, 5);
+    private Result miss2 = Result.checkStatue(Tern.SECOND, 5);
+    private Result gutter = Result.checkStatue(Tern.SECOND, 10);
 
     @DisplayName("턴과 남은 핀의 개수를 이용해 상태를 구한다")
     @Test
     public void checkStatus_success() throws Exception {
         //then
-        assertThat(strike).isEqualTo(State.STRIKE);
-        assertThat(spare).isEqualTo(State.SPARE);
-        assertThat(miss1).isEqualTo(State.MISS);
-        assertThat(miss2).isEqualTo(State.MISS);
-        assertThat(gutter).isEqualTo(State.GUTTER);
+        assertThat(strike).isEqualTo(Result.STRIKE);
+        assertThat(spare).isEqualTo(Result.SPARE);
+        assertThat(miss1).isEqualTo(Result.MISS);
+        assertThat(miss2).isEqualTo(Result.MISS);
+        assertThat(gutter).isEqualTo(Result.GUTTER);
     }
 
     @DisplayName("각 상태의 표기되는 점수 문자 구하기")
