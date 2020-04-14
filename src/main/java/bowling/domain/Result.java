@@ -25,7 +25,7 @@ public enum Result {
         return String.valueOf(showStateDisplay.apply(count));
     }
 
-    public static Result checkStatue(TurnState turnState, int pinCount) {
+    public static Result getResultState(TurnState turnState, int pinCount) {
         if (turnState == TurnState.FIRST && pinCount == 0) {
             return Result.STRIKE;
         }

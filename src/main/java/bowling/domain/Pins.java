@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.turn.TurnState;
 import bowling.exception.BowlingException;
 
 public class Pins {
@@ -32,6 +33,10 @@ public class Pins {
     public Score getScore(final Score current) {
         Score pinScore = new Score(getDownPin());
         return current.addScore(pinScore);
+    }
+
+    public Result getResultState(TurnState turnState) {
+        return Result.getResultState(turnState, pins);
     }
 
     private int getDownPin() {
