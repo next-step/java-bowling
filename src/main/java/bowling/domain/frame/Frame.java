@@ -70,6 +70,10 @@ public class Frame {
         return (isMiss() || isGutter());
     }
 
+    public boolean isResult(FrameResult frameResult){
+        return false;
+    }
+
     public boolean isStrike() {
         return FrameResult.STRIKE.equals(points.findResult());
     }

@@ -2,7 +2,6 @@ package bowling;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-import bowling.domain.point.Ordinal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,6 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.IntStream;
 
+import static bowling.domain.frame.FrameResult.*;
 import static bowling.domain.point.Ordinal.FIRST;
 import static bowling.domain.point.Ordinal.SECOND;
 import static org.assertj.core.api.Assertions.*;
@@ -109,9 +109,9 @@ public class FrameTest {
     @DisplayName("프레임의 Points와 몇 번째 프레임인지 인자로 주면, point를 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"10:0", "9:1", "7:2", "0:0"}, delimiter = ':')
-    void returnPointWhenPointsAndOrdinalAreProvided(int firstPoint, int secondPoint){
+    void returnPointWhenPointsAndOrdinalAreProvided(int firstPoint, int secondPoint) {
         //given
-        Frame frame = new Frame (1, firstPoint, secondPoint);
+        Frame frame = new Frame(1, firstPoint, secondPoint);
 
         //when
         int first = frame.getPointAtOrdinal(FIRST);
@@ -120,5 +120,21 @@ public class FrameTest {
         //then
         assertThat(first).isEqualTo(firstPoint);
         assertThat(second).isEqualTo(secondPoint);
+    }
+
+    @DisplayName("FrameResult를 인자로 주면, 해당 프레임이 인자로 받은 FrameResult와 일치하는지 반환")
+    @Test
+    void returnBooleanWhenFrameResultIsProvided() {
+        //given
+        Frame strikeFrame = new Frame(0, 10, 0);
+        Frame spareFrame = new Frame(1, 8, 2);
+        Frame missFrame = new Frame(2, 5, 2);
+        Frame gutterFrame = new Frame(3, 0, 0);
+
+        //when, then
+        assertThat(strikeFrame.isResult(STRIKE)).isTrue();
+        assertThat(spareFrame.isResult(SPARE)).isTrue();
+        assertThat(missFrame.isResult(MISS)).isTrue();
+        assertThat(gutterFrame.isResult(GUTTER)).isTrue();
     }
 }
