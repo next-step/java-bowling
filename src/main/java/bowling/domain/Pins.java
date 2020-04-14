@@ -28,4 +28,13 @@ public class Pins {
     public Pins bowl(final int count) {
         return new Pins(this.pins - count);
     }
+
+    public Score getScore(final Score current) {
+        Score pinScore = new Score(getDownPin());
+        return current.addScore(pinScore);
+    }
+
+    private int getDownPin() {
+        return MAX_PIN - this.pins;
+    }
 }

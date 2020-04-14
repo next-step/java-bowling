@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PinsTest {
@@ -45,5 +46,19 @@ class PinsTest {
         assertThatThrownBy(
                 () -> pins.bowl(10)
         ).isInstanceOf(BowlingException.class);
+    }
+
+    @DisplayName("넘어뜨린 핀만큼 점수를 계산한다.")
+    @Test
+    public void getScore_success() throws Exception {
+        //given
+        Pins pins = new Pins();
+
+        //when
+        pins = pins.bowl(5);
+        Score score = pins.getScore(new Score(10));
+
+        //then
+        assertThat(score).isEqualTo(new Score(15));
     }
 }
