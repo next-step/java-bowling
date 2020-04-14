@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.domain.turn.TurnState;
 import bowling.domain.turn.Turns;
