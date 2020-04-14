@@ -25,7 +25,7 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Question(){}
+    protected Question(){}
 
     public Question(String title, String contents) {
         this(null, title, contents);
@@ -63,9 +63,8 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question delete() {
+    public void delete() {
         this.deleted = true;
-        return this;
     }
 
     public boolean isDeleted() {
