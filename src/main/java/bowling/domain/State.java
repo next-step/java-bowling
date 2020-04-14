@@ -14,10 +14,14 @@ public enum State {
 
     private static final String MISS_STATE = "알수 없는 상태의 경우 발생";
 
-    private Function checkStatue;
+    private Function<Integer, String> showStateDisplay;
 
-    State(Function checkStatue) {
-        this.checkStatue = checkStatue;
+    State(Function showStateDisplay) {
+        this.showStateDisplay = showStateDisplay;
+    }
+
+    public String showStateDisplay(int count) {
+        return String.valueOf(showStateDisplay.apply(count));
     }
 
     public static State checkStatue(Tern tern, int pinCount) {
