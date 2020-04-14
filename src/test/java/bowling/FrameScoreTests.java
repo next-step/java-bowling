@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("FrameScoreTests")
@@ -40,25 +39,4 @@ public class FrameScoreTests {
         FrameScore frameScore = FrameScore.newInstance(Arrays.asList(1, 2));
         assertTrue(frameScore.isSameScoreCount(2));
     }
-
-    @DisplayName("FrameScore strike 테스트")
-    @Test
-    public void checkStrikeTest() {
-        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
-        assertThat(frameScore.getResult()).isEqualTo(FrameScoreResult.STRIKE);
-
-        FrameScore frameScore2 = FrameScore.newInstance(Arrays.asList(3, 7));
-        assertThat(frameScore2.getResult()).isNotEqualTo(FrameScoreResult.STRIKE);
-    }
-
-    @DisplayName("FrameScore spare 테스트")
-    @Test
-    public void checkSpareTest() {
-        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
-        assertThat(frameScore.getResult()).isNotEqualTo(FrameScoreResult.SPARE);
-
-        FrameScore frameScore2 = FrameScore.newInstance(Arrays.asList(3, 7));
-        assertThat(frameScore2.getResult()).isEqualTo(FrameScoreResult.SPARE);
-    }
-
 }
