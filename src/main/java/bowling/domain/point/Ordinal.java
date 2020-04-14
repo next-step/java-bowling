@@ -1,12 +1,32 @@
 package bowling.domain.point;
 
-public enum Ordinal {
-    FIRST,
-    SECOND,
-    THIRD,
-    FOURTH;
+import java.util.Arrays;
+import java.util.function.Function;
 
-    public int getPoint(Ordinal first, Points points) {
-        return 0;
+import static bowling.Messages.WARNING_ORDINAL_NOT_FOUND_MATCHED_ORDINAL;
+
+public enum Ordinal {
+    FIRST(points -> points.getFirstPoint()),
+    SECOND(points -> points.getSecondPoint()),
+    THIRD(points -> points.getThirdPoint()),
+    FOURTH(points -> points.getFourthPoint());
+
+    private Function<Points, Integer> expression;
+
+    Ordinal(Function<Points, Integer> expression) {
+        this.expression = expression;
+    }
+
+    public int getPoint(Ordinal ordinal, Points points) {
+        return match(ordinal)
+                .expression
+                .apply(points);
+    }
+
+    private Ordinal match(Ordinal ordinal) {
+        return Arrays.stream(Ordinal.values())
+                .filter(it -> it.equals(ordinal))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(WARNING_ORDINAL_NOT_FOUND_MATCHED_ORDINAL));
     }
 }
