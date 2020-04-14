@@ -11,7 +11,7 @@ class GutterTest {
     @DisplayName("첫번째, 두번째 투구 다 거터일경우 -|-를 출력한다.")
     @Test
     void gutter() {
-        String expect = "-|-";
+        String expect = "-";
         State gutter = new Gutter(Pins.GUTTER_PINS, Pins.GUTTER_PINS);
 
         assertThat(gutter.toResult()).isEqualTo(expect);
