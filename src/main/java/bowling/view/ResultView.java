@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.PlayerName;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.FrameResult;
 import bowling.domain.frame.Frames;
 import bowling.domain.point.Ordinal;
 
@@ -24,7 +23,6 @@ public class ResultView {
     private static final String SYMBOL_GUTTER = "-";
     private static final String DELIMITER_SPARE = "/";
     private static final int FRAME_ID_FIRST = 1;
-    private static final int FRAME_ID_FINAL = 10;
     private static final int MIN_NUMBER_FOR_THREE_DIGITS = 100;
     private static final int MIN_NUMBER_FOR_TWO_DIGITS = 10;
     private static final int OFFSET = -1;
@@ -367,9 +365,8 @@ public class ResultView {
     }
 
     private static void printThreeLineSeparators() {
-        printLineSeparator();
-        printLineSeparator();
-        printLineSeparator();
+        IntStream.range(0, 3)
+                .forEach(System.out::println);
     }
 
     private static void printLineSeparator() {
