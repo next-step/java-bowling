@@ -25,15 +25,11 @@ public class Gutter implements State {
 
     @Override
     public String toResult() {
-        if (first.isGutter() && second.isGutter()) {
-            return EXPRESSION + State.DELIMITER + EXPRESSION;
-        }
-
-        if (first.isGutter()) {
+        if (first.isGutter() && !second.isGutter()) {
             return EXPRESSION + State.DELIMITER + second.count();
         }
 
-        if (second.isGutter()) {
+        if (!first.isGutter() && second.isGutter()) {
             return first.count() + State.DELIMITER + EXPRESSION;
         }
         return EXPRESSION;
