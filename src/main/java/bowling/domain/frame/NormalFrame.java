@@ -57,7 +57,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public String getStates() {
-        return StateFormatter.format(state) + "," + nextFrame.getStates();
+        return StateFormatter.format(state) + Frame.SEPARATOR + nextFrame.getStates();
     }
 
     @Override

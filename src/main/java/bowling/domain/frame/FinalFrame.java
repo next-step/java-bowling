@@ -1,18 +1,46 @@
 package bowling.domain.frame;
 
+import bowling.domain.format.StateFormatter;
+import bowling.domain.frame.state.FinalReady;
+import bowling.domain.frame.state.State;
+import bowling.domain.pin.Pins;
+
 import java.util.Objects;
 import java.util.Optional;
 
 public class FinalFrame implements Frame {
     private final FrameNumber frameNumber;
+    private State state;
 
     public FinalFrame(final FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
+        this.state = new FinalReady();
+    }
+
+    @Override
+    public Frame bowl(final Pins pins) {
+        state.roll(pins);
+        return this;
+    }
+
+    @Override
+    public boolean isEnd() {
+        return state.isTurnOver();
     }
 
     @Override
     public Optional<Frame> getNext() {
         return Optional.empty();
+    }
+
+    @Override
+    public FrameNumber getFrameNumber() {
+        return frameNumber;
+    }
+
+    @Override
+    public String getStates() {
+        return StateFormatter.format(state);
     }
 
     @Override
