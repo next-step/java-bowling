@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.exception.OutOfRangeArgumentException;
+import bowling.domain.frame.Frame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

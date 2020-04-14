@@ -1,6 +1,9 @@
 package bowling.domain;
 
 import bowling.domain.exception.OutOfRangeArgumentException;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.frame.PinCount;
 
 import java.util.ArrayList;
 import java.util.List;

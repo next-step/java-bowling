@@ -1,7 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Game;
-import bowling.domain.PinCount;
+import bowling.domain.frame.PinCount;
 
 import java.util.List;
 import java.util.stream.Collectors;

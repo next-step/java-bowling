@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
