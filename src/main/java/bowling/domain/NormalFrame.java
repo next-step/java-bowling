@@ -7,7 +7,7 @@ public class NormalFrame implements Frame {
     private static final int MAX_NORMAL_FRAME_COUNT = 9;
     public static final String OVER_NORMAL_FRAME_NO_ERROR = "일반 Frame은 최대 9개까지만 생성할 수 있습니다.";
     private int frameNumber;
-    private int bowlCount;
+    private int playCount;
     private int firstFalledPin;         // TODO: State 내에서 관리해보자
     private int secondFalledPin;
     private State state;
@@ -15,7 +15,7 @@ public class NormalFrame implements Frame {
     public NormalFrame(int frameNumber, State state) {
         assertFrameNo(frameNumber);
         this.frameNumber = frameNumber;
-        this.bowlCount = Constants.ZERO;
+        this.playCount = Constants.ZERO;
         this.firstFalledPin = Constants.ZERO;
         this.secondFalledPin = Constants.ZERO;
         this.state = state;
@@ -28,14 +28,14 @@ public class NormalFrame implements Frame {
     public void play(int falledPin) {
         assertFalledPin(falledPin);
 
-        if(bowlCount == 0) {
+        if(playCount == 0) {
             firstFalledPin = falledPin;
         }
         else {
             secondFalledPin = falledPin;
         }
 
-        bowlCount++;
+        playCount++;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class NormalFrame implements Frame {
     }
 
     private void assertFalledPin(int falledPin) {
-        if(isFirstBowl()) {
+        if(isFirstPlay()) {
             assertFirstFalledPin(falledPin);
         }
         else {
@@ -65,8 +65,8 @@ public class NormalFrame implements Frame {
         }
     }
 
-    private boolean isFirstBowl() {
-        return bowlCount == 0;
+    private boolean isFirstPlay() {
+        return playCount == 0;
     }
 
     private void assertFirstFalledPin(int falledPin) {

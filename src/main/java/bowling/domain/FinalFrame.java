@@ -5,14 +5,14 @@ import bowling.Constants;
 public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NO = 10;
 
-    private int bowlCount;
+    private int playCount;
     private int firstFalledPin;         // TODO: State 에석 관리해보자.
     private int secondFalledPin;
     private int thirdFalledPin;
     private State state;
 
     public FinalFrame(State state) {
-        this.bowlCount = Constants.ZERO;
+        this.playCount = Constants.ZERO;
         this.firstFalledPin = Constants.ZERO;
         this.secondFalledPin = Constants.ZERO;
         this.thirdFalledPin = Constants.ZERO;
@@ -26,16 +26,16 @@ public class FinalFrame implements Frame {
     public void play(int falledPin) {
         assertFalledPin(falledPin);
 
-        if(bowlCount == 0) {
+        if(playCount == 0) {
             firstFalledPin = falledPin;
         }
-        else if(bowlCount == 1){
+        else if(playCount == 1){
             secondFalledPin = falledPin;
         }
         else {
             thirdFalledPin = falledPin;
         }
-        bowlCount++;
+        playCount++;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class FinalFrame implements Frame {
     }
 
     private void assertFalledPin(int falledPin) {       // TODO: 3회 충족할 수 있도록 다시 구현 필요
-        if(isFirstBowl()) {
+        if(isFirstPlay()) {
             assertFirstFalledPin(falledPin);
         }
         else {
@@ -62,8 +62,8 @@ public class FinalFrame implements Frame {
         }
     }
 
-    private boolean isFirstBowl() {
-        return bowlCount == 0;
+    private boolean isFirstPlay() {
+        return playCount == 0;
     }
 
     private void assertFirstFalledPin(int falledPin) {
