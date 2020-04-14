@@ -7,7 +7,6 @@ import bowling.view.OutputView;
 public class Application {
     public static void main(String[] args) {
         InputView inputView = new InputView();
-
         String playerName = inputView.inputPlayerName();
 
         BowlingGame bowlingGame = new BowlingGame(playerName);
@@ -16,7 +15,6 @@ public class Application {
 
         do {
             int lastFrameNumber = bowlingGame.getLastFrameNumber();
-
             int clearPinCount = inputView.inputClearPin(lastFrameNumber);
 
             bowlingGame.play(clearPinCount);
