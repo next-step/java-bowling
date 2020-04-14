@@ -144,7 +144,6 @@ https://www.bowlinggenius.com/ 참고
     * 10 프레임을 가진다.  
     * 3개의 처리는 어떻게 하면 좋을지 고민 필요 
 * FrameResult: 각 Frame 의 결과를 가진다.  
-    * 고민 필요  
 * Board: 점수판 객체  
     * FrameResult를 통해 점수판을 만든다.     
 
@@ -155,6 +154,7 @@ https://www.bowlinggenius.com/ 참고
 * Frame  
     1. 현재 Frame이 0에서 10사이에 있는 지 검증   
     2. 각 상태에 따른 Play 
+    * 고민 필요  
     3. 다음 Frame 생성  
 * State  
     1. 프레임의 완료 여부 

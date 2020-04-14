@@ -1,13 +1,11 @@
 package bowling.domain;
 
+import bowling.Constants;
+
 public class NormalFrame implements Frame {
 
     private static final int MAX_FRAME_NO = 10;
     public static final String OVER_NORMAL_FRAME_NO_ERROR = "Frame은 최대 10개까지만 생성할 수 있습니다.";
-    public static int MAX_PIN_COUNT = 10;
-    public static int MIN_PIN_COUNT = 1;
-    public static int ZERO = 0;
-
     private int no;
     private int playCount;
     private int firstFalledPin;
@@ -16,9 +14,9 @@ public class NormalFrame implements Frame {
     public NormalFrame(int no) {
         assertFrameNo(no);
         this.no = no;
-        this.playCount = ZERO;
-        this.firstFalledPin = ZERO;
-        this.secondFalledPin = ZERO;
+        this.playCount = Constants.ZERO;
+        this.firstFalledPin = Constants.ZERO;
+        this.secondFalledPin = Constants.ZERO;
     }
 
     public Frame play(int falledPin) {
@@ -55,14 +53,14 @@ public class NormalFrame implements Frame {
     }
 
     private void assertFirstFalledPin(int falledPin) {
-        if(falledPin > MAX_PIN_COUNT || falledPin < MIN_PIN_COUNT) {
+        if(falledPin > Constants.MAX_PIN_COUNT || falledPin < Constants.MIN_PIN_COUNT) {
             throw new IllegalArgumentException(Frame.WRONG_FALLED_PIN);
         }
     }
 
     private void assertNotFirstFalledPin(int falledPin) {
-        int canFalledPin = MAX_PIN_COUNT - firstFalledPin;
-        if(falledPin > canFalledPin || falledPin < MIN_PIN_COUNT) {
+        int canFalledPin = Constants.MAX_PIN_COUNT - firstFalledPin;
+        if(falledPin > canFalledPin || falledPin < Constants.MIN_PIN_COUNT) {
             throw new IllegalArgumentException(Frame.WRONG_FALLED_PIN);
         }
     }
