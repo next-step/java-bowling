@@ -12,4 +12,8 @@ public class FramesDto {
     public List<FrameDto> getFrames() {
         return frames;
     }
+
+    public int size(){
+        return frames.size();
+    }
 }

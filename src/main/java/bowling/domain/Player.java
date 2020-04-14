@@ -32,18 +32,21 @@ public class Player {
         return frames.size();
     }
 
-    public PlayerDto shot(int shot) {
+    public void shot(int shot) {
         if (isCurrentFrameDone()) {
             frames.add(NormalFrame.init());
         }
         frames.get(frames.size() - 1).shot(shot);
-        return new PlayerDto(name,
-                new FramesDto(frames.stream()
-                        .map(NormalFrame::getDto)
-                        .collect(Collectors.toList())));
     }
 
     private boolean isCurrentFrameDone() {
         return frames.isEmpty() || frames.get(frames.size() - 1).isFrameClosed();
+    }
+
+    public PlayerDto getDto() {
+        return new PlayerDto(name,
+                new FramesDto(frames.stream()
+                        .map(NormalFrame::getDto)
+                        .collect(Collectors.toList())));
     }
 }
