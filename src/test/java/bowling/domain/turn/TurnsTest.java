@@ -1,8 +1,5 @@
 package bowling.domain.turn;
 
-import bowling.domain.Pins;
-import bowling.domain.Result;
-import bowling.domain.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,10 +14,9 @@ class TurnsTest {
     @Test
     public void bowl_success() throws Exception {
         //given
-        Turns turns = new Turns(Arrays.asList(Turn.from()));
+        Turns turns = new Turns();
         Turns expect = new Turns(Arrays.asList(
-                Turn.from(),
-                new Turn(new Score(3), Result.MISS, new Pins(7), TurnState.SECOND)));
+                Turn.from(3)));
 
         //when
         turns = turns.bowl(3);
@@ -33,8 +29,8 @@ class TurnsTest {
     @Test
     public void isMoreTwice() throws Exception {
         //given
-        Turns less = new Turns(Arrays.asList(Turn.from(), Turn.from()));
-        Turns more = new Turns(Arrays.asList(Turn.from(), Turn.from(), Turn.from()));
+        Turns less = new Turns(Arrays.asList(Turn.from(3), Turn.from(3)));
+        Turns more = new Turns(Arrays.asList(Turn.from(3), Turn.from(3), Turn.from(3)));
 
         //then
         assertFalse(less.isMoreTwice());

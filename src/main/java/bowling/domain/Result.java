@@ -7,7 +7,6 @@ import java.util.function.Function;
 
 public enum Result {
 
-    READY((count) -> count),
     STRIKE((count) -> "X"),
     SPARE((count) -> "/"),
     MISS((count) -> count),

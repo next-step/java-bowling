@@ -7,7 +7,13 @@ import java.util.Objects;
 
 public class Turns {
 
+    private static final int ZERO = 0;
+
     private final List<Turn> turns;
+
+    public Turns() {
+        this.turns = new ArrayList<>();
+    }
 
     public Turns(final List<Turn> turns) {
         this.turns = new ArrayList<>(turns);
@@ -18,6 +24,9 @@ public class Turns {
     }
 
     public Turns bowl(final int pinCount) {
+        if (turns.size() == ZERO) {
+            return addTurn(Turn.from(pinCount));
+        }
         Turn next = turns.get(getLastIndex()).bowl(pinCount);
         return addTurn(next);
     }
@@ -30,6 +39,10 @@ public class Turns {
 
     public boolean isMoreTwice() {
         return turns.size() > 2;
+    }
+
+    public int size() {
+        return turns.size();
     }
 
     private int getLastIndex() {
