@@ -1,61 +1,37 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static bowling.Constants.FIRST_FRAME_NUMBER;
+import bowling.domain.frame.Frames;
 
 public class Player {
     public static final String PLAYER_NAME_ERROR = "플레이어의 이름은 3글자로 입력해주세요.";
     private static final int PLAYER_NAME_LENGTH = 3;
 
     private String name;
-    private List<Frame> frames;
+    private Frames frames;
 
     public Player(String name) {
         assertPlayerName(name);
         this.name = name;
-        this.frames = new ArrayList<>();
-
-        frames.add(NormalFrame.create(FIRST_FRAME_NUMBER));
+        this.frames = new Frames();
     }
 
     public void play(int felledPin) {
-        Frame frame = getCurrentFrame();
-        frame.play(felledPin);
-
-        if(!frame.isLastFrame() && frame.isEndedFrame()) {
-            Frame nextFrame = frame.getNext();
-            addFrame(nextFrame);
-        }
-    }
-
-    private void addFrame(Frame frame) {
-        if(frame != null) {
-            frames.add(frame);
-        }
+        frames.play(felledPin);
     }
 
     public boolean isEnd() {
-        return getCurrentFrame().isLastFrame();
-    }
-
-    public Frame getCurrentFrame() {
-        return frames.get(frames.size() - 1);
+        return frames.isEnd();
     }
 
     public int getCurrentFrameNumber() {
-        return frames.size();
+        return frames.getCurrentFrameNumber();
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Frame> getFrames() {
+    public Frames getFrames() {
         return frames;
     }
 

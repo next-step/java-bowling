@@ -15,7 +15,7 @@ public class OutputView {
 
     public void showFrameResult(Player player) {
         showBoardHeader();
-        showState(player.getName(), player.getFrames());
+        showState(player.getName(), player.getFrames().getValue());
         newLine();
     }
 
