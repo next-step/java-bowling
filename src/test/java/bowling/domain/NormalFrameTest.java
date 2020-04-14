@@ -18,7 +18,7 @@ class NormalFrameTest {
 
     @Test
     void shot() {
-        NormalFrame normalFrame = NormalFrame.init();
+        Frame normalFrame = NormalFrame.init();
         normalFrame.shot(4);
         assertThat(normalFrame.getDto().getShotScores())
                 .anyMatch(v -> v.getScoreType().equals(ScoreType.MISS))
@@ -35,7 +35,7 @@ class NormalFrameTest {
 
     @Test
     void next() {
-        NormalFrame normalFrame = NormalFrame.init();
+        Frame normalFrame = NormalFrame.init();
         assertThatCode(() -> normalFrame.next(5))
                 .doesNotThrowAnyException();
 
@@ -46,7 +46,7 @@ class NormalFrameTest {
     @ParameterizedTest
     @ValueSource(strings = {"5,4", "10"})
     void isClosed(String shotString) {
-        NormalFrame normalFrame = NormalFrame.init();
+        Frame normalFrame = NormalFrame.init();
         assertThat(normalFrame.isFrameClosed())
                 .isFalse();
 

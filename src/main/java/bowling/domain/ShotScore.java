@@ -45,8 +45,9 @@ public class ShotScore {
         return of(nextScore);
     }
 
-    boolean isStrike(){
-        return ScoreType.STRIKE.equals(scoreType);
+    boolean isClear(){
+        return ScoreType.STRIKE.equals(scoreType) ||
+                ScoreType.SPARE.equals(scoreType);
     }
 
     public ShotScoreDto getDto() {

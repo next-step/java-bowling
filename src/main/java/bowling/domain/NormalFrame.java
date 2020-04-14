@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
     private static final int SHOT_LIMIT = 2;
 
     private final List<ShotScore> shotScores;
@@ -16,15 +16,15 @@ public class NormalFrame {
         this.shotScores = shotScores;
     }
 
-    static NormalFrame init() {
+    static Frame init() {
         return new NormalFrame(new ArrayList<>());
     }
 
-    NormalFrame next(int shot) {
+    public Frame next(int shot) {
         return new NormalFrame(Arrays.asList(ShotScore.of(shot)));
     }
 
-    void shot(int shot) {
+    public void shot(int shot) {
         if (shotScores.isEmpty()) {
             shotScores.add(ShotScore.of(shot));
             return;
@@ -37,10 +37,10 @@ public class NormalFrame {
         shotScores.add(shotScores.get(0).next(shot));
     }
 
-    boolean isFrameClosed() {
+    public boolean isFrameClosed() {
         return shotScores.size() == SHOT_LIMIT ||
                 shotScores.stream()
-                        .anyMatch(ShotScore::isStrike);
+                        .anyMatch(ShotScore::isClear);
     }
 
     public FrameDto getDto() {

@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Player {
+    private static final int MAX_FRAMES = 10;
     private final String name;
-    private final List<NormalFrame> frames;
+    private final List<Frame> frames;
 
     private Player(String name) {
         this.name = name;
@@ -34,7 +35,7 @@ public class Player {
 
     public void shot(int shot) {
         if (isCurrentFrameDone()) {
-            frames.add(NormalFrame.init());
+            frames.add(createAddFrame());
         }
         frames.get(frames.size() - 1).shot(shot);
     }
@@ -43,10 +44,17 @@ public class Player {
         return frames.isEmpty() || frames.get(frames.size() - 1).isFrameClosed();
     }
 
+    private Frame createAddFrame() {
+        if(frames.size()==9){
+            return FinalFrame.of();
+        }
+        return NormalFrame.init();
+    }
+
     public PlayerDto getDto() {
         return new PlayerDto(name,
                 new FramesDto(frames.stream()
-                        .map(NormalFrame::getDto)
+                        .map(Frame::getDto)
                         .collect(Collectors.toList())));
     }
 }

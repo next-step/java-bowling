@@ -40,4 +40,15 @@ class ShotScoreTest {
         assertThatThrownBy(()->shotScore.next(6))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void isClear() {
+        ShotScore shotScore = ShotScore.of(10);
+        assertThat(shotScore.isClear())
+                .isTrue();
+
+        shotScore = ShotScore.of(4);
+        assertThat(shotScore.next(6).isClear())
+                .isTrue();
+    }
 }
