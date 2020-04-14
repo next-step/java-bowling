@@ -32,7 +32,7 @@ public class Gutter implements State {
         if (isRightGutter()) {
             return first.count() + State.DELIMITER + EXPRESSION;
         }
-        return EXPRESSION;
+        return EXPRESSION + State.DELIMITER + EXPRESSION;
     }
 
     private boolean isFirstGutter() {

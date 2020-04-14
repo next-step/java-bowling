@@ -2,16 +2,14 @@ package bowling.domain.frame.state;
 
 import bowling.domain.pin.Pins;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class FinalReady implements State {
-    private static final int LAST_INDEX = 1;
     private static final int NORMAL_FRAME_COUNT = 2;
     private static final int MAX_COUNT = 3;
 
-    private List<State> states = new ArrayList<>();
+    private Stack<State> states = new Stack<>();
     private int count;
 
     public FinalReady() { }
@@ -19,9 +17,8 @@ public class FinalReady implements State {
     @Override
     public State roll(final Pins knockOverPins) {
         ready();
-        State state = current().roll(knockOverPins);
-        states.remove(states.size() - LAST_INDEX);
-        states.add(state);
+        State state = states.pop().roll(knockOverPins);
+        states.push(state);
         count++;
         return state;
     }
@@ -42,17 +39,13 @@ public class FinalReady implements State {
     }
 
     private void ready() {
-        if (states.isEmpty() || current().isTurnOver()) {
-            states.add(new Ready());
+        if (states.isEmpty() || states.peek().isTurnOver()) {
+            states.push(new Ready());
         }
     }
 
     private boolean isPossibleTurnOver() {
         return count == NORMAL_FRAME_COUNT && !hasBonusState();
-    }
-
-    private State current() {
-        return states.get(states.size() - LAST_INDEX);
     }
 
     private boolean hasBonusState() {
