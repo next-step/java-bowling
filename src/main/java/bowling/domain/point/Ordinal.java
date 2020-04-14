@@ -17,13 +17,13 @@ public enum Ordinal {
         this.expression = expression;
     }
 
-    public int getPoint(Ordinal ordinal, Points points) {
+    public static int getPoint(Ordinal ordinal, Points points) {
         return match(ordinal)
                 .expression
                 .apply(points);
     }
 
-    private Ordinal match(Ordinal ordinal) {
+    private static Ordinal match(Ordinal ordinal) {
         return Arrays.stream(Ordinal.values())
                 .filter(it -> it.equals(ordinal))
                 .findFirst()
