@@ -71,7 +71,7 @@ public class Frame {
     }
 
     public boolean isResult(FrameResult frameResult){
-        return false;
+        return frameResult.equals(points.findResult());
     }
 
     public boolean isStrike() {
