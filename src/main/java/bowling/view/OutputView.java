@@ -11,11 +11,12 @@ public class OutputView {
     private static final String BOARD_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String VERTICAL_LINE = "|";
     private static final String SPACE = " ";
-    private static final int SPACE_PER_FRAME = 6;
+    private static final int LENGTH_PER_FRAME = 6;
 
     public void showFrameResult(Player player) {
         showBoardHeader();
         showState(player.getName(), player.getFrames());
+        newLine();
     }
 
     private void showBoardHeader() {
@@ -28,12 +29,15 @@ public class OutputView {
         for(Frame frame : frames) {
             showStateHistory(frame);
         }
+
+        newLine();
     }
+
     private void showPlayerName(String playerName) {
         showVerticalLine();
 
-        int spaceCount = SPACE_PER_FRAME - playerName.length();
-        ViewUtils.printLine(appendSpaces(playerName, spaceCount));
+        int spaceCount = LENGTH_PER_FRAME - playerName.length();
+        ViewUtils.print(appendSpaces(playerName, spaceCount));
 
         showVerticalLine();
     }
@@ -45,8 +49,8 @@ public class OutputView {
             appendStateContent(builder, state);
         }
 
-        ViewUtils.printLine(appendSpaces(builder.toString(), SPACE_PER_FRAME));
-        ViewUtils.printLine(VERTICAL_LINE);
+        ViewUtils.print(appendSpaces(builder.toString(), LENGTH_PER_FRAME));
+        ViewUtils.print(VERTICAL_LINE);
     }
 
     private void appendStateContent(StringBuilder builder, State state) {
@@ -64,10 +68,20 @@ public class OutputView {
         for(int i = 0; i < spaceCount; i++) {
             builder.append(SPACE);
         }
+
+        if(builder.length() > LENGTH_PER_FRAME) {
+            return builder.substring(0, LENGTH_PER_FRAME);
+        }
+
         return builder.toString();
     }
 
     private void showVerticalLine() {
-        ViewUtils.printLine(VERTICAL_LINE);
+        ViewUtils.print(VERTICAL_LINE);
     }
+
+    private void newLine() {
+        ViewUtils.printLine("");
+    }
+
 }

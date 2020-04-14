@@ -11,6 +11,10 @@ public class ViewUtils {
         System.out.println(line);
     }
 
+    public static void print(String line) {
+        System.out.print(line);
+    }
+
     public static String readLine() {
         String input = scanner.nextLine();
 

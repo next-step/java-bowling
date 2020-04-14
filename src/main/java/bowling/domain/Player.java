@@ -45,7 +45,7 @@ public class Player {
     }
 
     public int getCurrentFrameNumber() {
-        return frames.size() + 1;
+        return frames.size();
     }
 
     public String getName() {

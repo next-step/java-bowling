@@ -11,7 +11,7 @@ public class BowlingGameController {
         while(!player.isEnd()) {
             player.play(inputView.getFelledPin(player.getCurrentFrameNumber()));
 
-            inputView.showFrameResult(player);
+            outputView.showFrameResult(player);
         }
     }
 }
