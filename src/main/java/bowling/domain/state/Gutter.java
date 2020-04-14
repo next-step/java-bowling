@@ -5,6 +5,8 @@ import static bowling.Constants.MIN_FELLED_PIN_COUNT;
 
 public class Gutter implements State {
 
+    static final String TEXT = "-";
+
     @Override
     public State play(int newFelledPin) {
 
@@ -18,5 +20,10 @@ public class Gutter implements State {
     @Override
     public boolean isEndedState() {
         return false;
+    }
+
+    @Override
+    public String getString() {
+        return TEXT;
     }
 }

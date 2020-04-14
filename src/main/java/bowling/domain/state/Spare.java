@@ -3,12 +3,14 @@ package bowling.domain.state;
 public class Spare implements State {
     public static final String SPARE_CAN_NOT_PLAY_ERROR = "Spare 상태입니다. 프레임이 종료되어 플레이할 수 없습니다.";
 
-    private int firstPlayPoint;
-    private int secondPlayPoint;
+    private static final String TEXT = "/";
+
+    private int lastPlayPoint;
+    private int currentPlayPoint;
 
     public Spare(int felledPin, int newFelledPin) {
-        this.firstPlayPoint = felledPin;
-        this.secondPlayPoint = newFelledPin;
+        this.lastPlayPoint = felledPin;
+        this.currentPlayPoint = newFelledPin;
     }
 
     @Override
@@ -17,7 +19,12 @@ public class Spare implements State {
     }
 
     @Override
-    public boolean isEnded() {
+    public boolean isEndedState() {
         return true;
+    }
+
+    @Override
+    public String getString() {
+        return TEXT;
     }
 }

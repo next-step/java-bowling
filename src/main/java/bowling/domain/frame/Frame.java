@@ -2,11 +2,13 @@ package bowling.domain.frame;
 
 import bowling.domain.state.State;
 
+import java.util.List;
+
 public interface Frame {
 
     void play(int felledPin);
 
-    State getStatus();
+    State getState();
 
     Frame getNext();
 
@@ -15,4 +17,6 @@ public interface Frame {
     boolean isEndedFrame();
 
     boolean isLastFrame();
+
+    List<State> getStateHistory();
 }

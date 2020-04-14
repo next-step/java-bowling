@@ -23,6 +23,11 @@ public class Ready implements State {
         return false;
     }
 
+    @Override
+    public String getString() {
+        return "";
+    }
+
     private void assertFirstFelledPin(int felledPin) {
         if(felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
             throw new IllegalArgumentException(WRONG_FELLED_PIN);

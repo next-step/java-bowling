@@ -3,11 +3,16 @@ package bowling.domain.frame;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static bowling.Constants.*;
 
 public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NO = 10;
+
     private State state;
+    private final List<State> stateHistory = new ArrayList<>();
 
     public FinalFrame(State state) {
         this.state = state;
@@ -20,10 +25,11 @@ public class FinalFrame implements Frame {
     public void play(int felledPin) {
         assertFelledPin(felledPin);
         state = state.play(felledPin);
+        stateHistory.add(state);
     }
 
     @Override
-    public State getStatus() {
+    public State getState() {
         return state;
     }
 
@@ -45,6 +51,11 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isLastFrame() {
         return state.isEndedState();
+    }
+
+    @Override
+    public List<State> getStateHistory() {
+        return stateHistory;
     }
 
     private void assertFelledPin(int felledPin) {

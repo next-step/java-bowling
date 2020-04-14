@@ -3,6 +3,9 @@ package bowling.domain.frame;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static bowling.Constants.*;
 
 public class NormalFrame implements Frame {
@@ -10,7 +13,9 @@ public class NormalFrame implements Frame {
     private static final int MAX_NORMAL_FRAME_COUNT = 9;
     public static final String OVER_NORMAL_FRAME_NO_ERROR = "일반 Frame은 최대 9개까지만 생성할 수 있습니다.";
     private int frameNumber;
+
     private State state;
+    private final List<State> stateHistory = new ArrayList<>();
 
     public NormalFrame(int frameNumber, State state) {
         assertFrameNo(frameNumber);
@@ -25,6 +30,7 @@ public class NormalFrame implements Frame {
     public void play(int felledPin) {
         assertFelledPin(felledPin);
         state = state.play(felledPin);
+        stateHistory.add(state);
     }
 
     @Override
@@ -36,7 +42,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public State getStatus() {
+    public State getState() {
         return state;
     }
 
@@ -53,6 +59,11 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isLastFrame() {
         return false;
+    }
+
+    @Override
+    public List<State> getStateHistory() {
+        return stateHistory;
     }
 
     private void assertFelledPin(int felledPin) {
