@@ -20,12 +20,14 @@ class NormalFrameTest {
     void shot() {
         NormalFrame normalFrame = NormalFrame.init();
         normalFrame.shot(4);
-        assertThat(normalFrame.getDto())
-                .contains(ShotScore.of(4));
+        assertThat(normalFrame.getDto().getShotScores())
+                .anyMatch(v -> v.getScoreType().equals(ScoreType.MISS))
+                .anyMatch(v -> v.getScore() == 4);
 
         normalFrame.shot(6);
-        assertThat(normalFrame.getDto())
-                .contains(ShotScore.of(4).next(6));
+        assertThat(normalFrame.getDto().getShotScores())
+                .anyMatch(v -> v.getScoreType().equals(ScoreType.SPARE))
+                .anyMatch(v -> v.getScore() == 6);
 
         assertThatThrownBy(() -> normalFrame.shot(5))
                 .isInstanceOf(IllegalStateException.class);
@@ -42,7 +44,7 @@ class NormalFrameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"5,4","10"})
+    @ValueSource(strings = {"5,4", "10"})
     void isClosed(String shotString) {
         NormalFrame normalFrame = NormalFrame.init();
         assertThat(normalFrame.isFrameClosed())

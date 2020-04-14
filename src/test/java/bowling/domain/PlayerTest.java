@@ -35,11 +35,13 @@ class PlayerTest {
 
     @Test
     void shot() {
-        PlayerDto currentDto = Player.of("skt").shot(5);
+        Player player = Player.of("skt");
+        player.shot(5);
+        PlayerDto currentDto = player.getDto();
         assertThat(currentDto.getName())
                 .isEqualTo("skt");
 
-        assertThat(currentDto.getFrames())
+        assertThat(currentDto.getFrames().getFrames())
                 .anyMatch(v -> v.getShotScores().get(0).getScore() == 5)
                 .hasSize(1);
 
