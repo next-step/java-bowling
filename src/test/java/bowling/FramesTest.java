@@ -131,6 +131,23 @@ public class FramesTest {
                 .isEqualTo(tenthFrame.getFirstPoint() + tenthFrame.getSecondPoint());
     }
 
+    @DisplayName("현재 프레임을 인자로 주면, 지금까지의 합계를 반환한다.")
+    @Test
+    void returnTotalPoint() {
+        //given
+        Frame first = new Frame(0, 10, 0);  // 20 (strike)
+        Frame second = new Frame(1, 5, 5);  // 12 (spare)
+        Frame third = new Frame (2, 2, 1);  // 3  (miss)
+        Frame fourth = new Frame (3, 0, 0);  // 0  (gutter)
+        Frames frames = Frames.of(Arrays.asList(first, second, third, fourth));
+
+        //when
+        int total = frames.getTotalPointUntil(fourth);
+
+        //then
+        assertThat(total).isEqualTo(35);
+    }
+
     private List<Frame> createTenFramesWithOneFrame(Frame frame) {
         List<Frame> frames = new ArrayList<>();
         IntStream.range(0, 10)
