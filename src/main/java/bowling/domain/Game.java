@@ -4,6 +4,7 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.Pitch;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Game {
     private static final int ONE = 1;
@@ -48,6 +49,10 @@ public class Game {
         return frames.getCurrentFrameIndex(currentFrame) + ONE;
     }
 
+    public Optional<Integer> getFrameScore(int frameIndex) {
+        return frames.getFrameScore(frameIndex);
+    }
+
     public int getFrameTotal() {
         return frames.size();
     }
@@ -59,4 +64,5 @@ public class Game {
     private boolean isAddable() {
         return !currentFrame.isLast() || !currentFrame.isDone();
     }
+
 }

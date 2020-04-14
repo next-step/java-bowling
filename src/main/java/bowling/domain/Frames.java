@@ -7,6 +7,7 @@ import bowling.domain.frame.Pitch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Frames {
     private static final String OUT_OF_RANGE_ERROR_MESSAGE =
@@ -40,6 +41,10 @@ public class Frames {
 
     public int getCurrentFrameIndex(Frame frame) {
         return frames.indexOf(frame);
+    }
+
+    public Optional<Integer> getFrameScore(int frameIndex) {
+        return frames.get(frameIndex).getScore();
     }
 
     public List<Pitch> getFramePinCounts(int index) {
