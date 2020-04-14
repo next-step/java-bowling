@@ -11,8 +11,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static int inputBowl(int frameNumber) {
-        System.out.print(String.format("%s프레임 투구 : ", frameNumber));
+    public static int inputBowl(String playerName) {
+        System.out.print(String.format("%s `s 프레임 투구 : ", playerName));
         return Integer.parseInt(scanner.nextLine());
     }
 }

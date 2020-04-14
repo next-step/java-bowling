@@ -18,26 +18,25 @@ public class Games {
         this.games = games;
     }
 
-    public void bowl(Pin pin) {
+    public void bowl() {
         if (currentFrameNumber <= 9) {
             for (Game game : games) {
                 if (isSameByFrameNumber(game.getFrameNumber())) {
-                    game.bowl(pin);
+                    game.bowl();
                     return;
                 }
             }
-            games.get(0).bowl(pin);
+            games.get(0).bowl();
             increaseNumber();
             return;
         } else {
             for (Game game : games) {
                 if (!game.getResponse().isEnd()) {
-                    game.bowl(pin);
+                    game.bowl();
                     return;
                 }
             }
         }
-
         end();
     }
 

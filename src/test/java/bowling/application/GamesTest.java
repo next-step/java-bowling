@@ -1,7 +1,5 @@
 package bowling.application;
 
-import bowling.domain.state.Pin;
-import bowling.view.ResultView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,41 +23,6 @@ class GamesTest {
             games.add(game);
         }
         Games games1 = new Games(games);
-
-
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-
-
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-        games1.bowl(new Pin(10));
-
-
-        for (Response respons : games1.getResponses()) {
-            ResultView.view(respons);
-        }
-
         // when
         boolean same = games1.getResponses().size() == requests.size();
         // then

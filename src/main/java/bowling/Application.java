@@ -20,7 +20,7 @@ public class Application {
         ResultView.view(response);
 
         while (!response.isEnd()) {
-            Pin pin = new Pin(InputView.inputBowl(response.getFrameNumberLast()));
+            Pin pin = new Pin(InputView.inputBowl(response.getName()));
             request = request.bowlFallenPins(pin);
             response = bowlingController.bowl(request);
             ResultView.view(response);

@@ -2,6 +2,7 @@ package bowling.application;
 
 import bowling.domain.state.Pin;
 import bowling.ui.BowlingController;
+import bowling.view.InputView;
 
 import java.util.Objects;
 
@@ -17,7 +18,8 @@ public class Game {
         this.response = bowlingController.bowl(request);
     }
 
-    public void bowl(Pin pin) {
+    public void bowl() {
+        Pin pin = new Pin(InputView.inputBowl(request.getName()));
         request = request.bowlFallenPins(pin);
         this.response = bowlingController.bowl(request);
     }
