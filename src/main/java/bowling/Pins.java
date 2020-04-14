@@ -16,13 +16,13 @@ public class Pins {
     }
 
     public int drop(final int dropPinCount) {
-        changePins(dropPinCount);
+        deductPins(dropPinCount);
         return dropPinCount;
     }
 
-    private void changePins(final int dropPinCount) {
+    private void deductPins(final int dropPinCount) {
         if (pinCount < dropPinCount) {
-            throw new RuntimeException("Remain pin count must be greater than dropping pin count.");
+            throw new IllegalStateException("Remain pin count must be greater than dropping pin count.");
         }
 
         pinCount -= dropPinCount;

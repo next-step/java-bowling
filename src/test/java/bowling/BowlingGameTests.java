@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("볼링 게임 테스트")
 public class BowlingGameTests {
@@ -33,7 +32,7 @@ public class BowlingGameTests {
                 .forEach(i -> bowlingGame.bowl(10));
 
 
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatIllegalStateException()
                 .isThrownBy(() -> bowlingGame.bowl(10))
                 .withMessageContaining("The bowling Game is Over.");
     }

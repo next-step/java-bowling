@@ -10,11 +10,11 @@ public class Score {
     private final int score;
 
     private Score(final int score) {
-        validate(score);
+        validateScoreRange(score);
         this.score = score;
     }
 
-    private static void validate(final int score) {
+    private static void validateScoreRange(final int score) {
         if (score < MIN_SCORE || score > MAX_SCORE) {
             throw new IllegalArgumentException("Score must be greater than zero and lower than 10.");
         }

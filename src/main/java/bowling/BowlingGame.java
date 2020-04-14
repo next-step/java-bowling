@@ -18,20 +18,16 @@ public class BowlingGame {
         return new BowlingGame(player);
     }
 
-    public void bowl(final int pinCount) {
-        if (isOver()) {
-            throw new RuntimeException("The bowling Game is Over.");
-        }
-
-        bowlingFrames.bowl(pinCount);
-    }
-
     public boolean isOver() {
         return bowlingFrames.isAllFrameOver();
     }
 
+    public void bowl(final int pinCount) {
+        bowlingFrames.bowl(pinCount);
+    }
+
     public int getFrameCount() {
-        return bowlingFrames.count();
+        return bowlingFrames.size();
     }
 
     public Player getPlayer() {

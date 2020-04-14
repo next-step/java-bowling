@@ -37,7 +37,7 @@ public class PinsTests {
         Pins pins = new Pins();
         pins.drop(10);
 
-        assertThatExceptionOfType(RuntimeException.class)
+        assertThatIllegalStateException()
                 .isThrownBy(() -> pins.drop(5))
                 .withMessageContaining("Remain pin count must be greater than dropping pin count.");
     }

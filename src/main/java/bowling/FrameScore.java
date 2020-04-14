@@ -33,7 +33,7 @@ public class FrameScore {
         return Score.sum(scores);
     }
 
-    public boolean isCount(final int count) {
+    public boolean isSameScoreCount(final int count) {
         return scores.size() == count;
     }
 

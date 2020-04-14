@@ -14,7 +14,7 @@ public class BowlingFrames {
     }
 
     public boolean isAllFrameOver() {
-        if (lastBowledFrame().isOver()) {
+        if (getLastBowledFrame().isOver()) {
             return frames.size() == MAX_BOWLING_FRAME_SIZE;
         }
 
@@ -22,26 +22,34 @@ public class BowlingFrames {
     }
 
     public void bowl(final int pinCount) {
-        BowlingFrame bowlingFrame = lastBowledFrame();
+        validateBowlable();
+
+        BowlingFrame bowlingFrame = getLastBowledFrame();
         bowlingFrame.bowl(pinCount);
 
         if (bowlingFrame.isOver() && frames.size() < MAX_BOWLING_FRAME_SIZE) {
-            frames.add(nextFrame());
+            frames.add(getNextFrame());
         }
     }
 
-    private BowlingFrame nextFrame() {
+    private void validateBowlable() {
+        if (isAllFrameOver()) {
+            throw new IllegalStateException("The bowling Game is Over.");
+        }
+    }
+
+    private BowlingFrame getNextFrame() {
         if (frames.size() == MAX_BOWLING_FRAME_SIZE - 1) {
             return LastBowlingFrame.newInstance();
         }
         return CommonBowlingFrame.newInstance();
     }
 
-    private BowlingFrame lastBowledFrame() {
+    private BowlingFrame getLastBowledFrame() {
         return frames.get(frames.size() - 1);
     }
 
-    public int count() {
+    public int size() {
         return frames.size();
     }
 

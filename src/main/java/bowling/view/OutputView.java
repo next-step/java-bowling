@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static bowling.BowlingFrames.MAX_BOWLING_FRAME_SIZE;
-
 public class OutputView {
 
     private static final String FRAME_DELIMITER = " | ";
@@ -20,6 +18,7 @@ public class OutputView {
     private static final String GAME_FRAME_SCORE_FORMAT = "%-4s";
     private static final String GAME_FRAME_SCORE_EMPTY_FORMAT = "    ";
     private static final String GAME_FIRST_ROW;
+    private static final int MAX_BOWLING_FRAME_SIZE = 10;
 
     static {
         List<String> frames = IntStream.range(0, MAX_BOWLING_FRAME_SIZE)

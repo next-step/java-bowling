@@ -38,7 +38,7 @@ public class FrameScoreTests {
     @Test
     public void countFrameScoreTest() {
         FrameScore frameScore = FrameScore.newInstance(Arrays.asList(1, 2));
-        assertTrue(frameScore.isCount(2));
+        assertTrue(frameScore.isSameScoreCount(2));
     }
 
     @DisplayName("FrameScore strike 테스트")

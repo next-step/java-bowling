@@ -22,38 +22,38 @@ public class LastBowlingFrame implements BowlingFrame {
         validateBowl();
         frameScore.add(pins.drop(scoreCount));
 
-        if (!frameScore.isCount(MAX_LAST_FRAME_BOWLABLE_COUNT) && pins.isRemain(MIN_PIN_COUNT)) {
+        if (!frameScore.isSameScoreCount(MAX_LAST_FRAME_BOWLABLE_COUNT) && pins.isRemain(MIN_PIN_COUNT)) {
             pins.reset();
         }
     }
 
     private void validateBowl() {
-        if (frameScore.isCount(MAX_LAST_FRAME_BOWLABLE_COUNT - 1) && !canBowlOneMore()) {
-            throw new RuntimeException("Can not bowl the third.");
+        if (frameScore.isSameScoreCount(MAX_LAST_FRAME_BOWLABLE_COUNT - 1) && !canBowlOneMore()) {
+            throw new IllegalStateException("Can not bowl the third.");
         }
     }
 
     @Override
     public boolean isOver() {
-        if (frameScore.isCount(MAX_LAST_FRAME_BOWLABLE_COUNT)) {
+        if (frameScore.isSameScoreCount(MAX_LAST_FRAME_BOWLABLE_COUNT)) {
             return true;
         }
 
-        if (frameScore.isCount(MAX_LAST_FRAME_BOWLABLE_COUNT - 1)) {
+        if (frameScore.isSameScoreCount(MAX_LAST_FRAME_BOWLABLE_COUNT - 1)) {
             return !canBowlOneMore();
         }
 
         return false;
     }
 
-    @Override
-    public int sum() {
-        return frameScore.sum();
-    }
-
     private boolean canBowlOneMore() {
         FrameScoreResult frameScoreResult = frameScore.getResult();
         return frameScoreResult == FrameScoreResult.STRIKE || frameScoreResult == FrameScoreResult.SPARE;
+    }
+
+    @Override
+    public int sum() {
+        return frameScore.sum();
     }
 
     @Override

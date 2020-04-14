@@ -24,7 +24,7 @@ public class CommonBowlingFrame implements BowlingFrame {
 
     @Override
     public boolean isOver() {
-        return pins.isRemain(MIN_PIN_COUNT) || frameScore.isCount(MAX_COMMON_FRAME_BOWLABLE_COUNT);
+        return pins.isRemain(MIN_PIN_COUNT) || frameScore.isSameScoreCount(MAX_COMMON_FRAME_BOWLABLE_COUNT);
     }
 
     @Override

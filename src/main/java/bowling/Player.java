@@ -21,12 +21,16 @@ public class Player {
     }
 
     private static void validate(final String name) {
+        validateNull(name);
+        validateFormat(name);
+    }
+
+    private static void validateNull(String name) {
         if (Objects.isNull(name)) {
             throw new IllegalArgumentException("Player name is null");
         }
-
-        validateFormat(name);
     }
+
 
     private static void validateFormat(final String name) {
         Matcher matcher = NAME_VALIDATE_PATTERN.matcher(name);
