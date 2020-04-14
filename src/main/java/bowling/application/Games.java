@@ -4,8 +4,11 @@ import bowling.domain.state.Pin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Games {
+
+    private static final int GAME_END = 1;
 
     private List<Game> games;
     private List<Response> responses;
@@ -16,14 +19,36 @@ public class Games {
     }
 
     public void bowl(Pin pin) {
-        for (Game game : games) {
-            if (isSameByFrameNumber(game.getFrameNumber())) {
-                game.bowl(pin);
-                return;
+        if (currentFrameNumber <= 9) {
+            for (Game game : games) {
+                if (isSameByFrameNumber(game.getFrameNumber())) {
+                    game.bowl(pin);
+                    return;
+                }
+            }
+            games.get(0).bowl(pin);
+            increaseNumber();
+            return;
+        } else {
+            for (Game game : games) {
+                if (!game.getResponse().isEnd()) {
+                    game.bowl(pin);
+                    return;
+                }
             }
         }
-        games.get(0).bowl(pin);
-        increaseNumber();
+
+        end();
+    }
+
+    private void end() {
+        int size = games.stream()
+                .map(game -> game.getResponse().isEnd())
+                .collect(Collectors.toSet())
+                .size();
+        if (size == GAME_END) {
+            throw new IllegalArgumentException("끝");
+        }
     }
 
     private boolean isSameByFrameNumber(int frameNumber) {
