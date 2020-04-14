@@ -22,6 +22,11 @@ public class Playing implements State{
         return new Miss(felledPin, newFelledPin);
     }
 
+    @Override
+    public boolean isEndedState() {
+        return false;
+    }
+
     private void assertNewFelledPin(int newFelledPin) {
         if(felledPin + newFelledPin > MAX_FELLED_PIN_COUNT) {
             throw new IllegalArgumentException(WRONG_FELLED_PIN);

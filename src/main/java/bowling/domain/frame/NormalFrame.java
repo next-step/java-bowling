@@ -45,6 +45,16 @@ public class NormalFrame implements Frame {
         return frameNumber;
     }
 
+    @Override
+    public boolean isEndedFrame() {
+        return state.isEndedState();
+    }
+
+    @Override
+    public boolean isLastFrame() {
+        return false;
+    }
+
     private void assertFelledPin(int felledPin) {
         if(felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
             throw new IllegalArgumentException(WRONG_FELLED_PIN);

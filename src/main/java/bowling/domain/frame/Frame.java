@@ -12,4 +12,7 @@ public interface Frame {
 
     int getFrameNumber();
 
+    boolean isEndedFrame();
+
+    boolean isLastFrame();
 }

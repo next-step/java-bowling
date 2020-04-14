@@ -19,7 +19,6 @@ public class FinalFrame implements Frame {
 
     public void play(int felledPin) {
         assertFelledPin(felledPin);
-        assertFelledPin(felledPin);
         state = state.play(felledPin);
     }
 
@@ -36,6 +35,16 @@ public class FinalFrame implements Frame {
     @Override
     public int getFrameNumber() {
         return FINAL_FRAME_NO;
+    }
+
+    @Override
+    public boolean isEndedFrame() {
+        return state.isEndedState();
+    }
+
+    @Override
+    public boolean isLastFrame() {
+        return state.isEndedState();
     }
 
     private void assertFelledPin(int felledPin) {

@@ -14,4 +14,9 @@ public class Gutter implements State {
 
         return new Miss(MIN_FELLED_PIN_COUNT, newFelledPin);
     }
+
+    @Override
+    public boolean isEndedState() {
+        return false;
+    }
 }

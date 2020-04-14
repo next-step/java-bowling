@@ -7,4 +7,9 @@ public class Strike implements State {
     public State play(int newFelledPin) {
         throw new IllegalStateException(STRIKE_CAN_NOT_PLAY_ERROR);
     }
+
+    @Override
+    public boolean isEndedState() {
+        return true;
+    }
 }

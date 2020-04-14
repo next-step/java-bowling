@@ -15,4 +15,9 @@ public class Miss implements State {
     public State play(int newFelledPin) {
         throw new IllegalStateException(MISS_CAN_NOT_PLAY_ERROR);
     }
+
+    @Override
+    public boolean isEndedState() {
+        return true;
+    }
 }

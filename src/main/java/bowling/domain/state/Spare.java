@@ -15,4 +15,9 @@ public class Spare implements State {
     public State play(int newFelledPin) {
         throw new IllegalStateException(SPARE_CAN_NOT_PLAY_ERROR);
     }
+
+    @Override
+    public boolean isEnded() {
+        return true;
+    }
 }
