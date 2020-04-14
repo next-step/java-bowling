@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 public class BowlingGameResult {
 
     private final String name;
-    private final List<FrameScoreResult> frameScoreResults;
+    private final List<FrameScoreConsoleResult> frameScoreConsoleResults;
 
-    private BowlingGameResult(final String name, final List<FrameScoreResult> frameScoreResults) {
+    private BowlingGameResult(final String name, final List<FrameScoreConsoleResult> frameScoreConsoleResults) {
         this.name = name;
-        this.frameScoreResults = frameScoreResults;
+        this.frameScoreConsoleResults = frameScoreConsoleResults;
     }
 
     public static BowlingGameResult newInstance(final BowlingGame bowlingGame) {
@@ -22,19 +22,19 @@ public class BowlingGameResult {
 
         BowlingFrames bowlingFrames = bowlingGame.getBowlingFrames();
 
-        List<FrameScoreResult> frameScoreResults = bowlingFrames.getFrames()
+        List<FrameScoreConsoleResult> frameScoreConsoleResults = bowlingFrames.getFrames()
                 .stream()
-                .map(bowlingFrame -> FrameScoreResult.newInstance(bowlingFrame.getFrameScore()))
+                .map(bowlingFrame -> FrameScoreConsoleResult.newInstance(bowlingFrame.getFrameScore()))
                 .collect(Collectors.toList());
 
-        return new BowlingGameResult(player.getName(), frameScoreResults);
+        return new BowlingGameResult(player.getName(), frameScoreConsoleResults);
     }
 
     public String getName() {
         return name;
     }
 
-    public List<FrameScoreResult> getFrameScores() {
-        return frameScoreResults;
+    public List<FrameScoreConsoleResult> getFrameScores() {
+        return frameScoreConsoleResults;
     }
 }

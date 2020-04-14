@@ -47,6 +47,11 @@ public class Score {
         return Objects.hash(score);
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(score);
+    }
+
     public int getScore() {
         return score;
     }
