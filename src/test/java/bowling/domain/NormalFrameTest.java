@@ -57,6 +57,6 @@ class NormalFrameTest {
         NormalFrame next = frame.bowl(3);
 
         //then
-        assertThat(next.getTurns().size()).isEqualTo(2);
+        assertThat(next.getTurns().size()).isEqualTo(1);
     }
 }

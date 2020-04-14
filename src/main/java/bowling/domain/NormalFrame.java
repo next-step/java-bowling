@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.turn.Turn;
 import bowling.domain.turn.TurnState;
 import bowling.domain.turn.Turns;
 import bowling.exception.BowlingException;
@@ -51,11 +50,12 @@ public class NormalFrame implements Frame {
     public NormalFrame bowl(final int pinCount) {
         Turns turns = this.turns.bowl(pinCount);
         TurnState next = turnState.getNextTurnState();
+        NormalFrame frame = null;
 
-        System.out.println(frameNumber);
         if (turns.size() == 2 && frameNumber < 10) {
-            return new NormalFrame(turns, frameNumber, NormalFrame.from(frameNumber + 1), next);
+            frame = NormalFrame.from(frameNumber + 1);
         }
+
         return new NormalFrame(turns, frameNumber, null, next);
     }
 
