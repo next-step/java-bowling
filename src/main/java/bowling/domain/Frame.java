@@ -42,5 +42,4 @@ public class Frame {
                 .mapToInt(Point::getPoint)
                 .sum();
     }
-
 }
