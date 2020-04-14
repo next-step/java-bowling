@@ -42,6 +42,7 @@ public class FramesTest {
         frames.play(10);
         frames.play(9);
         frames.play(1);
+        frames.play(10);
 
         assertThat(frames.isEnd()).isTrue();
     }

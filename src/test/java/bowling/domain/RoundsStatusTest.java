@@ -11,27 +11,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RoundsStatusTest {
     @ParameterizedTest
-    @CsvSource(value = {"10:STRIKE", "8:NONE"}, delimiter = ':')
-    void firstRoundStatus(int value, RoundsStatus expected) {
-        assertThat(RoundsStatus.firstRoundStatus(value)).isEqualTo(expected);
-    }
-
-    @Test
-    void firstRoundStatus_exception() {
-        assertThatThrownBy(() -> RoundsStatus.firstRoundStatus(11))
-                .isInstanceOf(BowlingException.class)
-                .hasMessageContaining(ExceptionType.INVALID_CLEAR_PIN_COUNT.getErrorMessage());
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"10:SPARE", "8:MISS"}, delimiter = ':')
-    void getRoundStatus(int value, RoundsStatus expected) {
-        assertThat(RoundsStatus.getRoundStatus(value)).isEqualTo(expected);
+    @CsvSource(value = {"0:1:NONE", "0:10:STRIKE", "1:10:SPARE", "1:8:MISS"}, delimiter = ':')
+    void getRoundStatus(int index, int value, RoundsStatus expected) {
+        assertThat(RoundsStatus.getRoundStatus(index, value)).isEqualTo(expected);
     }
 
     @Test
     void getRoundStatus_exception() {
-        assertThatThrownBy(() -> RoundsStatus.getRoundStatus(11))
+        assertThatThrownBy(() -> RoundsStatus.getRoundStatus(0, 11))
                 .isInstanceOf(BowlingException.class)
                 .hasMessageContaining(ExceptionType.INVALID_CLEAR_PIN_COUNT.getErrorMessage());
     }
