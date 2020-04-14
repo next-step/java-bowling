@@ -7,10 +7,10 @@ public class FinalFrame implements Frame {
     private static final int MAX_PIN_COUNT_SIZE = 3;
     private static final int MIN_PIN_COUNT_FOR_THIRD = 10;
 
-    private PinCounts pinCounts;
+    private Pitches pitches;
 
     public FinalFrame() {
-        pinCounts = new PinCounts();
+        pitches = new Pitches();
     }
 
     @Override public boolean addPinCount(int pinCount) {
@@ -18,7 +18,7 @@ public class FinalFrame implements Frame {
             return false;
         }
 
-        return pinCounts.add(pinCount);
+        return pitches.add(pinCount);
     }
 
     private boolean isAddable(int pinCount) {
@@ -30,40 +30,40 @@ public class FinalFrame implements Frame {
             return true;
         }
 
-        Optional<PinCount> lastPinCount = pinCounts.getLast();
+        Optional<Pitch> lastPinCount = pitches.getLast();
         return lastPinCount.map(pc -> !pc.isOverMaxAfterAdd(pinCount))
                 .orElse(true);
     }
 
     private boolean hasThirdChance() {
-        PinCount firstPinCount = pinCounts.getFirst()
-                .orElse(PinCount.empty());
-        PinCount secondPinCount = pinCounts.getSecond()
-                .orElse(PinCount.empty());
+        Pitch firstPitch = pitches.getFirst()
+                .orElse(Pitch.empty());
+        Pitch secondPitch = pitches.getSecond()
+                .orElse(Pitch.empty());
 
-        if (firstPinCount.isStrike()) {
+        if (firstPitch.isStrike()) {
             return true;
-        } else return secondPinCount.isSpare();
+        } else return secondPitch.isSpare();
     }
 
     private boolean isPinCountsFull() {
-        return pinCounts.size() == MAX_PIN_COUNT_SIZE;
+        return pitches.size() == MAX_PIN_COUNT_SIZE;
     }
 
     @Override public int getScore() {
-        return pinCounts.getPinCountTotal();
+        return pitches.getPinCountTotal();
     }
 
     @Override public boolean isDone() {
         if (isPinCountsFull()) {
             return true;
         }
-        return pinCounts.size() == 2 &&
-                pinCounts.getPinCountTotal() < MIN_PIN_COUNT_FOR_THIRD;
+        return pitches.size() == 2 &&
+                pitches.getPinCountTotal() < MIN_PIN_COUNT_FOR_THIRD;
     }
 
-    @Override public List<PinCount> getPinCounts() {
-        return pinCounts.getPinCounts();
+    @Override public List<Pitch> getPitches() {
+        return pitches.getPitches();
     }
 
     @Override public Frame createNext() {

@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.frame.PinCountTest;
+import bowling.domain.frame.PitchTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,8 +40,8 @@ public class GameTest {
         game.addPin(second);
 
         assertThat(game.getFramePinCounts(0))
-                .containsExactly(PinCountTest.PIN_COUNT_1,
-                        PinCountTest.PIN_COUNT_2);
+                .containsExactly(PitchTest.PIN_COUNT_1,
+                        PitchTest.PIN_COUNT_2);
     }
 
     @DisplayName("현재 프레임 정보를 얻어온다")

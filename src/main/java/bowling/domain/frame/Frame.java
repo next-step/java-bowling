@@ -9,7 +9,7 @@ public interface Frame {
 
     boolean isDone();
 
-    List<PinCount> getPinCounts();
+    List<Pitch> getPitches();
 
     Frame createNext();
 

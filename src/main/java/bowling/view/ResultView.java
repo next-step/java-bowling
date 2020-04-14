@@ -1,7 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Game;
-import bowling.domain.frame.PinCount;
+import bowling.domain.frame.Pitch;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,8 +40,8 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void displayPinCounts(List<PinCount> pinCounts) {
-        String stringPinCounts = pinCounts.stream()
+    private static void displayPinCounts(List<Pitch> pitches) {
+        String stringPinCounts = pitches.stream()
                 .map(ResultView::getSymbol)
                 .collect(Collectors.joining(PIN_DELIMITER));
 
@@ -49,15 +49,15 @@ public class ResultView {
                 DELIMITER);
     }
 
-    private static String getSymbol(PinCount pinCount) {
-        if (pinCount.isStrike()) {
+    private static String getSymbol(Pitch pitch) {
+        if (pitch.isStrike()) {
             return STRIKE;
-        } else if (pinCount.isSpare()) {
+        } else if (pitch.isSpare()) {
             return SPARE;
-        } else if (pinCount.isGutter()) {
+        } else if (pitch.isGutter()) {
             return GUTTER;
         }
-        return Integer.toString(pinCount.getCount());
+        return Integer.toString(pitch.getCount());
     }
 
     private ResultView() {

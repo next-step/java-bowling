@@ -9,18 +9,18 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class PinCountTest {
-    public static final PinCount PIN_COUNT_0 = PinCount.valueOf(0);
-    public static final PinCount PIN_COUNT_1 = PinCount.valueOf(1);
-    public static final PinCount PIN_COUNT_2 = PinCount.valueOf(2);
-    public static final PinCount PIN_COUNT_3 = PinCount.valueOf(3);
-    public static final PinCount PIN_COUNT_8 = PinCount.valueOf(8);
-    public static final PinCount PIN_COUNT_10 = PinCount.valueOf(10);
+public class PitchTest {
+    public static final Pitch PIN_COUNT_0 = Pitch.valueOf(0);
+    public static final Pitch PIN_COUNT_1 = Pitch.valueOf(1);
+    public static final Pitch PIN_COUNT_2 = Pitch.valueOf(2);
+    public static final Pitch PIN_COUNT_3 = Pitch.valueOf(3);
+    public static final Pitch PIN_COUNT_8 = Pitch.valueOf(8);
+    public static final Pitch PIN_COUNT_10 = Pitch.valueOf(10);
 
     @DisplayName("점수를 저장할 수 있다.")
     @Test
     void init() {
-        assertThat(PIN_COUNT_10).isEqualTo(PinCount.valueOf(10));
+        assertThat(PIN_COUNT_10).isEqualTo(Pitch.valueOf(10));
     }
 
     @DisplayName("범위 밖의 점수를 입력하면 에러")
@@ -28,7 +28,7 @@ public class PinCountTest {
     @ValueSource(ints = {-1, 11})
     void error(int score) {
         assertThatExceptionOfType(OutOfRangeArgumentException.class)
-                .isThrownBy(() -> PinCount.valueOf(score));
+                .isThrownBy(() -> Pitch.valueOf(score));
     }
 
     @DisplayName("최대 허용 갯수까지 저장되었는지 확인한다.")
@@ -53,8 +53,8 @@ public class PinCountTest {
     @DisplayName("스페어 처리 여부를 알 수 있다.")
     @Test
     void isSpare() {
-        PinCount pinCount = PIN_COUNT_8.next(2);
-        assertThat(pinCount.isSpare()).isTrue();
+        Pitch pitch = PIN_COUNT_8.next(2);
+        assertThat(pitch.isSpare()).isTrue();
     }
 
     @DisplayName("거터 여부를 알 수 있다.")

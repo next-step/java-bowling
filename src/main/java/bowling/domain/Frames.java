@@ -3,7 +3,7 @@ package bowling.domain;
 import bowling.domain.exception.OutOfRangeArgumentException;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.frame.PinCount;
+import bowling.domain.frame.Pitch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +42,8 @@ public class Frames {
         return frames.indexOf(frame);
     }
 
-    public List<PinCount> getFramePinCounts(int index) {
-        return frames.get(index).getPinCounts();
+    public List<Pitch> getFramePinCounts(int index) {
+        return frames.get(index).getPitches();
     }
 
     public int size() {

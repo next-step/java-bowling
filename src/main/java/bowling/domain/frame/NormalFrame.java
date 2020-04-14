@@ -7,11 +7,11 @@ public class NormalFrame implements Frame {
     private static final int MAX_PIN_COUNT_SIZE = 2;
     private static final int MAX_PIN_COUNT = 10;
 
-    private PinCounts pinCounts;
+    private Pitches pitches;
     private Frame next;
 
     public NormalFrame() {
-        pinCounts = new PinCounts();
+        pitches = new Pitches();
     }
 
     @Override public boolean addPinCount(int pinCount) {
@@ -23,7 +23,7 @@ public class NormalFrame implements Frame {
             return false;
         }
 
-        return pinCounts.add(pinCount);
+        return pitches.add(pinCount);
     }
 
     private boolean isAddable(int pinCount) {
@@ -31,7 +31,7 @@ public class NormalFrame implements Frame {
             return false;
         }
 
-        Optional<PinCount> firstPinCount = pinCounts.getFirst();
+        Optional<Pitch> firstPinCount = pitches.getFirst();
         return firstPinCount.map(count -> !count.isOverMaxAfterAdd(pinCount))
                 .orElse(true);
     }
@@ -42,11 +42,11 @@ public class NormalFrame implements Frame {
     }
 
     private boolean isPinCountsFull() {
-        return pinCounts.size() == MAX_PIN_COUNT_SIZE;
+        return pitches.size() == MAX_PIN_COUNT_SIZE;
     }
 
     @Override public int getScore() {
-        return pinCounts.getPinCountTotal();
+        return pitches.getPinCountTotal();
     }
 
     @Override public boolean isDone() {
@@ -54,11 +54,11 @@ public class NormalFrame implements Frame {
             return true;
         }
 
-        return pinCounts.getPinCountTotal() == MAX_PIN_COUNT;
+        return pitches.getPinCountTotal() == MAX_PIN_COUNT;
     }
 
-    @Override public List<PinCount> getPinCounts() {
-        return pinCounts.getPinCounts();
+    @Override public List<Pitch> getPitches() {
+        return pitches.getPitches();
     }
 
     @Override public Frame getNext() {

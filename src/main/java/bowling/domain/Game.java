@@ -1,7 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.PinCount;
+import bowling.domain.frame.Pitch;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class Game {
         return this;
     }
 
-    public List<PinCount> getFramePinCounts(int frameIndex) {
+    public List<Pitch> getFramePinCounts(int frameIndex) {
         return frames.getFramePinCounts(frameIndex);
     }
 
