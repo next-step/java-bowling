@@ -1,8 +1,9 @@
 package bowling.domain.state;
 
-public class Spare implements State {
-    public static final String SPARE_CAN_NOT_PLAY_ERROR = "Spare 상태입니다. 프레임이 종료되어 플레이할 수 없습니다.";
+import static bowling.Constants.*;
+import static bowling.Constants.WRONG_FELLED_PIN;
 
+public class Spare implements State {
     private static final String TEXT = "/";
 
     private int lastPlayPoint;
@@ -15,7 +16,16 @@ public class Spare implements State {
 
     @Override
     public State play(int newFelledPin) {
-        throw new IllegalStateException(SPARE_CAN_NOT_PLAY_ERROR);
+        assertFirstFelledPin(newFelledPin);
+
+        if(newFelledPin == MAX_FELLED_PIN_COUNT) {
+            return new Strike();
+        }
+        if(newFelledPin == ZERO) {
+            return new Gutter();
+        }
+
+        return new Playing(newFelledPin);
     }
 
     @Override
@@ -28,8 +38,9 @@ public class Spare implements State {
         return TEXT;
     }
 
-    @Override
-    public boolean canAdditionalFrame() {
-        return true;
+    private void assertFirstFelledPin(int felledPin) {
+        if(felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
+            throw new IllegalArgumentException(WRONG_FELLED_PIN);
+        }
     }
 }

@@ -14,7 +14,8 @@ public class Playing implements State{
     @Override
     public State play(int newFelledPin) {
         assertNewFelledPin(newFelledPin);
-        
+
+        System.out.println(felledPin + newFelledPin);
         if(felledPin + newFelledPin == MAX_FELLED_PIN_COUNT) {
             return new Spare(felledPin, newFelledPin);
         }
@@ -30,11 +31,6 @@ public class Playing implements State{
     @Override
     public String getString() {
         return String.valueOf(felledPin);
-    }
-
-    @Override
-    public boolean canAdditionalFrame() {
-        return false;
     }
 
     private void assertNewFelledPin(int newFelledPin) {

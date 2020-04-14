@@ -25,9 +25,4 @@ public class Miss implements State {
     public String getString() {
         return currentPlayPoint == 0 ? Gutter.TEXT : String.valueOf(currentPlayPoint);
     }
-
-    @Override
-    public boolean canAdditionalFrame() {
-        return false;
-    }
 }

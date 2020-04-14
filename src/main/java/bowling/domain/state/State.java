@@ -6,6 +6,4 @@ public interface State {
     boolean isEndedState();
 
     String getString();
-
-    boolean canAdditionalFrame();
 }

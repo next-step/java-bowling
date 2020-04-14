@@ -31,28 +31,10 @@ public class StateTest {
     }
 
     @Test
-    @DisplayName("프레임이 완료된 상태인 Spare, Strike, Miss 상태에서 play를 수행하면 Exception을 발생한다.")
-    void playFromFinished() {
-        assertThatIllegalStateException().isThrownBy(() -> {
-            new Strike().play(0);
-        }).withMessage(Strike.STRIKE_CAN_NOT_PLAY_ERROR);
-
-        assertThatIllegalStateException().isThrownBy(() -> {
-            new Spare(3, 7).play(0);
-        }).withMessage(Spare.SPARE_CAN_NOT_PLAY_ERROR);
-
-        assertThatIllegalStateException().isThrownBy(() -> {
-            new Miss(3, 4).play(0);
-        }).withMessage(Miss.MISS_CAN_NOT_PLAY_ERROR);
-    }
-
-    @Test
     @DisplayName("프레임의 두번째 투구는 첫번째 투구와 합하여 10 이상이 될 수 없다.")
     void assertSecondFelledPin() {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             new Playing(8).play(10);
         }).withMessage(WRONG_FELLED_PIN);
     }
-
-
 }
