@@ -6,7 +6,6 @@ import bowling.domain.score.Scores;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 마지막 프레임을 나타내기 위한 객체
@@ -20,8 +19,8 @@ public class LastFrame implements Frame {
     private static final int FIRST_PLAY = 0;
     private static final int SECOND_PLAY = 1;
 
-    private Scores scores;
-    private List<BonusScore> bonusScores;
+    private final Scores scores;
+    private final List<BonusScore> bonusScores;
 
     public LastFrame(List<BonusScore> bonusScores) {
         this.scores = new Scores();
@@ -38,7 +37,7 @@ public class LastFrame implements Frame {
             validateThirdPoint(point);
         }
 
-        scores.add(Score.lastScore(scores, point));
+        scores.add(Score.lastFrameScore(scores, point));
         addBonusScore(point);
     }
 

@@ -10,8 +10,8 @@ public class Score {
     private static final int FIRST_PLAY = 0;
     private static final int SECOND_PLAY = 1;
 
-    private ScoreType scoreType;
-    private int point;
+    private final ScoreType scoreType;
+    private final int point;
 
     private Score(ScoreType scoreType, int point) {
         validatePoint(point);
@@ -30,7 +30,7 @@ public class Score {
         }
     }
 
-    public static Score defaultScore(Scores scores, int point) {
+    public static Score defaultFrameScore(Scores scores, int point) {
         return new Score(generateDefaultScoreType(scores, point), point);
     }
 
@@ -41,7 +41,7 @@ public class Score {
         return getSpareOrGutterType(scores, point);
     }
 
-    public static Score lastScore(Scores scores, int point) {
+    public static Score lastFrameScore(Scores scores, int point) {
         return new Score(generateLastScoreType(scores, point), point);
     }
 

@@ -64,7 +64,7 @@ public class DefaultFrame implements Frame {
         if (scores.currentPoint() + point > STRIKE_POINT) {
             throw new IllegalArgumentException("한 프레임의 포인트는 10점을 넘을수 없습니다.");
         }
-        scores.add(Score.defaultScore(scores, point));
+        scores.add(Score.defaultFrameScore(scores, point));
         addBonusScore(point);
     }
 
