@@ -35,14 +35,14 @@ public class StateTest {
     void playFromFinished() {
         assertThatIllegalStateException().isThrownBy(() -> {
             new Strike().play(0);
-        }).withMessage("프레임이 종료되어 플레이할 수 없습니다.");
+        }).withMessage(Strike.STRIKE_CAN_NOT_PLAY_ERROR);
 
         assertThatIllegalStateException().isThrownBy(() -> {
             new Spare(3, 7).play(0);
-        }).withMessage("프레임이 종료되어 플레이할 수 없습니다.");
+        }).withMessage(Spare.SPARE_CAN_NOT_PLAY_ERROR);
 
         assertThatIllegalStateException().isThrownBy(() -> {
             new Miss(3, 4).play(0);
-        }).withMessage("프레임이 종료되어 플레이할 수 없습니다.");
+        }).withMessage(Miss.MISS_CAN_NOT_PLAY_ERROR);
     }
 }

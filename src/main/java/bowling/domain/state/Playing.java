@@ -11,11 +11,11 @@ public class Playing implements State{
     }
 
     @Override
-    public State play(int felledPin) {
-        if(this.felledPin + felledPin == MAX_FELLED_PIN_COUNT) {
-            return new Spare(this.felledPin, felledPin);
+    public State play(int newFelledPin) {
+        if(felledPin + newFelledPin == MAX_FELLED_PIN_COUNT) {
+            return new Spare(felledPin, newFelledPin);
         }
 
-        return new Miss(this.felledPin, felledPin);
+        return new Miss(felledPin, newFelledPin);
     }
 }

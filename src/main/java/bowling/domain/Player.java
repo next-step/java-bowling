@@ -1,4 +1,4 @@
-package bowling.domain.state;
+package bowling.domain;
 
 public class Player {
     public static final String PLAYER_NAME_ERROR = "플레이어의 이름은 3글자로 입력해주세요.";
