@@ -10,18 +10,17 @@ public enum RoundsStatus {
     MISS;
 
     public static final int MAX_CLEAR_PIN_COUNT = 10;
+    private static final int ZERO = 0;
 
-    public static RoundsStatus firstRoundStatus(int firstClearPinCount) {
-        validClearPinCount(firstClearPinCount);
-
-        if (firstClearPinCount == MAX_CLEAR_PIN_COUNT) {
-            return STRIKE;
-        }
-
-        return NONE;
+    public boolean isNone() {
+        return this == NONE;
     }
 
-    public static RoundsStatus getRoundStatus(int totalClearPinCount) {
+    public static RoundsStatus getRoundStatus(int roundIndex, int totalClearPinCount) {
+        if (roundIndex == ZERO) {
+            return firstRoundStatus(totalClearPinCount);
+        }
+
         if (totalClearPinCount == MAX_CLEAR_PIN_COUNT) {
             return SPARE;
         }
@@ -29,16 +28,22 @@ public enum RoundsStatus {
         return MISS;
     }
 
-    public static boolean isStrike(RoundsStatus status) {
-        return status == STRIKE;
+    public boolean isStrike() {
+        return this == STRIKE;
     }
 
-    public static boolean isSpare(RoundsStatus status) {
-        return status == SPARE;
+    public boolean isSpare() {
+        return this == SPARE;
     }
 
-    public static boolean isNone(RoundsStatus status) {
-        return status == NONE;
+    private static RoundsStatus firstRoundStatus(int firstClearPinCount) {
+        validClearPinCount(firstClearPinCount);
+
+        if (firstClearPinCount == MAX_CLEAR_PIN_COUNT) {
+            return STRIKE;
+        }
+
+        return NONE;
     }
 
     private static void validClearPinCount(int clearPinCount) {

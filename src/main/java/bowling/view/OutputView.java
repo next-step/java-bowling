@@ -85,7 +85,7 @@ public class OutputView {
             return STRIKE_SIGN;
         }
 
-        if (roundIndex != ZERO && RoundsStatus.isSpare(status)) {
+        if (roundIndex != ZERO && status.isSpare()) {
             return SPARE_SIGN;
         }
 

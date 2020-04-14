@@ -13,24 +13,25 @@ public class Frames {
 
     public void play(int clearPinCount) {
         if (frames.isEmpty()) {
-            frames.add(Frame.fistFrame(clearPinCount));
+            Frame frame = Frame.fistFrame();
+            frame.roundPlay(clearPinCount);
+
+            frames.add(frame);
             return;
         }
 
         Frame frame = lastFrame();
-
         if (frame.isEndFrame()) {
-            frame = frame.next(clearPinCount);
-            frames.add(frame);
+            frame = frame.next();
 
-            return;
+            frames.add(frame);
         }
 
         frame.roundPlay(clearPinCount);
     }
 
     public boolean isEnd() {
-        if(frames.size() >= FRAME_NUMBER) {
+        if (frames.size() >= FRAME_NUMBER) {
             return lastFrame().isEndFrame();
         }
 

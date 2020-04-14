@@ -19,11 +19,7 @@ public class InputView {
     }
 
     public int inputClearPin(int frameNumber) {
-        if (frameNumber == 0) {
-            frameNumber++;
-        }
-
-        System.out.printf(CLEAR_PIN, frameNumber);
+        System.out.printf(CLEAR_PIN, ++frameNumber);
 
         return scanner.nextInt();
     }

@@ -12,30 +12,23 @@ public class FrameRounds {
     @Getter
     private List<FrameRound> frameRounds;
 
-    private FrameRounds(List<FrameRound> frameRounds, RoundsStatus status) {
-        this.frameRounds = frameRounds;
-        this.status = status;
+    public FrameRounds() {
+        this.status = RoundsStatus.NONE;
+        this.frameRounds = new ArrayList<>();
     }
 
     public void play(int clearCount) {
-        frameRounds.add(new FrameRound(this.frameRounds.size(), clearCount));
+        int roundIndex = this.frameRounds.size();
+        frameRounds.add(new FrameRound(roundIndex, clearCount));
 
-        if (RoundsStatus.isNone(this.status)) {
-            this.status = RoundsStatus.getRoundStatus(totalClearPinCount());
+        if (this.status.isNone()) {
+            this.status = RoundsStatus.getRoundStatus(roundIndex, totalClearPinCount());
         }
-    }
-
-    public static FrameRounds of(int clearPinCount) {
-        List<FrameRound> frameRounds = new ArrayList<>();
-        frameRounds.add(new FrameRound(0, clearPinCount));
-
-        RoundsStatus status = RoundsStatus.firstRoundStatus(clearPinCount);
-        return new FrameRounds(frameRounds, status);
     }
 
     public boolean isEnd(boolean isLastFrame) {
         if (isLastFrame
-                && (RoundsStatus.isStrike(this.status) || RoundsStatus.isSpare(this.status))
+                && (this.status.isStrike() || this.status.isSpare())
                 && !isMaxRoundSize(this.frameRounds.size())) {
             return false;
         }
