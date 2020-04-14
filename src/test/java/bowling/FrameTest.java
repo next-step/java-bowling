@@ -45,12 +45,11 @@ public class FrameTest {
     void assertSecondFalledPinl() {
         Frame frame = new NormalFrame(1);
         int firstFalledPin = 2;
-
-        Frame secondFrame = frame.play(firstFalledPin);
         int secondFalledPin = 9;
 
+        frame.play(firstFalledPin);
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            secondFrame.play(secondFalledPin);
+            frame.play(secondFalledPin);
         }).withMessage("넘어뜨린 핀의 개수가 알맞지 않습니다.");
     }
 
@@ -72,9 +71,11 @@ public class FrameTest {
     @DisplayName("Strike 했을 시 한번만 투구했어도 새로운 Frame을 생성한다.")
     void playStrike() {
         Frame frame = new NormalFrame(1);
-        Frame next = frame.play(10);
 
-        assertThat(next.getNo()).isEqualTo(2);
+        frame.play(10);
+
+        Frame nextFrame = frame.getNext();
+        assertThat(nextFrame.getNo()).isEqualTo(2);
     }
 
     @Test
@@ -82,9 +83,10 @@ public class FrameTest {
     void playNotStrike() {
         Frame frame = new NormalFrame(1);
 
-        Frame next = frame.play(1);
-        assertThat(next.getNo()).isEqualTo(1);
-        next = next.play(0);
-        assertThat(next.getNo()).isEqualTo(2);
+        frame.play(1);
+        frame.play(0);
+
+        Frame nextFrame = frame.getNext();
+        assertThat(nextFrame.getNo()).isEqualTo(2);
     }
 }
