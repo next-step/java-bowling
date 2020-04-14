@@ -31,15 +31,8 @@ public class Answers {
     }
 
     public List<DeleteHistory> delete() {
-        answers.forEach(Answer::delete);
-
-        return getDeleteHistories();
-    }
-
-    private List<DeleteHistory> getDeleteHistories() {
         return answers.stream()
-                .filter(Answer::isDeleted)
-                .map(Answer::toDeleteHistory)
+                .map(Answer::delete)
                 .collect(Collectors.toList());
     }
 }
