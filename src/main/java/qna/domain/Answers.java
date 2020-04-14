@@ -8,16 +8,21 @@ import java.util.List;
 public class Answers {
     private List<Answer> answers;
 
-    public Answers(List<Answer> answers)  {
+    public Answers(List<Answer> answers) {
         this.answers = new ArrayList<>(answers);
     }
 
-    public void validateOwnerCheck(User loginUser) throws CannotDeleteException{
-        for (Answer answer : this.answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        for (Answer answer : answers) {
+            deleteHistories.add(answer.delete(loginUser));
         }
+        return deleteHistories;
+    }
+
+    public boolean isDeletable(User loginUser) {
+        return answers.stream()
+                .allMatch(answer -> answer.isOwner(loginUser));
     }
 
 }
