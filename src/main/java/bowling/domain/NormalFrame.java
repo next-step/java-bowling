@@ -10,32 +10,19 @@ public class NormalFrame implements Frame {
     private static final int MIN_FRAME_NUMBER = 1;
     private static final int MAX_FRAME_NUMBER = 10;
 
-    private final Score score;
-    private final Result result;
-    private final Pins pins;
-
     private final Turn turn;
     private final int frameNumber;
     private final Frame nextFrame;
 
-    public NormalFrame(Turn turn, int frameNumber, Frame nextFrame,
-                       Score score, Pins pins, Result result) {
+    public NormalFrame(Turn turn, int frameNumber, Frame nextFrame) {
         validateFrameNumber(frameNumber);
         this.turn = turn;
         this.frameNumber = frameNumber;
         this.nextFrame = nextFrame;
-        this.score = score;
-        this.pins = pins;
-        this.result = result;
     }
 
     public static NormalFrame from() {
-        return new NormalFrame(Turn.FIRST,
-                ZERO,
-                null,
-                Score.from(),
-                Pins.from(),
-                Result.READY);
+        return new NormalFrame(Turn.from(), ZERO, null);
     }
 
     public void validateFrameNumber(int frameNumber) {

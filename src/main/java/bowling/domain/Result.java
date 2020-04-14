@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.turn.Turn;
+import bowling.domain.turn.TurnState;
 import bowling.exception.BowlingException;
 
 import java.util.function.Function;
@@ -25,20 +25,20 @@ public enum Result {
         return String.valueOf(showStateDisplay.apply(count));
     }
 
-    public static Result checkStatue(Turn turn, int pinCount) {
-        if (turn == Turn.FIRST && pinCount == 0) {
+    public static Result checkStatue(TurnState turnState, int pinCount) {
+        if (turnState == TurnState.FIRST && pinCount == 0) {
             return Result.STRIKE;
         }
 
-        if (turn == Turn.SECOND && pinCount == 0) {
+        if (turnState == TurnState.SECOND && pinCount == 0) {
             return Result.SPARE;
         }
 
-        if (turn == Turn.SECOND && pinCount == 10) {
+        if (turnState == TurnState.SECOND && pinCount == 10) {
             return Result.GUTTER;
         }
 
-        if ((turn == Turn.FIRST || turn == Turn.SECOND)
+        if ((turnState == TurnState.FIRST || turnState == TurnState.SECOND)
                 && (pinCount < 10 && pinCount > 0)) {
             return Result.MISS;
         }

@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.turn.Turn;
+import bowling.domain.turn.TurnState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,11 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ResultTest {
 
-    private Result strike = Result.checkStatue(Turn.FIRST, 0);
-    private Result spare = Result.checkStatue(Turn.SECOND, 0);
-    private Result miss1 = Result.checkStatue(Turn.FIRST, 5);
-    private Result miss2 = Result.checkStatue(Turn.SECOND, 5);
-    private Result gutter = Result.checkStatue(Turn.SECOND, 10);
+    private Result strike = Result.checkStatue(TurnState.FIRST, 0);
+    private Result spare = Result.checkStatue(TurnState.SECOND, 0);
+    private Result miss1 = Result.checkStatue(TurnState.FIRST, 5);
+    private Result miss2 = Result.checkStatue(TurnState.SECOND, 5);
+    private Result gutter = Result.checkStatue(TurnState.SECOND, 10);
 
     @DisplayName("턴과 남은 핀의 개수를 이용해 상태를 구한다")
     @Test
