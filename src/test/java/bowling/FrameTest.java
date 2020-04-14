@@ -21,15 +21,6 @@ public class FrameTest {
     }
 
     @Test
-    @DisplayName("마지막 Frame의 수는 2회 이상이 될 수 없다.")
-    void assertFinalFrameNumber() {
-        int no = 2;
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            new FinalFrame(no);
-        }).withMessage(FinalFrame.OVER_FINAL_FRAME_NO_ERROR);
-    }
-
-    @Test
     @DisplayName("프레임의 첫 투구 점수는 0이상 10 이하여야 한다.")
     void assertFirstFalledPin() {
         Frame frame = new NormalFrame(1);

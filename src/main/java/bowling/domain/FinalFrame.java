@@ -3,20 +3,17 @@ package bowling.domain;
 import bowling.Constants;
 
 public class FinalFrame implements Frame {
-    private static final int MAX_FRAME_NO = 1;
+    private static final int FINAL_FRAME_NO = 10;
     public static final String OVER_FINAL_FRAME_NO_ERROR = "마지막 Frame 입니다.";
     public static int ZERO = 0;
 
-    private int no;
     private int playCount;
     private int firstFalledPin;         // TODO: 좋지 않음
     private int secondFalledPin;
     private int thirdFalledPin;
     private State state;
 
-    public FinalFrame(int no) {
-        assertFrameNo(no);
-        this.no = no;
+    public FinalFrame() {
         this.playCount = ZERO;
         this.firstFalledPin = ZERO;
         this.secondFalledPin = ZERO;
@@ -39,7 +36,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public int getNo() {
-        return no;
+        return FINAL_FRAME_NO;
     }
 
     private void assertFalledPin(int falledPin) {
@@ -65,12 +62,6 @@ public class FinalFrame implements Frame {
         int canFalledPin = Constants.MAX_PIN_COUNT - firstFalledPin;
         if(falledPin > canFalledPin || falledPin < Constants.MIN_PIN_COUNT) {
             throw new IllegalArgumentException(Frame.WRONG_FALLED_PIN);
-        }
-    }
-
-    private void assertFrameNo(int no) {
-        if(no > MAX_FRAME_NO) {
-            throw new IllegalArgumentException(OVER_FINAL_FRAME_NO_ERROR);
         }
     }
 }

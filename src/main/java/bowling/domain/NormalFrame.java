@@ -4,7 +4,7 @@ import bowling.Constants;
 
 public class NormalFrame implements Frame {
 
-    private static final int MAX_FRAME_NO = 9;
+    private static final int MAX_NORMAL_FRAME_COUNT = 9;
     public static final String OVER_NORMAL_FRAME_NO_ERROR = "일반 Frame은 최대 9개까지만 생성할 수 있습니다.";
     private int no;
     private int playCount;
@@ -17,7 +17,7 @@ public class NormalFrame implements Frame {
         this.playCount = Constants.ZERO;
         this.firstFalledPin = Constants.ZERO;
         this.secondFalledPin = Constants.ZERO;
-    }
+}
 
     public void play(int falledPin) {
         assertFalledPin(falledPin);
@@ -26,12 +26,15 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public State getStatus() {
-        return null;
+    public Frame getNext() {
+        if(no == MAX_NORMAL_FRAME_COUNT) {
+            return new FinalFrame();
+        }
+        return new NormalFrame(no + 1);
     }
 
     @Override
-    public Frame getNext() {
+    public State getStatus() {
         return null;
     }
 
@@ -67,7 +70,7 @@ public class NormalFrame implements Frame {
     }
 
     private void assertFrameNo(int no) {
-        if(no > MAX_FRAME_NO) {
+        if(no > MAX_NORMAL_FRAME_COUNT) {
             throw new IllegalArgumentException(OVER_NORMAL_FRAME_NO_ERROR);
         }
     }
