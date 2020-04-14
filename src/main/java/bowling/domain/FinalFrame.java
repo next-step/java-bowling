@@ -23,9 +23,8 @@ public class FinalFrame implements Frame {
         this.thirdFalledPin = ZERO;
     }
 
-    public Frame play(int falledPin) {
+    public void play(int falledPin) {
         assertFalledPin(falledPin);
-        return null;
     }
 
     @Override
@@ -34,7 +33,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame nextFrame() {
+    public Frame getNext() {
         return null;
     }
 

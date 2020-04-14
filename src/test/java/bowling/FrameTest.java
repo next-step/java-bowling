@@ -40,31 +40,34 @@ public class FrameTest {
         }).withMessage(Frame.WRONG_FALLED_PIN);
     }
 
-    @Test
-    @DisplayName("프레임의 두번째 투구는 첫번째 투구와 합하여 10 이하여야 한다.")
-    void assertSecondFalledPinl() {
-        Frame frame = new NormalFrame(1);
-        int firstFalledPin = 2;
-        int secondFalledPin = 9;
+//    @Test
+//    @DisplayName("프레임의 두번째 투구는 첫번째 투구와 합하여 10 이하여야 한다.")
+//    void assertSecondFalledPin() {
+//        Frame frame = new NormalFrame(1);
+//        int firstFalledPin = 2;
+//        int secondFalledPin = 9;
+//
+//        frame.play(firstFalledPin);
+//
+//        assertThatIllegalArgumentException().isThrownBy(() -> {
+//            frame.play(secondFalledPin);
+//        }).withMessage("넘어뜨린 핀의 개수가 알맞지 않습니다.");
+//    }
 
-        frame.play(firstFalledPin);
-        assertThatIllegalArgumentException().isThrownBy(() -> {
-            frame.play(secondFalledPin);
-        }).withMessage("넘어뜨린 핀의 개수가 알맞지 않습니다.");
+    @Test
+    @DisplayName("9프레임이 안채워졌을 경우 다음 프레임은 일반 Frame을 생성해야 한다.")
+    void getNextNormalFrame() {
+        Frame frame = new NormalFrame(2);
+
+        assertThat(frame.getNext()).isInstanceOf(NormalFrame.class);
     }
 
     @Test
-    @DisplayName("Frame 생성시 첫 상태는 Ready 이다.")
-    void firstFrameState() {
-        Frame frame = new NormalFrame(1);
-        assertThat(frame.getStatus()).isEqualTo(new Ready());
-    }
+    @DisplayName("9 프레임의 일반 Frame을 모두 진행하고 나면 다음 프레임은 마지막 Frame을 생성해야 한다.")
+    void getNextFinalFrame() {
+        Frame frame = new NormalFrame(9);
 
-    @Test
-    @DisplayName("다음 Frame을 생성한다. 생성된 프레임은 이전 Frame보다 no가 1이 크다 다 ")
-    void nextFrame() {
-        Frame frame = new NormalFrame(1);
-        assertThat(frame.nextFrame().getNo()).isEqualTo(2);
+        assertThat(frame.getNext()).isInstanceOf(FinalFrame.class);
     }
 
     @Test

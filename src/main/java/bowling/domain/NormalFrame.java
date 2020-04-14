@@ -19,11 +19,10 @@ public class NormalFrame implements Frame {
         this.secondFalledPin = Constants.ZERO;
     }
 
-    public Frame play(int falledPin) {
+    public void play(int falledPin) {
         assertFalledPin(falledPin);
 
         playCount++;
-        return null;
     }
 
     @Override
@@ -32,7 +31,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame nextFrame() {
+    public Frame getNext() {
         return null;
     }
 
