@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 public class StateTest {
     @Test
@@ -27,5 +28,21 @@ public class StateTest {
     void playFromGutter() {
         assertThat(new Gutter().play(0)).isInstanceOf(Miss.class);
         assertThat(new Gutter().play(10)).isInstanceOf(Spare.class);
+    }
+
+    @Test
+    @DisplayName("프레임이 완료된 상태인 Spare, Strike, Miss 상태에서 play를 수행하면 Exception을 발생한다.")
+    void playFromFinished() {
+        assertThatIllegalStateException().isThrownBy(() -> {
+            new Strike().play(0);
+        }).withMessage("프레임이 종료되어 플레이할 수 없습니다.");
+
+        assertThatIllegalStateException().isThrownBy(() -> {
+            new Spare(3, 7).play(0);
+        }).withMessage("프레임이 종료되어 플레이할 수 없습니다.");
+
+        assertThatIllegalStateException().isThrownBy(() -> {
+            new Miss(3, 4).play(0);
+        }).withMessage("프레임이 종료되어 플레이할 수 없습니다.");
     }
 }

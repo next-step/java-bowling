@@ -126,11 +126,11 @@ https://www.bowlinggenius.com/ 참고
     * play를 수행한다.  
     * 다음 Frame을 생성한다. (힌트 참고) <- State를 이용하자.   
     * 스트라이크/스페어/거터/미스 중 하나의 상태를 가질 수 있다. <- State  
-        * 위의 4개의 상태는 Frame이 끝나야만 가질 수 있다. 
+        * 거터를 제외하  3개의 상태는 Frame이 끝나야만 가질 수 있다. 
         * 진행 전에는 Ready, 결과를 갖기 전에는 Playing 이라는 상태를 가지면 좋을까?
     * State를 통해 프레임 완료 여부를 판단할 수 있다.   
-        * 스트라이크/스페어/거터/미스는 Frame 완료
-        * Ready, Playing: Frame 미완료  
+        * 스트라이크/스페어/미스는 Frame 완료
+        * Gutter, Ready, Playing: Frame 미완료  
     * 프레임의 점수를 계산하여 가지고 있다. 
 * State: 프레임이 갖는 상태 객체  
     * 각 상태에 맞는 play를 수행한다.  
