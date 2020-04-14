@@ -17,4 +17,10 @@ public class StateTest {
         assertThat(new Ready().play(1)).isInstanceOf(Playing.class);
         assertThat(new Ready().play(10)).isInstanceOf(Strike.class);
     }
+
+    @Test
+    void playFromPlaying() {
+        assertThat(new Playing(5).play(5)).isInstanceOf(Space.class);
+        assertThat(new Playing(5).play(3)).isInstanceOf(Miss.class);
+    }
 }
