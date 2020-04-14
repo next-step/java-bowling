@@ -51,7 +51,7 @@ public class PinCounts {
         return Optional.of(pinCounts.get(SECOND_INDEX));
     }
 
-    private Optional<PinCount> getLast() {
+    public Optional<PinCount> getLast() {
         if (pinCounts.isEmpty()) {
             return Optional.empty();
         }

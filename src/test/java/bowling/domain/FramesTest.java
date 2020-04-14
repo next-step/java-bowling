@@ -31,7 +31,7 @@ public class FramesTest {
 
     @DisplayName("현재 프레임의 인덱스를 얻어온다.")
     @Test
-    void index(){
+    void index() {
         Frame first = frames.getFirstFrame();
         assertThat(frames.getCurrentFrameIndex(first.getNext())).isEqualTo(1);
     }

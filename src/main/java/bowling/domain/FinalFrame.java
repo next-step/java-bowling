@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 public class FinalFrame implements Frame {
     private static final int MAX_PIN_COUNT_SIZE = 3;
@@ -17,39 +18,32 @@ public class FinalFrame implements Frame {
             return false;
         }
 
-        if (isDone()) {
-            return false;
-        }
-
         return pinCounts.add(pinCount);
     }
 
     private boolean isAddable(int pinCount) {
         if (isDone()) {
             return false;
-        } else if (pinCounts.isEmpty()) {
+        }
+
+        if (hasThirdChance()) {
             return true;
         }
 
-        PinCount firstPinCount = pinCounts.getFirst()
-                .orElse(PinCount.empty());
-
-        if (hasThirdChance(pinCount)) {
-            return true;
-        }
-
-        return !firstPinCount.isOverMaxAfterAdd(pinCount);
+        Optional<PinCount> lastPinCount = pinCounts.getLast();
+        return lastPinCount.map(pc -> !pc.isOverMaxAfterAdd(pinCount))
+                .orElse(true);
     }
 
-    private boolean hasThirdChance(int pinCount) {
+    private boolean hasThirdChance() {
         PinCount firstPinCount = pinCounts.getFirst()
                 .orElse(PinCount.empty());
         PinCount secondPinCount = pinCounts.getSecond()
                 .orElse(PinCount.empty());
 
-        if (pinCounts.size() >= 1 && firstPinCount.isStrike()) {
-            return !secondPinCount.isOverMaxAfterAdd(pinCount);
-        } else return pinCounts.size() == 2 && secondPinCount.isSpare();
+        if (firstPinCount.isStrike()) {
+            return true;
+        } else return secondPinCount.isSpare();
     }
 
     private boolean isPinCountsFull() {

@@ -73,4 +73,15 @@ public class FinalFrameTest {
         finalFrame.addPinCount(3);
         assertThat(finalFrame.isDone()).isTrue();
     }
+
+    @DisplayName("모든 시도가 스트라이크여도 세번의 기회가 주어진다.")
+    @Test
+    void onlyThreeOpportunity() {
+        finalFrame.addPinCount(10);
+        assertThat(finalFrame.isDone()).isFalse();
+        finalFrame.addPinCount(10);
+        assertThat(finalFrame.isDone()).isFalse();
+        finalFrame.addPinCount(10);
+        assertThat(finalFrame.isDone()).isTrue();
+    }
 }
