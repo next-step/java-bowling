@@ -1,11 +1,9 @@
 package bowling;
 
-import bowling.domain.state.Gutter;
-import bowling.domain.state.Playing;
-import bowling.domain.state.Ready;
-import bowling.domain.state.Strike;
+import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import sun.jvm.hotspot.gc.shared.Space;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,7 +18,7 @@ public class StateTest {
 
     @Test
     void playFromPlaying() {
-        assertThat(new Playing(5).play(5)).isInstanceOf(Space.class);
+        assertThat(new Playing(5).play(5)).isInstanceOf(Spare.class);
         assertThat(new Playing(5).play(3)).isInstanceOf(Miss.class);
     }
 }
