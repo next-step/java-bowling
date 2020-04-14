@@ -24,22 +24,13 @@ public class Frame {
         return this.scores.nextFrame();
     }
 
-    public void add(Score score) {
-        this.scores.add(score);
-    }
-
-    public void add(int numberOfPin) {
+    public void addNormalFrame(int numberOfPin) {
         this.scores.checkBeforeAddNormal(numberOfPin);
         this.scores.add(new Score(numberOfPin));
     }
 
-    public void addFrame(int numberOfPin, int currentFrame) {
-        if (currentFrame < TOTAL_FRAME) {
-            this.scores.checkBeforeAddNormal(numberOfPin);
-        }
-        if (currentFrame == TOTAL_FRAME) {
-            this.scores.checkBeforeAddFinal(numberOfPin);
-        }
+    public void addFinalFrame(int numberOfPin) {
+        this.scores.checkBeforeAddFinal(numberOfPin);
         this.scores.add(new Score(numberOfPin));
     }
 

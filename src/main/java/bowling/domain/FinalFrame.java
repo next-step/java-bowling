@@ -14,4 +14,13 @@ public class FinalFrame extends Frame{
     public boolean isEndFinalFrame() {
         return this.scores.isEndFinalFrame();
     }
+
+    public void add(Score score) {
+        this.scores.add(score);
+    }
+
+    public void add(int numberOfPin) {
+        this.scores.checkBeforeAddFinal(numberOfPin);
+        this.scores.add(new Score(numberOfPin));
+    }
 }

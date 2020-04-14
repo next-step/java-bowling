@@ -32,8 +32,8 @@ public class PlayerTest {
         Player player = new Player("KPJ");
         assertThat(player.currentFrame()).isEqualTo(1);
         NormalFrame normalFrame = new NormalFrame();
-        normalFrame.add(9);
-        normalFrame.add(0);
+        normalFrame.add(new Score(9));
+        normalFrame.add(new Score(0));
         player.addFrame(normalFrame);
         assertThat(player.currentFrame()).isEqualTo(2);
     }
@@ -44,10 +44,11 @@ public class PlayerTest {
         Player player = new Player("KPJ");
         assertThat(player.currentFrame()).isEqualTo(1);
         NormalFrame normalFrame = new NormalFrame();
-        normalFrame.add(9);
+        normalFrame.add(new Score(9));
         player.addFrame(normalFrame);
         assertThat(player.isNextFrame()).isFalse(); // 스트라이크 아니여서 한번더
         normalFrame.add(new Score(0));
+        player.addFrame(normalFrame);
         assertThat(player.isNextFrame()).isTrue(); // 2번다던져서 다음프레임으로
     }
 
@@ -57,7 +58,7 @@ public class PlayerTest {
         Player player = new Player("KPJ");
         assertThat(player.currentFrame()).isEqualTo(1);
         NormalFrame normalFrame = new NormalFrame(); // 스트라이크여서 다음프레임으로
-        normalFrame.add(10);
+        normalFrame.add(new Score(10));
         player.addFrame(normalFrame);
         assertThat(player.isNextFrame()).isTrue();
     }

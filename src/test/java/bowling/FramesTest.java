@@ -3,6 +3,7 @@ package bowling;
 import bowling.domain.FinalFrame;
 import bowling.domain.Frames;
 import bowling.domain.NormalFrame;
+import bowling.domain.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ public class FramesTest {
         Frames frames = new Frames();
         assertThat(frames.currentFrame()).isEqualTo(0);
         NormalFrame normalFrame = new NormalFrame();
-        normalFrame.add(10);
+        normalFrame.add(new Score(9));
         frames.addNormalFrame(normalFrame);
         assertThat(frames.currentFrame()).isEqualTo(1);
     }
@@ -26,7 +27,7 @@ public class FramesTest {
     public void frameOrderTest() {
         Frames frames = new Frames();
         NormalFrame normalFrame = new NormalFrame();
-        normalFrame.add(10);
+        normalFrame.add(new Score(10));
         frames.addNormalFrame(normalFrame);
         assertThat(frames.isNextFrame()).isTrue();
     }

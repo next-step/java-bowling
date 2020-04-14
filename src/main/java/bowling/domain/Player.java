@@ -39,7 +39,7 @@ public class Player {
     }
 
     public void addNormalFrame(int numberOfPin) {
-        frame.addFrame(numberOfPin, currentFrame());
+        frame.addNormalFrame(numberOfPin);
         if (!isEndNormalFrame() && frame.isNextFrame()) {
             NormalFrame normalFrame = new NormalFrame(frame);
             addFrame(normalFrame);
@@ -48,7 +48,7 @@ public class Player {
     }
 
     public void addFinalFrame(int numberOfPin) {
-        frame.addFrame(numberOfPin, currentFrame());
+        frame.addFinalFrame(numberOfPin);
         FinalFrame finalFrame = new FinalFrame(frame);
         addFrame(finalFrame);
     }
