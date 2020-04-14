@@ -7,6 +7,7 @@ import bowling.domain.state.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.Constants.WRONG_FELLED_PIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -22,27 +23,27 @@ public class FrameTest {
 
     @Test
     @DisplayName("프레임의 첫 투구 점수는 0이상 10 이하여야 한다.")
-    void assertFirstFalledPin() {
+    void assertFirstFelledPin() {
         Frame frame = NormalFrame.create(1);
-        int falledPin = 11;
+        int felledPin = 11;
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            frame.play(falledPin);
-        }).withMessage(Frame.WRONG_FALLED_PIN);
+            frame.play(felledPin);
+        }).withMessage(WRONG_FELLED_PIN);
     }
 
     @Test
     @DisplayName("프레임의 두번째 투구는 첫번째 투구와 합하여 10 이하여야 한다.")
-    void assertSecondFalledPin() {
+    void assertSecondFelledPin() {
         Frame frame = NormalFrame.create(1);
-        int firstFalledPin = 2;
-        int secondFalledPin = 9;
+        int firstFelledPin = 2;
+        int secondFelledPin = 9;
 
-        frame.play(firstFalledPin);
+        frame.play(firstFelledPin);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            frame.play(secondFalledPin);
-        }).withMessage("넘어뜨린 핀의 개수가 알맞지 않습니다.");
+            frame.play(secondFelledPin);
+        }).withMessage(WRONG_FELLED_PIN);
     }
 
     @Test

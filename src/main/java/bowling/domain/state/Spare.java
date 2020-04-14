@@ -1,11 +1,11 @@
 package bowling.domain.state;
 
 public class Spare implements State {
-    public Spare(int falledPin, int newFalledPin) {
+    public Spare(int felledPin, int newFelledPin) {
     }
 
     @Override
-    public State play(int falledPin) {
+    public State play(int felledPin) {
         return null;
     }
 }

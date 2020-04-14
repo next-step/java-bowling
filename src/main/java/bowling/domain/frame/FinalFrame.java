@@ -9,16 +9,16 @@ public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NO = 10;
 
     private int playCount;
-    private int firstFalledPin;         // TODO: State 에석 관리해보자.
-    private int secondFalledPin;
-    private int thirdFalledPin;
+    private int firstFelledPin;         // TODO: State 에석 관리해보자.
+    private int secondFelledPin;
+    private int thirdFelledPin;
     private State state;
 
     public FinalFrame(State state) {
         this.playCount = ZERO;
-        this.firstFalledPin = ZERO;
-        this.secondFalledPin = ZERO;
-        this.thirdFalledPin = ZERO;
+        this.firstFelledPin = ZERO;
+        this.secondFelledPin = ZERO;
+        this.thirdFelledPin = ZERO;
         this.state = state;
     }
 
@@ -26,17 +26,17 @@ public class FinalFrame implements Frame {
         return new FinalFrame(new Ready());
     }
 
-    public void play(int falledPin) {
-        assertFalledPin(falledPin);
+    public void play(int felledPin) {
+        assertFelledPin(felledPin);
 
         if(playCount == 0) {
-            firstFalledPin = falledPin;
+            firstFelledPin = felledPin;
         }
         else if(playCount == 1){
-            secondFalledPin = falledPin;
+            secondFelledPin = felledPin;
         }
         else {
-            thirdFalledPin = falledPin;
+            thirdFelledPin = felledPin;
         }
         playCount++;
     }
@@ -56,12 +56,12 @@ public class FinalFrame implements Frame {
         return FINAL_FRAME_NO;
     }
 
-    private void assertFalledPin(int falledPin) {       // TODO: 3회 충족할 수 있도록 다시 구현 필요
+    private void assertFelledPin(int felledPin) {       // TODO: 3회 충족할 수 있도록 다시 구현 필요
         if(isFirstPlay()) {
-            assertFirstFalledPin(falledPin);
+            assertFirstFelledPin(felledPin);
         }
         else {
-            assertNotFirstFalledPin(falledPin);
+            assertNotFirstFelledPin(felledPin);
         }
     }
 
@@ -69,16 +69,16 @@ public class FinalFrame implements Frame {
         return playCount == 0;
     }
 
-    private void assertFirstFalledPin(int falledPin) {
-        if(falledPin > MAX_FALL_PIN_COUNT || falledPin < MIN_FALL_PIN_COUNT) {
-            throw new IllegalArgumentException(Frame.WRONG_FALLED_PIN);
+    private void assertFirstFelledPin(int felledPin) {
+        if(felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
+            throw new IllegalArgumentException(WRONG_FELLED_PIN);
         }
     }
 
-    private void assertNotFirstFalledPin(int falledPin) {
-        int canFalledPin = MAX_FALL_PIN_COUNT - firstFalledPin;
-        if(falledPin > canFalledPin || falledPin < MIN_FALL_PIN_COUNT) {
-            throw new IllegalArgumentException(Frame.WRONG_FALLED_PIN);
+    private void assertNotFirstFelledPin(int felledPin) {
+        int canFelledPin = MAX_FELLED_PIN_COUNT - firstFelledPin;
+        if(felledPin > canFelledPin || felledPin < MIN_FELLED_PIN_COUNT) {
+            throw new IllegalArgumentException(WRONG_FELLED_PIN);
         }
     }
 }

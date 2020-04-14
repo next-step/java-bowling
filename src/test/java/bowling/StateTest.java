@@ -3,7 +3,6 @@ package bowling;
 import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sun.jvm.hotspot.gc.shared.Space;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

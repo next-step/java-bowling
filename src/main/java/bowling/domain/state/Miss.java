@@ -1,12 +1,12 @@
 package bowling.domain.state;
 
 public class Miss implements State {
-    public Miss(int falledPin, int newFalledPin) {
+    public Miss(int felledPin, int newFelledPin) {
 
     }
 
     @Override
-    public State play(int falledPin) {
+    public State play(int felledPin) {
         return null;
     }
 }

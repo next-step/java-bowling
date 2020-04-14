@@ -1,23 +1,21 @@
 package bowling.domain.state;
 
-import sun.jvm.hotspot.gc.shared.Space;
-
-import static bowling.Constants.MAX_FALL_PIN_COUNT;
+import static bowling.Constants.MAX_FELLED_PIN_COUNT;
 
 public class Playing implements State{
 
-    private final int falledPin;
+    private final int felledPin;
 
-    public Playing(int falledPin) {
-        this.falledPin = falledPin;
+    public Playing(int felledPin) {
+        this.felledPin = felledPin;
     }
 
     @Override
-    public State play(int newFalledPin) {
-        if(falledPin + newFalledPin == MAX_FALL_PIN_COUNT) {
-            return new Spare(falledPin, newFalledPin);
+    public State play(int felledPin) {
+        if(this.felledPin + felledPin == MAX_FELLED_PIN_COUNT) {
+            return new Spare(this.felledPin, felledPin);
         }
 
-        return new Miss(falledPin, newFalledPin);
+        return new Miss(this.felledPin, felledPin);
     }
 }

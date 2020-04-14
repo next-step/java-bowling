@@ -3,9 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.state.State;
 
 public interface Frame {
-    public static final String WRONG_FALLED_PIN = "넘어뜨린 핀의 개수가 알맞지 않습니다.";
 
-    void play(int falledPin);
+    void play(int felledPin);
 
     State getStatus();
 
