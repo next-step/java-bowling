@@ -35,7 +35,7 @@ public class FrameRounds {
 
     public boolean isEnd(boolean isLastFrame) {
         if (isLastFrame
-                && RoundsStatus.isStrike(this.status)
+                && (RoundsStatus.isStrike(this.status) || RoundsStatus.isSpare(this.status))
                 && !isMaxRoundSize(this.frameRounds.size())) {
             return false;
         }
