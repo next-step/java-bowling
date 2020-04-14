@@ -39,7 +39,9 @@ public class DefaultFrame implements Frame {
     }
 
     public LastFrame lastFrame(int frameIndex) {
-        bonusScores.add(createBonusScore(frameIndex));
+        if (scores.hasStrikeOrSpare()) {
+            bonusScores.add(createBonusScore(frameIndex));
+        }
         return new LastFrame(validateBonusScores());
     }
 
@@ -47,10 +49,7 @@ public class DefaultFrame implements Frame {
         if (scores.isStrike(FIRST_PLAY)) {
             return new StrikeBonus(frameIndex);
         }
-        if (scores.isSpare(SECOND_PLAY)) {
-            return new SpareBonus(frameIndex);
-        }
-        return new NoneBonus();
+        return new SpareBonus(frameIndex);
     }
 
     private List<BonusScore> validateBonusScores() {

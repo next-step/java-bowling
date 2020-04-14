@@ -29,18 +29,25 @@ public class LastFrame implements Frame {
 
     @Override
     public void addScore(int point) {
-        validateScore(point);
+        if (scores.isSecondPlay()) {
+            validateSpareScore(point);
+        }
+
         this.scores.add(Score.lastScore(scores, point));
         addBonusScore(point);
     }
 
-    private void validateScore(int point) {
+    private void validateSpareScore(int point) {
         if (CollectionUtils.isEmpty(scores.getScores())) {
             return;
         }
-        if (scores.size() == SECOND_PLAY && !scores.isStrike(FIRST_PLAY) && scores.currentPoint() + point > STRIKE_POINT) {
+        if (!scores.isStrike(FIRST_PLAY) && totalPoint(point) > STRIKE_POINT) {
             throw new IllegalArgumentException("1구와 2구의 포인트합은 10점을 넘을수 없습니다.");
         }
+    }
+
+    private int totalPoint(int point) {
+        return scores.currentPoint() + point;
     }
 
     private void addBonusScore(int point) {
