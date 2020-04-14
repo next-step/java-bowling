@@ -7,4 +7,6 @@ public interface BonusScore {
     void add(int score);
 
     boolean isAddable();
+
+    int getBonusPoint(int frameIndex);
 }

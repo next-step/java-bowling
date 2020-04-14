@@ -17,7 +17,6 @@ public class LastFrame implements Frame {
     private static final int DEFAULT_PLAY_COUNT = 2;
     private static final int BONUS_PLAY_COUNT = 3;
     private static final int FIRST_PLAY = 0;
-    private static final int SECOND_PLAY = 1;
 
     private Scores scores;
     private List<BonusScore> bonusScores;
@@ -70,17 +69,18 @@ public class LastFrame implements Frame {
             return true;
         }
 
-        return scores.size() < BONUS_PLAY_COUNT && hasStrikeOrSpare();
-    }
-
-    private boolean hasStrikeOrSpare() {
-        return scores.getScores().stream()
-                .anyMatch(score -> score.isEqualScoreType(ScoreType.STRIKE)
-                        || score.isEqualScoreType(ScoreType.SPARE));
+        return scores.size() < BONUS_PLAY_COUNT && scores.hasStrikeOrSpare();
     }
 
     @Override
     public int scoreSize() {
         return scores.size();
+    }
+
+    @Override
+    public int getBonusScore(int frameIndex) {
+        return bonusScores.stream()
+                .mapToInt(bonusScore -> bonusScore.getBonusPoint(frameIndex))
+                .sum();
     }
 }

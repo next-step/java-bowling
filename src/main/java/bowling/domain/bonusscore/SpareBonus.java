@@ -5,9 +5,10 @@ import java.util.List;
 
 public class SpareBonus implements BonusScore {
     private static final int ADDITIONAL_COUNT = 1;
+    private static final int DEFAULT_POINT = 0;
 
-    private List<Integer> bonusScores;
-    private int frameIndex;
+    private final List<Integer> bonusScores;
+    private final int frameIndex;
 
     public SpareBonus(int frameIndex) {
         this.bonusScores = new ArrayList<>();
@@ -22,5 +23,15 @@ public class SpareBonus implements BonusScore {
     @Override
     public boolean isAddable() {
         return bonusScores.size() < ADDITIONAL_COUNT;
+    }
+
+    @Override
+    public int getBonusPoint(int frameIndex) {
+        if (this.frameIndex == frameIndex) {
+            return bonusScores.stream()
+                    .mapToInt(Integer::intValue)
+                    .sum();
+        }
+        return DEFAULT_POINT;
     }
 }

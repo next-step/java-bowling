@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.bonusscore.BonusScore;
-import bowling.domain.bonusscore.NoneBonus;
 import bowling.domain.bonusscore.SpareBonus;
 import bowling.domain.bonusscore.StrikeBonus;
 import bowling.domain.score.Score;
@@ -19,7 +18,6 @@ public class DefaultFrame implements Frame {
     private static final int STRIKE_POINT = 10;
     private static final int DEFAULT_PLAY_COUNT = 2;
     private static final int FIRST_PLAY = 0;
-    private static final int SECOND_PLAY = 1;
 
     private Scores scores;
     private List<BonusScore> bonusScores;
@@ -92,5 +90,12 @@ public class DefaultFrame implements Frame {
     @Override
     public int scoreSize() {
         return scores.size();
+    }
+
+    @Override
+    public int getBonusScore(int frameIndex) {
+        return bonusScores.stream()
+                .mapToInt(bonusScore -> bonusScore.getBonusPoint(frameIndex))
+                .sum();
     }
 }
