@@ -32,8 +32,6 @@ class LastFrameTest {
     @ParameterizedTest
     @MethodSource("points")
     void addPoint(List<Integer> values) {
-        lastFrame = new LastFrame(new ArrayList<>());
-
         assertThatCode(
                 () -> {
                     for (Integer value : values) {
@@ -55,8 +53,6 @@ class LastFrameTest {
     @ParameterizedTest
     @MethodSource("overPoints")
     void addPointFailByPointOver(List<Integer> values) {
-        lastFrame = new LastFrame(new ArrayList<>());
-
         assertThatIllegalArgumentException().isThrownBy(
                 () -> {
                     for (Integer value : values) {
@@ -76,7 +72,6 @@ class LastFrameTest {
     @DisplayName("볼링공을 던질수 있는 상태")
     @Test
     void isPlayable() {
-        lastFrame = new LastFrame(new ArrayList<>());
         lastFrame.addScore(1);
 
         assertThat(lastFrame.isPlayable()).isTrue();
@@ -86,7 +81,6 @@ class LastFrameTest {
     @ParameterizedTest
     @MethodSource("strikeOrSparePoints")
     void isPlayableByStrikteOrSpare(List<Integer> values) {
-        lastFrame = new LastFrame(new ArrayList<>());
         for (Integer value : values) {
             lastFrame.addScore(value);
         }
@@ -99,6 +93,81 @@ class LastFrameTest {
                 arguments(Arrays.asList(10, 2)),
                 arguments(Arrays.asList(1, 9)),
                 arguments(Arrays.asList(4, 6))
+        );
+    }
+
+    @DisplayName("마지막 프레임 점수 계산")
+    @ParameterizedTest
+    @MethodSource("pointResult")
+    void calculateFramePoint(List<Integer> values) {
+        lastFrame.addScore(values.get(0));
+        lastFrame.addScore(values.get(1));
+
+        assertThat(lastFrame.getTotalPoint(0)).isEqualTo(values.get(2));
+    }
+
+    static Stream<Arguments> pointResult() {
+        return Stream.of(
+                arguments(Arrays.asList(1, 2, 3)),
+                arguments(Arrays.asList(2, 4, 6)),
+                arguments(Arrays.asList(4, 5, 9)),
+                arguments(Arrays.asList(0, 0, 0))
+        );
+    }
+
+    @DisplayName("마지막 프레임 점수 계산 - 2구 이내 스트라이크 또는 스페어 인 경우")
+    @ParameterizedTest
+    @MethodSource("strikeOrSparePointResult")
+    void calculateSpareOrStrikeFramePoint(List<Integer> values) {
+        lastFrame.addScore(values.get(0));
+        lastFrame.addScore(values.get(1));
+        lastFrame.addScore(values.get(2));
+
+        assertThat(lastFrame.getTotalPoint(0)).isEqualTo(values.get(3));
+    }
+
+    static Stream<Arguments> strikeOrSparePointResult() {
+        return Stream.of(
+                arguments(Arrays.asList(10, 10, 10, 30)),
+                arguments(Arrays.asList(10, 9, 1, 20)),
+                arguments(Arrays.asList(4, 6, 0, 10)),
+                arguments(Arrays.asList(10, 4, 0, 14))
+        );
+    }
+
+    @DisplayName("2구 이내 스트라이크, 스페어가 아닐 때 10점을 넘으면 throw Exception")
+    @ParameterizedTest
+    @MethodSource("invalidPointList")
+    void addPointFailByInvalidPoint(List<Integer> values) {
+        lastFrame.addScore(values.get(0));
+
+        assertThatIllegalArgumentException().isThrownBy(() -> lastFrame.addScore(values.get(1)));
+    }
+
+    static Stream<Arguments> invalidPointList() {
+        return Stream.of(
+                arguments(Arrays.asList(9, 2)),
+                arguments(Arrays.asList(7, 4)),
+                arguments(Arrays.asList(4, 8)),
+                arguments(Arrays.asList(5, 7))
+        );
+    }
+
+    @DisplayName("2구 가 스트라이크 아닐 때 20점을 넘으면 throw Exception")
+    @ParameterizedTest
+    @MethodSource("invalidPointNotStrikeSecondPlay")
+    void addPointFailByNotStrikeSecondPlay(List<Integer> values) {
+        lastFrame.addScore(values.get(0));
+        lastFrame.addScore(values.get(1));
+
+        assertThatIllegalArgumentException().isThrownBy(() -> lastFrame.addScore(values.get(2)));
+    }
+
+    static Stream<Arguments> invalidPointNotStrikeSecondPlay() {
+        return Stream.of(
+                arguments(Arrays.asList(10, 2, 10)),
+                arguments(Arrays.asList(10, 4, 7)),
+                arguments(Arrays.asList(10, 8, 5))
         );
     }
 }
