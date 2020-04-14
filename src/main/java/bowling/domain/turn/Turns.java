@@ -41,6 +41,13 @@ public class Turns {
         return turns.size() > 2;
     }
 
+    public boolean isFinish() {
+        if (turns.size() == 0) {
+            return false;
+        }
+        return turns.get(getLastIndex()).isFinish();
+    }
+
     public int size() {
         return turns.size();
     }

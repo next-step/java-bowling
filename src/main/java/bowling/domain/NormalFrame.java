@@ -8,7 +8,7 @@ public class NormalFrame implements Frame {
 
     private static final String MAX_FRAME_MESSAGE = "1~10번 프레임 까지만 등록 가능 합니다.";
     private static final String CAN_THROW_TWICE = "1~9번 프레임은 2회 던질수 있습니다.";
-    private static final int ZERO = 0;
+    private static final int NEXT_TURN_SIZE = 2;
     private static final int MIN_FRAME_NUMBER = 1;
     private static final int MAX_FRAME_NUMBER = 10;
 
@@ -16,6 +16,14 @@ public class NormalFrame implements Frame {
     private final int frameNumber;
     private final Frame nextFrame;
     private final TurnState turnState;
+
+    public NormalFrame() {
+        this(new Turns(), MIN_FRAME_NUMBER, null, TurnState.READY);
+    }
+
+    public NormalFrame(final int frameNumber) {
+        this(new Turns(), frameNumber, null, TurnState.READY);
+    }
 
     public NormalFrame(final Turns turns, final int frameNumber, final Frame nextFrame,
                        final TurnState turnState) {
@@ -27,12 +35,12 @@ public class NormalFrame implements Frame {
         this.turnState = turnState;
     }
 
-    public static NormalFrame from() {
-        return new NormalFrame(new Turns(), MIN_FRAME_NUMBER, null, TurnState.READY);
-    }
+    public static Frame from(final int frameNumber) {
+        if (frameNumber == MAX_FRAME_NUMBER) {
+            return new FinalFrame();
+        }
 
-    public static NormalFrame from(final int frameNumber) {
-        return new NormalFrame(new Turns(), frameNumber, null, TurnState.READY);
+        return new NormalFrame(frameNumber);
     }
 
     private void validateFrameNumber(final int frameNumber) {
@@ -47,18 +55,25 @@ public class NormalFrame implements Frame {
         }
     }
 
-    public NormalFrame bowl(final int pinCount) {
+    @Override
+    public Frame bowl(final int pinCount) {
+        if (this.turns.isFinish()) {
+            new NormalFrame(new Turns(), MIN_FRAME_NUMBER,
+                    new NormalFrame(), TurnState.READY);
+        }
+
         Turns turns = this.turns.bowl(pinCount);
         TurnState next = turnState.getNextTurnState();
-        NormalFrame frame = null;
+        Frame frame = null;
 
-        if (turns.size() == 2 && frameNumber < 10) {
-            frame = NormalFrame.from(frameNumber + 1);
+        if (turns.size() == NEXT_TURN_SIZE && frameNumber < MAX_FRAME_NUMBER) {
+            frame = NormalFrame.from(frameNumber + MIN_FRAME_NUMBER);
         }
 
         return new NormalFrame(turns, frameNumber, frame, next);
     }
 
+    @Override
     public Turns getTurns() {
         return turns;
     }

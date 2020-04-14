@@ -4,6 +4,7 @@ import bowling.domain.turn.Turn;
 import bowling.domain.turn.TurnState;
 import bowling.domain.turn.Turns;
 import bowling.exception.BowlingException;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +12,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTest {
@@ -51,12 +51,12 @@ class NormalFrameTest {
     @Test
     public void bowl_success() throws Exception {
         //given
-        NormalFrame frame = NormalFrame.from();
+        NormalFrame frame = new NormalFrame();
 
         //when
-        NormalFrame next = frame.bowl(3);
+        Frame next = frame.bowl(3);
 
         //then
-        assertThat(next.getTurns().size()).isEqualTo(1);
+        Assertions.assertThat(next.getTurns().size()).isEqualTo(1);
     }
 }
