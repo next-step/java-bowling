@@ -44,6 +44,19 @@ class PlayerTest {
         assertThat(currentDto.getFrames().getFrames())
                 .anyMatch(v -> v.getShotScores().get(0).getScore() == 5)
                 .hasSize(1);
+    }
 
+    @Test
+    void isGameSet() {
+        Player player = Player.of("skt");
+        for (int i = 0; i < 10; i++) {
+            player.shot(10);
+        }
+        assertThat(player.isGameSet())
+                .isFalse();
+        player.shot(4);
+        player.shot(5);
+        assertThat(player.isGameSet())
+                .isTrue();
     }
 }

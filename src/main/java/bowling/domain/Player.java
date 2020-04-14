@@ -57,4 +57,10 @@ public class Player {
                         .map(Frame::getDto)
                         .collect(Collectors.toList())));
     }
+
+    public boolean isGameSet() {
+        return frames.stream()
+                .filter(Frame::isFrameClosed)
+                .count() == MAX_FRAMES;
+    }
 }
