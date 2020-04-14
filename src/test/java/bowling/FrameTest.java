@@ -31,19 +31,19 @@ public class FrameTest {
         }).withMessage(Frame.WRONG_FALLED_PIN);
     }
 
-//    @Test
-//    @DisplayName("프레임의 두번째 투구는 첫번째 투구와 합하여 10 이하여야 한다.")
-//    void assertSecondFalledPin() {
-//        Frame frame = new NormalFrame(1);
-//        int firstFalledPin = 2;
-//        int secondFalledPin = 9;
-//
-//        frame.play(firstFalledPin);
-//
-//        assertThatIllegalArgumentException().isThrownBy(() -> {
-//            frame.play(secondFalledPin);
-//        }).withMessage("넘어뜨린 핀의 개수가 알맞지 않습니다.");
-//    }
+    @Test
+    @DisplayName("프레임의 두번째 투구는 첫번째 투구와 합하여 10 이하여야 한다.")
+    void assertSecondFalledPin() {
+        Frame frame = new NormalFrame(1);
+        int firstFalledPin = 2;
+        int secondFalledPin = 9;
+
+        frame.play(firstFalledPin);
+
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            frame.play(secondFalledPin);
+        }).withMessage("넘어뜨린 핀의 개수가 알맞지 않습니다.");
+    }
 
     @Test
     @DisplayName("9프레임이 안채워졌을 경우 다음 프레임은 일반 Frame을 생성해야 한다.")
@@ -69,7 +69,7 @@ public class FrameTest {
         frame.play(10);
 
         Frame nextFrame = frame.getNext();
-        assertThat(nextFrame.getNo()).isEqualTo(2);
+        assertThat(nextFrame.getFrameNumber()).isEqualTo(2);
     }
 
     @Test
@@ -81,6 +81,6 @@ public class FrameTest {
         frame.play(0);
 
         Frame nextFrame = frame.getNext();
-        assertThat(nextFrame.getNo()).isEqualTo(2);
+        assertThat(nextFrame.getFrameNumber()).isEqualTo(2);
     }
 }

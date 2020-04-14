@@ -8,7 +8,7 @@ public class NormalFrame implements Frame {
     public static final String OVER_NORMAL_FRAME_NO_ERROR = "일반 Frame은 최대 9개까지만 생성할 수 있습니다.";
     private int frameNumber;
     private int bowlCount;
-    private int firstFalledPin;
+    private int firstFalledPin;         // TODO: State 내에서 관리해보자
     private int secondFalledPin;
 
     public NormalFrame(int frameNumber) {
@@ -21,6 +21,13 @@ public class NormalFrame implements Frame {
 
     public void play(int falledPin) {
         assertFalledPin(falledPin);
+
+        if(bowlCount == 0) {
+            firstFalledPin = falledPin;
+        }
+        else {
+            secondFalledPin = falledPin;
+        }
 
         bowlCount++;
     }
@@ -57,20 +64,20 @@ public class NormalFrame implements Frame {
     }
 
     private void assertFirstFalledPin(int falledPin) {
-        if(falledPin > Constants.MAX_PIN_COUNT || falledPin < Constants.MIN_PIN_COUNT) {
+        if(falledPin > Constants.MAX_FALL_PIN_COUNT || falledPin < Constants.MIN_FALL_PIN_COUNT) {
             throw new IllegalArgumentException(Frame.WRONG_FALLED_PIN);
         }
     }
 
     private void assertNotFirstFalledPin(int falledPin) {
-        int canFalledPin = Constants.MAX_PIN_COUNT - firstFalledPin;
-        if(falledPin > canFalledPin || falledPin < Constants.MIN_PIN_COUNT) {
+        int canFalledPin = Constants.MAX_FALL_PIN_COUNT - firstFalledPin;
+        if(falledPin > canFalledPin || falledPin < Constants.MIN_FALL_PIN_COUNT) {
             throw new IllegalArgumentException(Frame.WRONG_FALLED_PIN);
         }
     }
 
-    private void assertFrameNo(int no) {
-        if(no > MAX_NORMAL_FRAME_COUNT) {
+    private void assertFrameNo(int frameNumber) {
+        if(frameNumber > MAX_NORMAL_FRAME_COUNT) {
             throw new IllegalArgumentException(OVER_NORMAL_FRAME_NO_ERROR);
         }
     }
