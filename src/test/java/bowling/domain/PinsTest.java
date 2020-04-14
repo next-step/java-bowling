@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PinsTest {
 
@@ -94,5 +96,19 @@ class PinsTest {
         assertThat(spare.getResultState(TurnState.SECOND)).isEqualTo(Result.SPARE);
         assertThat(gutter.getResultState(TurnState.SECOND)).isEqualTo(Result.GUTTER);
         assertThat(miss.getResultState(TurnState.FIRST)).isEqualTo(Result.MISS);
+    }
+
+    @DisplayName("남은 핀이 없으면 완료(true)로 응답")
+    @Test
+    public void isFinish_success() throws Exception {
+        //given
+        Pins max = new Pins(10);
+        Pins min = new Pins(0);
+
+        //when
+
+        //then
+        assertFalse(max.isFinish());
+        assertTrue(min.isFinish());
     }
 }

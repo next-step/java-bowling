@@ -5,6 +5,7 @@ import bowling.domain.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TurnTest {
@@ -33,5 +34,19 @@ class TurnTest {
 
         //then
         assertTrue(init.equals(expect));
+    }
+
+    @DisplayName("남은 핀이 없으면 완료(true)로 응답")
+    @Test
+    public void isFinish_success() throws Exception {
+        //given
+        Turn max = new Turn(new Score(1), new Pins(10));
+        Turn min = new Turn(new Score(1), new Pins(0));
+
+        //when
+
+        //then
+        assertFalse(max.isFinish());
+        assertTrue(min.isFinish());
     }
 }

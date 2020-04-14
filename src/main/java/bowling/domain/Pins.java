@@ -45,6 +45,13 @@ public class Pins {
         return Result.getResultState(turnState, pins);
     }
 
+    public boolean isFinish() {
+        if (pins == 0) {
+            return true;
+        }
+        return false;
+    }
+
     private int getDownPin() {
         return MAX_PIN - this.pins;
     }

@@ -29,6 +29,10 @@ public class Turn {
         return new Turn(score, pin);
     }
 
+    public boolean isFinish() {
+        return pins.isFinish();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
