@@ -11,6 +11,7 @@ public class OutputView {
     private static final String ADD_SCORE_BOARD_SUBJECT = "   %02d   |";
     private static final String ADD_SCORE_BOARD_CONTENTS = "%8s|";
     private static final String STRIKE_SIGN = "X";
+    private static final String SPARE_SIGN = "/";
     private static final String GUTTER_SIGN = "-";
     private static final String SEPARATOR = "|";
     private static final String BLANK = "";
@@ -68,22 +69,26 @@ public class OutputView {
     }
 
     private static String getScourValue(int roundIndex, RoundsStatus status, FrameRound frameRound) {
-        if (roundIndex == ZERO && RoundsStatus.isStrike(status)) {
-            return STRIKE_SIGN;
-        }
-
         String value = BLANK;
 
         if (frameRound.getRoundIndex() != ZERO) {
             value += SEPARATOR;
         }
 
-        value += convertClearPinCount(frameRound.getClearPinCount());
+        value += convertClearPinCount(roundIndex, status, frameRound.getClearPinCount());
 
         return value;
     }
 
-    private static String convertClearPinCount(int clearPinCount) {
+    private static String convertClearPinCount(int roundIndex, RoundsStatus status, int clearPinCount) {
+        if (clearPinCount == RoundsStatus.MAX_CLEAR_PIN_COUNT) {
+            return STRIKE_SIGN;
+        }
+
+        if (roundIndex != ZERO && RoundsStatus.isSpare(status)) {
+            return SPARE_SIGN;
+        }
+
         if (clearPinCount == ZERO) {
             return GUTTER_SIGN;
         }

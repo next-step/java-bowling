@@ -9,12 +9,12 @@ public enum RoundsStatus {
     SPARE,
     MISS;
 
-    private static final int STRIKE_PIN_COUNT = 10;
+    public static final int MAX_CLEAR_PIN_COUNT = 10;
 
     public static RoundsStatus firstRoundStatus(int firstClearPinCount) {
         validClearPinCount(firstClearPinCount);
 
-        if (firstClearPinCount == STRIKE_PIN_COUNT) {
+        if (firstClearPinCount == MAX_CLEAR_PIN_COUNT) {
             return STRIKE;
         }
 
@@ -22,7 +22,7 @@ public enum RoundsStatus {
     }
 
     public static RoundsStatus getRoundStatus(int totalClearPinCount) {
-        if (totalClearPinCount == STRIKE_PIN_COUNT) {
+        if (totalClearPinCount == MAX_CLEAR_PIN_COUNT) {
             return SPARE;
         }
 
@@ -33,12 +33,16 @@ public enum RoundsStatus {
         return status == STRIKE;
     }
 
+    public static boolean isSpare(RoundsStatus status) {
+        return status == SPARE;
+    }
+
     public static boolean isNone(RoundsStatus status) {
         return status == NONE;
     }
 
     private static void validClearPinCount(int clearPinCount) {
-        if (clearPinCount > STRIKE_PIN_COUNT) {
+        if (clearPinCount > MAX_CLEAR_PIN_COUNT) {
             throw new BowlingException(ExceptionType.INVALID_CLEAR_PIN_COUNT);
         }
     }
