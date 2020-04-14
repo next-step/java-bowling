@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Scores {
     private static final int SECOND_PLAY = 1;
+    private static final int THIRD_PLAY = 2;
 
     private final List<Score> scores;
 
@@ -37,10 +38,6 @@ public class Scores {
         return scores.get(index).isEqualScoreType(ScoreType.SPARE);
     }
 
-    public String pointToScore(int scoreIndex) {
-        return scores.get(scoreIndex).pointToScore();
-    }
-
     public List<Score> getScores() {
         return scores;
     }
@@ -53,5 +50,9 @@ public class Scores {
 
     public boolean isSecondPlay() {
         return scores.size() == SECOND_PLAY;
+    }
+
+    public boolean isThirdPlay() {
+        return scores.size() == THIRD_PLAY;
     }
 }

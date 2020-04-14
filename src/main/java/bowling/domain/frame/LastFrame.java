@@ -14,9 +14,11 @@ import java.util.Objects;
  */
 public class LastFrame implements Frame {
     private static final int STRIKE_POINT = 10;
+    private static final int DOUBLE_POINT = 20;
     private static final int DEFAULT_PLAY_COUNT = 2;
     private static final int BONUS_PLAY_COUNT = 3;
     private static final int FIRST_PLAY = 0;
+    private static final int SECOND_PLAY = 1;
 
     private Scores scores;
     private List<BonusScore> bonusScores;
@@ -29,19 +31,32 @@ public class LastFrame implements Frame {
     @Override
     public void addScore(int point) {
         if (scores.isSecondPlay()) {
-            validateSpareScore(point);
+            validateSecondPoint(point);
         }
 
-        this.scores.add(Score.lastScore(scores, point));
+        if (scores.isThirdPlay()) {
+            validateThirdPoint(point);
+        }
+
+        scores.add(Score.lastScore(scores, point));
         addBonusScore(point);
     }
 
-    private void validateSpareScore(int point) {
+    private void validateSecondPoint(int point) {
         if (CollectionUtils.isEmpty(scores.getScores())) {
             return;
         }
         if (!scores.isStrike(FIRST_PLAY) && totalPoint(point) > STRIKE_POINT) {
-            throw new IllegalArgumentException("1구와 2구의 포인트합은 10점을 넘을수 없습니다.");
+            throw new IllegalArgumentException("마지막 포인트합은 10점을 넘을수 없습니다.");
+        }
+    }
+
+    private void validateThirdPoint(int point) {
+        if (CollectionUtils.isEmpty(scores.getScores())) {
+            return;
+        }
+        if (!scores.isStrike(SECOND_PLAY) && totalPoint(point) > DOUBLE_POINT) {
+            throw new IllegalArgumentException("마지막 포인트합은 20점을 넘을수 없습니다.");
         }
     }
 
@@ -74,9 +89,7 @@ public class LastFrame implements Frame {
 
     @Override
     public int getTotalPoint(int frameIndex) {
-        int totalPoint = scores.currentPoint();
-
-        return totalPoint;
+        return scores.currentPoint();
     }
 
     @Override
