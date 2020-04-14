@@ -10,12 +10,8 @@ public class Scores {
     private static final int NORMAL_TRY_NUMBER = 2;
     private static final int FINAL_TRY_NUMBER = 3;
     private static final int ZERO = 0;
-    private static final String STRIKE_SIGN = "X";
-    private static final String SPARE_SIGN = "/";
-    private static final String GUTTER_SIGN = "-";
     private List<Score> scores;
     private List<String> signs = new ArrayList<>();
-
 
     public Scores() {
         this.scores = new ArrayList<>();
@@ -23,8 +19,11 @@ public class Scores {
 
     public void add(Score score) {
         this.scores.add(score);
-        String sign = makeSign(score);
-        signs.add(sign);
+        String sign = Sign.matchSign(score.getScore(), numberOfTry(), sum()).getSign();
+        if("".equals(sign)){
+            sign = score.toString();
+        }
+        this.signs.add(sign);
     }
 
     @Override
@@ -39,35 +38,6 @@ public class Scores {
         return this.signs.stream()
                 .map(Object::toString)
                 .collect(Collectors.joining("|"));
-    }
-
-    private String makeSign(Score score) {
-        String sign = "";
-        if (score.getScore() == FRAME_MAX_SCORE) { //10개쳤을 경우 스트라이크표시 후 아래에서 보정작업진행( 0 / 10 같은경우)
-            sign = STRIKE_SIGN;
-        }
-        if (isSpare()) {
-            sign = SPARE_SIGN;
-        }
-        if (isFinalFrameSpare(score)) {
-            sign = SPARE_SIGN;
-        }
-        if (score.getScore() == ZERO) {
-            sign = GUTTER_SIGN;
-        }
-        if ("".equals(sign)) {
-            sign = score.toString();
-        }
-        return sign;
-    }
-
-    private boolean isFinalFrameSpare(Score score) {
-        return isFinalFrame() && sum() == FINAL_MAX_SCORE
-                && sumBeforeAndNow(score);
-    }
-
-    private boolean sumBeforeAndNow(Score score) {
-        return scores.get(FINAL_TRY_NUMBER - 2).getScore() + score.getScore() == FRAME_MAX_SCORE;
     }
 
     private boolean isFinalFrame() {
@@ -97,14 +67,6 @@ public class Scores {
         return numberOfTry() == 1 && sum() == FRAME_MAX_SCORE;
     }
 
-    private boolean isSpare() {
-        return numberOfTry() == NORMAL_TRY_NUMBER && sum() == FRAME_MAX_SCORE;
-    }
-
-    private boolean isGutter() {
-        return sum() == ZERO;
-    }
-
     private boolean isMiss() {
         return sum() < FRAME_MAX_SCORE;
     }
@@ -128,7 +90,6 @@ public class Scores {
         }
         return false;
     }
-
 
     public void checkBeforeAddFinal(int numberOfPin) {
         //처음에스트라이크가 아닌경우
