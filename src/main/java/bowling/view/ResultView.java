@@ -356,7 +356,9 @@ public class ResultView {
 
     private static String convertFrameNumberToString(int number) {
         String stringNumber
-                = (number >= 10) ? String.valueOf(BLANK_ONE + number + BLANK_ONE) : " 0" + number + BLANK_ONE;
+                = (number >= MIN_NUMBER_FOR_TWO_DIGITS)
+                ? String.valueOf(BLANK_ONE + number + BLANK_ONE)
+                : " 0" + number + BLANK_ONE;
         return stringNumber;
     }
 
@@ -366,7 +368,7 @@ public class ResultView {
 
     private static void printThreeLineSeparators() {
         IntStream.range(0, 3)
-                .forEach(System.out::println);
+                .forEach(IntConsumer -> printLineSeparator());
     }
 
     private static void printLineSeparator() {
