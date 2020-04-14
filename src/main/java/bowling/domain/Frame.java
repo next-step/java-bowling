@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public class Frame {
     private static final int MAX_FRAME_NO = 10;
