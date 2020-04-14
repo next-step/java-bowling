@@ -2,7 +2,7 @@ package bowling.domain;
 
 public interface Frame {
 
-    boolean throwBall(int fallenCount);
+    void throwBall(int fallenCount) throws IllegalArgumentException;
 
     boolean isThrowable();
 }

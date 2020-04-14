@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.*;
 
 public class NomalFrameTest {
 
@@ -42,5 +41,37 @@ public class NomalFrameTest {
         nomalFrame.throwBall(1);
         nomalFrame.throwBall(0);
         assertThat(nomalFrame.isThrowable()).isFalse();
+    }
+
+    @ParameterizedTest
+    @DisplayName("첫번쨰 공 던지기 테스트")
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    void firstIsThrowBallTest(int fallenPin) {
+        NomalFrame nomalFrame = new NomalFrame();
+        assertThatCode(
+                () -> nomalFrame.throwBall(fallenPin)
+        ).doesNotThrowAnyException();
+    }
+
+    @ParameterizedTest
+    @DisplayName("두번쨰 공 던지기 테스트")
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5})
+    void secondIsThrowBallTest(int fallenPin) {
+        NomalFrame nomalFrame = new NomalFrame();
+        nomalFrame.throwBall(5);
+        assertThatCode(
+                () -> nomalFrame.throwBall(fallenPin)
+        ).doesNotThrowAnyException();
+    }
+
+    @ParameterizedTest
+    @DisplayName("두번쨰 공 던지기 실패 테스트")
+    @ValueSource(ints = {6, 7, 8, 9, 10})
+    void failSecondIsThrowBallTest(int fallenPin) {
+        NomalFrame nomalFrame = new NomalFrame();
+        nomalFrame.throwBall(5);
+        assertThatThrownBy(
+                () -> nomalFrame.throwBall(fallenPin)
+        ).isInstanceOf(IllegalArgumentException.class);
     }
 }

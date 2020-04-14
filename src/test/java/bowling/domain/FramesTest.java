@@ -22,7 +22,7 @@ public class FramesTest {
     @DisplayName("기본세팅 테스트")
     void sizeFramesTest() {
         assertThat(
-                frames.getNomalFrames().size()
+                frames.getFrames().size()
         ).isEqualTo(10);
     }
 
@@ -34,10 +34,10 @@ public class FramesTest {
         frames.getNextFrame().throwBall(10);
         frames.getNextFrame().throwBall(10);
 
-        List<NomalFrame> nomalFrameList = frames.getNomalFrames();
+        List<Frame> frameList = frames.getFrames();
 
         assertThat(
                 frames.getNextFrame()
-        ).isEqualTo(nomalFrameList.get(3));
+        ).isEqualTo(frameList.get(3));
     }
 }
