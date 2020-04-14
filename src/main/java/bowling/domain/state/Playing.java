@@ -38,5 +38,4 @@ public class Playing implements State{
             throw new IllegalArgumentException(WRONG_FELLED_PIN);
         }
     }
-
 }

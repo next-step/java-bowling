@@ -4,7 +4,6 @@ public class Constants {
     private Constants() {
     }
 
-    public static final int MAX_FRAME_NUMBER = 10;
     public static final int MAX_FELLED_PIN_COUNT = 10;
     public static final int MIN_FELLED_PIN_COUNT = 0;
     public static final int ZERO = 0;

@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 
@@ -8,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static bowling.Constants.FIRST_FRAME_NUMBER;
-import static bowling.Constants.MAX_FRAME_NUMBER;
 
 public class Player {
     public static final String PLAYER_NAME_ERROR = "플레이어의 이름은 3글자로 입력해주세요.";
     private static final int PLAYER_NAME_LENGTH = 3;
+
     private String name;
     private List<Frame> frames;
 

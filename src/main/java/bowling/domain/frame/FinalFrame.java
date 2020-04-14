@@ -7,7 +7,7 @@ import java.util.List;
 
 import static bowling.Constants.*;
 
-public class FinalFrame<state> implements Frame {
+public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NO = 10;
 
     private State state;

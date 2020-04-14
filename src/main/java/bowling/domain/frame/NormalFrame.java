@@ -9,11 +9,10 @@ import java.util.List;
 import static bowling.Constants.*;
 
 public class NormalFrame implements Frame {
-
     private static final int MAX_NORMAL_FRAME_COUNT = 9;
     public static final String OVER_NORMAL_FRAME_NO_ERROR = "일반 Frame은 최대 9개까지만 생성할 수 있습니다.";
-    private int frameNumber;
 
+    private int frameNumber;
     private State state;
     private final List<State> stateHistory = new ArrayList<>();
 

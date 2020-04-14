@@ -4,6 +4,8 @@ import static bowling.Constants.*;
 
 public class Ready implements State {
 
+    private static final String TEXT = "";
+
     @Override
     public State play(int newFelledPin) {
         assertFirstFelledPin(newFelledPin);
@@ -25,7 +27,7 @@ public class Ready implements State {
 
     @Override
     public String getString() {
-        return "";
+        return TEXT;
     }
 
     private void assertFirstFelledPin(int felledPin) {
