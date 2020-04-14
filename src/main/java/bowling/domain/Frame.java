@@ -9,6 +9,6 @@ public interface Frame {
 
     Frame getNext();
 
-    int getNo();
+    int getFrameNumber();
 
 }

@@ -7,14 +7,14 @@ public class FinalFrame implements Frame {
     public static final String OVER_FINAL_FRAME_NO_ERROR = "마지막 Frame 입니다.";
     public static int ZERO = 0;
 
-    private int playCount;
+    private int bowlCount;
     private int firstFalledPin;         // TODO: 좋지 않음
     private int secondFalledPin;
     private int thirdFalledPin;
     private State state;
 
     public FinalFrame() {
-        this.playCount = ZERO;
+        this.bowlCount = ZERO;
         this.firstFalledPin = ZERO;
         this.secondFalledPin = ZERO;
         this.thirdFalledPin = ZERO;
@@ -35,7 +35,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int getNo() {
+    public int getFrameNumber() {
         return FINAL_FRAME_NO;
     }
 
@@ -49,7 +49,7 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isFirstBowl() {
-        return playCount == 0;
+        return bowlCount == 0;
     }
 
     private void assertFirstFalledPin(int falledPin) {
