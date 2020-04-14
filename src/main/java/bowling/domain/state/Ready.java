@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.state;
 
 import static bowling.Constants.MAX_FALL_PIN_COUNT;
 import static bowling.Constants.ZERO;

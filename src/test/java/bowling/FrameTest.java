@@ -1,9 +1,9 @@
 package bowling;
 
-import bowling.domain.FinalFrame;
-import bowling.domain.Frame;
-import bowling.domain.NormalFrame;
-import bowling.domain.Ready;
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.state.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

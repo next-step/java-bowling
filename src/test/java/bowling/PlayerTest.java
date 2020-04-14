@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.Player;
+import bowling.domain.state.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

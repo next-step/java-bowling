@@ -1,6 +1,9 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.Constants;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
+
+import static bowling.Constants.*;
 
 public class NormalFrame implements Frame {
 
@@ -15,9 +18,9 @@ public class NormalFrame implements Frame {
     public NormalFrame(int frameNumber, State state) {
         assertFrameNo(frameNumber);
         this.frameNumber = frameNumber;
-        this.playCount = Constants.ZERO;
-        this.firstFalledPin = Constants.ZERO;
-        this.secondFalledPin = Constants.ZERO;
+        this.playCount = ZERO;
+        this.firstFalledPin = ZERO;
+        this.secondFalledPin = ZERO;
         this.state = state;
     }
 
@@ -70,14 +73,14 @@ public class NormalFrame implements Frame {
     }
 
     private void assertFirstFalledPin(int falledPin) {
-        if(falledPin > Constants.MAX_FALL_PIN_COUNT || falledPin < Constants.MIN_FALL_PIN_COUNT) {
+        if(falledPin > MAX_FALL_PIN_COUNT || falledPin < MIN_FALL_PIN_COUNT) {
             throw new IllegalArgumentException(Frame.WRONG_FALLED_PIN);
         }
     }
 
     private void assertNotFirstFalledPin(int falledPin) {
-        int canFalledPin = Constants.MAX_FALL_PIN_COUNT - firstFalledPin;
-        if(falledPin > canFalledPin || falledPin < Constants.MIN_FALL_PIN_COUNT) {
+        int canFalledPin = MAX_FALL_PIN_COUNT - firstFalledPin;
+        if(falledPin > canFalledPin || falledPin < MIN_FALL_PIN_COUNT) {
             throw new IllegalArgumentException(Frame.WRONG_FALLED_PIN);
         }
     }

@@ -1,6 +1,6 @@
-package bowling.domain;
+package bowling.domain.state;
 
-public class Strike implements State{
+public class Gutter implements State {
 
     @Override
     public State play(int falledPin) {
