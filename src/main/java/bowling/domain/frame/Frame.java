@@ -87,18 +87,6 @@ public class Frame {
     }
 
     public int getPointAtOrdinal(Ordinal ordinal) {
-        if (Ordinal.SECOND.equals(ordinal)) {
-            return points.getSecondPoint();
-        }
-
-        if (Ordinal.THIRD.equals(ordinal)) {
-            return points.getThirdPoint();
-        }
-
-        if (Ordinal.FOURTH.equals(ordinal)) {
-            return points.getFourthPoint();
-        }
-
         return Ordinal.getPoint(ordinal, points);
     }
 
