@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class NormalFrame implements Frame {
@@ -9,9 +10,15 @@ public class NormalFrame implements Frame {
 
     private Pitches pitches;
     private Frame next;
+    private Frame previous;
 
     public NormalFrame() {
-        pitches = new Pitches();
+        this(null);
+    }
+
+    public NormalFrame(Frame previous) {
+        this.pitches = new Pitches();
+        this.previous = previous;
     }
 
     @Override public boolean addPinCount(int pinCount) {
@@ -37,7 +44,7 @@ public class NormalFrame implements Frame {
     }
 
     public FinalFrame createFinal() {
-        next = new FinalFrame();
+        next = new FinalFrame(this);
         return (FinalFrame) next;
     }
 
@@ -45,8 +52,30 @@ public class NormalFrame implements Frame {
         return pitches.size() == MAX_PIN_COUNT_SIZE;
     }
 
-    @Override public int getScore() {
-        return pitches.getPinCountTotal();
+    @Override public Optional<Integer> getScore() {
+        if (!isDone() || pitches.isEmpty()) {
+            return Optional.empty();
+        }
+
+        int previousScore = getPreviousScore();
+        int currentScore = pitches.getPinCountTotal();
+        if (pitches.isLastPitchStrike()) {
+            return next.getScoreForTwoPitches()
+                    .map(nextScore -> nextScore + currentScore + previousScore);
+        } else if (pitches.isLastPitchSpare()) {
+            return next.getScoreForOnePitch()
+                    .map(nextScore -> nextScore + currentScore + previousScore);
+        }
+
+        return Optional.of(currentScore + previousScore);
+    }
+
+    private int getPreviousScore() {
+        if (Objects.isNull(previous)) {
+            return 0;
+        }
+
+        return previous.getScore().orElse(0);
     }
 
     @Override public boolean isDone() {
@@ -70,7 +99,21 @@ public class NormalFrame implements Frame {
     }
 
     @Override public NormalFrame createNext() {
-        next = new NormalFrame();
+        next = new NormalFrame(this);
         return (NormalFrame) next;
+    }
+
+    @Override public Optional<Integer> getScoreForTwoPitches() {
+        if (pitches.size() == MAX_PIN_COUNT_SIZE) {
+            return Optional.of(pitches.getPinCountTotal());
+        } else if (pitches.isLastPitchStrike()) {
+            return next.getScoreForOnePitch()
+                    .map(score -> score + pitches.getPinCountTotal());
+        }
+        return Optional.empty();
+    }
+
+    @Override public Optional<Integer> getScoreForOnePitch() {
+        return pitches.getFirst().map(Pitch::getCount);
     }
 }

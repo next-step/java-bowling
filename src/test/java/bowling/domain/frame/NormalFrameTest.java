@@ -4,14 +4,24 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NormalFrameTest {
     private NormalFrame normalFrame;
+    private NormalFrame strikeFrame;
+    private NormalFrame spareFrame;
 
     @BeforeEach
     void setUp() {
         normalFrame = new NormalFrame();
+        strikeFrame = new NormalFrame();
+        strikeFrame.addPinCount(10);
+
+        spareFrame = new NormalFrame();
+        spareFrame.addPinCount(8);
+        spareFrame.addPinCount(2);
     }
 
     @DisplayName("프레임의 쓰러트린 핀 갯수를 저장할 수 있다.")
@@ -20,7 +30,9 @@ public class NormalFrameTest {
         assertThat(normalFrame.addPinCount(8)).isTrue();
         assertThat(normalFrame.addPinCount(1)).isTrue();
 
-        assertThat(normalFrame.getScore()).isEqualTo(9);
+        Optional<Integer> score = normalFrame.getScore();
+        assertThat(score.isPresent()).isTrue();
+        assertThat(score.get()).isEqualTo(9);
     }
 
     @DisplayName("한 프레임의 핀 갯수는 10개를 넘을 수 없다")
@@ -50,7 +62,64 @@ public class NormalFrameTest {
     @DisplayName("스트라이크 치면 프레임은 끝난다.")
     @Test
     void strikeDone() {
-        normalFrame.addPinCount(10);
-        assertThat(normalFrame.isDone()).isTrue();
+        assertThat(strikeFrame.isDone()).isTrue();
+    }
+
+    @DisplayName("스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. ")
+    @Test
+    void strike() {
+        NormalFrame nextFrame = strikeFrame.createNext();
+
+        nextFrame.addPinCount(8);
+
+        assertThat(strikeFrame.getScore().isPresent()).isFalse();
+        nextFrame.addPinCount(1);
+
+        Optional<Integer> score = strikeFrame.getScore();
+        assertThat(score.isPresent()).isTrue();
+        assertThat(score.get()).isEqualTo(19);
+    }
+
+    @DisplayName("더블일 경우 그 다음 프레임의 첫 점수까지 합산한다")
+    @Test
+    void strikeTwice() {
+        NormalFrame nextFrame = strikeFrame.createNext();
+        NormalFrame afterNextFrame = nextFrame.createNext();
+
+        assertThat(strikeFrame.getScore().isPresent()).isFalse();
+
+        nextFrame.addPinCount(10);
+        assertThat(strikeFrame.getScore().isPresent()).isFalse();
+
+        afterNextFrame.addPinCount(1);
+
+        Optional<Integer> score = strikeFrame.getScore();
+        assertThat(score.isPresent()).isTrue();
+        assertThat(score.get()).isEqualTo(21);
+    }
+
+    @DisplayName("스페어는 다음 1번의 투구까지 점수를 합산해야 한다. ")
+    @Test
+    void spare() {
+        NormalFrame nextFrame = spareFrame.createNext();
+        assertThat(spareFrame.getScore().isPresent()).isFalse();
+        nextFrame.addPinCount(8);
+
+        Optional<Integer> score = spareFrame.getScore();
+        assertThat(score.isPresent()).isTrue();
+        assertThat(score.get()).isEqualTo(18);
+    }
+
+    @DisplayName("이전 프레임의 점수까지 합산하여야 한다.")
+    @Test
+    void accumulate() {
+        NormalFrame nextFrame = spareFrame.createNext();
+        assertThat(spareFrame.getScore().isPresent()).isFalse();
+        nextFrame.addPinCount(8);
+        nextFrame.addPinCount(1);
+
+        Optional<Integer> score = nextFrame.getScore();
+        assertThat(score.isPresent()).isTrue();
+        assertThat(score.get()).isEqualTo(27);
     }
 }

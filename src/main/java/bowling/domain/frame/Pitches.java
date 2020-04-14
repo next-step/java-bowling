@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Pitches {
+    private static final int ONE = 1;
     private static final int FIRST_INDEX = 0;
     private static final int SECOND_INDEX = 1;
 
@@ -60,7 +61,17 @@ public class Pitches {
     }
 
     private int getLastIndex() {
-        return pitches.size() - 1;
+        return pitches.size() - ONE;
+    }
+
+    public boolean isLastPitchStrike() {
+        Optional<Pitch> pitch = getLast();
+        return pitch.map(Pitch::isStrike).orElse(false);
+    }
+
+    public boolean isLastPitchSpare() {
+        Optional<Pitch> pitch = getLast();
+        return pitch.map(Pitch::isSpare).orElse(false);
     }
 
     public List<Pitch> getPitches() {
