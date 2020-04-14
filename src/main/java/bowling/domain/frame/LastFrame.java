@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.bonusscore.BonusScore;
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreType;
 import bowling.domain.score.Scores;
 import org.springframework.util.CollectionUtils;
 
@@ -56,11 +55,6 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public String getScore(int scoreIndex) {
-        return scores.pointToScore(scoreIndex);
-    }
-
-    @Override
     public boolean isPlayable() {
         if (CollectionUtils.isEmpty(scores.getScores())) {
             return true;
@@ -73,14 +67,18 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public int scoreSize() {
-        return scores.size();
+    public List<Score> getScores() {
+        return scores.getScores();
     }
 
     @Override
-    public int getBonusScore(int frameIndex) {
-        return bonusScores.stream()
+    public String getTotalPoint(int frameIndex) {
+        int sum = bonusScores.stream()
                 .mapToInt(bonusScore -> bonusScore.getBonusPoint(frameIndex))
                 .sum();
+        if (sum == 0) {
+            return "";
+        }
+        return Integer.toString(sum + scores.currentPoint());
     }
 }

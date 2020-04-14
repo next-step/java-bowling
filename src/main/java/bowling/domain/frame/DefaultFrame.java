@@ -1,8 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.bonusscore.BonusScore;
-import bowling.domain.bonusscore.SpareBonus;
-import bowling.domain.bonusscore.StrikeBonus;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import org.springframework.util.CollectionUtils;
@@ -32,7 +30,9 @@ public class DefaultFrame implements Frame {
     }
 
     public DefaultFrame nextFrame(int frameIndex) {
-        bonusScores.add(createBonusScore(frameIndex));
+        if (scores.hasStrikeOrSpare()) {
+            bonusScores.add(createBonusScore(frameIndex));
+        }
         return new DefaultFrame(validateBonusScores());
     }
 
@@ -45,9 +45,9 @@ public class DefaultFrame implements Frame {
 
     private BonusScore createBonusScore(int frameIndex) {
         if (scores.isStrike(FIRST_PLAY)) {
-            return new StrikeBonus(frameIndex);
+            return BonusScore.strikeBonus(frameIndex);
         }
-        return new SpareBonus(frameIndex);
+        return BonusScore.spareBonus(frameIndex);
     }
 
     private List<BonusScore> validateBonusScores() {
@@ -83,19 +83,18 @@ public class DefaultFrame implements Frame {
     }
 
     @Override
-    public String getScore(int scoreIndex) {
-        return scores.pointToScore(scoreIndex);
+    public List<Score> getScores() {
+        return scores.getScores();
     }
 
     @Override
-    public int scoreSize() {
-        return scores.size();
-    }
-
-    @Override
-    public int getBonusScore(int frameIndex) {
-        return bonusScores.stream()
+    public String getTotalPoint(int frameIndex) {
+        int sum = bonusScores.stream()
                 .mapToInt(bonusScore -> bonusScore.getBonusPoint(frameIndex))
                 .sum();
+        if (sum == 0) {
+            return "";
+        }
+        return Integer.toString(sum + scores.currentPoint());
     }
 }
