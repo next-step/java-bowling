@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.view.format.StateFormatter;
 import bowling.domain.frame.state.FinalReady;
 import bowling.domain.frame.state.State;
 import bowling.domain.pin.Pins;
@@ -10,11 +9,13 @@ import java.util.Optional;
 
 public class FinalFrame implements Frame {
     private final FrameNumber frameNumber;
+    //private States states;
     private State state;
 
     public FinalFrame(final FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
         this.state = new FinalReady();
+        //this.states = new States(Collections.emptyList());
     }
 
     @Override
@@ -39,13 +40,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String getStates() {
-        return StateFormatter.format(state);
-    }
-
-    @Override
     public String getState() {
-        return "";
+        return state.toResult();
     }
 
     @Override

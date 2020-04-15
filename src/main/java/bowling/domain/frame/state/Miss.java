@@ -3,6 +3,7 @@ package bowling.domain.frame.state;
 import bowling.domain.pin.Pins;
 
 public class Miss implements State {
+    private static final String DELIMITER = "|";
     private final Pins first;
     private final Pins second;
 
@@ -23,6 +24,6 @@ public class Miss implements State {
 
     @Override
     public String toResult() {
-        return first.count() + State.DELIMITER + second.count();
+        return first.count() + DELIMITER + second.count();
     }
 }

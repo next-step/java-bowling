@@ -33,35 +33,43 @@ public class Pins {
                    .collect(Collectors.collectingAndThen(Collectors.toList(), Pins::new));
     }
 
-    public long knockOverCount() {
+    public long getKnockOverCount() {
         return pins.stream()
                    .filter(Pin::isKnockOver)
                    .count();
     }
 
-    public long standingCount() {
+    public long getStandingCount() {
         return pins.stream()
                    .filter(Pin::isStanding)
                    .count();
     }
 
     public boolean isStrike() {
-        return knockOverCount() == MAX_COUNT;
+        return getKnockOverCount() == MAX_COUNT;
     }
 
     public boolean isSpare() {
-        return knockOverCount() == MAX_COUNT;
+        return getKnockOverCount() == MAX_COUNT;
     }
 
     public boolean isGutter() {
-        return knockOverCount() == ZERO;
+        return getKnockOverCount() == ZERO;
     }
 
     public Pins add(final Pins knockOverPins) {
+        checkOverCount(knockOverPins);
         List<Pin> all = new ArrayList<>();
         all.addAll(pins);
         all.addAll(knockOverPins.pins);
         return new Pins(all);
+    }
+
+    private void checkOverCount(final Pins knockOverPins) {
+        int bowlCount = knockOverPins.count();
+        if (pins.size() + knockOverPins.count() > MAX_COUNT) {
+            throw new BowlCountOverThanPinsException(bowlCount);
+        }
     }
 
     public int count() {
@@ -75,7 +83,7 @@ public class Pins {
     }
 
     private void checkKnockOver(final BowlCount bowlCount) {
-        if (bowlCount.isGreaterThan(standingCount())) {
+        if (bowlCount.isGreaterThan(getStandingCount())) {
             throw new BowlCountOverThanPinsException(bowlCount.count());
         }
     }

@@ -3,8 +3,6 @@ package bowling.domain.frame.state;
 import bowling.domain.pin.Pins;
 
 public class Gutter implements State {
-    private static final String EXPRESSION = "-";
-
     private final Pins first;
     private final Pins second;
 
@@ -25,21 +23,44 @@ public class Gutter implements State {
 
     @Override
     public String toResult() {
-        if (isFirstGutter()) {
-            return EXPRESSION + State.DELIMITER + second.count();
+        if (GutterExpression.isFirstGutter(first, second)) {
+            return GutterExpression.LEFT.toExpression(second);
         }
 
-        if (isRightGutter()) {
-            return first.count() + State.DELIMITER + EXPRESSION;
+        if (GutterExpression.isSecondGutter(first, second)) {
+            return GutterExpression.RIGHT.toExpression(first);
         }
-        return EXPRESSION + State.DELIMITER + EXPRESSION;
+        return GutterExpression.BOTH.toExpression(Pins.GUTTER_PINS);
     }
 
-    private boolean isFirstGutter() {
-        return first.isGutter() && !second.isGutter();
-    }
+    private enum GutterExpression {
+        LEFT {
+            @Override
+            String toExpression(final Pins second) {
+                return "-|" +  second.count();
+            }
+        },
+        RIGHT {
+            @Override
+            String toExpression(final Pins first) {
+                return first.count() + "|-";
+            }
+        },
+        BOTH {
+            @Override
+            String toExpression(final Pins pins) {
+                return "-|-";
+            }
+        };
 
-    private boolean isRightGutter() {
-        return !first.isGutter() && second.isGutter();
+        public static boolean isFirstGutter(final Pins first, final Pins second) {
+            return first.isGutter() && !second.isGutter();
+        }
+
+        public static boolean isSecondGutter(final Pins first, final Pins second) {
+            return !first.isGutter() && second.isGutter();
+        }
+
+        abstract String toExpression(Pins pins);
     }
 }

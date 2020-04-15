@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.view.format.StateFormatter;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
 import bowling.domain.pin.Pins;
@@ -11,16 +10,14 @@ import java.util.Optional;
 public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
     private final Frame nextFrame;
+    //private States states;
     private State state;
 
     public NormalFrame(final FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
         this.state = new Ready();
+        //this.states = new States(Collections.emptyList());
         this.nextFrame = next();
-    }
-
-    public static NormalFrame ofFirst() {
-        return new NormalFrame(new FrameNumber(FrameNumber.MIN_NUMBER));
     }
 
     private Frame next() {
@@ -34,6 +31,7 @@ public class NormalFrame implements Frame {
     @Override
     public Frame bowl(final Pins pins) {
         state = state.roll(pins);
+        //states.add(state);
         if (!isEnd()) {
             return this;
         }
@@ -53,11 +51,6 @@ public class NormalFrame implements Frame {
     @Override
     public FrameNumber getFrameNumber() {
         return frameNumber;
-    }
-
-    @Override
-    public String getStates() {
-        return StateFormatter.format(state) + Frame.SEPARATOR + nextFrame.getStates();
     }
 
     @Override

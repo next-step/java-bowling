@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pins;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +11,7 @@ public class Frames {
     private static final int NORMAL_FRAME_COUNT = 9;
 
     private final List<Frame> frames;
+    private int currentIndex = 0;
 
     private Frames(final List<Frame> frames) {
         this.frames = Collections.unmodifiableList(frames);
@@ -23,6 +26,14 @@ public class Frames {
         return new Frames(frames);
     }
 
+    public void bowl(final Pins knockOver) {
+        Frame current = getCurrent();
+        current.bowl(knockOver);
+        if (current.isEnd()) {
+            currentIndex++;
+        }
+    }
+
     public List<Frame> getFrames() {
         return frames;
     }
@@ -31,5 +42,18 @@ public class Frames {
         return frames.stream()
                      .map(Frame::getState)
                      .collect(Collectors.toList());
+    }
+
+//    public List<States> getStates() {
+//        return frames.stream()
+//                     .map(Frame::getStates)
+//                     .collect(Collectors.toList());
+//    }
+
+    public Frame getCurrent() {
+        if (currentIndex > NORMAL_FRAME_COUNT) {
+            currentIndex = NORMAL_FRAME_COUNT;
+        }
+        return frames.get(currentIndex);
     }
 }

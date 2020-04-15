@@ -6,6 +6,7 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class FinalReady implements State {
+    private static final String DELIMITER = "|";
     private static final int NORMAL_FRAME_COUNT = 2;
     private static final int MAX_COUNT = 3;
 
@@ -35,7 +36,7 @@ public class FinalReady implements State {
         }
         return states.stream()
                      .map(State::toResult)
-                     .collect(Collectors.joining(State.DELIMITER));
+                     .collect(Collectors.joining(DELIMITER));
     }
 
     private void ready() {
