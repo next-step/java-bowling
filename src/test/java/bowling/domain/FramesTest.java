@@ -40,4 +40,17 @@ public class FramesTest {
                 frames.getNextFrame()
         ).isEqualTo(frameList.get(3));
     }
+
+    @Test
+    @DisplayName("마지막 프레임 가져오기 테스트")
+    void getLastFrameTest() {
+        Frames frames = new Frames(player);
+        for (int i = 1; i < 13; i++) {
+            frames.getNextFrame().throwBall(10);
+        }
+
+        assertThat(
+                frames.getNextFrame()
+        ).isNull();
+    }
 }

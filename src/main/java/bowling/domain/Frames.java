@@ -22,7 +22,7 @@ public class Frames {
         return this.frames.stream()
                 .filter(frame -> frame.isThrowable() == true)
                 .findFirst()
-                .orElseGet(null);
+                .orElseGet(() -> null);
     }
 
     public String getPlayerName() {
