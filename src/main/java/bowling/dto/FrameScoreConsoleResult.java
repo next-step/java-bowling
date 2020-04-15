@@ -27,7 +27,8 @@ public class FrameScoreConsoleResult {
 
         for (Score score : frameScore.getScores()) {
             FrameScoreResult frameResult = FrameScoreResult.of(preScore, score);
-            scoresString.add(frameResult.toConsoleResult(score));
+            ScoreConsoleResult consoleResult = ScoreConsoleResult.of(frameResult);
+            scoresString.add(consoleResult.toConsoleResult(score));
             preScore = score;
         }
 

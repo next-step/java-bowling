@@ -3,25 +3,18 @@ package bowling;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 
 import static bowling.Pins.MAX_PIN_COUNT;
 import static bowling.Pins.MIN_PIN_COUNT;
 
 public enum FrameScoreResult {
-    STRIKE(score -> "X"),
-    SPARE(score -> "/"),
-    MISS(Score::toString),
-    GUTTER(score -> "-");
+    STRIKE,
+    SPARE,
+    MISS,
+    GUTTER;
 
     private static final int FIRST_SCORE_INDEX = 0;
     private static final int SECOND_SCORE_INDEX = 1;
-
-    private final Function<Score, String> printFunction;
-
-    FrameScoreResult(final Function<Score, String> printFunction) {
-        this.printFunction = printFunction;
-    }
 
     public static FrameScoreResult of(final List<Score> scores) {
         if (scores.size() >= 2) {
@@ -50,10 +43,6 @@ public enum FrameScoreResult {
         }
 
         return MISS;
-    }
-
-    public String toConsoleResult(final Score score) {
-        return printFunction.apply(score);
     }
 
     private static boolean isSpare(final Score preScore, final Score nowScore) {
