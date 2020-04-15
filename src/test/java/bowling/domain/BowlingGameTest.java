@@ -15,8 +15,8 @@ public class BowlingGameTest {
         bowlingGame.play(8);
         bowlingGame.play(1);
 
-        assertThat(bowlingGame.getBowling().getFrames().getFrames()).hasSize(2);
-        assertThat(bowlingGame.getBowling().getPlayer().getName()).isEqualTo("PES");
+        assertThat(bowlingGame.getPlayer().getFrames().getFrames()).hasSize(2);
+        assertThat(bowlingGame.getPlayer().getName()).isEqualTo("PES");
     }
 
     @Test
