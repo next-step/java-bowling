@@ -11,8 +11,10 @@ public class FinalFrame implements Frame {
 
     // 볼링 칠때마다 쌓인다
     private List<Point> points;
+    private final int frameNo;
 
-    public FinalFrame() {
+    public FinalFrame(int frameNo) {
+        this.frameNo = frameNo;
         points = new ArrayList<>();
     }
 
@@ -38,6 +40,17 @@ public class FinalFrame implements Frame {
         }
         return false;
     }
+
+    @Override
+    public int getFrameNo() {
+        return this.frameNo;
+    }
+
+    @Override
+    public List<Point> getPoints() {
+        return this.points;
+    }
+
 
     private int getSumPoints() {
         return this.points.stream()

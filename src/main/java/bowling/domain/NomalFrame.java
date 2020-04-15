@@ -10,8 +10,10 @@ public class NomalFrame implements Frame {
 
     // 볼링 칠때마다 쌓인다
     private List<Point> points;
+    private final int no;
 
-    public NomalFrame() {
+    public NomalFrame(int no) {
+        this.no = no;
         points = new ArrayList<>();
     }
 
@@ -36,6 +38,16 @@ public class NomalFrame implements Frame {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int getFrameNo() {
+        return this.no;
+    }
+
+    @Override
+    public List<Point> getPoints() {
+        return this.points;
     }
 
     // 남은 핀

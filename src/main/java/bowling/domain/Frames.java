@@ -25,12 +25,16 @@ public class Frames {
                 .orElseGet(null);
     }
 
+    public String getPlayerName() {
+        return player.getName();
+    }
+
     private List<Frame> initFrames() {
         List<Frame> frames = new ArrayList<>();
         for (int i = 1; i <= TOTAL_NOMAL_FRAME; i++) {
-            frames.add(new NomalFrame());
+            frames.add(new NomalFrame(i));
         }
-        frames.add(new FinalFrame());
+        frames.add(new FinalFrame(TOTAL_NOMAL_FRAME + 1));
 
         return frames;
     }

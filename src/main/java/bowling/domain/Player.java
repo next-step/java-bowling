@@ -12,6 +12,10 @@ public class Player {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private void validate(String input) {
         Optional.ofNullable(input).orElseThrow(() -> new IllegalArgumentException("이름을 입력해야 합니다."));
         if (input.length() != REQUIRED_LENGTH) {
