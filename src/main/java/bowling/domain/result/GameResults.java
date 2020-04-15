@@ -9,6 +9,9 @@ import java.util.Set;
 import static java.util.stream.Collectors.toSet;
 
 public class GameResults {
+    private static final int INDEX_FIRST = 0;
+    private static final int INDEX_SECOND = 1;
+
     private final List<GameResult> results;
 
     public GameResults(List<GameResult> results) {
@@ -34,5 +37,14 @@ public class GameResults {
 
     public List<GameResult> getResults() {
         return results;
+    }
+
+
+    public GameResult getFirstResult(){
+        return getResults().get(INDEX_FIRST);
+    }
+
+    public GameResult getSecondResult(){
+        return getResults().get(INDEX_SECOND);
     }
 }
