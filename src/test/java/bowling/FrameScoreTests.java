@@ -39,4 +39,24 @@ public class FrameScoreTests {
         FrameScore frameScore = FrameScore.newInstance(Arrays.asList(1, 2));
         assertTrue(frameScore.isSameScoreCount(2));
     }
+
+    @DisplayName("SubTotalScore 반환 테스트")
+    @Test
+    public void getSubTotalScoreTest() {
+        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
+        SubTotalScore expectedSubTotalScore = SubTotalScore.newInstance(10, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10))));
+
+        assertThat(frameScore.getSubTotalScore()).isEqualTo(expectedSubTotalScore);
+    }
+
+    @DisplayName("SubTotalScore 반환 테스트2")
+    @Test
+    public void getSubTotalScoreTest() {
+        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
+        SubTotalScore subTotalScore = SubTotalScore.newInstance(10, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10))));
+        SubTotalScore expectedSubTotalScore = SubTotalScore.newInstance(20, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10), Score.of(10))));
+
+        assertThat(frameScore.getSubTotalScore(subTotalScore)).isEqualTo(expectedSubTotalScore);
+    }
+
 }
