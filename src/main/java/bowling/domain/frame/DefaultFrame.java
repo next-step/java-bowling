@@ -30,12 +30,12 @@ public class DefaultFrame implements Frame {
         return new DefaultFrame(new ArrayList<>());
     }
 
-    public DefaultFrame nextFrame(int frameIndex) {
+    public DefaultFrame createNextFrame(int frameIndex) {
         addBounusScoreHasStrikeOrSpare(frameIndex);
         return new DefaultFrame(validateBonusScores());
     }
 
-    public LastFrame lastFrame(int frameIndex) {
+    public LastFrame createLastFrame(int frameIndex) {
         addBounusScoreHasStrikeOrSpare(frameIndex);
         return new LastFrame(validateBonusScores());
     }

@@ -84,7 +84,7 @@ class FramesTest {
         first.addScore(points.get(0));
         assertThat(frames.calculateFramePoint(0)).isEqualTo(NOT_ADDABLE_FRAME);
 
-        DefaultFrame nextFrame = first.nextFrame(0);
+        DefaultFrame nextFrame = first.createNextFrame(0);
         frames.add(nextFrame);
         nextFrame.addScore(points.get(1));
         assertThat(frames.calculateFramePoint(0)).isEqualTo(NOT_ADDABLE_FRAME);
@@ -124,7 +124,7 @@ class FramesTest {
         first.addScore(points.get(1));
         assertThat(frames.calculateFramePoint(0)).isEqualTo(NOT_ADDABLE_FRAME);
 
-        DefaultFrame nextFrame = first.nextFrame(0);
+        DefaultFrame nextFrame = first.createNextFrame(0);
         frames.add(nextFrame);
         nextFrame.addScore(points.get(2));
         assertThat(frames.calculateFramePoint(0)).isEqualTo(results.get(0));

@@ -40,12 +40,13 @@ public class Frames {
             return;
         }
 
+        DefaultFrame currentFrame = (DefaultFrame) getLast();
         int currentIndex = frames.size() - ONE;
         if (isLast()) {
-            frames.add(((DefaultFrame) getLast()).lastFrame(currentIndex));
+            frames.add(currentFrame.createLastFrame(currentIndex));
             return;
         }
-        frames.add(((DefaultFrame) getLast()).nextFrame(currentIndex));
+        frames.add(currentFrame.createNextFrame(currentIndex));
     }
 
     private boolean isLast() {

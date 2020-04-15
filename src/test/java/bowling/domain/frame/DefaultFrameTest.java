@@ -36,7 +36,7 @@ class DefaultFrameTest {
         defaultFrame.addScore(5);
         defaultFrame.addScore(4);
 
-        assertThatCode(() -> defaultFrame.nextFrame(0)).doesNotThrowAnyException();
+        assertThatCode(() -> defaultFrame.createNextFrame(0)).doesNotThrowAnyException();
     }
 
     @DisplayName("마지막 프레임 생성")
@@ -46,7 +46,7 @@ class DefaultFrameTest {
         defaultFrame.addScore(5);
         defaultFrame.addScore(4);
 
-        assertThatCode(() -> defaultFrame.lastFrame(0)).doesNotThrowAnyException();
+        assertThatCode(() -> defaultFrame.createLastFrame(0)).doesNotThrowAnyException();
     }
 
     @DisplayName("점수 추가")
@@ -136,10 +136,10 @@ class DefaultFrameTest {
     void calculateStrikeFramePoint(List<Integer> points) {
         defaultFrame.addScore(points.get(0));
 
-        DefaultFrame secondFrame = defaultFrame.nextFrame(0);
+        DefaultFrame secondFrame = defaultFrame.createNextFrame(0);
         secondFrame.addScore(points.get(1));
 
-        DefaultFrame thirdFrame = secondFrame.nextFrame(1);
+        DefaultFrame thirdFrame = secondFrame.createNextFrame(1);
         thirdFrame.addScore(points.get(2));
 
         assertThat(defaultFrame.getTotalPoint(0)).isEqualTo(points.get(3));
@@ -159,7 +159,7 @@ class DefaultFrameTest {
         defaultFrame.addScore(points.get(0));
         defaultFrame.addScore(points.get(1));
 
-        DefaultFrame secondFrame = defaultFrame.nextFrame(0);
+        DefaultFrame secondFrame = defaultFrame.createNextFrame(0);
         secondFrame.addScore(points.get(2));
 
         assertThat(defaultFrame.getTotalPoint(0)).isEqualTo(points.get(3));
