@@ -2,6 +2,7 @@ package bowling.domain.frame.state;
 
 import bowling.exception.BowlingException;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class FinalFrameStates {
 
     public FinalFrameStates(final LinkedList<State> states) {
         validateStateSize(states);
-        this.states = states;
+        this.states = new LinkedList<>(states);
     }
 
     public static FinalFrameStates of() {
@@ -36,26 +37,71 @@ public class FinalFrameStates {
     }
 
     public boolean isFinish() {
-        if (isStrikeOrSpare()) {
+        if (states.getFirst() instanceof Ready) {
             return false;
         }
 
-        if (states.getLast() instanceof Miss || states.getLast() instanceof Gutter) {
+        if (isNormalTurnStrikeOrSpareOrFirstBowl()) {
+            return false;
+        }
+
+        if (isNormalTurnMissOrGutter()) {
             return true;
+        }
+
+        if (states.size() == FINAL_STATE_SIZE) {
+            return false;
         }
 
         return true;
     }
 
-    private boolean isStrikeOrSpare() {
+    private boolean isNormalTurnStrikeOrSpare() {
         if (states.size() != 1) {
             return false;
         }
 
-        if (states.getFirst() instanceof Strike || states.getFirst() instanceof Spare) {
+        if (states.getFirst() instanceof Strike
+                || states.getFirst() instanceof Spare) {
             return true;
         }
 
         return false;
+    }
+
+    private boolean isNormalTurnStrikeOrSpareOrFirstBowl() {
+        if (states.size() != 1) {
+            return false;
+        }
+
+        if (isNormalTurnStrikeOrSpare() || states.getFirst() instanceof FirstBowl) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isNormalTurnMissOrGutter() {
+        if (states.getLast() instanceof Miss || states.getLast() instanceof Gutter) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public FinalFrameStates bowl(final int pinCount) {
+        if (isFinish()) {
+            throw new BowlingException(State.CANT_THROW_BALL);
+        }
+
+        if (isNormalTurnStrikeOrSpare()) {
+            State third = new Ready();
+            third = third.bowl(pinCount);
+            return addState(third);
+        }
+
+        State bowl = states.getFirst().bowl(pinCount);
+        LinkedList<State> states = new LinkedList<>(Arrays.asList(bowl));
+        return new FinalFrameStates(states);
     }
 }

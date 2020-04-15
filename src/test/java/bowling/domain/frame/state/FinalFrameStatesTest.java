@@ -84,4 +84,57 @@ class FinalFrameStatesTest {
         //when
         assertTrue(states.isFinish());
     }
+
+    @DisplayName("첫 투구가 strike 이면 한번 더 투구 가능하다")
+    @Test
+    public void bowl_success_strike() throws Exception {
+        //given
+        FinalFrameStates states = FinalFrameStates.of();
+        states = states.bowl(10);
+
+        //when
+        states.bowl(5);
+    }
+
+    @DisplayName("두번째 투구가 spare 이면 한번 더 투구 가능하다")
+    @Test
+    public void bowl_success() throws Exception {
+        //given
+        FinalFrameStates states = FinalFrameStates.of();
+        states = states.bowl(5);
+        states = states.bowl(5);
+
+        //when
+        states.bowl(5);
+    }
+
+    @DisplayName("두번째 투구가 miss 이면 한번 더 투구 불가능")
+    @Test
+    public void bowl_fail_miss() throws Exception {
+        //given
+        FinalFrameStates states = FinalFrameStates.of();
+        states = states.bowl(1);
+        states = states.bowl(2);
+        FinalFrameStates finalStates = states;
+
+        //then
+        assertThatThrownBy(
+                () -> finalStates.bowl(3)
+        ).isInstanceOf(BowlingException.class);
+    }
+
+    @DisplayName("두번째 투구가 gutter 이면 한번 더 투구 불가능")
+    @Test
+    public void bowl_fail_gutter() throws Exception {
+        //given
+        FinalFrameStates states = FinalFrameStates.of();
+        states = states.bowl(0);
+        states = states.bowl(0);
+        FinalFrameStates finalStates = states;
+
+        //then
+        assertThatThrownBy(
+                () -> finalStates.bowl(3)
+        ).isInstanceOf(BowlingException.class);
+    }
 }
