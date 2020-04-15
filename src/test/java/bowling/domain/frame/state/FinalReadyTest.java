@@ -31,7 +31,7 @@ class FinalReadyTest {
         assertThat(third).isInstanceOf(Strike.class);
     }
 
-    @DisplayName("Strike, Strike, FirstBowl")
+    @DisplayName("Strike, Strike, FirstGutter")
     @Test
     void bonusTwoStrikeFirstBowl() {
         BowlCount bowlCount = new BowlCount(10);
@@ -43,7 +43,7 @@ class FinalReadyTest {
 
         assertThat(first).isInstanceOf(Strike.class);
         assertThat(second).isInstanceOf(Strike.class);
-        assertThat(third).isInstanceOf(FirstBowl.class);
+        assertThat(third).isInstanceOf(FirstGutter.class);
     }
 
     @DisplayName("Strike, FirstBowl, Spare")
@@ -81,7 +81,7 @@ class FinalReadyTest {
 
         assertThat(first).isInstanceOf(Strike.class);
         assertThat(second).isInstanceOf(FirstBowl.class);
-        assertThat(third).isInstanceOf(Gutter.class);
+        assertThat(third).isInstanceOf(SecondGutter.class);
     }
 
     @DisplayName("FirstBowl, Spare, FirstBowl")
@@ -114,7 +114,7 @@ class FinalReadyTest {
         State second = finalReady.roll(Pins.GUTTER_PINS);
 
         assertThat(first).isInstanceOf(FirstBowl.class);
-        assertThat(second).isInstanceOf(Gutter.class);
+        assertThat(second).isInstanceOf(SecondGutter.class);
     }
 
     @DisplayName("FirstBowl, Miss")

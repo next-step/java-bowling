@@ -1,7 +1,5 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.pin.BowlCount;
-import bowling.domain.pin.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,10 +9,9 @@ class SpareTest {
     @DisplayName("SPARE의 점수를 갖고올 수 있다.")
     @Test
     void spare() {
-        String expect = "9|/";
-        Pins first = Pins.of().knockOver(new BowlCount(9));
+        String expect = "/";
 
-        State actual = new Spare(first);
+        State actual = new Spare();
 
         assertThat(actual.toResult()).isEqualTo(expect);
     }

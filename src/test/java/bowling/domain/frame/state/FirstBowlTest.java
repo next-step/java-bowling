@@ -41,7 +41,7 @@ class FirstBowlTest {
 
         State actual = firstBowl.roll(second);
 
-        assertThat(actual).isInstanceOf(Gutter.class);
+        assertThat(actual).isInstanceOf(SecondGutter.class);
     }
 
 
