@@ -37,6 +37,7 @@ class FramesTest {
         for (int i = 0; i < size; i++) {
             frames.add(DefaultFrame.first());
         }
+
         assertThat(frames.size()).isEqualTo(size);
     }
 
@@ -47,6 +48,7 @@ class FramesTest {
         for (int i = 0; i < 10; i++) {
             frames.add(DefaultFrame.first());
         }
+
         assertThat(frames.isOver()).isTrue();
     }
 }
