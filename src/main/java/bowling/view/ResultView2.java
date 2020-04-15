@@ -1,13 +1,11 @@
 package bowling.view;
 
-import bowling.domain.PlayerName;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.point.Ordinal;
 import bowling.domain.result.GameResult;
 import bowling.domain.result.GameResults;
 
-import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
 import static bowling.domain.frame.FrameResult.*;
@@ -43,26 +41,21 @@ public class ResultView2 {
     }
 
     private static void printFrameResultSoFar(GameResult gameResult1, GameResult gameResult2, int frameId) {
-        if (gameResult1.getFrameByFrameId(frameId).isResult(STRIKE) && frameId != FRAME_ID_FINAL) {
-            printFrameResultWhenStrike(FIRST, gameResult1, gameResult2, frameId);
-            printFrameResultWhenStrike(THIRD, gameResult1, gameResult2, frameId);
-            printFrameResultWhenStrike(FOURTH, gameResult1, gameResult2, frameId);
+        if (frameId != FRAME_ID_FINAL) {
+            printFrameResult(FIRST, gameResult1, gameResult2, frameId);
+            printFrameResult(SECOND, gameResult1, gameResult2, frameId);
         }
 
-        if(gameResult1.getFrameByFrameId(frameId).isResult(STRIKE) && frameId == FRAME_ID_FINAL){
-            printFrameResultWhenStrike(FIRST, gameResult1, gameResult2, frameId);
-            printFrameResultWhenStrike(SECOND, gameResult1, gameResult2, frameId);
-        }
-
-        if (!gameResult1.getFrameByFrameId(frameId).isResult(STRIKE)){
-            printFrameResultWhenNonStrike(FIRST, gameResult1, gameResult2, frameId);
-            printFrameResultWhenNonStrike(SECOND, gameResult1, gameResult2, frameId);
-            printFrameResultWhenNonStrike(THIRD, gameResult1, gameResult2, frameId);
+        if (frameId == FRAME_ID_FINAL) {
+            printFrameResult(FIRST, gameResult1, gameResult2, frameId);
+            printFrameResult(SECOND, gameResult1, gameResult2, frameId);
+            printFrameResult(THIRD, gameResult1, gameResult2, frameId);
+            printFrameResult(FOURTH, gameResult1, gameResult2, frameId);
         }
     }
 
-    private static void printFrameResultWhenStrike(Ordinal ordinal, GameResult gameResult1, GameResult gameResult2,
-                                                   int frameId) {
+    private static void printFrameResult(Ordinal ordinal, GameResult gameResult1, GameResult gameResult2,
+                                         int frameId) {
         if (gameResult1.getFrameByFrameId(frameId).containsOrdinal(ordinal)) {
             print(gameResult1.getName() + "'s turn");
             print(" : ");
@@ -72,86 +65,44 @@ public class ResultView2 {
             printForOnePlayer(ordinal, gameResult1, gameResult1.getFrameByFrameId(frameId));
             printLineSeparator();
 
-            if(frameId == FRAME_ID_FIRST && FIRST.equals(ordinal)){
+            if (frameId == FRAME_ID_FIRST && FIRST.equals(ordinal)) {
                 printName(gameResult2.getPlayerName().getName());
             }
 
-            if(frameId == FRAME_ID_FIRST && SECOND.equals(ordinal)){
+            if (frameId == FRAME_ID_FIRST && SECOND.equals(ordinal)) {
                 printForOnePlayer(FIRST, gameResult2, gameResult2.getFrameByFrameId(frameId));
             }
 
-            if(frameId != FRAME_ID_FIRST && FIRST.equals(ordinal)){
+            if (frameId != FRAME_ID_FIRST && FIRST.equals(ordinal)) {
                 printForOnePlayer(SECOND, gameResult2, gameResult2.getFrameByFrameId(frameId + OFFSET));
             }
 
-            if(frameId != FRAME_ID_FIRST && SECOND.equals(ordinal)){
+            if (frameId != FRAME_ID_FIRST && SECOND.equals(ordinal)) {
                 printForOnePlayer(FIRST, gameResult2, gameResult2.getFrameByFrameId(frameId));
             }
 
-            if(frameId == FRAME_ID_FINAL && THIRD.equals(ordinal)){
+            if (frameId == FRAME_ID_FINAL
+                    && THIRD.equals(ordinal)
+                    && gameResult2.getFrameByFrameId(frameId).containsOrdinal(THIRD)) {
                 printForOnePlayer(FIRST, gameResult2, gameResult2.getFrameByFrameId(frameId));
             }
 
-            if(frameId == FRAME_ID_FINAL && FOURTH.equals(ordinal)){
-                printForOnePlayer(THIRD, gameResult2, gameResult2.getFrameByFrameId(frameId));
-            }
-
-            printThreeLineSeparators();
-        }
-
-        if (gameResult2.getFrameByFrameId(frameId).containsOrdinal(ordinal)) {
-            print(gameResult2.getPlayerName().getName() + "'s turn");
-            print(" : ");
-            println(gameResult2.getFrameByFrameId(frameId).getPointAtOrdinal(ordinal));
-            printPlayInformation();
-
-            printForOnePlayer(ordinal, gameResult1, gameResult1.getFrameByFrameId(frameId));
-            printLineSeparator();
-
-            printForOnePlayer(ordinal, gameResult2, gameResult2.getFrameByFrameId(frameId));
-            printThreeLineSeparators();
-        }
-    }
-
-    private static void printFrameResultWhenNonStrike(Ordinal ordinal, GameResult gameResult1, GameResult gameResult2, int frameId) {
-        if (gameResult1.getFrameByFrameId(frameId).containsOrdinal(ordinal)) {
-            print(gameResult1.getName() + "'s turn");
-            print(" : ");
-            println(gameResult1.getFrameByFrameId(frameId).getPointAtOrdinal(ordinal));
-            printPlayInformation();
-
-            printForOnePlayer(ordinal, gameResult1, gameResult1.getFrameByFrameId(frameId));
-            printLineSeparator();
-
-            if(frameId == FRAME_ID_FIRST && FIRST.equals(ordinal)){
-                printName(gameResult2.getPlayerName().getName());
-            }
-
-            if(frameId == FRAME_ID_FIRST && SECOND.equals(ordinal)){
-                printForOnePlayer(FIRST, gameResult2, gameResult2.getFrameByFrameId(frameId));
-            }
-
-            if(frameId != FRAME_ID_FIRST && FIRST.equals(ordinal)){
-                printForOnePlayer(SECOND, gameResult2, gameResult2.getFrameByFrameId(frameId + OFFSET));
-            }
-
-            if(frameId != FRAME_ID_FIRST && SECOND.equals(ordinal)){
-                printForOnePlayer(FIRST, gameResult2, gameResult2.getFrameByFrameId(frameId));
-            }
-
-            if(frameId == FRAME_ID_FINAL && THIRD.equals(ordinal)){
+            if (frameId == FRAME_ID_FINAL
+                    && THIRD.equals(ordinal)
+                    && !gameResult2.getFrameByFrameId(frameId).containsOrdinal(THIRD)) {
                 printForOnePlayer(SECOND, gameResult2, gameResult2.getFrameByFrameId(frameId));
             }
 
-            if(frameId == FRAME_ID_FINAL && FOURTH.equals(ordinal)){
+            if (frameId == FRAME_ID_FINAL && FOURTH.equals(ordinal)) {
                 printForOnePlayer(THIRD, gameResult2, gameResult2.getFrameByFrameId(frameId));
             }
 
             printThreeLineSeparators();
         }
 
-        if (gameResult2.getFrameByFrameId(frameId).containsOrdinal(ordinal)) {
-            print(gameResult2.getPlayerName().getName() + "'s turn");
+        if (gameResult2.getFrameByFrameId(frameId).containsOrdinal(ordinal)
+                && gameResult1.getFrameByFrameId(frameId).containsOrdinal(ordinal)) {
+            print(gameResult2.getName() + "'s turn");
             print(" : ");
             println(gameResult2.getFrameByFrameId(frameId).getPointAtOrdinal(ordinal));
             printPlayInformation();
@@ -162,15 +113,29 @@ public class ResultView2 {
             printForOnePlayer(ordinal, gameResult2, gameResult2.getFrameByFrameId(frameId));
             printThreeLineSeparators();
         }
+
+
+        if (!gameResult2.getFrameByFrameId(frameId).containsOrdinal(ordinal)
+                && gameResult1.getFrameByFrameId(frameId).containsOrdinal(ordinal)) {
+            print(gameResult2.getName() + "'s turn");
+            print(" : ");
+            println(gameResult2.getFrameByFrameId(frameId).getPointAtOrdinal(ordinal));
+            printPlayInformation();
+
+            printForOnePlayer(ordinal, gameResult1, gameResult1.getFrameByFrameId(frameId));
+            printLineSeparator();
+
+            printForOnePlayer(SECOND, gameResult2, gameResult2.getFrameByFrameId(frameId));
+            printThreeLineSeparators();
+        }
     }
 
-    private static void printForOnePlayer(Ordinal ordinal, GameResult gameResult, Frame frame){
-        // printForOnePlayer(FIRST, gameResult2, gameResult2.getFrameByFrameId(frameId));
+    private static void printForOnePlayer(Ordinal ordinal, GameResult gameResult, Frame frame) {
         printName(gameResult.getName());
 
-        if(SECOND.equals(ordinal)
+        if (SECOND.equals(ordinal)
                 && gameResult.getFrameByFrameId(frame.getFrameId()).isResult(STRIKE)
-                && frame.getFrameId() != FRAME_ID_FIRST){
+                && frame.getFrameId() != FRAME_ID_FIRST) {
             gameResult.getFrames().getFrames()
                     .subList(0, frame.getFrameId())
                     .forEach(frame1 -> printFrame(frame1));
