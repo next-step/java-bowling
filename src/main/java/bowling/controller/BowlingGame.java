@@ -12,9 +12,9 @@ import java.util.Arrays;
 public class BowlingGame {
     public static void start() {
         GameResult gameResult1
-                = GameResult.of(PlayerName.of(InputView.getPlayerName()), Frame.createTenFrames());
+                = GameResult.of(PlayerName.of(InputView.getFirstPlayerName()), Frame.createTenFrames());
         GameResult gameResult2
-                = GameResult.of(PlayerName.of(InputView.getPlayerName()), Frame.createTenFrames());
+                = GameResult.of(PlayerName.of(InputView.getSecondPlayerName()), Frame.createTenFrames());
 
         ResultView.print(GameResults.of(Arrays.asList(gameResult1, gameResult2)));
     }
