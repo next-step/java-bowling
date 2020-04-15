@@ -2,9 +2,13 @@ package bowling.domain;
 
 import java.util.Random;
 
+import bowling.view.ResultView;
+
 public class PlayBowling {
     private static PlayBowling playBowling = new PlayBowling();
+    private static ResultView resultView = ResultView.getResultView();
     private Random random = new Random();
+    private boolean bonusFlag = false;
 
     public int generateBowlingScore(int rangePin) {
         validatePinRange(rangePin);
@@ -19,6 +23,50 @@ public class PlayBowling {
         if (rangePin < Rule.MIN_PINS.getValue()) {
             throw new IllegalArgumentException("발생 할 수 있는 스코어는 0미만이 될 수 없습니다.");
         }
+    }
+
+    public void playFrame(Game game, NormalFrame normalFrame) {
+        setGameScore(game, normalFrame);
+        if (normalFrame.getFalledPins() == Rule.MAX_PINS.getValue()) {
+            bonusFlag = true;
+        }
+    }
+
+    public void playFinalFrame(Game game, FinalFrame finalFrame) {
+        setGameScore(game, finalFrame);
+        if (finalFrame.getBonusCount() > 0) {
+            getFirstScore(game, finalFrame);
+        }
+    }
+
+    private void setGameScore(Game game, NormalFrame normalFrame) {
+        int firstScore = getFirstScore(game, normalFrame);
+        resultView.printPlayFrame(game, normalFrame, firstScore);
+        setSecondScore(game, normalFrame, firstScore);
+    }
+
+    private int getFirstScore(Game game, NormalFrame normalFrame) {
+        int firstScore = setScore(normalFrame, Rule.MAX_PINS.getValue());
+        game.addFrame(normalFrame);
+        return firstScore;
+    }
+
+    private void setSecondScore(Game game, NormalFrame normalFrame, int firstScore) {
+        int remainPin = Rule.MAX_PINS.getValue() - firstScore;
+        if (remainPin > 0) {
+            int secondScore = setScore(normalFrame, remainPin);
+            resultView.printPlayFrame(game, normalFrame, secondScore);
+        }
+    }
+
+    private int setScore(NormalFrame normalFrame, int value) {
+        int firstScore = generateBowlingScore(value);
+        normalFrame.bowl(firstScore);
+        return firstScore;
+    }
+
+    public boolean isBonusFlag() {
+        return bonusFlag;
     }
 
     public static PlayBowling getPlayBowling() {
