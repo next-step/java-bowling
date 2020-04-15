@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Frames {
     private static final int FRAME_NUMBER = 10;
+    private static final int ONE = 1;
 
     @Getter
     private int scoreCalculateIndex;
@@ -21,9 +22,7 @@ public class Frames {
             return;
         }
 
-        frames.stream()
-                .filter(Frame::availableBonus)
-                .forEach(bonusAvailableFrame -> bonusAvailableFrame.updateBonus(clearPinCount));
+        updateBonus(clearPinCount);
 
         Frame frame = lastFrame();
         if (frame.isEndFrame()) {
@@ -50,7 +49,7 @@ public class Frames {
     }
 
     private Frame lastFrame() {
-        return this.frames.get(this.frames.size() - 1);
+        return this.frames.get(this.frames.size() - ONE);
     }
 
     private Frame getFrame(int index) {
@@ -58,10 +57,10 @@ public class Frames {
     }
 
     private void calculateScore() {
-        for (int i = scoreCalculateIndex; i < frames.size() - 1; i++) {
+        for (int i = scoreCalculateIndex, end = frames.size() - ONE; i < end; i++) {
             Frame frame = getFrame(i);
             if (frame.endCalculate()) {
-                Frame nextFrame = getFrame(i + 1);
+                Frame nextFrame = getFrame(i + ONE);
                 nextFrame.addScore(frame.getTotalScore());
 
                 scoreCalculateIndex++;
@@ -69,5 +68,11 @@ public class Frames {
                 continue;
             }
         }
+    }
+
+    private void updateBonus(int clearPinCount) {
+        frames.stream()
+                .filter(Frame::availableBonus)
+                .forEach(bonusAvailableFrame -> bonusAvailableFrame.updateBonus(clearPinCount));
     }
 }
