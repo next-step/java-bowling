@@ -98,6 +98,17 @@ class PinsTest {
         assertThat(miss.getResultState(TurnState.FIRST)).isEqualTo(Result.MISS);
     }
 
+    @DisplayName("남은 핀이 10개 이면 gutter 상태 이다")
+    @Test
+    public void isGutter_success() throws Exception {
+        //given
+        Pins pin1 = new Pins(10);
+        Pins pin2 = Pins.from();
+
+        //then
+        assertTrue(pin1.isGutter());
+        assertTrue(pin2.isGutter());
+    }
     @DisplayName("남은 핀이 없으면 완료(true)로 응답")
     @Test
     public void isFinish_success() throws Exception {

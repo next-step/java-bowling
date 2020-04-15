@@ -45,8 +45,16 @@ public class Pins {
         return Result.getResultState(turnState, pins);
     }
 
+
+    public boolean isGutter() {
+        if (pins == MAX_PIN) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean isFinish() {
-        if (pins == 0) {
+        if (pins == MIN_PIN) {
             return true;
         }
         return false;
