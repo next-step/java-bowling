@@ -4,21 +4,21 @@ import lombok.Getter;
 
 public class BowlingGame {
     @Getter
-    private Bowling bowling;
+    private Player player;
 
     public BowlingGame(String playerName) {
-        this.bowling = new Bowling(playerName);
+        this.player = new Player(playerName);
     }
 
     public void play(int clearPinCount) {
-        bowling.play(clearPinCount);
+        player.play(clearPinCount);
     }
 
     public int getLastFrameNumber() {
-        return bowling.getLastFrameNumber();
+        return player.getLastFrameNumber();
     }
 
     public boolean isEnd() {
-        return bowling.isEnd();
+        return player.isEnd();
     }
 }

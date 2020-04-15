@@ -9,11 +9,26 @@ public class Player {
 
     @Getter
     private String name;
+    @Getter
+    private Frames frames;
 
     public Player(String name) {
         validPlayerName(name);
 
         this.name = name;
+        this.frames = new Frames();
+    }
+
+    public void play(int clearPinCount) {
+        this.frames.play(clearPinCount);
+    }
+
+    public int getLastFrameNumber() {
+        return this.frames.getFrameNumber();
+    }
+
+    public boolean isEnd() {
+        return this.frames.isEnd();
     }
 
     private void validPlayerName(String playerName) {
