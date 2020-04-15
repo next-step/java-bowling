@@ -27,7 +27,7 @@ public class BowlingTest {
         bowling.play(1);
 
         assertThat(bowling.getFrames().getFrames()).hasSize(1);
-        assertThat(bowling.getFrames().getFrames().get(0).getFrameRounds().getStatus()).isEqualTo(RoundsStatus.MISS);
+        assertThat(bowling.getFrames().getFrames().get(0).getFrameRounds().getScoreStatus().getStatus()).isEqualTo(RoundsStatus.MISS);
     }
 
     @Test

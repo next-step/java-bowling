@@ -16,9 +16,9 @@ public class FramesTest {
         frames.play(1);
 
         assertThat(frames.getFrames()).hasSize(3);
-        assertThat(frames.getFrames().get(0).getFrameRounds().getStatus()).isEqualTo(RoundsStatus.STRIKE);
-        assertThat(frames.getFrames().get(1).getFrameRounds().getStatus()).isEqualTo(RoundsStatus.SPARE);
-        assertThat(frames.getFrames().get(2).getFrameRounds().getStatus()).isEqualTo(RoundsStatus.MISS);
+        assertThat(frames.getFrames().get(0).getFrameRounds().getScoreStatus().getStatus()).isEqualTo(RoundsStatus.STRIKE);
+        assertThat(frames.getFrames().get(1).getFrameRounds().getScoreStatus().getStatus()).isEqualTo(RoundsStatus.SPARE);
+        assertThat(frames.getFrames().get(2).getFrameRounds().getScoreStatus().getStatus()).isEqualTo(RoundsStatus.MISS);
     }
 
     @Test
