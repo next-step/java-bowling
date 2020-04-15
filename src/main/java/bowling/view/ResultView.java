@@ -5,44 +5,34 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.score.Score;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResultView {
-    private static final String BOWLING_FRAME = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String BLANK_FRAME_FORMAT = "      |";
-    private static final String BLANK_FRAME = "|      |";
-    private static final String FRAME_LINE = "|";
-    private static final String DEFAULT_SCORE_FRAME = "|  %s |      |      |      |      |      |      |      |      |      |";
-    private static final String EMPTY_FRAME = "|      |      |      |      |      |      |      |      |      |      |";
-    private static final String NAME_FORMAT = "  %s |";
-    private static final String MULTI_SCORE_FORMAT = "  %s |";
-    private static final String SINGLE_SCORE_FORMAT = "  %s   |";
+import static bowling.view.FrameFormat.*;
 
+public class ResultView {
+    private static final int ONE = 1;
 
     public static void printBowlingFrame(Player player) {
-        System.out.println(BOWLING_FRAME);
-        System.out.println(String.format(DEFAULT_SCORE_FRAME, player.getName()));
-        System.out.println(EMPTY_FRAME);
+        System.out.println(BOWLING_FRAME.getForamt());
+        System.out.println(String.format(DEFAULT_SCORE_FRAME.getForamt(), player.getName()));
+        System.out.println(EMPTY_FRAME.getForamt());
     }
 
     public static void printBowlingScore(Frames frames) {
-        System.out.println(BOWLING_FRAME);
         Player player = frames.getPlayer();
 
-        StringBuilder result = new StringBuilder(FRAME_LINE);
-        StringBuilder pointResult = new StringBuilder(BLANK_FRAME);
-
-        result.append(String.format(NAME_FORMAT, player.getName()));
+        System.out.println(BOWLING_FRAME.getForamt());
+        StringBuilder result = new StringBuilder(String.format(NAME_FORMAT.getForamt(), player.getName()));
+        StringBuilder pointResult = new StringBuilder(BLANK_FRAME.getForamt());
 
         for (int i = 0, end = frames.size(); i < end; i++) {
             result.append(formatScores(frames.get(i)));
-            pointResult.append(formatPoint(frames.get(i), i));
+            pointResult.append(formatPoint(frames, i));
         }
 
-        addBlankFrame(frames, result);
-        addBlankFrame(frames, pointResult);
+        addBlankFrame(frames.size(), result);
+        addBlankFrame(frames.size(), pointResult);
         System.out.println(result);
         System.out.println(pointResult);
     }
@@ -52,19 +42,19 @@ public class ResultView {
                 .map(Score::pointToScore)
                 .collect(Collectors.toList());
 
-        if (scores.size() > 1) {
-            return String.format(MULTI_SCORE_FORMAT, String.join(FRAME_LINE, scores));
+        if (scores.size() > ONE) {
+            return String.format(MULTI_SCORE_FORMAT.getForamt(), String.join(FRAME_LINE.getForamt(), scores));
         }
-        return String.format(SINGLE_SCORE_FORMAT, scores.get(0));
+        return String.format(SINGLE_SCORE_FORMAT.getForamt(), scores.get(0));
     }
 
-    private static String formatPoint(Frame frame, int frameIndex) {
-        return String.format(MULTI_SCORE_FORMAT, frame.getTotalPoint(frameIndex));
+    private static String formatPoint(Frames frames, int frameIndex) {
+        return String.format(POINT_SCORE_FORMAT.getForamt(), frames.calculateFramePoint(frameIndex));
     }
 
-    private static void addBlankFrame(Frames frames, StringBuilder result) {
-        for (int i = 0, frameSize = frames.size(); i < 10 - frameSize; i++) {
-            result.append(BLANK_FRAME_FORMAT);
+    private static void addBlankFrame(int frameSize, StringBuilder result) {
+        for (int i = 0; i < 10 - frameSize; i++) {
+            result.append(BLANK_FRAME_FORMAT.getForamt());
         }
     }
 }
