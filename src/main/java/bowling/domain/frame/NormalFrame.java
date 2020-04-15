@@ -56,6 +56,10 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame bowl(final int pinCount) {
+        if (isFinish()) {
+            throw new BowlingException(State.CANT_THROW_BALL);
+        }
+
         State bowl = state.bowl(pinCount);
         return new NormalFrame(frameNumber, nextFrame, bowl);
     }

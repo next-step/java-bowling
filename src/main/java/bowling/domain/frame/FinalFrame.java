@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.frame.state.FinalFrameStates;
+import bowling.domain.frame.state.State;
 import bowling.exception.BowlingException;
 
 public class FinalFrame implements Frame {
@@ -29,7 +30,12 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame bowl(int pinCount) {
-        return null;
+        if (isFinish()) {
+            throw new BowlingException(State.CANT_THROW_BALL);
+        }
+
+        FinalFrameStates bowl = states.bowl(pinCount);
+        return new FinalFrame(bowl);
     }
 
     @Override
