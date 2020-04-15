@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.GameResult;
+import bowling.domain.result.GameResult;
 import bowling.domain.PlayerName;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
