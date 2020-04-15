@@ -4,6 +4,7 @@ import bowling.domain.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 프레임 일급 컬렉션
@@ -14,11 +15,12 @@ public class Frames {
     private static final int FRAME_INDEX_NINE = 9;
     private static final int ZERO = 0;
     private static final int ONE = 1;
+    private static final String NOT_ADDABLE_FRAME = "";
 
     private final List<Frame> frames;
     private final Player player;
 
-    public Frames(List<Frame> frames, Player player) {
+    private Frames(List<Frame> frames, Player player) {
         this.frames = frames;
         this.player = player;
     }
@@ -47,22 +49,27 @@ public class Frames {
     }
 
     private boolean isLast() {
-        return frames.size() == FRAME_INDEX_NINE;
+        return !Objects.isNull(frames) && frames.size() == FRAME_INDEX_NINE;
     }
 
     private boolean isFrist() {
-        return frames.size() == ZERO;
+        return !Objects.isNull(frames) && frames.size() == ZERO;
     }
 
-    public String getFramePoint(int frameIndex) {
-        int totalPoint = 0;
+    public String calculateFramePoint(int frameIndex) {
+        if (!isCalculatableFrame(frameIndex)) {
+            return NOT_ADDABLE_FRAME;
+        }
+
+        int totalPoint = ZERO;
         for (int i = 0; i < frameIndex + 1; i++) {
-            if (!frames.get(i).isCalculatableFrame(i)) {
-                return "";
-            }
-            totalPoint +=frames.get(i).getTotalPoint(i);
+            totalPoint += frames.get(i).getTotalPoint(i);
         }
         return Integer.toString(totalPoint);
+    }
+
+    private boolean isCalculatableFrame(int frameIndex) {
+        return !Objects.isNull(frames) && frames.get(frameIndex).isCalculatableFrame(frameIndex);
     }
 
     public Frame getLast() {
