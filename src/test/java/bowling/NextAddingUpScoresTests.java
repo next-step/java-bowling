@@ -19,7 +19,7 @@ public class NextAddingUpScoresTests {
 
     @DisplayName("스코어 추가 테스트")
     @Test
-    public void generateTest() {
+    public void addTest() {
         NextAddingUpScores nextAddingUpScores = NextAddingUpScores.newInstance(Arrays.asList(Score.of(10)));
         assertThatCode(() -> nextAddingUpScores.add(Score.of(10)));
     }
