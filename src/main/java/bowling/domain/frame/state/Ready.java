@@ -11,6 +11,10 @@ public class Ready implements State {
         if (knockOverPins.isStrike()) {
             return new Strike();
         }
+
+        if (knockOverPins.isGutter()) {
+            return new FirstGutter(knockOverPins);
+        }
         return new FirstBowl(knockOverPins);
     }
 

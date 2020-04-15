@@ -2,20 +2,22 @@ package bowling.domain.frame;
 
 import bowling.domain.frame.state.FinalReady;
 import bowling.domain.frame.state.State;
+import bowling.domain.frame.state.States;
 import bowling.domain.pin.Pins;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 
 public class FinalFrame implements Frame {
     private final FrameNumber frameNumber;
-    //private States states;
+    private States states;
     private State state;
 
     public FinalFrame(final FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
         this.state = new FinalReady();
-        //this.states = new States(Collections.emptyList());
+        this.states = new States(new ArrayList<>());
     }
 
     @Override
@@ -42,6 +44,11 @@ public class FinalFrame implements Frame {
     @Override
     public String getState() {
         return state.toResult();
+    }
+
+    @Override
+    public States getStates() {
+        return states;
     }
 
     @Override

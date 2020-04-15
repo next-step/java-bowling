@@ -3,12 +3,9 @@ package bowling.domain.frame.state;
 import bowling.domain.pin.Pins;
 
 public class Miss implements State {
-    private static final String DELIMITER = "|";
-    private final Pins first;
     private final Pins second;
 
-    Miss(final Pins first, final Pins second) {
-        this.first = first;
+    Miss(final Pins second) {
         this.second = second;
     }
 
@@ -24,6 +21,9 @@ public class Miss implements State {
 
     @Override
     public String toResult() {
-        return first.count() + DELIMITER + second.count();
+        if (second.isGutter()) {
+            return "-";
+        }
+        return String.valueOf(second.count());
     }
 }

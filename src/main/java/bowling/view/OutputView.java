@@ -1,6 +1,8 @@
 package bowling.view;
 
 import bowling.controller.BowlingGame;
+import bowling.domain.frame.state.State;
+import bowling.domain.frame.state.States;
 import bowling.domain.player.Player;
 import bowling.view.format.StateFormatter;
 
@@ -20,23 +22,65 @@ public class OutputView {
 
     public static void printOverHead(BowlingGame game) {
         printFramesHeader();
-        printFrameState(game.getCurrentPlayer(), game.getResult());
+        printPlayerName(game.getCurrentPlayer());
+        //printFrameState(game.getCurrentPlayer(), game.getResult());
+        printFrameState(game.getStates());
         System.out.println();
+    }
+
+    private static void printPlayerName(final Player currentPlayer) {
+        System.out.print(formatName(currentPlayer.name()));
+    }
+
+    private static String formatName(final String name) {
+        return DELIMITER + name + DELIMITER;
     }
 
     private static void printFrameState(final Player currentPlayer, final List<String> states) {
         String formatName = formatName(currentPlayer.name());
         String formatStates = states.stream()
-                                    .map(OutputView::formatState)
+                                    .map(StateFormatter::format)
                                     .collect(Collectors.joining(DELIMITER, EMPTY_STRING, DELIMITER));
         System.out.println(formatName + formatStates);
     }
 
-    private static String formatState(final String state) {
-        return StateFormatter.format(state);
+    private static void printFrameState(final List<States> states) {
+        StringBuilder stateExpressionBuilder = new StringBuilder();
+        for (States histories : states) {
+            System.out.print(printStateHistories(histories));
+        }
+        System.out.println();
     }
 
-    private static String formatName(final String name) {
-        return DELIMITER + name + DELIMITER;
+    private static String printStateHistories(final States states) {
+        if (states.isEmpty()) {
+            return formatState(EMPTY_STRING) + DELIMITER;
+        }
+
+        String expression = EMPTY_STRING;
+        for (State state : states.getList()) {
+            expression += addJoiner(state, replaceNull(state));
+        }
+        expression = formatState(expression);
+        expression += DELIMITER;
+        return expression;
+    }
+
+    private static String replaceNull(final State state) {
+        if (state == null) {
+            return EMPTY_STRING;
+        }
+        return state.toResult();
+    }
+
+    private static String addJoiner(final State state, final String expression) {
+        if (!state.isTurnOver()) {
+            return expression + DELIMITER;
+        }
+        return expression;
+    }
+
+    private static String formatState(final String expression) {
+        return StateFormatter.format(expression);
     }
 }

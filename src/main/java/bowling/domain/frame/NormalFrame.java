@@ -2,21 +2,21 @@ package bowling.domain.frame;
 
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
+import bowling.domain.frame.state.States;
 import bowling.domain.pin.Pins;
 
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
     private final Frame nextFrame;
-    //private States states;
-    private State state;
+    private States states;
+    private State currentState;
 
     public NormalFrame(final FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
-        this.state = new Ready();
-        //this.states = new States(Collections.emptyList());
+        this.currentState = new Ready();
+        this.states = new States(new ArrayList<>());
         this.nextFrame = next();
     }
 
@@ -30,8 +30,8 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame bowl(final Pins pins) {
-        state = state.roll(pins);
-        //states.add(state);
+        currentState = currentState.roll(pins);
+        states.add(currentState);
         if (!isEnd()) {
             return this;
         }
@@ -40,7 +40,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return state.isTurnOver();
+        return currentState.isTurnOver();
     }
 
     @Override
@@ -55,7 +55,12 @@ public class NormalFrame implements Frame {
 
     @Override
     public String getState() {
-        return state.toResult();
+        return currentState.toResult();
+    }
+
+    @Override
+    public States getStates() {
+        return states;
     }
 
     @Override

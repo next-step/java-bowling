@@ -3,6 +3,7 @@ package bowling.controller;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.Frames;
+import bowling.domain.frame.state.States;
 import bowling.domain.pin.BowlCount;
 import bowling.domain.pin.Pins;
 import bowling.domain.player.Player;
@@ -41,4 +42,7 @@ public class BowlingGame {
         return current.getFrameNumber().isFinal() && current.isEnd();
     }
 
+    public List<States> getStates() {
+        return frames.getStates();
+    }
 }

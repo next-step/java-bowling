@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.state.States;
 import bowling.domain.pin.Pins;
 
 import java.util.Collections;
@@ -44,11 +45,11 @@ public class Frames {
                      .collect(Collectors.toList());
     }
 
-//    public List<States> getStates() {
-//        return frames.stream()
-//                     .map(Frame::getStates)
-//                     .collect(Collectors.toList());
-//    }
+    public List<States> getStates() {
+        return frames.stream()
+                     .map(Frame::getStates)
+                     .collect(Collectors.toList());
+    }
 
     public Frame getCurrent() {
         if (currentIndex > NORMAL_FRAME_COUNT) {
