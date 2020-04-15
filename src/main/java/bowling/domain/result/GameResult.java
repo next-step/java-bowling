@@ -23,6 +23,10 @@ public class GameResult {
         return playerName;
     }
 
+    public String getName(){
+        return playerName.getName();
+    }
+
     public Frames getFrames() {
         return frames;
     }
