@@ -119,7 +119,7 @@ public class ResultView2 {
                 && gameResult1.getFrameByFrameId(frameId).containsOrdinal(ordinal)) {
             print(gameResult2.getName() + "'s turn");
             print(" : ");
-            println(gameResult2.getFrameByFrameId(frameId).getPointAtOrdinal(ordinal));
+            System.out.println("-");
             printPlayInformation();
 
             printForOnePlayer(ordinal, gameResult1, gameResult1.getFrameByFrameId(frameId));
@@ -240,7 +240,6 @@ public class ResultView2 {
 
     private static void printFormatting(Frames frames, Frame frame) {
         if (frames.getTotalPointUntil(frame) >= MIN_NUMBER_FOR_THREE_DIGITS) {
-            print(BLANK_TWO);
         }
 
         if (frames.getTotalPointUntil(frame) >= MIN_NUMBER_FOR_TWO_DIGITS) {
