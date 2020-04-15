@@ -14,7 +14,7 @@ class ShotScoreTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1,11})
+    @ValueSource(ints = {-1, 11})
     void ofException(int score) {
         assertThatThrownBy(() -> ShotScore.of(score))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -37,7 +37,7 @@ class ShotScoreTest {
     @Test
     void nextException() {
         ShotScore shotScore = ShotScore.of(5);
-        assertThatThrownBy(()->shotScore.next(6))
+        assertThatThrownBy(() -> shotScore.next(6))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

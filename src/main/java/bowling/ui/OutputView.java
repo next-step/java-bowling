@@ -39,8 +39,8 @@ public class OutputView {
 
     private Stream<String> getFrameStringStream(FramesDto frames) {
         return frames.getFrames()
-                        .stream()
-                        .map(this::parseFrame);
+                .stream()
+                .map(this::parseFrame);
     }
 
     private Stream<String> getEmptyStringStream(FramesDto frames) {

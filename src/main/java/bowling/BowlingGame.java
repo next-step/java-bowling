@@ -13,17 +13,17 @@ public class BowlingGame {
         outputView = new OutputView();
     }
 
-    public void start(){
+    public void start() {
         Player player = Player.of(inputView.getPlayer());
         outputView.printFrame(player.getDto());
 
-        while(!player.isGameSet()) {
+        while (!player.isGameSet()) {
             player.shot(inputView.getShot(player.getCurrentFrameNumber()));
             outputView.printFrame(player.getDto());
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         new BowlingGame().start();
     }
 }

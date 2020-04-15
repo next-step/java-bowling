@@ -13,7 +13,7 @@ public class FramesDto {
         return frames;
     }
 
-    public int size(){
+    public int size() {
         return frames.size();
     }
 }
