@@ -165,10 +165,20 @@ public class ResultView2 {
     }
 
     private static void printForOnePlayer(Ordinal ordinal, GameResult gameResult, Frame frame){
+        // printForOnePlayer(FIRST, gameResult2, gameResult2.getFrameByFrameId(frameId));
         printName(gameResult.getName());
-        gameResult.getFrames().getFrames()
-                .subList(0, frame.getFrameId() + OFFSET)
-                .forEach(frame1 -> printFrame(frame1));
+
+        if(SECOND.equals(ordinal)
+                && gameResult.getFrameByFrameId(frame.getFrameId()).isResult(STRIKE)
+                && frame.getFrameId() != FRAME_ID_FIRST){
+            gameResult.getFrames().getFrames()
+                    .subList(0, frame.getFrameId())
+                    .forEach(frame1 -> printFrame(frame1));
+        } else {
+            gameResult.getFrames().getFrames()
+                    .subList(0, frame.getFrameId() + OFFSET)
+                    .forEach(frame1 -> printFrame(frame1));
+        }
 
         printFrameByOrdinal(frame, ordinal);
         printLineSeparator();
