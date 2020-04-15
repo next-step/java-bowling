@@ -1,19 +1,42 @@
 # 볼링 점수판 구현
 
-- 플레이어
-  - 현재 프레임 번호
-  - 투구
+## Public
+- Player (플레이어 및 Frames)
+  - playerName
+  - Frames
+  - getCurrentFrameNumber
+  - shot
+  - isGameSet
   - dto
-    - 이름
-    - 프레임 리스트
-  
-- 프레임 (개별점수 리스트)
-  - 투구
-  - 프레임 총 점수 (다음 프레임 득점 시 현재 프레임 점수 바뀔 수 있음)
-  - 다음 프레임
+    - getName
+    - FramesDto
 
-- 개별점수  
-    - 스트라이크,스페어,미스,거터 상태 (enum)
-    - 점수
-    - 투구(다음 점수)
-    
+## package-private
+- Frames (Frame 일급 컬렉션)
+  - getCurrentFrameNumber
+  - shot
+  - isGameSet
+  - dto
+    - List<FrameDto>
+  
+- Frame (개별점수 리스트)
+  - next
+  - last
+  - shot
+  - isFrameSet
+  - dto
+    - FrameDto(List<ShotScoreDto>)
+
+- ShotScores (ShotScore 일급 컬렉션)  
+    - add
+    - isSize
+    - isClear
+    - dto
+        - List<ShotScoreDto>
+
+- ShotScore (개별 점수)
+  - next
+  - isClear (스페어 또는 스트라이크 처리인지)
+  - dto
+    - getScoreType
+    - getScore
