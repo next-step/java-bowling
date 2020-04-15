@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Rolls {
-    private static final int ROLL_COUNT = 2;
+    private static final int MAX_ROLL_COUNT = 3;
+    private int rollCount = 2;
     private List<Pin> rolls = new ArrayList<>();
 
     public Rolls() {
@@ -18,9 +19,16 @@ public class Rolls {
     }
 
     public void validateRolls() {
-        if (rolls.size() >= ROLL_COUNT) {
-            throw new IllegalArgumentException("");
+        if (rolls.size() >= rollCount) {
+            throw new IllegalArgumentException("던질 수 있는 횟수를 초과하였습니다.");
         }
+    }
+
+    public void addBonusRoll() {
+        if (rollCount >= MAX_ROLL_COUNT) {
+            throw new IllegalArgumentException("최대 공을 던질 수 있는 기회는 3번입니다.");
+        }
+        ++rollCount;
     }
 
     public void add(Pin pin) {

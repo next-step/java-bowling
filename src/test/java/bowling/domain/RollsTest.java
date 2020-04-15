@@ -28,4 +28,15 @@ class RollsTest {
         rolls.add(Pin.of(8));
         assertThat(rolls.getRolls()).hasSize(1);
     }
+
+    @DisplayName("공을 세번 굴릴 수 있을때 보너스 투구 추가시")
+    @Test
+    void addBonusRoll() {
+        Rolls rolls = new Rolls();
+        rolls.add(Pin.of(1));
+        rolls.add(Pin.of(2));
+        rolls.addBonusRoll();
+        rolls.add(Pin.of(10));
+        assertThat(rolls.getRolls()).hasSize(3);
+    }
 }
