@@ -1,12 +1,25 @@
 package bowling.view;
 
+import java.util.List;
+
+import bowling.domain.Game;
+import bowling.domain.NormalFrame;
+import bowling.domain.Pin;
+import bowling.domain.Rule;
+
 public class ResultView {
     private static final String NAME = "NAME";
     private static final int FRAME_NUM = 10;
+    private static final int COLUMN_INTERVAL = 6;
+    private static final int TEXT_INTERVAL = 2;
+    private static final String FRAME_NUM_FORMAT = "%02d";
     private static final String VERTICAL = "|";
     private static final String BLANK = " ";
     private static final String NEW_LINE = "\n";
-
+    private static final String TITLE_BOWL = "프레임 투구 : ";
+    private static final String GUTTER = "-";
+    private static final String SPARE = "/";
+    private static final String STRIKE = "X";
 
     private static ResultView resultView = new ResultView();
 
@@ -15,24 +28,101 @@ public class ResultView {
     }
 
     public String initScoreBoard(String userName) {
-        StringBuilder builder = new StringBuilder();
-        setNameHeader(builder);
-        setHeaderNumber(builder);
-        setUserNameColumn(userName, builder);
-        for (int i = 0; i < FRAME_NUM; i++) {
-            setInitColumn(builder);
-        }
+        StringBuilder builder = initBasicInfo(userName);
+        repeatInitColumn(FRAME_NUM, builder);
         builder.append(NEW_LINE);
         return builder.toString();
     }
 
+    public String playFrameResult(NormalFrame normalFrame) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(normalFrame.getFrameNum())
+               .append(TITLE_BOWL)
+               .append(normalFrame.getFalledPins())
+               .append(NEW_LINE);
+        return builder.toString();
+    }
+
+    public String playFrameScoreBoard(Game game) {
+        StringBuilder builder = initBasicInfo(game.getUserName());
+        List<NormalFrame> frames = game.getFrames();
+
+        for (NormalFrame frame : frames) {
+            List<Pin> rolls = frame.getRolls().getRolls();
+            builder.append(displayRolls(rolls, frame.getFalledPins()));
+        }
+
+        repeatInitColumn(FRAME_NUM - frames.size(), builder);
+        builder.append(NEW_LINE);
+        return builder.toString();
+    }
+
+    private String displayRolls(List<Pin> rolls, int falledPins) {
+        StringBuilder builder = new StringBuilder(appendBlank(TEXT_INTERVAL));
+        boolean spareFlag = isSpareFlag(rolls, falledPins);
+
+        for (int i = 0; i < rolls.size(); i++) {
+            String score = displayScore(rolls.get(i));
+            appendScoreVertical(builder, i);
+            score = isSpareScore(spareFlag, i, score);
+            builder.append(score);
+        }
+
+        builder.append(appendBlank(COLUMN_INTERVAL - builder.length()));
+        builder.append(VERTICAL);
+        return builder.toString();
+    }
+
+    private String isSpareScore(boolean spareFlag, int i, String score) {
+        if (i == 1 && spareFlag) {
+            score = SPARE;
+        }
+        return score;
+    }
+
+    private void appendScoreVertical(StringBuilder builder, int i) {
+        if (i == 1) {
+            builder.append(VERTICAL);
+        }
+    }
+
+    private boolean isSpareFlag(List<Pin> rolls, int falledPins) {
+        boolean spareFlag = false;
+
+        if (rolls.size() == 2 && falledPins == Rule.MAX_PINS.getValue()) {
+            spareFlag = true;
+        }
+        return spareFlag;
+    }
+
+    private String displayScore(Pin roll) {
+        int rollFalledPins = roll.getFalledPins();
+        String displayScore = String.valueOf(rollFalledPins);
+
+        if (rollFalledPins == Rule.MAX_PINS.getValue()) {
+            return STRIKE;
+        }
+
+        if (rollFalledPins == Rule.MIN_PINS.getValue()) {
+            return GUTTER;
+        }
+
+        return displayScore;
+    }
+
+    private void repeatInitColumn(int repeatNum, StringBuilder builder) {
+        for (int i = 0; i < repeatNum; i++) {
+            setInitColumn(builder);
+        }
+    }
+
     private void setInitColumn(StringBuilder builder) {
-        builder.append(appendBlank(6)).append(VERTICAL);
+        builder.append(appendBlank(COLUMN_INTERVAL)).append(VERTICAL);
     }
 
     private void setUserNameColumn(String userName, StringBuilder builder) {
         builder.append(VERTICAL)
-               .append(appendBlank(2))
+               .append(appendBlank(TEXT_INTERVAL))
                .append(userName)
                .append(BLANK)
                .append(VERTICAL);
@@ -48,9 +138,9 @@ public class ResultView {
 
     private void setHeaderNumber(StringBuilder builder) {
         for (int i = 1; i <= FRAME_NUM; i++) {
-            builder.append(appendBlank(2))
-                   .append(String.format("%02d", i))
-                   .append(appendBlank(2))
+            builder.append(appendBlank(TEXT_INTERVAL))
+                   .append(String.format(FRAME_NUM_FORMAT, i))
+                   .append(appendBlank(TEXT_INTERVAL))
                    .append(VERTICAL);
         }
         builder.append(NEW_LINE);
@@ -62,5 +152,13 @@ public class ResultView {
                .append(NAME)
                .append(BLANK)
                .append(VERTICAL);
+    }
+
+    private StringBuilder initBasicInfo(String userName) {
+        StringBuilder builder = new StringBuilder();
+        setNameHeader(builder);
+        setHeaderNumber(builder);
+        setUserNameColumn(userName, builder);
+        return builder;
     }
 }

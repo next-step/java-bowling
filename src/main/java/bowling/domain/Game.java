@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.List;
 
 public class Game {
+    private static final int FIRST_FRAME_NUMBER = 1;
     private String userName;
     private Frames frames;
 
@@ -14,9 +15,16 @@ public class Game {
         this.userName = userName;
         this.frames = frames;
     }
-    public void startGame() {
+
+    public NormalFrame startGame() {
         frames = new Frames();
-        frames.addFrame(new NormalFrame(1));
+        NormalFrame normalFrame = new NormalFrame(FIRST_FRAME_NUMBER);
+        frames.addFrame(normalFrame);
+        return normalFrame;
+    }
+
+    public void addFrame(NormalFrame frame) {
+        frames.addFrame(frame);
     }
 
     public String getUserName() {
