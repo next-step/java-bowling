@@ -13,7 +13,7 @@ public class BowlingGame {
         return Frames.of(player);
     }
 
-    public static void nexrFrame(Frames frames) {
-        frames.nextFrame();
+    public static void addNextFrame(Frames frames) {
+        frames.addNextFrame();
     }
 }

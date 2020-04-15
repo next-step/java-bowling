@@ -34,7 +34,7 @@ public class Frames {
         frames.add(frame);
     }
 
-    public void nextFrame() {
+    public void addNextFrame() {
         if (isFrist()) {
             frames.add(DefaultFrame.first());
             return;

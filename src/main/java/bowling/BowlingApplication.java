@@ -15,7 +15,7 @@ public class BowlingApplication {
 
         Frames frames = BowlingGame.startGame(player);
         while (!frames.isOver()) {
-            BowlingGame.nexrFrame(frames);
+            BowlingGame.addNextFrame(frames);
             playBowling(frames);
         }
     }
