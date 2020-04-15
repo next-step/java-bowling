@@ -17,6 +17,10 @@ public class FirstBowl implements State {
             return new Spare(firstPins, second);
         }
 
+        if (second.isGutter()) {
+            return new Gutter();
+        }
+
         return new Miss(firstPins, second);
     }
 
