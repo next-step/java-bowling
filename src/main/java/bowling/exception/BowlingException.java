@@ -7,4 +7,8 @@ public class BowlingException extends RuntimeException {
     public BowlingException(String message) {
         super(String.format(MESSAGE, message));
     }
+
+    public BowlingException() {
+        super();
+    }
 }
