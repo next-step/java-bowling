@@ -1,7 +1,9 @@
 package bowling;
 
 import bowling.domain.Player;
+import bowling.domain.Result;
 import bowling.view.InputView;
+import bowling.view.ResultView;
 
 public class BowlingApplication {
 
@@ -11,5 +13,7 @@ public class BowlingApplication {
         Player player = new Player(name);
 
         System.out.println(player);
+
+        ResultView.printScoreBoardTop();
     }
 }
