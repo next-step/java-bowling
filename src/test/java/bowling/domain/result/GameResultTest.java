@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain.result;
 
 import bowling.domain.result.GameResult;
 import bowling.domain.PlayerName;
