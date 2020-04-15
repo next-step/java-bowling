@@ -1,12 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.turn.Turns;
-
 public interface Frame {
+
+    int MAX_FRAME_NUMBER = 10;
 
     Frame bowl(final int pinCount);
 
-    Turns getTurns();
-
     Frame createNext();
+
+    Frame getNext();
 }
