@@ -19,7 +19,7 @@ public class Frame {
     }
 
     public void roundPlay(int clearCount) {
-        frameRounds.play(clearCount);
+        frameRounds.play(clearCount, isLastFrame());
     }
 
     public static Frame fistFrame() {
@@ -30,8 +30,28 @@ public class Frame {
         return new Frame(this.frameIndex + ONE);
     }
 
+    public void updateBonus(int bonusScore) {
+        frameRounds.updateBonus(bonusScore);
+    }
+
+    public boolean endCalculate() {
+        return frameRounds.endCalculate();
+    }
+
+    public int getTotalScore() {
+        return frameRounds.getTotalScore();
+    }
+
+    public void addScore(int score) {
+        frameRounds.addScore(score);
+    }
+
     public boolean isEndFrame() {
         return frameRounds.isEnd(isLastFrame());
+    }
+
+    public boolean availableBonus() {
+        return frameRounds.availableBonus();
     }
 
     private boolean isLastFrame() {

@@ -7,33 +7,52 @@ import java.util.List;
 
 public class FrameRounds {
     private static final int MAX_ROUND_SIZE = 3;
+
     @Getter
-    private RoundsStatus status;
+    private ScoreStatus scoreStatus;
     @Getter
     private List<FrameRound> frameRounds;
 
     public FrameRounds() {
-        this.status = RoundsStatus.NONE;
+        this.scoreStatus = new ScoreStatus();
         this.frameRounds = new ArrayList<>();
     }
 
-    public void play(int clearCount) {
+    public void play(int clearCount, boolean isLastFrame) {
         int roundIndex = this.frameRounds.size();
         frameRounds.add(new FrameRound(roundIndex, clearCount));
 
-        if (this.status.isNone()) {
-            this.status = RoundsStatus.getRoundStatus(roundIndex, totalClearPinCount());
-        }
+        scoreStatus.update(roundIndex, clearCount, totalClearPinCount(), isLastFrame);
     }
 
     public boolean isEnd(boolean isLastFrame) {
         if (isLastFrame
-                && (this.status.isStrike() || this.status.isSpare())
+                && (this.scoreStatus.isStrike() || this.scoreStatus.isSpare())
                 && !isMaxRoundSize(this.frameRounds.size())) {
             return false;
         }
 
-        return this.status != RoundsStatus.NONE;
+        return !this.scoreStatus.isNone();
+    }
+
+    public boolean availableBonus() {
+        return scoreStatus.availableBonus();
+    }
+
+    public boolean endCalculate() {
+        return scoreStatus.endCalculate();
+    }
+
+    public void addScore(int score) {
+        scoreStatus.addScore(score);
+    }
+
+    public int getTotalScore() {
+        return scoreStatus.getTotalScore();
+    }
+
+    public void updateBonus(int bonusScore) {
+        scoreStatus.updateBonus(bonusScore);
     }
 
     private int totalClearPinCount() {
