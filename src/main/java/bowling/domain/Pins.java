@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.turn.TurnState;
 import bowling.exception.BowlingException;
 
 import java.util.Objects;
@@ -40,11 +39,6 @@ public class Pins {
     public Score getScore() {
         return new Score(getDownPin());
     }
-
-    public Result getResultState(TurnState turnState) {
-        return Result.getResultState(turnState, pins);
-    }
-
 
     public boolean isGutter() {
         if (pins == MAX_PIN) {

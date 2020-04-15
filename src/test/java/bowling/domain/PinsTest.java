@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.turn.TurnState;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -79,25 +78,6 @@ class PinsTest {
         assertThat(score).isEqualTo(new Score(15));
     }
 
-    @DisplayName("남은 핀 개수를 이용해 strike, spare 등의 상태를 구한다.")
-    @Test
-    public void getResultState_success() throws Exception {
-        //given
-        Pins pins = Pins.from();
-
-        //when
-        Pins strike = pins.bowl(10);
-        Pins spare = pins.bowl(10);
-        Pins miss = pins.bowl(3);
-        Pins gutter = pins.bowl(0);
-
-        //then
-        assertThat(strike.getResultState(TurnState.FIRST)).isEqualTo(Result.STRIKE);
-        assertThat(spare.getResultState(TurnState.SECOND)).isEqualTo(Result.SPARE);
-        assertThat(gutter.getResultState(TurnState.SECOND)).isEqualTo(Result.GUTTER);
-        assertThat(miss.getResultState(TurnState.FIRST)).isEqualTo(Result.MISS);
-    }
-
     @DisplayName("남은 핀이 10개 이면 gutter 상태 이다")
     @Test
     public void isGutter_success() throws Exception {
@@ -115,8 +95,6 @@ class PinsTest {
         //given
         Pins max = new Pins(10);
         Pins min = new Pins(0);
-
-        //when
 
         //then
         assertFalse(max.isFinish());

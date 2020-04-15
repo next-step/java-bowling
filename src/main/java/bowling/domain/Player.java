@@ -18,4 +18,8 @@ public class Player {
             throw new BowlingException(PLAYER_NAME_LENGTH_ERR_MESSAGE);
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
