@@ -8,7 +8,7 @@ import java.util.Objects;
 
 /**
  * 프레임 일급 컬렉션
- * 프레임의 추가를 제어한다.
+ * 프레임의 추가, 프레임의 전체 점수를 계산하는 책임을 가진다.
  */
 public class Frames {
     private static final int BOWLING_FRAME_SIZE = 10;
