@@ -31,10 +31,8 @@ public class ResultView {
             pointResult.append(formatPoint(frames, i));
         }
 
-        addBlankFrame(frames.size(), result);
-        addBlankFrame(frames.size(), pointResult);
-        System.out.println(result);
-        System.out.println(pointResult);
+        System.out.println(addBlankFrame(frames.size(), result));
+        System.out.println(addBlankFrame(frames.size(), pointResult));
     }
 
     private static String formatScores(Frame frame) {
@@ -52,9 +50,10 @@ public class ResultView {
         return String.format(POINT_SCORE_FORMAT.getForamt(), frames.calculateFramePoint(frameIndex));
     }
 
-    private static void addBlankFrame(int frameSize, StringBuilder result) {
+    private static StringBuilder addBlankFrame(int frameSize, StringBuilder result) {
         for (int i = 0; i < 10 - frameSize; i++) {
             result.append(BLANK_FRAME_FORMAT.getForamt());
         }
+        return result;
     }
 }
