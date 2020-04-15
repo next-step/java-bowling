@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Frames {
 
+    private static final int TOTAL_FRAME_SIZE = 10;
+
     private final LinkedList<Frame> frames;
 
     public Frames(final List<Frame> frames) {

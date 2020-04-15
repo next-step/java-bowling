@@ -43,6 +43,15 @@ public class NormalFrame implements Frame {
         return new NormalFrame(frameNumber);
     }
 
+    public Frame createNext() {
+        if (frameNumber == MAX_FRAME_NUMBER - 1) {
+            return new FinalFrame();
+        }
+
+        NormalFrame next = new NormalFrame(frameNumber + 1);
+        return new NormalFrame(this.turns, this.frameNumber, next, this.turnState);
+    }
+
     private void validateFrameNumber(final int frameNumber) {
         if (frameNumber < MIN_FRAME_NUMBER || frameNumber > MAX_FRAME_NUMBER) {
             throw new BowlingException(MAX_FRAME_MESSAGE);

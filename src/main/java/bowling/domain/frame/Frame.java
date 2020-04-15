@@ -7,4 +7,6 @@ public interface Frame {
     Frame bowl(final int pinCount);
 
     Turns getTurns();
+
+    Frame createNext();
 }
