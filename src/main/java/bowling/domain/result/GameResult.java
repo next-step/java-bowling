@@ -15,7 +15,7 @@ public class GameResult {
         this.frames = frames;
     }
 
-    public static GameResult of(PlayerName playerName, Frames frames){
+    public static GameResult of(PlayerName playerName, Frames frames) {
         return new GameResult(playerName, frames);
     }
 
@@ -23,7 +23,7 @@ public class GameResult {
         return playerName;
     }
 
-    public String getName(){
+    public String getName() {
         return playerName.getName();
     }
 
@@ -31,7 +31,7 @@ public class GameResult {
         return frames;
     }
 
-    public Frame getFrameByFrameId(int frameId){
+    public Frame getFrameByFrameId(int frameId) {
         return frames.getFrames().get(frameId + OFFSET);
     }
 }

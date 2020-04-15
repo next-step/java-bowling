@@ -1,10 +1,10 @@
 package bowling.view;
 
-import bowling.domain.PlayerName;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.point.Ordinal;
 import bowling.domain.result.GameResult;
+import bowling.domain.result.GameResults;
 
 import java.util.stream.IntStream;
 
@@ -24,57 +24,134 @@ public class ResultView {
     private static final String SYMBOL_GUTTER = "-";
     private static final String DELIMITER_SPARE = "/";
     private static final int FRAME_ID_FIRST = 1;
+    private static final int FRAME_ID_FINAL = 10;
     private static final int MIN_NUMBER_FOR_THREE_DIGITS = 100;
     private static final int MIN_NUMBER_FOR_TWO_DIGITS = 10;
     private static final int OFFSET = -1;
     private static final int OFFSET_DOUBLE = -2;
 
-    public static void print(GameResult gameResult) {
+    public static void print(GameResults gameResults) {
         printLineSeparator();
-        printResult(gameResult.getPlayerName(), gameResult.getFrames());
+        printResult(gameResults.getFirstResult(), gameResults.getSecondResult());
     }
 
-    private static void printResult(PlayerName playerName, Frames frames) {
-        frames.getFrames().stream()
-                .forEach(frame -> printFrameResultSoFar(playerName, frames, frame));
+    private static void printResult(GameResult gameResult1, GameResult gameResult2) {
+        IntStream.rangeClosed(FRAME_ID_FIRST, FRAME_ID_FINAL)
+                .forEach(frameId -> printFrameResultSoFar(gameResult1, gameResult2, frameId));
     }
 
-    private static void printFrameResultSoFar(PlayerName playerName, Frames frames, Frame frame) {
-        if (frame.isResult(STRIKE)) {
-            printFrameResultWhen(FIRST, playerName, frames, frame);
-            printFrameResultWhen(THIRD, playerName, frames, frame);
-            printFrameResultWhen(FOURTH, playerName, frames, frame);
+    private static void printFrameResultSoFar(GameResult gameResult1, GameResult gameResult2, int frameId) {
+        if (frameId != FRAME_ID_FINAL) {
+            printFrameResult(FIRST, gameResult1, gameResult2, frameId);
+            printFrameResult(SECOND, gameResult1, gameResult2, frameId);
         }
 
-        if (!frame.isResult(STRIKE)) {
-            printFrameResultWhen(FIRST, playerName, frames, frame);
-            printFrameResultWhen(SECOND, playerName, frames, frame);
-            printFrameResultWhen(THIRD, playerName, frames, frame);
+        if (frameId == FRAME_ID_FINAL) {
+            printFrameResult(FIRST, gameResult1, gameResult2, frameId);
+            printFrameResult(SECOND, gameResult1, gameResult2, frameId);
+            printFrameResult(THIRD, gameResult1, gameResult2, frameId);
+            printFrameResult(FOURTH, gameResult1, gameResult2, frameId);
         }
     }
 
-    private static void printFrameResultWhen(Ordinal ordinal, PlayerName playerName, Frames frames, Frame frame) {
-        if (frame.containsOrdinal(ordinal)) {
-            printFrameId(frame);
+    private static void printFrameResult(Ordinal ordinal, GameResult gameResult1, GameResult gameResult2,
+                                         int frameId) {
+        if (gameResult1.getFrameByFrameId(frameId).containsOrdinal(ordinal)) {
+            print(gameResult1.getName() + "'s turn");
             print(" : ");
-            println(frame.getPointAtOrdinal(ordinal));
-
+            println(gameResult1.getFrameByFrameId(frameId).getPointAtOrdinal(ordinal));
             printPlayInformation();
-            printName(playerName.getName());
-            frames.getFrames()
+
+            printForOnePlayer(ordinal, gameResult1, gameResult1.getFrameByFrameId(frameId));
+            printLineSeparator();
+
+            if (frameId == FRAME_ID_FIRST && FIRST.equals(ordinal)) {
+                printName(gameResult2.getPlayerName().getName());
+            }
+
+            if (frameId == FRAME_ID_FIRST && SECOND.equals(ordinal)) {
+                printForOnePlayer(FIRST, gameResult2, gameResult2.getFrameByFrameId(frameId));
+            }
+
+            if (frameId != FRAME_ID_FIRST && FIRST.equals(ordinal)) {
+                printForOnePlayer(SECOND, gameResult2, gameResult2.getFrameByFrameId(frameId + OFFSET));
+            }
+
+            if (frameId != FRAME_ID_FIRST && SECOND.equals(ordinal)) {
+                printForOnePlayer(FIRST, gameResult2, gameResult2.getFrameByFrameId(frameId));
+            }
+
+            if (frameId == FRAME_ID_FINAL
+                    && THIRD.equals(ordinal)
+                    && gameResult2.getFrameByFrameId(frameId).containsOrdinal(THIRD)) {
+                printForOnePlayer(FIRST, gameResult2, gameResult2.getFrameByFrameId(frameId));
+            }
+
+            if (frameId == FRAME_ID_FINAL
+                    && THIRD.equals(ordinal)
+                    && !gameResult2.getFrameByFrameId(frameId).containsOrdinal(THIRD)) {
+                printForOnePlayer(SECOND, gameResult2, gameResult2.getFrameByFrameId(frameId));
+            }
+
+            if (frameId == FRAME_ID_FINAL && FOURTH.equals(ordinal)) {
+                printForOnePlayer(THIRD, gameResult2, gameResult2.getFrameByFrameId(frameId));
+            }
+
+            printThreeLineSeparators();
+        }
+
+        if (gameResult2.getFrameByFrameId(frameId).containsOrdinal(ordinal)
+                && gameResult1.getFrameByFrameId(frameId).containsOrdinal(ordinal)) {
+            print(gameResult2.getName() + "'s turn");
+            print(" : ");
+            println(gameResult2.getFrameByFrameId(frameId).getPointAtOrdinal(ordinal));
+            printPlayInformation();
+
+            printForOnePlayer(ordinal, gameResult1, gameResult1.getFrameByFrameId(frameId));
+            printLineSeparator();
+
+            printForOnePlayer(ordinal, gameResult2, gameResult2.getFrameByFrameId(frameId));
+            printThreeLineSeparators();
+        }
+
+
+        if (!gameResult2.getFrameByFrameId(frameId).containsOrdinal(ordinal)
+                && gameResult1.getFrameByFrameId(frameId).containsOrdinal(ordinal)) {
+            print(gameResult2.getName() + "'s turn");
+            print(" : ");
+            System.out.println("-");
+            printPlayInformation();
+
+            printForOnePlayer(ordinal, gameResult1, gameResult1.getFrameByFrameId(frameId));
+            printLineSeparator();
+
+            printForOnePlayer(SECOND, gameResult2, gameResult2.getFrameByFrameId(frameId));
+            printThreeLineSeparators();
+        }
+    }
+
+    private static void printForOnePlayer(Ordinal ordinal, GameResult gameResult, Frame frame) {
+        printName(gameResult.getName());
+
+        if (SECOND.equals(ordinal)
+                && gameResult.getFrameByFrameId(frame.getFrameId()).isResult(STRIKE)
+                && frame.getFrameId() != FRAME_ID_FIRST) {
+            gameResult.getFrames().getFrames()
+                    .subList(0, frame.getFrameId())
+                    .forEach(frame1 -> printFrame(frame1));
+        } else {
+            gameResult.getFrames().getFrames()
                     .subList(0, frame.getFrameId() + OFFSET)
                     .forEach(frame1 -> printFrame(frame1));
-
-            printFrameByOrdinal(frame, ordinal);
-            System.out.println();
-
-            if (frame.getFrameId() != FRAME_ID_FIRST) {
-                printFrameScoreSoFar(frames, frame, ordinal);
-            }
-            printCurrentFrameScore(frames, frame, ordinal);
-            printThreeLineSeparators();
-            System.out.println();
         }
+
+        printFrameByOrdinal(frame, ordinal);
+        printLineSeparator();
+
+        if (frame.getFrameId() != FRAME_ID_FIRST) {
+            printFrameScoreSoFar(gameResult.getFrames(), frame, ordinal);
+        }
+        printCurrentFrameScore(gameResult.getFrames(), frame, ordinal);
     }
 
     private static void printFrameScoreSoFar(Frames frames, Frame frame, Ordinal ordinal) {
@@ -103,7 +180,9 @@ public class ResultView {
         print(BLANK_FIVE);
 
         print(frames.getTotalPointUntil(frame));
+
         printFormatting(frames, frame);
+
         printBlockBorder();
     }
 
@@ -161,7 +240,6 @@ public class ResultView {
 
     private static void printFormatting(Frames frames, Frame frame) {
         if (frames.getTotalPointUntil(frame) >= MIN_NUMBER_FOR_THREE_DIGITS) {
-            print(BLANK_TWO);
         }
 
         if (frames.getTotalPointUntil(frame) >= MIN_NUMBER_FOR_TWO_DIGITS) {
@@ -324,10 +402,6 @@ public class ResultView {
         print(SYMBOL_GUTTER);
         print(BLANK_FOUR);
         printBlockBorder();
-    }
-
-    private static void printFrameId(Frame frame) {
-        print(frame.getFrameId() + "프레임 투구");
     }
 
     private static void printPlayInformation() {

@@ -19,7 +19,7 @@ public class GameResults {
         this.results = Collections.unmodifiableList(results);
     }
 
-    public static GameResults of(List<GameResult> results){
+    public static GameResults of(List<GameResult> results) {
         return new GameResults(results);
     }
 
@@ -39,12 +39,11 @@ public class GameResults {
         return results;
     }
 
-
-    public GameResult getFirstResult(){
+    public GameResult getFirstResult() {
         return getResults().get(INDEX_FIRST);
     }
 
-    public GameResult getSecondResult(){
+    public GameResult getSecondResult() {
         return getResults().get(INDEX_SECOND);
     }
 }
