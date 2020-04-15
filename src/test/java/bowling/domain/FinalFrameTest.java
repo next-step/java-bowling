@@ -36,13 +36,6 @@ public class FinalFrameTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    @Test
-    void next() {
-        Frame finalFrame = FinalFrame.of();
-        assertThatThrownBy(() -> finalFrame.next(11))
-                .isInstanceOf(NotImplementedException.class);
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {"5,4", "10,10,10","4,6,4","10,4,5"})
     void isClosed(String shotString) {
