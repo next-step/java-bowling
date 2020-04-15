@@ -33,6 +33,10 @@ public class Pitches {
         return pitches.isEmpty();
     }
 
+    public boolean isFull(int maxSize) {
+        return pitches.size() == maxSize;
+    }
+
     public int getPinCountTotal() {
         return pitches.stream()
                 .reduce(0, (p1, p2) -> p2.add(p1), Integer::sum);

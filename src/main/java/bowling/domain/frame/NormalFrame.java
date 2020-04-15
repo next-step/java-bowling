@@ -34,7 +34,7 @@ public class NormalFrame implements Frame {
     }
 
     private boolean isAddable(int pinCount) {
-        if (isPinCountsFull()) {
+        if (pitches.isFull(MAX_PIN_COUNT_SIZE)) {
             return false;
         }
 
@@ -46,10 +46,6 @@ public class NormalFrame implements Frame {
     public FinalFrame createFinal() {
         next = new FinalFrame(this);
         return (FinalFrame) next;
-    }
-
-    private boolean isPinCountsFull() {
-        return pitches.size() == MAX_PIN_COUNT_SIZE;
     }
 
     @Override public Optional<Integer> getScore() {
@@ -79,7 +75,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override public boolean isDone() {
-        if (isPinCountsFull()) {
+        if (pitches.isFull(MAX_PIN_COUNT_SIZE)) {
             return true;
         }
 

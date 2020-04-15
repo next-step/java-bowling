@@ -53,9 +53,6 @@ public class FinalFrame implements Frame {
         } else return secondPitch.isSpare();
     }
 
-    private boolean isPinCountsFull() {
-        return pitches.size() == MAX_PIN_COUNT_SIZE;
-    }
 
     @Override public Optional<Integer> getScore() {
         if (!isDone() || pitches.isEmpty()) {
@@ -74,7 +71,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override public boolean isDone() {
-        if (isPinCountsFull()) {
+        if (pitches.isFull(MAX_PIN_COUNT_SIZE)) {
             return true;
         }
         return pitches.size() == 2 &&
