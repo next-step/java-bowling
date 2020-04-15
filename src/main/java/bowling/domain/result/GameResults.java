@@ -16,6 +16,10 @@ public class GameResults {
         this.results = Collections.unmodifiableList(results);
     }
 
+    public static GameResults of(List<GameResult> results){
+        return new GameResults(results);
+    }
+
     private void validateDuplicationPlayerName(List<GameResult> results) {
         Set<String> names = results.stream()
                 .map(GameResult::getPlayerName)
@@ -26,5 +30,9 @@ public class GameResults {
         if (results.size() != names.size()) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public List<GameResult> getResults() {
+        return results;
     }
 }
