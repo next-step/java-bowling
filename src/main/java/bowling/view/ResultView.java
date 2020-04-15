@@ -1,6 +1,7 @@
 package bowling.view;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import bowling.domain.Game;
 import bowling.domain.NormalFrame;
@@ -34,11 +35,11 @@ public class ResultView {
         return builder.toString();
     }
 
-    public String playFrameResult(NormalFrame normalFrame) {
+    public String playFrameResult(int frameNum, int falledPin) {
         StringBuilder builder = new StringBuilder();
-        builder.append(normalFrame.getFrameNum())
+        builder.append(frameNum)
                .append(TITLE_BOWL)
-               .append(normalFrame.getFalledPins())
+               .append(falledPin)
                .append(NEW_LINE);
         return builder.toString();
     }
@@ -49,12 +50,32 @@ public class ResultView {
 
         for (NormalFrame frame : frames) {
             List<Pin> rolls = frame.getRolls().getRolls();
-            builder.append(displayRolls(rolls, frame.getFalledPins()));
+            if (frame.getFrameNum() != FRAME_NUM) {
+                builder.append(displayRolls(rolls, frame.getFalledPins()));
+                continue;
+            }
+            builder.append(displayLastGame(rolls));
         }
 
         repeatInitColumn(FRAME_NUM - frames.size(), builder);
         builder.append(NEW_LINE);
         return builder.toString();
+    }
+
+    private String displayLastGame(List<Pin> rolls) {
+        StringBuilder builder = new StringBuilder();
+        String lastGame = rolls.stream()
+                               .map(roll -> displayScore(roll))
+                               .collect(Collectors.joining(VERTICAL));
+        builder.append(appendBlank(COLUMN_INTERVAL - lastGame.length()))
+               .append(lastGame)
+               .append(VERTICAL);
+        return builder.toString();
+    }
+
+    public void printPlayFrame(Game game, NormalFrame normalFrame, int firstScore) {
+        System.out.print(playFrameResult(normalFrame.getFrameNum(), firstScore));
+        System.out.println(playFrameScoreBoard(game));
     }
 
     private String displayRolls(List<Pin> rolls, int falledPins) {
