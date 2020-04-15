@@ -7,6 +7,7 @@ import bowling.domain.point.Ordinal;
 
 import java.util.stream.IntStream;
 
+import static bowling.domain.frame.FrameResult.*;
 import static bowling.domain.point.Ordinal.*;
 
 public class ResultView {
@@ -15,12 +16,17 @@ public class ResultView {
     private static final String BLANK_THREE = "   ";
     private static final String BLANK_FOUR = "    ";
     private static final String BLANK_FIVE = "     ";
+    private static final String BLANK_SIX = "      ";
     private static final String BLOCK_BORDER = "|";
     private static final String LABEL_NAME = "NAME";
     private static final String SYMBOL_STRIKE = "X";
     private static final String SYMBOL_GUTTER = "-";
     private static final String DELIMITER_SPARE = "/";
-
+    private static final int FRAME_ID_FIRST = 1;
+    private static final int MIN_NUMBER_FOR_THREE_DIGITS = 100;
+    private static final int MIN_NUMBER_FOR_TWO_DIGITS = 10;
+    private static final int OFFSET = -1;
+    private static final int OFFSET_DOUBLE = -2;
 
     public static void print(PlayerName playerName, Frames frames) {
         printLineSeparator();
@@ -33,12 +39,13 @@ public class ResultView {
     }
 
     private static void printFrameResultSoFar(PlayerName playerName, Frames frames, Frame frame) {
-        if (frame.isStrike()) {
+        if (frame.isResult(STRIKE)) {
             printFrameResultWhen(FIRST, playerName, frames, frame);
             printFrameResultWhen(THIRD, playerName, frames, frame);
+            printFrameResultWhen(FOURTH, playerName, frames, frame);
         }
 
-        if (!frame.isStrike()) {
+        if (!frame.isResult(STRIKE)) {
             printFrameResultWhen(FIRST, playerName, frames, frame);
             printFrameResultWhen(SECOND, playerName, frames, frame);
             printFrameResultWhen(THIRD, playerName, frames, frame);
@@ -54,48 +61,149 @@ public class ResultView {
             printPlayInformation();
             printName(playerName.getName());
             frames.getFrames()
-                    .subList(0, frame.getFrameId() - 1)
+                    .subList(0, frame.getFrameId() + OFFSET)
                     .forEach(frame1 -> printFrame(frame1));
 
             printFrameByOrdinal(frame, ordinal);
+            System.out.println();
+
+            if (frame.getFrameId() != FRAME_ID_FIRST) {
+                printFrameScoreSoFar(frames, frame, ordinal);
+            }
+            printCurrentFrameScore(frames, frame, ordinal);
             printThreeLineSeparators();
+            System.out.println();
+        }
+    }
+
+    private static void printFrameScoreSoFar(Frames frames, Frame frame, Ordinal ordinal) {
+        printName(BLANK_THREE);
+
+        if (!frames.getPreviousFrame(frame).isResult(STRIKE) && !frame.isFirstFrame()) {
+            frames.getFrames()
+                    .subList(0, frame.getFrameId() + OFFSET)
+                    .forEach(frame1 -> printFrameScore(frames, frame1));
+        }
+
+        if (frames.getPreviousFrame(frame).isResult(STRIKE) && FIRST.equals(ordinal)) {
+            frames.getFrames()
+                    .subList(0, frame.getFrameId() + (OFFSET_DOUBLE))
+                    .forEach(frame1 -> printFrameScore(frames, frame1));
+        }
+
+        if (frames.getPreviousFrame(frame).isResult(STRIKE) && !FIRST.equals(ordinal)) {
+            frames.getFrames()
+                    .subList(0, frame.getFrameId() + OFFSET)
+                    .forEach(frame1 -> printFrameScore(frames, frame1));
+        }
+    }
+
+    private static void printFrameScore(Frames frames, Frame frame) {
+        print(BLANK_FIVE);
+
+        print(frames.getTotalPointUntil(frame));
+        printFormatting(frames, frame);
+        printBlockBorder();
+    }
+
+    private static void printCurrentFrameScore(Frames frames, Frame frame, Ordinal ordinal) {
+        print(BLANK_FOUR);
+
+        if (!frame.isFinalFrame()) {
+            printNormalFrameScore(frames, frame, ordinal);
+        }
+
+        if (frame.isFinalFrame()) {
+            printFinalFrameScore(frames, frame, ordinal);
+        }
+
+        printFormatting(frames, frame);
+        printBlockBorder();
+    }
+
+    private static void printNormalFrameScore(Frames frames, Frame frame, Ordinal ordinal) {
+        if (frame.isResult(STRIKE) || frame.isResult(SPARE) || FIRST.equals(ordinal)) {
+            print(BLANK_THREE);
+        }
+
+        if (SECOND.equals(ordinal) && frame.isGutterOrMiss() && !frame.isFirstFrame()) {
+            print(frames.getTotalPointUntil(frame));
+            print(BLANK_ONE);
+        }
+
+        if (SECOND.equals(ordinal) && frame.isFirstFrame() && !frame.isResult(SPARE)) {
+            print(BLANK_SIX);
+            print(BLOCK_BORDER);
+            print(BLANK_FOUR);
+            print(frames.getTotalPointUntil(frame));
+            print(BLANK_ONE);
+        }
+    }
+
+    private static void printFinalFrameScore(Frames frames, Frame frame, Ordinal ordinal) {
+        if (FIRST.equals(ordinal) || SECOND.equals(ordinal) && frame.containsOrdinal(THIRD)) {
+            print(BLANK_TWO);
+        }
+
+        if (SECOND.equals(ordinal) && !frame.containsOrdinal(THIRD)) {
+            print(frames.getTotalPointUntil(frame));
+        }
+
+        if ((THIRD.equals(ordinal) && frame.isResult(SPARE))) {
+            print(frames.getTotalPointUntil(frame));
+        }
+
+        if (FOURTH.equals(ordinal) && frame.isResult(STRIKE)) {
+            print(frames.getTotalPointUntil(frame));
+        }
+    }
+
+    private static void printFormatting(Frames frames, Frame frame) {
+        if (frames.getTotalPointUntil(frame) >= MIN_NUMBER_FOR_THREE_DIGITS) {
+            print(BLANK_TWO);
+        }
+
+        if (frames.getTotalPointUntil(frame) >= MIN_NUMBER_FOR_TWO_DIGITS) {
+            print(BLANK_THREE);
+        }
+
+        if (frames.getTotalPointUntil(frame) < MIN_NUMBER_FOR_TWO_DIGITS) {
+            print(BLANK_FOUR);
         }
     }
 
     private static void printFrame(Frame frame) {
-        if (frame.isStrike()) {
+        if (frame.isResult(STRIKE)) {
             printStrikeByOrdinal(frame, FIRST);
         }
 
-        if (frame.isSpare()) {
+        if (frame.isResult(SPARE)) {
             printSpareByOrdinal(frame, SECOND);
-            print(BLANK_THREE);
-            printBlockBorder();
         }
 
-        if (frame.isMiss()) {
+        if (frame.isResult(MISS)) {
             printMissByOrdinal(frame, SECOND);
         }
 
-        if (frame.isGutter()) {
+        if (frame.isResult(GUTTER)) {
             printGutter();
         }
     }
 
     private static void printFrameByOrdinal(Frame frame, Ordinal ordinal) {
-        if (frame.isStrike()) {
+        if (frame.isResult(STRIKE)) {
             printStrikeByOrdinal(frame, ordinal);
         }
 
-        if (frame.isSpare()) {
+        if (frame.isResult(SPARE)) {
             printSpareByOrdinal(frame, ordinal);
         }
 
-        if (frame.isMiss()) {
+        if (frame.isResult(MISS)) {
             printMissByOrdinal(frame, ordinal);
         }
 
-        if (frame.isGutter()) {
+        if (frame.isResult(GUTTER)) {
             printGutter();
         }
     }
@@ -107,6 +215,10 @@ public class ResultView {
 
         if (THIRD.equals(ordinal)) {
             printFrameThirdWhenStrike(frame);
+        }
+
+        if (FOURTH.equals(ordinal)) {
+            printFrameFourthWhenStrike(frame);
         }
     }
 
@@ -122,7 +234,13 @@ public class ResultView {
         print(SYMBOL_STRIKE);
         print(BLOCK_BORDER);
         print(frame.getThirdPoint());
-        print(BLANK_TWO);
+    }
+
+    private static void printFrameFourthWhenStrike(Frame frame) {
+        printFrameThirdWhenStrike(frame);
+        print(BLOCK_BORDER);
+        print(frame.getFourthPoint());
+        print(BLANK_ONE);
         printBlockBorder();
     }
 
@@ -132,13 +250,10 @@ public class ResultView {
         }
 
         if (SECOND.equals(ordinal)) {
-            printFrameFirstWhenSpare(frame);
             printFrameSecondWhenSpare(frame);
         }
 
         if (THIRD.equals(ordinal)) {
-            printFrameFirstWhenSpare(frame);
-            printFrameSecondWhenSpare(frame);
             printFrameThirdWhenSpare(frame);
         }
     }
@@ -146,16 +261,33 @@ public class ResultView {
     private static void printFrameFirstWhenSpare(Frame frame) {
         print(BLANK_FOUR);
         print(frame.getFirstPoint());
+
+        print(BLANK_TWO);
+        print(BLANK_THREE);
+        printBlockBorder();
     }
 
     private static void printFrameSecondWhenSpare(Frame frame) {
+        print(BLANK_FOUR);
+        print(frame.getFirstPoint());
+
         print(BLOCK_BORDER);
         print(DELIMITER_SPARE);
+
+        print(BLANK_THREE);
+        printBlockBorder();
     }
 
     private static void printFrameThirdWhenSpare(Frame frame) {
+        print(BLANK_FOUR);
+        print(frame.getFirstPoint());
+
+        print(BLOCK_BORDER);
+        print(DELIMITER_SPARE);
+
         print(BLOCK_BORDER);
         print(frame.getThirdPoint());
+
         print(BLANK_ONE);
         printBlockBorder();
     }
@@ -173,6 +305,8 @@ public class ResultView {
     private static void printFrameFirstWhenMiss(Frame frame) {
         print(BLANK_FOUR);
         print(frame.getFirstPoint());
+        print(BLANK_FIVE);
+        printBlockBorder();
     }
 
     private static void printFrameSecondWhenMiss(Frame frame) {
@@ -222,7 +356,9 @@ public class ResultView {
 
     private static String convertFrameNumberToString(int number) {
         String stringNumber
-                = (number >= 10) ? String.valueOf(BLANK_ONE + number + BLANK_ONE) : " 0" + number + BLANK_ONE;
+                = (number >= MIN_NUMBER_FOR_TWO_DIGITS)
+                ? String.valueOf(BLANK_ONE + number + BLANK_ONE)
+                : " 0" + number + BLANK_ONE;
         return stringNumber;
     }
 
@@ -231,9 +367,8 @@ public class ResultView {
     }
 
     private static void printThreeLineSeparators() {
-        printLineSeparator();
-        printLineSeparator();
-        printLineSeparator();
+        IntStream.range(0, 3)
+                .forEach(IntConsumer -> printLineSeparator());
     }
 
     private static void printLineSeparator() {

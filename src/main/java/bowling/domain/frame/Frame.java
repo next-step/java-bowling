@@ -1,75 +1,85 @@
 package bowling.domain.frame;
 
-import bowling.domain.point.Ordinal;
-import bowling.domain.point.Point;
-import bowling.domain.point.Points;
 import bowling.domain.RandomGenerator;
+import bowling.domain.point.Ordinal;
+import bowling.domain.point.Points;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static bowling.Messages.WARNING_FRAME_NOT_ALLOWED_SECOND_WHEN_STRIKE;
 import static bowling.Messages.WARNING_FRAME_NOT_ALLOWED_SUM;
+import static bowling.domain.frame.FrameResult.*;
 
 public class Frame {
-    private static final int SCORE_TEN = 10;
+    private static final RandomGenerator RANDOM_GENERATOR = new RandomGenerator();
     private static final int SCORE_ZERO = 0;
-    private static final int LAST_FRAME_ID = 10;
+    private static final int SCORE_TEN = 10;
+    private static final int FRAME_ID_ZERO = 0;
+    private static final int FRAME_ID_FIRST = 1;
+    private static final int FRAME_ID_NINETH = 9;
+    private static final int FRAME_ID_FINAL = 10;
+    private static final int INCREMENT_FOR_NEXT_ID = 1;
 
-    private int frameId = 1;
+    private int frameId;
     private Points points;
 
-    public Frame(int firstPoint, int secondPoint) {
-        validateSecondWhenFirstTen(firstPoint, secondPoint);
-        validateSumIsLessThanTen(firstPoint, secondPoint);
-        points = Points.of(firstPoint, secondPoint);
+    public Frame(int prevFrameId, int first, int second) {
+        validate(first, second);
+        this.frameId = prevFrameId + INCREMENT_FOR_NEXT_ID;
+        points = Points.of(first, second, needOnePoint(first, second), needTwoPoints(first, second));
     }
 
-    public Frame(int prevFrameId, int firstPoint, int secondPoint) {
-        validateSecondWhenFirstTen(firstPoint, secondPoint);
-        validateSumIsLessThanTen(firstPoint, secondPoint);
-        points = Points.of(firstPoint, secondPoint);
-        this.frameId = prevFrameId + 1;
-
-        if (doesNeedOneMorePoint()) {
-            points.addThirdPoint(Point.of(RandomGenerator.getThirdPoint()));
-        }
+    public static Frame create() {
+        return new Frame(FRAME_ID_ZERO, RANDOM_GENERATOR.getFirstPoint(), RANDOM_GENERATOR.getSecondPoint());
     }
 
-    public static Frame create(RandomGenerator randomGenerator) {
-        return new Frame(randomGenerator.getFirstPoint(), randomGenerator.getSecondPoint());
-    }
-
-    public static Frames createTenFrames(RandomGenerator randomGenerator) {
+    public static Frames createTenFrames() {
         List<Frame> frames = new ArrayList<>();
-        Frame currentFrame = Frame.create(randomGenerator);
+        Frame currentFrame = Frame.create();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = FRAME_ID_FIRST; i <= FRAME_ID_FINAL; i++) {
             frames.add(currentFrame);
-            currentFrame = currentFrame.createNextFrame(randomGenerator);
+            currentFrame = currentFrame.createNextFrame();
         }
 
-        return new Frames(frames);
+        return Frames.of(frames);
     }
 
-    public Frame createNextFrame(RandomGenerator randomGenerator) {
-        return new Frame(this.frameId, randomGenerator.getFirstPoint(), randomGenerator.getSecondPoint());
+    public Frame createNextFrame() {
+        return new Frame(this.frameId, RANDOM_GENERATOR.getFirstPoint(), RANDOM_GENERATOR.getSecondPoint());
     }
 
-    private boolean doesNeedOneMorePoint() {
-        return frameId == LAST_FRAME_ID && points.isStrikeOrSpare();
+    public int getPointSumOnlyThisFrame() {
+        return points.sum();
     }
 
-    private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {
-        if (firstPoint == SCORE_TEN && secondPoint != SCORE_ZERO) {
-            throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SECOND_WHEN_STRIKE);
-        }
+    public boolean isFirstFrame() {
+        return frameId == FRAME_ID_FIRST;
     }
 
-    private void validateSumIsLessThanTen(int firstPoint, int secondPoint) {
-        if (firstPoint + secondPoint > SCORE_TEN) {
-            throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SUM);
-        }
+    public boolean isFinalFrame() {
+        return frameId == FRAME_ID_FINAL;
+    }
+
+    public boolean isGutterOrMiss() {
+        return (isResult(MISS) || isResult(GUTTER));
+    }
+
+    public boolean isResult(FrameResult frameResult) {
+        return frameResult.equals(points.findResult());
+    }
+
+    public int getPointAtOrdinal(Ordinal ordinal) {
+        return Ordinal.getPoint(ordinal, points);
+    }
+
+    public boolean containsOrdinal(Ordinal ordinal) {
+        return points.containsOrdinal(ordinal);
+    }
+
+    public boolean isNineth() {
+        return frameId == FRAME_ID_NINETH;
     }
 
     public int getFrameId() {
@@ -92,39 +102,32 @@ public class Frame {
         return points.getThirdPoint();
     }
 
-    public FrameResult findResult() {
-        return points.findResult();
+    public int getFourthPoint() {
+        return points.getFourthPoint();
     }
 
-    public boolean isStrike(){
-        return FrameResult.STRIKE.equals(points.findResult());
+    private boolean needOnePoint(int first, int second) {
+        return (isFinalFrame() && SPARE.equals(FrameResult.findResult(first, second)));
     }
 
-    public boolean isSpare(){
-        return FrameResult.SPARE.equals(points.findResult());
+    private boolean needTwoPoints(int first, int second) {
+        return (isFinalFrame() && STRIKE.equals(FrameResult.findResult(first, second)));
     }
 
-    public boolean isMiss(){
-        return FrameResult.MISS.equals(points.findResult());
+    private void validate(int firstPoint, int secondPoint) {
+        validateSecondWhenFirstTen(firstPoint, secondPoint);
+        validateSumIsLessThanTen(firstPoint, secondPoint);
     }
 
-    public boolean isGutter(){
-        return FrameResult.GUTTER.equals(points.findResult());
-    }
-
-    public int getPointAtOrdinal(Ordinal ordinal){
-        if(Ordinal.SECOND.equals(ordinal)){
-            return points.getSecondPoint();
+    private void validateSecondWhenFirstTen(int firstPoint, int secondPoint) {
+        if (firstPoint == SCORE_TEN && secondPoint != SCORE_ZERO) {
+            throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SECOND_WHEN_STRIKE);
         }
-
-        if(Ordinal.THIRD.equals(ordinal)){
-            return points.getThirdPoint();
-        }
-
-        return points.getFirstPoint();
     }
 
-    public boolean containsOrdinal(Ordinal ordinal){
-        return points.containsOrdinal(ordinal);
+    private void validateSumIsLessThanTen(int firstPoint, int secondPoint) {
+        if (firstPoint + secondPoint > SCORE_TEN) {
+            throw new IllegalArgumentException(WARNING_FRAME_NOT_ALLOWED_SUM);
+        }
     }
 }

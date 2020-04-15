@@ -39,7 +39,7 @@ public class FrameResultTest {
         assertThat(result).isEqualTo(FrameResult.GUTTER);
     }
 
-    @DisplayName("첫번째, 두번째 합이 10 이하 0 이상일 때 미스 반환")
+    @DisplayName("첫번째, 두번째 합이 10 미만, 0 초과일 때 미스 반환")
     @ParameterizedTest
     @CsvSource(value = {"5:2", "7:1", "9:0", "0:1"}, delimiter = ':')
     void findFrameResultWhenMiss(int firstPoint, int secondPoint) {
