@@ -26,7 +26,7 @@ class BonusScoreTest {
         bonusScore.add(10);
         bonusScore.add(10);
 
-        assertThat(bonusScore.totalBonusPoint()).isEqualTo(20);
+        assertThat(bonusScore.getTotalBonusPoint()).isEqualTo(20);
     }
 
     @DisplayName("스페어 보너스 점수 계산")
@@ -35,7 +35,7 @@ class BonusScoreTest {
         BonusScore bonusScore = BonusScore.spareBonus(0);
         bonusScore.add(10);
 
-        assertThat(bonusScore.totalBonusPoint()).isEqualTo(10);
+        assertThat(bonusScore.getTotalBonusPoint()).isEqualTo(10);
     }
 
     @DisplayName("스페어 보너스는 1구만 추가 가능")

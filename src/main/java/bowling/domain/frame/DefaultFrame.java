@@ -95,7 +95,7 @@ public class DefaultFrame implements Frame {
         BonusScore bonusScore = findBonusScore(frameIndex);
         int totalPoint = scores.currentPoint();
         if (!Objects.isNull(bonusScore)) {
-            return bonusScore.totalBonusPoint() + totalPoint;
+            return bonusScore.getTotalBonusPoint() + totalPoint;
         }
 
         return totalPoint;

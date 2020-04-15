@@ -133,7 +133,7 @@ class DefaultFrameTest {
     @DisplayName("프레임 점수 계산 - 스트라이크 보너스 점수")
     @ParameterizedTest
     @MethodSource("strikePoint")
-    void calculateStrikeFramePoint(List<Integer> points) {
+    void calculateStrikeFramePoint(List<Integer> points, int totalPoint) {
         defaultFrame.addScore(points.get(0));
 
         DefaultFrame secondFrame = defaultFrame.createNextFrame(0);
@@ -142,33 +142,33 @@ class DefaultFrameTest {
         DefaultFrame thirdFrame = secondFrame.createNextFrame(1);
         thirdFrame.addScore(points.get(2));
 
-        assertThat(defaultFrame.getTotalPoint(0)).isEqualTo(points.get(3));
+        assertThat(defaultFrame.getTotalPoint(0)).isEqualTo(totalPoint);
     }
 
     static Stream<Arguments> strikePoint() {
         return Stream.of(
-                arguments(Arrays.asList(10, 1, 2, 13)),
-                arguments(Arrays.asList(10, 10, 10, 30))
+                arguments(Arrays.asList(10, 1, 2), 13),
+                arguments(Arrays.asList(10, 10, 10), 30)
         );
     }
 
     @DisplayName("프레임 점수 계산 - 스페어 보너스 점수")
     @ParameterizedTest
     @MethodSource("sparePoint")
-    void calculateSpareFramePoint(List<Integer> points) {
+    void calculateSpareFramePoint(List<Integer> points, int totalPoint) {
         defaultFrame.addScore(points.get(0));
         defaultFrame.addScore(points.get(1));
 
         DefaultFrame secondFrame = defaultFrame.createNextFrame(0);
         secondFrame.addScore(points.get(2));
 
-        assertThat(defaultFrame.getTotalPoint(0)).isEqualTo(points.get(3));
+        assertThat(defaultFrame.getTotalPoint(0)).isEqualTo(totalPoint);
     }
 
     static Stream<Arguments> sparePoint() {
         return Stream.of(
-                arguments(Arrays.asList(1, 9, 2, 12)),
-                arguments(Arrays.asList(5, 5, 10, 20))
+                arguments(Arrays.asList(1, 9, 2), 12),
+                arguments(Arrays.asList(5, 5, 10), 20)
         );
     }
 }

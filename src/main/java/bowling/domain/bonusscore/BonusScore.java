@@ -43,7 +43,7 @@ public class BonusScore {
         return bonusScoreInfo.isEqualFrameIndex(frameIndex);
     }
 
-    public int totalBonusPoint() {
+    public int getTotalBonusPoint() {
         return bonusScores.stream()
                 .mapToInt(Integer::intValue)
                 .sum();

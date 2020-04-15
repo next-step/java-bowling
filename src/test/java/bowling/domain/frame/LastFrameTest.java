@@ -99,39 +99,39 @@ class LastFrameTest {
     @DisplayName("마지막 프레임 점수 계산")
     @ParameterizedTest
     @MethodSource("pointResult")
-    void calculateFramePoint(List<Integer> values) {
+    void calculateFramePoint(List<Integer> values, int totalPoint) {
         lastFrame.addScore(values.get(0));
         lastFrame.addScore(values.get(1));
 
-        assertThat(lastFrame.getTotalPoint(0)).isEqualTo(values.get(2));
+        assertThat(lastFrame.getTotalPoint(0)).isEqualTo(totalPoint);
     }
 
     static Stream<Arguments> pointResult() {
         return Stream.of(
-                arguments(Arrays.asList(1, 2, 3)),
-                arguments(Arrays.asList(2, 4, 6)),
-                arguments(Arrays.asList(4, 5, 9)),
-                arguments(Arrays.asList(0, 0, 0))
+                arguments(Arrays.asList(1, 2), 3),
+                arguments(Arrays.asList(2, 4), 6),
+                arguments(Arrays.asList(4, 5), 9),
+                arguments(Arrays.asList(0, 0), 0)
         );
     }
 
     @DisplayName("마지막 프레임 점수 계산 - 2구 이내 스트라이크 또는 스페어 인 경우")
     @ParameterizedTest
     @MethodSource("strikeOrSparePointResult")
-    void calculateSpareOrStrikeFramePoint(List<Integer> values) {
+    void calculateSpareOrStrikeFramePoint(List<Integer> values, int totalPoint) {
         lastFrame.addScore(values.get(0));
         lastFrame.addScore(values.get(1));
         lastFrame.addScore(values.get(2));
 
-        assertThat(lastFrame.getTotalPoint(0)).isEqualTo(values.get(3));
+        assertThat(lastFrame.getTotalPoint(0)).isEqualTo(totalPoint);
     }
 
     static Stream<Arguments> strikeOrSparePointResult() {
         return Stream.of(
-                arguments(Arrays.asList(10, 10, 10, 30)),
-                arguments(Arrays.asList(10, 9, 1, 20)),
-                arguments(Arrays.asList(4, 6, 0, 10)),
-                arguments(Arrays.asList(10, 4, 0, 14))
+                arguments(Arrays.asList(10, 10, 10), 30),
+                arguments(Arrays.asList(10, 9, 1), 20),
+                arguments(Arrays.asList(4, 6, 0), 10),
+                arguments(Arrays.asList(10, 4, 0), 14)
         );
     }
 
