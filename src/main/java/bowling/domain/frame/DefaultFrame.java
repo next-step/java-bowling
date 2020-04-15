@@ -31,16 +31,16 @@ public class DefaultFrame implements Frame {
     }
 
     public DefaultFrame nextFrame(int frameIndex) {
-        checkHasStrikeOrSpare(frameIndex);
+        addBounusScoreHasStrikeOrSpare(frameIndex);
         return new DefaultFrame(validateBonusScores());
     }
 
     public LastFrame lastFrame(int frameIndex) {
-        checkHasStrikeOrSpare(frameIndex);
+        addBounusScoreHasStrikeOrSpare(frameIndex);
         return new LastFrame(validateBonusScores());
     }
 
-    private void checkHasStrikeOrSpare(int frameIndex) {
+    private void addBounusScoreHasStrikeOrSpare(int frameIndex) {
         if (scores.hasStrikeOrSpare()) {
             bonusScores.add(createBonusScore(frameIndex));
         }
