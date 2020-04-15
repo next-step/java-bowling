@@ -4,7 +4,7 @@ import bowling.dto.ShotScoreDto;
 
 import java.util.Objects;
 
-public class ShotScore {
+class ShotScore {
     private static final int MAX = 10;
     private static final int MIN = 0;
 
@@ -50,7 +50,7 @@ public class ShotScore {
                 ScoreType.SPARE.equals(scoreType);
     }
 
-    public ShotScoreDto getDto() {
+    ShotScoreDto getDto() {
         return new ShotScoreDto(scoreType, score);
     }
 

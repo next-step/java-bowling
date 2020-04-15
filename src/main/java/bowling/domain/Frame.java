@@ -5,7 +5,7 @@ import bowling.dto.FrameDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Frame {
+class Frame {
     private static final int SHOT_LIMIT = 2;
 
     private final ShotScores shotScores;
@@ -16,23 +16,23 @@ public class Frame {
         this.hasBonus = hasBonus;
     }
 
-    public static Frame init() {
+    static Frame init() {
         return new Frame(new ArrayList<>(), false);
     }
 
-    public Frame next(int shot) {
+    Frame next(int shot) {
         Frame frame = new Frame(new ArrayList<>(), false);
         frame.shot(shot);
         return frame;
     }
 
-    public Frame last(int shot) {
+    Frame last(int shot) {
         Frame frame = new Frame(new ArrayList<>(), true);
         frame.shot(shot);
         return frame;
     }
 
-    public void shot(int shot) {
+    void shot(int shot) {
         if (shotScores.isSize(getShotLimit())) {
             throw new IllegalStateException(String.format("shot NormalFrame fail. cannot shot over %d times", getShotLimit()));
         }
@@ -40,7 +40,7 @@ public class Frame {
         shotScores.add(shot, hasBonus);
     }
 
-    public boolean isFrameClosed() {
+    boolean isFrameSet() {
         return shotScores.isSize(getShotLimit()) ||
                 (cannotShooting());
     }
@@ -52,7 +52,7 @@ public class Frame {
         return shotScores.isClear();
     }
 
-    public FrameDto getDto() {
+    FrameDto getDto() {
         return new FrameDto(shotScores.getDtoList());
     }
 

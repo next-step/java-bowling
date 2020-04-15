@@ -47,7 +47,7 @@ class FrameTest {
     @ValueSource(strings = {"5,4", "10"})
     void isClosed(String shotString) {
         Frame normalFrame = Frame.init();
-        assertThat(normalFrame.isFrameClosed())
+        assertThat(normalFrame.isFrameSet())
                 .isFalse();
 
         int[] shots = splitInts(shotString);
@@ -55,7 +55,7 @@ class FrameTest {
             normalFrame.shot(shot);
         }
 
-        assertThat(normalFrame.isFrameClosed())
+        assertThat(normalFrame.isFrameSet())
                 .isTrue();
     }
 
@@ -82,14 +82,14 @@ class FrameTest {
     void isClosedLastFrame(String shotString) {
         int[] shots = splitInts(shotString);
         Frame finalFrame = Frame.init().last(shots[0]);
-        assertThat(finalFrame.isFrameClosed())
+        assertThat(finalFrame.isFrameSet())
                 .isFalse();
 
         for (int i = 1; i < shots.length; i++) {
             finalFrame.shot(shots[i]);
         }
 
-        assertThat(finalFrame.isFrameClosed())
+        assertThat(finalFrame.isFrameSet())
                 .isTrue();
     }
 
@@ -98,14 +98,14 @@ class FrameTest {
     void isNotClosedFrame(String shotString) {
         int[] shots = splitInts(shotString);
         Frame finalFrame = Frame.init().last(shots[0]);
-        assertThat(finalFrame.isFrameClosed())
+        assertThat(finalFrame.isFrameSet())
                 .isFalse();
 
         for (int i = 1; i < shots.length; i++) {
             finalFrame.shot(shots[i]);
         }
 
-        assertThat(finalFrame.isFrameClosed())
+        assertThat(finalFrame.isFrameSet())
                 .isFalse();
     }
 

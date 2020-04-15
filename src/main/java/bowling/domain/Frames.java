@@ -24,7 +24,7 @@ class Frames {
     }
 
     private boolean isCurrentFrameDone() {
-        return getLast().isFrameClosed();
+        return getLast().isFrameSet();
     }
 
     private Frame getLast() {
@@ -55,7 +55,7 @@ class Frames {
 
     boolean isGameSet() {
         return frames.stream()
-                .filter(Frame::isFrameClosed)
+                .filter(Frame::isFrameSet)
                 .count() == MAX_FRAMES;
     }
 }

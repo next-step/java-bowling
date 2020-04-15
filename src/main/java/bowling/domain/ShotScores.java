@@ -12,7 +12,7 @@ class ShotScores {
         this.shotScores = shotScores;
     }
 
-    ShotScore getLast() {
+    private ShotScore getLast() {
         return shotScores.get(shotScores.size() - 1);
     }
 
@@ -29,7 +29,7 @@ class ShotScores {
         return this.getLast().isClear() && hasBonusShot;
     }
 
-    public boolean isSize(int size) {
+    boolean isSize(int size) {
         return shotScores.size() == size;
     }
 
