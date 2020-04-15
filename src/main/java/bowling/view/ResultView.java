@@ -4,6 +4,7 @@ import bowling.domain.PlayerName;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.point.Ordinal;
+import bowling.domain.result.GameResult;
 
 import java.util.stream.IntStream;
 
@@ -28,9 +29,9 @@ public class ResultView {
     private static final int OFFSET = -1;
     private static final int OFFSET_DOUBLE = -2;
 
-    public static void print(PlayerName playerName, Frames frames) {
+    public static void print(GameResult gameResult) {
         printLineSeparator();
-        printResult(playerName, frames);
+        printResult(gameResult.getPlayerName(), gameResult.getFrames());
     }
 
     private static void printResult(PlayerName playerName, Frames frames) {
