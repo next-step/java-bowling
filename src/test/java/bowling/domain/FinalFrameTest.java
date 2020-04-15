@@ -24,8 +24,8 @@ class FinalFrameTest {
         FinalFrame finalFrame = new FinalFrame(10, true);
         finalFrame.bowl(2);
         finalFrame.bowl(8);
-        finalFrame.bonusBowl(5);
-        Pin bonusPin = finalFrame.getBonusPin();
-        assertThat(bonusPin).isEqualTo(new Pin(5));
+        finalFrame.bowl(5);
+        Rolls rolls = finalFrame.getRolls();
+        assertThat(rolls.getRolls().get(2)).isEqualTo(new Pin(5));
     }
 }
