@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class NormalFrameTest {
@@ -43,5 +44,31 @@ class NormalFrameTest {
 
         //then
         assertTrue(frame instanceof FinalFrame);
+    }
+
+    @DisplayName("남은 핀이 없으면 해당 프레임은 완료 상태 이다")
+    @Test
+    public void isFinish_success_strike() throws Exception {
+        //given
+        Frame frame = new NormalFrame();
+
+        //when
+        frame = frame.bowl(10);
+
+        //then
+        assertTrue(frame.isFinish());
+    }
+
+    @DisplayName("남은 핀이 있으면 해당 프레임은 완료 상태가 아니다")
+    @Test
+    public void isFinish_success_miss() throws Exception {
+        //given
+        Frame frame = new NormalFrame();
+
+        //when
+        frame = frame.bowl(5);
+
+        //then
+        assertFalse(frame.isFinish());
     }
 }

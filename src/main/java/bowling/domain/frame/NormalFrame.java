@@ -46,6 +46,15 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean isFinish() {
+        if (state.isFinish()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public Frame bowl(final int pinCount) {
         State bowl = state.bowl(pinCount);
         return new NormalFrame(frameNumber, nextFrame, bowl);

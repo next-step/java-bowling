@@ -9,4 +9,6 @@ public interface Frame {
     Frame createNext();
 
     Frame getNext();
+
+    boolean isFinish();
 }
