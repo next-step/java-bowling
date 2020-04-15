@@ -35,7 +35,8 @@ public class Player {
 
     public void shot(int shot) {
         if (isCurrentFrameDone()) {
-            frames.add(createAddFrame());
+            frames.add(createAddFrame(shot));
+            return;
         }
         frames.get(frames.size() - 1).shot(shot);
     }
@@ -44,11 +45,17 @@ public class Player {
         return frames.isEmpty() || frames.get(frames.size() - 1).isFrameClosed();
     }
 
-    private Frame createAddFrame() {
-        if(frames.size()==9){
-            return FinalFrame.of();
+    private Frame createAddFrame(int shot) {
+        if (frames.isEmpty()) {
+            Frame frame = Frame.init();
+            frame.shot(shot);
+            return frame;
         }
-        return NormalFrame.init();
+
+        if (frames.size() < 9) {
+            return frames.get(frames.size() - 1).next(shot);
+        }
+        return frames.get(frames.size() - 1).last(shot);
     }
 
     public PlayerDto getDto() {
