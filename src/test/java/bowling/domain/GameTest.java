@@ -8,21 +8,27 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameTest {
-    public static final Game FINISHED_GAME =
-            (new Game("QWE", 2)).addPin(10).addPin(1).addPin(2);
-
     private Game game;
+    private Game finishedGame;
 
     @BeforeEach
     void setUp() {
         String name = "BRK";
-        game = new Game(name, 3);
+        game = new Game(name);
+
+        finishedGame = (new Game(name));
+        for(int i = 0; i < Frames.DEFAULT_FRAME_SIZE; i++) {
+            finishedGame.addPin(10);
+        }
+        finishedGame.addPin(2);
+        finishedGame.addPin(3);
+
     }
 
     @DisplayName("게임이 끝났는지 확인한다")
     @Test
     void isFinished() {
-        assertThat(FINISHED_GAME.isFinished()).isTrue();
+        assertThat(finishedGame.isFinished()).isTrue();
     }
 
     @DisplayName("쓰러트린 핀 갯수를 추가한다")
@@ -57,18 +63,5 @@ public class GameTest {
     void nextFrame() {
         game.addPin(10);
         assertThat(game.getCurrentFrame()).isEqualTo(2);
-    }
-
-    @DisplayName("게임이 끝났는지 여부를 체크한다")
-    @Test
-    void lastFrame() {
-        int dummyPinCount = 10;
-        game.addPin(dummyPinCount);
-        assertThat(game.isFinished()).isFalse();
-        game.addPin(dummyPinCount);
-        assertThat(game.isFinished()).isFalse();
-        game.addPin(1);
-        game.addPin(2);
-        assertThat(game.isFinished()).isTrue();
     }
 }

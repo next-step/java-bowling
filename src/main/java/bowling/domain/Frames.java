@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.exception.OutOfRangeArgumentException;
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.Pitch;
@@ -10,37 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class Frames {
-    private static final String OUT_OF_RANGE_ERROR_MESSAGE =
-            "프레임 갯수는 최소 %d 이상이여야 합니다.";
-    private static final int MIN = 2;
+    public static final int DEFAULT_FRAME_SIZE = 10;
     private static final int FIRST_INDEX = 0;
+    private static final int ONE = 1;
 
     private List<Frame> frames;
 
-    public Frames(int size) {
-        if (size < MIN) {
-            throw new OutOfRangeArgumentException(
-                    String.format(OUT_OF_RANGE_ERROR_MESSAGE, MIN));
-        }
-
+    public Frames() {
         frames = new ArrayList<>();
-        initFrameList(size);
-    }
-
-    private void initFrameList(int size) {
-        NormalFrame firstFrame = new NormalFrame();
-
-        frames.add(firstFrame);
-        NormalFrame frame = firstFrame;
-        for (int i = 0, sizeWithoutLast = size - 2; i < sizeWithoutLast; i++) {
-            frame = frame.createNext();
-            frames.add(frame);
-        }
-        frames.add(frame.createFinal());
-    }
-
-    public int getCurrentFrameIndex(Frame frame) {
-        return frames.indexOf(frame);
+        frames.add(new NormalFrame());
     }
 
     public Optional<Integer> getFrameScore(int frameIndex) {
@@ -51,11 +29,52 @@ public class Frames {
         return frames.get(index).getPitches();
     }
 
+    public void addPinCount(int pinCount) {
+        getLastFrame().addPinCount(pinCount);
+        if (isAddable()) {
+            createNext();
+        }
+    }
+
     public int size() {
         return frames.size();
     }
 
-    public Frame getFirstFrame() {
-        return frames.get(FIRST_INDEX);
+    public Frame getLastFrame() {
+        return frames.get(lastIndex());
+    }
+
+    private int lastIndex() {
+        return frames.size() - ONE;
+    }
+
+    private boolean isBeforeMax() {
+        return frames.size() == (DEFAULT_FRAME_SIZE - ONE);
+    }
+
+    private void createNext() {
+        if (!isAddable()) {
+            return;
+        }
+        Frame lastFrame = getLastFrame();
+        if (isBeforeMax()) {
+            frames.add(new FinalFrame());
+            return;
+        }
+
+        frames.add(lastFrame.createNext());
+    }
+
+    private boolean isAddable() {
+        if (isFinished()) {
+            return false;
+        }
+        Frame lastFrame = getLastFrame();
+        return lastFrame.isDone();
+    }
+
+    public boolean isFinished() {
+        Frame lastFrame = getLastFrame();
+        return lastFrame.isLast() && lastFrame.isDone();
     }
 }
