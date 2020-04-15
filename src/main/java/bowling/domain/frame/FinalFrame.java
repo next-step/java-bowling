@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.format.StateFormatter;
+import bowling.view.format.StateFormatter;
 import bowling.domain.frame.state.FinalReady;
 import bowling.domain.frame.state.State;
 import bowling.domain.pin.Pins;
@@ -41,6 +41,11 @@ public class FinalFrame implements Frame {
     @Override
     public String getStates() {
         return StateFormatter.format(state);
+    }
+
+    @Override
+    public String getState() {
+        return "";
     }
 
     @Override

@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.format.StateFormatter;
+import bowling.view.format.StateFormatter;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
 import bowling.domain.pin.Pins;
@@ -58,6 +58,11 @@ public class NormalFrame implements Frame {
     @Override
     public String getStates() {
         return StateFormatter.format(state) + Frame.SEPARATOR + nextFrame.getStates();
+    }
+
+    @Override
+    public String getState() {
+        return state.toResult();
     }
 
     @Override
