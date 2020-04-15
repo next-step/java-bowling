@@ -1,8 +1,11 @@
 package bowling.view;
 
+import bowling.domain.ScoreStatus;
 import lombok.Getter;
 
 public class ScoreView {
+    private static final String BLANK = "";
+
     @Getter
     private String score;
 
@@ -19,8 +22,12 @@ public class ScoreView {
         this.sign = sign;
     }
 
-    public static ScoreView of(int score, String sign) {
-        return new ScoreView(score, sign);
+    public static ScoreView of(ScoreStatus status, String sign) {
+        if (status.endCalculate()) {
+            return new ScoreView(status.getTotalScore(), sign);
+        }
+
+        return new ScoreView(BLANK, sign);
     }
 
     public static ScoreView of(String score, String sign) {

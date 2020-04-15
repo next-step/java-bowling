@@ -69,7 +69,7 @@ public class OutputView {
             value += getScourValue(frameRound.getRoundIndex(), scoreStatus.getStatus(), frameRound);
         }
 
-        scoreMap.put(frame.getFrameIndex() + ONE, ScoreView.of(scoreStatus.getScore().getTotalScore(), value));
+        scoreMap.put(frame.getFrameIndex() + ONE, ScoreView.of(scoreStatus, value));
 
         return scoreMap;
     }
