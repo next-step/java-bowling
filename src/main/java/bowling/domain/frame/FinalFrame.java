@@ -1,22 +1,30 @@
 package bowling.domain.frame;
 
-import bowling.domain.turn.TurnState;
-import bowling.domain.turn.Turns;
+import bowling.domain.frame.state.FinalFrameStates;
+import bowling.exception.BowlingException;
 
 public class FinalFrame implements Frame {
 
-    private final Turns turns;
-    private final int frameNumber = 10;
-    private final TurnState turnState;
+    private static final String LAST_FRAME = "10번 이후의 프레임은 생성 불가";
+
+    private final FinalFrameStates states;
 
     public FinalFrame() {
-        this.turns = new Turns();
-        this.turnState = TurnState.READY;
+        this.states = FinalFrameStates.of();
     }
 
-    public FinalFrame(Turns turns, TurnState turnState) {
-        this.turns = turns;
-        this.turnState = turnState;
+    public FinalFrame(FinalFrameStates states) {
+        this.states = states;
+    }
+
+    @Override
+    public boolean isFinish() {
+        return states.isFinish();
+    }
+
+    @Override
+    public Frame createNext() {
+        throw new BowlingException(LAST_FRAME);
     }
 
     @Override
@@ -25,7 +33,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Turns getTurns() {
-        return null;
+    public Frame getNext() {
+        throw new BowlingException("마지막 프레임 입니다");
     }
 }
