@@ -4,6 +4,7 @@ import qna.CannotDeleteException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Answers {
     private List<Answer> answers = new ArrayList<>();
@@ -32,12 +33,9 @@ public class Answers {
     }
 
     public List<DeleteHistory> deleteHistory() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        for (int i = 0; i < answers.size(); i++) {
-            DeleteHistory answerDeleteHistory = DeleteHistory.deleteAnswer(answers.get(i));
-            deleteHistories.add(answerDeleteHistory);
-        }
-        return deleteHistories;
+        return answers.stream()
+                .map(answer->DeleteHistory.deleteAnswer(answer))
+                .collect(Collectors.toList());
     }
 
     public void deleteAfterCheck(User loginUser) throws CannotDeleteException {
