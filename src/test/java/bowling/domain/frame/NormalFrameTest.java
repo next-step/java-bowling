@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class NormalFrameTest {
 
@@ -26,5 +27,21 @@ class NormalFrameTest {
         assertThatThrownBy(
                 () -> new NormalFrame(number)
         ).isInstanceOf(BowlingException.class);
+    }
+
+    @DisplayName("10번째 생성된 프레임은 FinalFrame 이어야 한다")
+    @Test
+    public void createNext_success() throws Exception {
+        //given
+        Frame frame = new NormalFrame();
+
+        //when
+        for (int i = 0; i < 9; i++) {
+            frame = frame.createNext();
+            frame = frame.getNext();
+        }
+
+        //then
+        assertTrue(frame instanceof FinalFrame);
     }
 }

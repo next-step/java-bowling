@@ -38,7 +38,7 @@ public class NormalFrame implements Frame {
 
     public Frame createNext() {
         if (frameNumber == MAX_FRAME_NUMBER - 1) {
-            return new FinalFrame();
+            return new NormalFrame(frameNumber, new FinalFrame(), state);
         }
 
         NormalFrame next = new NormalFrame(frameNumber + 1);
