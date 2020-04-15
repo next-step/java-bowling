@@ -13,12 +13,13 @@ class ResultViewTest {
     private static ResultView resultView = ResultView.getResultView();
     private Game game;
     private NormalFrame normalFrame;
+    private int bowl = 0;
 
     @BeforeEach
     void setUp() {
         game = new Game("PJS");
         normalFrame = game.startGame();
-        normalFrame.bowl(10);
+        bowl = normalFrame.bowl(10);
     }
 
     @DisplayName("입력받은 유저이름으로 점수판을 생성한다.")
@@ -33,7 +34,7 @@ class ResultViewTest {
     @DisplayName("프레임의 투구를 보여준다.")
     @Test
     void playFrameResult() {
-        String printPlayFrame = resultView.playFrameResult(normalFrame);
+        String printPlayFrame = resultView.playFrameResult(normalFrame.getFrameNum(), bowl);
         assertThat(printPlayFrame).isEqualTo("1프레임 투구 : 10\n");
     }
 
@@ -50,7 +51,7 @@ class ResultViewTest {
     @DisplayName("스페어가 있을때 점수판을 확인한다")
     @Test
     void playFrameScoreBoard2() {
-        NormalFrame nextFrame = normalFrame.createNextFrame(true);
+        NormalFrame nextFrame = normalFrame.createNextFrame();
         nextFrame.bowl(8);
         nextFrame.bowl(2);
         game.addFrame(nextFrame);
@@ -64,12 +65,12 @@ class ResultViewTest {
     @DisplayName("거터가 있을때 점수판을 확인한다")
     @Test
     void playFrameScoreBoard3() {
-        NormalFrame nextFrame = normalFrame.createNextFrame(true);
+        NormalFrame nextFrame = normalFrame.createNextFrame();
         nextFrame.bowl(8);
         nextFrame.bowl(2);
         game.addFrame(nextFrame);
 
-        NormalFrame nextFrame2 = normalFrame.createNextFrame(true);
+        NormalFrame nextFrame2 = normalFrame.createNextFrame();
         nextFrame2.bowl(7);
         nextFrame2.bowl(0);
         game.addFrame(nextFrame2);

@@ -48,7 +48,7 @@ class NormalFrameTest {
     @Test
     void createNextNomarFrame() {
         NormalFrame frame = new NormalFrame(2);
-        NormalFrame nextFrame = frame.createNextFrame(true);
+        NormalFrame nextFrame = frame.createNextFrame();
         assertThat(nextFrame).isEqualTo(new NormalFrame(3));
     }
 
@@ -56,7 +56,8 @@ class NormalFrameTest {
     @Test
     void createNextFinalFrame() {
         NormalFrame frame = new NormalFrame(9);
-        NormalFrame nextFrame = frame.createNextFrame(true);
+        frame.bowl(10);
+        NormalFrame nextFrame = frame.createNextFrame();
         assertThat(nextFrame).isEqualTo(new FinalFrame(10, true));
     }
 }

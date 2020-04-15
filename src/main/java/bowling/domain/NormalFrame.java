@@ -34,11 +34,12 @@ public class NormalFrame {
         return falledPins;
     }
 
-    public NormalFrame createNextFrame(boolean bonusFlag) {
+    public NormalFrame createNextFrame() {
         int createFrameNum = frameNum + 1;
         if (frameNum < Rule.MAX_FRAME_NUM.getValue()) {
             return new NormalFrame(createFrameNum);
         }
+        boolean bonusFlag = falledPins == Rule.MAX_PINS.getValue() ? true : false;
         return new FinalFrame(createFrameNum, bonusFlag);
     }
 
