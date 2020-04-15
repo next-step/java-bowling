@@ -19,7 +19,6 @@ public class Game {
     public NormalFrame startGame() {
         frames = new Frames();
         NormalFrame normalFrame = new NormalFrame(FIRST_FRAME_NUMBER);
-        frames.addFrame(normalFrame);
         return normalFrame;
     }
 

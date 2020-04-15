@@ -12,7 +12,9 @@ class GameTest {
     @Test
     void startGame() {
         Game game = new Game("CSJ");
-        game.startGame();
+        NormalFrame normalFrame = game.startGame();
+        game.addFrame(normalFrame);
+
         assertThat(game.getFrames()).hasSize(1);
         assertThat(game.getFrames().get(0)).isEqualTo(new NormalFrame(1));
     }
