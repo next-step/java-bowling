@@ -4,6 +4,8 @@ import bowling.domain.Pins;
 
 public class FirstBowl implements State {
 
+    private static final String PINS_STATE = "%d|";
+
     private final Pins firstPins;
 
     public FirstBowl(final Pins firstPins) {
@@ -27,5 +29,10 @@ public class FirstBowl implements State {
     @Override
     public boolean isFinish() {
         return false;
+    }
+
+    @Override
+    public String getCurrentPinsState() {
+        return String.format(PINS_STATE, firstPins.getDownPin());
     }
 }

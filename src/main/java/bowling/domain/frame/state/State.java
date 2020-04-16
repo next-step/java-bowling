@@ -7,4 +7,6 @@ public interface State {
     State bowl(int pinsCount);
 
     boolean isFinish();
+
+    String getCurrentPinsState();
 }

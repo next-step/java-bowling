@@ -5,6 +5,8 @@ import bowling.exception.BowlingException;
 
 public class Gutter implements State {
 
+    private static final String PINS_STATE = "%d|$d";
+
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -21,5 +23,10 @@ public class Gutter implements State {
     @Override
     public boolean isFinish() {
         return true;
+    }
+
+    @Override
+    public String getCurrentPinsState() {
+        return String.format(PINS_STATE, firstPins.getDownPin(), secondPins.getDownPin());
     }
 }

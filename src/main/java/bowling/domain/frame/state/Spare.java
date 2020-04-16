@@ -5,6 +5,8 @@ import bowling.exception.BowlingException;
 
 public class Spare implements State {
 
+    private static final String PINS_STATE = "%d|/";
+
     private final Pins firstPins;
     private final Pins secondPins;
 
@@ -28,5 +30,10 @@ public class Spare implements State {
     @Override
     public boolean isFinish() {
         return true;
+    }
+
+    @Override
+    public String getCurrentPinsState() {
+        return String.format(PINS_STATE, firstPins.getDownPin());
     }
 }

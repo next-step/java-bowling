@@ -104,4 +104,12 @@ public class FinalFrameStates {
         LinkedList<State> states = new LinkedList<>(Arrays.asList(bowl));
         return new FinalFrameStates(states);
     }
+
+//    @Override
+//    public String getCurrentPinsState() {
+//        for (State state : states) {
+//            state.
+//            return String.format(PINS_STATE, firstPins);
+//        }
+//    }
 }

@@ -19,4 +19,9 @@ public class Ready implements State {
     public boolean isFinish() {
         return false;
     }
+
+    @Override
+    public String getCurrentPinsState() {
+        return null;
+    }
 }
