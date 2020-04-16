@@ -4,40 +4,28 @@ import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 
-import java.util.LinkedList;
-
 public class BowlingGame {
 
     private final Player player;
-    private final Frame frame;
-    private final LinkedList<Frame> frames;
+    private final Frame firstFrame;
+    private Frame frame;
 
     public BowlingGame(final Player player) {
         this.player = player;
         this.frame = new NormalFrame();
-        this.frames = new LinkedList<>();
+        this.firstFrame = this.frame;
     }
 
-    public BowlingGame(final Player player, final Frame frame, final LinkedList<Frame> frames) {
-        this.player = player;
-        this.frame = frame;
-        this.frames = frames;
-    }
-
-    public BowlingGame play(final int pinCount) {
+    public void play(final int pinCount) {
         if (frame.isFinish()) {
-            LinkedList<Frame> merge = new LinkedList<>(frames);
-            Frame current = frame.createNext();
-            merge.add(current);
-
-            Frame next = current.getNext();
-            next = next.bowl(pinCount);
-
-            return new BowlingGame(player, next, merge);
+            frame = frame.createNext();
         }
 
-        Frame bowl = frame.bowl(pinCount);
-        return new BowlingGame(player, bowl, frames);
+        frame.bowl(pinCount);
+    }
+
+    public String getPlayerName() {
+        return player.getName();
     }
 
     public boolean isFinish() {
@@ -51,7 +39,7 @@ public class BowlingGame {
         return frame;
     }
 
-    public LinkedList<Frame> getFrames() {
-        return frames;
+    public Frame getFirstFrame() {
+        return firstFrame;
     }
 }
