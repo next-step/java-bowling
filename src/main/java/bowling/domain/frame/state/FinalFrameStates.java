@@ -10,6 +10,7 @@ public class FinalFrameStates implements State {
 
     private static final int FINAL_STATE_SIZE = 2;
     private static final String FINAL_STATE_SIZE_ERR_MESSAGE = "마지막 프레임은 최대 3번 투구 가능";
+    private static final String PINS_STATE = "%5s ";
 
     private final LinkedList<State> states;
 
@@ -128,12 +129,16 @@ public class FinalFrameStates implements State {
     @Override
     public String getCurrentPinsState() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append(states.getFirst().getCurrentPinsState());
+
+        String firstResult = states.getFirst().getCurrentPinsState();
 
         if (isHaveBonus()) {
-            buffer.append("|").append(states.getLast().getCurrentPinsState());
+            buffer.append(firstResult.trim());
+            buffer.append("|").append(states.getLast().getCurrentPinsState().trim());
+            return String.format("%5s ", buffer.toString());
         }
 
-        return buffer.toString();
+        buffer.append(firstResult);
+        return String.format("%3s ", buffer.toString());
     }
 }
