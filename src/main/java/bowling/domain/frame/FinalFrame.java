@@ -19,16 +19,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isFinish() {
-        return states.isFinish();
-    }
-
-    @Override
-    public Frame createNext() {
-        throw new BowlingException(LAST_FRAME);
-    }
-
-    @Override
     public Frame bowl(int pinCount) {
         if (isFinish()) {
             throw new BowlingException(State.CANT_THROW_BALL);
@@ -39,13 +29,18 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame getNext() {
-        return this;
+    public boolean isFinish() {
+        return states.isFinish();
     }
 
+    @Override
+    public Frame createNext() {
+        throw new BowlingException(LAST_FRAME);
+    }
 
-    public FinalFrameStates getStates() {
-        return states;
+    @Override
+    public Frame getNext() {
+        return this;
     }
 
     @Override

@@ -34,14 +34,14 @@ public class NormalFrame implements Frame {
         }
     }
 
-    public Frame createNext() {
-        if (frameNumber == MAX_FRAME_NUMBER - 1) {
-            nextFrame = new FinalFrame();
-            return nextFrame;
+    @Override
+    public Frame bowl(final int pinCount) {
+        if (isFinish()) {
+            throw new BowlingException(State.CANT_THROW_BALL);
         }
 
-        nextFrame = new NormalFrame(frameNumber + 1);
-        return nextFrame;
+        state = state.bowl(pinCount);
+        return this;
     }
 
     @Override
@@ -54,13 +54,14 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame bowl(final int pinCount) {
-        if (isFinish()) {
-            throw new BowlingException(State.CANT_THROW_BALL);
+    public Frame createNext() {
+        if (frameNumber == MAX_FRAME_NUMBER - 1) {
+            nextFrame = new FinalFrame();
+            return nextFrame;
         }
 
-        state = state.bowl(pinCount);
-        return this;
+        nextFrame = new NormalFrame(frameNumber + 1);
+        return nextFrame;
     }
 
     @Override

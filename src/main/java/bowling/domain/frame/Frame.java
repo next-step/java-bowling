@@ -8,11 +8,11 @@ public interface Frame {
 
     Frame bowl(final int pinCount);
 
+    boolean isFinish();
+
     Frame createNext();
 
     Frame getNext();
-
-    boolean isFinish();
 
     State getState();
 }
