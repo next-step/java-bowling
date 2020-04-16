@@ -1,12 +1,15 @@
 package bowling.domain.result;
 
 import bowling.domain.PlayerName;
+import bowling.domain.frame.Frame;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.*;
 
 public class GameResults {
     private static final int INDEX_FIRST = 0;
@@ -24,7 +27,9 @@ public class GameResults {
     }
 
     public static GameResults createWithPlayerNames(List<PlayerName> playerNames) {
-        return null;
+        return playerNames.stream()
+                .map(playerName -> GameResult.of(playerName, Frame.createTenFrames()))
+                .collect(collectingAndThen(toList(), GameResults::new));
     }
 
     private void validateDuplicationPlayerName(List<GameResult> results) {
