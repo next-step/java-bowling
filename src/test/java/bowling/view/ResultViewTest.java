@@ -33,13 +33,6 @@ class ResultViewTest {
                 + "|  PJS |      |      |      |      |      |      |      |      |      |      |\n");
     }
 
-    @DisplayName("프레임의 투구를 보여준다.")
-    @Test
-    void playFrameResult() {
-        String printPlayFrame = resultView.playFrameResult(normalFrame.getFrameNum(), bowl);
-        assertThat(printPlayFrame).isEqualTo("1프레임 투구 : 10\n");
-    }
-
     @DisplayName("스트라이크가 있을때 점수판을 확인한다")
     @Test
     void playFrameScoreBoard() {
@@ -96,7 +89,8 @@ class ResultViewTest {
         finalFrame.bowl(2);
         finalFrame.bowl(3);
         game.addFrame(finalFrame);
-        assertThat(resultView.playFrameScoreBoard(game)).isEqualTo("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |\n"
-                                                                   + "|  PJS |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   | X|2|3|\n");
+        assertThat(resultView.playFrameScoreBoard(game)).isEqualTo(
+                "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |\n"
+                + "|  PJS |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   | X|2|3|\n");
     }
 }

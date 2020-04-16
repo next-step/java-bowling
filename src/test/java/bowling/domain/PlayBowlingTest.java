@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 class PlayBowlingTest {
     private static PlayBowling playBowling = PlayBowling.getPlayBowling();
 
-    @DisplayName("자동으로 발생시키는 볼링 점수가 범위를 초과할 경우 예외를 발생시킨다.")
+    @DisplayName("입력하는 볼링 점수가 범위를 초과할 경우 예외를 발생시킨다.")
     @Test
     void validatePinRange() {
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            playBowling.generateBowlingScore(11);
+            playBowling.validatePinRange(11);
         });
     }
 }

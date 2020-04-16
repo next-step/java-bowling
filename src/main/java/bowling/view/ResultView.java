@@ -36,15 +36,6 @@ public class ResultView {
         return builder.toString();
     }
 
-    public String playFrameResult(int frameNum, int falledPin) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(frameNum)
-               .append(TITLE_BOWL)
-               .append(falledPin)
-               .append(NEW_LINE);
-        return builder.toString();
-    }
-
     public String playFrameScoreBoard(Game game) {
         StringBuilder builder = initBasicInfo(game.getUserName());
         List<NormalFrame> frames = game.getFrames();
@@ -74,8 +65,7 @@ public class ResultView {
         return builder.toString();
     }
 
-    public void printPlayFrame(Game game, NormalFrame normalFrame, int firstScore) {
-        System.out.print(playFrameResult(normalFrame.getFrameNum(), firstScore));
+    public void printPlayFrame(Game game) {
         System.out.println(playFrameScoreBoard(game));
     }
 

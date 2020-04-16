@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import java.util.Random;
+import java.util.Scanner;
 
 import bowling.view.ResultView;
 
@@ -10,21 +10,23 @@ public class PlayBowling {
 
     private static PlayBowling playBowling = new PlayBowling();
     private static ResultView resultView = ResultView.getResultView();
-    private Random random = new Random();
+    private Scanner scanner = new Scanner(System.in);
     private boolean bonusFlag = false;
 
-    public int generateBowlingScore(int rangePin) {
-        validatePinRange(rangePin);
-        return random.nextInt(rangePin);
+    public int inputScore(NormalFrame frame) {
+        System.out.print(frame.getFrameNum() + "프레임 투구 : ");
+        int inputPin = scanner.nextInt();
+        validatePinRange(inputPin);
+        return inputPin;
     }
 
-    public void validatePinRange(int rangePin) {
-        if (rangePin > MAX_PINS) {
-            throw new IllegalArgumentException("발생 할 수 있는 스코어는 10을 넘을 수 없습니다.");
+    public void validatePinRange(int inputPin) {
+        if (inputPin > MAX_PINS) {
+            throw new IllegalArgumentException("쓰러 트릴 수 있는 핀은 10개를 넘을 수 없습니다.");
         }
 
-        if (rangePin < MIN_PINS) {
-            throw new IllegalArgumentException("발생 할 수 있는 스코어는 0미만이 될 수 없습니다.");
+        if (inputPin < MIN_PINS) {
+            throw new IllegalArgumentException("쓰러 트릴 수 있는 핀은 0미만이 될 수 없습니다.");
         }
     }
 
@@ -38,18 +40,19 @@ public class PlayBowling {
     public void playFinalFrame(Game game, FinalFrame finalFrame) {
         setGameScore(game, finalFrame);
         if (finalFrame.getBonusCount() > 0) {
-            getFirstScore(game, finalFrame);
+            setScore(finalFrame);
+            resultView.printPlayFrame(game);
         }
     }
 
     private void setGameScore(Game game, NormalFrame normalFrame) {
         int firstScore = getFirstScore(game, normalFrame);
-        resultView.printPlayFrame(game, normalFrame, firstScore);
+        resultView.printPlayFrame(game);
         setSecondScore(game, normalFrame, firstScore);
     }
 
     private int getFirstScore(Game game, NormalFrame normalFrame) {
-        int firstScore = setScore(normalFrame, MAX_PINS);
+        int firstScore = setScore(normalFrame);
         game.addFrame(normalFrame);
         return firstScore;
     }
@@ -57,13 +60,13 @@ public class PlayBowling {
     private void setSecondScore(Game game, NormalFrame normalFrame, int firstScore) {
         int remainPin = MAX_PINS - firstScore;
         if (remainPin > 0) {
-            int secondScore = setScore(normalFrame, remainPin);
-            resultView.printPlayFrame(game, normalFrame, secondScore);
+            int secondScore = setScore(normalFrame);
+            resultView.printPlayFrame(game);
         }
     }
 
-    private int setScore(NormalFrame normalFrame, int value) {
-        int firstScore = generateBowlingScore(value);
+    private int setScore(NormalFrame normalFrame) {
+        int firstScore = inputScore(normalFrame);
         normalFrame.bowl(firstScore);
         return firstScore;
     }
