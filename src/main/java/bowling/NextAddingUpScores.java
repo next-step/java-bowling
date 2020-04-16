@@ -1,9 +1,6 @@
 package bowling;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class NextAddingUpScores {
@@ -15,6 +12,14 @@ public class NextAddingUpScores {
 
     private NextAddingUpScores(final Queue<Score> scores) {
         this.scores = new LinkedList<>(scores);
+    }
+
+    public static NextAddingUpScores newInstance(final int... scoreNumbers) {
+        List<Score> scores = Arrays.stream(scoreNumbers)
+                .mapToObj(Score::of)
+                .collect(Collectors.toList());
+
+        return newInstance(scores);
     }
 
     public static NextAddingUpScores newInstance(final List<Score> scores) {

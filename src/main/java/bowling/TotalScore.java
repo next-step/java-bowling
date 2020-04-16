@@ -8,7 +8,14 @@ public class TotalScore {
     private final int score;
 
     private TotalScore(final int score) {
+        validateRange(score);
         this.score = score;
+    }
+
+    private void validateRange(final int score) {
+        if(score < 0) {
+            throw new IllegalArgumentException("Total Score must be greater than zero.");
+        }
     }
 
     public static TotalScore of(final int score) {
@@ -22,7 +29,6 @@ public class TotalScore {
     public TotalScore sumSpare(final NextAddingUpScores nextAddingUpScores) {
         return new TotalScore(score + nextAddingUpScores.sumAddingUpSpareCase());
     }
-
 
     public static TotalScore calculateTotalScore(final List<Score> scores) {
         Score preScore = null;
