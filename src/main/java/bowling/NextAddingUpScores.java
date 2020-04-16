@@ -73,4 +73,11 @@ public class NextAddingUpScores {
     public int hashCode() {
         return Objects.hash(scores);
     }
+
+    @Override
+    public String toString() {
+        return "NextAddingUpScores{" +
+                "scores=" + scores +
+                '}';
+    }
 }

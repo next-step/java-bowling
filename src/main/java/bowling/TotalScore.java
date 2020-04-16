@@ -14,7 +14,7 @@ public class TotalScore {
     }
 
     private void validateRange(final int score) {
-        if(score < 0) {
+        if (score < 0) {
             throw new IllegalArgumentException("Total Score must be greater than zero.");
         }
     }
@@ -50,9 +50,9 @@ public class TotalScore {
 
     private static List<Score> sliceScores(final List<Score> scores, final int startIndex) {
         return scores.stream()
-                        .skip(1)
-                        .limit(scores.size() - startIndex + 1)
-                        .collect(Collectors.toList());
+                .skip(startIndex + 1)
+                .limit(scores.size() - startIndex + 1)
+                .collect(Collectors.toList());
     }
 
     public static TotalScore calculateTotalScore(final FrameScore frameScore, final NextAddingUpScores nextAddingUpScores) {

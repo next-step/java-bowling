@@ -54,11 +54,17 @@ public class TotalScoreTests {
     @DisplayName("Total Score 계산 테스트")
     @Test
     public void calculateTotalScoreTest() {
-        List<Score> scores = Stream.of(10, 5)
+        List<Score> scores = Stream.of(10, 4)
                 .map(Score::of)
                 .collect(Collectors.toList());
 
-        assertThat(TotalScore.calculateTotalScore(scores)).isEqualTo(TotalScore.of(20));
+        assertThat(TotalScore.calculateTotalScore(scores)).isEqualTo(TotalScore.of(18));
+
+        List<Score> scores2 = Stream.of(8, 2)
+                .map(Score::of)
+                .collect(Collectors.toList());
+
+        assertThat(TotalScore.calculateTotalScore(scores2)).isEqualTo(TotalScore.of(10));
     }
 
     @DisplayName("Total Score 계산 테스트2")

@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.Objects;
+
 import static bowling.Pins.MIN_PIN_COUNT;
 
 public class CommonBowlingFrame implements BowlingFrame {
@@ -34,6 +36,10 @@ public class CommonBowlingFrame implements BowlingFrame {
 
     @Override
     public SubTotal getSubTotal(final NextAddingUpScores nextAddingUpScores) {
+        if(Objects.isNull(nextAddingUpScores)) {
+            return frameScore.getSubTotal();
+        }
+
         return frameScore.getSubTotal(nextAddingUpScores);
     }
 

@@ -16,7 +16,7 @@ public class OutputView {
     private static final String GAME_ROW_PREFIX = "| ";
     private static final String GAME_ROW_SUFFIX = " |";
     private static final String GAME_ROW_BLANK = " ";
-    private static final String GAME_ROW_SCORE_HEAD = "    ";
+    private static final String GAME_ROW_SCORE_HEAD = "   ";
     private static final String GAME_FIRST_ROW_FRAME_NUMBER_FORMAT = " %02d ";
     private static final String GAME_FIRST_ROW_NAME_FORMAT = "NAME";
     private static final String GAME_FRAME_SCORE_FORMAT = "%-4s";
@@ -44,7 +44,7 @@ public class OutputView {
         System.out.println(GAME_FIRST_ROW);
 
         List<String> scores = getCollect(bowlingGameResult, FrameScoreConsoleResult::getScoreResult);
-        List<String> subTotals = getCollect(bowlingGameResult, FrameScoreConsoleResult::getSubTotal);
+        List<String> subTotals = getCollect(bowlingGameResult, FrameScoreConsoleResult::getSubTotalScore);
 
         System.out.println(makeGameRow(GAME_ROW_BLANK + bowlingGameResult.getName(), makeFrameWordsWithBlank(scores)));
         System.out.println(makeGameRow(GAME_ROW_BLANK + GAME_ROW_SCORE_HEAD, makeFrameWordsWithBlank(subTotals)));

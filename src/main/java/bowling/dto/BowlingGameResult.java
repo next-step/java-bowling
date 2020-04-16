@@ -2,8 +2,10 @@ package bowling.dto;
 
 import bowling.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BowlingGameResult {
 
@@ -24,20 +26,25 @@ public class BowlingGameResult {
     }
 
     private static List<FrameScoreConsoleResult> makeFrameScoreConsoleResults(final BowlingFrames bowlingFrames) {
-        List<FrameScoreConsoleResult> frameScoreConsoleResults = new ArrayList<>();
+        Stack<FrameScoreConsoleResult> frameScoreConsoleResults = new Stack<>();
 
         NextAddingUpScores nextAddingUpScores = null;
         for (int i = bowlingFrames.size() - 1; i >= 0; i--) {
             BowlingFrame bowlingFrame = bowlingFrames.getFrame(i);
 
-            FrameScore frameScore = bowlingFrame.getFrameScore();
-            SubTotal subTotal = bowlingFrame.getSubTotal(nextAddingUpScores);
-            frameScoreConsoleResults.add(FrameScoreConsoleResult.newInstance(frameScore, subTotal));
+            FrameScoreConsoleResult frameScoreConsoleResult = makeFrameScoreConsoleResult(bowlingFrame, nextAddingUpScores);
+            nextAddingUpScores = frameScoreConsoleResult.getNextAddingUpScores();
 
-            nextAddingUpScores = subTotal.getNextAddingUpScores();
+            frameScoreConsoleResults.push(frameScoreConsoleResult);
         }
 
-        return frameScoreConsoleResults;
+        return IntStream.range(0, frameScoreConsoleResults.size())
+                .mapToObj(i -> frameScoreConsoleResults.pop())
+                .collect(Collectors.toList());
+    }
+
+    private static FrameScoreConsoleResult makeFrameScoreConsoleResult(final BowlingFrame bowlingFrame, final NextAddingUpScores nextAddingUpScores) {
+        return FrameScoreConsoleResult.newInstance(bowlingFrame, nextAddingUpScores);
     }
 
     public String getName() {
