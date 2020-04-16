@@ -12,7 +12,7 @@ class FinalFrameTest {
     @DisplayName("보너스로 투구 할 수 없는데 시도 할 경우 예외를 발생시킨다.")
     @Test
     void exceptionBonusBowl() {
-        FinalFrame finalFrame = new FinalFrame(10);
+        FinalFrame finalFrame = new FinalFrame(false);
         assertThatIllegalArgumentException().isThrownBy(() -> {
             finalFrame.bonusBowl(5);
         });
@@ -21,7 +21,7 @@ class FinalFrameTest {
     @DisplayName("보너스로 투구 할 수 있는 경우 확인한다.")
     @Test
     void bonusBowl() {
-        FinalFrame finalFrame = new FinalFrame(10, true);
+        FinalFrame finalFrame = new FinalFrame(true);
         finalFrame.bowl(2);
         finalFrame.bowl(8);
         finalFrame.bowl(5);

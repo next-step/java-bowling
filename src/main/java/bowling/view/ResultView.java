@@ -3,6 +3,7 @@ package bowling.view;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import bowling.domain.Frame;
 import bowling.domain.Game;
 import bowling.domain.NormalFrame;
 import bowling.domain.Pin;
@@ -38,9 +39,9 @@ public class ResultView {
 
     public String playFrameScoreBoard(Game game) {
         StringBuilder builder = initBasicInfo(game.getUserName());
-        List<NormalFrame> frames = game.getFrames();
+        List<Frame> frames = game.getFrames();
 
-        for (NormalFrame frame : frames) {
+        for (Frame frame : frames) {
             List<Pin> rolls = frame.getRolls().getRolls();
             if (frame.getFrameNum() != FRAME_NUM) {
                 builder.append(displayRolls(rolls, frame.getFalledPins()));

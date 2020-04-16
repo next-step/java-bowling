@@ -5,21 +5,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Frames {
-    private List<NormalFrame> frames;
+    private List<Frame> frames;
 
     public Frames() {
         frames = new LinkedList<>();
     }
 
-    public Frames(List<NormalFrame> frames) {
+    public Frames(List<Frame> frames) {
         this.frames = Collections.unmodifiableList(new LinkedList<>(frames));
     }
 
-    public void addFrame(NormalFrame normalFrame) {
-        frames.add(normalFrame);
+    public void addFrame(Frame frame) {
+        frames.add(frame);
     }
 
-    public List<NormalFrame> getFrames() {
+    public List<Frame> getFrames() {
         return frames;
     }
 }

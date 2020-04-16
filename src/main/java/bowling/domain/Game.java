@@ -22,7 +22,7 @@ public class Game {
         return normalFrame;
     }
 
-    public void addFrame(NormalFrame frame) {
+    public void addFrame(Frame frame) {
         frames.addFrame(frame);
     }
 
@@ -30,7 +30,7 @@ public class Game {
         return userName;
     }
 
-    public List<NormalFrame> getFrames() {
+    public List<Frame> getFrames() {
         return frames.getFrames();
     }
 }

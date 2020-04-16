@@ -13,7 +13,7 @@ public class PlayBowling {
     private Scanner scanner = new Scanner(System.in);
     private boolean bonusFlag = false;
 
-    public int inputScore(NormalFrame frame) {
+    public int inputScore(Frame frame) {
         System.out.print(frame.getFrameNum() + "프레임 투구 : ");
         int inputPin = scanner.nextInt();
         validatePinRange(inputPin);
@@ -47,31 +47,31 @@ public class PlayBowling {
         }
     }
 
-    private void scoreAndPrint(Game game, NormalFrame normalFrame) {
+    private void scoreAndPrint(Game game, Frame normalFrame) {
         setScore(normalFrame);
         resultView.printPlayFrame(game);
     }
 
-    private void setGameScore(Game game, NormalFrame normalFrame) {
+    private void setGameScore(Game game, Frame normalFrame) {
         int firstScore = getFirstScore(game, normalFrame);
         resultView.printPlayFrame(game);
         setSecondScore(game, normalFrame, firstScore);
     }
 
-    private int getFirstScore(Game game, NormalFrame normalFrame) {
-        int firstScore = setScore(normalFrame);
-        game.addFrame(normalFrame);
+    private int getFirstScore(Game game, Frame frame) {
+        int firstScore = setScore(frame);
+        game.addFrame(frame);
         return firstScore;
     }
 
-    private void setSecondScore(Game game, NormalFrame normalFrame, int firstScore) {
+    private void setSecondScore(Game game, Frame normalFrame, int firstScore) {
         int remainPin = MAX_PINS - firstScore;
         if (remainPin > 0) {
             scoreAndPrint(game, normalFrame);
         }
     }
 
-    private int setScore(NormalFrame normalFrame) {
+    private int setScore(Frame normalFrame) {
         int score = inputScore(normalFrame);
         normalFrame.bowl(score);
         return score;

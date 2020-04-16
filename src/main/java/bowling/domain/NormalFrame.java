@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
     private static final int MIN_FRAME_NUM = 1;
     private static final int MAX_FRAME_NUM = 10;
     private int falledPins = 0;
@@ -32,7 +32,8 @@ public class NormalFrame {
     }
 
     public int bowl(int falledPins) {
-        setPin(falledPins);
+        this.falledPins += falledPins;
+        rolls.add(Pin.of(falledPins));
         return falledPins;
     }
 
@@ -41,12 +42,7 @@ public class NormalFrame {
     }
 
     public FinalFrame createFinalFrame(boolean bonusFlag) {
-        return new FinalFrame(MAX_FRAME_NUM, bonusFlag);
-    }
-
-    private void setPin(int falledPins) {
-        this.falledPins += falledPins;
-        rolls.add(Pin.of(falledPins));
+        return new FinalFrame(bonusFlag);
     }
 
     public int getFalledPins() {

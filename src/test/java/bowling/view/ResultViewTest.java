@@ -91,6 +91,6 @@ class ResultViewTest {
         game.addFrame(finalFrame);
         assertThat(resultView.playFrameScoreBoard(game)).isEqualTo(
                 "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |\n"
-                + "|  PJS |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   | X|2|3|\n");
+                + "|  PJS |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |X|2|3 |\n");
     }
 }
