@@ -6,7 +6,7 @@ import bowling.exception.BowlingException;
 public class Gutter implements State {
 
     private static final String GUTTER_DASH = " -|-  ";
-    private static final String PINS_STATE = "  %d|-  ";
+    private static final String PINS_STATE = "%3d|-  ";
 
     private final Pins firstPins;
     private final Pins secondPins;
