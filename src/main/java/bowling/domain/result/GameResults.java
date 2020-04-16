@@ -23,6 +23,10 @@ public class GameResults {
         return new GameResults(results);
     }
 
+    public static GameResults createWithPlayerNames(List<PlayerName> playerNames) {
+        return null;
+    }
+
     private void validateDuplicationPlayerName(List<GameResult> results) {
         Set<String> names = results.stream()
                 .map(GameResult::getPlayerName)
