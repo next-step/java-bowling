@@ -39,15 +39,16 @@ public class Score {
         if (point == STRIKE_POINT) {
             return ScoreType.STRIKE;
         }
+
         return getSpareOrGutterType(scores, point);
     }
 
     private static ScoreType getSpareOrGutterType(Scores scores, int point) {
-        if (scores.size() == SECOND_PLAY && scores.currentPoint() + point == STRIKE_POINT) {
-            return ScoreType.SPARE;
-        }
         if (point == ZERO_POINT) {
             return ScoreType.GUTTER;
+        }
+        if (scores.size() == SECOND_PLAY && scores.currentPoint() + point == STRIKE_POINT) {
+            return ScoreType.SPARE;
         }
         return ScoreType.MISS;
     }
