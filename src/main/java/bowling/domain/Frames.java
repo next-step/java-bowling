@@ -11,7 +11,6 @@ import java.util.Optional;
 
 public class Frames {
     public static final int DEFAULT_FRAME_SIZE = 10;
-    private static final int FIRST_INDEX = 0;
     private static final int ONE = 1;
 
     private List<Frame> frames;

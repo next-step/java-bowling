@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class FinalFrame implements Frame {
@@ -9,15 +8,9 @@ public class FinalFrame implements Frame {
     private static final int MIN_PIN_COUNT_FOR_THIRD = 10;
 
     private Pitches pitches;
-    private Frame previous;
 
     public FinalFrame() {
-        this(null);
-    }
-
-    public FinalFrame(Frame previous) {
         this.pitches = new Pitches();
-        this.previous = previous;
     }
 
     @Override public boolean addPinCount(int pinCount) {
@@ -59,15 +52,7 @@ public class FinalFrame implements Frame {
             return Optional.empty();
         }
 
-        return Optional.of(pitches.getPinCountTotal() + getPreviousScore());
-    }
-
-    private int getPreviousScore() {
-        if (Objects.isNull(previous)) {
-            return 0;
-        }
-
-        return previous.getScore().orElse(0);
+        return Optional.of(pitches.getPinCountTotal());
     }
 
     @Override public boolean isDone() {

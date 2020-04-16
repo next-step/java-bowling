@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class NormalFrame implements Frame {
@@ -10,23 +9,13 @@ public class NormalFrame implements Frame {
 
     private Pitches pitches;
     private Frame next;
-    private Frame previous;
 
     public NormalFrame() {
-        this(null);
-    }
-
-    public NormalFrame(Frame previous) {
         this.pitches = new Pitches();
-        this.previous = previous;
     }
 
     @Override public boolean addPinCount(int pinCount) {
-        if (!isAddable(pinCount)) {
-            return false;
-        }
-
-        if (isDone()) {
+        if (!isAddable(pinCount) || isDone()) {
             return false;
         }
 
@@ -43,35 +32,21 @@ public class NormalFrame implements Frame {
                 .orElse(true);
     }
 
-    public FinalFrame createFinal() {
-        next = new FinalFrame(this);
-        return (FinalFrame) next;
-    }
-
     @Override public Optional<Integer> getScore() {
         if (!isDone() || pitches.isEmpty()) {
             return Optional.empty();
         }
 
-        int previousScore = getPreviousScore();
         int currentScore = pitches.getPinCountTotal();
         if (pitches.isLastPitchStrike()) {
             return next.getScoreForTwoPitches()
-                    .map(nextScore -> nextScore + currentScore + previousScore);
+                    .map(nextScore -> nextScore + currentScore);
         } else if (pitches.isLastPitchSpare()) {
             return next.getScoreForOnePitch()
-                    .map(nextScore -> nextScore + currentScore + previousScore);
+                    .map(nextScore -> nextScore + currentScore);
         }
 
-        return Optional.of(currentScore + previousScore);
-    }
-
-    private int getPreviousScore() {
-        if (Objects.isNull(previous)) {
-            return 0;
-        }
-
-        return previous.getScore().orElse(0);
+        return Optional.of(currentScore);
     }
 
     @Override public boolean isDone() {
@@ -95,8 +70,15 @@ public class NormalFrame implements Frame {
     }
 
     @Override public NormalFrame createNext() {
-        next = new NormalFrame(this);
-        return (NormalFrame) next;
+        NormalFrame normalFrame = new NormalFrame();
+        next = normalFrame;
+        return normalFrame;
+    }
+
+    public FinalFrame createFinal() {
+        FinalFrame finalFrame = new FinalFrame();
+        next = finalFrame;
+        return finalFrame;
     }
 
     @Override public Optional<Integer> getScoreForTwoPitches() {
