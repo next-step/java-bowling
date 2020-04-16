@@ -44,4 +44,13 @@ public class FrameScore {
     public List<Score> getScores() {
         return scores;
     }
+
+    public SubTotal getSubTotal() {
+        return SubTotal.newInstance(TotalScore.calculateTotalScore(scores), NextAddingUpScores.newInstance(scores));
+    }
+
+    public SubTotal getSubTotal(final NextAddingUpScores nextAddingUpScores) {
+        return SubTotal.newInstance(TotalScore.calculateTotalScore(this, nextAddingUpScores), nextAddingUpScores.update(scores));
+    }
+
 }

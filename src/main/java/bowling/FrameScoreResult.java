@@ -3,18 +3,25 @@ package bowling;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiFunction;
 
 import static bowling.Pins.MAX_PIN_COUNT;
 import static bowling.Pins.MIN_PIN_COUNT;
 
 public enum FrameScoreResult {
-    STRIKE,
-    SPARE,
-    MISS,
-    GUTTER;
+    STRIKE(TotalScore::sumStrike),
+    SPARE(TotalScore::sumSpare),
+    MISS((score, nextAddingUpScores) -> score),
+    GUTTER((score, nextAddingUpScores) -> score);
 
     private static final int FIRST_SCORE_INDEX = 0;
     private static final int SECOND_SCORE_INDEX = 1;
+
+    private final BiFunction<TotalScore, NextAddingUpScores, TotalScore> subTotalFunction;
+
+    FrameScoreResult(final BiFunction<TotalScore, NextAddingUpScores, TotalScore> subTotalFunction) {
+        this.subTotalFunction = subTotalFunction;
+    }
 
     public static FrameScoreResult of(final List<Score> scores) {
         if (scores.size() >= 2) {
@@ -43,6 +50,10 @@ public enum FrameScoreResult {
         }
 
         return MISS;
+    }
+
+    public TotalScore calculateTotalScore(final TotalScore score, final NextAddingUpScores nextAddingUpScores) {
+        return subTotalFunction.apply(score, nextAddingUpScores);
     }
 
     private static boolean isSpare(final Score preScore, final Score nowScore) {

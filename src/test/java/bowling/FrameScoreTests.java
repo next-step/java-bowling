@@ -44,19 +44,19 @@ public class FrameScoreTests {
     @Test
     public void getSubTotalScoreTest() {
         FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
-        SubTotalScore expectedSubTotalScore = SubTotalScore.newInstance(10, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10))));
+        SubTotal expectedSubTotal = SubTotal.newInstance(10, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10))));
 
-        assertThat(frameScore.getSubTotalScore()).isEqualTo(expectedSubTotalScore);
+        assertThat(frameScore.getSubTotal()).isEqualTo(expectedSubTotal);
     }
 
     @DisplayName("SubTotalScore 반환 테스트2")
     @Test
-    public void getSubTotalScoreTest() {
+    public void getSubTotalScoreTest2() {
         FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
-        SubTotalScore subTotalScore = SubTotalScore.newInstance(10, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10))));
-        SubTotalScore expectedSubTotalScore = SubTotalScore.newInstance(20, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10), Score.of(10))));
+        SubTotal subTotal = SubTotal.newInstance(10, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10))));
+        SubTotal expectedSubTotal = SubTotal.newInstance(20, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10), Score.of(10))));
 
-        assertThat(frameScore.getSubTotalScore(subTotalScore)).isEqualTo(expectedSubTotalScore);
+        assertThat(frameScore.getSubTotal(subTotal)).isEqualTo(expectedSubTotal);
     }
 
 }

@@ -13,4 +13,8 @@ public class SubTotal {
     public static SubTotal newInstance(final int subTotalScore, final NextAddingUpScores nextAddingUpScores) {
         return new SubTotal(TotalScore.of(subTotalScore), nextAddingUpScores);
     }
+
+    public static SubTotal newInstance(final TotalScore subTotalScore, final NextAddingUpScores nextAddingUpScores) {
+        return new SubTotal(subTotalScore, nextAddingUpScores);
+    }
 }

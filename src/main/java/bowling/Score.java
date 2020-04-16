@@ -34,6 +34,10 @@ public class Score {
         return score == pinCount;
     }
 
+    public TotalScore toTotalScore() {
+        return TotalScore.of(score);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

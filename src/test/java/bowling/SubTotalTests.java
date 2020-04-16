@@ -8,12 +8,12 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 @DisplayName("프레임 점수 테스트")
-public class SubTotalScoreTests {
+public class SubTotalTests {
 
     @DisplayName("생성 테스트")
     @Test
     public void generateTest() {
-        assertThatCode(() -> SubTotalScore.newInstance(20, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10)))));
+        assertThatCode(() -> SubTotal.newInstance(20, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10)))));
     }
 
 }
