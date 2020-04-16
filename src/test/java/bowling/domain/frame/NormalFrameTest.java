@@ -39,7 +39,6 @@ class NormalFrameTest {
         //when
         for (int i = 0; i < 9; i++) {
             frame = frame.createNext();
-            frame = frame.getNext();
         }
 
         //then

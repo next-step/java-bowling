@@ -7,13 +7,11 @@ import bowling.exception.BowlingException;
 public class NormalFrame implements Frame {
 
     private static final String MAX_FRAME_MESSAGE = "1~10번 프레임 까지만 등록 가능 합니다.";
-    private static final String CAN_THROW_TWICE = "1~9번 프레임은 2회 던질수 있습니다.";
-    private static final int NEXT_TURN_SIZE = 2;
     private static final int MIN_FRAME_NUMBER = 1;
 
     private final int frameNumber;
-    private final Frame nextFrame;
-    private final State state;
+    private Frame nextFrame;
+    private State state;
 
     public NormalFrame() {
         this(MIN_FRAME_NUMBER);
@@ -38,11 +36,12 @@ public class NormalFrame implements Frame {
 
     public Frame createNext() {
         if (frameNumber == MAX_FRAME_NUMBER - 1) {
-            return new NormalFrame(frameNumber, new FinalFrame(), state);
+            nextFrame = new FinalFrame();
+            return nextFrame;
         }
 
-        NormalFrame next = new NormalFrame(frameNumber + 1);
-        return new NormalFrame(frameNumber, next, state);
+        nextFrame = new NormalFrame(frameNumber + 1);
+        return nextFrame;
     }
 
     @Override
@@ -60,12 +59,17 @@ public class NormalFrame implements Frame {
             throw new BowlingException(State.CANT_THROW_BALL);
         }
 
-        State bowl = state.bowl(pinCount);
-        return new NormalFrame(frameNumber, nextFrame, bowl);
+        state = state.bowl(pinCount);
+        return this;
     }
 
     @Override
     public Frame getNext() {
         return nextFrame;
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 }
