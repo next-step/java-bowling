@@ -1,6 +1,7 @@
 package bowling;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class TotalScore {
@@ -57,5 +58,18 @@ public class TotalScore {
     public static TotalScore calculateTotalScore(final FrameScore frameScore, final NextAddingUpScores nextAddingUpScores) {
         FrameScoreResult frameScoreResult = frameScore.getResult();
         return frameScoreResult.calculateTotalScore(TotalScore.of(frameScore.sum()), nextAddingUpScores);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TotalScore)) return false;
+        TotalScore that = (TotalScore) o;
+        return score == that.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }

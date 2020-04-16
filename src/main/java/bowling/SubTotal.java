@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.Objects;
+
 public class SubTotal {
 
     private final TotalScore subTotalScore;
@@ -16,5 +18,19 @@ public class SubTotal {
 
     public static SubTotal newInstance(final TotalScore subTotalScore, final NextAddingUpScores nextAddingUpScores) {
         return new SubTotal(subTotalScore, nextAddingUpScores);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SubTotal)) return false;
+        SubTotal subTotal = (SubTotal) o;
+        return Objects.equals(subTotalScore, subTotal.subTotalScore) &&
+                Objects.equals(nextAddingUpScores, subTotal.nextAddingUpScores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(subTotalScore, nextAddingUpScores);
     }
 }

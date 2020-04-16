@@ -1,7 +1,7 @@
 package bowling;
 
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -34,21 +34,21 @@ public class TotalScoreTests {
     @DisplayName("스트라이크 합산 테스트")
     @ParameterizedTest
     @MethodSource("sumStrikeTestCases")
-    public void sumStrikeTest() {
+    public void sumStrikeTest(int[] scores, int expectedResult) {
         TotalScore totalScore = TotalScore.of(10);
-        NextAddingUpScores nextAddingUpScores = NextAddingUpScores.newInstance(9, 1);
+        NextAddingUpScores nextAddingUpScores = NextAddingUpScores.newInstance(scores);
 
-        assertThat(totalScore.sumStrike(nextAddingUpScores)).isEqualTo(TotalScore.of(20));
+        assertThat(totalScore.sumStrike(nextAddingUpScores)).isEqualTo(TotalScore.of(expectedResult));
     }
 
     @DisplayName("스페어 합산 테스트")
     @ParameterizedTest
     @MethodSource("sumSpareTestCases")
-    public void sumSpareTest() {
+    public void sumSpareTest(int[] scores, int expectedResult) {
         TotalScore totalScore = TotalScore.of(10);
-        NextAddingUpScores nextAddingUpScores = NextAddingUpScores.newInstance(9, 1);
+        NextAddingUpScores nextAddingUpScores = NextAddingUpScores.newInstance(scores);
 
-        assertThat(totalScore.sumSpare(nextAddingUpScores)).isEqualTo(TotalScore.of(20));
+        assertThat(totalScore.sumSpare(nextAddingUpScores)).isEqualTo(TotalScore.of(expectedResult));
     }
 
     @DisplayName("Total Score 계산 테스트")
