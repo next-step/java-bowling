@@ -53,10 +53,10 @@ public class FrameScoreTests {
     @Test
     public void getSubTotalScoreTest2() {
         FrameScore frameScore = FrameScore.newInstance(Arrays.asList(10));
-        SubTotal subTotal = SubTotal.newInstance(10, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10))));
-        SubTotal expectedSubTotal = SubTotal.newInstance(20, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10), Score.of(10))));
+        NextAddingUpScores nextAddingUpScores = NextAddingUpScores.newInstance(Arrays.asList(Score.of(10), Score.of(10)));
+        SubTotal expectedSubTotal = SubTotal.newInstance(30, NextAddingUpScores.newInstance(Arrays.asList(Score.of(10), Score.of(10))));
 
-        assertThat(frameScore.getSubTotal(subTotal)).isEqualTo(expectedSubTotal);
+        assertThat(frameScore.getSubTotal(nextAddingUpScores)).isEqualTo(expectedSubTotal);
     }
 
 }
