@@ -42,4 +42,16 @@ public class BowlingGame {
     public Frame getFirstFrame() {
         return firstFrame;
     }
+
+    public int getFrameSize() {
+        int count = 1;
+        Frame frame = firstFrame;
+
+        while (frame.getNext() != null) {
+            frame = frame.getNext();
+            count++;
+        }
+
+        return count + 1;
+    }
 }
