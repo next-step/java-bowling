@@ -36,35 +36,6 @@ public class FinalFrameStates implements State {
         return new FinalFrameStates(merge);
     }
 
-    @Override
-    public boolean isFinish() {
-        if (states.getFirst() instanceof Ready) {
-            return false;
-        }
-
-        if (isHaveBonus()) {
-            return true;
-        }
-
-        if (isThrowAbleBonus()) {
-            return false;
-        }
-
-        if (isNormalTurnFirstBowl()) {
-            return false;
-        }
-
-        if (isNormalTurnMissOrGutter()) {
-            return true;
-        }
-
-        if (states.size() == FINAL_STATE_SIZE) {
-            return false;
-        }
-
-        return true;
-    }
-
     private boolean isThrowAbleBonus() {
         if (isNormalTurnStrikeOrSpare() && !isHaveBonus()) {
             return true;
@@ -123,6 +94,35 @@ public class FinalFrameStates implements State {
         State bowl = states.getFirst().bowl(pinCount);
         LinkedList<State> states = new LinkedList<>(Arrays.asList(bowl));
         return new FinalFrameStates(states);
+    }
+
+    @Override
+    public boolean isFinish() {
+        if (states.getFirst() instanceof Ready) {
+            return false;
+        }
+
+        if (isHaveBonus()) {
+            return true;
+        }
+
+        if (isThrowAbleBonus()) {
+            return false;
+        }
+
+        if (isNormalTurnFirstBowl()) {
+            return false;
+        }
+
+        if (isNormalTurnMissOrGutter()) {
+            return true;
+        }
+
+        if (states.size() == FINAL_STATE_SIZE) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
