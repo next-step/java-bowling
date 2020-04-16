@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.bonusscore.BonusScore;
+import bowling.domain.bonusscore.BonusScores;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import org.springframework.util.CollectionUtils;
@@ -21,9 +22,9 @@ public class LastFrame implements Frame {
     private static final int SECOND_PLAY = 1;
 
     private final Scores scores;
-    private final List<BonusScore> bonusScores;
+    private final BonusScores bonusScores;
 
-    public LastFrame(List<BonusScore> bonusScores) {
+    public LastFrame(BonusScores bonusScores) {
         this.scores = new Scores();
         this.bonusScores = bonusScores;
     }
@@ -39,7 +40,7 @@ public class LastFrame implements Frame {
         }
 
         scores.add(Score.lastFrameScore(scores, point));
-        addBonusScore(point);
+        bonusScores.addBonusPoint(point);
     }
 
     private void validateSecondPoint(int point) {
@@ -62,12 +63,6 @@ public class LastFrame implements Frame {
 
     private int totalPoint(int point) {
         return scores.currentPoint() + point;
-    }
-
-    private void addBonusScore(int point) {
-        bonusScores.stream()
-                .filter(BonusScore::isAddable)
-                .forEach(bonusScore -> bonusScore.add(point));
     }
 
     @Override
