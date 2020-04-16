@@ -19,9 +19,7 @@ public class ResultView {
         System.out.println(EMPTY_FRAME.getForamt());
     }
 
-    public static void printBowlingScore(Frames frames) {
-        Player player = frames.getPlayer();
-
+    public static void printBowlingScore(Frames frames, Player player) {
         System.out.println(BOWLING_FRAME.getForamt());
         StringBuilder result = new StringBuilder(String.format(NAME_FORMAT.getForamt(), player.getName()));
         StringBuilder pointResult = new StringBuilder(BLANK_FRAME.getForamt());

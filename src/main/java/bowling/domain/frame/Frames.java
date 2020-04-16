@@ -18,16 +18,14 @@ public class Frames {
     private static final String NOT_ADDABLE_FRAME = "";
 
     private final List<Frame> frames;
-    private final Player player;
 
-    private Frames(List<Frame> frames, Player player) {
+    private Frames(List<Frame> frames) {
         this.frames = frames;
-        this.player = player;
     }
 
-    public static Frames of(Player player) {
+    public static Frames of() {
         List<Frame> frames = new ArrayList<>();
-        return new Frames(frames, player);
+        return new Frames(frames);
     }
 
     public void add(Frame frame) {
@@ -91,9 +89,5 @@ public class Frames {
 
     public Frame get(int index) {
         return frames.get(index);
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 }
