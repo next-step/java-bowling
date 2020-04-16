@@ -2,6 +2,7 @@ package bowling.domain.frame.state;
 
 import bowling.domain.pin.BowlCount;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -44,6 +45,17 @@ class FirstBowlTest {
         assertThat(actual).isInstanceOf(SecondGutter.class);
     }
 
+    @DisplayName("FirstBowl 의 점수를 반환한다.")
+    @Test
+    void getScore() {
+        Pins first = createPins(5);
+        State firstBowl = new FirstBowl(first);
+        Score expect = new Score(5);
+
+        Score actual = ((Calculable) firstBowl).getScore();
+
+        assertThat(actual).isEqualTo(expect);
+    }
 
     Pins createPins(int count) {
         BowlCount bowlCount = new BowlCount(count);

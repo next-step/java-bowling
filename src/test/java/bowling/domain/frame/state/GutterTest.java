@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,5 +18,16 @@ class GutterTest {
 
         assertThat(first.toResult()).isEqualTo(expect);
         assertThat(second.toResult()).isEqualTo(expect);
+    }
+
+    @DisplayName("SecondGutter의 Score를 가져올 수 있다.")
+    @Test
+    void getScore() {
+        State first = new FirstGutter(Pins.GUTTER_PINS);
+        State second = first.roll(Pins.GUTTER_PINS);
+
+        final Score score = ((Calculable) second).getScore();
+
+        assertThat(score).isEqualTo(new Score(0));
     }
 }
