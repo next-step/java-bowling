@@ -23,7 +23,6 @@ public class BowlingApplication {
     private static void playBowling(Frames frames, Player player) {
         Frame frame = frames.getLast();
         while (frame.isPlayable()) {
-            //BowlingGame.play(frame, InputView.relaseBowling(frames.size() - ONE));
             frame.addScore(InputView.relaseBowling(frames.size() - ONE));
             ResultView.printBowlingScore(frames, player);
         }

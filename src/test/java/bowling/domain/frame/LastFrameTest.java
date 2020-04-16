@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.bonusscore.BonusScores;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,13 +20,13 @@ class LastFrameTest {
     private LastFrame lastFrame;
     @BeforeEach
     void setUp() {
-        lastFrame = new LastFrame(new ArrayList<>());
+        lastFrame = new LastFrame(new BonusScores());
     }
 
     @DisplayName("마지막 프레임 생성")
     @Test
     void create() {
-        assertThatCode(() -> new LastFrame(new ArrayList<>()));
+        assertThatCode(() -> new LastFrame(new BonusScores()));
     }
 
     @DisplayName("2구 이내 스트라이크 또는 스페어 인 경우 3구 실행")
