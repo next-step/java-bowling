@@ -8,7 +8,7 @@ public class FinalFrame implements Frame {
 
     private static final String LAST_FRAME = "10번 이후의 프레임은 생성 불가";
 
-    private final FinalFrameStates states;
+    private FinalFrameStates states;
 
     public FinalFrame() {
         this.states = FinalFrameStates.of();
@@ -34,12 +34,22 @@ public class FinalFrame implements Frame {
             throw new BowlingException(State.CANT_THROW_BALL);
         }
 
-        FinalFrameStates bowl = states.bowl(pinCount);
-        return new FinalFrame(bowl);
+        states = states.bowl(pinCount);
+        return this;
     }
 
     @Override
     public Frame getNext() {
         throw new BowlingException("마지막 프레임 입니다");
+    }
+
+
+    public FinalFrameStates getStates() {
+        return states;
+    }
+
+    @Override
+    public State getState() {
+        throw new BowlingException(State.CANT_THROW_BALL);
     }
 }

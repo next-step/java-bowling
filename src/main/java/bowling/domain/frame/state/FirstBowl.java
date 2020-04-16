@@ -33,6 +33,9 @@ public class FirstBowl implements State {
 
     @Override
     public String getCurrentPinsState() {
+        if (firstPins.getDownPin() == 0) {
+            return "  -  ";
+        }
         return String.format(PINS_STATE, firstPins.getDownPin());
     }
 }
