@@ -5,7 +5,7 @@ import bowling.exception.BowlingException;
 
 public class Spare implements State {
 
-    private static final String PINS_STATE = "%d|/";
+    private static final String PINS_STATE = "  %d|/ ";
 
     private final Pins firstPins;
     private final Pins secondPins;

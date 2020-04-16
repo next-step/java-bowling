@@ -4,7 +4,7 @@ import bowling.domain.Pins;
 
 public class FirstBowl implements State {
 
-    private static final String PINS_STATE = "%d|";
+    private static final String PINS_STATE = "  %d  ";
 
     private final Pins firstPins;
 
