@@ -24,7 +24,6 @@ public class GameTest {
         }
         finishedGame.addPin(2);
         finishedGame.addPin(3);
-
     }
 
     @DisplayName("게임이 끝났는지 확인한다")
