@@ -5,8 +5,6 @@ import bowling.util.ScannerUtil;
 import static bowling.Messages.*;
 
 public class InputView {
-    private static final String DELIMITER = " : ";
-
     public static int getPlayerCount(){
         printMessage(MESSAGE_INPUT_PLAYER_COUNT);
         return ScannerUtil.readInt();
@@ -14,16 +12,6 @@ public class InputView {
 
     public static String getPlayerName(int playerCount){
         printInputMessage(playerCount);
-        return ScannerUtil.readLine();
-    }
-
-    public static String getFirstPlayerName() {
-        printMessage(MESSAGE_INPUT_FIRST_PLAYER_NAME + DELIMITER);
-        return ScannerUtil.readLine();
-    }
-
-    public static String getSecondPlayerName() {
-        printMessage(MESSAGE_INPUT_SECOND_PLAYER_NAME + DELIMITER);
         return ScannerUtil.readLine();
     }
 
