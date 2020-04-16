@@ -8,9 +8,11 @@ import bowling.domain.point.Point;
  */
 public class Score {
     private static final int STRIKE_POINT = 10;
+    private static final int DOUBLE_STRIKE_POINT = 20;
     private static final int ZERO_POINT = 0;
     private static final int FIRST_PLAY = 0;
     private static final int SECOND_PLAY = 1;
+    private static final int THIRD_PLAY = 2;
 
     private final ScoreType scoreType;
     private final Point point;
@@ -36,10 +38,23 @@ public class Score {
     }
 
     private static ScoreType generateLastScoreType(Scores scores, int point) {
-        if (point == STRIKE_POINT) {
+        if (point == STRIKE_POINT && scores.size() * STRIKE_POINT == scores.currentPoint()) {
             return ScoreType.STRIKE;
         }
 
+        if (scores.size() == THIRD_PLAY) {
+            return getThirdPlayScoreType(scores, point);
+        }
+        return getSpareOrGutterType(scores, point);
+    }
+
+    private static ScoreType getThirdPlayScoreType(Scores scores, int point) {
+        if (scores.isSpare(SECOND_PLAY) && point == STRIKE_POINT) {
+            return ScoreType.STRIKE;
+        }
+        if (!scores.isSpare(SECOND_PLAY) && scores.currentPoint() + point == DOUBLE_STRIKE_POINT) {
+            return ScoreType.SPARE;
+        }
         return getSpareOrGutterType(scores, point);
     }
 
