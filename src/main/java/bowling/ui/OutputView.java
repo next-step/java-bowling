@@ -6,7 +6,7 @@ import bowling.dto.FramesDto;
 import bowling.dto.PlayerDto;
 import bowling.dto.ShotScoreDto;
 
-import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,9 +34,6 @@ public class OutputView {
         System.out.println();
         System.out.print(FRAME_SCORE_FIRST);
         getParsedFrameScoreStream(frames)
-                .map(score -> score
-                        .map(Object::toString)
-                        .orElse(""))
                 .map(scoreString -> String.format(FRAME_SCORE_FORMAT, scoreString))
                 .forEach(System.out::print);
         System.out.println();
@@ -80,19 +77,16 @@ public class OutputView {
         return Integer.toString(v.getScore());
     }
 
-    private Stream<Optional<Integer>> getParsedFrameScoreStream(FramesDto frames) {
+    private Stream<String> getParsedFrameScoreStream(FramesDto frames) {
         return Stream.concat(getFrameScoreStream(frames),
-                getEmptyScoreStream(frames));
+                getEmptyStringStream(frames));
     }
 
-    private Stream<Optional<Integer>> getFrameScoreStream(FramesDto frames) {
+    private Stream<String> getFrameScoreStream(FramesDto frames) {
         return frames.getFrames()
                 .stream()
-                .map(FrameDto::getScore);
-    }
-
-    private Stream<Optional<Integer>> getEmptyScoreStream(FramesDto frames) {
-        return Stream.generate(Optional::<Integer>empty)
-                .limit(MAX - frames.size());
+                .map(FrameDto::getScore)
+                .map(Objects::toString)
+                .map(v -> v.equals("null")? "" : v);
     }
 }

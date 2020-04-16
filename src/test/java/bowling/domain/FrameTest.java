@@ -115,4 +115,33 @@ class FrameTest {
                 .toArray();
     }
 
+    @Test
+    void getFrameScore() {
+        Frame firstFrame = Frame.init();
+        firstFrame.shot(4);
+        firstFrame.shot(4);
+        assertThat(firstFrame.getDto().getScore())
+                .isEqualTo(8);
+
+
+        firstFrame = Frame.init();
+        firstFrame.shot(4);
+        firstFrame.shot(6);
+        firstFrame.next(10);
+        assertThat(firstFrame.getDto().getScore())
+                .isEqualTo(20);
+
+        firstFrame = Frame.init();
+        firstFrame.shot(10);
+        firstFrame.next(10).next(10);
+        assertThat(firstFrame.getDto().getScore())
+                .isEqualTo(30);
+
+        firstFrame = Frame.init();
+        firstFrame.shot(10);
+        firstFrame.next(4).shot(3);
+        assertThat(firstFrame.getDto().getScore())
+                .isEqualTo(17);
+    }
+
 }
