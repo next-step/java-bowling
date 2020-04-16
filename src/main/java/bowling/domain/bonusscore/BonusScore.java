@@ -1,6 +1,7 @@
 package bowling.domain.bonusscore;
 
-import bowling.domain.Point;
+import bowling.domain.point.Point;
+import bowling.domain.point.Points;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,24 +14,24 @@ public class BonusScore {
     private static final int SPARE_BONUS_COUNT = 1;
     private static final int ZERO_BONUS_COUNT = 0;
 
-    private final List<Point> bonusPoints;
+    private final Points bonusPoints;
     private final BonusScoreInfo bonusScoreInfo;
 
-    private BonusScore(List<Point> bonusPoints, BonusScoreInfo bonusScoreInfo) {
+    private BonusScore(Points bonusPoints, BonusScoreInfo bonusScoreInfo) {
         this.bonusPoints = bonusPoints;
         this.bonusScoreInfo = bonusScoreInfo;
     }
 
     public static BonusScore noneBonus(int frameIndex) {
-        return new BonusScore(new ArrayList<>(), new BonusScoreInfo(frameIndex, ZERO_BONUS_COUNT));
+        return new BonusScore(new Points(), new BonusScoreInfo(frameIndex, ZERO_BONUS_COUNT));
     }
 
     public static BonusScore strikeBonus(int frameIndex) {
-        return new BonusScore(new ArrayList<>(), new BonusScoreInfo(frameIndex, STRIKE_BONUS_COUNT));
+        return new BonusScore(new Points(), new BonusScoreInfo(frameIndex, STRIKE_BONUS_COUNT));
     }
 
     public static BonusScore spareBonus(int frameIndex) {
-        return new BonusScore(new ArrayList<>(), new BonusScoreInfo(frameIndex, SPARE_BONUS_COUNT));
+        return new BonusScore(new Points(), new BonusScoreInfo(frameIndex, SPARE_BONUS_COUNT));
     }
 
     public void add(int point) {
@@ -46,8 +47,6 @@ public class BonusScore {
     }
 
     public int getTotalBonusPoint() {
-        return bonusPoints.stream()
-                .mapToInt(Point::getPoint)
-                .sum();
+        return bonusPoints.getTotalBonusPoint();
     }
 }
