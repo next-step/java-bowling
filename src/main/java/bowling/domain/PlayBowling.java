@@ -38,11 +38,18 @@ public class PlayBowling {
     }
 
     public void playFinalFrame(Game game, FinalFrame finalFrame) {
-        setGameScore(game, finalFrame);
+        getFirstScore(game, finalFrame);
+        resultView.printPlayFrame(game);
+        scoreAndPrint(game, finalFrame);
+
         if (finalFrame.getBonusCount() > 0) {
-            setScore(finalFrame);
-            resultView.printPlayFrame(game);
+            scoreAndPrint(game, finalFrame);
         }
+    }
+
+    private void scoreAndPrint(Game game, NormalFrame normalFrame) {
+        setScore(normalFrame);
+        resultView.printPlayFrame(game);
     }
 
     private void setGameScore(Game game, NormalFrame normalFrame) {
@@ -60,15 +67,14 @@ public class PlayBowling {
     private void setSecondScore(Game game, NormalFrame normalFrame, int firstScore) {
         int remainPin = MAX_PINS - firstScore;
         if (remainPin > 0) {
-            int secondScore = setScore(normalFrame);
-            resultView.printPlayFrame(game);
+            scoreAndPrint(game, normalFrame);
         }
     }
 
     private int setScore(NormalFrame normalFrame) {
-        int firstScore = inputScore(normalFrame);
-        normalFrame.bowl(firstScore);
-        return firstScore;
+        int score = inputScore(normalFrame);
+        normalFrame.bowl(score);
+        return score;
     }
 
     public boolean isBonusFlag() {

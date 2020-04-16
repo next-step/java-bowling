@@ -59,9 +59,10 @@ public class ResultView {
         String lastGame = rolls.stream()
                                .map(roll -> displayScore(roll))
                                .collect(Collectors.joining(VERTICAL));
-        builder.append(appendBlank(COLUMN_INTERVAL - lastGame.length()))
-               .append(lastGame)
-               .append(VERTICAL);
+        builder
+                .append(lastGame)
+                .append(appendBlank(COLUMN_INTERVAL - lastGame.length()))
+                .append(VERTICAL);
         return builder.toString();
     }
 
