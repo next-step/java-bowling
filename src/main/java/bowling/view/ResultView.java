@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import bowling.domain.Frame;
 import bowling.domain.Game;
-import bowling.domain.NormalFrame;
 import bowling.domain.Pin;
 
 public class ResultView {
@@ -19,7 +18,6 @@ public class ResultView {
     private static final String VERTICAL = "|";
     private static final String BLANK = " ";
     private static final String NEW_LINE = "\n";
-    private static final String TITLE_BOWL = "프레임 투구 : ";
     private static final String GUTTER = "-";
     private static final String SPARE = "/";
     private static final String STRIKE = "X";

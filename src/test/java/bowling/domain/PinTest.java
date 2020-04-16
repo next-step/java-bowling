@@ -18,6 +18,26 @@ class PinTest {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             new Pin(pin);
         });
+    }
 
+    @DisplayName("스트라이크일때 표시되는 text를 확인한다.")
+    @Test
+    void getStrikeDisplayText() {
+        Pin pin = new Pin(10);
+        assertThat(pin.getDisplayText()).isEqualTo("X");
+    }
+
+    @DisplayName("스페어일때 표시되는 text를 확인한다.")
+    @Test
+    void getSpareDisplayText() {
+        Pin pin = new Pin(8);
+        assertThat(pin.getDisplayText(Pin.of(2))).isEqualTo("8|/");
+    }
+
+    @DisplayName("미스일떄 표시되는 text를 확인한다.")
+    @Test
+    void getMissDisplayText() {
+        Pin pin = new Pin(5);
+        assertThat(pin.getDisplayText(Pin.of(2))).isEqualTo("5|2");
     }
 }
