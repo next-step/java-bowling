@@ -22,7 +22,7 @@ public class Miss implements State {
     @Override
     public String toResult() {
         if (second.isGutter()) {
-            return "-";
+            return StateSymbol.GUTTER.getSymbol();
         }
         return String.valueOf(second.count());
     }

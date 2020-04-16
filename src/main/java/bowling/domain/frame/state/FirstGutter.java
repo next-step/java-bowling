@@ -3,8 +3,6 @@ package bowling.domain.frame.state;
 import bowling.domain.pin.Pins;
 
 public class FirstGutter implements State {
-    private static final String expression = "-";
-
     private final Pins first;
 
     FirstGutter(final Pins first) {
@@ -33,6 +31,6 @@ public class FirstGutter implements State {
 
     @Override
     public String toResult() {
-        return expression;
+        return StateSymbol.GUTTER.getSymbol();
     }
 }

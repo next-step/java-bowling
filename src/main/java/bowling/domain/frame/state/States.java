@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class States {
+    private static final int LAST = 1;
+
     private final List<State> stateHistory;
 
     public States(final List<State> stateHistory) {
@@ -20,5 +22,9 @@ public class States {
 
     public boolean isEmpty() {
         return stateHistory.isEmpty();
+    }
+
+    public State getLast() {
+        return stateHistory.get(stateHistory.size() - LAST);
     }
 }
