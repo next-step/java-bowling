@@ -6,13 +6,14 @@ import java.util.stream.Collectors;
 import bowling.domain.Game;
 import bowling.domain.NormalFrame;
 import bowling.domain.Pin;
-import bowling.domain.Rule;
 
 public class ResultView {
     private static final String NAME = "NAME";
     private static final int FRAME_NUM = 10;
     private static final int COLUMN_INTERVAL = 6;
     private static final int TEXT_INTERVAL = 2;
+    private static final int MAX_PINS = 10;
+    private static final int MIN_PINS = 0;
     private static final String FRAME_NUM_FORMAT = "%02d";
     private static final String VERTICAL = "|";
     private static final String BLANK = " ";
@@ -110,7 +111,7 @@ public class ResultView {
     private boolean isSpareFlag(List<Pin> rolls, int falledPins) {
         boolean spareFlag = false;
 
-        if (rolls.size() == 2 && falledPins == Rule.MAX_PINS.getValue()) {
+        if (rolls.size() == 2 && falledPins == MAX_PINS) {
             spareFlag = true;
         }
         return spareFlag;
@@ -120,11 +121,11 @@ public class ResultView {
         int rollFalledPins = roll.getFalledPins();
         String displayScore = String.valueOf(rollFalledPins);
 
-        if (rollFalledPins == Rule.MAX_PINS.getValue()) {
+        if (rollFalledPins == MAX_PINS) {
             return STRIKE;
         }
 
-        if (rollFalledPins == Rule.MIN_PINS.getValue()) {
+        if (rollFalledPins == MIN_PINS) {
             return GUTTER;
         }
 

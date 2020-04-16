@@ -3,6 +3,8 @@ package bowling.domain;
 import java.util.Objects;
 
 public class NormalFrame {
+    private static final int MIN_FRAME_NUM = 1;
+    private static final int MAX_FRAME_NUM = 10;
     private int falledPins = 0;
 
     private int frameNum;
@@ -20,11 +22,11 @@ public class NormalFrame {
     }
 
     public void validateFrameNum(int frameNum) {
-        if (frameNum < Rule.MIN_FRAME_NUM.getValue()) {
+        if (frameNum < MIN_FRAME_NUM) {
             throw new IllegalArgumentException("프레임 넘버는 1미만 일 수 없습니다.");
         }
 
-        if (frameNum > Rule.MAX_FRAME_NUM.getValue()) {
+        if (frameNum > MAX_FRAME_NUM) {
             throw new IllegalArgumentException("프레임 넘버는 10초과 일 수 없습니다.");
         }
     }
@@ -39,7 +41,7 @@ public class NormalFrame {
     }
 
     public FinalFrame createFinalFrame(boolean bonusFlag) {
-        return new FinalFrame(Rule.MAX_FRAME_NUM.getValue(), bonusFlag);
+        return new FinalFrame(MAX_FRAME_NUM, bonusFlag);
     }
 
     private void setPin(int falledPins) {
