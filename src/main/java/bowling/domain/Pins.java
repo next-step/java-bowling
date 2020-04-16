@@ -54,7 +54,7 @@ public class Pins {
         return false;
     }
 
-    private int getDownPin() {
+    public int getDownPin() {
         return MAX_PIN - this.pins;
     }
 

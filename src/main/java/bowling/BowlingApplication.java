@@ -18,13 +18,12 @@ public class BowlingApplication {
         while (!bowlingGame.isFinish()) {
             int inputBowlCount =
                     Integer.parseInt(InputView.inputBowlCount(frameNumber));
-            bowlingGame = bowlingGame.play(inputBowlCount);
+            bowlingGame.play(inputBowlCount);
 
             ResultView.printScoreBoardTop();
-            ResultView.printScoreBoardPlayer(bowlingGame, player);
+            ResultView.printScoreBoardPlayer(bowlingGame);
 
             if (bowlingGame.getFrame().isFinish()) {
-
                 frameNumber++;
             }
         }
