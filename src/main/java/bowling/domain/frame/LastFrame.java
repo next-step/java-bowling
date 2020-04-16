@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.bonusscore.BonusScore;
 import bowling.domain.bonusscore.BonusScores;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;

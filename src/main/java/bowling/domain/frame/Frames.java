@@ -1,7 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

@@ -3,9 +3,6 @@ package bowling.domain.bonusscore;
 import bowling.domain.point.Point;
 import bowling.domain.point.Points;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 스트라이크. 스페어의 보너스 점수를 계산 및 추가하는 객체
  */
