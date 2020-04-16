@@ -42,7 +42,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame getNext() {
-        return this;
+        return null;
     }
 
     @Override
