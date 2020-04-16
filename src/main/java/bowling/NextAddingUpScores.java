@@ -60,4 +60,17 @@ public class NextAddingUpScores {
 
         return Score.sum(addingUpScore);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NextAddingUpScores)) return false;
+        NextAddingUpScores that = (NextAddingUpScores) o;
+        return Objects.equals(scores, that.scores);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scores);
+    }
 }
