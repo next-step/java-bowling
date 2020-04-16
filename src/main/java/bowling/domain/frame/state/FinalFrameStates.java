@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FinalFrameStates {
+public class FinalFrameStates implements State {
 
     private static final int FINAL_STATE_SIZE = 2;
     private static final String FINAL_STATE_SIZE_ERR_MESSAGE = "마지막 프레임은 최대 3번 투구 가능";
@@ -36,12 +36,21 @@ public class FinalFrameStates {
         return new FinalFrameStates(merge);
     }
 
+    @Override
     public boolean isFinish() {
         if (states.getFirst() instanceof Ready) {
             return false;
         }
 
-        if (isNormalTurnStrikeOrSpareOrFirstBowl()) {
+        if (isHaveBonus()) {
+            return true;
+        }
+
+        if (isThrowAbleBonus()) {
+            return false;
+        }
+
+        if (isNormalTurnFirstBowl()) {
             return false;
         }
 
@@ -56,11 +65,14 @@ public class FinalFrameStates {
         return true;
     }
 
-    private boolean isNormalTurnStrikeOrSpare() {
-        if (states.size() != 1) {
-            return false;
+    private boolean isThrowAbleBonus() {
+        if (isNormalTurnStrikeOrSpare() && !isHaveBonus()) {
+            return true;
         }
+        return false;
+    }
 
+    private boolean isNormalTurnStrikeOrSpare() {
         if (states.getFirst() instanceof Strike
                 || states.getFirst() instanceof Spare) {
             return true;
@@ -69,12 +81,12 @@ public class FinalFrameStates {
         return false;
     }
 
-    private boolean isNormalTurnStrikeOrSpareOrFirstBowl() {
-        if (states.size() != 1) {
+    private boolean isNormalTurnFirstBowl() {
+        if (isHaveBonus()) {
             return false;
         }
 
-        if (isNormalTurnStrikeOrSpare() || states.getFirst() instanceof FirstBowl) {
+        if (states.getFirst() instanceof FirstBowl) {
             return true;
         }
 
@@ -89,6 +101,14 @@ public class FinalFrameStates {
         return false;
     }
 
+    private boolean isHaveBonus() {
+        if (states.size() == FINAL_STATE_SIZE && !(states.getLast() instanceof Ready)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public FinalFrameStates bowl(final int pinCount) {
         if (isFinish()) {
             throw new BowlingException(State.CANT_THROW_BALL);
@@ -105,11 +125,15 @@ public class FinalFrameStates {
         return new FinalFrameStates(states);
     }
 
-//    @Override
-//    public String getCurrentPinsState() {
-//        for (State state : states) {
-//            state.
-//            return String.format(PINS_STATE, firstPins);
-//        }
-//    }
+    @Override
+    public String getCurrentPinsState() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(states.getFirst().getCurrentPinsState());
+
+        if (isHaveBonus()) {
+            buffer.append("|").append(states.getLast().getCurrentPinsState());
+        }
+
+        return buffer.toString();
+    }
 }
