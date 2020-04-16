@@ -35,7 +35,7 @@ public class Frames {
     }
 
     public void addNextFrame() {
-        if (isFrist()) {
+        if (isFirst()) {
             frames.add(DefaultFrame.first());
             return;
         }
@@ -53,7 +53,7 @@ public class Frames {
         return !Objects.isNull(frames) && frames.size() == FRAME_INDEX_NINE;
     }
 
-    private boolean isFrist() {
+    private boolean isFirst() {
         return !Objects.isNull(frames) && frames.size() == ZERO;
     }
 
