@@ -1,10 +1,12 @@
 package bowling.domain.frame;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +16,13 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class DefaultFrameTest {
+    private DefaultFrame defaultFrame;
+
+    @BeforeEach
+    void setUp() {
+        defaultFrame = DefaultFrame.first();
+    }
+
     @DisplayName("첫번째 프레임 생성")
     @Test
     void createFrame() {
@@ -23,26 +32,28 @@ class DefaultFrameTest {
     @DisplayName("다음 프레임 생성")
     @Test
     void createNextFrame() {
-        DefaultFrame first = DefaultFrame.first();
-        first.addScore(5);
-        first.addScore(4);
-        assertThatCode(() -> first.nextFrame(0)).doesNotThrowAnyException();
+        defaultFrame = DefaultFrame.first();
+        defaultFrame.addScore(5);
+        defaultFrame.addScore(4);
+
+        assertThatCode(() -> defaultFrame.createNextFrame(0)).doesNotThrowAnyException();
     }
 
     @DisplayName("마지막 프레임 생성")
     @Test
     void createLastFrame() {
-        DefaultFrame first = DefaultFrame.first();
-        first.addScore(5);
-        first.addScore(4);
-        assertThatCode(() -> first.lastFrame(0)).doesNotThrowAnyException();
+        defaultFrame = DefaultFrame.first();
+        defaultFrame.addScore(5);
+        defaultFrame.addScore(4);
+
+        assertThatCode(() -> defaultFrame.createLastFrame(0)).doesNotThrowAnyException();
     }
 
     @DisplayName("점수 추가")
     @ParameterizedTest
     @MethodSource("points")
     void addPoint(List<Integer> values) {
-        DefaultFrame defaultFrame = DefaultFrame.first();
+        defaultFrame = DefaultFrame.first();
 
         assertThatCode(
                 () -> {
@@ -64,7 +75,7 @@ class DefaultFrameTest {
     @ParameterizedTest
     @MethodSource("overPoints")
     void addPointFailByOverPoint(List<Integer> values) {
-        DefaultFrame defaultFrame = DefaultFrame.first();
+        defaultFrame = DefaultFrame.first();
 
         assertThatIllegalArgumentException().isThrownBy(
                 () -> {
@@ -85,25 +96,79 @@ class DefaultFrameTest {
     @DisplayName("볼링공을 던질수 있는 상태")
     @Test
     void isPlayable() {
-        DefaultFrame defaultFrame = DefaultFrame.first();
+        defaultFrame = DefaultFrame.first();
         defaultFrame.addScore(1);
+
         assertThat(defaultFrame.isPlayable()).isTrue();
     }
 
     @DisplayName("볼링공을 던질수 없는 상태 - 초구 스트라이크")
     @Test
     void isNotPlayableByStrike() {
-        DefaultFrame defaultFrame = DefaultFrame.first();
+        defaultFrame = DefaultFrame.first();
         defaultFrame.addScore(10);
+
         assertThat(defaultFrame.isPlayable()).isFalse();
     }
 
     @DisplayName("볼링공을 던질수 없는 상태 - 2번의 공을 던졌을때")
     @Test
     void isNotPlayableByCount() {
-        DefaultFrame defaultFrame = DefaultFrame.first();
+        defaultFrame = DefaultFrame.first();
         defaultFrame.addScore(1);
         defaultFrame.addScore(2);
+
         assertThat(defaultFrame.isPlayable()).isFalse();
+    }
+
+    @DisplayName("프레임 점수 계산")
+    @ParameterizedTest
+    @ValueSource(ints = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0})
+    void calculateFramePoint(int point) {
+        defaultFrame.addScore(point);
+
+        assertThat(defaultFrame.getTotalPoint(0)).isEqualTo(point);
+    }
+
+    @DisplayName("프레임 점수 계산 - 스트라이크 보너스 점수")
+    @ParameterizedTest
+    @MethodSource("strikePoint")
+    void calculateStrikeFramePoint(List<Integer> points, int totalPoint) {
+        defaultFrame.addScore(points.get(0));
+
+        DefaultFrame secondFrame = defaultFrame.createNextFrame(0);
+        secondFrame.addScore(points.get(1));
+
+        DefaultFrame thirdFrame = secondFrame.createNextFrame(1);
+        thirdFrame.addScore(points.get(2));
+
+        assertThat(defaultFrame.getTotalPoint(0)).isEqualTo(totalPoint);
+    }
+
+    static Stream<Arguments> strikePoint() {
+        return Stream.of(
+                arguments(Arrays.asList(10, 1, 2), 13),
+                arguments(Arrays.asList(10, 10, 10), 30)
+        );
+    }
+
+    @DisplayName("프레임 점수 계산 - 스페어 보너스 점수")
+    @ParameterizedTest
+    @MethodSource("sparePoint")
+    void calculateSpareFramePoint(List<Integer> points, int totalPoint) {
+        defaultFrame.addScore(points.get(0));
+        defaultFrame.addScore(points.get(1));
+
+        DefaultFrame secondFrame = defaultFrame.createNextFrame(0);
+        secondFrame.addScore(points.get(2));
+
+        assertThat(defaultFrame.getTotalPoint(0)).isEqualTo(totalPoint);
+    }
+
+    static Stream<Arguments> sparePoint() {
+        return Stream.of(
+                arguments(Arrays.asList(1, 9, 2), 12),
+                arguments(Arrays.asList(5, 5, 10), 20)
+        );
     }
 }

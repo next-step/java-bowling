@@ -27,11 +27,13 @@ class ScoresTest {
     void addScore(List<Integer> values) {
         Scores scores = new Scores();
         for (Integer value : values) {
-            scores.add(Score.defaultScore(scores, value));
+            scores.add(Score.defaultFrameScore(scores, value));
         }
+
         int currentPoint = values.stream()
                 .mapToInt(Integer::intValue)
                 .sum();
+
         assertThat(scores.currentPoint()).isEqualTo(currentPoint);
     }
 
@@ -46,12 +48,14 @@ class ScoresTest {
     @Test
     void isStrike() {
         Scores socres = strikeScores();
+
         assertThat(socres.isStrike(0)).isTrue();
     }
 
     private Scores strikeScores() {
         Scores scores = new Scores();
-        scores.add(Score.defaultScore(scores, 10));
+        scores.add(Score.defaultFrameScore(scores, 10));
+
         return scores;
     }
 
@@ -59,13 +63,15 @@ class ScoresTest {
     @Test
     void isSpare() {
         Scores socres = spareScores();
+
         assertThat(socres.isSpare(1)).isTrue();
     }
 
     private Scores spareScores() {
         Scores scores = new Scores();
-        scores.add(Score.defaultScore(scores, 1));
-        scores.add(Score.defaultScore(scores, 9));
+        scores.add(Score.defaultFrameScore(scores, 1));
+        scores.add(Score.defaultFrameScore(scores, 9));
+
         return scores;
     }
 }

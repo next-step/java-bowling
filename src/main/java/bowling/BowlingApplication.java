@@ -13,18 +13,18 @@ public class BowlingApplication {
         Player player = new Player(InputView.inputPlayer());
         ResultView.printBowlingFrame(player);
 
-        Frames frames = BowlingGame.startGame(player);
+        Frames frames = Frames.of();
         while (!frames.isOver()) {
-            BowlingGame.nexrFrame(frames);
-            playBowling(player, frames);
+            frames.addNextFrame();
+            playBowling(frames, player);
         }
     }
 
-    private static void playBowling(Player player, Frames frames) {
+    private static void playBowling(Frames frames, Player player) {
         Frame frame = frames.getLast();
         while (frame.isPlayable()) {
-            BowlingGame.play(frame, InputView.relaseBowling(frames.size() - ONE));
-            ResultView.printBowlingScore(player, frames);
+            frame.addScore(InputView.relaseBowling(frames.size() - ONE));
+            ResultView.printBowlingScore(frames, player);
         }
     }
 }

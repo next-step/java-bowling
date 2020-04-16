@@ -1,11 +1,17 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
+
+import java.util.List;
+
 public interface Frame {
     void addScore(int score);
 
     boolean isPlayable();
 
-    int scoreSize();
+    boolean isCalculatableFrame(int frameIndex);
 
-    String getScore(int i);
+    List<Score> getScores();
+
+    int getTotalPoint(int frameIndex);
 }

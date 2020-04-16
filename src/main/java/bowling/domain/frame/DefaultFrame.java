@@ -1,16 +1,14 @@
 package bowling.domain.frame;
 
 import bowling.domain.bonusscore.BonusScore;
-import bowling.domain.bonusscore.NoneBonus;
-import bowling.domain.bonusscore.SpareBonus;
-import bowling.domain.bonusscore.StrikeBonus;
+import bowling.domain.bonusscore.BonusScores;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 /**
  * 프레임은 점수를 기록하고 다음 프레임을 생성하는 책임을 가진다.
@@ -19,44 +17,40 @@ public class DefaultFrame implements Frame {
     private static final int STRIKE_POINT = 10;
     private static final int DEFAULT_PLAY_COUNT = 2;
     private static final int FIRST_PLAY = 0;
-    private static final int SECOND_PLAY = 1;
 
-    private Scores scores;
-    private List<BonusScore> bonusScores;
+    private final Scores scores;
+    private final BonusScores bonusScores;
 
-    private DefaultFrame(List<BonusScore> bonusScores) {
+    private DefaultFrame(BonusScores bonusScores) {
         this.scores = new Scores();
         this.bonusScores = bonusScores;
     }
 
     public static DefaultFrame first() {
-        return new DefaultFrame(new ArrayList<>());
+        return new DefaultFrame(new BonusScores());
     }
 
-    public DefaultFrame nextFrame(int frameIndex) {
-        bonusScores.add(createBonusScore(frameIndex));
-        return new DefaultFrame(validateBonusScores());
+    public DefaultFrame createNextFrame(int frameIndex) {
+        addBounusScoresHasStrikeOrSpare(frameIndex);
+        return new DefaultFrame(bonusScores.findAddableBonusScores());
     }
 
-    public LastFrame lastFrame(int frameIndex) {
-        bonusScores.add(createBonusScore(frameIndex));
-        return new LastFrame(validateBonusScores());
+    public LastFrame createLastFrame(int frameIndex) {
+        addBounusScoresHasStrikeOrSpare(frameIndex);
+        return new LastFrame(bonusScores.findAddableBonusScores());
+    }
+
+    private void addBounusScoresHasStrikeOrSpare(int frameIndex) {
+        if (scores.hasStrikeOrSpare()) {
+            bonusScores.add(createBonusScore(frameIndex));
+        }
     }
 
     private BonusScore createBonusScore(int frameIndex) {
         if (scores.isStrike(FIRST_PLAY)) {
-            return new StrikeBonus(frameIndex);
+            return BonusScore.strikeBonus(frameIndex);
         }
-        if (scores.isSpare(SECOND_PLAY)) {
-            return new SpareBonus(frameIndex);
-        }
-        return new NoneBonus();
-    }
-
-    private List<BonusScore> validateBonusScores() {
-        return bonusScores.stream()
-                .filter(BonusScore::isAddable)
-                .collect(Collectors.toList());
+        return BonusScore.spareBonus(frameIndex);
     }
 
     @Override
@@ -64,14 +58,8 @@ public class DefaultFrame implements Frame {
         if (scores.currentPoint() + point > STRIKE_POINT) {
             throw new IllegalArgumentException("한 프레임의 포인트는 10점을 넘을수 없습니다.");
         }
-        this.scores.add(Score.defaultScore(scores, point));
-        addBonusScore(point);
-    }
-
-    private void addBonusScore(int score) {
-        bonusScores.stream()
-                .filter(BonusScore::isAddable)
-                .forEach(bonusScore -> bonusScore.add(score));
+        scores.add(Score.defaultFrameScore(scores, point));
+        bonusScores.addBonusPoint(point);
     }
 
     @Override
@@ -86,12 +74,32 @@ public class DefaultFrame implements Frame {
     }
 
     @Override
-    public String getScore(int scoreIndex) {
-        return scores.pointToScore(scoreIndex);
+    public List<Score> getScores() {
+        return new ArrayList<>(scores.getScores());
     }
 
     @Override
-    public int scoreSize() {
-        return scores.size();
+    public int getTotalPoint(int frameIndex) {
+        BonusScore bonusScore = bonusScores.findBonusScore(frameIndex);
+        int totalPoint = scores.currentPoint();
+        if (!Objects.isNull(bonusScore)) {
+            return bonusScore.getTotalBonusPoint() + totalPoint;
+        }
+
+        return totalPoint;
+    }
+
+    @Override
+    public boolean isCalculatableFrame(int frameIndex) {
+        if (isPlayable()) {
+            return false;
+        }
+        if (scores.hasStrikeOrSpare() && !bonusScores.isExistBonusScore(frameIndex)) {
+            return false;
+        }
+        if (bonusScores.findBonusScore(frameIndex).isAddable()) {
+            return false;
+        }
+        return true;
     }
 }
