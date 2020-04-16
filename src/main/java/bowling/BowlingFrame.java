@@ -8,5 +8,7 @@ public interface BowlingFrame {
 
     int sum();
 
+    SubTotal getSubTotal(final NextAddingUpScores nextAddingUpScores);
+
     FrameScore getFrameScore();
 }

@@ -33,6 +33,11 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     @Override
+    public SubTotal getSubTotal(final NextAddingUpScores nextAddingUpScores) {
+        return frameScore.getSubTotal(nextAddingUpScores);
+    }
+
+    @Override
     public FrameScore getFrameScore() {
         return frameScore;
     }

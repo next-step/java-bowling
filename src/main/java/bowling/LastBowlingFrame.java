@@ -57,6 +57,11 @@ public class LastBowlingFrame implements BowlingFrame {
     }
 
     @Override
+    public SubTotal getSubTotal(final NextAddingUpScores nextAddingUpScores) {
+        return frameScore.getSubTotal();
+    }
+
+    @Override
     public FrameScore getFrameScore() {
         return frameScore;
     }
