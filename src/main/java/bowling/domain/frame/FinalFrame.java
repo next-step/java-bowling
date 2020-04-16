@@ -1,8 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.state.FinalReady;
-import bowling.domain.frame.state.State;
-import bowling.domain.frame.state.States;
+import bowling.domain.frame.state.*;
 import bowling.domain.pin.Pins;
 
 import java.util.ArrayList;
@@ -12,23 +10,33 @@ import java.util.Optional;
 public class FinalFrame implements Frame {
     private final FrameNumber frameNumber;
     private States states;
-    private State state;
+    private Count count;
 
     public FinalFrame(final FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
-        this.state = new FinalReady();
         this.states = new States(new ArrayList<>());
+        this.count = Count.ofFirst();
     }
 
     @Override
     public Frame bowl(final Pins pins) {
-        state.roll(pins);
+        State state = getCurrentState();
+        states.add(state.roll(pins));
+        count = count.increaseFinalFrameCount();
         return this;
     }
 
     @Override
+    public State getCurrentState() {
+        if (states.isEmpty() || states.getLast().isTurnOver()) {
+            return new Ready();
+        }
+        return states.getLast();
+    }
+
+    @Override
     public boolean isEnd() {
-        return state.isTurnOver();
+        return count.isBonusCount() || isPossibleTurnOver();
     }
 
     @Override
@@ -42,13 +50,17 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String getState() {
-        return state.toResult();
-    }
-
-    @Override
     public States getStates() {
         return states;
+    }
+
+    private boolean isPossibleTurnOver() {
+        return count.isNotBonusCount() && !hasBonusState();
+    }
+
+    private boolean hasBonusState() {
+        return states.getList().stream().anyMatch(Strike.class::isInstance) ||
+                states.getList().stream().anyMatch(Spare.class::isInstance);
     }
 
     @Override

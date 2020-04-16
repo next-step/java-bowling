@@ -4,7 +4,6 @@ import bowling.domain.frame.state.State;
 import bowling.domain.frame.state.States;
 import bowling.domain.pin.Pins;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface Frame {
@@ -16,7 +15,7 @@ public interface Frame {
 
     FrameNumber getFrameNumber();
 
-    String getState();
-
     States getStates();
+
+    State getCurrentState();
 }

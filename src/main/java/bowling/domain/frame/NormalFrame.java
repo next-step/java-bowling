@@ -5,17 +5,17 @@ import bowling.domain.frame.state.State;
 import bowling.domain.frame.state.States;
 import bowling.domain.pin.Pins;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Optional;
 
 public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
     private final Frame nextFrame;
     private States states;
-    private State currentState;
 
     public NormalFrame(final FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
-        this.currentState = new Ready();
         this.states = new States(new ArrayList<>());
         this.nextFrame = next();
     }
@@ -30,8 +30,8 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame bowl(final Pins pins) {
-        currentState = currentState.roll(pins);
-        states.add(currentState);
+        State currentState = getCurrentState();
+        states.add(currentState.roll(pins));
         if (!isEnd()) {
             return this;
         }
@@ -39,8 +39,16 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public State getCurrentState() {
+        if (states.isEmpty() || states.getLast().isTurnOver()) {
+            return new Ready();
+        }
+        return states.getLast();
+    }
+
+    @Override
     public boolean isEnd() {
-        return currentState.isTurnOver();
+        return states.getLast().isTurnOver();
     }
 
     @Override
@@ -51,11 +59,6 @@ public class NormalFrame implements Frame {
     @Override
     public FrameNumber getFrameNumber() {
         return frameNumber;
-    }
-
-    @Override
-    public String getState() {
-        return currentState.toResult();
     }
 
     @Override

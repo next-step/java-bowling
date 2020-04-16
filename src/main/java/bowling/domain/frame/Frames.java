@@ -9,13 +9,14 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Frames {
-    private static final int NORMAL_FRAME_COUNT = 9;
+    public static final int NORMAL_FRAME_COUNT = 9;
 
     private final List<Frame> frames;
-    private int currentIndex = 0;
+    private Count count;
 
-    private Frames(final List<Frame> frames) {
+    private Frames(final List<Frame> frames, final Count count) {
         this.frames = Collections.unmodifiableList(frames);
+        this.count = count;
     }
 
     public static Frames create() {
@@ -24,25 +25,19 @@ public class Frames {
                                             .map(NormalFrame::new)
                                             .collect(Collectors.toList());
         frames.add(new FinalFrame(new FrameNumber(FrameNumber.MAX_NUMBER)));
-        return new Frames(frames);
+        return new Frames(frames, Count.ofFirst());
     }
 
     public void bowl(final Pins knockOver) {
         Frame current = getCurrent();
         current.bowl(knockOver);
         if (current.isEnd()) {
-            currentIndex++;
+            count = count.increaseNormalFrameCount();
         }
     }
 
     public List<Frame> getFrames() {
         return frames;
-    }
-
-    public List<String> getStateResult() {
-        return frames.stream()
-                     .map(Frame::getState)
-                     .collect(Collectors.toList());
     }
 
     public List<States> getStates() {
@@ -52,9 +47,6 @@ public class Frames {
     }
 
     public Frame getCurrent() {
-        if (currentIndex > NORMAL_FRAME_COUNT) {
-            currentIndex = NORMAL_FRAME_COUNT;
-        }
-        return frames.get(currentIndex);
+        return frames.get(count.getCount());
     }
 }

@@ -23,7 +23,6 @@ public class OutputView {
     public static void printOverHead(BowlingGame game) {
         printFramesHeader();
         printPlayerName(game.getCurrentPlayer());
-        //printFrameState(game.getCurrentPlayer(), game.getResult());
         printFrameState(game.getStates());
         System.out.println();
     }
@@ -36,31 +35,22 @@ public class OutputView {
         return DELIMITER + name + DELIMITER;
     }
 
-    private static void printFrameState(final Player currentPlayer, final List<String> states) {
-        String formatName = formatName(currentPlayer.name());
-        String formatStates = states.stream()
-                                    .map(StateFormatter::format)
-                                    .collect(Collectors.joining(DELIMITER, EMPTY_STRING, DELIMITER));
-        System.out.println(formatName + formatStates);
-    }
-
     private static void printFrameState(final List<States> states) {
-        StringBuilder stateExpressionBuilder = new StringBuilder();
-        for (States histories : states) {
-            System.out.print(printStateHistories(histories));
+        for (States history : states) {
+            System.out.print(printStates(history));
         }
         System.out.println();
     }
 
-    private static String printStateHistories(final States states) {
+    private static String printStates(final States states) {
         if (states.isEmpty()) {
             return formatState(EMPTY_STRING) + DELIMITER;
         }
 
-        String expression = EMPTY_STRING;
-        for (State state : states.getList()) {
-            expression += addJoiner(state, replaceNull(state));
-        }
+        String expression = states.getList()
+                                  .stream()
+                                  .map(OutputView::replaceNull)
+                                  .collect(Collectors.joining(DELIMITER));
         expression = formatState(expression);
         expression += DELIMITER;
         return expression;
@@ -71,13 +61,6 @@ public class OutputView {
             return EMPTY_STRING;
         }
         return state.toResult();
-    }
-
-    private static String addJoiner(final State state, final String expression) {
-        if (!state.isTurnOver()) {
-            return expression + DELIMITER;
-        }
-        return expression;
     }
 
     private static String formatState(final String expression) {

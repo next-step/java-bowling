@@ -33,10 +33,6 @@ public class BowlingGame {
                      .getFrameNumber();
     }
 
-    public List<String> getResult() {
-        return frames.getStateResult();
-    }
-
     public boolean isEnd() {
         Frame current = frames.getCurrent();
         return current.getFrameNumber().isFinal() && current.isEnd();
