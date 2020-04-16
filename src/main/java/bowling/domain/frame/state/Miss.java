@@ -1,8 +1,9 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
-public class Miss implements State {
+public class Miss implements State, Calculable {
     private final Pins second;
 
     Miss(final Pins second) {
@@ -25,5 +26,10 @@ public class Miss implements State {
             return StateSymbol.GUTTER.getSymbol();
         }
         return String.valueOf(second.count());
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(second.count());
     }
 }

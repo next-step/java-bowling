@@ -1,9 +1,9 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
-public class FirstBowl implements State {
-
+public class FirstBowl implements State, Calculable {
     private final Pins first;
 
     FirstBowl(Pins first) {
@@ -15,7 +15,7 @@ public class FirstBowl implements State {
         Pins knockOverPins = first.add(second);
 
         if (knockOverPins.isSpare()) {
-            return new Spare();
+            return new Spare(second);
         }
 
         if (second.isGutter()) {
@@ -33,5 +33,10 @@ public class FirstBowl implements State {
     @Override
     public String toResult() {
         return String.valueOf(first.count());
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(first.count());
     }
 }

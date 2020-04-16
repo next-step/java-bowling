@@ -18,7 +18,7 @@ public class FirstGutter implements State {
         }
 
         if (knockOverPins.isSpare()) {
-            return new Spare();
+            return new Spare(second);
         }
 
         return new Miss(second);
