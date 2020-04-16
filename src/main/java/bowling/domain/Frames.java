@@ -57,16 +57,16 @@ public class Frames {
     }
 
     private void calculateScore() {
-        for (int i = scoreCalculateIndex, end = frames.size() - ONE; i < end; i++) {
-            Frame frame = getFrame(i);
-            if (frame.endCalculate()) {
-                Frame nextFrame = getFrame(i + ONE);
-                nextFrame.addScore(frame.getTotalScore());
+        if (frames.size() - ONE <= scoreCalculateIndex) {
+            return;
+        }
 
-                scoreCalculateIndex++;
+        Frame frame = getFrame(scoreCalculateIndex);
+        if (frame.endCalculate()) {
+            Frame nextFrame = getFrame(scoreCalculateIndex + ONE);
+            nextFrame.addScore(frame.getTotalScore());
 
-                continue;
-            }
+            scoreCalculateIndex++;
         }
     }
 
