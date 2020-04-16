@@ -1,5 +1,7 @@
 package bowling.domain.bonusscore;
 
+import bowling.domain.Point;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +13,11 @@ public class BonusScore {
     private static final int SPARE_BONUS_COUNT = 1;
     private static final int ZERO_BONUS_COUNT = 0;
 
-    private final List<Integer> bonusScores;
+    private final List<Point> bonusPoints;
     private final BonusScoreInfo bonusScoreInfo;
 
-    private BonusScore(List<Integer> bonusScores, BonusScoreInfo bonusScoreInfo) {
-        this.bonusScores = bonusScores;
+    private BonusScore(List<Point> bonusPoints, BonusScoreInfo bonusScoreInfo) {
+        this.bonusPoints = bonusPoints;
         this.bonusScoreInfo = bonusScoreInfo;
     }
 
@@ -31,12 +33,12 @@ public class BonusScore {
         return new BonusScore(new ArrayList<>(), new BonusScoreInfo(frameIndex, SPARE_BONUS_COUNT));
     }
 
-    public void add(int score) {
-        bonusScores.add(score);
+    public void add(int point) {
+        bonusPoints.add(new Point(point));
     }
 
     public boolean isAddable() {
-        return bonusScores.size() < bonusScoreInfo.getBonusCount();
+        return bonusPoints.size() < bonusScoreInfo.getBonusCount();
     }
 
     public boolean isEqualFrameIndex(int frameIndex) {
@@ -44,8 +46,8 @@ public class BonusScore {
     }
 
     public int getTotalBonusPoint() {
-        return bonusScores.stream()
-                .mapToInt(Integer::intValue)
+        return bonusPoints.stream()
+                .mapToInt(Point::getPoint)
                 .sum();
     }
 }

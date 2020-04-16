@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import bowling.domain.Point;
+
 /**
  * 점수를 나타내는 객체 쓰러트린 볼링핀 개수와 점수 타입을 가진다.
  * 10점을 넘을 수 없다.
@@ -11,27 +13,15 @@ public class Score {
     private static final int SECOND_PLAY = 1;
 
     private final ScoreType scoreType;
-    private final int point;
+    private final Point point;
 
-    private Score(ScoreType scoreType, int point) {
-        validatePoint(point);
-
+    private Score(ScoreType scoreType, Point point) {
         this.scoreType = scoreType;
         this.point = point;
     }
 
-    private void validatePoint(int point) {
-        if (point > STRIKE_POINT) {
-            throw new IllegalArgumentException("점수는 10점을 넘을수 없습니다.");
-        }
-
-        if (point < ZERO_POINT) {
-            throw new IllegalArgumentException("점수는 0점이상이어야 합니다.");
-        }
-    }
-
     public static Score defaultFrameScore(Scores scores, int point) {
-        return new Score(generateDefaultScoreType(scores, point), point);
+        return new Score(generateDefaultScoreType(scores, point), new Point(point));
     }
 
     private static ScoreType generateDefaultScoreType(Scores scores, int point) {
@@ -42,7 +32,7 @@ public class Score {
     }
 
     public static Score lastFrameScore(Scores scores, int point) {
-        return new Score(generateLastScoreType(scores, point), point);
+        return new Score(generateLastScoreType(scores, point), new Point(point));
     }
 
     private static ScoreType generateLastScoreType(Scores scores, int point) {
@@ -63,7 +53,7 @@ public class Score {
     }
 
     public int getPoint() {
-        return point;
+        return point.getPoint();
     }
 
     public boolean isEqualScoreType(ScoreType scoreType) {
@@ -71,6 +61,6 @@ public class Score {
     }
 
     public String pointToScore() {
-        return scoreType.pointToScore(point);
+        return scoreType.pointToScore(point.getPoint());
     }
 }

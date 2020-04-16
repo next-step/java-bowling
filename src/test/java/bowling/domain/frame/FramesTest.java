@@ -23,13 +23,13 @@ class FramesTest {
 
     @BeforeEach
     void setUp() {
-        frames = frames.of(new Player("LDC"));
+        frames = frames.of();
     }
 
     @DisplayName("프레임 리스트 생성")
     @Test
     void create() {
-        assertThatCode(() -> Frames.of(new Player("LDC")));
+        assertThatCode(() -> Frames.of());
     }
 
     @DisplayName("프레임 추가")
