@@ -13,6 +13,7 @@ public class ResultView {
     private static final String VERTICAL = "|";
     private static final String NAME = "NAME";
     private static final String SCORE_BOARD_TOP;
+    private static final String EMPTY_FRAME = "|      ";
 
     static {
         String buffer = IntStream.range(1, 11)
@@ -48,6 +49,12 @@ public class ResultView {
                 frame.getState().getCurrentPinsState()));
     }
 
+    private static void printEmptyFrame(int count) {
+        for (int i = 0; i < count + 2; i++) {
+            System.out.print(EMPTY_FRAME);
+        }
+    }
+
 
     public static void printScoreBoardPlayer(BowlingGame bowlingGame) {
         printPlayerName(bowlingGame.getPlayerName());
@@ -57,6 +64,7 @@ public class ResultView {
 
         Frame finalFrame = bowlingGame.getFrame();
         printFinalFrame(finalFrame);
+        printEmptyFrame(Frame.MAX_FRAME_NUMBER - bowlingGame.getFrameSize());
         System.out.println();
     }
 }
