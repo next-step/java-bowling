@@ -40,7 +40,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame getNext() {
-        throw new BowlingException("마지막 프레임 입니다");
+        return this;
     }
 
 
@@ -50,6 +50,6 @@ public class FinalFrame implements Frame {
 
     @Override
     public State getState() {
-        throw new BowlingException(State.CANT_THROW_BALL);
+        return states;
     }
 }

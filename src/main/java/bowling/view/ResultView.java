@@ -1,7 +1,9 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -28,17 +30,33 @@ public class ResultView {
         System.out.print(String.format("%-3s%s   ", VERTICAL, name));
     }
 
-    public static void printScoreBoardPlayer(BowlingGame bowlingGame) {
-
-        Frame frame = bowlingGame.getFirstFrame();
-        printPlayerName(bowlingGame.getPlayerName());
-
-        while (!bowlingGame.isFinish() && frame != null) {
+    private static void printNormalFrame(Frame frame) {
+        while (frame != null && frame instanceof NormalFrame) {
             System.out.print(String.format("%s%s", VERTICAL,
                     frame.getState().getCurrentPinsState()));
 
             frame = frame.getNext();
         }
+    }
+
+    private static void printFinalFrame(Frame frame) {
+        if (frame == null || !(frame instanceof FinalFrame)) {
+            return;
+        }
+
+        System.out.print(String.format("%s%s", VERTICAL,
+                frame.getState().getCurrentPinsState()));
+    }
+
+
+    public static void printScoreBoardPlayer(BowlingGame bowlingGame) {
+        printPlayerName(bowlingGame.getPlayerName());
+
+        Frame frame = bowlingGame.getFirstFrame();
+        printNormalFrame(frame);
+
+        Frame finalFrame = bowlingGame.getFrame();
+        printFinalFrame(finalFrame);
         System.out.println();
     }
 }
