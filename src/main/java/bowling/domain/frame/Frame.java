@@ -15,7 +15,7 @@ public interface Frame {
 
     Frame createNext();
 
-    Frame getNext();
+    Frame createNext(Frame frame);
 
     boolean isLast();
 

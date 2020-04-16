@@ -109,17 +109,4 @@ public class NormalFrameTest {
         assertThat(score.isPresent()).isTrue();
         assertThat(score.get()).isEqualTo(18);
     }
-
-    @DisplayName("이전 프레임의 점수까지 합산하여야 한다.")
-    @Test
-    void accumulate() {
-        NormalFrame nextFrame = spareFrame.createNext();
-        assertThat(spareFrame.getScore().isPresent()).isFalse();
-        nextFrame.addPinCount(8);
-        nextFrame.addPinCount(1);
-
-        Optional<Integer> score = nextFrame.getScore();
-        assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(27);
-    }
 }

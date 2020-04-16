@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.dto.FrameStatus;
+import bowling.domain.dto.GameStatus;
 import bowling.domain.frame.PitchTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +19,7 @@ public class GameTest {
         game = new Game(name);
 
         finishedGame = (new Game(name));
-        for(int i = 0; i < Frames.DEFAULT_FRAME_SIZE; i++) {
+        for (int i = 0; i < Frames.DEFAULT_FRAME_SIZE; i++) {
             finishedGame.addPin(10);
         }
         finishedGame.addPin(2);
@@ -45,7 +47,8 @@ public class GameTest {
         game.addPin(first);
         game.addPin(second);
 
-        assertThat(game.getFramePinCounts(0))
+        GameStatus gameStatus = game.getGameStatus();
+        assertThat(gameStatus.getFrameStatus(0).getPitches())
                 .containsExactly(PitchTest.PIN_COUNT_1,
                         PitchTest.PIN_COUNT_2);
     }
@@ -63,5 +66,17 @@ public class GameTest {
     void nextFrame() {
         game.addPin(10);
         assertThat(game.getCurrentFrame()).isEqualTo(2);
+    }
+
+    @DisplayName("현재 게임의 상태를 가져온다")
+    @Test
+    void getGameStatus() {
+        game.addPin(8);
+        game.addPin(2);
+        game.addPin(1);
+        GameStatus gameStatus = game.getGameStatus();
+
+        assertThat(gameStatus.getFrameStatus(0).getScore().get()).isEqualTo(11);
+        assertThat(gameStatus.getFrameStatus(3)).isEqualTo(FrameStatus.EMPTY);
     }
 }

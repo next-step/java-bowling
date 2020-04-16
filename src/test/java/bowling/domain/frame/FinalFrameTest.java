@@ -90,21 +90,21 @@ public class FinalFrameTest {
     @DisplayName("스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. ")
     @Test
     void strike() {
-        FinalFrame finalFrame = normalFrame.createFinal();
+        Frame finalFrame = normalFrame.createNext(new FinalFrame());
 
         normalFrame.addPinCount(10);
         finalFrame.addPinCount(8);
         finalFrame.addPinCount(1);
 
-        Optional<Integer> score = finalFrame.getScore();
+        Optional<Integer> score = normalFrame.getScore();
         assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(28);
+        assertThat(score.get()).isEqualTo(19);
     }
 
     @DisplayName("스페어는 다음 1번의 투구까지 점수를 합산해야 한다. ")
     @Test
     void spare() {
-        FinalFrame finalFrame = normalFrame.createFinal();
+        Frame finalFrame = normalFrame.createNext(new FinalFrame());
 
         normalFrame.addPinCount(8);
         normalFrame.addPinCount(2);
@@ -112,9 +112,9 @@ public class FinalFrameTest {
         finalFrame.addPinCount(8);
         finalFrame.addPinCount(1);
 
-        Optional<Integer> score = finalFrame.getScore();
+        Optional<Integer> score = normalFrame.getScore();
         assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(27);
+        assertThat(score.get()).isEqualTo(18);
     }
 
     @DisplayName("투구를 세번 하면, 세번 모두의 점수가 합산된다.")

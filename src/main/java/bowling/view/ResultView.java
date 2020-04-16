@@ -1,9 +1,9 @@
 package bowling.view;
 
-import bowling.domain.Game;
+import bowling.domain.dto.FrameStatus;
+import bowling.domain.dto.GameStatus;
 import bowling.domain.frame.Pitch;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -13,6 +13,7 @@ public class ResultView {
     private static final String EMPTY = "|      | ";
     private static final String DELIMITER = " | ";
     private static final String FRAME_FORMAT = " %02d ";
+    private static final String SCORE_FORMAT = " %3d";
     private static final String PIN_COUNT_FORMAT = "%-4s";
     private static final String EMPTY_SCORE = "     | ";
     private static final String PIN_DELIMITER = "|";
@@ -20,10 +21,10 @@ public class ResultView {
     private static final String SPARE = "/";
     private static final String GUTTER = "-";
 
-    public static void displayGameBoard(Game game) {
-        displayHeader(game.getFrameTotal());
-        displayBody(game);
-        displayScores(game);
+    public static void displayGameBoard(GameStatus gameStatus) {
+        displayHeader(gameStatus.getFrameStatusesSize());
+        displayBody(gameStatus);
+        displayScores(gameStatus);
     }
 
     private static void displayHeader(int maxFrame) {
@@ -35,17 +36,22 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void displayBody(Game game) {
-        System.out.print(String.format(NAME_VALUE, game.getPlayerName()));
+    private static void displayBody(GameStatus gameStatus) {
+        System.out.print(String.format(NAME_VALUE, gameStatus.getPlayerName()));
 
-        for (int i = 0, maxFrame = game.getFrameTotal(); i < maxFrame; i++) {
-            displayPinCounts(game.getFramePinCounts(i));
+        for (int i = 0, size = gameStatus.getFrameStatusesSize(); i < size;
+             i++) {
+            displayPinCounts(gameStatus.getFrameStatus(i));
         }
         System.out.println();
     }
 
-    private static void displayPinCounts(List<Pitch> pitches) {
-        String stringPinCounts = pitches.stream()
+    private static void displayPinCounts(FrameStatus frameStatus) {
+        if (frameStatus.isEmpty()) {
+            System.out.print(EMPTY_SCORE);
+            return;
+        }
+        String stringPinCounts = frameStatus.getPitches().stream()
                 .map(ResultView::getSymbol)
                 .collect(Collectors.joining(PIN_DELIMITER));
 
@@ -64,18 +70,23 @@ public class ResultView {
         return Integer.toString(pitch.getCount());
     }
 
-    private static void displayScores(Game game) {
+    private static void displayScores(GameStatus gameStatus) {
         System.out.print(EMPTY);
-        for (int i = 0, maxFrame = game.getFrameTotal(); i < maxFrame; i++) {
-            Optional<Integer> score = game.getFrameScore(i);
-            displayScore(score);
+        for (int i = 0, size = gameStatus.getFrameStatusesSize(); i < size;
+             i++) {
+            displayScore(gameStatus.getFrameStatus(i));
         }
         System.out.println();
     }
 
-    private static void displayScore(Optional<Integer> score) {
+    private static void displayScore(FrameStatus frameStatus) {
+        if (frameStatus.isEmpty()) {
+            System.out.print(EMPTY_SCORE);
+            return;
+        }
+        Optional<Integer> score = frameStatus.getScore();
         if (score.isPresent()) {
-            System.out.print(String.format(FRAME_FORMAT, score.get()) +
+            System.out.print(String.format(SCORE_FORMAT, score.get()) +
                     DELIMITER);
             return;
         }

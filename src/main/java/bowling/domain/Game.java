@@ -1,13 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.frame.Pitch;
-
-import java.util.List;
-import java.util.Optional;
+import bowling.domain.dto.GameStatus;
 
 public class Game {
-
-
     private Player player;
     private Frames frames;
 
@@ -25,26 +20,13 @@ public class Game {
             return;
         }
         frames.addPinCount(count);
-        return;
-    }
-
-    public List<Pitch> getFramePinCounts(int frameIndex) {
-        return frames.getFramePinCounts(frameIndex);
     }
 
     public int getCurrentFrame() {
         return frames.size();
     }
 
-    public Optional<Integer> getFrameScore(int frameIndex) {
-        return frames.getFrameScore(frameIndex);
-    }
-
-    public int getFrameTotal() {
-        return frames.size();
-    }
-
-    public String getPlayerName() {
-        return player.getName();
+    public GameStatus getGameStatus() {
+        return new GameStatus(frames, player.getName());
     }
 }

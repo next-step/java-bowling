@@ -38,6 +38,10 @@ public class NormalFrame implements Frame {
         }
 
         int currentScore = pitches.getPinCountTotal();
+        return calculateScoreWithNextScore(currentScore);
+    }
+
+    private Optional<Integer> calculateScoreWithNextScore(int currentScore) {
         if (pitches.isLastPitchStrike()) {
             return next.getScoreForTwoPitches()
                     .map(nextScore -> nextScore + currentScore);
@@ -61,10 +65,6 @@ public class NormalFrame implements Frame {
         return pitches.getPitches();
     }
 
-    @Override public Frame getNext() {
-        return next;
-    }
-
     @Override public boolean isLast() {
         return false;
     }
@@ -75,10 +75,9 @@ public class NormalFrame implements Frame {
         return normalFrame;
     }
 
-    public FinalFrame createFinal() {
-        FinalFrame finalFrame = new FinalFrame();
-        next = finalFrame;
-        return finalFrame;
+    @Override public Frame createNext(Frame frame) {
+        next = frame;
+        return frame;
     }
 
     @Override public Optional<Integer> getScoreForTwoPitches() {

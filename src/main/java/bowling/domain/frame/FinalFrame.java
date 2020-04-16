@@ -71,7 +71,7 @@ public class FinalFrame implements Frame {
         return null;
     }
 
-    @Override public Frame getNext() {
+    @Override public Frame createNext(Frame frame) {
         return null;
     }
 

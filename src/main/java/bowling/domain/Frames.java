@@ -57,7 +57,7 @@ public class Frames {
         }
         Frame lastFrame = getLastFrame();
         if (isBeforeMax()) {
-            frames.add(new FinalFrame());
+            frames.add(lastFrame.createNext(new FinalFrame()));
             return;
         }
 
