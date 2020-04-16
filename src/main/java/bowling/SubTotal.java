@@ -33,4 +33,12 @@ public class SubTotal {
     public int hashCode() {
         return Objects.hash(subTotalScore, nextAddingUpScores);
     }
+
+    public int getSubTotalScore() {
+        return subTotalScore.getScore();
+    }
+
+    public NextAddingUpScores getNextAddingUpScores() {
+        return nextAddingUpScores;
+    }
 }

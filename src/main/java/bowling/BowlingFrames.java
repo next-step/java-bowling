@@ -53,6 +53,10 @@ public class BowlingFrames {
         return frames.size();
     }
 
+    public BowlingFrame getFrame(final int index) {
+        return frames.get(index);
+    }
+
     public List<BowlingFrame> getFrames() {
         return frames;
     }

@@ -1,9 +1,8 @@
 package bowling.dto;
 
-import bowling.FrameScore;
-import bowling.FrameScoreResult;
-import bowling.Score;
+import bowling.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +11,15 @@ public class FrameScoreConsoleResult {
     private static final String SCORE_DELIMITER = "|";
 
     private final String scoreResult;
+    private final int subTotal;
 
-    private FrameScoreConsoleResult(final String scoreResult) {
+    private FrameScoreConsoleResult(final String scoreResult, final int subTotal) {
         this.scoreResult = scoreResult;
+        this.subTotal = subTotal;
     }
 
-    public static FrameScoreConsoleResult newInstance(final FrameScore frameScore) {
-        return new FrameScoreConsoleResult(joinFrameScoreString(frameScore));
+    public static FrameScoreConsoleResult newInstance(final FrameScore frameScore, final SubTotal subTotal) {
+        return new FrameScoreConsoleResult(joinFrameScoreString(frameScore), subTotal.getSubTotalScore());
     }
 
     public static String joinFrameScoreString(final FrameScore frameScore) {

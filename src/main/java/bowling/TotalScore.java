@@ -72,4 +72,8 @@ public class TotalScore {
     public int hashCode() {
         return Objects.hash(score);
     }
+
+    public int getScore() {
+        return score;
+    }
 }
