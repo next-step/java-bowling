@@ -1,9 +1,12 @@
 package bowling.view;
 
 import bowling.dto.BowlingGameResult;
+import bowling.dto.FrameScoreConsoleResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -13,6 +16,7 @@ public class OutputView {
     private static final String GAME_ROW_PREFIX = "| ";
     private static final String GAME_ROW_SUFFIX = " |";
     private static final String GAME_ROW_BLANK = " ";
+    private static final String GAME_ROW_SCORE_HEAD = "    ";
     private static final String GAME_FIRST_ROW_FRAME_NUMBER_FORMAT = " %02d ";
     private static final String GAME_FIRST_ROW_NAME_FORMAT = "NAME";
     private static final String GAME_FRAME_SCORE_FORMAT = "%-4s";
@@ -39,18 +43,24 @@ public class OutputView {
     public static void printBowlingGame(final BowlingGameResult bowlingGameResult) {
         System.out.println(GAME_FIRST_ROW);
 
-        List<String> scores = bowlingGameResult.getFrameScores()
-                .stream()
-                .map(frameScoreResult -> String.format(GAME_FRAME_SCORE_FORMAT, frameScoreResult.getScoreResult()))
-                .collect(Collectors.toList());
+        List<String> scores = getCollect(bowlingGameResult, FrameScoreConsoleResult::getScoreResult);
+        List<String> subTotals = getCollect(bowlingGameResult, FrameScoreConsoleResult::getSubTotal);
 
-        System.out.println(makeGameRow(GAME_ROW_BLANK + bowlingGameResult.getName(), makeScoreWithBlank(scores)));
+        System.out.println(makeGameRow(GAME_ROW_BLANK + bowlingGameResult.getName(), makeFrameWordsWithBlank(scores)));
+        System.out.println(makeGameRow(GAME_ROW_BLANK + GAME_ROW_SCORE_HEAD, makeFrameWordsWithBlank(subTotals)));
         System.out.println();
     }
 
-    private static List<String> makeScoreWithBlank(final List<String> scores) {
-        List<String> scoresWithBlank = new ArrayList<>(scores);
-        IntStream.range(0, MAX_BOWLING_FRAME_SIZE - scores.size())
+    private static List<String> getCollect(final BowlingGameResult bowlingGameResult, Function<FrameScoreConsoleResult, String> frameScoreFunction) {
+        return bowlingGameResult.getFrameScores()
+                .stream()
+                .map(frameScoreResult -> String.format(GAME_FRAME_SCORE_FORMAT, frameScoreFunction.apply(frameScoreResult)))
+                .collect(Collectors.toList());
+    }
+
+    private static List<String> makeFrameWordsWithBlank(final List<String> frameWords) {
+        List<String> scoresWithBlank = new ArrayList<>(frameWords);
+        IntStream.range(0, MAX_BOWLING_FRAME_SIZE - frameWords.size())
                 .forEach(i -> scoresWithBlank.add(GAME_FRAME_SCORE_EMPTY_FORMAT));
 
         return scoresWithBlank;
