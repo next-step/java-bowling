@@ -1,5 +1,8 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.state.Miss;
+import bowling.domain.frame.state.Spare;
+import bowling.domain.frame.state.Strike;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +35,7 @@ class NormalFrameTest {
 
     @DisplayName("10번째 생성된 프레임은 FinalFrame 이어야 한다")
     @Test
-    public void createNext_success() throws Exception {
+    public void createNext_success_finalFrame() throws Exception {
         //given
         Frame frame = new NormalFrame();
 
@@ -43,6 +46,60 @@ class NormalFrameTest {
 
         //then
         assertTrue(frame instanceof FinalFrame);
+    }
+
+    @DisplayName("다음 프레임을 생성하면 현재 프래임의 멤버에 등록 한다")
+    @Test
+    public void createNext_success() throws Exception {
+        //given
+        Frame frame = new NormalFrame();
+
+        //when
+        Frame next = frame.createNext();
+
+        //then
+        assertTrue(frame.getNext().equals(next));
+    }
+
+    @DisplayName("ready 상태에서 10개를 치면 strike 상태를 반환")
+    @Test
+    public void bowl_success_strike() throws Exception {
+        //given
+        Frame frame = new NormalFrame();
+
+        //when
+        frame.bowl(10);
+
+        //then
+        assertTrue(frame.getState() instanceof Strike);
+    }
+
+    @DisplayName("ready 상태에서 5개 연속으로 치면 spare 상태를 반환")
+    @Test
+    public void bowl_success_spare() throws Exception {
+        //given
+        Frame frame = new NormalFrame();
+
+        //when
+        frame.bowl(5);
+        frame.bowl(5);
+
+        //then
+        assertTrue(frame.getState() instanceof Spare);
+    }
+
+    @DisplayName("ready 상태에서 2회 투구 하여 10개 처리 못하면 miss 상태를 반환")
+    @Test
+    public void bowl_success_miss() throws Exception {
+        //given
+        Frame frame = new NormalFrame();
+
+        //when
+        frame.bowl(1);
+        frame.bowl(1);
+
+        //then
+        assertTrue(frame.getState() instanceof Miss);
     }
 
     @DisplayName("남은 핀이 없으면 해당 프레임은 완료 상태 이다")
