@@ -1,10 +1,13 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.state.*;
 import bowling.domain.pin.BowlCount;
 import bowling.domain.pin.Pins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -65,7 +68,9 @@ class NormalFrameTest {
         Pins pins = Pins.of().knockOver(new BowlCount(10));
 
         frame.bowl(pins);
+        final List<State> states = frame.getStates().getList();
 
+        assertThat(states.get(0)).isInstanceOf(Strike.class);
         assertThat(frame.isEnd()).isTrue();
     }
 
@@ -78,6 +83,10 @@ class NormalFrameTest {
         frame.bowl(first);
         frame.bowl(second);
 
+        final List<State> states = frame.getStates().getList();
+
+        assertThat(states.get(0)).isInstanceOf(FirstBowl.class);
+        assertThat(states.get(1)).isInstanceOf(Spare.class);
         assertThat(frame.isEnd()).isTrue();
     }
 
@@ -89,7 +98,10 @@ class NormalFrameTest {
 
         frame.bowl(first);
         frame.bowl(second);
+        final List<State> states = frame.getStates().getList();
 
+        assertThat(states.get(0)).isInstanceOf(FirstBowl.class);
+        assertThat(states.get(1)).isInstanceOf(Miss.class);
         assertThat(frame.isEnd()).isTrue();
     }
 
@@ -103,6 +115,10 @@ class NormalFrameTest {
         frame.bowl(first);
         frame.bowl(second);
 
+        final List<State> states = frame.getStates().getList();
+
+        assertThat(states.get(0)).isInstanceOf(FirstGutter.class);
+        assertThat(states.get(1)).isInstanceOf(SecondGutter.class);
         assertThat(frame.isEnd()).isTrue();
     }
 }
