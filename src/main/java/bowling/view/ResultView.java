@@ -1,5 +1,9 @@
 package bowling.view;
 
+import bowling.domain.BowlingGame;
+import bowling.domain.Player;
+import bowling.domain.frame.Frame;
+
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -19,5 +23,20 @@ public class ResultView {
 
     public static void printScoreBoardTop() {
         System.out.println(SCORE_BOARD_TOP);
+    }
+
+    public static void printScoreBoardPlayer(BowlingGame bowlingGame, Player player) {
+//        StringBuffer buffer = new StringBuffer();
+
+        for (Frame frame : bowlingGame.getFrames()) {
+            if (frame.isFinish()) {
+                System.out.print(frame.getState().getCurrentPinsState());
+            }
+        }
+//        buffer.append(String.format("%-3s%s  ", VERTICAL, NAME));
+
+
+//        System.out.println(buffer.toString());
+
     }
 }
