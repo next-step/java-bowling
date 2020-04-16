@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.score.Score;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +21,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public void throwBall(int fallenCount) throws IllegalArgumentException {
+    public Frame throwBall(int fallenCount) throws IllegalArgumentException {
         Point point = new Point(fallenCount);
         if (point.isScoreable(getLeftPin())) {
             this.points.add(point);
-            return;
+            return this;
         }
         throw new IllegalArgumentException("다시 입력해주세요(남은 핀: " + getLeftPin() + ")");
     }
@@ -51,8 +53,12 @@ public class FinalFrame implements Frame {
         return this.points;
     }
 
+    @Override
+    public String getScoreMark() {
+        return Score.getScoreMark(this);
+    }
 
-    private int getSumPoints() {
+    public int getSumPoints() {
         return this.points.stream()
                 .mapToInt(Point::getPoint)
                 .sum();

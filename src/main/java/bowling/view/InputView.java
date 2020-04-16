@@ -20,6 +20,4 @@ public class InputView {
         System.out.println(sb);
         return scanner.nextInt();
     }
-
-
 }

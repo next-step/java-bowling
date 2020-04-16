@@ -2,7 +2,6 @@ package bowling.controller;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.Frame;
-import bowling.domain.Frames;
 import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -19,14 +18,13 @@ public class BowlingGameRun {
             ResultView.viewResult(bowlingGame.getFrames());
             frame = bowlingGame.next();
         }
-        System.out.println("끝");
     }
 
     private static void throwBallResult(Frame frame) {
-        try{
+        try {
             int throwCount = InputView.inputThrowCount(frame);
             frame.throwBall(throwCount);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             ResultView.viewRetry(e);
         }
     }

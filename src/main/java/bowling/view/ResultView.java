@@ -2,11 +2,12 @@ package bowling.view;
 
 import bowling.domain.Frame;
 import bowling.domain.Frames;
+import bowling.domain.NomalFrame;
 
 import java.util.stream.Collectors;
 
 public class ResultView {
-    private static final String FRAME_HEAD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    private static final String FRAME_HEAD = "|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |";
 
     public static void viewRetry(Exception e) {
         System.out.println(e.getMessage());
@@ -21,20 +22,19 @@ public class ResultView {
         viewPlayerName(frames.getPlayerName());
         String frameViews = frames.getFrames().stream()
                 .map(frame -> viewFrame(frame))
-                .collect(Collectors.joining(" | "));
-        System.out.println(frameViews);
+                .collect(Collectors.joining("|"));
+        System.out.println(frameViews + "|");
     }
 
     private static String viewFrame(Frame frame) {
-        String framePoints = frame.getPoints().stream()
-                .map(point -> String.valueOf(point.getPoint()))
-                .collect(Collectors.joining(" "));
-        return String.format("%5s", framePoints);
-//        System.out.print(String.format("%5s", framePoints));
+        if (frame instanceof NomalFrame) {
+            return String.format("%5s   ", frame.getScoreMark());
+        }
+        return String.format(" %5s  ", frame.getScoreMark());
     }
 
     private static void viewPlayerName(String name) {
-        System.out.print(String.format("|  %s |", name));
+        System.out.print(String.format("|%6s  |", name));
     }
 
     private static void viewFrameHead() {
