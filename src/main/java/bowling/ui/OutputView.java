@@ -6,6 +6,7 @@ import bowling.dto.FramesDto;
 import bowling.dto.PlayerDto;
 import bowling.dto.ShotScoreDto;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,6 +14,8 @@ public class OutputView {
     private static final String FRAME_HEADER_STRING = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String PLAYER_FORMAT = "|  %3s |";
     private static final String FRAME_BODY_FORMAT = " %-5s|";
+    private static final String FRAME_SCORE_FORMAT = "  %-3s |";
+    private static final String FRAME_SCORE_FIRST = "|      |";
     private static final String SHOT_DELIMITER = "|";
     private static final String STRIKE = "X";
     private static final String SPARE = "/";
@@ -27,6 +30,14 @@ public class OutputView {
         FramesDto frames = playerDto.getFrames();
         getParsedFrameStringStream(frames)
                 .map(frameString -> String.format(FRAME_BODY_FORMAT, frameString))
+                .forEach(System.out::print);
+        System.out.println();
+        System.out.print(FRAME_SCORE_FIRST);
+        getParsedFrameScoreStream(frames)
+                .map(score -> score
+                        .map(Object::toString)
+                        .orElse(""))
+                .map(scoreString -> String.format(FRAME_SCORE_FORMAT, scoreString))
                 .forEach(System.out::print);
         System.out.println();
         System.out.println();
@@ -67,5 +78,21 @@ public class OutputView {
         }
 
         return Integer.toString(v.getScore());
+    }
+
+    private Stream<Optional<Integer>> getParsedFrameScoreStream(FramesDto frames) {
+        return Stream.concat(getFrameScoreStream(frames),
+                getEmptyScoreStream(frames));
+    }
+
+    private Stream<Optional<Integer>> getFrameScoreStream(FramesDto frames) {
+        return frames.getFrames()
+                .stream()
+                .map(FrameDto::getScore);
+    }
+
+    private Stream<Optional<Integer>> getEmptyScoreStream(FramesDto frames) {
+        return Stream.generate(Optional::<Integer>empty)
+                .limit(MAX - frames.size());
     }
 }

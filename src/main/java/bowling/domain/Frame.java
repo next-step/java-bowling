@@ -4,6 +4,7 @@ import bowling.dto.FrameDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 class Frame {
     private static final int SHOT_LIMIT = 2;
@@ -53,7 +54,7 @@ class Frame {
     }
 
     FrameDto getDto() {
-        return new FrameDto(shotScores.getDtoList());
+        return new FrameDto(shotScores.getDtoList(), Optional.empty());
     }
 
     private int getShotLimit() {
