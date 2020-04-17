@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.FinalFrame;
+import bowling.domain.point.PointOutOfRangeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ public class FinalFrameTest {
     void FailFirstIsThrowBallTest(int fallenPin) {
         assertThatThrownBy(
                 () -> finalFrame.throwBall(fallenPin)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(PointOutOfRangeException.class);
     }
 
     @ParameterizedTest
@@ -71,7 +71,7 @@ public class FinalFrameTest {
 
         assertThatThrownBy(
                 () -> finalFrame.throwBall(6)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(OverThrowBallException.class);
     }
 
     @ParameterizedTest

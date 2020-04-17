@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -74,6 +73,6 @@ public class NormalFrameTest {
         normalFrame.throwBall(5);
         assertThatThrownBy(
                 () -> normalFrame.throwBall(fallenPin)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(OverThrowBallException.class);
     }
 }

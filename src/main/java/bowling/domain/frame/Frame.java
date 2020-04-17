@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.point.Point;
+import bowling.domain.point.PointOutOfRangeException;
 import bowling.domain.point.Points;
 import bowling.score.Score;
 
@@ -17,13 +18,13 @@ public abstract class Frame {
 
     abstract boolean isThrowable();
 
-    public Frame throwBall(int fallenCount) throws IllegalArgumentException {
+    public Frame throwBall(int fallenCount) throws PointOutOfRangeException {
         Point point = new Point(fallenCount);
         if (point.isScoreable(getLeftPin())) {
             this.points.addPoint(point);
             return this;
         }
-        throw new IllegalArgumentException("다시 입력해주세요(남은 핀: " + getLeftPin() + ")");
+        throw new OverThrowBallException("다시 입력해주세요(남은 핀: " + getLeftPin() + ")");
     }
 
     public int getFrameNo() {

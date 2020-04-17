@@ -3,6 +3,8 @@ package bowling.controller;
 import bowling.domain.BowlingGame;
 import bowling.domain.frame.Frame;
 import bowling.domain.Player;
+import bowling.domain.frame.OverThrowBallException;
+import bowling.domain.point.PointOutOfRangeException;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -24,7 +26,7 @@ public class BowlingGameRun {
         try {
             int throwCount = InputView.inputThrowCount(frame);
             frame.throwBall(throwCount);
-        } catch (IllegalArgumentException e) {
+        } catch (OverThrowBallException | PointOutOfRangeException e) {
             ResultView.viewRetry(e);
         }
     }

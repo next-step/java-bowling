@@ -20,6 +20,6 @@ public class PointTest {
     void failCreatePointTest() {
         assertThatCode(
                 () -> new Point(11)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(PointOutOfRangeException.class);
     }
 }
