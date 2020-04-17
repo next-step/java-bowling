@@ -22,7 +22,7 @@ public class Frames {
 
     public Frame getNextFrame() {
         return this.frames.stream()
-                .filter(frame -> frame.isThrowable() == true)
+                .filter(frame -> frame.isThrowable())
                 .findFirst()
                 .orElseGet(() -> null);
     }
