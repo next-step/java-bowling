@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 public interface Frame {
     Frame throwBall(int fallenCount) throws IllegalArgumentException;
 
@@ -9,7 +7,7 @@ public interface Frame {
 
     int getFrameNo();
 
-    List<Point> getPoints();
+    Points getPoints();
 
     String getScoreMark();
 }

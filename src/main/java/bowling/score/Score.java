@@ -2,43 +2,42 @@ package bowling.score;
 
 import bowling.domain.Frame;
 import bowling.domain.Point;
-
-import java.util.List;
+import bowling.domain.Points;
 
 public enum Score {
     STRIKE(points -> "X"),
-    NORMAL(points -> String.valueOf(points.get(0).getPoint())),
+    NORMAL(points -> String.valueOf(points.getPoint(0))),
     MISS(points -> "-"),
 
     STRIKE_STRIKE(points -> "X|X"),
-    STRIKE_NORMAL(points -> "X|" + points.get(1).getPoint()),
+    STRIKE_NORMAL(points -> "X|" + points.getPoint(1)),
     STRIKE_MISS(points -> "X|-"),
     MISS_SPARE(points -> "-|/"),
     MISS_MISS(points -> "-|-"),
-    MISS_NORMAL(points -> "-|" + points.get(1).getPoint()),
-    NORMAL_MISS(points -> points.get(0).getPoint() + "|-"),
-    NORMAL_SPARE(points -> points.get(0).getPoint() + "|/"),
-    NORMAL_NORMAL(points -> points.get(0).getPoint() + "|" + points.get(1).getPoint()),
+    MISS_NORMAL(points -> "-|" + points.getPoint(1)),
+    NORMAL_MISS(points -> points.getPoint(0) + "|-"),
+    NORMAL_SPARE(points -> points.getPoint(0) + "|/"),
+    NORMAL_NORMAL(points -> points.getPoint(0) + "|" + points.getPoint(1)),
 
     STRIKE_STRIKE_STRIKE(points -> "X|X|X"),
     STRIKE_STRIKE_MISS(points -> "X|X|-"),
-    STRIKE_STRIKE_NORMAL(points -> "X|X|" + points.get(2).getPoint()),
+    STRIKE_STRIKE_NORMAL(points -> "X|X|" + points.getPoint(2)),
 
     STRIKE_MISS_SPARE(points -> "X|-|/"),
     STRIKE_MISS_MISS(points -> "X|-|-"),
-    STRIKE_MISS_NORMAL(points -> "X|-|" + points.get(2).getPoint()),
+    STRIKE_MISS_NORMAL(points -> "X|-|" + points.getPoint(2)),
 
-    STRIKE_NORMAL_SPARE(points -> "X|" + points.get(1).getPoint() + "|/"),
-    STRIKE_NORMAL_MISS(points -> "X|" + points.get(1).getPoint() + "|-"),
-    STRIKE_NORMAL_NORMAL(points -> "X|" + points.get(1).getPoint() + "|" + points.get(2).getPoint()),
+    STRIKE_NORMAL_SPARE(points -> "X|" + points.getPoint(1) + "|/"),
+    STRIKE_NORMAL_MISS(points -> "X|" + points.getPoint(1) + "|-"),
+    STRIKE_NORMAL_NORMAL(points -> "X|" + points.getPoint(1) + "|" + points.getPoint(2)),
 
     MISS_SPARE_STRIKE(points -> "-|/|X"),
     MISS_SPARE_MISS(points -> "-|/|-"),
-    MISS_SPARE_NORMAL(points -> "-|/|" + points.get(2).getPoint()),
+    MISS_SPARE_NORMAL(points -> "-|/|" + points.getPoint(2)),
 
-    NORMAL_SPARE_STRIKE(points -> points.get(0).getPoint() + "|/|X"),
-    NORMAL_SPARE_MISS(points -> points.get(0).getPoint() + "|/|-"),
-    NORMAL_SPARE_NORMAL(points -> points.get(0).getPoint() + "|/|" + points.get(2).getPoint());
+    NORMAL_SPARE_STRIKE(points -> points.getPoint(0) + "|/|X"),
+    NORMAL_SPARE_MISS(points -> points.getPoint(0) + "|/|-"),
+    NORMAL_SPARE_NORMAL(points -> points.getPoint(0) + "|/|" + points.getPoint(2));
 
     Markable markable;
 
@@ -47,7 +46,7 @@ public enum Score {
     }
 
     public static String getScoreMark(Frame frame) {
-        List<Point> points = frame.getPoints();
+        Points points = frame.getPoints();
         int tryCount = points.size();
         if (tryCount == 1) {
             return whenFirstTry(points.get(0)).getMark(points);
@@ -210,7 +209,7 @@ public enum Score {
         return false;
     }
 
-    private String getMark(List<Point> points) {
+    private String getMark(Points points) {
         return this.markable.getMark(points);
     }
 }

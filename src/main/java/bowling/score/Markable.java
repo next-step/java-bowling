@@ -1,11 +1,9 @@
 package bowling.score;
 
-import bowling.domain.Point;
-
-import java.util.List;
+import bowling.domain.Points;
 
 @FunctionalInterface
 public interface Markable {
 
-    String getMark(List<Point> points);
+    String getMark(Points points);
 }

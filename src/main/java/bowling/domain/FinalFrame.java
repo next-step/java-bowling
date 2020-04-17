@@ -2,29 +2,23 @@ package bowling.domain;
 
 import bowling.score.Score;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class FinalFrame implements Frame {
-    private static final int DOUBLE_STRIKE_POINT = 20;
-    private static final int STRIKE_POINT = 10;
-    private static final int SPARE_POINT = 10;
     private static final int MAX_POINT_COUNT = 10;
 
     // 볼링 칠때마다 쌓인다
-    private List<Point> points;
+    private Points points;
     private final int frameNo;
 
     public FinalFrame(int frameNo) {
         this.frameNo = frameNo;
-        points = new ArrayList<>();
+        points = new Points();
     }
 
     @Override
     public Frame throwBall(int fallenCount) throws IllegalArgumentException {
         Point point = new Point(fallenCount);
         if (point.isScoreable(getLeftPin())) {
-            this.points.add(point);
+            this.points.addPoint(point);
             return this;
         }
         throw new IllegalArgumentException("다시 입력해주세요(남은 핀: " + getLeftPin() + ")");
@@ -37,7 +31,7 @@ public class FinalFrame implements Frame {
             return true;
         }
         // 스트라이크 또는 스페어 처리됬을때
-        if (isSpare() || isDoubleStrike()) {
+        if (points.isSpare() || points.isDoubleStrike()) {
             return true;
         }
         return false;
@@ -49,7 +43,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<Point> getPoints() {
+    public Points getPoints() {
         return this.points;
     }
 
@@ -58,41 +52,14 @@ public class FinalFrame implements Frame {
         return Score.getScoreMark(this);
     }
 
-    public int getSumPoints() {
-        return this.points.stream()
-                .mapToInt(Point::getPoint)
-                .sum();
-    }
-
     // 남은 핀
     private int getLeftPin() {
-        if (isStrike()) {
+        if (points.isStrike()) {
             return MAX_POINT_COUNT;
         }
         if (points.size() == 1) {
-            return MAX_POINT_COUNT - getSumPoints();
+            return MAX_POINT_COUNT - this.points.getSum();
         }
         return MAX_POINT_COUNT;
-    }
-
-    private boolean isStrike() {
-        if (points.size() == 1 && getSumPoints() == STRIKE_POINT) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isDoubleStrike() {
-        if (points.size() == 2 && getSumPoints() == DOUBLE_STRIKE_POINT) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isSpare() {
-        if (points.size() == 2 && getSumPoints() == SPARE_POINT) {
-            return true;
-        }
-        return false;
     }
 }
