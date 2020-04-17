@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.bowlinggame.BowlingGame;
-import bowling.bowlinggame.BowlingGames;
+import bowling.domain.bowlinggame.BowlingGame;
+import bowling.domain.bowlinggame.BowlingGames;
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;

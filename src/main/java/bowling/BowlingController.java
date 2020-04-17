@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.bowlinggame.BowlingGames;
+import bowling.domain.bowlinggame.BowlingGames;
 import bowling.domain.Player;
 
 import java.util.List;
