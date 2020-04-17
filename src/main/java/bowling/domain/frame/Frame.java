@@ -6,6 +6,7 @@ import bowling.domain.point.Points;
 import bowling.score.Score;
 
 public abstract class Frame {
+    private static final int LAST_FRAME_NO = 10;
     protected Points points;
     protected int frameNo;
 
@@ -14,7 +15,7 @@ public abstract class Frame {
         points = new Points();
     }
 
-    abstract boolean isThrowable();
+    abstract public boolean isThrowable();
 
     public Frame throwBall(int fallenCount) throws PointOutOfRangeException {
         int leftPoint = points.getLeftPoint();
@@ -36,5 +37,12 @@ public abstract class Frame {
 
     public String getScoreMark() {
         return Score.getScoreMark(this);
+    }
+
+    public boolean isLast() {
+        if (frameNo == LAST_FRAME_NO && !isThrowable()) {
+            return true;
+        }
+        return false;
     }
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
+    private static final int LAST_FRAME_INDEX = 9;
     private static final int TOTAL_NORMAL_FRAME = 9;
 
     private final Player player;
@@ -24,7 +25,7 @@ public class Frames {
         return this.frames.stream()
                 .filter(frame -> frame.isThrowable())
                 .findFirst()
-                .orElseGet(() -> null);
+                .orElseGet(() -> frames.get(LAST_FRAME_INDEX));
     }
 
     public String getPlayerName() {

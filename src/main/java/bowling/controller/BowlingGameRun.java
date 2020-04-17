@@ -15,7 +15,7 @@ public class BowlingGameRun {
         BowlingGame bowlingGame = new BowlingGame(player);
 
         Frame frame = bowlingGame.next();
-        while (frame != null) {
+        while (!frame.isLast()) {
             throwBallResult(frame);
             ResultView.viewResult(bowlingGame.getFrames());
             frame = bowlingGame.next();
