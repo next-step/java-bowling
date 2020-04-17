@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
-    private static final int TOTAL_NOMAL_FRAME = 9;
+    private static final int TOTAL_NORMAL_FRAME = 9;
 
     private final Player player;
     private final List<Frame> frames;
@@ -31,10 +31,10 @@ public class Frames {
 
     private List<Frame> initFrames() {
         List<Frame> frames = new ArrayList<>();
-        for (int i = 1; i <= TOTAL_NOMAL_FRAME; i++) {
-            frames.add(new NomalFrame(i));
+        for (int i = 1; i <= TOTAL_NORMAL_FRAME; i++) {
+            frames.add(new NormalFrame(i));
         }
-        frames.add(new FinalFrame(TOTAL_NOMAL_FRAME + 1));
+        frames.add(new FinalFrame(TOTAL_NORMAL_FRAME + 1));
 
         return frames;
     }

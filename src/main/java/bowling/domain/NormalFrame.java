@@ -5,7 +5,7 @@ import bowling.score.Score;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NomalFrame implements Frame {
+public class NormalFrame implements Frame {
     private static final int TRYABLE_COUNT = 2;
     private static final int MAX_POINT_COUNT = 10;
     private static final int STRIKE_POINT = 10;
@@ -14,7 +14,7 @@ public class NomalFrame implements Frame {
     private List<Point> points;
     private final int no;
 
-    public NomalFrame(int no) {
+    public NormalFrame(int no) {
         this.no = no;
         points = new ArrayList<>();
     }

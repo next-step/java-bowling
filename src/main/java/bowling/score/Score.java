@@ -7,38 +7,38 @@ import java.util.List;
 
 public enum Score {
     STRIKE(points -> "X"),
-    NOMAL(points -> String.valueOf(points.get(0).getPoint())),
+    NORMAL(points -> String.valueOf(points.get(0).getPoint())),
     MISS(points -> "-"),
 
     STRIKE_STRIKE(points -> "X|X"),
-    STRIKE_NOMAL(points -> "X|" + points.get(1).getPoint()),
+    STRIKE_NORMAL(points -> "X|" + points.get(1).getPoint()),
     STRIKE_MISS(points -> "X|-"),
     MISS_SPARE(points -> "-|/"),
     MISS_MISS(points -> "-|-"),
-    MISS_NOMAL(points -> "-|" + points.get(1).getPoint()),
-    NOMAL_MISS(points -> points.get(0).getPoint() + "|-"),
-    NOMAL_SPARE(points -> points.get(0).getPoint() + "|/"),
-    NOMAL_NOMAL(points -> points.get(0).getPoint() + "|" + points.get(1).getPoint()),
+    MISS_NORMAL(points -> "-|" + points.get(1).getPoint()),
+    NORMAL_MISS(points -> points.get(0).getPoint() + "|-"),
+    NORMAL_SPARE(points -> points.get(0).getPoint() + "|/"),
+    NORMAL_NORMAL(points -> points.get(0).getPoint() + "|" + points.get(1).getPoint()),
 
     STRIKE_STRIKE_STRIKE(points -> "X|X|X"),
     STRIKE_STRIKE_MISS(points -> "X|X|-"),
-    STRIKE_STRIKE_NOMAL(points -> "X|X|" + points.get(2).getPoint()),
+    STRIKE_STRIKE_NORMAL(points -> "X|X|" + points.get(2).getPoint()),
 
     STRIKE_MISS_SPARE(points -> "X|-|/"),
     STRIKE_MISS_MISS(points -> "X|-|-"),
-    STRIKE_MISS_NOMAL(points -> "X|-|" + points.get(2).getPoint()),
+    STRIKE_MISS_NORMAL(points -> "X|-|" + points.get(2).getPoint()),
 
-    STRIKE_NOMAL_SPARE(points -> "X|" + points.get(1).getPoint() + "|/"),
-    STRIKE_NOMAL_MISS(points -> "X|" + points.get(1).getPoint() + "|-"),
-    STRIKE_NOMAL_NOMAL(points -> "X|" + points.get(1).getPoint() + "|" + points.get(2).getPoint()),
+    STRIKE_NORMAL_SPARE(points -> "X|" + points.get(1).getPoint() + "|/"),
+    STRIKE_NORMAL_MISS(points -> "X|" + points.get(1).getPoint() + "|-"),
+    STRIKE_NORMAL_NORMAL(points -> "X|" + points.get(1).getPoint() + "|" + points.get(2).getPoint()),
 
     MISS_SPARE_STRIKE(points -> "-|/|X"),
     MISS_SPARE_MISS(points -> "-|/|-"),
-    MISS_SPARE_NOMAL(points -> "-|/|" + points.get(2).getPoint()),
+    MISS_SPARE_NORMAL(points -> "-|/|" + points.get(2).getPoint()),
 
-    NOMAL_SPARE_STRIKE(points -> points.get(0).getPoint() + "|/|X"),
-    NOMAL_SPARE_MISS(points -> points.get(0).getPoint() + "|/|-"),
-    NOMAL_SPARE_NOMAL(points -> points.get(0).getPoint() + "|/|" + points.get(2).getPoint());
+    NORMAL_SPARE_STRIKE(points -> points.get(0).getPoint() + "|/|X"),
+    NORMAL_SPARE_MISS(points -> points.get(0).getPoint() + "|/|-"),
+    NORMAL_SPARE_NORMAL(points -> points.get(0).getPoint() + "|/|" + points.get(2).getPoint());
 
     Markable markable;
 
@@ -69,7 +69,7 @@ public enum Score {
         if (isMiss(firstPoint)) {
             return MISS;
         }
-        return NOMAL;
+        return NORMAL;
     }
 
     // 두번 던졌을때
@@ -80,7 +80,7 @@ public enum Score {
         if (isMiss(firstPoint)) {
             return whenSecondTryWithFirstMiss(secondPoint);
         }
-        return whenSecondTryWithFirstNomal(firstPoint, secondPoint);
+        return whenSecondTryWithFirstNormal(firstPoint, secondPoint);
     }
 
     // 두번 던졌을때 & 초구 스트라이크
@@ -91,7 +91,7 @@ public enum Score {
         if (isMiss(secondPoint)) {
             return STRIKE_MISS;
         }
-        return STRIKE_NOMAL;
+        return STRIKE_NORMAL;
     }
 
     // 두번 던졌을때 & 초구 미쓰
@@ -102,19 +102,19 @@ public enum Score {
         if (isMiss(secondPoint)) {
             return MISS_MISS;
         }
-        return MISS_NOMAL;
+        return MISS_NORMAL;
     }
 
     // 두번 던졌을때 & 초구가 스트라이크랑 미쓰가 아닐때
-    private static Score whenSecondTryWithFirstNomal(Point firstPoint, Point secondPoint) {
+    private static Score whenSecondTryWithFirstNormal(Point firstPoint, Point secondPoint) {
         int sumPoint = firstPoint.getPoint() + secondPoint.getPoint();
         if (sumPoint == 10) {
-            return NOMAL_SPARE;
+            return NORMAL_SPARE;
         }
         if (isMiss(secondPoint)) {
-            return NOMAL_MISS;
+            return NORMAL_MISS;
         }
-        return NOMAL_NOMAL;
+        return NORMAL_NORMAL;
     }
 
     // 세번째까지 던졌을때
@@ -124,8 +124,8 @@ public enum Score {
         if (preScore.equals(STRIKE_STRIKE)) {
             return whenThirdTryWithDoubleStrike(thirdPoint);
         }
-        if (preScore.equals(STRIKE_NOMAL)) {
-            return whenThirdTryWithStrikeNomal(thirdPoint, sumPoint);
+        if (preScore.equals(STRIKE_NORMAL)) {
+            return whenThirdTryWithStrikeNormal(thirdPoint, sumPoint);
         }
         if (preScore.equals(STRIKE_MISS)) {
             return whenThirdTryWithStrikeMiss(thirdPoint, sumPoint);
@@ -141,18 +141,18 @@ public enum Score {
         if (isMiss(thirdPoint)) {
             return STRIKE_STRIKE_MISS;
         }
-        return STRIKE_STRIKE_NOMAL;
+        return STRIKE_STRIKE_NORMAL;
     }
 
-    // 세번 던졌을때 & 스트라이크 nomal 후
-    private static Score whenThirdTryWithStrikeNomal(Point thirdPoint, int sumPoint) {
+    // 세번 던졌을때 & 스트라이크 normal 후
+    private static Score whenThirdTryWithStrikeNormal(Point thirdPoint, int sumPoint) {
         if (sumPoint == 20) {
-            return STRIKE_NOMAL_SPARE;
+            return STRIKE_NORMAL_SPARE;
         }
         if (isMiss(thirdPoint)) {
-            return STRIKE_NOMAL_MISS;
+            return STRIKE_NORMAL_MISS;
         }
-        return STRIKE_NOMAL_NOMAL;
+        return STRIKE_NORMAL_NORMAL;
     }
 
     // 세번 던졌을때 & 스트라이크 미스 후
@@ -163,7 +163,7 @@ public enum Score {
         if (isMiss(thirdPoint)) {
             return STRIKE_MISS_MISS;
         }
-        return STRIKE_MISS_NOMAL;
+        return STRIKE_MISS_NORMAL;
     }
 
     // 세번 던졌을때 & 스페어 후
@@ -171,7 +171,7 @@ public enum Score {
         if (preScore.equals(MISS_SPARE)) {
             return whenThirdTryWithMissSpare(thirdPoint);
         }
-        return whenThirdTryWithNomalSpare(thirdPoint);
+        return whenThirdTryWithNormalSpare(thirdPoint);
     }
 
     // 세번 던졌을때 & 스페어(miss spare) 후
@@ -182,18 +182,18 @@ public enum Score {
         if (isMiss(thirdPoint)) {
             return MISS_SPARE_MISS;
         }
-        return MISS_SPARE_NOMAL;
+        return MISS_SPARE_NORMAL;
     }
 
-    // 세번 던졌을때 & 스페어(miss nomal) 후
-    private static Score whenThirdTryWithNomalSpare(Point thirdPoint) {
+    // 세번 던졌을때 & 스페어(miss normal) 후
+    private static Score whenThirdTryWithNormalSpare(Point thirdPoint) {
         if (isStrike(thirdPoint)) {
-            return NOMAL_SPARE_STRIKE;
+            return NORMAL_SPARE_STRIKE;
         }
         if (isMiss(thirdPoint)) {
-            return NOMAL_SPARE_MISS;
+            return NORMAL_SPARE_MISS;
         }
-        return NOMAL_SPARE_NOMAL;
+        return NORMAL_SPARE_NORMAL;
     }
 
     private static boolean isStrike(Point point) {

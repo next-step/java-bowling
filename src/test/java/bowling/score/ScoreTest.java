@@ -1,7 +1,7 @@
 package bowling.score;
 
 import bowling.domain.FinalFrame;
-import bowling.domain.NomalFrame;
+import bowling.domain.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,11 +12,11 @@ public class ScoreTest {
 
     @Test
     @DisplayName("일반 프레임에서 첫 던지기 후 마크가져오기 테스트")
-    void nomalFrameFirstTryTest() {
+    void normalFrameFirstTryTest() {
         assertAll(
-                () -> assertThat(new NomalFrame(1).throwBall(10).getScoreMark()).isEqualTo("X"),
-                () -> assertThat(new NomalFrame(1).throwBall(0).getScoreMark()).isEqualTo("-"),
-                () -> assertThat(new NomalFrame(1).throwBall(5).getScoreMark()).isEqualTo("5")
+                () -> assertThat(new NormalFrame(1).throwBall(10).getScoreMark()).isEqualTo("X"),
+                () -> assertThat(new NormalFrame(1).throwBall(0).getScoreMark()).isEqualTo("-"),
+                () -> assertThat(new NormalFrame(1).throwBall(5).getScoreMark()).isEqualTo("5")
         );
     }
 
@@ -24,12 +24,12 @@ public class ScoreTest {
     @DisplayName("일반 프레임에서 두번째 던지기 후 마크가져오기 테스트")
     void getNextFrameTest() {
         assertAll(
-                () -> assertThat(new NomalFrame(1).throwBall(3).throwBall(0).getScoreMark()).isEqualTo("3|-"),
-                () -> assertThat(new NomalFrame(1).throwBall(0).throwBall(5).getScoreMark()).isEqualTo("-|5"),
-                () -> assertThat(new NomalFrame(1).throwBall(0).throwBall(0).getScoreMark()).isEqualTo("-|-"),
-                () -> assertThat(new NomalFrame(1).throwBall(0).throwBall(10).getScoreMark()).isEqualTo("-|/"),
-                () -> assertThat(new NomalFrame(1).throwBall(3).throwBall(6).getScoreMark()).isEqualTo("3|6"),
-                () -> assertThat(new NomalFrame(1).throwBall(3).throwBall(7).getScoreMark()).isEqualTo("3|/")
+                () -> assertThat(new NormalFrame(1).throwBall(3).throwBall(0).getScoreMark()).isEqualTo("3|-"),
+                () -> assertThat(new NormalFrame(1).throwBall(0).throwBall(5).getScoreMark()).isEqualTo("-|5"),
+                () -> assertThat(new NormalFrame(1).throwBall(0).throwBall(0).getScoreMark()).isEqualTo("-|-"),
+                () -> assertThat(new NormalFrame(1).throwBall(0).throwBall(10).getScoreMark()).isEqualTo("-|/"),
+                () -> assertThat(new NormalFrame(1).throwBall(3).throwBall(6).getScoreMark()).isEqualTo("3|6"),
+                () -> assertThat(new NormalFrame(1).throwBall(3).throwBall(7).getScoreMark()).isEqualTo("3|/")
         );
     }
 

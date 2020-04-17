@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.domain.Frame;
 import bowling.domain.Frames;
-import bowling.domain.NomalFrame;
+import bowling.domain.NormalFrame;
 
 import java.util.stream.Collectors;
 
@@ -27,7 +27,7 @@ public class ResultView {
     }
 
     private static String viewFrame(Frame frame) {
-        if (frame instanceof NomalFrame) {
+        if (frame instanceof NormalFrame) {
             return String.format("%5s   ", frame.getScoreMark());
         }
         return String.format(" %5s  ", frame.getScoreMark());
