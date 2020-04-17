@@ -24,7 +24,7 @@ public class Points {
     }
 
     public void add(int point) {
-        points.add(new Point(point));
+        points.add(Point.valueOf(point));
     }
 
     public int size() {

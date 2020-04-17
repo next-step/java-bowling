@@ -12,7 +12,7 @@ public class Score {
 
     public Score(ScoreType scoreType, int point) {
         this.scoreType = scoreType;
-        this.point = new Point(point);
+        this.point = Point.valueOf(point);
     }
 
     public int getPoint() {
