@@ -20,7 +20,12 @@ public class SecondGutter implements State, Calculable {
     }
 
     @Override
+    public int getKnockOverCount() {
+        return Pins.ZERO;
+    }
+
+    @Override
     public Score getScore() {
-        return new Score(0);
+        return new Score(Score.ZERO, Score.ZERO);
     }
 }

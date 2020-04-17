@@ -33,4 +33,9 @@ public class FirstGutter implements State {
     public String toResult() {
         return StateSymbol.GUTTER.getSymbol();
     }
+
+    @Override
+    public int getKnockOverCount() {
+        return Pins.ZERO;
+    }
 }

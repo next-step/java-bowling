@@ -2,11 +2,13 @@ package bowling.domain.frame;
 
 import bowling.domain.frame.state.States;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Frames {
     public static final int NORMAL_FRAME_COUNT = 9;
@@ -20,11 +22,18 @@ public class Frames {
     }
 
     public static Frames create() {
-        final List<Frame> frames = IntStream.rangeClosed(FrameNumber.MIN_NUMBER, NORMAL_FRAME_COUNT)
-                                            .mapToObj(FrameNumber::new)
-                                            .map(NormalFrame::new)
-                                            .collect(Collectors.toList());
-        frames.add(new FinalFrame(new FrameNumber(FrameNumber.MAX_NUMBER)));
+        List<Frame> frames = new ArrayList<>();
+        FinalFrame finalFrame = new FinalFrame(new FrameNumber(FrameNumber.MAX_NUMBER));
+        frames.add(finalFrame);
+
+        Frame prevFrame = finalFrame;
+        for (int i = NORMAL_FRAME_COUNT; i > 0; i--) {
+            final Frame normalFrame = new NormalFrame(new FrameNumber(i), prevFrame);
+            frames.add(normalFrame);
+            prevFrame = normalFrame;
+        }
+
+        Collections.reverse(frames);
         return new Frames(frames, Count.ofFirst());
     }
 
@@ -48,5 +57,13 @@ public class Frames {
 
     public Frame getCurrent() {
         return frames.get(count.getCount());
+    }
+
+    public List<Score> getScores() {
+        Scores scores = new Scores();
+        for (Frame frame : frames) {
+            scores.accumulate(frame);
+        }
+        return scores.getScores();
     }
 }

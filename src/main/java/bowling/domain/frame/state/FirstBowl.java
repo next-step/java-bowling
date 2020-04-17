@@ -36,7 +36,12 @@ public class FirstBowl implements State, Calculable {
     }
 
     @Override
+    public int getKnockOverCount() {
+        return first.count();
+    }
+
+    @Override
     public Score getScore() {
-        return new Score(first.count());
+        return new Score(first.count(), Score.ZERO);
     }
 }

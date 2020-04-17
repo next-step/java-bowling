@@ -27,4 +27,9 @@ public class Ready implements State {
     public String toResult() {
         return "";
     }
+
+    @Override
+    public int getKnockOverCount() {
+        throw new UnsupportedOperationException();
+    }
 }

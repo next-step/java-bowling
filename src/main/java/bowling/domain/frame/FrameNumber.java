@@ -15,10 +15,6 @@ public class FrameNumber {
         this.frameNumber = frameNumber;
     }
 
-    public FrameNumber increase() {
-        return new FrameNumber(frameNumber + MIN_NUMBER);
-    }
-
     public boolean isFinal() {
         return frameNumber == MAX_NUMBER;
     }

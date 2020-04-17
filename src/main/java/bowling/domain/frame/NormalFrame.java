@@ -1,31 +1,24 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.state.Calculable;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
 import bowling.domain.frame.state.States;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Optional;
 
 public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
     private final Frame nextFrame;
     private States states;
 
-    public NormalFrame(final FrameNumber frameNumber) {
+    public NormalFrame(final FrameNumber frameNumber, final Frame nextFrame) {
         this.frameNumber = frameNumber;
+        this.nextFrame = nextFrame;
         this.states = new States(new ArrayList<>());
-        this.nextFrame = next();
-    }
-
-    private Frame next() {
-        final FrameNumber nextFrameNumber = frameNumber.increase();
-        if (nextFrameNumber.isFinal()) {
-            return new FinalFrame(nextFrameNumber);
-        }
-        return new NormalFrame(nextFrameNumber);
     }
 
     @Override
@@ -52,11 +45,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Optional<Frame> getNext() {
-        return Optional.of(nextFrame);
-    }
-
-    @Override
     public FrameNumber getFrameNumber() {
         return frameNumber;
     }
@@ -64,6 +52,52 @@ public class NormalFrame implements Frame {
     @Override
     public States getStates() {
         return states;
+    }
+
+    @Override
+    public Score getScore() {
+        if (states.isEmpty() || !isEnd()) {
+            return Score.NOT_ADDABLE_SCORE;
+        }
+
+        Score totalScore = sum();
+        if (totalScore.isCompleteAccumulation()) {
+            return totalScore;
+        }
+
+        return nextFrame.calculateAdditionalScore(totalScore);
+    }
+
+    private Score sum() {
+        Score total = Score.INIT_SCORE;
+        for (State state : states.getList()) {
+            total = add(total, state);
+        }
+        return total;
+    }
+
+    private Score add(Score total, final State state) {
+        if (state instanceof Calculable) {
+            Score score = ((Calculable) state).getScore();
+            total = total.add(score);
+        }
+        return total;
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score beforeScore) {
+        if (states.isEmpty()) {
+            return Score.NOT_ADDABLE_SCORE;
+        }
+
+        Score totalScore = beforeScore;
+        for (State state : states.getList()) {
+            totalScore = totalScore.accumulate(state.getKnockOverCount());
+            if (totalScore.isCompleteAccumulation()) {
+                return totalScore;
+            }
+        }
+        return nextFrame.calculateAdditionalScore(totalScore);
     }
 
     @Override

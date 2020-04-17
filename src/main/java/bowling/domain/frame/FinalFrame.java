@@ -2,10 +2,11 @@ package bowling.domain.frame;
 
 import bowling.domain.frame.state.*;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class FinalFrame implements Frame {
     private final FrameNumber frameNumber;
@@ -35,13 +36,48 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isEnd() {
-        return count.isBonusCount() || isPossibleTurnOver();
+    public Score getScore() {
+        if (states.isEmpty() || !isEnd()) {
+            return Score.NOT_ADDABLE_SCORE;
+        }
+        return sum();
+    }
+
+    private Score sum() {
+        Score total = Score.INIT_SCORE;
+        for (State state : states.getList()) {
+            total = add(total, state);
+        }
+        return total;
+    }
+
+    private Score add(Score total, final State state) {
+        if (state instanceof Calculable) {
+            Score score = ((Calculable) state).getScore();
+            total = total.add(score);
+        }
+        return total;
     }
 
     @Override
-    public Optional<Frame> getNext() {
-        return Optional.empty();
+    public Score calculateAdditionalScore(final Score beforeScore) {
+        if (states.isEmpty() || checkFinalAccumulate(states.getList(), beforeScore.getLeft())) {
+            return Score.NOT_ADDABLE_SCORE;
+        }
+
+        Score totalScore = beforeScore;
+        for (State state : states.getList()) {
+            totalScore = totalScore.accumulate(state.getKnockOverCount());
+            if (totalScore.isCompleteAccumulation()) {
+                return totalScore;
+            }
+        }
+        return beforeScore;
+    }
+
+    @Override
+    public boolean isEnd() {
+        return count.isBonusCount() || isPossibleTurnOver();
     }
 
     @Override
@@ -61,6 +97,10 @@ public class FinalFrame implements Frame {
     private boolean hasBonusState() {
         return states.getList().stream().anyMatch(Strike.class::isInstance) ||
                 states.getList().stream().anyMatch(Spare.class::isInstance);
+    }
+
+    private boolean checkFinalAccumulate(final List<State> states, final int leftCount) {
+        return states.size() < leftCount;
     }
 
     @Override

@@ -8,4 +8,6 @@ public interface State {
     boolean isTurnOver();
 
     String toResult();
+
+    int getKnockOverCount();
 }

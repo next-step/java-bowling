@@ -26,7 +26,12 @@ public class Spare implements State, Calculable {
     }
 
     @Override
+    public int getKnockOverCount() {
+        return second.count();
+    }
+
+    @Override
     public Score getScore() {
-        return new Score(second.count());
+        return new Score(second.count(), 1);
     }
 }

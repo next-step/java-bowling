@@ -29,7 +29,12 @@ public class Miss implements State, Calculable {
     }
 
     @Override
+    public int getKnockOverCount() {
+        return second.count();
+    }
+
+    @Override
     public Score getScore() {
-        return new Score(second.count());
+        return new Score(second.count(), Score.ZERO);
     }
 }

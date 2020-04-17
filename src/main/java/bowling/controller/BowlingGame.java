@@ -7,6 +7,7 @@ import bowling.domain.frame.state.States;
 import bowling.domain.pin.BowlCount;
 import bowling.domain.pin.Pins;
 import bowling.domain.player.Player;
+import bowling.domain.score.Score;
 
 import java.util.List;
 
@@ -40,5 +41,9 @@ public class BowlingGame {
 
     public List<States> getStates() {
         return frames.getStates();
+    }
+
+    public List<Score> getScores() {
+        return frames.getScores();
     }
 }
