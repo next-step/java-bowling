@@ -33,7 +33,7 @@ public class Points {
     }
 
     public Point get(int index) {
-        return new Point(points.get(index).getPoint());
+        return points.get(index);
     }
 
     public int getSum() {

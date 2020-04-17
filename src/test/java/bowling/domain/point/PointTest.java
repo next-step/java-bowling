@@ -11,7 +11,7 @@ public class PointTest {
     @DisplayName("점수 생성 테스트")
     void createPointTest() {
         assertThatCode(
-                () -> new Point(3)
+                () -> Point.of(3)
         ).doesNotThrowAnyException();
     }
 
@@ -19,7 +19,7 @@ public class PointTest {
     @DisplayName("점수 생성 실패 테스트")
     void failCreatePointTest() {
         assertThatCode(
-                () -> new Point(11)
+                () -> Point.of(11)
         ).isInstanceOf(PointOutOfRangeException.class);
     }
 }

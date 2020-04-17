@@ -1,5 +1,7 @@
 package bowling.domain.point;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Point {
@@ -8,9 +10,22 @@ public class Point {
 
     private final int point;
 
-    public Point(int point) {
-        validate(point);
-        this.point = point;
+    private static final Map<Integer, Point> points = new HashMap<>();
+
+    static {
+        for (int i = MIN_POINT; i <= MAX_POINT; i++) {
+            points.put(i, new Point(i));
+        }
+    }
+
+    public static Point of(int input) {
+        validate(input);
+        return points.get(input);
+    }
+
+    private Point(int input) {
+        validate(input);
+        this.point = input;
     }
 
     public int getPoint() {
@@ -21,7 +36,7 @@ public class Point {
         return this.point <= leftPin;
     }
 
-    private void validate(int input) {
+    private static void validate(int input) {
         if (input < MIN_POINT || input > MAX_POINT) {
             throw new PointOutOfRangeException(String.format("포인트는 %s ~ %s 사이만 가능합니다.", MIN_POINT, MAX_POINT));
         }

@@ -19,7 +19,7 @@ public abstract class Frame {
 
     public Frame throwBall(int fallenCount) throws PointOutOfRangeException {
         int leftPoint = points.getLeftPoint();
-        Point point = new Point(fallenCount);
+        Point point = Point.of(fallenCount);
         if (point.isScoreable(leftPoint)) {
             this.points.addPoint(point);
             return this;
