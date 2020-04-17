@@ -22,6 +22,6 @@ class StrikeTest {
     void getScore() {
         Calculable actual = new Strike();
 
-        assertThat(actual.getScore()).isEqualTo(new Score(10));
+        assertThat(actual.getScore()).isEqualTo(new Score(10, 2));
     }
 }

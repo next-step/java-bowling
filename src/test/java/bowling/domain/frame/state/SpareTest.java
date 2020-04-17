@@ -26,6 +26,6 @@ class SpareTest {
         State actual = new Spare(second);
 
         Score score = ((Calculable) actual).getScore();
-        assertThat(score).isEqualTo(new Score(4));
+        assertThat(score).isEqualTo(new Score(4, 1));
     }
 }

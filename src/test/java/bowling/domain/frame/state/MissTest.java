@@ -34,6 +34,6 @@ class MissTest {
         State actual = firstBowl.roll(second);
         Score score = ((Calculable) actual).getScore();
 
-        assertThat(score).isEqualTo(new Score(4));
+        assertThat(score).isEqualTo(new Score(4, 0));
     }
 }

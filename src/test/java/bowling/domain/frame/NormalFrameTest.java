@@ -18,38 +18,7 @@ class NormalFrameTest {
     @BeforeEach
     void setUp() {
         frameNumber = new FrameNumber(1);
-        frame =  new NormalFrame(frameNumber);
-    }
-
-    @DisplayName("Frame은 프레임 번호를 가진다.")
-    @Test
-    void create() {
-        Frame expect = new NormalFrame(frameNumber);
-
-        Frame actual = new NormalFrame(frameNumber);
-
-        assertThat(actual).isEqualTo(expect);
-    }
-
-    @DisplayName("Frame은 다음 프레임을 가지고 있다.")
-    @Test
-    void getNormalFrame() {
-        Frame expect = new NormalFrame(frameNumber.increase());
-
-        Frame actual = new NormalFrame(frameNumber);
-
-        assertThat(actual.getNext().get()).isEqualTo(expect);
-    }
-
-    @DisplayName("Frame은 마지막 프레임을 가지고 있다.")
-    @Test
-    void getFinalFrame() {
-        FrameNumber frameNumber = new FrameNumber(9);
-        Frame expect = new FinalFrame(frameNumber.increase());
-
-        Frame actual = new NormalFrame(frameNumber);
-
-        assertThat(actual.getNext().get()).isEqualTo(expect);
+        frame =  new NormalFrame(frameNumber, null);
     }
 
     @DisplayName("현재 Frame이 진행중 상태일 경우 다음 프레임으로 넘어갈 수 없다.")

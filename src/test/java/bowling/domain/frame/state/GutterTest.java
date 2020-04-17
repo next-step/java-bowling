@@ -28,6 +28,6 @@ class GutterTest {
 
         final Score score = ((Calculable) second).getScore();
 
-        assertThat(score).isEqualTo(new Score(0));
+        assertThat(score).isEqualTo(new Score(0, 0));
     }
 }

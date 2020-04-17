@@ -50,7 +50,7 @@ class FirstBowlTest {
     void getScore() {
         Pins first = createPins(5);
         State firstBowl = new FirstBowl(first);
-        Score expect = new Score(5);
+        Score expect = new Score(5, 0);
 
         Score actual = ((Calculable) firstBowl).getScore();
 

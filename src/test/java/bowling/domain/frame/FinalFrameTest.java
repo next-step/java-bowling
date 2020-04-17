@@ -22,14 +22,6 @@ class FinalFrameTest {
         finalFrame = new FinalFrame(frameNumber);
     }
 
-    @DisplayName("마지막 프레임은 다음 프레임이 존재하지 않는다.")
-    @Test
-    void getNextFrame() {
-        Frame actual = new FinalFrame(frameNumber);
-
-        assertThat(actual.getNext()).isEmpty();
-    }
-
     @DisplayName("Strike, Strike, Strike")
     @Test
     void bonusAllStrike() {
