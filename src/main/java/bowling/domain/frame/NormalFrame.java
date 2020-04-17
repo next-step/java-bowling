@@ -68,22 +68,6 @@ public class NormalFrame implements Frame {
         return nextFrame.calculateAdditionalScore(totalScore);
     }
 
-    private Score sum() {
-        Score total = Score.INIT_SCORE;
-        for (State state : states.getList()) {
-            total = add(total, state);
-        }
-        return total;
-    }
-
-    private Score add(Score total, final State state) {
-        if (state instanceof Calculable) {
-            Score score = ((Calculable) state).getScore();
-            total = total.add(score);
-        }
-        return total;
-    }
-
     @Override
     public Score calculateAdditionalScore(Score beforeScore) {
         if (states.isEmpty()) {
@@ -98,6 +82,22 @@ public class NormalFrame implements Frame {
             }
         }
         return nextFrame.calculateAdditionalScore(totalScore);
+    }
+
+    private Score sum() {
+        Score total = Score.INIT_SCORE;
+        for (State state : states.getList()) {
+            total = add(total, state);
+        }
+        return total;
+    }
+
+    private Score add(Score total, final State state) {
+        if (state instanceof Calculable) {
+            Score score = ((Calculable) state).getScore();
+            total = total.add(score);
+        }
+        return total;
     }
 
     @Override

@@ -43,22 +43,6 @@ public class FinalFrame implements Frame {
         return sum();
     }
 
-    private Score sum() {
-        Score total = Score.INIT_SCORE;
-        for (State state : states.getList()) {
-            total = add(total, state);
-        }
-        return total;
-    }
-
-    private Score add(Score total, final State state) {
-        if (state instanceof Calculable) {
-            Score score = ((Calculable) state).getScore();
-            total = total.add(score);
-        }
-        return total;
-    }
-
     @Override
     public Score calculateAdditionalScore(final Score beforeScore) {
         if (states.isEmpty() || checkFinalAccumulate(states.getList(), beforeScore.getLeft())) {
@@ -72,7 +56,7 @@ public class FinalFrame implements Frame {
                 return totalScore;
             }
         }
-        return beforeScore;
+        return totalScore;
     }
 
     @Override
@@ -101,6 +85,22 @@ public class FinalFrame implements Frame {
 
     private boolean checkFinalAccumulate(final List<State> states, final int leftCount) {
         return states.size() < leftCount;
+    }
+
+    private Score sum() {
+        Score total = Score.INIT_SCORE;
+        for (State state : states.getList()) {
+            total = add(total, state);
+        }
+        return total;
+    }
+
+    private Score add(Score total, final State state) {
+        if (state instanceof Calculable) {
+            Score score = ((Calculable) state).getScore();
+            total = total.add(score);
+        }
+        return total;
     }
 
     @Override
