@@ -47,7 +47,7 @@ public enum Score {
 
     public static String getScoreMark(Frame frame) {
         Points points = frame.getPoints();
-        int tryCount = points.size();
+        int tryCount = points.getTryCount();
         if (tryCount == 1) {
             return whenFirstTry(points.get(0)).getMark(points);
         }

@@ -22,7 +22,7 @@ public class PointsTest {
     void isStrikeTest() {
         Points points = new Points(Arrays.asList(new Point(10)));
         assertThat(
-                points.isStrike()
+                points.isFirstStrike()
         ).isTrue();
     }
 

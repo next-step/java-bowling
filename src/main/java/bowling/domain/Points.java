@@ -23,7 +23,7 @@ public class Points {
         return new Points(points);
     }
 
-    public int size() {
+    public int getTryCount() {
         return points.size();
     }
 
@@ -41,7 +41,7 @@ public class Points {
                 .sum();
     }
 
-    public boolean isStrike() {
+    public boolean isFirstStrike() {
         if (points.size() == 1 && getPoint(0) == STRIKE_POINT) {
             return true;
         }
