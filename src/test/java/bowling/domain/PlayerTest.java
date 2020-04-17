@@ -21,6 +21,6 @@ public class PlayerTest {
     void failCreatePlayerTest() {
         assertThatThrownBy(
                 () -> new Player("namasdf")
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(InvalidNameException.class);
     }
 }
