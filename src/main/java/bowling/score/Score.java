@@ -1,8 +1,8 @@
 package bowling.score;
 
-import bowling.domain.Frame;
-import bowling.domain.Point;
-import bowling.domain.Points;
+import bowling.domain.frame.Frame;
+import bowling.domain.point.Point;
+import bowling.domain.point.Points;
 
 public enum Score {
     STRIKE(points -> "X"),

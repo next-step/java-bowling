@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.point.Point;
+import bowling.domain.point.Points;
 import bowling.score.Score;
 
 public abstract class Frame {

@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 public class NormalFrame extends Frame {
     private static final int MAX_TRYABLE_COUNT = 2;

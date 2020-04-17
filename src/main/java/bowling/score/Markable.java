@@ -1,6 +1,6 @@
 package bowling.score;
 
-import bowling.domain.Points;
+import bowling.domain.point.Points;
 
 @FunctionalInterface
 public interface Markable {
