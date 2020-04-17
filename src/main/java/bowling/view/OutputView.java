@@ -6,7 +6,6 @@ import bowling.dto.FrameScoreConsoleResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -44,10 +43,10 @@ public class OutputView {
         System.out.println(GAME_FIRST_ROW);
 
         List<String> scores = getCollect(bowlingGameResult, FrameScoreConsoleResult::getScoreResult);
-        List<String> subTotals = getCollect(bowlingGameResult, FrameScoreConsoleResult::getSubTotalScore);
+        List<String> totalScores = getCollect(bowlingGameResult, FrameScoreConsoleResult::getTotalScore);
 
         System.out.println(makeGameRow(GAME_ROW_BLANK + bowlingGameResult.getName(), makeFrameWordsWithBlank(scores)));
-        System.out.println(makeGameRow(GAME_ROW_BLANK + GAME_ROW_SCORE_HEAD, makeFrameWordsWithBlank(subTotals)));
+        System.out.println(makeGameRow(GAME_ROW_BLANK + GAME_ROW_SCORE_HEAD, makeFrameWordsWithBlank(totalScores)));
         System.out.println();
     }
 

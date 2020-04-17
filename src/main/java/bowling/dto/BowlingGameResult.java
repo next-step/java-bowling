@@ -10,9 +10,9 @@ import java.util.stream.IntStream;
 public class BowlingGameResult {
 
     private final String name;
-    private final List<FrameScoreConsoleResult> frameScoreConsoleResults;
+    private final FrameScoreConsoleResults frameScoreConsoleResults;
 
-    private BowlingGameResult(final String name, final List<FrameScoreConsoleResult> frameScoreConsoleResults) {
+    private BowlingGameResult(final String name, final FrameScoreConsoleResults frameScoreConsoleResults) {
         this.name = name;
         this.frameScoreConsoleResults = frameScoreConsoleResults;
     }
@@ -22,29 +22,7 @@ public class BowlingGameResult {
 
         BowlingFrames bowlingFrames = bowlingGame.getBowlingFrames();
 
-        return new BowlingGameResult(player.getName(), makeFrameScoreConsoleResults(bowlingFrames));
-    }
-
-    private static List<FrameScoreConsoleResult> makeFrameScoreConsoleResults(final BowlingFrames bowlingFrames) {
-        Stack<FrameScoreConsoleResult> frameScoreConsoleResults = new Stack<>();
-
-        NextAddingUpScores nextAddingUpScores = null;
-        for (int i = bowlingFrames.size() - 1; i >= 0; i--) {
-            BowlingFrame bowlingFrame = bowlingFrames.getFrame(i);
-
-            FrameScoreConsoleResult frameScoreConsoleResult = makeFrameScoreConsoleResult(bowlingFrame, nextAddingUpScores);
-            nextAddingUpScores = frameScoreConsoleResult.getNextAddingUpScores();
-
-            frameScoreConsoleResults.push(frameScoreConsoleResult);
-        }
-
-        return IntStream.range(0, frameScoreConsoleResults.size())
-                .mapToObj(i -> frameScoreConsoleResults.pop())
-                .collect(Collectors.toList());
-    }
-
-    private static FrameScoreConsoleResult makeFrameScoreConsoleResult(final BowlingFrame bowlingFrame, final NextAddingUpScores nextAddingUpScores) {
-        return FrameScoreConsoleResult.newInstance(bowlingFrame, nextAddingUpScores);
+        return new BowlingGameResult(player.getName(), FrameScoreConsoleResults.newInstance(bowlingFrames));
     }
 
     public String getName() {
@@ -52,6 +30,6 @@ public class BowlingGameResult {
     }
 
     public List<FrameScoreConsoleResult> getFrameScores() {
-        return frameScoreConsoleResults;
+        return frameScoreConsoleResults.getFrameScoreConsoleResults();
     }
 }

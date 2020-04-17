@@ -35,7 +35,12 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     @Override
-    public SubTotal getSubTotal(final NextAddingUpScores nextAddingUpScores) {
+    public FrameScoreResult getResult() {
+        return frameScore.getResult();
+    }
+
+    @Override
+    public SubTotal calculateSubTotal(final NextAddingUpScores nextAddingUpScores) {
         if(Objects.isNull(nextAddingUpScores)) {
             return frameScore.getSubTotal();
         }

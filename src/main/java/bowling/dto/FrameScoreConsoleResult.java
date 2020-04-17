@@ -1,6 +1,8 @@
 package bowling.dto;
 
-import bowling.*;
+import bowling.FrameScore;
+import bowling.FrameScoreResult;
+import bowling.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,18 +12,18 @@ public class FrameScoreConsoleResult {
     private static final String SCORE_DELIMITER = "|";
 
     private final String scoreResult;
-    private final SubTotal subTotal;
+    private final TotalScoreResult totalScoreResult;
 
-    private FrameScoreConsoleResult(final String scoreResult, final SubTotal subTotal) {
+    private FrameScoreConsoleResult(final String scoreResult, final TotalScoreResult totalScoreResult) {
         this.scoreResult = scoreResult;
-        this.subTotal = subTotal;
+        this.totalScoreResult = totalScoreResult;
     }
 
-    public static FrameScoreConsoleResult newInstance(final BowlingFrame bowlingFrame, final NextAddingUpScores nextAddingUpScores) {
-        return new FrameScoreConsoleResult(joinFrameScoreString(bowlingFrame.getFrameScore()), bowlingFrame.getSubTotal(nextAddingUpScores));
+    public static FrameScoreConsoleResult newInstance(final FrameScore frameScore, final TotalScoreResult totalScoreResult) {
+        return new FrameScoreConsoleResult(joinFrameScoreString(frameScore), totalScoreResult);
     }
 
-    public static String joinFrameScoreString(final FrameScore frameScore) {
+    private static String joinFrameScoreString(final FrameScore frameScore) {
         List<String> scores = new ArrayList<>();
         Score preScore = null;
 
@@ -40,19 +42,11 @@ public class FrameScoreConsoleResult {
         return scoreResult;
     }
 
-    public NextAddingUpScores getNextAddingUpScores() {
-        return subTotal.getNextAddingUpScores();
-    }
-
-    public String getSubTotalScore() {
-        if (hasToEmptyDisplay()) {
-            return "";
+    public String getTotalScore() {
+        if (totalScoreResult.isCanDisplay()) {
+            return String.valueOf(totalScoreResult.getTotalScore());
         }
 
-        return Integer.toString(subTotal.getSubTotalScore());
-    }
-
-    private boolean hasToEmptyDisplay() {
-        return false;
+        return "";
     }
 }
