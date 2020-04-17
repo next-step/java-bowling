@@ -27,7 +27,7 @@ class ScoresTest {
     void addScore(List<Integer> values) {
         Scores scores = new Scores();
         for (Integer value : values) {
-            scores.add(Score.defaultFrameScore(scores, value));
+            scores.add(new Score(ScoreType.MISS, value));
         }
 
         int currentPoint = values.stream()
@@ -54,7 +54,7 @@ class ScoresTest {
 
     private Scores strikeScores() {
         Scores scores = new Scores();
-        scores.add(Score.defaultFrameScore(scores, 10));
+        scores.add(new Score(ScoreType.STRIKE, 10));
 
         return scores;
     }
@@ -69,8 +69,8 @@ class ScoresTest {
 
     private Scores spareScores() {
         Scores scores = new Scores();
-        scores.add(Score.defaultFrameScore(scores, 1));
-        scores.add(Score.defaultFrameScore(scores, 9));
+        scores.add(new Score(ScoreType.MISS, 1));
+        scores.add(new Score(ScoreType.SPARE, 9));
 
         return scores;
     }

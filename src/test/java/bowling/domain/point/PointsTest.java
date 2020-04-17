@@ -33,9 +33,9 @@ class PointsTest {
     @ParameterizedTest
     @MethodSource("points")
     void totalPoint(List<Integer> values, int totalPoint) {
-        points.add(new Point(values.get(0)));
-        points.add(new Point(values.get(1)));
-        points.add(new Point(values.get(2)));
+        points.add(values.get(0));
+        points.add(values.get(1));
+        points.add(values.get(2));
 
         assertThat(points.getTotalBonusPoint()).isEqualTo(totalPoint);
     }
