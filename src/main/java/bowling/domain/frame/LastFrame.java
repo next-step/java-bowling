@@ -77,18 +77,12 @@ public class LastFrame implements Frame {
     }
 
     private void validateSecondPoint(int point) {
-        if (CollectionUtils.isEmpty(scores.getScores())) {
-            return;
-        }
         if (!scores.isStrike(FIRST_PLAY) && totalPoint(point) > STRIKE_POINT) {
             throw new IllegalArgumentException("마지막 포인트합은 10점을 넘을수 없습니다.");
         }
     }
 
     private void validateThirdPoint(int point) {
-        if (CollectionUtils.isEmpty(scores.getScores())) {
-            return;
-        }
         if (!scores.isStrike(SECOND_PLAY) && totalPoint(point) > DOUBLE_STRIKE_POINT) {
             throw new IllegalArgumentException("마지막 포인트합은 20점을 넘을수 없습니다.");
         }
@@ -122,9 +116,6 @@ public class LastFrame implements Frame {
 
     @Override
     public boolean isCalculatableFrame(int frameIndex) {
-        if (isPlayable()) {
-            return false;
-        }
-        return true;
+        return !isPlayable();
     }
 }
