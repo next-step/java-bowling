@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import bowling.domain.bonusscore.BonusScores;
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
-import bowling.domain.score.Scores;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

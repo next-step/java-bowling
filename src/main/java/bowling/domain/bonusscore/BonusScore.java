@@ -1,6 +1,5 @@
 package bowling.domain.bonusscore;
 
-import bowling.domain.point.Point;
 import bowling.domain.point.Points;
 
 /**
