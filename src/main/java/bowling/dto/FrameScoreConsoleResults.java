@@ -32,7 +32,7 @@ public class FrameScoreConsoleResults {
     }
 
     private static void validateSize(final BowlingFrames bowlingFrames, final SubTotalConsoleResults subTotalConsoleResults) {
-        if(bowlingFrames.size() != subTotalConsoleResults.size()) {
+        if (bowlingFrames.size() != subTotalConsoleResults.size()) {
             throw new IllegalStateException("bowlingFrame size must be same as subTotalConsoleResults size");
         }
     }

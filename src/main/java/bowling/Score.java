@@ -55,8 +55,4 @@ public class Score {
     public String toString() {
         return String.valueOf(score);
     }
-
-    public int getScore() {
-        return score;
-    }
 }

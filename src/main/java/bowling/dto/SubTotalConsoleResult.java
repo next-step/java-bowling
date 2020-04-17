@@ -23,7 +23,7 @@ public class SubTotalConsoleResult {
     }
 
     private static boolean makeDisplayOption(final BowlingFrame bowlingFrame, final NextAddingUpScores nextAddingUpScores) {
-        if(!bowlingFrame.isOver()) {
+        if (!bowlingFrame.isOver()) {
             return false;
         }
 

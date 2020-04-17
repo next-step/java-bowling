@@ -31,7 +31,6 @@ public class Player {
         }
     }
 
-
     private static void validateFormat(final String name) {
         Matcher matcher = NAME_VALIDATE_PATTERN.matcher(name);
 

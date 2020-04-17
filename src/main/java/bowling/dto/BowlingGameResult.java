@@ -1,11 +1,10 @@
 package bowling.dto;
 
-import bowling.*;
+import bowling.BowlingFrames;
+import bowling.BowlingGame;
+import bowling.Player;
 
 import java.util.List;
-import java.util.Stack;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class BowlingGameResult {
 
@@ -19,7 +18,6 @@ public class BowlingGameResult {
 
     public static BowlingGameResult newInstance(final BowlingGame bowlingGame) {
         Player player = bowlingGame.getPlayer();
-
         BowlingFrames bowlingFrames = bowlingGame.getBowlingFrames();
 
         return new BowlingGameResult(player.getName(), FrameScoreConsoleResults.newInstance(bowlingFrames));
