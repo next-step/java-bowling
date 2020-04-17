@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Points {
+    private static final int MAX_POINT_COUNT = 10;
     private static final int STRIKE_POINT = 10;
     private static final int DOUBLE_STRIKE_POINT = 20;
     private static final int SPARE_POINT = 10;
@@ -60,5 +61,12 @@ public class Points {
             return true;
         }
         return false;
+    }
+
+    public int getLeftPoint() {
+        if (points.size() == 1 && !isFirstStrike()) {
+            return MAX_POINT_COUNT - getSum();
+        }
+        return MAX_POINT_COUNT;
     }
 }

@@ -32,12 +32,11 @@ public class Frames {
     }
 
     private List<Frame> initFrames() {
-        List<Frame> frames = new ArrayList<>();
+        List<Frame> tmpframes = new ArrayList<>();
         for (int i = 1; i <= TOTAL_NORMAL_FRAME; i++) {
-            frames.add(new NormalFrame(i));
+            tmpframes.add(new NormalFrame(i));
         }
-        frames.add(new FinalFrame(TOTAL_NORMAL_FRAME + 1));
-
-        return frames;
+        tmpframes.add(new FinalFrame(TOTAL_NORMAL_FRAME + 1));
+        return tmpframes;
     }
 }

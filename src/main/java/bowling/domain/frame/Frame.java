@@ -6,8 +6,6 @@ import bowling.domain.point.Points;
 import bowling.score.Score;
 
 public abstract class Frame {
-    protected static final int MAX_POINT_COUNT = 10;
-
     protected Points points;
     protected int frameNo;
 
@@ -19,12 +17,13 @@ public abstract class Frame {
     abstract boolean isThrowable();
 
     public Frame throwBall(int fallenCount) throws PointOutOfRangeException {
+        int leftPoint = points.getLeftPoint();
         Point point = new Point(fallenCount);
-        if (point.isScoreable(getLeftPin())) {
+        if (point.isScoreable(leftPoint)) {
             this.points.addPoint(point);
             return this;
         }
-        throw new OverThrowBallException("다시 입력해주세요(남은 핀: " + getLeftPin() + ")");
+        throw new OverThrowBallException("다시 입력해주세요(남은 핀: " + leftPoint + ")");
     }
 
     public int getFrameNo() {
@@ -37,12 +36,5 @@ public abstract class Frame {
 
     public String getScoreMark() {
         return Score.getScoreMark(this);
-    }
-
-    public int getLeftPin() {
-        if (points.getTryCount() == 1 && !points.isFirstStrike()) {
-            return MAX_POINT_COUNT - this.points.getSum();
-        }
-        return MAX_POINT_COUNT;
     }
 }
