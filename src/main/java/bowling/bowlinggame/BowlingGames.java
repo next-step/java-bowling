@@ -7,6 +7,10 @@ import bowling.domain.frame.Frames;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 볼링 게임의 일급 컬렉션
+ * 전체 게임 진행을 제어한다.
+ */
 public class BowlingGames {
     private final List<BowlingGame> bowlingGames;
 
