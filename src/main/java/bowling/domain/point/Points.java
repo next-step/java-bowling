@@ -23,8 +23,8 @@ public class Points {
                 .sum();
     }
 
-    public void add(Point point) {
-        points.add(point);
+    public void add(int point) {
+        points.add(new Point(point));
     }
 
     public int size() {
