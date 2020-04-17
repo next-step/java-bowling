@@ -15,11 +15,17 @@ public class FrameScoreConsoleResults {
     }
 
     public static FrameScoreConsoleResults newInstance(final BowlingFrames bowlingFrames) {
-        List<FrameScoreConsoleResult> result = new ArrayList<>();
+
         SubTotalConsoleResults subTotals = SubTotalConsoleResults.newInstance(bowlingFrames);
         validateSize(bowlingFrames, subTotals);
 
+        return newInstance(bowlingFrames, subTotals);
+    }
+
+    private static FrameScoreConsoleResults newInstance(BowlingFrames bowlingFrames, SubTotalConsoleResults subTotals) {
+        List<FrameScoreConsoleResult> result = new ArrayList<>();
         int totalScore = 0;
+
         for (int i = 0; i < bowlingFrames.size(); i++) {
             BowlingFrame bowlingFrame = bowlingFrames.getFrame(i);
             TotalScoreResult totalScoreResult = TotalScoreResult.newInstance(subTotals.get(i), totalScore);

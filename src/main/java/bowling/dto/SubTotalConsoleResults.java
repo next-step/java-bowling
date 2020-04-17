@@ -18,6 +18,14 @@ public class SubTotalConsoleResults {
     }
 
     public static SubTotalConsoleResults newInstance(final BowlingFrames bowlingFrames) {
+        Stack<SubTotalConsoleResult> subTotals = makeReverseSubTotalConsoleResults(bowlingFrames);
+
+        return new SubTotalConsoleResults(IntStream.range(0, subTotals.size())
+                .mapToObj(i -> subTotals.pop())
+                .collect(Collectors.toList()));
+    }
+
+    private static Stack<SubTotalConsoleResult> makeReverseSubTotalConsoleResults(BowlingFrames bowlingFrames) {
         Stack<SubTotalConsoleResult> subTotals = new Stack<>();
 
         NextAddingUpScores nextAddingUpScores = null;
@@ -30,10 +38,7 @@ public class SubTotalConsoleResults {
 
             subTotals.push(subTotalConsoleResult);
         }
-
-        return new SubTotalConsoleResults(IntStream.range(0, subTotals.size())
-                .mapToObj(i -> subTotals.pop())
-                .collect(Collectors.toList()));
+        return subTotals;
     }
 
     public SubTotalConsoleResult get(final int index) {

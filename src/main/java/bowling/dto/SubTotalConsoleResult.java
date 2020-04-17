@@ -33,7 +33,6 @@ public class SubTotalConsoleResult {
 
         FrameScoreResult frameScoreResult = bowlingFrame.getResult();
         return frameScoreResult.canCalculateTotalScore(nextAddingUpScores);
-
     }
 
     public Integer sumTotalScore(final int totalScore) {
