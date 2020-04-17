@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 public class NextAddingUpScores {
 
-    private final static int MAX_SIZE = 2;
-    private final static int SPARE_ADDING_UP_COUNT = 1;
+    public final static int MAX_SIZE = 2;
+    public final static int SPARE_ADDING_UP_COUNT = 1;
 
     private final Queue<Score> scores;
 
@@ -62,20 +62,8 @@ public class NextAddingUpScores {
         return Score.sum(addingUpScore);
     }
 
-    public boolean canAddingUpScores(final FrameScoreResult result) {
-        if (result == FrameScoreResult.MISS || result == FrameScoreResult.GUTTER) {
-            return true;
-        }
-
-        return canSumStrike(result) || canSumSpare(result);
-    }
-
-    private boolean canSumStrike(final FrameScoreResult result) {
-        return result == FrameScoreResult.STRIKE && scores.size() == MAX_SIZE;
-    }
-
-    private boolean canSumSpare(final FrameScoreResult result) {
-        return result == FrameScoreResult.SPARE && scores.size() >= SPARE_ADDING_UP_COUNT;
+    public int size() {
+        return scores.size();
     }
 
     @Override

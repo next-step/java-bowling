@@ -31,8 +31,8 @@ public class SubTotalConsoleResult {
             return true;
         }
 
-        System.out.println(nextAddingUpScores);
-        return nextAddingUpScores.canAddingUpScores(bowlingFrame.getResult());
+        FrameScoreResult frameScoreResult = bowlingFrame.getResult();
+        return frameScoreResult.canCalculateTotalScore(nextAddingUpScores);
 
     }
 

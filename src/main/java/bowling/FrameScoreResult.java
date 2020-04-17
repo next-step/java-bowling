@@ -4,23 +4,28 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
+import static bowling.NextAddingUpScores.MAX_SIZE;
+import static bowling.NextAddingUpScores.SPARE_ADDING_UP_COUNT;
 import static bowling.Pins.MAX_PIN_COUNT;
 import static bowling.Pins.MIN_PIN_COUNT;
 
 public enum FrameScoreResult {
-    STRIKE(TotalScore::sumStrike),
-    SPARE(TotalScore::sumSpare),
-    MISS((score, nextAddingUpScores) -> score),
-    GUTTER((score, nextAddingUpScores) -> score);
+    STRIKE(TotalScore::sumStrike, FrameScoreResult::canSumStrike),
+    SPARE(TotalScore::sumSpare, FrameScoreResult::canSumSpare),
+    MISS((score, nextAddingUpScores) -> score, nextAddingUpScores -> true),
+    GUTTER((score, nextAddingUpScores) -> score, nextAddingUpScores -> true);
 
     private static final int FIRST_SCORE_INDEX = 0;
     private static final int SECOND_SCORE_INDEX = 1;
 
     private final BiFunction<TotalScore, NextAddingUpScores, TotalScore> subTotalFunction;
+    private final Function<NextAddingUpScores, Boolean> checkGetSubTotalFunction;
 
-    FrameScoreResult(final BiFunction<TotalScore, NextAddingUpScores, TotalScore> subTotalFunction) {
+    FrameScoreResult(final BiFunction<TotalScore, NextAddingUpScores, TotalScore> subTotalFunction, final Function<NextAddingUpScores, Boolean> checkGetSubTotalFunction) {
         this.subTotalFunction = subTotalFunction;
+        this.checkGetSubTotalFunction = checkGetSubTotalFunction;
     }
 
     public static FrameScoreResult of(final List<Score> scores) {
@@ -56,6 +61,10 @@ public enum FrameScoreResult {
         return subTotalFunction.apply(score, nextAddingUpScores);
     }
 
+    public boolean canCalculateTotalScore(final NextAddingUpScores nextAddingUpScores) {
+        return checkGetSubTotalFunction.apply(nextAddingUpScores);
+    }
+
     private static boolean isSpare(final Score preScore, final Score nowScore) {
         return (!Objects.isNull(preScore) && !preScore.isEqualsTo(MIN_PIN_COUNT)) && Score.sum(Arrays.asList(preScore, nowScore)) == MAX_PIN_COUNT;
     }
@@ -67,4 +76,13 @@ public enum FrameScoreResult {
     private static boolean isGutter(final Score score) {
         return score.isEqualsTo(MIN_PIN_COUNT);
     }
+
+    private static boolean canSumStrike(final NextAddingUpScores nextAddingUpScores) {
+        return nextAddingUpScores.size() == MAX_SIZE;
+    }
+
+    private static boolean canSumSpare(final NextAddingUpScores nextAddingUpScores) {
+        return nextAddingUpScores.size() >= SPARE_ADDING_UP_COUNT;
+    }
+
 }

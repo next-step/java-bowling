@@ -33,7 +33,7 @@ public enum ScoreConsoleResult {
         ScoreConsoleResult scoreConsoleResult = CONSOLE_SCORES.get(frameScoreResult);
 
         if (Objects.isNull(scoreConsoleResult)) {
-            throw new IllegalArgumentException("일치하는 당첨 케이스가 없습니다.");
+            throw new IllegalArgumentException("FrameScoreResult not valid.");
         }
 
         return scoreConsoleResult;
