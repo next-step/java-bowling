@@ -31,7 +31,7 @@ public class Frames {
     public void addPinCount(int pinCount) {
         getLastFrame().addPinCount(pinCount);
         if (isAddable()) {
-            createNext();
+            frames.add(createNext());
         }
     }
 
@@ -39,7 +39,7 @@ public class Frames {
         return frames.size();
     }
 
-    public Frame getLastFrame() {
+    private Frame getLastFrame() {
         return frames.get(lastIndex());
     }
 
@@ -51,17 +51,13 @@ public class Frames {
         return frames.size() == (DEFAULT_FRAME_SIZE - ONE);
     }
 
-    private void createNext() {
-        if (!isAddable()) {
-            return;
-        }
+    public Frame createNext() {
         Frame lastFrame = getLastFrame();
         if (isBeforeMax()) {
-            frames.add(lastFrame.createNext(new FinalFrame()));
-            return;
+            return lastFrame.createNext(new FinalFrame());
         }
 
-        frames.add(lastFrame.createNext());
+        return lastFrame.createNext();
     }
 
     private boolean isAddable() {
