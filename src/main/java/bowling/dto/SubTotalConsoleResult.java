@@ -19,17 +19,20 @@ public class SubTotalConsoleResult {
 
     public static SubTotalConsoleResult newInstance(final BowlingFrame bowlingFrame, final NextAddingUpScores nextAddingUpScores) {
         SubTotal subTotal = bowlingFrame.calculateSubTotal(nextAddingUpScores);
-        FrameScoreResult frameScoreResult = bowlingFrame.getResult();
-        return new SubTotalConsoleResult(subTotal, makeDisplayOption(subTotal.getNextAddingUpScores(), frameScoreResult));
+        return new SubTotalConsoleResult(subTotal, makeDisplayOption(bowlingFrame, nextAddingUpScores));
     }
 
-    private static boolean makeDisplayOption(final NextAddingUpScores nextAddingUpScores, final FrameScoreResult frameScoreResult) {
+    private static boolean makeDisplayOption(final BowlingFrame bowlingFrame, final NextAddingUpScores nextAddingUpScores) {
+        if(!bowlingFrame.isOver()) {
+            return false;
+        }
+
         if (Objects.isNull(nextAddingUpScores)) {
             return true;
         }
 
         System.out.println(nextAddingUpScores);
-        return true;
+        return nextAddingUpScores.canAddingUpScores(bowlingFrame.getResult());
 
     }
 

@@ -38,8 +38,9 @@ public class NextAddingUpScores {
     }
 
     public NextAddingUpScores update(final List<Score> scores) {
-        scores.forEach(this::add);
-        return new NextAddingUpScores(this.scores);
+        NextAddingUpScores updateNextAddingUpScores = new NextAddingUpScores(this.scores);
+        scores.forEach(updateNextAddingUpScores::add);
+        return updateNextAddingUpScores;
     }
 
     private void add(final Score score) {
@@ -59,6 +60,22 @@ public class NextAddingUpScores {
                 .collect(Collectors.toList());
 
         return Score.sum(addingUpScore);
+    }
+
+    public boolean canAddingUpScores(final FrameScoreResult result) {
+        if (result == FrameScoreResult.MISS || result == FrameScoreResult.GUTTER) {
+            return true;
+        }
+
+        return canSumStrike(result) || canSumSpare(result);
+    }
+
+    private boolean canSumStrike(final FrameScoreResult result) {
+        return result == FrameScoreResult.STRIKE && scores.size() == MAX_SIZE;
+    }
+
+    private boolean canSumSpare(final FrameScoreResult result) {
+        return result == FrameScoreResult.SPARE && scores.size() >= SPARE_ADDING_UP_COUNT;
     }
 
     @Override
