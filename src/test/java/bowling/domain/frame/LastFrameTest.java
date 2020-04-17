@@ -1,18 +1,23 @@
 package bowling.domain.frame;
 
 import bowling.domain.bonusscore.BonusScores;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreType;
+import bowling.domain.score.Scores;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class LastFrameTest {
@@ -169,5 +174,69 @@ class LastFrameTest {
                 arguments(Arrays.asList(10, 4, 7)),
                 arguments(Arrays.asList(10, 8, 5))
         );
+    }
+
+    @DisplayName("스트라이크 추가")
+    @ParameterizedTest
+    @MethodSource("strikePoint")
+    void createStrike(List<Integer> points) {
+        lastFrame.addScore(points.get(0));
+        lastFrame.addScore(points.get(1));
+        lastFrame.addScore(points.get(2));
+
+        List<Score> scores = lastFrame.getScores();
+
+        assertAll(
+                () -> {
+                    for (Score score : scores) {
+                        assertThat(score.isEqualScoreType(ScoreType.STRIKE)).isTrue();
+                    }
+                }
+        );
+    }
+
+    static Stream<Arguments> strikePoint() {
+        return Stream.of(
+                arguments(Arrays.asList(10, 10, 10))
+        );
+    }
+
+    @DisplayName("스페어 추가")
+    @ParameterizedTest
+    @MethodSource("sparePoint")
+    void createSpare(List<Integer> points) {
+        lastFrame.addScore(points.get(0));
+        lastFrame.addScore(points.get(1));
+
+        List<Score> scores = lastFrame.getScores();
+
+        assertThat(scores.get(1).isEqualScoreType(ScoreType.SPARE)).isTrue();
+    }
+
+    static Stream<Arguments> sparePoint() {
+        return Stream.of(
+                arguments(Arrays.asList(5, 5))
+        );
+    }
+
+    @DisplayName("거터 추가")
+    @Test
+    void createGutter() {
+        lastFrame.addScore(0);
+
+        List<Score> scores = lastFrame.getScores();
+
+        assertThat(scores.get(0).isEqualScoreType(ScoreType.GUTTER)).isTrue();
+    }
+
+    @DisplayName("미스 추가")
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void createMiss(int point) {
+        lastFrame.addScore(point);
+
+        List<Score> scores = lastFrame.getScores();
+
+        assertThat(scores.get(0).isEqualScoreType(ScoreType.MISS)).isTrue();
     }
 }
