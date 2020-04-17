@@ -1,14 +1,13 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
-public class Spare implements State {
-    private static final String EXPRESSION = "/";
+public class Spare implements State, Calculable {
+    private final Pins second;
 
-    private final Pins pins;
-
-    Spare(final Pins pins) {
-        this.pins = pins;
+    public Spare(final Pins second) {
+        this.second = second;
     }
 
     @Override
@@ -23,6 +22,16 @@ public class Spare implements State {
 
     @Override
     public String toResult() {
-        return pins.count() + State.DELIMITER + EXPRESSION;
+        return StateSymbol.SPARE.getSymbol();
+    }
+
+    @Override
+    public int getKnockOverCount() {
+        return second.count();
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(second.count(), 1);
     }
 }

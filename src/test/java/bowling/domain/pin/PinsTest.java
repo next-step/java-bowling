@@ -27,7 +27,7 @@ class PinsTest {
 
         final Pins actual = pins.knockOver(bowlCount);
 
-        assertThat(actual.knockOverCount()).isEqualTo(3);
+        assertThat(actual.getKnockOverCount()).isEqualTo(3);
     }
 
     @DisplayName("투구수가 핀의 갯수보다 많을경우 예외를 발생한다.")

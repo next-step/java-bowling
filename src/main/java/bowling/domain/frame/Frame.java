@@ -1,19 +1,22 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.state.State;
+import bowling.domain.frame.state.States;
 import bowling.domain.pin.Pins;
-
-import java.util.Optional;
+import bowling.domain.score.Score;
 
 public interface Frame {
-    String SEPARATOR = ",";
-
     Frame bowl(Pins pins);
 
     boolean isEnd();
 
-    Optional<Frame> getNext();
-
     FrameNumber getFrameNumber();
 
-    String getStates();
+    States getStates();
+
+    State getCurrentState();
+
+    Score getScore();
+
+    Score calculateAdditionalScore(Score score);
 }

@@ -23,9 +23,9 @@ class ReadyTest {
         assertThat(actual).isInstanceOf(Strike.class);
     }
 
-    @DisplayName("첫투구에 strike가 아니라면 진행상태인 Running을 반환한다.")
+    @DisplayName("첫투구에 strike가 아니라면 진행상태인 FirstBowl을 반환한다.")
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
     void running(int count) {
         BowlCount bowlCount = new BowlCount(count);
         Pins pins = Pins.of();

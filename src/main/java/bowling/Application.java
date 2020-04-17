@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.controller.BowlingGame;
+import bowling.controller.BowlingGame;
 import bowling.domain.pin.BowlCount;
 import bowling.domain.player.Player;
 import bowling.view.InputView;
@@ -13,11 +13,11 @@ public class Application {
         final Player player = inputView.inputPlayerName();
         final BowlingGame bowlingGame = new BowlingGame(player);
 
-        OutputView.printOverHead(bowlingGame.overHead());
+        OutputView.printOverHead(bowlingGame);
         while (!bowlingGame.isEnd()) {
             BowlCount bowlCount = inputView.inputBowlCount(bowlingGame.getFrameNumber());
             bowlingGame.play(bowlCount);
-            OutputView.printOverHead(bowlingGame.overHead());
+            OutputView.printOverHead(bowlingGame);
         }
     }
 }

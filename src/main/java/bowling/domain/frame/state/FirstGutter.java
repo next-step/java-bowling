@@ -1,12 +1,11 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.pin.Pins;
-import bowling.domain.score.Score;
 
-public class FirstBowl implements State, Calculable {
+public class FirstGutter implements State {
     private final Pins first;
 
-    FirstBowl(Pins first) {
+    FirstGutter(final Pins first) {
         this.first = first;
     }
 
@@ -14,12 +13,12 @@ public class FirstBowl implements State, Calculable {
     public State roll(final Pins second) {
         Pins knockOverPins = first.add(second);
 
-        if (knockOverPins.isSpare()) {
-            return new Spare(second);
-        }
-
         if (second.isGutter()) {
             return new SecondGutter();
+        }
+
+        if (knockOverPins.isSpare()) {
+            return new Spare(second);
         }
 
         return new Miss(second);
@@ -32,16 +31,11 @@ public class FirstBowl implements State, Calculable {
 
     @Override
     public String toResult() {
-        return String.valueOf(first.count());
+        return StateSymbol.GUTTER.getSymbol();
     }
 
     @Override
     public int getKnockOverCount() {
-        return first.count();
-    }
-
-    @Override
-    public Score getScore() {
-        return new Score(first.count(), Score.ZERO);
+        return Pins.ZERO;
     }
 }

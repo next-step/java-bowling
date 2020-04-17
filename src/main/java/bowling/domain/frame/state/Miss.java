@@ -1,13 +1,12 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
-public class Miss implements State {
-    private final Pins first;
+public class Miss implements State, Calculable {
     private final Pins second;
 
-    Miss(final Pins first, final Pins second) {
-        this.first = first;
+    Miss(final Pins second) {
         this.second = second;
     }
 
@@ -23,6 +22,19 @@ public class Miss implements State {
 
     @Override
     public String toResult() {
-        return first.count() + State.DELIMITER + second.count();
+        if (second.isGutter()) {
+            return StateSymbol.GUTTER.getSymbol();
+        }
+        return String.valueOf(second.count());
+    }
+
+    @Override
+    public int getKnockOverCount() {
+        return second.count();
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(second.count(), Score.ZERO);
     }
 }

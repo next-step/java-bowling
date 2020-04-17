@@ -1,37 +1,33 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.pin.BowlCount;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GutterTest {
-    @DisplayName("첫번째, 두번째 투구 다 거터일경우 -|-를 출력한다.")
+    @DisplayName("첫번째, 두번째 투구 다 거터일경우 - 를 출력한다.")
     @Test
     void gutter() {
-        String expect = "-|-";
-        State gutter = new Gutter(Pins.GUTTER_PINS, Pins.GUTTER_PINS);
+        String expect = "-";
 
-        assertThat(gutter.toResult()).isEqualTo(expect);
+        State first = new FirstGutter(Pins.GUTTER_PINS);
+        State second = first.roll(Pins.GUTTER_PINS);
+
+        assertThat(first.toResult()).isEqualTo(expect);
+        assertThat(second.toResult()).isEqualTo(expect);
     }
 
-    @DisplayName("첫번째만 거터일경우 -|? 를 출력한다.")
+    @DisplayName("SecondGutter의 Score를 가져올 수 있다.")
     @Test
-    void leftGutter() {
-        String expect = "-|5";
-        State gutter = new Gutter(Pins.GUTTER_PINS, Pins.of().knockOver(new BowlCount(5)));
+    void getScore() {
+        State first = new FirstGutter(Pins.GUTTER_PINS);
+        State second = first.roll(Pins.GUTTER_PINS);
 
-        assertThat(gutter.toResult()).isEqualTo(expect);
-    }
+        final Score score = ((Calculable) second).getScore();
 
-    @DisplayName("두번째만 거터일경우 ?|- 를 출력한다.")
-    @Test
-    void rightGutter() {
-        String expect = "5|-";
-        State gutter = new Gutter(Pins.of().knockOver(new BowlCount(5)), Pins.GUTTER_PINS);
-
-        assertThat(gutter.toResult()).isEqualTo(expect);
+        assertThat(score).isEqualTo(new Score(0, 0));
     }
 }

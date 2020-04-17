@@ -1,10 +1,12 @@
 package bowling.view;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import bowling.controller.BowlingGame;
+import bowling.domain.player.Player;
+import bowling.view.format.NameFormatter;
 
 public class OutputView {
-    private static final String DELIMITER = "|";
+    public static final String DELIMITER = "|";
+    public static final String EMPTY_STRING = "";
     private static final String FRAMES_HEADER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
 
     private OutputView() {}
@@ -13,12 +15,19 @@ public class OutputView {
         System.out.println(FRAMES_HEADER);
     }
 
-    public static void printOverHead(String frameStates) {
+    public static void printOverHead(BowlingGame game) {
         printFramesHeader();
-        final String[] table = frameStates.split(",");
-        final String result = Arrays.stream(table)
-                                    .collect(Collectors.joining(DELIMITER, DELIMITER, DELIMITER));
-        System.out.println(result);
+        printPlayerName(game.getCurrentPlayer());
+        StateView.print(game.getStates());
+        ScoreView.print(game.getScores());
         System.out.println();
+    }
+
+    private static void printPlayerName(final Player currentPlayer) {
+        System.out.print(formatName(currentPlayer.name()));
+    }
+
+    private static String formatName(final String name) {
+        return DELIMITER + NameFormatter.format(name) + DELIMITER;
     }
 }
