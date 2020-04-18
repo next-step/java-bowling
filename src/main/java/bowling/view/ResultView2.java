@@ -24,11 +24,38 @@ public class ResultView2 {
     }
 
     private static void printOneFrame(GameResults gameResults, int frameId){
-        for (int i=0; i<gameResults.getSize(); i++){
-            System.out.println(BOWLING_FRAME);
-            for(int j=0; j<gameResults.getSize(); j++){
-                printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
+        if(frameId == FRAME_ID_FIRST){
+            for(int i=0; i<gameResults.getSize(); i++){
+                System.out.println(BOWLING_FRAME);
+                for (int j=0; j<gameResults.getSize(); j++){
+                    if(i==j){
+                        printFirstFrameFirst(gameResults.getResultByIndex(j));
+                    }
+                    if(i<j){
+                        printName(gameResults.getResultByIndex(j));
+                    }
 
+                    if(i>j){
+                        printFirstFrameFirst(gameResults.getResultByIndex(j));
+                    }
+                }
+            }
+        } else {
+            for (int i=0; i<gameResults.getSize(); i++){
+                System.out.println(BOWLING_FRAME);
+                for(int j=0; j<gameResults.getSize(); j++){
+                    if(i==j){
+                        printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
+                    }
+
+                    if(i<j){
+                        printOneFrameFirst(gameResults.getResultByIndex(j), frameId - 1);
+                    }
+
+                    if(i>j){
+                        printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
+                    }
+                }
             }
         }
 
@@ -41,6 +68,23 @@ public class ResultView2 {
         }
 
         System.out.println();
+        System.out.println();
+    }
+
+    private static void printName(GameResult gameResult){
+        StringBuilder name = new StringBuilder();
+        name.append(String.format(NAME, gameResult.getName()));
+
+        System.out.println(name.toString());
+        System.out.println();
+    }
+
+    private static void printFirstFrameFirst(GameResult gameResult){
+        StringBuilder name = new StringBuilder();
+        name.append(String.format(NAME, gameResult.getName()));
+        name.append(String.format(FIRST_SCORE, gameResult.getFrameByFrameId(FRAME_ID_FIRST).getFirstPoint()));
+
+        System.out.println(name.toString());
         System.out.println();
     }
 
