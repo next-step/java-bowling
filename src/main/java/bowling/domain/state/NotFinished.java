@@ -1,9 +1,9 @@
 package bowling.domain.state;
 
-abstract class Ended implements State {
+abstract class NotFinished implements State {
 
     @Override
     public boolean isEndedState() {
-        return true;
+        return false;
     }
 }

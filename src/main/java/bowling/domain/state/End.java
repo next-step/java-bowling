@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-public class End extends Ended {
+public class End extends Finished {
 
     private static final String TEXT = "";
     public static final String GAME_END_ERROR = "게임이 완료되었습니다. 플레이할 수 없습니다.";

@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import static bowling.Constants.*;
 
-public class Ready implements State {
+public class Ready extends NotFinished {
 
     private static final String TEXT = "";
 
@@ -18,11 +18,6 @@ public class Ready implements State {
         }
 
         return new Playing(newFelledPin);
-    }
-
-    @Override
-    public boolean isEndedState() {
-        return false;
     }
 
     @Override

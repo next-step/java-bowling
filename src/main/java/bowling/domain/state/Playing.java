@@ -3,7 +3,7 @@ package bowling.domain.state;
 import static bowling.Constants.MAX_FELLED_PIN_COUNT;
 import static bowling.Constants.WRONG_FELLED_PIN;
 
-public class Playing implements State {
+public class Playing extends NotFinished {
 
     private final int felledPin;
 
@@ -20,11 +20,6 @@ public class Playing implements State {
         }
 
         return new Miss(felledPin, newFelledPin);
-    }
-
-    @Override
-    public boolean isEndedState() {
-        return false;
     }
 
     @Override

@@ -3,7 +3,7 @@ package bowling.domain.state;
 import static bowling.Constants.MAX_FELLED_PIN_COUNT;
 import static bowling.Constants.MIN_FELLED_PIN_COUNT;
 
-public class Gutter implements State {
+public class Gutter extends NotFinished {
 
     static final String TEXT = "-";
 
@@ -15,11 +15,6 @@ public class Gutter implements State {
         }
 
         return new Miss(MIN_FELLED_PIN_COUNT, newFelledPin);
-    }
-
-    @Override
-    public boolean isEndedState() {
-        return false;
     }
 
     @Override
