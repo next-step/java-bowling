@@ -4,6 +4,7 @@ import bowling.FrameScore;
 import bowling.framestate.State;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Spare implements State {
 
@@ -37,5 +38,10 @@ public class Spare implements State {
     @Override
     public boolean isOver() {
         return true;
+    }
+
+    @Override
+    public List<Integer> getPins() {
+        return Arrays.asList(firstPin, secondPin);
     }
 }

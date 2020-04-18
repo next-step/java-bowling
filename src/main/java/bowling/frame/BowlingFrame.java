@@ -2,6 +2,7 @@ package bowling.frame;
 
 import bowling.FrameScore;
 import bowling.Score;
+import bowling.framestate.State;
 
 public interface BowlingFrame {
 
@@ -25,4 +26,6 @@ public interface BowlingFrame {
     boolean isOver();
 
     BowlingFrame addNextFrame(int frameNumber);
+
+    State getState();
 }

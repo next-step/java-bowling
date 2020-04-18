@@ -7,8 +7,11 @@ import bowling.framestate.State;
 import bowling.framestate.common.Miss;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class FirstBowlLastFrame implements State {
+
     private final int countOfPin;
 
     private FirstBowlLastFrame(final int countOfPin) {
@@ -41,5 +44,10 @@ public class FirstBowlLastFrame implements State {
     @Override
     public boolean isOver() {
         return false;
+    }
+
+    @Override
+    public List<Integer> getPins() {
+        return Collections.singletonList(countOfPin);
     }
 }

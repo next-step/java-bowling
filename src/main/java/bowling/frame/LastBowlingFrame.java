@@ -49,4 +49,9 @@ public class LastBowlingFrame implements BowlingFrame {
     public BowlingFrame addNextFrame(final int frameNumber) {
         throw new IllegalStateException("It is last frame. can not add next frame");
     }
+
+    @Override
+    public State getState() {
+        return state;
+    }
 }

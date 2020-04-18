@@ -73,4 +73,9 @@ public class CommonBowlingFrame implements BowlingFrame {
         return nextFrame;
     }
 
+    @Override
+    public State getState() {
+        return state;
+    }
+
 }

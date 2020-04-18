@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.frame.BowlingFrames;
+
 public class BowlingGame {
 
     private final Player player;

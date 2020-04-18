@@ -6,6 +6,8 @@ import bowling.Score;
 import bowling.framestate.State;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class FirstBowl implements State {
 
@@ -43,4 +45,8 @@ public class FirstBowl implements State {
         return false;
     }
 
+    @Override
+    public List<Integer> getPins() {
+        return Collections.singletonList(countOfPin);
+    }
 }

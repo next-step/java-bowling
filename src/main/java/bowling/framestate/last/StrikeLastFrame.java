@@ -6,6 +6,7 @@ import bowling.Score;
 import bowling.framestate.State;
 
 import java.util.Collections;
+import java.util.List;
 
 public class StrikeLastFrame implements State {
 
@@ -34,5 +35,10 @@ public class StrikeLastFrame implements State {
     @Override
     public boolean isOver() {
         return false;
+    }
+
+    @Override
+    public List<Integer> getPins() {
+        return Collections.singletonList(10);
     }
 }

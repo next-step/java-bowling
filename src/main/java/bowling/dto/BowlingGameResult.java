@@ -2,31 +2,38 @@ package bowling.dto;
 
 import bowling.BowlingGame;
 import bowling.Player;
+import bowling.frame.BowlingFrames;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BowlingGameResult {
 
     private final String name;
-    private final FrameScoreConsoleResults frameScoreConsoleResults;
+    private final List<BowlingFrameConsoleResult> bowlingFrameConsoleResults;
 
-    private BowlingGameResult(final String name, final FrameScoreConsoleResults frameScoreConsoleResults) {
+    private BowlingGameResult(final String name, final List<BowlingFrameConsoleResult> bowlingFrameConsoleResults) {
         this.name = name;
-        this.frameScoreConsoleResults = frameScoreConsoleResults;
+        this.bowlingFrameConsoleResults = bowlingFrameConsoleResults;
     }
 
     public static BowlingGameResult newInstance(final BowlingGame bowlingGame) {
         Player player = bowlingGame.getPlayer();
         BowlingFrames bowlingFrames = bowlingGame.getBowlingFrames();
 
-        return new BowlingGameResult(player.getName(), FrameScoreConsoleResults.newInstance(bowlingFrames));
+        List<BowlingFrameConsoleResult> bowlingFrameConsoleResults = bowlingFrames.getFrames()
+                .stream()
+                .map(BowlingFrameConsoleResult::newInstance)
+                .collect(Collectors.toList());
+
+        return new BowlingGameResult(player.getName(), bowlingFrameConsoleResults);
     }
 
     public String getName() {
         return name;
     }
 
-    public List<FrameScoreConsoleResult> getFrameScores() {
-        return frameScoreConsoleResults.getFrameScoreConsoleResults();
+    public List<BowlingFrameConsoleResult> getBowlingFrameConsoleResults() {
+        return bowlingFrameConsoleResults;
     }
 }

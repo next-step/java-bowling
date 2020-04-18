@@ -1,6 +1,4 @@
-package bowling;
-
-import bowling.frame.BowlingFrame;
+package bowling.frame;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,5 +41,9 @@ public class BowlingFrames {
 
     public int size() {
         return frames.size();
+    }
+
+    public List<BowlingFrame> getFrames() {
+        return frames;
     }
 }

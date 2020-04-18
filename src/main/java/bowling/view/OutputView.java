@@ -1,8 +1,5 @@
 package bowling.view;
 
-import bowling.dto.BowlingGameResult;
-import bowling.dto.FrameScoreConsoleResult;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;

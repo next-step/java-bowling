@@ -22,4 +22,8 @@ public class Score {
     public Score add(final int score) {
         return new Score(this.score + score);
     }
+
+    public int getScore() {
+        return score;
+    }
 }

@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.frame.BowlingFrames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

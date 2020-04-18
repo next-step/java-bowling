@@ -3,7 +3,9 @@ package bowling.framestate.common;
 import bowling.FrameScore;
 import bowling.framestate.State;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class Strike implements State {
 
@@ -32,5 +34,10 @@ public class Strike implements State {
     @Override
     public boolean isOver() {
         return true;
+    }
+
+    @Override
+    public List<Integer> getPins() {
+        return Collections.singletonList(10);
     }
 }

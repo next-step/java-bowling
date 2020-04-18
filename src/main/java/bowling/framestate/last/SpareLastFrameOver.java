@@ -6,6 +6,7 @@ import bowling.Score;
 import bowling.framestate.State;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +47,11 @@ public class SpareLastFrameOver implements State {
     @Override
     public boolean isOver() {
         return true;
+    }
+
+    @Override
+    public List<Integer> getPins() {
+        return pins;
     }
 
     private Score calculateScore() {

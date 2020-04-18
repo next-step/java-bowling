@@ -6,6 +6,7 @@ import bowling.Score;
 import bowling.framestate.State;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Miss implements State {
 
@@ -39,5 +40,10 @@ public class Miss implements State {
     @Override
     public boolean isOver() {
         return true;
+    }
+
+    @Override
+    public List<Integer> getPins() {
+        return Arrays.asList(firstPin, secondPin);
     }
 }
