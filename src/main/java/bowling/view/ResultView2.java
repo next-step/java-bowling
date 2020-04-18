@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
 import bowling.domain.result.GameResult;
 import bowling.domain.result.GameResults;
 
@@ -77,15 +76,15 @@ public class ResultView2 {
             System.out.println(BOWLING_FRAME);
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i == j) {
-                    printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
+                    printNormalFrameFirst(gameResults.getResultByIndex(j), frameId);
                 }
 
                 if (i < j) {
-                    printOneFrameSecond(gameResults.getResultByIndex(j), frameId - 1);
+                    printNormalFrameSecond(gameResults.getResultByIndex(j), frameId - 1);
                 }
 
                 if (i > j) {
-                    printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
+                    printNormalFrameFirst(gameResults.getResultByIndex(j), frameId);
                 }
             }
         }
@@ -99,11 +98,11 @@ public class ResultView2 {
             System.out.println(BOWLING_FRAME);
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
-                    printOneFrameSecond(gameResults.getResultByIndex(j), frameId);
+                    printNormalFrameSecond(gameResults.getResultByIndex(j), frameId);
                 }
 
                 if (i < j) {
-                    printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
+                    printNormalFrameFirst(gameResults.getResultByIndex(j), frameId);
                 }
             }
         }
@@ -139,7 +138,7 @@ public class ResultView2 {
         System.out.println();
     }
 
-    private static void printOneFrameFirst(GameResult gameResult, int frameId) {
+    private static void printNormalFrameFirst(GameResult gameResult, int frameId) {
         StringBuilder name = new StringBuilder();
         name.append(String.format(NAME, gameResult.getName()));
 
@@ -153,7 +152,7 @@ public class ResultView2 {
         System.out.println();
     }
 
-    private static void printOneFrameSecond(GameResult gameResult, int frameId) {
+    private static void printNormalFrameSecond(GameResult gameResult, int frameId) {
         StringBuilder name = new StringBuilder();
         name.append(String.format(NAME, gameResult.getName()));
 
