@@ -1,5 +1,6 @@
 package bowling;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class ViewUtils {
@@ -18,7 +19,7 @@ public class ViewUtils {
     public static String readLine() {
         String input = scanner.nextLine();
 
-        if (input == null || input.isEmpty()) {
+        if (Objects.isNull(input) || input.isEmpty()) {
             throw new IllegalArgumentException(INPUT_NULL_EMPTY_EXCEPTION);
         }
         return input;
