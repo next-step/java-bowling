@@ -7,7 +7,7 @@ public class BowlingGame {
 
     private BowlingGame(final Player player) {
         this.player = player;
-        this.bowlingFrames = new BowlingFrames();
+        this.bowlingFrames = BowlingFrames.newInstance();
     }
 
     public static BowlingGame newInstance(final String name) {

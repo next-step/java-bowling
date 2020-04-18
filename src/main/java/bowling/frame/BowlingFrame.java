@@ -1,6 +1,13 @@
-package bowling;
+package bowling.frame;
+
+import bowling.FrameScore;
+import bowling.Score;
 
 public interface BowlingFrame {
+
+    static BowlingFrame createFirstFrame() {
+        return newInstance(1);
+    }
 
     static BowlingFrame newInstance(final int frameNumber) {
         if (frameNumber == 10) {

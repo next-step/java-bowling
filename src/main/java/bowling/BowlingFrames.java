@@ -1,23 +1,47 @@
 package bowling;
 
-public class BowlingFrames {
-    private final BowlingFrame firstFrame;
-    private BowlingFrame activeFrame;
+import bowling.frame.BowlingFrame;
 
-    private BowlingFrames(final BowlingFrame firstFrame, final BowlingFrame activeFrame) {
-        this.firstFrame = firstFrame;
-        this.activeFrame = activeFrame;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class BowlingFrames {
+    public static final int MAX_BOWLING_FRAME_SIZE = 10;
+
+    private final List<BowlingFrame> frames;
+
+    private BowlingFrames(final List<BowlingFrame> frames) {
+        this.frames = new ArrayList<>(frames);
     }
 
     public static BowlingFrames newInstance() {
-        BowlingFrame firstFrame = CommonBowlingFrame.newInstance(1);
-        BowlingFrame activeFrame = firstFrame;
-
-        return new BowlingFrames(firstFrame, activeFrame);
+        BowlingFrame firstFrame = BowlingFrame.createFirstFrame();
+        return new BowlingFrames(Collections.singletonList(firstFrame));
     }
 
     public void bowl(final int countOfPin) {
-        activeFrame.bowl(countOfPin);
+        BowlingFrame recentFrame = getRecentBowlingFrame();
+        recentFrame.bowl(countOfPin);
+
+        if (recentFrame.isOver() && frames.size() < MAX_BOWLING_FRAME_SIZE) {
+            frames.add(recentFrame.addNextFrame(frames.size()));
+        }
     }
 
+    public boolean isAllFrameOver() {
+        if (getRecentBowlingFrame().isOver()) {
+            return frames.size() == MAX_BOWLING_FRAME_SIZE;
+        }
+
+        return false;
+    }
+
+    private BowlingFrame getRecentBowlingFrame() {
+        return frames.get(frames.size() - 1);
+    }
+
+    public int size() {
+        return frames.size();
+    }
 }

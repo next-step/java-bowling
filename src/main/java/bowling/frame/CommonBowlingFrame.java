@@ -1,5 +1,7 @@
-package bowling;
+package bowling.frame;
 
+import bowling.FrameScore;
+import bowling.Score;
 import bowling.framestate.State;
 import bowling.framestate.common.Ready;
 
