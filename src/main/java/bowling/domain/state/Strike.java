@@ -3,7 +3,7 @@ package bowling.domain.state;
 import static bowling.Constants.*;
 import static bowling.Constants.WRONG_FELLED_PIN;
 
-public class Strike implements State {
+public class Strike extends Ended {
     private static final String TEXT = "X";
 
     @Override
@@ -18,11 +18,6 @@ public class Strike implements State {
         }
 
         return new Playing(newFelledPin);
-    }
-
-    @Override
-    public boolean isEndedState() {
-        return true;
     }
 
     @Override

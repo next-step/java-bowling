@@ -3,7 +3,7 @@ package bowling.domain.state;
 import static bowling.Constants.*;
 import static bowling.Constants.WRONG_FELLED_PIN;
 
-public class Spare implements State {
+public class Spare extends Ended {
     private static final String TEXT = "/";
 
     private int lastPlayPoint;
@@ -26,11 +26,6 @@ public class Spare implements State {
         }
 
         return new End(newFelledPin);
-    }
-
-    @Override
-    public boolean isEndedState() {
-        return true;
     }
 
     @Override
