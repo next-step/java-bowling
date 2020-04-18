@@ -15,7 +15,7 @@ public class Player {
         this.frames = new Frames();
     }
 
-    public void play(int felledPin) {
+    public void play(PinCount felledPin) {
         frames.play(felledPin);
     }
 

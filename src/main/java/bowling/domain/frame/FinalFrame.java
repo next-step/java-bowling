@@ -20,9 +20,8 @@ public class FinalFrame implements Frame {
         return new FinalFrame(new Ready(), new StateHistory());
     }
 
-    public void play(int felledPin) {
-        assertFelledPin(felledPin);
-        state = state.play(PinCount.create(felledPin));
+    public void play(PinCount felledPin) {
+        state = state.play(felledPin);
         stateHistory.add(state);
     }
 

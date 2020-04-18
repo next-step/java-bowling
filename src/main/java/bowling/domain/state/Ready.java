@@ -11,7 +11,7 @@ public class Ready extends NotFinished {
         if (newFelledPin.isMaxPinCount()) {
             return new Strike();
         }
-        if (newFelledPin.isMinPinPoint()) {
+        if (newFelledPin.isMinPinCount()) {
             return new Gutter();
         }
 

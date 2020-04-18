@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static bowling.domain.PinCountTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FramesTest {
@@ -14,12 +15,12 @@ public class FramesTest {
     void setUp() {
         frames = new Frames();
 
-        frames.play(10);    // Strike - add Frame
-        frames.play(5);     // Playing
-        frames.play(5);     // Spare - add Frame
-        frames.play(0);     // Playing
-        frames.play(3);     // Miss - add Frame
-        frames.play(5);     // Playing
+        frames.play(pinCount10);    // Strike - add Frame
+        frames.play(pinCount5);     // Playing
+        frames.play(pinCount5);     // Spare - add Frame
+        frames.play(pinCount0);     // Playing
+        frames.play(pinCount1);     // Miss - add Frame
+        frames.play(pinCount5);     // Playing
     }
 
     @Test

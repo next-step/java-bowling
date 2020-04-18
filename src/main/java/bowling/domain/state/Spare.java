@@ -18,7 +18,7 @@ public class Spare extends Finished {
         if (newFelledPin.isMaxPinCount()) {
             return new Strike();
         }
-        if (newFelledPin.isMinPinPoint()) {
+        if (newFelledPin.isMinPinCount()) {
             return new Gutter();
         }
 

@@ -1,10 +1,12 @@
 package bowling.domain.frame;
 
+import bowling.domain.PinCount;
 import bowling.domain.state.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static bowling.Constants.WRONG_FELLED_PIN;
+import static bowling.domain.PinCountTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -13,9 +15,8 @@ public class FrameTest {
     @Test
     @DisplayName("일반 Frame의 수는 10회 이상이 될 수 없다.")
     void assertNormalFrameNumber() {
-        FrameNumber frameNumber = new FrameNumber(10);
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            NormalFrame.create(frameNumber);
+            NormalFrame.create(new FrameNumber(10));
         }).withMessage(FrameNumber.OVER_NORMAL_FRAME_NO_ERROR);
     }
 
@@ -24,10 +25,9 @@ public class FrameTest {
     void assertFirstFelledPin() {
         FrameNumber frameNumber = new FrameNumber(1);
         Frame frame = NormalFrame.create(frameNumber);
-        int felledPin = 11;
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            frame.play(felledPin);
+            frame.play(PinCount.create(11));
         }).withMessage(WRONG_FELLED_PIN);
     }
 
@@ -36,13 +36,11 @@ public class FrameTest {
     void assertSecondFelledPin() {
         FrameNumber frameNumber = new FrameNumber(1);
         Frame frame = NormalFrame.create(frameNumber);
-        int firstFelledPin = 2;
-        int secondFelledPin = 9;
 
-        frame.play(firstFelledPin);
+        frame.play(pinCount5);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            frame.play(secondFelledPin);
+            frame.play(pinCount10);
         }).withMessage(WRONG_FELLED_PIN);
     }
 
@@ -83,7 +81,7 @@ public class FrameTest {
         FrameNumber frameNumber = new FrameNumber(1);
         Frame frame = NormalFrame.create(frameNumber);
 
-        frame.play(10);
+        frame.play(pinCount10);
 
         Frame nextFrame = frame.getNext();
         assertThat(nextFrame.getFrameNumber()).isEqualTo(2);
@@ -95,8 +93,8 @@ public class FrameTest {
         FrameNumber frameNumber = new FrameNumber(1);
         Frame frame = NormalFrame.create(frameNumber);
 
-        frame.play(1);
-        frame.play(0);
+        frame.play(pinCount1);
+        frame.play(pinCount0);
 
         Frame nextFrame = frame.getNext();
         assertThat(nextFrame.getFrameNumber()).isEqualTo(2);
@@ -107,12 +105,12 @@ public class FrameTest {
     void isEndedFrameSpare() {
         Frame frame = FinalFrame.create();
 
-        frame.play(5);
-        frame.play(5);
+        frame.play(pinCount5);
+        frame.play(pinCount5);
 
         assertThat(frame.isEndedFrame()).isFalse();
 
-        frame.play(5);
+        frame.play(pinCount5);
 
         assertThat(frame.isEndedFrame()).isTrue();
     }
@@ -122,12 +120,12 @@ public class FrameTest {
     void isEndedFrameStrike() {
         Frame frame = FinalFrame.create();
 
-        frame.play(10);
+        frame.play(pinCount10);
 
         assertThat(frame.isEndedFrame()).isFalse();
 
-        frame.play(5);
-        frame.play(1);
+        frame.play(pinCount5);
+        frame.play(pinCount1);
 
         assertThat(frame.isEndedFrame()).isTrue();
     }

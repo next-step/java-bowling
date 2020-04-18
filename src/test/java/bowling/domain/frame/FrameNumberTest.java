@@ -27,6 +27,6 @@ public class FrameNumberTest {
     @DisplayName("현재 FrameNumber의 다음 숫자륿 반환한다.")
     void getNext() {
         int frameNumber = 1;
-        assertThat(new FrameNumber(frameNumber).getNext()).isEqualTo(2);
+        assertThat(new FrameNumber(frameNumber).getNext().getValue()).isEqualTo(2);
     }
 }

@@ -1,5 +1,6 @@
 package bowling.controller;
 
+import bowling.domain.PinCount;
 import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.OutputView;
@@ -9,7 +10,8 @@ public class BowlingGameController {
         Player player = new Player(inputView.getPlayerName());
 
         while (!player.isEnd()) {
-            player.play(inputView.getFelledPin(player.getCurrentFrameNumber()));
+            int felledPin = inputView.getFelledPin(player.getCurrentFrameNumber());
+            player.play(PinCount.create(felledPin));
 
             outputView.showFrameResult(player);
         }

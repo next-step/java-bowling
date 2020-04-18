@@ -23,9 +23,8 @@ public class NormalFrame implements Frame {
         return new NormalFrame(frameNumber, new Ready(), new StateHistory());
     }
 
-    public void play(int felledPin) {
-        assertFelledPin(felledPin);
-        state = state.play(PinCount.create(felledPin));
+    public void play(PinCount felledPin) {
+        state = state.play(felledPin);
         stateHistory.add(state);
     }
 
@@ -60,11 +59,5 @@ public class NormalFrame implements Frame {
     @Override
     public StateHistory getStateHistory() {
         return stateHistory;
-    }
-
-    private void assertFelledPin(int felledPin) {
-        if (felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
-            throw new IllegalArgumentException(WRONG_FELLED_PIN);
-        }
     }
 }

@@ -1,11 +1,12 @@
 package bowling.domain.frame;
 
+import bowling.domain.PinCount;
 import bowling.domain.state.State;
 import bowling.domain.state.StateHistory;
 
 public interface Frame {
 
-    void play(int felledPin);
+    void play(PinCount felledPin);
 
     State getState();
 

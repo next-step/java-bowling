@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.PinCount;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +16,7 @@ public class Frames {
         frames.add(NormalFrame.create(new FrameNumber(FIRST_FRAME_NUMBER)));
     }
 
-    public void play(int felledPin) {
+    public void play(PinCount felledPin) {
         Frame frame = getCurrentFrame();
         frame.play(felledPin);
 
