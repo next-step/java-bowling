@@ -1,6 +1,5 @@
 package bowling.dto;
 
-import bowling.BowlingFrames;
 import bowling.BowlingGame;
 import bowling.Player;
 

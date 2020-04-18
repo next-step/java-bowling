@@ -1,9 +1,5 @@
 package bowling.dto;
 
-import bowling.BowlingFrame;
-import bowling.BowlingFrames;
-import bowling.NextAddingUpScores;
-
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;

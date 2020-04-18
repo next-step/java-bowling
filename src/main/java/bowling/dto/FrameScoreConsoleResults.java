@@ -1,8 +1,5 @@
 package bowling.dto;
 
-import bowling.BowlingFrame;
-import bowling.BowlingFrames;
-
 import java.util.ArrayList;
 import java.util.List;
 

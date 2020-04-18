@@ -1,9 +1,5 @@
 package bowling.dto;
 
-import bowling.FrameScore;
-import bowling.FrameScoreResult;
-import bowling.Score;
-
 import java.util.ArrayList;
 import java.util.List;
 

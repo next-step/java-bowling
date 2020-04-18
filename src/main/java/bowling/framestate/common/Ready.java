@@ -1,26 +1,26 @@
-package bowling.refactor.framestate.last;
+package bowling.framestate.common;
 
-import bowling.refactor.FrameScore;
-import bowling.refactor.framestate.State;
+import bowling.FrameScore;
+import bowling.framestate.State;
 
 import java.util.Arrays;
 
-public class ReadyLastFrame implements State {
+public class Ready implements State {
 
-    public ReadyLastFrame() {
+    public Ready() {
     }
 
-    public static ReadyLastFrame newInstance() {
-        return new ReadyLastFrame();
+    public static Ready newInstance() {
+        return new Ready();
     }
 
     @Override
     public State Bowl(final int countOfPin) {
         if (countOfPin == 10) {
-            return StrikeLastFrame.newInstance();
+            return Strike.newInstance();
         }
 
-        return FirstBowlLastFrame.newInstance(countOfPin);
+        return FirstBowl.newInstance(countOfPin);
     }
 
     @Override

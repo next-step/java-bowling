@@ -1,10 +1,5 @@
 package bowling.dto;
 
-import bowling.BowlingFrame;
-import bowling.FrameScoreResult;
-import bowling.NextAddingUpScores;
-import bowling.SubTotal;
-
 import java.util.Objects;
 
 public class SubTotalConsoleResult {

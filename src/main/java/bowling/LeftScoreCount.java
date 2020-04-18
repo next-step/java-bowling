@@ -1,4 +1,4 @@
-package bowling.refactor;
+package bowling;
 
 public class LeftScoreCount {
 

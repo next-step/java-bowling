@@ -1,7 +1,7 @@
-package bowling.refactor.framestate.common;
+package bowling.framestate.common;
 
-import bowling.refactor.FrameScore;
-import bowling.refactor.framestate.State;
+import bowling.FrameScore;
+import bowling.framestate.State;
 
 import java.util.Collections;
 

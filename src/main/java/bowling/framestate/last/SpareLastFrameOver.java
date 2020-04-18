@@ -1,12 +1,11 @@
-package bowling.refactor.framestate.last;
+package bowling.framestate.last;
 
-import bowling.refactor.FrameScore;
-import bowling.refactor.LeftScoreCount;
-import bowling.refactor.Score;
-import bowling.refactor.framestate.State;
+import bowling.FrameScore;
+import bowling.LeftScoreCount;
+import bowling.Score;
+import bowling.framestate.State;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 

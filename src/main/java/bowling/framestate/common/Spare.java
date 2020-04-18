@@ -1,24 +1,22 @@
-package bowling.refactor.framestate.common;
+package bowling.framestate.common;
 
-import bowling.refactor.FrameScore;
-import bowling.refactor.LeftScoreCount;
-import bowling.refactor.Score;
-import bowling.refactor.framestate.State;
+import bowling.FrameScore;
+import bowling.framestate.State;
 
 import java.util.Arrays;
 
-public class Miss implements State {
+public class Spare implements State {
 
     private final int firstPin;
     private final int secondPin;
 
-    private Miss(final int firstPin, final int secondPin) {
+    private Spare(final int firstPin, final int secondPin) {
         this.firstPin = firstPin;
         this.secondPin = secondPin;
     }
 
-    public static Miss newInstance(final int firstPin, final int secondPin) {
-        return new Miss(firstPin, secondPin);
+    public static Spare newInstance(final int firstPin, final int secondPin) {
+        return new Spare(firstPin, secondPin);
     }
 
     @Override
@@ -28,7 +26,7 @@ public class Miss implements State {
 
     @Override
     public FrameScore createFrameScore() {
-        return FrameScore.newInstance(Score.of(firstPin + secondPin), LeftScoreCount.of(0));
+        return FrameScore.createSpare();
     }
 
     @Override

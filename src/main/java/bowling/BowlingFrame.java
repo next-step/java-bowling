@@ -1,16 +1,36 @@
 package bowling;
 
-public interface BowlingFrame {
+import bowling.framestate.State;
+import bowling.framestate.common.Ready;
 
-    void bowl(int scoreCount);
+public class BowlingFrame {
 
-    boolean isOver();
+    private State state;
+    private BowlingFrame nextFrame;
 
-    int sum();
+    private BowlingFrame() {
+        this.state = Ready.newInstance();
+        this.nextFrame = null;
+    }
 
-    FrameScoreResult getResult();
+    public Score getScore() {
+        FrameScore frameScore = state.createFrameScore();
+        if (frameScore.canCalculateScore()) {
+            return frameScore.getScore();
+        }
 
-    SubTotal calculateSubTotal(final NextAddingUpScores nextAddingUpScores);
+        return nextFrame.addingUpScore(frameScore);
+    }
 
-    FrameScore getFrameScore();
+
+    private Score addingUpScore(final FrameScore beforeScore) {
+        FrameScore addingUpFrameScore = state.addingUpFrameScore(beforeScore);
+
+        if(addingUpFrameScore.canCalculateScore()) {
+            return addingUpFrameScore.getScore();
+        }
+
+        return nextFrame.addingUpScore(addingUpFrameScore);
+    }
+
 }

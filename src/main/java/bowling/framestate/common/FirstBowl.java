@@ -1,9 +1,9 @@
-package bowling.refactor.framestate.common;
+package bowling.framestate.common;
 
-import bowling.refactor.FrameScore;
-import bowling.refactor.LeftScoreCount;
-import bowling.refactor.Score;
-import bowling.refactor.framestate.State;
+import bowling.FrameScore;
+import bowling.LeftScoreCount;
+import bowling.Score;
+import bowling.framestate.State;
 
 import java.util.Arrays;
 

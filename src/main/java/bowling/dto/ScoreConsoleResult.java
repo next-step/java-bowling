@@ -1,8 +1,5 @@
 package bowling.dto;
 
-import bowling.FrameScoreResult;
-import bowling.Score;
-
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;

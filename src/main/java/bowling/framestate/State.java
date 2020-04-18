@@ -1,6 +1,6 @@
-package bowling.refactor.framestate;
+package bowling.framestate;
 
-import bowling.refactor.FrameScore;
+import bowling.FrameScore;
 
 public interface State {
 

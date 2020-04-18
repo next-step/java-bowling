@@ -1,56 +1,74 @@
 package bowling;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 public class FrameScore {
+    private final Score score;
+    private final LeftScoreCount leftScoreCount;
 
-    private final List<Score> scores;
-
-    public FrameScore() {
-        this.scores = new ArrayList<>();
+    private FrameScore(final Score score, final LeftScoreCount leftScoreCount) {
+        validateNull(score, leftScoreCount);
+        this.score = score;
+        this.leftScoreCount = leftScoreCount;
     }
 
-    private FrameScore(final List<Score> scores) {
-        this.scores = Collections.unmodifiableList(scores);
+    private void validateNull(final Score score, final LeftScoreCount leftScoreCount) {
+        if (Objects.isNull(score) || Objects.isNull(leftScoreCount)) {
+            throw new IllegalArgumentException("score and LeftScoreCount must be not null.");
+        }
     }
 
-    public static FrameScore newInstance(final List<Integer> scoreNumbers) {
-        List<Score> scores = scoreNumbers.stream()
-                .map(Score::of)
-                .collect(Collectors.toList());
-
-        return new FrameScore(scores);
+    public static FrameScore newInstance(final Score score, final LeftScoreCount leftScoreCount) {
+        return new FrameScore(score, leftScoreCount);
     }
 
-    public void add(final int scoreCount) {
-        scores.add(Score.of(scoreCount));
+    public static FrameScore createReady() {
+        return new FrameScore(Score.of(0), LeftScoreCount.of(2));
     }
 
-    public int sum() {
-        return Score.sum(scores);
+    public static FrameScore createMiss(final Score score) {
+        return new FrameScore(score, LeftScoreCount.of(0));
     }
 
-    public boolean isSameScoreCount(final int count) {
-        return scores.size() == count;
+    public static FrameScore createSpare() {
+        return new FrameScore(Score.of(10), LeftScoreCount.of(1));
     }
 
-    public FrameScoreResult getResult() {
-        return FrameScoreResult.of(scores);
+    public static FrameScore createStrike() {
+        return new FrameScore(Score.of(10), LeftScoreCount.of(2));
     }
 
-    public List<Score> getScores() {
-        return scores;
+    public Score getScore() {
+        if (!canCalculateScore()) {
+            throw new IllegalStateException();
+        }
+        return score;
     }
 
-    public SubTotal getSubTotal() {
-        return SubTotal.newInstance(TotalScore.calculateTotalScore(scores), NextAddingUpScores.newInstance(scores));
+    public boolean canCalculateScore() {
+        return leftScoreCount.isEqualTo(0);
     }
 
-    public SubTotal getSubTotal(final NextAddingUpScores nextAddingUpScores) {
-        return SubTotal.newInstance(TotalScore.calculateTotalScore(this, nextAddingUpScores), nextAddingUpScores.update(scores));
+    public FrameScore addingUp(final List<Integer> scores) {
+        if(canCalculateScore()) {
+            return this;
+        }
+
+        return getAddingUpFrameScore(scores);
     }
 
+    private FrameScore getAddingUpFrameScore(final List<Integer> scores) {
+        LeftScoreCount updateLeftScoreCount = LeftScoreCount.of(leftScoreCount);
+        Iterator<Integer> scoreIterator = scores.iterator();
+        int addingUpScore = 0;
+
+        while(!updateLeftScoreCount.isEqualTo(0) && scoreIterator.hasNext()) {
+            addingUpScore += scoreIterator.next();
+            updateLeftScoreCount = updateLeftScoreCount.minus();
+        }
+
+        return FrameScore.newInstance(score.add(addingUpScore), updateLeftScoreCount);
+    }
 }

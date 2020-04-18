@@ -1,5 +1,6 @@
 package bowling.refactor;
 
+import bowling.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
