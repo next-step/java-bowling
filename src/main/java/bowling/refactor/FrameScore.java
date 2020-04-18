@@ -41,7 +41,7 @@ public class FrameScore {
         return score;
     }
 
-    private boolean canCalculateScore() {
+    public boolean canCalculateScore() {
         return leftScoreCount.isEqualTo(0);
     }
 }
