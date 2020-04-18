@@ -15,7 +15,6 @@ public class Playing implements State {
     public State play(int newFelledPin) {
         assertNewFelledPin(newFelledPin);
 
-        System.out.println(felledPin + newFelledPin);
         if (felledPin + newFelledPin == MAX_FELLED_PIN_COUNT) {
             return new Spare(felledPin, newFelledPin);
         }
