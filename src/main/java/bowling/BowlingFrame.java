@@ -1,36 +1,21 @@
 package bowling;
 
-import bowling.framestate.State;
-import bowling.framestate.common.Ready;
+public interface BowlingFrame {
 
-public class BowlingFrame {
-
-    private State state;
-    private BowlingFrame nextFrame;
-
-    private BowlingFrame() {
-        this.state = Ready.newInstance();
-        this.nextFrame = null;
-    }
-
-    public Score getScore() {
-        FrameScore frameScore = state.createFrameScore();
-        if (frameScore.canCalculateScore()) {
-            return frameScore.getScore();
+    static BowlingFrame newInstance(final int frameNumber) {
+        if (frameNumber == 10) {
+            return LastBowlingFrame.newInstance();
         }
-
-        return nextFrame.addingUpScore(frameScore);
+        return CommonBowlingFrame.newInstance();
     }
 
+    void bowl(int countOfPin);
 
-    private Score addingUpScore(final FrameScore beforeScore) {
-        FrameScore addingUpFrameScore = state.addingUpFrameScore(beforeScore);
+    Score getScore();
 
-        if(addingUpFrameScore.canCalculateScore()) {
-            return addingUpFrameScore.getScore();
-        }
+    Score addingUpScore(FrameScore beforeScore);
 
-        return nextFrame.addingUpScore(addingUpFrameScore);
-    }
+    boolean isOver();
 
+    BowlingFrame addNextFrame(int frameNumber);
 }
