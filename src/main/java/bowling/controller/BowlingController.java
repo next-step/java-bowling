@@ -11,7 +11,7 @@ public class BowlingController {
         while (!game.isFinished()) {
             int pinCount = InputView.getPitching(game.getCurrentFrame());
             game.addPin(pinCount);
-            ResultView.displayGameBoard(game.getGameStatus());
+            ResultView.displayGameBoard(GameAssembler.writeDto(game));
         }
     }
 

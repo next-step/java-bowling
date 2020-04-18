@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.dto.GameStatus;
-
 public class Game {
     private Player player;
     private Frames frames;
@@ -26,7 +24,11 @@ public class Game {
         return frames.size();
     }
 
-    public GameStatus getGameStatus() {
-        return new GameStatus(frames, player.getName());
+    public String getPlayerName() {
+        return player.getName();
+    }
+
+    public Frames getFrames() {
+        return new Frames(frames);
     }
 }

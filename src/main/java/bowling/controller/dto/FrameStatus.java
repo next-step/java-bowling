@@ -1,4 +1,4 @@
-package bowling.domain.dto;
+package bowling.controller.dto;
 
 import bowling.domain.pitch.Pitch;
 

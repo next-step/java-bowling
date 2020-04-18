@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.domain.dto.FrameStatus;
-import bowling.domain.dto.GameStatus;
+import bowling.controller.dto.FrameStatus;
+import bowling.controller.dto.GameStatus;
 import bowling.domain.pitch.Pitch;
 
 import java.util.Optional;

@@ -1,13 +1,11 @@
 package bowling.domain;
 
-import bowling.domain.dto.FrameStatus;
-import bowling.domain.dto.GameStatus;
+import bowling.controller.dto.FrameStatus;
+import bowling.controller.dto.GameStatus;
 import bowling.domain.pitch.Pitch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,21 +37,7 @@ public class GameTest {
     void addPinCount() {
         game.addPin(1);
     }
-
-    @DisplayName("원하는 프레임의 핀 갯수 정보를 가져온다")
-    @Test
-    void getFramePinCount() {
-        int first = 1;
-        int second = 2;
-        game.addPin(first);
-        game.addPin(second);
-
-        GameStatus gameStatus = game.getGameStatus();
-        List<Pitch> pitchList = gameStatus.getFrameStatus(0).getPitches();
-        assertThat(pitchList.get(0).getCount()).isEqualTo(1);
-        assertThat(pitchList.get(1).getCount()).isEqualTo(2);
-    }
-
+    
     @DisplayName("현재 프레임 정보를 얻어온다")
     @Test
     void getCurrentFrame() {
@@ -67,17 +51,5 @@ public class GameTest {
     void nextFrame() {
         game.addPin(10);
         assertThat(game.getCurrentFrame()).isEqualTo(2);
-    }
-
-    @DisplayName("현재 게임의 상태를 가져온다")
-    @Test
-    void getGameStatus() {
-        game.addPin(8);
-        game.addPin(2);
-        game.addPin(1);
-        GameStatus gameStatus = game.getGameStatus();
-
-        assertThat(gameStatus.getFrameStatus(0).getScore().get()).isEqualTo(11);
-        assertThat(gameStatus.getFrameStatus(3)).isEqualTo(FrameStatus.EMPTY);
     }
 }

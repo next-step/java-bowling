@@ -20,6 +20,10 @@ public class Frames {
         frames.add(new NormalFrame());
     }
 
+    public Frames(Frames frames) {
+        this.frames = new ArrayList<>(frames.frames);
+    }
+
     public Optional<Integer> getFrameScore(int frameIndex) {
         return frames.get(frameIndex).getScore();
     }
