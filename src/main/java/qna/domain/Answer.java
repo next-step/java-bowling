@@ -1,5 +1,6 @@
 package qna.domain;
 
+import java.util.List;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -71,5 +72,9 @@ public class Answer extends AbstractEntity {
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+    }
+
+    public DeleteHistory deleteBy(User javajigi) {
+        return null;
     }
 }
