@@ -3,6 +3,7 @@ package bowling.controller;
 import bowling.domain.BowlingGame;
 import bowling.domain.frame.Frame;
 import bowling.domain.Player;
+import bowling.domain.frame.Frames;
 import bowling.domain.frame.OverThrowBallException;
 import bowling.domain.point.PointOutOfRangeException;
 import bowling.view.InputView;
@@ -14,9 +15,11 @@ public class BowlingGameRun {
         Player player = InputView.inputPlayers();
         BowlingGame bowlingGame = new BowlingGame(player);
 
-        Frame frame = bowlingGame.next();
+        Frames frames = bowlingGame.getFrames();
+        Frame frame = frames.getFrame(0);
+        int frameNo;
         while (!frame.isLast()) {
-            int frameNo = bowlingGame.getFrames().getFrameNo(frame);
+            frameNo = frames.getFrameNo(frame);
             throwBallResult(frameNo, frame);
             ResultView.viewResult(bowlingGame.getFrames());
             frame = bowlingGame.next();
