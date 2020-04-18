@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static bowling.Constants.FIRST_FRAME_NUMBER;
 
@@ -28,7 +29,7 @@ public class Frames {
     }
 
     private void addFrame(Frame frame) {
-        if(frame != null) {
+        if(Objects.nonNull(frame)) {
             frames.add(frame);
         }
     }
