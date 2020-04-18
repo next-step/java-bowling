@@ -7,27 +7,20 @@ import static bowling.Constants.*;
 public class Spare extends Finished {
     private static final String TEXT = "/";
 
-    private int lastPlayPoint;
-    private int currentPlayPoint;
-    private PinCount lastPlayPoint2;
-    private PinCount currentPlayPoint2;
+    private PinCount lastPlayPoint;
+    private PinCount currentPlayPoint;
 
-    public Spare(int felledPin, int newFelledPin) {
+    public Spare(PinCount felledPin, PinCount newFelledPin) {
         this.lastPlayPoint = felledPin;
         this.currentPlayPoint = newFelledPin;
-
-        this.lastPlayPoint2 = new PinCount(felledPin);
-        this.currentPlayPoint2 = new PinCount(newFelledPin);
     }
 
     @Override
-    public State play(int newFelledPin) {
-        assertFirstFelledPin(newFelledPin);
-
-        if (newFelledPin == MAX_FELLED_PIN_COUNT) {
+    public State play(PinCount newFelledPin) {
+        if (newFelledPin.isMaxPinCount()) {
             return new Strike();
         }
-        if (newFelledPin == ZERO) {
+        if (newFelledPin.isMinPinPoint()) {
             return new Gutter();
         }
 
@@ -39,9 +32,4 @@ public class Spare extends Finished {
         return TEXT;
     }
 
-    private void assertFirstFelledPin(int felledPin) {
-        if (felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
-            throw new IllegalArgumentException(WRONG_FELLED_PIN);
-        }
-    }
 }

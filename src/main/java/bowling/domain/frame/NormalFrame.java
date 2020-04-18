@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.PinCount;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 import bowling.domain.state.StateHistory;
@@ -24,7 +25,7 @@ public class NormalFrame implements Frame {
 
     public void play(int felledPin) {
         assertFelledPin(felledPin);
-        state = state.play(felledPin);
+        state = state.play(new PinCount(felledPin));
         stateHistory.add(state);
     }
 

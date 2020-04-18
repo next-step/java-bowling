@@ -17,9 +17,25 @@ public class PinCount {
         }
     }
 
-    public void assertSumFelledPin(int lastFelledPinCount) {
-        if (lastFelledPinCount + pinCount > MAX_FELLED_PIN_COUNT) {
+    public void assertSumFelledPin(PinCount lastFelledPinCount) {
+        if (lastFelledPinCount.getValue() + pinCount > MAX_FELLED_PIN_COUNT) {
             throw new IllegalArgumentException(WRONG_FELLED_PIN);
         }
+    }
+
+    public boolean isMaxPinCount() {
+        return pinCount == MAX_FELLED_PIN_COUNT;
+    }
+
+    public boolean isMaxPinCountBySum(PinCount lastFelledPinCount) {
+        return pinCount + lastFelledPinCount.getValue() == MAX_FELLED_PIN_COUNT;
+    }
+
+    public boolean isMinPinPoint() {
+        return pinCount == MIN_FELLED_PIN_COUNT;
+    }
+
+    public int getValue() {
+        return pinCount;
     }
 }

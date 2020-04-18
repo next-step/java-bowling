@@ -1,19 +1,17 @@
 package bowling.domain.state;
 
-import static bowling.Constants.*;
+import bowling.domain.PinCount;
 
 public class Ready extends NotFinished {
 
     private static final String TEXT = "";
 
     @Override
-    public State play(int newFelledPin) {
-        assertFirstFelledPin(newFelledPin);
-
-        if (newFelledPin == MAX_FELLED_PIN_COUNT) {
+    public State play(PinCount newFelledPin) {
+        if (newFelledPin.isMaxPinCount()) {
             return new Strike();
         }
-        if (newFelledPin == ZERO) {
+        if (newFelledPin.isMinPinPoint()) {
             return new Gutter();
         }
 
@@ -25,9 +23,4 @@ public class Ready extends NotFinished {
         return TEXT;
     }
 
-    private void assertFirstFelledPin(int felledPin) {
-        if (felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
-            throw new IllegalArgumentException(WRONG_FELLED_PIN);
-        }
-    }
 }

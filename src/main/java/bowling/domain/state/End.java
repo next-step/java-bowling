@@ -1,17 +1,19 @@
 package bowling.domain.state;
 
+import bowling.domain.PinCount;
+
 public class End extends Finished {
 
     public static final String GAME_END_ERROR = "게임이 완료되었습니다. 플레이할 수 없습니다.";
     private static final String TEXT = "";
-    private final int felledPin;
+    private final PinCount felledPin;
 
-    public End(int felledPin) {
+    public End(PinCount felledPin) {
         this.felledPin = felledPin;
     }
 
     @Override
-    public State play(int newFelledPin) {
+    public State play(PinCount newFelledPin) {
         throw new IllegalStateException(GAME_END_ERROR);
     }
 

@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.PinCount;
 import bowling.domain.state.*;
 
 import static bowling.Constants.*;
@@ -22,7 +23,7 @@ public class FinalFrame implements Frame {
 
     public void play(int felledPin) {
         assertFelledPin(felledPin);
-        state = state.play(felledPin);
+        state = state.play(new PinCount(felledPin));
         stateHistory.add(state);
     }
 
