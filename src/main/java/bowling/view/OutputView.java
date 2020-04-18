@@ -26,7 +26,7 @@ public class OutputView {
     private void showState(String name, List<Frame> frames) {
         showPlayerName(name);
 
-        for(Frame frame : frames) {
+        for (Frame frame : frames) {
             showStateHistory(frame);
         }
 
@@ -45,7 +45,7 @@ public class OutputView {
     private void showStateHistory(Frame frame) {
         StringBuilder builder = new StringBuilder();
 
-        for(State state : frame.getStateHistory().getValue()) {
+        for (State state : frame.getStateHistory().getValue()) {
             appendStateContent(builder, state);
         }
 
@@ -56,7 +56,7 @@ public class OutputView {
     private void appendStateContent(StringBuilder builder, State state) {
         builder.append(state.getString());
 
-        if(!state.isEndedState()) {
+        if (!state.isEndedState()) {
             builder.append(VERTICAL_LINE);
         }
     }
@@ -65,11 +65,11 @@ public class OutputView {
         StringBuilder builder = new StringBuilder();
 
         builder.append(content);
-        for(int i = 0; i < spaceCount; i++) {
+        for (int i = 0; i < spaceCount; i++) {
             builder.append(SPACE);
         }
 
-        if(builder.length() > LENGTH_PER_FRAME) {
+        if (builder.length() > LENGTH_PER_FRAME) {
             return builder.substring(0, LENGTH_PER_FRAME);
         }
 

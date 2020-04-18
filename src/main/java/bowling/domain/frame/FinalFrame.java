@@ -45,10 +45,10 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isEndedFrame() {
-        if(getBowledCount() == 1) {
+        if (getBowledCount() == 1) {
             return isEndedFrameBowledOnce();
         }
-        if(getBowledCount() == 2) {
+        if (getBowledCount() == 2) {
             return isEndedFrameBowledTwice();
         }
         return state.isEndedState();
@@ -59,7 +59,7 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isEndedFrameBowledOnce() {
-        if(state instanceof Strike) {
+        if (state instanceof Strike) {
             return false;
         }
         return state.isEndedState();
@@ -68,11 +68,11 @@ public class FinalFrame implements Frame {
     private boolean isEndedFrameBowledTwice() {
         State firstState = stateHistory.get(0);
 
-        if(firstState instanceof Strike) {
+        if (firstState instanceof Strike) {
             return false;
         }
 
-        if(state instanceof Spare) {
+        if (state instanceof Spare) {
             return false;
         }
         return true;
@@ -89,7 +89,7 @@ public class FinalFrame implements Frame {
     }
 
     private void assertFelledPin(int felledPin) {
-        if(felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
+        if (felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
             throw new IllegalArgumentException(WRONG_FELLED_PIN);
         }
     }

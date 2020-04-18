@@ -18,7 +18,7 @@ public class ViewUtils {
     public static String readLine() {
         String input = scanner.nextLine();
 
-        if(input == null || input.isEmpty()) {
+        if (input == null || input.isEmpty()) {
             throw new IllegalArgumentException(INPUT_NULL_EMPTY_EXCEPTION);
         }
         return input;
@@ -27,7 +27,7 @@ public class ViewUtils {
     public static int readLineToInt() {
         try {
             return Integer.parseInt(readLine());
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new NumberFormatException(NUMBER_FORMAT_EXCEPTION);
         }
     }

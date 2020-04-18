@@ -10,10 +10,10 @@ public class Strike implements State {
     public State play(int newFelledPin) {
         assertFirstFelledPin(newFelledPin);
 
-        if(newFelledPin == MAX_FELLED_PIN_COUNT) {
+        if (newFelledPin == MAX_FELLED_PIN_COUNT) {
             return new Strike();
         }
-        if(newFelledPin == ZERO) {
+        if (newFelledPin == ZERO) {
             return new Gutter();
         }
 
@@ -31,7 +31,7 @@ public class Strike implements State {
     }
 
     private void assertFirstFelledPin(int felledPin) {
-        if(felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
+        if (felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
             throw new IllegalArgumentException(WRONG_FELLED_PIN);
         }
     }

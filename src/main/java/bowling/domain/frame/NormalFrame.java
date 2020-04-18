@@ -36,7 +36,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame getNext() {
-        if(frameNumber == MAX_NORMAL_FRAME_COUNT) {
+        if (frameNumber == MAX_NORMAL_FRAME_COUNT) {
             return FinalFrame.create();
         }
         return NormalFrame.create(frameNumber + 1);
@@ -68,13 +68,13 @@ public class NormalFrame implements Frame {
     }
 
     private void assertFelledPin(int felledPin) {
-        if(felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
+        if (felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
             throw new IllegalArgumentException(WRONG_FELLED_PIN);
         }
     }
 
     private void assertFrameNo(int frameNumber) {
-        if(frameNumber > MAX_NORMAL_FRAME_COUNT) {
+        if (frameNumber > MAX_NORMAL_FRAME_COUNT) {
             throw new IllegalArgumentException(OVER_NORMAL_FRAME_NO_ERROR);
         }
     }

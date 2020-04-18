@@ -10,7 +10,7 @@ public class Gutter implements State {
     @Override
     public State play(int newFelledPin) {
 
-        if(newFelledPin == MAX_FELLED_PIN_COUNT) {
+        if (newFelledPin == MAX_FELLED_PIN_COUNT) {
             return new Spare(MIN_FELLED_PIN_COUNT, newFelledPin);
         }
 

@@ -8,7 +8,7 @@ public class BowlingGameController {
     public static void start(InputView inputView, OutputView outputView) {
         Player player = new Player(inputView.getPlayerName());
 
-        while(!player.isEnd()) {
+        while (!player.isEnd()) {
             player.play(inputView.getFelledPin(player.getCurrentFrameNumber()));
 
             outputView.showFrameResult(player);

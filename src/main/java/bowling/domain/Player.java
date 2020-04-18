@@ -36,7 +36,7 @@ public class Player {
     }
 
     private void assertPlayerName(String name) {
-        if(name.length() != PLAYER_NAME_LENGTH) {
+        if (name.length() != PLAYER_NAME_LENGTH) {
             throw new IllegalArgumentException(PLAYER_NAME_ERROR);
         }
     }

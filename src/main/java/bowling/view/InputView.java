@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.ViewUtils;
-import bowling.domain.Player;
 
 public class InputView {
     private static final String PLAYER_NAME_INFORMATION = "플레이어 이름은(3 english letters)?: ";
