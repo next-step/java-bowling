@@ -6,44 +6,55 @@ import org.junit.jupiter.api.Test;
 import static bowling.Constants.WRONG_FELLED_PIN;
 import static bowling.domain.state.End.GAME_END_ERROR;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class StateTest {
     @Test
     @DisplayName("Ready에서 play를 수행했을 때의 상태")
     void playFromReady() {
-        assertThat(new Ready().play(0)).isInstanceOf(Gutter.class);
-        assertThat(new Ready().play(1)).isInstanceOf(Playing.class);
-        assertThat(new Ready().play(10)).isInstanceOf(Strike.class);
+        assertAll(
+                () -> assertThat(new Ready().play(0)).isInstanceOf(Gutter.class),
+                () -> assertThat(new Ready().play(0)).isInstanceOf(Gutter.class),
+                () -> assertThat(new Ready().play(10)).isInstanceOf(Strike.class)
+        );
     }
 
     @Test
     @DisplayName("Playing 상태로부터 play를 수행했을 때의 상태")
     void playFromPlaying() {
-        assertThat(new Playing(5).play(5)).isInstanceOf(Spare.class);
-        assertThat(new Playing(5).play(3)).isInstanceOf(Miss.class);
+        assertAll(
+                () -> assertThat(new Playing(5).play(5)).isInstanceOf(Spare.class),
+                () -> assertThat(new Playing(5).play(3)).isInstanceOf(Miss.class)
+        );
     }
 
     @Test
     @DisplayName("첫 투구의 Gutter로부터 play를 수행했을 때의 상태")
     void playFromGutter() {
-        assertThat(new Gutter().play(0)).isInstanceOf(Miss.class);
-        assertThat(new Gutter().play(10)).isInstanceOf(Spare.class);
+        assertAll(
+                () -> assertThat(new Gutter().play(0)).isInstanceOf(Miss.class),
+                () -> assertThat(new Gutter().play(10)).isInstanceOf(Spare.class)
+        );
     }
 
     @Test
     @DisplayName("마지막 Frame에서 앞서 두 투구가 Spare가 나온 후 play를 수행했을 때의 상태")
     void playFromSpare() {
-        assertThat(new Spare(4, 6).play(5)).isInstanceOf(End.class);
-        assertThat(new Spare(4, 6).play(0)).isInstanceOf(Gutter.class);
-        assertThat(new Spare(4, 6).play(10)).isInstanceOf(Strike.class);
+        assertAll(
+                () -> assertThat(new Spare(4, 6).play(5)).isInstanceOf(End.class),
+                () -> assertThat(new Spare(4, 6).play(0)).isInstanceOf(Gutter.class),
+                () -> assertThat(new Spare(4, 6).play(10)).isInstanceOf(Strike.class)
+        );
     }
 
     @Test
     @DisplayName("마지막 Frame에서 앞선 투구가 Strike가 나온 후 play를 수행했을 때의 상태")
     void playFromStrike() {
-        assertThat(new Strike().play(5)).isInstanceOf(Playing.class);
-        assertThat(new Strike().play(0)).isInstanceOf(Gutter.class);
-        assertThat(new Strike().play(10)).isInstanceOf(Strike.class);
+        assertAll(
+                () -> assertThat(new Strike().play(5)).isInstanceOf(Playing.class),
+                () -> assertThat(new Strike().play(0)).isInstanceOf(Gutter.class),
+                () -> assertThat(new Strike().play(10)).isInstanceOf(Strike.class)
+        );
     }
 
     @Test

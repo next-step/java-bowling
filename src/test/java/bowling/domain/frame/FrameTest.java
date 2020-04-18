@@ -1,9 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.FrameNumber;
-import bowling.domain.frame.NormalFrame;
 import bowling.domain.state.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static bowling.Constants.WRONG_FELLED_PIN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class FrameTest {
     @Test
@@ -53,8 +50,10 @@ public class FrameTest {
         Frame normalFrame = NormalFrame.create(1);
         Frame finalFrame = FinalFrame.create();
 
-        assertThat(normalFrame.getState()).isInstanceOf(Ready.class);
-        assertThat(finalFrame.getState()).isInstanceOf(Ready.class);
+        assertAll(
+                () -> assertThat(normalFrame.getState()).isInstanceOf(Ready.class),
+                () -> assertThat(finalFrame.getState()).isInstanceOf(Ready.class)
+        );
     }
 
     @Test
