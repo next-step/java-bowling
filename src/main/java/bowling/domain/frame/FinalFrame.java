@@ -49,7 +49,7 @@ public class FinalFrame implements Frame {
         int bowledCount = getBowledCount();
 
         if (bowledCount == 1) {
-            return isEndedFrameBowledOnce();
+            return false;
         }
         if (bowledCount == 2) {
             return isEndedFrameBowledTwice();
@@ -59,13 +59,6 @@ public class FinalFrame implements Frame {
 
     private int getBowledCount() {
         return stateHistory.getSize();
-    }
-
-    private boolean isEndedFrameBowledOnce() {
-        if (state instanceof Strike) {
-            return false;
-        }
-        return state.isEndedState();
     }
 
     private boolean isEndedFrameBowledTwice() {

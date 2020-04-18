@@ -24,7 +24,7 @@ public class Frames {
         }
     }
 
-    private Frame getCurrentFrame() {
+    public Frame getCurrentFrame() {
         return frames.get(frames.size() - 1);
     }
 
