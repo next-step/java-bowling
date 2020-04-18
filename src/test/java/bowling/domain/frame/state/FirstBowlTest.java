@@ -73,4 +73,16 @@ class FirstBowlTest {
         //then
         assertFalse(firstBowl.isFinish());
     }
+
+    @DisplayName("FirstBowl 상태애서는 점수를 가져올 수 없다")
+    @Test
+    public void getScore_fail() throws Exception {
+        //given
+        FirstBowl firstBowl = new FirstBowl(new Pins(3));
+
+        //then
+        assertThatThrownBy(
+                () -> firstBowl.getScore()
+        ).isInstanceOf(BowlingException.class);
+    }
 }

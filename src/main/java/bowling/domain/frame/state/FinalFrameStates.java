@@ -1,5 +1,6 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.Score;
 import bowling.exception.BowlingException;
 
 import java.util.Arrays;
@@ -139,5 +140,14 @@ public class FinalFrameStates implements State {
 
         buffer.append(firstResult);
         return String.format("%3s ", buffer.toString());
+    }
+
+    @Override
+    public Score getScore() {
+        if (isHaveBonus()) {
+            return states.getFirst().getScore().addScore(states.getLast().getScore());
+        }
+
+        return states.getFirst().getScore();
     }
 }

@@ -1,5 +1,6 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.Score;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -113,7 +115,6 @@ class FinalFrameStatesTest {
         states = states.bowl(10);
         states = states.bowl(10);
 
-
         //then
         FinalFrameStates finalStates = states;
         assertTrue(states.isFinish());
@@ -185,5 +186,17 @@ class FinalFrameStatesTest {
         assertThatThrownBy(
                 () -> finalStates.bowl(3)
         ).isInstanceOf(BowlingException.class);
+    }
+
+    @DisplayName("finalFrame의 점수 계산")
+    @Test
+    public void getScore_success() throws Exception {
+        //given
+        FinalFrameStates states = FinalFrameStates.of();
+        states = states.bowl(10);
+        states = states.bowl(10);
+
+        //then
+        assertThat(states.getScore()).isEqualTo(new Score(20));
     }
 }

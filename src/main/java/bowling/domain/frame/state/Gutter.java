@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.exception.BowlingException;
 
 public class Gutter implements State {
@@ -32,5 +33,10 @@ public class Gutter implements State {
             return GUTTER_DASH;
         }
         return String.format(PINS_STATE, firstPins.getDownPin(), secondPins.getDownPin());
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(Pins.MIN_PIN);
     }
 }

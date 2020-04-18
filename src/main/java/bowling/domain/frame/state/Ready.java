@@ -1,6 +1,8 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
+import bowling.exception.BowlingException;
 
 public class Ready implements State {
 
@@ -22,6 +24,11 @@ public class Ready implements State {
 
     @Override
     public String getCurrentPinsState() {
-        return null;
+        throw new BowlingException();
+    }
+
+    @Override
+    public Score getScore() {
+        throw new BowlingException();
     }
 }

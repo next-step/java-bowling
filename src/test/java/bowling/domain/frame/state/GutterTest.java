@@ -1,5 +1,6 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.Score;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,5 +30,16 @@ class GutterTest {
 
         //then
         assertTrue(gutter.isFinish());
+    }
+
+    @DisplayName("Gutter 상태에서는 점수가 0점이다")
+    @Test
+    public void getScore_success() throws Exception {
+        //given
+        Gutter gutter = new Gutter();
+        Score score = new Score(0);
+
+        //then
+        assertTrue(gutter.getScore().equals(score));
     }
 }

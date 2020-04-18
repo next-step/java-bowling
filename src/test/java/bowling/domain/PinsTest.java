@@ -65,7 +65,7 @@ class PinsTest {
 
         //when
         pins = pins.bowl(5);
-        Score score = pins.getScore();
+        Score score = pins.sumScore();
 
         //then
         assertThat(score).isEqualTo(new Score(5));
@@ -79,7 +79,7 @@ class PinsTest {
 
         //when
         pins = pins.bowl(5);
-        Score score = pins.getScore(new Score(10));
+        Score score = pins.sumScore(new Score(10));
 
         //then
         assertThat(score).isEqualTo(new Score(15));

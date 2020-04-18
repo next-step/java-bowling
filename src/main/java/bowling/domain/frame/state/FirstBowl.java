@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.exception.BowlingException;
 
 public class FirstBowl implements State {
@@ -46,5 +47,10 @@ public class FirstBowl implements State {
             return "  -  ";
         }
         return String.format(PINS_STATE, firstPins.getDownPin());
+    }
+
+    @Override
+    public Score getScore() {
+        throw new BowlingException();
     }
 }

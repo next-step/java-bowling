@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.exception.BowlingException;
 
 public class Miss implements State {
@@ -36,5 +37,10 @@ public class Miss implements State {
         }
 
         return String.format(PINS_STATE, firstPins.getDownPin(), secondPins.getDownPin());
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(firstPins.getDownPin() + secondPins.getDownPin());
     }
 }

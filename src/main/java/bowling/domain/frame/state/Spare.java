@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
+import bowling.domain.Score;
 import bowling.exception.BowlingException;
 
 public class Spare implements State {
@@ -35,5 +36,10 @@ public class Spare implements State {
     @Override
     public String getCurrentPinsState() {
         return String.format(PINS_STATE, firstPins.getDownPin());
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(Pins.MAX_PIN);
     }
 }

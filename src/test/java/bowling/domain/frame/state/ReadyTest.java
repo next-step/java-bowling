@@ -1,11 +1,13 @@
 package bowling.domain.frame.state;
 
+import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class ReadyTest {
@@ -45,5 +47,27 @@ class ReadyTest {
 
         //then
         assertFalse(ready.isFinish());
+    }
+
+    @DisplayName("Ready에서는 점수를 출력할 수 없다")
+    @Test
+    public void getCurrentPinsState_fail() throws Exception {
+        Ready ready = new Ready();
+
+        //then
+        assertThatThrownBy(
+                () -> ready.getCurrentPinsState()
+        ).isInstanceOf(BowlingException.class);
+    }
+
+    @DisplayName("Ready 상태에서는 점수를 가져올 수 없다")
+    @Test
+    public void getScore_fail() throws Exception {
+        Ready ready = new Ready();
+
+        //then
+        assertThatThrownBy(
+                () -> ready.getScore()
+        ).isInstanceOf(BowlingException.class);
     }
 }

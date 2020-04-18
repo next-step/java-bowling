@@ -7,8 +7,8 @@ import java.util.Objects;
 public class Pins {
 
     public static final String PINS_COUNT_RANGE = "핀은 0~10 사이여야 합니다.";
-    private static final int MIN_PIN = 0;
-    private static final int MAX_PIN = 10;
+    public static final int MIN_PIN = 0;
+    public static final int MAX_PIN = 10;
 
     private final int pins;
 
@@ -31,13 +31,13 @@ public class Pins {
         return new Pins(count);
     }
 
-    public Score getScore(final Score current) {
+    public Score sumScore(final Score current) {
         Score pinScore = new Score(getDownPin());
         return current.addScore(pinScore);
     }
 
-    public Score getScore() {
-        return new Score(getDownPin());
+    public Score sumScore() {
+        return new Score(pins);
     }
 
     public boolean isGutter() {
