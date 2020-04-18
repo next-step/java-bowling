@@ -27,6 +27,14 @@ public class Miss implements State {
 
     @Override
     public String getCurrentPinsState() {
+        if (firstPins.isGutter()) {
+            return String.format(" -|%d  ", secondPins.getDownPin());
+        }
+
+        if (secondPins.isGutter()) {
+            return String.format("  %d|- ", secondPins.getDownPin());
+        }
+
         return String.format(PINS_STATE, firstPins.getDownPin(), secondPins.getDownPin());
     }
 }
