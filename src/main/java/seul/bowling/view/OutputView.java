@@ -1,8 +1,9 @@
-package bowling.view;
+package seul.bowling.view;
 
-import bowling.domain.*;
+import seul.bowling.domain.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -19,6 +20,7 @@ public class OutputView {
 
     private static final int ZERO = 0;
     private static final int ONE = 1;
+    private static final int MAX_CLEAR_PIN_COUNT = 10;
 
     private OutputView() {
     }
@@ -47,51 +49,46 @@ public class OutputView {
         Map<Integer, ScoreView> scoreMap = new HashMap<>();
 
         for (Frame frame : frames.getFrames()) {
-            scoreMap.putAll(addScoreBoardValue(frame));
+            scoreMap.putAll(addScoreBoardValue(frame.getIndex() + ONE, frame.getResult(), frame.getPins()));
         }
 
-        for (int i = scoreMap.size() + ONE, end = Frame.MAX_FRAME_NUMBER; i <= end; i++) {
-            scoreMap.put(i, ScoreView.of(BLANK, BLANK));
+        for (int i = scoreMap.size(), end = Frame.LAST_FRAME_INDEX; i <= end; i++) {
+            scoreMap.put(i + ONE, ScoreView.of(BLANK, BLANK));
         }
 
         return scoreMap;
     }
 
-    private static Map<Integer, ScoreView> addScoreBoardValue(Frame frame) {
+    private static Map<Integer, ScoreView> addScoreBoardValue(int frameIndex, FrameResult result, Pins pins) {
         Map<Integer, ScoreView> scoreMap = new HashMap<>();
+        String scoreValue = getScourValue(result.getStatus(), pins.getPins());
 
-        FrameRounds frameRounds = frame.getFrameRounds();
-        ScoreStatus scoreStatus = frameRounds.getScoreStatus();
-
-        String value = BLANK;
-
-        for (FrameRound frameRound : frameRounds.getFrameRounds()) {
-            value += getScourValue(frameRound.getRoundIndex(), scoreStatus.getStatus(), frameRound);
-        }
-
-        scoreMap.put(frame.getFrameIndex() + ONE, ScoreView.of(scoreStatus, value));
-
+        ScoreView scoreView = ScoreView.of(result.endScore(), result.getToTalScore(), scoreValue);
+        scoreMap.put(frameIndex, scoreView);
         return scoreMap;
     }
 
-    private static String getScourValue(int roundIndex, RoundsStatus status, FrameRound frameRound) {
+    private static String getScourValue(FrameStatus status, List<Pin> pins) {
         String value = BLANK;
 
-        if (frameRound.getRoundIndex() != ZERO) {
-            value += SEPARATOR;
-        }
+        for (int i = 0, end = pins.size(); i < end; i++) {
+            Pin pin = pins.get(i);
+            if (i != ZERO) {
+                value += SEPARATOR;
+            }
 
-        value += convertClearPinCount(roundIndex, status, frameRound.getClearPinCount());
+            value += convertClearPinCount(i, status, pin.getPin());
+        }
 
         return value;
     }
 
-    private static String convertClearPinCount(int roundIndex, RoundsStatus status, int clearPinCount) {
-        if (clearPinCount == RoundsStatus.MAX_CLEAR_PIN_COUNT) {
+    private static String convertClearPinCount(int index, FrameStatus status, int clearPinCount) {
+        if (clearPinCount == MAX_CLEAR_PIN_COUNT) {
             return STRIKE_SIGN;
         }
 
-        if (roundIndex != ZERO && status.isSpare()) {
+        if (index != ZERO && status == FrameStatus.SPARE) {
             return SPARE_SIGN;
         }
 

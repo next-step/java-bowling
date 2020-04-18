@@ -1,8 +1,8 @@
-package bowling.domain;
+package seul.bowling.domain;
 
-import bowling.exception.BowlingException;
-import bowling.exception.ExceptionType;
 import lombok.Getter;
+import seul.bowling.exception.BowlingException;
+import seul.bowling.exception.ExceptionType;
 
 public class Player {
     private static final int PLAYER_NAME_LENGTH = 3;
@@ -23,12 +23,8 @@ public class Player {
         this.frames.play(clearPinCount);
     }
 
-    public int getLastFrameNumber() {
-        return this.frames.getFrameNumber();
-    }
-
     public boolean isEnd() {
-        return this.frames.isEnd();
+        return this.frames.end();
     }
 
     private void validPlayerName(String playerName) {

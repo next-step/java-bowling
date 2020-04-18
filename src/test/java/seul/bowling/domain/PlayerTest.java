@@ -1,10 +1,10 @@
-package bowling.domain;
+package seul.bowling.domain;
 
-import bowling.exception.BowlingException;
-import bowling.exception.ExceptionType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import seul.bowling.exception.BowlingException;
+import seul.bowling.exception.ExceptionType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -36,15 +36,7 @@ public class PlayerTest {
         player.play(1);
 
         assertThat(player.getFrames().getFrames()).hasSize(1);
-        assertThat(player.getFrames().getFrames().get(0).getFrameRounds().getScoreStatus().getStatus()).isEqualTo(RoundsStatus.MISS);
-    }
-
-    @Test
-    void getLastFrameNumber() {
-        Player player = new Player("PES");
-        player.play(8);
-
-        assertThat(player.getLastFrameNumber()).isEqualTo(1);
+        assertThat(player.getFrames().getFrames().get(0).getResult().getStatus()).isEqualTo(FrameStatus.MISS);
     }
 
     @ParameterizedTest
@@ -60,4 +52,3 @@ public class PlayerTest {
         assertThat(player.isEnd()).isEqualTo(expected);
     }
 }
-

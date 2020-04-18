@@ -1,4 +1,4 @@
-package bowling.exception;
+package seul.bowling.exception;
 
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
-package bowling.view;
+package seul.bowling.view;
 
-import bowling.domain.Frames;
 import org.junit.jupiter.api.Test;
+import seul.bowling.domain.Frames;
 
 public class OutputViewTest {
     @Test
