@@ -149,7 +149,11 @@ https://www.bowlinggenius.com/ 참고
 * Board: 점수판 객체  
     * FrameResult를 통해 점수판을 만든다.     
 * Score: 점수 객체  
-    * 
+    * 각 Frame에서 Score 객체를 이용해 현재 상태의 점수를 구한다.
+    * Frame에서 현재 상태에서의 Score를 가지고 있는다.  
+    * 상태별로 Strike와 Spare는 추가 점수 개수를 각각 2개, 1개를 가지고 있다고 가정한다. 
+    * Frame에서 이 정보를 이용해 현재 점수를 계산할 수 있을지를 판단하고, 그렇지 않으면 다음 Frame으로 계산하는 것을 위임한다.  
+
 
 ### 테스트 코드 도출  
 
@@ -164,4 +168,7 @@ https://www.bowlinggenius.com/ 참고
     1. 프레임의 완료 여부 
     2. 각 상태에서 play를 수행한 후의 상태 변경  
     3. 각 투구 수 검증  
-   
+* Score  
+    1. 첫 투구가 Strike일 경우 이후 2개의 점수를 더한다.  
+    2. 첫 두 투구가 Spare일 경우 이후 1개의 점수를 더한다. 
+    3. Strike와 Spare외 각 상태 Play별 점수 산정 테스트
