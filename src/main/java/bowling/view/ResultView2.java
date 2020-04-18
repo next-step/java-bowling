@@ -36,6 +36,8 @@ public class ResultView2 {
 
     private static void printFirstFrame(GameResults gameResults, int frameId) {
         for (int i = 0; i < gameResults.getSize(); i++) {
+            System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
+            System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(frameId).getFirstPoint());
             System.out.println(BOWLING_FRAME);
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
@@ -51,6 +53,8 @@ public class ResultView2 {
         System.out.println();
 
         for (int i = 0; i < gameResults.getSize(); i++) {
+            System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
+            System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(frameId).getSecondPoint());
             System.out.println(BOWLING_FRAME);
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
@@ -68,6 +72,8 @@ public class ResultView2 {
 
     private static void printNormalFrame(GameResults gameResults, int frameId) {
         for (int i = 0; i < gameResults.getSize(); i++) {
+            System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
+            System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(frameId).getFirstPoint());
             System.out.println(BOWLING_FRAME);
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i == j) {
@@ -88,6 +94,8 @@ public class ResultView2 {
         System.out.println();
 
         for (int i = 0; i < gameResults.getSize(); i++) {
+            System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
+            System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(frameId).getSecondPoint());
             System.out.println(BOWLING_FRAME);
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
