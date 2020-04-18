@@ -14,18 +14,15 @@ import java.util.Objects;
 /**
  * 프레임은 점수를 기록하고 다음 프레임을 생성하는 책임을 가진다.
  */
-public class DefaultFrame implements Frame {
+public class DefaultFrame extends Frame {
     private static final int STRIKE_POINT = 10;
     private static final int DEFAULT_PLAY_COUNT = 2;
     private static final int FIRST_PLAY = 0;
-    private static final int ZERO_POINT = 0;
-    private static final int SECOND_PLAY = 1;
 
-    private final Scores scores;
     private final BonusScores bonusScores;
 
     private DefaultFrame(BonusScores bonusScores) {
-        this.scores = new Scores();
+        super(new Scores());
         this.bonusScores = bonusScores;
     }
 
@@ -72,16 +69,6 @@ public class DefaultFrame implements Frame {
         return getSpareOrGutterType(scores, point);
     }
 
-    private ScoreType getSpareOrGutterType(Scores scores, int point) {
-        if (point == ZERO_POINT) {
-            return ScoreType.GUTTER;
-        }
-        if (scores.size() == SECOND_PLAY && scores.currentPoint() + point == STRIKE_POINT) {
-            return ScoreType.SPARE;
-        }
-        return ScoreType.MISS;
-    }
-
     @Override
     public boolean isPlayable() {
         if (CollectionUtils.isEmpty(scores.getScores())) {
@@ -91,11 +78,6 @@ public class DefaultFrame implements Frame {
             return false;
         }
         return scores.size() < DEFAULT_PLAY_COUNT;
-    }
-
-    @Override
-    public List<Score> getScores() {
-        return new ArrayList<>(scores.getScores());
     }
 
     @Override
