@@ -9,6 +9,7 @@ import static bowling.Constants.*;
 
 public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NO = 10;
+    private static final String FINAL_FRAME_ERROR = "마지막 프레임입니다.";
 
     private State state;
     private final StateHistory stateHistory;
@@ -35,7 +36,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame getNext() {
-        return null;
+        throw new IllegalStateException(FINAL_FRAME_ERROR);
     }
 
     @Override
