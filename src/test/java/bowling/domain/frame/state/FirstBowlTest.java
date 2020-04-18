@@ -1,23 +1,37 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
+import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FirstBowlTest {
 
 
+    @DisplayName("첫투구와 두번째 투구의 쓰러뜨린 핀의 개수가 10개가 넘으면 exception")
+    @Test
+    public void validate_fail() throws Exception {
+        //given
+        FirstBowl first = new FirstBowl(new Pins(3));
+
+        //then
+        assertThatThrownBy(
+                () -> first.bowl(10)
+        ).isInstanceOf(BowlingException.class);
+    }
+
     @DisplayName("나머지 공을 모두 처리하면 spare 상태를 리턴 한다.")
     @Test
-    public void blow__success_spare() throws Exception {
+    public void blow_success_spare() throws Exception {
         //given
         FirstBowl firstBowl = new FirstBowl(new Pins(4));
 
         //when
-        State bowl = firstBowl.bowl(4);
+        State bowl = firstBowl.bowl(6);
 
         //then
         assertTrue(bowl instanceof Spare);
@@ -26,7 +40,7 @@ class FirstBowlTest {
 
     @DisplayName("공을 던져 핀이 남으면 miss 상태를 리턴한다")
     @Test
-    public void blow__success_miss() throws Exception {
+    public void blow_success_miss() throws Exception {
         //given
         FirstBowl firstBowl = new FirstBowl(new Pins(4));
 
@@ -39,9 +53,9 @@ class FirstBowlTest {
 
     @DisplayName("공을 던져 남은 핀이 10개 이면 gutter 상태를 리턴한다")
     @Test
-    public void blow__success_gutter() throws Exception {
+    public void blow_success_gutter() throws Exception {
         //given
-        FirstBowl firstBowl = new FirstBowl(new Pins(10));
+        FirstBowl firstBowl = new FirstBowl(new Pins(0));
 
         //when
         State bowl = firstBowl.bowl(0);

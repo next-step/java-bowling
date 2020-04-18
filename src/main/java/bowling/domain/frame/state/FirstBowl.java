@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
+import bowling.exception.BowlingException;
 
 public class FirstBowl implements State {
 
@@ -12,14 +13,22 @@ public class FirstBowl implements State {
         this.firstPins = firstPins;
     }
 
+    private void validatePinCount(int pinCount) {
+        if (firstPins.getTotalDownPin(new Pins(pinCount)) > 10) {
+            throw new BowlingException(Pins.PINS_COUNT_RANGE);
+        }
+    }
+
     @Override
     public State bowl(int pinsCount) {
-        Pins second = firstPins.bowl(pinsCount);
-        if (second.isFinish()) {
+        validatePinCount(pinsCount);
+        Pins second = Pins.from().bowl(pinsCount);
+
+        if (firstPins.isFinish(second)) {
             return new Spare(firstPins, second);
         }
 
-        if (second.isGutter()) {
+        if (firstPins.isGutter() && second.isGutter()) {
             return new Gutter();
         }
 
