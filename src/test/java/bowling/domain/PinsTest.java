@@ -34,8 +34,13 @@ class PinsTest {
     public void bowl_success() throws Exception {
         //given
         Pins pins = Pins.from();
+        Pins compare = new Pins(4);
 
-        pins = pins.bowl(5);
+        //when
+        pins = pins.bowl(4);
+
+        //then
+        assertTrue(pins.equals(compare));
     }
 
     @DisplayName("0~10 개 사이의 핀만 쓰러뜨릴 수 있다")
@@ -47,7 +52,7 @@ class PinsTest {
 
         //then
         assertThatThrownBy(
-                ()-> pins.bowl(count)
+                () -> pins.bowl(count)
         ).isInstanceOf(BowlingException.class);
     }
 
@@ -80,7 +85,7 @@ class PinsTest {
         assertThat(score).isEqualTo(new Score(15));
     }
 
-    @DisplayName("남은 핀이 10개 이면 gutter 상태 이다")
+    @DisplayName("쓰러뜨린 핀이 0개 이면 gutter 상태 이다")
     @Test
     public void isGutter_success() throws Exception {
         //given
@@ -88,11 +93,11 @@ class PinsTest {
         Pins pin2 = Pins.from();
 
         //then
-        assertTrue(pin1.isGutter());
+        assertFalse(pin1.isGutter());
         assertTrue(pin2.isGutter());
     }
 
-    @DisplayName("남은 핀이 없으면 완료(true)로 응답")
+    @DisplayName("쓰러뜨린 핀이 10개 이면 완료(true)로 응답")
     @Test
     public void isFinish_success() throws Exception {
         //given
@@ -100,8 +105,19 @@ class PinsTest {
         Pins min = new Pins(0);
 
         //then
-        assertFalse(max.isFinish());
-        assertTrue(min.isFinish());
+        assertTrue(max.isFinish());
+        assertFalse(min.isFinish());
+    }
+
+    @DisplayName("현재 쓰러진 핀의 개수와 전달 받은 핀의 쓰러진 개수를 더해 10개 이면 완료(true)로 응답")
+    @Test
+    public void isFinish_success_downPinCount() throws Exception {
+        //given
+        Pins first = new Pins(4);
+        Pins second = new Pins(6);
+
+        //then
+        assertTrue(first.isFinish(second));
     }
 
     @DisplayName("넘어진 핀의 개수를 반환")
@@ -118,6 +134,7 @@ class PinsTest {
         assertThat(pins.getDownPin()).isEqualTo(count);
     }
 
+    @DisplayName("넘어진 핀의 개수를 반환")
     @Test
     public void getTotalDownPin_success() throws Exception {
         //given

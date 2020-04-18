@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Pins {
 
-    private static final String PINS_COUNT_RANGE = "핀은 0~10 사이여야 합니다.";
+    public static final String PINS_COUNT_RANGE = "핀은 0~10 사이여야 합니다.";
     private static final int MIN_PIN = 0;
     private static final int MAX_PIN = 10;
 
@@ -18,7 +18,7 @@ public class Pins {
     }
 
     public static Pins from() {
-        return new Pins(MAX_PIN);
+        return new Pins(MIN_PIN);
     }
 
     private void validatePinesCount(int pins) {
@@ -28,7 +28,7 @@ public class Pins {
     }
 
     public Pins bowl(final int count) {
-        return new Pins(MAX_PIN - count);
+        return new Pins(count);
     }
 
     public Score getScore(final Score current) {
@@ -41,19 +41,23 @@ public class Pins {
     }
 
     public boolean isGutter() {
-        return pins == MAX_PIN;
-    }
-
-    public boolean isFinish() {
         return pins == MIN_PIN;
     }
 
+    public boolean isFinish() {
+        return pins == MAX_PIN;
+    }
+
+    public boolean isFinish(Pins other) {
+        return (pins + other.pins) == MAX_PIN;
+    }
+
     public int getDownPin() {
-        return MAX_PIN - this.pins;
+        return this.pins;
     }
 
     public int getTotalDownPin(Pins other) {
-        int totalDown = getDownPin() + other.getDownPin();
+        int totalDown = pins + other.pins;
         validatePinesCount(totalDown);
         return totalDown;
     }
