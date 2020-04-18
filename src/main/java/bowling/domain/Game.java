@@ -13,11 +13,11 @@ public class Game {
         return frames.isFinished();
     }
 
-    public void addPin(int count) {
+    public boolean addPin(int count) {
         if (isFinished()) {
-            return;
+            return false;
         }
-        frames.addPinCount(count);
+        return frames.addPinCount(count);
     }
 
     public int getCurrentFrame() {

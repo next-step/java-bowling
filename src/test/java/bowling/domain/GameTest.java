@@ -35,9 +35,9 @@ public class GameTest {
     @DisplayName("쓰러트린 핀 갯수를 추가한다")
     @Test
     void addPinCount() {
-        game.addPin(1);
+        assertThat(game.addPin(1)).isTrue();
     }
-    
+
     @DisplayName("현재 프레임 정보를 얻어온다")
     @Test
     void getCurrentFrame() {

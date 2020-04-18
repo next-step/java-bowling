@@ -32,11 +32,14 @@ public class Frames {
         return frames.get(index).getPitches();
     }
 
-    public void addPinCount(int pinCount) {
-        getLastFrame().addPinCount(pinCount);
+    public boolean addPinCount(int pinCount) {
+        boolean result = getLastFrame().addPinCount(pinCount);
+
         if (isAddable()) {
             frames.add(createNext());
         }
+
+        return result;
     }
 
     public int size() {
