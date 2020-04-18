@@ -1,10 +1,13 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -21,7 +24,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -71,29 +74,41 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
+    private boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
-    }
-
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> deleteBy(User user) {
-        return null;
+    public List<DeleteHistory> deleteBy(User user) throws CannotDeleteException {
+        if (!isOwner(user)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        if (!answers.canDelete(user)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+
+        deleted = true;
+        DeleteHistory questionDelete = new DeleteHistory(
+            ContentType.QUESTION,
+            getId(),
+            this.writer,
+            LocalDateTime.now()
+        );
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(questionDelete);
+        deleteHistories.addAll(answers.deleteBy(user));
+
+        return deleteHistories;
     }
 }

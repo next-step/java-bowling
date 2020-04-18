@@ -11,7 +11,7 @@ import qna.CannotDeleteException;
 public class AnswersTest {
 
   @Test
-  public void deleteSuccessfully() {
+  public void deleteSuccessfully() throws CannotDeleteException {
     Answer answer1 = AnswerTest.answerBy(UserTest.JAVAJIGI);
     Answer answer2 = AnswerTest.answerBy(UserTest.JAVAJIGI);
     Answers answers = new Answers(Arrays.asList(answer1, answer2));

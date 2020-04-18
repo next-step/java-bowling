@@ -11,7 +11,7 @@ public class AnswerTest {
     public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
     @Test
-    public void deleteSuccessfully() {
+    public void deleteSuccessfully() throws CannotDeleteException {
         Answer answer = answerBy(UserTest.JAVAJIGI);
         DeleteHistory deleteHistory = answer.deleteBy(UserTest.JAVAJIGI);
 
@@ -26,7 +26,7 @@ public class AnswerTest {
             .isInstanceOf(CannotDeleteException.class);
     }
 
-    public static Answer answerBy(User user) {
+    static Answer answerBy(User user) {
         return new Answer(user, QuestionTest.Q1, "Answer");
     }
 }

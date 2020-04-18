@@ -12,7 +12,7 @@ public class QuestionTest {
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
     @Test
-    public void deleteQuestionWithoutAnswer() {
+    public void deleteQuestionWithoutAnswer() throws CannotDeleteException {
         Question question = new Question("title1", "contents1")
             .writeBy(UserTest.JAVAJIGI);
 
@@ -23,7 +23,7 @@ public class QuestionTest {
     }
 
     @Test
-    public void deleteQuestionWithAnswer() {
+    public void deleteQuestionWithAnswer() throws CannotDeleteException {
         Question question = new Question("title1", "contents1")
             .writeBy(UserTest.JAVAJIGI);
         question.addAnswer(AnswerTest.answerBy(UserTest.JAVAJIGI));
@@ -31,7 +31,7 @@ public class QuestionTest {
         List<DeleteHistory> deleteHistories = question.deleteBy(UserTest.JAVAJIGI);
 
         assertThat(question.isDeleted()).isTrue();
-        assertThat(deleteHistories).hasSize(1);
+        assertThat(deleteHistories).hasSize(2);
     }
 
     @Test
