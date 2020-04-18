@@ -9,7 +9,7 @@ public class BowlingApplication {
 
     public static void main(String[] args) {
 
-        String name = InputView.inputPlayerNmae().trim();
+        String name = InputView.inputPlayerName().trim();
         Player player = new Player(name);
 
         int frameNumber = 1;
