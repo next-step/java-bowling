@@ -20,6 +20,6 @@ public class Miss extends Finished {
 
     @Override
     public String getString() {
-        return currentPlayPoint.isMinPinPoint() ? Gutter.TEXT : String.valueOf(currentPlayPoint);
+        return currentPlayPoint.isMinPinPoint() ? Gutter.TEXT : String.valueOf(currentPlayPoint.getValue());
     }
 }

@@ -19,6 +19,6 @@ public class End extends Finished {
 
     @Override
     public String getString() {
-        return TEXT;
+        return String.valueOf(felledPin.getValue());
     }
 }
