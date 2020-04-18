@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain.state;
 
 import bowling.domain.state.*;
 import org.junit.jupiter.api.DisplayName;

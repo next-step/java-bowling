@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain.frame;
 
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
