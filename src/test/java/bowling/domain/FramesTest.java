@@ -2,7 +2,6 @@ package bowling.domain;
 
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.NormalFrame;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

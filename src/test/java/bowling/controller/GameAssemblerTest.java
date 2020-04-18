@@ -2,7 +2,6 @@ package bowling.controller;
 
 import bowling.controller.dto.FrameStatus;
 import bowling.controller.dto.GameStatus;
-import bowling.domain.Frames;
 import bowling.domain.Game;
 import bowling.domain.pitch.Pitch;
 import org.junit.jupiter.api.BeforeEach;

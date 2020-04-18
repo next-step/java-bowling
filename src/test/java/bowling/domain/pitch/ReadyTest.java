@@ -9,10 +9,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReadyTest {
     private Ready ready;
+
     @BeforeEach
     void setUp() {
         ready = new Ready();
     }
+
     @DisplayName("볼을 리턴한다")
     @Test
     void returnBowl() {

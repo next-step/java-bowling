@@ -8,10 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FirstBowlTest {
     private FirstBowl firstBowl;
+
     @BeforeEach
     void setUp() {
         firstBowl = new FirstBowl(1);
     }
+
     @DisplayName("미스를 리턴한다")
     @Test
     void returnBowl() {
