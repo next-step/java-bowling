@@ -3,13 +3,14 @@ package qna.domain;
 import qna.CannotDeleteException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 class Answers {
     private final List<Answer> answers;
 
     Answers(List<Answer> answers) {
-        this.answers = answers;
+        this.answers = Collections.unmodifiableList(answers);
     }
 
     boolean isNotDeletable(User loginUser) {
