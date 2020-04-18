@@ -22,6 +22,18 @@ public class FrameScore {
         return new FrameScore(score, leftScoreCount);
     }
 
+    public static FrameScore createMiss(final Score score) {
+        return new FrameScore(score, LeftScoreCount.of(0));
+    }
+
+    public static FrameScore createSpare() {
+        return new FrameScore(Score.of(10), LeftScoreCount.of(1));
+    }
+
+    public static FrameScore createStrike() {
+        return new FrameScore(Score.of(10), LeftScoreCount.of(2));
+    }
+
     public Score getScore() {
         if (!canCalculateScore()) {
             throw new IllegalStateException();
