@@ -13,7 +13,7 @@ public class BowlingGameController {
             int felledPin = inputView.getFelledPin(player.getCurrentFrameNumber());
             player.play(PinCount.create(felledPin));
 
-            outputView.showFrameResult(player);
+            outputView.showFrameResult(player, player.getCurrentResult());
         }
     }
 }

@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.ViewUtils;
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.FrameResults;
 import bowling.domain.player.Player;
 import bowling.domain.state.State;
 
@@ -13,10 +14,10 @@ public class OutputView {
     private static final String SPACE = " ";
     private static final int LENGTH_PER_FRAME = 6;
 
-    public void showFrameResult(Player player) {
+    public void showFrameResult(Player player, FrameResults currentResult) {
         showBoardHeader();
-        showState(player.getName(), player.getCurrentResult().getValue());
-        showScore(player.getCurrentResult().getScores());
+        showState(player.getName(), currentResult.getValue());
+        showScore(currentResult.getScores());
         newLine();
     }
 
