@@ -38,17 +38,19 @@ class PinsTest {
         pins = pins.bowl(5);
     }
 
-    @DisplayName("남은 핀보다 많은 핀을 넘어뜨리려 하면 exception")
-    @Test
-    public void bowl_fail() throws Exception {
+    @DisplayName("0~10 개 사이의 핀만 쓰러뜨릴 수 있다")
+    @ParameterizedTest
+    @ValueSource(ints = {-20, -1, 11, 20})
+    public void getDownPin_fail(int count) throws Exception {
         //given
-        Pins pins = new Pins(5);
+        Pins pins = Pins.from();
 
         //then
         assertThatThrownBy(
-                () -> pins.bowl(10)
+                ()-> pins.bowl(count)
         ).isInstanceOf(BowlingException.class);
     }
+
 
     @DisplayName("넘어뜨린 핀만큼 점수를 계산한다.")
     @Test
@@ -89,6 +91,7 @@ class PinsTest {
         assertTrue(pin1.isGutter());
         assertTrue(pin2.isGutter());
     }
+
     @DisplayName("남은 핀이 없으면 완료(true)로 응답")
     @Test
     public void isFinish_success() throws Exception {
@@ -99,5 +102,33 @@ class PinsTest {
         //then
         assertFalse(max.isFinish());
         assertTrue(min.isFinish());
+    }
+
+    @DisplayName("넘어진 핀의 개수를 반환")
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    public void getDownPin_success(int count) throws Exception {
+        //given
+        Pins pins = Pins.from();
+
+        //when
+        pins = pins.bowl(count);
+
+        //then
+        assertThat(pins.getDownPin()).isEqualTo(count);
+    }
+
+    @Test
+    public void getTotalDownPin_success() throws Exception {
+        //given
+        Pins pins1 = Pins.from();
+        Pins pins2 = Pins.from();
+
+        //when
+        pins1 = pins1.bowl(1);
+        pins2 = pins2.bowl(3);
+
+        //then
+        assertThat(pins1.getTotalDownPin(pins2)).isEqualTo(4);
     }
 }

@@ -28,7 +28,7 @@ public class Pins {
     }
 
     public Pins bowl(final int count) {
-        return new Pins(this.pins - count);
+        return new Pins(MAX_PIN - count);
     }
 
     public Score getScore(final Score current) {
@@ -50,6 +50,12 @@ public class Pins {
 
     public int getDownPin() {
         return MAX_PIN - this.pins;
+    }
+
+    public int getTotalDownPin(Pins other) {
+        int totalDown = getDownPin() + other.getDownPin();
+        validatePinesCount(totalDown);
+        return totalDown;
     }
 
     @Override
