@@ -20,15 +20,22 @@ public class GameAssembler {
 
     private static List<FrameStatus> getFrameStatuses(Frames frames) {
         List<FrameStatus> frameStatuses = new ArrayList<>();
-        int size = frames.size();
+
+        frameStatuses.addAll(getNotEmptyFrameStatuses(frames));
+        frameStatuses.addAll(getEmptyFrameStatuses(frames.size()));
+
+        return frameStatuses;
+    }
+
+    private static List<FrameStatus> getNotEmptyFrameStatuses(Frames frames) {
+        List<FrameStatus> frameStatuses = new ArrayList<>();
+
         int beforeScore = ZERO;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0, size = frames.size(); i < size; i++) {
             FrameStatus frameStatus = getFrameStatus(frames, i, beforeScore);
             frameStatuses.add(frameStatus);
             beforeScore = frameStatus.getScore().orElse(ZERO);
         }
-
-        frameStatuses.addAll(getEmptyFrameStatuses(size));
 
         return frameStatuses;
     }
@@ -38,9 +45,8 @@ public class GameAssembler {
         Optional<Integer> optionalScore = frames.getFrameScore(index);
 
         if (optionalScore.isPresent()) {
-            int score = optionalScore.get() + beforeScore;
             List<Pitch> pitches = frames.getFramePinCounts(index);
-            return new FrameStatus(pitches, score);
+            return new FrameStatus(pitches, optionalScore.get() + beforeScore);
         }
 
         List<Pitch> pitches = frames.getFramePinCounts(index);
