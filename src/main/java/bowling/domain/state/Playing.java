@@ -2,9 +2,6 @@ package bowling.domain.state;
 
 import bowling.domain.PinCount;
 
-import static bowling.Constants.MAX_FELLED_PIN_COUNT;
-import static bowling.Constants.WRONG_FELLED_PIN;
-
 public class Playing extends NotFinished {
 
     private final PinCount felledPin;

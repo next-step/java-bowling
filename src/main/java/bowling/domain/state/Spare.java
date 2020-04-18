@@ -2,8 +2,6 @@ package bowling.domain.state;
 
 import bowling.domain.PinCount;
 
-import static bowling.Constants.*;
-
 public class Spare extends Finished {
     private static final String TEXT = "/";
 
