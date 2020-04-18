@@ -35,5 +35,13 @@ public class FrameResults {
 
         int nextScore = scores.get(scores.size() - 1) + score;
         scores.add(nextScore);
+
+        for(int printScore : scores) {
+            System.out.println(printScore);
+        }
+    }
+
+    public List<Frame> getValue() {
+        return new ArrayList<>(frames);
     }
 }

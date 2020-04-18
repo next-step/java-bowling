@@ -37,10 +37,6 @@ public class Player {
         return name;
     }
 
-    public Frames getFrames() {
-        return frames;
-    }
-
     private void assertPlayerName(String name) {
         if (name.length() != PLAYER_NAME_LENGTH) {
             throw new IllegalArgumentException(PLAYER_NAME_ERROR);
