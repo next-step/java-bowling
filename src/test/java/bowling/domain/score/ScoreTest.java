@@ -1,9 +1,13 @@
 package bowling.domain.score;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.FrameResults;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static bowling.domain.state.PinCountTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,10 +20,10 @@ public class ScoreTest {
 
         frames.play(pinCount10);
         frames.play(pinCount5);
-        frames.play(pinCount1);
+        FrameResults frameResults = frames.play(pinCount1);
 
-        int scoreFirstFrame = frames.getScores().get(0);
-        int scoreSecondFrame = frames.getScores().get(1);
+        int scoreFirstFrame = frameResults.getScores().get(0);
+        int scoreSecondFrame = frameResults.getScores().get(1);
 
         assertThat(scoreFirstFrame).isEqualTo(16);
         assertThat(scoreSecondFrame).isEqualTo(6);

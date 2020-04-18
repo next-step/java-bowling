@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.state.PinCount;
 import bowling.domain.state.StateHistory;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,18 +18,18 @@ public class Frames {
         frames.add(NormalFrame.create(new FrameNumber(FIRST_FRAME_NUMBER)));
     }
 
-    public List<Frame> play(PinCount felledPin) {
+    public FrameResults play(PinCount felledPin) {
         Frame frame = getCurrentFrame();
         frame.play(felledPin);
 
-        //TODO: addFrame되기 전 Frame 목록으로 getScore를 계산해야 한다.
+        FrameResults frameResults = new FrameResults(getValue());
 
         if (!frame.isLastFrame() && frame.isEndedFrame()) {
             Frame nextFrame = frame.getNext();
             addFrame(nextFrame);
         }
 
-        return frames;
+        return frameResults;
     }
 
     public Frame getCurrentFrame() {
