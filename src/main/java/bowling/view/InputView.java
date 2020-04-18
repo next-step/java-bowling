@@ -1,6 +1,5 @@
 package bowling.view;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.Player;
 
 import java.util.Scanner;
@@ -13,9 +12,9 @@ public class InputView {
         return new Player(scanner.nextLine());
     }
 
-    public static int inputThrowCount(Frame frame) {
+    public static int inputThrowCount(int frameNo) {
         StringBuilder sb = new StringBuilder();
-        sb.append(frame.getFrameNo())
+        sb.append(frameNo)
                 .append("프레임 투구 : ");
         System.out.println(sb);
         return scanner.nextInt();

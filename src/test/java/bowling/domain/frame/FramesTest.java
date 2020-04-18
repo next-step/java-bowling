@@ -52,6 +52,6 @@ public class FramesTest {
 
         assertThat(
                 frames.getNextFrame()
-        ).isNull();
+        ).isEqualTo(frames.getFrames().get(9));
     }
 }

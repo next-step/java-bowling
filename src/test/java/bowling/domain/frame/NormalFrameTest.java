@@ -13,14 +13,14 @@ public class NormalFrameTest {
 
     @BeforeEach
     void setUp() {
-        normalFrame = new NormalFrame(1);
+        normalFrame = new NormalFrame();
     }
 
     @Test
     @DisplayName("프레임 생성 테스트")
     void createFrameTest() {
         assertThatCode(
-                () -> new NormalFrame(1)
+                () -> new NormalFrame()
         ).doesNotThrowAnyException();
     }
 

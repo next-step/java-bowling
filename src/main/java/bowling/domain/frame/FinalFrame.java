@@ -2,8 +2,8 @@ package bowling.domain.frame;
 
 public class FinalFrame extends Frame {
 
-    public FinalFrame(int frameNo) {
-        super(frameNo);
+    public FinalFrame() {
+        super();
     }
 
     @Override

@@ -5,13 +5,12 @@ import bowling.domain.point.PointOutOfRangeException;
 import bowling.domain.point.Points;
 import bowling.score.Score;
 
-public abstract class Frame {
-    private static final int LAST_FRAME_NO = 10;
-    protected Points points;
-    protected int frameNo;
+import java.util.Objects;
 
-    public Frame(int frameNo) {
-        this.frameNo = frameNo;
+public abstract class Frame {
+    protected Points points;
+
+    public Frame() {
         points = new Points();
     }
 
@@ -27,10 +26,6 @@ public abstract class Frame {
         throw new OverThrowBallException("다시 입력해주세요(남은 핀: " + leftPoint + ")");
     }
 
-    public int getFrameNo() {
-        return this.frameNo;
-    }
-
     public Points getPoints() {
         return this.points;
     }
@@ -40,9 +35,22 @@ public abstract class Frame {
     }
 
     public boolean isLast() {
-        if (frameNo == LAST_FRAME_NO && !isThrowable()) {
+        if (this instanceof FinalFrame && !isThrowable()) {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frame frame = (Frame) o;
+        return Objects.equals(points, frame.points);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(points);
     }
 }

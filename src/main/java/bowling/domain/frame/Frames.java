@@ -4,6 +4,7 @@ import bowling.domain.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Frames {
     private static final int LAST_FRAME_INDEX = 9;
@@ -32,12 +33,22 @@ public class Frames {
         return player.getName();
     }
 
+    public int getFrameNo(Frame frame) {
+        int frameNo = 0;
+        Frame targetFrame = frames.get(frameNo);
+        while(!targetFrame.equals(frame)) {
+            frameNo++;
+            targetFrame = frames.get(frameNo);
+        }
+        return frameNo + 1;
+    }
+
     private List<Frame> initFrames() {
         List<Frame> tmpframes = new ArrayList<>();
         for (int i = 1; i <= TOTAL_NORMAL_FRAME; i++) {
-            tmpframes.add(new NormalFrame(i));
+            tmpframes.add(new NormalFrame());
         }
-        tmpframes.add(new FinalFrame(TOTAL_NORMAL_FRAME + 1));
+        tmpframes.add(new FinalFrame());
         return tmpframes;
     }
 }

@@ -16,15 +16,16 @@ public class BowlingGameRun {
 
         Frame frame = bowlingGame.next();
         while (!frame.isLast()) {
-            throwBallResult(frame);
+            int frameNo = bowlingGame.getFrames().getFrameNo(frame);
+            throwBallResult(frameNo, frame);
             ResultView.viewResult(bowlingGame.getFrames());
             frame = bowlingGame.next();
         }
     }
 
-    private static void throwBallResult(Frame frame) {
+    private static void throwBallResult(int frameNo, Frame frame) {
         try {
-            int throwCount = InputView.inputThrowCount(frame);
+            int throwCount = InputView.inputThrowCount(frameNo);
             frame.throwBall(throwCount);
         } catch (OverThrowBallException | PointOutOfRangeException e) {
             ResultView.viewRetry(e);

@@ -25,22 +25,4 @@ public class PointsTest {
                 points.isFirstStrike()
         ).isTrue();
     }
-
-    @Test
-    @DisplayName("연속 스트라이크 테스트")
-    void isDoubleStrikeTest() {
-        Points points = new Points(Arrays.asList(Point.of(10), Point.of(10)));
-        assertThat(
-                points.isDoubleStrike()
-        ).isTrue();
-    }
-
-    @Test
-    @DisplayName("스페어 테스트")
-    void isSpareTest() {
-        Points points = new Points(Arrays.asList(Point.of(5), Point.of(5)));
-        assertThat(
-                points.isSpare()
-        ).isTrue();
-    }
 }

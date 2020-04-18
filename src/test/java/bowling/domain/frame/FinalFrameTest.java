@@ -15,14 +15,14 @@ public class FinalFrameTest {
 
     @BeforeEach
     void setUp() {
-        finalFrame = new FinalFrame(10);
+        finalFrame = new FinalFrame();
     }
 
     @Test
     @DisplayName("프레임 생성 테스트")
     void createFrameTest() {
         assertThatCode(
-                () -> new FinalFrame(1)
+                () -> new FinalFrame()
         ).doesNotThrowAnyException();
     }
 

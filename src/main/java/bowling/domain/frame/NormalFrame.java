@@ -3,8 +3,8 @@ package bowling.domain.frame;
 public class NormalFrame extends Frame {
     private static final int MAX_TRYABLE_COUNT = 2;
 
-    public NormalFrame(int frameNo) {
-        super(frameNo);
+    public NormalFrame() {
+        super();
     }
 
     @Override
