@@ -35,6 +35,10 @@ public class BowlingGame {
         return false;
     }
 
+    public boolean isLastFrameFinish() {
+        return frame.isFinish();
+    }
+
     public Frame getFrame() {
         return frame;
     }
