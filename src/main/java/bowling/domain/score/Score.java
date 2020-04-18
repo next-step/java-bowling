@@ -14,7 +14,7 @@ public class Score {
     }
 
     public void addAdditionalScore(int felledPin) {
-        this.score = score + felledPin;
+        score = score + felledPin;
         additionalCount--;
     }
 

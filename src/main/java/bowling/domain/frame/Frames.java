@@ -17,14 +17,18 @@ public class Frames {
         frames.add(NormalFrame.create(new FrameNumber(FIRST_FRAME_NUMBER)));
     }
 
-    public void play(PinCount felledPin) {
+    public List<Frame> play(PinCount felledPin) {
         Frame frame = getCurrentFrame();
         frame.play(felledPin);
+
+        //TODO: addFrame되기 전 Frame 목록으로 getScore를 계산해야 한다.
 
         if (!frame.isLastFrame() && frame.isEndedFrame()) {
             Frame nextFrame = frame.getNext();
             addFrame(nextFrame);
         }
+
+        return frames;
     }
 
     public Frame getCurrentFrame() {
@@ -57,7 +61,7 @@ public class Frames {
 
     private void addScore(List<Integer> scores, Frame frame) {
         if(!frame.canCalculateScore()) {
-            //TODO: Exception 처리
+            return ;
         }
 
         int score = frame.getScore();

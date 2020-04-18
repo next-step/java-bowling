@@ -4,6 +4,8 @@ import bowling.domain.score.Score;
 import bowling.domain.state.PinCount;
 import bowling.domain.state.*;
 
+import java.util.Objects;
+
 import static bowling.Constants.*;
 
 public class FinalFrame implements Frame {
@@ -84,7 +86,7 @@ public class FinalFrame implements Frame {
     @Override
     public int getScore() {
         if(!isEndedFrame()) {
-            throw new IllegalStateException(NOT_ENDED_FRAME_ERROR);
+            return -1;
         }
 
         Score score = ((Finished) state).createScore();
@@ -93,11 +95,19 @@ public class FinalFrame implements Frame {
             return score.getScore();
         }
 
+        if(Objects.isNull(getNext())) {
+            return -1;
+        }
+
         return getNext().calculateAdditionalScore(score);
     }
 
     @Override
     public int calculateAdditionalScore(Score score) {
+        if(!isEndedFrame()) {
+            return -1;
+        }
+
         for(State state : stateHistory.getValue()) {
             score.addAdditionalScore(state.getFelledPin());
 
@@ -106,11 +116,15 @@ public class FinalFrame implements Frame {
             }
         }
 
+        if(Objects.isNull(getNext())) {
+            return -1;
+        }
+
         return getNext().calculateAdditionalScore(score);
     }
 
     @Override
     public boolean canCalculateScore() {
-        return !isEndedFrame();
+        return isEndedFrame();
     }
 }
