@@ -10,23 +10,8 @@ import static bowling.domain.frame.FrameResult.*;
 import static bowling.view.PrintFormat.*;
 
 public class ResultView2 {
-    private static final String BLANK_ONE = " ";
-    private static final String BLANK_TWO = "  ";
-    private static final String BLANK_THREE = "   ";
-    private static final String BLANK_FOUR = "    ";
-    private static final String BLANK_FIVE = "     ";
-    private static final String BLANK_SIX = "      ";
-    private static final String BLOCK_BORDER = "|";
-    private static final String LABEL_NAME = "NAME";
-    private static final String SYMBOL_STRIKE = "X";
-    private static final String SYMBOL_GUTTER = "-";
-    private static final String DELIMITER_SPARE = "/";
     private static final int FRAME_ID_FIRST = 1;
     private static final int FRAME_ID_FINAL = 10;
-    private static final int MIN_NUMBER_FOR_THREE_DIGITS = 100;
-    private static final int MIN_NUMBER_FOR_TWO_DIGITS = 10;
-    private static final int OFFSET = -1;
-    private static final int OFFSET_DOUBLE = -2;
 
     public static void print(GameResults gameResults) {
         System.out.println();
@@ -41,7 +26,10 @@ public class ResultView2 {
     private static void printOneFrame(GameResults gameResults, int frameId){
         for (int i=0; i<gameResults.getSize(); i++){
             System.out.println(BOWLING_FRAME);
-            printOneFrameFirst(gameResults.getResultByIndex(i), frameId);
+            for(int j=0; j<gameResults.getSize(); j++){
+                printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
+
+            }
         }
 
         System.out.println();
