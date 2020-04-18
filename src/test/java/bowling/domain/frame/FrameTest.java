@@ -106,7 +106,7 @@ public class FrameTest {
 
         assertThat(frame.isEndedFrame()).isFalse();
 
-        frame.play(10);
+        frame.play(5);
 
         assertThat(frame.isEndedFrame()).isTrue();
     }
@@ -120,8 +120,8 @@ public class FrameTest {
 
         assertThat(frame.isEndedFrame()).isFalse();
 
-        frame.play(2);
-        frame.play(8);
+        frame.play(5);
+        frame.play(1);
 
         assertThat(frame.isEndedFrame()).isTrue();
     }

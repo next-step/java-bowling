@@ -25,7 +25,7 @@ public class Spare implements State {
             return new Gutter();
         }
 
-        return new Playing(newFelledPin);
+        return new End(newFelledPin);
     }
 
     @Override
