@@ -33,6 +33,7 @@ public class ScoreTest {
         frames.play(pinCount5);
         frames.play(pinCount5);
         frames.play(pinCount1);
+        frames.play(pinCount0);
 
         int scoreFirstFrame = frames.getScores().get(0);
         int scoreSecondFrame = frames.getScores().get(1);

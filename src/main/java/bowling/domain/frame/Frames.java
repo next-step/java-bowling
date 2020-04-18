@@ -24,7 +24,10 @@ public class Frames {
 
         if (!frame.isLastFrame() && frame.isEndedFrame()) {
             Frame nextFrame = frame.getNext();
-            addFrame(nextFrame);
+
+            if(Objects.nonNull(nextFrame)) {
+                addFrame(nextFrame);
+            }
         }
 
         return frameResults;
@@ -65,13 +68,7 @@ public class Frames {
 
         int score = frame.getScore();
 
-        if(scores.isEmpty()) {
-            scores.add(score);
-            return ;
-        }
-
-        int nextScore = scores.get(scores.size() - 1) + score;
-        scores.add(nextScore);
+        scores.add(score);
     }
 
     public List<Frame> getValue() {
