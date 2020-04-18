@@ -55,4 +55,12 @@ public class GameResults {
     public GameResult getSecondResult() {
         return getResults().get(INDEX_SECOND);
     }
+
+    public GameResult getResultByIndex(int index){
+        return getResults().get(index);
+    }
+
+    public int getSize(){
+        return results.size();
+    }
 }
