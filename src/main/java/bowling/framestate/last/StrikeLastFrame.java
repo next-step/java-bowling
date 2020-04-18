@@ -17,7 +17,7 @@ public class StrikeLastFrame implements State {
     }
 
     @Override
-    public State Bowl(final int countOfPin) {
+    public State bowl(final int countOfPin) {
         return StrikeLastFrameOver.newInstance(countOfPin);
     }
 
@@ -29,5 +29,10 @@ public class StrikeLastFrame implements State {
     @Override
     public FrameScore addingUpFrameScore(FrameScore beforeScore) {
         return beforeScore.addingUp(Collections.singletonList(10));
+    }
+
+    @Override
+    public boolean isOver() {
+        return false;
     }
 }

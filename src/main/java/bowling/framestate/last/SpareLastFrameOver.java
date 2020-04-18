@@ -29,7 +29,7 @@ public class SpareLastFrameOver implements State {
     }
 
     @Override
-    public State Bowl(int countOfPin) {
+    public State bowl(int countOfPin) {
         throw new IllegalStateException("No more bowl.");
     }
 
@@ -41,6 +41,11 @@ public class SpareLastFrameOver implements State {
     @Override
     public FrameScore addingUpFrameScore(FrameScore beforeScore) {
         return beforeScore.addingUp(pins);
+    }
+
+    @Override
+    public boolean isOver() {
+        return true;
     }
 
     private Score calculateScore() {

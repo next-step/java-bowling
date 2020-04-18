@@ -20,7 +20,7 @@ public class SpareLastFrame implements State {
     }
 
     @Override
-    public State Bowl(final int countOfPin) {
+    public State bowl(final int countOfPin) {
         return SpareLastFrameOver.newInstance(Arrays.asList(firstPin, secondPin, countOfPin));
     }
 
@@ -32,5 +32,10 @@ public class SpareLastFrame implements State {
     @Override
     public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
         return beforeScore.addingUp(Arrays.asList(firstPin, secondPin));
+    }
+
+    @Override
+    public boolean isOver() {
+        return false;
     }
 }

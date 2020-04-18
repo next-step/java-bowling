@@ -15,7 +15,7 @@ public class Strike implements State {
     }
 
     @Override
-    public State Bowl(final int countOfPin) {
+    public State bowl(final int countOfPin) {
         throw new IllegalStateException("No more bowl.");
     }
 
@@ -27,5 +27,10 @@ public class Strike implements State {
     @Override
     public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
         return beforeScore.addingUp(Collections.singletonList(10));
+    }
+
+    @Override
+    public boolean isOver() {
+        return true;
     }
 }

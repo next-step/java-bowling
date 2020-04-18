@@ -15,7 +15,7 @@ public class ReadyLastFrame implements State {
     }
 
     @Override
-    public State Bowl(final int countOfPin) {
+    public State bowl(final int countOfPin) {
         if (countOfPin == 10) {
             return StrikeLastFrame.newInstance();
         }
@@ -31,5 +31,10 @@ public class ReadyLastFrame implements State {
     @Override
     public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
         return beforeScore.addingUp(Arrays.asList(0, 0));
+    }
+
+    @Override
+    public boolean isOver() {
+        return false;
     }
 }

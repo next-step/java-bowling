@@ -22,7 +22,7 @@ public class Miss implements State {
     }
 
     @Override
-    public State Bowl(final int countOfPin) {
+    public State bowl(final int countOfPin) {
         throw new IllegalStateException("No more bowl.");
     }
 
@@ -34,5 +34,10 @@ public class Miss implements State {
     @Override
     public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
         return beforeScore.addingUp(Arrays.asList(firstPin, secondPin));
+    }
+
+    @Override
+    public boolean isOver() {
+        return true;
     }
 }

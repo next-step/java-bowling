@@ -4,9 +4,11 @@ import bowling.FrameScore;
 
 public interface State {
 
-    State Bowl(int countOfPin);
+    State bowl(int countOfPin);
 
     FrameScore createFrameScore();
 
     FrameScore addingUpFrameScore(FrameScore beforeScore);
+
+    boolean isOver();
 }

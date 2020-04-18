@@ -20,7 +20,7 @@ public class FirstBowl implements State {
     }
 
     @Override
-    public State Bowl(final int countOfPin) {
+    public State bowl(final int countOfPin) {
         if (this.countOfPin + countOfPin == 10) {
             return Spare.newInstance(this.countOfPin, countOfPin);
         }
@@ -36,6 +36,11 @@ public class FirstBowl implements State {
     @Override
     public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
         return beforeScore.addingUp(Arrays.asList(countOfPin, 0));
+    }
+
+    @Override
+    public boolean isOver() {
+        return false;
     }
 
 }
