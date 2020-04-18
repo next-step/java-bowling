@@ -1,11 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.PinCount;
+import bowling.domain.state.PinCount;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 import bowling.domain.state.StateHistory;
-
-import static bowling.Constants.*;
 
 public class NormalFrame implements Frame {
 

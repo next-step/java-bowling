@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.player;
 
+import bowling.domain.state.PinCount;
 import bowling.domain.frame.Frames;
 
 public class Player {

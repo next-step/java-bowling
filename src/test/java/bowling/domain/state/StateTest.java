@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static bowling.Constants.WRONG_FELLED_PIN;
-import static bowling.domain.PinCountTest.*;
+import static bowling.domain.state.PinCountTest.*;
 import static bowling.domain.state.End.GAME_END_ERROR;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;

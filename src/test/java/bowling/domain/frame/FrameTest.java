@@ -1,12 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.PinCount;
+import bowling.domain.state.PinCount;
 import bowling.domain.state.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static bowling.Constants.WRONG_FELLED_PIN;
-import static bowling.domain.PinCountTest.*;
+import static bowling.domain.state.PinCountTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;

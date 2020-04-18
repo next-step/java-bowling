@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.PinCount;
+import bowling.domain.state.PinCount;
 import bowling.domain.state.*;
 
 import static bowling.Constants.*;

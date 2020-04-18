@@ -1,7 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.PinCount;
-
 public class Ready extends NotFinished {
 
     private static final String TEXT = "";

@@ -1,7 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.PinCount;
-
 public class Miss extends Finished {
     public static final String MISS_CAN_NOT_PLAY_ERROR = "Miss 상태입니다. 프레임이 종료되어 플레이할 수 없습니다.";
 

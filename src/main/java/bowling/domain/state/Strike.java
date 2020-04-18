@@ -1,7 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.PinCount;
-
 public class Strike extends Finished {
     private static final String TEXT = "X";
 

@@ -148,6 +148,8 @@ https://www.bowlinggenius.com/ 참고
 * FrameResult: 각 Frame 의 결과를 가진다.  
 * Board: 점수판 객체  
     * FrameResult를 통해 점수판을 만든다.     
+* Score: 점수 객체  
+    * 
 
 ### 테스트 코드 도출  
 

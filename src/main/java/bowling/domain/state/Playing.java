@@ -1,7 +1,5 @@
 package bowling.domain.state;
 
-import bowling.domain.PinCount;
-
 public class Playing extends NotFinished {
 
     private final PinCount felledPin;

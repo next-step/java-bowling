@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.PinCount;
+import bowling.domain.state.PinCount;
 
 import java.util.ArrayList;
 import java.util.List;
