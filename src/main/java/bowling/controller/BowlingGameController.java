@@ -14,7 +14,6 @@ public class BowlingGameController {
             player.play(PinCount.create(felledPin));
 
             outputView.showFrameResult(player);
-            outputView.showFrameScore(player);
         }
     }
 }

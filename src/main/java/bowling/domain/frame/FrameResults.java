@@ -27,7 +27,13 @@ public class FrameResults {
         }
 
         int score = frame.getScore();
-        
-        scores.add(score);
+
+        if (scores.isEmpty()) {
+            scores.add(score);
+            return;
+        }
+
+        int nextScore = scores.get(scores.size() - 1) + score;
+        scores.add(nextScore);
     }
 }

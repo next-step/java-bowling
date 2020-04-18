@@ -19,10 +19,8 @@ public class ScoreTest {
         FrameResults frameResults = frames.play(pinCount1);
 
         int scoreFirstFrame = frameResults.getScores().get(0);
-        int scoreSecondFrame = frameResults.getScores().get(1);
 
         assertThat(scoreFirstFrame).isEqualTo(16);
-        assertThat(scoreSecondFrame).isEqualTo(6);
     }
 
     @Test
@@ -36,10 +34,8 @@ public class ScoreTest {
         frames.play(pinCount0);
 
         int scoreFirstFrame = frames.getScores().get(0);
-        int scoreSecondFrame = frames.getScores().get(1);
 
         assertThat(scoreFirstFrame).isEqualTo(11);
-        assertThat(scoreSecondFrame).isEqualTo(1);
     }
 
     @Test
