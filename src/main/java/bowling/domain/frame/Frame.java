@@ -15,4 +15,6 @@ public interface Frame {
     Frame getNext();
 
     State getState();
+
+    Frame findLast();
 }

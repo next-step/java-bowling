@@ -16,10 +16,6 @@ public class FinalFrame implements Frame {
         this.states = FinalFrameStates.of();
     }
 
-    public FinalFrame(FinalFrameStates states) {
-        this.states = states;
-    }
-
     @Override
     public Frame bowl(int pinCount) {
         if (isFinish()) {
@@ -48,6 +44,11 @@ public class FinalFrame implements Frame {
     @Override
     public State getState() {
         return states;
+    }
+
+    @Override
+    public Frame findLast() {
+        return this;
     }
 
     @Override

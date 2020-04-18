@@ -46,7 +46,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        return  state.isFinish();
+        return state.isFinish();
     }
 
     @Override
@@ -68,5 +68,13 @@ public class NormalFrame implements Frame {
     @Override
     public State getState() {
         return state;
+    }
+
+    @Override
+    public Frame findLast() {
+        if (nextFrame == null) {
+            return this;
+        }
+        return nextFrame.findLast();
     }
 }

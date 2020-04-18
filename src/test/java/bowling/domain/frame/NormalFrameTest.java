@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.frame.state.Miss;
+import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.Spare;
 import bowling.domain.frame.state.Strike;
 import bowling.exception.BowlingException;
@@ -126,5 +127,34 @@ class NormalFrameTest {
 
         //then
         assertFalse(frame.isFinish());
+    }
+
+    @DisplayName("연결된 마지막 NormalFrame를 가져온다")
+    @Test
+    public void findLast_success() throws Exception {
+        //given
+        NormalFrame next = new NormalFrame(2);
+        NormalFrame frame = new NormalFrame(1, next, new Ready());
+
+        //when
+        Frame last = frame.findLast();
+
+        //then
+        assertTrue(next == last);
+    }
+
+    @DisplayName("연결된 마지막 FinalFrame를 가져온다")
+    @Test
+    public void findLast_success_finalFrame() throws Exception {
+        //given
+        FinalFrame finalFrame = new FinalFrame();
+        NormalFrame next = new NormalFrame(2, finalFrame, new Ready());
+        NormalFrame frame = new NormalFrame(1, next, new Ready());
+
+        //when
+        Frame last = frame.findLast();
+
+        //then
+        assertTrue(finalFrame == last);
     }
 }
