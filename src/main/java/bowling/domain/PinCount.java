@@ -11,6 +11,10 @@ public class PinCount {
         this.pinCount = pinCount;
     }
 
+    public static PinCount create(int pinCount) {
+        return new PinCount(pinCount);
+    }
+
     private void assertFelledPin(int felledPin) {
         if (felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
             throw new IllegalArgumentException(WRONG_FELLED_PIN);

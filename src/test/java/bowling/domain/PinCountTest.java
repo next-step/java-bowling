@@ -14,6 +14,11 @@ public class PinCountTest {
     public static final PinCount pinCount10 = new PinCount(10);
 
     @Test
+    void create() {
+        assertThat(PinCount.create(5)).isInstanceOf(PinCount.class);
+    }
+
+    @Test
     @DisplayName("첫 투구에 대한 Pin 수는 0이상 10이하여야 한다.")
     void assertFelledPin() {
         assertThatIllegalArgumentException().isThrownBy(() -> {
