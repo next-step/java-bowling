@@ -71,6 +71,10 @@ public class Frames {
         scores.add(score);
     }
 
+    public FrameResults getCurrentFrameResults() {
+        return new FrameResults(new ArrayList<>(frames));
+    }
+
     public List<Frame> getValue() {
         return new ArrayList<>(frames);
     }

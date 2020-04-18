@@ -1,5 +1,6 @@
 package bowling.domain.player;
 
+import bowling.domain.frame.FrameResults;
 import bowling.domain.state.PinCount;
 import bowling.domain.frame.Frames;
 
@@ -26,6 +27,10 @@ public class Player {
 
     public int getCurrentFrameNumber() {
         return frames.getCurrentFrameNumber();
+    }
+
+    public FrameResults getCurrentResult() {
+        return frames.getCurrentFrameResults();
     }
 
     public String getName() {

@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.ViewUtils;
+import bowling.domain.frame.FrameResults;
 import bowling.domain.player.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.state.State;
@@ -16,6 +17,7 @@ public class OutputView {
     public void showFrameResult(Player player) {
         showBoardHeader();
         showState(player.getName(), player.getFrames().getValue());
+        showScore(player.getCurrentResult().getScores());
         newLine();
     }
 
@@ -76,6 +78,21 @@ public class OutputView {
         return builder.toString();
     }
 
+    public void showScore(List<Integer> scores) {
+        showEmptyFrame();
+
+        for(Integer score : scores) {
+            ViewUtils.print(appendSpaces(String.valueOf(score), LENGTH_PER_FRAME));
+            ViewUtils.print(VERTICAL_LINE);
+        }
+    }
+
+    private void showEmptyFrame() {
+        ViewUtils.print(VERTICAL_LINE);
+        ViewUtils.print(appendSpaces("", 6));
+        ViewUtils.print(VERTICAL_LINE);
+    }
+
     private void showVerticalLine() {
         ViewUtils.print(VERTICAL_LINE);
     }
@@ -83,5 +100,4 @@ public class OutputView {
     private void newLine() {
         ViewUtils.printLine("");
     }
-
 }
