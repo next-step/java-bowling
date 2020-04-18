@@ -43,6 +43,6 @@ public class Frames {
     }
 
     public List<Frame> getValue() {
-        return frames;
+        return new ArrayList<>(frames);
     }
 }
