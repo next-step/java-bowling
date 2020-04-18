@@ -49,6 +49,6 @@ public class PinCountTest {
     @Test
     @DisplayName("가능한 최소 Pin의 개수를 가지고 있는지 검증한다.")
     void isMinPinCount() {
-        assertThat(pinCount0.isMinPinPoint()).isTrue();
+        assertThat(pinCount0.isMinPinCount()).isTrue();
     }
 }

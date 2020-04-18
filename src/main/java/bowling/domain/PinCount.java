@@ -35,7 +35,7 @@ public class PinCount {
         return pinCount + lastFelledPinCount.getValue() == MAX_FELLED_PIN_COUNT;
     }
 
-    public boolean isMinPinPoint() {
+    public boolean isMinPinCount() {
         return pinCount == MIN_FELLED_PIN_COUNT;
     }
 
