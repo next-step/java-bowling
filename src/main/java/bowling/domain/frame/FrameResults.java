@@ -23,7 +23,7 @@ public class FrameResults {
 
     private void addScore(List<Integer> scores, Frame frame) {
         if(!frame.canCalculateScore()) {
-            return ;
+            return;
         }
 
         int score = frame.getScore();

@@ -5,6 +5,8 @@ import bowling.domain.state.*;
 
 import java.util.Objects;
 
+import static bowling.Constants.CAN_NOT_CALCULATE_SCORE;
+
 public class NormalFrame implements Frame {
     private final StateHistory stateHistory;
     private FrameNumber frameNumber;
@@ -67,8 +69,8 @@ public class NormalFrame implements Frame {
 
     @Override
     public int getScore() {
-        if(!canCalculateScore()) {
-            return -1;
+        if(!isEndedFrame()) {
+            return CAN_NOT_CALCULATE_SCORE;
         }
 
         Score score = ((Finished) state).createScore();
@@ -78,7 +80,7 @@ public class NormalFrame implements Frame {
         }
 
         if(Objects.isNull(nextFrame)) {
-            return -1;
+            return CAN_NOT_CALCULATE_SCORE;
         }
 
         return nextFrame.calculateAdditionalScore(score);
@@ -86,10 +88,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public int calculateAdditionalScore(Score score) {
-        if(!canCalculateScore()) {
-            return -1;
-        }
-
         for(State state : stateHistory.getValue()) {
             score.addAdditionalScore(state.getFelledPin());
 
@@ -99,7 +97,7 @@ public class NormalFrame implements Frame {
         }
 
         if(Objects.isNull(nextFrame)) {
-            return -1;
+            return CAN_NOT_CALCULATE_SCORE;
         }
 
         return nextFrame.calculateAdditionalScore(score);
@@ -107,6 +105,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean canCalculateScore() {
-        return isEndedFrame();
+        return getScore() != CAN_NOT_CALCULATE_SCORE;
     }
 }

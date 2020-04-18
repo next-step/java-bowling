@@ -86,7 +86,7 @@ public class FinalFrame implements Frame {
     @Override
     public int getScore() {
         if(!isEndedFrame()) {
-            return -1;
+            return CAN_NOT_CALCULATE_SCORE;
         }
 
         Score score = ((Finished) state).createScore();
@@ -101,6 +101,6 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean canCalculateScore() {
-        return isEndedFrame();
+        return getScore() != CAN_NOT_CALCULATE_SCORE;
     }
 }
