@@ -3,10 +3,6 @@ package bowling.domain;
 public class NormalFrame extends Frame {
     private Scores scores;
 
-    public NormalFrame() {
-        this.scores = new Scores();
-    }
-
     public void add(Score score) {
         this.scores.add(score);
     }
@@ -21,5 +17,21 @@ public class NormalFrame extends Frame {
 
     public boolean isNextFrame() {
         return this.scores.nextFrame();
+    }
+
+    public String getSigns() {
+        return scores.getSigns();
+    }
+
+    public int firstScore() {
+        return scores.firstScore();
+    }
+
+    public int sumScore() {
+        return scores.sum();
+    }
+
+    public int sumStrikeScore() {
+        return scores.firstScore() + scores.secondScore();
     }
 }

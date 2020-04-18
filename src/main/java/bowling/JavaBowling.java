@@ -17,6 +17,6 @@ public class JavaBowling {
             int numberOfPin = inputView.askNumberOfPin(player.currentFrame());
             game.play(numberOfPin);
             outputView.drawPlay(game);
-        }while(!player.isEndNormalFrame() || !player.isEndFinalFrame());
+        }while(!player.isEndGame());
     }
 }

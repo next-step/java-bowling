@@ -1,18 +1,10 @@
 package bowling.domain;
 
-public class FinalFrame extends Frame{
+public class FinalFrame extends Frame {
     private Scores scores;
-
-    public FinalFrame() {
-        this.scores = new Scores();
-    }
 
     public FinalFrame(Frame frame) {
         this.scores = frame.getScores();
-    }
-
-    public boolean isEndFinalFrame() {
-        return this.scores.isEndFinalFrame();
     }
 
     public void add(Score score) {
@@ -23,4 +15,25 @@ public class FinalFrame extends Frame{
         this.scores.checkBeforeAddFinal(numberOfPin);
         this.scores.add(new Score(numberOfPin));
     }
+
+    public String getSigns() {
+        return scores.getSigns();
+    }
+
+    public int firstScore() {
+        return scores.firstScore();
+    }
+
+    public int sumScore() {
+        return scores.sum();
+    }
+
+    public int sumStrikeScore() {
+        return scores.firstScore() + scores.secondScore();
+    }
+
+    public boolean isCountOfStrike() {
+        return this.scores.countOfSign(Sign.STRIKE) > 1;
+    }
+
 }

@@ -12,7 +12,9 @@ public class ScoreTest {
     @Test
     @DisplayName("스코어테스트")
     public void scoreTest() {
-        assertThatThrownBy(() -> new Score(-1)).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("0~10 입력");
+        assertThatThrownBy(() -> new Score(-1))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("0~10 입력");
     }
 
     @Test
@@ -20,8 +22,10 @@ public class ScoreTest {
     public void checkScoresTest() {
         Scores scores = new Scores();
         scores.add(new Score(5));
-        assertThat(scores.size()).isEqualTo(1);
-        assertThatThrownBy(() -> scores.checkBeforeAddNormal(6)).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("10을 넘으면 안됩니다.");
+        assertThat(scores.numberOfTry()).isEqualTo(1);
+        assertThatThrownBy(() -> scores.checkBeforeAddNormal(6))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("10을 넘으면 안됩니다.");
     }
 
     @Test

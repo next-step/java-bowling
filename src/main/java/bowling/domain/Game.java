@@ -8,14 +8,11 @@ public class Game {
     }
 
     public void play(int numberOfPin) {
-        if (player.isFinal()){
-            player.addFinalFrame(numberOfPin);
-            return;
-        }
-        player.addNormalFrame(numberOfPin);
+        player.processPin(numberOfPin);
     }
 
     public Player getPlay() {
         return this.player;
     }
+
 }

@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Player {
-    private static final int TOTAL_FRAME = 10;
     private static final int LIMIT_OF_LENGTH = 3;
     private String name;
     private Frames frames;
-    private Frame frame = new Frame();
+
+    public Frames getFrames() {
+        return frames;
+    }
 
     public String getName() {
         return name;
@@ -30,39 +32,8 @@ public class Player {
         return frames.currentFrame() + 1;
     }
 
-    public void addFrame(NormalFrame normalFrame) {
-        frames.addNormalFrame(normalFrame);
-    }
-
-    public void addFrame(FinalFrame finalFrame) {
-        frames.addFinalFrame(finalFrame);
-    }
-
-    public void addNormalFrame(int numberOfPin) {
-        frame.addNormalFrame(numberOfPin);
-        if (!isEndNormalFrame() && frame.isNextFrame()) {
-            NormalFrame normalFrame = new NormalFrame(frame);
-            addFrame(normalFrame);
-            frame = new Frame();
-        }
-    }
-
-    public void addFinalFrame(int numberOfPin) {
-        frame.addFinalFrame(numberOfPin);
-        FinalFrame finalFrame = new FinalFrame(frame);
-        addFrame(finalFrame);
-    }
-
-    public boolean isNextFrame() {
-        return frames.isNextFrame();
-    }
-
-    public boolean isEndNormalFrame() {
-        return currentFrame() == TOTAL_FRAME;
-    }
-
-    public boolean isEndFinalFrame() {
-        return frames.isEndFinalFrame();
+    public boolean isEndGame() {
+        return frames.isEndGame();
     }
 
     @Override
@@ -71,16 +42,20 @@ public class Player {
     }
 
     public List<String> getSigns() {
-        return frames.getNormalFrames().stream()
+        return frames.getFrames().stream()
                 .map(n -> n.getSigns())
                 .collect(Collectors.toList());
     }
 
-    public boolean isFinal() {
-        return isEndNormalFrame() && !isEndFinalFrame();
+    public void processPin(int numberOfPin) {
+        frames.processPin(numberOfPin);
     }
 
     public Frame getFrame() {
-        return frame;
+        return frames.getFrame();
+    }
+
+    public FrameScores getFrameScore() {
+        return frames.getFrameScores();
     }
 }
