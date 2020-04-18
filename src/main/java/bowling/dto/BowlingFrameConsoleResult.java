@@ -9,20 +9,20 @@ public class BowlingFrameConsoleResult {
     private static final String SCORE_DELIMITER = "|";
 
     private final String frameScoreResult;
-    private final String totalScore;
+    private final int totalScore;
 
-    private BowlingFrameConsoleResult(final String frameScoreResult, final String totalScore) {
+    private BowlingFrameConsoleResult(final String frameScoreResult, final int totalScore) {
         this.frameScoreResult = frameScoreResult;
         this.totalScore = totalScore;
     }
 
-    public static BowlingFrameConsoleResult newInstance(final BowlingFrame bowlingFrame) {
-        return new BowlingFrameConsoleResult(extractFrameScoreResult(bowlingFrame), extractTotalScore(bowlingFrame));
+    public static BowlingFrameConsoleResult newInstance(final BowlingFrame bowlingFrame, final int beforeTotalScore) {
+        return new BowlingFrameConsoleResult(extractFrameScoreResult(bowlingFrame), extractTotalScore(bowlingFrame, beforeTotalScore));
     }
 
-    private static String extractTotalScore(final BowlingFrame bowlingFrame) {
+    private static int extractTotalScore(final BowlingFrame bowlingFrame, final int beforeTotalScore) {
         Score score = bowlingFrame.getScore();
-        return Integer.toString(score.getScore());
+        return beforeTotalScore + score.getScore();
     }
 
     private static String extractFrameScoreResult(final BowlingFrame bowlingFrame) {
@@ -35,7 +35,7 @@ public class BowlingFrameConsoleResult {
         return frameScoreResult;
     }
 
-    public String getTotalScore() {
+    public int getTotalScore() {
         return totalScore;
     }
 }

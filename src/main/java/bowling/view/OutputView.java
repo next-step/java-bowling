@@ -43,7 +43,7 @@ public class OutputView {
         System.out.println(GAME_FIRST_ROW);
 
         List<String> scores = getScoreRow(bowlingGameResult, BowlingFrameConsoleResult::getFrameScoreResult);
-        List<String> totalScores = getScoreRow(bowlingGameResult, BowlingFrameConsoleResult::getTotalScore);
+        List<String> totalScores = getScoreRow(bowlingGameResult, bowlingFrameConsoleResult -> String.valueOf(bowlingFrameConsoleResult.getTotalScore()));
 
         System.out.println(makeGameRow(GAME_ROW_BLANK + bowlingGameResult.getName(), makeFrameWordsWithBlank(scores)));
         System.out.println(makeGameRow(GAME_ROW_BLANK + GAME_ROW_SCORE_HEAD, makeFrameWordsWithBlank(totalScores)));

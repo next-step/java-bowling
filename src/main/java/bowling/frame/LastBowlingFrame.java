@@ -6,6 +6,7 @@ import bowling.framestate.State;
 import bowling.framestate.last.ReadyLastFrame;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class LastBowlingFrame implements BowlingFrame {
 
@@ -36,7 +37,13 @@ public class LastBowlingFrame implements BowlingFrame {
 
     @Override
     public Score addingUpScore(final FrameScore beforeScore) {
-        FrameScore addingUpFrameScore = beforeScore.addingUp(Arrays.asList(0, 0, 0));
+        FrameScore addingUpFrameScore = state.addingUpFrameScore(beforeScore);
+
+        if (addingUpFrameScore.canCalculateScore()) {
+            return addingUpFrameScore.getScore();
+        }
+
+        addingUpFrameScore = beforeScore.addingUp(Arrays.asList(0, 0, 0));
         return addingUpFrameScore.getScore();
     }
 
