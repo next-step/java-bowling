@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.PinCount;
+
 import static bowling.Constants.*;
 
 public class Spare extends Finished {
@@ -7,10 +9,15 @@ public class Spare extends Finished {
 
     private int lastPlayPoint;
     private int currentPlayPoint;
+    private PinCount lastPlayPoint2;
+    private PinCount currentPlayPoint2;
 
     public Spare(int felledPin, int newFelledPin) {
         this.lastPlayPoint = felledPin;
         this.currentPlayPoint = newFelledPin;
+
+        this.lastPlayPoint2 = new PinCount(felledPin);
+        this.currentPlayPoint2 = new PinCount(newFelledPin);
     }
 
     @Override

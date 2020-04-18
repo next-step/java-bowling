@@ -21,8 +21,8 @@ public class FrameNumber {
         return frameNumber == MAX_NORMAL_FRAME_COUNT;
     }
 
-    public int getNext() {
-        return frameNumber + 1;
+    public FrameNumber getNext() {
+        return new FrameNumber(frameNumber + 1);
     }
 
     public int getValue() {

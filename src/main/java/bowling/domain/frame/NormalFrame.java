@@ -12,13 +12,13 @@ public class NormalFrame implements Frame {
     private FrameNumber frameNumber;
     private State state;
 
-    private NormalFrame(int frameNumber, State state, StateHistory stateHistory) {
-        this.frameNumber = new FrameNumber(frameNumber);
+    private NormalFrame(FrameNumber frameNumber, State state, StateHistory stateHistory) {
+        this.frameNumber = frameNumber;
         this.state = state;
         this.stateHistory = stateHistory;
     }
 
-    public static Frame create(int frameNumber) {
+    public static Frame create(FrameNumber frameNumber) {
         return new NormalFrame(frameNumber, new Ready(), new StateHistory());
     }
 

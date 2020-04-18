@@ -11,7 +11,7 @@ public class Frames {
     private final List<Frame> frames = new ArrayList<>();
 
     public Frames() {
-        frames.add(NormalFrame.create(FIRST_FRAME_NUMBER));
+        frames.add(NormalFrame.create(new FrameNumber(FIRST_FRAME_NUMBER)));
     }
 
     public void play(int felledPin) {
