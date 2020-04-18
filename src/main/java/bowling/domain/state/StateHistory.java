@@ -24,6 +24,6 @@ public class StateHistory {
     }
 
     public List<State> getValue() {
-        return stateHistory;
+        return new ArrayList<>(stateHistory);
     }
 }
