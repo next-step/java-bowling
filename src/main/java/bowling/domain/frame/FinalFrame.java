@@ -46,10 +46,12 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isEndedFrame() {
-        if (getBowledCount() == 1) {
+        int bowledCount = getBowledCount();
+
+        if (bowledCount == 1) {
             return isEndedFrameBowledOnce();
         }
-        if (getBowledCount() == 2) {
+        if (bowledCount == 2) {
             return isEndedFrameBowledTwice();
         }
         return state.isEndedState();
