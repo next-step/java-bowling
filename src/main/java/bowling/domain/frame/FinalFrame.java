@@ -85,7 +85,7 @@ public class FinalFrame implements Frame {
         return true;
     }
 
-    @Override public Optional<Integer> getScoreForTwoPitches() {
+    @Override public Optional<Score> getScoreForTwoPitches() {
         Optional<Pitch> firstPitch = pitches.getFirst();
         Optional<Pitch> secondPitch = pitches.getSecond();
         if (!firstPitch.isPresent() || !secondPitch.isPresent()) {
@@ -94,11 +94,11 @@ public class FinalFrame implements Frame {
 
         int firstCount = firstPitch.get().getCount();
         int secondCount = secondPitch.get().getCount();
-        return Optional.of(firstCount + secondCount);
+        return Optional.of(new Score(firstCount + secondCount));
     }
 
-    @Override public Optional<Integer> getScoreForOnePitch() {
+    @Override public Optional<Score> getScoreForOnePitch() {
         return pitches.getFirst()
-                .map(Pitch::getCount);
+                .map(p -> new Score(p.getCount()));
     }
 }

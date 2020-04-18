@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.pitch.Pitch;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class NormalFrame implements Frame {
@@ -11,6 +12,7 @@ public class NormalFrame implements Frame {
 
     private Pitches pitches;
     private Frame next;
+    private Score score;
 
     public NormalFrame() {
         this.pitches = new Pitches();
@@ -21,7 +23,12 @@ public class NormalFrame implements Frame {
             return false;
         }
 
-        return pitches.add(pinCount);
+        boolean result = pitches.add(pinCount);
+        if (isDone()) {
+            score = new Score(pitches);
+        }
+
+        return result;
     }
 
     private boolean isAddable(int pinCount) {
@@ -35,24 +42,28 @@ public class NormalFrame implements Frame {
     }
 
     @Override public Optional<Integer> getScore() {
-        if (!isDone()) {
+        if (Objects.isNull(score)) {
             return Optional.empty();
         }
-
-        int currentScore = pitches.getPinCountTotal();
-        return calculateScoreWithNextScore(currentScore);
+        if (score.isAbleToGetScore()) {
+            return score.getScore();
+        }
+        return calculateScoreWithNextScore()
+                .map(additionalScore -> {
+                    score.setAdditionalScore(additionalScore);
+                    return score.getScore();
+                })
+                .map(Optional::get);
     }
 
-    private Optional<Integer> calculateScoreWithNextScore(int currentScore) {
+    private Optional<Score> calculateScoreWithNextScore() {
         if (pitches.isLastPitchStrike()) {
-            return next.getScoreForTwoPitches()
-                    .map(nextScore -> nextScore + currentScore);
+            return next.getScoreForTwoPitches();
         } else if (pitches.isLastPitchSpare()) {
-            return next.getScoreForOnePitch()
-                    .map(nextScore -> nextScore + currentScore);
+            return next.getScoreForOnePitch();
         }
 
-        return Optional.of(currentScore);
+        return Optional.empty();
     }
 
     @Override public boolean isDone() {
@@ -86,17 +97,18 @@ public class NormalFrame implements Frame {
         return frame;
     }
 
-    @Override public Optional<Integer> getScoreForTwoPitches() {
+    @Override public Optional<Score> getScoreForTwoPitches() {
         if (pitches.size() == MAX_PIN_COUNT_SIZE) {
-            return Optional.of(pitches.getPinCountTotal());
+            return Optional.of(score);
         } else if (pitches.isLastPitchStrike()) {
             return next.getScoreForOnePitch()
-                    .map(score -> score + pitches.getPinCountTotal());
+                    .map(nextScore -> score.add(nextScore));
         }
         return Optional.empty();
     }
 
-    @Override public Optional<Integer> getScoreForOnePitch() {
-        return pitches.getFirst().map(Pitch::getCount);
+    @Override public Optional<Score> getScoreForOnePitch() {
+        return pitches.getFirst()
+                .map(pitch -> new Score(pitch.getCount()));
     }
 }

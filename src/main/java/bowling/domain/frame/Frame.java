@@ -21,7 +21,7 @@ public interface Frame {
 
     boolean isLast();
 
-    Optional<Integer> getScoreForOnePitch();
+    Optional<Score> getScoreForOnePitch();
 
-    Optional<Integer> getScoreForTwoPitches();
+    Optional<Score> getScoreForTwoPitches();
 }
