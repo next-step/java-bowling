@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.state.PinCount;
+import bowling.domain.state.StateHistory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,32 @@ public class Frames {
 
     public int getCurrentFrameNumber() {
         return frames.size();
+    }
+
+    public List<Integer> getScores() {
+        List<Integer> scores = new ArrayList<>();
+
+        for(Frame frame : frames) {
+            addScore(scores, frame);
+        }
+
+        return scores;
+    }
+
+    private void addScore(List<Integer> scores, Frame frame) {
+        if(!frame.canCalculateScore()) {
+            //TODO: Exception 처리
+        }
+
+        int score = frame.getScore();
+
+        if(scores.isEmpty()) {
+            scores.add(score);
+            return ;
+        }
+
+        int nextScore = scores.get(scores.size() - 1) + score;
+        scores.add(nextScore);
     }
 
     public List<Frame> getValue() {

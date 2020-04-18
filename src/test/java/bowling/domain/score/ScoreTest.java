@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,7 @@ public class ScoreTest {
 
     @Test
     @DisplayName("첫 두 투구에서 Spare가 나왔을 경우, 다음 한 투구에 대한 점수를 추가로 더한다.")
-    void getScoreStrike() {
+    void getScoreSpare() {
         Frames frames = new Frames();
 
         frames.play(pinCount5);

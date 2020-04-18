@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.PinCount;
 import bowling.domain.state.*;
 
@@ -80,9 +81,36 @@ public class FinalFrame implements Frame {
         return stateHistory;
     }
 
-    private void assertFelledPin(int felledPin) {
-        if (felledPin > MAX_FELLED_PIN_COUNT || felledPin < MIN_FELLED_PIN_COUNT) {
-            throw new IllegalArgumentException(WRONG_FELLED_PIN);
+    @Override
+    public int getScore() {
+        if(!isEndedFrame()) {
+            throw new IllegalStateException(NOT_ENDED_FRAME_ERROR);
         }
+
+        Score score = ((Finished) state).createScore();
+
+        if(!score.canCalculateScore()) {
+            return score.getScore();
+        }
+
+        return getNext().calculateAdditionalScore(score);
+    }
+
+    @Override
+    public int calculateAdditionalScore(Score score) {
+        for(State state : stateHistory.getValue()) {
+            score.addAdditionalScore(state.getFelledPin());
+
+            if(!score.canCalculateScore()) {
+                return score.getScore();
+            }
+        }
+
+        return getNext().calculateAdditionalScore(score);
+    }
+
+    @Override
+    public boolean canCalculateScore() {
+        return !isEndedFrame();
     }
 }

@@ -1,9 +1,13 @@
 package bowling.domain.state;
 
-abstract class Finished implements State {
+import bowling.domain.score.Score;
+
+public abstract class Finished implements State {
 
     @Override
     public boolean isEndedState() {
         return true;
     }
+
+    abstract public Score createScore();
 }

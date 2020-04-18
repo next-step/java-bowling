@@ -1,12 +1,11 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.PinCount;
-import bowling.domain.state.Ready;
-import bowling.domain.state.State;
-import bowling.domain.state.StateHistory;
+import bowling.domain.score.Score;
+import bowling.domain.state.*;
+
+import static bowling.Constants.NOT_ENDED_FRAME_ERROR;
 
 public class NormalFrame implements Frame {
-
     private final StateHistory stateHistory;
     private FrameNumber frameNumber;
     private State state;
@@ -57,5 +56,38 @@ public class NormalFrame implements Frame {
     @Override
     public StateHistory getStateHistory() {
         return stateHistory;
+    }
+
+    @Override
+    public int getScore() {
+        if(!isEndedFrame()) {
+            throw new IllegalStateException(NOT_ENDED_FRAME_ERROR);
+        }
+
+        Score score = ((Finished) state).createScore();
+
+        if(!score.canCalculateScore()) {
+            return score.getScore();
+        }
+
+        return getNext().calculateAdditionalScore(score);
+    }
+
+    @Override
+    public int calculateAdditionalScore(Score score) {
+        for(State state : stateHistory.getValue()) {
+            score.addAdditionalScore(state.getFelledPin());
+
+            if(!score.canCalculateScore()) {
+                return score.getScore();
+            }
+        }
+
+        return getNext().calculateAdditionalScore(score);
+    }
+
+    @Override
+    public boolean canCalculateScore() {
+        return !isEndedFrame();
     }
 }

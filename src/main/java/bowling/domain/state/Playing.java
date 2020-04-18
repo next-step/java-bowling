@@ -23,4 +23,9 @@ public class Playing extends NotFinished {
     public String getString() {
         return String.valueOf(felledPin.getValue());
     }
+
+    @Override
+    public int getFelledPin() {
+        return felledPin.getValue();
+    }
 }

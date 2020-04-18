@@ -20,4 +20,9 @@ public class Gutter extends NotFinished {
     public String getString() {
         return TEXT;
     }
+
+    @Override
+    public int getFelledPin() {
+        return MIN_FELLED_PIN_COUNT;
+    }
 }

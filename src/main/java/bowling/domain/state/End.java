@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.score.Score;
+
 public class End extends Finished {
 
     public static final String GAME_END_ERROR = "게임이 완료되었습니다. 플레이할 수 없습니다.";
@@ -18,5 +20,15 @@ public class End extends Finished {
     @Override
     public String getString() {
         return String.valueOf(felledPin.getValue());
+    }
+
+    @Override
+    public int getFelledPin() {
+        return felledPin.getValue();
+    }
+
+    @Override
+    public Score createScore() {
+        return new Score(felledPin.getValue(), 0);
     }
 }

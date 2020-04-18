@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.PinCount;
 import bowling.domain.state.State;
 import bowling.domain.state.StateHistory;
@@ -19,4 +20,10 @@ public interface Frame {
     boolean isLastFrame();
 
     StateHistory getStateHistory();
+
+    int getScore();
+
+    int calculateAdditionalScore(Score score);
+
+    boolean canCalculateScore();
 }
