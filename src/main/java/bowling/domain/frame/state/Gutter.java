@@ -28,7 +28,7 @@ public class Gutter implements State {
 
     @Override
     public String getCurrentPinsState() {
-        if (firstPins.getDownPin() == 0) {
+        if (firstPins.isGutter()) {
             return GUTTER_DASH;
         }
         return String.format(PINS_STATE, firstPins.getDownPin(), secondPins.getDownPin());

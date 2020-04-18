@@ -41,17 +41,11 @@ public class Pins {
     }
 
     public boolean isGutter() {
-        if (pins == MAX_PIN) {
-            return true;
-        }
-        return false;
+        return pins == MAX_PIN;
     }
 
     public boolean isFinish() {
-        if (pins == MIN_PIN) {
-            return true;
-        }
-        return false;
+        return pins == MIN_PIN;
     }
 
     public int getDownPin() {

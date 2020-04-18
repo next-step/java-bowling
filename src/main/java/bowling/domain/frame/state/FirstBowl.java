@@ -33,7 +33,7 @@ public class FirstBowl implements State {
 
     @Override
     public String getCurrentPinsState() {
-        if (firstPins.getDownPin() == 0) {
+        if (firstPins.isGutter()) {
             return "  -  ";
         }
         return String.format(PINS_STATE, firstPins.getDownPin());
