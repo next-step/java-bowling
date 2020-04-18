@@ -21,7 +21,7 @@ public class LastBowlingFrame implements BowlingFrame {
 
     @Override
     public void bowl(final int countOfPin) {
-        state.bowl(countOfPin);
+        state = state.bowl(countOfPin);
     }
 
     @Override

@@ -4,9 +4,6 @@ import bowling.Score;
 import bowling.frame.BowlingFrame;
 import bowling.framestate.State;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class BowlingFrameConsoleResult {
 
     private static final String SCORE_DELIMITER = "|";
@@ -20,21 +17,18 @@ public class BowlingFrameConsoleResult {
     }
 
     public static BowlingFrameConsoleResult newInstance(final BowlingFrame bowlingFrame) {
-        return new BowlingFrameConsoleResult(joinScoreString(bowlingFrame), getTotalScore(bowlingFrame));
+        return new BowlingFrameConsoleResult(extractFrameScoreResult(bowlingFrame), extractTotalScore(bowlingFrame));
     }
 
-    private static String getTotalScore(final BowlingFrame bowlingFrame) {
+    private static String extractTotalScore(final BowlingFrame bowlingFrame) {
         Score score = bowlingFrame.getScore();
         return Integer.toString(score.getScore());
     }
 
-    private static String joinScoreString(final BowlingFrame bowlingFrame) {
+    private static String extractFrameScoreResult(final BowlingFrame bowlingFrame) {
         State state = bowlingFrame.getState();
-        List<String> scoreStrings = state.getPins().stream()
-                .map(String::valueOf)
-                .collect(Collectors.toList());
-
-        return String.join(SCORE_DELIMITER, scoreStrings);
+        FrameScoreConsoleResult frameScoreConsoleResult = FrameScoreConsoleResult.of(state);
+        return frameScoreConsoleResult.toString(state.getPins());
     }
 
     public String getFrameScoreResult() {
