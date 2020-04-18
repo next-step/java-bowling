@@ -51,32 +51,6 @@ public class Frames {
         return frames.size();
     }
 
-    public List<Integer> getScores() {
-        List<Integer> scores = new ArrayList<>();
-
-        for(Frame frame : frames) {
-            addScore(scores, frame);
-        }
-
-        return scores;
-    }
-
-    private void addScore(List<Integer> scores, Frame frame) {
-        if(!frame.canCalculateScore()) {
-            return ;
-        }
-
-        int score = frame.getScore();
-
-        if (scores.isEmpty()) {
-            scores.add(score);
-            return;
-        }
-
-        int nextScore = scores.get(scores.size() - 1) + score;
-        scores.add(nextScore);
-    }
-
     public FrameResults getCurrentFrameResults() {
         return new FrameResults(new ArrayList<>(frames));
     }

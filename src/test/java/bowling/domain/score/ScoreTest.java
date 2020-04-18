@@ -31,9 +31,9 @@ public class ScoreTest {
         frames.play(pinCount5);
         frames.play(pinCount5);
         frames.play(pinCount1);
-        frames.play(pinCount0);
+        FrameResults frameResults = frames.play(pinCount0);
 
-        int scoreFirstFrame = frames.getScores().get(0);
+        int scoreFirstFrame = frameResults.getScores().get(0);
 
         assertThat(scoreFirstFrame).isEqualTo(11);
     }
@@ -43,9 +43,9 @@ public class ScoreTest {
         Frames frames = new Frames();
 
         frames.play(pinCount1);
-        frames.play(pinCount5);
+        FrameResults frameResults = frames.play(pinCount5);
 
-        int scoreFirstFrame = frames.getScores().get(0);
+        int scoreFirstFrame = frameResults.getScores().get(0);
 
         assertThat(scoreFirstFrame).isEqualTo(6);
     }
@@ -55,9 +55,9 @@ public class ScoreTest {
         Frames frames = new Frames();
 
         frames.play(pinCount0);
-        frames.play(pinCount0);
+        FrameResults frameResults = frames.play(pinCount0);
 
-        int scoreFirstFrame = frames.getScores().get(0);
+        int scoreFirstFrame = frameResults.getScores().get(0);
 
         assertThat(scoreFirstFrame).isEqualTo(0);
     }
