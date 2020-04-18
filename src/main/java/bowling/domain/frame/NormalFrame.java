@@ -33,7 +33,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override public Optional<Integer> getScore() {
-        if (!isDone() || pitches.isEmpty()) {
+        if (!isDone()) {
             return Optional.empty();
         }
 
@@ -54,6 +54,10 @@ public class NormalFrame implements Frame {
     }
 
     @Override public boolean isDone() {
+        if (pitches.isEmpty()) {
+            return false;
+        }
+
         if (pitches.isFull(MAX_PIN_COUNT_SIZE)) {
             return true;
         }
