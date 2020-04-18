@@ -1,7 +1,7 @@
 package bowling.domain.dto;
 
 import bowling.domain.Frames;
-import bowling.domain.frame.Pitch;
+import bowling.domain.pitch.Pitch;
 
 import java.util.ArrayList;
 import java.util.List;

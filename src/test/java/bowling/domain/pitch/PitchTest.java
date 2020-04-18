@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.pitch;
 
 import bowling.domain.exception.OutOfRangeArgumentException;
 import org.junit.jupiter.api.DisplayName;
@@ -11,9 +11,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class PitchTest {
     public static final Pitch PIN_COUNT_0 = Pitch.valueOf(0);
-    public static final Pitch PIN_COUNT_1 = Pitch.valueOf(1);
-    public static final Pitch PIN_COUNT_2 = Pitch.valueOf(2);
-    public static final Pitch PIN_COUNT_3 = Pitch.valueOf(3);
     public static final Pitch PIN_COUNT_8 = Pitch.valueOf(8);
     public static final Pitch PIN_COUNT_10 = Pitch.valueOf(10);
 
@@ -29,12 +26,6 @@ public class PitchTest {
     void error(int score) {
         assertThatExceptionOfType(OutOfRangeArgumentException.class)
                 .isThrownBy(() -> Pitch.valueOf(score));
-    }
-
-    @DisplayName("최대 허용 갯수까지 저장되었는지 확인한다.")
-    @Test
-    void max() {
-        assertThat(PIN_COUNT_10.isMax()).isTrue();
     }
 
     @DisplayName("다른 PinCount 와 더했을때 최대치를 넘지 않아야 한다.")

@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.pitch.Pitch;
+
 import java.util.List;
 import java.util.Optional;
 

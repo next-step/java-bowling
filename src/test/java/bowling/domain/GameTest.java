@@ -2,10 +2,12 @@ package bowling.domain;
 
 import bowling.domain.dto.FrameStatus;
 import bowling.domain.dto.GameStatus;
-import bowling.domain.frame.PitchTest;
+import bowling.domain.pitch.Pitch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,9 +49,9 @@ public class GameTest {
         game.addPin(second);
 
         GameStatus gameStatus = game.getGameStatus();
-        assertThat(gameStatus.getFrameStatus(0).getPitches())
-                .containsExactly(PitchTest.PIN_COUNT_1,
-                        PitchTest.PIN_COUNT_2);
+        List<Pitch> pitchList = gameStatus.getFrameStatus(0).getPitches();
+        assertThat(pitchList.get(0).getCount()).isEqualTo(1);
+        assertThat(pitchList.get(1).getCount()).isEqualTo(2);
     }
 
     @DisplayName("현재 프레임 정보를 얻어온다")
