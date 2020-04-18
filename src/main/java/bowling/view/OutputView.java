@@ -1,8 +1,12 @@
 package bowling.view;
 
+import bowling.dto.BowlingFrameConsoleResult;
+import bowling.dto.BowlingGameResult;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -39,18 +43,18 @@ public class OutputView {
     public static void printBowlingGame(final BowlingGameResult bowlingGameResult) {
         System.out.println(GAME_FIRST_ROW);
 
-        List<String> scores = getCollect(bowlingGameResult, FrameScoreConsoleResult::getScoreResult);
-        List<String> totalScores = getCollect(bowlingGameResult, FrameScoreConsoleResult::getTotalScore);
+        List<String> scores = getCollect(bowlingGameResult, BowlingFrameConsoleResult::getFrameScoreResult);
+        List<String> totalScores = getCollect(bowlingGameResult, BowlingFrameConsoleResult::getTotalScore);
 
         System.out.println(makeGameRow(GAME_ROW_BLANK + bowlingGameResult.getName(), makeFrameWordsWithBlank(scores)));
         System.out.println(makeGameRow(GAME_ROW_BLANK + GAME_ROW_SCORE_HEAD, makeFrameWordsWithBlank(totalScores)));
         System.out.println();
     }
 
-    private static List<String> getCollect(final BowlingGameResult bowlingGameResult, Function<FrameScoreConsoleResult, String> frameScoreFunction) {
-        return bowlingGameResult.getFrameScores()
+    private static List<String> getCollect(final BowlingGameResult bowlingGameResult, Function<BowlingFrameConsoleResult, String> frameScoreFunction) {
+        return bowlingGameResult.getBowlingFrameConsoleResults()
                 .stream()
-                .map(frameScoreResult -> String.format(GAME_FRAME_SCORE_FORMAT, frameScoreFunction.apply(frameScoreResult)))
+                .map(bowlingFrameConsoleResult -> String.format(GAME_FRAME_SCORE_FORMAT, frameScoreFunction.apply(bowlingFrameConsoleResult)))
                 .collect(Collectors.toList());
     }
 
