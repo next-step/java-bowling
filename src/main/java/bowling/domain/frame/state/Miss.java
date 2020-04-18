@@ -32,7 +32,7 @@ public class Miss implements State {
         }
 
         if (secondPins.isGutter()) {
-            return String.format("  %d|- ", secondPins.getDownPin());
+            return String.format("  %d|- ", firstPins.getDownPin());
         }
 
         return String.format(PINS_STATE, firstPins.getDownPin(), secondPins.getDownPin());
