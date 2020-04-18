@@ -2,9 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.state.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static bowling.Constants.*;
 
 public class FinalFrame implements Frame {

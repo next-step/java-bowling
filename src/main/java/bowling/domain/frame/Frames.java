@@ -18,7 +18,7 @@ public class Frames {
         Frame frame = getCurrentFrame();
         frame.play(felledPin);
 
-        if(!frame.isLastFrame() && frame.isEndedFrame()) {
+        if (!frame.isLastFrame() && frame.isEndedFrame()) {
             Frame nextFrame = frame.getNext();
             addFrame(nextFrame);
         }
@@ -29,7 +29,7 @@ public class Frames {
     }
 
     private void addFrame(Frame frame) {
-        if(Objects.nonNull(frame)) {
+        if (Objects.nonNull(frame)) {
             frames.add(frame);
         }
     }

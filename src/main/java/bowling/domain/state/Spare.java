@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import static bowling.Constants.*;
-import static bowling.Constants.WRONG_FELLED_PIN;
 
 public class Spare extends Finished {
     private static final String TEXT = "/";

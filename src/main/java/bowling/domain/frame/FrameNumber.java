@@ -1,9 +1,8 @@
 package bowling.domain.frame;
 
 public class FrameNumber {
-    private static final int MAX_NORMAL_FRAME_COUNT = 9;
     public static final String OVER_NORMAL_FRAME_NO_ERROR = "일반 Frame은 최대 9개까지만 생성할 수 있습니다.";
-
+    private static final int MAX_NORMAL_FRAME_COUNT = 9;
     private int frameNumber;
 
     public FrameNumber(int frameNumber) {

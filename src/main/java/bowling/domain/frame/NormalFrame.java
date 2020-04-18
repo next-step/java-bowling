@@ -4,16 +4,13 @@ import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 import bowling.domain.state.StateHistory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static bowling.Constants.*;
 
 public class NormalFrame implements Frame {
 
+    private final StateHistory stateHistory;
     private FrameNumber frameNumber;
     private State state;
-    private final StateHistory stateHistory;
 
     private NormalFrame(int frameNumber, State state, StateHistory stateHistory) {
         this.frameNumber = new FrameNumber(frameNumber);
@@ -33,7 +30,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame getNext() {
-        if(frameNumber.isMaxNormalFrameCount()) {
+        if (frameNumber.isMaxNormalFrameCount()) {
             return FinalFrame.create();
         }
         return NormalFrame.create(frameNumber.getNext());
