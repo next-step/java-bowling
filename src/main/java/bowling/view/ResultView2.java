@@ -25,36 +25,60 @@ public class ResultView2 {
 
     private static void printOneFrame(GameResults gameResults, int frameId){
         if(frameId == FRAME_ID_FIRST){
-            for(int i=0; i<gameResults.getSize(); i++){
-                System.out.println(BOWLING_FRAME);
-                for (int j=0; j<gameResults.getSize(); j++){
-                    if(i==j){
-                        printFirstFrameFirst(gameResults.getResultByIndex(j));
-                    }
-                    if(i<j){
-                        printName(gameResults.getResultByIndex(j));
-                    }
+            printFirstFrame(gameResults, frameId);
+        }
 
-                    if(i>j){
-                        printFirstFrameFirst(gameResults.getResultByIndex(j));
-                    }
+        if(frameId != FRAME_ID_FIRST){
+            printNormalFrame(gameResults, frameId);
+        }
+    }
+
+    private static void printFirstFrame(GameResults gameResults, int frameId){
+        for(int i=0; i<gameResults.getSize(); i++){
+            System.out.println(BOWLING_FRAME);
+            for (int j=0; j<gameResults.getSize(); j++){
+                if(i>=j){
+                    printFirstFrameFirst(gameResults.getResultByIndex(j));
+                }
+                if(i<j){
+                    printName(gameResults.getResultByIndex(j));
                 }
             }
-        } else {
-            for (int i=0; i<gameResults.getSize(); i++){
-                System.out.println(BOWLING_FRAME);
-                for(int j=0; j<gameResults.getSize(); j++){
-                    if(i==j){
-                        printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
-                    }
+        }
 
-                    if(i<j){
-                        printOneFrameFirst(gameResults.getResultByIndex(j), frameId - 1);
-                    }
+        System.out.println();
+        System.out.println();
 
-                    if(i>j){
-                        printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
-                    }
+        for(int i=0; i<gameResults.getSize(); i++){
+            System.out.println(BOWLING_FRAME);
+            for (int j=0; j<gameResults.getSize(); j++){
+                if(i>=j){
+                    printFirstFrameSecond(gameResults.getResultByIndex(j));
+                }
+                if(i<j){
+                    printFirstFrameFirst(gameResults.getResultByIndex(j));
+                }
+            }
+        }
+
+        System.out.println();
+        System.out.println();
+    }
+
+    private static void printNormalFrame(GameResults gameResults, int frameId){
+        for (int i=0; i<gameResults.getSize(); i++){
+            System.out.println(BOWLING_FRAME);
+            for(int j=0; j<gameResults.getSize(); j++){
+                if(i==j){
+                    printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
+                }
+
+                if(i<j){
+                    printOneFrameFirst(gameResults.getResultByIndex(j), frameId - 1);
+                }
+
+                if(i>j){
+                    printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
                 }
             }
         }
@@ -64,16 +88,34 @@ public class ResultView2 {
 
         for (int i=0; i<gameResults.getSize(); i++){
             System.out.println(BOWLING_FRAME);
-            printOneFrameSecond(gameResults.getResultByIndex(i), frameId);
+            for(int j=0; j<gameResults.getSize(); j++){
+                if(i>=j){
+                    printOneFrameSecond(gameResults.getResultByIndex(j), frameId);
+                }
+
+                if(i<j){
+                    printOneFrameFirst(gameResults.getResultByIndex(j), frameId);
+                }
+            }
         }
 
         System.out.println();
         System.out.println();
     }
 
+
     private static void printName(GameResult gameResult){
         StringBuilder name = new StringBuilder();
         name.append(String.format(NAME, gameResult.getName()));
+
+        System.out.println(name.toString());
+        System.out.println();
+    }
+
+    private static void printFirstFrameSecond(GameResult gameResult){
+        StringBuilder name = new StringBuilder();
+        name.append(String.format(NAME, gameResult.getName()));
+        name.append(String.format(SCORE, getScore(gameResult.getFrameByFrameId(FRAME_ID_FIRST))));
 
         System.out.println(name.toString());
         System.out.println();
