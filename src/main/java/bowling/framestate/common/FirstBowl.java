@@ -23,6 +23,10 @@ public class FirstBowl implements State {
 
     @Override
     public State bowl(final int countOfPin) {
+        if (this.countOfPin + countOfPin > 10) {
+            throw new IllegalStateException("The frame maximum pin count is 10");
+        }
+
         if (this.countOfPin + countOfPin == 10) {
             return Spare.newInstance(this.countOfPin, countOfPin);
         }
