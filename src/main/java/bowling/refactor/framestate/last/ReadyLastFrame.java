@@ -1,5 +1,6 @@
 package bowling.refactor.framestate.last;
 
+import bowling.refactor.FrameScore;
 import bowling.refactor.framestate.State;
 
 public class ReadyLastFrame implements State {
@@ -18,5 +19,10 @@ public class ReadyLastFrame implements State {
         }
 
         return FirstBowlLastFrame.newInstance(countOfPin);
+    }
+
+    @Override
+    public FrameScore createFrameScore() {
+        return FrameScore.createReady();
     }
 }

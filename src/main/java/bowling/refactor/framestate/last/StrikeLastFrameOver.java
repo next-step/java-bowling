@@ -1,5 +1,8 @@
 package bowling.refactor.framestate.last;
 
+import bowling.refactor.FrameScore;
+import bowling.refactor.LeftScoreCount;
+import bowling.refactor.Score;
 import bowling.refactor.framestate.State;
 
 public class StrikeLastFrameOver implements State {
@@ -17,5 +20,14 @@ public class StrikeLastFrameOver implements State {
     @Override
     public State Bowl(int countOfPin) {
         throw new IllegalStateException("No more bowl.");
+    }
+
+    @Override
+    public FrameScore createFrameScore() {
+        return FrameScore.newInstance(calculateScore(), LeftScoreCount.of(0));
+    }
+
+    private Score calculateScore() {
+        return Score.of(10 + secondPin + secondPin);
     }
 }

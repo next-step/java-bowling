@@ -1,5 +1,8 @@
 package bowling.refactor.framestate.common;
 
+import bowling.refactor.FrameScore;
+import bowling.refactor.LeftScoreCount;
+import bowling.refactor.Score;
 import bowling.refactor.framestate.State;
 
 public class FirstBowl implements State {
@@ -16,10 +19,15 @@ public class FirstBowl implements State {
 
     @Override
     public State Bowl(final int countOfPin) {
-        if(this.countOfPin + countOfPin == 10) {
+        if (this.countOfPin + countOfPin == 10) {
             return Spare.newInstance(this.countOfPin, countOfPin);
         }
 
         return Miss.newInstance(this.countOfPin, countOfPin);
+    }
+
+    @Override
+    public FrameScore createFrameScore() {
+        return FrameScore.newInstance(Score.of(countOfPin), LeftScoreCount.of(1));
     }
 }

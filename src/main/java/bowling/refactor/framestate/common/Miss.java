@@ -1,5 +1,8 @@
 package bowling.refactor.framestate.common;
 
+import bowling.refactor.FrameScore;
+import bowling.refactor.LeftScoreCount;
+import bowling.refactor.Score;
 import bowling.refactor.framestate.State;
 
 public class Miss implements State {
@@ -19,5 +22,10 @@ public class Miss implements State {
     @Override
     public State Bowl(final int countOfPin) {
         throw new IllegalStateException("No more bowl.");
+    }
+
+    @Override
+    public FrameScore createFrameScore() {
+        return FrameScore.newInstance(Score.of(firstPin + secondPin), LeftScoreCount.of(0));
     }
 }

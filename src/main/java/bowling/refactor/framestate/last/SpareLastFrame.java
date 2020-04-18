@@ -1,5 +1,6 @@
 package bowling.refactor.framestate.last;
 
+import bowling.refactor.FrameScore;
 import bowling.refactor.framestate.State;
 
 import java.util.Arrays;
@@ -21,5 +22,10 @@ public class SpareLastFrame implements State {
     @Override
     public State Bowl(final int countOfPin) {
         return SpareLastFrameOver.newInstance(Arrays.asList(firstPin, secondPin, countOfPin));
+    }
+
+    @Override
+    public FrameScore createFrameScore() {
+        return FrameScore.createSpare();
     }
 }
