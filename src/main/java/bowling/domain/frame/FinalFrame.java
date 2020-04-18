@@ -1,12 +1,9 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Score;
-import bowling.domain.state.PinCount;
 import bowling.domain.state.*;
 
-import java.util.Objects;
-
-import static bowling.Constants.*;
+import static bowling.Constants.CAN_NOT_CALCULATE_SCORE;
 
 public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NO = 10;
@@ -96,6 +93,13 @@ public class FinalFrame implements Frame {
 
     @Override
     public int calculateAdditionalScore(Score score) {
+        for(State state : stateHistory.getValue()) {
+            score.addAdditionalScore(state.getFelledPin());
+
+            if(score.isEnded()) {
+                break;
+            }
+        }
         return score.getScore();
     }
 

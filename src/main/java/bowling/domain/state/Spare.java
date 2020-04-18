@@ -2,8 +2,6 @@ package bowling.domain.state;
 
 import bowling.domain.score.Score;
 
-import static bowling.Constants.MAX_FELLED_PIN_COUNT;
-
 public class Spare extends Finished {
     private static final String TEXT = "/";
 

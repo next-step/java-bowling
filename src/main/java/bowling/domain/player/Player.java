@@ -1,8 +1,8 @@
 package bowling.domain.player;
 
 import bowling.domain.frame.FrameResults;
-import bowling.domain.state.PinCount;
 import bowling.domain.frame.Frames;
+import bowling.domain.state.PinCount;
 
 public class Player {
     public static final String PLAYER_NAME_ERROR = "플레이어의 이름은 3글자로 입력해주세요.";
