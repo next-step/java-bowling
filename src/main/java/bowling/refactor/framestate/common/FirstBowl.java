@@ -5,6 +5,8 @@ import bowling.refactor.LeftScoreCount;
 import bowling.refactor.Score;
 import bowling.refactor.framestate.State;
 
+import java.util.Arrays;
+
 public class FirstBowl implements State {
 
     private final int countOfPin;
@@ -30,4 +32,10 @@ public class FirstBowl implements State {
     public FrameScore createFrameScore() {
         return FrameScore.newInstance(Score.of(countOfPin), LeftScoreCount.of(1));
     }
+
+    @Override
+    public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
+        return beforeScore.addingUp(Arrays.asList(countOfPin, 0));
+    }
+
 }

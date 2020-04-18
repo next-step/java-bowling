@@ -1,10 +1,12 @@
 package bowling.refactor;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 public class FrameScore {
-    private Score score;
-    private LeftScoreCount leftScoreCount;
+    private final Score score;
+    private final LeftScoreCount leftScoreCount;
 
     private FrameScore(final Score score, final LeftScoreCount leftScoreCount) {
         validateNull(score, leftScoreCount);
@@ -20,6 +22,10 @@ public class FrameScore {
 
     public static FrameScore newInstance(final Score score, final LeftScoreCount leftScoreCount) {
         return new FrameScore(score, leftScoreCount);
+    }
+
+    public static FrameScore createReady() {
+        return new FrameScore(Score.of(0), LeftScoreCount.of(2));
     }
 
     public static FrameScore createMiss(final Score score) {
@@ -43,5 +49,26 @@ public class FrameScore {
 
     public boolean canCalculateScore() {
         return leftScoreCount.isEqualTo(0);
+    }
+
+    public FrameScore addingUp(final List<Integer> scores) {
+        if(canCalculateScore()) {
+            return this;
+        }
+
+        return getAddingUpFrameScore(scores);
+    }
+
+    private FrameScore getAddingUpFrameScore(final List<Integer> scores) {
+        LeftScoreCount updateLeftScoreCount = LeftScoreCount.of(leftScoreCount);
+        Iterator<Integer> scoreIterator = scores.iterator();
+        int addingUpScore = 0;
+
+        while(!updateLeftScoreCount.isEqualTo(0) && scoreIterator.hasNext()) {
+            addingUpScore += scoreIterator.next();
+            updateLeftScoreCount = updateLeftScoreCount.minus();
+        }
+
+        return FrameScore.newInstance(score.add(addingUpScore), updateLeftScoreCount);
     }
 }

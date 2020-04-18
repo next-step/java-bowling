@@ -2,7 +2,7 @@ package bowling.refactor;
 
 public class LeftScoreCount {
 
-    private int count;
+    private final int count;
 
     private LeftScoreCount(final int count) {
         validateCountRange(count);
@@ -19,7 +19,15 @@ public class LeftScoreCount {
         return new LeftScoreCount(count);
     }
 
+    public static LeftScoreCount of(final LeftScoreCount leftScoreCount) {
+        return new LeftScoreCount(leftScoreCount.count);
+    }
+
     public boolean isEqualTo(final int count) {
         return this.count == count;
+    }
+
+    public LeftScoreCount minus() {
+        return new LeftScoreCount(count - 1);
     }
 }

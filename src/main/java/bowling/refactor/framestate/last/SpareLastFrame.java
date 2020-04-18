@@ -28,4 +28,9 @@ public class SpareLastFrame implements State {
     public FrameScore createFrameScore() {
         return FrameScore.createSpare();
     }
+
+    @Override
+    public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
+        return beforeScore.addingUp(Arrays.asList(firstPin, secondPin));
+    }
 }

@@ -3,6 +3,8 @@ package bowling.refactor.framestate.common;
 import bowling.refactor.FrameScore;
 import bowling.refactor.framestate.State;
 
+import java.util.Arrays;
+
 public class Spare implements State {
 
     private final int firstPin;
@@ -25,5 +27,10 @@ public class Spare implements State {
     @Override
     public FrameScore createFrameScore() {
         return FrameScore.createSpare();
+    }
+
+    @Override
+    public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
+        return beforeScore.addingUp(Arrays.asList(firstPin, secondPin));
     }
 }

@@ -19,4 +19,7 @@ public class Score {
         return new Score(score);
     }
 
+    public Score add(final int score) {
+        return new Score(this.score + score);
+    }
 }

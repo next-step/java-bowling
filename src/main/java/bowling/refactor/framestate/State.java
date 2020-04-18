@@ -7,4 +7,6 @@ public interface State {
     State Bowl(int countOfPin);
 
     FrameScore createFrameScore();
+
+    FrameScore addingUpFrameScore(FrameScore beforeScore);
 }
