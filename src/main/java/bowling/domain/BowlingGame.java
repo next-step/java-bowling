@@ -8,20 +8,24 @@ public class BowlingGame {
 
     private final Player player;
     private final Frame firstFrame;
-    private Frame frame;
 
     public BowlingGame(final Player player) {
         this.player = player;
-        this.frame = new NormalFrame();
-        this.firstFrame = this.frame;
+        this.firstFrame = new NormalFrame();
+    }
+
+    private Frame findLastFrame() {
+        return firstFrame.findLast();
     }
 
     public void play(final int pinCount) {
-        if (frame.isFinish()) {
-            frame = frame.createNext();
+        Frame last = findLastFrame();
+
+        if (last.isFinish()) {
+            last.createNext();
         }
 
-        frame.bowl(pinCount);
+        last.findLast().bowl(pinCount);
     }
 
     public String getPlayerName() {
@@ -29,18 +33,18 @@ public class BowlingGame {
     }
 
     public boolean isFinish() {
-        if (frame instanceof FinalFrame && frame.isFinish()) {
+        if (findLastFrame() instanceof FinalFrame && findLastFrame().isFinish()) {
             return true;
         }
         return false;
     }
 
     public boolean isLastFrameFinish() {
-        return frame.isFinish();
+        return findLastFrame().isFinish();
     }
 
-    public Frame getFrame() {
-        return frame;
+    public Frame getCurrentFrame() {
+        return findLastFrame();
     }
 
     public Frame getFirstFrame() {

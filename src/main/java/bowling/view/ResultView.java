@@ -62,7 +62,7 @@ public class ResultView {
         Frame frame = bowlingGame.getFirstFrame();
         printNormalFrame(frame);
 
-        Frame finalFrame = bowlingGame.getFrame();
+        Frame finalFrame = bowlingGame.getCurrentFrame();
         printFinalFrame(finalFrame);
         printEmptyFrame(Frame.MAX_FRAME_NUMBER - bowlingGame.getFrameSize());
         System.out.println();
