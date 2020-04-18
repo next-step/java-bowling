@@ -1,9 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.state.PinCount;
-import bowling.domain.state.StateHistory;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

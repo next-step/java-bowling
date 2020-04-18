@@ -1,13 +1,9 @@
 package bowling.domain.score;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameResults;
 import bowling.domain.frame.Frames;
-import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static bowling.domain.state.PinCountTest.*;
 import static org.assertj.core.api.Assertions.assertThat;

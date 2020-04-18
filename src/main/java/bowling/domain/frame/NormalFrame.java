@@ -9,6 +9,7 @@ public class NormalFrame implements Frame {
     private final StateHistory stateHistory;
     private FrameNumber frameNumber;
     private State state;
+    private Frame nextFrame;
 
     private NormalFrame(FrameNumber frameNumber, State state, StateHistory stateHistory) {
         this.frameNumber = frameNumber;
@@ -28,9 +29,15 @@ public class NormalFrame implements Frame {
     @Override
     public Frame getNext() {
         if (frameNumber.isMaxNormalFrameCount()) {
-            return FinalFrame.create();
+            setNext(FinalFrame.create());
+            return this.nextFrame;
         }
-        return NormalFrame.create(frameNumber.getNext());
+        setNext(NormalFrame.create(frameNumber.getNext()));
+        return this.nextFrame;
+    }
+
+    public void setNext(Frame nextFrame) {
+        this.nextFrame = nextFrame;
     }
 
     @Override
@@ -66,15 +73,15 @@ public class NormalFrame implements Frame {
 
         Score score = ((Finished) state).createScore();
 
-        if(!score.canCalculateScore()) {
+        if(score.isEnded()) {
             return score.getScore();
         }
 
-        if(Objects.isNull(getNext())) {
+        if(Objects.isNull(nextFrame)) {
             return -1;
         }
 
-        return getNext().calculateAdditionalScore(score);
+        return nextFrame.calculateAdditionalScore(score);
     }
 
     @Override
@@ -86,16 +93,16 @@ public class NormalFrame implements Frame {
         for(State state : stateHistory.getValue()) {
             score.addAdditionalScore(state.getFelledPin());
 
-            if(!score.canCalculateScore()) {
+            if(score.isEnded()) {
                 return score.getScore();
             }
         }
 
-        if(Objects.isNull(getNext())) {
+        if(Objects.isNull(nextFrame)) {
             return -1;
         }
 
-        return getNext().calculateAdditionalScore(score);
+        return nextFrame.calculateAdditionalScore(score);
     }
 
     @Override

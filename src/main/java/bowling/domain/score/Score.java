@@ -9,8 +9,8 @@ public class Score {
         this.additionalCount = additionalCount;
     }
 
-    public boolean canCalculateScore() {
-        return additionalCount > 0;
+    public boolean isEnded() {
+        return additionalCount == 0;
     }
 
     public void addAdditionalScore(int felledPin) {
