@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.state.Ready;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +19,7 @@ public class FrameTest {
         int frameNumber = 10;
         assertThatIllegalArgumentException().isThrownBy(() -> {
             NormalFrame.create(frameNumber);
-        }).withMessage(NormalFrame.OVER_NORMAL_FRAME_NO_ERROR);
+        }).withMessage(FrameNumber.OVER_NORMAL_FRAME_NO_ERROR);
     }
 
     @Test
