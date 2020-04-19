@@ -63,18 +63,18 @@ public class OutputView {
                 .collect(Collectors.joining(SHOT_DELIMITER));
     }
 
-    private String parseScore(ShotScoreDto v) {
-        if (v.getScoreType().equals(ScoreType.STRIKE)) {
+    private String parseScore(ShotScoreDto scoreType) {
+        if (ScoreType.STRIKE.equals(scoreType.getScoreType())) {
             return STRIKE;
         }
-        if (v.getScoreType().equals(ScoreType.SPARE)) {
+        if (ScoreType.SPARE.equals(scoreType.getScoreType())) {
             return SPARE;
         }
-        if (v.getScoreType().equals(ScoreType.GUTTER)) {
+        if (ScoreType.GUTTER.equals(scoreType.getScoreType())) {
             return GUTTER;
         }
 
-        return Integer.toString(v.getScore());
+        return Integer.toString(scoreType.getScore());
     }
 
     private Stream<String> getParsedFrameScoreStream(FramesDto frames) {
