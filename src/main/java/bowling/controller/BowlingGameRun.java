@@ -17,9 +17,9 @@ public class BowlingGameRun {
         Frames frames = bowlingGame.getFrames();
         Frame frame = bowlingGame.getFirstFrame();
         while (!frame.isLast()) {
-            int frameNo = frames.getFrameNo(frame);
+            int frameNo = bowlingGame.currentFrameNo();
             Point point = InputView.inputThrowCount(frameNo);
-            frame = bowlingGame.throwBall(frame, point);
+            frame = bowlingGame.throwBall(point);
             ResultView.viewResult(frames);
         }
     }

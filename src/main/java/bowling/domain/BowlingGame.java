@@ -15,7 +15,8 @@ public class BowlingGame {
         this.frames = new Frames(player);
     }
 
-    public Frame throwBall(Frame frame, Point point) {
+    public Frame throwBall(Point point) {
+        Frame frame = frames.getNextFrame();
         try {
             frame.throwBall(point);
         } catch (OverThrowBallException e) {
@@ -25,6 +26,10 @@ public class BowlingGame {
         frames.calculateScores(point);
         frame.addScore();
         return this.frames.getNextFrame();
+    }
+
+    public int currentFrameNo() {
+        return frames.getFrameNo(frames.getNextFrame());
     }
 
     public Frames getFrames() {
