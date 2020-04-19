@@ -3,6 +3,7 @@ package bowling.domain.frame.state;
 import bowling.domain.Pins;
 import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 
 public class Gutter implements State {
@@ -37,8 +38,8 @@ public class Gutter implements State {
     }
 
     @Override
-    public Score getScore() {
-        return new Score(Pins.MIN_PIN);
+    public Calculator getScoreCalculator() {
+        return new ScoreCalculator(new Score(Pins.MIN_PIN), 0);
     }
 
     @Override

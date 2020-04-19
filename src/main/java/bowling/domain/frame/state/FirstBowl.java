@@ -51,7 +51,7 @@ public class FirstBowl implements State {
     }
 
     @Override
-    public Score getScore() {
+    public Calculator getScoreCalculator() {
         throw new BowlingException();
     }
 

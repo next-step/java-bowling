@@ -2,7 +2,6 @@ package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
 import bowling.domain.score.Calculator;
-import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
 public class Ready implements State {
@@ -29,7 +28,7 @@ public class Ready implements State {
     }
 
     @Override
-    public Score getScore() {
+    public Calculator getScoreCalculator() {
         throw new BowlingException();
     }
 

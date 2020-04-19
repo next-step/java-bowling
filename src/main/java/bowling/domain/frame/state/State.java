@@ -1,7 +1,6 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.score.Calculator;
-import bowling.domain.score.Score;
 
 public interface State {
 
@@ -13,7 +12,7 @@ public interface State {
 
     String getCurrentPinsState();
 
-    Score getScore();
+    Calculator getScoreCalculator();
 
     Calculator getCalculateScore(Calculator calculator);
 }

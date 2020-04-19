@@ -52,7 +52,7 @@ class SpareTest {
         Score ten = new Score(10);
 
         //then
-        assertTrue(strike.getScore().equals(ten));
+        assertTrue(strike.getScoreCalculator().getScore().equals(ten));
     }
 
     @DisplayName("이전 프레임에서 점수를 2회 더해준다(이전이 strike 일때")

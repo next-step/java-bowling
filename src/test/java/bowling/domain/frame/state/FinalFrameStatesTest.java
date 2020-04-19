@@ -199,7 +199,7 @@ class FinalFrameStatesTest {
         states = states.bowl(10);
 
         //then
-        assertThat(states.getScore()).isEqualTo(new Score(20));
+        assertThat(states.getScoreCalculator().getScore()).isEqualTo(new Score(20));
     }
 
     @DisplayName("마지막 frame의 첫 투구를 이전 점수에 더해준다")

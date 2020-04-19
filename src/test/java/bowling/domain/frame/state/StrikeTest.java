@@ -1,6 +1,5 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.Pins;
 import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreCalculator;
@@ -43,7 +42,7 @@ class StrikeTest {
         Score ten = new Score(10);
 
         //then
-        assertTrue(strike.getScore().equals(ten));
+        assertTrue(strike.getScoreCalculator().getScore().equals(ten));
     }
 
     @DisplayName("이전 점수에 합한 점수를 반환해 준다")

@@ -2,6 +2,7 @@ package bowling.domain.frame.state;
 
 import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 
 import java.util.Arrays;
@@ -144,12 +145,15 @@ public class FinalFrameStates implements State {
     }
 
     @Override
-    public Score getScore() {
+    public Calculator getScoreCalculator() {
+        Score firstStateScore = states.getFirst().getScoreCalculator().getScore();
+
         if (isHaveBonus()) {
-            return states.getFirst().getScore().addScore(states.getLast().getScore());
+            Score secondStateScore = states.getLast().getScoreCalculator().getScore();
+            return new ScoreCalculator(firstStateScore.addScore(secondStateScore), 0);
         }
 
-        return states.getFirst().getScore();
+        return new ScoreCalculator(firstStateScore, 0);
     }
 
     @Override

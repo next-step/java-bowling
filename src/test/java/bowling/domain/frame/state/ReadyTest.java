@@ -70,7 +70,7 @@ class ReadyTest {
 
         //then
         assertThatThrownBy(
-                () -> ready.getScore()
+                () -> ready.getScoreCalculator()
         ).isInstanceOf(BowlingException.class);
     }
 

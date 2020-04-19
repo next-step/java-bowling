@@ -85,7 +85,7 @@ class FirstBowlTest {
 
         //then
         assertThatThrownBy(
-                () -> firstBowl.getScore()
+                () -> firstBowl.getScoreCalculator()
         ).isInstanceOf(BowlingException.class);
     }
 
