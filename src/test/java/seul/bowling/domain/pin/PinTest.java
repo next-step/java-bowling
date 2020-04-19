@@ -1,4 +1,4 @@
-package seul.bowling.domain;
+package seul.bowling.domain.pin;
 
 import org.junit.jupiter.api.Test;
 import seul.bowling.exception.BowlingException;
@@ -9,19 +9,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PinTest {
     @Test
-    void pin() {
+    void of() {
         int clearPin = 10;
 
-        Pin pin = new Pin(clearPin);
+        Pin pin = Pin.of(clearPin);
 
         assertThat(pin.getPin()).isEqualTo(clearPin);
     }
 
     @Test
-    void pin_invalidClearPinCount() {
+    void of_invalidClearPinCount() {
         int clearPin = 11;
 
-        assertThatThrownBy(() -> new Pin(clearPin))
+        assertThatThrownBy(() -> Pin.of(clearPin))
                 .isInstanceOf(BowlingException.class)
                 .hasMessageContaining(ExceptionType.INVALID_CLEAR_PIN_COUNT.getErrorMessage());
     }
