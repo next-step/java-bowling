@@ -1,10 +1,11 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
 import bowling.domain.frame.state.Miss;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.Spare;
 import bowling.domain.frame.state.Strike;
+import bowling.domain.score.Calculator;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -173,12 +174,13 @@ class NormalFrameTest {
         next.bowl(5);
 
         //then
-        assertTrue(frame.getScore().equals(compare));
+        Calculator cal = frame.getCurrenteCalculator();
+        assertTrue(next.getScoreCalculate(cal).getScore().equals(compare));
     }
 
     @DisplayName("현제 프레임이 spare 상태이면 다음 1개 투구의 점수를 합산해 준다")
     @Test
-    public void makeSpareScore_success() throws Exception {
+    public void getScoreCalculate_success() throws Exception {
         //given
         Frame frame = new NormalFrame();
         Score compare = new Score(11);
@@ -190,6 +192,7 @@ class NormalFrameTest {
         next.bowl(1);
 
         //then
-        assertTrue(frame.getScore().equals(compare));
+        Calculator cal = frame.getCurrenteCalculator();
+        assertTrue(next.getScoreCalculate(cal).getScore().equals(compare));
     }
 }

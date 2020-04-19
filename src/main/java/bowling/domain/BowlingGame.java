@@ -94,11 +94,11 @@ public class BowlingGame {
             return new Score();
         }
 
-        Calculator calculator = frame.getState().getCurrenteCalculator();
+        Calculator calculator = frame.getCurrenteCalculator();
 
         while (calculator.canAddNextScore() && frame.getNext() != null) {
             frame = frame.getNext();
-            calculator = frame.getState().getScoreCalculate(calculator);
+            calculator = frame.getScoreCalculate(calculator);
         }
 
         return calculator.getScore();

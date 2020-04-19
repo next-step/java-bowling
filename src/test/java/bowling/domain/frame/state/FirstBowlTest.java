@@ -85,7 +85,7 @@ class FirstBowlTest {
         Score compare = new Score(3);
 
         //when
-        Calculator calculator = firstBowl.getCurrenteCalculator();
+        Calculator calculator = firstBowl.getCurrentCalculator();
 
         //then
         assertTrue(calculator.getScore().equals(compare));

@@ -28,7 +28,7 @@ public class Ready implements State {
     }
 
     @Override
-    public Calculator getCurrenteCalculator() {
+    public Calculator getCurrentCalculator() {
         throw new BowlingException();
     }
 

@@ -42,7 +42,7 @@ public class Miss implements State {
     }
 
     @Override
-    public Calculator getCurrenteCalculator() {
+    public Calculator getCurrentCalculator() {
         return new ScoreCalculator(new Score(firstPins.getDownPin() + secondPins.getDownPin()), 0);
     }
 

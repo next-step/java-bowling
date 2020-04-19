@@ -52,7 +52,7 @@ public class FirstBowl implements State {
     }
 
     @Override
-    public Calculator getCurrenteCalculator() {
+    public Calculator getCurrentCalculator() {
         return new ScoreCalculator(new Score(firstPins.getDownPin()), 0);
     }
 

@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
 import bowling.domain.frame.state.State;
+import bowling.domain.score.Calculator;
 
 public interface Frame {
 
@@ -19,5 +19,7 @@ public interface Frame {
 
     Frame findLast();
 
-    Score getScore();
+    Calculator getCurrenteCalculator();
+
+    Calculator getScoreCalculate(Calculator calculator);
 }

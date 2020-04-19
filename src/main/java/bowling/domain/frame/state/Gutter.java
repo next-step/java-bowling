@@ -38,7 +38,7 @@ public class Gutter implements State {
     }
 
     @Override
-    public Calculator getCurrenteCalculator() {
+    public Calculator getCurrentCalculator() {
         return new ScoreCalculator(new Score(Pins.MIN_PIN), 0);
     }
 

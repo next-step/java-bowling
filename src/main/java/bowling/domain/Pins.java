@@ -32,15 +32,6 @@ public class Pins {
         return new Pins(count);
     }
 
-    public Score sumScore(final Score current) {
-        Score pinScore = new Score(getDownPin());
-        return current.addScore(pinScore);
-    }
-
-    public Score sumScore() {
-        return new Score(pins);
-    }
-
     public boolean isGutter() {
         return pins == MIN_PIN;
     }
