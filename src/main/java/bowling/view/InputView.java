@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class InputView {
-    private static final String WHAT_IS_YOUR_NAME = "플레이어 이름은(3 english letters)?: ";
+    private static final String WHAT_IS_YOUR_NAME = "플레이어 %d의 이름은(3 english letters)?: ";
     private static final String FRAME_BOWLING_MESSAGE = "%s 프레임 투구 : ";
     private static final String HOW_MANY_PEOPLE = "How many people? ";
 
@@ -23,8 +23,8 @@ public class InputView {
         this.scanner = new Scanner(inputStream);
     }
 
-    public Player inputPlayerName() {
-        System.out.print(WHAT_IS_YOUR_NAME);
+    public Player inputPlayerName(final int index) {
+        System.out.print(String.format(WHAT_IS_YOUR_NAME, index));
         return Player.of(scanner.nextLine());
     }
 

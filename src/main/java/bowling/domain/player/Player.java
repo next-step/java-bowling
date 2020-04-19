@@ -1,20 +1,35 @@
 package bowling.domain.player;
 
+import bowling.domain.frame.Frames;
+import bowling.domain.frame.state.States;
+import bowling.domain.score.Score;
+
+import java.util.List;
 import java.util.Objects;
 
 public class Player {
     private final PlayerName playerName;
+    private final Frames frames;
 
-    private Player(final PlayerName playerNmae) {
-        this.playerName = playerNmae;
+    private Player(final PlayerName playerName, final Frames frames) {
+        this.playerName = playerName;
+        this.frames = frames;
     }
 
     public static Player of(final String name) {
-        return new Player(PlayerName.of(name));
+        return new Player(PlayerName.of(name), Frames.create());
     }
 
     public String getName() {
         return playerName.toString();
+    }
+
+    public List<States> getStates() {
+        return frames.getStates();
+    }
+
+    public List<Score> getScores() {
+        return frames.getScores();
     }
 
     @Override

@@ -15,16 +15,15 @@ public class OutputView {
 
     private OutputView() {}
 
-    private static void printFramesHeader() {
+    public static void printFramesHeader() {
+        System.out.println();
         System.out.println(FRAMES_HEADER);
     }
 
     public static void printOverHead(final String name, final List<States> states, final List<Score> scores) {
-        printFramesHeader();
         printPlayerName(name);
         StateView.print(states);
         ScoreView.print(scores);
-        System.out.println();
     }
 
     private static void printPlayerName(final String name) {
