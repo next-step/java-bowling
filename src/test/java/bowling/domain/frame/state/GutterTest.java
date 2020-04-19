@@ -1,6 +1,8 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,5 +43,20 @@ class GutterTest {
 
         //then
         assertTrue(gutter.getScore().equals(score));
+    }
+
+    @DisplayName("Gutter 상태에서는 점수를 더해도 이전과 동일 하다")
+    @Test
+    public void getCalculateScore_success() throws Exception {
+        //given
+        Gutter gutter = new Gutter();
+        Calculator calculator = new ScoreCalculator(new Score(10), 2);
+        Score compare = new Score(10);
+
+        //when
+        calculator = gutter.getCalculateScore(calculator);
+
+        //then
+        assertTrue(calculator.getScore().equals(compare));
     }
 }

@@ -1,5 +1,8 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.score.Calculator;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +30,7 @@ class ReadyTest {
 
     @DisplayName("ready 상태에서 친 핀이 10개가 아니면 FirstBowl 을 반환한다")
     @ParameterizedTest
-    @ValueSource(ints = {1,2,3,4,5,6,7,8,9})
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
     public void bowl_success_firstBowl(int pinCount) throws Exception {
         //given
         Ready ready = new Ready();
@@ -68,6 +71,19 @@ class ReadyTest {
         //then
         assertThatThrownBy(
                 () -> ready.getScore()
+        ).isInstanceOf(BowlingException.class);
+    }
+
+    @DisplayName("Ready 상태에서는 점수 계산 불가능")
+    @Test
+    public void getCalculateScore_fail() throws Exception {
+        //given
+        Ready ready = new Ready();
+        Calculator calculator = new ScoreCalculator(new Score(), 2);
+
+        //then
+        assertThatThrownBy(
+                () -> ready.getCalculateScore(calculator)
         ).isInstanceOf(BowlingException.class);
     }
 }

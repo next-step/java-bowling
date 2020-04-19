@@ -1,6 +1,8 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -198,5 +200,56 @@ class FinalFrameStatesTest {
 
         //then
         assertThat(states.getScore()).isEqualTo(new Score(20));
+    }
+
+    @DisplayName("마지막 frame의 첫 투구를 이전 점수에 더해준다")
+    @Test
+    public void getCalculateScore_success() throws Exception {
+        //given
+        FinalFrameStates states = FinalFrameStates.of();
+        states = states.bowl(3);
+        states = states.bowl(5);
+        Score compare = new Score(13);
+        Calculator calculator = new ScoreCalculator(new Score(10), 1);
+
+        //when
+        calculator = states.getCalculateScore(calculator);
+
+        //then
+        assertTrue(calculator.getScore().equals(compare));
+    }
+
+    @DisplayName("마지막 frame의 2개 투구를 이전 점수에 더해준다")
+    @Test
+    public void getCalculateScore_success_twice() throws Exception {
+        //given
+        FinalFrameStates states = FinalFrameStates.of();
+        states = states.bowl(3);
+        states = states.bowl(5);
+        Score compare = new Score(18);
+        Calculator calculator = new ScoreCalculator(new Score(10), 2);
+
+        //when
+        calculator = states.getCalculateScore(calculator);
+
+        //then
+        assertTrue(calculator.getScore().equals(compare));
+    }
+
+    @DisplayName("마지막 frame의 2개 투구를 이전 점수에 더해준다(마지막에 2개의 strike 쳤을때)")
+    @Test
+    public void getCalculateScore_success_twiceStrike() throws Exception {
+        //given
+        FinalFrameStates states = FinalFrameStates.of();
+        states = states.bowl(10);
+        states = states.bowl(10);
+        Score compare = new Score(30);
+        Calculator calculator = new ScoreCalculator(new Score(10), 2);
+
+        //when
+        calculator = states.getCalculateScore(calculator);
+
+        //then
+        assertTrue(calculator.getScore().equals(compare));
     }
 }

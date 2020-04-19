@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
+import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
@@ -41,7 +42,13 @@ public class Gutter implements State {
     }
 
     @Override
-    public Score getFirstScore() {
-        return new Score(0);
+    public Calculator getCalculateScore(Calculator before) {
+        before = before.sumScore(new Score(firstPins.getDownPin()));
+
+        if (before.canAddNextScore()) {
+            return before.sumScore(new Score(secondPins.getDownPin()));
+        }
+
+        return before;
     }
 }

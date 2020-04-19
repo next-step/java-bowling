@@ -1,6 +1,9 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
+import bowling.domain.score.Calculator;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -84,5 +87,20 @@ class FirstBowlTest {
         assertThatThrownBy(
                 () -> firstBowl.getScore()
         ).isInstanceOf(BowlingException.class);
+    }
+
+    @DisplayName("첫 투구한 점수를 더해주고 반환 한다")
+    @Test
+    public void getCalculateScore_success() throws Exception {
+        //given
+        FirstBowl firstBowl = new FirstBowl(new Pins(5));
+        Calculator calculator = new ScoreCalculator(new Score(10), 2);
+        Score compare = new Score(15);
+
+        //when
+        calculator = firstBowl.getCalculateScore(calculator);
+
+        //then
+        assertTrue(calculator.getScore().equals(compare));
     }
 }

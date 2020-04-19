@@ -1,6 +1,9 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.Pins;
+import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,5 +44,20 @@ class StrikeTest {
 
         //then
         assertTrue(strike.getScore().equals(ten));
+    }
+
+    @DisplayName("이전 점수에 합한 점수를 반환해 준다")
+    @Test
+    public void getCalculateScore_success() throws Exception {
+        //given
+        Strike strike = new Strike();
+        Calculator calculator = new ScoreCalculator(new Score(10), 2);
+        Score compare = new Score(20);
+
+        //when
+        Calculator result = strike.getCalculateScore(calculator);
+
+        //then
+        assertTrue(result.getScore().equals(compare));
     }
 }

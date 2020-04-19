@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
+import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
@@ -30,7 +31,7 @@ public class Strike implements State {
     }
 
     @Override
-    public Score getFirstScore() {
-        return getScore();
+    public Calculator getCalculateScore(Calculator before) {
+        return before.sumScore(new Score(Pins.MAX_PIN));
     }
 }

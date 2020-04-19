@@ -1,5 +1,6 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
@@ -145,14 +146,20 @@ public class FinalFrameStates implements State {
     @Override
     public Score getScore() {
         if (isHaveBonus()) {
-            return getFirstScore();
+            return states.getFirst().getScore().addScore(states.getLast().getScore());
         }
 
         return states.getFirst().getScore();
     }
 
     @Override
-    public Score getFirstScore() {
-        return states.getFirst().getScore().addScore(states.getLast().getScore());
+    public Calculator getCalculateScore(Calculator before) {
+        before = states.getFirst().getCalculateScore(before);
+
+        if (before.canAddNextScore()) {
+            return states.getLast().getCalculateScore(before);
+        }
+
+        return before;
     }
 }

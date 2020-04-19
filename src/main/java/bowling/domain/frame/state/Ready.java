@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
+import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
@@ -33,7 +34,7 @@ public class Ready implements State {
     }
 
     @Override
-    public Score getFirstScore() {
+    public Calculator getCalculateScore(Calculator calculator) {
         throw new BowlingException();
     }
 }

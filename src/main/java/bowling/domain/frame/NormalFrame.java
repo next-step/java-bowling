@@ -54,17 +54,17 @@ public class NormalFrame implements Frame {
     private Score makeSpareScore() {
         Score score = state.getScore();
 
-        Frame next = nextFrame;
-        if (next == null) {
-            return null;
-        }
-
-        if (next.getState() instanceof Miss
-                || next.getState() instanceof Strike
-                || next.getState() instanceof Gutter
-                || next.getState() instanceof FirstBowl) {
-            score = score.addScore(next.getState().getFirstScore());
-        }
+//        Frame next = nextFrame;
+//        if (next == null) {
+//            return null;
+//        }
+//
+//        if (next.getState() instanceof Miss
+//                || next.getState() instanceof Strike
+//                || next.getState() instanceof Gutter
+//                || next.getState() instanceof FirstBowl) {
+//            score = score.addScore(next.getState().getCalculateScore());
+//        }
 
         return score;
     }
