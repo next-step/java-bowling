@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static bowling.Pin.MAX_PIN_COUNT;
+
 public class FirstBowl implements State {
 
     private final Pin pinCount;
@@ -26,7 +28,7 @@ public class FirstBowl implements State {
     public State bowl(final Pin pinCount) {
         Pin sumCount = pinCount.add(this.pinCount);
 
-        if (sumCount.isEqualTo(10)) {
+        if (sumCount.isEqualTo(MAX_PIN_COUNT)) {
             return Spare.newInstance(this.pinCount, pinCount);
         }
 

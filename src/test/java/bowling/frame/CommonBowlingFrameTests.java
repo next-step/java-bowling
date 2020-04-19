@@ -1,6 +1,9 @@
 package bowling.frame;
 
-import bowling.*;
+import bowling.FrameScore;
+import bowling.LeftScoreCount;
+import bowling.Pin;
+import bowling.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

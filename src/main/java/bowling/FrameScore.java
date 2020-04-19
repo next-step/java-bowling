@@ -52,7 +52,7 @@ public class FrameScore {
     }
 
     public FrameScore addingUp(final List<Score> scores) {
-        if(canCalculateSelfScore()) {
+        if (canCalculateSelfScore()) {
             return this;
         }
 
@@ -64,7 +64,7 @@ public class FrameScore {
         Iterator<Score> scoreIterator = scores.iterator();
         Score addingUpScore = Score.ofZeroPins();
 
-        while(!updateLeftScoreCount.isEqualTo(0) && scoreIterator.hasNext()) {
+        while (!updateLeftScoreCount.isEqualTo(0) && scoreIterator.hasNext()) {
             addingUpScore = addingUpScore.add(scoreIterator.next());
             updateLeftScoreCount = updateLeftScoreCount.minus();
         }
