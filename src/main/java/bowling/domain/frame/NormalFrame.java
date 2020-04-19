@@ -55,6 +55,9 @@ public class NormalFrame implements Frame {
     }
 
     private Optional<Score> getAdditionalScore() {
+        if(Objects.isNull(next)) {
+            return Optional.empty();
+        }
         if (framePitch.isFirstPitchStrike()) {
             return next.getScoreForTwoPitches();
         } else if (framePitch.isSecondPitchSpare()) {

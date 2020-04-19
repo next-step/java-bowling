@@ -29,21 +29,23 @@ public class Frames {
     }
 
     public boolean addPinCount(int pinCount) {
-        Frame lastFrame = this.frames.get(getLastIndex());
-
-        boolean result = lastFrame.addPinCount(pinCount);
-        if(!isFinished() && lastFrame.isDone()) {
+        if (needToAdd()) {
             frames.add(getNewFrame());
         }
 
-        return result;
+        Frame lastFrame = getLastFrame();
+        return lastFrame.addPinCount(pinCount);
+    }
+
+    public boolean needToAdd() {
+        Frame lastFrame = getLastFrame();
+        return !isFinished() && lastFrame.isDone();
     }
 
     protected Frame getNewFrame() {
-        int lastIndex = getLastIndex();
-        Frame lastFrame = this.frames.get(lastIndex);
+        Frame lastFrame = getLastFrame();
 
-        if(isBeforeMax()) {
+        if (isBeforeMax()) {
             return lastFrame.createNext(new FinalFrame());
         }
         return lastFrame.createNext();
@@ -54,11 +56,7 @@ public class Frames {
     }
 
     private Frame getLastFrame() {
-        return frames.get(lastIndex());
-    }
-
-    private int lastIndex() {
-        return frames.size() - ONE;
+        return frames.get(getLastIndex());
     }
 
     private boolean isBeforeMax() {
@@ -77,7 +75,12 @@ public class Frames {
     public List<Pitch> getFramePinCounts(int index) {
         return frames.get(index).getFramePitch();
     }
+
     private int getLastIndex() {
         return frames.size() - ONE;
+    }
+
+    public boolean isLastFrameDone() {
+        return getLastFrame().isDone();
     }
 }

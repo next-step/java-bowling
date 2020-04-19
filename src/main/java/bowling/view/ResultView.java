@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.controller.dto.FrameStatus;
 import bowling.controller.dto.GameStatus;
+import bowling.controller.dto.PlayerFrameStatus;
 import bowling.domain.pitch.Pitch;
 
 import java.util.Optional;
@@ -22,9 +23,15 @@ public class ResultView {
     private static final String GUTTER = "-";
 
     public static void displayGameBoard(GameStatus gameStatus) {
-        displayHeader(gameStatus.getFrameStatusesSize());
-        displayBody(gameStatus);
-        displayScores(gameStatus);
+        for(int i = 0, size = gameStatus.size(); i < size; i++) {
+            displayPlayer(gameStatus.get(i));
+        }
+    }
+
+    private static void displayPlayer(PlayerFrameStatus playerFrameStatus) {
+        displayHeader(playerFrameStatus.getFrameStatusesSize());
+        displayBody(playerFrameStatus);
+        displayScores(playerFrameStatus);
     }
 
     private static void displayHeader(int maxFrame) {
@@ -36,12 +43,12 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void displayBody(GameStatus gameStatus) {
-        System.out.print(String.format(NAME_VALUE, gameStatus.getPlayerName()));
+    private static void displayBody(PlayerFrameStatus playerFrameStatus) {
+        System.out.print(String.format(NAME_VALUE, playerFrameStatus.getPlayerName()));
 
-        for (int i = 0, size = gameStatus.getFrameStatusesSize(); i < size;
+        for (int i = 0, size = playerFrameStatus.getFrameStatusesSize(); i < size;
              i++) {
-            displayPinCounts(gameStatus.getFrameStatus(i));
+            displayPinCounts(playerFrameStatus.getFrameStatus(i));
         }
         System.out.println();
     }
@@ -70,11 +77,11 @@ public class ResultView {
         return Integer.toString(pitch.getPinCount());
     }
 
-    private static void displayScores(GameStatus gameStatus) {
+    private static void displayScores(PlayerFrameStatus playerFrameStatus) {
         System.out.print(EMPTY);
-        for (int i = 0, size = gameStatus.getFrameStatusesSize(); i < size;
+        for (int i = 0, size = playerFrameStatus.getFrameStatusesSize(); i < size;
              i++) {
-            displayScore(gameStatus.getFrameStatus(i));
+            displayScore(playerFrameStatus.getFrameStatus(i));
         }
         System.out.println();
     }

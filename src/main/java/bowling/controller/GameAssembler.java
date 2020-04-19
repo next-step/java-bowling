@@ -2,8 +2,11 @@ package bowling.controller;
 
 import bowling.controller.dto.FrameStatus;
 import bowling.controller.dto.GameStatus;
+import bowling.controller.dto.PlayerFrameStatus;
 import bowling.domain.Frames;
 import bowling.domain.Game;
+import bowling.domain.PlayerFrame;
+import bowling.domain.PlayerFrames;
 import bowling.domain.pitch.Pitch;
 
 import java.util.ArrayList;
@@ -14,8 +17,19 @@ public class GameAssembler {
     private static final int ZERO = 0;
 
     public static GameStatus writeDto(Game game) {
-        List<FrameStatus> frameStatuses = getFrameStatuses(game.getFrames());
-        return new GameStatus(frameStatuses, game.getPlayerName());
+        return new GameStatus(getPlayerFrameStatus(game.getPlayerFrames()));
+    }
+
+    private static List<PlayerFrameStatus> getPlayerFrameStatus(
+            PlayerFrames playerFrames) {
+        List<PlayerFrameStatus> playerFrameStatuses = new ArrayList<>();
+        for(PlayerFrame playerFrame: playerFrames) {
+            List<FrameStatus> frameStatuses =
+                    getFrameStatuses(playerFrame.getFrames());
+            playerFrameStatuses.add( new PlayerFrameStatus(frameStatuses,
+                    playerFrame.getPlayerName()));
+        }
+        return playerFrameStatuses;
     }
 
     private static List<FrameStatus> getFrameStatuses(Frames frames) {

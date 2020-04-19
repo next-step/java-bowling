@@ -3,23 +3,17 @@ package bowling.controller.dto;
 import java.util.List;
 
 public class GameStatus {
-    List<FrameStatus> frameStatuses;
-    String playerName;
+    List<PlayerFrameStatus> playerFrameStatuses;
 
-    public GameStatus(List<FrameStatus> frameStatuses, String playerName) {
-        this.playerName = playerName;
-        this.frameStatuses = frameStatuses;
+    public GameStatus(List<PlayerFrameStatus> playerFrameStatuses) {
+        this.playerFrameStatuses = playerFrameStatuses;
     }
 
-    public FrameStatus getFrameStatus(int i) {
-        return frameStatuses.get(i);
+    public PlayerFrameStatus get(int index) {
+        return playerFrameStatuses.get(index);
     }
 
-    public int getFrameStatusesSize() {
-        return frameStatuses.size();
-    }
-
-    public String getPlayerName() {
-        return playerName;
+    public int size() {
+        return playerFrameStatuses.size();
     }
 }
