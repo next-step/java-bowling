@@ -20,7 +20,7 @@ public class Frames {
         Frame frame = getCurrentFrame();
         frame.play(felledPin);
 
-        FrameResults frameResults = new FrameResults(getValue());
+        FrameResults frameResults = new FrameResults(new ArrayList<>(frames));
 
         if (!frame.isLastFrame() && frame.isEndedFrame()) {
             Frame nextFrame = frame.getNext();

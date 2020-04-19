@@ -13,14 +13,15 @@ public class NormalFrame implements Frame {
     private State state;
     private Frame nextFrame;
 
-    private NormalFrame(FrameNumber frameNumber, State state, StateHistory stateHistory) {
+    private NormalFrame(FrameNumber frameNumber, State state, StateHistory stateHistory, Frame nextFrame) {
         this.frameNumber = frameNumber;
         this.state = state;
         this.stateHistory = stateHistory;
+        this.nextFrame = nextFrame;
     }
 
     public static Frame create(FrameNumber frameNumber) {
-        return new NormalFrame(frameNumber, new Ready(), new StateHistory());
+        return new NormalFrame(frameNumber, new Ready(), new StateHistory(), null);
     }
 
     public void play(PinCount felledPin) {

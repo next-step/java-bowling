@@ -3,6 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.score.Score;
 import bowling.domain.state.*;
 
+import java.util.Objects;
+
 import static bowling.Constants.CAN_NOT_CALCULATE_SCORE;
 
 public class FinalFrame implements Frame {
@@ -10,14 +12,16 @@ public class FinalFrame implements Frame {
     private static final String FINAL_FRAME_ERROR = "마지막 프레임입니다.";
     private final StateHistory stateHistory;
     private State state;
+    private Frame nextFrame;
 
-    private FinalFrame(State state, StateHistory stateHistory) {
+    private FinalFrame(State state, StateHistory stateHistory, Frame nextFrame) {
         this.state = state;
         this.stateHistory = stateHistory;
+        this.nextFrame = nextFrame;
     }
 
     public static Frame create() {
-        return new FinalFrame(new Ready(), new StateHistory());
+        return new FinalFrame(new Ready(), new StateHistory(), null);
     }
 
     public void play(PinCount felledPin) {
@@ -88,7 +92,15 @@ public class FinalFrame implements Frame {
 
         Score score = ((Finished) state).createScore();
 
-        return score.getScore();
+        if(score.isEnded()) {
+            return score.getScore();
+        }
+
+        if(Objects.isNull(nextFrame)) {
+            return CAN_NOT_CALCULATE_SCORE;
+        }
+
+        return nextFrame.calculateAdditionalScore(score);
     }
 
     @Override
@@ -97,10 +109,15 @@ public class FinalFrame implements Frame {
             score.addAdditionalScore(state.getFelledPin());
 
             if(score.isEnded()) {
-                break;
+                return score.getScore();
             }
         }
-        return score.getScore();
+
+        if(Objects.isNull(nextFrame)) {
+            return CAN_NOT_CALCULATE_SCORE;
+        }
+
+        return nextFrame.calculateAdditionalScore(score);
     }
 
     @Override
