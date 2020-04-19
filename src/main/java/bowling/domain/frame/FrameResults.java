@@ -16,7 +16,7 @@ public class FrameResults {
     public List<Integer> getScores() {
         List<Integer> scores = new ArrayList<>();
 
-        for(Frame frame : frames) {
+        for (Frame frame : frames) {
             addScore(scores, frame);
         }
 
@@ -26,8 +26,8 @@ public class FrameResults {
     private void addScore(List<Integer> scores, Frame frame) {
         int score = frame.getScore();
 
-        if(score == CAN_NOT_CALCULATE_SCORE) {  //TODO: Getter 사용 해결 고민
-            return ;
+        if (score == CAN_NOT_CALCULATE_SCORE) {  //TODO: Getter 사용 해결 고민
+            return;
         }
 
         if (scores.isEmpty()) {

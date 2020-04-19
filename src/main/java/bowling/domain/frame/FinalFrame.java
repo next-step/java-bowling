@@ -86,20 +86,20 @@ public class FinalFrame implements Frame {
 
     @Override
     public int getScore() {
-        if(!isEndedFrame()) {
+        if (!isEndedFrame()) {
             return CAN_NOT_CALCULATE_SCORE;
         }
 
         Score score = ((Finished) state).createScore();
 
-        if(score.isEnded()) {
+        if (score.isEnded()) {
             return score.getScore();
         }
 
-        for(State state : stateHistory.getValue()) {
+        for (State state : stateHistory.getValue()) {
             score.addAdditionalScore(state.getFelledPin());
 
-            if(score.isEnded()) {
+            if (score.isEnded()) {
                 return score.getScore();
             }
         }
@@ -109,15 +109,15 @@ public class FinalFrame implements Frame {
 
     @Override
     public int calculateAdditionalScore(Score score) {
-        for(State state : stateHistory.getValue()) {
+        for (State state : stateHistory.getValue()) {
             score.addAdditionalScore(state.getFelledPin());
 
-            if(score.isEnded()) {
+            if (score.isEnded()) {
                 return score.getScore();
             }
         }
 
-        if(Objects.isNull(nextFrame)) {
+        if (Objects.isNull(nextFrame)) {
             return CAN_NOT_CALCULATE_SCORE;
         }
 

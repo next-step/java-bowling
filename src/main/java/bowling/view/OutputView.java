@@ -81,7 +81,7 @@ public class OutputView {
     public void showScore(List<Integer> scores) {
         showEmptyFrame();
 
-        for(Integer score : scores) {
+        for (Integer score : scores) {
             ViewUtils.print(appendSpaces(String.valueOf(score), LENGTH_PER_FRAME));
             ViewUtils.print(VERTICAL_LINE);
         }

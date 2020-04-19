@@ -25,7 +25,7 @@ public class Frames {
         if (!frame.isLastFrame() && frame.isEndedFrame()) {
             Frame nextFrame = frame.getNext();
 
-            if(Objects.nonNull(nextFrame)) {
+            if (Objects.nonNull(nextFrame)) {
                 addFrame(nextFrame);
             }
         }
