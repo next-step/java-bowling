@@ -1,6 +1,8 @@
 package seul.bowling.domain;
 
 import lombok.Getter;
+import seul.bowling.domain.pin.Pin;
+import seul.bowling.domain.pin.PinFactory;
 import seul.bowling.exception.BowlingException;
 import seul.bowling.exception.ExceptionType;
 
@@ -23,7 +25,7 @@ public class Pins {
             invalidClearPinCount(clearPin);
         }
 
-        pins.add(new Pin(clearPin));
+        pins.add(PinFactory.getPin(clearPin));
     }
 
     public boolean allClear() {

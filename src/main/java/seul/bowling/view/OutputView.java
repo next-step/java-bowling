@@ -1,6 +1,7 @@
 package seul.bowling.view;
 
 import seul.bowling.domain.*;
+import seul.bowling.domain.pin.Pin;
 
 import java.util.HashMap;
 import java.util.List;
