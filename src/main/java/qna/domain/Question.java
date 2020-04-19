@@ -1,6 +1,5 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
@@ -110,7 +109,7 @@ public class Question extends AbstractEntity {
     }
 
     public List<DeleteHistory> setAnswersDelete(User loginUsers) {
-        return answers.setAnswersDeleted(loginUsers);
+        return answers.delete(loginUsers);
     }
 
     @Override

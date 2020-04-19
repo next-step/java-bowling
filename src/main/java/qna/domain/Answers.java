@@ -31,11 +31,11 @@ public class Answers extends AbstractEntity {
         }
     }
 
-    public List<DeleteHistory> setAnswersDeleted(User writer) {
+    public List<DeleteHistory> delete(User writer) {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
         for (Answer answer : answers) {
-            answer.setDeleted(true);
+            answer.delete();
             deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), writer, LocalDateTime.now()));
         }
 
