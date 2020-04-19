@@ -15,9 +15,9 @@ class FrameNumberTest {
     @Test
     void create() {
         int number = 1;
-        FrameNumber expect = new FrameNumber(number);
+        FrameNumber expect = FrameNumber.valueOf(number);
 
-        FrameNumber actual = new FrameNumber(number);
+        FrameNumber actual = FrameNumber.valueOf(number);
 
         assertThat(actual).isEqualTo(expect);
     }
@@ -27,7 +27,7 @@ class FrameNumberTest {
     @ValueSource(ints = {-1, 0, 11})
     void validRange(int number) {
         assertThatExceptionOfType(FrameNumberOutOfRangeException.class).isThrownBy(
-                () -> new FrameNumber(number)
+                () -> FrameNumber.valueOf(number)
         );
     }
 }

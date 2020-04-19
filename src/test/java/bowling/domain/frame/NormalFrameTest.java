@@ -17,7 +17,7 @@ class NormalFrameTest {
 
     @BeforeEach
     void setUp() {
-        frameNumber = new FrameNumber(1);
+        frameNumber = FrameNumber.ofFirst();
         frame =  new NormalFrame(frameNumber, null);
     }
 
