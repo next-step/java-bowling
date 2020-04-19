@@ -1,51 +1,26 @@
 package bowling.domain;
 
-import java.util.List;
-
 public class Game {
-    private static final int ONE = 1;
-    private static final int DEFAULT_FRAME_SIZE = 10;
-
     private Player player;
     private Frames frames;
-    private Frame currentFrame;
-
-    protected Game(String playerName, int frameSize) {
-        this.player = new Player(playerName);
-        this.frames = new Frames(frameSize);
-        this.currentFrame = frames.getFirstFrame();
-    }
 
     public Game(String playerName) {
-        this(playerName, DEFAULT_FRAME_SIZE);
+        this.player = new Player(playerName);
+        this.frames = new Frames();
     }
 
     public boolean isFinished() {
-        return !isAddable();
+        return frames.isFinished();
     }
 
-    public Game addPin(int count) {
-        if (!isAddable()) {
-            return this;
+    public boolean addPin(int count) {
+        if (isFinished()) {
+            return false;
         }
-
-        currentFrame.addPinCount(count);
-        if (currentFrame.isDone() && !currentFrame.isLast()) {
-            currentFrame = currentFrame.getNext();
-        }
-
-        return this;
-    }
-
-    public List<PinCount> getFramePinCounts(int frameIndex) {
-        return frames.getFramePinCounts(frameIndex);
+        return frames.addPinCount(count);
     }
 
     public int getCurrentFrame() {
-        return frames.getCurrentFrameIndex(currentFrame) + ONE;
-    }
-
-    public int getFrameTotal() {
         return frames.size();
     }
 
@@ -53,7 +28,7 @@ public class Game {
         return player.getName();
     }
 
-    private boolean isAddable() {
-        return !currentFrame.isLast() || !currentFrame.isDone();
+    public Frames getFrames() {
+        return new Frames(frames);
     }
 }

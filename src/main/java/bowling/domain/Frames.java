@@ -1,53 +1,83 @@
 package bowling.domain;
 
-import bowling.domain.exception.OutOfRangeArgumentException;
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.pitch.Pitch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Frames {
-    private static final String OUT_OF_RANGE_ERROR_MESSAGE =
-            "프레임 갯수는 최소 %d 이상이여야 합니다.";
-    private static final int MIN = 2;
-    private static final int FIRST_INDEX = 0;
+    public static final int DEFAULT_FRAME_SIZE = 10;
+    private static final int ONE = 1;
 
     private List<Frame> frames;
 
-    public Frames(int size) {
-        if (size < MIN) {
-            throw new OutOfRangeArgumentException(
-                    String.format(OUT_OF_RANGE_ERROR_MESSAGE, MIN));
-        }
-
+    public Frames() {
         frames = new ArrayList<>();
-        initFrameList(size);
+        initFrames();
     }
 
-    private void initFrameList(int size) {
-        NormalFrame firstFrame = new NormalFrame();
+    public Frames(Frames frames) {
+        this.frames = new ArrayList<>(frames.frames);
+    }
 
-        frames.add(firstFrame);
-        NormalFrame frame = firstFrame;
-        for (int i = 0, sizeWithoutLast = size - 2; i < sizeWithoutLast; i++) {
-            frame = frame.createNext();
-            frames.add(frame);
+    private void initFrames() {
+        this.frames.add(new NormalFrame());
+    }
+
+    public boolean addPinCount(int pinCount) {
+        Frame lastFrame = this.frames.get(getLastIndex());
+
+        boolean result = lastFrame.addPinCount(pinCount);
+        if(!isFinished() && lastFrame.isDone()) {
+            frames.add(getNewFrame());
         }
-        frames.add(frame.createFinal());
+
+        return result;
     }
 
-    public int getCurrentFrameIndex(Frame frame) {
-        return frames.indexOf(frame);
-    }
+    protected Frame getNewFrame() {
+        int lastIndex = getLastIndex();
+        Frame lastFrame = this.frames.get(lastIndex);
 
-    public List<PinCount> getFramePinCounts(int index) {
-        return frames.get(index).getPinCounts();
+        if(isBeforeMax()) {
+            return lastFrame.createNext(new FinalFrame());
+        }
+        return lastFrame.createNext();
     }
 
     public int size() {
         return frames.size();
     }
 
-    public Frame getFirstFrame() {
-        return frames.get(FIRST_INDEX);
+    private Frame getLastFrame() {
+        return frames.get(lastIndex());
+    }
+
+    private int lastIndex() {
+        return frames.size() - ONE;
+    }
+
+    private boolean isBeforeMax() {
+        return frames.size() == (DEFAULT_FRAME_SIZE - ONE);
+    }
+
+    public boolean isFinished() {
+        Frame lastFrame = getLastFrame();
+        return lastFrame.isLast() && lastFrame.isDone();
+    }
+
+    public Optional<Integer> getFrameScore(int frameIndex) {
+        return frames.get(frameIndex).getScore();
+    }
+
+    public List<Pitch> getFramePinCounts(int index) {
+        return frames.get(index).getFramePitch();
+    }
+    private int getLastIndex() {
+        return frames.size() - ONE;
     }
 }

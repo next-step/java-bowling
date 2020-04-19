@@ -1,38 +1,37 @@
 package bowling.domain;
 
-import bowling.domain.exception.OutOfRangeArgumentException;
-import org.junit.jupiter.api.BeforeEach;
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class FramesTest {
-    private Frames frames;
+    @DisplayName("다음 프레임을 생성한다.")
+    @Test
+    void createNext() {
+        Frames frames = new Frames();
+        for (int i = 0; i < 7; i++) {
+            frames.addPinCount(10);
+        }
 
-    @BeforeEach
-    void setUp() {
-        frames = new Frames(2);
+        assertThat(frames.getNewFrame()).isExactlyInstanceOf(NormalFrame.class);
+        frames.addPinCount(10);
+        assertThat(frames.getNewFrame()).isExactlyInstanceOf(FinalFrame.class);
     }
 
-    @DisplayName("지정된 사이즈만큼 생성한다.")
+    @DisplayName("마지막 프레임이 종료하면 더이상 추가할 수 없다.")
     @Test
-    void init() {
-        assertThat(frames.size()).isEqualTo(2);
-    }
+    void finish() {
+        Frames frames = new Frames();
+        for (int i = 0; i < 8; i++) {
+            frames.addPinCount(10);
+        }
 
-    @DisplayName("프레임 갯수는 최소 2 이상이여야 한다")
-    @Test
-    void minError() {
-        assertThatExceptionOfType(OutOfRangeArgumentException.class)
-                .isThrownBy(() -> new Frames(1));
-    }
-
-    @DisplayName("현재 프레임의 인덱스를 얻어온다.")
-    @Test
-    void index() {
-        Frame first = frames.getFirstFrame();
-        assertThat(frames.getCurrentFrameIndex(first.getNext())).isEqualTo(1);
+        frames.addPinCount(10);
+        frames.addPinCount(1);
+        frames.addPinCount(2);
+        assertThat(frames.isFinished()).isTrue();
     }
 }

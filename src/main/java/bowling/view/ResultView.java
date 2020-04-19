@@ -1,25 +1,30 @@
 package bowling.view;
 
-import bowling.domain.Game;
-import bowling.domain.PinCount;
+import bowling.controller.dto.FrameStatus;
+import bowling.controller.dto.GameStatus;
+import bowling.domain.pitch.Pitch;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ResultView {
     private static final String NAME_TITLE = "| NAME | ";
     private static final String NAME_VALUE = "| %4s | ";
+    private static final String EMPTY = "|      | ";
     private static final String DELIMITER = " | ";
     private static final String FRAME_FORMAT = " %02d ";
+    private static final String SCORE_FORMAT = " %3d";
     private static final String PIN_COUNT_FORMAT = "%-4s";
+    private static final String EMPTY_SCORE = "     | ";
     private static final String PIN_DELIMITER = "|";
     private static final String STRIKE = "X";
     private static final String SPARE = "/";
     private static final String GUTTER = "-";
 
-    public static void displayGameBoard(Game game) {
-        displayHeader(game.getFrameTotal());
-        displayBody(game);
+    public static void displayGameBoard(GameStatus gameStatus) {
+        displayHeader(gameStatus.getFrameStatusesSize());
+        displayBody(gameStatus);
+        displayScores(gameStatus);
     }
 
     private static void displayHeader(int maxFrame) {
@@ -31,17 +36,22 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void displayBody(Game game) {
-        System.out.print(String.format(NAME_VALUE, game.getPlayerName()));
+    private static void displayBody(GameStatus gameStatus) {
+        System.out.print(String.format(NAME_VALUE, gameStatus.getPlayerName()));
 
-        for (int i = 0, maxFrame = game.getFrameTotal(); i < maxFrame; i++) {
-            displayPinCounts(game.getFramePinCounts(i));
+        for (int i = 0, size = gameStatus.getFrameStatusesSize(); i < size;
+             i++) {
+            displayPinCounts(gameStatus.getFrameStatus(i));
         }
         System.out.println();
     }
 
-    private static void displayPinCounts(List<PinCount> pinCounts) {
-        String stringPinCounts = pinCounts.stream()
+    private static void displayPinCounts(FrameStatus frameStatus) {
+        if (frameStatus.isEmpty()) {
+            System.out.print(EMPTY_SCORE);
+            return;
+        }
+        String stringPinCounts = frameStatus.getPitches().stream()
                 .map(ResultView::getSymbol)
                 .collect(Collectors.joining(PIN_DELIMITER));
 
@@ -49,15 +59,38 @@ public class ResultView {
                 DELIMITER);
     }
 
-    private static String getSymbol(PinCount pinCount) {
-        if (pinCount.isStrike()) {
+    private static String getSymbol(Pitch pitch) {
+        if (pitch.isStrike()) {
             return STRIKE;
-        } else if (pinCount.isSpare()) {
+        } else if (pitch.isSpare()) {
             return SPARE;
-        } else if (pinCount.isGutter()) {
+        } else if (pitch.isGutter()) {
             return GUTTER;
         }
-        return Integer.toString(pinCount.getCount());
+        return Integer.toString(pitch.getPinCount());
+    }
+
+    private static void displayScores(GameStatus gameStatus) {
+        System.out.print(EMPTY);
+        for (int i = 0, size = gameStatus.getFrameStatusesSize(); i < size;
+             i++) {
+            displayScore(gameStatus.getFrameStatus(i));
+        }
+        System.out.println();
+    }
+
+    private static void displayScore(FrameStatus frameStatus) {
+        if (frameStatus.isEmpty()) {
+            System.out.print(EMPTY_SCORE);
+            return;
+        }
+        Optional<Integer> score = frameStatus.getScore();
+        if (score.isPresent()) {
+            System.out.print(String.format(SCORE_FORMAT, score.get()) +
+                    DELIMITER);
+            return;
+        }
+        System.out.print(EMPTY_SCORE);
     }
 
     private ResultView() {
