@@ -1,6 +1,9 @@
 package seul.bowling.domain;
 
+import lombok.Getter;
+
 public class LastFrame extends Frame{
+    @Getter
     private int bonusPlay;
 
     protected LastFrame(int index) {
