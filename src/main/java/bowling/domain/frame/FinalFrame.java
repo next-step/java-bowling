@@ -3,6 +3,9 @@ package bowling.domain.frame;
 import bowling.domain.score.Score;
 
 public class FinalFrame extends Frame {
+    private static final int NONE_TRY_COUNT = 0;
+    private static final int FIRST_TRY_COUNT = 1;
+    private static final int SECOND_TRY_COUNT = 2;
 
     public FinalFrame() {
         super();
@@ -10,7 +13,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isThrowable() {
-        if (points.getTryCount() == 0 || points.getTryCount() == 1) {
+        if (points.getTryCount() == NONE_TRY_COUNT || points.getTryCount() == FIRST_TRY_COUNT) {
             return true;
         }
         if (points.isSpare() || points.isDoubleStrike()) {
@@ -30,7 +33,7 @@ public class FinalFrame extends Frame {
         if (points.isFirstStrike()) {
             return Score.ofStrike();
         }
-        if (points.getTryCount() == 2 && points.isSpare() && !points.isFirstStrike()) {
+        if (points.getTryCount() == SECOND_TRY_COUNT && points.isSpare() && !points.isFirstStrike()) {
             return Score.ofSpare();
         }
         return Score.ofMiss(points.getSum());

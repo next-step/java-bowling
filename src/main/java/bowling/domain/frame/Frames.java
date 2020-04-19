@@ -38,13 +38,7 @@ public class Frames {
     }
 
     public int getFrameNo(Frame frame) {
-        int frameNo = 0;
-        Frame targetFrame = frames.get(frameNo);
-        while (!frame.equals(targetFrame)) {
-            frameNo++;
-            targetFrame = frames.get(frameNo);
-        }
-        return frameNo + 1;
+        return frames.indexOf(frame) + 1;
     }
 
     public void calculateScores(Point point) {

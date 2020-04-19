@@ -9,6 +9,13 @@ import bowling.domain.point.Points;
 import java.util.stream.Collectors;
 
 public class ResultView {
+    private static final int FIRST_TRY_COUNT = 1;
+    private static final int SECOND_TRY_COUNT = 2;
+    private static final int THIRD_TRY_COUNT = 3;
+
+    private static final int STRIKE_POINT = 10;
+    private static final int GUTTER_POINT = 0;
+
     private static final String MARK_JOIN_DELIMETER = "|";
     private static final String MARK_STRIKE = "X";
     private static final String MARK_SPARE = "/";
@@ -67,31 +74,31 @@ public class ResultView {
     }
 
     private static String getScoreMark(Points points) {
-        if (points.getTryCount() == 1) {
-            return getMark(points.get(0));
+        if (points.getTryCount() == FIRST_TRY_COUNT) {
+            return getMark(points.getFirstPoint());
         }
-        if (points.getTryCount() == 2) {
-            return getMark(points.get(0), points.get(1));
+        if (points.getTryCount() == SECOND_TRY_COUNT) {
+            return getMark(points.getFirstPoint(), points.getSecondPoint());
         }
-        if (points.getTryCount() == 3) {
-            return getMark(points.get(0), points.get(1)) + MARK_JOIN_DELIMETER + getMark(points.get(2));
+        if (points.getTryCount() == THIRD_TRY_COUNT) {
+            return getMark(points.getFirstPoint(), points.getSecondPoint()) + MARK_JOIN_DELIMETER + getMark(points.getThirdPoint());
         }
         return MARK_NONE;
     }
 
     private static String getMark(Point point1, Point point2) {
         int sumPoint = point1.getPoint() + point2.getPoint();
-        if (sumPoint == 10) {
+        if (sumPoint == STRIKE_POINT) {
             return getMark(point1) + MARK_JOIN_DELIMETER + MARK_SPARE;
         }
         return getMark(point1) + MARK_JOIN_DELIMETER + getMark(point2);
     }
 
     private static String getMark(Point point) {
-        if (point.getPoint() == 10) {
+        if (point.getPoint() == STRIKE_POINT) {
             return MARK_STRIKE;
         }
-        if (point.getPoint() == 0) {
+        if (point.getPoint() == GUTTER_POINT) {
             return MARK_GUTTER;
         }
         return String.valueOf(point.getPoint());

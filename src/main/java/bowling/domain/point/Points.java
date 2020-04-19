@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Points {
+    private static final int FIRST_POINT_INDEX = 0;
+    private static final int SECOND_POINT_INDEX = 1;
+    private static final int THIRD_POINT_INDEX = 2;
+
+    private static final int FIRST_TRY_COUNT = 1;
+    private static final int SECOND_TRY_COUNT = 2;
+
     private static final int MAX_POINT_COUNT = 10;
     private static final int STRIKE_POINT = 10;
     private static final int DOUBLE_STRIKE_POINT = 20;
@@ -28,10 +35,6 @@ public class Points {
         return points.size();
     }
 
-    public int getPoint(int index) {
-        return points.get(index).getPoint();
-    }
-
     public Point get(int index) {
         return points.get(index);
     }
@@ -43,30 +46,42 @@ public class Points {
     }
 
     public boolean isFirstStrike() {
-        if (points.size() == 1 && getPoint(0) == STRIKE_POINT) {
+        if (points.size() == FIRST_TRY_COUNT && getSum() == STRIKE_POINT) {
             return true;
         }
         return false;
     }
 
     public boolean isDoubleStrike() {
-        if (points.size() == 2 && getSum() == DOUBLE_STRIKE_POINT) {
+        if (points.size() == SECOND_TRY_COUNT && getSum() == DOUBLE_STRIKE_POINT) {
             return true;
         }
         return false;
     }
 
     public boolean isSpare() {
-        if (points.size() == 2 && getSum() == SPARE_POINT && !isFirstStrike()) {
+        if (points.size() == SECOND_TRY_COUNT && getSum() == SPARE_POINT && !isFirstStrike()) {
             return true;
         }
         return false;
     }
 
     public int getLeftPoint() {
-        if (points.size() == 1 && !isFirstStrike()) {
+        if (points.size() == FIRST_TRY_COUNT && !isFirstStrike()) {
             return MAX_POINT_COUNT - getSum();
         }
         return MAX_POINT_COUNT;
+    }
+
+    public Point getFirstPoint(){
+        return points.get(FIRST_POINT_INDEX);
+    }
+
+    public Point getSecondPoint(){
+        return points.get(SECOND_POINT_INDEX);
+    }
+
+    public Point getThirdPoint(){
+        return points.get(THIRD_POINT_INDEX);
     }
 }
