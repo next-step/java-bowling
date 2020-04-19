@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.NormalFrame;
+import bowling.domain.Frame;
 import bowling.domain.Player;
 import bowling.domain.Score;
 import org.junit.jupiter.api.DisplayName;
@@ -31,10 +31,10 @@ public class PlayerTest {
     public void frameTest() {
         Player player = new Player("KPJ");
         assertThat(player.currentFrame()).isEqualTo(1);
-        NormalFrame normalFrame = new NormalFrame();
-        normalFrame.add(new Score(9));
-        normalFrame.add(new Score(0));
-        player.addFrame(normalFrame);
+        Frame normalFrame = new Frame();
+        normalFrame.addFrame(9, false);
+        normalFrame.addFrame(0, false);
+        player.getFrames().addFrame(normalFrame);
         assertThat(player.currentFrame()).isEqualTo(2);
     }
 
@@ -43,13 +43,13 @@ public class PlayerTest {
     public void nextFrameTest() {
         Player player = new Player("KPJ");
         assertThat(player.currentFrame()).isEqualTo(1);
-        NormalFrame normalFrame = new NormalFrame();
-        normalFrame.add(new Score(9));
-        player.addFrame(normalFrame);
-        assertThat(player.isNextFrame()).isFalse(); // 스트라이크 아니여서 한번더
-        normalFrame.add(new Score(0));
-        player.addFrame(normalFrame);
-        assertThat(player.isNextFrame()).isTrue(); // 2번다던져서 다음프레임으로
+        Frame frame = player.getFrames().getFrame();
+        frame.addFrame(9,false);
+        player.getFrames().addFrame(frame);
+        assertThat(player.getFrames().isNextFrame()).isFalse(); // 스트라이크 아니여서 한번더
+        frame.addFrame(0,false);
+        player.getFrames().addFrame(frame);
+        assertThat(player.getFrames().isNextFrame()).isTrue(); // 2번다던져서 다음프레임으로
     }
 
     @Test
@@ -57,9 +57,9 @@ public class PlayerTest {
     public void nextFrameStrikeTest() {
         Player player = new Player("KPJ");
         assertThat(player.currentFrame()).isEqualTo(1);
-        NormalFrame normalFrame = new NormalFrame(); // 스트라이크여서 다음프레임으로
-        normalFrame.add(new Score(10));
-        player.addFrame(normalFrame);
-        assertThat(player.isNextFrame()).isTrue();
+        Frame frame = new Frame(); // 스트라이크여서 다음프레임으로
+        frame.addFrame(10,false);
+        player.getFrames().addFrame(frame);
+        assertThat(player.getFrames().isNextFrame()).isTrue();
     }
 }

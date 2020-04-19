@@ -3,7 +3,7 @@ package bowling.domain;
 public class Score {
     private static final int FRAME_MAX_SCORE = 10;
     private static final int FRAME_MIN_SCORE = 0;
-    private int score = 0;
+    private int score;
 
     public Score(int score) {
         checkScore(score);
