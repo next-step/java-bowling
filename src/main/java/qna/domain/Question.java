@@ -67,7 +67,7 @@ public class Question extends AbstractEntity {
     }
 
     public void isOwner(User loginUser) throws CannotDeleteException {
-        if(!writer.equals(loginUser)){
+        if (!writer.equals(loginUser)) {
             throw new CannotDeleteException(NO_AUTHORIZATION);
         }
     }
@@ -84,7 +84,7 @@ public class Question extends AbstractEntity {
 
     private DeleteHistory createDeleteHistory() {
         return new DeleteHistory(
-                    ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+                ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
     public boolean isDeleted() {

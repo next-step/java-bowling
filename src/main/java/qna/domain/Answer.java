@@ -58,7 +58,6 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-
     public void isOwner(User loginUser) throws CannotDeleteException {
         if (!writer.equals(loginUser)) {
             throw new CannotDeleteException(OTHER_ANSWERS);
