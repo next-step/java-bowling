@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.dto.ShotScoreDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,7 +10,7 @@ class ShotScores {
     private final List<ShotScore> shotScores;
 
     ShotScores(List<ShotScore> shotScores) {
-        this.shotScores = shotScores;
+        this.shotScores = new ArrayList<>(shotScores);
     }
 
     private ShotScore getLast() {
