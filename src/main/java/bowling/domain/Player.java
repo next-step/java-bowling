@@ -19,7 +19,6 @@ public class Player {
         return new Player(name, new Frames());
     }
 
-
     public int getCurrentFrameNumber() {
         return frames.getCurrentFrameNumber();
     }
