@@ -13,7 +13,7 @@ public class Player {
         return new Player(PlayerName.of(name));
     }
 
-    public String name() {
+    public String getName() {
         return playerName.toString();
     }
 

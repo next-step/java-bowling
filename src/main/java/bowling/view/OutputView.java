@@ -1,8 +1,12 @@
 package bowling.view;
 
 import bowling.controller.BowlingGame;
+import bowling.domain.frame.state.States;
 import bowling.domain.player.Player;
+import bowling.domain.score.Score;
 import bowling.view.format.NameFormatter;
+
+import java.util.List;
 
 public class OutputView {
     public static final String DELIMITER = "|";
@@ -15,16 +19,16 @@ public class OutputView {
         System.out.println(FRAMES_HEADER);
     }
 
-    public static void printOverHead(BowlingGame game) {
+    public static void printOverHead(final String name, final List<States> states, final List<Score> scores) {
         printFramesHeader();
-        printPlayerName(game.getCurrentPlayer());
-        StateView.print(game.getStates());
-        ScoreView.print(game.getScores());
+        printPlayerName(name);
+        StateView.print(states);
+        ScoreView.print(scores);
         System.out.println();
     }
 
-    private static void printPlayerName(final Player currentPlayer) {
-        System.out.print(formatName(currentPlayer.name()));
+    private static void printPlayerName(final String name) {
+        System.out.print(formatName(name));
     }
 
     private static String formatName(final String name) {

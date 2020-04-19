@@ -3,36 +3,28 @@ package bowling.controller;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.Frames;
-import bowling.domain.frame.state.States;
 import bowling.domain.pin.BowlCount;
 import bowling.domain.pin.Pins;
 import bowling.domain.player.Player;
-import bowling.domain.score.Score;
-
-import java.util.List;
+import bowling.view.InputView;
+import bowling.view.OutputView;
 
 public class BowlingGame {
-    private final Player player;
     private final Frames frames;
 
-    public BowlingGame(final Player player) {
-        this.player = player;
+    public BowlingGame() {
         this.frames = Frames.create();
     }
 
-    public void play(final BowlCount bowlCount) {
-        Pins pins = Pins.of();
-        frames.bowl(pins.knockOver(bowlCount));
-    }
-
-    public Player getCurrentPlayer() {
-        return player;
-    }
-
-    // todo - 여기서 FrameNumber을 알필요가 있을까?
-    public FrameNumber getFrameNumber() {
-        return frames.getCurrent()
-                     .getFrameNumber();
+    public void play(final InputView inputView) {
+        Player player = inputView.inputPlayerName();
+        OutputView.printOverHead(player.getName(), frames.getStates(), frames.getScores());
+        while (!isEnd()) {
+            BowlCount bowlCount = inputView.inputBowlCount(getFrameNumber());
+            Pins pins = Pins.of();
+            frames.bowl(pins.knockOver(bowlCount));
+            OutputView.printOverHead(player.getName(), frames.getStates(), frames.getScores());
+        }
     }
 
     public boolean isEnd() {
@@ -40,11 +32,7 @@ public class BowlingGame {
         return current.getFrameNumber().isFinal() && current.isEnd();
     }
 
-    public List<States> getStates() {
-        return frames.getStates();
-    }
-
-    public List<Score> getScores() {
-        return frames.getScores();
+    public FrameNumber getFrameNumber() {
+        return frames.getCurrent().getFrameNumber();
     }
 }
