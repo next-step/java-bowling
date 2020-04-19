@@ -42,6 +42,14 @@ public class SpareLastFrameOver implements State {
         return FrameScore.newInstance(calculateScore(), LeftScoreCount.of(0));
     }
 
+    private Score calculateScore() {
+        List<Score> scores = pins.stream()
+                .map(Pin::toScore)
+                .collect(Collectors.toList());
+
+        return Score.of(scores.get(0), scores.get(1), scores.get(2), scores.get(2));
+    }
+
     @Override
     public FrameScore addingUpFrameScore(FrameScore beforeScore) {
         List<Score> scores = pins.stream()
@@ -59,14 +67,6 @@ public class SpareLastFrameOver implements State {
     @Override
     public List<Pin> getPins() {
         return pins;
-    }
-
-    private Score calculateScore() {
-        List<Score> scores = pins.stream()
-                .map(Pin::toScore)
-                .collect(Collectors.toList());
-
-        return Score.of(scores.get(0), scores.get(1), scores.get(2), scores.get(2));
     }
 
     @Override

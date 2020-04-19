@@ -18,7 +18,7 @@ public class StrikeLastFrameOver implements State {
         this.secondPinCount = pinCount;
     }
 
-    public static State newInstance(final Pin pinCount) {
+    public static StrikeLastFrameOver newInstance(final Pin pinCount) {
         return new StrikeLastFrameOver(pinCount);
     }
 

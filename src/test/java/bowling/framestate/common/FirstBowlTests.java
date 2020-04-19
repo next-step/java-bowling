@@ -10,7 +10,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+@DisplayName("첫번째 투구 상태 테스트")
 public class FirstBowlTests {
+
+    private FirstBowl firstBowl = FirstBowl.newInstance(Pin.of(6));
+
     @DisplayName("생성 테스트")
     @Test
     public void generateTest() {
@@ -20,8 +24,6 @@ public class FirstBowlTests {
     @DisplayName("bowl 테스트")
     @Test
     public void bowlTest() {
-        FirstBowl firstBowl = FirstBowl.newInstance(Pin.of(6));
-
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> firstBowl.bowl(Pin.ofMax()));
 
@@ -32,23 +34,18 @@ public class FirstBowlTests {
     @DisplayName("FrameScore 생성 테스트")
     @Test
     public void createFrameScoreTest() {
-        FirstBowl firstBowl = FirstBowl.newInstance(Pin.of(7));
-
-        assertThat(firstBowl.createFrameScore()).isEqualTo(FrameScore.newInstance(Score.of(7), LeftScoreCount.of(1)));
+        assertThat(firstBowl.createFrameScore()).isEqualTo(FrameScore.newInstance(Score.of(6), LeftScoreCount.of(1)));
     }
 
     @DisplayName("FrameScore 합산 테스트")
     @Test
     public void addingUpFrameScoreTest() {
-        FirstBowl firstBowl = FirstBowl.newInstance(Pin.of(7));
-
-        assertThat(firstBowl.addingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(17), LeftScoreCount.of(1)));
+        assertThat(firstBowl.addingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(1)));
     }
 
     @DisplayName("종료 테스트")
     @Test
     public void isOverTest() {
-        FirstBowl firstBowl = FirstBowl.newInstance(Pin.of(8));
         assertFalse(firstBowl.isOver());
     }
 }
