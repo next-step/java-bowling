@@ -6,6 +6,7 @@ import bowling.framestate.State;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Spare implements State {
 
@@ -44,5 +45,19 @@ public class Spare implements State {
     @Override
     public List<Pin> getPins() {
         return Arrays.asList(firstPinCount, secondPinCount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Spare)) return false;
+        Spare spare = (Spare) o;
+        return Objects.equals(firstPinCount, spare.firstPinCount) &&
+                Objects.equals(secondPinCount, spare.secondPinCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstPinCount, secondPinCount);
     }
 }

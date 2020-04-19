@@ -8,6 +8,7 @@ import bowling.framestate.State;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class StrikeLastFrameOver implements State {
 
@@ -44,6 +45,19 @@ public class StrikeLastFrameOver implements State {
     @Override
     public List<Pin> getPins() {
         return Arrays.asList(Pin.ofMax(), secondPinCount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof StrikeLastFrameOver)) return false;
+        StrikeLastFrameOver that = (StrikeLastFrameOver) o;
+        return Objects.equals(secondPinCount, that.secondPinCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(secondPinCount);
     }
 
     private Score calculateScore() {

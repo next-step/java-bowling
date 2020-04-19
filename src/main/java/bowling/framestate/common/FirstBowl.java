@@ -8,6 +8,7 @@ import bowling.framestate.State;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class FirstBowl implements State {
 
@@ -50,5 +51,18 @@ public class FirstBowl implements State {
     @Override
     public List<Pin> getPins() {
         return Collections.singletonList(pinCount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FirstBowl)) return false;
+        FirstBowl firstBowl = (FirstBowl) o;
+        return Objects.equals(pinCount, firstBowl.pinCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pinCount);
     }
 }

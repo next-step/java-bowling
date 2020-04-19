@@ -68,4 +68,17 @@ public class SpareLastFrameOver implements State {
 
         return Score.of(scores.get(0), scores.get(1), scores.get(2), scores.get(2));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SpareLastFrameOver)) return false;
+        SpareLastFrameOver that = (SpareLastFrameOver) o;
+        return Objects.equals(getPins(), that.getPins());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPins());
+    }
 }

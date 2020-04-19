@@ -77,12 +77,12 @@ public class FrameScore {
         if (this == o) return true;
         if (!(o instanceof FrameScore)) return false;
         FrameScore that = (FrameScore) o;
-        return Objects.equals(getScore(), that.getScore()) &&
+        return Objects.equals(score, that.score) &&
                 Objects.equals(leftScoreCount, that.leftScoreCount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getScore(), leftScoreCount);
+        return Objects.hash(score, leftScoreCount);
     }
 }

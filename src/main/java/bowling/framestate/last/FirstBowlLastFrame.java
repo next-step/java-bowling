@@ -8,6 +8,7 @@ import bowling.framestate.common.Miss;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class FirstBowlLastFrame implements State {
 
@@ -50,5 +51,18 @@ public class FirstBowlLastFrame implements State {
     @Override
     public List<Pin> getPins() {
         return Collections.singletonList(pinCount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FirstBowlLastFrame)) return false;
+        FirstBowlLastFrame that = (FirstBowlLastFrame) o;
+        return Objects.equals(pinCount, that.pinCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pinCount);
     }
 }

@@ -7,6 +7,7 @@ import bowling.framestate.State;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Miss implements State {
 
@@ -46,5 +47,19 @@ public class Miss implements State {
     @Override
     public List<Pin> getPins() {
         return Arrays.asList(firstPinCount, secondPinCount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Miss)) return false;
+        Miss miss = (Miss) o;
+        return Objects.equals(firstPinCount, miss.firstPinCount) &&
+                Objects.equals(secondPinCount, miss.secondPinCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstPinCount, secondPinCount);
     }
 }

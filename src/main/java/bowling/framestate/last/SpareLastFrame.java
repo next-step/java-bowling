@@ -6,6 +6,7 @@ import bowling.framestate.State;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class SpareLastFrame implements State {
 
@@ -44,5 +45,19 @@ public class SpareLastFrame implements State {
     @Override
     public List<Pin> getPins() {
         return Arrays.asList(firstPinCount, secondPinCount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SpareLastFrame)) return false;
+        SpareLastFrame that = (SpareLastFrame) o;
+        return Objects.equals(firstPinCount, that.firstPinCount) &&
+                Objects.equals(secondPinCount, that.secondPinCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstPinCount, secondPinCount);
     }
 }
