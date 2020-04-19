@@ -39,4 +39,17 @@ class ScoreCalculatorTest {
         assertFalse(calc1.canAddNextScore());
         assertTrue(calc2.canAddNextScore());
     }
+
+    @Test
+    public void sumScore_success() throws Exception {
+        //given
+        Calculator calculator = new ScoreCalculator(new Score(10), 2);
+        Calculator compare = new ScoreCalculator(new Score(15), 1);
+
+        //when
+        calculator = calculator.sumScore(new Score(5));
+
+        //then
+        assertTrue(calculator.equals(compare));
+    }
 }

@@ -1,5 +1,6 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
 
 public interface State {
@@ -14,5 +15,5 @@ public interface State {
 
     Score getScore();
 
-    Score getFirstScore();
+    Calculator getCalculateScore(Calculator calculator);
 }
