@@ -53,7 +53,8 @@ public class OutputView {
         Map<Integer, ScoreView> scoreMap = new HashMap<>();
 
         for (Frame frame : frames.getFrames()) {
-            scoreMap.putAll(addScoreBoardValue(frame.getIndex() + ONE, frame.getStatus(), frame.getPins()));
+            Status status = frame.getStatus();
+            scoreMap.putAll(addScoreBoardValue(frame.getIndex() + ONE, status, status.getPins()));
         }
 
         for (int i = scoreMap.size(), end = Frame.LAST_FRAME_INDEX; i <= end; i++) {

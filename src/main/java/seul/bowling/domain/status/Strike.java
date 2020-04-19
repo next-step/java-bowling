@@ -1,13 +1,15 @@
 package seul.bowling.domain.status;
 
+import seul.bowling.domain.Pins;
 import seul.bowling.domain.Score;
 
 public class Strike extends Status {
     private static final int BONUS_PLAY = 2;
     private static final int BONUS_SCORE_COUNT = 2;
+    private static final boolean STRIKE = false;
 
-    public Strike(Score score) {
-        super(score);
+    public Strike(Score score, Pins pins) {
+        super(score, pins);
     }
 
     @Override
@@ -17,11 +19,6 @@ public class Strike extends Status {
 
     @Override
     public boolean endJudgmentStatus() {
-        return true;
-    }
-
-    @Override
-    public boolean isStrike() {
         return true;
     }
 
@@ -38,5 +35,10 @@ public class Strike extends Status {
     @Override
     public boolean endScore() {
         return !availableAddBonusScore();
+    }
+
+    @Override
+    public boolean pinsEndDefaultPlayCount() {
+        return pins.endDefaultPlayCount(STRIKE);
     }
 }

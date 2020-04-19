@@ -1,13 +1,14 @@
 package seul.bowling.domain.status;
 
+import seul.bowling.domain.Pins;
 import seul.bowling.domain.Score;
 
 public class Spare extends Status {
     private static final int BONUS_PLAY = 1;
     private static final int BONUS_SCORE_COUNT = 1;
 
-    public Spare(Score score) {
-        super(score);
+    public Spare(Score score, Pins pins) {
+        super(score, pins);
     }
 
     @Override

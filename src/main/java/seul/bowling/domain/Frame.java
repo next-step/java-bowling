@@ -12,14 +12,12 @@ public class Frame {
     public static final int LAST_FRAME_INDEX = 9;
 
     private int index;
-    protected Pins pins;
     @Getter
     protected Status status;
 
     protected Frame(int index) {
         this.index = index;
         this.status = new Status();
-        this.pins = new Pins();
     }
 
     public void addPins(int clearPin) {
@@ -27,10 +25,10 @@ public class Frame {
     }
 
     void addPins(int clearPin, boolean isBonusPlay) {
-        pins.addPin(clearPin, isBonusPlay);
+        status.addPins(clearPin, isBonusPlay);
 
         if (!this.status.endJudgmentStatus()) {
-            this.status = status.judgmentStatus(pins.allClear());
+            this.status = status.judgmentStatus(status.pinsAllClear());
             this.status.addScore(clearPin);
         }
     }

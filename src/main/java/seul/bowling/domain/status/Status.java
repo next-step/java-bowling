@@ -1,28 +1,30 @@
 package seul.bowling.domain.status;
 
 import lombok.Getter;
+import seul.bowling.domain.Pins;
 import seul.bowling.domain.Score;
 
 public class Status {
     private static final int BONUS_PLAY = 0;
     private static final int BONUS_SCORE_COUNT = 0;
+    private static final boolean STRIKE = false;
 
+    @Getter
+    Pins pins;
     @Getter
     Score score;
 
-    protected Status(Score score) {
+    protected Status(Score score, Pins pins) {
         this.score = score;
+        this.pins = pins;
     }
 
     public Status() {
         this.score = new Score();
+        this.pins = new Pins();
     }
 
     public boolean endJudgmentStatus() {
-        return false;
-    }
-
-    public boolean isStrike() {
         return false;
     }
 
@@ -40,10 +42,10 @@ public class Status {
 
     public Status judgmentStatus(boolean allClear) {
         if (allClear) {
-            return new Strike(this.score);
+            return new Strike(this.score, this.pins);
         }
 
-        return new Hold(this.score);
+        return new Hold(this.score, this.pins);
     }
 
     public void addCumulativeScore(int score) {
@@ -64,5 +66,17 @@ public class Status {
 
     public int getToTalScore() {
         return this.score.getScore();
+    }
+
+    public void addPins(int clearPin, boolean isBonusPlay) {
+        pins.addPin(clearPin, isBonusPlay);
+    }
+
+    public boolean pinsAllClear() {
+        return pins.allClear();
+    }
+
+    public boolean pinsEndDefaultPlayCount() {
+        return pins.endDefaultPlayCount(STRIKE);
     }
 }

@@ -42,7 +42,7 @@ public class LastFrame extends Frame {
     }
 
     private boolean endDefaultPlay() {
-        return pins.endDefaultPlayCount(status.isStrike());
+        return status.pinsEndDefaultPlayCount();
     }
 
     private boolean isBonusPlay() {
