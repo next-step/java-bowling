@@ -22,6 +22,7 @@ public class BowlingApplication {
 
             ResultView.printScoreBoardTop();
             ResultView.printScoreBoardPlayer(bowlingGame);
+            ResultView.printScorePlayer(bowlingGame, frameNumber);
 
             if (bowlingGame.isLastFrameFinish()) {
                 frameNumber++;

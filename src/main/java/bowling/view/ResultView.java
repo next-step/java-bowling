@@ -4,6 +4,7 @@ import bowling.domain.BowlingGame;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.score.Score;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -55,7 +56,6 @@ public class ResultView {
         }
     }
 
-
     public static void printScoreBoardPlayer(BowlingGame bowlingGame) {
         printPlayerName(bowlingGame.getPlayerName());
 
@@ -65,6 +65,26 @@ public class ResultView {
         Frame finalFrame = bowlingGame.getCurrentFrame();
         printFinalFrame(finalFrame);
         printEmptyFrame(Frame.MAX_FRAME_NUMBER - bowlingGame.getFrameSize());
+        System.out.println();
+    }
+
+    private static void printScore(Score score) {
+        if (score != null) {
+            System.out.print(String.format("%s%4d  ",
+                    VERTICAL, score.getScore()));
+        } else {
+            System.out.print(EMPTY_FRAME);
+        }
+    }
+
+    public static void printScorePlayer(BowlingGame bowlingGame, int frameNumber) {
+        System.out.print(EMPTY_FRAME + "  ");
+
+        for (int i = 1; i <= frameNumber; i++) {
+            printScore(bowlingGame.getFrameScore(i));
+        }
+
+        printEmptyFrame(9 - frameNumber);
         System.out.println();
     }
 }
