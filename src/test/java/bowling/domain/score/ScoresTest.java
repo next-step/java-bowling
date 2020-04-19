@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import bowling.domain.scores.DefaultScores;
+import bowling.domain.scores.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,16 +20,16 @@ class ScoresTest {
     @DisplayName("프레임 점수 생성")
     @Test
     void create() {
-        assertThatCode(() -> new Scores());
+        assertThatCode(() -> new DefaultScores());
     }
 
     @DisplayName("프레임 점수 저장")
     @ParameterizedTest
     @MethodSource("points")
     void addScore(List<Integer> values) {
-        Scores scores = new Scores();
+        Scores scores = new DefaultScores();
         for (Integer value : values) {
-            scores.add(new Score(ScoreType.MISS, value));
+            scores.add(value);
         }
 
         int currentPoint = values.stream()
@@ -53,8 +55,8 @@ class ScoresTest {
     }
 
     private Scores strikeScores() {
-        Scores scores = new Scores();
-        scores.add(new Score(ScoreType.STRIKE, 10));
+        Scores scores = new DefaultScores();
+        scores.add(10);
 
         return scores;
     }
@@ -68,9 +70,9 @@ class ScoresTest {
     }
 
     private Scores spareScores() {
-        Scores scores = new Scores();
-        scores.add(new Score(ScoreType.MISS, 1));
-        scores.add(new Score(ScoreType.SPARE, 9));
+        Scores scores = new DefaultScores();
+        scores.add(1);
+        scores.add(9);
 
         return scores;
     }
