@@ -10,14 +10,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class PitchTest {
-    public static final Pitch PIN_COUNT_0 = Pitch.valueOf(0);
-    public static final Pitch PIN_COUNT_8 = Pitch.valueOf(8);
-    public static final Pitch PIN_COUNT_10 = Pitch.valueOf(10);
+    public static final Pitch PIN_COUNT_0 = new Pitch(0);
+    public static final Pitch PIN_COUNT_8 = new Pitch(8);
+    public static final Pitch PIN_COUNT_10 = new Pitch(10);
 
-    @DisplayName("점수를 저장할 수 있다.")
+    @DisplayName("핀 갯수를 저장할 수 있다.")
     @Test
     void init() {
-        assertThat(PIN_COUNT_10).isEqualTo(Pitch.valueOf(10));
+        assertThat(PIN_COUNT_10.getPinCount()).isEqualTo(10);
     }
 
     @DisplayName("범위 밖의 점수를 입력하면 에러")
@@ -25,14 +25,7 @@ public class PitchTest {
     @ValueSource(ints = {-1, 11})
     void error(int score) {
         assertThatExceptionOfType(OutOfRangeArgumentException.class)
-                .isThrownBy(() -> Pitch.valueOf(score));
-    }
-
-    @DisplayName("다른 PinCount 와 더했을때 최대치를 넘지 않아야 한다.")
-    @Test
-    void isAddable() {
-        assertThat(PIN_COUNT_8.isOverMaxAfterAdd(3)).isTrue();
-        assertThat(PIN_COUNT_8.isOverMaxAfterAdd(1)).isFalse();
+                .isThrownBy(() -> new Pitch(score));
     }
 
     @DisplayName("스트라이크 여부를 알 수 있다.")

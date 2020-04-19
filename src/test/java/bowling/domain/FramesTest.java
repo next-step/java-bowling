@@ -16,9 +16,9 @@ public class FramesTest {
             frames.addPinCount(10);
         }
 
-        assertThat(frames.createNext()).isExactlyInstanceOf(NormalFrame.class);
+        assertThat(frames.getNewFrame()).isExactlyInstanceOf(NormalFrame.class);
         frames.addPinCount(10);
-        assertThat(frames.createNext()).isExactlyInstanceOf(FinalFrame.class);
+        assertThat(frames.getNewFrame()).isExactlyInstanceOf(FinalFrame.class);
     }
 
     @DisplayName("마지막 프레임이 종료하면 더이상 추가할 수 없다.")

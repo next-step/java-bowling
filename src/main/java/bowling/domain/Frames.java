@@ -17,29 +17,36 @@ public class Frames {
 
     public Frames() {
         frames = new ArrayList<>();
-        frames.add(new NormalFrame());
+        initFrames();
     }
 
     public Frames(Frames frames) {
         this.frames = new ArrayList<>(frames.frames);
     }
 
-    public Optional<Integer> getFrameScore(int frameIndex) {
-        return frames.get(frameIndex).getScore();
-    }
-
-    public List<Pitch> getFramePinCounts(int index) {
-        return frames.get(index).getPitches();
+    private void initFrames() {
+        this.frames.add(new NormalFrame());
     }
 
     public boolean addPinCount(int pinCount) {
-        boolean result = getLastFrame().addPinCount(pinCount);
+        Frame lastFrame = this.frames.get(getLastIndex());
 
-        if (isAddable()) {
-            frames.add(createNext());
+        boolean result = lastFrame.addPinCount(pinCount);
+        if(!isFinished() && lastFrame.isDone()) {
+            frames.add(getNewFrame());
         }
 
         return result;
+    }
+
+    protected Frame getNewFrame() {
+        int lastIndex = getLastIndex();
+        Frame lastFrame = this.frames.get(lastIndex);
+
+        if(isBeforeMax()) {
+            return lastFrame.createNext(new FinalFrame());
+        }
+        return lastFrame.createNext();
     }
 
     public int size() {
@@ -58,25 +65,19 @@ public class Frames {
         return frames.size() == (DEFAULT_FRAME_SIZE - ONE);
     }
 
-    public Frame createNext() {
-        Frame lastFrame = getLastFrame();
-        if (isBeforeMax()) {
-            return lastFrame.createNext(new FinalFrame());
-        }
-
-        return lastFrame.createNext();
-    }
-
-    private boolean isAddable() {
-        if (isFinished()) {
-            return false;
-        }
-        Frame lastFrame = getLastFrame();
-        return lastFrame.isDone();
-    }
-
     public boolean isFinished() {
         Frame lastFrame = getLastFrame();
         return lastFrame.isLast() && lastFrame.isDone();
+    }
+
+    public Optional<Integer> getFrameScore(int frameIndex) {
+        return frames.get(frameIndex).getScore();
+    }
+
+    public List<Pitch> getFramePinCounts(int index) {
+        return frames.get(index).getFramePitch();
+    }
+    private int getLastIndex() {
+        return frames.size() - ONE;
     }
 }

@@ -35,13 +35,6 @@ public class NormalFrameTest {
         assertThat(score.get()).isEqualTo(9);
     }
 
-    @DisplayName("한 프레임의 핀 갯수는 10개를 넘을 수 없다")
-    @Test
-    void overMax() {
-        assertThat(normalFrame.addPinCount(8)).isTrue();
-        assertThat(normalFrame.addPinCount(3)).isFalse();
-    }
-
     @DisplayName("한 프레임에서 두번 이상 투구할 수 없다.")
     @Test
     void error() {
@@ -68,7 +61,7 @@ public class NormalFrameTest {
     @DisplayName("스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. ")
     @Test
     void strike() {
-        NormalFrame nextFrame = strikeFrame.createNext();
+        Frame nextFrame = strikeFrame.createNext();
 
         nextFrame.addPinCount(8);
 
@@ -83,8 +76,8 @@ public class NormalFrameTest {
     @DisplayName("더블일 경우 그 다음 프레임의 첫 점수까지 합산한다")
     @Test
     void strikeTwice() {
-        NormalFrame nextFrame = strikeFrame.createNext();
-        NormalFrame afterNextFrame = nextFrame.createNext();
+        Frame nextFrame = strikeFrame.createNext();
+        Frame afterNextFrame = nextFrame.createNext();
 
         assertThat(strikeFrame.getScore().isPresent()).isFalse();
 
@@ -101,7 +94,7 @@ public class NormalFrameTest {
     @DisplayName("스페어는 다음 1번의 투구까지 점수를 합산해야 한다. ")
     @Test
     void spare() {
-        NormalFrame nextFrame = spareFrame.createNext();
+        Frame nextFrame = spareFrame.createNext();
         assertThat(spareFrame.getScore().isPresent()).isFalse();
         nextFrame.addPinCount(8);
 

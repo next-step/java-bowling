@@ -1,15 +1,15 @@
 package bowling.domain.pitch;
 
 class Ready implements State {
-    public static State bowlFirst(int pinCount) {
-        if (pinCount == Pitch.MAX) {
+    public static State bowlFirst(Pin pin) {
+        if (pin.isMax()) {
             return new Strike();
         }
 
-        return new FirstBowl(pinCount);
+        return new FirstBowl(pin);
     }
 
-    @Override public State bowl(int pinCount) {
-        return bowlFirst(pinCount);
+    @Override public State bowl(Pin pin) {
+        return bowlFirst(pin);
     }
 }

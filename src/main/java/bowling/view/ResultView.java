@@ -67,7 +67,7 @@ public class ResultView {
         } else if (pitch.isGutter()) {
             return GUTTER;
         }
-        return Integer.toString(pitch.getCount());
+        return Integer.toString(pitch.getPinCount());
     }
 
     private static void displayScores(GameStatus gameStatus) {

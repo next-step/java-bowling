@@ -13,7 +13,7 @@ public interface Frame {
 
     boolean isDone();
 
-    List<Pitch> getPitches();
+    List<Pitch> getFramePitch();
 
     Frame createNext();
 

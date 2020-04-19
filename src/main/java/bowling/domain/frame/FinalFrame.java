@@ -3,74 +3,66 @@ package bowling.domain.frame;
 import bowling.domain.pitch.Pitch;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class FinalFrame implements Frame {
-    private static final int MAX_PIN_COUNT_SIZE = 3;
-    private static final int MIN_PIN_COUNT_FOR_THIRD = 10;
+    private static final int MAX_PITCH_SIZE = 3;
 
-    private Pitches pitches;
+    private FramePitch framePitch;
+    private Score score;
 
     public FinalFrame() {
-        this.pitches = new Pitches();
+        this.framePitch = new FramePitch();
+    }
+
+    private boolean hasThirdChance() {
+        return framePitch.isSecondPitchSpare() ||
+                framePitch.isFirstPitchStrike();
     }
 
     @Override public boolean addPinCount(int pinCount) {
-        if (!isAddable(pinCount)) {
-            return false;
-        }
-
-        return pitches.add(pinCount);
-    }
-
-    private boolean isAddable(int pinCount) {
         if (isDone()) {
             return false;
         }
 
-        if (hasThirdChance()) {
-            return true;
-        }
-
-        Optional<Pitch> lastPinCount = pitches.getLast();
-        return lastPinCount.map(pc -> !pc.isOverMaxAfterAdd(pinCount))
-                .orElse(true);
+        return framePitch.add(pinCount);
     }
-
-    private boolean hasThirdChance() {
-        Pitch firstPitch = pitches.getFirst()
-                .orElse(Pitch.empty());
-        Pitch secondPitch = pitches.getSecond()
-                .orElse(Pitch.empty());
-
-        if (firstPitch.isStrike()) {
-            return true;
-        } else return secondPitch.isSpare();
-    }
-
 
     @Override public Optional<Integer> getScore() {
         if (!isDone()) {
             return Optional.empty();
         }
 
-        return Optional.of(pitches.getPinCountTotal());
+        if (!Objects.isNull(score)) {
+            return Optional.of(score.getScore());
+        }
+
+        score = framePitch.getScore();
+        return Optional.of(score.getScore());
+    }
+
+    @Override public Optional<Score> getScoreForOnePitch() {
+        return framePitch.getFirstPitchScore();
+    }
+
+    @Override public Optional<Score> getScoreForTwoPitches() {
+        Optional<Score> firstScore = framePitch.getFirstPitchScore();
+        Optional<Score> secondScore = framePitch.getSecondPitchScore();
+        if (firstScore.isPresent() && secondScore.isPresent()) {
+            return firstScore
+                    .map(fs -> fs.add(secondScore.get()));
+        }
+        return Optional.empty();
     }
 
     @Override public boolean isDone() {
-        if (pitches.isEmpty()) {
-            return false;
-        }
-
-        if (pitches.isFull(MAX_PIN_COUNT_SIZE)) {
-            return true;
-        }
-        return pitches.size() == 2 &&
-                pitches.getPinCountTotal() < MIN_PIN_COUNT_FOR_THIRD;
+        return framePitch.size() == MAX_PITCH_SIZE ||
+                (!hasThirdChance() && framePitch.size() == 2);
     }
 
-    @Override public List<Pitch> getPitches() {
-        return pitches.getPitches();
+    @Override public List<Pitch> getFramePitch() {
+        return framePitch.getPitches();
     }
 
     @Override public Frame createNext() {
@@ -83,22 +75,5 @@ public class FinalFrame implements Frame {
 
     @Override public boolean isLast() {
         return true;
-    }
-
-    @Override public Optional<Score> getScoreForTwoPitches() {
-        Optional<Pitch> firstPitch = pitches.getFirst();
-        Optional<Pitch> secondPitch = pitches.getSecond();
-        if (!firstPitch.isPresent() || !secondPitch.isPresent()) {
-            return Optional.empty();
-        }
-
-        int firstCount = firstPitch.get().getCount();
-        int secondCount = secondPitch.get().getCount();
-        return Optional.of(new Score(firstCount + secondCount));
-    }
-
-    @Override public Optional<Score> getScoreForOnePitch() {
-        return pitches.getFirst()
-                .map(p -> new Score(p.getCount()));
     }
 }

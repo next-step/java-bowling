@@ -1,5 +1,5 @@
 package bowling.domain.pitch;
 
 interface State {
-    State bowl(int pinCount);
+    State bowl(Pin pin);
 }

@@ -28,13 +28,6 @@ public class FinalFrameTest {
         assertThat(finalFrame.addPinCount(1)).isFalse();
     }
 
-    @DisplayName("첫번째 시도가 스트라이크가 아닐경우, 두번째 시도의 핀 갯수와 첫번째 시도의 핀 갯수가 10을 넘을 수 없다")
-    @Test
-    void error() {
-        assertThat(finalFrame.addPinCount(8)).isTrue();
-        assertThat(finalFrame.addPinCount(3)).isFalse();
-    }
-
     @DisplayName("첫번째 시도가 스트라크일 경우, 두번째 핀의 갯수는 아무거나 관계 없다")
     @Test
     void secondPinAfterStrike() {

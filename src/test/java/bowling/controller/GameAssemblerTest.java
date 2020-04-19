@@ -32,8 +32,8 @@ public class GameAssemblerTest {
         GameStatus gameStatus = GameAssembler.writeDto(game);
 
         List<Pitch> pitchList = gameStatus.getFrameStatus(0).getPitches();
-        assertThat(pitchList.get(0).getCount()).isEqualTo(1);
-        assertThat(pitchList.get(1).getCount()).isEqualTo(2);
+        assertThat(pitchList.get(0).getPinCount()).isEqualTo(1);
+        assertThat(pitchList.get(1).getPinCount()).isEqualTo(2);
     }
 
     @DisplayName("현재 게임의 상태를 가져온다")

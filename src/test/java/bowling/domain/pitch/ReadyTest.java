@@ -18,12 +18,14 @@ public class ReadyTest {
     @DisplayName("볼을 리턴한다")
     @Test
     void returnBowl() {
-        assertThat(ready.bowl(1)).isExactlyInstanceOf(FirstBowl.class);
+        assertThat(ready.bowl(Pin.valueOf(1)))
+                .isExactlyInstanceOf(FirstBowl.class);
     }
 
     @DisplayName("스트라이크를 리턴한다")
     @Test
     void returnStrike() {
-        assertThat(ready.bowl(10)).isExactlyInstanceOf(Strike.class);
+        assertThat(ready.bowl(Pin.valueOf(10)))
+                .isExactlyInstanceOf(Strike.class);
     }
 }
