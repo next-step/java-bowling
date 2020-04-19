@@ -6,9 +6,12 @@ import bowling.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("프레임 스코어 테스트")
 public class FrameScoreTests {
@@ -44,11 +47,34 @@ public class FrameScoreTests {
         assertThat(frameScore.getScore()).isEqualTo(Score.of(10));
     }
 
+    @DisplayName("스코어 합계 반영 테스트")
+    @Test
+    public void addingUpTest() {
+        FrameScore strikeFrame = FrameScore.createStrike();
+        assertThat(strikeFrame.addingUp(Arrays.asList(Score.of(3),Score.of(7))))
+                .isEqualTo(FrameScore.newInstance(Score.of(20),LeftScoreCount.of(0)));
+
+        FrameScore spareFrame = FrameScore.createSpare();
+        assertThat(spareFrame.addingUp(Arrays.asList(Score.of(3),Score.of(7))))
+                .isEqualTo(FrameScore.newInstance(Score.of(13),LeftScoreCount.of(0)));
+    }
+
     @DisplayName("스코어 계산 가능 체크 테스트")
     @Test
     public void canCalculateScoreTest() {
-        FrameScore frameScore = FrameScore.createMiss(Score.of(7));
-        assertFalse(frameScore.canCalculateSelfScore());
+
+        FrameScore readyFrameScore = FrameScore.createReady();
+        assertFalse(readyFrameScore.canCalculateSelfScore());
+
+        FrameScore missFrameScore = FrameScore.createMiss(Score.of(7));
+        assertTrue(missFrameScore.canCalculateSelfScore());
+
+        FrameScore strikeFrameScore = FrameScore.createStrike();
+        assertFalse(strikeFrameScore.canCalculateSelfScore());
+
+        FrameScore spareFrameScore = FrameScore.createSpare();
+        assertFalse(spareFrameScore.canCalculateSelfScore());
     }
 
 }
+;
