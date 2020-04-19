@@ -73,9 +73,9 @@ class BowlingGameTest {
         assertThat(score).isEqualTo(new Score(10));
     }
 
-    @DisplayName("다음 프레임을 확인하여 strike 점수 계산")
+    @DisplayName("strike 누적 점수 계산")
     @Test
-    public void getFrameScore_success_strike() throws Exception {
+    public void getTotalScore_success_strike() throws Exception {
         //given
         BowlingGame game = new BowlingGame(new Player("aaa"));
         game.play(10);
@@ -89,9 +89,29 @@ class BowlingGameTest {
         assertThat(score).isEqualTo(new Score(17));
     }
 
-    @DisplayName("다음 프레임을 확인하여 spare 점수 계산")
+    @DisplayName("strike 누적 점수 계산2")
     @Test
-    public void getFrameScore_success_spare() throws Exception {
+    public void getTotalScore_success_strike2() throws Exception {
+        //given
+        BowlingGame game = new BowlingGame(new Player("aaa"));
+        game.play(10);
+        game.play(10);
+        game.play(10);
+
+        //when
+        Score score1 = game.getTotalScore(1);
+        Score score2 = game.getTotalScore(2);
+        Score score3 = game.getTotalScore(3);
+
+        //then
+        assertThat(score1).isEqualTo(new Score(30));
+        assertThat(score2).isEqualTo(new Score(50));
+        assertThat(score3).isEqualTo(new Score(60));
+    }
+
+    @DisplayName("spare의 누적 점수 계산")
+    @Test
+    public void getTotalScore_success_spare() throws Exception {
         //given
         BowlingGame game = new BowlingGame(new Player("aaa"));
         game.play(5);
@@ -107,8 +127,9 @@ class BowlingGameTest {
         assertThat(score2).isEqualTo(new Score(14));
     }
 
+    @DisplayName("spare의 누적 점수 계산")
     @Test
-    public void getTotalScore_success() throws Exception {
+    public void getTotalScore_success_spare2() throws Exception {
         //given
         BowlingGame game = new BowlingGame(new Player("aaa"));
         game.play(5);

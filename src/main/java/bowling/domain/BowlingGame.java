@@ -96,8 +96,9 @@ public class BowlingGame {
 
         Calculator calculator = frame.getState().getCurrenteCalculator();
 
-        if (calculator.canAddNextScore() && frame.getNext() != null) {
-            calculator = frame.getNext().getState().getScoreCalculate(calculator);
+        while (calculator.canAddNextScore() && frame.getNext() != null) {
+            frame = frame.getNext();
+            calculator = frame.getState().getScoreCalculate(calculator);
         }
 
         return calculator.getScore();
