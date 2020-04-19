@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class Frames {
     private static final int FIRST_FRAME_INDEX = 0;
+
     private final List<Frame> frames;
     private Frame currentFrame;
 
