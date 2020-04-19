@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Player;
+import bowling.domain.point.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,9 +32,9 @@ public class FramesTest {
     @DisplayName("다음 시작할 프레임 가져오기 테스트")
     void getNextFrameTest() {
         Frames frames = new Frames(player);
-        frames.getNextFrame().throwBall(10);
-        frames.getNextFrame().throwBall(10);
-        frames.getNextFrame().throwBall(10);
+        frames.getNextFrame().throwBall(Point.of(10));
+        frames.getNextFrame().throwBall(Point.of(10));
+        frames.getNextFrame().throwBall(Point.of(10));
 
         List<Frame> frameList = frames.getFrames();
 
@@ -47,7 +48,7 @@ public class FramesTest {
     void getLastFrameTest() {
         Frames frames = new Frames(player);
         for (int i = 1; i < 13; i++) {
-            frames.getNextFrame().throwBall(10);
+            frames.getNextFrame().throwBall(Point.of(10));
         }
 
         assertThat(

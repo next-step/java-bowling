@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.Player;
+import bowling.domain.point.Point;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,19 +40,25 @@ public class Frames {
     public int getFrameNo(Frame frame) {
         int frameNo = 0;
         Frame targetFrame = frames.get(frameNo);
-        while (!targetFrame.equals(frame)) {
+        while (!frame.equals(targetFrame)) {
             frameNo++;
             targetFrame = frames.get(frameNo);
         }
         return frameNo + 1;
     }
 
+    public void calculateScores(Point point) {
+        this.frames.stream()
+                .filter(frame -> frame.hasScore())
+                .forEach(frame -> frame.calculateScore(point.getPoint()));
+    }
+
     private List<Frame> initFrames() {
-        List<Frame> tmpframes = new ArrayList<>();
+        List<Frame> baseframes = new ArrayList<>();
         for (int i = 1; i <= TOTAL_NORMAL_FRAME; i++) {
-            tmpframes.add(new NormalFrame());
+            baseframes.add(new NormalFrame());
         }
-        tmpframes.add(new FinalFrame());
-        return tmpframes;
+        baseframes.add(new FinalFrame());
+        return baseframes;
     }
 }

@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.point.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,23 +28,23 @@ public class NormalFrameTest {
     @ParameterizedTest
     @DisplayName("공 던지기 가능 테스트")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
-    void isThrowableTrueTest(int firstFallenPin) {
-        normalFrame.throwBall(firstFallenPin);
+    void isThrowableTrueTest(int fallenPin) {
+        normalFrame.throwBall(Point.of(fallenPin));
         assertThat(normalFrame.isThrowable()).isTrue();
     }
 
     @Test
     @DisplayName("공 던지기 불가능 테스트1")
     void isThrowableFalseTest() {
-        normalFrame.throwBall(10);
+        normalFrame.throwBall(Point.of(10));
         assertThat(normalFrame.isThrowable()).isFalse();
     }
 
     @Test
     @DisplayName("공 던지기 불가능 테스트2")
     void isThrowableFalse2Test() {
-        normalFrame.throwBall(1);
-        normalFrame.throwBall(0);
+        normalFrame.throwBall(Point.of(1));
+        normalFrame.throwBall(Point.of(0));
         assertThat(normalFrame.isThrowable()).isFalse();
     }
 
@@ -52,7 +53,7 @@ public class NormalFrameTest {
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void firstIsThrowBallTest(int fallenPin) {
         assertThatCode(
-                () -> normalFrame.throwBall(fallenPin)
+                () -> normalFrame.throwBall(Point.of(fallenPin))
         ).doesNotThrowAnyException();
     }
 
@@ -60,19 +61,9 @@ public class NormalFrameTest {
     @DisplayName("두번쨰 공 던지기 테스트")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     void secondIsThrowBallTest(int fallenPin) {
-        normalFrame.throwBall(5);
+        normalFrame.throwBall(Point.of(5));
         assertThatCode(
-                () -> normalFrame.throwBall(fallenPin)
+                () -> normalFrame.throwBall(Point.of(fallenPin))
         ).doesNotThrowAnyException();
-    }
-
-    @ParameterizedTest
-    @DisplayName("두번쨰 공 던지기 실패 테스트")
-    @ValueSource(ints = {6, 7, 8, 9, 10})
-    void failSecondIsThrowBallTest(int fallenPin) {
-        normalFrame.throwBall(5);
-        assertThatThrownBy(
-                () -> normalFrame.throwBall(fallenPin)
-        ).isInstanceOf(OverThrowBallException.class);
     }
 }

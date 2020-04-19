@@ -56,18 +56,8 @@ public class Points {
         return false;
     }
 
-    public boolean isGutter() {
-        if(points.size() == 1 && getSum() == 0) {
-            return true;
-        }
-        if(points.size() == 2 && getSum() == 0) {
-            return true;
-        }
-        return false;
-    }
-
     public boolean isSpare() {
-        if (points.size() == 2 && getSum() == SPARE_POINT) {
+        if (points.size() == 2 && getSum() == SPARE_POINT && !isFirstStrike()) {
             return true;
         }
         return false;

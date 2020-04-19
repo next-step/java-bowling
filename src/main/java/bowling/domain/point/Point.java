@@ -1,5 +1,7 @@
 package bowling.domain.point;
 
+import bowling.domain.frame.OverThrowBallException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -32,8 +34,11 @@ public class Point {
         return point;
     }
 
-    public boolean isScoreable(int leftPin) {
-        return this.point <= leftPin;
+    public Point checkLeftPin(int leftPin) {
+        if (this.point <= leftPin) {
+            return this;
+        }
+        throw new OverThrowBallException("다시 입력해주세요(남은 핀: " + leftPin + ")");
     }
 
     private static void validate(int input) {

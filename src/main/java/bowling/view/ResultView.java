@@ -14,23 +14,48 @@ public class ResultView {
     private static final String MARK_SPARE = "/";
     private static final String MARK_GUTTER = "-";
     private static final String MARK_NONE = "";
-    private static final String FRAME_HEAD = "|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |";
 
-    public static void viewRetry(Exception e) {
-        System.out.println(e.getMessage());
-    }
+    private static final String FRAME_HEAD = "|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |";
+    private static final String FRAME_LINE = "|";
 
     public static void viewResult(Frames frames) {
         viewFrameHead();
         viewFrames(frames);
+        viewScores(frames);
     }
 
     private static void viewFrames(Frames frames) {
         viewPlayerName(frames.getPlayerName());
         String frameViews = frames.getFrames().stream()
                 .map(frame -> viewFrame(frame))
-                .collect(Collectors.joining("|"));
-        System.out.println(frameViews + "|");
+                .collect(Collectors.joining(FRAME_LINE));
+        System.out.println(frameViews + FRAME_LINE);
+    }
+
+    private static void viewScores(Frames frames) {
+        viewPlayerName("");
+        StringBuilder sb = new StringBuilder();
+        Integer sumScore = 0;
+        for (int i = 0; i < frames.getFrames().size(); i++) {
+            sb.append(getScoures(frames.getFrame(i), sumScore));
+            sumScore += getSumScore(frames.getFrame(i).getScore());
+        }
+        System.out.println(sb.toString());
+    }
+
+    private static int getSumScore(Integer score) {
+        if(score != null){
+            return score;
+        }
+        return 0;
+    }
+
+    private static String getScoures(Frame preframe, Integer sumScore) {
+        Integer score = preframe.getScore();
+        if (score != null) {
+            return String.format("%5s   |", score + sumScore);
+        }
+        return "        |";
     }
 
     private static String viewFrame(Frame frame) {
