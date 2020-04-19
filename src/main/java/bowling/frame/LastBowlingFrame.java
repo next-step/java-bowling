@@ -39,11 +39,11 @@ public class LastBowlingFrame implements BowlingFrame {
             return frameScore.getScore();
         }
 
-        return addingUpScore(frameScore);
+        return sumScore(frameScore);
     }
 
     @Override
-    public Score addingUpScore(final FrameScore beforeScore) {
+    public Score sumScore(final FrameScore beforeScore) {
         FrameScore addingUpFrameScore = state.addingUpFrameScore(beforeScore);
 
         if (addingUpFrameScore.canCalculateSelfScore()) {

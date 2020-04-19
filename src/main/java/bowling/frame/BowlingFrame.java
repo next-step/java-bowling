@@ -26,7 +26,7 @@ public interface BowlingFrame {
 
     Score getFrameScore();
 
-    Score addingUpScore(FrameScore beforeScore);
+    Score sumScore(FrameScore beforeScore);
 
     BowlingFrame appendNextFrame(int frameNumber);
 

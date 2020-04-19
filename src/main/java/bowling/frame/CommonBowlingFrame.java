@@ -39,24 +39,24 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     @Override
-    public Score addingUpScore(final FrameScore beforeScore) {
+    public Score sumScore(final FrameScore beforeScore) {
         return getScore(state.addingUpFrameScore(beforeScore));
     }
 
-    private Score getScore(final FrameScore frameScore) {
-        if (frameScore.canCalculateSelfScore()) {
-            return frameScore.getScore();
+    private Score getScore(final FrameScore beforeScore) {
+        if (beforeScore.canCalculateSelfScore()) {
+            return beforeScore.getScore();
         }
 
         if (Objects.isNull(nextFrame)) {
-            return getNowScore(frameScore);
+            return getNowScore(beforeScore);
         }
 
-        return nextFrame.addingUpScore(frameScore);
+        return nextFrame.sumScore(beforeScore);
     }
 
-    private Score getNowScore(final FrameScore frameScore) {
-        FrameScore nowFrameScore = frameScore.addingUp(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins()));
+    private Score getNowScore(final FrameScore beforeScore) {
+        FrameScore nowFrameScore = beforeScore.addingUp(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins()));
         return nowFrameScore.getScore();
     }
 
