@@ -119,9 +119,4 @@ public class FinalFrame implements Frame {
 
         return nextFrame.calculateAdditionalScore(score);
     }
-
-    @Override
-    public boolean canCalculateScore() {
-        return getScore() != CAN_NOT_CALCULATE_SCORE;
-    }
 }

@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.domain.frame.FrameNumber;
 import bowling.domain.frame.FrameResults;
 import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.DisplayName;
@@ -60,5 +61,24 @@ public class ScoreTest {
         int scoreFirstFrame = frameResults.getScores().get(0);
 
         assertThat(scoreFirstFrame).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("마지막 Frame 점수 산정 테스트")
+    void getScoreFinalFrame() {
+        Frames frames = new Frames();
+
+        for(int i = 0; i < FrameNumber.MAX_NORMAL_FRAME_COUNT; i++) {
+            frames.play(pinCount10);
+        }
+        frames.play(pinCount10);
+        frames.play(pinCount10);
+        FrameResults frameResults = frames.play(pinCount10);
+
+        int scoreLastNormalFrame = frameResults.getScores().get(8);
+        int scoreLastFrame = frameResults.getScores().get(9);
+
+        assertThat(scoreLastNormalFrame).isEqualTo(270);
+        assertThat(scoreLastNormalFrame).isEqualTo(300);
     }
 }
