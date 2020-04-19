@@ -1,7 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
-
 public class FinalFrame extends Frame {
     private static final int NONE_TRY_COUNT = 0;
     private static final int FIRST_TRY_COUNT = 1;
@@ -25,17 +23,7 @@ public class FinalFrame extends Frame {
     @Override
     public void addScore() {
         if (points.isFirstStrike() || points.isSpare()) {
-            this.score = makeScore();
+            this.score = points.makeScore();
         }
-    }
-
-    private Score makeScore() {
-        if (points.isFirstStrike()) {
-            return Score.ofStrike();
-        }
-        if (points.isTryCount(SECOND_TRY_COUNT) && points.isSpare()) {
-            return Score.ofSpare();
-        }
-        return Score.ofMiss(points.getSum());
     }
 }

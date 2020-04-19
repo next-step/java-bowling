@@ -1,6 +1,7 @@
 package bowling.domain.point;
 
 import bowling.domain.frame.OverThrowBallException;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,16 @@ public class Points {
             return true;
         }
         return false;
+    }
+
+    public Score makeScore() {
+        if (isFirstStrike()) {
+            return Score.ofStrike();
+        }
+        if (isSpare()) {
+            return Score.ofSpare();
+        }
+        return Score.ofMiss(getSum());
     }
 
     public void validateLeftPoint(Point point) {
