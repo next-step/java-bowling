@@ -1,5 +1,7 @@
 package bowling.domain.State;
 
+import bowling.domain.Score;
+
 public class Pins {
     private static final int MIN_PINS = 0;
     private static final int MAX_PINS = 10;
@@ -63,7 +65,12 @@ public class Pins {
         return getDisplayPins(felledPins) + DELIMITER + getDisplayPins(secondPins.felledPins);
     }
 
+    public Score sumScore(Score beforeScore) {
+        return beforeScore.bowl(felledPins);
+    }
+
     public int getFelledPins() {
         return felledPins;
     }
+
 }
