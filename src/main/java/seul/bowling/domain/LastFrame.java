@@ -2,7 +2,7 @@ package seul.bowling.domain;
 
 import lombok.Getter;
 
-public class LastFrame extends Frame{
+public class LastFrame extends Frame {
     @Getter
     private int bonusPlay;
 
@@ -10,7 +10,7 @@ public class LastFrame extends Frame{
         super(index);
 
         if (index == LAST_FRAME_INDEX && !isBonusPlay()) {
-            this.bonusPlay = result.bonusPlay();
+            this.bonusPlay = status.getBonusPlay();
         }
 
         if (isBonusPlay() && endDefaultPlay()) {
@@ -20,11 +20,10 @@ public class LastFrame extends Frame{
 
     @Override
     public void addPins(int clearPin) {
-        pins.addPin(clearPin, isBonusPlay());
-        result.addScore(clearPin, pins.allClear());
+        addPins(clearPin, isBonusPlay());
 
         if (!isBonusPlay()) {
-            this.bonusPlay = result.bonusPlay();
+            this.bonusPlay = status.getBonusPlay();
         }
 
         if (isBonusPlay() && endDefaultPlay()) {
@@ -39,11 +38,11 @@ public class LastFrame extends Frame{
 
     @Override
     public boolean endFrame() {
-        return result.endJudgmentStatus() && this.bonusPlay == ZERO;
+        return status.endJudgmentStatus() && this.bonusPlay == ZERO;
     }
 
     private boolean endDefaultPlay() {
-        return pins.endDefaultPlayCount(result.isStrike());
+        return pins.endDefaultPlayCount(status.isStrike());
     }
 
     private boolean isBonusPlay() {

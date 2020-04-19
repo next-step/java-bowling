@@ -1,7 +1,10 @@
 package seul.bowling.view;
 
-import seul.bowling.domain.*;
+import seul.bowling.domain.Frame;
+import seul.bowling.domain.Frames;
+import seul.bowling.domain.Pins;
 import seul.bowling.domain.pin.Pin;
+import seul.bowling.domain.status.Status;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +53,7 @@ public class OutputView {
         Map<Integer, ScoreView> scoreMap = new HashMap<>();
 
         for (Frame frame : frames.getFrames()) {
-            scoreMap.putAll(addScoreBoardValue(frame.getIndex() + ONE, frame.getResult(), frame.getPins()));
+            scoreMap.putAll(addScoreBoardValue(frame.getIndex() + ONE, frame.getStatus(), frame.getPins()));
         }
 
         for (int i = scoreMap.size(), end = Frame.LAST_FRAME_INDEX; i <= end; i++) {
@@ -60,16 +63,16 @@ public class OutputView {
         return scoreMap;
     }
 
-    private static Map<Integer, ScoreView> addScoreBoardValue(int frameIndex, FrameResult result, Pins pins) {
+    private static Map<Integer, ScoreView> addScoreBoardValue(int frameIndex, Status status, Pins pins) {
         Map<Integer, ScoreView> scoreMap = new HashMap<>();
-        String scoreValue = getScourValue(result.getStatus(), pins.getPins());
+        String scoreValue = getScourValue(status, pins.getPins());
 
-        ScoreView scoreView = ScoreView.of(result.endScore(), result.getToTalScore(), scoreValue);
+        ScoreView scoreView = ScoreView.of(status.endScore(), status.getToTalScore(), scoreValue);
         scoreMap.put(frameIndex, scoreView);
         return scoreMap;
     }
 
-    private static String getScourValue(FrameStatus status, List<Pin> pins) {
+    private static String getScourValue(Status status, List<Pin> pins) {
         String value = BLANK;
 
         for (int i = 0, end = pins.size(); i < end; i++) {
@@ -84,12 +87,12 @@ public class OutputView {
         return value;
     }
 
-    private static String convertClearPinCount(int index, FrameStatus status, int clearPinCount) {
+    private static String convertClearPinCount(int index, Status status, int clearPinCount) {
         if (clearPinCount == MAX_CLEAR_PIN_COUNT) {
             return STRIKE_SIGN;
         }
 
-        if (index != ZERO && status == FrameStatus.SPARE) {
+        if (index != ZERO && status.isSpare()) {
             return SPARE_SIGN;
         }
 

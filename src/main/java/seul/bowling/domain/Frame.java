@@ -1,6 +1,7 @@
 package seul.bowling.domain;
 
 import lombok.Getter;
+import seul.bowling.domain.status.Status;
 
 import java.util.Objects;
 
@@ -11,26 +12,35 @@ public class Frame {
     public static final int LAST_FRAME_INDEX = 9;
 
     private int index;
-    protected FrameResult result;
     protected Pins pins;
+    @Getter
+    protected Status status;
 
     protected Frame(int index) {
         this.index = index;
-        this.result = new FrameResult();
+        this.status = new Status();
         this.pins = new Pins();
     }
 
     public void addPins(int clearPin) {
-        pins.addPin(clearPin, false);
-        result.addScore(clearPin, pins.allClear());
+        addPins(clearPin, false);
+    }
+
+    void addPins(int clearPin, boolean isBonusPlay) {
+        pins.addPin(clearPin, isBonusPlay);
+
+        if (!this.status.endJudgmentStatus()) {
+            this.status = status.judgmentStatus(pins.allClear());
+            this.status.addScore(clearPin);
+        }
     }
 
     public void addBonusScore(int bonusScore) {
-        result.addBonusScore(bonusScore);
+        status.addBonusScore(bonusScore);
     }
 
     public void addCumulativeScore(int score) {
-        result.addCumulativeScore(score);
+        status.addCumulativeScore(score);
     }
 
     public Frame next() {
@@ -47,15 +57,15 @@ public class Frame {
     }
 
     public boolean endFrame() {
-        return result.endJudgmentStatus();
+        return status.endJudgmentStatus();
     }
 
     public boolean endCalculateScore() {
-        return result.endScore();
+        return status.endScore();
     }
 
     public boolean availableAddBonusScore() {
-        return result.availableAddBonusScore();
+        return status.availableAddBonusScore();
     }
 
     public boolean isLastFame() {
@@ -63,7 +73,7 @@ public class Frame {
     }
 
     public int getScore() {
-        return this.result.getToTalScore();
+        return this.status.getToTalScore();
     }
 
     @Override
