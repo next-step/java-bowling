@@ -28,12 +28,12 @@ public class Ready implements State {
     }
 
     @Override
-    public Calculator getScoreCalculator() {
+    public Calculator getCurrenteCalculator() {
         throw new BowlingException();
     }
 
     @Override
-    public Calculator getCalculateScore(Calculator calculator) {
+    public Calculator getScoreCalculate(Calculator calculator) {
         throw new BowlingException();
     }
 }

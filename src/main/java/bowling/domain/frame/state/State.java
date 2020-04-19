@@ -12,7 +12,7 @@ public interface State {
 
     String getCurrentPinsState();
 
-    Calculator getScoreCalculator();
+    Calculator getCurrenteCalculator();
 
-    Calculator getCalculateScore(Calculator calculator);
+    Calculator getScoreCalculate(Calculator calculator);
 }

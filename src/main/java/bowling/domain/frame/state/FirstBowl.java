@@ -3,6 +3,7 @@ package bowling.domain.frame.state;
 import bowling.domain.Pins;
 import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 
 public class FirstBowl implements State {
@@ -51,12 +52,12 @@ public class FirstBowl implements State {
     }
 
     @Override
-    public Calculator getScoreCalculator() {
-        throw new BowlingException();
+    public Calculator getCurrenteCalculator() {
+        return new ScoreCalculator(new Score(firstPins.getDownPin()), 0);
     }
 
     @Override
-    public Calculator getCalculateScore(Calculator before) {
+    public Calculator getScoreCalculate(Calculator before) {
         return before.sumScore(new Score(firstPins.getDownPin()));
     }
 }

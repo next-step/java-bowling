@@ -27,12 +27,12 @@ public class Strike implements State {
     }
 
     @Override
-    public Calculator getScoreCalculator() {
+    public Calculator getCurrenteCalculator() {
         return new ScoreCalculator(new Score(Pins.MAX_PIN), 2);
     }
 
     @Override
-    public Calculator getCalculateScore(Calculator before) {
+    public Calculator getScoreCalculate(Calculator before) {
         return before.sumScore(new Score(Pins.MAX_PIN));
     }
 }

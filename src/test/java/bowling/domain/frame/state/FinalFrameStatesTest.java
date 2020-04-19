@@ -199,7 +199,7 @@ class FinalFrameStatesTest {
         states = states.bowl(10);
 
         //then
-        assertThat(states.getScoreCalculator().getScore()).isEqualTo(new Score(20));
+        assertThat(states.getCurrenteCalculator().getScore()).isEqualTo(new Score(20));
     }
 
     @DisplayName("마지막 frame의 첫 투구를 이전 점수에 더해준다")
@@ -213,7 +213,7 @@ class FinalFrameStatesTest {
         Calculator calculator = new ScoreCalculator(new Score(10), 1);
 
         //when
-        calculator = states.getCalculateScore(calculator);
+        calculator = states.getScoreCalculate(calculator);
 
         //then
         assertTrue(calculator.getScore().equals(compare));
@@ -230,7 +230,7 @@ class FinalFrameStatesTest {
         Calculator calculator = new ScoreCalculator(new Score(10), 2);
 
         //when
-        calculator = states.getCalculateScore(calculator);
+        calculator = states.getScoreCalculate(calculator);
 
         //then
         assertTrue(calculator.getScore().equals(compare));
@@ -247,7 +247,7 @@ class FinalFrameStatesTest {
         Calculator calculator = new ScoreCalculator(new Score(10), 2);
 
         //when
-        calculator = states.getCalculateScore(calculator);
+        calculator = states.getScoreCalculate(calculator);
 
         //then
         assertTrue(calculator.getScore().equals(compare));

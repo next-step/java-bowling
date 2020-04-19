@@ -44,7 +44,7 @@ class MissTest {
         Score compare = new Score(11);
 
         //when
-        Calculator result = miss.getCalculateScore(calculator);
+        Calculator result = miss.getScoreCalculate(calculator);
 
         //then
         assertTrue(result.getScore().equals(compare));
@@ -59,7 +59,7 @@ class MissTest {
         Score compare = new Score(13);
 
         //when
-        Calculator result = miss.getCalculateScore(calculator);
+        Calculator result = miss.getScoreCalculate(calculator);
 
         //then
         assertTrue(result.getScore().equals(compare));

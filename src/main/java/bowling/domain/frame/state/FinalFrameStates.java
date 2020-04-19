@@ -75,7 +75,7 @@ public class FinalFrameStates implements State {
         return false;
     }
 
-    private boolean isHaveBonus() {
+    public boolean isHaveBonus() {
         if (states.size() == FINAL_STATE_SIZE && !(states.getLast() instanceof Ready)) {
             return true;
         }
@@ -145,11 +145,11 @@ public class FinalFrameStates implements State {
     }
 
     @Override
-    public Calculator getScoreCalculator() {
-        Score firstStateScore = states.getFirst().getScoreCalculator().getScore();
+    public Calculator getCurrenteCalculator() {
+        Score firstStateScore = states.getFirst().getCurrenteCalculator().getScore();
 
         if (isHaveBonus()) {
-            Score secondStateScore = states.getLast().getScoreCalculator().getScore();
+            Score secondStateScore = states.getLast().getCurrenteCalculator().getScore();
             return new ScoreCalculator(firstStateScore.addScore(secondStateScore), 0);
         }
 
@@ -157,11 +157,11 @@ public class FinalFrameStates implements State {
     }
 
     @Override
-    public Calculator getCalculateScore(Calculator before) {
-        before = states.getFirst().getCalculateScore(before);
+    public Calculator getScoreCalculate(Calculator before) {
+        before = states.getFirst().getScoreCalculate(before);
 
         if (before.canAddNextScore()) {
-            return states.getLast().getCalculateScore(before);
+            return states.getLast().getScoreCalculate(before);
         }
 
         return before;

@@ -41,12 +41,12 @@ public class Spare implements State {
     }
 
     @Override
-    public Calculator getScoreCalculator() {
+    public Calculator getCurrenteCalculator() {
         return new ScoreCalculator(new Score(Pins.MAX_PIN), 1);
     }
 
     @Override
-    public Calculator getCalculateScore(Calculator before) {
+    public Calculator getScoreCalculate(Calculator before) {
         before = before.sumScore(new Score(firstPins.getDownPin()));
 
         if (before.canAddNextScore()) {

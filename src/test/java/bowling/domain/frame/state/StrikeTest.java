@@ -42,7 +42,7 @@ class StrikeTest {
         Score ten = new Score(10);
 
         //then
-        assertTrue(strike.getScoreCalculator().getScore().equals(ten));
+        assertTrue(strike.getCurrenteCalculator().getScore().equals(ten));
     }
 
     @DisplayName("이전 점수에 합한 점수를 반환해 준다")
@@ -54,7 +54,7 @@ class StrikeTest {
         Score compare = new Score(20);
 
         //when
-        Calculator result = strike.getCalculateScore(calculator);
+        Calculator result = strike.getScoreCalculate(calculator);
 
         //then
         assertTrue(result.getScore().equals(compare));

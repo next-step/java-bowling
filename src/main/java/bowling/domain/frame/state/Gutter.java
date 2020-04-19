@@ -38,12 +38,12 @@ public class Gutter implements State {
     }
 
     @Override
-    public Calculator getScoreCalculator() {
+    public Calculator getCurrenteCalculator() {
         return new ScoreCalculator(new Score(Pins.MIN_PIN), 0);
     }
 
     @Override
-    public Calculator getCalculateScore(Calculator before) {
+    public Calculator getScoreCalculate(Calculator before) {
         before = before.sumScore(new Score(firstPins.getDownPin()));
 
         if (before.canAddNextScore()) {

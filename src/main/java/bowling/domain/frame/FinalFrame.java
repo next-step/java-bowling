@@ -1,8 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
 import bowling.domain.frame.state.FinalFrameStates;
 import bowling.domain.frame.state.State;
+import bowling.domain.score.Calculator;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
 import java.util.Objects;
@@ -67,6 +68,8 @@ public class FinalFrame implements Frame {
 
     @Override
     public Score getScore() {
-        return null;
+        Calculator calculator = states.getCurrenteCalculator();
+
+        return calculator.getScore();
     }
 }

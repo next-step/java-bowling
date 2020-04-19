@@ -77,16 +77,18 @@ class FirstBowlTest {
         assertFalse(firstBowl.isFinish());
     }
 
-    @DisplayName("FirstBowl 상태애서는 점수를 가져올 수 없다")
+    @DisplayName("FirstBowl 상태애서 점수 계산 확인")
     @Test
-    public void getScore_fail() throws Exception {
+    public void getScore_success() throws Exception {
         //given
         FirstBowl firstBowl = new FirstBowl(new Pins(3));
+        Score compare = new Score(3);
+
+        //when
+        Calculator calculator = firstBowl.getCurrenteCalculator();
 
         //then
-        assertThatThrownBy(
-                () -> firstBowl.getScoreCalculator()
-        ).isInstanceOf(BowlingException.class);
+        assertTrue(calculator.getScore().equals(compare));
     }
 
     @DisplayName("첫 투구한 점수를 더해주고 반환 한다")
@@ -98,7 +100,7 @@ class FirstBowlTest {
         Score compare = new Score(15);
 
         //when
-        calculator = firstBowl.getCalculateScore(calculator);
+        calculator = firstBowl.getScoreCalculate(calculator);
 
         //then
         assertTrue(calculator.getScore().equals(compare));
