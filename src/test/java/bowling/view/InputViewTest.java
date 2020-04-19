@@ -1,6 +1,5 @@
 package bowling.view;
 
-import bowling.domain.frame.FrameNumber;
 import bowling.domain.pin.BowlCount;
 import bowling.domain.player.Player;
 import bowling.domain.player.PlayerCount;
@@ -35,7 +34,7 @@ class InputViewTest {
         BowlCount expect = new BowlCount(bowlCount);
         inputView = new InputView(createInputStream(bowlCount));
 
-        BowlCount actual = inputView.inputBowlCount(FrameNumber.ofFirst());
+        BowlCount actual = inputView.inputBowlCount("otk");
 
         assertThat(actual).isEqualTo(expect);
     }
