@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.frame.BowlingFrames;
+
 public class BowlingGame {
 
     private final Player player;
@@ -7,7 +9,7 @@ public class BowlingGame {
 
     private BowlingGame(final Player player) {
         this.player = player;
-        this.bowlingFrames = new BowlingFrames();
+        this.bowlingFrames = BowlingFrames.newInstance();
     }
 
     public static BowlingGame newInstance(final String name) {
@@ -22,7 +24,7 @@ public class BowlingGame {
         return bowlingFrames.isAllFrameOver();
     }
 
-    public void bowl(final int pinCount) {
+    public void bowl(final Pin pinCount) {
         bowlingFrames.bowl(pinCount);
     }
 

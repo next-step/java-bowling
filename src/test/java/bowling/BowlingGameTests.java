@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 @DisplayName("볼링 게임 테스트")
 public class BowlingGameTests {
@@ -20,7 +21,7 @@ public class BowlingGameTests {
     @Test
     public void bowlTest() {
         BowlingGame bowlingGame = BowlingGame.newInstance("ABC");
-        assertThatCode(() -> bowlingGame.bowl(10)).doesNotThrowAnyException();
+        assertThatCode(() -> bowlingGame.bowl(Pin.ofMax())).doesNotThrowAnyException();
     }
 
 
@@ -28,12 +29,11 @@ public class BowlingGameTests {
     @Test
     public void bowlAbnormalTest() {
         BowlingGame bowlingGame = BowlingGame.newInstance("ABC");
-        IntStream.range(0, 12)
-                .forEach(i -> bowlingGame.bowl(10));
+        IntStream.range(0, 11)
+                .forEach(i -> bowlingGame.bowl(Pin.ofMax()));
 
 
         assertThatIllegalStateException()
-                .isThrownBy(() -> bowlingGame.bowl(10))
-                .withMessageContaining("The bowling Game is Over.");
+                .isThrownBy(() -> bowlingGame.bowl(Pin.ofMax()));
     }
 }

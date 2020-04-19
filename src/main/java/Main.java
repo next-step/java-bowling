@@ -1,4 +1,5 @@
 import bowling.BowlingGame;
+import bowling.Pin;
 import bowling.Player;
 import bowling.dto.BowlingGameResult;
 import bowling.view.InputView;
@@ -14,7 +15,7 @@ public class Main {
 
         while (!bowlingGame.isOver()) {
             int pinCount = InputView.inputDropPinCount(bowlingGame.getFrameCount());
-            bowlingGame.bowl(pinCount);
+            bowlingGame.bowl(Pin.of(pinCount));
 
             OutputView.printBowlingGame(BowlingGameResult.newInstance(bowlingGame));
         }

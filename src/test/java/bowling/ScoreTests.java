@@ -2,26 +2,32 @@ package bowling;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 
-@DisplayName("Score 테스트")
+@DisplayName("스코어 테스트")
 public class ScoreTests {
 
-    @DisplayName("Score 투구 생성 테스트")
+    @DisplayName("스코어 생성 테스트")
     @Test
-    public void generateFirstPitchingTest() {
+    public void generateTest() {
         assertThatCode(() -> Score.of(5));
+        assertThatCode(Score::ofAllPins);
+        assertThatCode(Score::ofZeroPins);
+        assertThatCode(() -> Score.of(Score.of(5), Score.of(6)));
     }
 
-    @DisplayName("Score 투구 생성 오류 테스트")
-    @ParameterizedTest
-    @ValueSource(ints = {-1, 11})
-    public void generateFirstPitchingAbnormalTest(final int score) {
+    @DisplayName("스코어 생성 오류 테스트")
+    @Test
+    public void generateAbnormalTest() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Score.of(score));
+                .isThrownBy(() -> Score.of(-2));
+    }
+
+    @DisplayName("스코어 생성 오류 테스트")
+    @Test
+    public void addTest() {
+        assertThat(Score.of(6).add(Score.ofAllPins())).isEqualTo(Score.of(16));
+        assertThat(Score.of(6).add(4)).isEqualTo(Score.of(10));
     }
 }

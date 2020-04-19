@@ -7,36 +7,64 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("FrameScoreTests")
+@DisplayName("프레임 스코어 테스트")
 public class FrameScoreTests {
 
-    @DisplayName("FrameScore 생성 테스트")
+    @DisplayName("생성 테스트")
     @Test
-    public void generateFrameScoreTest() {
-        assertThatCode(FrameScore::new);
+    public void generateTest() {
+        assertThatCode(() -> FrameScore.newInstance(Score.of(7), LeftScoreCount.of(1)));
     }
 
-    @DisplayName("FrameScore add 테스트")
+    @DisplayName("생성 (Miss) 테스트")
     @Test
-    public void addFrameScoreTest() {
-        FrameScore frameScore = new FrameScore();
-        assertThatCode(() -> frameScore.add(5));
-        assertThatCode(() -> frameScore.add(4));
+    public void generateMissTest() {
+        assertThatCode(() -> FrameScore.createMiss(Score.of(7)));
     }
 
-    @DisplayName("FrameScore sum 테스트")
+    @DisplayName("생성 (Spare) 테스트")
     @Test
-    public void sumFrameScoreTest() {
-        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(1, 2));
-        assertThat(frameScore.sum()).isEqualTo(3);
+    public void generateSpareTest() {
+        assertThatCode(FrameScore::createSpare);
     }
 
-    @DisplayName("FrameScore count 테스트")
+    @DisplayName("생성 (Strike) 테스트")
     @Test
-    public void countFrameScoreTest() {
-        FrameScore frameScore = FrameScore.newInstance(Arrays.asList(1, 2));
-        assertTrue(frameScore.isSameScoreCount(2));
+    public void generateStrikeTest() {
+        assertThatCode(FrameScore::createStrike);
     }
+
+    @DisplayName("스코어 합계 반영 테스트")
+    @Test
+    public void addingUpTest() {
+        FrameScore strikeFrame = FrameScore.createStrike();
+        assertThat(strikeFrame.addingUp(Arrays.asList(Score.of(3), Score.of(7))))
+                .isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
+
+        FrameScore spareFrame = FrameScore.createSpare();
+        assertThat(spareFrame.addingUp(Arrays.asList(Score.of(3), Score.of(7))))
+                .isEqualTo(FrameScore.newInstance(Score.of(13), LeftScoreCount.of(0)));
+    }
+
+    @DisplayName("스코어 계산 가능 체크 테스트")
+    @Test
+    public void canCalculateScoreTest() {
+
+        FrameScore readyFrameScore = FrameScore.createReady();
+        assertFalse(readyFrameScore.canCalculateSelfScore());
+
+        FrameScore missFrameScore = FrameScore.createMiss(Score.of(7));
+        assertTrue(missFrameScore.canCalculateSelfScore());
+
+        FrameScore strikeFrameScore = FrameScore.createStrike();
+        assertFalse(strikeFrameScore.canCalculateSelfScore());
+
+        FrameScore spareFrameScore = FrameScore.createSpare();
+        assertFalse(spareFrameScore.canCalculateSelfScore());
+    }
+
 }
+;

@@ -1,40 +1,43 @@
 package bowling.dto;
 
-import bowling.BowlingFrames;
 import bowling.BowlingGame;
 import bowling.Player;
+import bowling.Score;
+import bowling.frame.BowlingFrames;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BowlingGameResult {
 
     private final String name;
-    private final List<FrameScoreConsoleResult> frameScoreConsoleResults;
+    private final List<BowlingFrameConsoleResult> bowlingFrameConsoleResults;
 
-    private BowlingGameResult(final String name, final List<FrameScoreConsoleResult> frameScoreConsoleResults) {
+    private BowlingGameResult(final String name, final List<BowlingFrameConsoleResult> bowlingFrameConsoleResults) {
         this.name = name;
-        this.frameScoreConsoleResults = frameScoreConsoleResults;
+        this.bowlingFrameConsoleResults = bowlingFrameConsoleResults;
     }
 
     public static BowlingGameResult newInstance(final BowlingGame bowlingGame) {
         Player player = bowlingGame.getPlayer();
 
-        BowlingFrames bowlingFrames = bowlingGame.getBowlingFrames();
+        return new BowlingGameResult(player.getName(), makeBowlingFrameConsoleResults(bowlingGame.getBowlingFrames()));
+    }
 
-        List<FrameScoreConsoleResult> frameScoreConsoleResults = bowlingFrames.getFrames()
-                .stream()
-                .map(bowlingFrame -> FrameScoreConsoleResult.newInstance(bowlingFrame.getFrameScore()))
+    private static List<BowlingFrameConsoleResult> makeBowlingFrameConsoleResults(final BowlingFrames bowlingFrames) {
+        List<Score> totalScores = bowlingFrames.getTotalScores();
+
+        return IntStream.range(0, bowlingFrames.size())
+                .mapToObj(i -> BowlingFrameConsoleResult.newInstance(bowlingFrames.getFrame(i), totalScores.get(i)))
                 .collect(Collectors.toList());
-
-        return new BowlingGameResult(player.getName(), frameScoreConsoleResults);
     }
 
     public String getName() {
         return name;
     }
 
-    public List<FrameScoreConsoleResult> getFrameScores() {
-        return frameScoreConsoleResults;
+    public List<BowlingFrameConsoleResult> getBowlingFrameConsoleResults() {
+        return bowlingFrameConsoleResults;
     }
 }

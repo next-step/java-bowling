@@ -22,6 +22,7 @@
     * 볼링 게임의 프레임을 관리한다.
     * FrameScore와 Pins를 관리한다.
     * 쓰러트린 볼링 핀수를 입력받아 FrameScore과 Pins를 갱신한다.
+    * SubTotalScore을 계산하여 반환한다.
 * CommonBowlingFrame
     * 1-9 프레임을 표현하는 BowlingFrame 구현체
     * 남은 투구 기회 판단은 다음과 같다.
@@ -42,9 +43,17 @@
     * 볼링 프레임의 점수를 관리한다.
     * Score 리스트를 관리한다.
     * Score 의 합을 반환한다.
+    * SubTotalScore 객체를 반환한다.
+    * SubTotalScore를 입력받아서 SubTotalScore 객체를 반환한다.
 * Score
     * Score는 0 이상 10 이하의 정수 타입이다.
     * 0 ~ 10 사이의 정수를 입력 받아 투구 점수를 생성한다.
+* SubTotalScore
+    * 각 프레임의 획득 Score를 관리하는 객체.
+    * 획득 스코어 Score와 이전 프레임에서 합산할 수 있는 객체 NextAddingUpScores를 관리한다.
+* NextAddingUpScores
+    * Strike나 spare시 합산할 score를 저장하는 객체.
+    * 최대 2개의 Score를 가질 수 있다.
 * FrameScoreResult
     * FrameScore를 가지고 아래 4가지 종류를 표현한다.
     * 스트라이크(strike) : 프레임의 첫번째 투구에서 모든 핀(10개)을 쓰러트린 상태 (Ex. X)
