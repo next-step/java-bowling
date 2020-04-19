@@ -7,21 +7,15 @@ import bowling.view.ResultView;
 public class PlayBowling {
     private static final int MAX_PINS = 10;
     private static final int FRAME_NUM = 10;
-    private static PlayBowling playBowling = new PlayBowling();
-    private static ResultView resultView = ResultView.getResultView();
-    private Scanner scanner = new Scanner(System.in);
-    private boolean bonusFlag = false;
+    private static Scanner scanner = new Scanner(System.in);
+    private static boolean bonusFlag = false;
 
-    public static PlayBowling getPlayBowling() {
-        return playBowling;
-    }
-
-    public void play(Game game, NormalFrame frame) {
+    public static void play(Game game, NormalFrame frame) {
         frame = playNormalFrame(game, frame);
         playFinalFrame(game, frame);
     }
 
-    private NormalFrame playNormalFrame(Game game, NormalFrame frame) {
+    private static NormalFrame playNormalFrame(Game game, NormalFrame frame) {
         for (int i = 0; i < FRAME_NUM - 1; i++) {
             int felledPins = firstRoll(game, frame);
             felledPins = getfelledPins(game, frame, felledPins);
@@ -37,27 +31,27 @@ public class PlayBowling {
      * @param i
      * @return
      */
-    private NormalFrame getNormalFrame(NormalFrame frame, int i) {
+    private static NormalFrame getNormalFrame(NormalFrame frame, int i) {
         if (i != FRAME_NUM - 2) {
             frame = (NormalFrame) frame.create();
         }
         return frame;
     }
 
-    private void bonus(int felledPins) {
+    private static void bonus(int felledPins) {
         if (felledPins == MAX_PINS) {
             bonusFlag = true;
         }
     }
 
-    private int getfelledPins(Game game, NormalFrame frame, int felledPins) {
+    private static int getfelledPins(Game game, NormalFrame frame, int felledPins) {
         if (felledPins < MAX_PINS) {
             felledPins = roll(game, frame);
         }
         return felledPins;
     }
 
-    private void playFinalFrame(Game game, NormalFrame frame) {
+    private static void playFinalFrame(Game game, NormalFrame frame) {
         if (bonusFlag) {
             frame.bonus();
         }
@@ -70,24 +64,24 @@ public class PlayBowling {
         }
     }
 
-    private int roll(Game game, Frame frame) {
+    private static int roll(Game game, Frame frame) {
         int felledPins;
         System.out.print(frame.getFrameNum() + "프레임 투구 :");
         felledPins = scanner.nextInt();
         frame.bowl(felledPins);
         felledPins += felledPins;
-        resultView.print(game);
+        ResultView.print(game);
         return felledPins;
     }
 
-    private int firstRoll(Game game, Frame frame) {
+    private static int firstRoll(Game game, Frame frame) {
         int felledPins = inputFelledPins(frame);
         game.addFrame(frame);
-        resultView.print(game);
+        ResultView.print(game);
         return felledPins;
     }
 
-    private int inputFelledPins(Frame frame) {
+    private static int inputFelledPins(Frame frame) {
         System.out.print(frame.getFrameNum() + "프레임 투구 :");
         int felledPins = scanner.nextInt();
         frame.bowl(felledPins);

@@ -22,11 +22,6 @@ public class ResultView {
     private static final int FIRST_FRAME = 1;
     private static final int LAST_FRAME = 10;
     private static final PrintStream CONSOLE = System.out;
-    private static ResultView resultView = new ResultView();
-
-    public static ResultView getResultView() {
-        return resultView;
-    }
 
     public static String print(Game param) {
         List<Frame> frames = param.getFrames();

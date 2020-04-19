@@ -12,7 +12,6 @@ import bowling.domain.Game;
 import bowling.domain.NormalFrame;
 
 class ResultViewTest {
-    private static ResultView resultView = ResultView.getResultView();
     private Game game;
     private NormalFrame normalFrame;
 
@@ -27,7 +26,7 @@ class ResultViewTest {
     @DisplayName("스트라이크가 있을때 점수판을 확인한다")
     @Test
     void playFrameScoreBoard() {
-        String playFrameScoreBoard = resultView.print(game);
+        String playFrameScoreBoard = ResultView.print(game);
         assertThat(playFrameScoreBoard).isEqualTo(
                 "|  PJS |  X   |      |      |      |      |      |      |      |      |      |\n");
     }
@@ -39,7 +38,7 @@ class ResultViewTest {
         nextFrame.bowl(8);
         nextFrame.bowl(2);
         game.addFrame(nextFrame);
-        String playFrameScoreBoard = resultView.print(game);
+        String playFrameScoreBoard = ResultView.print(game);
         System.out.println(playFrameScoreBoard);
 
         assertThat(playFrameScoreBoard).isEqualTo(
@@ -59,7 +58,7 @@ class ResultViewTest {
         nextFrame2.bowl(0);
         game.addFrame(nextFrame2);
 
-        String playFrameScoreBoard = resultView.print(game);
+        String playFrameScoreBoard = ResultView.print(game);
 
         assertThat(playFrameScoreBoard).isEqualTo(
                 "|  PJS |  X   |  8|/ |  7|- |      |      |      |      |      |      |      |\n");
@@ -83,7 +82,7 @@ class ResultViewTest {
         finalFrame.bowl(2);
         finalFrame.bowl(3);
         game.addFrame(finalFrame);
-        assertThat(resultView.print(game)).isEqualTo(
+        assertThat(ResultView.print(game)).isEqualTo(
                 "|  PJS |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |  X|2|3 |\n");
     }
 }
