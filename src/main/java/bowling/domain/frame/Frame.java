@@ -18,8 +18,10 @@ public abstract class Frame {
 
     abstract public void addScore();
 
-    public Frame throwBall(Point point) {
+    public Frame throwBall(Point point) throws OverThrowBallException{
+        point.checkLeftPin(points.getLeftPoint());
         this.points.addPoint(point);
+
         return this;
     }
 

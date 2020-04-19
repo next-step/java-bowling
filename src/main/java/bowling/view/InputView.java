@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.player.Player;
-import bowling.domain.frame.Frame;
 import bowling.domain.point.Point;
 
 import java.util.Scanner;
@@ -14,15 +13,13 @@ public class InputView {
         return new Player(scanner.nextLine());
     }
 
-    public static Point inputThrowCount(int frameNo, Frame frame) {
-        int leftPoint = frame.getPoints().getLeftPoint();
+    public static Point inputThrowCount(int frameNo) {
+        System.out.println(frameNo + "프레임 투구 : ");
         try {
-            System.out.println(frameNo + "프레임 투구 : ");
-            Point point = Point.of(scanner.nextInt());
-            return point.checkLeftPin(leftPoint);
+            return Point.of(scanner.nextInt());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return inputThrowCount(frameNo, frame);
+            return inputThrowCount(frameNo);
         }
     }
 }

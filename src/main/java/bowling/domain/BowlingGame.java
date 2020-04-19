@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.frame.OverThrowBallException;
 import bowling.domain.player.Player;
 import bowling.domain.point.Point;
 
@@ -15,7 +16,12 @@ public class BowlingGame {
     }
 
     public Frame throwBall(Frame frame, Point point) {
-        frame.throwBall(point);
+        try {
+            frame.throwBall(point);
+        } catch (OverThrowBallException e) {
+            System.out.println(e.getMessage());
+            return frame;
+        }
         frames.calculateScores(point);
         frame.addScore();
         return this.frames.getNextFrame();
