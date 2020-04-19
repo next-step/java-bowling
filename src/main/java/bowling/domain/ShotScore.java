@@ -5,26 +5,22 @@ import bowling.dto.ShotScoreDto;
 import java.util.Objects;
 
 class ShotScore {
-    private static final int MAX = 10;
-    private static final int MIN = 0;
-
-    private final int score;
+    private final Score score;
     private final ScoreType scoreType;
 
-    private ShotScore(int score, ScoreType scoreType) {
+    private ShotScore(Score score, ScoreType scoreType) {
         this.score = score;
         this.scoreType = scoreType;
     }
 
-    static ShotScore of(int score) {
-        if (score < MIN || MAX < score) {
-            throw new IllegalArgumentException(String.format("create ShotScore fail, score must be %d~%d : score = %d", MIN, MAX, score));
-        }
-        if (score == MAX) {
+    static ShotScore of(int shotScore) {
+        Score score = Score.of(shotScore);
+
+        if (score.isMax()) {
             return new ShotScore(score, ScoreType.STRIKE);
         }
 
-        if (score == MIN) {
+        if (score.isMin()) {
             return new ShotScore(score, ScoreType.GUTTER);
         }
 
@@ -32,14 +28,8 @@ class ShotScore {
     }
 
     ShotScore next(int nextScore) {
-        int totalScore = this.score + nextScore;
-
-        if (MAX < totalScore) {
-            throw new IllegalArgumentException(String.format("next ShotScore fail, nextScore + score must be %d~%d : thisScore = %d, nextScore = %d", MIN, MAX, this.score, nextScore));
-        }
-
-        if (totalScore == MAX) {
-            return new ShotScore(nextScore, ScoreType.SPARE);
+        if (score.isMax(nextScore)) {
+            return new ShotScore(Score.of(nextScore), ScoreType.SPARE);
         }
 
         return of(nextScore);
@@ -50,7 +40,7 @@ class ShotScore {
     }
 
     ShotScoreDto getDto() {
-        return new ShotScoreDto(scoreType, score);
+        return new ShotScoreDto(scoreType, score.getScore());
     }
 
     @Override
