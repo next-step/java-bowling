@@ -3,6 +3,7 @@ package seul.bowling.domain;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import seul.bowling.domain.status.Miss;
 import seul.bowling.exception.BowlingException;
 import seul.bowling.exception.ExceptionType;
 
@@ -36,7 +37,7 @@ public class PlayerTest {
         player.play(1);
 
         assertThat(player.getFrames().getFrames()).hasSize(1);
-        assertThat(player.getFrames().getFrames().get(0).getResult().getStatus()).isEqualTo(FrameStatus.MISS);
+        assertThat(player.getFrames().getFrames().get(0).getStatus().getClass()).isEqualTo(Miss.class);
     }
 
     @ParameterizedTest

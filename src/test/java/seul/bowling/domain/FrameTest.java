@@ -1,6 +1,7 @@
 package seul.bowling.domain;
 
 import org.junit.jupiter.api.Test;
+import seul.bowling.domain.status.Spare;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,8 +14,8 @@ public class FrameTest {
         frame.addPins(1);
 
         assertThat(frame.getPins().allClear()).isTrue();
-        assertThat(frame.getResult().getStatus()).isEqualTo(FrameStatus.SPARE);
-        assertThat(frame.getResult().getScore().getScore()).isEqualTo(10);
+        assertThat(frame.getStatus().getClass()).isEqualTo(Spare.class);
+        assertThat(frame.getStatus().getScore().getScore()).isEqualTo(10);
     }
 
     @Test
@@ -62,7 +63,7 @@ public class FrameTest {
 
         frame.addBonusScore(10);
 
-        Score score = frame.getResult().getScore();
+        Score score = frame.getStatus().getScore();
         assertThat(score.getScore()).isEqualTo(20);
     }
 }

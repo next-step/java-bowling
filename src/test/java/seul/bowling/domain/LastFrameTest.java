@@ -2,6 +2,7 @@ package seul.bowling.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seul.bowling.domain.status.Spare;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,9 +26,9 @@ public class LastFrameTest {
 
         assertThat(lastFrame.getPins().allClear()).isTrue();
         assertThat(lastFrame.getBonusPlay()).isEqualTo(1);
-        assertThat(lastFrame.getResult().getStatus()).isEqualTo(FrameStatus.SPARE);
+        assertThat(lastFrame.getStatus().getClass()).isEqualTo(Spare.class);
         assertThat(lastFrame.getBonusPlay()).isEqualTo(1);
-        assertThat(lastFrame.getResult().getScore().getScore()).isEqualTo(10);
+        assertThat(lastFrame.getScore()).isEqualTo(10);
     }
 
     @Test
