@@ -14,5 +14,4 @@ public class Game {
     public Player getPlay() {
         return this.player;
     }
-
 }

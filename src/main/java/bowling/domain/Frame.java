@@ -2,6 +2,8 @@ package bowling.domain;
 
 public class Frame {
     private static final int ZERO = 0;
+    private static final int BONUS = 10;
+    private static final int DOUBLE_BONUS = 20;
     private Scores scores;
 
     public Frame() {
@@ -73,5 +75,21 @@ public class Frame {
 
     public int sumStrikeScore() {
         return scores.firstScore() + scores.secondScore();
+    }
+
+    public int calculateMissCase() {
+        return sumScore();
+    }
+
+    public int calculateSingleStrike(int sumScore) {
+        return sumScore + BONUS + sumStrikeScore();
+    }
+
+    public int calculateDoubleStrike(int sumScore) {
+        return sumScore + DOUBLE_BONUS + firstScore();
+    }
+
+    public int calculateSpare(int sumScore) {
+        return sumScore + BONUS + firstScore();
     }
 }
