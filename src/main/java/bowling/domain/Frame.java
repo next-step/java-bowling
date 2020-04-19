@@ -36,8 +36,9 @@ class Frame {
     }
 
     void shot(int shot) {
-        if (shotScores.isSize(getShotLimit())) {
-            throw new IllegalStateException(String.format("shot NormalFrame fail. cannot shot over %d times", getShotLimit()));
+        int shotLimit = getShotLimit();
+        if (shotScores.isSize(shotLimit)) {
+            throw new IllegalStateException(String.format("shot NormalFrame fail. cannot shot over %d times", shotLimit));
         }
 
         shotScores.add(shot, hasBonus);
@@ -65,7 +66,7 @@ class Frame {
 
     private Integer getFrameScore() {
         if (isFrameSet()) {
-            if(hasBonus){
+            if (hasBonus) {
                 return getUnBonusScore();
             }
             return getTotalScore();
