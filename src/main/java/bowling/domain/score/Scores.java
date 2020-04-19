@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import org.springframework.util.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,10 @@ public class Scores {
         return scores.stream()
                 .anyMatch(score -> score.isEqualScoreType(ScoreType.STRIKE)
                         || score.isEqualScoreType(ScoreType.SPARE));
+    }
+
+    public boolean isFirstPlay() {
+        return CollectionUtils.isEmpty(scores);
     }
 
     public boolean isSecondPlay() {

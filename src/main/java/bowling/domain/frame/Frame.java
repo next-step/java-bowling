@@ -9,7 +9,6 @@ import java.util.List;
 
 public abstract class Frame {
     private static final int ZERO_POINT = 0;
-    private static final int SECOND_PLAY = 1;
     private static final int STRIKE_POINT = 10;
 
     protected final Scores scores;
@@ -34,7 +33,7 @@ public abstract class Frame {
         if (point == ZERO_POINT) {
             return ScoreType.GUTTER;
         }
-        if (scores.size() == SECOND_PLAY && scores.currentPoint() + point == STRIKE_POINT) {
+        if (scores.isSecondPlay() && scores.currentPoint() + point == STRIKE_POINT) {
             return ScoreType.SPARE;
         }
         return ScoreType.MISS;

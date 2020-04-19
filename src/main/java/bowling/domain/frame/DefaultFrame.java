@@ -63,7 +63,7 @@ public class DefaultFrame extends Frame {
     }
 
     private ScoreType generateDefaultScoreType(Scores scores, int point) {
-        if (scores.size() == FIRST_PLAY && point == STRIKE_POINT) {
+        if (scores.isFirstPlay() && point == STRIKE_POINT) {
             return ScoreType.STRIKE;
         }
         return getSpareOrGutterType(scores, point);
