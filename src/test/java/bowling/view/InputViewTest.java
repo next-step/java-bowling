@@ -19,10 +19,11 @@ class InputViewTest {
     @Test
     void inputPlayerName() {
         String name = "otk";
+        int index = 1;
         Player expect = Player.of(name);
         inputView = new InputView(createInputStream(name));
 
-        Player actual = inputView.inputPlayerName();
+        Player actual = inputView.inputPlayerName(index);
 
         assertThat(actual).isEqualTo(expect);
     }
