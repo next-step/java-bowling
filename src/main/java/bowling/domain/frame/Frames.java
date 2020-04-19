@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.controller.BowlingGame;
 import bowling.domain.frame.state.States;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
@@ -14,34 +15,34 @@ public class Frames {
     public static final int NORMAL_FRAME_COUNT = 9;
 
     private final List<Frame> frames;
-    private Count count;
+    private Frame currentFrame;
 
-    private Frames(final List<Frame> frames, final Count count) {
+    private Frames(final List<Frame> frames) {
         this.frames = Collections.unmodifiableList(frames);
-        this.count = count;
+        this.currentFrame = frames.get(0);
     }
 
     public static Frames create() {
         List<Frame> frames = new ArrayList<>();
-        FinalFrame finalFrame = new FinalFrame(new FrameNumber(FrameNumber.MAX_NUMBER));
+        FinalFrame finalFrame = new FinalFrame(FrameNumber.valueOf(FrameNumber.MAX_NUMBER));
         frames.add(finalFrame);
 
         Frame prevFrame = finalFrame;
         for (int i = NORMAL_FRAME_COUNT; i > 0; i--) {
-            final Frame normalFrame = new NormalFrame(new FrameNumber(i), prevFrame);
+            final Frame normalFrame = new NormalFrame(FrameNumber.valueOf(i), prevFrame);
             frames.add(normalFrame);
             prevFrame = normalFrame;
         }
 
         Collections.reverse(frames);
-        return new Frames(frames, Count.ofFirst());
+        return new Frames(frames);
     }
 
     public void bowl(final Pins knockOver) {
-        Frame current = getCurrent();
-        current.bowl(knockOver);
-        if (current.isEnd()) {
-            count = count.increaseNormalFrameCount();
+        currentFrame.bowl(knockOver);
+        if (isPossibleNextFrame()) {
+            currentFrame = currentFrame.getNext()
+                                       .get();
         }
     }
 
@@ -55,15 +56,20 @@ public class Frames {
                      .collect(Collectors.toList());
     }
 
-    public Frame getCurrent() {
-        return frames.get(count.getCount());
-    }
-
     public List<Score> getScores() {
         Scores scores = new Scores();
         for (Frame frame : frames) {
             scores.accumulate(frame);
         }
         return scores.getScores();
+    }
+
+    public Frame getCurrent() {
+        return currentFrame;
+    }
+
+    private boolean isPossibleNextFrame() {
+        FrameNumber frameNumber = currentFrame.getFrameNumber();
+        return currentFrame.isEnd() && !frameNumber.isFinal();
     }
 }

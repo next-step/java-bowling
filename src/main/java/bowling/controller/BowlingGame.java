@@ -29,6 +29,7 @@ public class BowlingGame {
         return player;
     }
 
+    // todo - 여기서 FrameNumber을 알필요가 있을까?
     public FrameNumber getFrameNumber() {
         return frames.getCurrent()
                      .getFrameNumber();

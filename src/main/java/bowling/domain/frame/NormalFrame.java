@@ -9,6 +9,7 @@ import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 
 public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
@@ -47,6 +48,11 @@ public class NormalFrame implements Frame {
     @Override
     public FrameNumber getFrameNumber() {
         return frameNumber;
+    }
+
+    @Override
+    public Optional<Frame> getNext() {
+        return Optional.of(nextFrame);
     }
 
     @Override
