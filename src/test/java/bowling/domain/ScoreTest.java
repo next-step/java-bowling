@@ -42,4 +42,25 @@ class ScoreTest {
         Score score = new Score(22, 0);
         assertThat(score.getScore()).isEqualTo(22);
     }
+
+    @DisplayName("미스일 경우 점수")
+    @Test
+    void miss() {
+        Score miss = Score.ofMiss(9);
+        assertThat(miss).isEqualTo(new Score(9, 0));
+    }
+
+    @DisplayName("스페어일 경우 점수")
+    @Test
+    void spare() {
+        Score spare = Score.ofSpare();
+        assertThat(spare).isEqualTo(new Score(10, 1));
+    }
+
+    @DisplayName("스트라이크일 경우 점수")
+    @Test
+    void strike() {
+        Score strike = Score.ofStrike();
+        assertThat(strike).isEqualTo(new Score(10, 2));
+    }
 }

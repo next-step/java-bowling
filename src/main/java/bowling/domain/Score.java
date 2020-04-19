@@ -5,7 +5,11 @@ import java.util.Objects;
 import bowling.exception.CannotCalculateException;
 
 public class Score {
+    private static final int MAX_PINS = 10;
     private static final int DONE = 0;
+    private static final int SPARE_LEFT = 1;
+    private static final int STRIKE_LEFT = 2;
+
     private int score;
     private int left;
 
@@ -23,10 +27,22 @@ public class Score {
     }
 
     public int getScore() {
-        if(!canCalucateScore()){
+        if (!canCalucateScore()) {
             throw new CannotCalculateException("아직 계산이 끝나지 않아 스코어를 반환 할 수 없습니다.");
         }
         return score;
+    }
+
+    public static Score ofMiss(int felledPins) {
+        return new Score(felledPins, 0);
+    }
+
+    public static Score ofSpare() {
+        return new Score(MAX_PINS, SPARE_LEFT);
+    }
+
+    public static Score ofStrike() {
+        return new Score(MAX_PINS, STRIKE_LEFT);
     }
 
     @Override
