@@ -46,8 +46,7 @@ class ShotScore {
     }
 
     boolean isClear() {
-        return ScoreType.STRIKE.equals(scoreType) ||
-                ScoreType.SPARE.equals(scoreType);
+        return scoreType.isIn(ScoreType.STRIKE, ScoreType.SPARE);
     }
 
     ShotScoreDto getDto() {
