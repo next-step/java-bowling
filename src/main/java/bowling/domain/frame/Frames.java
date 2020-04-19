@@ -1,53 +1,40 @@
 package bowling.domain.frame;
 
-import bowling.controller.BowlingGame;
 import bowling.domain.frame.state.States;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frames {
-    public static final int NORMAL_FRAME_COUNT = 9;
-
+    private static final int FIRST_FRAME_INDEX = 0;
     private final List<Frame> frames;
     private Frame currentFrame;
 
-    private Frames(final List<Frame> frames) {
-        this.frames = Collections.unmodifiableList(frames);
-        this.currentFrame = frames.get(0);
+    private Frames() {
+        this.frames = new ArrayList<>(Arrays.asList(NormalFrame.ofFirst()));
+        this.currentFrame = frames.get(FIRST_FRAME_INDEX);
     }
 
     public static Frames create() {
-        List<Frame> frames = new ArrayList<>();
-        FinalFrame finalFrame = new FinalFrame(FrameNumber.valueOf(FrameNumber.MAX_NUMBER));
-        frames.add(finalFrame);
-
-        Frame prevFrame = finalFrame;
-        for (int i = NORMAL_FRAME_COUNT; i > 0; i--) {
-            final Frame normalFrame = new NormalFrame(FrameNumber.valueOf(i), prevFrame);
-            frames.add(normalFrame);
-            prevFrame = normalFrame;
-        }
-
-        Collections.reverse(frames);
-        return new Frames(frames);
+        return new Frames();
     }
 
     public void bowl(final Pins knockOver) {
         currentFrame.bowl(knockOver);
-        if (isPossibleNextFrame()) {
-            currentFrame = currentFrame.getNext()
-                                       .get();
+        if (hasNextFrame()) {
+            currentFrame = currentFrame.getNext().get();
+            frames.add(currentFrame);
         }
     }
 
     public List<Frame> getFrames() {
-        return frames;
+        return Collections.unmodifiableList(frames);
     }
 
     public List<States> getStates() {
@@ -68,8 +55,7 @@ public class Frames {
         return currentFrame;
     }
 
-    private boolean isPossibleNextFrame() {
-        FrameNumber frameNumber = currentFrame.getFrameNumber();
-        return currentFrame.isEnd() && !frameNumber.isFinal();
+    private boolean hasNextFrame() {
+        return currentFrame.isEnd() && currentFrame.getNext().isPresent();
     }
 }

@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.frame.state.State;
 import bowling.domain.frame.state.States;
+import bowling.view.format.ScoreFormatter;
 import bowling.view.format.StateFormatter;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class StateView {
         for (States history : states) {
             System.out.print(printStates(history));
         }
+        fillEmptyString(states.size());
         System.out.println();
     }
 
@@ -41,5 +43,11 @@ public class StateView {
 
     private static String formatState(final String expression) {
         return StateFormatter.format(expression);
+    }
+
+    private static void fillEmptyString(final int size) {
+        for (int i = 0; i < 10 - size; i++) {
+            System.out.print(StateFormatter.format(OutputView.EMPTY_STRING) + OutputView.DELIMITER);
+        }
     }
 }

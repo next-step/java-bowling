@@ -16,10 +16,22 @@ public class NormalFrame implements Frame {
     private final Frame nextFrame;
     private States states;
 
-    public NormalFrame(final FrameNumber frameNumber, final Frame nextFrame) {
+    public NormalFrame(final FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
-        this.nextFrame = nextFrame;
+        this.nextFrame = createNextFrame();
         this.states = new States(new ArrayList<>());
+    }
+
+    public static Frame ofFirst() {
+        return new NormalFrame(FrameNumber.ofFirst());
+    }
+
+    private Frame createNextFrame() {
+        final FrameNumber nextFrameNumber = frameNumber.increase();
+        if (nextFrameNumber.isFinal()) {
+            return new FinalFrame(nextFrameNumber);
+        }
+        return new NormalFrame(nextFrameNumber);
     }
 
     @Override

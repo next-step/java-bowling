@@ -93,7 +93,7 @@ public class FinalFrame implements Frame {
     }
 
     private boolean canAdditionalScore(final Score score) {
-        return states.hasCalculableSize(score.getLeft());
+        return states.hasCalculableSize(score.getLeftBonusCount());
     }
 
     private Score calculate(final Score beforeScore) {
