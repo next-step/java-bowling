@@ -13,12 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalFrameTest {
     private Frame frame;
-    private FrameNumber frameNumber;
 
     @BeforeEach
     void setUp() {
-        frameNumber = FrameNumber.ofFirst();
-        frame =  new NormalFrame(frameNumber, null);
+        frame =  NormalFrame.ofFirst();
     }
 
     @DisplayName("현재 Frame이 진행중 상태일 경우 다음 프레임으로 넘어갈 수 없다.")
