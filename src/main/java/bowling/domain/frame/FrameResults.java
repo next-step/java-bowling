@@ -3,6 +3,8 @@ package bowling.domain.frame;
 import java.util.ArrayList;
 import java.util.List;
 
+import static bowling.Constants.CAN_NOT_CALCULATE_SCORE;
+
 public class FrameResults {
 
     private final List<Frame> frames;
@@ -22,11 +24,11 @@ public class FrameResults {
     }
 
     private void addScore(List<Integer> scores, Frame frame) {
-        if(!frame.canCalculateScore()) {
-            return;
-        }
-
         int score = frame.getScore();
+
+        if(score == CAN_NOT_CALCULATE_SCORE) {
+            return ;
+        }
 
         if (scores.isEmpty()) {
             scores.add(score);
