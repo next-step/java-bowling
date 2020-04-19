@@ -15,10 +15,8 @@ public class Answers {
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
     private final List<Answer> answers;
-    private final List<DeleteHistory> deleteHistories;
 
     protected Answers() {
-        this.deleteHistories = new ArrayList<>();
         this.answers = new ArrayList<>();
     }
 
@@ -30,6 +28,7 @@ public class Answers {
     }
 
     public List<DeleteHistory> deleteAnswers(User user) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : validateOwner(answers, user)) {
             deleteHistories.add(answer.delete());
         }
@@ -44,7 +43,4 @@ public class Answers {
         return answers;
     }
 
-    public List<DeleteHistory> getDeleteHistories() {
-        return deleteHistories;
-    }
 }
