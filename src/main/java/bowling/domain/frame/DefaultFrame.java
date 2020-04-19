@@ -2,13 +2,9 @@ package bowling.domain.frame;
 
 import bowling.domain.bonusscore.BonusScore;
 import bowling.domain.bonusscore.BonusScores;
-import bowling.domain.score.Score;
-import bowling.domain.score.ScoreType;
-import bowling.domain.score.Scores;
+import bowling.domain.scores.DefaultScores;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -16,13 +12,12 @@ import java.util.Objects;
  */
 public class DefaultFrame extends Frame {
     private static final int STRIKE_POINT = 10;
-    private static final int DEFAULT_PLAY_COUNT = 2;
     private static final int FIRST_PLAY = 0;
 
     private final BonusScores bonusScores;
 
     private DefaultFrame(BonusScores bonusScores) {
-        super(new Scores());
+        super(new DefaultScores());
         this.bonusScores = bonusScores;
     }
 
@@ -58,15 +53,8 @@ public class DefaultFrame extends Frame {
         if (scores.currentPoint() + point > STRIKE_POINT) {
             throw new IllegalArgumentException("한 프레임의 포인트는 10점을 넘을수 없습니다.");
         }
-        scores.add(new Score(generateDefaultScoreType(scores, point), point));
+        scores.add(point);
         bonusScores.addBonusPoint(point);
-    }
-
-    private ScoreType generateDefaultScoreType(Scores scores, int point) {
-        if (scores.isFirstPlay() && point == STRIKE_POINT) {
-            return ScoreType.STRIKE;
-        }
-        return getSpareOrGutterType(scores, point);
     }
 
     @Override
@@ -77,7 +65,7 @@ public class DefaultFrame extends Frame {
         if (scores.isStrike(FIRST_PLAY)) {
             return false;
         }
-        return scores.size() < DEFAULT_PLAY_COUNT;
+        return scores.isPlayable();
     }
 
     @Override

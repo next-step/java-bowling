@@ -1,13 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.bonusscore.BonusScores;
-import bowling.domain.score.Score;
-import bowling.domain.score.ScoreType;
-import bowling.domain.score.Scores;
+import bowling.domain.scores.LastScores;
 import org.springframework.util.CollectionUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 마지막 프레임을 나타내기 위한 객체
@@ -20,12 +15,11 @@ public class LastFrame extends Frame {
     private static final int FIRST_PLAY = 0;
     private static final int SECOND_PLAY = 1;
     private static final int DOUBLE_STRIKE_POINT = 20;
-    private static final int THIRD_PLAY = 2;
 
     private final BonusScores bonusScores;
 
     public LastFrame(BonusScores bonusScores) {
-        super(new Scores());
+        super(new LastScores());
         this.bonusScores = bonusScores;
     }
 
@@ -39,29 +33,8 @@ public class LastFrame extends Frame {
             validateThirdPoint(point);
         }
 
-        scores.add(new Score(generateLastScoreType(scores, point), point));
+        scores.add(point);
         bonusScores.addBonusPoint(point);
-    }
-
-    private ScoreType generateLastScoreType(Scores scores, int point) {
-        if (point == STRIKE_POINT && scores.size() * STRIKE_POINT == scores.currentPoint()) {
-            return ScoreType.STRIKE;
-        }
-
-        if (scores.size() == THIRD_PLAY) {
-            return getThirdPlayScoreType(scores, point);
-        }
-        return getSpareOrGutterType(scores, point);
-    }
-
-    private ScoreType getThirdPlayScoreType(Scores scores, int point) {
-        if (scores.isSpare(SECOND_PLAY) && point == STRIKE_POINT) {
-            return ScoreType.STRIKE;
-        }
-        if (!scores.isSpare(SECOND_PLAY) && scores.currentPoint() + point == DOUBLE_STRIKE_POINT) {
-            return ScoreType.SPARE;
-        }
-        return getSpareOrGutterType(scores, point);
     }
 
     private void validateSecondPoint(int point) {
