@@ -22,12 +22,12 @@ public class Score {
         return new Score(score += countOfPins, left - 1);
     }
 
-    public boolean canCalucateScore() {
+    public boolean canCalculateScore() {
         return left == DONE;
     }
 
     public int getScore() {
-        if (!canCalucateScore()) {
+        if (!canCalculateScore()) {
             throw new CannotCalculateException("아직 계산이 끝나지 않아 스코어를 반환 할 수 없습니다.");
         }
         return score;
@@ -57,5 +57,13 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score, left);
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+               "score=" + score +
+               ", left=" + left +
+               '}';
     }
 }

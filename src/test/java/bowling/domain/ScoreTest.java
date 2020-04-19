@@ -23,7 +23,7 @@ class ScoreTest {
     @Test
     void canCalucateScore() {
         Score score = new Score(10, 0);
-        boolean done = score.canCalucateScore();
+        boolean done = score.canCalculateScore();
         assertThat(done).isTrue();
     }
 
