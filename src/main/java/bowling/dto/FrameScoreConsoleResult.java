@@ -1,5 +1,6 @@
 package bowling.dto;
 
+import bowling.Pin;
 import bowling.framestate.State;
 import bowling.framestate.common.*;
 import bowling.framestate.last.*;
@@ -39,9 +40,9 @@ public enum FrameScoreConsoleResult {
         FRAME_STATES.put(StrikeLastFrameOver.class, STRIKE_LAST_FRAME_OVER);
     }
 
-    private final Function<List<Integer>, List<String>> printFunction;
+    private final Function<List<Pin>, List<String>> printFunction;
 
-    FrameScoreConsoleResult(final Function<List<Integer>, List<String>> printFunction) {
+    FrameScoreConsoleResult(final Function<List<Pin>, List<String>> printFunction) {
         this.printFunction = printFunction;
     }
 
@@ -49,7 +50,7 @@ public enum FrameScoreConsoleResult {
         return FRAME_STATES.get(state.getClass());
     }
 
-    public String toString(final List<Integer> pins) {
+    public String toString(final List<Pin> pins) {
         return joinScoreString(printFunction.apply(pins));
     }
 

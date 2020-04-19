@@ -1,11 +1,14 @@
 package bowling.framestate.common;
 
 import bowling.FrameScore;
+import bowling.Pin;
+import bowling.Score;
 import bowling.framestate.State;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static bowling.Pin.MAX_PIN_COUNT;
 
 public class Strike implements State {
 
@@ -17,7 +20,7 @@ public class Strike implements State {
     }
 
     @Override
-    public State bowl(final int countOfPin) {
+    public State bowl(final Pin countOfPin) {
         throw new IllegalStateException("No more bowl.");
     }
 
@@ -28,7 +31,7 @@ public class Strike implements State {
 
     @Override
     public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Collections.singletonList(10));
+        return beforeScore.addingUp(Collections.singletonList(Score.ofAllPins()));
     }
 
     @Override
@@ -37,7 +40,7 @@ public class Strike implements State {
     }
 
     @Override
-    public List<Integer> getPins() {
-        return Collections.singletonList(10);
+    public List<Pin> getPins() {
+        return Collections.singletonList(Pin.of(MAX_PIN_COUNT));
     }
 }

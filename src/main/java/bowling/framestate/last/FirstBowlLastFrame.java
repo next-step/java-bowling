@@ -2,47 +2,44 @@ package bowling.framestate.last;
 
 import bowling.FrameScore;
 import bowling.LeftScoreCount;
-import bowling.Score;
+import bowling.Pin;
 import bowling.framestate.State;
 import bowling.framestate.common.Miss;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class FirstBowlLastFrame implements State {
 
-    private final int countOfPin;
+    private final Pin pinCount;
 
-    private FirstBowlLastFrame(final int countOfPin) {
-        this.countOfPin = countOfPin;
+    private FirstBowlLastFrame(final Pin pinCount) {
+        this.pinCount = pinCount;
     }
 
-    public static FirstBowlLastFrame newInstance(final int countOfPin) {
+    public static FirstBowlLastFrame newInstance(final Pin countOfPin) {
         return new FirstBowlLastFrame(countOfPin);
     }
 
     @Override
-    public State bowl(final int countOfPin) {
-        if (this.countOfPin + countOfPin > 10) {
-            throw new IllegalStateException("The frame maximum pin count is 10");
+    public State bowl(final Pin pinCount) {
+        Pin sumCount = pinCount.sum(this.pinCount);
+
+        if (sumCount.isEqualTo(10)) {
+            return SpareLastFrame.newInstance(this.pinCount, pinCount);
         }
 
-        if (this.countOfPin + countOfPin == 10) {
-            return SpareLastFrame.newInstance(this.countOfPin, countOfPin);
-        }
-
-        return Miss.newInstance(this.countOfPin, countOfPin);
+        return Miss.newInstance(this.pinCount, pinCount);
     }
 
     @Override
     public FrameScore createFrameScore() {
-        return FrameScore.newInstance(Score.of(countOfPin), LeftScoreCount.of(1));
+        return FrameScore.newInstance(pinCount.toScore(), LeftScoreCount.of(1));
     }
 
     @Override
     public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Arrays.asList(countOfPin));
+        return beforeScore.addingUp(Collections.singletonList(pinCount.toScore()));
     }
 
     @Override
@@ -51,7 +48,7 @@ public class FirstBowlLastFrame implements State {
     }
 
     @Override
-    public List<Integer> getPins() {
-        return Collections.singletonList(countOfPin);
+    public List<Pin> getPins() {
+        return Collections.singletonList(pinCount);
     }
 }

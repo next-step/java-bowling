@@ -1,6 +1,7 @@
 package bowling.frame;
 
 import bowling.FrameScore;
+import bowling.Pin;
 import bowling.Score;
 import bowling.framestate.State;
 import bowling.framestate.last.ReadyLastFrame;
@@ -8,6 +9,8 @@ import bowling.framestate.last.ReadyLastFrame;
 import java.util.Arrays;
 
 public class LastBowlingFrame implements BowlingFrame {
+
+    public static final int LAST_FRAME_MAX_BOWL_COUNT = 3;
 
     private State state;
 
@@ -20,8 +23,8 @@ public class LastBowlingFrame implements BowlingFrame {
     }
 
     @Override
-    public void bowl(final int countOfPin) {
-        state = state.bowl(countOfPin);
+    public void bowl(final Pin pinCount) {
+        state = state.bowl(pinCount);
     }
 
     @Override
@@ -47,7 +50,7 @@ public class LastBowlingFrame implements BowlingFrame {
             return addingUpFrameScore.getScore();
         }
 
-        addingUpFrameScore = beforeScore.addingUp(Arrays.asList(0, 0, 0));
+        addingUpFrameScore = beforeScore.addingUp(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins(), Score.ofZeroPins()));
         return addingUpFrameScore.getScore();
     }
 

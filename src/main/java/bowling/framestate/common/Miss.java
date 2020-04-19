@@ -2,7 +2,7 @@ package bowling.framestate.common;
 
 import bowling.FrameScore;
 import bowling.LeftScoreCount;
-import bowling.Score;
+import bowling.Pin;
 import bowling.framestate.State;
 
 import java.util.Arrays;
@@ -10,31 +10,32 @@ import java.util.List;
 
 public class Miss implements State {
 
-    private final int firstPin;
-    private final int secondPin;
+    private final Pin firstPinCount;
+    private final Pin secondPinCount;
 
-    private Miss(final int firstPin, final int secondPin) {
-        this.firstPin = firstPin;
-        this.secondPin = secondPin;
+    private Miss(final Pin firstPinCount, final Pin secondPinCount) {
+        this.firstPinCount = firstPinCount;
+        this.secondPinCount = secondPinCount;
     }
 
-    public static Miss newInstance(final int firstPin, final int secondPin) {
-        return new Miss(firstPin, secondPin);
+    public static Miss newInstance(final Pin firstPinCount, final Pin secondPinCount) {
+        return new Miss(firstPinCount, secondPinCount);
     }
 
     @Override
-    public State bowl(final int countOfPin) {
+    public State bowl(final Pin pinCount) {
         throw new IllegalStateException("No more bowl.");
     }
 
     @Override
     public FrameScore createFrameScore() {
-        return FrameScore.newInstance(Score.of(firstPin + secondPin), LeftScoreCount.of(0));
+        Pin sum = firstPinCount.sum(secondPinCount);
+        return FrameScore.newInstance(sum.toScore(), LeftScoreCount.of(0));
     }
 
     @Override
     public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Arrays.asList(firstPin, secondPin));
+        return beforeScore.addingUp(Arrays.asList(firstPinCount.toScore(), secondPinCount.toScore()));
     }
 
     @Override
@@ -43,7 +44,7 @@ public class Miss implements State {
     }
 
     @Override
-    public List<Integer> getPins() {
-        return Arrays.asList(firstPin, secondPin);
+    public List<Pin> getPins() {
+        return Arrays.asList(firstPinCount, secondPinCount);
     }
 }

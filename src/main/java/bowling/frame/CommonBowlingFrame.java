@@ -1,6 +1,7 @@
 package bowling.frame;
 
 import bowling.FrameScore;
+import bowling.Pin;
 import bowling.Score;
 import bowling.framestate.State;
 import bowling.framestate.common.Ready;
@@ -23,8 +24,8 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     @Override
-    public void bowl(final int countOfPin) {
-        state = state.bowl(countOfPin);
+    public void bowl(final Pin pinCount) {
+        state = state.bowl(pinCount);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     private Score getNowScore(final FrameScore frameScore) {
-        FrameScore nowScore = frameScore.addingUp(Arrays.asList(0, 0));
+        FrameScore nowScore = frameScore.addingUp(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins()));
         return nowScore.getScore();
     }
 

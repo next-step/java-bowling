@@ -25,7 +25,7 @@ public class FrameScore {
     }
 
     public static FrameScore createReady() {
-        return new FrameScore(Score.of(0), LeftScoreCount.of(2));
+        return new FrameScore(Score.ofZeroPins(), LeftScoreCount.of(2));
     }
 
     public static FrameScore createMiss(final Score score) {
@@ -33,11 +33,11 @@ public class FrameScore {
     }
 
     public static FrameScore createSpare() {
-        return new FrameScore(Score.of(10), LeftScoreCount.of(1));
+        return new FrameScore(Score.ofAllPins(), LeftScoreCount.of(1));
     }
 
     public static FrameScore createStrike() {
-        return new FrameScore(Score.of(10), LeftScoreCount.of(2));
+        return new FrameScore(Score.ofAllPins(), LeftScoreCount.of(2));
     }
 
     public Score getScore() {
@@ -51,7 +51,7 @@ public class FrameScore {
         return leftScoreCount.isEqualTo(0);
     }
 
-    public FrameScore addingUp(final List<Integer> scores) {
+    public FrameScore addingUp(final List<Score> scores) {
         if(canCalculateSelfScore()) {
             return this;
         }
@@ -59,13 +59,13 @@ public class FrameScore {
         return getAddingUpFrameScore(scores);
     }
 
-    private FrameScore getAddingUpFrameScore(final List<Integer> scores) {
+    private FrameScore getAddingUpFrameScore(final List<Score> scores) {
         LeftScoreCount updateLeftScoreCount = LeftScoreCount.of(leftScoreCount);
-        Iterator<Integer> scoreIterator = scores.iterator();
-        int addingUpScore = 0;
+        Iterator<Score> scoreIterator = scores.iterator();
+        Score addingUpScore = Score.ofZeroPins();
 
         while(!updateLeftScoreCount.isEqualTo(0) && scoreIterator.hasNext()) {
-            addingUpScore += scoreIterator.next();
+            addingUpScore = addingUpScore.add(scoreIterator.next());
             updateLeftScoreCount = updateLeftScoreCount.minus();
         }
 

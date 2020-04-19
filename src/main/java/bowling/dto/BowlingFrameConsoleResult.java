@@ -6,8 +6,6 @@ import bowling.framestate.State;
 
 public class BowlingFrameConsoleResult {
 
-    private static final String SCORE_DELIMITER = "|";
-
     private final String frameScoreResult;
     private final String totalScore;
 

@@ -2,7 +2,7 @@ package bowling.framestate.common;
 
 import bowling.FrameScore;
 import bowling.LeftScoreCount;
-import bowling.Score;
+import bowling.Pin;
 import bowling.framestate.State;
 
 import java.util.Arrays;
@@ -11,37 +11,35 @@ import java.util.List;
 
 public class FirstBowl implements State {
 
-    private final int countOfPin;
+    private final Pin pinCount;
 
-    private FirstBowl(final int countOfPin) {
-        this.countOfPin = countOfPin;
+    private FirstBowl(final Pin pinCount) {
+        this.pinCount = pinCount;
     }
 
-    public static FirstBowl newInstance(final int countOfPin) {
+    public static FirstBowl newInstance(final Pin countOfPin) {
         return new FirstBowl(countOfPin);
     }
 
     @Override
-    public State bowl(final int countOfPin) {
-        if (this.countOfPin + countOfPin > 10) {
-            throw new IllegalStateException("The frame maximum pin count is 10");
+    public State bowl(final Pin pinCount) {
+        Pin sumCount = pinCount.sum(this.pinCount);
+
+        if (sumCount.isEqualTo(10)) {
+            return Spare.newInstance(this.pinCount, pinCount);
         }
 
-        if (this.countOfPin + countOfPin == 10) {
-            return Spare.newInstance(this.countOfPin, countOfPin);
-        }
-
-        return Miss.newInstance(this.countOfPin, countOfPin);
+        return Miss.newInstance(this.pinCount, pinCount);
     }
 
     @Override
     public FrameScore createFrameScore() {
-        return FrameScore.newInstance(Score.of(countOfPin), LeftScoreCount.of(1));
+        return FrameScore.newInstance(pinCount.toScore(), LeftScoreCount.of(1));
     }
 
     @Override
     public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Arrays.asList(countOfPin));
+        return beforeScore.addingUp(Arrays.asList(pinCount.toScore()));
     }
 
     @Override
@@ -50,7 +48,7 @@ public class FirstBowl implements State {
     }
 
     @Override
-    public List<Integer> getPins() {
-        return Collections.singletonList(countOfPin);
+    public List<Pin> getPins() {
+        return Collections.singletonList(pinCount);
     }
 }

@@ -1,8 +1,11 @@
 package bowling.frame;
 
 import bowling.FrameScore;
+import bowling.Pin;
 import bowling.Score;
 import bowling.framestate.State;
+
+import static bowling.frame.BowlingFrames.MAX_BOWLING_FRAME_SIZE;
 
 public interface BowlingFrame {
 
@@ -11,13 +14,13 @@ public interface BowlingFrame {
     }
 
     static BowlingFrame newInstance(final int frameNumber) {
-        if (frameNumber == 10) {
+        if (frameNumber == MAX_BOWLING_FRAME_SIZE) {
             return LastBowlingFrame.newInstance();
         }
         return CommonBowlingFrame.newInstance();
     }
 
-    void bowl(int countOfPin);
+    void bowl(Pin pinCount);
 
     Score getFrameScore();
 

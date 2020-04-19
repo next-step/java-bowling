@@ -24,7 +24,7 @@ public class BowlingGame {
         return bowlingFrames.isAllFrameOver();
     }
 
-    public void bowl(final int pinCount) {
+    public void bowl(final Pin pinCount) {
         bowlingFrames.bowl(pinCount);
     }
 

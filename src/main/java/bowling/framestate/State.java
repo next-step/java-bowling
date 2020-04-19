@@ -1,12 +1,13 @@
 package bowling.framestate;
 
 import bowling.FrameScore;
+import bowling.Pin;
 
 import java.util.List;
 
 public interface State {
 
-    State bowl(int countOfPin);
+    State bowl(Pin pinCount);
 
     FrameScore createFrameScore();
 
@@ -14,5 +15,5 @@ public interface State {
 
     boolean isOver();
 
-    List<Integer> getPins();
+    List<Pin> getPins();
 }

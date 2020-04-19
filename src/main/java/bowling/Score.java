@@ -1,5 +1,10 @@
 package bowling;
 
+import java.util.Arrays;
+
+import static bowling.Pin.MAX_PIN_COUNT;
+import static bowling.Pin.MIN_PIN_COUNT;
+
 public class Score {
 
     private final int score;
@@ -15,8 +20,24 @@ public class Score {
         }
     }
 
+    public static Score ofAllPins() {
+        return of(MAX_PIN_COUNT);
+    }
+
+    public static Score ofZeroPins() {
+        return of(MIN_PIN_COUNT);
+    }
+
     public static Score of(final int score) {
         return new Score(score);
+    }
+
+    public static Score of(final Score... scores) {
+        int sum = Arrays.stream(scores)
+                .mapToInt(score -> score.score)
+                .sum();
+
+        return of(sum);
     }
 
     public Score add(final int score) {

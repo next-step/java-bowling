@@ -2,35 +2,38 @@ package bowling.framestate.last;
 
 import bowling.FrameScore;
 import bowling.LeftScoreCount;
+import bowling.Pin;
 import bowling.Score;
 import bowling.framestate.State;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static bowling.frame.LastBowlingFrame.LAST_FRAME_MAX_BOWL_COUNT;
 
 public class SpareLastFrameOver implements State {
 
-    private List<Integer> pins;
+    private List<Pin> pins;
 
-    private SpareLastFrameOver(final List<Integer> pins) {
+    private SpareLastFrameOver(final List<Pin> pins) {
         validatePins(pins);
         this.pins = new ArrayList<>(pins);
     }
 
-    private void validatePins(final List<Integer> pins) {
-        if(Objects.isNull(pins) || pins.size() != 3) {
+    private void validatePins(final List<Pin> pins) {
+        if (Objects.isNull(pins) || pins.size() != LAST_FRAME_MAX_BOWL_COUNT) {
             throw new IllegalStateException("Last frame spare case must be has three pin scores.");
         }
     }
 
-    public static SpareLastFrameOver newInstance(final List<Integer> pins) {
+    public static SpareLastFrameOver newInstance(final List<Pin> pins) {
         return new SpareLastFrameOver(pins);
     }
 
     @Override
-    public State bowl(int countOfPin) {
+    public State bowl(final Pin pinCount) {
         throw new IllegalStateException("No more bowl.");
     }
 
@@ -41,7 +44,11 @@ public class SpareLastFrameOver implements State {
 
     @Override
     public FrameScore addingUpFrameScore(FrameScore beforeScore) {
-        return beforeScore.addingUp(pins);
+        List<Score> scores = pins.stream()
+                .map(Pin::toScore)
+                .collect(Collectors.toList());
+
+        return beforeScore.addingUp(scores);
     }
 
     @Override
@@ -50,11 +57,15 @@ public class SpareLastFrameOver implements State {
     }
 
     @Override
-    public List<Integer> getPins() {
+    public List<Pin> getPins() {
         return pins;
     }
 
     private Score calculateScore() {
-        return Score.of(pins.get(0) + pins.get(1) + pins.get(2) + pins.get(2));
+        List<Score> scores = pins.stream()
+                .map(Pin::toScore)
+                .collect(Collectors.toList());
+
+        return Score.of(scores.get(0), scores.get(1), scores.get(2), scores.get(2));
     }
 }

@@ -1,10 +1,13 @@
 package bowling.framestate.common;
 
 import bowling.FrameScore;
+import bowling.Pin;
 import bowling.framestate.State;
 
 import java.util.Collections;
 import java.util.List;
+
+import static bowling.Pin.MAX_PIN_COUNT;
 
 public class Ready implements State {
 
@@ -16,12 +19,12 @@ public class Ready implements State {
     }
 
     @Override
-    public State bowl(final int countOfPin) {
-        if (countOfPin == 10) {
+    public State bowl(final Pin pinCount) {
+        if (pinCount.isEqualTo(MAX_PIN_COUNT)) {
             return Strike.newInstance();
         }
 
-        return FirstBowl.newInstance(countOfPin);
+        return FirstBowl.newInstance(pinCount);
     }
 
     @Override
@@ -40,7 +43,7 @@ public class Ready implements State {
     }
 
     @Override
-    public List<Integer> getPins() {
+    public List<Pin> getPins() {
         return Collections.emptyList();
     }
 }

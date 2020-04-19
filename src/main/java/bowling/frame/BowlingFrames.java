@@ -1,5 +1,6 @@
 package bowling.frame;
 
+import bowling.Pin;
 import bowling.Score;
 
 import java.util.ArrayList;
@@ -20,9 +21,9 @@ public class BowlingFrames {
         return new BowlingFrames(Collections.singletonList(firstFrame));
     }
 
-    public void bowl(final int countOfPin) {
+    public void bowl(final Pin pinCount) {
         BowlingFrame recentFrame = getRecentBowlingFrame();
-        recentFrame.bowl(countOfPin);
+        recentFrame.bowl(pinCount);
 
         if (recentFrame.isOver() && frames.size() < MAX_BOWLING_FRAME_SIZE) {
             frames.add(recentFrame.addNextFrame(frames.size()));
@@ -47,7 +48,7 @@ public class BowlingFrames {
 
     public List<Score> getTotalScores() {
         List<Score> totalScores = new ArrayList<>();
-        Score totalScore = Score.of(0);
+        Score totalScore = Score.ofZeroPins();
 
         for (BowlingFrame bowlingFrame : frames) {
             Score subTotalScore = bowlingFrame.getTotalScore(totalScore);

@@ -2,11 +2,14 @@ package bowling.framestate.last;
 
 import bowling.FrameScore;
 import bowling.LeftScoreCount;
+import bowling.Pin;
 import bowling.Score;
 import bowling.framestate.State;
 
 import java.util.Collections;
 import java.util.List;
+
+import static bowling.Pin.MAX_PIN_COUNT;
 
 public class StrikeLastFrame implements State {
 
@@ -18,18 +21,18 @@ public class StrikeLastFrame implements State {
     }
 
     @Override
-    public State bowl(final int countOfPin) {
-        return StrikeLastFrameOver.newInstance(countOfPin);
+    public State bowl(final Pin pinCount) {
+        return StrikeLastFrameOver.newInstance(pinCount);
     }
 
     @Override
     public FrameScore createFrameScore() {
-        return FrameScore.newInstance(Score.of(10), LeftScoreCount.of(1));
+        return FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(1));
     }
 
     @Override
     public FrameScore addingUpFrameScore(FrameScore beforeScore) {
-        return beforeScore.addingUp(Collections.singletonList(10));
+        return beforeScore.addingUp(Collections.singletonList(Score.ofAllPins()));
     }
 
     @Override
@@ -38,7 +41,7 @@ public class StrikeLastFrame implements State {
     }
 
     @Override
-    public List<Integer> getPins() {
-        return Collections.singletonList(10);
+    public List<Pin> getPins() {
+        return Collections.singletonList(Pin.of(MAX_PIN_COUNT));
     }
 }
