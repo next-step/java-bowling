@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +9,8 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    private static final String NO_AUTHORIZATION = "질문을 삭제할 권한이 없습니다.";
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -25,7 +28,8 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
-    protected Question(){}
+    protected Question() {
+    }
 
     public Question(String title, String contents) {
         this(null, title, contents);
@@ -59,8 +63,10 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
+    public void isOwner(User loginUser) throws CannotDeleteException {
+        if(!writer.equals(loginUser)){
+            throw new CannotDeleteException(NO_AUTHORIZATION);
+        }
     }
 
     public void delete() {
