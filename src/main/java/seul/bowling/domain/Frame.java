@@ -6,32 +6,23 @@ import java.util.Objects;
 
 @Getter
 public class Frame {
-    private static final int ZERO = 0;
+    protected static final int ZERO = 0;
     private static final int ONE = 1;
     public static final int LAST_FRAME_INDEX = 9;
 
     private int index;
-    private FrameResult result;
-    private Pins pins;
-    private int bonusPlay;
+    protected FrameResult result;
+    protected Pins pins;
 
-    private Frame(int index) {
+    protected Frame(int index) {
         this.index = index;
         this.result = new FrameResult();
         this.pins = new Pins();
     }
 
     public void addPins(int clearPin) {
-        pins.addPin(clearPin, isBonusPlay());
+        pins.addPin(clearPin, false);
         result.addScore(clearPin, pins.allClear());
-
-        if (index == LAST_FRAME_INDEX && !isBonusPlay()) {
-            this.bonusPlay = result.bonusPlay();
-        }
-
-        if (isBonusPlay() && endDefaultPlay()) {
-            this.bonusPlay--;
-        }
     }
 
     public void addBonusScore(int bonusScore) {
@@ -43,7 +34,12 @@ public class Frame {
     }
 
     public Frame next() {
-        return new Frame(index + ONE);
+        int newIndex = index + ONE;
+        if (newIndex == LAST_FRAME_INDEX) {
+            return new LastFrame(newIndex);
+        }
+
+        return new Frame(newIndex);
     }
 
     public static Frame first() {
@@ -51,7 +47,7 @@ public class Frame {
     }
 
     public boolean endFrame() {
-        return result.endJudgmentStatus() && this.bonusPlay == ZERO;
+        return result.endJudgmentStatus();
     }
 
     public boolean endCalculateScore() {
@@ -63,19 +59,11 @@ public class Frame {
     }
 
     public boolean isLastFame() {
-        return index == LAST_FRAME_INDEX;
-    }
-
-    public boolean isBonusPlay() {
-        return this.bonusPlay > ZERO;
+        return false;
     }
 
     public int getScore() {
         return this.result.getToTalScore();
-    }
-
-    private boolean endDefaultPlay() {
-        return pins.endDefaultPlayCount(result.isStrike());
     }
 
     @Override
