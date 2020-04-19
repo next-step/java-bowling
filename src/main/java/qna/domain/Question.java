@@ -1,6 +1,5 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
@@ -22,12 +21,13 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
+
+    @Transient
+    private List<DeleteHistory> deleteHistories;
 
     protected Question() {
     }
@@ -40,6 +40,8 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
+        this.answers = new Answers();
+        this.deleteHistories = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -61,7 +63,7 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        this.answers.add(answer);
     }
 
     public void isOwner(User loginUser) throws CannotDeleteException {
@@ -70,21 +72,23 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public DeleteHistory delete() {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        isOwner(loginUser);
         this.deleted = true;
 
+        deleteHistories.add(createDeleteHistory());
+        deleteHistories.addAll(this.answers.deleteAnswers(loginUser));
 
-        DeleteHistory deleteHistory = new DeleteHistory(
-                ContentType.QUESTION, getId(), writer, LocalDateTime.now());
-        return deleteHistory;
+        return deleteHistories;
+    }
+
+    private DeleteHistory createDeleteHistory() {
+        return new DeleteHistory(
+                    ContentType.QUESTION, getId(), writer, LocalDateTime.now());
     }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override

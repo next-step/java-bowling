@@ -47,7 +47,6 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-
     public DeleteHistory delete() {
         this.deleted = true;
         DeleteHistory deleteHistory = new DeleteHistory(
