@@ -78,21 +78,26 @@ public class BowlingGame {
         return frame;
     }
 
-    public Score getFrameScore(int frameNumber) {
+    public Score getTotalScore(int frameNumber) {
+        Score result = new Score();
+        for (int i = 1; i <= frameNumber; i++) {
+            Score frameScore = getFrameScore(i);
+            result = result.addScore(frameScore);
+        }
+        return result;
+    }
+
+    private Score getFrameScore(int frameNumber) {
         Frame frame = findFrame(frameNumber);
 
         if (frame == null) {
-            return null;
+            return new Score();
         }
 
         Calculator calculator = frame.getState().getCurrenteCalculator();
 
         if (calculator.canAddNextScore() && frame.getNext() != null) {
             calculator = frame.getNext().getState().getScoreCalculate(calculator);
-        }
-
-        if (calculator.canAddNextScore() && frame.getNext() == null) {
-            return null;
         }
 
         return calculator.getScore();

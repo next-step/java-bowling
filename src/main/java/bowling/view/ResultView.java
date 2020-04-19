@@ -81,7 +81,7 @@ public class ResultView {
         System.out.print(EMPTY_FRAME + "  ");
 
         for (int i = 1; i <= frameNumber; i++) {
-            printScore(bowlingGame.getFrameScore(i));
+            printScore(bowlingGame.getTotalScore(i));
         }
 
         printEmptyFrame(9 - frameNumber);

@@ -59,7 +59,7 @@ class BowlingGameTest {
         assertThat(game.getFrameSize()).isEqualTo(3);
     }
 
-    @DisplayName("점수 합산해야 하는데 다음 프레임이 없을 경우 null 리턴")
+    @DisplayName("점수 합산해야 하는데 다음 프레임이 없을 경우 현재 점수로 리턴")
     @Test
     public void getFrameScore_success_null() throws Exception {
         //given
@@ -67,10 +67,10 @@ class BowlingGameTest {
         game.play(10);
 
         //when
-        Score score = game.getFrameScore(1);
+        Score score = game.getTotalScore(1);
 
         //then
-        assertThat(score).isEqualTo(null);
+        assertThat(score).isEqualTo(new Score(10));
     }
 
     @DisplayName("다음 프레임을 확인하여 strike 점수 계산")
@@ -83,7 +83,7 @@ class BowlingGameTest {
         game.play(2);
 
         //when
-        Score score = game.getFrameScore(1);
+        Score score = game.getTotalScore(1);
 
         //then
         assertThat(score).isEqualTo(new Score(17));
@@ -99,11 +99,26 @@ class BowlingGameTest {
         game.play(2);
 
         //when
-        Score score = game.getFrameScore(1);
-        Score score2 = game.getFrameScore(2);
+        Score score = game.getTotalScore(1);
+        Score score2 = game.getTotalScore(2);
 
         //then
         assertThat(score).isEqualTo(new Score(12));
-        assertThat(score2).isEqualTo(new Score(2));
+        assertThat(score2).isEqualTo(new Score(14));
+    }
+
+    @Test
+    public void getTotalScore_success() throws Exception {
+        //given
+        BowlingGame game = new BowlingGame(new Player("aaa"));
+        game.play(5);
+        game.play(5);
+        game.play(2);
+
+        //when
+        Score totalScore = game.getTotalScore(2);
+
+        //then
+        assertThat(totalScore).isEqualTo(new Score(14));
     }
 }
