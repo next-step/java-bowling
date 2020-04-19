@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -56,5 +57,53 @@ class BowlingGameTest {
 
         //then
         assertThat(game.getFrameSize()).isEqualTo(3);
+    }
+
+    @DisplayName("점수 합산해야 하는데 다음 프레임이 없을 경우 null 리턴")
+    @Test
+    public void getFrameScore_success_null() throws Exception {
+        //given
+        BowlingGame game = new BowlingGame(new Player("aaa"));
+        game.play(10);
+
+        //when
+        Score score = game.getFrameScore(1);
+
+        //then
+        assertThat(score).isEqualTo(null);
+    }
+
+    @DisplayName("다음 프레임을 확인하여 strike 점수 계산")
+    @Test
+    public void getFrameScore_success_strike() throws Exception {
+        //given
+        BowlingGame game = new BowlingGame(new Player("aaa"));
+        game.play(10);
+        game.play(5);
+        game.play(2);
+
+        //when
+        Score score = game.getFrameScore(1);
+
+        //then
+        assertThat(score).isEqualTo(new Score(17));
+    }
+
+    @DisplayName("다음 프레임을 확인하여 spare 점수 계산")
+    @Test
+    public void getFrameScore_success_spare() throws Exception {
+        //given
+        BowlingGame game = new BowlingGame(new Player("aaa"));
+        game.play(5);
+        game.play(5);
+        game.play(2);
+
+        //when
+        Score score = game.getFrameScore(1);
+        Score score2 = game.getFrameScore(2);
+
+        //then
+        assertThat(score).isEqualTo(new Score(12));
+        assertThat(score2).isEqualTo(new Score(2));
     }
 }

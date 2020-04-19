@@ -3,6 +3,8 @@ package bowling.domain;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.score.Calculator;
+import bowling.domain.score.Score;
 
 public class BowlingGame {
 
@@ -61,5 +63,30 @@ public class BowlingGame {
         }
 
         return count + 1;
+    }
+
+    private Frame findFrame(int frameNumber) {
+        Frame frame = firstFrame;
+
+        for (int i = 0; i < frameNumber - 1; i++) {
+            frame = frame.getNext();
+        }
+
+        return frame;
+    }
+
+    public Score getFrameScore(int frameNumber) {
+        Frame frame = findFrame(frameNumber);
+        Calculator calculator = frame.getState().getCurrenteCalculator();
+
+        if (calculator.canAddNextScore() && frame.getNext() != null) {
+            calculator = frame.getNext().getState().getScoreCalculate(calculator);
+        }
+
+        if (calculator.canAddNextScore() && frame.getNext() == null) {
+            return null;
+        }
+
+        return calculator.getScore();
     }
 }
