@@ -23,6 +23,10 @@ public class Score {
         return new Score(this.score + score);
     }
 
+    public Score add(final Score score) {
+        return add(score.score);
+    }
+
     public int getScore() {
         return score;
     }

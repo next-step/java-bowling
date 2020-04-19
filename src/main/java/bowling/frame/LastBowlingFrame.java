@@ -35,6 +35,11 @@ public class LastBowlingFrame implements BowlingFrame {
     }
 
     @Override
+    public Score getTotalScore(final Score beforeScore) {
+        return getFrameScore().add(beforeScore);
+    }
+
+    @Override
     public Score addingUpScore(final FrameScore beforeScore) {
         FrameScore addingUpFrameScore = state.addingUpFrameScore(beforeScore);
 

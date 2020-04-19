@@ -21,6 +21,8 @@ public interface BowlingFrame {
 
     Score getFrameScore();
 
+    Score getTotalScore(Score beforeScore);
+
     Score addingUpScore(FrameScore beforeScore);
 
     boolean isOver();

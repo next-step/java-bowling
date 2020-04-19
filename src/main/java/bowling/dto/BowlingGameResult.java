@@ -3,11 +3,11 @@ package bowling.dto;
 import bowling.BowlingGame;
 import bowling.Player;
 import bowling.Score;
-import bowling.frame.BowlingFrame;
 import bowling.frame.BowlingFrames;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BowlingGameResult {
 
@@ -21,28 +21,16 @@ public class BowlingGameResult {
 
     public static BowlingGameResult newInstance(final BowlingGame bowlingGame) {
         Player player = bowlingGame.getPlayer();
-        List<BowlingFrameConsoleResult> bowlingFrameConsoleResults = getBowlingFrameConsoleResults(bowlingGame);
 
-        return new BowlingGameResult(player.getName(), bowlingFrameConsoleResults);
+        return new BowlingGameResult(player.getName(), makeBowlingFrameConsoleResults(bowlingGame.getBowlingFrames()));
     }
 
-    private static List<BowlingFrameConsoleResult> getBowlingFrameConsoleResults(BowlingGame bowlingGame) {
-        BowlingFrames bowlingFrames = bowlingGame.getBowlingFrames();
-        int totalScore = 0;
+    private static List<BowlingFrameConsoleResult> makeBowlingFrameConsoleResults(final BowlingFrames bowlingFrames) {
+        List<Score> totalScores = bowlingFrames.getTotalScores();
 
-        List<BowlingFrameConsoleResult> bowlingFrameConsoleResults = new ArrayList<>();
-        for(BowlingFrame bowlingFrame : bowlingFrames.getFrames()) {
-            BowlingFrameConsoleResult bowlingFrameConsoleResult = BowlingFrameConsoleResult.newInstance(bowlingFrame, totalScore);
-            bowlingFrameConsoleResults.add(bowlingFrameConsoleResult);
-            totalScore = extractTotalScore(bowlingFrame, totalScore);
-        }
-
-        return bowlingFrameConsoleResults;
-    }
-
-    private static int extractTotalScore(final BowlingFrame bowlingFrame, final int beforeTotalScore) {
-        Score score = bowlingFrame.getFrameScore();
-        return beforeTotalScore + score.getScore();
+        return IntStream.range(0, bowlingFrames.size())
+                .mapToObj(i -> BowlingFrameConsoleResult.newInstance(bowlingFrames.getFrame(i), totalScores.get(i)))
+                .collect(Collectors.toList());
     }
 
     public String getName() {

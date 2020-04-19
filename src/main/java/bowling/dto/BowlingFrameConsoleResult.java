@@ -1,6 +1,5 @@
 package bowling.dto;
 
-import bowling.FrameScore;
 import bowling.Score;
 import bowling.frame.BowlingFrame;
 import bowling.framestate.State;
@@ -17,22 +16,16 @@ public class BowlingFrameConsoleResult {
         this.totalScore = totalScore;
     }
 
-    public static BowlingFrameConsoleResult newInstance(final BowlingFrame bowlingFrame, final int totalScore) {
-        return new BowlingFrameConsoleResult(extractFrameScoreResult(bowlingFrame), setTotalScore(bowlingFrame, totalScore));
+    public static BowlingFrameConsoleResult newInstance(final BowlingFrame bowlingFrame, final Score totalScore) {
+        return new BowlingFrameConsoleResult(extractFrameScoreResult(bowlingFrame), makeTotalScore(bowlingFrame, totalScore));
     }
 
-    private static String setTotalScore(final BowlingFrame bowlingFrame, final int beforeTotalScore) {
-        FrameScore frameScore = bowlingFrame.getState().createFrameScore();
+    private static String makeTotalScore(final BowlingFrame bowlingFrame, final Score totalScore) {
         if (bowlingFrame.canCalculateScore()) {
-            return String.valueOf(extractTotalScore(bowlingFrame, beforeTotalScore));
+            return String.valueOf(totalScore.getScore());
         }
 
         return "";
-    }
-
-    private static int extractTotalScore(final BowlingFrame bowlingFrame, final int beforeTotalScore) {
-        Score score = bowlingFrame.getFrameScore();
-        return beforeTotalScore + score.getScore();
     }
 
     private static String extractFrameScoreResult(final BowlingFrame bowlingFrame) {

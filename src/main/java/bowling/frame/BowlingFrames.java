@@ -1,5 +1,7 @@
 package bowling.frame;
 
+import bowling.Score;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +45,20 @@ public class BowlingFrames {
         return frames.size();
     }
 
-    public List<BowlingFrame> getFrames() {
-        return frames;
+    public List<Score> getTotalScores() {
+        List<Score> totalScores = new ArrayList<>();
+        Score totalScore = Score.of(0);
+
+        for (BowlingFrame bowlingFrame : frames) {
+            Score subTotalScore = bowlingFrame.getTotalScore(totalScore);
+            totalScore = subTotalScore;
+            totalScores.add(subTotalScore);
+        }
+
+        return totalScores;
+    }
+
+    public BowlingFrame getFrame(final int index) {
+        return frames.get(index);
     }
 }
