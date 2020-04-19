@@ -14,7 +14,6 @@ public class FrameTest {
 
         assertThat(frame.getPins().allClear()).isTrue();
         assertThat(frame.getResult().getStatus()).isEqualTo(FrameStatus.SPARE);
-        assertThat(frame.getResult().bonusPlay()).isEqualTo(1);
         assertThat(frame.getResult().getScore().getScore()).isEqualTo(10);
     }
 
@@ -25,6 +24,16 @@ public class FrameTest {
         Frame secondFrame = firstFrame.next();
 
         assertThat(secondFrame.getIndex()).isEqualTo(1);
+    }
+
+    @Test
+    void next_lastFrame() {
+        Frame frame = Frame.first();
+        for (int i = 1; i < 10; i++) {
+            frame = frame.next();
+        }
+
+        assertThat(frame.equals(new LastFrame(9))).isTrue();
     }
 
     @Test
