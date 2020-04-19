@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Player;
+import bowling.domain.player.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.point.Point;
 

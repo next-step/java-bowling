@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.player;
 
 public class InvalidNameException extends IllegalArgumentException {
 

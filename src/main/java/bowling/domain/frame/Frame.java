@@ -30,7 +30,7 @@ public abstract class Frame {
     public Integer getScore() {
         try {
             return score.getScore();
-        }catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }

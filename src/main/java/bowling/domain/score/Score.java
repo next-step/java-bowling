@@ -28,9 +28,9 @@ public class Score {
         return this;
     }
 
-    public int getScore() {
+    public Integer getScore() {
         if (!canCalcucateScore()) {
-            throw new IllegalArgumentException();
+            throw new ScroeAccessDenyException("아직 스코어에 접근 할 수 없습니다.");
         }
         return this.score;
     }

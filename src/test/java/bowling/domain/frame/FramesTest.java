@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Player;
+import bowling.domain.player.Player;
 import bowling.domain.point.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

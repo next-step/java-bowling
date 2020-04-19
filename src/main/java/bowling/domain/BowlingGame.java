@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.player.Player;
 import bowling.domain.point.Point;
 
 public class BowlingGame {
