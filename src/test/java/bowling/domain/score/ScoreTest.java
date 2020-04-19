@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ class ScoreTest {
     @Test
     public void addScore_success() throws Exception {
         //given
-        Score current = Score.from();
+        Score current = new Score();
         Score added = new Score(5);
 
         //when

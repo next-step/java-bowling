@@ -21,10 +21,6 @@ public class Score {
         this.score = score;
     }
 
-    public static Score from() {
-        return new Score(MIN_SCORE);
-    }
-
     private void validateScoreRange(int score) {
         if (score < MIN_SCORE || score > MAX_SCORE) {
             throw new BowlingException(SCORE_RANGE);
