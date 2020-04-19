@@ -29,6 +29,6 @@ public class End extends Finished {
 
     @Override
     public Score createScore() {
-        return new Score(felledPin.getValue(), 0);
+        return new Score(felledPin.getValue(), 2);
     }
 }

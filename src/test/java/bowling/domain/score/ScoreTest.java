@@ -64,7 +64,7 @@ public class ScoreTest {
     }
 
     @Test
-    @DisplayName("마지막 Frame 점수 산정 테스트")
+    @DisplayName("마지막 Frame 점수 산정 테스트 - All Strike")
     void getScoreFinalFrame() {
         Frames frames = new Frames();
 
@@ -79,6 +79,62 @@ public class ScoreTest {
         int scoreLastFrame = frameResults.getScores().get(9);
 
         assertThat(scoreLastNormalFrame).isEqualTo(270);
-        assertThat(scoreLastNormalFrame).isEqualTo(300);
+        assertThat(scoreLastFrame).isEqualTo(300);
+    }
+
+    @Test
+    @DisplayName("마지막 Frame 점수 산정 테스트 - Spare -> Strike")
+    void getScoreFinalFrame2() {
+        Frames frames = new Frames();
+
+        for(int i = 0; i < FrameNumber.MAX_NORMAL_FRAME_COUNT; i++) {
+            frames.play(pinCount10);
+        }
+        frames.play(pinCount5);
+        frames.play(pinCount5);
+        FrameResults frameResults = frames.play(pinCount10);
+
+        int scoreLastNormalFrame = frameResults.getScores().get(8);
+        int scoreLastFrame = frameResults.getScores().get(9);
+
+        assertThat(scoreLastNormalFrame).isEqualTo(255);
+        assertThat(scoreLastFrame).isEqualTo(275);
+    }
+
+    @Test
+    @DisplayName("마지막 Frame 점수 산정 테스트 - Spare -> Miss")
+    void getScoreFinalFrame3() {
+        Frames frames = new Frames();
+
+        for(int i = 0; i < FrameNumber.MAX_NORMAL_FRAME_COUNT; i++) {
+            frames.play(pinCount10);
+        }
+        frames.play(pinCount5);
+        frames.play(pinCount5);
+        FrameResults frameResults = frames.play(pinCount5);
+
+        int scoreLastNormalFrame = frameResults.getScores().get(8);
+        int scoreLastFrame = frameResults.getScores().get(9);
+
+        assertThat(scoreLastNormalFrame).isEqualTo(255);
+        assertThat(scoreLastFrame).isEqualTo(270);
+    }
+
+    @Test
+    @DisplayName("마지막 Frame 점수 산정 테스트 -> Miss")
+    void getScoreFinalFrame4() {
+        Frames frames = new Frames();
+
+        for(int i = 0; i < FrameNumber.MAX_NORMAL_FRAME_COUNT; i++) {
+            frames.play(pinCount10);
+        }
+        frames.play(pinCount5);
+        FrameResults frameResults = frames.play(pinCount1);
+
+        int scoreLastNormalFrame = frameResults.getScores().get(8);
+        int scoreLastFrame = frameResults.getScores().get(9);
+
+        assertThat(scoreLastNormalFrame).isEqualTo(251);
+        assertThat(scoreLastFrame).isEqualTo(257);
     }
 }
