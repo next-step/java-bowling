@@ -9,8 +9,6 @@ import bowling.framestate.State;
 import java.util.Arrays;
 import java.util.List;
 
-import static bowling.Pin.MAX_PIN_COUNT;
-
 public class StrikeLastFrameOver implements State {
 
     private final Pin secondPinCount;
@@ -45,7 +43,7 @@ public class StrikeLastFrameOver implements State {
 
     @Override
     public List<Pin> getPins() {
-        return Arrays.asList(Pin.of(MAX_PIN_COUNT), secondPinCount);
+        return Arrays.asList(Pin.ofMax(), secondPinCount);
     }
 
     private Score calculateScore() {

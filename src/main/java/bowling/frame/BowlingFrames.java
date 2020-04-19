@@ -25,6 +25,10 @@ public class BowlingFrames {
         BowlingFrame recentFrame = getRecentBowlingFrame();
         recentFrame.bowl(pinCount);
 
+        prepareNextFrame(recentFrame);
+    }
+
+    private void prepareNextFrame(BowlingFrame recentFrame) {
         if (recentFrame.isOver() && frames.size() < MAX_BOWLING_FRAME_SIZE) {
             frames.add(recentFrame.addNextFrame(frames.size()));
         }

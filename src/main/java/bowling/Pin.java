@@ -22,6 +22,10 @@ public class Pin {
         return new Pin(pinCount);
     }
 
+    public static Pin ofMax() {
+        return new Pin(MAX_PIN_COUNT);
+    }
+
     public Pin sum(final Pin pinCount) {
         return new Pin(this.pinCount + pinCount.pinCount);
     }
