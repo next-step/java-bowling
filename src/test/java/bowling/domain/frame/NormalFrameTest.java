@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Score;
 import bowling.domain.frame.state.Miss;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.Spare;
@@ -156,5 +157,39 @@ class NormalFrameTest {
 
         //then
         assertTrue(finalFrame == last);
+    }
+
+    @DisplayName("현제 프레임이 strike 상태이면 다음 2개 투구의 점수를 합산해 준다")
+    @Test
+    public void makeStrikeScore_success() throws Exception {
+        //given
+        Frame frame = new NormalFrame();
+        Score compare = new Score(16);
+
+        //when
+        frame.bowl(10);
+        Frame next = frame.createNext();
+        next.bowl(1);
+        next.bowl(5);
+
+        //then
+        assertTrue(frame.getScore().equals(compare));
+    }
+
+    @DisplayName("현제 프레임이 spare 상태이면 다음 1개 투구의 점수를 합산해 준다")
+    @Test
+    public void makeSpareScore_success() throws Exception {
+        //given
+        Frame frame = new NormalFrame();
+        Score compare = new Score(11);
+
+        //when
+        frame.bowl(5);
+        frame.bowl(5);
+        Frame next = frame.createNext();
+        next.bowl(1);
+
+        //then
+        assertTrue(frame.getScore().equals(compare));
     }
 }

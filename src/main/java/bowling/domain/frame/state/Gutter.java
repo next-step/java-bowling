@@ -39,4 +39,9 @@ public class Gutter implements State {
     public Score getScore() {
         return new Score(Pins.MIN_PIN);
     }
+
+    @Override
+    public Score getFirstScore() {
+        return new Score(0);
+    }
 }

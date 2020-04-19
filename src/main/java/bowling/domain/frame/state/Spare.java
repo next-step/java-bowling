@@ -42,4 +42,9 @@ public class Spare implements State {
     public Score getScore() {
         return new Score(Pins.MAX_PIN);
     }
+
+    @Override
+    public Score getFirstScore() {
+        return new Score(firstPins.getDownPin());
+    }
 }

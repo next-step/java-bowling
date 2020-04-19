@@ -13,4 +13,6 @@ public interface State {
     String getCurrentPinsState();
 
     Score getScore();
+
+    Score getFirstScore();
 }

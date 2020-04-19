@@ -12,6 +12,10 @@ public class Score {
 
     private final int score;
 
+    public Score() {
+        this(MIN_SCORE);
+    }
+
     public Score(int score) {
         validateScoreRange(score);
         this.score = score;

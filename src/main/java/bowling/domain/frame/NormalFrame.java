@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.state.Ready;
-import bowling.domain.frame.state.State;
+import bowling.domain.Score;
+import bowling.domain.frame.state.*;
 import bowling.exception.BowlingException;
 
 public class NormalFrame implements Frame {
@@ -32,6 +32,41 @@ public class NormalFrame implements Frame {
         if (frameNumber < MIN_FRAME_NUMBER || frameNumber > MAX_FRAME_NUMBER) {
             throw new BowlingException(MAX_FRAME_MESSAGE);
         }
+    }
+
+    private Score makeStrikeScore() {
+        Score score = state.getScore();
+
+        Frame next = nextFrame;
+        if (next == null) {
+            return null;
+        }
+
+        if (next.getState() instanceof Miss
+                || next.getState() instanceof Spare
+                || next.getState() instanceof Gutter) {
+            score = score.addScore(next.getState().getScore());
+        }
+
+        return score;
+    }
+
+    private Score makeSpareScore() {
+        Score score = state.getScore();
+
+        Frame next = nextFrame;
+        if (next == null) {
+            return null;
+        }
+
+        if (next.getState() instanceof Miss
+                || next.getState() instanceof Strike
+                || next.getState() instanceof Gutter
+                || next.getState() instanceof FirstBowl) {
+            score = score.addScore(next.getState().getFirstScore());
+        }
+
+        return score;
     }
 
     @Override
@@ -76,5 +111,17 @@ public class NormalFrame implements Frame {
             return this;
         }
         return nextFrame.findLast();
+    }
+
+    @Override
+    public Score getScore() {
+        if (state instanceof Strike) {
+            return makeStrikeScore();
+        }
+
+        if (state instanceof Spare) {
+            return makeSpareScore();
+        }
+        return null;
     }
 }

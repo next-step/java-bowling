@@ -31,4 +31,9 @@ public class Ready implements State {
     public Score getScore() {
         throw new BowlingException();
     }
+
+    @Override
+    public Score getFirstScore() {
+        throw new BowlingException();
+    }
 }

@@ -145,9 +145,14 @@ public class FinalFrameStates implements State {
     @Override
     public Score getScore() {
         if (isHaveBonus()) {
-            return states.getFirst().getScore().addScore(states.getLast().getScore());
+            return getFirstScore();
         }
 
         return states.getFirst().getScore();
+    }
+
+    @Override
+    public Score getFirstScore() {
+        return states.getFirst().getScore().addScore(states.getLast().getScore());
     }
 }

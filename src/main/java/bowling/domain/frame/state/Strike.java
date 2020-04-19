@@ -28,4 +28,9 @@ public class Strike implements State {
     public Score getScore() {
         return new Score(Pins.MAX_PIN);
     }
+
+    @Override
+    public Score getFirstScore() {
+        return getScore();
+    }
 }

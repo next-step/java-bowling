@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.Score;
 import bowling.domain.frame.state.FinalFrameStates;
 import bowling.domain.frame.state.State;
 import bowling.exception.BowlingException;
@@ -62,5 +63,10 @@ public class FinalFrame implements Frame {
     @Override
     public int hashCode() {
         return Objects.hash(states);
+    }
+
+    @Override
+    public Score getScore() {
+        return null;
     }
 }

@@ -43,4 +43,9 @@ public class Miss implements State {
     public Score getScore() {
         return new Score(firstPins.getDownPin() + secondPins.getDownPin());
     }
+
+    @Override
+    public Score getFirstScore() {
+        return new Score(firstPins.getDownPin());
+    }
 }

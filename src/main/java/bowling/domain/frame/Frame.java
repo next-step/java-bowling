@@ -18,4 +18,6 @@ public interface Frame {
     State getState();
 
     Frame findLast();
+
+    Score getScore();
 }
