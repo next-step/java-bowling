@@ -23,7 +23,7 @@ public class FirstBowl implements State {
 
     @Override
     public State bowl(final Pin pinCount) {
-        Pin sumCount = pinCount.sum(this.pinCount);
+        Pin sumCount = pinCount.add(this.pinCount);
 
         if (sumCount.isEqualTo(10)) {
             return Spare.newInstance(this.pinCount, pinCount);

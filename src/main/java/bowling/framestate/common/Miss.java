@@ -29,7 +29,7 @@ public class Miss implements State {
 
     @Override
     public FrameScore createFrameScore() {
-        Pin sum = firstPinCount.sum(secondPinCount);
+        Pin sum = firstPinCount.add(secondPinCount);
         return FrameScore.newInstance(sum.toScore(), LeftScoreCount.of(0));
     }
 

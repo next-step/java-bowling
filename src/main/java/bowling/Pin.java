@@ -26,7 +26,7 @@ public class Pin {
         return new Pin(MAX_PIN_COUNT);
     }
 
-    public Pin sum(final Pin pinCount) {
+    public Pin add(final Pin pinCount) {
         return new Pin(this.pinCount + pinCount.pinCount);
     }
 
