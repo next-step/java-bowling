@@ -1,6 +1,7 @@
 package bowling;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import static bowling.Pin.MAX_PIN_COUNT;
 import static bowling.Pin.MIN_PIN_COUNT;
@@ -50,5 +51,18 @@ public class Score {
 
     public int getScore() {
         return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Score)) return false;
+        Score score1 = (Score) o;
+        return getScore() == score1.getScore();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getScore());
     }
 }

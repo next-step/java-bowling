@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName(" Tests")
+@DisplayName("볼링 프레임 목록 테스트")
 public class BowlingFramesTests {
 
     @DisplayName("생성 테스트")
@@ -70,10 +70,10 @@ public class BowlingFramesTests {
 
     private static Stream<Arguments> totalScoreTestCases() {
         return Stream.of(
-                Arguments.of(Collections.singletonList(Pin.ofMax()), Collections.singletonList(Score.ofAllPins())),
-                Arguments.of(Arrays.asList(Pin.ofMax(), Pin.of(5), Pin.of(3)), Arrays.asList(Score.of(18), Score.of(26))),
-                Arguments.of(Arrays.asList(Pin.ofMax(), Pin.of(7), Pin.of(3)), Arrays.asList(Score.of(20), Score.of(30))),
-                Arguments.of(Arrays.asList(Pin.ofMax(), Pin.ofMax(), Pin.ofMax()), Arrays.asList(Score.of(30), Score.of(20), Score.of(10)))
+                Arguments.of(Collections.singletonList(Pin.ofMax()), Arrays.asList(Score.ofAllPins(), Score.ofAllPins())),
+                Arguments.of(Arrays.asList(Pin.ofMax(), Pin.of(5), Pin.of(3)), Arrays.asList(Score.of(18), Score.of(26), Score.of(26))),
+                Arguments.of(Arrays.asList(Pin.ofMax(), Pin.of(7), Pin.of(3)), Arrays.asList(Score.of(20), Score.of(30), Score.of(30))),
+                Arguments.of(Arrays.asList(Pin.ofMax(), Pin.ofMax(), Pin.ofMax()), Arrays.asList(Score.of(30), Score.of(50), Score.of(60), Score.of(60)))
         );
     }
 }

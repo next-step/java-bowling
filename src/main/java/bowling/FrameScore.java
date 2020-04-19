@@ -71,4 +71,18 @@ public class FrameScore {
 
         return FrameScore.newInstance(score.add(addingUpScore), updateLeftScoreCount);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FrameScore)) return false;
+        FrameScore that = (FrameScore) o;
+        return Objects.equals(getScore(), that.getScore()) &&
+                Objects.equals(leftScoreCount, that.leftScoreCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getScore(), leftScoreCount);
+    }
 }

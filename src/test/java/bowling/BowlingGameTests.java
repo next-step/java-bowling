@@ -29,7 +29,7 @@ public class BowlingGameTests {
     @Test
     public void bowlAbnormalTest() {
         BowlingGame bowlingGame = BowlingGame.newInstance("ABC");
-        IntStream.range(0, 12)
+        IntStream.range(0, 11)
                 .forEach(i -> bowlingGame.bowl(Pin.ofMax()));
 
 

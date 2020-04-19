@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.Objects;
+
 public class Pin {
 
     public static final int MAX_PIN_COUNT = 10;
@@ -41,5 +43,18 @@ public class Pin {
     @Override
     public String toString() {
         return String.valueOf(pinCount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pin)) return false;
+        Pin pin = (Pin) o;
+        return pinCount == pin.pinCount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pinCount);
     }
 }

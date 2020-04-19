@@ -1,8 +1,5 @@
 package bowling;
 
-import bowling.FrameScore;
-import bowling.LeftScoreCount;
-import bowling.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -40,23 +37,16 @@ public class FrameScoreTests {
         assertThatCode(FrameScore::createStrike);
     }
 
-    @DisplayName("스코어 반환 테스트")
-    @Test
-    public void getScoreTest() {
-        FrameScore frameScore = FrameScore.createSpare();
-        assertThat(frameScore.getScore()).isEqualTo(Score.of(10));
-    }
-
     @DisplayName("스코어 합계 반영 테스트")
     @Test
     public void addingUpTest() {
         FrameScore strikeFrame = FrameScore.createStrike();
-        assertThat(strikeFrame.addingUp(Arrays.asList(Score.of(3),Score.of(7))))
-                .isEqualTo(FrameScore.newInstance(Score.of(20),LeftScoreCount.of(0)));
+        assertThat(strikeFrame.addingUp(Arrays.asList(Score.of(3), Score.of(7))))
+                .isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
 
         FrameScore spareFrame = FrameScore.createSpare();
-        assertThat(spareFrame.addingUp(Arrays.asList(Score.of(3),Score.of(7))))
-                .isEqualTo(FrameScore.newInstance(Score.of(13),LeftScoreCount.of(0)));
+        assertThat(spareFrame.addingUp(Arrays.asList(Score.of(3), Score.of(7))))
+                .isEqualTo(FrameScore.newInstance(Score.of(13), LeftScoreCount.of(0)));
     }
 
     @DisplayName("스코어 계산 가능 체크 테스트")

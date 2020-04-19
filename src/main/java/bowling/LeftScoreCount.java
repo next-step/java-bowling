@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.Objects;
+
 public class LeftScoreCount {
 
     private final int count;
@@ -29,5 +31,18 @@ public class LeftScoreCount {
 
     public LeftScoreCount minus() {
         return new LeftScoreCount(count - 1);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LeftScoreCount)) return false;
+        LeftScoreCount that = (LeftScoreCount) o;
+        return count == that.count;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(count);
     }
 }
