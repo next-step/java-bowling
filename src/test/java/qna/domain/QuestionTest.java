@@ -17,4 +17,5 @@ public class QuestionTest {
             Q1.isOwner(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
+
 }
