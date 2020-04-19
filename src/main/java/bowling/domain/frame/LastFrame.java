@@ -10,8 +10,6 @@ import org.springframework.util.CollectionUtils;
  */
 public class LastFrame extends Frame {
     private static final int STRIKE_POINT = 10;
-    private static final int DEFAULT_PLAY_COUNT = 2;
-    private static final int BONUS_PLAY_COUNT = 3;
     private static final int FIRST_PLAY = 0;
     private static final int SECOND_PLAY = 1;
     private static final int DOUBLE_STRIKE_POINT = 20;
@@ -58,11 +56,11 @@ public class LastFrame extends Frame {
         if (CollectionUtils.isEmpty(scores.getScores())) {
             return true;
         }
-        if (scores.size() < DEFAULT_PLAY_COUNT) {
+        if (scores.isPlayable()) {
             return true;
         }
 
-        return scores.size() < BONUS_PLAY_COUNT && scores.hasStrikeOrSpare();
+        return scores.isBonusPlayable() && scores.hasStrikeOrSpare();
     }
 
     @Override

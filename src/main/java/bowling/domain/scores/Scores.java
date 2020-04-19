@@ -15,6 +15,7 @@ public abstract class Scores {
     private static final int SECOND_PLAY = 1;
     private static final int THIRD_PLAY = 2;
     private static final int DEFAULT_PLAY_COUNT = 2;
+    private static final int BONUS_PLAY_COUNT = 3;
 
     private final List<Score> scores;
 
@@ -75,5 +76,9 @@ public abstract class Scores {
 
     public boolean isPlayable() {
         return scores.size() < DEFAULT_PLAY_COUNT;
+    }
+
+    public boolean isBonusPlayable() {
+        return scores.size() < BONUS_PLAY_COUNT;
     }
 }
