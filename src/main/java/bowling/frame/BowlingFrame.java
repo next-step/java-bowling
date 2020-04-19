@@ -22,15 +22,15 @@ public interface BowlingFrame {
 
     void bowl(Pin pinCount);
 
-    Score getFrameScore();
-
     Score getTotalScore(Score beforeScore);
+
+    Score getFrameScore();
 
     Score addingUpScore(FrameScore beforeScore);
 
-    boolean isOver();
+    BowlingFrame appendNextFrame(int frameNumber);
 
-    BowlingFrame addNextFrame(int frameNumber);
+    boolean isOver();
 
     boolean canCalculateScore();
 

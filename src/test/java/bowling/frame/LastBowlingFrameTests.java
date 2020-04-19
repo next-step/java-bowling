@@ -1,12 +1,15 @@
 package bowling.frame;
 
-import bowling.frame.LastBowlingFrame;
+import bowling.FrameScore;
+import bowling.LeftScoreCount;
+import bowling.Pin;
+import bowling.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,88 +18,102 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DisplayName("LastBowlingFrame 테스트")
+@DisplayName("마지막 프레임 테스트")
 public class LastBowlingFrameTests {
 
-    @DisplayName("생성 테스트")
+
+    @DisplayName("생성 테스트 마지막 프레임")
     @Test
     public void generateTest() {
-        assertThatCode(LastBowlingFrame::newInstance);
+        assertThatCode(() -> BowlingFrame.newInstance(10));
+        assertThatCode(() -> LastBowlingFrame.newInstance());
     }
 
-    @DisplayName("첫번째 투구 테스트")
+    @DisplayName("투구 테스트")
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    public void bowlTest(final int pinCount) {
+        LastBowlingFrame lastFrame = LastBowlingFrame.newInstance();
+        assertThatCode(() -> lastFrame.bowl(Pin.of(pinCount)));
+    }
+
+    @DisplayName("합산 스코어 테스트")
     @Test
-    public void addFirstBowlTest() {
-        LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
-        assertThatCode(() -> bowlingFrame.bowl(5));
+    public void getTotalScoreTest() {
+        LastBowlingFrame lastFrame = LastBowlingFrame.newInstance();
+        lastFrame.bowl(Pin.of(10));
+        assertThat(lastFrame.getTotalScore(Score.ofZeroPins())).isEqualTo(Score.of(10));
     }
 
-    @DisplayName("두번째 투구 테스트")
-    @ParameterizedTest
-    @CsvSource(value = {"10,4", "6,4"})
-    public void addSecondBowlTest(final int firstBowl, final int secondBowl) {
-        LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
-        bowlingFrame.bowl(firstBowl);
-        assertThatCode(() -> bowlingFrame.bowl(secondBowl));
-    }
-
-    @DisplayName("두번째 투구 오류 테스트")
-    @ParameterizedTest
-    @CsvSource(value = {"5,6", "9,2"})
-    public void addSecondBowlAbnormalTest(final int firstBowl, final int secondBowl) {
-        LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
-        bowlingFrame.bowl(firstBowl);
-        assertThatExceptionOfType(Exception.class)
-                .isThrownBy(() -> bowlingFrame.bowl(secondBowl));
-    }
-
-    @DisplayName("세번째 투구 추가 테스트")
-    @ParameterizedTest
-    @CsvSource(value = {"10,3,7", "8,2,3", "0,10,2"})
-    public void addThirdBowlTest(final int firstPitch, final int secondPitch, final int thirdPitch) {
-        LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
-        bowlingFrame.bowl(firstPitch);
-        bowlingFrame.bowl(secondPitch);
-        assertThatCode(() -> bowlingFrame.bowl(thirdPitch));
-    }
-
-    @DisplayName("BowlingFrame 세번째 투구 추가 오류 테스트")
-    @ParameterizedTest
-    @CsvSource(value = {"10,3,8", "8,1,3", "0,0,2"})
-    public void addThirdBowlAbnormalTest(final int firstPitch, final int secondPitch, final int thirdPitch) {
-        LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
-        bowlingFrame.bowl(firstPitch);
-        bowlingFrame.bowl(secondPitch);
-        assertThatExceptionOfType(Exception.class)
-                .isThrownBy(() -> bowlingFrame.bowl(thirdPitch));
-    }
-
-    @DisplayName("합 테스트")
+    @DisplayName("마지막 프레임 추가 테스트")
     @Test
-    public void sumTest() {
+    public void appendNextFrameTest() {
         LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
-        bowlingFrame.bowl(5);
-        bowlingFrame.bowl(5);
-        bowlingFrame.bowl(6);
-        assertThat(bowlingFrame.sum()).isEqualTo(16);
+        assertThatIllegalStateException()
+                .isThrownBy(() -> bowlingFrame.appendNextFrame(10));
     }
 
-    @DisplayName("종료 테스트")
+    @DisplayName("마지막 프레임 종료 테스트")
     @ParameterizedTest
-    @MethodSource("overTestCases")
-    public void overTest(List<Integer> scores, boolean expectedResult) {
-        LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
+    @MethodSource("lastFrameOverTestCases")
+    public void lastFrameOverTest(List<Pin> scores, boolean expectedResult) {
+        CommonBowlingFrame bowlingFrame = CommonBowlingFrame.newInstance();
         scores.forEach(bowlingFrame::bowl);
         assertThat(bowlingFrame.isOver()).isEqualTo(expectedResult);
     }
 
-    private static Stream<Arguments> overTestCases() {
+    private static Stream<Arguments> lastFrameOverTestCases() {
         return Stream.of(
                 Arguments.of(Collections.EMPTY_LIST, false),
-                Arguments.of(Collections.singletonList(10), false),
-                Arguments.of(Arrays.asList(5, 5), false),
-                Arguments.of(Arrays.asList(10, 5), true),
-                Arguments.of(Arrays.asList(5, 5, 5), true)
+                Arguments.of(Collections.singletonList(Pin.of(5)), false),
+                Arguments.of(Collections.singletonList(Pin.of(10)), false),
+                Arguments.of(Arrays.asList(Pin.of(10), Pin.of(5)), true),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(4)), true),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(5)), false),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(5), Pin.of(4)), true)
         );
     }
+
+    @DisplayName("마지막 프레임 계산 가능 테스트")
+    @ParameterizedTest
+    @MethodSource("lastFrameCanCalculateTestCases")
+    public void lastFrameCanCalculateTest(List<Pin> scores, boolean expectedResult) {
+        LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
+        scores.forEach(bowlingFrame::bowl);
+        assertThat(bowlingFrame.canCalculateScore()).isEqualTo(expectedResult);
+    }
+
+    private static Stream<Arguments> lastFrameCanCalculateTestCases() {
+        return Stream.of(
+                Arguments.of(Collections.EMPTY_LIST, false),
+                Arguments.of(Collections.singletonList(Pin.of(5)), false),
+                Arguments.of(Collections.singletonList(Pin.of(10)), false),
+                Arguments.of(Arrays.asList(Pin.of(10), Pin.of(4)), true),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(4)), true),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(5)), false),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(5), Pin.of(5)), true)
+        );
+    }
+
+    @DisplayName("마지막 프레임 계산 가능 테스트2")
+    @ParameterizedTest
+    @MethodSource("lastFrameCanCalculateTestCases2")
+    public void lastFrameCanCalculateTest2(List<Pin> scores, FrameScore beforeFrameScore, boolean expectedResult) {
+        LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
+        scores.forEach(bowlingFrame::bowl);
+        assertThat(bowlingFrame.canCalculateScore(beforeFrameScore)).isEqualTo(expectedResult);
+    }
+
+    private static Stream<Arguments> lastFrameCanCalculateTestCases2() {
+        return Stream.of(
+                Arguments.of(Collections.EMPTY_LIST, FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(2)), false),
+                Arguments.of(Collections.singletonList(Pin.of(5)), FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(1)), true),
+                Arguments.of(Collections.singletonList(Pin.of(10)), FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(2)), false),
+                Arguments.of(Arrays.asList(Pin.of(10), Pin.of(4)), FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(2)), true),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(4)), FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(2)), true),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(5)), FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(2)), true),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(5), Pin.of(5)), FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(1)), true)
+        );
+    }
+
 }

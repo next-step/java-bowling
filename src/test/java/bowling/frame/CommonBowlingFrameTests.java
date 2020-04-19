@@ -1,79 +1,108 @@
 package bowling.frame;
 
-import bowling.frame.CommonBowlingFrame;
+import bowling.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
-@DisplayName("CommonBowlingFrame 테스트")
+@DisplayName("볼링 프레임 테스트")
 public class CommonBowlingFrameTests {
 
-    @DisplayName("생성 테스트")
+    @DisplayName("생성 테스트 - 첫 프레임, 1~9 프레임, 마지막 프레임")
     @Test
     public void generateTest() {
-        assertThatCode(CommonBowlingFrame::newInstance);
+        assertThatCode(BowlingFrame::createFirstFrame);
+        assertThatCode(() -> BowlingFrame.newInstance(5));
     }
 
-    @DisplayName("첫번째 투구 테스트")
-    @Test
-    public void addFirstBowlTest() {
-        CommonBowlingFrame bowlingFrame = CommonBowlingFrame.newInstance();
-        assertThatCode(() -> bowlingFrame.bowl(5));
-    }
-
-    @DisplayName("두번째 투구 테스트")
-    @Test
-    public void addSecondBowlTest() {
-        CommonBowlingFrame bowlingFrame = CommonBowlingFrame.newInstance();
-        bowlingFrame.bowl(5);
-        assertThatCode(() -> bowlingFrame.bowl(4));
-    }
-
-    @DisplayName("두번째 투구 오류 테스트")
+    @DisplayName("투구 테스트")
     @ParameterizedTest
-    @CsvSource(value = {"5,6", "10,4"})
-    public void addSecondBowlAbnormalTest(final int firstBowl, final int secondBowl) {
-        CommonBowlingFrame bowlingFrame = CommonBowlingFrame.newInstance();
-        bowlingFrame.bowl(firstBowl);
-        assertThatExceptionOfType(Exception.class)
-                .isThrownBy(() -> bowlingFrame.bowl(secondBowl));
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    public void bowlTest(final int pinCount) {
+        BowlingFrame bowlingFrame = BowlingFrame.createFirstFrame();
+        assertThatCode(() -> bowlingFrame.bowl(Pin.of(pinCount)));
     }
 
-    @DisplayName("합 테스트")
+    @DisplayName("합산 스코어 테스트")
     @Test
-    public void sumTest() {
+    public void getTotalScoreTest() {
         CommonBowlingFrame bowlingFrame = CommonBowlingFrame.newInstance();
-        bowlingFrame.bowl(5);
-        bowlingFrame.bowl(4);
-        assertThat(bowlingFrame.sum()).isEqualTo(9);
+        bowlingFrame.bowl(Pin.of(5));
+        assertThat(bowlingFrame.getTotalScore(Score.ofAllPins())).isEqualTo(Score.of(15));
     }
 
-    @DisplayName("종료 테스트")
+    @DisplayName("일반 프레임 추가 테스트")
+    @Test
+    public void appendNextFrameTest() {
+        CommonBowlingFrame bowlingFrame = CommonBowlingFrame.newInstance();
+        assertThatCode(() -> bowlingFrame.appendNextFrame(5));
+    }
+
+    @DisplayName("일반 프레임 종료 테스트")
     @ParameterizedTest
-    @MethodSource("overTestCases")
-    public void overTest(List<Integer> scores, boolean expectedResult) {
+    @MethodSource("commonFrameOverTestCases")
+    public void commonFrameOverTest(List<Pin> scores, boolean expectedResult) {
         CommonBowlingFrame bowlingFrame = CommonBowlingFrame.newInstance();
         scores.forEach(bowlingFrame::bowl);
         assertThat(bowlingFrame.isOver()).isEqualTo(expectedResult);
     }
 
-    private static Stream<Arguments> overTestCases() {
+    private static Stream<Arguments> commonFrameOverTestCases() {
         return Stream.of(
                 Arguments.of(Collections.EMPTY_LIST, false),
-                Arguments.of(Collections.singletonList(5), false),
-                Arguments.of(Collections.singletonList(10), true),
-                Arguments.of(Arrays.asList(5, 4), true),
-                Arguments.of(Arrays.asList(5, 5), true)
+                Arguments.of(Collections.singletonList(Pin.of(5)), false),
+                Arguments.of(Collections.singletonList(Pin.of(10)), true),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(4)), true),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(5)), true)
+        );
+    }
+
+    @DisplayName("일반 프레임 계산 가능 테스트")
+    @ParameterizedTest
+    @MethodSource("commonFrameCanCalculateTestCases")
+    public void commonFrameCanCalculateTest(List<Pin> scores, boolean expectedResult) {
+        CommonBowlingFrame bowlingFrame = CommonBowlingFrame.newInstance();
+        scores.forEach(bowlingFrame::bowl);
+        assertThat(bowlingFrame.canCalculateScore()).isEqualTo(expectedResult);
+    }
+
+    private static Stream<Arguments> commonFrameCanCalculateTestCases() {
+        return Stream.of(
+                Arguments.of(Collections.EMPTY_LIST, false),
+                Arguments.of(Collections.singletonList(Pin.of(5)), false),
+                Arguments.of(Collections.singletonList(Pin.of(10)), false),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(4)), true),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(5)), false)
+        );
+    }
+
+    @DisplayName("일반 프레임 계산 가능 테스트2")
+    @ParameterizedTest
+    @MethodSource("commonFrameCanCalculateTestCases2")
+    public void commonFrameCanCalculateTest2(List<Pin> scores, FrameScore beforeFrameScore, boolean expectedResult) {
+        CommonBowlingFrame bowlingFrame = CommonBowlingFrame.newInstance();
+        scores.forEach(bowlingFrame::bowl);
+        assertThat(bowlingFrame.canCalculateScore(beforeFrameScore)).isEqualTo(expectedResult);
+    }
+
+    private static Stream<Arguments> commonFrameCanCalculateTestCases2() {
+        return Stream.of(
+                Arguments.of(Collections.EMPTY_LIST, FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(2)), false),
+                Arguments.of(Collections.singletonList(Pin.of(5)), FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(1)), true),
+                Arguments.of(Collections.singletonList(Pin.of(10)), FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(2)), false),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(4)), FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(2)), true),
+                Arguments.of(Arrays.asList(Pin.of(5), Pin.of(5)), FrameScore.newInstance(Score.ofAllPins(), LeftScoreCount.of(2)), true)
         );
     }
 }

@@ -28,6 +28,11 @@ public class LastBowlingFrame implements BowlingFrame {
     }
 
     @Override
+    public Score getTotalScore(final Score beforeScore) {
+        return getFrameScore().add(beforeScore);
+    }
+
+    @Override
     public Score getFrameScore() {
         FrameScore frameScore = state.createFrameScore();
         if (frameScore.canCalculateSelfScore()) {
@@ -35,11 +40,6 @@ public class LastBowlingFrame implements BowlingFrame {
         }
 
         return addingUpScore(frameScore);
-    }
-
-    @Override
-    public Score getTotalScore(final Score beforeScore) {
-        return getFrameScore().add(beforeScore);
     }
 
     @Override
@@ -55,13 +55,13 @@ public class LastBowlingFrame implements BowlingFrame {
     }
 
     @Override
-    public boolean isOver() {
-        return state.isOver();
+    public BowlingFrame appendNextFrame(final int frameNumber) {
+        throw new IllegalStateException("It is last frame. can not add next frame");
     }
 
     @Override
-    public BowlingFrame addNextFrame(final int frameNumber) {
-        throw new IllegalStateException("It is last frame. can not add next frame");
+    public boolean isOver() {
+        return state.isOver();
     }
 
     @Override

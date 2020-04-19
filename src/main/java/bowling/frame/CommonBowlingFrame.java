@@ -29,22 +29,18 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     @Override
-    public Score getFrameScore() {
-        FrameScore frameScore = state.createFrameScore();
-
-        return getScore(frameScore);
-    }
-
-    @Override
     public Score getTotalScore(final Score beforeScore) {
         return getFrameScore().add(beforeScore);
     }
 
     @Override
-    public Score addingUpScore(final FrameScore beforeScore) {
-        FrameScore addingUpFrameScore = state.addingUpFrameScore(beforeScore);
+    public Score getFrameScore() {
+        return getScore(state.createFrameScore());
+    }
 
-        return getScore(addingUpFrameScore);
+    @Override
+    public Score addingUpScore(final FrameScore beforeScore) {
+        return getScore(state.addingUpFrameScore(beforeScore));
     }
 
     private Score getScore(final FrameScore frameScore) {
@@ -55,23 +51,18 @@ public class CommonBowlingFrame implements BowlingFrame {
         if (Objects.isNull(nextFrame)) {
             return getNowScore(frameScore);
         }
+
         return nextFrame.addingUpScore(frameScore);
     }
 
     private Score getNowScore(final FrameScore frameScore) {
-        FrameScore nowScore = frameScore.addingUp(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins()));
-        return nowScore.getScore();
-    }
-
-
-    @Override
-    public boolean isOver() {
-        return state.isOver();
+        FrameScore nowFrameScore = frameScore.addingUp(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins()));
+        return nowFrameScore.getScore();
     }
 
     @Override
-    public BowlingFrame addNextFrame(final int frameNumber) {
-        if(!Objects.isNull(nextFrame)) {
+    public BowlingFrame appendNextFrame(final int frameNumber) {
+        if (!Objects.isNull(nextFrame)) {
             throw new IllegalStateException("can not add next frame. It already existed");
         }
 
@@ -80,9 +71,22 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     @Override
+    public boolean isOver() {
+        return state.isOver();
+    }
+
+    @Override
     public boolean canCalculateScore() {
-        FrameScore frameScore = state.createFrameScore();
-        if(frameScore.canCalculateSelfScore()) {
+        return canGetCalculateScore(state.createFrameScore());
+    }
+
+    @Override
+    public boolean canCalculateScore(final FrameScore frameScore) {
+        return canGetCalculateScore(state.addingUpFrameScore(frameScore));
+    }
+
+    private boolean canGetCalculateScore(FrameScore frameScore) {
+        if (frameScore.canCalculateSelfScore()) {
             return true;
         }
 
@@ -93,19 +97,6 @@ public class CommonBowlingFrame implements BowlingFrame {
         return nextFrame.canCalculateScore(frameScore);
     }
 
-    @Override
-    public boolean canCalculateScore(final FrameScore frameScore) {
-        FrameScore addingUpFrameScore = state.addingUpFrameScore(frameScore);
-        if(addingUpFrameScore.canCalculateSelfScore()) {
-            return true;
-        }
-
-        if (Objects.isNull(nextFrame)) {
-            return false;
-        }
-
-        return nextFrame.canCalculateScore(addingUpFrameScore);
-    }
 
     @Override
     public State getState() {

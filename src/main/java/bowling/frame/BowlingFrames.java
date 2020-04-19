@@ -28,9 +28,9 @@ public class BowlingFrames {
         prepareNextFrame(recentFrame);
     }
 
-    private void prepareNextFrame(BowlingFrame recentFrame) {
+    private void prepareNextFrame(final BowlingFrame recentFrame) {
         if (recentFrame.isOver() && frames.size() < MAX_BOWLING_FRAME_SIZE) {
-            frames.add(recentFrame.addNextFrame(frames.size()));
+            frames.add(recentFrame.appendNextFrame(frames.size()));
         }
     }
 
@@ -65,5 +65,9 @@ public class BowlingFrames {
 
     public BowlingFrame getFrame(final int index) {
         return frames.get(index);
+    }
+
+    public List<BowlingFrame> getFrames() {
+        return frames;
     }
 }
