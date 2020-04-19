@@ -2,6 +2,7 @@ package bowling.dto;
 
 import bowling.BowlingGame;
 import bowling.Player;
+import bowling.Score;
 import bowling.frame.BowlingFrame;
 import bowling.frame.BowlingFrames;
 
@@ -33,10 +34,15 @@ public class BowlingGameResult {
         for(BowlingFrame bowlingFrame : bowlingFrames.getFrames()) {
             BowlingFrameConsoleResult bowlingFrameConsoleResult = BowlingFrameConsoleResult.newInstance(bowlingFrame, totalScore);
             bowlingFrameConsoleResults.add(bowlingFrameConsoleResult);
-            totalScore = bowlingFrameConsoleResult.getTotalScore();
+            totalScore = extractTotalScore(bowlingFrame, totalScore);
         }
 
         return bowlingFrameConsoleResults;
+    }
+
+    private static int extractTotalScore(final BowlingFrame bowlingFrame, final int beforeTotalScore) {
+        Score score = bowlingFrame.getFrameScore();
+        return beforeTotalScore + score.getScore();
     }
 
     public String getName() {

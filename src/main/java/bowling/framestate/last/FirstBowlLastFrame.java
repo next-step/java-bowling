@@ -42,7 +42,7 @@ public class FirstBowlLastFrame implements State {
 
     @Override
     public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Arrays.asList(countOfPin, 0));
+        return beforeScore.addingUp(Arrays.asList(countOfPin));
     }
 
     @Override

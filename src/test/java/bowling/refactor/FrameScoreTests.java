@@ -48,7 +48,7 @@ public class FrameScoreTests {
     @Test
     public void canCalculateScoreTest() {
         FrameScore frameScore = FrameScore.createMiss(Score.of(7));
-        assertFalse(frameScore.canCalculateScore());
+        assertFalse(frameScore.canCalculateSelfScore());
     }
 
 }

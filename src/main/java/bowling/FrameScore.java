@@ -41,18 +41,18 @@ public class FrameScore {
     }
 
     public Score getScore() {
-        if (!canCalculateScore()) {
+        if (!canCalculateSelfScore()) {
             throw new IllegalStateException();
         }
         return score;
     }
 
-    public boolean canCalculateScore() {
+    public boolean canCalculateSelfScore() {
         return leftScoreCount.isEqualTo(0);
     }
 
     public FrameScore addingUp(final List<Integer> scores) {
-        if(canCalculateScore()) {
+        if(canCalculateSelfScore()) {
             return this;
         }
 

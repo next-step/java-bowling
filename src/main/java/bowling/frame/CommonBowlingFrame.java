@@ -28,7 +28,7 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     @Override
-    public Score getScore() {
+    public Score getFrameScore() {
         FrameScore frameScore = state.createFrameScore();
 
         return getScore(frameScore);
@@ -42,7 +42,7 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     private Score getScore(final FrameScore frameScore) {
-        if (frameScore.canCalculateScore()) {
+        if (frameScore.canCalculateSelfScore()) {
             return frameScore.getScore();
         }
 
@@ -71,6 +71,34 @@ public class CommonBowlingFrame implements BowlingFrame {
 
         nextFrame = BowlingFrame.newInstance(frameNumber + 1);
         return nextFrame;
+    }
+
+    @Override
+    public boolean canCalculateScore() {
+        FrameScore frameScore = state.createFrameScore();
+        if(frameScore.canCalculateSelfScore()) {
+            return true;
+        }
+
+        if (Objects.isNull(nextFrame)) {
+            return false;
+        }
+
+        return nextFrame.canCalculateScore(frameScore);
+    }
+
+    @Override
+    public boolean canCalculateScore(final FrameScore frameScore) {
+        FrameScore addingUpFrameScore = state.addingUpFrameScore(frameScore);
+        if(addingUpFrameScore.canCalculateSelfScore()) {
+            return true;
+        }
+
+        if (Objects.isNull(nextFrame)) {
+            return false;
+        }
+
+        return nextFrame.canCalculateScore(addingUpFrameScore);
     }
 
     @Override

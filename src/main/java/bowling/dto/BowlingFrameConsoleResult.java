@@ -1,5 +1,6 @@
 package bowling.dto;
 
+import bowling.FrameScore;
 import bowling.Score;
 import bowling.frame.BowlingFrame;
 import bowling.framestate.State;
@@ -9,19 +10,28 @@ public class BowlingFrameConsoleResult {
     private static final String SCORE_DELIMITER = "|";
 
     private final String frameScoreResult;
-    private final int totalScore;
+    private final String totalScore;
 
-    private BowlingFrameConsoleResult(final String frameScoreResult, final int totalScore) {
+    private BowlingFrameConsoleResult(final String frameScoreResult, final String totalScore) {
         this.frameScoreResult = frameScoreResult;
         this.totalScore = totalScore;
     }
 
-    public static BowlingFrameConsoleResult newInstance(final BowlingFrame bowlingFrame, final int beforeTotalScore) {
-        return new BowlingFrameConsoleResult(extractFrameScoreResult(bowlingFrame), extractTotalScore(bowlingFrame, beforeTotalScore));
+    public static BowlingFrameConsoleResult newInstance(final BowlingFrame bowlingFrame, final int totalScore) {
+        return new BowlingFrameConsoleResult(extractFrameScoreResult(bowlingFrame), setTotalScore(bowlingFrame, totalScore));
+    }
+
+    private static String setTotalScore(final BowlingFrame bowlingFrame, final int beforeTotalScore) {
+        FrameScore frameScore = bowlingFrame.getState().createFrameScore();
+        if (bowlingFrame.canCalculateScore()) {
+            return String.valueOf(extractTotalScore(bowlingFrame, beforeTotalScore));
+        }
+
+        return "";
     }
 
     private static int extractTotalScore(final BowlingFrame bowlingFrame, final int beforeTotalScore) {
-        Score score = bowlingFrame.getScore();
+        Score score = bowlingFrame.getFrameScore();
         return beforeTotalScore + score.getScore();
     }
 
@@ -35,7 +45,7 @@ public class BowlingFrameConsoleResult {
         return frameScoreResult;
     }
 
-    public int getTotalScore() {
+    public String getTotalScore() {
         return totalScore;
     }
 }

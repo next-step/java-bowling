@@ -19,13 +19,17 @@ public interface BowlingFrame {
 
     void bowl(int countOfPin);
 
-    Score getScore();
+    Score getFrameScore();
 
     Score addingUpScore(FrameScore beforeScore);
 
     boolean isOver();
 
     BowlingFrame addNextFrame(int frameNumber);
+
+    boolean canCalculateScore();
+
+    boolean canCalculateScore(FrameScore frameScore);
 
     State getState();
 }
