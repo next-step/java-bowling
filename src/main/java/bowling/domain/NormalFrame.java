@@ -68,4 +68,14 @@ public class NormalFrame implements Frame {
         }
         return next.calculateAdditionalScore(score);
     }
+
+    @Override
+    public void addFrameResult(Board board) {
+
+    }
+
+    @Override
+    public Board createBoard() {
+        return null;
+    }
 }

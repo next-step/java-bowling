@@ -37,4 +37,14 @@ public class FinalFrame implements Frame {
         return state.calculateAdditionalScore(score);
     }
 
+    @Override
+    public void addFrameResult(Board board) {
+
+    }
+
+    @Override
+    public Board createBoard() {
+        return null;
+    }
+
 }

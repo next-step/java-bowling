@@ -10,4 +10,8 @@ public interface Frame {
     Score getScore();
 
     Score calculateAdditionalScore(Score beforeScore);
+
+    void addFrameResult(Board board);
+
+    Board createBoard();
 }
