@@ -1,14 +1,12 @@
 package bowling.domain.point;
 
-import bowling.domain.frame.OverThrowBallException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class Point {
-    private static final int MAX_POINT = 10;
-    private static final int MIN_POINT = 0;
+    public static final int MAX_POINT = 10;
+    public static final int MIN_POINT = 0;
 
     private final int point;
 
@@ -34,11 +32,11 @@ public class Point {
         return point;
     }
 
-    public Point checkLeftPin(int leftPin) {
-        if (this.point <= leftPin) {
-            return this;
+    public boolean isMaxPoint() {
+        if (point == MAX_POINT) {
+            return true;
         }
-        throw new OverThrowBallException("다시 입력해주세요(남은 핀: " + leftPin + ")");
+        return false;
     }
 
     private static void validate(int input) {

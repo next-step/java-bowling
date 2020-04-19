@@ -32,7 +32,7 @@ public class BowlingGameTest {
         BowlingGame bowlingGame = new BowlingGame(player);
         Frames frames = bowlingGame.getFrames();
         assertThat(
-                bowlingGame.throwBall(frames.getFrame(0), Point.of(10))
+                bowlingGame.throwBall(Point.of(10))
         ).isEqualTo(frames.getFrame(1));
     }
 

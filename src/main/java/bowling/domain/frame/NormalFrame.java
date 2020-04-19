@@ -11,7 +11,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isThrowable() {
-        if (points.getTryCount() >= MAX_TRYABLE_COUNT || points.isFirstStrike()) {
+        if (points.isTryOver(MAX_TRYABLE_COUNT) || points.isFirstStrike()) {
             return false;
         }
         return true;

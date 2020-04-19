@@ -51,7 +51,7 @@ public class ResultView {
     }
 
     private static int getSumScore(Integer score) {
-        if(score != null){
+        if (score != null) {
             return score;
         }
         return 0;
@@ -74,13 +74,13 @@ public class ResultView {
     }
 
     private static String getScoreMark(Points points) {
-        if (points.getTryCount() == FIRST_TRY_COUNT) {
+        if (points.isTryCount(FIRST_TRY_COUNT)) {
             return getMark(points.getFirstPoint());
         }
-        if (points.getTryCount() == SECOND_TRY_COUNT) {
+        if (points.isTryCount(SECOND_TRY_COUNT)) {
             return getMark(points.getFirstPoint(), points.getSecondPoint());
         }
-        if (points.getTryCount() == THIRD_TRY_COUNT) {
+        if (points.isTryCount(THIRD_TRY_COUNT)) {
             return getMark(points.getFirstPoint(), points.getSecondPoint()) + MARK_JOIN_DELIMETER + getMark(points.getThirdPoint());
         }
         return MARK_NONE;

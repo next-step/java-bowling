@@ -1,5 +1,7 @@
 package bowling.domain.point;
 
+import bowling.domain.frame.OverThrowBallException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,6 @@ public class Points {
     private static final int FIRST_TRY_COUNT = 1;
     private static final int SECOND_TRY_COUNT = 2;
 
-    private static final int MAX_POINT_COUNT = 10;
-    private static final int STRIKE_POINT = 10;
     private static final int DOUBLE_STRIKE_POINT = 20;
     private static final int SPARE_POINT = 10;
 
@@ -31,12 +31,12 @@ public class Points {
         return new Points(points);
     }
 
-    public int getTryCount() {
-        return points.size();
+    public boolean isTryCount(int count) {
+        return points.size() == count;
     }
 
-    public Point get(int index) {
-        return points.get(index);
+    public boolean isTryOver(int maxTryableCount) {
+        return points.size() >= maxTryableCount;
     }
 
     public int getSum() {
@@ -46,42 +46,49 @@ public class Points {
     }
 
     public boolean isFirstStrike() {
-        if (points.size() == FIRST_TRY_COUNT && getSum() == STRIKE_POINT) {
+        if (isTryCount(FIRST_TRY_COUNT) && getFirstPoint().isMaxPoint()) {
             return true;
         }
         return false;
     }
 
     public boolean isDoubleStrike() {
-        if (points.size() == SECOND_TRY_COUNT && getSum() == DOUBLE_STRIKE_POINT) {
+        if (isTryCount(SECOND_TRY_COUNT) && getSum() == DOUBLE_STRIKE_POINT) {
             return true;
         }
         return false;
     }
 
     public boolean isSpare() {
-        if (points.size() == SECOND_TRY_COUNT && getSum() == SPARE_POINT && !isFirstStrike()) {
+        if (isTryCount(SECOND_TRY_COUNT) && getSum() == SPARE_POINT) {
             return true;
         }
         return false;
     }
 
-    public int getLeftPoint() {
-        if (points.size() == FIRST_TRY_COUNT && !isFirstStrike()) {
-            return MAX_POINT_COUNT - getSum();
+    public void validateLeftPoint(Point point) {
+        int leftPint = getLeftPoint();
+        if (point.getPoint() > leftPint) {
+            throw new OverThrowBallException("다시 입력해주세요(남은 핀: " + leftPint + ")");
         }
-        return MAX_POINT_COUNT;
     }
 
-    public Point getFirstPoint(){
+    private int getLeftPoint() {
+        if (isTryCount(FIRST_TRY_COUNT) && !isFirstStrike()) {
+            return Point.MAX_POINT - getSum();
+        }
+        return Point.MAX_POINT;
+    }
+
+    public Point getFirstPoint() {
         return points.get(FIRST_POINT_INDEX);
     }
 
-    public Point getSecondPoint(){
+    public Point getSecondPoint() {
         return points.get(SECOND_POINT_INDEX);
     }
 
-    public Point getThirdPoint(){
+    public Point getThirdPoint() {
         return points.get(THIRD_POINT_INDEX);
     }
 }

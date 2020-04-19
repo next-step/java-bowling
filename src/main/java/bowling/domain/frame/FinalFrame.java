@@ -13,10 +13,10 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isThrowable() {
-        if (points.getTryCount() == NONE_TRY_COUNT || points.getTryCount() == FIRST_TRY_COUNT) {
+        if (points.isTryCount(NONE_TRY_COUNT) || points.isTryCount(FIRST_TRY_COUNT)) {
             return true;
         }
-        if (points.isSpare() || points.isDoubleStrike()) {
+        if (points.isTryCount(SECOND_TRY_COUNT) && (points.getFirstPoint().isMaxPoint() || points.isSpare() || points.isDoubleStrike())) {
             return true;
         }
         return false;
@@ -33,7 +33,7 @@ public class FinalFrame extends Frame {
         if (points.isFirstStrike()) {
             return Score.ofStrike();
         }
-        if (points.getTryCount() == SECOND_TRY_COUNT && points.isSpare() && !points.isFirstStrike()) {
+        if (points.isTryCount(SECOND_TRY_COUNT) && points.isSpare()) {
             return Score.ofSpare();
         }
         return Score.ofMiss(points.getSum());
