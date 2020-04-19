@@ -1,4 +1,4 @@
-package bowling;
+package bowling.frame;
 
 import bowling.frame.LastBowlingFrame;
 import org.junit.jupiter.api.DisplayName;

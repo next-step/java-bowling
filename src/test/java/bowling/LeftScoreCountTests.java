@@ -1,4 +1,4 @@
-package bowling.refactor;
+package bowling;
 
 import bowling.LeftScoreCount;
 import org.junit.jupiter.api.DisplayName;
