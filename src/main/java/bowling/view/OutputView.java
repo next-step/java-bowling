@@ -13,6 +13,7 @@ public class OutputView {
     private static final String VERTICAL_LINE = "|";
     private static final String SPACE = " ";
     private static final int LENGTH_PER_FRAME = 6;
+    private static final String EMPTY_STRING = "";
 
     public void showFrameResult(Player player, FrameResults currentResult) {
         showBoardHeader();
@@ -89,7 +90,7 @@ public class OutputView {
 
     private void showEmptyFrame() {
         ViewUtils.print(VERTICAL_LINE);
-        ViewUtils.print(appendSpaces("", 6));
+        ViewUtils.print(appendSpaces(EMPTY_STRING, LENGTH_PER_FRAME));
         ViewUtils.print(VERTICAL_LINE);
     }
 
@@ -98,6 +99,6 @@ public class OutputView {
     }
 
     private void newLine() {
-        ViewUtils.printLine("");
+        ViewUtils.printLine(EMPTY_STRING);
     }
 }
