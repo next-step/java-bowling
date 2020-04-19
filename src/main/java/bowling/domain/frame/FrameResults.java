@@ -3,8 +3,6 @@ package bowling.domain.frame;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bowling.Constants.CAN_NOT_CALCULATE_SCORE;
-
 public class FrameResults {
 
     private final List<Frame> frames;

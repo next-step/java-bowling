@@ -92,16 +92,12 @@ public class FinalFrame implements Frame {
 
         Score score = ((Finished) state).createScore();
 
-        if (score.isEnded()) {
-            return score.getScore();
-        }
-
         for (State state : stateHistory.getValue()) {
-            score.addAdditionalScore(state.getFelledPin());
-
             if (score.isEnded()) {
                 return score.getScore();
             }
+
+            score.addAdditionalScore(state.getFelledPin());
         }
 
         return score.getScore();
