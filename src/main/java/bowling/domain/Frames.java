@@ -52,7 +52,6 @@ public class Frames {
         }
         if (!isFinalFrame()) {
             processNormalFrame();
-            this.frame = new Frame();
         }
         frameScores.calculateScore(this);
     }
@@ -60,6 +59,7 @@ public class Frames {
     private void processNormalFrame() {
         if (frame.isNextFrame()) {
             addFrame(new NormalFrame(frame));
+            this.frame = new Frame();
         }
     }
 
