@@ -13,13 +13,14 @@ import java.util.stream.Collectors;
 
 public class Frames {
     private static final int FIRST_FRAME_INDEX = 0;
+    private static final int LAST_INDEX = 1;
 
     private final List<Frame> frames;
-    private Frame currentFrame;
+    private Frame cursor;
 
     private Frames() {
         this.frames = new ArrayList<>(Arrays.asList(NormalFrame.ofFirst()));
-        this.currentFrame = frames.get(FIRST_FRAME_INDEX);
+        this.cursor = frames.get(FIRST_FRAME_INDEX);
     }
 
     public static Frames create() {
@@ -27,11 +28,14 @@ public class Frames {
     }
 
     public void bowl(final Pins knockOver) {
-        currentFrame.bowl(knockOver);
-        if (hasNextFrame()) {
-            currentFrame = currentFrame.getNext().get();
-            frames.add(currentFrame);
+        final Frame afterBowlingFrame = getLast().bowl(knockOver);
+        if (isNextFrame()) {
+            frames.add(afterBowlingFrame);
         }
+    }
+
+    public void changeFrameToNext() {
+        cursor = getLast();
     }
 
     public List<Frame> getFrames() {
@@ -53,10 +57,14 @@ public class Frames {
     }
 
     public Frame getCurrent() {
-        return currentFrame;
+        return cursor;
     }
 
-    private boolean hasNextFrame() {
-        return currentFrame.isEnd() && currentFrame.getNext().isPresent();
+    private boolean isNextFrame() {
+        return getLast().isFinish() && getLast().getNext().isPresent();
+    }
+
+    private Frame getLast() {
+        return frames.get(frames.size() - LAST_INDEX);
     }
 }

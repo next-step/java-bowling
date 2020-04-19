@@ -16,7 +16,6 @@ public class OutputView {
     private OutputView() {}
 
     public static void printFramesHeader() {
-        System.out.println();
         System.out.println(FRAMES_HEADER);
     }
 

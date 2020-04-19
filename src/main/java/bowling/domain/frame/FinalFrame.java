@@ -20,7 +20,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isEnd() {
+    public boolean isFinish() {
         return isBonusGameOver() || isGeneralGameOver();
     }
 
@@ -31,7 +31,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public Score getScore() {
-        if (states.isEmpty() || !isEnd()) {
+        if (states.isEmpty() || !isFinish()) {
             return Score.NOT_ADDABLE_SCORE;
         }
         return sum();

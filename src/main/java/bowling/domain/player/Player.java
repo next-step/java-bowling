@@ -1,7 +1,9 @@
 package bowling.domain.player;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.state.States;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 
 import java.util.List;
@@ -18,6 +20,24 @@ public class Player {
 
     public static Player of(final String name) {
         return new Player(PlayerName.of(name), Frames.create());
+    }
+
+    public void bowl(final Pins knockOver) {
+        frames.bowl(knockOver);
+    }
+
+    public void waitNextFrame() {
+        frames.changeFrameToNext();
+    }
+
+    public boolean isFinish() {
+        Frame current = frames.getCurrent();
+        return current.isFinish();
+    }
+
+    public boolean isGameOver() {
+        Frame current = frames.getCurrent();
+        return current.getFrameNumber().isFinal() && current.isFinish();
     }
 
     public String getName() {

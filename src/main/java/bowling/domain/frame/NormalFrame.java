@@ -22,14 +22,17 @@ public class NormalFrame extends Frame {
     public Frame bowl(final Pins pins) {
         State currentState = getCurrentState();
         states.add(currentState.roll(pins));
-        if (!isEnd()) {
+        if (!isFinish()) {
             return this;
         }
         return nextFrame;
     }
 
     @Override
-    public boolean isEnd() {
+    public boolean isFinish() {
+        if (states.isEmpty()) {
+            return false;
+        }
         return states.getLast().isTurnOver();
     }
 
@@ -40,7 +43,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public Score getScore() {
-        if (states.isEmpty() || !isEnd()) {
+        if (states.isEmpty() || !isFinish()) {
             return Score.NOT_ADDABLE_SCORE;
         }
 

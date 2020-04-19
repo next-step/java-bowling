@@ -61,7 +61,7 @@ public abstract class Frame {
         return totalScore;
     }
 
-    public abstract boolean isEnd();
+    public abstract boolean isFinish();
 
     public abstract Score getScore();
 
