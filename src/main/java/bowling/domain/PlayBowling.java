@@ -18,10 +18,11 @@ public class PlayBowling {
     private static NormalFrame playNormalFrame(Game game, NormalFrame frame) {
         for (int i = 0; i < FRAME_NUM - 1; i++) {
             int felledPins = firstRoll(game, frame);
-            felledPins = getfelledPins(game, frame, felledPins);
+            felledPins = getFelledPins(game, frame, felledPins);
             bonus(felledPins);
             frame = getNormalFrame(frame, i);
         }
+
         return frame;
     }
 
@@ -39,13 +40,17 @@ public class PlayBowling {
     }
 
     private static void bonus(int felledPins) {
+        if (bonusFlag) {
+            return;
+        }
+
         if (felledPins == MAX_PINS) {
             bonusFlag = true;
         }
     }
 
-    private static int getfelledPins(Game game, NormalFrame frame, int felledPins) {
-        if (felledPins < MAX_PINS) {
+    private static int getFelledPins(Game game, NormalFrame frame, int felledPins) {
+        if (!frame.isFinish()) {
             felledPins = roll(game, frame);
         }
         return felledPins;
