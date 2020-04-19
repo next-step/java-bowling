@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
+import bowling.domain.score.Score;
 import bowling.domain.frame.state.*;
 import bowling.exception.BowlingException;
 

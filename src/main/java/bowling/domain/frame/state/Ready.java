@@ -1,7 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
-import bowling.domain.Score;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
 public class Ready implements State {

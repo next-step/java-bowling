@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
+import bowling.domain.score.Score;
 import bowling.domain.frame.state.Miss;
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.Spare;

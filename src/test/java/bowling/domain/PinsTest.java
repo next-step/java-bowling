@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

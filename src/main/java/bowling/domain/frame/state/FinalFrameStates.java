@@ -1,6 +1,6 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.Score;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
 import java.util.Arrays;
