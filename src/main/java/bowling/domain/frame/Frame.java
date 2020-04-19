@@ -24,4 +24,6 @@ public interface Frame {
     int getScore();
 
     int calculateAdditionalScore(Score score);
+
+    boolean canCalculateScore();
 }

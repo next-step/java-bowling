@@ -24,11 +24,11 @@ public class FrameResults {
     }
 
     private void addScore(List<Integer> scores, Frame frame) {
-        int score = frame.getScore();
-
-        if (score == CAN_NOT_CALCULATE_SCORE) {  //TODO: Getter 사용 해결 고민
-            return;
+        if(!frame.canCalculateScore()) {
+            return ;
         }
+
+        int score = frame.getScore();
 
         if (scores.isEmpty()) {
             scores.add(score);
