@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import bowling.domain.Score;
+
 public class LastFrameBowl extends Running {
     private List<Pins> rolls = new ArrayList<>();
     private int count = 2;
@@ -29,6 +31,12 @@ public class LastFrameBowl extends Running {
         return rolls.stream()
                     .map(pins -> displayText(pins))
                     .collect(Collectors.joining(DELIMITER));
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        return (Score) rolls.stream()
+                            .map(pins -> pins.sumScore(score));
     }
 
     private String displayText(Pins pins) {

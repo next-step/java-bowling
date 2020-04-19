@@ -1,5 +1,8 @@
 package bowling.domain.State;
 
+import bowling.domain.Score;
+import bowling.exception.CannotCalculateException;
+
 public class FirstBowl extends Running {
     private final Pins firstPins;
 
@@ -19,5 +22,14 @@ public class FirstBowl extends Running {
     @Override
     public String getDesc() {
         return firstPins.getDesc();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = firstPins.sumScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        throw new CannotCalculateException("계산 할 수 있는 상태가 아닙니다");
     }
 }

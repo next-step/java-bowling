@@ -1,5 +1,7 @@
 package bowling.domain.State;
 
+import bowling.domain.Score;
+
 public class Spare extends Finished {
     private final Pins firstPins;
     private final Pins secondPins;
@@ -16,5 +18,20 @@ public class Spare extends Finished {
     @Override
     public String getDesc() {
         return firstPins.getDesc(secondPins);
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofSpare();
+    }
+
+    @Override
+    public Score calculateAdditionalScore(Score score) {
+        score = firstPins.sumScore(score);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        score = secondPins.sumScore(score);
+        return score;
     }
 }
