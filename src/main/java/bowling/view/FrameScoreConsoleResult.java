@@ -1,4 +1,4 @@
-package bowling.dto;
+package bowling.view;
 
 import bowling.Pin;
 import bowling.framestate.State;

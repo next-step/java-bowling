@@ -2,6 +2,8 @@ package bowling.view;
 
 import bowling.dto.BowlingFrameConsoleResult;
 import bowling.dto.BowlingGameResult;
+import bowling.frame.BowlingFrame;
+import bowling.framestate.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,7 @@ public class OutputView {
     public static void printBowlingGame(final BowlingGameResult bowlingGameResult) {
         System.out.println(GAME_FIRST_ROW);
 
-        List<String> scores = getScoreRow(bowlingGameResult, BowlingFrameConsoleResult::getFrameScoreResult);
+        List<String> scores = getScoreRow(bowlingGameResult, bowlingFrameConsoleResult -> extractFrameScoreResult(bowlingFrameConsoleResult.getFrameState()));
         List<String> totalScores = getScoreRow(bowlingGameResult, bowlingFrameConsoleResult -> String.valueOf(bowlingFrameConsoleResult.getTotalScore()));
 
         System.out.println(makeGameRow(GAME_ROW_BLANK + bowlingGameResult.getName(), makeFrameWordsWithBlank(scores)));
@@ -63,5 +65,11 @@ public class OutputView {
                 .forEach(i -> scoresWithBlank.add(GAME_FRAME_SCORE_EMPTY_FORMAT));
 
         return scoresWithBlank;
+    }
+
+
+    private static String extractFrameScoreResult(final State state) {
+        FrameScoreConsoleResult frameScoreConsoleResult = FrameScoreConsoleResult.of(state);
+        return frameScoreConsoleResult.toString(state.getPins());
     }
 }

@@ -3,19 +3,20 @@ package bowling.dto;
 import bowling.Score;
 import bowling.frame.BowlingFrame;
 import bowling.framestate.State;
+import bowling.view.FrameScoreConsoleResult;
 
 public class BowlingFrameConsoleResult {
 
-    private final String frameScoreResult;
+    private final State frameState;
     private final String totalScore;
 
-    private BowlingFrameConsoleResult(final String frameScoreResult, final String totalScore) {
-        this.frameScoreResult = frameScoreResult;
+    private BowlingFrameConsoleResult(final State frameState, final String totalScore) {
+        this.frameState = frameState;
         this.totalScore = totalScore;
     }
 
     public static BowlingFrameConsoleResult newInstance(final BowlingFrame bowlingFrame, final Score totalScore) {
-        return new BowlingFrameConsoleResult(extractFrameScoreResult(bowlingFrame), makeTotalScore(bowlingFrame, totalScore));
+        return new BowlingFrameConsoleResult(bowlingFrame.getState(), makeTotalScore(bowlingFrame, totalScore));
     }
 
     private static String makeTotalScore(final BowlingFrame bowlingFrame, final Score totalScore) {
@@ -26,14 +27,8 @@ public class BowlingFrameConsoleResult {
         return "";
     }
 
-    private static String extractFrameScoreResult(final BowlingFrame bowlingFrame) {
-        State state = bowlingFrame.getState();
-        FrameScoreConsoleResult frameScoreConsoleResult = FrameScoreConsoleResult.of(state);
-        return frameScoreConsoleResult.toString(state.getPins());
-    }
-
-    public String getFrameScoreResult() {
-        return frameScoreResult;
+    public State getFrameState() {
+        return frameState;
     }
 
     public String getTotalScore() {
