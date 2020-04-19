@@ -1,6 +1,7 @@
 package seul.bowling.domain.status;
 
 import org.junit.jupiter.api.Test;
+import seul.bowling.domain.Pins;
 import seul.bowling.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -8,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StrikeTest {
     @Test
     void addScore() {
-        Status status = new Strike(new Score());
+        Status status = new Strike(new Score(), new Pins());
 
         status.addScore(10);
 
@@ -18,7 +19,7 @@ public class StrikeTest {
 
     @Test
     void endScore() {
-        Status status = new Strike(new Score());
+        Status status = new Strike(new Score(), new Pins());
         status.addScore(10);
 
         boolean endScore = status.endScore();

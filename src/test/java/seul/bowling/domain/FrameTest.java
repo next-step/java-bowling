@@ -13,7 +13,7 @@ public class FrameTest {
         frame.addPins(9);
         frame.addPins(1);
 
-        assertThat(frame.getPins().allClear()).isTrue();
+        assertThat(frame.getStatus().getPins().allClear()).isTrue();
         assertThat(frame.getStatus().getClass()).isEqualTo(Spare.class);
         assertThat(frame.getStatus().getScore().getScore()).isEqualTo(10);
     }
