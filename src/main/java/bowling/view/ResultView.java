@@ -18,6 +18,8 @@ public class ResultView {
     private static final int STRIKE_POINT = 10;
     private static final int GUTTER_POINT = 0;
 
+    private static final int DEFAULT_SCORE = 0;
+
     private static final String MARK_JOIN_DELIMETER = "|";
     private static final String MARK_STRIKE = "X";
     private static final String MARK_SPARE = "/";
@@ -27,6 +29,8 @@ public class ResultView {
     private static final String FRAME_HEAD = "|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |";
     private static final String FRAME_LINE = "|";
     private static final String FRAME_EMPTY = "        |";
+
+
 
     public static void viewResult(Frames frames) {
         viewFrameHead();
@@ -46,7 +50,7 @@ public class ResultView {
     private static void viewScores(Frames frames) {
         viewPlayerName("");
         StringBuilder sb = new StringBuilder();
-        Integer sumScore = 0;
+        Integer sumScore = DEFAULT_SCORE;
         LinkedList<Frame> linkedFrames = frames.getFrames();
         for (int i = 0; i < frames.size(); i++) {
             sb.append(getScores(linkedFrames.get(i), sumScore));
@@ -68,7 +72,7 @@ public class ResultView {
         if (score != null) {
             return score;
         }
-        return 0;
+        return DEFAULT_SCORE;
     }
 
     private static String viewFrame(Frame frame) {
