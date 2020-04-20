@@ -1,9 +1,8 @@
-package bowling.framestate.common;
+package bowling.framestate;
 
 import bowling.FrameScore;
 import bowling.LeftScoreCount;
 import bowling.Pin;
-import bowling.framestate.State;
 
 import java.util.Arrays;
 import java.util.Collections;

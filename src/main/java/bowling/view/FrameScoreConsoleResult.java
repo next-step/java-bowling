@@ -2,8 +2,7 @@ package bowling.view;
 
 import bowling.Pin;
 import bowling.dto.FrameState;
-import bowling.framestate.State;
-import bowling.framestate.common.*;
+import bowling.framestate.*;
 
 import java.util.*;
 import java.util.function.BiFunction;

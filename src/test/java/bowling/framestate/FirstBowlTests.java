@@ -1,9 +1,12 @@
-package bowling.framestate.common;
+package bowling.framestate;
 
 import bowling.FrameScore;
 import bowling.LeftScoreCount;
 import bowling.Pin;
 import bowling.Score;
+import bowling.framestate.FirstBowl;
+import bowling.framestate.Miss;
+import bowling.framestate.Spare;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,8 +1,7 @@
-package bowling.framestate.common;
+package bowling.framestate;
 
 import bowling.FrameScore;
 import bowling.Pin;
-import bowling.framestate.State;
 
 import java.util.Collections;
 import java.util.List;

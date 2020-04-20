@@ -4,7 +4,7 @@ import bowling.FrameScore;
 import bowling.Pin;
 import bowling.Score;
 import bowling.framestate.State;
-import bowling.framestate.common.Ready;
+import bowling.framestate.Ready;
 
 import java.util.Arrays;
 import java.util.Objects;

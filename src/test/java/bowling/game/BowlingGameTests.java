@@ -1,5 +1,7 @@
-package bowling;
+package bowling.game;
 
+import bowling.BowlingGame;
+import bowling.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,48 +1,49 @@
-package bowling.framestate.common;
+package bowling.framestate;
 
 import bowling.FrameScore;
 import bowling.LeftScoreCount;
 import bowling.Pin;
 import bowling.Score;
+import bowling.framestate.Miss;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("스페어 테스트")
-public class SpareTests {
+@DisplayName("Miss 테스트")
+public class MissTests {
 
-    private Spare spare = Spare.newInstance(Pin.of(6), Pin.of(4));
+    private Miss miss = Miss.newInstance(Pin.of(6), Pin.of(3));
 
     @DisplayName("생성 테스트")
     @Test
     public void generateTest() {
-        assertThatCode(() -> Spare.newInstance(Pin.of(6), Pin.of(4)));
+        assertThatCode(() -> Miss.newInstance(Pin.of(6), Pin.of(3)));
     }
 
     @DisplayName("bowl 테스트")
     @Test
     public void bowlTest() {
         assertThatIllegalStateException()
-                .isThrownBy(() -> spare.bowl(Pin.of(1)));
+                .isThrownBy(() -> miss.bowl(Pin.of(1)));
     }
 
     @DisplayName("FrameScore 생성 테스트")
     @Test
     public void createFrameScoreTest() {
-        assertThat(spare.createFrameScore()).isEqualTo(FrameScore.createSpare());
+        assertThat(miss.createFrameScore()).isEqualTo(FrameScore.newInstance(Score.of(9), LeftScoreCount.of(0)));
     }
 
     @DisplayName("FrameScore 합산 테스트")
     @Test
     public void addingUpFrameScoreTest() {
-        assertThat(spare.addNextAddingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
+        assertThat(miss.addNextAddingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(19), LeftScoreCount.of(0)));
     }
 
     @DisplayName("종료 테스트")
     @Test
     public void isOverTest() {
-        assertTrue(spare.isOver());
+        assertTrue(miss.isOver());
     }
 }

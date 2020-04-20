@@ -5,9 +5,9 @@ import bowling.LeftScoreCount;
 import bowling.Pin;
 import bowling.Score;
 import bowling.framestate.State;
-import bowling.framestate.common.Ready;
-import bowling.framestate.common.Spare;
-import bowling.framestate.common.Strike;
+import bowling.framestate.Ready;
+import bowling.framestate.Spare;
+import bowling.framestate.Strike;
 
 import java.util.Arrays;
 import java.util.List;
