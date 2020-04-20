@@ -274,10 +274,20 @@ public class ResultView2 {
                             if(gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isGutterOrMiss()){
                                 printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
+
+                            if(gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)){
+                                printFinalFrameWhenStrikeThird(gameResults.getResultByIndex(j));
+                            }
                         }
 
                         if (i < j) {
-                            printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                            if(gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)){
+                                printFinalFrameWhenStrikeThird(gameResults.getResultByIndex(j));
+                            }
+
+                            if(!gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)){
+                                printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                            }
                         }
                     }
                 }
@@ -307,7 +317,11 @@ public class ResultView2 {
                                 printFinalFrameWhenStrikeFourth(gameResults.getResultByIndex(j));
                             }
 
-                            if(!gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)){
+                            if(gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(SPARE)){
+                                printFinalFrameWhenSpareThird(gameResults.getResultByIndex(j));
+                            }
+
+                            if(gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isGutterOrMiss()){
                                 printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
                         }
