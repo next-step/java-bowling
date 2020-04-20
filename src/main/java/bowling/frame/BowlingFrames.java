@@ -6,6 +6,7 @@ import bowling.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class BowlingFrames {
     public static final int MAX_BOWLING_FRAME_SIZE = 10;
@@ -27,9 +28,15 @@ public class BowlingFrames {
     }
 
     public void prepareNextFrame() {
-        if (getRecentBowlingFrame().isOver() && frames.size() < MAX_BOWLING_FRAME_SIZE) {
-            frames.add(getRecentBowlingFrame().appendNextFrame(frames.size()));
+        if (!isRecentFrameOver()) {
+            throw new IllegalStateException("The frame is not over");
         }
+
+        if (frames.size() >= MAX_BOWLING_FRAME_SIZE) {
+            throw new IllegalStateException("This is the last Frame.");
+        }
+
+        frames.add(getRecentBowlingFrame().appendNextFrame(frames.size()));
     }
 
     public boolean isAllFrameOver() {

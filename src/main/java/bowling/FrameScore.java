@@ -38,6 +38,10 @@ public class FrameScore {
         return new FrameScore(Score.ofZeroPins(), LeftScoreCount.of(2));
     }
 
+    public static FrameScore createMiss(final Score score) {
+        return new FrameScore(score, LeftScoreCount.of(0));
+    }
+
     public static FrameScore createGutter() {
         return new FrameScore(Score.ofZeroPins(), LeftScoreCount.of(0));
     }

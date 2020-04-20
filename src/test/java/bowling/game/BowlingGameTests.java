@@ -25,14 +25,14 @@ public class BowlingGameTests {
         assertThatCode(() -> bowlingGame.bowl(Pin.ofMax())).doesNotThrowAnyException();
     }
 
-
     @DisplayName("게임 투구 테스트 - 에러")
     @Test
     public void bowlAbnormalTest() {
         BowlingGame bowlingGame = BowlingGame.newInstance("ABC");
-        IntStream.range(0, 11)
+        IntStream.range(0, 9)
                 .forEach(i -> doStrike(bowlingGame));
-
+        bowlingGame.bowl(Pin.ofMax());
+        bowlingGame.bowl(Pin.ofMax());
 
         assertThatIllegalStateException()
                 .isThrownBy(() -> bowlingGame.bowl(Pin.ofMax()));

@@ -39,8 +39,9 @@ public class BowlingFramesTests {
     @Test
     public void overTest() {
         BowlingFrames bowlingFrames = BowlingFrames.newInstance();
-        IntStream.range(0, 10)
+        IntStream.range(0, 9)
                 .forEach(i -> doStrike(bowlingFrames));
+        bowlingFrames.bowl(Pin.ofMax());
 
         assertFalse(bowlingFrames.isAllFrameOver());
 
@@ -59,7 +60,7 @@ public class BowlingFramesTests {
         BowlingFrames bowlingFrames = BowlingFrames.newInstance();
         assertThat(bowlingFrames.size()).isEqualTo(1);
 
-        IntStream.range(0, 10)
+        IntStream.range(0, 9)
                 .forEach(i -> doStrike(bowlingFrames));
         assertThat(bowlingFrames.size()).isEqualTo(10);
     }
