@@ -102,7 +102,7 @@ public class LastBowlingFrameTests {
     public void lastFrameCanCalculateTest2(List<Pin> scores, FrameScore beforeFrameScore, boolean expectedResult) {
         LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
         scores.forEach(bowlingFrame::bowl);
-        assertThat(bowlingFrame.canCalculateScore(beforeFrameScore)).isEqualTo(expectedResult);
+        assertThat(bowlingFrame.canCalculateWithBeforeScore(beforeFrameScore)).isEqualTo(expectedResult);
     }
 
     private static Stream<Arguments> lastFrameCanCalculateTestCases2() {

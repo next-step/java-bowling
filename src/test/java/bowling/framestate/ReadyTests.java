@@ -35,7 +35,7 @@ public class ReadyTests {
 
     @DisplayName("FrameScore 합산 테스트")
     @Test
-    public void addingUpFrameScoreTest() {
+    public void sumBeforeScoreTest() {
         assertThat(ready.sumBeforeScore(FrameScore.createStrike())).isEqualTo(FrameScore.createStrike());
         assertThat(ready.sumBeforeScore(FrameScore.createSpare())).isEqualTo(FrameScore.createSpare());
     }

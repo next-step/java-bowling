@@ -36,7 +36,7 @@ public class StrikeTests {
 
     @DisplayName("FrameScore 합산 테스트")
     @Test
-    public void addingUpFrameScoreTest() {
+    public void sumBeforeScoreTest() {
         assertThat(strike.sumBeforeScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(1)));
         assertThat(strike.sumBeforeScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
     }

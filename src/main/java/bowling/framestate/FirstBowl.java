@@ -4,7 +4,6 @@ import bowling.FrameScore;
 import bowling.LeftScoreCount;
 import bowling.Pin;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -46,7 +45,7 @@ public class FirstBowl implements State {
 
     @Override
     public FrameScore sumBeforeScore(final FrameScore beforeScore) {
-        return beforeScore.addNextAddingUpScores(Collections.singletonList(pinCount.toScore()));
+        return beforeScore.makeFrameScoreWithSumScore(Collections.singletonList(pinCount.toScore()));
     }
 
     @Override

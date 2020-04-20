@@ -43,7 +43,7 @@ public class FirstBowlTests {
 
     @DisplayName("FrameScore 합산 테스트")
     @Test
-    public void addingUpFrameScoreTest() {
+    public void sumBeforeScoreTest() {
         assertThat(firstBowl.sumBeforeScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(1)));
         assertThat(firstBowl.sumBeforeScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(0)));
     }

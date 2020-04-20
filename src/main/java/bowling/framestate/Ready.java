@@ -33,7 +33,7 @@ public class Ready implements State {
 
     @Override
     public FrameScore sumBeforeScore(final FrameScore beforeScore) {
-        return beforeScore.addNextAddingUpScores(Collections.emptyList());
+        return beforeScore.makeFrameScoreWithSumScore(Collections.emptyList());
     }
 
     @Override

@@ -36,7 +36,7 @@ public class GutterTests {
 
     @DisplayName("FrameScore 합산 테스트")
     @Test
-    public void addingUpFrameScoreTest() {
+    public void sumBeforeScoreTest() {
         assertThat(gutter.sumBeforeScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(10), LeftScoreCount.of(0)));
         assertThat(gutter.sumBeforeScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(10), LeftScoreCount.of(0)));
     }

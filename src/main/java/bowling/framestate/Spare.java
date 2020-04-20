@@ -33,7 +33,7 @@ public class Spare implements State {
 
     @Override
     public FrameScore sumBeforeScore(final FrameScore beforeScore) {
-        return beforeScore.addNextAddingUpScores(firstPinCount.toScore(), secondPinCount.toScore());
+        return beforeScore.makeFrameScoreWithSumScore(firstPinCount.toScore(), secondPinCount.toScore());
     }
 
     @Override

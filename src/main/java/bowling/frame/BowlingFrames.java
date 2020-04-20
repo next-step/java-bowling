@@ -44,14 +44,6 @@ public class BowlingFrames {
         return getRecentBowlingFrame().isOver();
     }
 
-    private BowlingFrame getRecentBowlingFrame() {
-        return frames.get(frames.size() - 1);
-    }
-
-    public int size() {
-        return frames.size();
-    }
-
     public List<Score> getTotalScores() {
         List<Score> totalScores = new ArrayList<>();
         Score totalScore = Score.ofZeroPins();
@@ -63,6 +55,14 @@ public class BowlingFrames {
         }
 
         return totalScores;
+    }
+
+    private BowlingFrame getRecentBowlingFrame() {
+        return frames.get(frames.size() - 1);
+    }
+
+    public int size() {
+        return frames.size();
     }
 
     public BowlingFrame getFrame(final int index) {

@@ -65,29 +65,21 @@ public class FrameScore {
         return leftScoreCount.isEqualTo(0);
     }
 
-    public FrameScore addNextAddingUpScores(final Score... scores) {
-        return addNextAddingUpScores(Arrays.asList(scores));
+    public FrameScore makeFrameScoreWithSumScore(final Score... scores) {
+        return makeFrameScoreWithSumScore(Arrays.asList(scores));
     }
 
-    public FrameScore addNextAddingUpScores(final List<Score> scores) {
-        if (canCalculateSelfScore()) {
-            return this;
-        }
-
-        return getAddingUpFrameScore(scores);
-    }
-
-    private FrameScore getAddingUpFrameScore(final List<Score> scores) {
-        LeftScoreCount updateLeftScoreCount = LeftScoreCount.of(leftScoreCount);
+    public FrameScore makeFrameScoreWithSumScore(final List<Score> scores) {
+        LeftScoreCount updatedLeftScoreCount = LeftScoreCount.of(leftScoreCount);
         Iterator<Score> scoreIterator = scores.iterator();
         Score addingUpScore = Score.ofZeroPins();
 
-        while (!updateLeftScoreCount.isEqualTo(0) && scoreIterator.hasNext()) {
+        while (!updatedLeftScoreCount.isEqualTo(0) && scoreIterator.hasNext()) {
             addingUpScore = addingUpScore.add(scoreIterator.next());
-            updateLeftScoreCount = updateLeftScoreCount.minus();
+            updatedLeftScoreCount = updatedLeftScoreCount.minus();
         }
 
-        return FrameScore.newInstance(score.add(addingUpScore), updateLeftScoreCount);
+        return FrameScore.newInstance(score.add(addingUpScore), updatedLeftScoreCount);
     }
 
     @Override

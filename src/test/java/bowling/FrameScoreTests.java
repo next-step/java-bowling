@@ -39,11 +39,11 @@ public class FrameScoreTests {
     @Test
     public void addingUpTest() {
         FrameScore strikeFrame = FrameScore.createStrike();
-        assertThat(strikeFrame.addNextAddingUpScores(Score.of(3), Score.of(7)))
+        assertThat(strikeFrame.makeFrameScoreWithSumScore(Score.of(3), Score.of(7)))
                 .isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
 
         FrameScore spareFrame = FrameScore.createSpare();
-        assertThat(spareFrame.addNextAddingUpScores(Score.of(3), Score.of(7)))
+        assertThat(spareFrame.makeFrameScoreWithSumScore(Score.of(3), Score.of(7)))
                 .isEqualTo(FrameScore.newInstance(Score.of(13), LeftScoreCount.of(0)));
     }
 

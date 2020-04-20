@@ -36,7 +36,7 @@ public class MissTests {
 
     @DisplayName("FrameScore 합산 테스트")
     @Test
-    public void addingUpFrameScoreTest() {
+    public void sumBeforeScoreTest() {
         assertThat(miss.sumBeforeScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(19), LeftScoreCount.of(0)));
         assertThat(miss.sumBeforeScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(0)));
     }

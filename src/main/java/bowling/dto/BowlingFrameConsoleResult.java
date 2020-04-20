@@ -5,6 +5,8 @@ import bowling.frame.BowlingFrame;
 
 public class BowlingFrameConsoleResult {
 
+    private static final String UN_CALCULATE_TOTAL_SCORE = "";
+
     private final FrameState frameState;
     private final String totalScore;
 
@@ -22,7 +24,7 @@ public class BowlingFrameConsoleResult {
             return String.valueOf(totalScore.getScore());
         }
 
-        return "";
+        return UN_CALCULATE_TOTAL_SCORE;
     }
 
     public FrameState getFrameState() {
