@@ -1,7 +1,6 @@
 import bowling.Pin;
 import bowling.Player;
 import bowling.dto.BowlingGameBoardResult;
-import bowling.dto.BowlingGameResult;
 import bowling.game.BowlingGame;
 import bowling.game.BowlingGameBoard;
 import bowling.view.InputView;

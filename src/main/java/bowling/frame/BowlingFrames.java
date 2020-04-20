@@ -6,7 +6,6 @@ import bowling.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class BowlingFrames {
     public static final int MAX_BOWLING_FRAME_SIZE = 10;

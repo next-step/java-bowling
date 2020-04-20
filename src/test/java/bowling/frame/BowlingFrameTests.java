@@ -1,9 +1,8 @@
 package bowling.frame;
 
-import bowling.game.BowlingGame;
 import bowling.Pin;
-import bowling.Player;
 import bowling.Score;
+import bowling.game.BowlingGame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
