@@ -23,7 +23,7 @@ public class FrameDto {
     }
 
     private String parseShotScore(ShotScore shotScore) {
-        return ShotScoreParser.of(shotScore.scoreType()).parse(shotScore.score());
+        return ShotScoreParser.of(shotScore.scoreType()).parse(shotScore.singleScore());
     }
 
     public Integer getFrameScore() {

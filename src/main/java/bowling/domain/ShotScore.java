@@ -1,17 +1,19 @@
 package bowling.domain;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class ShotScore {
     private final Score score;
     private final ScoreType scoreType;
+    private ShotScore next;
 
     private ShotScore(Score score, ScoreType scoreType) {
         this.score = score;
         this.scoreType = scoreType;
     }
 
-    static ShotScore of(int shotScore) {
+    static ShotScore init(int shotScore) {
         Score score = Score.of(shotScore);
 
         if (score.isMax()) {
@@ -26,11 +28,14 @@ public class ShotScore {
     }
 
     ShotScore next(int nextScore) {
-        if (score.isMax(nextScore)) {
-            return new ShotScore(Score.of(nextScore), ScoreType.SPARE);
+        if (!isClear() &&
+                score.isMax(nextScore)) {
+            next = new ShotScore(Score.of(nextScore), ScoreType.SPARE);
+            return next;
         }
 
-        return of(nextScore);
+        next = init(nextScore);
+        return next;
     }
 
     boolean isClear() {
@@ -41,8 +46,25 @@ public class ShotScore {
         return scoreType;
     }
 
-    public int score() {
+    public int singleScore() {
         return score.score();
+    }
+
+    public Integer totalScore() {
+        if (scoreType.isIn(ScoreType.STRIKE)) {
+            return Optional.ofNullable(next)
+                    .flatMap(next -> Optional.ofNullable(next.next)
+                            .map(nextAfter -> nextAfter.singleScore() + next.singleScore() + singleScore()))
+                    .orElse(null);
+        }
+
+        if (scoreType.isIn(ScoreType.SPARE)) {
+            return Optional.ofNullable(next)
+                    .map(next -> next.singleScore() + singleScore())
+                    .orElse(null);
+        }
+
+        return singleScore();
     }
 
     @Override

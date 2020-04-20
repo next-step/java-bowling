@@ -46,7 +46,7 @@ class ShotScoresTest {
 
     @Test
     void totalScore(){
-        ShotScores shotScores = ShotScores.of(Arrays.asList(ShotScore.of(4),ShotScore.of(5)));
+        ShotScores shotScores = ShotScores.of(Arrays.asList(ShotScore.init(4),ShotScore.init(5)));
         assertThat(shotScores.totalScore(2))
                 .isEqualTo(9);
 
@@ -56,7 +56,7 @@ class ShotScoresTest {
 
     @Test
     void totalScoreTest(){
-        ShotScores shotScores = ShotScores.of(Arrays.asList(ShotScore.of(4),ShotScore.of(5)));
+        ShotScores shotScores = ShotScores.of(Arrays.asList(ShotScore.init(4),ShotScore.init(5)));
         assertThat(shotScores.totalScore())
                 .isEqualTo(9);
     }

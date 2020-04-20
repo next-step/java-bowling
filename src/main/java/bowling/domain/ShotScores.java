@@ -20,7 +20,7 @@ class ShotScores {
 
     void add(int shotScore, boolean canShootingBonus) {
         if (shotScores.isEmpty() || checkCanShootingBonus(canShootingBonus)) {
-            shotScores.add(ShotScore.of(shotScore));
+            shotScores.add(ShotScore.init(shotScore));
             return;
         }
 
@@ -53,7 +53,7 @@ class ShotScores {
         return shotScores
                 .stream()
                 .limit(rangeScore)
-                .mapToInt(ShotScore::score)
+                .mapToInt(ShotScore::singleScore)
                 .sum();
     }
 
