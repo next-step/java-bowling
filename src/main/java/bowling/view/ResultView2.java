@@ -139,7 +139,14 @@ public class ResultView2 {
     private static void printFirstFrameFirst(GameResult gameResult) {
         StringBuilder name = new StringBuilder();
         name.append(String.format(NAME, gameResult.getName()));
-        name.append(String.format(FIRST_SCORE, gameResult.getFrameByFrameId(FRAME_ID_FIRST).getFirstPoint()));
+
+        if(gameResult.getFrameByFrameId(FRAME_ID_FIRST).getFirstPoint() == 10){
+            name.append(String.format(FIRST_SCORE, "X"));
+        }
+
+        if(gameResult.getFrameByFrameId(FRAME_ID_FIRST).getFirstPoint() != 10){
+            name.append(String.format(FIRST_SCORE, gameResult.getFrameByFrameId(FRAME_ID_FIRST).getFirstPoint()));
+        }
 
         System.out.println(name.toString());
         System.out.println();
@@ -153,7 +160,13 @@ public class ResultView2 {
             name.append(String.format(SCORE, getScore(gameResult.getFrameByFrameId(i))));
         }
 
-        name.append(String.format(FIRST_SCORE, gameResult.getFrameByFrameId(frameId).getFirstPoint()));
+        if(gameResult.getFrameByFrameId(frameId).getFirstPoint() == 10){
+            name.append(String.format(FIRST_SCORE, "X"));
+        }
+
+        if(gameResult.getFrameByFrameId(frameId).getFirstPoint() != 10){
+            name.append(String.format(FIRST_SCORE, gameResult.getFrameByFrameId(frameId).getFirstPoint()));
+        }
 
         System.out.println(name.toString());
         System.out.println();
@@ -237,12 +250,12 @@ public class ResultView2 {
                             }
 
                             if(gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isGutterOrMiss()){
-                                printNormalFrameFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                                printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
                         }
 
                         if (i < j) {
-                            printNormalFrameFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                            printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                         }
                     }
                 }
@@ -316,18 +329,6 @@ public class ResultView2 {
                 }
             }
         }
-    }
-
-    private static void printFinalFrameWhenStrikeFirst(GameResult gameResult){
-        StringBuilder name = new StringBuilder();
-        name.append(String.format(NAME, gameResult.getName()));
-
-        for (int i = FRAME_ID_FIRST; i < FRAME_ID_FINAL; i++) {
-            name.append(String.format(SCORE, getScore(gameResult.getFrameByFrameId(i))));
-        }
-        name.append(String.format(SCORE, gameResult.getFrameByFrameId(10).getFirstPoint()));
-        System.out.println(name.toString());
-        System.out.println();
     }
 
     private static void printFinalFrameWhenStrikeThird(GameResult gameResult){

@@ -8,6 +8,6 @@ public class PrintFormat {
     public static final String NAME_BLANK = "|          |";
     public static final String SCORE = "    %s   |";
     public static final String FIRST_SCORE = "     %s    |";
-    public static final String THIRD_SCORE = "    %s    |";
+    public static final String THIRD_SCORE = "   %s  |";
 
 }
