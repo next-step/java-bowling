@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.score.EmptyScore;
-import bowling.domain.frame.score.Score;
+import bowling.domain.score.EmptyScore;
+import bowling.domain.score.Score;
 import bowling.domain.pitch.Pitch;
 
 import java.util.List;

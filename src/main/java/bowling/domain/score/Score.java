@@ -1,4 +1,4 @@
-package bowling.domain.frame.score;
+package bowling.domain.score;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.pitch.Pitch;
