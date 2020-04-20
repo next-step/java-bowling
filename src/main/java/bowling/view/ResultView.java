@@ -532,9 +532,8 @@ public class ResultView {
 
     private static void printScoreAtFirst(GameResult gameResult, int frameId) {
         Frame prevFrame = gameResult.getFrameByFrameId(frameId + OFFSET);
-        Frame prevPrevFrame = gameResult.getFrameByFrameId(frameId + OFFSET_DOUBLE);
 
-        if (prevFrame.isResult(STRIKE) && !prevPrevFrame.isResult(STRIKE)) {
+        if (prevFrame.isResult(STRIKE)) {
             printScoreUntil(gameResult, frameId + OFFSET_DOUBLE);
         }
 
