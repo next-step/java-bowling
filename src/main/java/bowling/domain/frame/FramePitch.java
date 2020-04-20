@@ -55,8 +55,26 @@ public class FramePitch {
         return pitch.map(Pitch::isStrike).orElse(false);
     }
 
+    public Optional<Score> getBonusScore(Frame next) {
+        Optional<Pitch> pitch = getHasBonusPitch();
+        if (pitch.isPresent()) {
+            return pitch.get().getBonusScore(next);
+        }
+        return Optional.empty();
+    }
+
     public int size() {
         return pitches.size();
+    }
+
+    private Optional<Pitch> getHasBonusPitch() {
+        if (isFirstPitchStrike()) {
+            return get(ZERO);
+        } else if (isSecondPitchSpare()) {
+            return get(ONE);
+        }
+
+        return Optional.empty();
     }
 
     private boolean needAdditionalScore() {

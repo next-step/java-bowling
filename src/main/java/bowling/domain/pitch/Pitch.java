@@ -1,5 +1,10 @@
 package bowling.domain.pitch;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Score;
+
+import java.util.Optional;
+
 public class Pitch {
     private Pin pin;
     private State state;
@@ -40,5 +45,9 @@ public class Pitch {
 
     public Pitch next(int pinCount) {
         return next(Pin.valueOf(pinCount));
+    }
+
+    public Optional<Score> getBonusScore(Frame next) {
+        return state.calculateBonusScore(next);
     }
 }

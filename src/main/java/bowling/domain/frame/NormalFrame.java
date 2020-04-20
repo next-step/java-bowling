@@ -58,12 +58,8 @@ public class NormalFrame implements Frame {
         if(Objects.isNull(next)) {
             return Optional.empty();
         }
-        if (framePitch.isFirstPitchStrike()) {
-            return next.getScoreForTwoPitches();
-        } else if (framePitch.isSecondPitchSpare()) {
-            return next.getScoreForOnePitch();
-        }
-        return Optional.empty();
+
+        return framePitch.getBonusScore(next);
     }
 
     @Override public Frame createNext() {
