@@ -1,8 +1,15 @@
 package bowling.domain.score;
 
 public class NomalScore extends Score{
-    public NomalScore(int point) {
-        super(point);
+    public NomalScore(int point, ScoreType scoreType) {
+        super(point, scoreType);
+    }
+
+    public static NomalScore of(int point) {
+        if (isGutterPoint(point)) {
+            return new NomalScore(point, ScoreType.GUTTER);
+        }
+        return new NomalScore(point, ScoreType.MISS);
     }
 
     @Override
@@ -11,21 +18,5 @@ public class NomalScore extends Score{
             return new Spare(point);
         }
         return getMissOrGutterScore(point);
-    }
-
-    @Override
-    public boolean isEqualScoreType(ScoreType scoreType) {
-        if (isGutterPoint(point.getPoint())) {
-            return scoreType.equals(ScoreType.GUTTER);
-        }
-        return scoreType.equals(ScoreType.MISS);
-    }
-
-    @Override
-    public String getScore() {
-        if (isGutterPoint(point.getPoint())) {
-            return ScoreType.GUTTER.pointToScore(point.getPoint());
-        }
-        return ScoreType.MISS.pointToScore(point.getPoint());
     }
 }

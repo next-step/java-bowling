@@ -2,7 +2,7 @@ package bowling.domain.score;
 
 public class Miss extends Score {
     public Miss(int point) {
-        super(point);
+        super(point, ScoreType.MISS);
     }
 
     @Override
@@ -11,15 +11,5 @@ public class Miss extends Score {
             return new Spare(point);
         }
         return getMissOrGutterScore(point);
-    }
-
-    @Override
-    public boolean isEqualScoreType(ScoreType scoreType) {
-        return scoreType.equals(ScoreType.MISS);
-    }
-
-    @Override
-    public String getScore() {
-        return ScoreType.MISS.pointToScore(point.getPoint());
     }
 }

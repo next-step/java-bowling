@@ -2,7 +2,7 @@ package bowling.domain.score;
 
 public class Strike extends Score {
     public Strike(int point) {
-        super(point);
+        super(point, ScoreType.STRIKE);
     }
 
     @Override
@@ -10,16 +10,6 @@ public class Strike extends Score {
         if (isStrikePoint(point)) {
             return new Strike(point);
         }
-        return new NomalScore(point);
-    }
-
-    @Override
-    public boolean isEqualScoreType(ScoreType scoreType) {
-        return scoreType.equals(ScoreType.STRIKE);
-    }
-
-    @Override
-    public String getScore() {
-        return ScoreType.STRIKE.pointToScore(point.getPoint());
+        return NomalScore.of(point);
     }
 }

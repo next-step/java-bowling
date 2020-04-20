@@ -7,7 +7,7 @@ public class ScoreGenerator {
         if (isStrikePoint(point)) {
             return new Strike(point);
         }
-        return new NomalScore(point);
+        return NomalScore.of(point);
     }
 
     private static boolean isStrikePoint(int point) {

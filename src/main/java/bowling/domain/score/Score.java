@@ -11,20 +11,26 @@ public abstract class Score {
     private static final int GUTTER_POINT = 0;
 
     final Point point;
+    final ScoreType scoreType;
 
-    public Score(int point) {
+    public Score(int point, ScoreType scoreType) {
         this.point = Point.valueOf(point);
+        this.scoreType = scoreType;
     }
 
     public abstract Score nextScore(int point);
 
-    public abstract boolean isEqualScoreType(ScoreType scoreType);
+    public boolean isEqualScoreType(ScoreType scoreType) {
+        return this.scoreType.equals(scoreType);
+    }
 
     public int getPoint() {
         return point.getPoint();
     };
 
-    public abstract String getScore();
+    public String getScore() {
+        return scoreType.pointToScore(point.getPoint());
+    }
 
     static boolean isStrikePoint(int point) {
         return point == STRIKE_POINT;
