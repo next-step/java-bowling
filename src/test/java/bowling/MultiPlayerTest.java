@@ -14,12 +14,30 @@ public class MultiPlayerTest {
     @BeforeEach
     void setUp() {
         game = new Game();
+        player = new Player("kim");
     }
 
     @Test
-    public void name() {
-        player = new Player("kim");
+    public void multiPlayerTest() {
         game.add(player);
         assertThat(game.getPlay(0).getName()).isEqualTo("kim");
+    }
+
+    @Test
+    public void isEndGameTest() {
+        game.add(player);
+        game.play(10, 0);
+        game.play(10, 0);
+        game.play(10, 0);
+        game.play(10, 0);
+        game.play(10, 0);
+        game.play(10, 0);
+        game.play(10, 0);
+        game.play(10, 0);
+        game.play(10, 0);
+        game.play(10, 0);
+        game.play(10, 0);
+        game.play(10, 0);
+        assertThat(game.isEndGame()).isTrue();
     }
 }
