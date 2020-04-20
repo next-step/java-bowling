@@ -18,10 +18,17 @@ public class BowlingGames {
         this.bowlingGames = bowlingGames;
     }
 
-    public static BowlingGames of(List<Player> players) {
+    public static BowlingGames of(List<String> inputPlayers) {
+        List<Player> players = listToPlaysers(inputPlayers);
         return players.stream()
                 .map(player -> new BowlingGame(Frames.of(), player))
                 .collect(Collectors.collectingAndThen(Collectors.toList(), BowlingGames::new));
+    }
+
+    private static List<Player> listToPlaysers(List<String> inputPlayers) {
+        return inputPlayers.stream()
+                .map(Player::new)
+                .collect(Collectors.toList());
     }
 
     public boolean isOverAllGames() {
