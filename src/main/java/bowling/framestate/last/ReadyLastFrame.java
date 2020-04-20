@@ -31,8 +31,8 @@ public class ReadyLastFrame implements State {
     }
 
     @Override
-    public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Collections.emptyList());
+    public FrameScore addNextAddingUpFrameScore(final FrameScore beforeScore) {
+        return beforeScore.addNextAddingUpScores(Collections.emptyList());
     }
 
     @Override

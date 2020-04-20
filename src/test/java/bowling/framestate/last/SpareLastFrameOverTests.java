@@ -39,8 +39,8 @@ public class SpareLastFrameOverTests {
     @DisplayName("FrameScore 합산 테스트")
     @Test
     public void addingUpFrameScoreTest() {
-        assertThat(spareLastFrameOver.addingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
-        assertThat(spareLastFrameOver.addingUpFrameScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(0)));
+        assertThat(spareLastFrameOver.addNextAddingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
+        assertThat(spareLastFrameOver.addNextAddingUpFrameScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(0)));
     }
 
     @DisplayName("종료 테스트")

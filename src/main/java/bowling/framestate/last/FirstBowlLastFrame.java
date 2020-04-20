@@ -41,8 +41,8 @@ public class FirstBowlLastFrame implements State {
     }
 
     @Override
-    public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Collections.singletonList(pinCount.toScore()));
+    public FrameScore addNextAddingUpFrameScore(final FrameScore beforeScore) {
+        return beforeScore.addNextAddingUpScores(Collections.singletonList(pinCount.toScore()));
     }
 
     @Override

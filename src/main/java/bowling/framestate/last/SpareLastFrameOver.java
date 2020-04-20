@@ -51,12 +51,12 @@ public class SpareLastFrameOver implements State {
     }
 
     @Override
-    public FrameScore addingUpFrameScore(FrameScore beforeScore) {
+    public FrameScore addNextAddingUpFrameScore(FrameScore beforeScore) {
         List<Score> scores = pins.stream()
                 .map(Pin::toScore)
                 .collect(Collectors.toList());
 
-        return beforeScore.addingUp(scores);
+        return beforeScore.addNextAddingUpScores(scores);
     }
 
     @Override

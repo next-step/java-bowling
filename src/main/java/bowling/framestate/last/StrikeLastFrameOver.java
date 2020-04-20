@@ -33,8 +33,8 @@ public class StrikeLastFrameOver implements State {
     }
 
     @Override
-    public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Arrays.asList(Score.ofAllPins(), secondPinCount.toScore()));
+    public FrameScore addNextAddingUpFrameScore(final FrameScore beforeScore) {
+        return beforeScore.addNextAddingUpScores(Arrays.asList(Score.ofAllPins(), secondPinCount.toScore()));
     }
 
     @Override

@@ -37,8 +37,8 @@ public class StrikeTests {
     @DisplayName("FrameScore 합산 테스트")
     @Test
     public void addingUpFrameScoreTest() {
-        assertThat(strike.addingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(1)));
-        assertThat(strike.addingUpFrameScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
+        assertThat(strike.addNextAddingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(1)));
+        assertThat(strike.addNextAddingUpFrameScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
     }
 
     @DisplayName("종료 테스트")

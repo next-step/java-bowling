@@ -42,7 +42,8 @@ public class LastBowlingFrameTests {
     public void getTotalScoreTest() {
         LastBowlingFrame lastFrame = LastBowlingFrame.newInstance();
         lastFrame.bowl(Pin.of(10));
-        assertThat(lastFrame.getTotalScore(Score.ofZeroPins())).isEqualTo(Score.of(20));
+        lastFrame.bowl(Pin.of(10));
+        assertThat(lastFrame.getTotalScore(Score.ofZeroPins())).isEqualTo(Score.of(30));
     }
 
     @DisplayName("마지막 프레임 추가 테스트")

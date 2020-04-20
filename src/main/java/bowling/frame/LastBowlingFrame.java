@@ -1,30 +1,46 @@
 package bowling.frame;
 
 import bowling.FrameScore;
+import bowling.LeftScoreCount;
 import bowling.Pin;
 import bowling.Score;
 import bowling.framestate.State;
-import bowling.framestate.last.ReadyLastFrame;
+import bowling.framestate.common.Ready;
+import bowling.framestate.common.Spare;
+import bowling.framestate.common.Strike;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class LastBowlingFrame implements BowlingFrame {
 
     public static final int LAST_FRAME_MAX_BOWL_COUNT = 3;
 
     private State state;
+    private Pin bonusPin;
 
-    private LastBowlingFrame(final State state) {
+    private LastBowlingFrame(final State state, final Pin bonusPin) {
         this.state = state;
+        this.bonusPin = bonusPin;
     }
 
     public static LastBowlingFrame newInstance() {
-        return new LastBowlingFrame(ReadyLastFrame.newInstance());
+        return new LastBowlingFrame(Ready.newInstance(), null);
     }
 
     @Override
     public void bowl(final Pin pinCount) {
+        if (canBowlBonusPin()) {
+            bonusPin = pinCount;
+            return;
+        }
+
         state = state.bowl(pinCount);
+    }
+
+    private boolean canBowlBonusPin() {
+        return (state instanceof Spare || state instanceof Strike) && Objects.isNull(bonusPin);
     }
 
     @Override
@@ -35,22 +51,38 @@ public class LastBowlingFrame implements BowlingFrame {
     @Override
     public Score getFrameScore() {
         FrameScore frameScore = state.createFrameScore();
+
         if (frameScore.canCalculateSelfScore()) {
             return frameScore.getScore();
         }
 
-        return sumScore(frameScore);
+        return makeAddingBonusPinFrameScore().getScore();
+    }
+
+    private FrameScore makeAddingBonusPinFrameScore() {
+        FrameScore frameScore = state.createFrameScore();
+
+        if (!Objects.isNull(bonusPin)) {
+            FrameScore updateFrameScore = frameScore.addNextAddingUpScores(getBonusPinToScores());
+            return FrameScore.newInstanceWithBonusPin(updateFrameScore, bonusPin, LeftScoreCount.of(0));
+        }
+
+        return frameScore.addNextAddingUpScores(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins()));
+    }
+
+    private List<Score> getBonusPinToScores() {
+        return Arrays.asList(bonusPin.toScore(), Score.ofZeroPins());
     }
 
     @Override
     public Score sumScore(final FrameScore beforeScore) {
-        FrameScore addingUpFrameScore = state.addingUpFrameScore(beforeScore);
+        FrameScore addingUpFrameScore = state.addNextAddingUpFrameScore(beforeScore);
 
         if (addingUpFrameScore.canCalculateSelfScore()) {
             return addingUpFrameScore.getScore();
         }
 
-        addingUpFrameScore = beforeScore.addingUp(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins(), Score.ofZeroPins()));
+        addingUpFrameScore = beforeScore.addNextAddingUpScores(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins(), Score.ofZeroPins()));
         return addingUpFrameScore.getScore();
     }
 
@@ -61,19 +93,32 @@ public class LastBowlingFrame implements BowlingFrame {
 
     @Override
     public boolean isOver() {
+        if (canBowlBonusPin()) {
+            return false;
+        }
+
         return state.isOver();
     }
 
     @Override
     public boolean canCalculateScore() {
         FrameScore frameScore = state.createFrameScore();
-        return frameScore.canCalculateSelfScore();
 
+        if (!Objects.isNull(bonusPin)) {
+            frameScore = frameScore.addNextAddingUpScores(getBonusPinToScores());
+        }
+
+        return frameScore.canCalculateSelfScore();
     }
 
     @Override
     public boolean canCalculateScore(FrameScore beforeScore) {
-        FrameScore addingUpFrameScore = state.addingUpFrameScore(beforeScore);
+        FrameScore addingUpFrameScore = state.addNextAddingUpFrameScore(beforeScore);
+
+        if (!Objects.isNull(bonusPin)) {
+            addingUpFrameScore = addingUpFrameScore.addNextAddingUpScores(getBonusPinToScores());
+        }
+
         return addingUpFrameScore.canCalculateSelfScore();
     }
 

@@ -28,8 +28,8 @@ public class Strike implements State {
     }
 
     @Override
-    public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Collections.singletonList(Score.ofAllPins()));
+    public FrameScore addNextAddingUpFrameScore(final FrameScore beforeScore) {
+        return beforeScore.addNextAddingUpScores(Collections.singletonList(Score.ofAllPins()));
     }
 
     @Override

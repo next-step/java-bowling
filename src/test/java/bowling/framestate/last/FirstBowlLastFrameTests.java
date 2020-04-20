@@ -41,8 +41,8 @@ public class FirstBowlLastFrameTests {
     @DisplayName("FrameScore 합산 테스트")
     @Test
     public void addingUpFrameScoreTest() {
-        assertThat(firstBowlLastFrame.addingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(1)));
-        assertThat(firstBowlLastFrame.addingUpFrameScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(0)));
+        assertThat(firstBowlLastFrame.addNextAddingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(1)));
+        assertThat(firstBowlLastFrame.addNextAddingUpFrameScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(0)));
     }
 
     @DisplayName("종료 테스트")

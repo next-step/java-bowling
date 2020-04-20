@@ -36,7 +36,7 @@ public class ReadyTests {
     @DisplayName("FrameScore 합산 테스트")
     @Test
     public void addingUpFrameScoreTest() {
-        assertThat(ready.addingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.createStrike());
+        assertThat(ready.addNextAddingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.createStrike());
     }
 
     @DisplayName("종료 테스트")

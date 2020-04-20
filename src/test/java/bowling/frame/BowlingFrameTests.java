@@ -19,22 +19,22 @@ public class BowlingFrameTests {
     static {
         BowlingGame bowlingGame = BowlingGame.newInstance("AAA");
         bowlingGame.bowl(Pin.of(5));
-        bowlingGame.bowl(Pin.of(4));
+        bowlingGame.bowl(Pin.of(4));//1
         bowlingGame.bowl(Pin.of(7));
-        bowlingGame.bowl(Pin.of(3));
+        bowlingGame.bowl(Pin.of(3));//2
         bowlingGame.bowl(Pin.of(8));
-        bowlingGame.bowl(Pin.of(1));
-        bowlingGame.bowl(Pin.of(10));
-        bowlingGame.bowl(Pin.of(10));
-        bowlingGame.bowl(Pin.of(10));
+        bowlingGame.bowl(Pin.of(1));//3
+        bowlingGame.bowl(Pin.of(10));//4
+        bowlingGame.bowl(Pin.of(10));//5
+        bowlingGame.bowl(Pin.of(10));//6
         bowlingGame.bowl(Pin.of(8));
-        bowlingGame.bowl(Pin.of(1));
-        bowlingGame.bowl(Pin.of(10));
+        bowlingGame.bowl(Pin.of(1));//7
+        bowlingGame.bowl(Pin.of(10));//8
         bowlingGame.bowl(Pin.of(9));
-        bowlingGame.bowl(Pin.of(1));
+        bowlingGame.bowl(Pin.of(1));//9
         bowlingGame.bowl(Pin.of(0));
         bowlingGame.bowl(Pin.of(10));
-        bowlingGame.bowl(Pin.of(4));
+        bowlingGame.bowl(Pin.of(4));//10
         BowlingFrames frames = bowlingGame.getBowlingFrames();
         bowlingFrames = frames.getFrames();
     }
@@ -44,6 +44,7 @@ public class BowlingFrameTests {
     @CsvSource(value = {"0,9", "1,18", "2,9", "3,30", "4,28", "5,19", "6,9", "7,20", "8,10", "9,18"})
     public void getFrameScoreTest(final int index, final int expectedScore) {
         BowlingFrame bowlingFrame = bowlingFrames.get(index);
+        Score score = bowlingFrame.getFrameScore();
         assertThat(bowlingFrame.getFrameScore()).isEqualTo(Score.of(expectedScore));
     }
 }
