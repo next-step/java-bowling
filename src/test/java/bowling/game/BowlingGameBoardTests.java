@@ -8,7 +8,10 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+@DisplayName("볼링 게임판 테스트")
 public class BowlingGameBoardTests {
+
+    BowlingGameBoard bowlingGameBoard = BowlingGameBoard.newInstance("AAA", "BBB");
 
     @DisplayName("생성 테스트")
     @Test
@@ -19,22 +22,30 @@ public class BowlingGameBoardTests {
     @DisplayName("사용자 투구 테스트")
     @Test
     public void bowlTest() {
-        assertThatCode(() -> BowlingGameBoard.bowl(Player.of("AAA"), Pin.ofMax())).doesNotThrowAnyException();
+        assertThatCode(() -> bowlingGameBoard.bowl(Player.of("AAA"), Pin.ofMax())).doesNotThrowAnyException();
     }
 
     @DisplayName("사용자 턴 테스트")
     @Test
     public void getNextTurnTest() {
-        assertThat(BowlingGameBoard.getNextPlayer()).isEqualTo(Player.of("AAA"));
-        BowlingGameBoard.bowl(Player.of("AAA"), Pin.ofMax());
-        assertThat(BowlingGameBoard.getNextPlayer()).isEqualTo(Player.of("BBB"));
+        BowlingGame game = bowlingGameBoard.getNextTurn();
+        assertThat(game.getPlayer()).isEqualTo(Player.of("AAA"));
+
+        bowlingGameBoard.bowl(Player.of("AAA"), Pin.ofMax());
+
+        BowlingGame anotherGame = bowlingGameBoard.getNextTurn();
+        assertThat(anotherGame.getPlayer()).isEqualTo(Player.of("BBB"));
     }
 
     @DisplayName("사용자 턴 테스트2")
     @Test
     public void getNextTurnTest2() {
-        assertThat(BowlingGameBoard.getNextPlayer()).isEqualTo(Player.of("AAA"));
-        BowlingGameBoard.bowl(Player.of("AAA"), Pin.of(7));
-        assertThat(BowlingGameBoard.getNextPlayer()).isEqualTo(Player.of("AAA"));
+        BowlingGame game = bowlingGameBoard.getNextTurn();
+        assertThat(game.getPlayer()).isEqualTo(Player.of("AAA"));
+
+        bowlingGameBoard.bowl(Player.of("AAA"), Pin.of(7));
+
+        BowlingGame anotherGame = bowlingGameBoard.getNextTurn();
+        assertThat(anotherGame.getPlayer()).isEqualTo(Player.of("AAA"));
     }
 }

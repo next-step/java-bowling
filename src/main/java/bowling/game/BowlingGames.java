@@ -65,10 +65,6 @@ public class BowlingGames {
                 .allMatch(BowlingGame::isAllFramesOver);
     }
 
-    public List<Player> getPlayers() {
-        return new ArrayList<>(games.keySet());
-    }
-
     public List<BowlingGame> getAllGames() {
         return games.keySet()
                 .stream()

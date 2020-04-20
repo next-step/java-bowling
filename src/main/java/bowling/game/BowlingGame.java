@@ -4,6 +4,8 @@ import bowling.Pin;
 import bowling.Player;
 import bowling.frame.BowlingFrames;
 
+import java.util.Objects;
+
 public class BowlingGame {
 
     private final Player player;
@@ -48,5 +50,19 @@ public class BowlingGame {
 
     public BowlingFrames getBowlingFrames() {
         return bowlingFrames;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BowlingGame)) return false;
+        BowlingGame that = (BowlingGame) o;
+        return Objects.equals(getPlayer(), that.getPlayer()) &&
+                Objects.equals(getBowlingFrames(), that.getBowlingFrames());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPlayer(), getBowlingFrames());
     }
 }

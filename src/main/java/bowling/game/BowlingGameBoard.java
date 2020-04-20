@@ -37,7 +37,7 @@ public class BowlingGameBoard {
         bowlingGames.bowl(player, pinCount);
     }
 
-    public BowlingGame getNextPlayer() {
+    public BowlingGame getNextTurn() {
         BowlingGame bowlingGame = bowlingGameTurn.getNextTurn();
 
         if (Objects.isNull(bowlingGame)) {

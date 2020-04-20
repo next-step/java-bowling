@@ -21,18 +21,36 @@ public class BowlingFrameTests {
         BowlingGame bowlingGame = BowlingGame.newInstance("AAA");
         bowlingGame.bowl(Pin.of(5));
         bowlingGame.bowl(Pin.of(4));//1
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(7));
         bowlingGame.bowl(Pin.of(3));//2
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(8));
         bowlingGame.bowl(Pin.of(1));//3
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(10));//4
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(10));//5
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(10));//6
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(8));
         bowlingGame.bowl(Pin.of(1));//7
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(10));//8
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(9));
         bowlingGame.bowl(Pin.of(1));//9
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(0));
         bowlingGame.bowl(Pin.of(10));
         bowlingGame.bowl(Pin.of(4));//10

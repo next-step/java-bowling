@@ -31,10 +31,15 @@ public class BowlingGameTests {
     public void bowlAbnormalTest() {
         BowlingGame bowlingGame = BowlingGame.newInstance("ABC");
         IntStream.range(0, 11)
-                .forEach(i -> bowlingGame.bowl(Pin.ofMax()));
+                .forEach(i -> doStrike(bowlingGame));
 
 
         assertThatIllegalStateException()
                 .isThrownBy(() -> bowlingGame.bowl(Pin.ofMax()));
+    }
+
+    private void doStrike(BowlingGame bowlingGame) {
+        bowlingGame.bowl(Pin.ofMax());
+        bowlingGame.prepareNextFrame();
     }
 }

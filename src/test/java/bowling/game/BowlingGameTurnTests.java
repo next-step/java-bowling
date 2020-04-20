@@ -1,6 +1,7 @@
 package bowling.game;
 
 import bowling.Pin;
+import bowling.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,7 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+@DisplayName("볼링 게임 턴 테스트")
 public class BowlingGameTurnTests {
 
     private BowlingGameTurn bowlingGameTurn = BowlingGameTurn.newInstance(Arrays.asList(BowlingGame.newInstance("AAA"), BowlingGame.newInstance("BBB")));
@@ -19,13 +21,14 @@ public class BowlingGameTurnTests {
         assertThatCode(() -> BowlingGameTurn.newInstance(Arrays.asList(BowlingGame.newInstance("AAA"), BowlingGame.newInstance("BBB"))));
     }
 
-    @DisplayName("사용자 턴 테스트")
+    @DisplayName("다음 턴 테스트")
     @Test
     public void getNextTurnTest() {
-        assertThat(bowlingGameTurn.getNextTurn()).isEqualTo(BowlingGame.newInstance("AAA"));
+        BowlingGame nextTurnGame = bowlingGameTurn.getNextTurn();
+        assertThat(nextTurnGame.getPlayer()).isEqualTo(Player.of("AAA"));
     }
 
-    @DisplayName("사용자 턴 (남은 턴이 없을 때) 테스트")
+    @DisplayName("다음 턴 (남은 턴이 없을 때) 테스트")
     @Test
     public void getNextTurnEmptyTest() {
         BowlingGame first = bowlingGameTurn.getNextTurn();
