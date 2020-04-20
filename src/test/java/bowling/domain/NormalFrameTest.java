@@ -2,11 +2,10 @@ package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import bowling.domain.Frame;
-import bowling.domain.NormalFrame;
 
 class NormalFrameTest {
 
@@ -37,5 +36,18 @@ class NormalFrameTest {
         normalFrame.bowl(0);
         Frame next = normalFrame.create();
         assertThat(next.getFrameNum()).isEqualTo(2);
+    }
+
+    @DisplayName("첫번째 프레임일때 보드를 생성해본다.")
+    @Test
+    void createBoard() {
+        NormalFrame normalFrame = new NormalFrame(1);
+        normalFrame
+                .bowl(8).bowl(2);
+        NormalFrame next = (NormalFrame) normalFrame.create();
+        Board board = normalFrame.createBoard();
+        List<FrameResult> frameResults = board.getFrameResults();
+        assertThat(frameResults.get(0).getDisplayScore()).isEqualTo("8|/");
+        assertThat(frameResults.get(0).getTotalScore()).isEqualTo(-1);
     }
 }

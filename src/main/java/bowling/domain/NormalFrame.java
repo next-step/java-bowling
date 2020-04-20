@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.State.Ready;
 import bowling.domain.State.State;
+import bowling.exception.CannotCalculateException;
 
 public class NormalFrame implements Frame {
     private static final int MAX_FRAME_NUM = 10;
@@ -26,11 +27,11 @@ public class NormalFrame implements Frame {
             throw new IllegalArgumentException("끝나지 않은 상태에서는 새로운 프레임을 만들 수 없습니다.");
         }
         if (frameNum + 1 == MAX_FRAME_NUM) {
-            this.next = new FinalFrame(bonusFlag);
-            return this.next;
+            next = new FinalFrame(bonusFlag);
+            return next;
         }
-        this.next = new NormalFrame(frameNum + 1);
-        return this.next;
+        next = new NormalFrame(frameNum + 1);
+        return next;
     }
 
     public void bonus() {
@@ -71,11 +72,28 @@ public class NormalFrame implements Frame {
 
     @Override
     public void addFrameResult(Board board) {
+        board.add(getFrameResult());
 
+        if (next != null) {
+            next.addFrameResult(board);
+        }
     }
 
-    @Override
     public Board createBoard() {
-        return null;
+        Board board = new Board();
+        addFrameResult(board);
+        return board;
+    }
+
+    public FrameResult getFrameResult() {
+        if (!state.isFinish()) {
+            return new FrameResult(state.getDesc());
+        }
+
+        try {
+            return new FrameResult(state.getDesc(), getScore().getScore());
+        } catch (CannotCalculateException e) {
+            return new FrameResult(state.getDesc());
+        }
     }
 }

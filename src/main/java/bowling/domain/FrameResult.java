@@ -9,6 +9,10 @@ public class FrameResult {
     private int score;
     private int totalScore = -1;
 
+    public FrameResult(String displayScore) {
+        this(displayScore, UN_SCORE);
+    }
+
     public FrameResult(String displayScore, int score) {
         this.displayScore = displayScore;
         this.score = score;
@@ -23,12 +27,16 @@ public class FrameResult {
         return totalScore;
     }
 
-    private boolean isUnScore() {
+    public boolean isUnScore() {
         return score == UN_SCORE;
     }
 
     public int getTotalScore() {
         return totalScore;
+    }
+
+    public String getDisplayScore() {
+        return displayScore;
     }
 
     @Override
@@ -37,11 +45,12 @@ public class FrameResult {
         if (!(o instanceof FrameResult)) { return false; }
         final FrameResult that = (FrameResult) o;
         return score == that.score &&
-               Objects.equals(displayScore, that.displayScore);
+               getTotalScore() == that.getTotalScore() &&
+               Objects.equals(getDisplayScore(), that.getDisplayScore());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(displayScore, score);
+        return Objects.hash(getDisplayScore(), score, getTotalScore());
     }
 }
