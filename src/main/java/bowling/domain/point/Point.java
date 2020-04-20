@@ -7,20 +7,19 @@ import java.util.Objects;
 public class Point {
     public static final int MAX_POINT = 10;
     public static final int MIN_POINT = 0;
+    private static final Map<Integer, Point> POINT = new HashMap<>();
 
     private final int point;
 
-    private static final Map<Integer, Point> points = new HashMap<>();
-
     static {
         for (int i = MIN_POINT; i <= MAX_POINT; i++) {
-            points.put(i, new Point(i));
+            POINT.put(i, new Point(i));
         }
     }
 
     public static Point of(int input) {
         validate(input);
-        return points.get(input);
+        return POINT.get(input);
     }
 
     private Point(int input) {

@@ -30,8 +30,6 @@ public class ResultView {
     private static final String FRAME_LINE = "|";
     private static final String FRAME_EMPTY = "        |";
 
-
-
     public static void viewResult(Frames frames) {
         viewFrameHead();
         viewFrames(frames);
