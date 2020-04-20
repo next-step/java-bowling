@@ -3,7 +3,6 @@ package bowling.controller;
 import bowling.domain.PlayerName;
 import bowling.domain.result.GameResults;
 import bowling.view.InputView;
-import bowling.view.ResultView;
 import bowling.view.ResultView2;
 
 import java.util.List;

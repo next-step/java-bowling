@@ -2,7 +2,6 @@ package bowling.domain.result;
 
 import bowling.domain.PlayerName;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.FrameResult;
 import bowling.domain.frame.Frames;
 
 import static bowling.domain.frame.FrameResult.SPARE;
@@ -58,6 +57,6 @@ public class GameResult {
     }
 
     public int getScoreUntilFrame(int frameId){
-        return frames.getTotalPointUntil(frames.getFrames().get(frameId - 1));
+        return frames.getTotalPointUntil(frameId);
     }
 }

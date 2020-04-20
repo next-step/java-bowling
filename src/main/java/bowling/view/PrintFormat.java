@@ -6,8 +6,11 @@ public class PrintFormat {
 
     public static final String NAME = "|    %s   |";
     public static final String NAME_BLANK = "|          |";
+    public static final String SCORE_BOX = "|    점수   |";
     public static final String SCORE = "    %s   |";
     public static final String FIRST_SCORE = "     %s    |";
     public static final String THIRD_SCORE = "   %s  |";
-
+    public static final String SCORE_ONE_DIGIT = "     %s    |";
+    public static final String SCORE_TWO_DIGIT = "    %s    |";
+    public static final String SCORE_THREE_DIGIT = "   %s   |";
 }

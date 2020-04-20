@@ -52,6 +52,7 @@ public class ResultView2 {
                 if (i < j) {
                     printName(gameResults.getResultByIndex(j));
                 }
+                printScoreBlank();
             }
         }
 
@@ -65,9 +66,11 @@ public class ResultView2 {
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
                     printFirstFrameSecond(gameResults.getResultByIndex(j));
+                    printScoreUntil(gameResults.getResultByIndex(j), 1);
                 }
                 if (i < j) {
                     printFirstFrameFirst(gameResults.getResultByIndex(j));
+                    printScoreBlank();
                 }
             }
         }
@@ -93,6 +96,8 @@ public class ResultView2 {
                 if (i > j) {
                     printNormalFrameFirst(gameResults.getResultByIndex(j), frameId);
                 }
+
+                printScoreUntil(gameResults.getResultByIndex(j), frameId - 1);
             }
         }
 
@@ -106,10 +111,12 @@ public class ResultView2 {
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
                     printNormalFrameSecond(gameResults.getResultByIndex(j), frameId);
+                    printScoreUntil(gameResults.getResultByIndex(j), frameId);
                 }
 
                 if (i < j) {
                     printNormalFrameFirst(gameResults.getResultByIndex(j), frameId);
+                    printScoreUntil(gameResults.getResultByIndex(j), frameId - 1);
                 }
             }
         }
@@ -390,29 +397,37 @@ public class ResultView2 {
         System.out.println();
     }
 
-
     private static void printScoreUntil(GameResult gameResult, int frameId){
         StringBuilder name = new StringBuilder();
-        name.append(NAME_BLANK);
+        name.append(SCORE_BOX);
 
         for (int i = FRAME_ID_FIRST; i < frameId; i++) {
-            name.append(String.format(SCORE, getScoreUntil(gameResult, frameId)));
+            if(getScoreUntil(gameResult, i) >= 100){
+                name.append(String.format(SCORE_THREE_DIGIT, getScoreUntil(gameResult, i)));
+            }
+
+            if(getScoreUntil(gameResult, i) >= 10){
+                name.append(String.format(SCORE_TWO_DIGIT, getScoreUntil(gameResult, i)));
+            }
+
+            if(getScoreUntil(gameResult, i) < 10){
+                name.append(String.format(SCORE_ONE_DIGIT, getScoreUntil(gameResult, i)));
+            }
         }
-        name.append(String.format(SCORE, getScoreUntil(gameResult, frameId)));
+
+        System.out.println(name.toString());
+        System.out.println();
+    }
+
+    private static void printScoreBlank(){
+        StringBuilder name = new StringBuilder();
+        name.append(SCORE_BOX);
+
         System.out.println(name.toString());
         System.out.println();
     }
 
     private static int getScoreUntil(GameResult gameResult, int frameId){
-        if(frameId == 1){
-            return gameResult.getFrameByFrameId(frameId).getPointSumOnlyThisFrame();
-        }
-
-        if(gameResult.getFrameByFrameId(frameId).isResult(STRIKE)
-        || gameResult.getFrameByFrameId(frameId).isResult(SPARE)){
-            return gameResult.getScoreUntilFrame(frameId - 1);
-        }
-
         return gameResult.getScoreUntilFrame(frameId);
     }
 
