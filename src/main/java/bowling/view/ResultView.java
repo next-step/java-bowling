@@ -15,9 +15,14 @@ public class ResultView {
 
   public static void printBowlingScoreTable(BowlingGame bowlingGame) {
     System.out.println(FRAMES_META_DATA);
-    Frame frame = bowlingGame.getFrame();
+    StringBuilder builder = getFrameStatus(bowlingGame);
 
+    System.out.println(builder);
+  }
+
+  private static StringBuilder getFrameStatus(BowlingGame bowlingGame) {
     StringBuilder builder = new StringBuilder(String.format(NAME_FORMAT, bowlingGame.getPlayerName()));
+    Frame frame = bowlingGame.getFrame();
     int frameCount = 0;
 
     while (frame != NULL_FRAME) {
@@ -30,7 +35,6 @@ public class ResultView {
       frameCount++;
       builder.append(EMPTY_FRAME);
     }
-
-    System.out.println(builder);
+    return builder;
   }
 }

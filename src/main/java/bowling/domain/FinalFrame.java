@@ -17,6 +17,16 @@ public class FinalFrame implements Frame {
   }
 
   @Override
+  public int getRound() {
+    return Round.FINAL_ROUND;
+  }
+
+  @Override
+  public Frame getNextFrame() {
+    return NULL_FRAME;
+  }
+
+  @Override
   public Frame roll(int pinCount) throws CannotBowlException {
     if (!regularResult.isFinished()) {
       regularResult.roll(pinCount);
@@ -26,16 +36,6 @@ public class FinalFrame implements Frame {
 
     bonusResult.roll(pinCount);
     return this;
-  }
-
-  @Override
-  public int getRound() {
-    return Round.FINAL_ROUND;
-  }
-
-  @Override
-  public Frame getNextFrame() {
-    return NULL_FRAME;
   }
 
   private void prepareBonusBowl() {

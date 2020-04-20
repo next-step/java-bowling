@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import static bowling.domain.FrameState.MISS;
+import static bowling.domain.FrameState.SPARE;
+import static bowling.domain.FrameState.STRIKE;
 import static bowling.domain.Trial.NOT_PLAYED_SIGN;
 
 import bowling.exception.CannotBowlException;
@@ -7,21 +10,21 @@ import bowling.exception.CannotBowlException;
 public class BonusResult extends BowlResult {
 
   public BonusResult(int bonusBallCount) {
-    if (bonusBallCount > 2 || bonusBallCount < 0) {
+    if (bonusBallCount > STRIKE.getBonusBallCount() || bonusBallCount < MISS.getBonusBallCount()) {
       throw new IllegalArgumentException("보너스 볼은 최소 0개 최대 2개입니다.");
     }
 
-    if (bonusBallCount == 2) {
+    if (bonusBallCount == STRIKE.getBonusBallCount()) {
       first = Trial.initialize();
       second = Trial.initialize();
     }
 
-    if (bonusBallCount == 1) {
+    if (bonusBallCount == SPARE.getBonusBallCount()) {
       first = Trial.initialize();
       second = Trial.block();
     }
 
-    if (bonusBallCount == 0) {
+    if (bonusBallCount == MISS.getBonusBallCount()) {
       first = Trial.block();
       second = Trial.block();
     }

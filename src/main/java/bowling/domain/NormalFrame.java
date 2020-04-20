@@ -21,6 +21,16 @@ public class NormalFrame implements Frame {
   }
 
   @Override
+  public int getRound() {
+    return frameInfo.getRound();
+  }
+
+  @Override
+  public Frame getNextFrame() {
+    return next;
+  }
+
+  @Override
   public Frame roll(int pinCount) throws CannotBowlException {
     frameInfo.roll(pinCount);
     if (frameInfo.isFull()) {
@@ -29,16 +39,6 @@ public class NormalFrame implements Frame {
     }
 
     return this;
-  }
-
-  @Override
-  public int getRound() {
-    return frameInfo.getRound();
-  }
-
-  @Override
-  public Frame getNextFrame() {
-    return next;
   }
 
   @Override

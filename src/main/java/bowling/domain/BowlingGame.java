@@ -17,5 +17,4 @@ public class BowlingGame {
   public NormalFrame getFrame() {
     return frame;
   }
-
 }

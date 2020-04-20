@@ -11,13 +11,13 @@ public class Player {
     this.name = name;
   }
 
-  public String getName() {
-    return name;
-  }
-
   private void validateName(String name) {
     if (!name.matches(NAME_REGEX)) {
       throw new IllegalArgumentException("이름은 영문 3글자여야합니다.");
     }
+  }
+
+  public String getName() {
+    return name;
   }
 }

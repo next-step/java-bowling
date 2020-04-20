@@ -6,8 +6,8 @@ public class Trial {
 
   static final String STRIKE_SIGN = "X";
   static final String GUTTER_SIGN = "-";
-  private final String SPARE_SIGN = "/";
   static final String NOT_PLAYED_SIGN = "";
+  private final String SPARE_SIGN = "/";
 
   private PinCount pinCount;
   private TrialState state;
