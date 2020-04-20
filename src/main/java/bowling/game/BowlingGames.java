@@ -2,15 +2,17 @@ package bowling.game;
 
 import bowling.Player;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class BowlingGames {
 
-    private final Map<Player, BowlingGame> games;
+    private final List<BowlingGame> games;
 
-    private BowlingGames(final Map<Player, BowlingGame> games) {
-        this.games = Collections.unmodifiableMap(games);
+    private BowlingGames(final List<BowlingGame> games) {
+        this.games = Collections.unmodifiableList(games);
     }
 
     public static BowlingGames newInstance(final String... playerStrings) {
@@ -21,33 +23,27 @@ public class BowlingGames {
     }
 
     public static BowlingGames newInstance(final List<Player> players) {
-        Map<Player, BowlingGame> games = new LinkedHashMap<>();
-        players.forEach(player -> games.put(player, BowlingGame.newInstance(player)));
+        List<BowlingGame> games = players.stream()
+                .map(BowlingGame::newInstance)
+                .collect(Collectors.toList());
 
         return new BowlingGames(games);
     }
 
     public void prepareNextFrames() {
-        games.keySet()
-                .stream()
-                .map(games::get)
-                .forEach(BowlingGame::prepareNextFrame);
+        games.forEach(BowlingGame::prepareNextFrame);
     }
 
     public boolean isAllGameOver() {
-        return games.keySet()
-                .stream()
-                .map(games::get)
+        return games.stream()
                 .allMatch(BowlingGame::isAllFramesOver);
     }
 
-    public List<BowlingGame> getAllGames() {
-        List<BowlingGame> games = this.games
-                .keySet()
-                .stream()
-                .map(this.games::get)
-                .collect(Collectors.toList());
+    public BowlingGameTurn makeNewGameTurn() {
+        return BowlingGameTurn.newInstance(games);
+    }
 
-        return Collections.unmodifiableList(games);
+    public List<BowlingGame> getGames() {
+        return games;
     }
 }

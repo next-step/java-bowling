@@ -16,7 +16,7 @@ public class BowlingGameBoardResult {
 
     public static BowlingGameBoardResult newInstance(final BowlingGameBoard bowlingGameBoard) {
         BowlingGames bowlingGames = bowlingGameBoard.getBowlingGames();
-        List<BowlingGameResult> games = bowlingGames.getAllGames()
+        List<BowlingGameResult> games = bowlingGames.getGames()
                 .stream()
                 .map(BowlingGameResult::newInstance)
                 .collect(Collectors.toList());

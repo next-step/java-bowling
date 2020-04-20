@@ -27,7 +27,7 @@ public class BowlingGameBoard {
 
     public static BowlingGameBoard newInstance(final List<Player> players) {
         BowlingGames bowlingGames = BowlingGames.newInstance(players);
-        BowlingGameTurn bowlingGameTurn = BowlingGameTurn.newInstance(bowlingGames.getAllGames());
+        BowlingGameTurn bowlingGameTurn = bowlingGames.makeNewGameTurn();
 
         return new BowlingGameBoard(bowlingGames, bowlingGameTurn);
     }
@@ -45,7 +45,7 @@ public class BowlingGameBoard {
 
     private void reset() {
         bowlingGames.prepareNextFrames();
-        bowlingGameTurn = BowlingGameTurn.newInstance(bowlingGames.getAllGames());
+        bowlingGameTurn = bowlingGames.makeNewGameTurn();
     }
 
     public boolean isAllGameOver() {
