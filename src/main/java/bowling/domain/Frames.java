@@ -8,8 +8,6 @@ public class Frames {
     private static final int TOTAL_FRAME = 10;
     private static final int NEXT_FRAME = 1;
     private static final int NEXT_AFTER_FRAME = 2;
-    private static final int BONUS = 10;
-    private static final int DOUBLE_BONUS = 20;
     private List<Frame> frames;
     private Frame frame;
     private FrameScores frameScores = new FrameScores();

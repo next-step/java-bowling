@@ -21,4 +21,10 @@ public class Game {
     public Player getPlay(int index) {
         return this.player.get(index);
     }
+
+    public boolean isEndGame() {
+        return player.stream()
+                .filter(n->n.isEndGame())
+                .count() > 0;
+    }
 }

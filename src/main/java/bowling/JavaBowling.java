@@ -11,20 +11,28 @@ public class JavaBowling {
         int number = inputView.askNumberOfPeople();
         Game game = new Game();
         Player player = null;
-        for (int i = 0; i < number; i++) {
-            String name = inputView.askName(i+1);
-            player = new Player(name);
-            game.add(player);
-        }
+        askName(inputView, number, game);
         OutputView outputView = new OutputView();
         outputView.drawStart(game, number);
         do{
             for (int i = 0; i < number ; i++) {
-                player = game.getPlay(i);
-                int numberOfPin = inputView.askNumberOfPin(player.getName());
-                game.play(numberOfPin, i);
-                outputView.drawPlay(game, number);
+                do{
+                    player = game.getPlay(i);
+                    int numberOfPin = inputView.askNumberOfPin(player.getName());
+                    game.play(numberOfPin, i);
+                    outputView.drawPlay(game, number);
+                }while(!player.isNextFrame());
+
             }
-        }while(!player.isEndGame());
+        }while(!game.isEndGame());
+    }
+
+    private static void askName(InputView inputView, int number, Game game) {
+        Player player;
+        for (int i = 0; i < number; i++) {
+            String name = inputView.askName(i);
+            player = new Player(name);
+            game.add(player);
+        }
     }
 }

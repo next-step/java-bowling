@@ -15,7 +15,7 @@ public class InputView {
     }
 
     public String askName(int number) {
-        System.out.printf(NAME_QUESTION, number);
+        System.out.printf(NAME_QUESTION, number + 1);
         scanner = new Scanner(System.in);
         return scanner.nextLine();
     }

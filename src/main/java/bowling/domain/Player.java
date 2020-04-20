@@ -58,4 +58,8 @@ public class Player {
     public FrameScores getFrameScore() {
         return frames.getFrameScores();
     }
+
+    public boolean isNextFrame() {
+        return frames.getFrame().getScoresSize() == 0;
+    }
 }
