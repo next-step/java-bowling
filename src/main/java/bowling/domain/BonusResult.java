@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import static bowling.domain.Trial.NOT_PLAYED_SIGN;
+
 import bowling.exception.CannotBowlException;
 
 public class BonusResult extends BowlResult {
@@ -62,7 +64,7 @@ public class BonusResult extends BowlResult {
 
     @Override
     public String visualize() {
-      return null;
+      return NOT_PLAYED_SIGN;
     }
   };
 }

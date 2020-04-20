@@ -12,6 +12,10 @@ public class FrameInfo {
     this.round = round;
   }
 
+  public int getRound() {
+    return round.getRound();
+  }
+
   public void roll(int pinCount) throws CannotBowlException {
     regularResult.roll(pinCount);
   }

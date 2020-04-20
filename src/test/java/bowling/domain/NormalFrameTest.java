@@ -13,7 +13,7 @@ public class NormalFrameTest {
   @ParameterizedTest
   @CsvSource(value = {"0,6=-|6", "3,5=3|5", "3,0=3|-"}, delimiter = '=')
   public void testMiss(String pins, String visualized) throws CannotBowlException {
-    NormalFrame normalFrame = new NormalFrame(Round.first());
+    NormalFrame normalFrame = NormalFrame.initialize();
     String[] pinCounts = pins.split(",");
 
     normalFrame.roll(Integer.parseInt(pinCounts[0]));
@@ -28,7 +28,7 @@ public class NormalFrameTest {
   @ParameterizedTest
   @CsvSource(value = {"0,10=-|/", "3,7=3|/"}, delimiter = '=')
   public void testSpare(String pins, String visualized) throws CannotBowlException {
-    NormalFrame normalFrame = new NormalFrame(Round.first());
+    NormalFrame normalFrame = NormalFrame.initialize();
     String[] pinCounts = pins.split(",");
 
     normalFrame.roll(Integer.parseInt(pinCounts[0]));
@@ -42,7 +42,7 @@ public class NormalFrameTest {
 
   @Test
   public void testStrike() throws CannotBowlException {
-    NormalFrame normalFrame = new NormalFrame(Round.first());
+    NormalFrame normalFrame = NormalFrame.initialize();
     Frame newFrame = normalFrame.roll(PinCount.STRIKE);
 
     assertThat(normalFrame.visualize()).isEqualTo(Trial.STRIKE_SIGN);
@@ -53,7 +53,7 @@ public class NormalFrameTest {
 
   @Test
   public void testFinalRound() throws CannotBowlException {
-    NormalFrame normalFrame = new NormalFrame(Round.of(Round.FINAL_ROUND - Round.ROUND_UNIT));
+    NormalFrame normalFrame = NormalFrame.of(Round.of(Round.FINAL_ROUND - Round.ROUND_UNIT));
     Frame newFrame = normalFrame.roll(PinCount.STRIKE);
 
     assertThat(newFrame instanceof FinalFrame).isTrue();

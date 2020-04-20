@@ -9,10 +9,14 @@ public interface Frame {
       return new FinalFrame();
     }
 
-    return new NormalFrame(round);
+    return NormalFrame.of(round);
   }
 
   Frame roll(int pinCount) throws CannotBowlException;
+
+  int getRound();
+
+  Frame getNextFrame();
 
   Score calculateBonusScore(int bonusBowlCount);
 
@@ -26,6 +30,16 @@ public interface Frame {
   Frame NULL_FRAME = new Frame() {
     @Override
     public Frame roll(int pinCount) {
+      return null;
+    }
+
+    @Override
+    public int getRound() {
+      return 0;
+    }
+
+    @Override
+    public Frame getNextFrame() {
       return null;
     }
 

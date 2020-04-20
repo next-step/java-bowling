@@ -7,9 +7,17 @@ public class NormalFrame implements Frame {
   private FrameInfo frameInfo;
   private Frame next;
 
-  public NormalFrame(Round round) {
+  private NormalFrame(Round round) {
     frameInfo = new FrameInfo(round);
     next = NULL_FRAME;
+  }
+
+  public static NormalFrame initialize() {
+    return new NormalFrame(Round.first());
+  }
+
+  public static NormalFrame of(Round round) {
+    return new NormalFrame(round);
   }
 
   @Override
@@ -21,6 +29,16 @@ public class NormalFrame implements Frame {
     }
 
     return this;
+  }
+
+  @Override
+  public int getRound() {
+    return frameInfo.getRound();
+  }
+
+  @Override
+  public Frame getNextFrame() {
+    return next;
   }
 
   @Override

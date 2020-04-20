@@ -28,6 +28,16 @@ public class FinalFrame implements Frame {
     return this;
   }
 
+  @Override
+  public int getRound() {
+    return Round.FINAL_ROUND;
+  }
+
+  @Override
+  public Frame getNextFrame() {
+    return NULL_FRAME;
+  }
+
   private void prepareBonusBowl() {
     if (regularResult.isFinished()) {
       FrameState state = regularResult.getState();
