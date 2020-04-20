@@ -24,7 +24,7 @@ class ShotScoreTest {
     void score() {
         ShotScore shotScore = ShotScore.of(10);
         assertThat(shotScore.score())
-                .isEqualTo(Score.of(10));
+                .isEqualTo(10);
     }
 
     @Test

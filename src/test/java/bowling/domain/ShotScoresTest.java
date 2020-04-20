@@ -35,12 +35,12 @@ class ShotScoresTest {
 
     @Test
     void isClear() {
-        assertThat(shotScores.isClear())
+        assertThat(shotScores.hasClear())
                 .isFalse();
 
         shotScores.add(6, false);
 
-        assertThat(shotScores.isClear())
+        assertThat(shotScores.hasClear())
                 .isTrue();
     }
 

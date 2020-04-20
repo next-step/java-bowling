@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class Score {
+class Score {
     static final int MAX = 10;
     static final int MIN = 0;
 
@@ -36,7 +36,7 @@ public class Score {
         return totalScore == MAX;
     }
 
-    public int score() {
+    int score() {
         return score;
     }
 

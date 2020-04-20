@@ -54,8 +54,4 @@ public class Frames {
     public Stream<Frame> stream(){
         return frames.stream();
     }
-
-    public int size() {
-        return frames.size();
-    }
 }

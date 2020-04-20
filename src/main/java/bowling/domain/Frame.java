@@ -52,9 +52,9 @@ public class Frame {
 
     private boolean cannotShooting() {
         if (hasBonus) {
-            return shotScores.isSize(SHOT_LIMIT) && !shotScores.isClear();
+            return shotScores.isSize(SHOT_LIMIT) && !shotScores.hasClear();
         }
-        return shotScores.isClear();
+        return shotScores.hasClear();
     }
 
     public Integer getFrameScore() {
@@ -68,7 +68,7 @@ public class Frame {
     }
 
     private Integer getTotalScore() {
-        if (shotScores.isClear()) {
+        if (shotScores.hasClear()) {
             return Optional.ofNullable(nextFrame)
                     .map(next -> next.getBonusScore(frameScoreType()))
                     .map(nextBonus -> nextBonus + getUnBonusScore())
@@ -108,7 +108,7 @@ public class Frame {
         return 0;
     }
 
-    public ShotScores shotScores() {
-        return shotScores;
+    public List<ShotScore> shotScores() {
+        return shotScores.shotScores();
     }
 }

@@ -2,16 +2,15 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
-public class ShotScores {
+class ShotScores {
     private final List<ShotScore> shotScores;
 
     private ShotScores(List<ShotScore> shotScores) {
         this.shotScores = new ArrayList<>(shotScores);
     }
 
-    static ShotScores of(List<ShotScore> shotScores){
+    static ShotScores of(List<ShotScore> shotScores) {
         return new ShotScores(shotScores);
     }
 
@@ -36,33 +35,29 @@ public class ShotScores {
         return shotScores.size() == size;
     }
 
-    boolean isClear() {
-        return !shotScores.isEmpty() && stream()
+    boolean hasClear() {
+        return !shotScores.isEmpty() &&
+                shotScores.stream()
                 .anyMatch(ShotScore::isClear);
     }
 
-    int totalScore(){
-        return sum(stream());
-    }
-
-    int totalScore(int rangeScore){
-        return sum(stream()
-                .limit(rangeScore));
-    }
-
-    ScoreType lastScoreType(){
+    ScoreType lastScoreType() {
         return this.getLast().scoreType();
     }
 
-    public Stream<ShotScore> stream() {
-        return shotScores
-                .stream();
+    int totalScore() {
+        return totalScore(shotScores.size());
     }
 
-    private int sum(Stream<ShotScore> shotScoreStream){
-        return shotScoreStream
-                .map(ShotScore::score)
-                .mapToInt(Score::score)
+    int totalScore(int rangeScore) {
+        return shotScores
+                .stream()
+                .limit(rangeScore)
+                .mapToInt(ShotScore::score)
                 .sum();
+    }
+
+    List<ShotScore> shotScores() {
+        return shotScores;
     }
 }

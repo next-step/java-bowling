@@ -41,8 +41,8 @@ public class ShotScore {
         return scoreType;
     }
 
-    public Score score() {
-        return score;
+    public int score() {
+        return score.score();
     }
 
     @Override

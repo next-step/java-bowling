@@ -22,12 +22,12 @@ class FrameTest {
         normalFrame.shot(4);
         assertThat(normalFrame.shotScores().stream())
                 .anyMatch(v -> v.scoreType().equals(ScoreType.MISS))
-                .anyMatch(v -> v.score().equals(Score.of(4)));
+                .anyMatch(v -> v.score() == 4);
 
         normalFrame.shot(6);
         assertThat(normalFrame.shotScores().stream())
                 .anyMatch(v -> v.scoreType().equals(ScoreType.SPARE))
-                .anyMatch(v -> v.score().equals(Score.of(6)));
+                .anyMatch(v -> v.score() == 6);
 
         assertThatThrownBy(() -> normalFrame.shot(5))
                 .isInstanceOf(IllegalStateException.class);
@@ -64,12 +64,12 @@ class FrameTest {
         Frame finalFrame = Frame.init().last(4);
         assertThat(finalFrame.shotScores().stream())
                 .anyMatch(v -> v.scoreType().equals(ScoreType.MISS))
-                .anyMatch(v -> v.score().equals(Score.of(4)));
+                .anyMatch(v -> v.score() == 4);
 
         finalFrame.shot(6);
         assertThat(finalFrame.shotScores().stream())
                 .anyMatch(v -> v.scoreType().equals(ScoreType.SPARE))
-                .anyMatch(v -> v.score().equals(Score.of(6)));
+                .anyMatch(v -> v.score() == 6);
 
         finalFrame.shot(5);
 
