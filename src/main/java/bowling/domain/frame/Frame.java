@@ -23,5 +23,9 @@ public interface Frame {
 
     Score getCurrentScore();
 
+    Score getTotalScore(int frameNumber);
+
     Score getCalculateScore(Score before);
+
+    Frame findFrame(int frameNumber);
 }

@@ -77,7 +77,17 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public Score getTotalScore(int frameNumber) {
+        return getCurrentScore();
+    }
+
+    @Override
     public Score getCalculateScore(Score before) {
         return states.getCalculateScore(before);
+    }
+
+    @Override
+    public Frame findFrame(int frameNumber) {
+        return this;
     }
 }

@@ -96,16 +96,21 @@ class BowlingGameTest {
         game.play(10);
         game.play(10);
         game.play(10);
+        game.play(10);
 
         //when
         Score score1 = game.getTotalScore(1);
         Score score2 = game.getTotalScore(2);
         Score score3 = game.getTotalScore(3);
 
+        System.out.println(score1.getScore());
+        System.out.println(score2.getScore());
+        System.out.println(score3.getScore());
+
         //then
         assertThat(score1).isEqualTo(new Score(30));
-        assertThat(score2).isEqualTo(new Score(50));
-        assertThat(score3).isEqualTo(new Score(60));
+        assertThat(score2).isEqualTo(new Score(60));
+        assertThat(score3).isEqualTo(new Score(80));
     }
 
     @DisplayName("spare의 누적 점수 계산")

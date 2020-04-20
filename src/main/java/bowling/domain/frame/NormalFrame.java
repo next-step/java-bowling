@@ -86,11 +86,37 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score getCurrentScore() {
-        return state.getCurrentScore();
+        Score score = state.getCurrentScore();
+        Frame frame = this;
+
+        while (score.canAddNextScore() && frame.getNext() != null) {
+            frame = nextFrame;
+            score = frame.getCalculateScore(score);
+        }
+
+        return score;
+    }
+
+    @Override
+    public Score getTotalScore(int frameNumber) {
+        if (this.frameNumber == frameNumber) {
+            return getCurrentScore();
+        }
+
+        return new Score(getCurrentScore().getScore() + nextFrame.getTotalScore(frameNumber).getScore());
     }
 
     @Override
     public Score getCalculateScore(Score before) {
         return state.getCalculateScore(before);
+    }
+
+    @Override
+    public Frame findFrame(int frameNumber) {
+        if (this.frameNumber == frameNumber) {
+            return this;
+        }
+
+        return nextFrame.findFrame(frameNumber);
     }
 }

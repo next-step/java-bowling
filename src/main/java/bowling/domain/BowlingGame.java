@@ -4,8 +4,6 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.score.Score;
 
-import java.util.Optional;
-
 public class BowlingGame {
 
     private final Player player;
@@ -62,40 +60,7 @@ public class BowlingGame {
         return count + 1;
     }
 
-    private Frame findFrame(int frameNumber) {
-        Frame frame = firstFrame;
-
-        for (int i = 0; i < frameNumber - 1; i++) {
-            frame = Optional.ofNullable(frame.getNext())
-                    .orElse(null);
-        }
-
-        return frame;
-    }
-
     public Score getTotalScore(int frameNumber) {
-        Score result = new Score();
-        for (int i = 1; i <= frameNumber; i++) {
-            Score frameScore = getFrameScore(i);
-            result = new Score(result.getScore() + frameScore.getScore());
-        }
-        return result;
-    }
-
-    private Score getFrameScore(int frameNumber) {
-        Frame frame = findFrame(frameNumber);
-
-        if (frame == null) {
-            return new Score();
-        }
-
-        Score score = frame.getCurrentScore();
-
-        while (score.canAddNextScore() && frame.getNext() != null) {
-            frame = frame.getNext();
-            score = frame.getCalculateScore(score);
-        }
-
-        return score;
+        return firstFrame.getTotalScore(frameNumber);
     }
 }
