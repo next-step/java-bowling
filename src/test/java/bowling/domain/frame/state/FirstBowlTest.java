@@ -1,9 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
-import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FirstBowlTest {
-
 
     @DisplayName("첫투구와 두번째 투구의 쓰러뜨린 핀의 개수가 10개가 넘으면 exception")
     @Test
@@ -85,10 +82,10 @@ class FirstBowlTest {
         Score compare = new Score(3);
 
         //when
-        Calculator calculator = firstBowl.getCurrentCalculator();
+        Score score = firstBowl.getCurrentScore();
 
         //then
-        assertTrue(calculator.getScore().equals(compare));
+        assertTrue(score.equals(compare));
     }
 
     @DisplayName("첫 투구한 점수를 더해주고 반환 한다")
@@ -96,13 +93,13 @@ class FirstBowlTest {
     public void getCalculateScore_success() throws Exception {
         //given
         FirstBowl firstBowl = new FirstBowl(new Pins(5));
-        Calculator calculator = new ScoreCalculator(new Score(10), 2);
+        Score score = new Score(10, 2);
         Score compare = new Score(15);
 
         //when
-        calculator = firstBowl.getScoreCalculate(calculator);
+        score = firstBowl.getCalculateScore(score);
 
         //then
-        assertTrue(calculator.getScore().equals(compare));
+        assertTrue(score.equals(compare));
     }
 }

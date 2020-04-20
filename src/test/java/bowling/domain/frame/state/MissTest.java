@@ -1,9 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
-import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,14 +38,14 @@ class MissTest {
     public void getCalculateScore_success_once() throws Exception {
         //given
         Miss miss = new Miss(new Pins(1), new Pins(2));
-        Calculator calculator = new ScoreCalculator(new Score(10), 1);
+        Score score = new Score(10, 1);
         Score compare = new Score(11);
 
         //when
-        Calculator result = miss.getScoreCalculate(calculator);
+        Score result = miss.getCalculateScore(score);
 
         //then
-        assertTrue(result.getScore().equals(compare));
+        assertTrue(result.equals(compare));
     }
 
     @DisplayName("이전 프레임에서 점수를 2회 더해준다(이전이 strike 일때")
@@ -55,13 +53,13 @@ class MissTest {
     public void getCalculateScore_success_twice() throws Exception {
         //given
         Miss miss = new Miss(new Pins(1), new Pins(2));
-        Calculator calculator = new ScoreCalculator(new Score(10), 2);
+        Score score = new Score(10, 2);
         Score compare = new Score(13);
 
         //when
-        Calculator result = miss.getScoreCalculate(calculator);
+        Score result = miss.getCalculateScore(score);
 
         //then
-        assertTrue(result.getScore().equals(compare));
+        assertTrue(result.equals(compare));
     }
 }

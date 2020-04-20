@@ -145,6 +145,18 @@ public class FinalFrameStates implements State {
     }
 
     @Override
+    public Score getCurrentScore() {
+        Score firstStateScore = states.getFirst().getCurrentScore();
+
+        if (isHaveBonus()) {
+            Score secondStateScore = states.getLast().getCurrentScore();
+            return new Score(firstStateScore.getScore() + secondStateScore.getScore(), 0);
+        }
+
+        return new Score(firstStateScore.getScore(), 0);
+    }
+
+    @Override
     public Calculator getCurrentCalculator() {
         Score firstStateScore = states.getFirst().getCurrentCalculator().getScore();
 
@@ -154,6 +166,17 @@ public class FinalFrameStates implements State {
         }
 
         return new ScoreCalculator(firstStateScore, 0);
+    }
+
+    @Override
+    public Score getCalculateScore(Score before) {
+        before = states.getFirst().getCalculateScore(before);
+
+        if (before.canAddNextScore()) {
+            return states.getLast().getCalculateScore(before);
+        }
+
+        return before;
     }
 
     @Override

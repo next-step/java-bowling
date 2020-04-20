@@ -8,17 +8,16 @@ public class Score {
 
     private static final String SCORE_RANGE = "점수의 범위는 0~300점 사이 여야 합니다.";
     private static final String ADD_COUNT_ERR_MESSAGE = "0~2회 까지만 점수 합산이 가능 합니다.";
-    private static final int MIN_SCORE = 0;
-    private static final int MAX_SCORE = 300;
-    private static final int MIN_ADD_COUNT = 0;
-    private static final int MAX_ADD_COUNT = 2;
+    private static final int ZERO = 0;
     private static final int MINUS_COUNT = 1;
+    private static final int MAX_ADD_COUNT = 2;
+    private static final int MAX_SCORE = 300;
 
     private final int score;
     private int addCount;
 
     public Score() {
-        this(MIN_SCORE, 0);
+        this(ZERO, 0);
     }
 
     public Score(int score) {
@@ -34,13 +33,13 @@ public class Score {
     }
 
     private void validateAddCount(int addCount) {
-        if (addCount < MIN_ADD_COUNT || addCount > MAX_ADD_COUNT) {
+        if (addCount < ZERO || addCount > MAX_ADD_COUNT) {
             throw new BowlingException(ADD_COUNT_ERR_MESSAGE);
         }
     }
 
     private void validateScoreRange(int score) {
-        if (score < MIN_SCORE || score > MAX_SCORE) {
+        if (score < ZERO || score > MAX_SCORE) {
             throw new BowlingException(SCORE_RANGE);
         }
     }
@@ -62,12 +61,11 @@ public class Score {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Score score1 = (Score) o;
-        return score == score1.score &&
-                addCount == score1.addCount;
+        return score == score1.score;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, addCount);
+        return Objects.hash(score);
     }
 }

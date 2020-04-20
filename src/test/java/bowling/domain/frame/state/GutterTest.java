@@ -1,8 +1,6 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,13 +48,13 @@ class GutterTest {
     public void getCalculateScore_success() throws Exception {
         //given
         Gutter gutter = new Gutter();
-        Calculator calculator = new ScoreCalculator(new Score(10), 2);
+        Score score = new Score(10, 2);
         Score compare = new Score(10);
 
         //when
-        calculator = gutter.getScoreCalculate(calculator);
+        score = gutter.getCalculateScore(score);
 
         //then
-        assertTrue(calculator.getScore().equals(compare));
+        assertTrue(score.equals(compare));
     }
 }

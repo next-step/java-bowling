@@ -1,8 +1,6 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -70,7 +68,7 @@ class ReadyTest {
 
         //then
         assertThatThrownBy(
-                () -> ready.getCurrentCalculator()
+                () -> ready.getCurrentScore()
         ).isInstanceOf(BowlingException.class);
     }
 
@@ -79,11 +77,11 @@ class ReadyTest {
     public void getCalculateScore_fail() throws Exception {
         //given
         Ready ready = new Ready();
-        Calculator calculator = new ScoreCalculator(new Score(), 2);
+        Score score = new Score(0, 2);
 
         //then
         assertThatThrownBy(
-                () -> ready.getScoreCalculate(calculator)
+                () -> ready.getCalculateScore(score)
         ).isInstanceOf(BowlingException.class);
     }
 }

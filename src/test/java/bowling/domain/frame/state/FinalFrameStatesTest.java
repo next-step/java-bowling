@@ -1,8 +1,6 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -190,7 +188,7 @@ class FinalFrameStatesTest {
         ).isInstanceOf(BowlingException.class);
     }
 
-    @DisplayName("finalFrame의 점수 계산")
+    @DisplayName("finalFrame의 점수 계산: strike 연속 2번")
     @Test
     public void getScore_success() throws Exception {
         //given
@@ -199,7 +197,7 @@ class FinalFrameStatesTest {
         states = states.bowl(10);
 
         //then
-        assertThat(states.getCurrentCalculator().getScore()).isEqualTo(new Score(20));
+        assertThat(states.getCurrentScore()).isEqualTo(new Score(20));
     }
 
     @DisplayName("마지막 frame의 첫 투구를 이전 점수에 더해준다")
@@ -210,13 +208,13 @@ class FinalFrameStatesTest {
         states = states.bowl(3);
         states = states.bowl(5);
         Score compare = new Score(13);
-        Calculator calculator = new ScoreCalculator(new Score(10), 1);
+        Score score = new Score(10, 1);
 
         //when
-        calculator = states.getScoreCalculate(calculator);
+        score = states.getCalculateScore(score);
 
         //then
-        assertTrue(calculator.getScore().equals(compare));
+        assertTrue(score.equals(compare));
     }
 
     @DisplayName("마지막 frame의 2개 투구를 이전 점수에 더해준다")
@@ -227,13 +225,13 @@ class FinalFrameStatesTest {
         states = states.bowl(3);
         states = states.bowl(5);
         Score compare = new Score(18);
-        Calculator calculator = new ScoreCalculator(new Score(10), 2);
+        Score score = new Score(10, 2);
 
         //when
-        calculator = states.getScoreCalculate(calculator);
+        score = states.getCalculateScore(score);
 
         //then
-        assertTrue(calculator.getScore().equals(compare));
+        assertTrue(score.equals(compare));
     }
 
     @DisplayName("마지막 frame의 2개 투구를 이전 점수에 더해준다(마지막에 2개의 strike 쳤을때)")
@@ -244,12 +242,12 @@ class FinalFrameStatesTest {
         states = states.bowl(10);
         states = states.bowl(10);
         Score compare = new Score(30);
-        Calculator calculator = new ScoreCalculator(new Score(10), 2);
+        Score score = new Score(10, 2);
 
         //when
-        calculator = states.getScoreCalculate(calculator);
+        score = states.getCalculateScore(score);
 
         //then
-        assertTrue(calculator.getScore().equals(compare));
+        assertTrue(score.equals(compare));
     }
 }
