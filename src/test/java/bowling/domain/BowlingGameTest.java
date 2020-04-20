@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 import bowling.domain.point.Point;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,37 +11,41 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class BowlingGameTest {
     private Player player;
+    private BowlingGame bowlingGame;
 
     @BeforeEach
     void setUp() {
         player = new Player("jjy");
-    }
-
-    @Test
-    @DisplayName("볼링게임 생성 테스트")
-    void createBowlingGameTest() {
-        assertThatCode(
-                () -> new BowlingGame(player)
-        ).doesNotThrowAnyException();
+        bowlingGame = new BowlingGame(player);
     }
 
     @Test
     @DisplayName("볼링게임 공던지기 테스트")
     void throwBallTest() {
-        BowlingGame bowlingGame = new BowlingGame(player);
-        Frames frames = bowlingGame.getFrames();
-        assertThat(
-                bowlingGame.throwBall(Point.of(10)).getFrame(1)
-        ).isEqualTo(frames.getFrame(1));
+        assertThatCode(
+                () -> bowlingGame.throwBall(Point.of(10))
+        ).doesNotThrowAnyException();
     }
 
     @Test
-    @DisplayName("첫 프레임 가져오기 테스트")
-    void getFirstFrameTest() {
-        BowlingGame bowlingGame = new BowlingGame(player);
-        Frames frames = bowlingGame.getFrames();
+    @DisplayName("진행중인 프레임 번호 가져오기")
+    void currentFrameNoTest() {
+        for (int i = 0; i < 2; i++) {
+            bowlingGame.throwBall(Point.of(10));
+        }
         assertThat(
-                bowlingGame.getFirstFrame()
-        ).isEqualTo(frames.getFrame(0));
+                bowlingGame.currentFrameNo()
+        ).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("게임 끝 테스트")
+    void isEndTest() {
+        for (int i = 0; i < 13; i++) {
+            bowlingGame.throwBall(Point.of(10));
+        }
+        assertThat(
+                bowlingGame.isEnd()
+        ).isTrue();
     }
 }

@@ -6,9 +6,11 @@ import bowling.domain.frame.NormalFrame;
 import bowling.domain.point.Point;
 import bowling.domain.point.Points;
 
+import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class ResultView {
+    private static final int TOTAL_FRAME_COUNT = 10;
     private static final int FIRST_TRY_COUNT = 1;
     private static final int SECOND_TRY_COUNT = 2;
     private static final int THIRD_TRY_COUNT = 3;
@@ -24,6 +26,7 @@ public class ResultView {
 
     private static final String FRAME_HEAD = "|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |";
     private static final String FRAME_LINE = "|";
+    private static final String FRAME_EMPTY = "        |";
 
     public static void viewResult(Frames frames) {
         viewFrameHead();
@@ -36,18 +39,29 @@ public class ResultView {
         String frameViews = frames.getFrames().stream()
                 .map(frame -> viewFrame(frame))
                 .collect(Collectors.joining(FRAME_LINE));
-        System.out.println(frameViews + FRAME_LINE);
+        System.out.print(frameViews + FRAME_LINE);
+        printEmptyFrames(TOTAL_FRAME_COUNT - frames.size());
     }
 
     private static void viewScores(Frames frames) {
         viewPlayerName("");
         StringBuilder sb = new StringBuilder();
         Integer sumScore = 0;
-        for (int i = 0; i < frames.getFrames().size(); i++) {
-            sb.append(getScoures(frames.getFrame(i), sumScore));
-            sumScore += getSumScore(frames.getFrame(i).getScore());
+        LinkedList<Frame> linkedFrames = frames.getFrames();
+        for (int i = 0; i < frames.size(); i++) {
+            sb.append(getScores(linkedFrames.get(i), sumScore));
+            sumScore += getSumScore(linkedFrames.get(i).getScore());
         }
-        System.out.println(sb.toString());
+        System.out.print(sb.toString());
+        printEmptyFrames(TOTAL_FRAME_COUNT - frames.size());
+    }
+
+    private static String getScores(Frame preframe, Integer sumScore) {
+        Integer score = preframe.getScore();
+        if (score != null) {
+            return String.format("%5s   |", score + sumScore);
+        }
+        return FRAME_EMPTY;
     }
 
     private static int getSumScore(Integer score) {
@@ -57,20 +71,20 @@ public class ResultView {
         return 0;
     }
 
-    private static String getScoures(Frame preframe, Integer sumScore) {
-        Integer score = preframe.getScore();
-        if (score != null) {
-            return String.format("%5s   |", score + sumScore);
-        }
-        return "        |";
-    }
-
     private static String viewFrame(Frame frame) {
         Points points = frame.getPoints();
         if (frame instanceof NormalFrame) {
             return String.format("%5s   ", getScoreMark(points));
         }
         return String.format(" %5s  ", getScoreMark(points));
+    }
+
+    private static void printEmptyFrames(int count) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            sb.append(FRAME_EMPTY);
+        }
+        System.out.println(sb.toString());
     }
 
     private static String getScoreMark(Points points) {

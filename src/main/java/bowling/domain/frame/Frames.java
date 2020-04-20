@@ -3,42 +3,43 @@ package bowling.domain.frame;
 import bowling.domain.player.Player;
 import bowling.domain.point.Point;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class Frames {
-    private static final int LAST_FRAME_INDEX = 9;
-    private static final int TOTAL_NORMAL_FRAME = 9;
+    private static final int TOTAL_NORMALFRAME_COUNT = 9;
+    private static final int MAX_FRAME_COUNT = 10;
 
     private final Player player;
-    private final List<Frame> frames;
+    private final Deque<Frame> frames;
 
     public Frames(Player player) {
         this.player = player;
-        this.frames = initFrames();
+        this.frames = new LinkedList<>();
+        frames.add(new NormalFrame());
     }
 
-    public List<Frame> getFrames() {
-        return frames;
-    }
-
-    public Frame getFrame(int index) {
-        return this.frames.get(index);
+    public LinkedList<Frame> getFrames() {
+        return new LinkedList<>(frames);
     }
 
     public Frame getNextFrame() {
-        return this.frames.stream()
-                .filter(frame -> frame.isThrowable())
-                .findFirst()
-                .orElseGet(() -> frames.get(LAST_FRAME_INDEX));
+        if (!frames.getLast().isThrowable() && size() != MAX_FRAME_COUNT) {
+            makeFrame();
+        }
+        return frames.getLast();
+    }
+
+    private void makeFrame() {
+        if (frames.size() == TOTAL_NORMALFRAME_COUNT) {
+            frames.addLast(new FinalFrame());
+            return;
+        }
+        frames.addLast(new NormalFrame());
     }
 
     public String getPlayerName() {
         return player.getName();
-    }
-
-    public int getFrameNo(Frame frame) {
-        return frames.indexOf(frame) + 1;
     }
 
     public void calculateScores(Point point) {
@@ -47,12 +48,15 @@ public class Frames {
                 .forEach(frame -> frame.calculateScore(point.getPoint()));
     }
 
-    private List<Frame> initFrames() {
-        List<Frame> baseframes = new ArrayList<>();
-        for (int i = 1; i <= TOTAL_NORMAL_FRAME; i++) {
-            baseframes.add(new NormalFrame());
-        }
-        baseframes.add(new FinalFrame());
-        return baseframes;
+    public int size() {
+        return frames.size();
+    }
+
+    public Frame getLastFrame() {
+        return frames.getLast();
+    }
+
+    public boolean isMax() {
+        return size() == MAX_FRAME_COUNT;
     }
 }
