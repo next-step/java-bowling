@@ -2,18 +2,16 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Frame {
     private static final int SHOT_LIMIT = 2;
 
     private final ShotScores shotScores;
-    private final boolean hasBonus;
-    private Frame nextFrame;
+    private final boolean islast;
 
-    protected Frame(List<ShotScore> shotScores, boolean hasBonus) {
+    protected Frame(List<ShotScore> shotScores, boolean islast) {
         this.shotScores = ShotScores.of(shotScores);
-        this.hasBonus = hasBonus;
+        this.islast = islast;
     }
 
     static Frame init() {
@@ -21,24 +19,28 @@ public class Frame {
     }
 
     Frame next(int shot) {
-        nextFrame = new Frame(new ArrayList<>(), false);
-        nextFrame.shot(shot);
+        Frame nextFrame = new Frame(new ArrayList<>(), false);
+        nextFrame.shot(shotScores.getNext(shot));
         return nextFrame;
     }
 
     Frame last(int shot) {
-        nextFrame = new Frame(new ArrayList<>(), true);
-        nextFrame.shot(shot);
+        Frame nextFrame = new Frame(new ArrayList<>(), true);
+        nextFrame.shot(shotScores.getNext(shot));
         return nextFrame;
     }
 
-    void shot(int shot) {
+    void shot(int shot){
+        shot(shotScores.getNext(shot));
+    }
+
+    private void shot(ShotScore shot) {
         int shotLimit = getShotLimit();
         if (shotScores.isSize(shotLimit)) {
             throw new IllegalStateException(String.format("shot Frame fail. cannot shot over %d times", shotLimit));
         }
 
-        shotScores.add(shot, hasBonus);
+        shotScores.add(shot);
     }
 
     boolean isFrameSet() {
@@ -47,11 +49,11 @@ public class Frame {
     }
 
     private int getShotLimit() {
-        return hasBonus ? SHOT_LIMIT + 1 : SHOT_LIMIT;
+        return islast ? SHOT_LIMIT + 1 : SHOT_LIMIT;
     }
 
     private boolean cannotShooting() {
-        if (hasBonus) {
+        if (islast) {
             return shotScores.isSize(SHOT_LIMIT) && !shotScores.hasClear();
         }
         return shotScores.hasClear();
@@ -59,53 +61,16 @@ public class Frame {
 
     public Integer getFrameScore() {
         if (isFrameSet()) {
-            if (hasBonus) {
-                return getUnBonusScore();
-            }
-            return getTotalScore();
+            return score();
         }
         return null;
     }
 
-    private Integer getTotalScore() {
-        if (shotScores.hasClear()) {
-            return Optional.ofNullable(nextFrame)
-                    .map(next -> next.getBonusScore(frameScoreType()))
-                    .map(nextBonus -> nextBonus + getUnBonusScore())
-                    .orElse(null);
+    private Integer score() {
+        if(islast){
+            return shotScores.singleScore();
         }
-
-        return getUnBonusScore();
-    }
-
-    private ScoreType frameScoreType() {
-        return shotScores.lastScoreType();
-    }
-
-    private int getUnBonusScore() {
         return shotScores.totalScore();
-    }
-
-    private Integer getBonusScore(ScoreType scoreType) {
-        if (scoreType.equals(ScoreType.STRIKE)) {
-            if (isFrameSet()) {
-                if (frameScoreType().equals(ScoreType.STRIKE)) {
-                    return Optional.ofNullable(nextFrame)
-                            .map(next -> next.getBonusScore(ScoreType.SPARE))
-                            .map(nextBonus -> nextBonus + 10)
-                            .orElse(null);
-                }
-                return shotScores.totalScore(2);
-            }
-
-            return null;
-        }
-
-        if (scoreType.equals(ScoreType.SPARE)) {
-            return shotScores.totalScore(1);
-        }
-
-        return 0;
     }
 
     public List<ShotScore> shotScores() {

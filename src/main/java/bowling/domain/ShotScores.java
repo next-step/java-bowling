@@ -2,6 +2,8 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 class ShotScores {
     private final List<ShotScore> shotScores;
@@ -14,21 +16,15 @@ class ShotScores {
         return new ShotScores(shotScores);
     }
 
-    private ShotScore getLast() {
-        return shotScores.get(shotScores.size() - 1);
+    void add(ShotScore shotScore) {
+        shotScores.add(shotScore);
     }
 
-    void add(int shotScore, boolean canShootingBonus) {
-        if (shotScores.isEmpty() || checkCanShootingBonus(canShootingBonus)) {
-            shotScores.add(ShotScore.init(shotScore));
-            return;
+    ShotScore getNext(int shot){
+        if(shotScores.isEmpty()){
+            return ShotScore.init(shot);
         }
-
-        shotScores.add(this.getLast().next(shotScore));
-    }
-
-    private boolean checkCanShootingBonus(boolean hasBonusShot) {
-        return this.getLast().isClear() && hasBonusShot;
+        return shotScores.get(shotScores.size()-1).next(shot);
     }
 
     boolean isSize(int size) {
@@ -41,20 +37,31 @@ class ShotScores {
                 .anyMatch(ShotScore::isClear);
     }
 
-    ScoreType lastScoreType() {
-        return this.getLast().scoreType();
+    Integer totalScore() {
+        if(isTotalScoreUnCalculated()){
+            return null;
+        }
+        return totalScoreStream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
-    int totalScore() {
-        return totalScore(shotScores.size());
-    }
-
-    int totalScore(int rangeScore) {
+    Integer singleScore(){
         return shotScores
                 .stream()
-                .limit(rangeScore)
                 .mapToInt(ShotScore::singleScore)
                 .sum();
+    }
+
+    private boolean isTotalScoreUnCalculated() {
+        return totalScoreStream()
+                .anyMatch(Objects::isNull);
+    }
+
+    private Stream<Integer> totalScoreStream() {
+        return shotScores
+                .stream()
+                .map(ShotScore::totalScore);
     }
 
     List<ShotScore> shotScores() {

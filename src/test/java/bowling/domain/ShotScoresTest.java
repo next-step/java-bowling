@@ -14,12 +14,12 @@ class ShotScoresTest {
     @BeforeEach
     void setting() {
         shotScores = ShotScores.of(new ArrayList<>());
-        shotScores.add(4, false);
+        shotScores.add(ShotScore.init(4));
     }
 
     @Test
     void add() {
-        shotScores.add(6, false);
+        shotScores.add(ShotScore.init(6));
         assertThat(shotScores.isSize(2))
                 .isTrue();
     }
@@ -38,7 +38,7 @@ class ShotScoresTest {
         assertThat(shotScores.hasClear())
                 .isFalse();
 
-        shotScores.add(6, false);
+        shotScores.add(shotScores.getNext(6));
 
         assertThat(shotScores.hasClear())
                 .isTrue();
@@ -47,11 +47,8 @@ class ShotScoresTest {
     @Test
     void totalScore(){
         ShotScores shotScores = ShotScores.of(Arrays.asList(ShotScore.init(4),ShotScore.init(5)));
-        assertThat(shotScores.totalScore(2))
+        assertThat(shotScores.totalScore())
                 .isEqualTo(9);
-
-        assertThat(shotScores.totalScore(1))
-                .isEqualTo(4);
     }
 
     @Test
