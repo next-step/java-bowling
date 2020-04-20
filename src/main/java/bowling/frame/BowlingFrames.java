@@ -26,9 +26,9 @@ public class BowlingFrames {
         recentFrame.bowl(pinCount);
     }
 
-    private void prepareNextFrame(final BowlingFrame recentFrame) {
-        if (recentFrame.isOver() && frames.size() < MAX_BOWLING_FRAME_SIZE) {
-            frames.add(recentFrame.appendNextFrame(frames.size()));
+    public void prepareNextFrame() {
+        if (getRecentBowlingFrame().isOver() && frames.size() < MAX_BOWLING_FRAME_SIZE) {
+            frames.add(getRecentBowlingFrame().appendNextFrame(frames.size()));
         }
     }
 

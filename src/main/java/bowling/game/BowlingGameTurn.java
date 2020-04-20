@@ -7,10 +7,10 @@ import java.util.Queue;
 
 public class BowlingGameTurn {
 
-    private final Queue<BowlingGame> games;
+    private final Queue<BowlingGame> turns;
 
-    private BowlingGameTurn(final Queue<BowlingGame> games) {
-        this.games = new LinkedList<>(games);
+    private BowlingGameTurn(final Queue<BowlingGame> turns) {
+        this.turns = new LinkedList<>(turns);
     }
 
     public static BowlingGameTurn newInstance(final List<BowlingGame> games) {
@@ -18,11 +18,11 @@ public class BowlingGameTurn {
     }
 
     public BowlingGame getNextTurn() {
-        BowlingGame bowlingGame = games.peek();
+        BowlingGame bowlingGame = turns.peek();
 
         if (!Objects.isNull(bowlingGame) && bowlingGame.isRecentFrameOver()) {
-            games.poll();
-            return games.peek();
+            turns.poll();
+            return turns.peek();
         }
 
         return bowlingGame;

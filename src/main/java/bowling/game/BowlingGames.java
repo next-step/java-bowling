@@ -41,7 +41,38 @@ public class BowlingGames {
         }
     }
 
+    public void prepareNextFrame() {
+        games.keySet()
+                .stream()
+                .map(games::get)
+                .forEach(BowlingGame::prepareNextFrame);
+    }
+
+    public boolean isRecentFrameOver(final Player player) {
+        BowlingGame bowlingGame = games.get(player);
+
+        if (Objects.isNull(bowlingGame)) {
+            return true;
+        }
+
+        return bowlingGame.isRecentFrameOver();
+    }
+
+    public boolean isAllGameOver() {
+        return games.keySet()
+                .stream()
+                .map(games::get)
+                .allMatch(BowlingGame::isAllFramesOver);
+    }
+
     public List<Player> getPlayers() {
         return new ArrayList<>(games.keySet());
+    }
+
+    public List<BowlingGame> getAllGames() {
+        return games.keySet()
+                .stream()
+                .map(games::get)
+                .collect(Collectors.toList());
     }
 }

@@ -30,6 +30,10 @@ public class BowlingGame {
         return bowlingFrames.isAllFrameOver();
     }
 
+    public void prepareNextFrame() {
+        bowlingFrames.prepareNextFrame();
+    }
+
     public void bowl(final Pin pinCount) {
         bowlingFrames.bowl(pinCount);
     }
