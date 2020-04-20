@@ -69,12 +69,7 @@ public class ResultView {
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
                     printFirstFrameSecond(gameResults.getResultByIndex(j));
-                    if(gameResults.getResultByIndex(j).getFrameByFrameId(frameId).isResult(STRIKE)
-                        || gameResults.getResultByIndex(j).getFrameByFrameId(frameId).isResult(SPARE)){
-                        printScoreBlank();
-                    }else {
-                        printScoreFirst(gameResults.getResultByIndex(j));
-                    }
+                    printFirstFrameScoreAtSecond(gameResults.getResultByIndex(j));
                 }
                 if (i < j) {
                     printFirstFrameFirst(gameResults.getResultByIndex(j));
@@ -100,7 +95,7 @@ public class ResultView {
 
                 if (i < j) {
                     printFirstFrameSecond(gameResults.getResultByIndex(j));
-                    printScoreBlank();
+                    printFirstFrameScoreAtSecond(gameResults.getResultByIndex(j));
                 }
             }
         }
@@ -249,17 +244,16 @@ public class ResultView {
             System.out.println(BOWLING_FRAME);
 
             for (int j = 0; j < gameResults.getSize(); j++) {
-                if (i == j) {
+                if (i >= j) {
                     printNormalFrameFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                    printScoreAtFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                 }
 
                 if (i < j) {
                     printNormalFrameSecond(gameResults.getResultByIndex(j), 9);
+                    printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL - 1);
                 }
 
-                if (i > j) {
-                    printNormalFrameFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
-                }
             }
         }
 
@@ -276,10 +270,12 @@ public class ResultView {
                 for (int j = 0; j < gameResults.getSize(); j++) {
                     if (i >= j) {
                         printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                        printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                     }
 
                     if (i < j) {
                         printNormalFrameFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                        printScoreAtFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                     }
                 }
             }
@@ -300,19 +296,34 @@ public class ResultView {
                         if (i >= j) {
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)) {
                                 printFinalFrameWhenStrikeThird(gameResults.getResultByIndex(j));
+                                printScoreAtFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
 
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(SPARE)) {
                                 printFinalFrameWhenSpareThird(gameResults.getResultByIndex(j));
+                                printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
 
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isGutterOrMiss()) {
                                 printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                                printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
                         }
 
                         if (i < j) {
                             printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+
+                            if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)) {
+                                printScoreAtFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                            }
+
+                            if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(SPARE)) {
+                                printScoreAtFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                            }
+
+                            if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isGutterOrMiss()) {
+                                printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                            }
                         }
                     }
                 }
@@ -326,24 +337,29 @@ public class ResultView {
                         if (i >= j) {
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(SPARE)) {
                                 printFinalFrameWhenSpareThird(gameResults.getResultByIndex(j));
+                                printScoreUntil(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
 
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isGutterOrMiss()) {
                                 printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                                printScoreUntil(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
 
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)) {
                                 printFinalFrameWhenStrikeThird(gameResults.getResultByIndex(j));
+                                printScoreAtFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
                         }
 
                         if (i < j) {
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)) {
                                 printFinalFrameWhenStrikeThird(gameResults.getResultByIndex(j));
+                                printScoreAtFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
 
                             if (!gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)) {
                                 printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                                printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
                         }
                     }
@@ -355,6 +371,7 @@ public class ResultView {
 
                     for (int j = 0; j < gameResults.getSize(); j++) {
                         printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                        printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                     }
                 }
             }
@@ -381,19 +398,24 @@ public class ResultView {
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isGutterOrMiss()) {
                                 printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
+
+                            printScoreUntil(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                         }
 
                         if (i < j) {
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)) {
                                 printFinalFrameWhenStrikeThird(gameResults.getResultByIndex(j));
+                                printScoreAtFirst(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
 
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(SPARE)) {
                                 printFinalFrameWhenSpareThird(gameResults.getResultByIndex(j));
+                                printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
 
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isGutterOrMiss()) {
                                 printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                                printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
                         }
                     }
@@ -454,6 +476,18 @@ public class ResultView {
 
         System.out.println(name.toString());
         System.out.println();
+    }
+
+    private static void printFirstFrameScoreAtSecond(GameResult gameResult){
+        Frame frame = gameResult.getFrameByFrameId(FRAME_ID_FIRST);
+
+        if(frame.isResult(STRIKE) || frame.isResult(SPARE)){
+            printScoreBlank();
+        }
+
+        if(frame.isGutterOrMiss()){
+            printScoreFirst(gameResult);
+        }
     }
 
     private static void printSecondFrameScoreAtFirst(GameResult gameResult, int frameId){
