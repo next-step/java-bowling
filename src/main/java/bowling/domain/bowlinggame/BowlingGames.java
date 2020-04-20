@@ -36,6 +36,11 @@ public class BowlingGames {
                 .allMatch(BowlingGame::isOver);
     }
 
+    public boolean isPlayableFrame(int index) {
+        Frame lastFrame = getLastFrame(index);
+        return lastFrame.isPlayable();
+    }
+
     public int size() {
         return bowlingGames.size();
     }
@@ -44,7 +49,7 @@ public class BowlingGames {
         bowlingGames.get(index).addNextFrame();
     }
 
-    public Frame getLastFrame(int index) {
+    private Frame getLastFrame(int index) {
         return bowlingGames.get(index).getLastFrame();
     }
 
@@ -54,5 +59,10 @@ public class BowlingGames {
 
     public List<BowlingGame> getBowlingGames() {
         return bowlingGames;
+    }
+
+    public void addFrameScore(int index, int point) {
+        Frame lastFrame = getLastFrame(index);
+        lastFrame.addScore(point);
     }
 }

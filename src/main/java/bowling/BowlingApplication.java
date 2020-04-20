@@ -23,9 +23,8 @@ public class BowlingApplication {
     }
 
     private static void playBowling(BowlingGames bowlingGames, int index) {
-        Frame frame = bowlingGames.getLastFrame(index);
-        while (frame.isPlayable()) {
-            frame.addScore(InputView.relaseBowling(bowlingGames.getPlayer(index)));
+        while (bowlingGames.isPlayableFrame(index)) {
+            bowlingGames.addFrameScore(index, InputView.relaseBowling(bowlingGames.getPlayer(index)));
             ResultView.printBowlingScores(bowlingGames);
         }
     }

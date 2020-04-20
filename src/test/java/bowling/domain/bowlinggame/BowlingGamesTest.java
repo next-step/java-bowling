@@ -15,13 +15,13 @@ class BowlingGamesTest {
     private BowlingGames bowlingGames;
     @BeforeEach
     void setUp() {
-        bowlingGames = BowlingGames.of(Arrays.asList(new Player("LDC"), new Player("EEE")));
+        bowlingGames = BowlingGames.of(Arrays.asList("LDC", "EEE"));
     }
 
     @DisplayName("볼링 게임 컬렉션 생성")
     @Test
     void create() {
-        assertThatCode(() -> BowlingGames.of(Arrays.asList(new Player("LDC"), new Player("EEE"))));
+        assertThatCode(() -> BowlingGames.of(Arrays.asList("LDC", "EEE")));
     }
 
     @DisplayName("모든 게임이 종료되었는지 판단")
@@ -63,5 +63,14 @@ class BowlingGamesTest {
         for (int i = 0; i < 10; i++) {
             bowlingGames.addNextFrame(0);
         }
+    }
+
+    @DisplayName("게임진행이 가능한 프레임인지 판단")
+    @Test
+    void isPlayableFrame() {
+        addAllFrame();
+        addNineFrame();
+
+        assertThat(bowlingGames.isPlayableFrame(1)).isTrue();
     }
 }
