@@ -1,7 +1,9 @@
 package bowling.framestate;
 
 import bowling.FrameScore;
+import bowling.LeftScoreCount;
 import bowling.Pin;
+import bowling.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +37,8 @@ public class GutterTests {
     @DisplayName("FrameScore 합산 테스트")
     @Test
     public void addingUpFrameScoreTest() {
-        assertThat(gutter.addNextAddingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.createStrike());
+        assertThat(gutter.sumBeforeScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(10), LeftScoreCount.of(0)));
+        assertThat(gutter.sumBeforeScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(10), LeftScoreCount.of(0)));
     }
 
     @DisplayName("종료 테스트")

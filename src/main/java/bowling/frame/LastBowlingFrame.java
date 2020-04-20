@@ -70,7 +70,7 @@ public class LastBowlingFrame implements BowlingFrame {
 
     @Override
     public Score sumScore(final FrameScore beforeScore) {
-        FrameScore addingUpFrameScore = state.addNextAddingUpFrameScore(beforeScore);
+        FrameScore addingUpFrameScore = state.sumBeforeScore(beforeScore);
 
         if (addingUpFrameScore.canCalculateSelfScore()) {
             return addingUpFrameScore.getScore();
@@ -107,7 +107,7 @@ public class LastBowlingFrame implements BowlingFrame {
 
     @Override
     public boolean canCalculateScore(FrameScore beforeScore) {
-        FrameScore addingUpFrameScore = state.addNextAddingUpFrameScore(beforeScore);
+        FrameScore addingUpFrameScore = state.sumBeforeScore(beforeScore);
 
         if (!Objects.isNull(bonusPin)) {
             addingUpFrameScore = FrameScore.newInstanceWithBonusPin(addingUpFrameScore, bonusPin);

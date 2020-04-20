@@ -4,7 +4,6 @@ import bowling.FrameScore;
 import bowling.LeftScoreCount;
 import bowling.Pin;
 import bowling.Score;
-import bowling.framestate.Miss;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +37,8 @@ public class MissTests {
     @DisplayName("FrameScore 합산 테스트")
     @Test
     public void addingUpFrameScoreTest() {
-        assertThat(miss.addNextAddingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(19), LeftScoreCount.of(0)));
+        assertThat(miss.sumBeforeScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(19), LeftScoreCount.of(0)));
+        assertThat(miss.sumBeforeScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(0)));
     }
 
     @DisplayName("종료 테스트")

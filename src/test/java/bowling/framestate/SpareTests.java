@@ -4,7 +4,6 @@ import bowling.FrameScore;
 import bowling.LeftScoreCount;
 import bowling.Pin;
 import bowling.Score;
-import bowling.framestate.Spare;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +37,7 @@ public class SpareTests {
     @DisplayName("FrameScore 합산 테스트")
     @Test
     public void addingUpFrameScoreTest() {
-        assertThat(spare.addNextAddingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
+        assertThat(spare.sumBeforeScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
     }
 
     @DisplayName("종료 테스트")

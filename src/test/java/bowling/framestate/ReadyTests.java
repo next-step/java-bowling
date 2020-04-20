@@ -2,9 +2,6 @@ package bowling.framestate;
 
 import bowling.FrameScore;
 import bowling.Pin;
-import bowling.framestate.FirstBowl;
-import bowling.framestate.Ready;
-import bowling.framestate.Strike;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +36,8 @@ public class ReadyTests {
     @DisplayName("FrameScore 합산 테스트")
     @Test
     public void addingUpFrameScoreTest() {
-        assertThat(ready.addNextAddingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.createStrike());
+        assertThat(ready.sumBeforeScore(FrameScore.createStrike())).isEqualTo(FrameScore.createStrike());
+        assertThat(ready.sumBeforeScore(FrameScore.createSpare())).isEqualTo(FrameScore.createSpare());
     }
 
     @DisplayName("종료 테스트")

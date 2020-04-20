@@ -28,6 +28,10 @@ public class Pin {
         return new Pin(MAX_PIN_COUNT);
     }
 
+    public static Pin ofMin() {
+        return new Pin(MIN_PIN_COUNT);
+    }
+
     public Pin add(final Pin pinCount) {
         return new Pin(this.pinCount + pinCount.pinCount);
     }

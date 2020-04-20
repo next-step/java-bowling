@@ -29,6 +29,7 @@ public enum FrameScoreConsoleResult {
         FRAME_STATES.put(Ready.class, READY);
         FRAME_STATES.put(FirstBowl.class, FIRST_BOWL);
         FRAME_STATES.put(Miss.class, MISS);
+        FRAME_STATES.put(Gutter.class, GUTTER);
         FRAME_STATES.put(Spare.class, SPARE);
         FRAME_STATES.put(Strike.class, STRIKE);
     }

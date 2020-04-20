@@ -1,9 +1,10 @@
 package bowling.framestate;
 
 import bowling.FrameScore;
+import bowling.LeftScoreCount;
 import bowling.Pin;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class Gutter implements State {
@@ -26,8 +27,8 @@ public class Gutter implements State {
     }
 
     @Override
-    public FrameScore addNextAddingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addNextAddingUpScores(Collections.emptyList());
+    public FrameScore sumBeforeScore(final FrameScore beforeScore) {
+        return FrameScore.newInstance(beforeScore, LeftScoreCount.of(0));
     }
 
     @Override
@@ -37,6 +38,6 @@ public class Gutter implements State {
 
     @Override
     public List<Pin> getPins() {
-        return Collections.emptyList();
+        return Arrays.asList(Pin.ofMin(), Pin.ofMin());
     }
 }

@@ -41,7 +41,7 @@ public class CommonBowlingFrame implements BowlingFrame {
 
     @Override
     public Score sumScore(final FrameScore beforeScore) {
-        return getScore(state.addNextAddingUpFrameScore(beforeScore));
+        return getScore(state.sumBeforeScore(beforeScore));
     }
 
     private Score getScore(final FrameScore beforeScore) {
@@ -83,7 +83,7 @@ public class CommonBowlingFrame implements BowlingFrame {
 
     @Override
     public boolean canCalculateScore(final FrameScore frameScore) {
-        return canGetCalculateScore(state.addNextAddingUpFrameScore(frameScore));
+        return canGetCalculateScore(state.sumBeforeScore(frameScore));
     }
 
     private boolean canGetCalculateScore(FrameScore frameScore) {
