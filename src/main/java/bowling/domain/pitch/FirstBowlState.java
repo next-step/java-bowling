@@ -1,17 +1,13 @@
 package bowling.domain.pitch;
 
 import bowling.domain.exception.OutOfRangeArgumentException;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Score;
 
-import java.util.Optional;
-
-class FirstBowl implements State {
+class FirstBowlState implements State {
     private static final String OUT_OF_RANGE_ERROR_MESSAGE =
             "잘못된 입력값 입니다.";
     private Pin pin;
 
-    public FirstBowl(Pin pin) {
+    public FirstBowlState(Pin pin) {
         this.pin = pin;
     }
 
@@ -21,13 +17,9 @@ class FirstBowl implements State {
         }
 
         if (this.pin.add(pin).isMax()) {
-            return new Spare();
+            return new SpareState();
         }
 
-        return new Miss();
-    }
-
-    @Override public Optional<Score> calculateBonusScore(Frame next) {
-        return Optional.empty();
+        return new MissState();
     }
 }

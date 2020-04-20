@@ -6,26 +6,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
-public class ReadyTest {
-    private Ready ready;
+public class ReadyStateTest {
+    private ReadyState readyState;
 
     @BeforeEach
     void setUp() {
-        ready = new Ready();
+        readyState = new ReadyState();
     }
 
     @DisplayName("볼을 리턴한다")
     @Test
     void returnBowl() {
-        assertThat(ready.bowl(Pin.valueOf(1)))
-                .isExactlyInstanceOf(FirstBowl.class);
+        assertThat(readyState.bowl(Pin.valueOf(1)))
+                .isExactlyInstanceOf(FirstBowlState.class);
     }
 
     @DisplayName("스트라이크를 리턴한다")
     @Test
     void returnStrike() {
-        assertThat(ready.bowl(Pin.valueOf(10)))
-                .isExactlyInstanceOf(Strike.class);
+        assertThat(readyState.bowl(Pin.valueOf(10)))
+                .isExactlyInstanceOf(StrikeState.class);
     }
 }

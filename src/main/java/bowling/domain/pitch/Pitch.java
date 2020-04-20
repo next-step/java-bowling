@@ -1,10 +1,5 @@
 package bowling.domain.pitch;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Score;
-
-import java.util.Optional;
-
 public class Pitch {
     private Pin pin;
     private State state;
@@ -15,7 +10,7 @@ public class Pitch {
     }
 
     public Pitch(int pinCount) {
-        this(Pin.valueOf(pinCount), new Ready());
+        this(Pin.valueOf(pinCount), new ReadyState());
     }
 
     public Pitch(Pitch pitch) {
@@ -28,11 +23,11 @@ public class Pitch {
     }
 
     public boolean isStrike() {
-        return state.getClass() == Strike.class;
+        return state.getClass() == StrikeState.class;
     }
 
     public boolean isSpare() {
-        return state.getClass() == Spare.class;
+        return state.getClass() == SpareState.class;
     }
 
     public boolean isGutter() {
@@ -45,9 +40,5 @@ public class Pitch {
 
     public Pitch next(int pinCount) {
         return next(Pin.valueOf(pinCount));
-    }
-
-    public Optional<Score> getBonusScore(Frame next) {
-        return state.calculateBonusScore(next);
     }
 }

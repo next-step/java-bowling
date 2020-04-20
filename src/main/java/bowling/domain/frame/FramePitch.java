@@ -22,68 +22,42 @@ public class FramePitch {
     }
 
     public boolean add(int pinCount) {
-        Pitch newPitch = getLast()
+        Pitch newPitch = getLastPitchOrEmpty()
                 .map(last -> last.next(pinCount))
                 .orElse(new Pitch(pinCount));
 
         return add(newPitch);
     }
 
-    public Score getScore() {
-        int sum = pitches.stream()
+    public int getPinCountTotal() {
+        return pitches.stream()
                 .map(Pitch::getPinCount)
                 .reduce(0, Integer::sum);
-
-        return new Score(sum, needAdditionalScore());
     }
 
-    public Optional<Score> getFirstPitchScore() {
-        return get(ZERO).map(p -> new Score(p.getPinCount()));
+    public Optional<Integer> getFirstPitchPinCount() {
+        return getOrEmpty(ZERO).map(Pitch::getPinCount);
     }
 
-    public Optional<Score> getSecondPitchScore() {
-        return get(ONE).map(p -> new Score(p.getPinCount()));
+    public Optional<Integer> getSecondPitchPinCount() {
+        return getOrEmpty(ONE).map(Pitch::getPinCount);
     }
 
     public boolean isSecondPitchSpare() {
-        Optional<Pitch> pitch = get(ONE);
+        Optional<Pitch> pitch = getOrEmpty(ONE);
         return pitch.map(Pitch::isSpare).orElse(false);
     }
 
     public boolean isFirstPitchStrike() {
-        Optional<Pitch> pitch = get(ZERO);
+        Optional<Pitch> pitch = getOrEmpty(ZERO);
         return pitch.map(Pitch::isStrike).orElse(false);
-    }
-
-    public Optional<Score> getBonusScore(Frame next) {
-        Optional<Pitch> pitch = getHasBonusPitch();
-        if (pitch.isPresent()) {
-            return pitch.get().getBonusScore(next);
-        }
-        return Optional.empty();
     }
 
     public int size() {
         return pitches.size();
     }
 
-    private Optional<Pitch> getHasBonusPitch() {
-        if (isFirstPitchStrike()) {
-            return get(ZERO);
-        } else if (isSecondPitchSpare()) {
-            return get(ONE);
-        }
-
-        return Optional.empty();
-    }
-
-    private boolean needAdditionalScore() {
-        return getLast()
-                .map(lastPitch -> lastPitch.isSpare() || lastPitch.isStrike())
-                .orElse(false);
-    }
-
-    private Optional<Pitch> get(int index) {
+    private Optional<Pitch> getOrEmpty(int index) {
         if (pitches.size() <= index) {
             return Optional.empty();
         }
@@ -91,11 +65,15 @@ public class FramePitch {
         return Optional.of(pitches.get(index));
     }
 
-    private Optional<Pitch> getLast() {
+    private Optional<Pitch> getLastPitchOrEmpty() {
         if (pitches.isEmpty()) {
             return Optional.empty();
         }
-        return get(getLastIndex());
+        return getOrEmpty(getLastIndex());
+    }
+
+    public Pitch getLastPitch() {
+        return pitches.get(getLastIndex());
     }
 
     private int getLastIndex() {

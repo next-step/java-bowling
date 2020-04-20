@@ -1,9 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.score.FinalScore;
+import bowling.domain.frame.score.Score;
 import bowling.domain.pitch.Pitch;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class FinalFrame implements Frame {
@@ -14,6 +15,7 @@ public class FinalFrame implements Frame {
 
     public FinalFrame() {
         this.framePitch = new FramePitch();
+        this.score = new FinalScore();
     }
 
     private boolean hasThirdChance() {
@@ -26,33 +28,30 @@ public class FinalFrame implements Frame {
             return false;
         }
 
-        return framePitch.add(pinCount);
+        if (framePitch.add(pinCount)) {
+            score = score.add(framePitch.getLastPitch());
+            return true;
+        }
+        return false;
     }
 
     @Override public Optional<Integer> getScore() {
-        if (!isDone()) {
-            return Optional.empty();
-        }
-
-        if (!Objects.isNull(score)) {
-            return Optional.of(score.getScore());
-        }
-
-        score = framePitch.getScore();
-        return Optional.of(score.getScore());
+        return score.calculateScore();
     }
 
-    @Override public Optional<Score> getScoreForOnePitch() {
-        return framePitch.getFirstPitchScore();
+    @Override public Optional<Integer> getPinCountForOnePitch() {
+        return framePitch.getFirstPitchPinCount();
     }
 
-    @Override public Optional<Score> getScoreForTwoPitches() {
-        Optional<Score> firstScore = framePitch.getFirstPitchScore();
-        Optional<Score> secondScore = framePitch.getSecondPitchScore();
-        if (firstScore.isPresent() && secondScore.isPresent()) {
-            return firstScore
-                    .map(fs -> fs.add(secondScore.get()));
+    @Override public Optional<Integer> getPinCountForTwoPitches() {
+        Optional<Integer> firstPinCount = framePitch.getFirstPitchPinCount();
+        Optional<Integer> secondPinCount = framePitch.getSecondPitchPinCount();
+
+        if (firstPinCount.isPresent() && secondPinCount.isPresent()) {
+            return firstPinCount
+                    .map(pinCount -> pinCount + secondPinCount.get());
         }
+
         return Optional.empty();
     }
 

@@ -14,7 +14,7 @@ public class FramePitchTest {
         FramePitch framePitch = new FramePitch();
         framePitch.add(8);
         framePitch.add(1);
-        assertThat(framePitch.getScore().getScore()).isEqualTo(9);
+        assertThat(framePitch.getPinCountTotal()).isEqualTo(9);
     }
 
     @DisplayName("첫번째 투구의 점수를 구할 수 있다.")
@@ -22,9 +22,9 @@ public class FramePitchTest {
     void getFirst() {
         FramePitch framePitch = new FramePitch();
         framePitch.add(1);
-        Optional<Score> firstScore = framePitch.getFirstPitchScore();
+        Optional<Integer> firstScore = framePitch.getFirstPitchPinCount();
         assertThat(firstScore.isPresent()).isTrue();
-        assertThat(firstScore.get().getScore()).isEqualTo(1);
+        assertThat(firstScore.get()).isEqualTo(1);
     }
 
     @DisplayName("첫번째 투구가 스트라이크인지 체크한다.")
@@ -45,9 +45,9 @@ public class FramePitchTest {
         FramePitch framePitch = new FramePitch();
         framePitch.add(1);
         framePitch.add(2);
-        Optional<Score> secondScore = framePitch.getSecondPitchScore();
+        Optional<Integer> secondScore = framePitch.getSecondPitchPinCount();
         assertThat(secondScore.isPresent()).isTrue();
-        assertThat(secondScore.get().getScore()).isEqualTo(2);
+        assertThat(secondScore.get()).isEqualTo(2);
     }
 
     @DisplayName("두번째 투구가 스페어인지 체크한다.")
@@ -63,5 +63,4 @@ public class FramePitchTest {
         normalPitch.add(8);
         assertThat(normalPitch.isSecondPitchSpare()).isFalse();
     }
-
 }

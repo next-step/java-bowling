@@ -21,7 +21,7 @@ public interface Frame {
 
     boolean isLast();
 
-    Optional<Score> getScoreForOnePitch();
+    Optional<Integer> getPinCountForOnePitch();
 
-    Optional<Score> getScoreForTwoPitches();
+    Optional<Integer> getPinCountForTwoPitches();
 }
