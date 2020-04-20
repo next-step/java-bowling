@@ -44,7 +44,6 @@ public class BowlingFrameTests {
     @CsvSource(value = {"0,9", "1,18", "2,9", "3,30", "4,28", "5,19", "6,9", "7,20", "8,10", "9,18"})
     public void getFrameScoreTest(final int index, final int expectedScore) {
         BowlingFrame bowlingFrame = bowlingFrames.get(index);
-        Score score = bowlingFrame.getFrameScore();
         assertThat(bowlingFrame.getFrameScore()).isEqualTo(Score.of(expectedScore));
     }
 }

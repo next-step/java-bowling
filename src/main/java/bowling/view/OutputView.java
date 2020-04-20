@@ -2,8 +2,7 @@ package bowling.view;
 
 import bowling.dto.BowlingFrameConsoleResult;
 import bowling.dto.BowlingGameResult;
-import bowling.frame.BowlingFrame;
-import bowling.framestate.State;
+import bowling.dto.FrameState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +67,8 @@ public class OutputView {
     }
 
 
-    private static String extractFrameScoreResult(final State state) {
-        FrameScoreConsoleResult frameScoreConsoleResult = FrameScoreConsoleResult.of(state);
-        return frameScoreConsoleResult.toString(state.getPins());
+    private static String extractFrameScoreResult(final FrameState frameState) {
+        FrameScoreConsoleResult frameScoreConsoleResult = FrameScoreConsoleResult.of(frameState.getState());
+        return frameScoreConsoleResult.toString(frameState);
     }
 }

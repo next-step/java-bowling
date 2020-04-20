@@ -126,4 +126,8 @@ public class LastBowlingFrame implements BowlingFrame {
     public State getState() {
         return state;
     }
+
+    public Pin getBonusPin() {
+        return bonusPin;
+    }
 }

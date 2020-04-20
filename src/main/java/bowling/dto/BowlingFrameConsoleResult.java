@@ -7,16 +7,16 @@ import bowling.view.FrameScoreConsoleResult;
 
 public class BowlingFrameConsoleResult {
 
-    private final State frameState;
+    private final FrameState frameState;
     private final String totalScore;
 
-    private BowlingFrameConsoleResult(final State frameState, final String totalScore) {
+    private BowlingFrameConsoleResult(final FrameState frameState, final String totalScore) {
         this.frameState = frameState;
         this.totalScore = totalScore;
     }
 
     public static BowlingFrameConsoleResult newInstance(final BowlingFrame bowlingFrame, final Score totalScore) {
-        return new BowlingFrameConsoleResult(bowlingFrame.getState(), makeTotalScore(bowlingFrame, totalScore));
+        return new BowlingFrameConsoleResult(FrameState.newInstance(bowlingFrame), makeTotalScore(bowlingFrame, totalScore));
     }
 
     private static String makeTotalScore(final BowlingFrame bowlingFrame, final Score totalScore) {
@@ -27,7 +27,7 @@ public class BowlingFrameConsoleResult {
         return "";
     }
 
-    public State getFrameState() {
+    public FrameState getFrameState() {
         return frameState;
     }
 
