@@ -50,13 +50,6 @@ public abstract class Frame {
         return false;
     }
 
-    public boolean isLast() {
-        if (this instanceof FinalFrame && !isThrowable()) {
-            return true;
-        }
-        return false;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

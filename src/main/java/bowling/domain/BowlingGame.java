@@ -8,6 +8,7 @@ import bowling.domain.point.Point;
 
 public class BowlingGame {
     private static final int FIRST_FRAME_INDEX = 0;
+    private static final int LAST_FRAME_INDEX = 9;
 
     private Frames frames;
 
@@ -15,17 +16,17 @@ public class BowlingGame {
         this.frames = new Frames(player);
     }
 
-    public Frame throwBall(Point point) {
+    public Frames throwBall(Point point) {
         Frame frame = frames.getNextFrame();
         try {
             frame.throwBall(point);
         } catch (OverThrowBallException e) {
             System.out.println(e.getMessage());
-            return frame;
+            return frames;
         }
         frames.calculateScores(point);
         frame.addScore();
-        return this.frames.getNextFrame();
+        return frames;
     }
 
     public int currentFrameNo() {
@@ -38,5 +39,9 @@ public class BowlingGame {
 
     public Frame getFirstFrame() {
         return frames.getFrame(FIRST_FRAME_INDEX);
+    }
+
+    public boolean isEnd() {
+        return !frames.getFrame(LAST_FRAME_INDEX).isThrowable();
     }
 }
