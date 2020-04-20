@@ -1,7 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.point.Point;
-
 public class Gutter extends Score {
     public Gutter(int point) {
         super(point);

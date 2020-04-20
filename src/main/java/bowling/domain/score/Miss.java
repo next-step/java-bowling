@@ -1,7 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.point.Point;
-
 public class Miss extends Score {
     public Miss(int point) {
         super(point);
