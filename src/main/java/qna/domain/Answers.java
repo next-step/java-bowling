@@ -42,7 +42,7 @@ public class Answers {
     }
 
     public List<Answer> getAnswers() {
-        return answers;
+        return new ArrayList<>(answers);
     }
 
 }
