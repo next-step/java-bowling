@@ -55,7 +55,7 @@ public class ResultView {
 
     private static String formatScores(Frame frame) {
         List<String> scores = frame.getScores().stream()
-                .map(Score::pointToScore)
+                .map(Score::getScore)
                 .collect(Collectors.toList());
 
         if (scores.size() > ONE) {

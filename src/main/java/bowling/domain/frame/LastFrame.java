@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.bonusscore.BonusScores;
-import bowling.domain.scores.LastScores;
+import bowling.domain.scores.Scores;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -17,7 +17,7 @@ public class LastFrame extends Frame {
     private final BonusScores bonusScores;
 
     public LastFrame(BonusScores bonusScores) {
-        super(new LastScores());
+        super(new Scores());
         this.bonusScores = bonusScores;
     }
 

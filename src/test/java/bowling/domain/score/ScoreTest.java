@@ -1,7 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.scores.DefaultScores;
-import bowling.domain.scores.LastScores;
 import bowling.domain.scores.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -18,20 +16,14 @@ public class ScoreTest {
     @DisplayName("일반 프레임 1구 점수 생성")
     @Test
     void createDefaultFrameScore() {
-        assertThatCode(() -> DefaultScore.of(10));
-    }
-
-    @DisplayName("마지막 프레임 1구 점수 생성")
-    @Test
-    void createLastFrameScore() {
-        assertThatCode(() -> LastScore.of(10));
+        assertThatCode(() -> EmptyScore.nextScore(10));
     }
 
     @DisplayName("점수가 10점이 넘거나 음수일 경우 throws Exception")
     @ParameterizedTest
     @ValueSource(ints = {-1, 11})
     void createScoreFailbyInvalidPoint(int point) {
-        assertThatIllegalArgumentException().isThrownBy(() -> DefaultScore.of(point));
+        assertThatIllegalArgumentException().isThrownBy(() -> EmptyScore.nextScore(point));
     }
 
     @Nested
@@ -41,7 +33,7 @@ public class ScoreTest {
         @DisplayName("스트라이크 생성")
         @Test
         void createStrike() {
-            Score strike = DefaultScore.of(10);
+            Score strike = EmptyScore.nextScore(10);
 
             assertThat(strike.isEqualScoreType(ScoreType.STRIKE)).isTrue();
         }
@@ -49,7 +41,7 @@ public class ScoreTest {
         @DisplayName("스페어 생성")
         @Test
         void createSpare() {
-            Scores lastScores = new LastScores();
+            Scores lastScores = new Scores();
             lastScores.add(5);
             lastScores.add(5);
 
@@ -62,7 +54,7 @@ public class ScoreTest {
         @DisplayName("거터 생성")
         @Test
         void createGutter() {
-            Score gutter = DefaultScore.of(0);
+            Score gutter = EmptyScore.nextScore(0);
 
             assertThat(gutter.isEqualScoreType(ScoreType.GUTTER)).isTrue();
         }
@@ -70,7 +62,7 @@ public class ScoreTest {
         @DisplayName("미스 생성")
         @Test
         void createMiss() {
-            Score miss = DefaultScore.of(5);
+            Score miss = EmptyScore.nextScore(5);
 
             assertThat(miss.isEqualScoreType(ScoreType.MISS)).isTrue();
         }
@@ -83,7 +75,7 @@ public class ScoreTest {
         @DisplayName("스트라이크 생성")
         @Test
         void createStrike() {
-            Scores scores = new LastScores();
+            Scores scores = new Scores();
 
             scores.add(10);
             scores.add(10);
@@ -96,35 +88,6 @@ public class ScoreTest {
                         }
                     }
             );
-        }
-
-        @DisplayName("스페어 생성")
-        @Test
-        void createSpare() {
-            Scores lastScores = new LastScores();
-            lastScores.add(5);
-            lastScores.add(5);
-
-            List<Score> scores = lastScores.getScores();
-            Score spare = scores.get(scores.size() - 1);
-
-            assertThat(spare.isEqualScoreType(ScoreType.SPARE)).isTrue();
-        }
-
-        @DisplayName("거터 생성")
-        @Test
-        void createGutter() {
-            Score gutter = LastScore.of(0);
-
-            assertThat(gutter.isEqualScoreType(ScoreType.GUTTER)).isTrue();
-        }
-
-        @DisplayName("미스 생성")
-        @Test
-        void createMiss() {
-            Score miss = LastScore.of(5);
-
-            assertThat(miss.isEqualScoreType(ScoreType.MISS)).isTrue();
         }
     }
 }

@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.bonusscore.BonusScore;
 import bowling.domain.bonusscore.BonusScores;
-import bowling.domain.scores.DefaultScores;
+import bowling.domain.scores.Scores;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Objects;
@@ -17,7 +17,7 @@ public class DefaultFrame extends Frame {
     private final BonusScores bonusScores;
 
     private DefaultFrame(BonusScores bonusScores) {
-        super(new DefaultScores());
+        super(new Scores());
         this.bonusScores = bonusScores;
     }
 
