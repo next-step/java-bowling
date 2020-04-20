@@ -14,6 +14,7 @@ import static bowling.view.PrintFormat.*;
 public class ResultView {
     private static final int FRAME_ID_FIRST = 1;
     private static final int FRAME_ID_SECOND = 2;
+    private static final int FRAME_ID_THIRD = 3;
     private static final int FRAME_ID_NINE = 9;
     private static final int FRAME_ID_FINAL = 10;
     private static final int OFFSET = -1;
@@ -144,7 +145,7 @@ public class ResultView {
 
                 if (i < j) {
                     printNormalFrameSecond(gameResults.getResultByIndex(j), frameId + OFFSET);
-                    if (frameId == 3) {
+                    if (frameId == FRAME_ID_THIRD) {
                         printSecondFrameScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_SECOND);
                     } else {
                         printScoreAtSecond(gameResults.getResultByIndex(j), frameId + OFFSET);
