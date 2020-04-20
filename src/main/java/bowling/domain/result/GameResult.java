@@ -27,10 +27,6 @@ public class GameResult {
         return playerName.getName();
     }
 
-    public Frames getFrames() {
-        return frames;
-    }
-
     public Frame getFrameByFrameId(int frameId) {
         return frames.getFrames().get(frameId + OFFSET);
     }
