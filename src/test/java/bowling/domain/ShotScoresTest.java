@@ -45,15 +45,15 @@ class ShotScoresTest {
     }
 
     @Test
-    void totalScore(){
-        ShotScores shotScores = ShotScores.of(Arrays.asList(ShotScore.init(4),ShotScore.init(5)));
+    void totalScore() {
+        ShotScores shotScores = ShotScores.of(Arrays.asList(ShotScore.init(4), ShotScore.init(5)));
         assertThat(shotScores.totalScore())
                 .isEqualTo(9);
     }
 
     @Test
-    void totalScoreTest(){
-        ShotScores shotScores = ShotScores.of(Arrays.asList(ShotScore.init(4),ShotScore.init(5)));
+    void totalScoreTest() {
+        ShotScores shotScores = ShotScores.of(Arrays.asList(ShotScore.init(4), ShotScore.init(5)));
         assertThat(shotScores.totalScore())
                 .isEqualTo(9);
     }

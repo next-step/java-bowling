@@ -50,7 +50,7 @@ public class ShotScore {
         return score.score();
     }
 
-    public Integer totalScore() {
+    Integer totalScore() {
         if (scoreType.isIn(ScoreType.STRIKE)) {
             return Optional.ofNullable(next)
                     .flatMap(next -> Optional.ofNullable(next.next)

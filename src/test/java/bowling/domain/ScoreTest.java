@@ -6,28 +6,28 @@ import static org.assertj.core.api.Assertions.*;
 
 public class ScoreTest {
     @Test
-    void scoreRange(){
-        assertThatCode(()->Score.of(0))
+    void scoreRange() {
+        assertThatCode(() -> Score.of(0))
                 .doesNotThrowAnyException();
 
-        assertThatCode(()->Score.of(10))
+        assertThatCode(() -> Score.of(10))
                 .doesNotThrowAnyException();
 
-        assertThatThrownBy(()->Score.of(11))
+        assertThatThrownBy(() -> Score.of(11))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(()->Score.of(-1))
+        assertThatThrownBy(() -> Score.of(-1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void getScore(){
+    void getScore() {
         assertThat(Score.of(5).score())
                 .isEqualTo(5);
     }
 
     @Test
-    void isMax(){
+    void isMax() {
         assertThat(Score.of(10).isMax())
                 .isTrue();
 
@@ -36,7 +36,7 @@ public class ScoreTest {
     }
 
     @Test
-    void isMin(){
+    void isMin() {
         assertThat(Score.of(0).isMin())
                 .isTrue();
 

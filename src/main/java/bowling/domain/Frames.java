@@ -51,7 +51,7 @@ public class Frames {
                 .count() == MAX_FRAMES;
     }
 
-    public Stream<Frame> stream(){
+    public Stream<Frame> stream() {
         return frames.stream();
     }
 }

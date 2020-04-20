@@ -64,7 +64,7 @@ public class OutputView {
                 .stream()
                 .map(FrameDto::getFrameScore)
                 .map(Objects::toString)
-                .map(v -> v.equals("null")? "" : v);
+                .map(v -> v.equals("null") ? "" : v);
     }
 
     private Stream<String> getEmptyStringStream(List<FrameDto> frames) {

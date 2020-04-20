@@ -8,7 +8,7 @@ public enum ScoreType {
     MISS,
     GUTTER;
 
-    public boolean isIn(ScoreType... scoreTypes) {
+    boolean isIn(ScoreType... scoreTypes) {
         return Arrays.asList(scoreTypes).contains(this);
     }
 }

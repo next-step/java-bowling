@@ -30,7 +30,7 @@ public class Frame {
         return nextFrame;
     }
 
-    void shot(int shot){
+    void shot(int shot) {
         shot(shotScores.getNext(shot));
     }
 
@@ -59,7 +59,7 @@ public class Frame {
         return shotScores.hasClear();
     }
 
-    public Integer getFrameScore() {
+    Integer getFrameScore() {
         if (isFrameSet()) {
             return score();
         }
@@ -67,7 +67,7 @@ public class Frame {
     }
 
     private Integer score() {
-        if(islast){
+        if (islast) {
             return shotScores.singleScore();
         }
         return shotScores.totalScore();

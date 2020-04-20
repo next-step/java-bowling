@@ -20,11 +20,11 @@ class ShotScores {
         shotScores.add(shotScore);
     }
 
-    ShotScore getNext(int shot){
-        if(shotScores.isEmpty()){
+    ShotScore getNext(int shot) {
+        if (shotScores.isEmpty()) {
             return ShotScore.init(shot);
         }
-        return shotScores.get(shotScores.size()-1).next(shot);
+        return shotScores.get(shotScores.size() - 1).next(shot);
     }
 
     boolean isSize(int size) {
@@ -34,11 +34,11 @@ class ShotScores {
     boolean hasClear() {
         return !shotScores.isEmpty() &&
                 shotScores.stream()
-                .anyMatch(ShotScore::isClear);
+                        .anyMatch(ShotScore::isClear);
     }
 
     Integer totalScore() {
-        if(isTotalScoreUnCalculated()){
+        if (isTotalScoreUnCalculated()) {
             return null;
         }
         return totalScoreStream()
@@ -46,7 +46,7 @@ class ShotScores {
                 .sum();
     }
 
-    Integer singleScore(){
+    Integer singleScore() {
         return shotScores
                 .stream()
                 .mapToInt(ShotScore::singleScore)
