@@ -20,7 +20,6 @@ class BowlingGameTest {
         game.play(10);
     }
 
-
     @DisplayName("마지막 프레임 까지 공을 던지면 게임이 완료 상태가 된다")
     @Test
     public void isFinish_success() throws Exception {

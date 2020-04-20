@@ -84,5 +84,4 @@ class ScoreTest {
         assertFalse(calc1.canAddNextScore());
         assertTrue(calc2.canAddNextScore());
     }
-
 }
