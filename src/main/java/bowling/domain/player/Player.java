@@ -30,7 +30,7 @@ public class Player {
         frames.changeFrameToNext();
     }
 
-    public boolean isFinish() {
+    public boolean isFinishCurrentFrame() {
         Frame current = frames.getCurrent();
         return current.isFinish();
     }

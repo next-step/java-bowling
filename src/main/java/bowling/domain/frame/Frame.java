@@ -34,29 +34,29 @@ public abstract class Frame {
         return states.getLast();
     }
 
-    protected Score sum() {
-        Score total = Score.INIT_SCORE;
+    protected Score sumCurrentFrameScore() {
+        Score totalScore = Score.INIT_SCORE;
         for (State state : states.getList()) {
-            total = add(total, state);
+            totalScore = addStateScore(totalScore, state);
         }
-        return total;
+        return totalScore;
     }
 
-    protected Score add(Score total, final State state) {
-        if (state instanceof Calculable) {
-            Score score = ((Calculable) state).getScore();
-            total = total.add(score);
-        }
-        return total;
-    }
-
-    protected Score calculate(final Score beforeScore) {
+    protected Score accumulateBeforeScore(final Score beforeScore) {
         Score totalScore = beforeScore;
         for (State state : states.getList()) {
             totalScore = totalScore.accumulate(state.getKnockOverCount());
             if (totalScore.isCompleteAccumulation()) {
                 return totalScore;
             }
+        }
+        return totalScore;
+    }
+
+    private Score addStateScore(Score totalScore, final State state) {
+        if (state instanceof Calculable) {
+            Score stateScore = ((Calculable) state).getScore();
+            totalScore = totalScore.add(stateScore);
         }
         return totalScore;
     }

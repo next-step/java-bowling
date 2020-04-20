@@ -45,7 +45,7 @@ public class BowlingGame {
 
     private void bowl(final Player player, final Players players) {
         Pins pins = Pins.of();
-        while (!player.isFinish()) {
+        while (!player.isFinishCurrentFrame()) {
             BowlCount bowlCount = inputView.inputBowlCount(player.getName());
             player.bowl(pins.knockOver(bowlCount));
             showOverHead(players);

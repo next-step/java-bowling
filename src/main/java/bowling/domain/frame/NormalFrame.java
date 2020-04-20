@@ -7,6 +7,8 @@ import bowling.domain.score.Score;
 import java.util.Optional;
 
 public class NormalFrame extends Frame {
+    static final int STATE_SIZE = 2;
+
     private final Frame nextFrame;
 
     public NormalFrame(final FrameNumber frameNumber) {
@@ -47,7 +49,7 @@ public class NormalFrame extends Frame {
             return Score.NOT_ADDABLE_SCORE;
         }
 
-        Score totalScore = sum();
+        Score totalScore = sumCurrentFrameScore();
         if (totalScore.isCompleteAccumulation()) {
             return totalScore;
         }
@@ -61,7 +63,7 @@ public class NormalFrame extends Frame {
             return Score.NOT_ADDABLE_SCORE;
         }
 
-        Score totalScore = calculate(beforeScore);
+        Score totalScore = accumulateBeforeScore(beforeScore);
         if (totalScore.isCompleteAccumulation()) {
             return totalScore;
         }

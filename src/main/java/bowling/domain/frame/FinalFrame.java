@@ -7,6 +7,7 @@ import bowling.domain.score.Score;
 import java.util.Optional;
 
 public class FinalFrame extends Frame {
+    private static final int BONUS_STATES_SIZE = 3;
 
     public FinalFrame(final FrameNumber frameNumber) {
         super(frameNumber);
@@ -21,7 +22,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isFinish() {
-        return isBonusGameOver() || isGeneralGameOver();
+        return isFinishBonusGame() || isFinishNormalGame();
     }
 
     @Override
@@ -34,23 +35,23 @@ public class FinalFrame extends Frame {
         if (states.isEmpty() || !isFinish()) {
             return Score.NOT_ADDABLE_SCORE;
         }
-        return sum();
+        return sumCurrentFrameScore();
     }
 
     @Override
     public Score calculateAdditionalScore(final Score beforeScore) {
         if (canAdditionalScore(beforeScore)) {
-            return calculate(beforeScore);
+            return accumulateBeforeScore(beforeScore);
         }
         return Score.NOT_ADDABLE_SCORE;
     }
 
-    private boolean isBonusGameOver() {
-        return states.isBonusGameCount();
+    private boolean isFinishBonusGame() {
+        return states.getSize() == BONUS_STATES_SIZE;
     }
 
-    private boolean isGeneralGameOver() {
-        return states.isGeneralGameCount() && states.hasNotBonusState();
+    private boolean isFinishNormalGame() {
+        return states.getSize() == NormalFrame.STATE_SIZE && states.hasNotBonusState();
     }
 
     private boolean canAdditionalScore(final Score score) {

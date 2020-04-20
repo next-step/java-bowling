@@ -27,8 +27,8 @@ public class Scores {
             return;
         }
 
-        Score prev = scores.get(scores.size() - 1);
-        Score nextScore = prev.add(score);
+        Score prevScore = scores.get(scores.size() - 1);
+        Score nextScore = prevScore.add(score);
         scores.add(nextScore);
     }
 
