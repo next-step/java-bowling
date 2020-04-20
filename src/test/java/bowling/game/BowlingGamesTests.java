@@ -29,6 +29,6 @@ public class BowlingGamesTests {
     @DisplayName("사용자 이름 반환 테스트")
     @Test
     public void getPlayerNames() {
-        assertThat(bowlingGames.getPlayerNames()).isEqualTo(Arrays.asList("AAA", "BBB"));
+        assertThat(bowlingGames.getPlayers()).isEqualTo(Arrays.asList("AAA", "BBB"));
     }
 }

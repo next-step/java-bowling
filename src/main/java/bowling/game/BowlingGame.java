@@ -22,7 +22,11 @@ public class BowlingGame {
         return new BowlingGame(player);
     }
 
-    public boolean isOver() {
+    public boolean isRecentFrameOver() {
+        return bowlingFrames.isRecentFrameOver();
+    }
+
+    public boolean isAllFramesOver() {
         return bowlingFrames.isAllFrameOver();
     }
 

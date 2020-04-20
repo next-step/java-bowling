@@ -5,6 +5,7 @@ import bowling.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class BowlingGameBoardTests {
@@ -17,7 +18,7 @@ public class BowlingGameBoardTests {
 
     @DisplayName("사용자 투구 테스트")
     @Test
-    public void getNextTurnTest() {
+    public void bowlTest() {
         assertThatCode(() -> BowlingGameBoard.bowl(Player.of("AAA"), Pin.ofMax())).doesNotThrowAnyException();
     }
 
@@ -32,8 +33,8 @@ public class BowlingGameBoardTests {
     @DisplayName("사용자 턴 테스트2")
     @Test
     public void getNextTurnTest2() {
-        assertThat(BowlingGameBoard.getNextTurn()).isEqualTo(Player.of("AAA"));
+        assertThat(BowlingGameBoard.getNextPlayer()).isEqualTo(Player.of("AAA"));
         BowlingGameBoard.bowl(Player.of("AAA"), Pin.of(7));
-        assertThat(BowlingGameBoard.getNextTurn()).isEqualTo(Player.of("AAA"));
+        assertThat(BowlingGameBoard.getNextPlayer()).isEqualTo(Player.of("AAA"));
     }
 }
