@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.dto.BowlingFrameConsoleResult;
+import bowling.dto.BowlingGameBoardResult;
 import bowling.dto.BowlingGameResult;
 import bowling.dto.FrameState;
 
@@ -41,13 +42,20 @@ public class OutputView {
     }
 
     public static void printBowlingGame(final BowlingGameResult bowlingGameResult) {
-        System.out.println(GAME_FIRST_ROW);
-
         List<String> scores = getScoreRow(bowlingGameResult, bowlingFrameConsoleResult -> extractFrameScoreResult(bowlingFrameConsoleResult.getFrameState()));
         List<String> totalScores = getScoreRow(bowlingGameResult, bowlingFrameConsoleResult -> String.valueOf(bowlingFrameConsoleResult.getTotalScore()));
 
         System.out.println(makeGameRow(GAME_ROW_BLANK + bowlingGameResult.getName(), makeFrameWordsWithBlank(scores)));
         System.out.println(makeGameRow(GAME_ROW_BLANK + GAME_ROW_SCORE_HEAD, makeFrameWordsWithBlank(totalScores)));
+    }
+
+    public static void printBowlingGameBoard(final BowlingGameBoardResult bowlingGameBoardResult) {
+        System.out.println(GAME_FIRST_ROW);
+
+        for(BowlingGameResult bowlingGameResult : bowlingGameBoardResult.getResult()) {
+            printBowlingGame(bowlingGameResult);
+        }
+
         System.out.println();
     }
 

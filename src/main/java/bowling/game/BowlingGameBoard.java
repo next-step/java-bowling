@@ -56,4 +56,8 @@ public class BowlingGameBoard {
     public boolean isAllGameOver() {
         return bowlingGames.isAllGameOver();
     }
+
+    public BowlingGames getBowlingGames() {
+        return bowlingGames;
+    }
 }

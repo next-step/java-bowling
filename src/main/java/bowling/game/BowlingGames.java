@@ -48,16 +48,6 @@ public class BowlingGames {
                 .forEach(BowlingGame::prepareNextFrame);
     }
 
-    public boolean isRecentFrameOver(final Player player) {
-        BowlingGame bowlingGame = games.get(player);
-
-        if (Objects.isNull(bowlingGame)) {
-            return true;
-        }
-
-        return bowlingGame.isRecentFrameOver();
-    }
-
     public boolean isAllGameOver() {
         return games.keySet()
                 .stream()
@@ -66,9 +56,12 @@ public class BowlingGames {
     }
 
     public List<BowlingGame> getAllGames() {
-        return games.keySet()
+        List<BowlingGame> games = this.games
+                .keySet()
                 .stream()
-                .map(games::get)
+                .map(this.games::get)
                 .collect(Collectors.toList());
+
+        return Collections.unmodifiableList(games);
     }
 }
