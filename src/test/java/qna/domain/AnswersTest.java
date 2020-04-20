@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.assertj.core.api.ObjectEnumerableAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,9 +25,9 @@ class AnswersTest {
         answers.add(AnswerTest.A1);
 
         answers.deleteAnswers(UserTest.JAVAJIGI);
-        for (Answer answer : answers.getAnswers()) {
+        assertThat(answers.getAnswers()).allSatisfy(answer -> {
             assertThat(answer.isDeleted()).isTrue();
-        }
+        });
     }
 
     @DisplayName("다른 아이디의 유저에 의한 삭제여부 테스트")
