@@ -98,7 +98,7 @@ public class ResultView {
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
                     printNormalFrameFirst(gameResults.getResultByIndex(j), frameId);
-                    printSecondFrameScoreAtFirst(gameResults.getResultByIndex(j), frameId);
+                    printSecondFrameScoreAtFirst(gameResults.getResultByIndex(j));
                 }
 
                 if (i < j) {
@@ -123,7 +123,7 @@ public class ResultView {
 
                 if (i < j) {
                     printNormalFrameFirst(gameResults.getResultByIndex(j), frameId);
-                    printSecondFrameScoreAtFirst(gameResults.getResultByIndex(j), frameId);
+                    printSecondFrameScoreAtFirst(gameResults.getResultByIndex(j));
                 }
             }
         }
@@ -498,7 +498,7 @@ public class ResultView {
         }
     }
 
-    private static void printSecondFrameScoreAtFirst(GameResult gameResult, int frameId) {
+    private static void printSecondFrameScoreAtFirst(GameResult gameResult) {
         Frame prevFrame = gameResult.getFrameByFrameId(FRAME_ID_FIRST);
 
         if (prevFrame.isResult(STRIKE)) {
@@ -601,7 +601,7 @@ public class ResultView {
         return gameResult.getScoreUntilFrame(frameId);
     }
 
-    private static void printBowlingFrame(){
+    private static void printBowlingFrame() {
         System.out.println(BOWLING_BORDER);
         System.out.println(BOWLING_FRAME);
         System.out.println(BOWLING_BORDER);
