@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-public class EmptyScore{
+public class ScoreGenerator {
     private static final int STRIKE_POINT = 10;
 
     public static Score nextScore(int point) {

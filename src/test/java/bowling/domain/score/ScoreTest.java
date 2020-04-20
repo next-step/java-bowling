@@ -16,14 +16,14 @@ public class ScoreTest {
     @DisplayName("일반 프레임 1구 점수 생성")
     @Test
     void createDefaultFrameScore() {
-        assertThatCode(() -> EmptyScore.nextScore(10));
+        assertThatCode(() -> ScoreGenerator.nextScore(10));
     }
 
     @DisplayName("점수가 10점이 넘거나 음수일 경우 throws Exception")
     @ParameterizedTest
     @ValueSource(ints = {-1, 11})
     void createScoreFailbyInvalidPoint(int point) {
-        assertThatIllegalArgumentException().isThrownBy(() -> EmptyScore.nextScore(point));
+        assertThatIllegalArgumentException().isThrownBy(() -> ScoreGenerator.nextScore(point));
     }
 
     @Nested
@@ -33,7 +33,7 @@ public class ScoreTest {
         @DisplayName("스트라이크 생성")
         @Test
         void createStrike() {
-            Score strike = EmptyScore.nextScore(10);
+            Score strike = ScoreGenerator.nextScore(10);
 
             assertThat(strike.isEqualScoreType(ScoreType.STRIKE)).isTrue();
         }
@@ -54,7 +54,7 @@ public class ScoreTest {
         @DisplayName("거터 생성")
         @Test
         void createGutter() {
-            Score gutter = EmptyScore.nextScore(0);
+            Score gutter = ScoreGenerator.nextScore(0);
 
             assertThat(gutter.isEqualScoreType(ScoreType.GUTTER)).isTrue();
         }
@@ -62,7 +62,7 @@ public class ScoreTest {
         @DisplayName("미스 생성")
         @Test
         void createMiss() {
-            Score miss = EmptyScore.nextScore(5);
+            Score miss = ScoreGenerator.nextScore(5);
 
             assertThat(miss.isEqualScoreType(ScoreType.MISS)).isTrue();
         }

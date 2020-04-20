@@ -1,6 +1,6 @@
 package bowling.domain.scores;
 
-import bowling.domain.score.EmptyScore;
+import bowling.domain.score.ScoreGenerator;
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
 import org.springframework.util.CollectionUtils;
@@ -30,7 +30,7 @@ public class Scores {
 
     private Score createScore(int point) {
         if (CollectionUtils.isEmpty(scores)) {
-            return EmptyScore.nextScore(point);
+            return ScoreGenerator.nextScore(point);
         }
         return getLastScore().nextScore(point);
     }
