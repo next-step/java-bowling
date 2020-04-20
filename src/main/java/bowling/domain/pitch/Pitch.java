@@ -23,11 +23,11 @@ public class Pitch {
     }
 
     public boolean isStrike() {
-        return state.getClass() == StrikeState.class;
+        return state.isStrike();
     }
 
     public boolean isSpare() {
-        return state.getClass() == SpareState.class;
+        return state.isSpare();
     }
 
     public boolean isGutter() {

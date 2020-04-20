@@ -12,4 +12,12 @@ class ReadyState implements State {
     @Override public State bowl(Pin pin) {
         return bowlFirst(pin);
     }
+
+    @Override public boolean isStrike() {
+        return false;
+    }
+
+    @Override public boolean isSpare() {
+        return false;
+    }
 }
