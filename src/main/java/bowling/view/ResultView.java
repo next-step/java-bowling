@@ -99,7 +99,7 @@ public class ResultView {
                 }
 
                 if (i < j) {
-                    printNormalFrameSecond(gameResults.getResultByIndex(j), frameId);
+                    printFirstFrameSecond(gameResults.getResultByIndex(j));
                     printScoreBlank();
                 }
             }
@@ -120,7 +120,7 @@ public class ResultView {
 
                 if (i < j) {
                     printNormalFrameFirst(gameResults.getResultByIndex(j), 2);
-                    printSecondFrameScoreAtSecond(gameResults.getResultByIndex(j), frameId);
+                    printSecondFrameScoreAtFirst(gameResults.getResultByIndex(j), frameId);
                 }
             }
         }
@@ -463,7 +463,7 @@ public class ResultView {
             printScoreBlank();
         }
 
-        if(prevFrame.isResult(SPARE)){
+        if(!prevFrame.isResult(STRIKE)){
             printScoreUntil(gameResult, frameId - 1);
         }
     }
