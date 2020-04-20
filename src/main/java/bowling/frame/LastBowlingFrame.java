@@ -4,29 +4,27 @@ import bowling.FrameScore;
 import bowling.LeftScoreCount;
 import bowling.Pin;
 import bowling.Score;
+import bowling.dto.FrameState;
 import bowling.framestate.Ready;
 import bowling.framestate.Spare;
 import bowling.framestate.State;
 import bowling.framestate.Strike;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 import java.util.Objects;
 
 public class LastBowlingFrame implements BowlingFrame {
 
-    public static final int LAST_FRAME_MAX_BOWL_COUNT = 3;
-
     private State state;
     private Pin bonusPin;
 
-    private LastBowlingFrame(final State state, final Pin bonusPin) {
+    private LastBowlingFrame(final State state) {
         this.state = state;
-        this.bonusPin = bonusPin;
+        this.bonusPin = null;
     }
 
     public static LastBowlingFrame newInstance() {
-        return new LastBowlingFrame(Ready.newInstance(), null);
+        return new LastBowlingFrame(Ready.newInstance());
     }
 
     @Override
@@ -63,15 +61,11 @@ public class LastBowlingFrame implements BowlingFrame {
         FrameScore frameScore = state.createFrameScore();
 
         if (!Objects.isNull(bonusPin)) {
-            FrameScore updateFrameScore = frameScore.addNextAddingUpScores(getBonusPinToScores());
-            return FrameScore.newInstanceWithBonusPin(updateFrameScore, bonusPin, LeftScoreCount.of(0));
+            FrameScore updateFrameScore = frameScore.addNextAddingUpScores(Collections.singletonList(bonusPin.toScore()));
+            return FrameScore.newInstanceWithBonusPin(updateFrameScore, bonusPin);
         }
 
-        return frameScore.addNextAddingUpScores(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins()));
-    }
-
-    private List<Score> getBonusPinToScores() {
-        return Arrays.asList(bonusPin.toScore(), Score.ofZeroPins());
+        return FrameScore.newInstance(frameScore, LeftScoreCount.of(0));
     }
 
     @Override
@@ -82,7 +76,7 @@ public class LastBowlingFrame implements BowlingFrame {
             return addingUpFrameScore.getScore();
         }
 
-        addingUpFrameScore = beforeScore.addNextAddingUpScores(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins(), Score.ofZeroPins()));
+        addingUpFrameScore = FrameScore.newInstance(beforeScore, LeftScoreCount.of(0));
         return addingUpFrameScore.getScore();
     }
 
@@ -105,7 +99,7 @@ public class LastBowlingFrame implements BowlingFrame {
         FrameScore frameScore = state.createFrameScore();
 
         if (!Objects.isNull(bonusPin)) {
-            frameScore = frameScore.addNextAddingUpScores(getBonusPinToScores());
+            frameScore = FrameScore.newInstanceWithBonusPin(frameScore, bonusPin);
         }
 
         return frameScore.canCalculateSelfScore();
@@ -116,7 +110,7 @@ public class LastBowlingFrame implements BowlingFrame {
         FrameScore addingUpFrameScore = state.addNextAddingUpFrameScore(beforeScore);
 
         if (!Objects.isNull(bonusPin)) {
-            addingUpFrameScore = addingUpFrameScore.addNextAddingUpScores(getBonusPinToScores());
+            addingUpFrameScore = FrameScore.newInstanceWithBonusPin(addingUpFrameScore, bonusPin);
         }
 
         return addingUpFrameScore.canCalculateSelfScore();
@@ -127,7 +121,8 @@ public class LastBowlingFrame implements BowlingFrame {
         return state;
     }
 
-    public Pin getBonusPin() {
-        return bonusPin;
+    @Override
+    public FrameState makeFrameState() {
+        return FrameState.newInstance(state, bonusPin);
     }
 }

@@ -3,6 +3,7 @@ package bowling.frame;
 import bowling.FrameScore;
 import bowling.Pin;
 import bowling.Score;
+import bowling.dto.FrameState;
 import bowling.framestate.State;
 
 import static bowling.frame.BowlingFrames.MAX_BOWLING_FRAME_SIZE;
@@ -37,4 +38,6 @@ public interface BowlingFrame {
     boolean canCalculateScore(FrameScore frameScore);
 
     State getState();
+
+    FrameState makeFrameState();
 }

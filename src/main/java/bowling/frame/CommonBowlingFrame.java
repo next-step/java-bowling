@@ -1,12 +1,13 @@
 package bowling.frame;
 
 import bowling.FrameScore;
+import bowling.LeftScoreCount;
 import bowling.Pin;
 import bowling.Score;
+import bowling.dto.FrameState;
 import bowling.framestate.Ready;
 import bowling.framestate.State;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class CommonBowlingFrame implements BowlingFrame {
@@ -56,7 +57,7 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     private Score getNowScore(final FrameScore beforeScore) {
-        FrameScore nowFrameScore = beforeScore.addNextAddingUpScores(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins()));
+        FrameScore nowFrameScore = FrameScore.newInstance(beforeScore, LeftScoreCount.of(0));
         return nowFrameScore.getScore();
     }
 
@@ -101,6 +102,11 @@ public class CommonBowlingFrame implements BowlingFrame {
     @Override
     public State getState() {
         return state;
+    }
+
+    @Override
+    public FrameState makeFrameState() {
+        return FrameState.newInstance(state, null);
     }
 
 }

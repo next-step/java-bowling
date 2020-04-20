@@ -24,9 +24,13 @@ public class FrameScore {
         return new FrameScore(score, leftScoreCount);
     }
 
-    public static FrameScore newInstanceWithBonusPin(FrameScore frameScore, Pin bonusPin, LeftScoreCount leftScoreCount) {
-        Score score = frameScore.score;
-        return new FrameScore(score.add(bonusPin.toScore()), leftScoreCount);
+    public static FrameScore newInstanceWithBonusPin(final FrameScore beforeScore, Pin bonusPin) {
+        Score score = beforeScore.score;
+        return new FrameScore(score.add(bonusPin.toScore()), LeftScoreCount.of(0));
+    }
+
+    public static FrameScore newInstance(final FrameScore beforeScore, LeftScoreCount leftScoreCount) {
+        return new FrameScore(beforeScore.score, leftScoreCount);
     }
 
     public static FrameScore createReady() {

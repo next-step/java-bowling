@@ -1,9 +1,6 @@
 package bowling.dto;
 
 import bowling.Pin;
-import bowling.frame.BowlingFrame;
-import bowling.frame.CommonBowlingFrame;
-import bowling.frame.LastBowlingFrame;
 import bowling.framestate.State;
 
 import java.util.List;
@@ -17,20 +14,9 @@ public class FrameState {
         this.bonusPin = bonusPin;
     }
 
-    public static FrameState newInstance(final CommonBowlingFrame bowlingFrame) {
-        return new FrameState(bowlingFrame.getState(), null);
-    }
-
-    public static FrameState newInstance(final LastBowlingFrame bowlingFrame) {
-        return new FrameState(bowlingFrame.getState(), bowlingFrame.getBonusPin());
-    }
-
-    public static FrameState newInstance(final BowlingFrame bowlingFrame) {
-        if (bowlingFrame instanceof CommonBowlingFrame) {
-            return newInstance((CommonBowlingFrame) bowlingFrame);
-        }
-
-        return newInstance((LastBowlingFrame) bowlingFrame);
+    //Q1. 도메인 클래스에서 DTO 객체를 만들어도 되는지?
+    public static FrameState newInstance(final State state, final Pin bonusPin) {
+        return new FrameState(state, bonusPin);
     }
 
     public State getState() {

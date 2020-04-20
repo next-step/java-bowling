@@ -14,7 +14,7 @@ public class BowlingFrameConsoleResult {
     }
 
     public static BowlingFrameConsoleResult newInstance(final BowlingFrame bowlingFrame, final Score totalScore) {
-        return new BowlingFrameConsoleResult(FrameState.newInstance(bowlingFrame), makeTotalScore(bowlingFrame, totalScore));
+        return new BowlingFrameConsoleResult(bowlingFrame.makeFrameState(), makeTotalScore(bowlingFrame, totalScore));
     }
 
     private static String makeTotalScore(final BowlingFrame bowlingFrame, final Score totalScore) {
