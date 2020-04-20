@@ -48,24 +48,15 @@ public class Points {
     }
 
     public boolean isFirstStrike() {
-        if (isTryCount(FIRST_TRY_COUNT) && getFirstPoint().isMaxPoint()) {
-            return true;
-        }
-        return false;
+        return isTryCount(FIRST_TRY_COUNT) && getFirstPoint().isMaxPoint();
     }
 
     public boolean isDoubleStrike() {
-        if (isTryCount(SECOND_TRY_COUNT) && getSum() == DOUBLE_STRIKE_POINT) {
-            return true;
-        }
-        return false;
+        return isTryCount(SECOND_TRY_COUNT) && getSum() == DOUBLE_STRIKE_POINT;
     }
 
     public boolean isSpare() {
-        if (isTryCount(SECOND_TRY_COUNT) && getSum() == SPARE_POINT) {
-            return true;
-        }
-        return false;
+        return isTryCount(SECOND_TRY_COUNT) && getSum() == SPARE_POINT;
     }
 
     public Score makeScore() {

@@ -32,10 +32,7 @@ public class Point {
     }
 
     public boolean isMaxPoint() {
-        if (point == MAX_POINT) {
-            return true;
-        }
-        return false;
+        return point == MAX_POINT;
     }
 
     private static void validate(int input) {

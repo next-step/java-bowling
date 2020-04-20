@@ -44,10 +44,7 @@ public abstract class Frame {
     }
 
     public boolean hasScore() {
-        if (score != null) {
-            return true;
-        }
-        return false;
+        return score != null;
     }
 
     @Override
