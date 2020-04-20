@@ -17,6 +17,10 @@ public enum FrameScoreConsoleResult {
     ;
 
     private static final String SCORE_DELIMITER = "|";
+    private static final String SCORE_GUTTER = "-";
+    private static final String SCORE_SPARE = "/";
+    private static final String SCORE_STRIKE = "X";
+    private static final String SCORE_EMPTY = "";
     private static final Map<Class, FrameScoreConsoleResult> FRAME_STATES;
 
     static {
@@ -39,17 +43,16 @@ public enum FrameScoreConsoleResult {
     }
 
     public String toString(final FrameState frameState) {
-        List<String> test = printFunction.apply(frameState.getPins(), frameState.getBonusPin());
-        return joinScoreString(test);
+        return joinScoreString(printFunction.apply(frameState.getPins(), frameState.getBonusPin()));
     }
 
     private static String printBonusPin(final Pin bonusPin) {
         if (Objects.isNull(bonusPin)) {
-            return "";
+            return SCORE_EMPTY;
         }
 
         if (bonusPin.isEqualTo(10)) {
-            return "X";
+            return SCORE_STRIKE;
         }
 
         return bonusPin.toString();
@@ -58,8 +61,17 @@ public enum FrameScoreConsoleResult {
     private static String joinScoreString(final List<String> scores) {
         List<String> filteredScoreStrings = scores.stream()
                 .filter(score -> !score.isEmpty())
+                .map(FrameScoreConsoleResult::changeFormat)
                 .collect(Collectors.toList());
 
         return String.join(SCORE_DELIMITER, filteredScoreStrings);
+    }
+
+    private static String changeFormat(final String score) {
+        if ("0".equals(score)) {
+            return SCORE_GUTTER;
+        }
+
+        return score;
     }
 }

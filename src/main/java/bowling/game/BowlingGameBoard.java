@@ -49,7 +49,7 @@ public class BowlingGameBoard {
     }
 
     private void reset() {
-        bowlingGames.prepareNextFrame();
+        bowlingGames.prepareNextFrames();
         bowlingGameTurn = BowlingGameTurn.newInstance(bowlingGames.getAllGames());
     }
 

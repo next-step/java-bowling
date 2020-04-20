@@ -52,7 +52,7 @@ public class OutputView {
     public static void printBowlingGameBoard(final BowlingGameBoardResult bowlingGameBoardResult) {
         System.out.println(GAME_FIRST_ROW);
 
-        for(BowlingGameResult bowlingGameResult : bowlingGameBoardResult.getResult()) {
+        for (BowlingGameResult bowlingGameResult : bowlingGameBoardResult.getResult()) {
             printBowlingGame(bowlingGameResult);
         }
 
@@ -73,7 +73,6 @@ public class OutputView {
 
         return scoresWithBlank;
     }
-
 
     private static String extractFrameScoreResult(final FrameState frameState) {
         FrameScoreConsoleResult frameScoreConsoleResult = FrameScoreConsoleResult.of(frameState.getState());

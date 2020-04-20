@@ -41,7 +41,7 @@ public class BowlingGames {
         }
     }
 
-    public void prepareNextFrame() {
+    public void prepareNextFrames() {
         games.keySet()
                 .stream()
                 .map(games::get)

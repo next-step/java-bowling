@@ -40,10 +40,6 @@ public class BowlingGame {
         bowlingFrames.bowl(pinCount);
     }
 
-    public int getFrameCount() {
-        return bowlingFrames.size();
-    }
-
     public Player getPlayer() {
         return player;
     }

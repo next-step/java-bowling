@@ -2,8 +2,6 @@ package bowling.dto;
 
 import bowling.Score;
 import bowling.frame.BowlingFrame;
-import bowling.framestate.State;
-import bowling.view.FrameScoreConsoleResult;
 
 public class BowlingFrameConsoleResult {
 

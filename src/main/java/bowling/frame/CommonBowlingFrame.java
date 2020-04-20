@@ -3,8 +3,8 @@ package bowling.frame;
 import bowling.FrameScore;
 import bowling.Pin;
 import bowling.Score;
-import bowling.framestate.State;
 import bowling.framestate.Ready;
+import bowling.framestate.State;
 
 import java.util.Arrays;
 import java.util.Objects;
