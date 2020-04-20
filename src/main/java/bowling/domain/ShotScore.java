@@ -1,10 +1,8 @@
 package bowling.domain;
 
-import bowling.dto.ShotScoreDto;
-
 import java.util.Objects;
 
-class ShotScore {
+public class ShotScore {
     private final Score score;
     private final ScoreType scoreType;
 
@@ -39,11 +37,11 @@ class ShotScore {
         return scoreType.isIn(ScoreType.STRIKE, ScoreType.SPARE);
     }
 
-    ShotScoreDto getDto() {
-        return new ShotScoreDto(scoreType, score.score());
+    public ScoreType scoreType() {
+        return scoreType;
     }
 
-    Score score(){
+    public Score score() {
         return score;
     }
 

@@ -1,12 +1,10 @@
 package bowling.domain;
 
-import bowling.dto.FramesDto;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-class Frames {
+public class Frames {
     private static final int MAX_FRAMES = 10;
 
     private final List<Frame> frames;
@@ -31,12 +29,6 @@ class Frames {
         return frames.get(frames.size() - 1);
     }
 
-    FramesDto getDto() {
-        return new FramesDto(frames.stream()
-                .map(Frame::getDto)
-                .collect(Collectors.toList()));
-    }
-
     void shot(int shot) {
         if (isCurrentFrameDone()) {
             frames.add(getNextFrame(shot));
@@ -57,5 +49,13 @@ class Frames {
         return frames.stream()
                 .filter(Frame::isFrameSet)
                 .count() == MAX_FRAMES;
+    }
+
+    public Stream<Frame> stream(){
+        return frames.stream();
+    }
+
+    public int size() {
+        return frames.size();
     }
 }

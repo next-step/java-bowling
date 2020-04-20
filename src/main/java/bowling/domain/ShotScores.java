@@ -1,13 +1,10 @@
 package bowling.domain;
 
-import bowling.dto.ShotScoreDto;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class ShotScores {
+public class ShotScores {
     private final List<ShotScore> shotScores;
 
     private ShotScores(List<ShotScore> shotScores) {
@@ -40,20 +37,24 @@ class ShotScores {
     }
 
     boolean isClear() {
-        return !shotScores.isEmpty() && getStream()
+        return !shotScores.isEmpty() && stream()
                 .anyMatch(ShotScore::isClear);
     }
 
     int totalScore(){
-        return sum(getStream());
+        return sum(stream());
     }
 
     int totalScore(int rangeScore){
-        return sum(getStream()
+        return sum(stream()
                 .limit(rangeScore));
     }
 
-    private Stream<ShotScore> getStream() {
+    ScoreType lastScoreType(){
+        return this.getLast().scoreType();
+    }
+
+    public Stream<ShotScore> stream() {
         return shotScores
                 .stream();
     }
@@ -63,12 +64,5 @@ class ShotScores {
                 .map(ShotScore::score)
                 .mapToInt(Score::score)
                 .sum();
-    }
-
-
-    List<ShotScoreDto> getDtoList() {
-        return getStream()
-                .map(ShotScore::getDto)
-                .collect(Collectors.toList());
     }
 }

@@ -30,7 +30,7 @@ class ShotScoreTest {
     @Test
     void next() {
         ShotScore shotScore = ShotScore.of(5);
-        assertThat(shotScore.next(5).getDto().getScoreType())
+        assertThat(shotScore.next(5).scoreType())
                 .isEqualTo(ScoreType.SPARE);
     }
 

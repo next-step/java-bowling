@@ -1,10 +1,6 @@
 package bowling.ui;
 
-import bowling.domain.ScoreType;
-import bowling.dto.FrameDto;
-import bowling.dto.FramesDto;
-import bowling.dto.PlayerDto;
-import bowling.dto.ShotScoreDto;
+import bowling.domain.*;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -22,12 +18,12 @@ public class OutputView {
     private static final String GUTTER = "-";
     private static final int MAX = 10;
 
-    public void printFrame(PlayerDto playerDto) {
+    public void printFrame(Player player) {
         System.out.println(FRAME_HEADER_STRING);
 
-        System.out.print(String.format(PLAYER_FORMAT, playerDto.getName()));
+        System.out.print(String.format(PLAYER_FORMAT, player.name()));
 
-        FramesDto frames = playerDto.getFrames();
+        Frames frames = player.frames();
         getParsedFrameStringStream(frames)
                 .map(frameString -> String.format(FRAME_BODY_FORMAT, frameString))
                 .forEach(System.out::print);
@@ -40,52 +36,52 @@ public class OutputView {
         System.out.println();
     }
 
-    private Stream<String> getParsedFrameStringStream(FramesDto frames) {
+    private Stream<String> getParsedFrameStringStream(Frames frames) {
         return Stream.concat(getFrameStringStream(frames),
                 getEmptyStringStream(frames));
     }
 
-    private Stream<String> getFrameStringStream(FramesDto frames) {
-        return frames.getFrames()
+    private Stream<String> getFrameStringStream(Frames frames) {
+        return frames
                 .stream()
                 .map(this::parseFrame);
     }
 
-    private Stream<String> getEmptyStringStream(FramesDto frames) {
+    private Stream<String> getEmptyStringStream(Frames frames) {
         return Stream.generate(() -> "")
                 .limit(MAX - frames.size());
     }
 
-    private String parseFrame(FrameDto frameDto) {
-        return frameDto.getShotScores()
+    private String parseFrame(Frame frame) {
+        return frame.shotScores()
                 .stream()
                 .map(this::parseScore)
                 .collect(Collectors.joining(SHOT_DELIMITER));
     }
 
-    private String parseScore(ShotScoreDto scoreType) {
-        if (ScoreType.STRIKE.equals(scoreType.getScoreType())) {
+    private String parseScore(ShotScore scoreType) {
+        if (ScoreType.STRIKE.equals(scoreType.scoreType())) {
             return STRIKE;
         }
-        if (ScoreType.SPARE.equals(scoreType.getScoreType())) {
+        if (ScoreType.SPARE.equals(scoreType.scoreType())) {
             return SPARE;
         }
-        if (ScoreType.GUTTER.equals(scoreType.getScoreType())) {
+        if (ScoreType.GUTTER.equals(scoreType.scoreType())) {
             return GUTTER;
         }
 
-        return Integer.toString(scoreType.getScore());
+        return Integer.toString(scoreType.score().score());
     }
 
-    private Stream<String> getParsedFrameScoreStream(FramesDto frames) {
+    private Stream<String> getParsedFrameScoreStream(Frames frames) {
         return Stream.concat(getFrameScoreStream(frames),
                 getEmptyStringStream(frames));
     }
 
-    private Stream<String> getFrameScoreStream(FramesDto frames) {
-        return frames.getFrames()
+    private Stream<String> getFrameScoreStream(Frames frames) {
+        return frames
                 .stream()
-                .map(FrameDto::getScore)
+                .map(Frame::getFrameScore)
                 .map(Objects::toString)
                 .map(v -> v.equals("null")? "" : v);
     }

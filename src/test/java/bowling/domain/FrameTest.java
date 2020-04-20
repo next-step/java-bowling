@@ -20,14 +20,14 @@ class FrameTest {
     void shot() {
         Frame normalFrame = Frame.init();
         normalFrame.shot(4);
-        assertThat(normalFrame.getDto().getShotScores())
-                .anyMatch(v -> v.getScoreType().equals(ScoreType.MISS))
-                .anyMatch(v -> v.getScore() == 4);
+        assertThat(normalFrame.shotScores().stream())
+                .anyMatch(v -> v.scoreType().equals(ScoreType.MISS))
+                .anyMatch(v -> v.score().equals(Score.of(4)));
 
         normalFrame.shot(6);
-        assertThat(normalFrame.getDto().getShotScores())
-                .anyMatch(v -> v.getScoreType().equals(ScoreType.SPARE))
-                .anyMatch(v -> v.getScore() == 6);
+        assertThat(normalFrame.shotScores().stream())
+                .anyMatch(v -> v.scoreType().equals(ScoreType.SPARE))
+                .anyMatch(v -> v.score().equals(Score.of(6)));
 
         assertThatThrownBy(() -> normalFrame.shot(5))
                 .isInstanceOf(IllegalStateException.class);
@@ -62,14 +62,14 @@ class FrameTest {
     @Test
     void shotLastFrame() {
         Frame finalFrame = Frame.init().last(4);
-        assertThat(finalFrame.getDto().getShotScores())
-                .anyMatch(v -> v.getScoreType().equals(ScoreType.MISS))
-                .anyMatch(v -> v.getScore() == 4);
+        assertThat(finalFrame.shotScores().stream())
+                .anyMatch(v -> v.scoreType().equals(ScoreType.MISS))
+                .anyMatch(v -> v.score().equals(Score.of(4)));
 
         finalFrame.shot(6);
-        assertThat(finalFrame.getDto().getShotScores())
-                .anyMatch(v -> v.getScoreType().equals(ScoreType.SPARE))
-                .anyMatch(v -> v.getScore() == 6);
+        assertThat(finalFrame.shotScores().stream())
+                .anyMatch(v -> v.scoreType().equals(ScoreType.SPARE))
+                .anyMatch(v -> v.score().equals(Score.of(6)));
 
         finalFrame.shot(5);
 
@@ -120,7 +120,7 @@ class FrameTest {
         Frame firstFrame = Frame.init();
         firstFrame.shot(4);
         firstFrame.shot(4);
-        assertThat(firstFrame.getDto().getScore())
+        assertThat(firstFrame.getFrameScore())
                 .isEqualTo(8);
 
 
@@ -128,19 +128,19 @@ class FrameTest {
         firstFrame.shot(4);
         firstFrame.shot(6);
         firstFrame.next(10);
-        assertThat(firstFrame.getDto().getScore())
+        assertThat(firstFrame.getFrameScore())
                 .isEqualTo(20);
 
         firstFrame = Frame.init();
         firstFrame.shot(10);
         firstFrame.next(10).next(10);
-        assertThat(firstFrame.getDto().getScore())
+        assertThat(firstFrame.getFrameScore())
                 .isEqualTo(30);
 
         firstFrame = Frame.init();
         firstFrame.shot(10);
         firstFrame.next(4).shot(3);
-        assertThat(firstFrame.getDto().getScore())
+        assertThat(firstFrame.getFrameScore())
                 .isEqualTo(17);
     }
 

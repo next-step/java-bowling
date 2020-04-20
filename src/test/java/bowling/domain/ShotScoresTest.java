@@ -18,18 +18,10 @@ class ShotScoresTest {
     }
 
     @Test
-    void getLast() {
-        assertThat(shotScores.getDtoList())
-                .anyMatch(shotScoreDto -> shotScoreDto.getScore() == 4 &&
-                        shotScoreDto.getScoreType().equals(ScoreType.MISS));
-    }
-
-    @Test
     void add() {
         shotScores.add(6, false);
-        assertThat(shotScores.getDtoList())
-                .anyMatch(shotScoreDto -> shotScoreDto.getScore() == 6 &&
-                        shotScoreDto.getScoreType().equals(ScoreType.SPARE));
+        assertThat(shotScores.isSize(2))
+                .isTrue();
     }
 
     @Test
@@ -69,10 +61,4 @@ class ShotScoresTest {
                 .isEqualTo(9);
     }
 
-    @Test
-    void getDtoList() {
-        assertThat(shotScores.getDtoList())
-                .anyMatch(shotScoreDto ->
-                        shotScoreDto.getScore() == 4 && shotScoreDto.getScoreType().equals(ScoreType.MISS));
-    }
 }

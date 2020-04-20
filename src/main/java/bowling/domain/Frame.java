@@ -1,12 +1,10 @@
 package bowling.domain;
 
-import bowling.dto.FrameDto;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-class Frame {
+public class Frame {
     private static final int SHOT_LIMIT = 2;
 
     private final ShotScores shotScores;
@@ -59,11 +57,7 @@ class Frame {
         return shotScores.isClear();
     }
 
-    FrameDto getDto() {
-        return new FrameDto(shotScores.getDtoList(), getFrameScore());
-    }
-
-    private Integer getFrameScore() {
+    public Integer getFrameScore() {
         if (isFrameSet()) {
             if (hasBonus) {
                 return getUnBonusScore();
@@ -76,7 +70,7 @@ class Frame {
     private Integer getTotalScore() {
         if (shotScores.isClear()) {
             return Optional.ofNullable(nextFrame)
-                    .map(next -> next.getBonusScore(getScoreType()))
+                    .map(next -> next.getBonusScore(frameScoreType()))
                     .map(nextBonus -> nextBonus + getUnBonusScore())
                     .orElse(null);
         }
@@ -84,8 +78,8 @@ class Frame {
         return getUnBonusScore();
     }
 
-    private ScoreType getScoreType() {
-        return shotScores.getDtoList().get(shotScores.getDtoList().size() - 1).getScoreType();
+    private ScoreType frameScoreType() {
+        return shotScores.lastScoreType();
     }
 
     private int getUnBonusScore() {
@@ -95,7 +89,7 @@ class Frame {
     private Integer getBonusScore(ScoreType scoreType) {
         if (scoreType.equals(ScoreType.STRIKE)) {
             if (isFrameSet()) {
-                if (getScoreType().equals(ScoreType.STRIKE)) {
+                if (frameScoreType().equals(ScoreType.STRIKE)) {
                     return Optional.ofNullable(nextFrame)
                             .map(next -> next.getBonusScore(ScoreType.SPARE))
                             .map(nextBonus -> nextBonus + 10)
@@ -112,5 +106,9 @@ class Frame {
         }
 
         return 0;
+    }
+
+    public ShotScores shotScores() {
+        return shotScores;
     }
 }
