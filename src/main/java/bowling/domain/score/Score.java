@@ -10,40 +10,34 @@ public abstract class Score {
     private static final int STRIKE_POINT = 10;
     private static final int GUTTER_POINT = 0;
 
-    private final ScoreType scoreType;
-    private final Point point;
+    final Point point;
 
-    protected Score(ScoreType scoreType, int point) {
-        this.scoreType = scoreType;
+    public Score(int point) {
         this.point = Point.valueOf(point);
     }
 
     public abstract Score nextScore(int point);
 
+    public abstract boolean isEqualScoreType(ScoreType scoreType);
+
     public int getPoint() {
         return point.getPoint();
-    }
+    };
 
-    public boolean isEqualScoreType(ScoreType scoreType) {
-        return this.scoreType.equals(scoreType);
-    }
+    public abstract String getScore();
 
-    public String pointToScore() {
-        return scoreType.pointToScore(point.getPoint());
-    }
-
-    protected static boolean isStrikePoint(int point) {
+    static boolean isStrikePoint(int point) {
         return point == STRIKE_POINT;
     }
 
-    protected static boolean isGutterPoint(int point) {
+    static boolean isGutterPoint(int point) {
         return point == GUTTER_POINT;
     }
 
-    protected static ScoreType getMissOrGutterType(int point) {
+    static Score getMissOrGutterScore(int point) {
         if (isGutterPoint(point)) {
-            return ScoreType.GUTTER;
+            return new Gutter(point);
         }
-        return ScoreType.MISS;
+        return new Miss(point);
     }
 }

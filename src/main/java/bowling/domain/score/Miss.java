@@ -1,7 +1,9 @@
 package bowling.domain.score;
 
-public class NomalScore extends Score{
-    public NomalScore(int point) {
+import bowling.domain.point.Point;
+
+public class Miss extends Score {
+    public Miss(int point) {
         super(point);
     }
 
@@ -15,17 +17,11 @@ public class NomalScore extends Score{
 
     @Override
     public boolean isEqualScoreType(ScoreType scoreType) {
-        if (isGutterPoint(point.getPoint())) {
-            return scoreType.equals(ScoreType.GUTTER);
-        }
         return scoreType.equals(ScoreType.MISS);
     }
 
     @Override
     public String getScore() {
-        if (isGutterPoint(point.getPoint())) {
-            return ScoreType.GUTTER.pointToScore(point.getPoint());
-        }
         return ScoreType.MISS.pointToScore(point.getPoint());
     }
 }
