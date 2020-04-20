@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.scores.DefaultScores;
 import bowling.domain.scores.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,14 +19,14 @@ class ScoresTest {
     @DisplayName("프레임 점수 생성")
     @Test
     void create() {
-        assertThatCode(() -> new DefaultScores());
+        assertThatCode(() -> new Scores());
     }
 
     @DisplayName("프레임 점수 저장")
     @ParameterizedTest
     @MethodSource("points")
     void addScore(List<Integer> values) {
-        Scores scores = new DefaultScores();
+        Scores scores = new Scores();
         for (Integer value : values) {
             scores.add(value);
         }
@@ -55,7 +54,7 @@ class ScoresTest {
     }
 
     private Scores strikeScores() {
-        Scores scores = new DefaultScores();
+        Scores scores = new Scores();
         scores.add(10);
 
         return scores;
@@ -64,13 +63,15 @@ class ScoresTest {
     @DisplayName("스페어 확인")
     @Test
     void isSpare() {
-        Scores socres = spareScores();
+        Scores spareScores = spareScores();
+        List<Score> scores = spareScores.getScores();
+        Score score = scores.get(1);
 
-        assertThat(socres.isSpare(1)).isTrue();
+        assertThat(score.isEqualScoreType(ScoreType.SPARE)).isTrue();
     }
 
     private Scores spareScores() {
-        Scores scores = new DefaultScores();
+        Scores scores = new Scores();
         scores.add(1);
         scores.add(9);
 

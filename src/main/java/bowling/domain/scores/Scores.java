@@ -1,5 +1,6 @@
 package bowling.domain.scores;
 
+import bowling.domain.score.EmptyScore;
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
 import org.springframework.util.CollectionUtils;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * 각 프레임에서 기록한 점수들를 저장한다.
  */
-public abstract class Scores {
+public class Scores {
     private static final int ONE = 1;
     private static final int SECOND_PLAY = 1;
     private static final int THIRD_PLAY = 2;
@@ -19,17 +20,22 @@ public abstract class Scores {
 
     private final List<Score> scores;
 
-    protected Scores() {
+    public Scores() {
         scores = new ArrayList<>();
     }
-
-    protected abstract Score createScore(int point);
 
     public void add(int point) {
         scores.add(createScore(point));
     }
 
-    protected Score getLastScore() {
+    private Score createScore(int point) {
+        if (CollectionUtils.isEmpty(scores)) {
+            return EmptyScore.nextScore(point);
+        }
+        return getLastScore().nextScore(point);
+    }
+
+    private Score getLastScore() {
         return scores.get(scores.size() - ONE);
     }
 
@@ -43,10 +49,6 @@ public abstract class Scores {
         return scores.get(index).isEqualScoreType(ScoreType.STRIKE);
     }
 
-    public boolean isSpare(int index) {
-        return scores.get(index).isEqualScoreType(ScoreType.SPARE);
-    }
-
     public List<Score> getScores() {
         return new ArrayList<>(scores);
     }
@@ -55,10 +57,6 @@ public abstract class Scores {
         return scores.stream()
                 .anyMatch(score -> score.isEqualScoreType(ScoreType.STRIKE)
                         || score.isEqualScoreType(ScoreType.SPARE));
-    }
-
-    public boolean isFirstPlay() {
-        return CollectionUtils.isEmpty(scores);
     }
 
     public boolean isSecondPlay() {
