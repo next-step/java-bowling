@@ -19,9 +19,7 @@ public abstract class Frame {
     public abstract void addScore();
 
     public Frame throwBall(Point point) throws OverThrowBallException{
-        points.validateLeftPoint(point);
         this.points.addPoint(point);
-
         return this;
     }
 
