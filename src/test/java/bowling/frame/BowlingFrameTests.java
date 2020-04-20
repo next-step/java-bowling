@@ -2,6 +2,7 @@ package bowling.frame;
 
 import bowling.BowlingGame;
 import bowling.Pin;
+import bowling.Player;
 import bowling.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,23 +19,23 @@ public class BowlingFrameTests {
 
     static {
         BowlingGame bowlingGame = BowlingGame.newInstance("AAA");
-        bowlingGame.bowl(Pin.of(5));
-        bowlingGame.bowl(Pin.of(4));//1
-        bowlingGame.bowl(Pin.of(7));
-        bowlingGame.bowl(Pin.of(3));//2
-        bowlingGame.bowl(Pin.of(8));
-        bowlingGame.bowl(Pin.of(1));//3
-        bowlingGame.bowl(Pin.of(10));//4
-        bowlingGame.bowl(Pin.of(10));//5
-        bowlingGame.bowl(Pin.of(10));//6
-        bowlingGame.bowl(Pin.of(8));
-        bowlingGame.bowl(Pin.of(1));//7
-        bowlingGame.bowl(Pin.of(10));//8
-        bowlingGame.bowl(Pin.of(9));
-        bowlingGame.bowl(Pin.of(1));//9
-        bowlingGame.bowl(Pin.of(0));
-        bowlingGame.bowl(Pin.of(10));
-        bowlingGame.bowl(Pin.of(4));//10
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(5));
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(4));//1
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(7));
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(3));//2
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(8));
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(1));//3
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(10));//4
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(10));//5
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(10));//6
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(8));
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(1));//7
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(10));//8
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(9));
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(1));//9
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(0));
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(10));
+        bowlingGame.bowl(Player.of("AAA"), Pin.of(4));//10
         BowlingFrames frames = bowlingGame.getBowlingFrames();
         bowlingFrames = frames.getFrames();
     }

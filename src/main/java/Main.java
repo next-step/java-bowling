@@ -15,7 +15,7 @@ public class Main {
 
         while (!bowlingGame.isOver()) {
             int pinCount = InputView.inputDropPinCount(bowlingGame.getFrameCount());
-            bowlingGame.bowl(Pin.of(pinCount));
+            bowlingGame.bowl(Player.of("AAA"), Pin.of(pinCount));
 
             OutputView.printBowlingGame(BowlingGameResult.newInstance(bowlingGame));
         }

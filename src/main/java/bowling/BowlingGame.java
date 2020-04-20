@@ -2,41 +2,56 @@ package bowling;
 
 import bowling.frame.BowlingFrames;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class BowlingGame {
 
-    private final Player player;
-    private final BowlingFrames bowlingFrames;
+    private final Map<Player, BowlingFrames> games;
 
-    private BowlingGame(final Player player) {
-        this.player = player;
-        this.bowlingFrames = BowlingFrames.newInstance();
+    private BowlingGame(final Map<Player, BowlingFrames> games) {
+        this.games = new LinkedHashMap<>(games);
     }
 
-    public static BowlingGame newInstance(final String name) {
-        return new BowlingGame(Player.of(name));
+    public static BowlingGame newInstance(String... names) {
+        List<Player> players = Arrays.stream(names)
+                .map(Player::of)
+                .collect(Collectors.toList());
+
+        return newInstance(players);
     }
 
-    public static BowlingGame newInstance(final Player player) {
-        return new BowlingGame(player);
+    public static BowlingGame newInstance(final List<Player> players) {
+        Map<Player, BowlingFrames> games = new LinkedHashMap<>();
+        players.forEach(player -> games.put(player, BowlingFrames.newInstance()));
+        return new BowlingGame(games);
     }
 
     public boolean isOver() {
-        return bowlingFrames.isAllFrameOver();
+        return getAllBowlingFrames().stream()
+                .allMatch(BowlingFrames::isAllFrameOver);
     }
 
-    public void bowl(final Pin pinCount) {
-        bowlingFrames.bowl(pinCount);
+    private List<BowlingFrames> getAllBowlingFrames() {
+        return games.keySet()
+                .stream()
+                .map(games::get)
+                .collect(Collectors.toList());
     }
 
-    public int getFrameCount() {
-        return bowlingFrames.size();
+    public void bowl(final Player player, final Pin pinCount) {
+        BowlingFrames playerFrames = games.get(player);
+        playerFrames.bowl(pinCount);
     }
 
-    public Player getPlayer() {
-        return player;
+    public int getFrameCount(final Player player) {
+        BowlingFrames playerFrames = games.get(player);
+        return playerFrames.size();
     }
 
-    public BowlingFrames getBowlingFrames() {
-        return bowlingFrames;
+    public Player getNextTurn() {
     }
 }
