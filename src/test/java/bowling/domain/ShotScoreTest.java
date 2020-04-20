@@ -23,8 +23,8 @@ class ShotScoreTest {
     @Test
     void score() {
         ShotScore shotScore = ShotScore.of(10);
-        assertThat(shotScore.getDto().getScore())
-                .isEqualTo(10);
+        assertThat(shotScore.score())
+                .isEqualTo(Score.of(10));
     }
 
     @Test

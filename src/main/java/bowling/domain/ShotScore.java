@@ -40,7 +40,11 @@ class ShotScore {
     }
 
     ShotScoreDto getDto() {
-        return new ShotScoreDto(scoreType, score.getScore());
+        return new ShotScoreDto(scoreType, score.score());
+    }
+
+    Score score(){
+        return score;
     }
 
     @Override

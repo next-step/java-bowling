@@ -22,7 +22,7 @@ public class ScoreTest {
 
     @Test
     void getScore(){
-        assertThat(Score.of(5).getScore())
+        assertThat(Score.of(5).score())
                 .isEqualTo(5);
     }
 

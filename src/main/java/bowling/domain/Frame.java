@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import bowling.dto.FrameDto;
-import bowling.dto.ShotScoreDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ class Frame {
     private Frame nextFrame;
 
     protected Frame(List<ShotScore> shotScores, boolean hasBonus) {
-        this.shotScores = new ShotScores(shotScores);
+        this.shotScores = ShotScores.of(shotScores);
         this.hasBonus = hasBonus;
     }
 
@@ -38,7 +37,7 @@ class Frame {
     void shot(int shot) {
         int shotLimit = getShotLimit();
         if (shotScores.isSize(shotLimit)) {
-            throw new IllegalStateException(String.format("shot NormalFrame fail. cannot shot over %d times", shotLimit));
+            throw new IllegalStateException(String.format("shot Frame fail. cannot shot over %d times", shotLimit));
         }
 
         shotScores.add(shot, hasBonus);
@@ -90,10 +89,7 @@ class Frame {
     }
 
     private int getUnBonusScore() {
-        return shotScores.getDtoList().stream()
-                .map(ShotScoreDto::getScore)
-                .mapToInt(Integer::intValue)
-                .sum();
+        return shotScores.totalScore();
     }
 
     private Integer getBonusScore(ScoreType scoreType) {
@@ -105,18 +101,14 @@ class Frame {
                             .map(nextBonus -> nextBonus + 10)
                             .orElse(null);
                 }
-                return shotScores.getDtoList().stream()
-                        .limit(2)
-                        .map(ShotScoreDto::getScore)
-                        .mapToInt(Integer::intValue)
-                        .sum();
+                return shotScores.totalScore(2);
             }
 
             return null;
         }
 
         if (scoreType.equals(ScoreType.SPARE)) {
-            return shotScores.getDtoList().get(0).getScore();
+            return shotScores.totalScore(1);
         }
 
         return 0;

@@ -36,7 +36,7 @@ class Score {
         return totalScore == MAX;
     }
 
-    int getScore() {
+    int score() {
         return score;
     }
 
