@@ -8,7 +8,6 @@ public class Score {
     private static final int SPARE_POINT = 10;
     private static final int STRIKE_POINT = 10;
     private static final int CAN_CALCULATE_LEFT_COUNT = 0;
-    private static final int LEFT_COUNT_DEDUCTION_UNIT = 1;
 
     private int score;
     private int leftCount;
@@ -32,7 +31,8 @@ public class Score {
 
     public Score calculate(int point) {
         if (leftCount != CAN_CALCULATE_LEFT_COUNT) {
-            return new Score(score += point, leftCount - LEFT_COUNT_DEDUCTION_UNIT);
+            this.score += point;
+            this.leftCount--;
         }
         return this;
     }
