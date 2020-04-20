@@ -14,9 +14,9 @@ public abstract class Frame {
         points = new Points();
     }
 
-    abstract public boolean isThrowable();
+    public abstract boolean isThrowable();
 
-    abstract public void addScore();
+    public abstract void addScore();
 
     public Frame throwBall(Point point) throws OverThrowBallException{
         points.validateLeftPoint(point);
