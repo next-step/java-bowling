@@ -123,4 +123,16 @@ public class FinalFrameTest {
         assertThat(score.isPresent()).isTrue();
         assertThat(score.get()).isEqualTo(11);
     }
+
+    @DisplayName("세번째 기회를 얻지 못했을때는 두번의 투구만 합산한다.")
+    @Test
+    void twoScore() {
+        finalFrame.addPinCount(8);
+        finalFrame.addPinCount(1);
+
+
+        Optional<Integer> score = finalFrame.getScore();
+        assertThat(score.isPresent()).isTrue();
+        assertThat(score.get()).isEqualTo(9);
+    }
 }
