@@ -43,7 +43,7 @@ public class Frames {
     }
 
     public boolean end() {
-        Frame frame = lastFrame();
+        Frame frame = getLastFrame();
         if (frame.isLastFame() && frame.endFrame()) {
             return true;
         }
@@ -72,7 +72,7 @@ public class Frames {
             return frame;
         }
 
-        Frame frame = lastFrame();
+        Frame frame = getLastFrame();
         if (frame.endFrame()) {
             frame = frame.next();
 
@@ -88,7 +88,7 @@ public class Frames {
                 .forEach(frame -> frame.addBonusScore(bonusScore));
     }
 
-    private Frame lastFrame() {
+    private Frame getLastFrame() {
         return frames.get(frames.size() - ONE);
     }
 }
