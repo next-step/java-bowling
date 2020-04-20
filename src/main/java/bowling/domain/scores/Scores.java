@@ -25,17 +25,12 @@ public abstract class Scores {
 
     protected abstract Score createScore(int point);
 
-
     public void add(int point) {
         scores.add(createScore(point));
     }
 
     protected Score getLastScore() {
         return scores.get(scores.size() - ONE);
-    }
-
-    public int size() {
-        return scores.size();
     }
 
     public int currentPoint() {
