@@ -1,4 +1,4 @@
-import bowling.BowlingGame;
+import bowling.game.BowlingGame;
 import bowling.Pin;
 import bowling.Player;
 import bowling.dto.BowlingGameResult;
