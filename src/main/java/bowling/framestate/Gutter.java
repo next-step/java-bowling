@@ -1,7 +1,6 @@
 package bowling.framestate;
 
 import bowling.FrameScore;
-import bowling.LeftScoreCount;
 import bowling.Pin;
 
 import java.util.Arrays;
@@ -28,7 +27,7 @@ public class Gutter implements State {
 
     @Override
     public FrameScore sumBeforeScore(final FrameScore beforeScore) {
-        return FrameScore.newInstance(beforeScore, LeftScoreCount.of(0));
+        return FrameScore.newInstanceWithNoLeftCount(beforeScore);
     }
 
     @Override

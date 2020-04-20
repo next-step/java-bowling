@@ -1,7 +1,6 @@
 package bowling.frame;
 
 import bowling.FrameScore;
-import bowling.LeftScoreCount;
 import bowling.Pin;
 import bowling.Score;
 import bowling.dto.FrameState;
@@ -57,7 +56,7 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     private Score getNowScore(final FrameScore beforeScore) {
-        FrameScore nowFrameScore = FrameScore.newInstance(beforeScore, LeftScoreCount.of(0));
+        FrameScore nowFrameScore = FrameScore.newInstanceWithNoLeftCount(beforeScore);
         return nowFrameScore.getScore();
     }
 

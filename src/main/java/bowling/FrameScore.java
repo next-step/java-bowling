@@ -30,8 +30,8 @@ public class FrameScore {
         return new FrameScore(score.add(bonusPin.toScore()), LeftScoreCount.of(0));
     }
 
-    public static FrameScore newInstance(final FrameScore beforeScore, LeftScoreCount leftScoreCount) {
-        return new FrameScore(beforeScore.score, leftScoreCount);
+    public static FrameScore newInstanceWithNoLeftCount(final FrameScore beforeScore) {
+        return new FrameScore(beforeScore.score, LeftScoreCount.of(0));
     }
 
     public static FrameScore createReady() {

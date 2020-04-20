@@ -1,7 +1,6 @@
 package bowling.frame;
 
 import bowling.FrameScore;
-import bowling.LeftScoreCount;
 import bowling.Pin;
 import bowling.Score;
 import bowling.dto.FrameState;
@@ -65,7 +64,7 @@ public class LastBowlingFrame implements BowlingFrame {
             return FrameScore.newInstanceWithBonusPin(updateFrameScore, bonusPin);
         }
 
-        return FrameScore.newInstance(frameScore, LeftScoreCount.of(0));
+        return FrameScore.newInstanceWithNoLeftCount(frameScore);
     }
 
     @Override
@@ -76,7 +75,7 @@ public class LastBowlingFrame implements BowlingFrame {
             return addingUpFrameScore.getScore();
         }
 
-        addingUpFrameScore = FrameScore.newInstance(beforeScore, LeftScoreCount.of(0));
+        addingUpFrameScore = FrameScore.newInstanceWithNoLeftCount(beforeScore);
         return addingUpFrameScore.getScore();
     }
 
