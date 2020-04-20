@@ -13,7 +13,14 @@ import static bowling.view.PrintFormat.*;
 
 public class ResultView {
     private static final int FRAME_ID_FIRST = 1;
+    private static final int FRAME_ID_SECOND = 2;
+    private static final int FRAME_ID_NINE = 9;
     private static final int FRAME_ID_FINAL = 10;
+    private static final int OFFSET = -1;
+    private static final int OFFSET_DOUBLE = -2;
+    private static final int STRIKE_POINT = 10;
+    private static final int THREE_DIGITS_MIN = 100;
+    private static final int TWO_DIGITS_MIN = 10;
 
     public static void print(GameResults gameResults) {
         System.out.println();
@@ -30,11 +37,11 @@ public class ResultView {
             printFirstFrame(gameResults, frameId);
         }
 
-        if (frameId == 2) {
+        if (frameId == FRAME_ID_SECOND) {
             printSecondFrame(gameResults, frameId);
         }
 
-        if (frameId != FRAME_ID_FIRST && frameId != 2 && frameId != FRAME_ID_FINAL) {
+        if (frameId != FRAME_ID_FIRST && frameId != FRAME_ID_SECOND && frameId != FRAME_ID_FINAL) {
             printNormalFrame(gameResults, frameId);
         }
 
@@ -47,7 +54,7 @@ public class ResultView {
         for (int i = 0; i < gameResults.getSize(); i++) {
             System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
             System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(frameId).getFirstPoint());
-            System.out.println(BOWLING_FRAME);
+            printBowlingFrame();
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
                     printFirstFrameFirst(gameResults.getResultByIndex(j));
@@ -65,7 +72,7 @@ public class ResultView {
         for (int i = 0; i < gameResults.getSize(); i++) {
             System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
             System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(frameId).getSecondPoint());
-            System.out.println(BOWLING_FRAME);
+            printBowlingFrame();
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
                     printFirstFrameSecond(gameResults.getResultByIndex(j));
@@ -85,8 +92,8 @@ public class ResultView {
     private static void printSecondFrame(GameResults gameResults, int frameId) {
         for (int i = 0; i < gameResults.getSize(); i++) {
             System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
-            System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(2).getFirstPoint());
-            System.out.println(BOWLING_FRAME);
+            System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(FRAME_ID_SECOND).getFirstPoint());
+            printBowlingFrame();
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
                     printNormalFrameFirst(gameResults.getResultByIndex(j), frameId);
@@ -105,8 +112,8 @@ public class ResultView {
 
         for (int i = 0; i < gameResults.getSize(); i++) {
             System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
-            System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(2).getSecondPoint());
-            System.out.println(BOWLING_FRAME);
+            System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(frameId).getSecondPoint());
+            printBowlingFrame();
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
                     printNormalFrameSecond(gameResults.getResultByIndex(j), frameId);
@@ -114,7 +121,7 @@ public class ResultView {
                 }
 
                 if (i < j) {
-                    printNormalFrameFirst(gameResults.getResultByIndex(j), 2);
+                    printNormalFrameFirst(gameResults.getResultByIndex(j), frameId);
                     printSecondFrameScoreAtFirst(gameResults.getResultByIndex(j), frameId);
                 }
             }
@@ -128,7 +135,7 @@ public class ResultView {
         for (int i = 0; i < gameResults.getSize(); i++) {
             System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
             System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(frameId).getFirstPoint());
-            System.out.println(BOWLING_FRAME);
+            printBowlingFrame();
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
                     printNormalFrameFirst(gameResults.getResultByIndex(j), frameId);
@@ -136,11 +143,11 @@ public class ResultView {
                 }
 
                 if (i < j) {
-                    printNormalFrameSecond(gameResults.getResultByIndex(j), frameId - 1);
+                    printNormalFrameSecond(gameResults.getResultByIndex(j), frameId + OFFSET);
                     if (frameId == 3) {
-                        printSecondFrameScoreAtSecond(gameResults.getResultByIndex(j), 2);
+                        printSecondFrameScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_SECOND);
                     } else {
-                        printScoreAtSecond(gameResults.getResultByIndex(j), frameId - 1);
+                        printScoreAtSecond(gameResults.getResultByIndex(j), frameId + OFFSET);
                     }
                 }
             }
@@ -152,7 +159,7 @@ public class ResultView {
         for (int i = 0; i < gameResults.getSize(); i++) {
             System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
             System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(frameId).getSecondPoint());
-            System.out.println(BOWLING_FRAME);
+            printBowlingFrame();
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
                     printNormalFrameSecond(gameResults.getResultByIndex(j), frameId);
@@ -192,11 +199,11 @@ public class ResultView {
         StringBuilder name = new StringBuilder();
         name.append(String.format(NAME, gameResult.getName()));
 
-        if (gameResult.getFrameByFrameId(FRAME_ID_FIRST).getFirstPoint() == 10) {
+        if (gameResult.getFrameByFrameId(FRAME_ID_FIRST).getFirstPoint() == STRIKE_POINT) {
             name.append(String.format(FIRST_SCORE, "X"));
         }
 
-        if (gameResult.getFrameByFrameId(FRAME_ID_FIRST).getFirstPoint() != 10) {
+        if (gameResult.getFrameByFrameId(FRAME_ID_FIRST).getFirstPoint() != STRIKE_POINT) {
             name.append(String.format(FIRST_SCORE, gameResult.getFrameByFrameId(FRAME_ID_FIRST).getFirstPoint()));
         }
 
@@ -212,11 +219,11 @@ public class ResultView {
             name.append(String.format(SCORE, getScore(gameResult.getFrameByFrameId(i))));
         }
 
-        if (gameResult.getFrameByFrameId(frameId).getFirstPoint() == 10) {
+        if (gameResult.getFrameByFrameId(frameId).getFirstPoint() == STRIKE_POINT) {
             name.append(String.format(FIRST_SCORE, "X"));
         }
 
-        if (gameResult.getFrameByFrameId(frameId).getFirstPoint() != 10) {
+        if (gameResult.getFrameByFrameId(frameId).getFirstPoint() != STRIKE_POINT) {
             name.append(String.format(FIRST_SCORE, gameResult.getFrameByFrameId(frameId).getFirstPoint()));
         }
 
@@ -241,7 +248,7 @@ public class ResultView {
         for (int i = 0; i < gameResults.getSize(); i++) {
             System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
             System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(FRAME_ID_FINAL).getFirstPoint());
-            System.out.println(BOWLING_FRAME);
+            printBowlingFrame();
 
             for (int j = 0; j < gameResults.getSize(); j++) {
                 if (i >= j) {
@@ -250,8 +257,8 @@ public class ResultView {
                 }
 
                 if (i < j) {
-                    printNormalFrameSecond(gameResults.getResultByIndex(j), 9);
-                    printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL - 1);
+                    printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_NINE);
+                    printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_NINE);
                 }
 
             }
@@ -265,7 +272,7 @@ public class ResultView {
             if (!gameResults.getResultByIndex(i).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)) {
                 System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
                 System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(FRAME_ID_FINAL).getSecondPoint());
-                System.out.println(BOWLING_FRAME);
+                printBowlingFrame();
 
                 for (int j = 0; j < gameResults.getSize(); j++) {
                     if (i >= j) {
@@ -290,7 +297,7 @@ public class ResultView {
                 if (gameResults.getResultByIndex(i).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)) {
                     System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
                     System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(FRAME_ID_FINAL).getThirdPoint());
-                    System.out.println(BOWLING_FRAME);
+                    printBowlingFrame();
 
                     for (int j = 0; j < gameResults.getSize(); j++) {
                         if (i >= j) {
@@ -331,7 +338,7 @@ public class ResultView {
                 if (gameResults.getResultByIndex(i).getFrameByFrameId(FRAME_ID_FINAL).isResult(SPARE)) {
                     System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
                     System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(FRAME_ID_FINAL).getThirdPoint());
-                    System.out.println(BOWLING_FRAME);
+                    printBowlingFrame();
 
                     for (int j = 0; j < gameResults.getSize(); j++) {
                         if (i >= j) {
@@ -367,7 +374,7 @@ public class ResultView {
 
                 if (gameResults.getResultByIndex(i).getFrameByFrameId(FRAME_ID_FINAL).isGutterOrMiss()) {
                     System.out.println(gameResults.getResultByIndex(i).getName() + "'s turn : -");
-                    System.out.println(BOWLING_FRAME);
+                    printBowlingFrame();
 
                     for (int j = 0; j < gameResults.getSize(); j++) {
                         printNormalFrameSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
@@ -383,7 +390,7 @@ public class ResultView {
                 if (gameResults.getResultByIndex(i).getFrameByFrameId(FRAME_ID_FINAL).isResult(STRIKE)) {
                     System.out.print(gameResults.getResultByIndex(i).getName() + "'s turn : ");
                     System.out.println(gameResults.getResultByIndex(i).getFrameByFrameId(FRAME_ID_FINAL).getFourthPoint());
-                    System.out.println(BOWLING_FRAME);
+                    printBowlingFrame();
 
                     for (int j = 0; j < gameResults.getSize(); j++) {
                         if (i >= j) {
@@ -431,7 +438,7 @@ public class ResultView {
         for (int i = FRAME_ID_FIRST; i < FRAME_ID_FINAL; i++) {
             name.append(String.format(SCORE, getScore(gameResult.getFrameByFrameId(i))));
         }
-        name.append(String.format(SCORE, "X|" + gameResult.getFrameByFrameId(10).getThirdPoint()));
+        name.append(String.format(SCORE, "X|" + gameResult.getFrameByFrameId(FRAME_ID_FINAL).getThirdPoint()));
 
         System.out.println(name.toString());
         System.out.println();
@@ -445,9 +452,9 @@ public class ResultView {
             name.append(String.format(SCORE, getScore(gameResult.getFrameByFrameId(i))));
         }
         name.append(String.format(THIRD_SCORE,
-                gameResult.getFrameByFrameId(10).getFirstPoint()
+                gameResult.getFrameByFrameId(FRAME_ID_FINAL).getFirstPoint()
                         + "|/|"
-                        + gameResult.getFrameByFrameId(10).getThirdPoint()));
+                        + gameResult.getFrameByFrameId(FRAME_ID_FINAL).getThirdPoint()));
 
         System.out.println(name.toString());
         System.out.println();
@@ -461,9 +468,9 @@ public class ResultView {
             name.append(String.format(SCORE, getScore(gameResult.getFrameByFrameId(i))));
         }
         name.append(String.format(THIRD_SCORE, "X|"
-                + gameResult.getFrameByFrameId(10).getThirdPoint()
+                + gameResult.getFrameByFrameId(FRAME_ID_FINAL).getThirdPoint()
                 + "|"
-                + gameResult.getFrameByFrameId(10).getFourthPoint()));
+                + gameResult.getFrameByFrameId(FRAME_ID_FINAL).getFourthPoint()));
 
         System.out.println(name.toString());
         System.out.println();
@@ -472,7 +479,7 @@ public class ResultView {
     private static void printScoreFirst(GameResult gameResult) {
         StringBuilder name = new StringBuilder();
         name.append(SCORE_BOX);
-        name.append(String.format(SCORE_ONE_DIGIT, getScoreUntil(gameResult, 1)));
+        name.append(String.format(SCORE_ONE_DIGIT, getScoreUntil(gameResult, FRAME_ID_FIRST)));
 
         System.out.println(name.toString());
         System.out.println();
@@ -491,30 +498,30 @@ public class ResultView {
     }
 
     private static void printSecondFrameScoreAtFirst(GameResult gameResult, int frameId) {
-        Frame prevFrame = gameResult.getFrameByFrameId(frameId - 1);
+        Frame prevFrame = gameResult.getFrameByFrameId(FRAME_ID_FIRST);
 
         if (prevFrame.isResult(STRIKE)) {
             printScoreBlank();
         }
 
         if (!prevFrame.isResult(STRIKE)) {
-            printScoreUntil(gameResult, frameId - 1);
+            printScoreUntil(gameResult, FRAME_ID_FIRST);
         }
     }
 
     private static void printSecondFrameScoreAtSecond(GameResult gameResult, int frameId) {
         Frame frame = gameResult.getFrameByFrameId(frameId);
-        Frame prevFrame = gameResult.getFrameByFrameId(frameId - 1);
+        Frame prevFrame = gameResult.getFrameByFrameId(FRAME_ID_FIRST);
 
         if (frame.isResult(STRIKE) && !prevFrame.isResult(STRIKE)) {
-            printScoreUntil(gameResult, frameId - 1);
+            printScoreUntil(gameResult, FRAME_ID_FIRST);
         }
         if (frame.isResult(STRIKE) && prevFrame.isResult(STRIKE)) {
             printScoreBlank();
         }
 
         if (frame.isResult(SPARE)) {
-            printScoreUntil(gameResult, frameId - 1);
+            printScoreUntil(gameResult, FRAME_ID_FIRST);
         }
 
         if (frame.isGutterOrMiss()) {
@@ -523,35 +530,35 @@ public class ResultView {
     }
 
     private static void printScoreAtFirst(GameResult gameResult, int frameId) {
-        Frame prevFrame = gameResult.getFrameByFrameId(frameId - 1);
-        Frame prevPrevFrame = gameResult.getFrameByFrameId(frameId - 2);
+        Frame prevFrame = gameResult.getFrameByFrameId(frameId + OFFSET);
+        Frame prevPrevFrame = gameResult.getFrameByFrameId(frameId + OFFSET_DOUBLE);
 
         if (prevFrame.isResult(STRIKE) && !prevPrevFrame.isResult(STRIKE)) {
-            printScoreUntil(gameResult, frameId - 2);
+            printScoreUntil(gameResult, frameId + OFFSET_DOUBLE);
         }
 
         if (prevFrame.isResult(SPARE)) {
-            printScoreUntil(gameResult, frameId - 1);
+            printScoreUntil(gameResult, frameId + OFFSET);
         }
 
         if (prevFrame.isGutterOrMiss()) {
-            printScoreUntil(gameResult, frameId - 1);
+            printScoreUntil(gameResult, frameId + OFFSET);
         }
     }
 
     private static void printScoreAtSecond(GameResult gameResult, int frameId) {
         Frame frame = gameResult.getFrameByFrameId(frameId);
-        Frame prevFrame = gameResult.getFrameByFrameId(frameId - 1);
+        Frame prevFrame = gameResult.getFrameByFrameId(frameId + OFFSET);
 
         if (frame.isResult(STRIKE) && !prevFrame.isResult(STRIKE)) {
-            printScoreUntil(gameResult, frameId - 1);
+            printScoreUntil(gameResult, frameId + OFFSET);
         }
         if (frame.isResult(STRIKE) && prevFrame.isResult(STRIKE)) {
-            printScoreUntil(gameResult, frameId - 2);
+            printScoreUntil(gameResult, frameId + OFFSET_DOUBLE);
         }
 
         if (frame.isResult(SPARE)) {
-            printScoreUntil(gameResult, frameId - 1);
+            printScoreUntil(gameResult, frameId + OFFSET);
         }
 
         if (frame.isGutterOrMiss()) {
@@ -564,15 +571,15 @@ public class ResultView {
         name.append(SCORE_BOX);
 
         for (int i = FRAME_ID_FIRST; i <= frameId; i++) {
-            if (getScoreUntil(gameResult, i) >= 100) {
+            if (getScoreUntil(gameResult, i) >= THREE_DIGITS_MIN) {
                 name.append(String.format(SCORE_THREE_DIGIT, getScoreUntil(gameResult, i)));
             }
 
-            if (getScoreUntil(gameResult, i) >= 10 && getScoreUntil(gameResult, i) < 100) {
+            if (getScoreUntil(gameResult, i) >= TWO_DIGITS_MIN && getScoreUntil(gameResult, i) < THREE_DIGITS_MIN) {
                 name.append(String.format(SCORE_TWO_DIGIT, getScoreUntil(gameResult, i)));
             }
 
-            if (getScoreUntil(gameResult, i) < 10) {
+            if (getScoreUntil(gameResult, i) < TWO_DIGITS_MIN) {
                 name.append(String.format(SCORE_ONE_DIGIT, getScoreUntil(gameResult, i)));
             }
         }
@@ -591,6 +598,12 @@ public class ResultView {
 
     private static int getScoreUntil(GameResult gameResult, int frameId) {
         return gameResult.getScoreUntilFrame(frameId);
+    }
+
+    private static void printBowlingFrame(){
+        System.out.println(BOWLING_BORDER);
+        System.out.println(BOWLING_FRAME);
+        System.out.println(BOWLING_BORDER);
     }
 
     private static String getScore(Frame frame) {
