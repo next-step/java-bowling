@@ -37,10 +37,7 @@ public class BowlingGame {
     }
 
     public boolean isFinish() {
-        if (findLastFrame() instanceof FinalFrame && findLastFrame().isFinish()) {
-            return true;
-        }
-        return false;
+        return findLastFrame() instanceof FinalFrame && findLastFrame().isFinish();
     }
 
     public boolean isLastFrameFinish() {
