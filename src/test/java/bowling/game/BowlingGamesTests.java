@@ -17,10 +17,4 @@ public class BowlingGamesTests {
     public void generateTest() {
         assertThatCode(() -> BowlingGames.newInstance("AAA", "BBB")).doesNotThrowAnyException();
     }
-
-    @DisplayName("사용자 투구 테스트")
-    @Test
-    public void getNextTurnTest() {
-        assertThatCode(() -> bowlingGames.bowl(Player.of("AAA"), Pin.ofMax())).doesNotThrowAnyException();
-    }
 }

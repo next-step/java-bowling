@@ -19,19 +19,13 @@ public class BowlingGameBoardTests {
         assertThatCode(() -> BowlingGameBoard.newInstance("AAA", "BBB")).doesNotThrowAnyException();
     }
 
-    @DisplayName("사용자 투구 테스트")
-    @Test
-    public void bowlTest() {
-        assertThatCode(() -> bowlingGameBoard.bowl(Player.of("AAA"), Pin.ofMax())).doesNotThrowAnyException();
-    }
-
     @DisplayName("사용자 턴 테스트")
     @Test
     public void getNextTurnTest() {
         BowlingGame game = bowlingGameBoard.getNextTurn();
         assertThat(game.getPlayer()).isEqualTo(Player.of("AAA"));
 
-        bowlingGameBoard.bowl(Player.of("AAA"), Pin.ofMax());
+        game.bowl(Pin.ofMax());
 
         BowlingGame anotherGame = bowlingGameBoard.getNextTurn();
         assertThat(anotherGame.getPlayer()).isEqualTo(Player.of("BBB"));
@@ -43,7 +37,7 @@ public class BowlingGameBoardTests {
         BowlingGame game = bowlingGameBoard.getNextTurn();
         assertThat(game.getPlayer()).isEqualTo(Player.of("AAA"));
 
-        bowlingGameBoard.bowl(Player.of("AAA"), Pin.of(7));
+        game.bowl(Pin.of(7));
 
         BowlingGame anotherGame = bowlingGameBoard.getNextTurn();
         assertThat(anotherGame.getPlayer()).isEqualTo(Player.of("AAA"));

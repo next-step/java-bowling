@@ -1,6 +1,5 @@
 package bowling.game;
 
-import bowling.Pin;
 import bowling.Player;
 
 import java.util.*;
@@ -26,19 +25,6 @@ public class BowlingGames {
         players.forEach(player -> games.put(player, BowlingGame.newInstance(player)));
 
         return new BowlingGames(games);
-    }
-
-    public void bowl(final Player player, final Pin pinCount) {
-        BowlingGame bowlingGame = games.get(player);
-        validateBowlingGame(bowlingGame);
-
-        bowlingGame.bowl(pinCount);
-    }
-
-    private void validateBowlingGame(final BowlingGame bowlingGame) {
-        if (Objects.isNull(bowlingGame)) {
-            throw new IllegalStateException("Can not find player bowling game");
-        }
     }
 
     public void prepareNextFrames() {

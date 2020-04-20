@@ -1,6 +1,5 @@
 package bowling.game;
 
-import bowling.Pin;
 import bowling.Player;
 
 import java.util.Arrays;
@@ -31,10 +30,6 @@ public class BowlingGameBoard {
         BowlingGameTurn bowlingGameTurn = BowlingGameTurn.newInstance(bowlingGames.getAllGames());
 
         return new BowlingGameBoard(bowlingGames, bowlingGameTurn);
-    }
-
-    public void bowl(final Player player, Pin pinCount) {
-        bowlingGames.bowl(player, pinCount);
     }
 
     public BowlingGame getNextTurn() {
