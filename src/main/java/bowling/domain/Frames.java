@@ -45,12 +45,13 @@ public class Frames {
         return frame.isEndGame();
     }
 
-    public void processPin(int numberOfPin) {
-        frame.addFrame(numberOfPin, isFinalFrame());
-        if (isFinalFrame()) {
+    public void processPin(Score numberOfPin) {
+        boolean isFinalFrame = isFinalFrame();
+        frame.addFrame(numberOfPin, isFinalFrame);
+        if (isFinalFrame) {
             processFinalFrame();
         }
-        if (!isFinalFrame()) {
+        if (!isFinalFrame) {
             processNormalFrame();
         }
         calculateScore();

@@ -1,13 +1,19 @@
 package bowling.domain;
 
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
+
 public class Frame {
     private static final int ZERO = 0;
     private static final int BONUS = 10;
     private static final int DOUBLE_BONUS = 20;
     private Scores scores;
 
+    private State state;
+
     public Frame() {
         this.scores = new Scores();
+        this.state = new Ready();
     }
 
     public String getSigns() {
@@ -23,10 +29,10 @@ public class Frame {
     }
 
     public boolean isNextFrame() {
-        return this.scores.nextFrame();
+        return this.state.isFinish();
     }
 
-    public void addFrame(int numberOfPin, boolean isFinalFrame) {
+    public void addFrame(Score numberOfPin, boolean isFinalFrame) {
         if (isFinalFrame) {
             this.scores.checkBeforeAddFinal(numberOfPin);
         }
@@ -34,6 +40,7 @@ public class Frame {
             this.scores.checkBeforeAddNormal(numberOfPin);
         }
         this.scores.add(numberOfPin);
+        this.state = state.bowl(numberOfPin);
     }
 
     public boolean isEndGame() {

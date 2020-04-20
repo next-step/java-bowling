@@ -14,7 +14,7 @@ public class Game {
         player = new ArrayList<>();
     }
 
-    public void play( int numberOfPin, int index) {
+    public void play(Score numberOfPin, int index) {
         player.get(index).processPin(numberOfPin);
     }
 

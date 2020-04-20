@@ -7,13 +7,9 @@ public class FinalFrame extends Frame {
         this.scores = frame.getScores();
     }
 
-    public void add(Score score) {
-        this.scores.add(score);
-    }
-
-    public void add(int numberOfPin) {
+    public void add(Score numberOfPin) {
         this.scores.checkBeforeAddFinal(numberOfPin);
-        this.scores.add(new Score(numberOfPin));
+        this.scores.add(numberOfPin);
     }
 
     public String getSigns() {
@@ -35,5 +31,4 @@ public class FinalFrame extends Frame {
     public boolean isCountOfStrike() {
         return this.scores.countOfSign(Sign.STRIKE) > 1;
     }
-
 }

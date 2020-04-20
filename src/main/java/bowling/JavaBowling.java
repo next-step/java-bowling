@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.Game;
 import bowling.domain.Player;
+import bowling.domain.Score;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
@@ -37,9 +38,9 @@ public class JavaBowling {
         Player player;
         do{
             player = game.getPlay(index);
-            int numberOfPin = inputView.askNumberOfPin(player.getName());
+            Score numberOfPin = new Score(inputView.askNumberOfPin(player.getName()));
             game.play(numberOfPin, index);
             outputView.drawPlay(game, number);
-        }while(!player.isNextFrame());
+        }while(!player.isEndGame());
     }
 }

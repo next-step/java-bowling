@@ -24,4 +24,12 @@ public class Score {
     public String toString() {
         return String.valueOf(score);
     }
+
+    public boolean isSpare(Score score) {
+        return this.score + score.getScore() == FRAME_MAX_SCORE;
+    }
+
+    public boolean isStrike(Score score) {
+        return this.score == FRAME_MAX_SCORE;
+    }
 }

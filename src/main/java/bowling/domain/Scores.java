@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 public class Scores {
     private static final int FRAME_MAX_SCORE = 10;
     private static final int FINAL_MAX_SCORE = 20;
-    private static final int ZERO = 0;
     private static final int FIRST_TRY_NUMBER = 1;
     private static final int SECOND_TRY_NUMBER = 2;
     private static final int FINAL_TRY_NUMBER = 3;
@@ -25,7 +24,7 @@ public class Scores {
 
     public void add(Score score) {
         this.scores.add(score);
-        String sign = Sign.matchSign(this).getSign();
+        String sign = Sign.matchSign(score.getScore(), numberOfTry(), sum()).getSign();
         if (EMPTY.equals(sign)) {
             sign = score.toString();
         }
@@ -74,14 +73,14 @@ public class Scores {
         return sum() < FRAME_MAX_SCORE;
     }
 
-    public void checkBeforeAddNormal(int numberOfPin) {
+    public void checkBeforeAddNormal(Score numberOfPin) {
         if (sumUntilThisValue(numberOfPin) > FRAME_MAX_SCORE) {
             throw new IllegalArgumentException(FRAME_MAX_SCORE + "을 넘으면 안됩니다.");
         }
     }
 
-    private int sumUntilThisValue(int numberOfPin) {
-        return sum() + numberOfPin;
+    private int sumUntilThisValue(Score numberOfPin) {
+        return sum() + numberOfPin.getScore();
     }
 
     public boolean isEndGame() {
@@ -94,7 +93,7 @@ public class Scores {
         return false;
     }
 
-    public void checkBeforeAddFinal(int numberOfPin) {
+    public void checkBeforeAddFinal(Score numberOfPin) {
         //처음에스트라이크가 아닌경우
         if (isFirstTry() && !isStrike() && sumUntilThisValue(numberOfPin) > FRAME_MAX_SCORE) {
             throw new IllegalArgumentException(FRAME_MAX_SCORE + "을 넘으면 안됩니다.");
@@ -127,10 +126,6 @@ public class Scores {
 
     public int recentScore() {
         return scores.get(numberOfTry() - 1).getScore();
-    }
-
-    public boolean isGutter() {
-        return recentScore() == ZERO;
     }
 
     public boolean isNormalFrameSpare() {

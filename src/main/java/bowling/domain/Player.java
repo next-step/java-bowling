@@ -47,7 +47,7 @@ public class Player {
                 .collect(Collectors.toList());
     }
 
-    public void processPin(int numberOfPin) {
+    public void processPin(Score numberOfPin) {
         frames.processPin(numberOfPin);
     }
 
