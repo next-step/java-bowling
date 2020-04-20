@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.Frame;
-import bowling.domain.PinCount;
 import bowling.domain.Player;
 import java.util.Scanner;
 
@@ -23,7 +22,7 @@ public class InputView {
   }
 
   public int inputPinCount(Frame frame) {
-    System.out.println(String.format(FRAME_BOWLING_MESSAGE, frame.getRound()));
+    printWithNewLine(String.format(FRAME_BOWLING_MESSAGE, frame.getRound()));
     return Integer.parseInt(scanner.nextLine());
   }
 
