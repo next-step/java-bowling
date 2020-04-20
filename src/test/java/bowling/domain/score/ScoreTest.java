@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -47,11 +49,12 @@ public class ScoreTest {
         @DisplayName("스페어 생성")
         @Test
         void createSpare() {
-            Scores scores = new DefaultScores();
-            scores.add(5);
-            scores.add(5);
+            Scores lastScores = new LastScores();
+            lastScores.add(5);
+            lastScores.add(5);
 
-            Score spare = scores.getLastScore();
+            List<Score> scores = lastScores.getScores();
+            Score spare = scores.get(scores.size() - 1);
 
             assertThat(spare.isEqualScoreType(ScoreType.SPARE)).isTrue();
         }
@@ -98,11 +101,12 @@ public class ScoreTest {
         @DisplayName("스페어 생성")
         @Test
         void createSpare() {
-            Scores scores = new LastScores();
-            scores.add(5);
-            scores.add(5);
+            Scores lastScores = new LastScores();
+            lastScores.add(5);
+            lastScores.add(5);
 
-            Score spare = scores.getLastScore();
+            List<Score> scores = lastScores.getScores();
+            Score spare = scores.get(scores.size() - 1);
 
             assertThat(spare.isEqualScoreType(ScoreType.SPARE)).isTrue();
         }
