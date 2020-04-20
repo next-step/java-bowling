@@ -14,20 +14,25 @@ public class OutputView {
     private static final String TITLE_SCTION = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String FRAME_SECTION = "|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|%6s|\n";
 
-    public void drawStart(Game game) {
+    public void drawStart(Game game, int number) {
         drawTitle();
-        drawName(game);
+        for (int i = 0; i < number; i++) {
+            drawName(game, i);
+            drawScore(game, i);
+        }
     }
 
-    public void drawPlay(Game game) {
+    public void drawPlay(Game game, int number) {
         drawTitle();
-        drawResult(game);
-        drawScore(game);
+        for (int i = 0; i < number; i++) {
+            drawResult(game, i);
+            drawScore(game, i);
+        }
     }
 
-    private void drawScore(Game game) {
+    private void drawScore(Game game, int index) {
         List<String> scores = new ArrayList<>();
-        Player player = game.getPlay();
+        Player player = game.getPlay(index);
         scores.add("");
         List<String> values;
         FrameScores frameScores = player.getFrameScore();
@@ -39,23 +44,24 @@ public class OutputView {
         System.out.println(TITLE_SCTION);
     }
 
-    private void drawName(Game game) {
+    private void drawName(Game game, int index) {
         List<String> scores = new ArrayList<>();
-        Player player = game.getPlay();
+        Player player = game.getPlay(index);
         scores.add(player.getName());
         List<String> values = new ArrayList<>();
         printData(scores, values);
     }
 
-    private void drawResult(Game game) {
+    private void drawResult(Game game, int index) {
         List<String> scores = new ArrayList<>();
-        Player player = game.getPlay();
+        Player player = game.getPlay(index);
         scores.add(player.getName());
         List<String> values;
         Frame frame = player.getFrame();
         values = player.getSigns(); //이전프레임성적
         values = getThisScore(scores, frame, values); //이번던진투구
         printData(scores, values);
+
     }
 
     private void printData(List<String> scores, List<String> values) {
