@@ -68,7 +68,7 @@ class FinalFrameTest {
         finalFrame = finalFrame.bowl(bowl2);
 
         //then
-        assertThat(finalFrame.getCurrenteCalculator().getScore()).isEqualTo(new Score(expect));
+        assertThat(finalFrame.getCurrentScore()).isEqualTo(new Score(expect));
     }
 
     @DisplayName("마지막 프레임의 점수 반환 : strike상태")
@@ -83,7 +83,7 @@ class FinalFrameTest {
         finalFrame = finalFrame.bowl(bowl2);
 
         //then
-        assertThat(finalFrame.getCurrenteCalculator().getScore()).isEqualTo(new Score(expect));
+        assertThat(finalFrame.getCurrentScore()).isEqualTo(new Score(expect));
     }
 
     @DisplayName("마지막 프레임의 점수 반환 : spare상태")
@@ -99,6 +99,6 @@ class FinalFrameTest {
         finalFrame = finalFrame.bowl(bowl3);
 
         //then
-        assertThat(finalFrame.getCurrenteCalculator().getScore()).isEqualTo(new Score(expect));
+        assertThat(finalFrame.getCurrentScore()).isEqualTo(new Score(expect));
     }
 }

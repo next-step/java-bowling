@@ -3,7 +3,6 @@ package bowling.domain;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
 
 import java.util.Optional;
@@ -79,7 +78,7 @@ public class BowlingGame {
         Score result = new Score();
         for (int i = 1; i <= frameNumber; i++) {
             Score frameScore = getFrameScore(i);
-            result = result.addScore(frameScore);
+            result = new Score(result.getScore() + frameScore.getScore());
         }
         return result;
     }
@@ -91,13 +90,13 @@ public class BowlingGame {
             return new Score();
         }
 
-        Calculator calculator = frame.getCurrenteCalculator();
+        Score score = frame.getCurrentScore();
 
-        while (calculator.canAddNextScore() && frame.getNext() != null) {
+        while (score.canAddNextScore() && frame.getNext() != null) {
             frame = frame.getNext();
-            calculator = frame.getScoreCalculate(calculator);
+            score = frame.getCalculateScore(score);
         }
 
-        return calculator.getScore();
+        return score;
     }
 }

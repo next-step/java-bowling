@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
-import bowling.domain.score.Calculator;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
 public class NormalFrame implements Frame {
@@ -80,12 +80,12 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Calculator getCurrenteCalculator() {
-        return state.getCurrentCalculator();
+    public Score getCurrentScore() {
+        return state.getCurrentScore();
     }
 
     @Override
-    public Calculator getScoreCalculate(Calculator calculator) {
-        return state.getScoreCalculate(calculator);
+    public Score getCalculateScore(Score before) {
+        return state.getCalculateScore(before);
     }
 }

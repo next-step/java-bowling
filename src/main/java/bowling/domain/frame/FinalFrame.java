@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.frame.state.FinalFrameStates;
 import bowling.domain.frame.state.State;
-import bowling.domain.score.Calculator;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
 import java.util.Objects;
@@ -65,13 +65,14 @@ public class FinalFrame implements Frame {
         return Objects.hash(states);
     }
 
+
     @Override
-    public Calculator getCurrenteCalculator() {
-        return states.getCurrentCalculator();
+    public Score getCurrentScore() {
+        return states.getCurrentScore();
     }
 
     @Override
-    public Calculator getScoreCalculate(Calculator calculator) {
-        return states.getScoreCalculate(calculator);
+    public Score getCalculateScore(Score before) {
+        return states.getCalculateScore(before);
     }
 }

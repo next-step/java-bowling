@@ -40,7 +40,7 @@ class GutterTest {
         Score score = new Score(0);
 
         //then
-        assertTrue(gutter.getCurrentCalculator().getScore().equals(score));
+        assertTrue(gutter.getCurrentScore().equals(score));
     }
 
     @DisplayName("Gutter 상태에서는 점수를 더해도 이전과 동일 하다")

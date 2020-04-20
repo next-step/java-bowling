@@ -1,9 +1,7 @@
 package bowling.domain.frame.state;
 
 import bowling.domain.Pins;
-import bowling.domain.score.Calculator;
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreCalculator;
 import bowling.exception.BowlingException;
 
 public class Miss implements State {
@@ -47,27 +45,11 @@ public class Miss implements State {
     }
 
     @Override
-    public Calculator getCurrentCalculator() {
-        return new ScoreCalculator(new Score(firstPins.getDownPin() + secondPins.getDownPin()), 0);
-    }
-
-    @Override
     public Score getCalculateScore(Score before) {
         before = before.addScore(new Score(firstPins.getDownPin()));
 
         if (before.canAddNextScore()) {
             return before.addScore(new Score(secondPins.getDownPin()));
-        }
-
-        return before;
-    }
-
-    @Override
-    public Calculator getScoreCalculate(Calculator before) {
-        before = before.sumScore(new Score(firstPins.getDownPin()));
-
-        if (before.canAddNextScore()) {
-            return before.sumScore(new Score(secondPins.getDownPin()));
         }
 
         return before;
