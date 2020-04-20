@@ -46,6 +46,7 @@ public class Frames {
         this.frames.stream()
                 .filter(frame -> frame.hasScore())
                 .forEach(frame -> frame.calculateScore(point.getPoint()));
+        frames.getLast().addScore();
     }
 
     public int size() {

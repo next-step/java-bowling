@@ -13,16 +13,18 @@ public class BowlingGame {
         this.frames = new Frames(player);
     }
 
-    public Frames throwBall(Point point) {
+    public void throwBall(Point point) {
         Frame frame = frames.getNextFrame();
         try {
             frame.throwBall(point);
         } catch (OverThrowBallException e) {
             System.out.println(e.getMessage());
-            return frames;
+            return;
         }
         frames.calculateScores(point);
-        frame.addScore();
+    }
+
+    public Frames getFrames() {
         return frames;
     }
 

@@ -14,7 +14,8 @@ public class BowlingGameRun {
 
         while (!bowlingGame.isEnd()) {
             Point point = InputView.inputThrowCount(bowlingGame.currentFrameNo());
-            ResultView.viewResult(bowlingGame.throwBall(point));
+            bowlingGame.throwBall(point);
+            ResultView.viewResult(bowlingGame);
         }
     }
 }

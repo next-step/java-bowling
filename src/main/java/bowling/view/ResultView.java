@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.NormalFrame;
@@ -30,10 +31,10 @@ public class ResultView {
     private static final String FRAME_LINE = "|";
     private static final String FRAME_EMPTY = "        |";
 
-    public static void viewResult(Frames frames) {
+    public static void viewResult(BowlingGame bowlingGame) {
         viewFrameHead();
-        viewFrames(frames);
-        viewScores(frames);
+        viewFrames(bowlingGame.getFrames());
+        viewScores(bowlingGame.getFrames());
     }
 
     private static void viewFrames(Frames frames) {
