@@ -13,6 +13,10 @@ public class Score {
     private int score;
     private int left;
 
+    public Score(int score) {
+        this(score, 0);
+    }
+
     public Score(int score, int left) {
         this.score = score;
         this.left = left;
@@ -52,6 +56,10 @@ public class Score {
         final Score score1 = (Score) o;
         return score == score1.score &&
                left == score1.left;
+    }
+
+    public int getLeft() {
+        return left;
     }
 
     @Override

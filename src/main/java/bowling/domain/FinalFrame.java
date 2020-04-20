@@ -2,13 +2,14 @@ package bowling.domain;
 
 import bowling.domain.State.LastFrameBowl;
 import bowling.domain.State.State;
+import bowling.exception.CannotCalculateException;
 
 public class FinalFrame implements Frame {
     private static final int MAX_FRAME_NUM = 10;
     private State state;
 
     public FinalFrame(boolean bonusFlag) {
-        this.state = new LastFrameBowl(bonusFlag);
+        state = new LastFrameBowl(bonusFlag);
     }
 
     @Override
@@ -33,18 +34,28 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Score calculateAdditionalScore(Score score) {
-        return state.calculateAdditionalScore(score);
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score score = state.calculateAdditionalScore(beforeScore);
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return score;
     }
 
     @Override
     public void addFrameResult(Board board) {
-
+        board.add(getFrameResult());
     }
 
-    @Override
-    public Board createBoard() {
-        return null;
-    }
+    public FrameResult getFrameResult() {
+        if (!state.isFinish()) {
+            return new FrameResult(state.getDesc());
+        }
 
+        try {
+            return new FrameResult(state.getDesc(), getScore().getScore());
+        } catch (CannotCalculateException e) {
+            return new FrameResult(state.getDesc());
+        }
+    }
 }
