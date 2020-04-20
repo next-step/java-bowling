@@ -11,6 +11,7 @@ public class Points {
     private static final int SECOND_POINT_INDEX = 1;
     private static final int THIRD_POINT_INDEX = 2;
 
+    private static final int NONE_TRY_COUNT = 1;
     private static final int FIRST_TRY_COUNT = 1;
     private static final int SECOND_TRY_COUNT = 2;
 
@@ -101,5 +102,22 @@ public class Points {
 
     public Point getThirdPoint() {
         return points.get(THIRD_POINT_INDEX);
+    }
+
+    public boolean isThrowableForNormalFrame(){
+        if (isTryOver(SECOND_TRY_COUNT) || isFirstStrike()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isThrowableForFinalFrame(){
+        if (isTryCount(NONE_TRY_COUNT) || isTryCount(FIRST_TRY_COUNT)) {
+            return true;
+        }
+        if (isTryCount(SECOND_TRY_COUNT) && (getFirstPoint().isMaxPoint() || isSpare() || isDoubleStrike())) {
+            return true;
+        }
+        return false;
     }
 }
