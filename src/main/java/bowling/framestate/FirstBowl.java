@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static bowling.Pin.MAX_PIN_COUNT;
+import static bowling.Pin.MIN_PIN_COUNT;
 
 public class FirstBowl implements State {
 
@@ -31,6 +32,10 @@ public class FirstBowl implements State {
             return Spare.newInstance(this.pinCount, pinCount);
         }
 
+        if (sumCount.isEqualTo(MIN_PIN_COUNT)) {
+            return Gutter.newInstance();
+        }
+
         return Miss.newInstance(this.pinCount, pinCount);
     }
 
@@ -41,7 +46,7 @@ public class FirstBowl implements State {
 
     @Override
     public FrameScore addNextAddingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addNextAddingUpScores(Arrays.asList(pinCount.toScore()));
+        return beforeScore.addNextAddingUpScores(Collections.singletonList(pinCount.toScore()));
     }
 
     @Override

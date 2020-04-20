@@ -32,6 +32,10 @@ public class FirstBowlTests {
 
         assertThat(firstBowl.bowl(Pin.of(4))).isEqualTo(Spare.newInstance(Pin.of(6), Pin.of(4)));
         assertThat(firstBowl.bowl(Pin.of(3))).isEqualTo(Miss.newInstance(Pin.of(6), Pin.of(3)));
+
+        FirstBowl firstBowlGutter = FirstBowl.newInstance(Pin.of(0));
+        //Q3. 인자가 없는 객체의 비교?
+        assertThat(firstBowlGutter.bowl(Pin.of(0))).isInstanceOf(Gutter.class);
     }
 
     @DisplayName("FrameScore 생성 테스트")

@@ -35,7 +35,7 @@ public class Miss implements State {
 
     @Override
     public FrameScore addNextAddingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addNextAddingUpScores(Arrays.asList(firstPinCount.toScore(), secondPinCount.toScore()));
+        return beforeScore.addNextAddingUpScores(firstPinCount.toScore(), secondPinCount.toScore());
     }
 
     @Override

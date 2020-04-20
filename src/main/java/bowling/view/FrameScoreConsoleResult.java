@@ -11,14 +11,15 @@ import java.util.stream.Collectors;
 public enum FrameScoreConsoleResult {
     READY((pins, bonusPin) -> Collections.singletonList("")),
     FIRST_BOWL((pins, bonusPin) -> Collections.singletonList(String.valueOf(pins.get(0)))),
+    GUTTER((pins, bonusPin) -> Arrays.asList("-", "-")),
     MISS((pins, bonusPin) -> Arrays.asList(String.valueOf(pins.get(0)), String.valueOf(pins.get(1)))),
     SPARE((pins, bonusPin) -> Arrays.asList(String.valueOf(pins.get(0)), "/", printBonusPin(bonusPin))),
     STRIKE((pins, bonusPin) -> Arrays.asList("X", printBonusPin(bonusPin))),
     ;
 
+    //Q2 상수값을 사용하고 싶다면? Illegal forward reference
     private static final String SCORE_DELIMITER = "|";
     private static final String SCORE_GUTTER = "-";
-    private static final String SCORE_SPARE = "/";
     private static final String SCORE_STRIKE = "X";
     private static final String SCORE_EMPTY = "";
     private static final Map<Class, FrameScoreConsoleResult> FRAME_STATES;

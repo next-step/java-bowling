@@ -1,5 +1,6 @@
 package bowling;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +38,10 @@ public class FrameScore {
         return new FrameScore(Score.ofZeroPins(), LeftScoreCount.of(2));
     }
 
+    public static FrameScore createGutter() {
+        return new FrameScore(Score.ofZeroPins(), LeftScoreCount.of(0));
+    }
+
     public static FrameScore createMiss(final Score score) {
         return new FrameScore(score, LeftScoreCount.of(0));
     }
@@ -58,6 +63,10 @@ public class FrameScore {
 
     public boolean canCalculateSelfScore() {
         return leftScoreCount.isEqualTo(0);
+    }
+
+    public FrameScore addNextAddingUpScores(final Score... scores) {
+        return addNextAddingUpScores(Arrays.asList(scores));
     }
 
     public FrameScore addNextAddingUpScores(final List<Score> scores) {

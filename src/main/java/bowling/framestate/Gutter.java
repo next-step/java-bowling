@@ -6,29 +6,23 @@ import bowling.Pin;
 import java.util.Collections;
 import java.util.List;
 
-import static bowling.Pin.MAX_PIN_COUNT;
+public class Gutter implements State {
 
-public class Ready implements State {
-
-    public Ready() {
+    private Gutter() {
     }
 
-    public static Ready newInstance() {
-        return new Ready();
+    public static Gutter newInstance() {
+        return new Gutter();
     }
 
     @Override
-    public State bowl(final Pin pinCount) {
-        if (pinCount.isEqualTo(MAX_PIN_COUNT)) {
-            return Strike.newInstance();
-        }
-
-        return FirstBowl.newInstance(pinCount);
+    public State bowl(Pin pinCount) {
+        throw new IllegalStateException("No more bowl.");
     }
 
     @Override
     public FrameScore createFrameScore() {
-        return FrameScore.createReady();
+        return FrameScore.createGutter();
     }
 
     @Override
@@ -38,7 +32,7 @@ public class Ready implements State {
 
     @Override
     public boolean isOver() {
-        return false;
+        return true;
     }
 
     @Override
