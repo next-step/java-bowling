@@ -418,7 +418,7 @@ public class ResultView {
 
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isResult(SPARE)) {
                                 printFinalFrameWhenSpareThird(gameResults.getResultByIndex(j));
-                                printScoreAtSecond(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
+                                printScoreUntil(gameResults.getResultByIndex(j), FRAME_ID_FINAL);
                             }
 
                             if (gameResults.getResultByIndex(j).getFrameByFrameId(FRAME_ID_FINAL).isGutterOrMiss()) {
