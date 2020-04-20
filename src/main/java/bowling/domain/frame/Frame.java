@@ -11,6 +11,8 @@ public interface Frame {
 
     boolean isFinish();
 
+    boolean isEnd();
+
     Frame createNext();
 
     Frame getNext();

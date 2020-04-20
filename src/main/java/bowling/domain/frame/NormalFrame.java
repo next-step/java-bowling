@@ -51,6 +51,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean isEnd() {
+        return false;
+    }
+
+    @Override
     public Frame createNext() {
         if (frameNumber == MAX_FRAME_NUMBER - 1) {
             nextFrame = new FinalFrame();

@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.score.Score;
@@ -36,7 +35,7 @@ public class BowlingGame {
     }
 
     public boolean isFinish() {
-        return findLastFrame() instanceof FinalFrame && findLastFrame().isFinish();
+        return findLastFrame().isEnd();
     }
 
     public boolean isLastFrameFinish() {

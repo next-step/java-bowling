@@ -33,6 +33,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public boolean isEnd() {
+        return isFinish();
+    }
+
+    @Override
     public Frame createNext() {
         throw new BowlingException(LAST_FRAME);
     }
