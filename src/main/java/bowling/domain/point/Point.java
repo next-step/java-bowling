@@ -13,7 +13,7 @@ public class Point {
         this.score = score;
     }
 
-    public static Point of(int score){
+    public static Point of(int score) {
         return new Point(score);
     }
 

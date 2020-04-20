@@ -22,12 +22,12 @@ public class RandomGenerator {
         return RANDOM.nextInt(BOUND_FIRST_POINT);
     }
 
-    public int getThirdPointForStrike(){
+    public int getThirdPointForStrike() {
         thirdPoint = RANDOM.nextInt(BOUND_FIRST_POINT);
         return thirdPoint;
     }
 
-    public int getFourthPointForStrike(){
+    public int getFourthPointForStrike() {
         return RANDOM.nextInt(BOUND_FIRST_POINT - thirdPoint);
     }
 }

@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
 import java.util.Objects;
 
 import static bowling.Messages.WARNING_PLAYERNAME_MUST_ENGLISH;
@@ -17,7 +16,7 @@ public class PlayerName {
         this.name = name;
     }
 
-    public static PlayerName of(String name){
+    public static PlayerName of(String name) {
         return new PlayerName(name);
     }
 
@@ -27,8 +26,8 @@ public class PlayerName {
         }
     }
 
-    private void validateNameInEnglish(String name){
-        if(name.toLowerCase() == name.toUpperCase()){
+    private void validateNameInEnglish(String name) {
+        if (name.toLowerCase() == name.toUpperCase()) {
             throw new IllegalArgumentException(WARNING_PLAYERNAME_MUST_ENGLISH);
         }
     }

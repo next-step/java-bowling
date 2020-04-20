@@ -4,9 +4,6 @@ import bowling.domain.PlayerName;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 
-import static bowling.domain.frame.FrameResult.SPARE;
-import static bowling.domain.frame.FrameResult.STRIKE;
-
 public class GameResult {
     private static final int OFFSET = -1;
 
@@ -38,25 +35,7 @@ public class GameResult {
         return frames.getFrames().get(frameId + OFFSET);
     }
 
-    public boolean isPrevFrameStrike(int frameId){
-        if(frameId == 1){
-            return false;
-        }
-
-        return frames.getPreviousFrame(getFrameByFrameId(frameId))
-                .isResult(STRIKE);
-    }
-
-    public boolean isPrevFrameSpare(int frameId){
-        if(frameId == 1){
-            return false;
-        }
-
-        return frames.getPreviousFrame(getFrameByFrameId(frameId))
-                .isResult(SPARE);
-    }
-
-    public int getScoreUntilFrame(int frameId){
+    public int getScoreUntilFrame(int frameId) {
         return frames.getTotalPointUntil(frameId);
     }
 }
