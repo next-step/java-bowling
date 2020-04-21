@@ -6,8 +6,9 @@ import seul.bowling.domain.Frames;
 import java.util.Scanner;
 
 public class InputView {
-    private static final String PLAYER_NAME = "플레이어 이름은(3 english letters)?:\n";
-    private static final String CLEAR_PIN = "%d프레임 투구 :\n";
+    private static final String PEOPLE_NUMBER = "How many people?:\n";
+    private static final String PLAYER_NAME = "플레이어 %d의 이름은?(3 english letters):\n";
+    private static final String PLAYER_TURN = "%s's turn : %d\n";
 
     private Scanner scanner;
 
@@ -15,13 +16,19 @@ public class InputView {
         this.scanner = new Scanner(System.in);
     }
 
-    public String inputPlayerName() {
-        System.out.printf(PLAYER_NAME);
+    public String inputPeopleNumber() {
+        System.out.println(PEOPLE_NUMBER);
 
         return scanner.nextLine();
     }
 
-    public int inputClearPin(Frames frames) {
+    public String inputPlayerName(int index) {
+        System.out.printf(PLAYER_NAME, index);
+
+        return scanner.nextLine();
+    }
+
+    public int inputClearPin(String name, Frames frames) {
         int lastFrameIndex = frames.currentFrameIndex();
 
         boolean endFrame = false;
@@ -34,7 +41,7 @@ public class InputView {
             lastFrameIndex++;
         }
 
-        System.out.printf(CLEAR_PIN, ++lastFrameIndex);
+        System.out.printf(PLAYER_TURN, name, ++lastFrameIndex);
 
         return scanner.nextInt();
     }

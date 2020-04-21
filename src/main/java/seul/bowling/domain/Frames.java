@@ -17,13 +17,15 @@ public class Frames {
         this.frames = new ArrayList<>();
     }
 
-    public void play(int clearPin) {
+    public Frame play(int clearPin) {
         addBonusScore(clearPin);
 
         Frame frame = playFrame();
         frame.addPins(clearPin);
 
         calculateCumulativeScore();
+
+        return frame;
     }
 
     private void calculateCumulativeScore() {

@@ -19,12 +19,16 @@ public class Player {
         this.frames = new Frames();
     }
 
-    public void play(int clearPinCount) {
-        this.frames.play(clearPinCount);
+    public Frame play(int clearPinCount) {
+        return this.frames.play(clearPinCount);
     }
 
     public boolean isEnd() {
         return this.frames.end();
+    }
+
+    public boolean equalsName(String name) {
+        return this.name.equals(name);
     }
 
     private void validPlayerName(String playerName) {
