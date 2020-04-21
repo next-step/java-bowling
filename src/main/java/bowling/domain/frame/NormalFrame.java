@@ -2,8 +2,13 @@ package bowling.domain.frame;
 
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class NormalFrame implements Frame {
 
@@ -118,5 +123,10 @@ public class NormalFrame implements Frame {
         }
 
         return nextFrame.findFrame(frameNumber);
+    }
+
+    @Override
+    public List<Pins> getPins() {
+        return new ArrayList<>(Arrays.asList(state.getPins()));
     }
 }

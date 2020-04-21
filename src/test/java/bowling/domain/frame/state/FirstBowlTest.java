@@ -1,6 +1,6 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +16,7 @@ class FirstBowlTest {
     @Test
     public void validate_fail() throws Exception {
         //given
-        FirstBowl first = new FirstBowl(new Pins(3));
+        FirstBowl first = new FirstBowl(new Pin(3));
 
         //then
         assertThatThrownBy(
@@ -28,7 +28,7 @@ class FirstBowlTest {
     @Test
     public void blow_success_spare() throws Exception {
         //given
-        FirstBowl firstBowl = new FirstBowl(new Pins(4));
+        FirstBowl firstBowl = new FirstBowl(new Pin(4));
 
         //when
         State bowl = firstBowl.bowl(6);
@@ -42,7 +42,7 @@ class FirstBowlTest {
     @Test
     public void blow_success_miss() throws Exception {
         //given
-        FirstBowl firstBowl = new FirstBowl(new Pins(4));
+        FirstBowl firstBowl = new FirstBowl(new Pin(4));
 
         //when
         State bowl = firstBowl.bowl(1);
@@ -55,7 +55,7 @@ class FirstBowlTest {
     @Test
     public void blow_success_gutter() throws Exception {
         //given
-        FirstBowl firstBowl = new FirstBowl(new Pins(0));
+        FirstBowl firstBowl = new FirstBowl(new Pin(0));
 
         //when
         State bowl = firstBowl.bowl(0);
@@ -68,7 +68,7 @@ class FirstBowlTest {
     @Test
     public void isFinish_success() throws Exception {
         //given
-        FirstBowl firstBowl = new FirstBowl(new Pins(3));
+        FirstBowl firstBowl = new FirstBowl(new Pin(3));
 
         //then
         assertFalse(firstBowl.isFinish());
@@ -78,7 +78,7 @@ class FirstBowlTest {
     @Test
     public void getScore_success() throws Exception {
         //given
-        FirstBowl firstBowl = new FirstBowl(new Pins(3));
+        FirstBowl firstBowl = new FirstBowl(new Pin(3));
         Score compare = new Score(3);
 
         //when
@@ -92,7 +92,7 @@ class FirstBowlTest {
     @Test
     public void getCalculateScore_success() throws Exception {
         //given
-        FirstBowl firstBowl = new FirstBowl(new Pins(5));
+        FirstBowl firstBowl = new FirstBowl(new Pin(5));
         Score score = new Score(10, 2);
         Score compare = new Score(15);
 

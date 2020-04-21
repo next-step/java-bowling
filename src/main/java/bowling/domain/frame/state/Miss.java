@@ -1,19 +1,24 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pin.Pin;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
 public class Miss implements State {
 
-    private static final String PINS_STATE = "%3d|%d ";
+    public static final String PINS_STATE = "%3d|%d ";
 
-    private final Pins firstPins;
-    private final Pins secondPins;
+    //    private final Pin firstPin;
+//    private final Pin secondPin;
+    private final Pins pins;
 
-    public Miss(final Pins firstPins, final Pins secondPins) {
-        this.firstPins = firstPins;
-        this.secondPins = secondPins;
+    public Miss(final Pin firstPin, final Pin secondPin) {
+        this.pins = new Pins(firstPin, secondPin);
+    }
+
+    public Miss(Pins pins) {
+        this.pins = pins;
     }
 
     @Override
@@ -26,32 +31,37 @@ public class Miss implements State {
         return true;
     }
 
-    @Override
-    public String getCurrentPinsState() {
-        if (firstPins.isGutter()) {
-            return String.format(" -|%d  ", secondPins.getDownPin());
-        }
-
-        if (secondPins.isGutter()) {
-            return String.format("  %d|- ", firstPins.getDownPin());
-        }
-
-        return String.format(PINS_STATE, firstPins.getDownPin(), secondPins.getDownPin());
-    }
+//    @Override
+//    public String getCurrentPinsState() {
+//        if (firstPin.isGutter()) {
+//            return String.format(" -|%d  ", secondPin.getDownPin());
+//        }
+//
+//        if (secondPin.isGutter()) {
+//            return String.format("  %d|- ", firstPin.getDownPin());
+//        }
+//
+//        return String.format(PINS_STATE, firstPin.getDownPin(), secondPin.getDownPin());
+//    }
 
     @Override
     public Score getCurrentScore() {
-        return new Score(firstPins.getDownPin() + secondPins.getDownPin(), 0);
+        return new Score(pins.getDownPins(), 0);
     }
 
     @Override
     public Score getCalculateScore(Score before) {
-        before = before.addScore(new Score(firstPins.getDownPin()));
+        before = before.addScore(new Score(pins.getFirstDownPin()));
 
         if (before.canAddNextScore()) {
-            return before.addScore(new Score(secondPins.getDownPin()));
+            return before.addScore(new Score(pins.getSecondDownPin()));
         }
 
         return before;
+    }
+
+    @Override
+    public Pins getPins() {
+        return pins;
     }
 }

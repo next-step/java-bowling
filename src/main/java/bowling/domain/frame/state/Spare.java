@@ -1,24 +1,27 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pin.Pin;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
 public class Spare implements State {
 
-    private static final String PINS_STATE = "%3d|/ ";
+    public static final String PINS_STATE = "%3d|/ ";
 
-    private final Pins firstPins;
-    private final Pins secondPins;
+    private final Pins pins;
 
-    public Spare(Pins firstPins, Pins secondPins) {
-        validatePinsCount(firstPins);
-        this.firstPins = firstPins;
-        this.secondPins = secondPins;
+    public Spare(Pin firstPin, Pin secondPin) {
+        validatePinsCount(firstPin);
+        this.pins = new Pins(firstPin, secondPin);
     }
 
-    private void validatePinsCount(Pins firstPins) {
-        if (firstPins.isFinish()) {
+    public Spare(Pins pins) {
+        this.pins = pins;
+    }
+
+    private void validatePinsCount(Pin firstPin) {
+        if (firstPin.isFinish()) {
             throw new BowlingException();
         }
     }
@@ -33,24 +36,29 @@ public class Spare implements State {
         return true;
     }
 
-    @Override
-    public String getCurrentPinsState() {
-        return String.format(PINS_STATE, firstPins.getDownPin());
-    }
+//    @Override
+//    public String getCurrentPinsState() {
+//        return String.format(PINS_STATE, firstPin.getDownPin());
+//    }
 
     @Override
     public Score getCurrentScore() {
-        return new Score(Pins.MAX_PIN, 1);
+        return new Score(pins.getDownPins(), 1);
     }
 
     @Override
     public Score getCalculateScore(Score before) {
-        before = before.addScore(new Score(firstPins.getDownPin()));
+        before = before.addScore(new Score(pins.getFirstDownPin()));
 
         if (before.canAddNextScore()) {
-            return before.addScore(new Score(secondPins.getDownPin()));
+            return before.addScore(new Score(pins.getSecondDownPin()));
         }
 
         return before;
+    }
+
+    @Override
+    public Pins getPins() {
+        return pins;
     }
 }

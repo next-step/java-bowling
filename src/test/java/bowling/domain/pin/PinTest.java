@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.pin;
 
+import bowling.domain.pin.Pin;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,13 +12,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class PinsTest {
+class PinTest {
 
     @DisplayName("핀의 개수는 0~10 사이여야 한다")
     @ParameterizedTest
     @ValueSource(ints = {1, 3, 5, 7, 10})
     public void validate_success(int count) throws Exception {
-        new Pins(count);
+        new Pin(count);
     }
 
     @DisplayName("핀의 개수가 0~10 사이가 아니면 exception")
@@ -25,7 +26,7 @@ class PinsTest {
     @ValueSource(ints = {-1, 11, 15})
     public void validate_fail(int count) throws Exception {
         assertThatThrownBy(
-                () -> new Pins(count)
+                () -> new Pin(count)
         ).isInstanceOf(BowlingException.class);
     }
 
@@ -33,14 +34,14 @@ class PinsTest {
     @Test
     public void bowl_success() throws Exception {
         //given
-        Pins pins = Pins.from();
-        Pins compare = new Pins(4);
+        Pin pin = Pin.from();
+        Pin compare = new Pin(4);
 
         //when
-        pins = pins.bowl(4);
+        pin = pin.bowl(4);
 
         //then
-        assertTrue(pins.equals(compare));
+        assertTrue(pin.equals(compare));
     }
 
     @DisplayName("0~10 개 사이의 핀만 쓰러뜨릴 수 있다")
@@ -48,11 +49,11 @@ class PinsTest {
     @ValueSource(ints = {-20, -1, 11, 20})
     public void getDownPin_fail(int count) throws Exception {
         //given
-        Pins pins = Pins.from();
+        Pin pin = Pin.from();
 
         //then
         assertThatThrownBy(
-                () -> pins.bowl(count)
+                () -> pin.bowl(count)
         ).isInstanceOf(BowlingException.class);
     }
 
@@ -60,8 +61,8 @@ class PinsTest {
     @Test
     public void isGutter_success() throws Exception {
         //given
-        Pins pin1 = new Pins(10);
-        Pins pin2 = Pins.from();
+        Pin pin1 = new Pin(10);
+        Pin pin2 = Pin.from();
 
         //then
         assertFalse(pin1.isGutter());
@@ -72,8 +73,8 @@ class PinsTest {
     @Test
     public void isFinish_success() throws Exception {
         //given
-        Pins max = new Pins(10);
-        Pins min = new Pins(0);
+        Pin max = new Pin(10);
+        Pin min = new Pin(0);
 
         //then
         assertTrue(max.isFinish());
@@ -84,8 +85,8 @@ class PinsTest {
     @Test
     public void isFinish_success_downPinCount() throws Exception {
         //given
-        Pins first = new Pins(4);
-        Pins second = new Pins(6);
+        Pin first = new Pin(4);
+        Pin second = new Pin(6);
 
         //then
         assertTrue(first.isFinish(second));
@@ -96,27 +97,27 @@ class PinsTest {
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     public void getDownPin_success(int count) throws Exception {
         //given
-        Pins pins = Pins.from();
+        Pin pin = Pin.from();
 
         //when
-        pins = pins.bowl(count);
+        pin = pin.bowl(count);
 
         //then
-        assertThat(pins.getDownPin()).isEqualTo(count);
+        assertThat(pin.getDownPin()).isEqualTo(count);
     }
 
     @DisplayName("넘어진 핀의 개수를 반환")
     @Test
     public void getTotalDownPin_success() throws Exception {
         //given
-        Pins pins1 = Pins.from();
-        Pins pins2 = Pins.from();
+        Pin pin1 = Pin.from();
+        Pin pin2 = Pin.from();
 
         //when
-        pins1 = pins1.bowl(1);
-        pins2 = pins2.bowl(3);
+        pin1 = pin1.bowl(1);
+        pin2 = pin2.bowl(3);
 
         //then
-        assertThat(pins1.getTotalDownPin(pins2)).isEqualTo(4);
+        assertThat(pin1.getTotalDownPin(pin2)).isEqualTo(4);
     }
 }

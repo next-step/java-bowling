@@ -1,20 +1,16 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pin.Pin;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
 public class Gutter implements State {
 
-    private static final String GUTTER_DASH = " -|-  ";
-    private static final String PINS_STATE = "%3d|-  ";
-
-    private final Pins firstPins;
-    private final Pins secondPins;
+    private final Pins pins;
 
     public Gutter() {
-        this.firstPins = Pins.from();
-        this.secondPins = Pins.from();
+        this.pins = new Pins(Pin.from(), Pin.from());
     }
 
     @Override
@@ -28,26 +24,23 @@ public class Gutter implements State {
     }
 
     @Override
-    public String getCurrentPinsState() {
-        if (firstPins.isGutter()) {
-            return GUTTER_DASH;
-        }
-        return String.format(PINS_STATE, firstPins.getDownPin(), secondPins.getDownPin());
-    }
-
-    @Override
     public Score getCurrentScore() {
-        return new Score(Pins.MIN_PIN, 0);
+        return new Score(pins.getDownPins(), 0);
     }
 
     @Override
     public Score getCalculateScore(Score before) {
-        before = before.addScore(new Score(firstPins.getDownPin()));
+        before = before.addScore(new Score(pins.getFirstDownPin()));
 
         if (before.canAddNextScore()) {
-            return before.addScore(new Score(secondPins.getDownPin()));
+            return before.addScore(new Score(pins.getSecondDownPin()));
         }
 
         return before;
+    }
+
+    @Override
+    public Pins getPins() {
+        return pins;
     }
 }

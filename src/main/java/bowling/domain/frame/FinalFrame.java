@@ -2,9 +2,12 @@ package bowling.domain.frame;
 
 import bowling.domain.frame.state.FinalFrameStates;
 import bowling.domain.frame.state.State;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class FinalFrame implements Frame {
@@ -89,5 +92,14 @@ public class FinalFrame implements Frame {
     @Override
     public Frame findFrame(int frameNumber) {
         return this;
+    }
+
+    @Override
+    public List<Pins> getPins() {
+        List merge = new ArrayList<>();
+        merge.add(states.getFirstPins());
+        merge.add(states.getLastPins());
+
+        return merge;
     }
 }

@@ -1,10 +1,10 @@
-package bowling.domain;
+package bowling.domain.pin;
 
 import bowling.exception.BowlingException;
 
 import java.util.Objects;
 
-public class Pins {
+public class Pin {
 
     public static final String PINS_COUNT_RANGE = "핀은 0~10 사이여야 합니다.";
     public static final int MIN_PIN = 0;
@@ -12,13 +12,13 @@ public class Pins {
 
     private final int pins;
 
-    public Pins(int pins) {
+    public Pin(int pins) {
         validatePinesCount(pins);
         this.pins = pins;
     }
 
-    public static Pins from() {
-        return new Pins(MIN_PIN);
+    public static Pin from() {
+        return new Pin(MIN_PIN);
     }
 
     private void validatePinesCount(int pins) {
@@ -27,8 +27,8 @@ public class Pins {
         }
     }
 
-    public Pins bowl(final int count) {
-        return new Pins(count);
+    public Pin bowl(final int count) {
+        return new Pin(count);
     }
 
     public boolean isGutter() {
@@ -39,7 +39,7 @@ public class Pins {
         return pins == MAX_PIN;
     }
 
-    public boolean isFinish(Pins other) {
+    public boolean isFinish(Pin other) {
         return (pins + other.pins) == MAX_PIN;
     }
 
@@ -47,7 +47,7 @@ public class Pins {
         return this.pins;
     }
 
-    public int getTotalDownPin(Pins other) {
+    public int getTotalDownPin(Pin other) {
         int totalDown = pins + other.pins;
         validatePinesCount(totalDown);
         return totalDown;
@@ -57,8 +57,8 @@ public class Pins {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pins pins1 = (Pins) o;
-        return pins == pins1.pins;
+        Pin pin1 = (Pin) o;
+        return pins == pin1.pins;
     }
 
     @Override

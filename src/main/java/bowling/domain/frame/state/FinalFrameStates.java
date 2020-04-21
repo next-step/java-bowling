@@ -1,5 +1,6 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
@@ -80,6 +81,14 @@ public class FinalFrameStates implements State {
         return false;
     }
 
+    public Pins getFirstPins() {
+        return states.getFirst().getPins();
+    }
+
+    public Pins getLastPins() {
+        return states.getFirst().getPins();
+    }
+
     @Override
     public FinalFrameStates bowl(final int pinCount) {
         if (isFinish()) {
@@ -126,21 +135,21 @@ public class FinalFrameStates implements State {
         return true;
     }
 
-    @Override
-    public String getCurrentPinsState() {
-        StringBuffer buffer = new StringBuffer();
-
-        String firstResult = states.getFirst().getCurrentPinsState();
-
-        if (isHaveBonus()) {
-            buffer.append(firstResult.trim());
-            buffer.append("|").append(states.getLast().getCurrentPinsState().trim());
-            return String.format("%5s ", buffer.toString());
-        }
-
-        buffer.append(firstResult);
-        return String.format("%3s ", buffer.toString());
-    }
+//    @Override
+//    public String getCurrentPinsState() {
+//        StringBuffer buffer = new StringBuffer();
+//
+//        String firstResult = states.getFirst().getCurrentPinsState();
+//
+//        if (isHaveBonus()) {
+//            buffer.append(firstResult.trim());
+//            buffer.append("|").append(states.getLast().getCurrentPinsState().trim());
+//            return String.format("%5s ", buffer.toString());
+//        }
+//
+//        buffer.append(firstResult);
+//        return String.format("%3s ", buffer.toString());
+//    }
 
     @Override
     public Score getCurrentScore() {
@@ -163,5 +172,10 @@ public class FinalFrameStates implements State {
         }
 
         return before;
+    }
+
+    @Override
+    public Pins getPins() {
+        throw new BowlingException();
     }
 }

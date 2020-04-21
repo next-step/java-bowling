@@ -1,7 +1,10 @@
 package bowling.domain.frame;
 
 import bowling.domain.frame.state.State;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
+
+import java.util.List;
 
 public interface Frame {
 
@@ -28,4 +31,6 @@ public interface Frame {
     Score getCalculateScore(Score before);
 
     Frame findFrame(int frameNumber);
+
+    List<Pins> getPins();
 }

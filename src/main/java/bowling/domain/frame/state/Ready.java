@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pin.Pin;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
@@ -8,23 +9,18 @@ public class Ready implements State {
 
     @Override
     public State bowl(final int pinsCount) {
-        Pins pins = Pins.from().bowl(pinsCount);
+        Pin pin = Pin.from().bowl(pinsCount);
 
-        if (pins.isFinish()) {
+        if (pin.isFinish()) {
             return new Strike();
         }
 
-        return new FirstBowl(pins);
+        return new FirstBowl(pin);
     }
 
     @Override
     public boolean isFinish() {
         return false;
-    }
-
-    @Override
-    public String getCurrentPinsState() {
-        throw new BowlingException();
     }
 
     @Override
@@ -34,6 +30,11 @@ public class Ready implements State {
 
     @Override
     public Score getCalculateScore(Score before) {
+        throw new BowlingException();
+    }
+
+    @Override
+    public Pins getPins() {
         throw new BowlingException();
     }
 }

@@ -1,39 +1,45 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pin.Pin;
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
 public class FirstBowl implements State {
 
-    private static final String PINS_STATE = "%3d   ";
+    public static final String PINS_STATE = "%3d   ";
 
-    private final Pins firstPins;
+    private final Pins pins;
 
-    public FirstBowl(final Pins firstPins) {
-        this.firstPins = firstPins;
+    public FirstBowl(final Pin firstPin) {
+        this.pins = new Pins(firstPin, null);
     }
 
     private void validatePinCount(int pinCount) {
-        if (firstPins.getTotalDownPin(new Pins(pinCount)) > 10) {
-            throw new BowlingException(Pins.PINS_COUNT_RANGE);
+        if (pinCount > 10) {
+            throw new BowlingException(Pin.PINS_COUNT_RANGE);
         }
     }
 
     @Override
     public State bowl(int pinsCount) {
         validatePinCount(pinsCount);
-        Pins second = Pins.from().bowl(pinsCount);
+        Pin second = Pin.from().bowl(pinsCount);
+        Pins throwResult = this.pins.addSecondPin(second);
 
-        if (firstPins.isFinish(second)) {
-            return new Spare(firstPins, second);
+        if (throwResult.isFinish()) {
+            return new Spare(throwResult);
         }
 
-        if (firstPins.isGutter() && second.isGutter()) {
+        if (throwResult.isMiss()) {
             return new Gutter();
         }
 
-        return new Miss(firstPins, second);
+        if (throwResult.isGutter()) {
+            return new Gutter();
+        }
+
+        return new Miss(throwResult);
     }
 
     @Override
@@ -41,21 +47,26 @@ public class FirstBowl implements State {
         return false;
     }
 
-    @Override
-    public String getCurrentPinsState() {
-        if (firstPins.isGutter()) {
-            return "  -  ";
-        }
-        return String.format(PINS_STATE, firstPins.getDownPin());
-    }
+//    @Override
+//    public String getCurrentPinsState() {
+//        if (firstPin.isGutter()) {
+//            return "  -  ";
+//        }
+//        return String.format(PINS_STATE, firstPin.getDownPin());
+//    }
 
     @Override
     public Score getCurrentScore() {
-        return new Score(firstPins.getDownPin(), 0);
+        return new Score(pins.getFirstDownPin(), 0);
     }
 
     @Override
     public Score getCalculateScore(Score before) {
-        return before.addScore(new Score(firstPins.getDownPin()));
+        return before.addScore(new Score(pins.getFirstDownPin()));
+    }
+
+    @Override
+    public Pins getPins() {
+        return pins;
     }
 }

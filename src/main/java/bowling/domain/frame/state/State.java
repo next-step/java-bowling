@@ -1,5 +1,6 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 
 public interface State {
@@ -10,9 +11,11 @@ public interface State {
 
     boolean isFinish();
 
-    String getCurrentPinsState();
+//    String getCurrentPinsState();
 
     Score getCurrentScore();
 
     Score getCalculateScore(Score before);
+
+    Pins getPins();
 }

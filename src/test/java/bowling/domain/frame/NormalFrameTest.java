@@ -174,7 +174,7 @@ class NormalFrameTest {
 
         //then
         Score score = frame.getCurrentScore();
-        assertTrue(next.getCalculateScore(score).equals(compare));
+        assertTrue(score.equals(compare));
     }
 
     @DisplayName("현제 프레임이 spare 상태이면 다음 1개 투구의 점수를 합산해 준다")
@@ -192,6 +192,6 @@ class NormalFrameTest {
 
         //then
         Score score = frame.getCurrentScore();
-        assertTrue(next.getCalculateScore(score).equals(compare));
+        assertTrue(score.equals(compare));
     }
 }

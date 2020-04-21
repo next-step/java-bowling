@@ -1,6 +1,6 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pin.Pin;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +15,7 @@ class MissTest {
     @Test
     public void bowl_fail() throws Exception {
         //given
-        Miss miss = new Miss(new Pins(1), new Pins(2));
+        Miss miss = new Miss(new Pin(1), new Pin(2));
 
         //then
         assertThatThrownBy(
@@ -27,7 +27,7 @@ class MissTest {
     @Test
     public void isFinish_success() throws Exception {
         //given
-        Miss miss = new Miss(new Pins(1), new Pins(2));
+        Miss miss = new Miss(new Pin(1), new Pin(2));
 
         //then
         assertTrue(miss.isFinish());
@@ -37,7 +37,7 @@ class MissTest {
     @Test
     public void getCalculateScore_success_once() throws Exception {
         //given
-        Miss miss = new Miss(new Pins(1), new Pins(2));
+        Miss miss = new Miss(new Pin(1), new Pin(2));
         Score score = new Score(10, 1);
         Score compare = new Score(11);
 
@@ -52,7 +52,7 @@ class MissTest {
     @Test
     public void getCalculateScore_success_twice() throws Exception {
         //given
-        Miss miss = new Miss(new Pins(1), new Pins(2));
+        Miss miss = new Miss(new Pin(1), new Pin(2));
         Score score = new Score(10, 2);
         Score compare = new Score(13);
 
