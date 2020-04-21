@@ -1,4 +1,9 @@
-package bowling.domain.score;
+package bowling.domain.scores;
+
+import bowling.domain.score.ScoreGenerator;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreType;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +12,11 @@ import java.util.List;
  * 각 프레임에서 기록한 점수들를 저장한다.
  */
 public class Scores {
+    private static final int ONE = 1;
     private static final int SECOND_PLAY = 1;
     private static final int THIRD_PLAY = 2;
+    private static final int DEFAULT_PLAY_COUNT = 2;
+    private static final int BONUS_PLAY_COUNT = 3;
 
     private final List<Score> scores;
 
@@ -16,12 +24,19 @@ public class Scores {
         scores = new ArrayList<>();
     }
 
-    public void add(Score score) {
-        scores.add(score);
+    public void add(int point) {
+        scores.add(createScore(point));
     }
 
-    public int size() {
-        return scores.size();
+    private Score createScore(int point) {
+        if (CollectionUtils.isEmpty(scores)) {
+            return ScoreGenerator.nextScore(point);
+        }
+        return getLastScore().nextScore(point);
+    }
+
+    private Score getLastScore() {
+        return scores.get(scores.size() - ONE);
     }
 
     public int currentPoint() {
@@ -32,10 +47,6 @@ public class Scores {
 
     public boolean isStrike(int index) {
         return scores.get(index).isEqualScoreType(ScoreType.STRIKE);
-    }
-
-    public boolean isSpare(int index) {
-        return scores.get(index).isEqualScoreType(ScoreType.SPARE);
     }
 
     public List<Score> getScores() {
@@ -54,5 +65,13 @@ public class Scores {
 
     public boolean isThirdPlay() {
         return scores.size() == THIRD_PLAY;
+    }
+
+    public boolean isPlayable() {
+        return scores.size() < DEFAULT_PLAY_COUNT;
+    }
+
+    public boolean isBonusPlayable() {
+        return scores.size() < BONUS_PLAY_COUNT;
     }
 }

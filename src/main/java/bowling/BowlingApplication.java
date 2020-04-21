@@ -1,30 +1,30 @@
 package bowling;
 
-import bowling.domain.Player;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
+import bowling.domain.bowlinggame.BowlingGames;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingApplication {
-    private static final int ONE = 1;
-
     public static void main(String[] args) {
-        Player player = new Player(InputView.inputPlayer());
-        ResultView.printBowlingFrame(player);
+        BowlingGames bowlingGames = BowlingGames.of(InputView.inputPlayers());
+        ResultView.printReadyToBowlingGame(bowlingGames);
 
-        Frames frames = Frames.of();
-        while (!frames.isOver()) {
-            frames.addNextFrame();
-            playBowling(frames, player);
+        while (!bowlingGames.isOverAllGames()) {
+            playBowlingGames(bowlingGames);
         }
     }
 
-    private static void playBowling(Frames frames, Player player) {
-        Frame frame = frames.getLast();
-        while (frame.isPlayable()) {
-            frame.addScore(InputView.relaseBowling(frames.size() - ONE));
-            ResultView.printBowlingScore(frames, player);
+    private static void playBowlingGames(BowlingGames bowlingGames) {
+        for (int i = 0; i < bowlingGames.size(); i++) {
+            bowlingGames.addNextFrame(i);
+            playBowling(bowlingGames, i);
+        }
+    }
+
+    private static void playBowling(BowlingGames bowlingGames, int index) {
+        while (bowlingGames.isPlayableFrame(index)) {
+            bowlingGames.addFrameScore(index, InputView.relaseBowling(bowlingGames.getPlayer(index)));
+            ResultView.printBowlingScores(bowlingGames);
         }
     }
 }

@@ -1,20 +1,31 @@
 package bowling.domain.point;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Point {
     private static final int STRIKE_POINT = 10;
     private static final int ZERO_POINT = 0;
+    private static final List<Point> points = IntStream.rangeClosed(ZERO_POINT, STRIKE_POINT)
+            .mapToObj(Point::new)
+            .collect(Collectors.toList());
 
     private final int point;
 
-    public Point(int point) {
+    private Point(int point) {
         validatePoint(point);
 
         this.point = point;
     }
 
-    private void validatePoint(int point) {
+    public static Point valueOf(int point) {
+        validatePoint(point);
+        return points.get(point);
+    }
+
+    private static void validatePoint(int point) {
         if (point > STRIKE_POINT) {
             throw new IllegalArgumentException("점수는 10점을 넘을수 없습니다.");
         }

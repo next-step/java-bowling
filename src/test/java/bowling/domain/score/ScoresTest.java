@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.domain.scores.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +28,7 @@ class ScoresTest {
     void addScore(List<Integer> values) {
         Scores scores = new Scores();
         for (Integer value : values) {
-            scores.add(Score.defaultFrameScore(scores, value));
+            scores.add(value);
         }
 
         int currentPoint = values.stream()
@@ -54,7 +55,7 @@ class ScoresTest {
 
     private Scores strikeScores() {
         Scores scores = new Scores();
-        scores.add(Score.defaultFrameScore(scores, 10));
+        scores.add(10);
 
         return scores;
     }
@@ -62,15 +63,17 @@ class ScoresTest {
     @DisplayName("스페어 확인")
     @Test
     void isSpare() {
-        Scores socres = spareScores();
+        Scores spareScores = spareScores();
+        List<Score> scores = spareScores.getScores();
+        Score score = scores.get(1);
 
-        assertThat(socres.isSpare(1)).isTrue();
+        assertThat(score.isEqualScoreType(ScoreType.SPARE)).isTrue();
     }
 
     private Scores spareScores() {
         Scores scores = new Scores();
-        scores.add(Score.defaultFrameScore(scores, 1));
-        scores.add(Score.defaultFrameScore(scores, 9));
+        scores.add(1);
+        scores.add(9);
 
         return scores;
     }

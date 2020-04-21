@@ -1,6 +1,8 @@
 package bowling.view;
 
 import bowling.domain.Player;
+import bowling.domain.bowlinggame.BowlingGame;
+import bowling.domain.bowlinggame.BowlingGames;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.score.Score;
@@ -13,14 +15,32 @@ import static bowling.view.FrameFormat.*;
 public class ResultView {
     private static final int ONE = 1;
 
-    public static void printBowlingFrame(Player player) {
+    public static void printReadyToBowlingGame(BowlingGames bowlingGames) {
+        printBowlingFrame();
+        for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
+            printPlayerFrame(bowlingGame.getPlayer());
+        }
+    }
+
+    private static void printBowlingFrame() {
         System.out.println(BOWLING_FRAME.getForamt());
+    }
+
+    public static void printPlayerFrame(Player player) {
         System.out.println(String.format(DEFAULT_SCORE_FRAME.getForamt(), player.getName()));
         System.out.println(EMPTY_FRAME.getForamt());
     }
 
-    public static void printBowlingScore(Frames frames, Player player) {
-        System.out.println(BOWLING_FRAME.getForamt());
+    public static void printBowlingScores(BowlingGames bowlingGames) {
+        printBowlingFrame();
+        for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
+            printBowlingScore(bowlingGame);
+        }
+    }
+
+    private static void printBowlingScore(BowlingGame bowlingGame) {
+        Player player = bowlingGame.getPlayer();
+        Frames frames = bowlingGame.getFrames();
         StringBuilder result = new StringBuilder(String.format(NAME_FORMAT.getForamt(), player.getName()));
         StringBuilder pointResult = new StringBuilder(BLANK_FRAME.getForamt());
 
@@ -35,7 +55,7 @@ public class ResultView {
 
     private static String formatScores(Frame frame) {
         List<String> scores = frame.getScores().stream()
-                .map(Score::pointToScore)
+                .map(Score::getScore)
                 .collect(Collectors.toList());
 
         if (scores.size() > ONE) {

@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -170,5 +172,54 @@ class DefaultFrameTest {
                 arguments(Arrays.asList(1, 9, 2), 12),
                 arguments(Arrays.asList(5, 5, 10), 20)
         );
+    }
+
+    @DisplayName("스트라이크 추가")
+    @Test
+    void createStrike() {
+        defaultFrame.addScore(10);
+
+        List<Score> scores = defaultFrame.getScores();
+
+        assertThat(scores.get(0).isEqualScoreType(ScoreType.STRIKE)).isTrue();
+    }
+
+    @DisplayName("스페어 추가")
+    @ParameterizedTest
+    @MethodSource("sparePoints")
+    void createSpare(List<Integer> points) {
+        defaultFrame.addScore(points.get(0));
+        defaultFrame.addScore(points.get(1));
+
+        List<Score> scores = defaultFrame.getScores();
+
+        assertThat(scores.get(1).isEqualScoreType(ScoreType.SPARE)).isTrue();
+    }
+
+    static Stream<Arguments> sparePoints() {
+        return Stream.of(
+                arguments(Arrays.asList(5, 5))
+        );
+    }
+
+    @DisplayName("거터 추가")
+    @Test
+    void createGutter() {
+        defaultFrame.addScore(0);
+
+        List<Score> scores = defaultFrame.getScores();
+
+        assertThat(scores.get(0).isEqualScoreType(ScoreType.GUTTER)).isTrue();
+    }
+
+    @DisplayName("미스 추가")
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    void createMiss(int point) {
+        defaultFrame.addScore(point);
+
+        List<Score> scores = defaultFrame.getScores();
+
+        assertThat(scores.get(0).isEqualScoreType(ScoreType.MISS)).isTrue();
     }
 }

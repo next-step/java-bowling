@@ -1,6 +1,5 @@
 package bowling.domain.bonusscore;
 
-import bowling.domain.point.Point;
 import bowling.domain.point.Points;
 
 /**
@@ -32,7 +31,7 @@ public class BonusScore {
     }
 
     public void add(int point) {
-        bonusPoints.add(new Point(point));
+        bonusPoints.add(point);
     }
 
     public boolean isAddable() {

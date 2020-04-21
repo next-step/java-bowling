@@ -1,17 +1,27 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Score;
+import bowling.domain.scores.Scores;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public interface Frame {
-    void addScore(int score);
+public abstract class Frame {
+    protected final Scores scores;
 
-    boolean isPlayable();
+    public Frame(Scores scores) {
+        this.scores = scores;
+    }
 
-    boolean isCalculatableFrame(int frameIndex);
+    public List<Score> getScores() {
+        return new ArrayList<>(scores.getScores());
+    }
 
-    List<Score> getScores();
+    public abstract void addScore(int point);
 
-    int getTotalPoint(int frameIndex);
+    public abstract boolean isPlayable();
+
+    public abstract boolean isCalculatableFrame(int frameIndex);
+
+    public abstract int getTotalPoint(int frameIndex);
 }
