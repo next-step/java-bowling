@@ -3,15 +3,12 @@ package bowling.domain;
 import java.util.List;
 
 public class Game {
-    private static final int FIRST_INDEX = 0;
-    private static final int ONE = 1;
-
     private PlayerFrames playerFrames;
-    private int currentPlayerIndex;
+    private GameRule gameRule;
 
     public Game(List<String> playerNames) {
         playerFrames = new PlayerFrames(playerNames);
-        currentPlayerIndex = FIRST_INDEX;
+        gameRule = new GameRule(playerNames.size());
     }
 
     public boolean isFinished() {
@@ -19,23 +16,21 @@ public class Game {
     }
 
     public boolean addPin(int count) {
-        boolean result = playerFrames.addPinCount(currentPlayerIndex, count);
-        if (playerFrames.isDone(currentPlayerIndex)) {
-            currentPlayerIndex = nextIndex();
+        int turn = gameRule.getTurn();
+        boolean result = playerFrames.addPinCount(turn, count);
+
+        if (playerFrames.isDone(turn)) {
+            gameRule.changeTurn();
         }
 
         return result;
     }
 
     public String getCurrentPlayerName() {
-        return playerFrames.getPlayerName(currentPlayerIndex);
+        return playerFrames.getPlayerName(gameRule.getTurn());
     }
 
     public PlayerFrames getPlayerFrames() {
         return new PlayerFrames(playerFrames);
-    }
-
-    private int nextIndex() {
-        return (currentPlayerIndex + ONE) % playerFrames.size();
     }
 }
