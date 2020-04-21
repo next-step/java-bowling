@@ -4,11 +4,11 @@ import bowling.domain.BowlingGame;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.frame.state.Strike;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -115,13 +115,22 @@ public class ResultView {
             return;
         }
 
-        if (frame instanceof Strike) {
-            System.out.print(STRIKE_STATE);
+        StringBuffer buffer = new StringBuffer();
+        List<Pins> pins = frame.getPins();
+        String firstResult = printScore(pins.get(0));
+
+        buffer.append(firstResult);
+
+        if (pins.get(1) != null) {
+            buffer.setLength(0);
+            buffer.append(firstResult.trim());
+            buffer.append("|").append(printScore(pins.get(1)).trim());
+            System.out.print(String.format("%s%5s ", VERTICAL, buffer.toString()));
             return;
         }
 
-//        System.out.print(String.format("%s%s", VERTICAL,
-//                frame.getState().getCurrentPinsState()));
+        System.out.print(String.format("%s%3s", VERTICAL,
+                buffer.toString()));
     }
 
     private static void printEmptyFrame(int count) {

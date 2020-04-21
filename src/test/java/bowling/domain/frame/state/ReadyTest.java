@@ -50,17 +50,6 @@ class ReadyTest {
         assertFalse(ready.isFinish());
     }
 
-//    @DisplayName("Ready에서는 점수를 출력할 수 없다")
-//    @Test
-//    public void getCurrentPinsState_fail() throws Exception {
-//        Ready ready = new Ready();
-//
-//        //then
-//        assertThatThrownBy(
-//                () -> ready.getCurrentPinsState()
-//        ).isInstanceOf(BowlingException.class);
-//    }
-
     @DisplayName("Ready 상태에서는 점수를 가져올 수 없다")
     @Test
     public void getScore_fail() throws Exception {

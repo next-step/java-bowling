@@ -96,7 +96,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public List<Pins> getPins() {
-        List merge = new ArrayList<>();
+        List<Pins> merge = new ArrayList<>();
         merge.add(states.getFirstPins());
         merge.add(states.getLastPins());
 

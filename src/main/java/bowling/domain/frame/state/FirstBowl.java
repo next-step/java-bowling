@@ -7,8 +7,6 @@ import bowling.exception.BowlingException;
 
 public class FirstBowl implements State {
 
-    public static final String PINS_STATE = "%3d   ";
-
     private final Pins pins;
 
     public FirstBowl(final Pin firstPin) {
@@ -27,12 +25,8 @@ public class FirstBowl implements State {
         Pin second = Pin.from().bowl(pinsCount);
         Pins throwResult = this.pins.addSecondPin(second);
 
-        if (throwResult.isFinish()) {
+        if (throwResult.isSpare()) {
             return new Spare(throwResult);
-        }
-
-        if (throwResult.isMiss()) {
-            return new Gutter();
         }
 
         if (throwResult.isGutter()) {
@@ -46,14 +40,6 @@ public class FirstBowl implements State {
     public boolean isFinish() {
         return false;
     }
-
-//    @Override
-//    public String getCurrentPinsState() {
-//        if (firstPin.isGutter()) {
-//            return "  -  ";
-//        }
-//        return String.format(PINS_STATE, firstPin.getDownPin());
-//    }
 
     @Override
     public Score getCurrentScore() {

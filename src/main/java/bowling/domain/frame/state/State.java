@@ -11,8 +11,6 @@ public interface State {
 
     boolean isFinish();
 
-//    String getCurrentPinsState();
-
     Score getCurrentScore();
 
     Score getCalculateScore(Score before);

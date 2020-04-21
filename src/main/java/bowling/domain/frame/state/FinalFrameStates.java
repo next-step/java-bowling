@@ -86,7 +86,10 @@ public class FinalFrameStates implements State {
     }
 
     public Pins getLastPins() {
-        return states.getFirst().getPins();
+        if (isHaveBonus()) {
+            return states.getLast().getPins();
+        }
+        return null;
     }
 
     @Override
@@ -134,22 +137,6 @@ public class FinalFrameStates implements State {
 
         return true;
     }
-
-//    @Override
-//    public String getCurrentPinsState() {
-//        StringBuffer buffer = new StringBuffer();
-//
-//        String firstResult = states.getFirst().getCurrentPinsState();
-//
-//        if (isHaveBonus()) {
-//            buffer.append(firstResult.trim());
-//            buffer.append("|").append(states.getLast().getCurrentPinsState().trim());
-//            return String.format("%5s ", buffer.toString());
-//        }
-//
-//        buffer.append(firstResult);
-//        return String.format("%3s ", buffer.toString());
-//    }
 
     @Override
     public Score getCurrentScore() {

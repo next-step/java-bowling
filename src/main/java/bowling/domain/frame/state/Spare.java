@@ -7,8 +7,6 @@ import bowling.exception.BowlingException;
 
 public class Spare implements State {
 
-    public static final String PINS_STATE = "%3d|/ ";
-
     private final Pins pins;
 
     public Spare(Pin firstPin, Pin secondPin) {
@@ -35,11 +33,6 @@ public class Spare implements State {
     public boolean isFinish() {
         return true;
     }
-
-//    @Override
-//    public String getCurrentPinsState() {
-//        return String.format(PINS_STATE, firstPin.getDownPin());
-//    }
 
     @Override
     public Score getCurrentScore() {

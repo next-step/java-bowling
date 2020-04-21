@@ -7,10 +7,6 @@ import bowling.exception.BowlingException;
 
 public class Miss implements State {
 
-    public static final String PINS_STATE = "%3d|%d ";
-
-    //    private final Pin firstPin;
-//    private final Pin secondPin;
     private final Pins pins;
 
     public Miss(final Pin firstPin, final Pin secondPin) {
@@ -30,19 +26,6 @@ public class Miss implements State {
     public boolean isFinish() {
         return true;
     }
-
-//    @Override
-//    public String getCurrentPinsState() {
-//        if (firstPin.isGutter()) {
-//            return String.format(" -|%d  ", secondPin.getDownPin());
-//        }
-//
-//        if (secondPin.isGutter()) {
-//            return String.format("  %d|- ", firstPin.getDownPin());
-//        }
-//
-//        return String.format(PINS_STATE, firstPin.getDownPin(), secondPin.getDownPin());
-//    }
 
     @Override
     public Score getCurrentScore() {
