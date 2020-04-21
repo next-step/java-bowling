@@ -4,7 +4,6 @@ import bowling.domain.state.Pin;
 import bowling.ui.BowlingController;
 import bowling.ui.Request;
 import bowling.ui.Response;
-import bowling.view.InputView;
 
 import java.util.Objects;
 
@@ -20,17 +19,20 @@ public class Game {
         this.response = bowlingController.bowl(request);
     }
 
-    public void bowl() {
-        Pin pin = new Pin(InputView.inputBowl(request.getName()));
+    public void bowl(Pin pin) {
         request = request.bowlFallenPins(pin);
         this.response = bowlingController.bowl(request);
     }
 
-    public Response getResponse() {
+    public String getName() {
+        return response.getName();
+    }
+
+    Response getResponse() {
         return response;
     }
 
-    public boolean isEnd() {
+    boolean isEnd() {
         return response.isEnd();
     }
 

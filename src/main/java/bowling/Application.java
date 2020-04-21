@@ -2,6 +2,7 @@ package bowling;
 
 
 import bowling.application.Games;
+import bowling.domain.state.Pin;
 import bowling.ui.Request;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -18,7 +19,7 @@ public class Application {
         ResultView.view(games.getResponses());
 
         while (!games.isEnd()) {
-            games.bowl();
+            games.bowl(new Pin(InputView.inputBowl(games.currentBowlPlayerName())));
             ResultView.view(games.getResponses());
         }
     }

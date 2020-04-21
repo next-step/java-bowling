@@ -1,5 +1,6 @@
 package bowling.application;
 
+import bowling.domain.state.Pin;
 import bowling.ui.Request;
 import bowling.ui.Response;
 
@@ -11,6 +12,7 @@ public class Games {
 
     private static final int GAME_END = 1;
     private static final int GAME_FINAL_ROUND = 11;
+    private static final int FIRST_REQUEST_INDEX = 0;
 
     private List<Game> games;
     private List<Response> responses;
@@ -27,29 +29,38 @@ public class Games {
         }
     }
 
-    public void bowl() {
+    public void bowl(Pin pin) {
         if (currentFrameNumber <= 9) {
-            normalRound();
+            normalRound(pin);
             return;
         }
-        finalRound();
+        finalRound(pin);
     }
 
-    private void normalRound() {
+    public String currentBowlPlayerName() {
         for (Game game : games) {
             if (game.isSameByFrameNumber(currentFrameNumber)) {
-                game.bowl();
+                return game.getName();
+            }
+        }
+        return games.get(FIRST_REQUEST_INDEX).getName();
+    }
+
+    private void normalRound(Pin pin) {
+        for (Game game : games) {
+            if (game.isSameByFrameNumber(currentFrameNumber)) {
+                game.bowl(pin);
                 return;
             }
         }
-        games.get(0).bowl();
+        games.get(FIRST_REQUEST_INDEX).bowl(pin);
         increaseNumber();
     }
 
-    private void finalRound() {
+    private void finalRound(Pin pin) {
         for (Game game : games) {
             if (!game.isEnd()) {
-                game.bowl();
+                game.bowl(pin);
                 return;
             }
         }
