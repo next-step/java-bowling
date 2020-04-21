@@ -12,6 +12,7 @@ import bowling.domain.pitch.Pitch;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class GameAssembler {
     private static final int ZERO = 0;
@@ -22,14 +23,11 @@ public class GameAssembler {
 
     private static List<PlayerFrameStatus> getPlayerFrameStatus(
             PlayerFrames playerFrames) {
-        List<PlayerFrameStatus> playerFrameStatuses = new ArrayList<>();
-        for(PlayerFrame playerFrame: playerFrames) {
-            List<FrameStatus> frameStatuses =
-                    getFrameStatuses(playerFrame.getFrames());
-            playerFrameStatuses.add( new PlayerFrameStatus(frameStatuses,
-                    playerFrame.getPlayerName()));
-        }
-        return playerFrameStatuses;
+        return playerFrames.stream()
+                .map(playerFrame -> new PlayerFrameStatus(
+                        getFrameStatuses(playerFrame.getFrames()),
+                        playerFrame.getPlayerName()))
+                .collect(Collectors.toList());
     }
 
     private static List<FrameStatus> getFrameStatuses(Frames frames) {

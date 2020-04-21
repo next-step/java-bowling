@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PlayerFrames implements Iterable<PlayerFrame> {
     private List<PlayerFrame> playerFrames;
@@ -36,6 +37,10 @@ public class PlayerFrames implements Iterable<PlayerFrame> {
 
     public int size() {
         return playerFrames.size();
+    }
+
+    public Stream<PlayerFrame> stream() {
+        return playerFrames.stream();
     }
 
     @Override public Iterator<PlayerFrame> iterator() {
