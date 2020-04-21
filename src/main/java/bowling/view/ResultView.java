@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.ui.Response;
 import bowling.domain.frame.Result;
+import bowling.ui.Response;
 
 import java.util.List;
 
