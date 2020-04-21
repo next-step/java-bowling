@@ -18,7 +18,7 @@ public class FinalScoreTest {
 
     @DisplayName("두번의 투구 점수를 합산한다.")
     @Test
-    void scoreForTwo() {
+    void sumScoreForTwo() {
         int pinCount = 1;
         int result = 2;
 
@@ -30,7 +30,7 @@ public class FinalScoreTest {
 
     @DisplayName("스페어일 경우 세번의 투구 점수를 합산한다.")
     @Test
-    void scoreForSpare() {
+    void sumScoreForSpare() {
         int pinCount = 1;
         int sparePinCount = 9;
         int result = 11;
@@ -45,7 +45,7 @@ public class FinalScoreTest {
 
     @DisplayName("스트라이크일 경우 세번의 투구 점수를 합산한다.")
     @Test
-    void scoreForStrike() {
+    void sumScoreForStrike() {
         int strikePinCount = 10;
         int pinCount = 1;
         int result = 12;

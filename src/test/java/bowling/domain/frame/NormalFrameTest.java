@@ -45,7 +45,7 @@ public class NormalFrameTest {
 
     @DisplayName("2회 시도하면 한 프레임은 끝이 난다.")
     @Test
-    void done() {
+    void finish() {
         normalFrame.addPinCount(8);
         assertThat(normalFrame.isDone()).isFalse();
         normalFrame.addPinCount(1);
@@ -54,13 +54,13 @@ public class NormalFrameTest {
 
     @DisplayName("스트라이크 치면 프레임은 끝난다.")
     @Test
-    void strikeDone() {
+    void finishAfterStrike() {
         assertThat(strikeFrame.isDone()).isTrue();
     }
 
     @DisplayName("스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. ")
     @Test
-    void strike() {
+    void sumScoreWithTwoPitch() {
         Frame nextFrame = strikeFrame.createNext();
 
         nextFrame.addPinCount(8);
@@ -75,7 +75,7 @@ public class NormalFrameTest {
 
     @DisplayName("더블일 경우 그 다음 프레임의 첫 점수까지 합산한다")
     @Test
-    void strikeTwice() {
+    void sumScoreWithTowPitchEvenDouble() {
         Frame nextFrame = strikeFrame.createNext();
         Frame afterNextFrame = nextFrame.createNext();
 
@@ -93,7 +93,7 @@ public class NormalFrameTest {
 
     @DisplayName("스페어는 다음 1번의 투구까지 점수를 합산해야 한다. ")
     @Test
-    void spare() {
+    void sumScoreWithOnePitch() {
         Frame nextFrame = spareFrame.createNext();
         assertThat(spareFrame.getScore().isPresent()).isFalse();
         nextFrame.addPinCount(8);

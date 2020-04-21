@@ -18,14 +18,14 @@ public class PinTest {
 
     @DisplayName("10은 최대값이다.")
     @Test
-    void max() {
+    void isMax() {
         assertThat(Pin.valueOf(10).isMax()).isTrue();
         assertThat(Pin.valueOf(9).isMax()).isFalse();
     }
 
     @DisplayName("0은 최소값이다.")
     @Test
-    void min() {
+    void isMin() {
         assertThat(Pin.valueOf(0).isMin()).isTrue();
         assertThat(Pin.valueOf(1).isMin()).isFalse();
     }
@@ -33,7 +33,7 @@ public class PinTest {
     @DisplayName("0~10 사이의 숫자가 아니면 에러")
     @ParameterizedTest
     @ValueSource(ints = {-1, 11})
-    void outOfRange(int count) {
+    void raiseOutOfRange(int count) {
         assertThatExceptionOfType(OutOfRangeArgumentException.class)
                 .isThrownBy(() -> Pin.valueOf(count));
     }
