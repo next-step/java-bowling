@@ -1,4 +1,4 @@
-package bowling.application;
+package bowling.ui;
 
 import bowling.domain.state.Pin;
 

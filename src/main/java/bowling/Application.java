@@ -1,29 +1,34 @@
 package bowling;
 
 
-import bowling.application.BowlingService;
-import bowling.application.Request;
-import bowling.application.Response;
+import bowling.application.Games;
 import bowling.domain.state.Pin;
-import bowling.ui.BowlingController;
+import bowling.ui.Request;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Application {
 
     public static void main(String[] args) {
-        Request request = new Request(InputView.inputName());
+        int count = InputView.inputPeopleCount();
 
-        BowlingController bowlingController = new BowlingController(new BowlingService());
+        Games games = new Games(createRequests(count));
+        ResultView.view(games.getResponses());
 
-        Response response = bowlingController.bowl(request);
-        ResultView.view(response);
-
-        while (!response.isEnd()) {
-            Pin pin = new Pin(InputView.inputBowl(response.getFrameNumberLast()));
-            request = request.bowlFallenPins(pin);
-            response = bowlingController.bowl(request);
-            ResultView.view(response);
+        while (!games.isEnd()) {
+            games.bowl(new Pin(InputView.inputBowl(games.currentBowlPlayerName())));
+            ResultView.view(games.getResponses());
         }
+    }
+
+    private static List<Request> createRequests(int count) {
+        List<Request> requests = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            requests.add(new Request(InputView.inputName(i + 1)));
+        }
+        return requests;
     }
 }

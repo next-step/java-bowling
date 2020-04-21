@@ -1,4 +1,4 @@
-package bowling.application;
+package bowling.ui;
 
 import bowling.domain.frame.Bowling;
 import bowling.domain.frame.FinalFrame;
@@ -25,6 +25,10 @@ public class Response {
 
     public int getFrameNumberLast() {
         return bowling.getFrameNumber();
+    }
+
+    public boolean isSameByFrameNumber(int frameNumber) {
+        return bowling.isSameByFrameNumber(frameNumber);
     }
 
     public boolean isEnd() {

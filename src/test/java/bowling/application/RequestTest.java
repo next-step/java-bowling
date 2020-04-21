@@ -1,6 +1,7 @@
 package bowling.application;
 
 import bowling.domain.state.Pin;
+import bowling.ui.Request;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

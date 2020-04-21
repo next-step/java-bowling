@@ -1,12 +1,13 @@
 package bowling.view;
 
-import bowling.application.Response;
 import bowling.domain.frame.Result;
+import bowling.ui.Response;
+
+import java.util.List;
 
 public class ResultView {
 
     public static void view(Response response) {
-        BowlingFrameView.getRoundBoard();
         BowlingFrameView.getName(response.getName());
 
         for (Result result : response.getResults()) {
@@ -27,6 +28,12 @@ public class ResultView {
 
         BowlingFrameView.getCollectFrame(response.getResults().size());
         System.out.println();
-        System.out.println();
+    }
+
+    public static void view(List<Response> responses) {
+        BowlingFrameView.getRoundBoard();
+        for (Response response : responses) {
+            view(response);
+        }
     }
 }
