@@ -40,6 +40,15 @@ public class PlayerTest {
         assertThat(player.getFrames().getFrames().get(0).getStatus().getClass()).isEqualTo(Miss.class);
     }
 
+    @Test
+    void equalsName() {
+        Player player = new Player("PES");
+
+        boolean equalsName = player.equalsName("PES");
+
+        assertThat(equalsName).isTrue();
+    }
+
     @ParameterizedTest
     @CsvSource(value = {"10:true", "9:false"}, delimiter = ':')
     void isEnd(int value, boolean expected) {
