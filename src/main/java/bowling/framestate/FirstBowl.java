@@ -1,16 +1,15 @@
-package bowling.framestate.common;
+package bowling.framestate;
 
 import bowling.FrameScore;
 import bowling.LeftScoreCount;
 import bowling.Pin;
-import bowling.framestate.State;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 import static bowling.Pin.MAX_PIN_COUNT;
+import static bowling.Pin.MIN_PIN_COUNT;
 
 public class FirstBowl implements State {
 
@@ -32,6 +31,10 @@ public class FirstBowl implements State {
             return Spare.newInstance(this.pinCount, pinCount);
         }
 
+        if (sumCount.isEqualTo(MIN_PIN_COUNT)) {
+            return Gutter.newInstance();
+        }
+
         return Miss.newInstance(this.pinCount, pinCount);
     }
 
@@ -41,8 +44,8 @@ public class FirstBowl implements State {
     }
 
     @Override
-    public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Arrays.asList(pinCount.toScore()));
+    public FrameScore sumBeforeScore(final FrameScore beforeScore) {
+        return beforeScore.makeFrameScoreWithSumScore(Collections.singletonList(pinCount.toScore()));
     }
 
     @Override

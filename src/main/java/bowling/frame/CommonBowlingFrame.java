@@ -3,10 +3,10 @@ package bowling.frame;
 import bowling.FrameScore;
 import bowling.Pin;
 import bowling.Score;
+import bowling.dto.FrameState;
+import bowling.framestate.Ready;
 import bowling.framestate.State;
-import bowling.framestate.common.Ready;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class CommonBowlingFrame implements BowlingFrame {
@@ -39,24 +39,24 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     @Override
-    public Score addingUpScore(final FrameScore beforeScore) {
-        return getScore(state.addingUpFrameScore(beforeScore));
+    public Score sumBeforeScore(final FrameScore beforeScore) {
+        return getScore(state.sumBeforeScore(beforeScore));
     }
 
-    private Score getScore(final FrameScore frameScore) {
-        if (frameScore.canCalculateSelfScore()) {
-            return frameScore.getScore();
+    private Score getScore(final FrameScore beforeScore) {
+        if (beforeScore.canCalculateSelfScore()) {
+            return beforeScore.getScore();
         }
 
         if (Objects.isNull(nextFrame)) {
-            return getNowScore(frameScore);
+            return getNowScore(beforeScore);
         }
 
-        return nextFrame.addingUpScore(frameScore);
+        return nextFrame.sumBeforeScore(beforeScore);
     }
 
-    private Score getNowScore(final FrameScore frameScore) {
-        FrameScore nowFrameScore = frameScore.addingUp(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins()));
+    private Score getNowScore(final FrameScore beforeScore) {
+        FrameScore nowFrameScore = FrameScore.newInstanceWithNoLeftCount(beforeScore);
         return nowFrameScore.getScore();
     }
 
@@ -81,8 +81,8 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     @Override
-    public boolean canCalculateScore(final FrameScore frameScore) {
-        return canGetCalculateScore(state.addingUpFrameScore(frameScore));
+    public boolean canCalculateWithBeforeScore(final FrameScore frameScore) {
+        return canGetCalculateScore(state.sumBeforeScore(frameScore));
     }
 
     private boolean canGetCalculateScore(FrameScore frameScore) {
@@ -94,13 +94,12 @@ public class CommonBowlingFrame implements BowlingFrame {
             return false;
         }
 
-        return nextFrame.canCalculateScore(frameScore);
+        return nextFrame.canCalculateWithBeforeScore(frameScore);
     }
 
-
     @Override
-    public State getState() {
-        return state;
+    public FrameState makeFrameState() {
+        return FrameState.newInstance(state, null);
     }
 
 }

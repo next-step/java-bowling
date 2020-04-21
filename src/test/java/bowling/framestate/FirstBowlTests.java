@@ -1,4 +1,4 @@
-package bowling.framestate.common;
+package bowling.framestate;
 
 import bowling.FrameScore;
 import bowling.LeftScoreCount;
@@ -29,6 +29,10 @@ public class FirstBowlTests {
 
         assertThat(firstBowl.bowl(Pin.of(4))).isEqualTo(Spare.newInstance(Pin.of(6), Pin.of(4)));
         assertThat(firstBowl.bowl(Pin.of(3))).isEqualTo(Miss.newInstance(Pin.of(6), Pin.of(3)));
+
+        FirstBowl firstBowlGutter = FirstBowl.newInstance(Pin.of(0));
+        //Q3. 인자가 없는 객체의 비교?
+        assertThat(firstBowlGutter.bowl(Pin.of(0))).isInstanceOf(Gutter.class);
     }
 
     @DisplayName("FrameScore 생성 테스트")
@@ -39,8 +43,9 @@ public class FirstBowlTests {
 
     @DisplayName("FrameScore 합산 테스트")
     @Test
-    public void addingUpFrameScoreTest() {
-        assertThat(firstBowl.addingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(1)));
+    public void sumBeforeScoreTest() {
+        assertThat(firstBowl.sumBeforeScore(FrameScore.createStrike())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(1)));
+        assertThat(firstBowl.sumBeforeScore(FrameScore.createSpare())).isEqualTo(FrameScore.newInstance(Score.of(16), LeftScoreCount.of(0)));
     }
 
     @DisplayName("종료 테스트")

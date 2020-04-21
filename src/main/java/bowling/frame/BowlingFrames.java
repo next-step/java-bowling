@@ -24,30 +24,30 @@ public class BowlingFrames {
     public void bowl(final Pin pinCount) {
         BowlingFrame recentFrame = getRecentBowlingFrame();
         recentFrame.bowl(pinCount);
-
-        prepareNextFrame(recentFrame);
     }
 
-    private void prepareNextFrame(final BowlingFrame recentFrame) {
-        if (recentFrame.isOver() && frames.size() < MAX_BOWLING_FRAME_SIZE) {
-            frames.add(recentFrame.appendNextFrame(frames.size()));
+    public void prepareNextFrame() {
+        if (!isRecentFrameOver()) {
+            throw new IllegalStateException("The frame is not over");
         }
+
+        if (frames.size() >= MAX_BOWLING_FRAME_SIZE) {
+            throw new IllegalStateException("This is the last Frame.");
+        }
+
+        frames.add(getRecentBowlingFrame().appendNextFrame(frames.size()));
     }
 
     public boolean isAllFrameOver() {
-        if (getRecentBowlingFrame().isOver()) {
+        if (isRecentFrameOver()) {
             return frames.size() == MAX_BOWLING_FRAME_SIZE;
         }
 
         return false;
     }
 
-    private BowlingFrame getRecentBowlingFrame() {
-        return frames.get(frames.size() - 1);
-    }
-
-    public int size() {
-        return frames.size();
+    public boolean isRecentFrameOver() {
+        return getRecentBowlingFrame().isOver();
     }
 
     public List<Score> getTotalScores() {
@@ -61,6 +61,14 @@ public class BowlingFrames {
         }
 
         return totalScores;
+    }
+
+    private BowlingFrame getRecentBowlingFrame() {
+        return frames.get(frames.size() - 1);
+    }
+
+    public int size() {
+        return frames.size();
     }
 
     public BowlingFrame getFrame(final int index) {

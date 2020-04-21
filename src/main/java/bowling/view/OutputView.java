@@ -1,7 +1,9 @@
 package bowling.view;
 
 import bowling.dto.BowlingFrameConsoleResult;
+import bowling.dto.BowlingGameBoardResult;
 import bowling.dto.BowlingGameResult;
+import bowling.dto.FrameState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +42,20 @@ public class OutputView {
     }
 
     public static void printBowlingGame(final BowlingGameResult bowlingGameResult) {
-        System.out.println(GAME_FIRST_ROW);
-
-        List<String> scores = getScoreRow(bowlingGameResult, BowlingFrameConsoleResult::getFrameScoreResult);
+        List<String> scores = getScoreRow(bowlingGameResult, bowlingFrameConsoleResult -> extractFrameScoreResult(bowlingFrameConsoleResult.getFrameState()));
         List<String> totalScores = getScoreRow(bowlingGameResult, bowlingFrameConsoleResult -> String.valueOf(bowlingFrameConsoleResult.getTotalScore()));
 
         System.out.println(makeGameRow(GAME_ROW_BLANK + bowlingGameResult.getName(), makeFrameWordsWithBlank(scores)));
         System.out.println(makeGameRow(GAME_ROW_BLANK + GAME_ROW_SCORE_HEAD, makeFrameWordsWithBlank(totalScores)));
+    }
+
+    public static void printBowlingGameBoard(final BowlingGameBoardResult bowlingGameBoardResult) {
+        System.out.println(GAME_FIRST_ROW);
+
+        for (BowlingGameResult bowlingGameResult : bowlingGameBoardResult.getResult()) {
+            printBowlingGame(bowlingGameResult);
+        }
+
         System.out.println();
     }
 
@@ -63,5 +72,10 @@ public class OutputView {
                 .forEach(i -> scoresWithBlank.add(GAME_FRAME_SCORE_EMPTY_FORMAT));
 
         return scoresWithBlank;
+    }
+
+    private static String extractFrameScoreResult(final FrameState frameState) {
+        FrameScoreConsoleResult frameScoreConsoleResult = FrameScoreConsoleResult.of(frameState.getState());
+        return frameScoreConsoleResult.toString(frameState);
     }
 }

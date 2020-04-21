@@ -1,8 +1,8 @@
 package bowling.frame;
 
-import bowling.BowlingGame;
 import bowling.Pin;
 import bowling.Score;
+import bowling.game.BowlingGame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,22 +19,40 @@ public class BowlingFrameTests {
     static {
         BowlingGame bowlingGame = BowlingGame.newInstance("AAA");
         bowlingGame.bowl(Pin.of(5));
-        bowlingGame.bowl(Pin.of(4));
+        bowlingGame.bowl(Pin.of(4));//1
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(7));
-        bowlingGame.bowl(Pin.of(3));
+        bowlingGame.bowl(Pin.of(3));//2
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(8));
-        bowlingGame.bowl(Pin.of(1));
-        bowlingGame.bowl(Pin.of(10));
-        bowlingGame.bowl(Pin.of(10));
-        bowlingGame.bowl(Pin.of(10));
+        bowlingGame.bowl(Pin.of(1));//3
+        bowlingGame.prepareNextFrame();
+
+        bowlingGame.bowl(Pin.of(10));//4
+        bowlingGame.prepareNextFrame();
+
+        bowlingGame.bowl(Pin.of(10));//5
+        bowlingGame.prepareNextFrame();
+
+        bowlingGame.bowl(Pin.of(10));//6
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(8));
-        bowlingGame.bowl(Pin.of(1));
-        bowlingGame.bowl(Pin.of(10));
+        bowlingGame.bowl(Pin.of(1));//7
+        bowlingGame.prepareNextFrame();
+
+        bowlingGame.bowl(Pin.of(10));//8
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(9));
-        bowlingGame.bowl(Pin.of(1));
+        bowlingGame.bowl(Pin.of(1));//9
+        bowlingGame.prepareNextFrame();
+
         bowlingGame.bowl(Pin.of(0));
         bowlingGame.bowl(Pin.of(10));
-        bowlingGame.bowl(Pin.of(4));
+        bowlingGame.bowl(Pin.of(4));//10
         BowlingFrames frames = bowlingGame.getBowlingFrames();
         bowlingFrames = frames.getFrames();
     }

@@ -3,8 +3,6 @@ package bowling;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -41,11 +39,11 @@ public class FrameScoreTests {
     @Test
     public void addingUpTest() {
         FrameScore strikeFrame = FrameScore.createStrike();
-        assertThat(strikeFrame.addingUp(Arrays.asList(Score.of(3), Score.of(7))))
+        assertThat(strikeFrame.makeFrameScoreWithSumScore(Score.of(3), Score.of(7)))
                 .isEqualTo(FrameScore.newInstance(Score.of(20), LeftScoreCount.of(0)));
 
         FrameScore spareFrame = FrameScore.createSpare();
-        assertThat(spareFrame.addingUp(Arrays.asList(Score.of(3), Score.of(7))))
+        assertThat(spareFrame.makeFrameScoreWithSumScore(Score.of(3), Score.of(7)))
                 .isEqualTo(FrameScore.newInstance(Score.of(13), LeftScoreCount.of(0)));
     }
 

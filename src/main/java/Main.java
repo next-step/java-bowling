@@ -1,23 +1,31 @@
-import bowling.BowlingGame;
 import bowling.Pin;
 import bowling.Player;
-import bowling.dto.BowlingGameResult;
+import bowling.dto.BowlingGameBoardResult;
+import bowling.game.BowlingGame;
+import bowling.game.BowlingGameBoard;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        Player player = Player.of(InputView.inputPlayerName());
+        int playerCount = InputView.inputPlayerCount();
 
-        BowlingGame bowlingGame = BowlingGame.newInstance(player);
+        List<Player> players = InputView.inputPlayerNames(playerCount);
 
-        OutputView.printBowlingGame(BowlingGameResult.newInstance(bowlingGame));
+        BowlingGameBoard bowlingGameBoard = BowlingGameBoard.newInstance(players);
 
-        while (!bowlingGame.isOver()) {
-            int pinCount = InputView.inputDropPinCount(bowlingGame.getFrameCount());
+        OutputView.printBowlingGameBoard(BowlingGameBoardResult.newInstance(bowlingGameBoard));
+
+        while (!bowlingGameBoard.isAllGameOver()) {
+            BowlingGame bowlingGame = bowlingGameBoard.getNextTurn();
+            Player player = bowlingGame.getPlayer();
+
+            int pinCount = InputView.inputDropPinCount(player);
             bowlingGame.bowl(Pin.of(pinCount));
 
-            OutputView.printBowlingGame(BowlingGameResult.newInstance(bowlingGame));
+            OutputView.printBowlingGameBoard(BowlingGameBoardResult.newInstance(bowlingGameBoard));
         }
     }
 }

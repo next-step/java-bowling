@@ -11,7 +11,7 @@ public interface State {
 
     FrameScore createFrameScore();
 
-    FrameScore addingUpFrameScore(FrameScore beforeScore);
+    FrameScore sumBeforeScore(FrameScore beforeScore);
 
     boolean isOver();
 

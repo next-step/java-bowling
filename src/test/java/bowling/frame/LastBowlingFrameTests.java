@@ -42,7 +42,8 @@ public class LastBowlingFrameTests {
     public void getTotalScoreTest() {
         LastBowlingFrame lastFrame = LastBowlingFrame.newInstance();
         lastFrame.bowl(Pin.of(10));
-        assertThat(lastFrame.getTotalScore(Score.ofZeroPins())).isEqualTo(Score.of(20));
+        lastFrame.bowl(Pin.of(10));
+        assertThat(lastFrame.getTotalScore(Score.ofZeroPins())).isEqualTo(Score.of(30));
     }
 
     @DisplayName("마지막 프레임 추가 테스트")
@@ -101,7 +102,7 @@ public class LastBowlingFrameTests {
     public void lastFrameCanCalculateTest2(List<Pin> scores, FrameScore beforeFrameScore, boolean expectedResult) {
         LastBowlingFrame bowlingFrame = LastBowlingFrame.newInstance();
         scores.forEach(bowlingFrame::bowl);
-        assertThat(bowlingFrame.canCalculateScore(beforeFrameScore)).isEqualTo(expectedResult);
+        assertThat(bowlingFrame.canCalculateWithBeforeScore(beforeFrameScore)).isEqualTo(expectedResult);
     }
 
     private static Stream<Arguments> lastFrameCanCalculateTestCases2() {

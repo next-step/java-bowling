@@ -1,8 +1,7 @@
-package bowling.framestate.common;
+package bowling.framestate;
 
 import bowling.FrameScore;
 import bowling.Pin;
-import bowling.framestate.State;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,8 +32,8 @@ public class Ready implements State {
     }
 
     @Override
-    public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Collections.EMPTY_LIST);
+    public FrameScore sumBeforeScore(final FrameScore beforeScore) {
+        return beforeScore.makeFrameScoreWithSumScore(Collections.emptyList());
     }
 
     @Override

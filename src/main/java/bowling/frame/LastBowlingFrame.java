@@ -3,28 +3,41 @@ package bowling.frame;
 import bowling.FrameScore;
 import bowling.Pin;
 import bowling.Score;
+import bowling.dto.FrameState;
+import bowling.framestate.Ready;
+import bowling.framestate.Spare;
 import bowling.framestate.State;
-import bowling.framestate.last.ReadyLastFrame;
+import bowling.framestate.Strike;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Objects;
 
 public class LastBowlingFrame implements BowlingFrame {
 
-    public static final int LAST_FRAME_MAX_BOWL_COUNT = 3;
-
     private State state;
+    private Pin bonusPin;
 
     private LastBowlingFrame(final State state) {
         this.state = state;
+        this.bonusPin = null;
     }
 
     public static LastBowlingFrame newInstance() {
-        return new LastBowlingFrame(ReadyLastFrame.newInstance());
+        return new LastBowlingFrame(Ready.newInstance());
     }
 
     @Override
     public void bowl(final Pin pinCount) {
+        if (canBowlBonusPin()) {
+            bonusPin = pinCount;
+            return;
+        }
+
         state = state.bowl(pinCount);
+    }
+
+    private boolean canBowlBonusPin() {
+        return (state instanceof Spare || state instanceof Strike) && Objects.isNull(bonusPin);
     }
 
     @Override
@@ -35,22 +48,34 @@ public class LastBowlingFrame implements BowlingFrame {
     @Override
     public Score getFrameScore() {
         FrameScore frameScore = state.createFrameScore();
+
         if (frameScore.canCalculateSelfScore()) {
             return frameScore.getScore();
         }
 
-        return addingUpScore(frameScore);
+        return makeAddingBonusPinFrameScore().getScore();
+    }
+
+    private FrameScore makeAddingBonusPinFrameScore() {
+        FrameScore frameScore = state.createFrameScore();
+
+        if (!Objects.isNull(bonusPin)) {
+            FrameScore updateFrameScore = frameScore.makeFrameScoreWithSumScore(Collections.singletonList(bonusPin.toScore()));
+            return FrameScore.newInstanceWithBonusPin(updateFrameScore, bonusPin);
+        }
+
+        return FrameScore.newInstanceWithNoLeftCount(frameScore);
     }
 
     @Override
-    public Score addingUpScore(final FrameScore beforeScore) {
-        FrameScore addingUpFrameScore = state.addingUpFrameScore(beforeScore);
+    public Score sumBeforeScore(final FrameScore beforeScore) {
+        FrameScore addingUpFrameScore = state.sumBeforeScore(beforeScore);
 
         if (addingUpFrameScore.canCalculateSelfScore()) {
             return addingUpFrameScore.getScore();
         }
 
-        addingUpFrameScore = beforeScore.addingUp(Arrays.asList(Score.ofZeroPins(), Score.ofZeroPins(), Score.ofZeroPins()));
+        addingUpFrameScore = FrameScore.newInstanceWithNoLeftCount(beforeScore);
         return addingUpFrameScore.getScore();
     }
 
@@ -61,24 +86,37 @@ public class LastBowlingFrame implements BowlingFrame {
 
     @Override
     public boolean isOver() {
+        if (canBowlBonusPin()) {
+            return false;
+        }
+
         return state.isOver();
     }
 
     @Override
     public boolean canCalculateScore() {
         FrameScore frameScore = state.createFrameScore();
-        return frameScore.canCalculateSelfScore();
 
+        if (!Objects.isNull(bonusPin)) {
+            frameScore = FrameScore.newInstanceWithBonusPin(frameScore, bonusPin);
+        }
+
+        return frameScore.canCalculateSelfScore();
     }
 
     @Override
-    public boolean canCalculateScore(FrameScore beforeScore) {
-        FrameScore addingUpFrameScore = state.addingUpFrameScore(beforeScore);
+    public boolean canCalculateWithBeforeScore(FrameScore beforeScore) {
+        FrameScore addingUpFrameScore = state.sumBeforeScore(beforeScore);
+
+        if (!Objects.isNull(bonusPin)) {
+            addingUpFrameScore = FrameScore.newInstanceWithBonusPin(addingUpFrameScore, bonusPin);
+        }
+
         return addingUpFrameScore.canCalculateSelfScore();
     }
 
     @Override
-    public State getState() {
-        return state;
+    public FrameState makeFrameState() {
+        return FrameState.newInstance(state, bonusPin);
     }
 }

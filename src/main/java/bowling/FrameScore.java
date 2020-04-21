@@ -1,5 +1,6 @@
 package bowling;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -24,12 +25,25 @@ public class FrameScore {
         return new FrameScore(score, leftScoreCount);
     }
 
+    public static FrameScore newInstanceWithBonusPin(final FrameScore beforeScore, Pin bonusPin) {
+        Score score = beforeScore.score;
+        return new FrameScore(score.add(bonusPin.toScore()), LeftScoreCount.of(0));
+    }
+
+    public static FrameScore newInstanceWithNoLeftCount(final FrameScore beforeScore) {
+        return new FrameScore(beforeScore.score, LeftScoreCount.of(0));
+    }
+
     public static FrameScore createReady() {
         return new FrameScore(Score.ofZeroPins(), LeftScoreCount.of(2));
     }
 
     public static FrameScore createMiss(final Score score) {
         return new FrameScore(score, LeftScoreCount.of(0));
+    }
+
+    public static FrameScore createGutter() {
+        return new FrameScore(Score.ofZeroPins(), LeftScoreCount.of(0));
     }
 
     public static FrameScore createSpare() {
@@ -51,25 +65,21 @@ public class FrameScore {
         return leftScoreCount.isEqualTo(0);
     }
 
-    public FrameScore addingUp(final List<Score> scores) {
-        if (canCalculateSelfScore()) {
-            return this;
-        }
-
-        return getAddingUpFrameScore(scores);
+    public FrameScore makeFrameScoreWithSumScore(final Score... scores) {
+        return makeFrameScoreWithSumScore(Arrays.asList(scores));
     }
 
-    private FrameScore getAddingUpFrameScore(final List<Score> scores) {
-        LeftScoreCount updateLeftScoreCount = LeftScoreCount.of(leftScoreCount);
+    public FrameScore makeFrameScoreWithSumScore(final List<Score> scores) {
+        LeftScoreCount updatedLeftScoreCount = LeftScoreCount.of(leftScoreCount);
         Iterator<Score> scoreIterator = scores.iterator();
         Score addingUpScore = Score.ofZeroPins();
 
-        while (!updateLeftScoreCount.isEqualTo(0) && scoreIterator.hasNext()) {
+        while (!updatedLeftScoreCount.isEqualTo(0) && scoreIterator.hasNext()) {
             addingUpScore = addingUpScore.add(scoreIterator.next());
-            updateLeftScoreCount = updateLeftScoreCount.minus();
+            updatedLeftScoreCount = updatedLeftScoreCount.minus();
         }
 
-        return FrameScore.newInstance(score.add(addingUpScore), updateLeftScoreCount);
+        return FrameScore.newInstance(score.add(addingUpScore), updatedLeftScoreCount);
     }
 
     @Override

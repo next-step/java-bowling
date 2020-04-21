@@ -96,7 +96,7 @@ public class CommonBowlingFrameTests {
     public void commonFrameCanCalculateTest2(List<Pin> scores, FrameScore beforeFrameScore, boolean expectedResult) {
         CommonBowlingFrame bowlingFrame = CommonBowlingFrame.newInstance();
         scores.forEach(bowlingFrame::bowl);
-        assertThat(bowlingFrame.canCalculateScore(beforeFrameScore)).isEqualTo(expectedResult);
+        assertThat(bowlingFrame.canCalculateWithBeforeScore(beforeFrameScore)).isEqualTo(expectedResult);
     }
 
     private static Stream<Arguments> commonFrameCanCalculateTestCases2() {

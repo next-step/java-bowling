@@ -1,9 +1,9 @@
 package bowling.dto;
 
-import bowling.BowlingGame;
 import bowling.Player;
 import bowling.Score;
 import bowling.frame.BowlingFrames;
+import bowling.game.BowlingGame;
 
 import java.util.List;
 import java.util.stream.Collectors;

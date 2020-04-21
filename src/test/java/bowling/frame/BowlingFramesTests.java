@@ -39,13 +39,19 @@ public class BowlingFramesTests {
     @Test
     public void overTest() {
         BowlingFrames bowlingFrames = BowlingFrames.newInstance();
-        IntStream.range(0, 10)
-                .forEach(i -> bowlingFrames.bowl(Pin.ofMax()));
+        IntStream.range(0, 9)
+                .forEach(i -> doStrike(bowlingFrames));
+        bowlingFrames.bowl(Pin.ofMax());
 
         assertFalse(bowlingFrames.isAllFrameOver());
 
         bowlingFrames.bowl(Pin.ofMax());
         assertTrue(bowlingFrames.isAllFrameOver());
+    }
+
+    private void doStrike(BowlingFrames bowlingFrames) {
+        bowlingFrames.bowl(Pin.ofMax());
+        bowlingFrames.prepareNextFrame();
     }
 
     @DisplayName("프레임 갯수 테스트")
@@ -54,8 +60,8 @@ public class BowlingFramesTests {
         BowlingFrames bowlingFrames = BowlingFrames.newInstance();
         assertThat(bowlingFrames.size()).isEqualTo(1);
 
-        IntStream.range(0, 10)
-                .forEach(i -> bowlingFrames.bowl(Pin.ofMax()));
+        IntStream.range(0, 9)
+                .forEach(i -> doStrike(bowlingFrames));
         assertThat(bowlingFrames.size()).isEqualTo(10);
     }
 
@@ -64,8 +70,19 @@ public class BowlingFramesTests {
     @MethodSource("totalScoreTestCases")
     public void totalScoreTest(final List<Pin> pins, List<Score> expectedScore) {
         BowlingFrames bowlingFrames = BowlingFrames.newInstance();
-        pins.forEach(bowlingFrames::bowl);
+
+        for (Pin pin : pins) {
+            bowlingFrames.bowl(pin);
+            checkBowlingFrame(bowlingFrames);
+        }
+
         assertThat(bowlingFrames.getTotalScores()).isEqualTo(expectedScore);
+    }
+
+    private void checkBowlingFrame(final BowlingFrames bowlingFrames) {
+        if (bowlingFrames.isRecentFrameOver()) {
+            bowlingFrames.prepareNextFrame();
+        }
     }
 
     private static Stream<Arguments> totalScoreTestCases() {

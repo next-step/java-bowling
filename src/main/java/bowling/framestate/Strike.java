@@ -1,9 +1,8 @@
-package bowling.framestate.common;
+package bowling.framestate;
 
 import bowling.FrameScore;
 import bowling.Pin;
 import bowling.Score;
-import bowling.framestate.State;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,8 +27,8 @@ public class Strike implements State {
     }
 
     @Override
-    public FrameScore addingUpFrameScore(final FrameScore beforeScore) {
-        return beforeScore.addingUp(Collections.singletonList(Score.ofAllPins()));
+    public FrameScore sumBeforeScore(final FrameScore beforeScore) {
+        return beforeScore.makeFrameScoreWithSumScore(Collections.singletonList(Score.ofAllPins()));
     }
 
     @Override

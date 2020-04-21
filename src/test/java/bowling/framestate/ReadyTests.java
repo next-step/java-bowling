@@ -1,4 +1,4 @@
-package bowling.framestate.common;
+package bowling.framestate;
 
 import bowling.FrameScore;
 import bowling.Pin;
@@ -35,8 +35,9 @@ public class ReadyTests {
 
     @DisplayName("FrameScore 합산 테스트")
     @Test
-    public void addingUpFrameScoreTest() {
-        assertThat(ready.addingUpFrameScore(FrameScore.createStrike())).isEqualTo(FrameScore.createStrike());
+    public void sumBeforeScoreTest() {
+        assertThat(ready.sumBeforeScore(FrameScore.createStrike())).isEqualTo(FrameScore.createStrike());
+        assertThat(ready.sumBeforeScore(FrameScore.createSpare())).isEqualTo(FrameScore.createSpare());
     }
 
     @DisplayName("종료 테스트")
