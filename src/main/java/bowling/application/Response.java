@@ -27,6 +27,10 @@ public class Response {
         return bowling.getFrameNumber();
     }
 
+    public boolean isSameByFrameNumber(int frameNumber) {
+        return bowling.isSameByFrameNumber(frameNumber);
+    }
+
     public boolean isEnd() {
         if (bowling.getFrameNumber() < 10) {
             return false;

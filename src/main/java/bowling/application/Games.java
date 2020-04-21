@@ -42,7 +42,7 @@ public class Games {
 
     private void normalRound() {
         for (Game game : games) {
-            if (isSameByFrameNumber(game.getFrameNumber())) {
+            if (game.isSameByFrameNumber(currentFrameNumber)) {
                 game.bowl();
                 return;
             }
@@ -69,10 +69,6 @@ public class Games {
         if (size == GAME_END) {
             throw new IllegalArgumentException("끝");
         }
-    }
-
-    private boolean isSameByFrameNumber(int frameNumber) {
-        return currentFrameNumber == frameNumber;
     }
 
     private void increaseNumber() {

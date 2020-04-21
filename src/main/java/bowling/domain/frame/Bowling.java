@@ -43,4 +43,8 @@ public class Bowling {
         return frames.getLast().getFrameNumber();
     }
 
+    public boolean isSameByFrameNumber(int frameNumber) {
+        return frames.getLast().getFrameNumber() == frameNumber;
+    }
+
 }

@@ -32,6 +32,10 @@ public class Game {
         return this.response.getFrameNumberLast();
     }
 
+    boolean isSameByFrameNumber(int frameNumber) {
+        return response.isSameByFrameNumber(frameNumber);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
