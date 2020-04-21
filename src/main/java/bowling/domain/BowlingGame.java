@@ -33,6 +33,6 @@ public class BowlingGame {
     }
 
     public boolean isEnd() {
-        return frames.isMax() && !frames.getLastFrame().isThrowable();
+        return frames.isEndLastFrame();
     }
 }

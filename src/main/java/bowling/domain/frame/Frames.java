@@ -60,4 +60,8 @@ public class Frames {
     public boolean isMax() {
         return size() == MAX_FRAME_COUNT;
     }
+
+    public boolean isEndLastFrame() {
+        return isMax() && !getLastFrame().isThrowable();
+    }
 }
