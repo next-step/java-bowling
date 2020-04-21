@@ -3,8 +3,6 @@ package bowling.domain.score;
 import bowling.domain.frame.Frame;
 import bowling.domain.pitch.Pitch;
 
-import java.util.Optional;
-
 public class FirstScoreCalculator implements ScoreCalculator {
     private int score;
 

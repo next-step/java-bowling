@@ -19,5 +19,4 @@ public class EmptyScoreTest {
         assertThat(EmptyScore.valueOf().add(completeScore))
                 .isEqualTo(EmptyScore.valueOf());
     }
-
 }

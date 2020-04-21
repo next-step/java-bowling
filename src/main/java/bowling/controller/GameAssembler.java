@@ -5,14 +5,12 @@ import bowling.controller.dto.GameStatus;
 import bowling.controller.dto.PlayerFrameStatus;
 import bowling.domain.Frames;
 import bowling.domain.Game;
-import bowling.domain.PlayerFrame;
 import bowling.domain.PlayerFrames;
 import bowling.domain.pitch.Pitch;
 import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class GameAssembler {
@@ -56,7 +54,7 @@ public class GameAssembler {
     private static FrameStatus getFrameStatus(Frames frames, int index,
                                               int beforeScore) {
         Score score = frames.getFrameScore(index);
-        if(score.isCompleted()) {
+        if (score.isCompleted()) {
             List<Pitch> pitches = frames.getFramePinCounts(index);
             return new FrameStatus(pitches, score.getScore() + beforeScore);
         }

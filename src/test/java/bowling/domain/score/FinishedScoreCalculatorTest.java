@@ -10,7 +10,8 @@ public class FinishedScoreCalculatorTest {
     @Test
     void getScore() {
         int score = 9;
-        FinishedScoreCalculator finishedScore = new FinishedScoreCalculator(score);
+        FinishedScoreCalculator finishedScore =
+                new FinishedScoreCalculator(score);
         assertThat(finishedScore.calculateScore().getScore()).isEqualTo(score);
     }
 }

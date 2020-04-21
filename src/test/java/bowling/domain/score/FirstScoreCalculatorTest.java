@@ -20,7 +20,8 @@ public class FirstScoreCalculatorTest {
     void bowlSpare() {
         Pitch spare = (new Pitch(1)).next(9);
         ScoreCalculator scoreCalculator = firstScore.add(spare);
-        assertThat(scoreCalculator).isExactlyInstanceOf(SpareScoreCalculator.class);
+        assertThat(scoreCalculator)
+                .isExactlyInstanceOf(SpareScoreCalculator.class);
         assertThat(scoreCalculator.calculateScore().getScore()).isEqualTo(10);
     }
 
@@ -29,7 +30,8 @@ public class FirstScoreCalculatorTest {
     void bowlNormal() {
         Pitch normal = new Pitch(8);
         ScoreCalculator scoreCalculator = firstScore.add(normal);
-        assertThat(scoreCalculator).isExactlyInstanceOf(FinishedScoreCalculator.class);
+        assertThat(scoreCalculator)
+                .isExactlyInstanceOf(FinishedScoreCalculator.class);
         assertThat(scoreCalculator.calculateScore().getScore()).isEqualTo(9);
     }
 }
