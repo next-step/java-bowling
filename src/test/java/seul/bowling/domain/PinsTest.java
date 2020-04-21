@@ -50,4 +50,11 @@ public class PinsTest {
 
         assertThat(pins.endDefaultPlayCount(false)).isEqualTo(true);
     }
+
+    @Test
+    void of() {
+        Pins pins = Pins.of(10);
+
+        assertThat(pins.getPins()).hasSize(1);
+    }
 }

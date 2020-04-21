@@ -1,5 +1,6 @@
 package seul.bowling.domain.status;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seul.bowling.domain.Pins;
 import seul.bowling.domain.Score;
@@ -7,22 +8,25 @@ import seul.bowling.domain.Score;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MissTest {
-    @Test
-    void judgmentStatus() {
-        Status status = new Miss(new Score(), new Pins());
+    private Status status;
 
-        Status newStatus = status.judgmentStatus(true);
-
-        assertThat(status == newStatus).isTrue();
+    @BeforeEach
+    void setUp() {
+        Score score = Score.of(3);
+        Pins pins = Pins.of(1);
+        pins.addPin(2, false);
+        status = new Miss(pins, score);
     }
 
     @Test
-    void addScore() {
-        Status status = new Miss(new Score(), new Pins());
+    void addCumulativeScore() {
+        status.addCumulativeScore(10);
 
-        status.addScore(10);
+        assertThat(status.getToTalScore()).isEqualTo(13);
+    }
 
-        assertThat(status.getScore().getScore()).isEqualTo(10);
-        assertThat(status.getScore().getBonusScoreCount()).isEqualTo(0);
+    @Test
+    void getToTalScore() {
+        assertThat(status.getToTalScore()).isEqualTo(3);
     }
 }

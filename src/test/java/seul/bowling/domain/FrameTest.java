@@ -15,7 +15,7 @@ public class FrameTest {
 
         assertThat(frame.getStatus().getPins().allClear()).isTrue();
         assertThat(frame.getStatus().getClass()).isEqualTo(Spare.class);
-        assertThat(frame.getStatus().getScore().getScore()).isEqualTo(10);
+        assertThat(frame.getStatus().getToTalScore()).isEqualTo(10);
     }
 
     @Test
@@ -54,16 +54,5 @@ public class FrameTest {
         frame.addPins(9);
 
         assertThat(frame.endFrame()).isTrue();
-    }
-
-    @Test
-    void addBonusScore() {
-        Frame frame = Frame.first();
-        frame.addPins(10);
-
-        frame.addBonusScore(10);
-
-        Score score = frame.getStatus().getScore();
-        assertThat(score.getScore()).isEqualTo(20);
     }
 }
