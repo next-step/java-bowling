@@ -50,18 +50,10 @@ public class Frames {
         return frame.getPointSumOnlyThisFrame();
     }
 
-    public int getTotalPointUntil(Frame currentFrame) {
-        return IntStream.rangeClosed(FIRST_FRAME_ID, currentFrame.getFrameId())
+    public int getTotalPointUntil(int currentFrameId) {
+        return IntStream.rangeClosed(FIRST_FRAME_ID, currentFrameId)
                 .map(it -> Frames.of(frames).getFrameScore(it))
                 .sum();
-    }
-
-    public Frame getPreviousFrame(Frame currentFrame) {
-        if (!currentFrame.isFirstFrame()) {
-            return getPrevFrameByCurrentId(currentFrame.getFrameId());
-        }
-
-        return currentFrame;
     }
 
     private Frame getNextFrameByCurrentId(int currentFrameId) {
@@ -87,9 +79,5 @@ public class Frames {
 
         int firstOfNextOfNext = getNextFrameByCurrentId(nextFrame.getFrameId()).getFirstPoint();
         return (MAX_POINT * DOUBLE) + firstOfNextOfNext;
-    }
-
-    private Frame getPrevFrameByCurrentId(int currentId) {
-        return frames.get(currentId - (OFFSET * DOUBLE));
     }
 }

@@ -1,21 +1,25 @@
 package bowling.controller;
 
 import bowling.domain.PlayerName;
-import bowling.domain.frame.Frame;
-import bowling.domain.result.GameResult;
 import bowling.domain.result.GameResults;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 
 public class BowlingGame {
     public static void start() {
-        GameResult gameResult1
-                = GameResult.of(PlayerName.of(InputView.getFirstPlayerName()), Frame.createTenFrames());
-        GameResult gameResult2
-                = GameResult.of(PlayerName.of(InputView.getSecondPlayerName()), Frame.createTenFrames());
+        int playerCount = InputView.getPlayerCount();
+        ResultView.print(GameResults.createWithPlayerNames(getPlayerNames(playerCount)));
+    }
 
-        ResultView.print(GameResults.of(Arrays.asList(gameResult1, gameResult2)));
+    private static List<PlayerName> getPlayerNames(int playerCount) {
+        return IntStream.rangeClosed(1, playerCount)
+                .mapToObj(count -> InputView.getPlayerName(count))
+                .map(PlayerName::new)
+                .collect(toList());
     }
 }

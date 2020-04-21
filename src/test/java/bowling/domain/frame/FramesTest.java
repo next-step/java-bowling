@@ -142,7 +142,7 @@ public class FramesTest {
         Frames frames = Frames.of(Arrays.asList(first, second, third, fourth));
 
         //when
-        int total = frames.getTotalPointUntil(fourth);
+        int total = frames.getTotalPointUntil(fourth.getFrameId());
 
         //then
         assertThat(total).isEqualTo(35);

@@ -1,17 +1,15 @@
 package bowling.domain.result;
 
 import bowling.domain.PlayerName;
+import bowling.domain.frame.Frame;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.*;
 
 public class GameResults {
-    private static final int INDEX_FIRST = 0;
-    private static final int INDEX_SECOND = 1;
-
     private final List<GameResult> results;
 
     public GameResults(List<GameResult> results) {
@@ -21,6 +19,12 @@ public class GameResults {
 
     public static GameResults of(List<GameResult> results) {
         return new GameResults(results);
+    }
+
+    public static GameResults createWithPlayerNames(List<PlayerName> playerNames) {
+        return playerNames.stream()
+                .map(playerName -> GameResult.of(playerName, Frame.createTenFrames()))
+                .collect(collectingAndThen(toList(), GameResults::new));
     }
 
     private void validateDuplicationPlayerName(List<GameResult> results) {
@@ -39,11 +43,11 @@ public class GameResults {
         return results;
     }
 
-    public GameResult getFirstResult() {
-        return getResults().get(INDEX_FIRST);
+    public GameResult getResultByIndex(int index) {
+        return getResults().get(index);
     }
 
-    public GameResult getSecondResult() {
-        return getResults().get(INDEX_SECOND);
+    public int getSize() {
+        return results.size();
     }
 }
