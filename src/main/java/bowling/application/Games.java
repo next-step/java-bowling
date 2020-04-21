@@ -49,7 +49,7 @@ public class Games {
 
     private void finalRound() {
         for (Game game : games) {
-            if (!game.getResponse().isEnd()) {
+            if (!game.isEnd()) {
                 game.bowl();
                 return;
             }
@@ -59,7 +59,7 @@ public class Games {
 
     private void end() {
         int size = games.stream()
-                .map(game -> game.getResponse().isEnd())
+                .map(Game::isEnd)
                 .collect(Collectors.toSet())
                 .size();
         if (size == GAME_END) {

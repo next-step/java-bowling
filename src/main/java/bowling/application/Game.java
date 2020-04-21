@@ -30,6 +30,10 @@ public class Game {
         return response;
     }
 
+    public boolean isEnd() {
+        return response.isEnd();
+    }
+
     public int getFrameNumber() {
         return this.response.getFrameNumberLast();
     }
