@@ -12,7 +12,7 @@ public class Points {
     private static final int SECOND_POINT_INDEX = 1;
     private static final int THIRD_POINT_INDEX = 2;
 
-    private static final int NONE_TRY_COUNT = 1;
+    private static final int NONE_TRY_COUNT = 0;
     private static final int FIRST_TRY_COUNT = 1;
     private static final int SECOND_TRY_COUNT = 2;
 

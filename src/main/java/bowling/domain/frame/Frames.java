@@ -1,20 +1,16 @@
 package bowling.domain.frame;
 
-import bowling.domain.player.Player;
 import bowling.domain.point.Point;
 
-import java.util.Deque;
 import java.util.LinkedList;
 
 public class Frames {
     private static final int TOTAL_NORMALFRAME_COUNT = 9;
     private static final int MAX_FRAME_COUNT = 10;
 
-    private final Player player;
-    private final Deque<Frame> frames;
+    private final LinkedList<Frame> frames;
 
-    public Frames(Player player) {
-        this.player = player;
+    public Frames() {
         this.frames = new LinkedList<>();
         frames.add(new NormalFrame());
     }
@@ -36,10 +32,6 @@ public class Frames {
             return;
         }
         frames.addLast(new NormalFrame());
-    }
-
-    public String getPlayerName() {
-        return player.getName();
     }
 
     public void calculateScores(Point point) {

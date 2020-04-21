@@ -1,9 +1,10 @@
 package bowling.view;
 
-import bowling.domain.BowlingGame;
+import bowling.domain.game.BowlingGame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.game.BowlingGames;
 import bowling.domain.point.Point;
 import bowling.domain.point.Points;
 
@@ -28,17 +29,24 @@ public class ResultView {
     private static final String MARK_NONE = "";
 
     private static final String FRAME_HEAD = "|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |";
+    private static final String FRAME_FOOTER = "----------------------------------------------------------------------------------------------------";
     private static final String FRAME_LINE = "|";
     private static final String FRAME_EMPTY = "        |";
 
-    public static void viewResult(BowlingGame bowlingGame) {
+    public static void viewResult(BowlingGames bowlingGames) {
         viewFrameHead();
+        bowlingGames.getBowlingGames().stream()
+                .forEach(ResultView::viewGame);
+    }
+
+    private static void viewGame(BowlingGame bowlingGame) {
+        viewPlayerName(bowlingGame.getPlayerName());
         viewFrames(bowlingGame.getFrames());
         viewScores(bowlingGame.getFrames());
+        viewFrameFooter();
     }
 
     private static void viewFrames(Frames frames) {
-        viewPlayerName(frames.getPlayerName());
         String frameViews = frames.getFrames().stream()
                 .map(frame -> viewFrame(frame))
                 .collect(Collectors.joining(FRAME_LINE));
@@ -127,5 +135,9 @@ public class ResultView {
 
     private static void viewFrameHead() {
         System.out.println(FRAME_HEAD);
+    }
+
+    private static void viewFrameFooter() {
+        System.out.println(FRAME_FOOTER);
     }
 }
