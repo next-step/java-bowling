@@ -22,4 +22,8 @@ public class AnswerTest {
             A1.delete(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
+
+    public static Answer ofUser(long id, User user) {
+        return new Answer(id, user, QuestionTest.Q1, "Answers Contents");
+    }
 }
