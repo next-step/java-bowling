@@ -16,7 +16,22 @@ public class Miss extends Finished {
     }
 
     @Override
-    public String display() {
-        return super.display();
+    public boolean isEnableCalculate() {
+        return true;
+    }
+
+    @Override
+    public int getFirstScore() {
+        return firstScore.getScore();
+    }
+
+    @Override
+    public int getSecondeScore() {
+        return secondScore.getScore();
+    }
+
+    @Override
+    public int getScore() {
+        return getFirstScore() + getSecondeScore();
     }
 }

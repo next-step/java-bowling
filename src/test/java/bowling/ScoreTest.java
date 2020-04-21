@@ -23,25 +23,9 @@ public class ScoreTest {
         Scores scores = new Scores();
         scores.add(new Score(5));
         assertThat(scores.numberOfTry()).isEqualTo(1);
-        assertThatThrownBy(() -> scores.checkBeforeAddNormal(6))
+        assertThatThrownBy(() -> scores.checkBeforeAddNormal(new Score(6)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("10을 넘으면 안됩니다.");
-    }
-
-    @Test
-    @DisplayName("프레임끝, 계속던지는지테스트")
-    public void continueCheckTest() {
-        Scores scores = new Scores();
-        scores.add(new Score(9));
-        assertThat(scores.nextFrame()).isFalse();
-    }
-
-    @Test
-    @DisplayName("처음에스트라이크했을경우다음프레임으로넘어가는지테스트")
-    public void continueCheckStrikeTest() {
-        Scores scores = new Scores();
-        scores.add(new Score(10));
-        assertThat(scores.nextFrame()).isTrue();
     }
 
     @Test

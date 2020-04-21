@@ -10,15 +10,15 @@ public class Ready extends Playing {
     }
 
     @Override
-    public String display() {
-        return super.display();
-    }
-
-    @Override
     public State bowl(Score score) {
         if(score.isStrike(score)){
             return new Strike();
         }
         return new NextBowl(score);
+    }
+
+    @Override
+    public int getScore() {
+        return super.getScore();
     }
 }

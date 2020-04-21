@@ -23,7 +23,12 @@ public class NextBowl extends Playing {
     }
 
     @Override
-    public String display() {
-        return super.display();
+    public int getScore() {
+        return super.getScore();
+    }
+
+    @Override
+    public int getFirstScore() {
+        return firstScore.getScore();
     }
 }

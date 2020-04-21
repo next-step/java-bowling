@@ -61,14 +61,6 @@ public class Scores {
         return scores.size();
     }
 
-    public boolean nextFrame() {
-        return isStrike() || isSecondTry();
-    }
-
-    public boolean isStrike() {
-        return recentScore() == FRAME_MAX_SCORE && !isNormalFrameSpare() && !isFinalFrameSpare();
-    }
-
     private boolean isMiss() {
         return sum() < FRAME_MAX_SCORE;
     }
@@ -84,10 +76,10 @@ public class Scores {
     }
 
     public boolean isEndGame() {
-        if (isSecondTry() && isMiss()) {
+        if (isTry(SECOND_TRY_NUMBER) && isMiss()) {
             return true;
         }
-        if (isFinalTry()) {
+        if (isTry(FINAL_TRY_NUMBER)) {
             return true;
         }
         return false;
@@ -95,25 +87,17 @@ public class Scores {
 
     public void checkBeforeAddFinal(Score numberOfPin) {
         //처음에스트라이크가 아닌경우
-        if (isFirstTry() && !isStrike() && sumUntilThisValue(numberOfPin) > FRAME_MAX_SCORE) {
+        if (isTry(FIRST_TRY_NUMBER) && isMiss() && sumUntilThisValue(numberOfPin) > FRAME_MAX_SCORE) {
             throw new IllegalArgumentException(FRAME_MAX_SCORE + "을 넘으면 안됩니다.");
         }
         //첫번째 스트라이크, 두번째
-        if (isSecondTry() && sum() < FINAL_MAX_SCORE && sumUntilThisValue(numberOfPin) > FINAL_MAX_SCORE) {
+        if (isTry(SECOND_TRY_NUMBER) && sum() < FINAL_MAX_SCORE && sumUntilThisValue(numberOfPin) > FINAL_MAX_SCORE) {
             throw new IllegalArgumentException(FINAL_MAX_SCORE + "을 넘으면 안됩니다.");
         }
     }
 
-    private boolean isFirstTry() {
-        return numberOfTry() == FIRST_TRY_NUMBER;
-    }
-
-    private boolean isSecondTry() {
-        return numberOfTry() == SECOND_TRY_NUMBER;
-    }
-
-    private boolean isFinalTry() {
-        return numberOfTry() == FINAL_TRY_NUMBER;
+    private boolean isTry(int number) {
+        return numberOfTry() == number;
     }
 
     public int firstScore() {
@@ -122,17 +106,5 @@ public class Scores {
 
     public int secondScore() {
         return scores.get(1).getScore();
-    }
-
-    public int recentScore() {
-        return scores.get(numberOfTry() - 1).getScore();
-    }
-
-    public boolean isNormalFrameSpare() {
-        return numberOfTry() == SECOND_TRY_NUMBER && sum() == FRAME_MAX_SCORE;
-    }
-
-    public boolean isFinalFrameSpare() {
-        return numberOfTry() == FINAL_TRY_NUMBER && sum() == FINAL_MAX_SCORE && recentScore() != FRAME_MAX_SCORE;
     }
 }

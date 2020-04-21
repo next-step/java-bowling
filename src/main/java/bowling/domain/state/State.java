@@ -7,6 +7,15 @@ public interface State  {
 
     boolean isFinish();
 
-    String display();
+    int getScore();
 
+    boolean isEnableCalculate();
+
+    int getFirstScore();
+
+    int getSecondeScore();
+
+    boolean isStrike();
+
+    boolean isSpare();
 }

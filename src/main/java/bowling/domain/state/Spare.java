@@ -12,7 +12,27 @@ public class Spare extends Finished {
     }
 
     @Override
-    public String display() {
-        return super.display();
+    public int getScore() {
+        return getFirstScore() + getSecondeScore();
+    }
+
+    @Override
+    public boolean isEnableCalculate() {
+        return false;
+    }
+
+    @Override
+    public int getFirstScore() {
+        return firstScore.getScore();
+    }
+
+    @Override
+    public int getSecondeScore() {
+        return secondScore.getScore();
+    }
+
+    @Override
+    public boolean isSpare() {
+        return true;
     }
 }

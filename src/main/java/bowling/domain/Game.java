@@ -24,7 +24,7 @@ public class Game {
 
     public boolean isEndGame() {
         return player.stream()
-                .filter(n->n.isEndGame())
+                .filter(n -> n.isEndGame())
                 .count() > 0;
     }
 }

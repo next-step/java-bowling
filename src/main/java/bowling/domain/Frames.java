@@ -94,26 +94,6 @@ public class Frames {
         return frames.get(index + NEXT_AFTER_FRAME);
     }
 
-    public boolean isSingleStrike(int index) {
-        return index < currentFrame() - 1 && !nextFrame(index).isStrike();
-    }
-
-    public boolean isDoubleStrike(int index) {
-        return (index < currentFrame() - 2 && nextFrame(index).isStrike());
-    }
-
-    public boolean isSpare(int index) {
-        return index < currentFrame() - 1;
-    }
-
-    public boolean isNumberOfTryZero() {
-        return frame.isNumberOfTryZero();
-    }
-
-    public boolean isDoubleStrikeFinalFrame() {
-        return isFinalFrame() && frame.isCountOfStrike();
-    }
-
     public void calculateScore() {
         frameScores = new FrameScores();
         int sumScore = 0;
@@ -137,48 +117,43 @@ public class Frames {
 
     private int calculateCase(int index, int sumScore) {
         Frame nowFrame = nowFrame(index);
-        if (nowFrame.isStrike()) {
-            sumScore = calculateStrike(index, sumScore);
-        }
-        if (nowFrame.isSpare()) {
-            sumScore = calculateSpare(index, sumScore);
-        }
-        if (nowFrame.isMiss()) {
-            sumScore = sumScore + nowFrame.calculateMissCase();
+        if(nowFrame.isEnableCalculate()){ // miss일때
+            sumScore = nowFrame.calculate(sumScore);
             frameScores.add(sumScore);
         }
-        return sumScore;
-    }
 
-    private int calculateSpare(int index, int sumScore) {
-        if (isSpare(index)) {
-            Frame nextFrame = nextFrame(index);
-            sumScore = nextFrame.calculateSpare(sumScore);
-            return addScore(sumScore);
+        if(!nowFrame.isEnableCalculate() && nowFrame.isSpare()) { // spare일때
+            Frame nextFrame = null;
+            if (index < currentFrame() - 1) {
+                nextFrame = nextFrame(index);
+                sumScore = nextFrame.calculateSpare(sumScore);
+                return addScore(sumScore);
+            }
+            if (!frame.isNumberOfTryZero() && index < TOTAL_NORMAL_FRAME) {
+                nextFrame = getFrame();
+                sumScore = nextFrame.calculateSpare(sumScore);
+                return addScore(sumScore);
+            }
         }
-        if (!isNumberOfTryZero() && index < TOTAL_NORMAL_FRAME ) {
-            Frame rollPin = getFrame();
-            sumScore = rollPin.calculateSpare(sumScore);
-            return addScore(sumScore);
-        }
-        return sumScore;
-    }
 
-    private int calculateStrike(int index, int sumScore) {
-        if (isSingleStrike(index)) {
-            Frame nextFrame = nextFrame(index);
-            sumScore = nextFrame.calculateSingleStrike(sumScore);
-            return addScore(sumScore);
-        }
-        if (isDoubleStrikeFinalFrame()) {
-            Frame rollPin = getFrame();
-            sumScore = rollPin.calculateDoubleStrike(sumScore);
-            return addScore(sumScore);
-        }
-        if (isDoubleStrike(index)) {
-            Frame nextAfterFrame = nextAfterFrame(index);
-            sumScore = nextAfterFrame.calculateDoubleStrike(sumScore);
-            return addScore(sumScore);
+        if (!nowFrame.isEnableCalculate() && nowFrame.isStrike()) { // strike일때
+            Frame nextFrame = null;
+            if (index < currentFrame() - 1 && !nextFrame(index).isStrike()) {
+                nextFrame = nextFrame(index);
+                sumScore = nextFrame.calculateSingleStrike(sumScore);
+                return addScore(sumScore);
+            }
+            if (isFinalFrame() && frame.isCountOfStrike()) {
+                nextFrame = getFrame();
+                sumScore = nextFrame.calculateDoubleStrike(sumScore);
+                return addScore(sumScore);
+            }
+            if ((index < currentFrame() - 2 && nextFrame(index).isStrike())) {
+                nextFrame = nextAfterFrame(index);
+                sumScore = nextFrame.calculateDoubleStrike(sumScore);
+                return addScore(sumScore);
+            }
+
         }
         return sumScore;
     }

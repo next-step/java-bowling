@@ -8,8 +8,11 @@ public class Frame {
     private static final int BONUS = 10;
     private static final int DOUBLE_BONUS = 20;
     private Scores scores;
-
     private State state;
+
+    public State getState() {
+        return state;
+    }
 
     public Frame() {
         this.scores = new Scores();
@@ -22,10 +25,6 @@ public class Frame {
 
     public Scores getScores() {
         return scores;
-    }
-
-    public int getScoresSize() {
-        return scores.numberOfTry();
     }
 
     public boolean isNextFrame() {
@@ -52,24 +51,17 @@ public class Frame {
         return scores.toString();
     }
 
-    public boolean isStrike() {
-        return this.getSigns().contains(Sign.STRIKE.getSign());
-    }
 
     public boolean isCountOfStrike() {
         return this.scores.countOfSign(Sign.STRIKE) > 1;
     }
 
+    public boolean isStrike() {
+        return this.getState().isStrike();
+    }
+
     public boolean isSpare() {
-        return this.getSigns().contains(Sign.SPARE.getSign());
-    }
-
-    public boolean isMiss() {
-        return !isStrike() && !isSpare();
-    }
-
-    public int firstScore() {
-        return scores.firstScore();
+        return this.getState().isSpare();
     }
 
     public int sumScore() {
@@ -77,26 +69,30 @@ public class Frame {
     }
 
     public boolean isNumberOfTryZero() {
-        return getScoresSize() == ZERO;
-    }
-
-    public int sumStrikeScore() {
-        return scores.firstScore() + scores.secondScore();
-    }
-
-    public int calculateMissCase() {
-        return sumScore();
+        return  scores.numberOfTry() == ZERO;
     }
 
     public int calculateSingleStrike(int sumScore) {
-        return sumScore + BONUS + sumStrikeScore();
+        return sumScore + BONUS + state.getScore();
     }
 
     public int calculateDoubleStrike(int sumScore) {
-        return sumScore + DOUBLE_BONUS + firstScore();
+        return sumScore + DOUBLE_BONUS + state.getFirstScore();
     }
 
     public int calculateSpare(int sumScore) {
-        return sumScore + BONUS + firstScore();
+        return sumScore + BONUS + state.getFirstScore();
+    }
+
+    public int calculate(int sumScore) {
+        return state.getScore() + sumScore;
+    }
+
+    public boolean isEnableCalculate() {
+        return state.isEnableCalculate();
+    }
+
+    public int getScoresSize() {
+        return scores.numberOfTry();
     }
 }
