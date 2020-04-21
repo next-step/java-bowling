@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,9 +57,8 @@ public class FinalFrameTest {
         finalFrame.addPinCount(3);
         assertThat(finalFrame.isDone()).isTrue();
 
-        Optional<Integer> score = finalFrame.getScore();
-        assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(15);
+        Score score = finalFrame.getScore();
+        assertThat(score.getScore()).isEqualTo(15);
     }
 
     @DisplayName("모든 시도가 스트라이크여도 세번의 기회가 주어진다.")
@@ -70,6 +70,7 @@ public class FinalFrameTest {
         assertThat(finalFrame.isDone()).isFalse();
         finalFrame.addPinCount(10);
         assertThat(finalFrame.isDone()).isTrue();
+        assertThat(finalFrame.getScore().isCompleted()).isTrue();
     }
 
     @DisplayName("스트라이크는 다음 2번의 투구까지 점수를 합산해야 한다. ")
@@ -81,9 +82,9 @@ public class FinalFrameTest {
         finalFrame.addPinCount(8);
         finalFrame.addPinCount(1);
 
-        Optional<Integer> score = normalFrame.getScore();
-        assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(19);
+        Score score = normalFrame.getScore();
+        assertThat(score.isCompleted()).isTrue();
+        assertThat(score.getScore()).isEqualTo(19);
     }
 
     @DisplayName("스페어는 다음 1번의 투구까지 점수를 합산해야 한다. ")
@@ -97,9 +98,9 @@ public class FinalFrameTest {
         finalFrame.addPinCount(8);
         finalFrame.addPinCount(1);
 
-        Optional<Integer> score = normalFrame.getScore();
-        assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(18);
+        Score score = normalFrame.getScore();
+        assertThat(score.isCompleted()).isTrue();
+        assertThat(score.getScore()).isEqualTo(18);
     }
 
     @DisplayName("세번의 기회가 주어지면, 세번의 투구가 끝날때 까지 점수를 계산할 수 없다.")
@@ -108,12 +109,12 @@ public class FinalFrameTest {
         finalFrame.addPinCount(8);
         finalFrame.addPinCount(2);
 
-        assertThat(finalFrame.getScore().isPresent()).isFalse();
+        assertThat(finalFrame.getScore().isCompleted()).isFalse();
         finalFrame.addPinCount(1);
 
-        Optional<Integer> score = finalFrame.getScore();
-        assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(11);
+        Score score = finalFrame.getScore();
+        assertThat(score.isCompleted()).isTrue();
+        assertThat(score.getScore()).isEqualTo(11);
     }
 
     @DisplayName("세번째 기회를 얻지 못했을때는 두번의 투구만 합산한다.")
@@ -122,8 +123,8 @@ public class FinalFrameTest {
         finalFrame.addPinCount(8);
         finalFrame.addPinCount(1);
 
-        Optional<Integer> score = finalFrame.getScore();
-        assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(9);
+        Score score = finalFrame.getScore();
+        assertThat(score.isCompleted()).isTrue();
+        assertThat(score.getScore()).isEqualTo(9);
     }
 }

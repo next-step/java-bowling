@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,9 +31,8 @@ public class NormalFrameTest {
         assertThat(normalFrame.addPinCount(8)).isTrue();
         assertThat(normalFrame.addPinCount(1)).isTrue();
 
-        Optional<Integer> score = normalFrame.getScore();
-        assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(9);
+        Score score = normalFrame.getScore();
+        assertThat(score.getScore()).isEqualTo(9);
     }
 
     @DisplayName("한 프레임에서 두번 이상 투구할 수 없다.")
@@ -65,12 +65,12 @@ public class NormalFrameTest {
 
         nextFrame.addPinCount(8);
 
-        assertThat(strikeFrame.getScore().isPresent()).isFalse();
+        assertThat(strikeFrame.getScore().isCompleted()).isFalse();
         nextFrame.addPinCount(1);
 
-        Optional<Integer> score = strikeFrame.getScore();
-        assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(19);
+        Score score = strikeFrame.getScore();
+        assertThat(score.isCompleted()).isTrue();
+        assertThat(score.getScore()).isEqualTo(19);
     }
 
     @DisplayName("더블일 경우 그 다음 프레임의 첫 점수까지 합산한다")
@@ -79,27 +79,27 @@ public class NormalFrameTest {
         Frame nextFrame = strikeFrame.createNext();
         Frame afterNextFrame = nextFrame.createNext();
 
-        assertThat(strikeFrame.getScore().isPresent()).isFalse();
+        assertThat(strikeFrame.getScore().isCompleted()).isFalse();
 
         nextFrame.addPinCount(10);
-        assertThat(strikeFrame.getScore().isPresent()).isFalse();
+        assertThat(strikeFrame.getScore().isCompleted()).isFalse();
 
         afterNextFrame.addPinCount(1);
 
-        Optional<Integer> score = strikeFrame.getScore();
-        assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(21);
+        Score score = strikeFrame.getScore();
+        assertThat(score.isCompleted()).isTrue();
+        assertThat(score.getScore()).isEqualTo(21);
     }
 
     @DisplayName("스페어는 다음 1번의 투구까지 점수를 합산해야 한다. ")
     @Test
     void sumScoreWithOnePitch() {
         Frame nextFrame = spareFrame.createNext();
-        assertThat(spareFrame.getScore().isPresent()).isFalse();
+        assertThat(spareFrame.getScore().isCompleted()).isFalse();
         nextFrame.addPinCount(8);
 
-        Optional<Integer> score = spareFrame.getScore();
-        assertThat(score.isPresent()).isTrue();
-        assertThat(score.get()).isEqualTo(18);
+        Score score = spareFrame.getScore();
+        assertThat(score.isCompleted()).isTrue();
+        assertThat(score.getScore()).isEqualTo(18);
     }
 }

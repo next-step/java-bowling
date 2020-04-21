@@ -1,28 +1,21 @@
 package bowling.domain.score;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.pitch.Pitch;
-
-import java.util.Optional;
-
 public class EmptyScore implements Score {
+    private static final EmptyScore cache = new EmptyScore();
 
-    public EmptyScore() {
+    @Override public boolean isCompleted() {
+        return false;
     }
 
-    @Override public Optional<Integer> calculateScore(Frame frame) {
-        return Optional.empty();
+    @Override public int getScore() {
+        return 0;
     }
 
-    @Override public Optional<Integer> calculateScore() {
-        return Optional.empty();
+    @Override public Score add(Score score) {
+        return this;
     }
 
-    @Override public Score add(Pitch pitch) {
-        if (pitch.isStrike()) {
-            return new StrikeScore();
-        }
-
-        return new FirstScore(pitch.getPinCount());
+    public static EmptyScore valueOf() {
+        return cache;
     }
 }

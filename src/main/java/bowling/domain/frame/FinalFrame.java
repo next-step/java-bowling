@@ -1,21 +1,21 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.FinalScore;
+import bowling.domain.score.FinalScoreCalculator;
 import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCalculator;
 import bowling.domain.pitch.Pitch;
 
 import java.util.List;
-import java.util.Optional;
 
 public class FinalFrame implements Frame {
     private static final int MAX_PITCH_SIZE = 3;
 
     private FramePitch framePitch;
-    private Score score;
+    private ScoreCalculator scoreCalculator;
 
     public FinalFrame() {
         this.framePitch = new FramePitch();
-        this.score = new FinalScore();
+        this.scoreCalculator = new FinalScoreCalculator();
     }
 
     private boolean hasThirdChance() {
@@ -29,30 +29,23 @@ public class FinalFrame implements Frame {
         }
 
         if (framePitch.add(pinCount)) {
-            score = score.add(framePitch.getLastPitch());
+            scoreCalculator = scoreCalculator.add(framePitch.getLastPitch());
             return true;
         }
         return false;
     }
 
-    @Override public Optional<Integer> getScore() {
-        return score.calculateScore();
+    @Override public Score getScore() {
+        return scoreCalculator.calculateScore();
     }
 
-    @Override public Optional<Integer> getPinCountForOnePitch() {
-        return framePitch.getFirstPitchPinCount();
+    @Override public Score getScoreForOnePitch() {
+        return framePitch.getFirstPitchScore();
     }
 
-    @Override public Optional<Integer> getPinCountForTwoPitches() {
-        Optional<Integer> firstPinCount = framePitch.getFirstPitchPinCount();
-        Optional<Integer> secondPinCount = framePitch.getSecondPitchPinCount();
-
-        if (firstPinCount.isPresent() && secondPinCount.isPresent()) {
-            return firstPinCount
-                    .map(pinCount -> pinCount + secondPinCount.get());
-        }
-
-        return Optional.empty();
+    @Override public Score getScoreForTwoPitches() {
+        return framePitch.getFirstPitchScore()
+                .add(framePitch.getSecondPitchPinCount());
     }
 
     @Override public boolean isDone() {

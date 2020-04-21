@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
 import bowling.domain.pitch.Pitch;
+import bowling.domain.score.CompleteScore;
+import bowling.domain.score.EmptyScore;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +38,16 @@ public class FramePitch {
                 .reduce(0, Integer::sum);
     }
 
-    public Optional<Integer> getFirstPitchPinCount() {
-        return getOrEmpty(ZERO).map(Pitch::getPinCount);
+    public Score getFirstPitchScore() {
+        return getOrEmpty(ZERO)
+                .map(pitch -> (Score) new CompleteScore(pitch.getPinCount()))
+                .orElse(EmptyScore.valueOf());
     }
 
-    public Optional<Integer> getSecondPitchPinCount() {
-        return getOrEmpty(ONE).map(Pitch::getPinCount);
+    public Score getSecondPitchPinCount() {
+        return getOrEmpty(ONE)
+                .map(pitch -> (Score) new CompleteScore(pitch.getPinCount()))
+                .orElse(EmptyScore.valueOf());
     }
 
     public boolean isSecondPitchSpare() {

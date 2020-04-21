@@ -1,15 +1,15 @@
 package bowling.domain.frame;
 
 import bowling.domain.pitch.Pitch;
+import bowling.domain.score.Score;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface Frame {
 
     boolean addPinCount(int nextPinCount);
 
-    Optional<Integer> getScore();
+    Score getScore();
 
     boolean isDone();
 
@@ -21,7 +21,7 @@ public interface Frame {
 
     boolean isLast();
 
-    Optional<Integer> getPinCountForOnePitch();
+    Score getScoreForOnePitch();
 
-    Optional<Integer> getPinCountForTwoPitches();
+    Score getScoreForTwoPitches();
 }

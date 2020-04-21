@@ -1,14 +1,9 @@
 package bowling.domain.score;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.pitch.Pitch;
-
-import java.util.Optional;
-
 public interface Score {
-    Optional<Integer> calculateScore(Frame frame);
+    boolean isCompleted();
 
-    Optional<Integer> calculateScore();
+    int getScore();
 
-    Score add(Pitch pitch);
+    Score add(Score score);
 }

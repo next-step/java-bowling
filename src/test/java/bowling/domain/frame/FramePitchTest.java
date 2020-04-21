@@ -1,9 +1,8 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,9 +21,8 @@ public class FramePitchTest {
     void getFirst() {
         FramePitch framePitch = new FramePitch();
         framePitch.add(1);
-        Optional<Integer> firstScore = framePitch.getFirstPitchPinCount();
-        assertThat(firstScore.isPresent()).isTrue();
-        assertThat(firstScore.get()).isEqualTo(1);
+        Score firstScore = framePitch.getFirstPitchScore();
+        assertThat(firstScore.getScore()).isEqualTo(1);
     }
 
     @DisplayName("첫번째 투구가 스트라이크인지 체크한다.")
@@ -45,9 +43,8 @@ public class FramePitchTest {
         FramePitch framePitch = new FramePitch();
         framePitch.add(1);
         framePitch.add(2);
-        Optional<Integer> secondScore = framePitch.getSecondPitchPinCount();
-        assertThat(secondScore.isPresent()).isTrue();
-        assertThat(secondScore.get()).isEqualTo(2);
+        Score secondScore = framePitch.getSecondPitchPinCount();
+        assertThat(secondScore.getScore()).isEqualTo(2);
     }
 
     @DisplayName("두번째 투구가 스페어인지 체크한다.")

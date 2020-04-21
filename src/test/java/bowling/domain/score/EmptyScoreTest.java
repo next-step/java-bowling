@@ -1,33 +1,23 @@
 package bowling.domain.score;
 
-import bowling.domain.pitch.Pitch;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class EmptyScoreTest {
-    private EmptyScore emptyScore;
-
-    @BeforeEach
-    void setUp() {
-        emptyScore = new EmptyScore();
-    }
-
-    @DisplayName("Strike Score 를 생성한다")
+    @DisplayName("complete는 false이다")
     @Test
-    void createStrikeScore() {
-        Pitch strikePitch = new Pitch(10);
-        assertThat(emptyScore.add(strikePitch))
-                .isExactlyInstanceOf(StrikeScore.class);
+    void isCompleted() {
+        assertThat(EmptyScore.valueOf().isCompleted()).isFalse();
     }
 
-    @DisplayName("First Score 를 생성한다.")
+    @DisplayName("어떤값을 더하여도 EmptyScore가 반환된다")
     @Test
-    void createFirstScore() {
-        Pitch pitch = new Pitch(3);
-        assertThat(emptyScore.add(pitch))
-                .isExactlyInstanceOf(FirstScore.class);
+    void returnEmptyScoreAfterAdd() {
+        CompleteScore completeScore = new CompleteScore(10);
+        assertThat(EmptyScore.valueOf().add(completeScore))
+                .isEqualTo(EmptyScore.valueOf());
     }
+
 }

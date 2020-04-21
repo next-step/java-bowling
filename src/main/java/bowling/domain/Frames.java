@@ -4,6 +4,7 @@ import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.pitch.Pitch;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class Frames {
         return lastFrame.isLast() && lastFrame.isDone();
     }
 
-    public Optional<Integer> getFrameScore(int frameIndex) {
+    public Score getFrameScore(int frameIndex) {
         return frames.get(frameIndex).getScore();
     }
 

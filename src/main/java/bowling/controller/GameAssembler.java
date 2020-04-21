@@ -8,6 +8,7 @@ import bowling.domain.Game;
 import bowling.domain.PlayerFrame;
 import bowling.domain.PlayerFrames;
 import bowling.domain.pitch.Pitch;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,11 +55,10 @@ public class GameAssembler {
 
     private static FrameStatus getFrameStatus(Frames frames, int index,
                                               int beforeScore) {
-        Optional<Integer> optionalScore = frames.getFrameScore(index);
-
-        if (optionalScore.isPresent()) {
+        Score score = frames.getFrameScore(index);
+        if(score.isCompleted()) {
             List<Pitch> pitches = frames.getFramePinCounts(index);
-            return new FrameStatus(pitches, optionalScore.get() + beforeScore);
+            return new FrameStatus(pitches, score.getScore() + beforeScore);
         }
 
         List<Pitch> pitches = frames.getFramePinCounts(index);
