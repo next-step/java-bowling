@@ -99,12 +99,4 @@ public class Scores {
     private boolean isTry(int number) {
         return numberOfTry() == number;
     }
-
-    public int firstScore() {
-        return scores.get(0).getScore();
-    }
-
-    public int secondScore() {
-        return scores.get(1).getScore();
-    }
 }

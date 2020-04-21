@@ -43,7 +43,7 @@ public class Player {
 
     public List<String> getSigns() {
         return frames.getFrames().stream()
-                .map(n -> n.getSigns())
+                .map(Frame::getSigns)
                 .collect(Collectors.toList());
     }
 
@@ -57,5 +57,9 @@ public class Player {
 
     public FrameScores getFrameScore() {
         return frames.getFrameScores();
+    }
+
+    public boolean isNextFrame() {
+        return frames.getFrame().getScoresSize() == 0;
     }
 }

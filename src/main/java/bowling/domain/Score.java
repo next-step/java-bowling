@@ -29,7 +29,7 @@ public class Score {
         return this.score + score.getScore() == FRAME_MAX_SCORE;
     }
 
-    public boolean isStrike(Score score) {
+    public boolean isStrike() {
         return this.score == FRAME_MAX_SCORE;
     }
 }

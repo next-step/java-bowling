@@ -3,6 +3,8 @@ package bowling.domain.state;
 import bowling.domain.Score;
 
 public class Finished implements State {
+    private static final int BONUS = 10;
+    private static final int DOUBLE_BONUS = 20;
     @Override
     public State bowl(Score score) {
         return null;
@@ -41,5 +43,20 @@ public class Finished implements State {
     @Override
     public boolean isSpare() {
         return false;
+    }
+
+    @Override
+    public int spareBonusScore() {
+        return BONUS + getFirstScore();
+    }
+
+    @Override
+    public int strikeBonusScore() {
+        return BONUS + getScore();
+    }
+
+    @Override
+    public int doubleStrikeBonusScore() {
+        return DOUBLE_BONUS + getFirstScore();
     }
 }

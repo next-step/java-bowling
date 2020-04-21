@@ -18,4 +18,10 @@ public interface State {
     boolean isStrike();
 
     boolean isSpare();
+
+    int spareBonusScore();
+
+    int strikeBonusScore();
+
+    int doubleStrikeBonusScore();
 }

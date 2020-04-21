@@ -42,4 +42,19 @@ public class Playing implements State {
     public boolean isSpare() {
         return false;
     }
+
+    @Override
+    public int spareBonusScore() {
+        return 0;
+    }
+
+    @Override
+    public int strikeBonusScore() {
+        return 0;
+    }
+
+    @Override
+    public int doubleStrikeBonusScore() {
+        return 0;
+    }
 }

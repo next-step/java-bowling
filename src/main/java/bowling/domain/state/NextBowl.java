@@ -3,6 +3,8 @@ package bowling.domain.state;
 import bowling.domain.Score;
 
 public class NextBowl extends Playing {
+    private static final int BONUS = 10;
+    private static final int DOUBLE_BONUS = 20;
     private Score firstScore;
 
     public NextBowl(Score score) {
@@ -30,5 +32,20 @@ public class NextBowl extends Playing {
     @Override
     public int getFirstScore() {
         return firstScore.getScore();
+    }
+
+    @Override
+    public int spareBonusScore() {
+        return BONUS + getFirstScore();
+    }
+
+    @Override
+    public int strikeBonusScore() {
+        return BONUS + getScore();
+    }
+
+    @Override
+    public int doubleStrikeBonusScore() {
+        return DOUBLE_BONUS + getFirstScore();
     }
 }

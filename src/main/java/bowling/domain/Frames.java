@@ -89,57 +89,73 @@ public class Frames {
     public void calculateScore() {
         frameScores = new FrameScores();
         int sumScore = 0;
-        sumScore = calculateNormalFrame(sumScore);
-        calculateFinalFrame(sumScore);
+        calculate(sumScore);
     }
 
-    private void calculateFinalFrame(int sumScore) {
+    private int calculate(int sumScore) {
+        for (int i = 0; i < currentFrame(); i++) {
+            sumScore = calculateCase(i, sumScore);
+        }
         if (isEndGame()) {
             Frame finalFrame = finalFrame();
             frameScores.add(sumScore + finalFrame.sumScore());
-        }
-    }
-
-    private int calculateNormalFrame(int sumScore) {
-        for (int i = 0; i < currentFrame(); i++) {
-            sumScore = calculateCase(i, sumScore);
         }
         return sumScore;
     }
 
     private int calculateCase(int index, int sumScore) {
         Frame nowFrame = frames.get(index);
-        sumScore = isMissCase(sumScore, nowFrame);
+        if (nowFrame.isEnableCalculate()) {
+            sumScore = isMissCase(sumScore, nowFrame);
+        }
+        if (nowFrame.isStrike()) {
+            sumScore = calculateStrike(index, sumScore);
+        }
+        if (nowFrame.isSpare()) {
+            sumScore = calculateSpare(index, sumScore);
+        }
+        return sumScore;
+    }
 
-        Frame nextFrame = null;
-        if (!nowFrame.isEnableCalculate() && index < currentFrame() - 1) {
-            nextFrame = nextFrame(index);
-            sumScore = nextFrame.calculateBonus(sumScore);
+    private int calculateSpare(int index, int sumScore) {
+        if (isNextFrame(index)) {
+            sumScore += nextFrame(index).calculateSpare();
             return addScore(sumScore);
         }
-        if (!nowFrame.isEnableCalculate() && !frame.isNumberOfTryZero() && index < TOTAL_NORMAL_FRAME) {
-            nextFrame = getFrame();
-            sumScore = nextFrame.calculateSpare(sumScore);
+        if (!frame.isNumberOfTryZero() && !isFinalFrame()) {
+            sumScore += getFrame().calculateSpare();
             return addScore(sumScore);
         }
-        if (!nowFrame.isEnableCalculate() && isFinalFrame() && frame.isCountOfStrike()) {
-            nextFrame = getFrame();
-            sumScore = nextFrame.calculateDoubleStrike(sumScore);
+        return sumScore;
+    }
+
+    private boolean isNextFrame(int index) {
+        return index < currentFrame() - 1;
+    }
+
+    private boolean isNextAfterFrame(int index) {
+        return index < currentFrame() - 2;
+    }
+
+    private int calculateStrike(int index, int sumScore) {
+        if (isNextFrame(index) && !nextFrame(index).isStrike()) {
+            sumScore += nextFrame(index).calculateSingleStrike();
             return addScore(sumScore);
         }
-        if (!nowFrame.isEnableCalculate() && index < currentFrame() - 2 && nextFrame(index).isStrike()) {
-            nextFrame = nextAfterFrame(index);
-            sumScore = nextFrame.calculateDoubleStrike(sumScore);
+        if (isFinalFrame() && frame.isCountOfStrike()) {
+            sumScore += getFrame().calculateDoubleStrike();
+            return addScore(sumScore);
+        }
+        if (isNextAfterFrame(index) && nextFrame(index).isStrike()) {
+            sumScore += nextAfterFrame(index).calculateDoubleStrike();
             return addScore(sumScore);
         }
         return sumScore;
     }
 
     private int isMissCase(int sumScore, Frame nowFrame) {
-        if (nowFrame.isEnableCalculate()) {
-            sumScore = nowFrame.calculate(sumScore);
-            frameScores.add(sumScore);
-        }
+        sumScore += nowFrame.calculate();
+        addScore(sumScore);
         return sumScore;
     }
 

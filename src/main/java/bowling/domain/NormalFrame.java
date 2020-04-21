@@ -3,9 +3,6 @@ package bowling.domain;
 import bowling.domain.state.State;
 
 public class NormalFrame extends Frame {
-    private static final int ZERO = 0;
-    private static final int BONUS = 10;
-    private static final int DOUBLE_BONUS = 20;
     private Scores scores;
     private State state;
 
@@ -18,20 +15,8 @@ public class NormalFrame extends Frame {
         this.state = frame.getState();
     }
 
-    public Scores getScores() {
-        return scores;
-    }
-
     public String getSigns() {
         return scores.getSigns();
-    }
-
-    public int sumScore() {
-        return scores.sum();
-    }
-
-    public boolean isNumberOfTryZero() {
-        return scores.numberOfTry() == ZERO;
     }
 
     public boolean isStrike() {
@@ -42,30 +27,23 @@ public class NormalFrame extends Frame {
         return state.isSpare();
     }
 
-    public int calculateBonus(int sumScore) {
-        if(!isStrike()){
-            return sumScore + BONUS + state.getScore();
-        }
-        return sumScore + BONUS + state.getFirstScore();
+    public int calculateDoubleStrike() {
+        return state.doubleStrikeBonusScore();
     }
 
-    public int calculateDoubleStrike(int sumScore) {
-        return sumScore + DOUBLE_BONUS + state.getFirstScore();
-    }
-
-    public int calculateSpare(int sumScore) {
-        return sumScore + BONUS + state.getFirstScore();
-    }
-
-    public int calculate(int sumScore) {
-        return state.getScore() + sumScore;
+    public int calculate() {
+        return state.getScore();
     }
 
     public boolean isEnableCalculate() {
         return state.isEnableCalculate();
     }
 
-    public boolean isCountOfStrike() {
-        return this.scores.countOfSign(Sign.STRIKE) > 1;
+    public int calculateSpare() {
+        return state.spareBonusScore();
+    }
+
+    public int calculateSingleStrike() {
+        return state.strikeBonusScore();
     }
 }

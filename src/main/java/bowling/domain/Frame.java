@@ -5,8 +5,6 @@ import bowling.domain.state.State;
 
 public class Frame {
     private static final int ZERO = 0;
-    private static final int BONUS = 10;
-    private static final int DOUBLE_BONUS = 20;
     private Scores scores;
     private State state;
 
@@ -28,7 +26,7 @@ public class Frame {
     }
 
     public boolean isNextFrame() {
-        return this.state.isFinish();
+        return state.isFinish();
     }
 
     public void addFrame(Score numberOfPin, boolean isFinalFrame) {
@@ -57,7 +55,11 @@ public class Frame {
     }
 
     public boolean isStrike() {
-        return this.getState().isStrike();
+        return state.isStrike();
+    }
+
+    public boolean isSpare() {
+        return state.isSpare();
     }
 
     public int sumScore() {
@@ -65,30 +67,32 @@ public class Frame {
     }
 
     public boolean isNumberOfTryZero() {
-        return  scores.numberOfTry() == ZERO;
+        return scores.numberOfTry() == ZERO;
     }
 
-    public int calculateDoubleStrike(int sumScore) {
-        return sumScore + DOUBLE_BONUS + state.getFirstScore();
+    public int calculateDoubleStrike() {
+        return state.doubleStrikeBonusScore();
     }
 
-    public int calculateSpare(int sumScore) {
-        return sumScore + BONUS + state.getFirstScore();
-    }
-
-    public int calculate(int sumScore) {
-        return 0;
+    public int calculate() {
+        return state.getScore();
     }
 
     public boolean isEnableCalculate() {
         return state.isEnableCalculate();
     }
 
+    public int calculateSpare() {
+        return state.spareBonusScore();
+    }
+
+    public int calculateSingleStrike() {
+        return state.strikeBonusScore();
+    }
+
     public int getScoresSize() {
         return scores.numberOfTry();
     }
-
-    public int calculateBonus(int sumScore) {
-        return 0;
-    }
 }
+
+

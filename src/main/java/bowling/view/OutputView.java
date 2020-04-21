@@ -78,7 +78,7 @@ public class OutputView {
     }
 
     private List<String> getThisScore(List<String> scores, Frame frame, List<String> values) {
-        if (frame.getScoresSize() > 0) { //지금던진투구
+        if (!frame.getState().isFinish()) { //지금던진투구
             scores.addAll(values);
             values = Arrays.asList(frame).stream()
                     .map(n -> n.getSigns())
