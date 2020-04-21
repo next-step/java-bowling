@@ -7,11 +7,11 @@ public class Game {
     private static final int ONE = 1;
 
     private PlayerFrames playerFrames;
-    private int currentIndex;
+    private int currentPlayerIndex;
 
     public Game(List<String> playerNames) {
         playerFrames = new PlayerFrames(playerNames);
-        currentIndex = FIRST_INDEX;
+        currentPlayerIndex = FIRST_INDEX;
     }
 
     public boolean isFinished() {
@@ -19,16 +19,16 @@ public class Game {
     }
 
     public boolean addPin(int count) {
-        boolean result = playerFrames.addPinCount(currentIndex, count);
-        if (playerFrames.isDone(currentIndex)) {
-            currentIndex = nextIndex();
+        boolean result = playerFrames.addPinCount(currentPlayerIndex, count);
+        if (playerFrames.isDone(currentPlayerIndex)) {
+            currentPlayerIndex = nextIndex();
         }
 
         return result;
     }
 
     public String getCurrentPlayerName() {
-        return playerFrames.getPlayerName(currentIndex);
+        return playerFrames.getPlayerName(currentPlayerIndex);
     }
 
     public PlayerFrames getPlayerFrames() {
@@ -36,6 +36,6 @@ public class Game {
     }
 
     private int nextIndex() {
-        return (currentIndex + ONE) % playerFrames.size();
+        return (currentPlayerIndex + ONE) % playerFrames.size();
     }
 }
