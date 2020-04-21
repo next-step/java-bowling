@@ -10,9 +10,21 @@ public class FrameNumber {
 
     private final int frameNumber;
 
-    public FrameNumber(final int frameNumber) {
+    private FrameNumber(final int frameNumber) {
         validRange(frameNumber);
         this.frameNumber = frameNumber;
+    }
+
+    public static FrameNumber ofFirst() {
+        return new FrameNumber(MIN_NUMBER);
+    }
+
+    public static FrameNumber valueOf(final int value) {
+        return new FrameNumber(value);
+    }
+
+    public FrameNumber increase() {
+        return new FrameNumber(frameNumber + MIN_NUMBER);
     }
 
     public boolean isFinal() {

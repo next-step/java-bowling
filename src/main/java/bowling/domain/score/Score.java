@@ -8,35 +8,35 @@ public class Score {
     public static final Score INIT_SCORE = new Score(ZERO, ZERO);
 
     private final int score;
-    private final int left;
+    private final int leftBonusCount;
 
-    public Score(final int score, final int left) {
+    public Score(final int score, final int leftBonusCount) {
         this.score = score;
-        this.left = left;
+        this.leftBonusCount = leftBonusCount;
     }
 
     public Score add(final Score other) {
-        return new Score(score + other.score, left + other.left);
+        return new Score(score + other.score, leftBonusCount + other.leftBonusCount);
     }
 
     public Score accumulate(final int knockOverCount) {
-        return new Score(score + knockOverCount, left - 1);
+        return new Score(score + knockOverCount, leftBonusCount - 1);
+    }
+
+    public boolean isCompleteAccumulation() {
+        return leftBonusCount == ZERO;
+    }
+
+    public boolean isNotAddable() {
+        return this.equals(NOT_ADDABLE_SCORE);
     }
 
     public int getValue() {
         return score;
     }
 
-    public int getLeft() {
-        return left;
-    }
-
-    public boolean isCompleteAccumulation() {
-        return left == ZERO;
-    }
-
-    public boolean isNotAddable() {
-        return this.equals(NOT_ADDABLE_SCORE);
+    public int getLeftBonusCount() {
+        return leftBonusCount;
     }
 
     @Override
@@ -45,11 +45,11 @@ public class Score {
         if (o == null || getClass() != o.getClass()) return false;
         final Score score1 = (Score) o;
         return score == score1.score &&
-                left == score1.left;
+                leftBonusCount == score1.leftBonusCount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, left);
+        return Objects.hash(score, leftBonusCount);
     }
 }

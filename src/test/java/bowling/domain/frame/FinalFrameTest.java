@@ -18,7 +18,7 @@ class FinalFrameTest {
 
     @BeforeEach
     void setUp() {
-        frameNumber = new FrameNumber(10);
+        frameNumber = FrameNumber.valueOf(10);
         finalFrame = new FinalFrame(frameNumber);
     }
 

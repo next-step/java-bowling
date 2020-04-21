@@ -1,6 +1,5 @@
 package bowling.domain.player;
 
-import bowling.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,5 +16,17 @@ class PlayerTest {
         Player actual = Player.of(name);
 
         assertThat(actual).isEqualTo(expect);
+    }
+
+    @DisplayName("각 플레이어는 자신의 frame을 갖고 있는다.")
+    @Test
+    void hasFrames() {
+        String name = "otk";
+
+        Player actual = Player.of(name);
+
+        assertThat(actual).hasFieldOrProperty("frames");
+        assertThat(actual.getStates().size()).isOne();
+        assertThat(actual.getScores()).isEmpty();
     }
 }

@@ -24,7 +24,20 @@ public class States {
         return stateHistory.isEmpty();
     }
 
+    public boolean hasNotBonusState() {
+        return stateHistory.stream().noneMatch(Strike.class::isInstance) &&
+                stateHistory.stream().noneMatch(Spare.class::isInstance);
+    }
+
     public State getLast() {
         return stateHistory.get(stateHistory.size() - LAST);
+    }
+
+    public boolean hasCalculableSize(final int leftCount) {
+        return stateHistory.size() >= leftCount;
+    }
+
+    public int getSize() {
+        return stateHistory.size();
     }
 }

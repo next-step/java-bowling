@@ -13,12 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalFrameTest {
     private Frame frame;
-    private FrameNumber frameNumber;
 
     @BeforeEach
     void setUp() {
-        frameNumber = new FrameNumber(1);
-        frame =  new NormalFrame(frameNumber, null);
+        frame =  NormalFrame.ofFirst();
     }
 
     @DisplayName("현재 Frame이 진행중 상태일 경우 다음 프레임으로 넘어갈 수 없다.")
@@ -28,7 +26,7 @@ class NormalFrameTest {
 
         frame.bowl(pins);
 
-        assertThat(frame.isEnd()).isFalse();
+        assertThat(frame.isFinish()).isFalse();
     }
 
     @DisplayName("현재 Frame이 Strike일 경우 다음 프레임으로 넘어갈 수 있다.")
@@ -40,7 +38,7 @@ class NormalFrameTest {
         final List<State> states = frame.getStates().getList();
 
         assertThat(states.get(0)).isInstanceOf(Strike.class);
-        assertThat(frame.isEnd()).isTrue();
+        assertThat(frame.isFinish()).isTrue();
     }
 
     @DisplayName("현재 Frame이 SPARE 일 경우 다음 프레임으로 넘어갈 수 있다.")
@@ -56,7 +54,7 @@ class NormalFrameTest {
 
         assertThat(states.get(0)).isInstanceOf(FirstBowl.class);
         assertThat(states.get(1)).isInstanceOf(Spare.class);
-        assertThat(frame.isEnd()).isTrue();
+        assertThat(frame.isFinish()).isTrue();
     }
 
     @DisplayName("현재 Frame이 MISS 일 경우 다음 프레임으로 넘어갈 수 있다.")
@@ -71,7 +69,7 @@ class NormalFrameTest {
 
         assertThat(states.get(0)).isInstanceOf(FirstBowl.class);
         assertThat(states.get(1)).isInstanceOf(Miss.class);
-        assertThat(frame.isEnd()).isTrue();
+        assertThat(frame.isFinish()).isTrue();
     }
 
 
@@ -88,6 +86,6 @@ class NormalFrameTest {
 
         assertThat(states.get(0)).isInstanceOf(FirstGutter.class);
         assertThat(states.get(1)).isInstanceOf(SecondGutter.class);
-        assertThat(frame.isEnd()).isTrue();
+        assertThat(frame.isFinish()).isTrue();
     }
 }
