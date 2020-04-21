@@ -11,7 +11,7 @@ public class Ready extends Playing {
 
     @Override
     public State bowl(Score score) {
-        if(score.isStrike(score)){
+        if (score.isStrike(score)) {
             return new Strike();
         }
         return new NextBowl(score);

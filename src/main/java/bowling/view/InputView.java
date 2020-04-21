@@ -20,7 +20,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public int askNumberOfPin(String name){
+    public int askNumberOfPin(String name) {
         System.out.printf(PIN_QUESTION, name);
         scanner = new Scanner(System.in);
         return scanner.nextInt();

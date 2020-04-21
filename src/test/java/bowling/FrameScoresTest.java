@@ -1,10 +1,8 @@
 package bowling;
 
 import bowling.domain.FrameScores;
-import bowling.domain.Frames;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
 
@@ -20,7 +18,7 @@ public class FrameScoresTest {
 
     @Test
     public void frameScoreMultiTest() {
-        FrameScores frameScores = new FrameScores(Arrays.asList(8,16,23));
+        FrameScores frameScores = new FrameScores(Arrays.asList(8, 16, 23));
         assertThat(frameScores.getScore().get(1)).isEqualTo("16");
     }
 }

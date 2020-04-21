@@ -23,16 +23,8 @@ public class FinalFrame extends Frame {
         return scores.getSigns();
     }
 
-    public int firstScore() {
-        return scores.firstScore();
-    }
-
     public int sumScore() {
         return scores.sum();
-    }
-
-    public int sumStrikeScore() {
-        return scores.firstScore() + scores.secondScore();
     }
 
     public boolean isCountOfStrike() {

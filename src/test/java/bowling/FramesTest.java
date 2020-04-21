@@ -1,6 +1,8 @@
 package bowling;
 
-import bowling.domain.*;
+import bowling.domain.Frame;
+import bowling.domain.Frames;
+import bowling.domain.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,7 @@ public class FramesTest {
         Frames frames = new Frames();
         assertThat(frames.currentFrame()).isEqualTo(0);
         Frame frame = new Frame();
-        frame.addFrame(9,false);
+        frame.addFrame(new Score(9),false);
         frames.addFrame(frame);
         assertThat(frames.currentFrame()).isEqualTo(1);
     }
@@ -24,16 +26,16 @@ public class FramesTest {
     public void frameOrderTest() {
         Frames frames = new Frames();
         Frame frame = new Frame();
-        frame.addFrame(10,false);
+        frame.addFrame(new Score(10),false);
         frames.addFrame(frame);
-        assertThat(frames.isNextFrame()).isTrue();
+        assertThat(frames.getFrames().get(0).getState().isFinish()).isTrue();
     }
 
     @Test
     @DisplayName("처음에스트라이크해도 종료되지않음")
     public void finalFrameTest() {
         Frames frames = new Frames();
-        frames.getFrame().addFrame(10,true);
+        frames.getFrame().addFrame(new Score(10),true);
         frames.addFrame(frames.getFrame());
         assertThat(frames.isFinalGame()).isFalse();
     }
@@ -42,8 +44,8 @@ public class FramesTest {
     @DisplayName("스페어처리하면종료안됨")
     public void finalFrameSpareTest() {
         Frames frames = new Frames();
-        frames.getFrame().addFrame(5,true);
-        frames.getFrame().addFrame(5,true);
+        frames.getFrame().addFrame(new Score(5),true);
+        frames.getFrame().addFrame(new Score(5),true);
         frames.addFrame(frames.getFrame());
         assertThat(frames.isFinalGame()).isFalse();
     }
@@ -52,8 +54,8 @@ public class FramesTest {
     @DisplayName("미스하면종료됨")
     public void finalFrameNotSpareTest() {
         Frames frames = new Frames();
-        frames.getFrame().addFrame(5,true);
-        frames.getFrame().addFrame(4,true);
+        frames.getFrame().addFrame(new Score(5),true);
+        frames.getFrame().addFrame(new Score(4),true);
         frames.addFrame(frames.getFrame());
         assertThat(frames.isFinalFrame()).isTrue();
     }
@@ -62,8 +64,8 @@ public class FramesTest {
     @DisplayName("프레임스코어테스트")
     public void frameScoreTest() {
         Frames frames = new Frames();
-        frames.processPin(4);
-        frames.processPin(5);
+        frames.processPin(new Score(4));
+        frames.processPin(new Score(5));
         assertThat(frames.getFrameScores().toString()).isEqualTo("9");
     }
 }

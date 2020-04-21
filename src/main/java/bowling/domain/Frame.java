@@ -60,20 +60,12 @@ public class Frame {
         return this.getState().isStrike();
     }
 
-    public boolean isSpare() {
-        return this.getState().isSpare();
-    }
-
     public int sumScore() {
         return scores.sum();
     }
 
     public boolean isNumberOfTryZero() {
         return  scores.numberOfTry() == ZERO;
-    }
-
-    public int calculateSingleStrike(int sumScore) {
-        return sumScore + BONUS + state.getScore();
     }
 
     public int calculateDoubleStrike(int sumScore) {
@@ -85,7 +77,7 @@ public class Frame {
     }
 
     public int calculate(int sumScore) {
-        return state.getScore() + sumScore;
+        return 0;
     }
 
     public boolean isEnableCalculate() {
@@ -94,5 +86,9 @@ public class Frame {
 
     public int getScoresSize() {
         return scores.numberOfTry();
+    }
+
+    public int calculateBonus(int sumScore) {
+        return 0;
     }
 }

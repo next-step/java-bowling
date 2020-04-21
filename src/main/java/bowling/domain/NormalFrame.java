@@ -42,8 +42,11 @@ public class NormalFrame extends Frame {
         return state.isSpare();
     }
 
-    public int calculateSingleStrike(int sumScore) {
-        return sumScore + BONUS + state.getScore();
+    public int calculateBonus(int sumScore) {
+        if(!isStrike()){
+            return sumScore + BONUS + state.getScore();
+        }
+        return sumScore + BONUS + state.getFirstScore();
     }
 
     public int calculateDoubleStrike(int sumScore) {

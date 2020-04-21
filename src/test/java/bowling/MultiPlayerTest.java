@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.Game;
 import bowling.domain.Player;
+import bowling.domain.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,18 +27,18 @@ public class MultiPlayerTest {
     @Test
     public void isEndGameTest() {
         game.add(player);
-        game.play(10, 0);
-        game.play(10, 0);
-        game.play(10, 0);
-        game.play(10, 0);
-        game.play(10, 0);
-        game.play(10, 0);
-        game.play(10, 0);
-        game.play(10, 0);
-        game.play(10, 0);
-        game.play(10, 0);
-        game.play(10, 0);
-        game.play(10, 0);
+        game.play(new Score(10), 0);
+        game.play(new Score(10), 0);
+        game.play(new Score(10), 0);
+        game.play(new Score(10), 0);
+        game.play(new Score(10), 0);
+        game.play(new Score(10), 0);
+        game.play(new Score(10), 0);
+        game.play(new Score(10), 0);
+        game.play(new Score(10), 0);
+        game.play(new Score(10), 0);
+        game.play(new Score(10), 0);
+        game.play(new Score(10), 0);
         assertThat(game.isEndGame()).isTrue();
     }
 }
