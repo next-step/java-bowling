@@ -1,4 +1,4 @@
-package bowling.application;
+package bowling.ui;
 
 import bowling.domain.frame.Bowling;
 import bowling.domain.frame.FinalFrame;

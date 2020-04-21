@@ -4,6 +4,7 @@ import bowling.domain.frame.Bowling;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.player.Player;
+import bowling.ui.Request;
 
 import java.util.LinkedList;
 import java.util.Objects;

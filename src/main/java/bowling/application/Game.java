@@ -2,6 +2,8 @@ package bowling.application;
 
 import bowling.domain.state.Pin;
 import bowling.ui.BowlingController;
+import bowling.ui.Request;
+import bowling.ui.Response;
 import bowling.view.InputView;
 
 import java.util.Objects;

@@ -1,8 +1,6 @@
 package bowling.ui;
 
 import bowling.application.BowlingService;
-import bowling.application.Request;
-import bowling.application.Response;
 import bowling.domain.frame.Bowling;
 
 public class BowlingController {

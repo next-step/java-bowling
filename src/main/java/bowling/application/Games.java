@@ -1,5 +1,7 @@
 package bowling.application;
 
+import bowling.ui.Request;
+import bowling.ui.Response;
 import bowling.view.InputView;
 
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
 package bowling.application;
 
+import bowling.ui.Request;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
