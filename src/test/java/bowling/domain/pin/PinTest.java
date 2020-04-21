@@ -1,6 +1,5 @@
 package bowling.domain.pin;
 
-import bowling.domain.pin.Pin;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
