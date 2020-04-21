@@ -1,8 +1,8 @@
 package bowling.controller;
 
 import bowling.domain.BowlingGame;
-import bowling.domain.Frame;
-import bowling.domain.Player;
+import bowling.domain.player.Player;
+import bowling.domain.point.Point;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
@@ -12,20 +12,10 @@ public class BowlingGameRun {
         Player player = InputView.inputPlayers();
         BowlingGame bowlingGame = new BowlingGame(player);
 
-        Frame frame = bowlingGame.next();
-        while (frame != null) {
-            throwBallResult(frame);
-            ResultView.viewResult(bowlingGame.getFrames());
-            frame = bowlingGame.next();
-        }
-    }
-
-    private static void throwBallResult(Frame frame) {
-        try {
-            int throwCount = InputView.inputThrowCount(frame);
-            frame.throwBall(throwCount);
-        } catch (IllegalArgumentException e) {
-            ResultView.viewRetry(e);
+        while (!bowlingGame.isEnd()) {
+            Point point = InputView.inputThrowCount(bowlingGame.currentFrameNo());
+            bowlingGame.throwBall(point);
+            ResultView.viewResult(bowlingGame);
         }
     }
 }

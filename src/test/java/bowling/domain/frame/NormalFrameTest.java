@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.point.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,43 +9,43 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class NomalFrameTest {
-    private NomalFrame nomalFrame;
+public class NormalFrameTest {
+    private NormalFrame normalFrame;
 
     @BeforeEach
     void setUp() {
-        nomalFrame = new NomalFrame(1);
+        normalFrame = new NormalFrame();
     }
 
     @Test
     @DisplayName("프레임 생성 테스트")
     void createFrameTest() {
         assertThatCode(
-                () -> new NomalFrame(1)
+                () -> new NormalFrame()
         ).doesNotThrowAnyException();
     }
 
     @ParameterizedTest
     @DisplayName("공 던지기 가능 테스트")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
-    void isThrowableTrueTest(int firstFallenPin) {
-        nomalFrame.throwBall(firstFallenPin);
-        assertThat(nomalFrame.isThrowable()).isTrue();
+    void isThrowableTrueTest(int fallenPin) {
+        normalFrame.throwBall(Point.of(fallenPin));
+        assertThat(normalFrame.isThrowable()).isTrue();
     }
 
     @Test
     @DisplayName("공 던지기 불가능 테스트1")
     void isThrowableFalseTest() {
-        nomalFrame.throwBall(10);
-        assertThat(nomalFrame.isThrowable()).isFalse();
+        normalFrame.throwBall(Point.of(10));
+        assertThat(normalFrame.isThrowable()).isFalse();
     }
 
     @Test
     @DisplayName("공 던지기 불가능 테스트2")
     void isThrowableFalse2Test() {
-        nomalFrame.throwBall(1);
-        nomalFrame.throwBall(0);
-        assertThat(nomalFrame.isThrowable()).isFalse();
+        normalFrame.throwBall(Point.of(1));
+        normalFrame.throwBall(Point.of(0));
+        assertThat(normalFrame.isThrowable()).isFalse();
     }
 
     @ParameterizedTest
@@ -52,7 +53,7 @@ public class NomalFrameTest {
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void firstIsThrowBallTest(int fallenPin) {
         assertThatCode(
-                () -> nomalFrame.throwBall(fallenPin)
+                () -> normalFrame.throwBall(Point.of(fallenPin))
         ).doesNotThrowAnyException();
     }
 
@@ -60,19 +61,9 @@ public class NomalFrameTest {
     @DisplayName("두번쨰 공 던지기 테스트")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     void secondIsThrowBallTest(int fallenPin) {
-        nomalFrame.throwBall(5);
+        normalFrame.throwBall(Point.of(5));
         assertThatCode(
-                () -> nomalFrame.throwBall(fallenPin)
+                () -> normalFrame.throwBall(Point.of(fallenPin))
         ).doesNotThrowAnyException();
-    }
-
-    @ParameterizedTest
-    @DisplayName("두번쨰 공 던지기 실패 테스트")
-    @ValueSource(ints = {6, 7, 8, 9, 10})
-    void failSecondIsThrowBallTest(int fallenPin) {
-        nomalFrame.throwBall(5);
-        assertThatThrownBy(
-                () -> nomalFrame.throwBall(fallenPin)
-        ).isInstanceOf(IllegalArgumentException.class);
     }
 }

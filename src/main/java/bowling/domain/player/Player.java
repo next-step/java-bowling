@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.player;
 
 import java.util.Optional;
 
@@ -17,9 +17,9 @@ public class Player {
     }
 
     private void validate(String input) {
-        Optional.ofNullable(input).orElseThrow(() -> new IllegalArgumentException("이름을 입력해야 합니다."));
+        Optional.ofNullable(input).orElseThrow(() -> new InvalidNameException("이름을 입력해야 합니다."));
         if (input.length() != REQUIRED_LENGTH) {
-            throw new IllegalArgumentException("이름은 3자를 적어주세요.");
+            throw new InvalidNameException("이름은 3자를 적어주세요.");
         }
     }
 }

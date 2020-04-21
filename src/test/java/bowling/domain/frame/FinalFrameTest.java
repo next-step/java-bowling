@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.point.Point;
+import bowling.domain.point.PointOutOfRangeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,14 +16,14 @@ public class FinalFrameTest {
 
     @BeforeEach
     void setUp() {
-        finalFrame = new FinalFrame(10);
+        finalFrame = new FinalFrame();
     }
 
     @Test
     @DisplayName("프레임 생성 테스트")
     void createFrameTest() {
         assertThatCode(
-                () -> new FinalFrame(1)
+                () -> new FinalFrame()
         ).doesNotThrowAnyException();
     }
 
@@ -30,7 +32,7 @@ public class FinalFrameTest {
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void firstIsThrowBallTest(int fallenPin) {
         assertThatCode(
-                () -> finalFrame.throwBall(fallenPin)
+                () -> finalFrame.throwBall(Point.of(fallenPin))
         ).doesNotThrowAnyException();
     }
 
@@ -39,17 +41,17 @@ public class FinalFrameTest {
     @ValueSource(ints = {-1, 11})
     void FailFirstIsThrowBallTest(int fallenPin) {
         assertThatThrownBy(
-                () -> finalFrame.throwBall(fallenPin)
-        ).isInstanceOf(IllegalArgumentException.class);
+                () -> finalFrame.throwBall(Point.of(fallenPin))
+        ).isInstanceOf(PointOutOfRangeException.class);
     }
 
     @ParameterizedTest
     @DisplayName("두번쨰 공 던지기 테스트")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void secondIsThrowBallTest(int fallenPin) {
-        finalFrame.throwBall(10);
+        finalFrame.throwBall(Point.of(10));
         assertThatCode(
-                () -> finalFrame.throwBall(fallenPin)
+                () -> finalFrame.throwBall(Point.of(fallenPin))
         ).doesNotThrowAnyException();
     }
 
@@ -57,30 +59,20 @@ public class FinalFrameTest {
     @DisplayName("두번쨰 공 던지기 테스트2")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     void secondIsThrowBallTest2(int fallenPin) {
-        finalFrame.throwBall(5);
+        finalFrame.throwBall(Point.of(5));
         assertThatCode(
-                () -> finalFrame.throwBall(fallenPin)
+                () -> finalFrame.throwBall(Point.of(fallenPin))
         ).doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("두번째 공 던지기 실패 테스트")
-    void failSecondIsThrowBallTest() {
-        finalFrame.throwBall(7);
-
-        assertThatThrownBy(
-                () -> finalFrame.throwBall(6)
-        ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
     @DisplayName("세번쨰 공 던지기 테스트")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void thirdIsThrowBallTest(int fallenPin) {
-        finalFrame.throwBall(5);
-        finalFrame.throwBall(5);
+        finalFrame.throwBall(Point.of(5));
+        finalFrame.throwBall(Point.of(5));
         assertThatCode(
-                () -> finalFrame.throwBall(fallenPin)
+                () -> finalFrame.throwBall(Point.of(fallenPin))
         ).doesNotThrowAnyException();
     }
 
@@ -88,19 +80,19 @@ public class FinalFrameTest {
     @DisplayName("세번쨰 공 던지기 가능 테스트2")
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void thirdIsThrowBallTest2(int fallenPin) {
-        finalFrame.throwBall(10);
-        finalFrame.throwBall(10);
+        finalFrame.throwBall(Point.of(10));
+        finalFrame.throwBall(Point.of(10));
         assertThatCode(
-                () -> finalFrame.throwBall(fallenPin)
+                () -> finalFrame.throwBall(Point.of(fallenPin))
         ).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("네번쨰 공 던지기 가능 테스트")
     void fourthIsThrowBallTest() {
-        finalFrame.throwBall(10);
-        finalFrame.throwBall(10);
-        finalFrame.throwBall(10);
+        finalFrame.throwBall(Point.of(10));
+        finalFrame.throwBall(Point.of(10));
+        finalFrame.throwBall(Point.of(10));
         assertThat(
                 finalFrame.isThrowable()
         ).isFalse();
