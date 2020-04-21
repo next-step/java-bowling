@@ -1,82 +1,23 @@
 package seul.bowling.domain.status;
 
-import lombok.Getter;
 import seul.bowling.domain.Pins;
-import seul.bowling.domain.Score;
 
-public class Status {
-    private static final int BONUS_PLAY = 0;
-    private static final int BONUS_SCORE_COUNT = 0;
-    private static final boolean STRIKE = false;
+public interface Status {
+    Status addPins(int clearPin);
 
-    @Getter
-    Pins pins;
-    @Getter
-    Score score;
+    void addBonusScore(int bonusScore);
 
-    protected Status(Score score, Pins pins) {
-        this.score = score;
-        this.pins = pins;
-    }
+    boolean end();
 
-    public Status() {
-        this.score = new Score();
-        this.pins = new Pins();
-    }
+    boolean isSpare();
 
-    public boolean endJudgmentStatus() {
-        return false;
-    }
+    void addCumulativeScore(int score);
 
-    public boolean isSpare() {
-        return false;
-    }
+    int getToTalScore();
 
-    public int getBonusPlay() {
-        return BONUS_PLAY;
-    }
+    boolean endCalculateScore();
 
-    public void addScore(int clearPin) {
-        this.score.addScore(clearPin, BONUS_SCORE_COUNT);
-    }
+    Pins getPins();
 
-    public Status judgmentStatus(boolean allClear) {
-        if (allClear) {
-            return new Strike(this.score, this.pins);
-        }
-
-        return new Hold(this.score, this.pins);
-    }
-
-    public void addCumulativeScore(int score) {
-        this.score.addCumulativeScore(score);
-    }
-
-    public void addBonusScore(int bonusScore) {
-        score.addBonusScore(bonusScore);
-    }
-
-    public boolean endScore() {
-        return false;
-    }
-
-    public boolean availableAddBonusScore() {
-        return !score.bonusScoreCountIsEmpty();
-    }
-
-    public int getToTalScore() {
-        return this.score.getScore();
-    }
-
-    public void addPins(int clearPin, boolean isBonusPlay) {
-        pins.addPin(clearPin, isBonusPlay);
-    }
-
-    public boolean pinsAllClear() {
-        return pins.allClear();
-    }
-
-    public boolean pinsEndDefaultPlayCount() {
-        return pins.endDefaultPlayCount(STRIKE);
-    }
+    boolean equalsStatus(Status status);
 }

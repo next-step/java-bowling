@@ -10,11 +10,11 @@ public class Score {
     @Getter
     private int score;
 
-    public void addScore(int score, int bonusScoreCount) {
-        if (bonusScoreCountIsEmpty()) {
-            this.bonusScoreCount += bonusScoreCount;
-        }
+    private Score(int score) {
+        this.score = score;
+    }
 
+    public void addScore(int score) {
         this.score += score;
     }
 
@@ -23,11 +23,19 @@ public class Score {
         this.bonusScoreCount--;
     }
 
+    public void addBonusScoreCount(int bonusScoreCount) {
+        this.bonusScoreCount += bonusScoreCount;
+    }
+
     public void addCumulativeScore(int score) {
         this.score += score;
     }
 
-    public boolean bonusScoreCountIsEmpty() {
+    public boolean endAddBonusScore() {
         return bonusScoreCount <= ZERO;
+    }
+
+    public static Score of(int score) {
+        return new Score(score);
     }
 }

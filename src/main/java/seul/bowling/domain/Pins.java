@@ -20,6 +20,11 @@ public class Pins {
         this.pins = new ArrayList<>();
     }
 
+    public Pins(int clearPin) {
+        this.pins = new ArrayList<>();
+        addPin(clearPin, false);
+    }
+
     public void addPin(int clearPin, boolean isBonusPlay) {
         if (!isBonusPlay && pins.size() < DEFAULT_PLAY_COUNT) {
             invalidClearPinCount(clearPin);
@@ -37,6 +42,10 @@ public class Pins {
             return pins.size() > DEFAULT_PLAY_COUNT;
 
         return pins.size() >= DEFAULT_PLAY_COUNT;
+    }
+
+    public static Pins of(int clearPin) {
+        return new Pins(clearPin);
     }
 
     private int totalPin() {

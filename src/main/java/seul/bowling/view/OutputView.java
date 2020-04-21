@@ -68,7 +68,7 @@ public class OutputView {
         Map<Integer, ScoreView> scoreMap = new HashMap<>();
         String scoreValue = getScourValue(status, pins.getPins());
 
-        ScoreView scoreView = ScoreView.of(status.endScore(), status.getToTalScore(), scoreValue);
+        ScoreView scoreView = ScoreView.of(status.endCalculateScore(), status.getToTalScore(), scoreValue);
         scoreMap.put(frameIndex, scoreView);
         return scoreMap;
     }

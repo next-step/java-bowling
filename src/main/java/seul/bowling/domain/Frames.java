@@ -73,7 +73,7 @@ public class Frames {
         }
 
         Frame frame = getLastFrame();
-        if (frame.endFrame()) {
+        if (frame.endFrame() && !frame.isLastFame()) {
             frame = frame.next();
 
             frames.add(frame);
@@ -84,7 +84,7 @@ public class Frames {
 
     private void addBonusScore(int bonusScore) {
         frames.stream()
-                .filter(frame -> frame.availableAddBonusScore())
+                .filter(frame -> !frame.endCalculateScore())
                 .forEach(frame -> frame.addBonusScore(bonusScore));
     }
 
