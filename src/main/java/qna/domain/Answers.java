@@ -8,6 +8,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Embeddable
@@ -31,6 +32,10 @@ public class Answers {
         }
 
         return deleteHistories;
+    }
+
+    public List<Answer> getAnswers() {
+        return Collections.unmodifiableList(answers);
     }
 
     public void add(Answer answer) {
