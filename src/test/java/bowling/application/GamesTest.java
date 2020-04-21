@@ -17,13 +17,8 @@ class GamesTest {
     void getSizeByMultiRequest() {
         // give
         List<Request> requests = Arrays.asList(new Request("KSC"), new Request("SSJ"));
-        List<Game> games = new ArrayList<>();
 
-        for (Request request : requests) {
-            Game game = new Game(request);
-            games.add(game);
-        }
-        Games games1 = new Games(games);
+        Games games1 = new Games(requests);
         // when
         boolean same = games1.getResponses().size() == requests.size();
         // then

@@ -17,20 +17,14 @@ public class Games {
     private List<Response> responses;
     private int currentFrameNumber = 1;
 
-    public Games(List<Game> games) {
-        this.games = games;
+    public Games(List<Request> requests) {
+        createGame(requests);
     }
 
-    public Games(int peopleCount) {
-        this.games = new ArrayList<>();
-        createGame(peopleCount);
-    }
-
-    private void createGame(int peopleCount) {
-        for (int i = 0; i < peopleCount; i++) {
-            Request request = new Request(InputView.inputName(i + 1));
-            Game game = new Game(request);
-            games.add(game);
+    private void createGame(List<Request> requests) {
+        games = new ArrayList<>();
+        for (Request request : requests) {
+            games.add(new Game(request));
         }
     }
 
