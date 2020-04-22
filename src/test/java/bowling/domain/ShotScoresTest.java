@@ -51,11 +51,4 @@ class ShotScoresTest {
                 .isEqualTo(9);
     }
 
-    @Test
-    void totalScoreTest() {
-        ShotScores shotScores = ShotScores.of(Arrays.asList(ShotScore.init(4), ShotScore.init(5)));
-        assertThat(shotScores.totalScore())
-                .isEqualTo(9);
-    }
-
 }
