@@ -16,10 +16,6 @@ public class Score {
     private final int score;
     private int addCount;
 
-    public Score() {
-        this(ZERO, 0);
-    }
-
     public Score(int score) {
         validateScoreRange(score);
         this.score = score;

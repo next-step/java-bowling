@@ -153,11 +153,10 @@ public class ResultView {
 
     private static void printScore(Score score) {
         if (score != null) {
-            System.out.print(String.format("%s%4d  ",
-                    VERTICAL, score.getScore()));
-        } else {
-            System.out.print(EMPTY_FRAME);
+            System.out.print(String.format("%s%4d  ", VERTICAL, score.getScore()));
+            return;
         }
+        System.out.print(EMPTY_FRAME);
     }
 
     public static void printScorePlayer(BowlingGame bowlingGame, int frameNumber) {
