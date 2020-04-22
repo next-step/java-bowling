@@ -12,11 +12,6 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isThrowable() {
-        return points.isThrowableForFinalFrame();
-    }
-
-    @Override
     public void addScore() {
         if (this.score == null && (points.isScore(ScoreStatus.STRIKE) || points.isTryCount(SCOREABLE_TRY_COUNT))) {
             this.score = points.makeScore();

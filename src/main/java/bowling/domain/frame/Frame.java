@@ -16,11 +16,13 @@ public abstract class Frame {
         points = new Points();
     }
 
-    public abstract boolean isThrowable();
+    public boolean isThrowable() {
+        return !status.isEnd();
+    }
 
     public abstract void addScore();
 
-    public Frame throwBall(Point point) throws OverThrowBallException{
+    public Frame throwBall(Point point) throws OverThrowBallException {
         this.points.addPoint(point);
         this.status = this.status.throwBall(point);
         return this;

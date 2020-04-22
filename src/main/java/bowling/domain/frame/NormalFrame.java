@@ -9,11 +9,6 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isThrowable() {
-        return points.isThrowableForNormalFrame();
-    }
-
-    @Override
     public void addScore() {
         if (!isThrowable()) {
             this.score = points.makeScore();

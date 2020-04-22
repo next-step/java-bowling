@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class ResultView {
     private static final int TOTAL_FRAME_COUNT = 10;
     private static final int DEFAULT_SCORE = 0;
-    
+
     private static final String FRAME_HEAD = "|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |";
     private static final String FRAME_FOOTER = "----------------------------------------------------------------------------------------------------";
     private static final String FRAME_LINE = "|";
