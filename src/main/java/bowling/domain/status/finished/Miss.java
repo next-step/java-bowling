@@ -17,6 +17,6 @@ public class Miss extends Finished {
 
     @Override
     public String print() {
-        return firstPoint.print() + "|" + firstPoint.print();
+        return firstPoint.print() + "|" + secondPoint.print();
     }
 }
