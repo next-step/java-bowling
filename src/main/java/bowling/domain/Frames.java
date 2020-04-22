@@ -52,6 +52,6 @@ public class Frames {
     }
 
     public Collection<Frame> getFrames() {
-        return frames;
+        return new ArrayList<>(frames);
     }
 }

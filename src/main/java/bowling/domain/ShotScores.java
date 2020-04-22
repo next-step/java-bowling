@@ -9,7 +9,7 @@ class ShotScores {
     private final List<ShotScore> shotScores;
 
     private ShotScores(List<ShotScore> shotScores) {
-        this.shotScores = new ArrayList<>(shotScores);
+        this.shotScores = shotScores;
     }
 
     static ShotScores of(List<ShotScore> shotScores) {
@@ -68,6 +68,6 @@ class ShotScores {
     }
 
     List<ShotScore> shotScores() {
-        return shotScores;
+        return new ArrayList<>(shotScores);
     }
 }
