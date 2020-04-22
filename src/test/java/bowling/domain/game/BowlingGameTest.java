@@ -30,7 +30,7 @@ public class BowlingGameTest {
     @Test
     @DisplayName("게임 끝 테스트")
     void isEndTest() {
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 12; i++) {
             bowlingGame.throwBall(Point.of(10));
         }
         assertThat(

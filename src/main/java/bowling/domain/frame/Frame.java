@@ -1,25 +1,21 @@
 package bowling.domain.frame;
 
 import bowling.domain.point.Point;
-import bowling.domain.point.Points;
 import bowling.domain.score.Score;
 import bowling.domain.status.Status;
 
 import java.util.Objects;
 
 public abstract class Frame {
-    protected Points points;
     protected Status status;
     protected Score score;
 
     public Frame() {
-        points = new Points();
     }
 
-    public void addScore(){
-        Score tmpScore = status.getScore();
-        if(tmpScore != null) {
-            this.score = tmpScore;
+    public void addScore() {
+        if (status.getScore() != null) {
+            this.score = status.getScore();
         }
     }
 
@@ -28,7 +24,6 @@ public abstract class Frame {
     }
 
     public Frame throwBall(Point point) throws OverThrowBallException {
-        this.points.addPoint(point);
         this.status = this.status.throwBall(point);
         return this;
     }

@@ -24,7 +24,7 @@ public class BowlingGamesTest {
     @Test
     @DisplayName("볼링게임 전체 끝 테스트")
     void isEndTest() {
-        for (int i = 0; i < 26; i++) {
+        for (int i = 0; i < 24; i++) {
             bowlingGames.throwBall(Point.of(10));
         }
         assertThat(

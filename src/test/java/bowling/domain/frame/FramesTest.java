@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class FramesTest {
     private Frames frames;
@@ -22,15 +23,15 @@ public class FramesTest {
     }
 
     @Test
-    @DisplayName("다음 시작할 프레임 생성, 가져오기 테스트")
+    @DisplayName("다음 시작할 프레임 가져오기 테스트")
     void getNextFrameTest() {
         frames.getNextFrame().throwBall(Point.of(10));
         frames.getNextFrame().throwBall(Point.of(10));
         frames.getNextFrame().throwBall(Point.of(10));
 
-        assertThat(
-                frames.getLastFrame().points.getSum()
-        ).isEqualTo(10);
+        assertThatCode(
+                () -> frames.getLastFrame()
+        ).doesNotThrowAnyException();
     }
 
     @Test
