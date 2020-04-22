@@ -62,7 +62,7 @@ public class Frame {
         return shotScores.hasClear();
     }
 
-    Integer getFrameScore() {
+    public Integer getFrameScore() {
         if (isFrameSet()) {
             return score();
         }
