@@ -1,5 +1,7 @@
 package bowling.domain.status.finished;
 
+import bowling.domain.score.Score;
+
 public class Double extends Finished {
 
     public static Double of() {
@@ -13,5 +15,10 @@ public class Double extends Finished {
     @Override
     public String print() {
         return "X|X";
+    }
+
+    @Override
+    public Score getScore() {
+        return null;
     }
 }

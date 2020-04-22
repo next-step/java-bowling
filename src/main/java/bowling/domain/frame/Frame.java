@@ -16,20 +16,21 @@ public abstract class Frame {
         points = new Points();
     }
 
+    public void addScore(){
+        Score tmpScore = status.getScore();
+        if(tmpScore != null) {
+            this.score = tmpScore;
+        }
+    }
+
     public boolean isThrowable() {
         return !status.isEnd();
     }
-
-    public abstract void addScore();
 
     public Frame throwBall(Point point) throws OverThrowBallException {
         this.points.addPoint(point);
         this.status = this.status.throwBall(point);
         return this;
-    }
-
-    public Points getPoints() {
-        return this.points;
     }
 
     public Integer getScore() {
@@ -59,12 +60,12 @@ public abstract class Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return Objects.equals(points, frame.points) &&
+        return Objects.equals(status, frame.status) &&
                 Objects.equals(score, frame.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(points, score);
+        return Objects.hash(status, score);
     }
 }

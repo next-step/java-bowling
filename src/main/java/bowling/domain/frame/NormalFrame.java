@@ -7,11 +7,4 @@ public class NormalFrame extends Frame {
         super();
         this.status = Ready.of();
     }
-
-    @Override
-    public void addScore() {
-        if (!isThrowable()) {
-            this.score = points.makeScore();
-        }
-    }
 }

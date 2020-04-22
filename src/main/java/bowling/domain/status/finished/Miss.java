@@ -1,6 +1,7 @@
 package bowling.domain.status.finished;
 
 import bowling.domain.point.Point;
+import bowling.domain.score.Score;
 
 public class Miss extends Finished {
     private final Point firstPoint;
@@ -18,5 +19,10 @@ public class Miss extends Finished {
     @Override
     public String print() {
         return firstPoint.print() + "|" + secondPoint.print();
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofMiss(firstPoint.add(secondPoint));
     }
 }

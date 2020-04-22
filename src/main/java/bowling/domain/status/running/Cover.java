@@ -1,6 +1,7 @@
 package bowling.domain.status.running;
 
 import bowling.domain.point.Point;
+import bowling.domain.score.Score;
 import bowling.domain.status.Status;
 import bowling.domain.status.finished.Double;
 import bowling.domain.status.finished.Gutter;
@@ -36,5 +37,10 @@ public class Cover extends Running {
     @Override
     public String print() {
         return firstPoint.print();
+    }
+
+    @Override
+    public Score getScore() {
+        return null;
     }
 }

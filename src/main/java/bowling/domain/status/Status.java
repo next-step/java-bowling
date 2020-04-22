@@ -1,6 +1,7 @@
 package bowling.domain.status;
 
 import bowling.domain.point.Point;
+import bowling.domain.score.Score;
 
 public interface Status {
 
@@ -9,4 +10,6 @@ public interface Status {
     boolean isEnd();
 
     String print();
+
+    Score getScore();
 }

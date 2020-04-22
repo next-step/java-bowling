@@ -1,10 +1,11 @@
 package bowling.domain.score;
 
 public class Score {
-    private static final int MISS_LEFT_COUNT = 0;
+    private static final int DEFAULT_LEFT_COUNT = 0;
     private static final int SPARE_LEFT_COUNT = 1;
     private static final int STRIKE_LEFT_COUNT = 2;
 
+    private static final int GUTTER_POINT = 10;
     private static final int SPARE_POINT = 10;
     private static final int STRIKE_POINT = 10;
     private static final int CAN_CALCULATE_LEFT_COUNT = 0;
@@ -12,8 +13,12 @@ public class Score {
     private int score;
     private int leftCount;
 
+    public static Score ofGutter() {
+        return new Score(GUTTER_POINT, DEFAULT_LEFT_COUNT);
+    }
+
     public static Score ofMiss(int point) {
-        return new Score(point, MISS_LEFT_COUNT);
+        return new Score(point, DEFAULT_LEFT_COUNT);
     }
 
     public static Score ofSpare() {

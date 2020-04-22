@@ -1,5 +1,7 @@
 package bowling.domain.status.finished;
 
+import bowling.domain.score.Score;
+
 public class Gutter extends Finished {
 
     public static Gutter of() {
@@ -13,5 +15,10 @@ public class Gutter extends Finished {
     @Override
     public String print() {
         return "-|-";
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofGutter();
     }
 }

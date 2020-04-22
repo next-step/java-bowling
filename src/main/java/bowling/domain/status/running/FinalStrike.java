@@ -1,6 +1,7 @@
 package bowling.domain.status.running;
 
 import bowling.domain.point.Point;
+import bowling.domain.score.Score;
 import bowling.domain.status.Status;
 import bowling.domain.status.finished.FinalStrikeEnd;
 
@@ -23,5 +24,10 @@ public class FinalStrike extends Running {
     @Override
     public String print() {
         return "X|" + secondPoint.print();
+    }
+
+    @Override
+    public Score getScore() {
+        return null;
     }
 }
