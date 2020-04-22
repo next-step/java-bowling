@@ -3,6 +3,7 @@ package seul.bowling.view;
 import seul.bowling.domain.Frame;
 import seul.bowling.domain.Frames;
 import seul.bowling.domain.Pins;
+import seul.bowling.domain.Player;
 import seul.bowling.domain.pin.Pin;
 import seul.bowling.domain.status.Status;
 
@@ -29,24 +30,35 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printScoreBoard(String playerName, Frames frames) {
-        Map<Integer, ScoreView> scoreMap = makeScore(frames);
-
+    public static void printScoreBoard(List<Player> players) {
         String subject = SCORE_BOARD_NAME;
-        String contents = String.format(SCORE_BOARD_NAME_CONTENTS, playerName);
-        String scores = SCORE_BOARD_INIT;
 
-        for (Map.Entry<Integer, ScoreView> scoreEntry : scoreMap.entrySet()) {
-            ScoreView scoreView = scoreEntry.getValue();
+        boolean first = true;
+        for (Player player : players) {
+            Map<Integer, ScoreView> scoreMap = makeScore(player.getFrames());
 
-            subject += String.format(ADD_SCORE_BOARD_SUBJECT, scoreEntry.getKey());
-            contents += String.format(ADD_SCORE_BOARD_CONTENTS, scoreView.getSign());
-            scores += String.format(ADD_SCORE_BOARD_CONTENTS, scoreView.getScore());
+            String contents = String.format(SCORE_BOARD_NAME_CONTENTS, player.getName());
+            String scores = SCORE_BOARD_INIT;
+
+            for (Map.Entry<Integer, ScoreView> scoreEntry : scoreMap.entrySet()) {
+                ScoreView scoreView = scoreEntry.getValue();
+
+                if (first) {
+                    subject += String.format(ADD_SCORE_BOARD_SUBJECT, scoreEntry.getKey());
+                }
+                contents += String.format(ADD_SCORE_BOARD_CONTENTS, scoreView.getSign());
+                scores += String.format(ADD_SCORE_BOARD_CONTENTS, scoreView.getScore());
+            }
+
+            if (first) {
+                System.out.println(subject);
+            }
+
+            System.out.println(contents);
+            System.out.println(scores);
+
+            first = false;
         }
-
-        System.out.println(subject);
-        System.out.println(contents);
-        System.out.println(scores);
     }
 
     private static Map<Integer, ScoreView> makeScore(Frames frames) {
@@ -68,7 +80,7 @@ public class OutputView {
         Map<Integer, ScoreView> scoreMap = new HashMap<>();
         String scoreValue = getScourValue(status, pins.getPins());
 
-        ScoreView scoreView = ScoreView.of(status.endScore(), status.getToTalScore(), scoreValue);
+        ScoreView scoreView = ScoreView.of(status.endCalculateScore(), status.getToTalScore(), scoreValue);
         scoreMap.put(frameIndex, scoreView);
         return scoreMap;
     }

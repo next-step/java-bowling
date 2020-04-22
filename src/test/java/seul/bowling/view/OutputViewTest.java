@@ -1,26 +1,22 @@
 package seul.bowling.view;
 
 import org.junit.jupiter.api.Test;
-import seul.bowling.domain.Frames;
+import seul.bowling.domain.Players;
+
+import java.util.Arrays;
 
 public class OutputViewTest {
     @Test
     void printScoreBoard() {
-        Frames frames = new Frames();
-        frames.play(10);
-        frames.play(9);
-        frames.play(1);
-        frames.play(10);
-        frames.play(10);
-        frames.play(10);
-        frames.play(10);
-        frames.play(10);
-        frames.play(10);
-        frames.play(10);
-        frames.play(9);
-        frames.play(1);
-        frames.play(10);
+        Players players = Players.of(Arrays.asList("PES", "EEE"));
 
-        OutputView.printScoreBoard("PES", frames);
+        players.play("PES", 10);
+        players.play("EEE", 10);
+        players.play("PES", 9);
+        players.play("PES", 1);
+        players.play("EEE", 8);
+        players.play("EEE", 2);
+
+        OutputView.printScoreBoard(players.getPlayers());
     }
 }

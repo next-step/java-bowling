@@ -25,9 +25,7 @@ public class LastFrameTest {
         lastFrame.addPins(1);
 
         assertThat(lastFrame.getStatus().getPins().allClear()).isTrue();
-        assertThat(lastFrame.getBonusPlay()).isEqualTo(1);
         assertThat(lastFrame.getStatus().getClass()).isEqualTo(Spare.class);
-        assertThat(lastFrame.getBonusPlay()).isEqualTo(1);
         assertThat(lastFrame.getScore()).isEqualTo(10);
     }
 

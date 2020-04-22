@@ -1,6 +1,7 @@
 package seul.bowling.domain;
 
 import lombok.Getter;
+import seul.bowling.domain.status.Ready;
 import seul.bowling.domain.status.Status;
 
 import java.util.Objects;
@@ -17,24 +18,15 @@ public class Frame {
 
     protected Frame(int index) {
         this.index = index;
-        this.status = new Status();
+        this.status = new Ready();
     }
 
     public void addPins(int clearPin) {
-        addPins(clearPin, false);
+        status = status.addPins(clearPin);
     }
 
-    void addPins(int clearPin, boolean isBonusPlay) {
-        status.addPins(clearPin, isBonusPlay);
-
-        if (!this.status.endJudgmentStatus()) {
-            this.status = status.judgmentStatus(status.pinsAllClear());
-            this.status.addScore(clearPin);
-        }
-    }
-
-    public void addBonusScore(int bonusScore) {
-        status.addBonusScore(bonusScore);
+    public void addBonusScore(int clearPin) {
+        status.addBonusScore(clearPin);
     }
 
     public void addCumulativeScore(int score) {
@@ -55,15 +47,11 @@ public class Frame {
     }
 
     public boolean endFrame() {
-        return status.endJudgmentStatus();
+        return status.end();
     }
 
     public boolean endCalculateScore() {
-        return status.endScore();
-    }
-
-    public boolean availableAddBonusScore() {
-        return status.availableAddBonusScore();
+        return status.endCalculateScore();
     }
 
     public boolean isLastFame() {

@@ -1,37 +1,42 @@
 package seul.bowling.domain.status;
 
 import org.junit.jupiter.api.Test;
-import seul.bowling.domain.Pins;
-import seul.bowling.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HoldTest {
     @Test
-    void judgmentStatus() {
-        Status status = new Hold(new Score(), new Pins());
+    void addPins() {
+        Status status = new Hold(1);
 
-        status = status.judgmentStatus(true);
+        status = status.addPins(9);
 
         assertThat(status.getClass()).isEqualTo(Spare.class);
+        assertThat(status.getToTalScore()).isEqualTo(10);
     }
 
     @Test
-    void endJudgmentStatus() {
-        Status status = new Hold(new Score(), new Pins());
+    void addCumulativeScore() {
+        Status status = new Hold(1);
 
-        boolean endJudgementStatus = status.endJudgmentStatus();
+        status.addCumulativeScore(10);
 
-        assertThat(endJudgementStatus).isFalse();
+        assertThat(status.getToTalScore()).isEqualTo(11);
     }
 
     @Test
-    void addScore() {
-        Status status = new Hold(new Score(), new Pins());
+    void getToTalScore() {
+        Status status = new Hold(9);
+        status.addPins(1);
 
-        status.addScore(10);
+        assertThat(status.getToTalScore()).isEqualTo(10);
+    }
 
-        assertThat(status.getScore().getScore()).isEqualTo(10);
-        assertThat(status.getScore().getBonusScoreCount()).isEqualTo(0);
+    @Test
+    void equalsStatus() {
+        Status status = new Hold(9);
+
+        assertThat(status.equalsStatus(new Hold(10))).isTrue();
+
     }
 }

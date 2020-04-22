@@ -1,35 +1,15 @@
 package seul.bowling.domain;
 
-import lombok.Getter;
+import seul.bowling.domain.status.Status;
 
 public class LastFrame extends Frame {
-    @Getter
-    private int bonusPlay;
+    private static final int ZERO = 0;
 
     protected LastFrame(int index) {
         super(index);
-
-        if (index == LAST_FRAME_INDEX && !isBonusPlay()) {
-            this.bonusPlay = status.getBonusPlay();
-        }
-
-        if (isBonusPlay() && endDefaultPlay()) {
-            this.bonusPlay--;
-        }
     }
 
-    @Override
-    public void addPins(int clearPin) {
-        addPins(clearPin, isBonusPlay());
-
-        if (!isBonusPlay()) {
-            this.bonusPlay = status.getBonusPlay();
-        }
-
-        if (isBonusPlay() && endDefaultPlay()) {
-            this.bonusPlay--;
-        }
-    }
+    private int bonusPlay;
 
     @Override
     public boolean isLastFame() {
@@ -37,15 +17,23 @@ public class LastFrame extends Frame {
     }
 
     @Override
+    public void addPins(int clearPin) {
+        if (!endBonusPlay()) {
+            bonusPlay--;
+        }
+
+        Status newStatus = status.addPins(clearPin);
+
+        if (!newStatus.equalsStatus(status)) {
+            this.status = newStatus;
+        }
+    }
+
     public boolean endFrame() {
-        return status.endJudgmentStatus() && this.bonusPlay == ZERO;
+        return status.end() && status.endCalculateScore();
     }
 
-    private boolean endDefaultPlay() {
-        return status.pinsEndDefaultPlayCount();
-    }
-
-    private boolean isBonusPlay() {
-        return this.bonusPlay > ZERO;
+    private boolean endBonusPlay() {
+        return this.bonusPlay <= ZERO;
     }
 }

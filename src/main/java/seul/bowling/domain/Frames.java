@@ -17,13 +17,15 @@ public class Frames {
         this.frames = new ArrayList<>();
     }
 
-    public void play(int clearPin) {
+    public Frame play(int clearPin) {
         addBonusScore(clearPin);
 
         Frame frame = playFrame();
         frame.addPins(clearPin);
 
         calculateCumulativeScore();
+
+        return frame;
     }
 
     private void calculateCumulativeScore() {
@@ -43,7 +45,7 @@ public class Frames {
     }
 
     public boolean end() {
-        Frame frame = lastFrame();
+        Frame frame = getLastFrame();
         if (frame.isLastFame() && frame.endFrame()) {
             return true;
         }
@@ -72,8 +74,8 @@ public class Frames {
             return frame;
         }
 
-        Frame frame = lastFrame();
-        if (frame.endFrame()) {
+        Frame frame = getLastFrame();
+        if (frame.endFrame() && !frame.isLastFame()) {
             frame = frame.next();
 
             frames.add(frame);
@@ -84,11 +86,11 @@ public class Frames {
 
     private void addBonusScore(int bonusScore) {
         frames.stream()
-                .filter(frame -> frame.availableAddBonusScore())
+                .filter(frame -> !frame.endCalculateScore())
                 .forEach(frame -> frame.addBonusScore(bonusScore));
     }
 
-    private Frame lastFrame() {
+    private Frame getLastFrame() {
         return frames.get(frames.size() - ONE);
     }
 }

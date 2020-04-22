@@ -1,30 +1,50 @@
 package seul.bowling.domain.status;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seul.bowling.domain.Pins;
-import seul.bowling.domain.Score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StrikeTest {
-    @Test
-    void addScore() {
-        Status status = new Strike(new Score(), new Pins());
+    private Status status;
 
-        status.addScore(10);
-
-        assertThat(status.getScore().getScore()).isEqualTo(10);
-        assertThat(status.getScore().getBonusScoreCount()).isEqualTo(2);
+    @BeforeEach
+    void setUp() {
+        status = new Strike(10);
     }
 
     @Test
-    void endScore() {
-        Status status = new Strike(new Score(), new Pins());
-        status.addScore(10);
+    void addPins() {
+        status.addPins(10);
 
-        boolean endScore = status.endScore();
+        assertThat(status.getClass()).isEqualTo(Strike.class);
+    }
 
-        assertThat(endScore).isFalse();
-        assertThat(status.getScore().getBonusScoreCount()).isEqualTo(2);
+    @Test
+    void addBonusScore() {
+        this.status.addBonusScore(10);
+
+        assertThat(status.getToTalScore()).isEqualTo(20);
+    }
+
+    @Test
+    void end() {
+        boolean end = this.status.end();
+
+        assertThat(end).isTrue();
+    }
+
+    @Test
+    void addCumulativeScore() {
+        this.status.addCumulativeScore(10);
+
+        assertThat(this.status.getToTalScore()).isEqualTo(20);
+    }
+
+    @Test
+    void getToTalScore() {
+        int totalScore = this.status.getToTalScore();
+
+        assertThat(totalScore).isEqualTo(10);
     }
 }

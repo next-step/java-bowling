@@ -1,32 +1,36 @@
 package seul.bowling.domain.status;
 
+import lombok.Getter;
 import seul.bowling.domain.Pins;
 import seul.bowling.domain.Score;
 
-public class Miss extends Status {
-    private static final int BONUS_SCORE_COUNT = 0;
+@Getter
+public class Miss extends Finished {
+    private Pins pins;
+    private Score score;
 
-    public Miss(Score score, Pins pins) {
-        super(score, pins);
+    public Miss(Pins pins, Score score) {
+        this.pins = pins;
+        this.score = score;
     }
 
     @Override
-    public Status judgmentStatus(boolean allClear) {
-        return this;
+    public void addCumulativeScore(int score) {
+        this.score.addCumulativeScore(score);
     }
 
     @Override
-    public boolean endJudgmentStatus() {
-        return true;
+    public int getToTalScore() {
+        return this.score.getScore();
     }
 
     @Override
-    public void addScore(int clearPin) {
-        this.score.addScore(clearPin, BONUS_SCORE_COUNT);
+    public Pins getPins() {
+        return this.pins;
     }
 
     @Override
-    public boolean endScore() {
-        return true;
+    public boolean equalsStatus(Status status) {
+        return this.getClass().equals(status.getClass());
     }
 }
