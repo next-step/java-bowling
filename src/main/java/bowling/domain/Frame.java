@@ -35,20 +35,23 @@ public class Frame {
     }
 
     private void shot(ShotScore shot) {
-        int shotLimit = getShotLimit();
-        if (shotScores.isSize(shotLimit)) {
-            throw new IllegalStateException(String.format("shot Frame fail. cannot shot over %d times", shotLimit));
+        if (isShootLimitedSize()) {
+            throw new IllegalStateException(String.format("shot Frame fail. cannot shot over %d times", getShotLimit()));
         }
 
         shotScores.add(shot);
     }
 
     boolean isFrameSet() {
-        return shotScores.isSize(getShotLimit()) ||
-                (cannotShooting());
+        return isShootLimitedSize() ||
+                cannotShooting();
     }
 
-    private int getShotLimit() {
+    private boolean isShootLimitedSize() {
+        return shotScores.isSize(getShotLimit());
+    }
+
+    private int getShotLimit(){
         return isLast ? SHOT_LIMIT + 1 : SHOT_LIMIT;
     }
 
