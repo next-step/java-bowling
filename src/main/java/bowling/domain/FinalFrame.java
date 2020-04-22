@@ -29,7 +29,7 @@ public class FinalFrame implements Frame {
 
   @Override
   public Frame getNextFrame() {
-    return NULL_FRAME;
+    return NullFrame.of(Round.of(Round.FINAL_ROUND).next());
   }
 
   @Override
@@ -64,5 +64,10 @@ public class FinalFrame implements Frame {
   @Override
   public boolean isEnd() {
     return regularResult.isFinished() && bonusResult.isFinished();
+  }
+
+  @Override
+  public boolean isFinalFrame() {
+    return true;
   }
 }

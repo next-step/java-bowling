@@ -1,9 +1,5 @@
 package bowling.view;
 
-import static bowling.domain.Frame.NULL_FRAME;
-import static bowling.domain.Round.FINAL_ROUND;
-
-import bowling.domain.BonusResult;
 import bowling.domain.BowlResult;
 import bowling.domain.BowlingGame;
 import bowling.domain.FinalFrame;
@@ -16,7 +12,6 @@ import bowling.domain.Trial;
 public class ResultView {
 
   private static final String FRAMES_META_DATA = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-  private static final String EMPTY_FRAME = "      |";
   private static final String NAME_FORMAT = "|  %s |";
   private static final String FRAME_STATUS_FORMAT = " %-5s|";
   private static final String SCORE_DELIMITER = "|";
@@ -36,18 +31,13 @@ public class ResultView {
   private static StringBuilder getFrameStatus(BowlingGame bowlingGame) {
     StringBuilder builder = new StringBuilder(String.format(NAME_FORMAT, bowlingGame.getPlayerName()));
     Frame frame = bowlingGame.getFrame();
-    int frameCount = 0;
 
-    while (frame != NULL_FRAME) {
-      frameCount++;
+    while (!frame.isFinalFrame()) {
       builder.append(String.format(FRAME_STATUS_FORMAT, visualize(frame)));
       frame = frame.getNextFrame();
     }
 
-    while (frameCount < FINAL_ROUND) {
-      frameCount++;
-      builder.append(EMPTY_FRAME);
-    }
+    builder.append(String.format(FRAME_STATUS_FORMAT, visualize(frame)));
     return builder;
   }
 
@@ -56,7 +46,18 @@ public class ResultView {
       return visualize((NormalFrame) frame);
     }
 
-    return visualize((FinalFrame) frame);
+    if (frame instanceof FinalFrame) {
+      return visualize((FinalFrame) frame);
+    }
+
+    return NOT_PLAYED_SIGN;
+  }
+
+  private static String visualize(NormalFrame frame) {
+    FrameInfo frameInfo = frame.getFrameInfo();
+    RegularResult regularResult = frameInfo.getRegularResult();
+
+    return visualize(regularResult);
   }
 
   private static String visualize(FinalFrame frame) {
@@ -68,13 +69,6 @@ public class ResultView {
     }
 
     return visualized;
-  }
-
-  private static String visualize(NormalFrame frame) {
-    FrameInfo frameInfo = frame.getFrameInfo();
-    RegularResult regularResult = frameInfo.getRegularResult();
-
-    return visualize(regularResult);
   }
 
   private static String visualize(BowlResult bowlResult) {

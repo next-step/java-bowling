@@ -24,36 +24,5 @@ public interface Frame {
 
   boolean isEnd();
 
-
-  Frame NULL_FRAME = new Frame() {
-    @Override
-    public Frame roll(int pinCount) {
-      return null;
-    }
-
-    @Override
-    public int getRound() {
-      return 0;
-    }
-
-    @Override
-    public Frame getNextFrame() {
-      return null;
-    }
-
-    @Override
-    public Score calculateBonusScore(int bonusBowlCount) {
-      return null;
-    }
-
-    @Override
-    public Score calculateScore() {
-      return null;
-    }
-
-    @Override
-    public boolean isEnd() {
-      return false;
-    }
-  };
+  boolean isFinalFrame();
 }

@@ -9,7 +9,7 @@ public class NormalFrame implements Frame {
 
   private NormalFrame(Round round) {
     frameInfo = new FrameInfo(round);
-    next = NULL_FRAME;
+    next = NullFrame.of(round.next());
   }
 
   public static NormalFrame initialize() {
@@ -57,6 +57,11 @@ public class NormalFrame implements Frame {
 
   @Override
   public boolean isEnd() {
+    return false;
+  }
+
+  @Override
+  public boolean isFinalFrame() {
     return false;
   }
 }
