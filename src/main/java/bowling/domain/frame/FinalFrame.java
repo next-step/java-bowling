@@ -2,8 +2,12 @@ package bowling.domain.frame;
 
 import bowling.domain.frame.state.FinalFrameStates;
 import bowling.domain.frame.state.State;
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class FinalFrame implements Frame {
@@ -14,10 +18,6 @@ public class FinalFrame implements Frame {
 
     public FinalFrame() {
         this.states = FinalFrameStates.of();
-    }
-
-    public FinalFrame(FinalFrameStates states) {
-        this.states = states;
     }
 
     @Override
@@ -36,6 +36,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public boolean isEnd() {
+        return isFinish();
+    }
+
+    @Override
     public Frame createNext() {
         throw new BowlingException(LAST_FRAME);
     }
@@ -51,6 +56,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public Frame findLast() {
+        return this;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -61,5 +71,35 @@ public class FinalFrame implements Frame {
     @Override
     public int hashCode() {
         return Objects.hash(states);
+    }
+
+
+    @Override
+    public Score getCurrentScore() {
+        return states.getCurrentScore();
+    }
+
+    @Override
+    public Score getTotalScore(int frameNumber) {
+        return getCurrentScore();
+    }
+
+    @Override
+    public Score getCalculateScore(Score before) {
+        return states.getCalculateScore(before);
+    }
+
+    @Override
+    public Frame findFrame(int frameNumber) {
+        return this;
+    }
+
+    @Override
+    public List<Pins> getPins() {
+        List<Pins> merge = new ArrayList<>();
+        merge.add(states.getFirstPins());
+        merge.add(states.getLastPins());
+
+        return merge;
     }
 }

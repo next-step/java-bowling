@@ -1,5 +1,7 @@
 package bowling.domain.frame.state;
 
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
 import java.util.Arrays;
@@ -72,11 +74,22 @@ public class FinalFrameStates implements State {
         return false;
     }
 
-    private boolean isHaveBonus() {
+    public boolean isHaveBonus() {
         if (states.size() == FINAL_STATE_SIZE && !(states.getLast() instanceof Ready)) {
             return true;
         }
         return false;
+    }
+
+    public Pins getFirstPins() {
+        return states.getFirst().getPins();
+    }
+
+    public Pins getLastPins() {
+        if (isHaveBonus()) {
+            return states.getLast().getPins();
+        }
+        return null;
     }
 
     @Override
@@ -126,18 +139,30 @@ public class FinalFrameStates implements State {
     }
 
     @Override
-    public String getCurrentPinsState() {
-        StringBuffer buffer = new StringBuffer();
-
-        String firstResult = states.getFirst().getCurrentPinsState();
+    public Score getCurrentScore() {
+        Score firstStateScore = states.getFirst().getCurrentScore();
 
         if (isHaveBonus()) {
-            buffer.append(firstResult.trim());
-            buffer.append("|").append(states.getLast().getCurrentPinsState().trim());
-            return String.format("%5s ", buffer.toString());
+            Score secondStateScore = states.getLast().getCurrentScore();
+            return new Score(firstStateScore.getScore() + secondStateScore.getScore(), 0);
         }
 
-        buffer.append(firstResult);
-        return String.format("%3s ", buffer.toString());
+        return new Score(firstStateScore.getScore(), 0);
+    }
+
+    @Override
+    public Score getCalculateScore(Score before) {
+        before = states.getFirst().getCalculateScore(before);
+
+        if (before.canAddNextScore()) {
+            return states.getLast().getCalculateScore(before);
+        }
+
+        return before;
+    }
+
+    @Override
+    public Pins getPins() {
+        throw new BowlingException();
     }
 }

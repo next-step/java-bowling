@@ -1,6 +1,7 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pin.Pin;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ class SpareTest {
     public void validate_fail() throws Exception {
         //given
         assertThatThrownBy(
-                () -> new Spare(new Pins(0), new Pins(2))
+                () -> new Spare(new Pin(10), new Pin(2))
         ).isInstanceOf(BowlingException.class);
     }
 
@@ -39,5 +40,31 @@ class SpareTest {
 
         //then
         assertTrue(strike.isFinish());
+    }
+
+    @DisplayName("spare 상태의 점수는 10점이다")
+    @Test
+    public void getScore_success() throws Exception {
+        //given
+        Strike strike = new Strike();
+        Score ten = new Score(10);
+
+        //then
+        assertTrue(strike.getCurrentScore().equals(ten));
+    }
+
+    @DisplayName("이전 프레임에서 점수를 2회 더해준다(이전이 strike 일때")
+    @Test
+    public void getCalculateScore_success_twice() throws Exception {
+        //given
+        Spare spare = new Spare(new Pin(1), new Pin(2));
+        Score score = new Score(10, 2);
+        Score compare = new Score(13);
+
+        //when
+        Score result = spare.getCalculateScore(score);
+
+        //then
+        assertTrue(result.equals(compare));
     }
 }

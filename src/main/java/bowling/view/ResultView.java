@@ -4,7 +4,12 @@ import bowling.domain.BowlingGame;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
+import bowling.exception.BowlingException;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -14,6 +19,11 @@ public class ResultView {
     private static final String NAME = "NAME";
     private static final String SCORE_BOARD_TOP;
     private static final String EMPTY_FRAME = "|      ";
+    private static final String STRIKE_STATE = "  X   ";
+    public static final String MISS_STATE = "%3d|%d ";
+    private static final String GUTTER_STATE = " -|-  ";
+    public static final String FIRST_BLOW_STATE = "%3d   ";
+    private static final String SPARE_STATE = "%3d|/ ";
 
     static {
         String buffer = IntStream.range(1, 11)
@@ -31,10 +41,70 @@ public class ResultView {
         System.out.print(String.format("%-3s%s   ", VERTICAL, name));
     }
 
+    private static String printGutter(Pins pins) {
+        if (pins.getFirstDownPin() == 0) {
+            return GUTTER_STATE;
+        }
+        return String.format("%3d|-  ", pins.getFirstDownPin());
+    }
+
+    private static String printSpare(Pins pins) {
+        return String.format(SPARE_STATE, pins.getFirstDownPin());
+    }
+
+    public static String printFirstBlow(Pins pins) {
+        if (pins.getFirstDownPin() == 0) {
+            return "  -  ";
+        }
+        return String.format(FIRST_BLOW_STATE, pins.getFirstDownPin());
+    }
+
+    public static String printMiss(Pins pins) {
+        if (pins.getFirstDownPin() == 0) {
+            return String.format(" -|%d  ", pins.getSecondDownPin());
+        }
+
+        if (pins.getSecondDownPin() == 0) {
+            return String.format("  %d|- ", pins.getFirstDownPin());
+        }
+
+        return String.format(MISS_STATE, pins.getFirstDownPin(), pins.getSecondDownPin());
+    }
+
+    private static String printScore(Pins pins) {
+        if (pins.isStrike()) {
+            return STRIKE_STATE;
+        }
+
+        if (pins.isSpare()) {
+            return printSpare(pins);
+        }
+
+        if (pins.isMiss()) {
+            return printMiss(pins);
+        }
+
+        if (pins.isGutter()) {
+            return printGutter(pins);
+        }
+
+        if (pins.isRunning()) {
+            return printFirstBlow(pins);
+        }
+
+        throw new BowlingException();
+    }
+
     private static void printNormalFrame(Frame frame) {
         while (frame != null && frame instanceof NormalFrame) {
-            System.out.print(String.format("%s%s", VERTICAL,
-                    frame.getState().getCurrentPinsState()));
+
+
+            String result = Optional.ofNullable(frame.getPins().get(0))
+                    .map(pins -> printScore(pins))
+                    .orElse(EMPTY_FRAME);
+
+
+            System.out.print(String.format("%s%s", VERTICAL, result));
 
             frame = frame.getNext();
         }
@@ -45,8 +115,22 @@ public class ResultView {
             return;
         }
 
-        System.out.print(String.format("%s%s", VERTICAL,
-                frame.getState().getCurrentPinsState()));
+        StringBuffer buffer = new StringBuffer();
+        List<Pins> pins = frame.getPins();
+        String firstResult = printScore(pins.get(0));
+
+        buffer.append(firstResult);
+
+        if (pins.get(1) != null) {
+            buffer.setLength(0);
+            buffer.append(firstResult.trim());
+            buffer.append("|").append(printScore(pins.get(1)).trim());
+            System.out.print(String.format("%s%5s ", VERTICAL, buffer.toString()));
+            return;
+        }
+
+        System.out.print(String.format("%s%3s", VERTICAL,
+                buffer.toString()));
     }
 
     private static void printEmptyFrame(int count) {
@@ -55,16 +139,34 @@ public class ResultView {
         }
     }
 
-
     public static void printScoreBoardPlayer(BowlingGame bowlingGame) {
         printPlayerName(bowlingGame.getPlayerName());
 
         Frame frame = bowlingGame.getFirstFrame();
         printNormalFrame(frame);
 
-        Frame finalFrame = bowlingGame.getFrame();
+        Frame finalFrame = bowlingGame.getCurrentFrame();
         printFinalFrame(finalFrame);
         printEmptyFrame(Frame.MAX_FRAME_NUMBER - bowlingGame.getFrameSize());
+        System.out.println();
+    }
+
+    private static void printScore(Score score) {
+        if (score != null) {
+            System.out.print(String.format("%s%4d  ", VERTICAL, score.getScore()));
+            return;
+        }
+        System.out.print(EMPTY_FRAME);
+    }
+
+    public static void printScorePlayer(BowlingGame bowlingGame, int frameNumber) {
+        System.out.print(EMPTY_FRAME + "  ");
+
+        for (int i = 1; i <= frameNumber; i++) {
+            printScore(bowlingGame.getTotalScore(i));
+        }
+
+        printEmptyFrame(9 - frameNumber);
         System.out.println();
     }
 }

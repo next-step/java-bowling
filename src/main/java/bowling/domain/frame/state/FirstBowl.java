@@ -1,29 +1,39 @@
 package bowling.domain.frame.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pin.Pin;
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
+import bowling.exception.BowlingException;
 
 public class FirstBowl implements State {
 
-    private static final String PINS_STATE = "%3d   ";
+    private final Pins pins;
 
-    private final Pins firstPins;
+    public FirstBowl(final Pin firstPin) {
+        this.pins = new Pins(firstPin, null);
+    }
 
-    public FirstBowl(final Pins firstPins) {
-        this.firstPins = firstPins;
+    private void validatePinCount(int pinCount) {
+        if (pinCount > 10) {
+            throw new BowlingException(Pin.PINS_COUNT_RANGE);
+        }
     }
 
     @Override
     public State bowl(int pinsCount) {
-        Pins second = firstPins.bowl(pinsCount);
-        if (second.isFinish()) {
-            return new Spare(firstPins, second);
+        validatePinCount(pinsCount);
+        Pin second = Pin.from().bowl(pinsCount);
+        Pins throwResult = this.pins.addSecondPin(second);
+
+        if (throwResult.isSpare()) {
+            return new Spare(throwResult);
         }
 
-        if (second.isGutter()) {
+        if (throwResult.isGutter()) {
             return new Gutter();
         }
 
-        return new Miss(firstPins, second);
+        return new Miss(throwResult);
     }
 
     @Override
@@ -32,10 +42,17 @@ public class FirstBowl implements State {
     }
 
     @Override
-    public String getCurrentPinsState() {
-        if (firstPins.getDownPin() == 0) {
-            return "  -  ";
-        }
-        return String.format(PINS_STATE, firstPins.getDownPin());
+    public Score getCurrentScore() {
+        return new Score(pins.getFirstDownPin(), 0);
+    }
+
+    @Override
+    public Score getCalculateScore(Score before) {
+        return before.addScore(new Score(pins.getFirstDownPin()));
+    }
+
+    @Override
+    public Pins getPins() {
+        return pins;
     }
 }

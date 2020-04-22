@@ -1,9 +1,13 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -50,5 +54,51 @@ class FinalFrameTest {
         assertThatThrownBy(
                 () -> finalFrame1.bowl(2)
         ).isInstanceOf(BowlingException.class);
+    }
+
+    @DisplayName("마지막 프레임의 점수 반환 : gutter, miss 상태")
+    @ParameterizedTest
+    @CsvSource(value = {"1:1:2", "0:1:1", "1:0:1"}, delimiter = ':')
+    public void getScore_success(int bowl1, int bowl2, int expect) throws Exception {
+        //given
+        Frame finalFrame = new FinalFrame();
+
+        //when
+        finalFrame = finalFrame.bowl(bowl1);
+        finalFrame = finalFrame.bowl(bowl2);
+
+        //then
+        assertThat(finalFrame.getCurrentScore()).isEqualTo(new Score(expect));
+    }
+
+    @DisplayName("마지막 프레임의 점수 반환 : strike상태")
+    @ParameterizedTest
+    @CsvSource(value = {"10:5:15", "10:10:20"}, delimiter = ':')
+    public void getScore_success_strike(int bowl1, int bowl2, int expect) throws Exception {
+        //given
+        Frame finalFrame = new FinalFrame();
+
+        //when
+        finalFrame = finalFrame.bowl(bowl1);
+        finalFrame = finalFrame.bowl(bowl2);
+
+        //then
+        assertThat(finalFrame.getCurrentScore()).isEqualTo(new Score(expect));
+    }
+
+    @DisplayName("마지막 프레임의 점수 반환 : spare상태")
+    @ParameterizedTest
+    @CsvSource(value = {"1:9:5:15", "5:5:10:20"}, delimiter = ':')
+    public void getScore_success_spare(int bowl1, int bowl2, int bowl3, int expect) throws Exception {
+        //given
+        Frame finalFrame = new FinalFrame();
+
+        //when
+        finalFrame = finalFrame.bowl(bowl1);
+        finalFrame = finalFrame.bowl(bowl2);
+        finalFrame = finalFrame.bowl(bowl3);
+
+        //then
+        assertThat(finalFrame.getCurrentScore()).isEqualTo(new Score(expect));
     }
 }

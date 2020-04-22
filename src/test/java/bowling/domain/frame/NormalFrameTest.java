@@ -1,8 +1,10 @@
 package bowling.domain.frame;
 
 import bowling.domain.frame.state.Miss;
+import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.Spare;
 import bowling.domain.frame.state.Strike;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -126,5 +128,70 @@ class NormalFrameTest {
 
         //then
         assertFalse(frame.isFinish());
+    }
+
+    @DisplayName("연결된 마지막 NormalFrame를 가져온다")
+    @Test
+    public void findLast_success() throws Exception {
+        //given
+        NormalFrame next = new NormalFrame(2);
+        NormalFrame frame = new NormalFrame(1, next, new Ready());
+
+        //when
+        Frame last = frame.findLast();
+
+        //then
+        assertTrue(next == last);
+    }
+
+    @DisplayName("연결된 마지막 FinalFrame를 가져온다")
+    @Test
+    public void findLast_success_finalFrame() throws Exception {
+        //given
+        FinalFrame finalFrame = new FinalFrame();
+        NormalFrame next = new NormalFrame(2, finalFrame, new Ready());
+        NormalFrame frame = new NormalFrame(1, next, new Ready());
+
+        //when
+        Frame last = frame.findLast();
+
+        //then
+        assertTrue(finalFrame == last);
+    }
+
+    @DisplayName("현제 프레임이 strike 상태이면 다음 2개 투구의 점수를 합산해 준다")
+    @Test
+    public void makeStrikeScore_success() throws Exception {
+        //given
+        Frame frame = new NormalFrame();
+        Score compare = new Score(16);
+
+        //when
+        frame.bowl(10);
+        Frame next = frame.createNext();
+        next.bowl(1);
+        next.bowl(5);
+
+        //then
+        Score score = frame.getCurrentScore();
+        assertTrue(score.equals(compare));
+    }
+
+    @DisplayName("현제 프레임이 spare 상태이면 다음 1개 투구의 점수를 합산해 준다")
+    @Test
+    public void getScoreCalculate_success() throws Exception {
+        //given
+        Frame frame = new NormalFrame();
+        Score compare = new Score(11);
+
+        //when
+        frame.bowl(5);
+        frame.bowl(5);
+        Frame next = frame.createNext();
+        next.bowl(1);
+
+        //then
+        Score score = frame.getCurrentScore();
+        assertTrue(score.equals(compare));
     }
 }

@@ -2,7 +2,13 @@ package bowling.domain.frame;
 
 import bowling.domain.frame.state.Ready;
 import bowling.domain.frame.state.State;
+import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class NormalFrame implements Frame {
 
@@ -46,10 +52,11 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        if (state.isFinish()) {
-            return true;
-        }
+        return state.isFinish();
+    }
 
+    @Override
+    public boolean isEnd() {
         return false;
     }
 
@@ -72,5 +79,54 @@ public class NormalFrame implements Frame {
     @Override
     public State getState() {
         return state;
+    }
+
+    @Override
+    public Frame findLast() {
+        if (nextFrame == null) {
+            return this;
+        }
+        return nextFrame.findLast();
+    }
+
+    @Override
+    public Score getCurrentScore() {
+        Score score = state.getCurrentScore();
+        Frame frame = this;
+
+        while (score.canAddNextScore() && frame.getNext() != null) {
+            frame = nextFrame;
+            score = frame.getCalculateScore(score);
+        }
+
+        return score;
+    }
+
+    @Override
+    public Score getTotalScore(int frameNumber) {
+        if (this.frameNumber == frameNumber) {
+            return getCurrentScore();
+        }
+
+        return new Score(getCurrentScore().getScore() + nextFrame.getTotalScore(frameNumber).getScore());
+    }
+
+    @Override
+    public Score getCalculateScore(Score before) {
+        return state.getCalculateScore(before);
+    }
+
+    @Override
+    public Frame findFrame(int frameNumber) {
+        if (this.frameNumber == frameNumber) {
+            return this;
+        }
+
+        return nextFrame.findFrame(frameNumber);
+    }
+
+    @Override
+    public List<Pins> getPins() {
+        return new ArrayList<>(Arrays.asList(state.getPins()));
     }
 }
