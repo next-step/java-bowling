@@ -1,22 +1,23 @@
 package bowling.domain;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class ScoreTest {
-    @Test
-    void scoreRange() {
-        assertThatCode(() -> Score.of(0))
+    @ParameterizedTest
+    @ValueSource(ints = {0,10})
+    void scoreRange(int score) {
+        assertThatCode(() -> Score.of(score))
                 .doesNotThrowAnyException();
+    }
 
-        assertThatCode(() -> Score.of(10))
-                .doesNotThrowAnyException();
-
-        assertThatThrownBy(() -> Score.of(11))
-                .isInstanceOf(IllegalArgumentException.class);
-
-        assertThatThrownBy(() -> Score.of(-1))
+    @ParameterizedTest
+    @ValueSource(ints = {-1,11})
+    void scoreExpectException(int outOfScoreValue) {
+        assertThatThrownBy(() -> Score.of(outOfScoreValue))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
