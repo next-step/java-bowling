@@ -18,7 +18,7 @@ public class FrameScores {
 
     public List<String> getScore() {
         return frameScores.stream()
-                .map(n -> String.valueOf(n))
+                .map(String::valueOf)
                 .collect(Collectors.toList());
     }
 

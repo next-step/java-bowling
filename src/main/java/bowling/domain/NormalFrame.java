@@ -1,7 +1,10 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
 public class NormalFrame extends Frame {
     private Scores scores;
+    private State state;
 
     public void add(Score score) {
         this.scores.add(score);
@@ -9,29 +12,38 @@ public class NormalFrame extends Frame {
 
     public NormalFrame(Frame frame) {
         this.scores = frame.getScores();
-    }
-
-    public Scores getScores() {
-        return scores;
-    }
-
-    public boolean isNextFrame() {
-        return this.scores.nextFrame();
+        this.state = frame.getState();
     }
 
     public String getSigns() {
         return scores.getSigns();
     }
 
-    public int firstScore() {
-        return scores.firstScore();
+    public boolean isStrike() {
+        return state.isStrike();
     }
 
-    public int sumScore() {
-        return scores.sum();
+    public boolean isSpare() {
+        return state.isSpare();
     }
 
-    public int sumStrikeScore() {
-        return scores.firstScore() + scores.secondScore();
+    public int calculateDoubleStrike() {
+        return state.doubleStrikeBonusScore();
+    }
+
+    public int calculate() {
+        return state.getScore();
+    }
+
+    public boolean isEnableCalculate() {
+        return state.isEnableCalculate();
+    }
+
+    public int calculateSpare() {
+        return state.spareBonusScore();
+    }
+
+    public int calculateSingleStrike() {
+        return state.strikeBonusScore();
     }
 }

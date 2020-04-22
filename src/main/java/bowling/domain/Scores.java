@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 public class Scores {
     private static final int FRAME_MAX_SCORE = 10;
     private static final int FINAL_MAX_SCORE = 20;
-    private static final int ZERO = 0;
     private static final int FIRST_TRY_NUMBER = 1;
     private static final int SECOND_TRY_NUMBER = 2;
     private static final int FINAL_TRY_NUMBER = 3;
@@ -25,7 +24,7 @@ public class Scores {
 
     public void add(Score score) {
         this.scores.add(score);
-        String sign = Sign.matchSign(this).getSign();
+        String sign = Sign.matchSign(score.getScore(), numberOfTry(), sum()).getSign();
         if (EMPTY.equals(sign)) {
             sign = score.toString();
         }
@@ -62,82 +61,42 @@ public class Scores {
         return scores.size();
     }
 
-    public boolean nextFrame() {
-        return isStrike() || isSecondTry();
-    }
-
-    public boolean isStrike() {
-        return recentScore() == FRAME_MAX_SCORE && !isNormalFrameSpare() && !isFinalFrameSpare();
-    }
-
     private boolean isMiss() {
         return sum() < FRAME_MAX_SCORE;
     }
 
-    public void checkBeforeAddNormal(int numberOfPin) {
+    public void checkBeforeAddNormal(Score numberOfPin) {
         if (sumUntilThisValue(numberOfPin) > FRAME_MAX_SCORE) {
             throw new IllegalArgumentException(FRAME_MAX_SCORE + "을 넘으면 안됩니다.");
         }
     }
 
-    private int sumUntilThisValue(int numberOfPin) {
-        return sum() + numberOfPin;
+    private int sumUntilThisValue(Score numberOfPin) {
+        return sum() + numberOfPin.getScore();
     }
 
     public boolean isEndGame() {
-        if (isSecondTry() && isMiss()) {
+        if (isTry(SECOND_TRY_NUMBER) && isMiss()) {
             return true;
         }
-        if (isFinalTry()) {
+        if (isTry(FINAL_TRY_NUMBER)) {
             return true;
         }
         return false;
     }
 
-    public void checkBeforeAddFinal(int numberOfPin) {
+    public void checkBeforeAddFinal(Score numberOfPin) {
         //처음에스트라이크가 아닌경우
-        if (isFirstTry() && !isStrike() && sumUntilThisValue(numberOfPin) > FRAME_MAX_SCORE) {
+        if (isTry(FIRST_TRY_NUMBER) && isMiss() && sumUntilThisValue(numberOfPin) > FRAME_MAX_SCORE) {
             throw new IllegalArgumentException(FRAME_MAX_SCORE + "을 넘으면 안됩니다.");
         }
         //첫번째 스트라이크, 두번째
-        if (isSecondTry() && sum() < FINAL_MAX_SCORE && sumUntilThisValue(numberOfPin) > FINAL_MAX_SCORE) {
+        if (isTry(SECOND_TRY_NUMBER) && sum() < FINAL_MAX_SCORE && sumUntilThisValue(numberOfPin) > FINAL_MAX_SCORE) {
             throw new IllegalArgumentException(FINAL_MAX_SCORE + "을 넘으면 안됩니다.");
         }
     }
 
-    private boolean isFirstTry() {
-        return numberOfTry() == FIRST_TRY_NUMBER;
-    }
-
-    private boolean isSecondTry() {
-        return numberOfTry() == SECOND_TRY_NUMBER;
-    }
-
-    private boolean isFinalTry() {
-        return numberOfTry() == FINAL_TRY_NUMBER;
-    }
-
-    public int firstScore() {
-        return scores.get(0).getScore();
-    }
-
-    public int secondScore() {
-        return scores.get(1).getScore();
-    }
-
-    public int recentScore() {
-        return scores.get(numberOfTry() - 1).getScore();
-    }
-
-    public boolean isGutter() {
-        return recentScore() == ZERO;
-    }
-
-    public boolean isNormalFrameSpare() {
-        return numberOfTry() == SECOND_TRY_NUMBER && sum() == FRAME_MAX_SCORE;
-    }
-
-    public boolean isFinalFrameSpare() {
-        return numberOfTry() == FINAL_TRY_NUMBER && sum() == FINAL_MAX_SCORE && recentScore() != FRAME_MAX_SCORE;
+    private boolean isTry(int number) {
+        return numberOfTry() == number;
     }
 }
