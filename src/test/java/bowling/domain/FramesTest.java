@@ -12,7 +12,7 @@ public class FramesTest {
     @Test
     void createNext() {
         Frames frames = new Frames();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 8; i++) {
             frames.addPinCount(10);
         }
 

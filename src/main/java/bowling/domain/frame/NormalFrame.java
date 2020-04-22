@@ -1,10 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.*;
 import bowling.domain.pitch.Pitch;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class NormalFrame implements Frame {
     private static final int MAX_PITCH_SIZE = 2;
@@ -13,10 +13,11 @@ public class NormalFrame implements Frame {
 
     private FramePitch framePitch;
     private Frame next;
-    private Score score;
+    private ScoreCalculator scoreCalculator;
 
     public NormalFrame() {
         this.framePitch = new FramePitch();
+        scoreCalculator = new EmptyScoreCalculator();
     }
 
     @Override public boolean addPinCount(int pinCount) {
@@ -24,43 +25,15 @@ public class NormalFrame implements Frame {
             return false;
         }
 
-        return framePitch.add(pinCount);
+        if (framePitch.add(pinCount)) {
+            scoreCalculator = scoreCalculator.add(framePitch.getLastPitch());
+            return true;
+        }
+        return false;
     }
 
-    @Override public Optional<Integer> getScore() {
-        if (!isDone()) {
-            return Optional.empty();
-        }
-
-        if (!Objects.isNull(score)) {
-            return Optional.of(score.getScore());
-        }
-
-        return calculateScore().map(s -> {
-            this.score = s;
-            return this.score.getScore();
-        });
-    }
-
-    private Optional<Score> calculateScore() {
-        Score framePitchScore = framePitch.getScore();
-        if (framePitchScore.isSatisfied()) {
-            return Optional.of(framePitchScore);
-        }
-
-        return getAdditionalScore().map(as -> {
-            framePitchScore.setAdditionalScore(as);
-            return framePitchScore;
-        });
-    }
-
-    private Optional<Score> getAdditionalScore() {
-        if (framePitch.isFirstPitchStrike()) {
-            return next.getScoreForTwoPitches();
-        } else if (framePitch.isSecondPitchSpare()) {
-            return next.getScoreForOnePitch();
-        }
-        return Optional.empty();
+    @Override public Score getScore() {
+        return scoreCalculator.calculateScore(next);
     }
 
     @Override public Frame createNext() {
@@ -73,19 +46,19 @@ public class NormalFrame implements Frame {
         return frame;
     }
 
-    @Override public Optional<Score> getScoreForOnePitch() {
+    @Override public Score getScoreForOnePitch() {
         return framePitch.getFirstPitchScore();
     }
 
-    @Override public Optional<Score> getScoreForTwoPitches() {
+    @Override public Score getScoreForTwoPitches() {
         if (framePitch.size() == ZERO) {
-            return Optional.empty();
+            return EmptyScore.valueOf();
         }
         if (framePitch.size() == ONE) {
-            return sumWithNextPitch();
+            return sumWithNextOnePitch();
         }
 
-        return Optional.of(framePitch.getScore());
+        return new CompleteScore(framePitch.getPinCountTotal());
     }
 
     @Override public boolean isDone() {
@@ -93,12 +66,12 @@ public class NormalFrame implements Frame {
                 framePitch.isFirstPitchStrike();
     }
 
-    private Optional<Score> sumWithNextPitch() {
+    private Score sumWithNextOnePitch() {
         if (Objects.isNull(next)) {
-            return Optional.empty();
+            return EmptyScore.valueOf();
         }
         return next.getScoreForOnePitch()
-                .map(s -> s.add(framePitch.getScore()));
+                .add(scoreCalculator.calculateScore());
     }
 
     @Override public List<Pitch> getFramePitch() {

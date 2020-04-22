@@ -1,19 +1,21 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.FinalScoreCalculator;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCalculator;
 import bowling.domain.pitch.Pitch;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 public class FinalFrame implements Frame {
     private static final int MAX_PITCH_SIZE = 3;
 
     private FramePitch framePitch;
-    private Score score;
+    private ScoreCalculator scoreCalculator;
 
     public FinalFrame() {
         this.framePitch = new FramePitch();
+        this.scoreCalculator = new FinalScoreCalculator();
     }
 
     private boolean hasThirdChance() {
@@ -26,34 +28,24 @@ public class FinalFrame implements Frame {
             return false;
         }
 
-        return framePitch.add(pinCount);
+        if (framePitch.add(pinCount)) {
+            scoreCalculator = scoreCalculator.add(framePitch.getLastPitch());
+            return true;
+        }
+        return false;
     }
 
-    @Override public Optional<Integer> getScore() {
-        if (!isDone()) {
-            return Optional.empty();
-        }
-
-        if (!Objects.isNull(score)) {
-            return Optional.of(score.getScore());
-        }
-
-        score = framePitch.getScore();
-        return Optional.of(score.getScore());
+    @Override public Score getScore() {
+        return scoreCalculator.calculateScore();
     }
 
-    @Override public Optional<Score> getScoreForOnePitch() {
+    @Override public Score getScoreForOnePitch() {
         return framePitch.getFirstPitchScore();
     }
 
-    @Override public Optional<Score> getScoreForTwoPitches() {
-        Optional<Score> firstScore = framePitch.getFirstPitchScore();
-        Optional<Score> secondScore = framePitch.getSecondPitchScore();
-        if (firstScore.isPresent() && secondScore.isPresent()) {
-            return firstScore
-                    .map(fs -> fs.add(secondScore.get()));
-        }
-        return Optional.empty();
+    @Override public Score getScoreForTwoPitches() {
+        return framePitch.getFirstPitchScore()
+                .add(framePitch.getSecondPitchPinCount());
     }
 
     @Override public boolean isDone() {

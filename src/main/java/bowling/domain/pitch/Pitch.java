@@ -10,7 +10,7 @@ public class Pitch {
     }
 
     public Pitch(int pinCount) {
-        this(Pin.valueOf(pinCount), new Ready());
+        this(Pin.valueOf(pinCount), new ReadyState());
     }
 
     public Pitch(Pitch pitch) {
@@ -23,11 +23,11 @@ public class Pitch {
     }
 
     public boolean isStrike() {
-        return state.getClass() == Strike.class;
+        return state.isStrike();
     }
 
     public boolean isSpare() {
-        return state.getClass() == Spare.class;
+        return state.isSpare();
     }
 
     public boolean isGutter() {

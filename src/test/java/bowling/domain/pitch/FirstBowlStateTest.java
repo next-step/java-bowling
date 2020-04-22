@@ -8,32 +8,32 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class FirstBowlTest {
-    private FirstBowl firstBowl;
+public class FirstBowlStateTest {
+    private FirstBowlState firstBowlState;
 
     @BeforeEach
     void setUp() {
-        firstBowl = new FirstBowl(Pin.valueOf(1));
+        firstBowlState = new FirstBowlState(Pin.valueOf(1));
     }
 
     @DisplayName("미스를 리턴한다")
     @Test
     void returnBowl() {
-        assertThat(firstBowl.bowl(Pin.valueOf(8)))
-                .isExactlyInstanceOf(Miss.class);
+        assertThat(firstBowlState.bowl(Pin.valueOf(8)))
+                .isExactlyInstanceOf(MissState.class);
     }
 
     @DisplayName("스트라이크를 리턴한다")
     @Test
     void returnStrike() {
-        assertThat(firstBowl.bowl(Pin.valueOf(9)))
-                .isExactlyInstanceOf(Spare.class);
+        assertThat(firstBowlState.bowl(Pin.valueOf(9)))
+                .isExactlyInstanceOf(SpareState.class);
     }
 
     @DisplayName("이전 시도와 합쳐서 핀 갯수가 10이 넘어갈 수 없다.")
     @Test
     void error() {
         assertThatExceptionOfType(OutOfRangeArgumentException.class)
-                .isThrownBy(() -> firstBowl.bowl(Pin.valueOf(10)));
+                .isThrownBy(() -> firstBowlState.bowl(Pin.valueOf(10)));
     }
 }

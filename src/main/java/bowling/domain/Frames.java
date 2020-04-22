@@ -4,6 +4,7 @@ import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.pitch.Pitch;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,21 +30,23 @@ public class Frames {
     }
 
     public boolean addPinCount(int pinCount) {
-        Frame lastFrame = this.frames.get(getLastIndex());
-
-        boolean result = lastFrame.addPinCount(pinCount);
-        if(!isFinished() && lastFrame.isDone()) {
+        if (needToAdd()) {
             frames.add(getNewFrame());
         }
 
-        return result;
+        Frame lastFrame = getLastFrame();
+        return lastFrame.addPinCount(pinCount);
+    }
+
+    public boolean needToAdd() {
+        Frame lastFrame = getLastFrame();
+        return !isFinished() && lastFrame.isDone();
     }
 
     protected Frame getNewFrame() {
-        int lastIndex = getLastIndex();
-        Frame lastFrame = this.frames.get(lastIndex);
+        Frame lastFrame = getLastFrame();
 
-        if(isBeforeMax()) {
+        if (isBeforeMax()) {
             return lastFrame.createNext(new FinalFrame());
         }
         return lastFrame.createNext();
@@ -54,11 +57,7 @@ public class Frames {
     }
 
     private Frame getLastFrame() {
-        return frames.get(lastIndex());
-    }
-
-    private int lastIndex() {
-        return frames.size() - ONE;
+        return frames.get(getLastIndex());
     }
 
     private boolean isBeforeMax() {
@@ -70,14 +69,19 @@ public class Frames {
         return lastFrame.isLast() && lastFrame.isDone();
     }
 
-    public Optional<Integer> getFrameScore(int frameIndex) {
+    public Score getFrameScore(int frameIndex) {
         return frames.get(frameIndex).getScore();
     }
 
     public List<Pitch> getFramePinCounts(int index) {
         return frames.get(index).getFramePitch();
     }
+
     private int getLastIndex() {
         return frames.size() - ONE;
+    }
+
+    public boolean isLastFrameDone() {
+        return getLastFrame().isDone();
     }
 }

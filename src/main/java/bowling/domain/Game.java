@@ -1,34 +1,36 @@
 package bowling.domain;
 
-public class Game {
-    private Player player;
-    private Frames frames;
+import java.util.List;
 
-    public Game(String playerName) {
-        this.player = new Player(playerName);
-        this.frames = new Frames();
+public class Game {
+    private PlayerFrames playerFrames;
+    private GameRule gameRule;
+
+    public Game(List<String> playerNames) {
+        playerFrames = new PlayerFrames(playerNames);
+        gameRule = new GameRule(playerNames.size());
     }
 
     public boolean isFinished() {
-        return frames.isFinished();
+        return playerFrames.isFinished();
     }
 
     public boolean addPin(int count) {
-        if (isFinished()) {
-            return false;
+        int turn = gameRule.getTurn();
+        boolean result = playerFrames.addPinCount(turn, count);
+
+        if (playerFrames.isDone(turn)) {
+            gameRule.changeTurn();
         }
-        return frames.addPinCount(count);
+
+        return result;
     }
 
-    public int getCurrentFrame() {
-        return frames.size();
+    public String getCurrentPlayerName() {
+        return playerFrames.getPlayerName(gameRule.getTurn());
     }
 
-    public String getPlayerName() {
-        return player.getName();
-    }
-
-    public Frames getFrames() {
-        return new Frames(frames);
+    public PlayerFrames getPlayerFrames() {
+        return new PlayerFrames(playerFrames);
     }
 }

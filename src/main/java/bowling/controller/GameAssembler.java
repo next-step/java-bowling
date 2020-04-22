@@ -2,20 +2,31 @@ package bowling.controller;
 
 import bowling.controller.dto.FrameStatus;
 import bowling.controller.dto.GameStatus;
+import bowling.controller.dto.PlayerFrameStatus;
 import bowling.domain.Frames;
 import bowling.domain.Game;
+import bowling.domain.PlayerFrames;
 import bowling.domain.pitch.Pitch;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class GameAssembler {
     private static final int ZERO = 0;
 
     public static GameStatus writeDto(Game game) {
-        List<FrameStatus> frameStatuses = getFrameStatuses(game.getFrames());
-        return new GameStatus(frameStatuses, game.getPlayerName());
+        return new GameStatus(getPlayerFrameStatus(game.getPlayerFrames()));
+    }
+
+    private static List<PlayerFrameStatus> getPlayerFrameStatus(
+            PlayerFrames playerFrames) {
+        return playerFrames.stream()
+                .map(playerFrame -> new PlayerFrameStatus(
+                        getFrameStatuses(playerFrame.getFrames()),
+                        playerFrame.getPlayerName()))
+                .collect(Collectors.toList());
     }
 
     private static List<FrameStatus> getFrameStatuses(Frames frames) {
@@ -42,11 +53,10 @@ public class GameAssembler {
 
     private static FrameStatus getFrameStatus(Frames frames, int index,
                                               int beforeScore) {
-        Optional<Integer> optionalScore = frames.getFrameScore(index);
-
-        if (optionalScore.isPresent()) {
+        Score score = frames.getFrameScore(index);
+        if (score.isCompleted()) {
             List<Pitch> pitches = frames.getFramePinCounts(index);
-            return new FrameStatus(pitches, optionalScore.get() + beforeScore);
+            return new FrameStatus(pitches, score.getScore() + beforeScore);
         }
 
         List<Pitch> pitches = frames.getFramePinCounts(index);
