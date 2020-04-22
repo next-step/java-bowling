@@ -144,4 +144,33 @@ class FrameTest {
                 .isEqualTo(17);
     }
 
+    @Test
+    void isScoreCalculated(){
+        Frame frame = Frame.init();
+        assertThat(frame.isScoreCalculated())
+                .isFalse();
+
+        frame.shot(4);
+        frame.shot(5);
+        assertThat(frame.isScoreCalculated())
+                .isTrue();
+
+        frame = frame.next(10);
+        assertThat(frame.isScoreCalculated())
+                .isFalse();
+
+        frame.next(4).shot(4);
+        assertThat(frame.isScoreCalculated())
+                .isTrue();
+
+        frame = frame.next(4);
+        frame.shot(6);
+        assertThat(frame.isScoreCalculated())
+                .isFalse();
+
+        frame.next(5);
+        assertThat(frame.isScoreCalculated())
+                .isTrue();
+    }
+
 }

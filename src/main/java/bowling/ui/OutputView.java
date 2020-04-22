@@ -1,6 +1,6 @@
 package bowling.ui;
 
-import bowling.dto.FrameDto;
+import bowling.dto.FrameShotDto;
 import bowling.dto.PlayerDto;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class OutputView {
 
     private void printFrameScores(PlayerDto player) {
         System.out.print(FRAME_SCORE_FIRST);
-        getParsedFrameScoreStream(player.getFrames())
+        getParsedFrameScoreStream(player.getFrameScores())
                 .map(scoreString -> String.format(FRAME_SCORE_FORMAT, scoreString))
                 .forEach(System.out::print);
         System.out.println();
@@ -33,42 +33,40 @@ public class OutputView {
 
     private void printFrameShots(PlayerDto player) {
         System.out.print(String.format(PLAYER_FORMAT, player.getName()));
-        getParsedFrameStringStream(player.getFrames())
+        getParsedFrameStringStream(player.getFrameShots())
                 .map(frameString -> String.format(FRAME_BODY_FORMAT, frameString))
                 .forEach(System.out::print);
         System.out.println();
     }
 
-    private Stream<String> getParsedFrameStringStream(List<FrameDto> frames) {
+    private Stream<String> getParsedFrameStringStream(List<FrameShotDto> frames) {
         return Stream.concat(getFrameStringStream(frames),
-                getEmptyStringStream(frames));
+                getEmptyStringStream(frames.size()));
     }
 
-    private Stream<String> getFrameStringStream(List<FrameDto> frames) {
+    private Stream<String> getFrameStringStream(List<FrameShotDto> frames) {
         return frames
                 .stream()
                 .map(this::parseFrameShots);
     }
 
-    private String parseFrameShots(FrameDto frame) {
+    private String parseFrameShots(FrameShotDto frame) {
         return String.join(SHOT_DELIMITER, frame.getShotScores());
     }
 
-    private Stream<String> getParsedFrameScoreStream(List<FrameDto> frames) {
-        return Stream.concat(getFrameScoreStream(frames),
-                getEmptyStringStream(frames));
+    private Stream<String> getParsedFrameScoreStream(List<Integer> frameScores) {
+        return Stream.concat(getFrameScoreStream(frameScores),
+                getEmptyStringStream(frameScores.size()));
     }
 
-    private Stream<String> getFrameScoreStream(List<FrameDto> frames) {
-        return frames
+    private Stream<String> getFrameScoreStream(List<Integer> frameScores) {
+        return frameScores
                 .stream()
-                .map(FrameDto::getFrameScore)
-                .map(Objects::toString)
-                .map(v -> v.equals("null") ? "" : v);
+                .map(Objects::toString);
     }
 
-    private Stream<String> getEmptyStringStream(List<FrameDto> frames) {
+    private Stream<String> getEmptyStringStream(int size) {
         return Stream.generate(() -> "")
-                .limit(MAX - frames.size());
+                .limit(MAX - size);
     }
 }

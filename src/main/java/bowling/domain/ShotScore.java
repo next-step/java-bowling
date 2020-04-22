@@ -6,6 +6,7 @@ public class ShotScore {
     private final Score score;
     private final ScoreType scoreType;
     private ShotScore next;
+    private boolean isSecond;
 
     private ShotScore(Score score, ScoreType scoreType) {
         this.score = score;
@@ -27,9 +28,14 @@ public class ShotScore {
     }
 
     ShotScore next(int nextScore) {
-        if (!isClear() &&
-                score.isLeftPins(nextScore)) {
-            next = new ShotScore(Score.of(nextScore), ScoreType.SPARE);
+        if (!isSecond &&
+                !isClear()){
+                if(score.isLeftPins(nextScore)) {
+                    next = new ShotScore(Score.of(nextScore), ScoreType.SPARE);
+                } else{
+                    next = init(nextScore);
+                }
+            next.isSecond = true;
             return next;
         }
 

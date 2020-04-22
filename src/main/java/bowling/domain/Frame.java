@@ -48,25 +48,26 @@ public class Frame {
     }
 
     private boolean isShootLimitedSize() {
-        return shotScores.isSize(getShotLimit());
+        return shotScores.hasSize(getShotLimit());
     }
 
-    private int getShotLimit(){
+    public boolean isScoreCalculated() {
+        return isFrameSet() && (score() != null);
+    }
+
+    private int getShotLimit() {
         return isLast ? SHOT_LIMIT + 1 : SHOT_LIMIT;
     }
 
     private boolean cannotShooting() {
         if (isLast) {
-            return shotScores.isSize(SHOT_LIMIT) && !shotScores.hasClear();
+            return shotScores.hasSize(SHOT_LIMIT) && !shotScores.hasClear();
         }
         return shotScores.hasClear();
     }
 
-    public Integer getFrameScore() {
-        if (isFrameSet()) {
-            return score();
-        }
-        return null;
+    public int getFrameScore() {
+        return score();
     }
 
     private Integer score() {
