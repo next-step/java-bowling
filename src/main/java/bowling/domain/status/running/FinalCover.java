@@ -2,35 +2,34 @@ package bowling.domain.status.running;
 
 import bowling.domain.point.Point;
 import bowling.domain.status.Status;
-import bowling.domain.status.finished.Double;
 import bowling.domain.status.finished.Gutter;
 import bowling.domain.status.finished.Miss;
 import bowling.domain.status.finished.Spare;
 
-public class Cover extends Running {
+public class FinalCover extends Running {
     private final Point firstPoint;
 
-    public static Cover of(Point point) {
-        return new Cover(point);
+    public static FinalCover of(Point point) {
+        return new FinalCover(point);
     }
 
-    private Cover(Point firstPoint) {
+    private FinalCover(Point firstPoint) {
         this.firstPoint = firstPoint;
     }
 
     @Override
-    public Status throwBall(Point point) {
-        int sumPoint = firstPoint.add(point);
-        if (firstPoint.isMaxPoint() && point.isMaxPoint()) {
-            return Double.of();
+    public Status throwBall(Point secondPoint) {
+        int sumPoint = firstPoint.add(secondPoint);
+        if (firstPoint.isMaxPoint()) {
+            return FinalStrike.of(secondPoint);
         }
         if (sumPoint == Point.MAX_POINT) {
-            return Spare.of(firstPoint, point);
+            return FinalSpare.of(firstPoint, secondPoint);
         }
         if (sumPoint == Point.MIN_POINT) {
             return Gutter.of();
         }
-        return Miss.of(firstPoint, point);
+        return Miss.of(firstPoint, secondPoint);
     }
 
     @Override

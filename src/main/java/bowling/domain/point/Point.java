@@ -39,8 +39,18 @@ public class Point {
         return point == MIN_POINT;
     }
 
-    public Point add(Point targetPoint) {
-        return Point.of(this.point + targetPoint.getPoint());
+    public int add(Point targetPoint) {
+        return this.point + targetPoint.getPoint();
+    }
+
+    public String print() {
+        if (isMaxPoint()) {
+            return "X";
+        }
+        if (isMinPoint()) {
+            return "-";
+        }
+        return String.valueOf(point);
     }
 
     private static void validate(int input) {

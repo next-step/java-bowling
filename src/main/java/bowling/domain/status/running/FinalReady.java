@@ -4,18 +4,15 @@ import bowling.domain.point.Point;
 import bowling.domain.status.Status;
 import bowling.domain.status.finished.Strike;
 
-public class Ready extends Running {
+public class FinalReady extends Running {
 
-    public static Ready of() {
-        return new Ready();
+    public static FinalReady of() {
+        return new FinalReady();
     }
 
     @Override
     public Status throwBall(Point point) {
-        if (point.isMaxPoint()) {
-            return Strike.of();
-        }
-        return Cover.of(point);
+        return FinalCover.of(point);
     }
 
     @Override

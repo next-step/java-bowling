@@ -17,6 +17,6 @@ public class Spare extends Finished {
 
     @Override
     public String print() {
-        return firstPoint + "|/";
+        return firstPoint.print() + "|/";
     }
 }

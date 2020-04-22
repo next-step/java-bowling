@@ -11,7 +11,7 @@ public abstract class Finished implements Status {
     }
 
     @Override
-    public boolean isEnd(){
+    public boolean isEnd() {
         return true;
     }
 }
