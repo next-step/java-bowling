@@ -40,25 +40,22 @@ class ShotScores {
                 .anyMatch(ShotScore::isClear);
     }
 
-    Integer totalScore() {
-        if (isTotalScoreUnCalculated()) {
-            return null;
-        }
+    int totalScore() {
         return totalScoreStream()
                 .mapToInt(Integer::intValue)
                 .sum();
     }
 
-    Integer singleScore() {
+    int singleScore() {
         return shotScores
                 .stream()
                 .mapToInt(ShotScore::singleScore)
                 .sum();
     }
 
-    private boolean isTotalScoreUnCalculated() {
+    boolean isScoreCalculated() {
         return totalScoreStream()
-                .anyMatch(Objects::isNull);
+                .allMatch(Objects::nonNull);
     }
 
     private Stream<Integer> totalScoreStream() {

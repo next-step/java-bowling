@@ -9,7 +9,7 @@ public class Frame {
     private final ShotScores shotScores;
     private final boolean isLast;
 
-    protected Frame(List<ShotScore> shotScores, boolean isLast) {
+    private Frame(List<ShotScore> shotScores, boolean isLast) {
         this.shotScores = ShotScores.of(shotScores);
         this.isLast = isLast;
     }
@@ -52,7 +52,7 @@ public class Frame {
     }
 
     public boolean isScoreCalculated() {
-        return isFrameSet() && (score() != null);
+        return isFrameSet() && shotScores.isScoreCalculated();
     }
 
     private int getShotLimit() {
@@ -70,7 +70,7 @@ public class Frame {
         return score();
     }
 
-    private Integer score() {
+    private int score() {
         if (isLast) {
             return shotScores.singleScore();
         }

@@ -27,7 +27,7 @@ public class ShotScore {
         return new ShotScore(score, ScoreType.MISS);
     }
 
-    ShotScore next(int nextScore) {
+    ShotScore next(int nextScore) {//TODO 리팩토링
         if (!isSecond &&
                 !isClear()){
                 if(score.isLeftPins(nextScore)) {
@@ -55,7 +55,7 @@ public class ShotScore {
         return score.score();
     }
 
-    Integer totalScore() {
+    Integer totalScore() { //TODO nullable 제거
         if (scoreType.isIn(ScoreType.STRIKE)) {
             return getStrikeTotalScore();
         }
