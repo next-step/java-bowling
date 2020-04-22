@@ -24,7 +24,11 @@ class ShotScores {
         if (shotScores.isEmpty()) {
             return ShotScore.init(shot);
         }
-        return shotScores.get(shotScores.size() - 1).next(shot);
+        return getLast().next(shot);
+    }
+
+    private ShotScore getLast() {
+        return shotScores.get(shotScores.size() - 1);
     }
 
     boolean isSize(int size) {
