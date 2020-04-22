@@ -31,7 +31,7 @@ class ShotScores {
         return shotScores.get(shotScores.size() - 1);
     }
 
-    boolean isSize(int size) {
+    boolean hasSize(int size) {
         return shotScores.size() == size;
     }
 

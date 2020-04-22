@@ -20,16 +20,16 @@ class ShotScoresTest {
     @Test
     void add() {
         shotScores.add(ShotScore.init(6));
-        assertThat(shotScores.isSize(2))
+        assertThat(shotScores.hasSize(2))
                 .isTrue();
     }
 
     @Test
     void isSize() {
-        assertThat(shotScores.isSize(1))
+        assertThat(shotScores.hasSize(1))
                 .isTrue();
 
-        assertThat(shotScores.isSize(2))
+        assertThat(shotScores.hasSize(2))
                 .isFalse();
     }
 
