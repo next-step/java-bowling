@@ -7,11 +7,11 @@ public class Frame {
     private static final int SHOT_LIMIT = 2;
 
     private final ShotScores shotScores;
-    private final boolean islast;
+    private final boolean isLast;
 
-    protected Frame(List<ShotScore> shotScores, boolean islast) {
+    protected Frame(List<ShotScore> shotScores, boolean isLast) {
         this.shotScores = ShotScores.of(shotScores);
-        this.islast = islast;
+        this.isLast = isLast;
     }
 
     static Frame init() {
@@ -49,11 +49,11 @@ public class Frame {
     }
 
     private int getShotLimit() {
-        return islast ? SHOT_LIMIT + 1 : SHOT_LIMIT;
+        return isLast ? SHOT_LIMIT + 1 : SHOT_LIMIT;
     }
 
     private boolean cannotShooting() {
-        if (islast) {
+        if (isLast) {
             return shotScores.isSize(SHOT_LIMIT) && !shotScores.hasClear();
         }
         return shotScores.hasClear();
@@ -67,7 +67,7 @@ public class Frame {
     }
 
     private Integer score() {
-        if (islast) {
+        if (isLast) {
             return shotScores.singleScore();
         }
         return shotScores.totalScore();
