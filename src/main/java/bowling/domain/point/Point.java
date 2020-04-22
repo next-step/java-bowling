@@ -35,6 +35,14 @@ public class Point {
         return point == MAX_POINT;
     }
 
+    public boolean isMinPoint() {
+        return point == MIN_POINT;
+    }
+
+    public Point add(Point targetPoint) {
+        return Point.of(this.point + targetPoint.getPoint());
+    }
+
     private static void validate(int input) {
         if (input < MIN_POINT || input > MAX_POINT) {
             throw new PointOutOfRangeException(String.format("포인트는 %s ~ %s 사이만 가능합니다.", MIN_POINT, MAX_POINT));
