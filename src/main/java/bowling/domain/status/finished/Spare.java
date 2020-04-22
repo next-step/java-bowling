@@ -14,4 +14,9 @@ public class Spare extends Finished {
         this.firstPoint = firstPoint;
         this.secondPoint = secondPoint;
     }
+
+    @Override
+    public String print() {
+        return firstPoint + "|/";
+    }
 }

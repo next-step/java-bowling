@@ -7,4 +7,6 @@ public interface Status {
     Status throwBall(Point point);
 
     boolean isEnd();
+
+    String print();
 }

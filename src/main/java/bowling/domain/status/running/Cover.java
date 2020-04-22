@@ -28,4 +28,12 @@ public class Cover extends Running{
         }
         return Miss.of(firstPoint, point);
     }
+
+    @Override
+    public String print() {
+        if(firstPoint.isMinPoint()) {
+            return "-";
+        }
+        return String.valueOf(firstPoint);
+    }
 }

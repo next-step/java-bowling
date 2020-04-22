@@ -9,4 +9,9 @@ public class Strike extends Finished {
     private Strike() {
         super();
     }
+
+    @Override
+    public String print() {
+        return "X";
+    }
 }

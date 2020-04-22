@@ -9,4 +9,9 @@ public class Gutter extends Finished {
     private Gutter() {
         super();
     }
+
+    @Override
+    public String print() {
+        return "-|-";
+    }
 }

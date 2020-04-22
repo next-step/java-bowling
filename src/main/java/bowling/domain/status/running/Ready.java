@@ -17,4 +17,9 @@ public class Ready extends Running{
         }
         return Cover.of(point);
     }
+
+    @Override
+    public String print() {
+        return "";
+    }
 }
