@@ -3,8 +3,8 @@ package bowling.domain;
 import java.util.Objects;
 
 class Score {
-    static final int MAX = 10;
-    static final int MIN = 0;
+    private static final int MAX = 10;
+    private static final int MIN = 0;
 
     private final int score;
 
