@@ -21,7 +21,7 @@ public class Cover extends Running{
     public Status throwBall(Point point) {
         Point sumPoint = firstPoint.add(point);
         if (sumPoint.isMaxPoint()) {
-            return Spare.of();
+            return Spare.of(firstPoint, point);
         }
         if(sumPoint.isMinPoint()) {
             return Gutter.of();
