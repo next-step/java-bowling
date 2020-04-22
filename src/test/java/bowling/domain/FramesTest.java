@@ -26,7 +26,7 @@ class FramesTest {
         Frames frames = new Frames();
         frames.shot(5);
 
-        assertThat(frames.stream())
+        assertThat(frames.getFrames())
                 .anyMatch(v -> v.shotScores().get(0).singleScore() == 5)
                 .hasSize(1);
     }

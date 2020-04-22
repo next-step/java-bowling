@@ -1,8 +1,8 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Frames {
     private static final int MAX_FRAMES = 10;
@@ -51,7 +51,7 @@ public class Frames {
                 .count() == MAX_FRAMES;
     }
 
-    public Stream<Frame> stream() {
-        return frames.stream();
+    public Collection<Frame> getFrames() {
+        return frames;
     }
 }
