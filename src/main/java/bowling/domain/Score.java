@@ -21,17 +21,20 @@ class Score {
     }
 
     boolean isMax() {
-        return isMax(0);
+        return this.score == MAX;
     }
 
     boolean isMin() {
         return this.score == MIN;
     }
 
-    boolean isMax(int addScore) {
-        int totalScore = this.score + addScore;
+    boolean isLeftPins(int pinCount) {
+        int totalScore = this.score + pinCount;
         if (MAX < totalScore) {
-            throw new IllegalArgumentException(String.format("check max fail, score + addScore must be %d~%d : thisScore = %d, addScore = %d", MIN, MAX, this.score, addScore));
+            throw new IllegalArgumentException(
+                    String.format("check leftPins fail, pinCount must be less then leftPins : leftPins = %d, pinCount = %d",
+                            MAX-this.score,
+                            pinCount));
         }
         return totalScore == MAX;
     }

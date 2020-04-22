@@ -43,4 +43,19 @@ public class ScoreTest {
         assertThat(Score.of(1).isMin())
                 .isFalse();
     }
+
+    @Test
+    void isLeftPins() {
+        assertThat(Score.of(0).isLeftPins(9))
+                .isFalse();
+
+        assertThat(Score.of(1).isLeftPins(9))
+                .isTrue();
+    }
+
+    @Test
+    void isLeftPinsExpectException() {
+        assertThatThrownBy(()->Score.of(2).isLeftPins(9))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

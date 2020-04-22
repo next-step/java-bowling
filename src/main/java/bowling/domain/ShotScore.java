@@ -29,7 +29,7 @@ public class ShotScore {
 
     ShotScore next(int nextScore) {
         if (!isClear() &&
-                score.isMax(nextScore)) {
+                score.isLeftPins(nextScore)) {
             next = new ShotScore(Score.of(nextScore), ScoreType.SPARE);
             return next;
         }
