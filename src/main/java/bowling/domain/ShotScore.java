@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class ShotScore {
     private final Score score;
@@ -52,19 +51,28 @@ public class ShotScore {
 
     Integer totalScore() {
         if (scoreType.isIn(ScoreType.STRIKE)) {
-            return Optional.ofNullable(next)
-                    .flatMap(next -> Optional.ofNullable(next.next)
-                            .map(nextAfter -> nextAfter.singleScore() + next.singleScore() + singleScore()))
-                    .orElse(null);
+            return getStrikeTotalScore();
         }
 
         if (scoreType.isIn(ScoreType.SPARE)) {
-            return Optional.ofNullable(next)
-                    .map(next -> next.singleScore() + singleScore())
-                    .orElse(null);
+            return getSpareTotalScore();
         }
 
         return singleScore();
+    }
+
+    private Integer getSpareTotalScore() {
+        return addNextScore(singleScore());
+    }
+
+    private Integer getStrikeTotalScore() {
+        return next == null ? null : next.addNextScore(addNextScore(singleScore()));
+    }
+
+    private Integer addNextScore(Integer beforeScore) {
+        return (next == null || beforeScore == null) ?
+                null :
+                next.singleScore() + beforeScore;
     }
 
     @Override
