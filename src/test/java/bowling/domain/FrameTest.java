@@ -21,12 +21,12 @@ class FrameTest {
         Frame normalFrame = Frame.init();
         normalFrame.shot(4);
         assertThat(normalFrame.shotScores().stream())
-                .anyMatch(v -> v.scoreType().equals(ScoreType.MISS))
+                .anyMatch(v -> ScoreType.MISS.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 4);
 
         normalFrame.shot(6);
         assertThat(normalFrame.shotScores().stream())
-                .anyMatch(v -> v.scoreType().equals(ScoreType.SPARE))
+                .anyMatch(v -> ScoreType.SPARE.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 6);
 
         assertThatThrownBy(() -> normalFrame.shot(5))
@@ -63,12 +63,12 @@ class FrameTest {
     void shotLastFrame() {
         Frame finalFrame = Frame.init().last(4);
         assertThat(finalFrame.shotScores().stream())
-                .anyMatch(v -> v.scoreType().equals(ScoreType.MISS))
+                .anyMatch(v -> ScoreType.MISS.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 4);
 
         finalFrame.shot(6);
         assertThat(finalFrame.shotScores().stream())
-                .anyMatch(v -> v.scoreType().equals(ScoreType.SPARE))
+                .anyMatch(v -> ScoreType.SPARE.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 6);
 
         finalFrame.shot(5);
