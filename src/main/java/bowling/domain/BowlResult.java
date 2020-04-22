@@ -4,7 +4,6 @@ import bowling.exception.CannotBowlException;
 
 public abstract class BowlResult {
 
-
   Trial first;
   Trial second;
 
@@ -21,21 +20,4 @@ public abstract class BowlResult {
   public boolean isFinished() {
     return !first.isNotPlayed() && !second.isNotPlayed();
   }
-
-  public FrameState getState() {
-    if (first.isStrike()) {
-      return FrameState.STRIKE;
-    }
-
-    if (second.isSpare(first)) {
-      return FrameState.SPARE;
-    }
-
-    if (isFinished()) {
-      return FrameState.MISS;
-    }
-
-    return FrameState.IN_PROGRESS;
-  }
-
 }

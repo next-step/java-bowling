@@ -14,8 +14,8 @@ public class RegularResultTest {
   public void testStrike() throws CannotBowlException {
     RegularResult regularResult = new RegularResult();
 
-    regularResult.roll(PinCount.STRIKE);
-    assertThat(regularResult.getState()).isEqualTo(FrameState.STRIKE);
+    regularResult.roll(PinCount.MAX_PIN);
+    assertThat(FrameState.of(regularResult)).isEqualTo(FrameState.STRIKE);
     assertThat(regularResult.isFinished()).isTrue();
     assertThatThrownBy(() -> regularResult.roll(3))
         .isInstanceOf(CannotBowlException.class);
@@ -28,11 +28,11 @@ public class RegularResultTest {
     String[] pinCounts = pins.split(",");
 
     regularResult.roll(Integer.parseInt(pinCounts[0]));
-    assertThat(regularResult.getState()).isEqualTo(FrameState.IN_PROGRESS);
+    assertThat(FrameState.of(regularResult)).isEqualTo(FrameState.IN_PROGRESS);
     assertThat(regularResult.isFinished()).isFalse();
 
     regularResult.roll(Integer.parseInt(pinCounts[1]));
-    assertThat(regularResult.getState()).isEqualTo(FrameState.SPARE);
+    assertThat(FrameState.of(regularResult)).isEqualTo(FrameState.SPARE);
     assertThat(regularResult.isFinished()).isTrue();
     assertThatThrownBy(() -> regularResult.roll(3))
         .isInstanceOf(CannotBowlException.class);
@@ -45,11 +45,11 @@ public class RegularResultTest {
     String[] pinCounts = pins.split(",");
 
     regularResult.roll(Integer.parseInt(pinCounts[0]));
-    assertThat(regularResult.getState()).isEqualTo(FrameState.IN_PROGRESS);
+    assertThat(FrameState.of(regularResult)).isEqualTo(FrameState.IN_PROGRESS);
     assertThat(regularResult.isFinished()).isFalse();
 
     regularResult.roll(Integer.parseInt(pinCounts[1]));
-    assertThat(regularResult.getState()).isEqualTo(FrameState.MISS);
+    assertThat(FrameState.of(regularResult)).isEqualTo(FrameState.MISS);
     assertThat(regularResult.isFinished()).isTrue();
     assertThatThrownBy(() -> regularResult.roll(3))
         .isInstanceOf(CannotBowlException.class);

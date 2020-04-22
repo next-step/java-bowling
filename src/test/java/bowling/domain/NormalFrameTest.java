@@ -39,7 +39,7 @@ public class NormalFrameTest {
   @Test
   public void testStrike() throws CannotBowlException {
     NormalFrame normalFrame = NormalFrame.initialize();
-    Frame newFrame = normalFrame.roll(PinCount.STRIKE);
+    Frame newFrame = normalFrame.roll(PinCount.MAX_PIN);
 
     assertThatThrownBy(() -> normalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
@@ -48,7 +48,7 @@ public class NormalFrameTest {
   @Test
   public void testFinalRound() throws CannotBowlException {
     NormalFrame normalFrame = NormalFrame.of(Round.of(Round.FINAL_ROUND - Round.ROUND_UNIT));
-    Frame newFrame = normalFrame.roll(PinCount.STRIKE);
+    Frame newFrame = normalFrame.roll(PinCount.MAX_PIN);
 
     assertThat(newFrame instanceof FinalFrame).isTrue();
   }

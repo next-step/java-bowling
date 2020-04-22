@@ -31,16 +31,16 @@ public class TrialTest {
   public void testStrike() throws CannotBowlException {
     Trial trial = Trial.initialize();
 
-    trial.roll(PinCount.STRIKE);
+    trial.roll(PinCount.MAX_PIN);
     assertThat(trial.isPlayed()).isTrue();
-    assertThat(trial.isStrike()).isTrue();
+    assertThat(trial.isMaxPin()).isTrue();
   }
 
   @Test
   public void testGutter() throws CannotBowlException {
     Trial trial = Trial.initialize();
 
-    trial.roll(PinCount.GUTTER);
+    trial.roll(PinCount.MIN_PIN);
     assertThat(trial.isPlayed()).isTrue();
     assertThat(trial.isGutter()).isTrue();
   }
@@ -52,7 +52,7 @@ public class TrialTest {
     Trial second = Trial.initialize();
 
     first.roll(notStrike);
-    second.roll(PinCount.STRIKE - notStrike);
-    assertThat(second.isSpare(first)).isTrue();
+    second.roll(PinCount.MAX_PIN - notStrike);
+    assertThat(second.isSpareOf(first)).isTrue();
   }
 }

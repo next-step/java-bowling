@@ -46,7 +46,7 @@ public class FinalFrame implements Frame {
 
   private void prepareBonusBowl() {
     if (regularResult.isFinished()) {
-      FrameState state = regularResult.getState();
+      FrameState state = FrameState.of(regularResult);
       bonusResult = new BonusResult(state.getBonusBallCount());
     }
   }

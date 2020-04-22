@@ -24,12 +24,12 @@ public class Trial {
     return new Trial(TrialState.NOT_ALLOWED);
   }
 
-  public boolean isStrike() {
-    return isPlayed() && pinCount.isStrike();
+  public boolean isMaxPin() {
+    return isPlayed() && pinCount.isMax();
   }
 
-  public boolean isSpare(Trial first) {
-    return isPlayed() && !first.isStrike() && pinCount.isSpareOf(first.pinCount);
+  public boolean isSpareOf(Trial first) {
+    return pinCount.isSpareOf(first.pinCount);
   }
 
   public boolean isPlayed() {
@@ -41,7 +41,7 @@ public class Trial {
   }
 
   public boolean isGutter() {
-    return isPlayed() && pinCount.isGutter();
+    return isPlayed() && pinCount.isMin();
   }
 
   public void roll(int pinCount) throws CannotBowlException {
@@ -58,9 +58,8 @@ public class Trial {
   }
 
   public void blockIfStrike(Trial first) {
-    if (first.isStrike()) {
+    if (first.isMaxPin()) {
       state = TrialState.NOT_ALLOWED;
     }
   }
-
 }

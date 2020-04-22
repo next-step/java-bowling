@@ -5,6 +5,7 @@ import bowling.domain.BowlingGame;
 import bowling.domain.FinalFrame;
 import bowling.domain.Frame;
 import bowling.domain.FrameInfo;
+import bowling.domain.FrameState;
 import bowling.domain.NormalFrame;
 import bowling.domain.RegularResult;
 import bowling.domain.Trial;
@@ -78,7 +79,7 @@ public class ResultView {
       return visualizeTrial(first);
     }
 
-    return String.join(SCORE_DELIMITER, visualizeTrial(first), visualizeSecondTrial(first, second));
+    return String.join(SCORE_DELIMITER, visualizeTrial(first), visualizeSecondTrial(bowlResult));
   }
 
   private static String visualizeTrial(Trial first) {
@@ -86,7 +87,7 @@ public class ResultView {
       return NOT_PLAYED_SIGN;
     }
 
-    if (first.isStrike()) {
+    if (first.isMaxPin()) {
       return STRIKE_SIGN;
     }
 
@@ -97,11 +98,11 @@ public class ResultView {
     return String.valueOf(first.getPinCount());
   }
 
-  private static String visualizeSecondTrial(Trial first, Trial second) {
-    if (second.isSpare(first)) {
+  private static String visualizeSecondTrial(BowlResult bowlResult) {
+    if (FrameState.of(bowlResult).equals(FrameState.SPARE)) {
       return SPARE_SIGN;
     }
 
-    return visualizeTrial(second);
+    return visualizeTrial(bowlResult.getSecond());
   }
 }

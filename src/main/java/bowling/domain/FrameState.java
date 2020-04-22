@@ -15,4 +15,23 @@ public enum FrameState {
   public int getBonusBallCount() {
     return bonusBallCount;
   }
+
+  public static FrameState of(BowlResult result) {
+    Trial first = result.getFirst();
+    Trial second = result.getSecond();
+
+    if (first.isMaxPin()) {
+      return FrameState.STRIKE;
+    }
+
+    if (second.isSpareOf(first)) {
+      return FrameState.SPARE;
+    }
+
+    if (result.isFinished()) {
+      return FrameState.MISS;
+    }
+
+    return FrameState.IN_PROGRESS;
+  }
 }
