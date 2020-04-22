@@ -4,10 +4,17 @@ import bowling.exception.CannotBowlException;
 
 public abstract class BowlResult {
 
-  static final String DELIMITER = "|";
 
   Trial first;
   Trial second;
+
+  public Trial getFirst() {
+    return first;
+  }
+
+  public Trial getSecond() {
+    return second;
+  }
 
   public abstract void roll(int pinCount) throws CannotBowlException;
 
@@ -31,11 +38,4 @@ public abstract class BowlResult {
     return FrameState.IN_PROGRESS;
   }
 
-  public String visualize() {
-    if (!second.isPlayed()) {
-      return first.visualize();
-    }
-
-    return String.join(DELIMITER, first.visualize(), second.visualize(first));
-  }
 }

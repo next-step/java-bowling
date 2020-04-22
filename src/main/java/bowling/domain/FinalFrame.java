@@ -6,14 +6,20 @@ import bowling.exception.CannotBowlException;
 
 public class FinalFrame implements Frame {
 
-  private final String SCORE_DELIMITER = "|";
-
   private RegularResult regularResult;
   private BonusResult bonusResult;
 
   public FinalFrame() {
     regularResult = new RegularResult();
     bonusResult = NULL_RESULT;
+  }
+
+  public RegularResult getRegularResult() {
+    return regularResult;
+  }
+
+  public BonusResult getBonusResult() {
+    return bonusResult;
   }
 
   @Override
@@ -53,17 +59,6 @@ public class FinalFrame implements Frame {
   @Override
   public Score calculateScore() {
     return null;
-  }
-
-  @Override
-  public String visualize() {
-    String visualized = regularResult.visualize();
-    String bonusVisualized = bonusResult.visualize();
-    if (!bonusVisualized.isEmpty()) {
-      visualized = String.join(SCORE_DELIMITER, visualized, bonusVisualized);
-    }
-
-    return visualized;
   }
 
   @Override

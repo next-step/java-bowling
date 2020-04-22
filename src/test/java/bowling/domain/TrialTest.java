@@ -34,7 +34,6 @@ public class TrialTest {
     trial.roll(PinCount.STRIKE);
     assertThat(trial.isPlayed()).isTrue();
     assertThat(trial.isStrike()).isTrue();
-    assertThat(trial.visualize()).isEqualTo(Trial.STRIKE_SIGN);
   }
 
   @Test
@@ -44,7 +43,6 @@ public class TrialTest {
     trial.roll(PinCount.GUTTER);
     assertThat(trial.isPlayed()).isTrue();
     assertThat(trial.isGutter()).isTrue();
-    assertThat(trial.visualize()).isEqualTo(Trial.GUTTER_SIGN);
   }
 
   @Test

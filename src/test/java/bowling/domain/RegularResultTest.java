@@ -17,7 +17,6 @@ public class RegularResultTest {
     regularResult.roll(PinCount.STRIKE);
     assertThat(regularResult.getState()).isEqualTo(FrameState.STRIKE);
     assertThat(regularResult.isFinished()).isTrue();
-    assertThat(regularResult.visualize()).isEqualTo(Trial.STRIKE_SIGN);
     assertThatThrownBy(() -> regularResult.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }
@@ -31,12 +30,10 @@ public class RegularResultTest {
     regularResult.roll(Integer.parseInt(pinCounts[0]));
     assertThat(regularResult.getState()).isEqualTo(FrameState.IN_PROGRESS);
     assertThat(regularResult.isFinished()).isFalse();
-    assertThat(regularResult.visualize()).isEqualTo(visualized.split(BowlResult.DELIMITER)[0]);
 
     regularResult.roll(Integer.parseInt(pinCounts[1]));
     assertThat(regularResult.getState()).isEqualTo(FrameState.SPARE);
     assertThat(regularResult.isFinished()).isTrue();
-    assertThat(regularResult.visualize()).isEqualTo(visualized);
     assertThatThrownBy(() -> regularResult.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }
@@ -50,12 +47,10 @@ public class RegularResultTest {
     regularResult.roll(Integer.parseInt(pinCounts[0]));
     assertThat(regularResult.getState()).isEqualTo(FrameState.IN_PROGRESS);
     assertThat(regularResult.isFinished()).isFalse();
-    assertThat(regularResult.visualize()).isEqualTo(visualized.split(BowlResult.DELIMITER)[0]);
 
     regularResult.roll(Integer.parseInt(pinCounts[1]));
     assertThat(regularResult.getState()).isEqualTo(FrameState.MISS);
     assertThat(regularResult.isFinished()).isTrue();
-    assertThat(regularResult.visualize()).isEqualTo(visualized);
     assertThatThrownBy(() -> regularResult.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }

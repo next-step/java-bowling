@@ -19,8 +19,6 @@ public class NormalFrameTest {
     normalFrame.roll(Integer.parseInt(pinCounts[0]));
     Frame newFrame = normalFrame.roll(Integer.parseInt(pinCounts[1]));
 
-    assertThat(normalFrame.visualize()).isEqualTo(visualized);
-    assertThat(newFrame.visualize()).isEqualTo(Trial.NOT_PLAYED_SIGN);
     assertThatThrownBy(() -> normalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }
@@ -34,8 +32,6 @@ public class NormalFrameTest {
     normalFrame.roll(Integer.parseInt(pinCounts[0]));
     Frame newFrame = normalFrame.roll(Integer.parseInt(pinCounts[1]));
 
-    assertThat(normalFrame.visualize()).isEqualTo(visualized);
-    assertThat(newFrame.visualize()).isEqualTo(Trial.NOT_PLAYED_SIGN);
     assertThatThrownBy(() -> normalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }
@@ -45,8 +41,6 @@ public class NormalFrameTest {
     NormalFrame normalFrame = NormalFrame.initialize();
     Frame newFrame = normalFrame.roll(PinCount.STRIKE);
 
-    assertThat(normalFrame.visualize()).isEqualTo(Trial.STRIKE_SIGN);
-    assertThat(newFrame.visualize()).isEqualTo(Trial.NOT_PLAYED_SIGN);
     assertThatThrownBy(() -> normalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }

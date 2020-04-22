@@ -12,6 +12,10 @@ public class FrameInfo {
     this.round = round;
   }
 
+  public RegularResult getRegularResult() {
+    return regularResult;
+  }
+
   public int getRound() {
     return round.getRound();
   }
@@ -22,10 +26,6 @@ public class FrameInfo {
 
   public Round nextRound() {
     return round.next();
-  }
-
-  public String visualize() {
-    return regularResult.visualize();
   }
 
   public boolean isFull() {

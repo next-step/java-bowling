@@ -18,7 +18,6 @@ public class FinalFrameTest {
     finalFrame.roll(Integer.parseInt(pinCounts[1]));
 
     assertThat(finalFrame.isEnd()).isTrue();
-    assertThat(finalFrame.visualize()).isEqualTo(visualized);
     assertThatThrownBy(() -> finalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }
@@ -36,7 +35,6 @@ public class FinalFrameTest {
     finalFrame.roll(Integer.parseInt(pinCounts[2]));
 
     assertThat(finalFrame.isEnd()).isTrue();
-    assertThat(finalFrame.visualize()).isEqualTo(visualized);
     assertThatThrownBy(() -> finalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }
@@ -55,7 +53,6 @@ public class FinalFrameTest {
     finalFrame.roll(Integer.parseInt(pinCounts[2]));
 
     assertThat(finalFrame.isEnd()).isTrue();
-    assertThat(finalFrame.visualize()).isEqualTo(visualized);
     assertThatThrownBy(() -> finalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }

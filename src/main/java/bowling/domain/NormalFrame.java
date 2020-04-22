@@ -20,6 +20,10 @@ public class NormalFrame implements Frame {
     return new NormalFrame(round);
   }
 
+  public FrameInfo getFrameInfo() {
+    return frameInfo;
+  }
+
   @Override
   public int getRound() {
     return frameInfo.getRound();
@@ -49,11 +53,6 @@ public class NormalFrame implements Frame {
   @Override
   public Score calculateScore() {
     return null;
-  }
-
-  @Override
-  public String visualize() {
-    return frameInfo.visualize();
   }
 
   @Override

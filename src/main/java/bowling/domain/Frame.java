@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import static bowling.domain.Trial.NOT_PLAYED_SIGN;
-
 import bowling.exception.CannotBowlException;
 
 public interface Frame {
@@ -23,8 +21,6 @@ public interface Frame {
   Score calculateBonusScore(int bonusBowlCount);
 
   Score calculateScore();
-
-  String visualize();
 
   boolean isEnd();
 
@@ -53,11 +49,6 @@ public interface Frame {
     @Override
     public Score calculateScore() {
       return null;
-    }
-
-    @Override
-    public String visualize() {
-      return NOT_PLAYED_SIGN;
     }
 
     @Override
