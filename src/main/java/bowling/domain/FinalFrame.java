@@ -24,11 +24,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String desc() {
-        return state.getDesc();
-    }
-
-    @Override
     public Score getScore() {
         return state.getScore();
     }

@@ -19,19 +19,21 @@ public class NormalFrame implements Frame {
     @Override
     public Frame bowl(int felledPins) {
         state = state.bowl(felledPins);
+        if (state.isFinish()) {
+            next = create();
+            return next;
+        }
         return this;
     }
 
-    public Frame create() {
+    private Frame create() {
         if (!state.isFinish()) {
             throw new IllegalArgumentException("끝나지 않은 상태에서는 새로운 프레임을 만들 수 없습니다.");
         }
         if (frameNum + 1 == MAX_FRAME_NUM) {
             next = new FinalFrame(bonusFlag);
-            return next;
         }
-        next = new NormalFrame(frameNum + 1);
-        return next;
+        return new NormalFrame(frameNum + 1);
     }
 
     public void bonus() {
@@ -45,11 +47,6 @@ public class NormalFrame implements Frame {
     @Override
     public int getFrameNum() {
         return frameNum;
-    }
-
-    @Override
-    public String desc() {
-        return state.getDesc();
     }
 
     @Override

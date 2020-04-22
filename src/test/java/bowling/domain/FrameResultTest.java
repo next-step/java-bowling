@@ -37,9 +37,7 @@ class FrameResultTest {
     @Test
     void getFrameResultSpare() {
         NormalFrame normalFrame = new NormalFrame(1);
-        normalFrame.bowl(8).bowl(2);
-        Frame frame = normalFrame.create();
-        frame.bowl(7);
+        normalFrame.bowl(8).bowl(2).bowl(7);
         FrameResult frameResult = normalFrame.getFrameResult();
         assertThat(frameResult).isEqualTo(new FrameResult("8|/", 17));
     }
@@ -49,7 +47,6 @@ class FrameResultTest {
     void getFrameResultSpareReadyState() {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(8).bowl(2);
-        Frame frame = normalFrame.create();
         FrameResult frameResult = normalFrame.getFrameResult();
         assertThat(frameResult).isEqualTo(new FrameResult("8|/"));
     }
@@ -58,11 +55,7 @@ class FrameResultTest {
     @Test
     void getFrameResultStrike() {
         NormalFrame normalFrame = new NormalFrame(1);
-        normalFrame.bowl(10);
-        NormalFrame frame = (NormalFrame) normalFrame.create();
-        frame.bowl(10);
-        Frame next = frame.create();
-        next.bowl(5);
+        normalFrame.bowl(10).bowl(10).bowl(5);
         FrameResult frameResult = normalFrame.getFrameResult();
         assertThat(frameResult).isEqualTo(new FrameResult("X", 25));
     }
@@ -71,10 +64,7 @@ class FrameResultTest {
     @Test
     void getFrameResultStrikeReadyState() {
         NormalFrame normalFrame = new NormalFrame(1);
-        normalFrame.bowl(10);
-        NormalFrame frame = (NormalFrame) normalFrame.create();
-        frame.bowl(10);
-        Frame next = frame.create();
+        normalFrame.bowl(10).bowl(10);
         FrameResult frameResult = normalFrame.getFrameResult();
         assertThat(frameResult).isEqualTo(new FrameResult("X"));
     }

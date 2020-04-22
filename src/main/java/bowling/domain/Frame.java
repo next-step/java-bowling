@@ -5,8 +5,6 @@ public interface Frame {
 
     int getFrameNum();
 
-    String desc();
-
     Score getScore();
 
     Score calculateAdditionalScore(Score beforeScore);

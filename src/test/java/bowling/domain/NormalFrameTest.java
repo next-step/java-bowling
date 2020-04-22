@@ -13,8 +13,7 @@ class NormalFrameTest {
     @Test
     void strikeBowl() {
         NormalFrame frame = new NormalFrame(1);
-        frame.bowl(10);
-        Frame next = frame.create();
+        Frame next = frame.bowl(10);
         assertThat(next.getFrameNum()).isEqualTo(2);
     }
 
@@ -23,8 +22,7 @@ class NormalFrameTest {
     void spareBowl() {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(1);
-        normalFrame.bowl(9);
-        Frame next = normalFrame.create();
+        Frame next = normalFrame.bowl(9);
         assertThat(next.getFrameNum()).isEqualTo(2);
     }
 
@@ -33,8 +31,7 @@ class NormalFrameTest {
     void missBowl() {
         NormalFrame normalFrame = new NormalFrame(1);
         normalFrame.bowl(1);
-        normalFrame.bowl(0);
-        Frame next = normalFrame.create();
+        Frame next = normalFrame.bowl(0);
         assertThat(next.getFrameNum()).isEqualTo(2);
     }
 
@@ -42,12 +39,21 @@ class NormalFrameTest {
     @Test
     void createBoard() {
         NormalFrame normalFrame = new NormalFrame(1);
-        normalFrame
-                .bowl(8).bowl(2);
-        NormalFrame next = (NormalFrame) normalFrame.create();
+        normalFrame.bowl(8).bowl(2)
+                   .bowl(10)
+                   .bowl(10)
+                   .bowl(2).bowl(5)
+                   .bowl(10)
+                   .bowl(10)
+                   .bowl(10)
+                   .bowl(10)
+                   .bowl(10)
+                   .bowl(10).bowl(10).bowl(10);
         Board board = normalFrame.createBoard();
         List<FrameResult> frameResults = board.getFrameResults();
-        assertThat(frameResults.get(0).getDisplayScore()).isEqualTo("8|/");
-        assertThat(frameResults.get(0).getTotalScore()).isEqualTo(-1);
+        for (FrameResult frameResult : frameResults) {
+            System.out.println(frameResult);
+        }
+
     }
 }
