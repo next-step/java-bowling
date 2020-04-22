@@ -36,9 +36,8 @@ class ShotScores {
     }
 
     boolean hasClear() {
-        return !shotScores.isEmpty() &&
-                shotScores.stream()
-                        .anyMatch(ShotScore::isClear);
+        return shotScores.stream()
+                .anyMatch(ShotScore::isClear);
     }
 
     Integer totalScore() {
