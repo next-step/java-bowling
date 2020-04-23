@@ -21,7 +21,7 @@ class FrameTest {
         Frame normalFrame = Frame.init();
         normalFrame.shot(4);
         assertThat(normalFrame.shotScores().stream())
-                .anyMatch(v -> ScoreType.MISS.equals(v.scoreType()))
+                .anyMatch(v -> ScoreType.MISS_FIRST.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 4);
 
         normalFrame.shot(6);
@@ -63,7 +63,7 @@ class FrameTest {
     void shotLastFrame() {
         Frame finalFrame = Frame.init().last(4);
         assertThat(finalFrame.shotScores().stream())
-                .anyMatch(v -> ScoreType.MISS.equals(v.scoreType()))
+                .anyMatch(v -> ScoreType.MISS_FIRST.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 4);
 
         finalFrame.shot(6);

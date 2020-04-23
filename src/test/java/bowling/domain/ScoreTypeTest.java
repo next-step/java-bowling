@@ -13,7 +13,7 @@ class ScoreTypeTest {
         assertThat(scoreType.finish())
                 .isTrue();
 
-        assertThat(Arrays.asList(ScoreType.SPARE, ScoreType.MISS, ScoreType.GUTTER).contains(scoreType))
+        assertThat(Arrays.asList(ScoreType.SPARE, ScoreType.MISS_FIRST, ScoreType.GUTTER_FIRST).contains(scoreType))
                 .isFalse();
     }
 

@@ -6,9 +6,8 @@ public class ShotScore {
     private final Score score;
     private final ScoreType scoreType;
     private ShotScore next;
-    private boolean isSecond;
 
-    private ShotScore(Score score, ScoreType scoreType) {
+    protected ShotScore(Score score, ScoreType scoreType) {
         this.score = score;
         this.scoreType = scoreType;
     }
@@ -21,30 +20,34 @@ public class ShotScore {
         }
 
         if (score.isMin()) {
-            return new ShotScore(score, ScoreType.GUTTER);
+            return new ShotScore(score, ScoreType.GUTTER_FIRST);
         }
 
-        return new ShotScore(score, ScoreType.MISS);
+        return new ShotScore(score, ScoreType.MISS_FIRST);
     }
 
-    ShotScore next(int nextScore) {//TODO 리팩토링
-        if (!isSecond &&
-                !isClear()) {
-            if (score.isLeftPins(nextScore)) {
-                next = new ShotScore(Score.of(nextScore), ScoreType.SPARE);
-            } else {
-                next = init(nextScore);
+    ShotScore next(int next) {//TODO 리팩토링
+        if (!scoreType.finish()) {
+            Score nextScore = Score.of(next);
+            if (score.isLeftPins(next)) {
+                this.next = new ShotScore(nextScore, ScoreType.SPARE);
+                return this.next;
             }
-            next.isSecond = true;
-            return next;
+            if (nextScore.isMin()) {
+                this.next = new ShotScore(nextScore, ScoreType.GUTTER_SECOND);
+                return this.next;
+            }
+
+            this.next = new ShotScore(nextScore, ScoreType.MISS_SECOND);
+            return this.next;
         }
 
-        next = init(nextScore);
-        return next;
+        this.next = init(next);
+        return this.next;
     }
 
     boolean isClear() {
-        return scoreType.finish();
+        return scoreType.isCleared();
     }
 
     public ScoreType scoreType() {
