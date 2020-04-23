@@ -29,12 +29,12 @@ public class ShotScore {
 
     ShotScore next(int nextScore) {//TODO 리팩토링
         if (!isSecond &&
-                !isClear()){
-                if(score.isLeftPins(nextScore)) {
-                    next = new ShotScore(Score.of(nextScore), ScoreType.SPARE);
-                } else{
-                    next = init(nextScore);
-                }
+                !isClear()) {
+            if (score.isLeftPins(nextScore)) {
+                next = new ShotScore(Score.of(nextScore), ScoreType.SPARE);
+            } else {
+                next = init(nextScore);
+            }
             next.isSecond = true;
             return next;
         }
@@ -55,7 +55,7 @@ public class ShotScore {
         return score.score();
     }
 
-    Integer totalScore() { //TODO nullable 제거
+    int totalScore() {
         if (ScoreType.STRIKE.equals(scoreType)) {
             return getStrikeTotalScore();
         }
@@ -67,18 +67,24 @@ public class ShotScore {
         return singleScore();
     }
 
+    boolean isScoreCalculated() {
+        if (ScoreType.STRIKE.equals(scoreType)) {
+            return next != null && next.next != null;
+        }
+
+        if (ScoreType.SPARE.equals(scoreType)) {
+            return next != null;
+        }
+
+        return true;
+    }
+
     private Integer getSpareTotalScore() {
-        return addNextScore(singleScore());
+        return next.singleScore() + singleScore();
     }
 
-    private Integer getStrikeTotalScore() {
-        return next == null ? null : next.addNextScore(addNextScore(singleScore()));
-    }
-
-    private Integer addNextScore(Integer beforeScore) {
-        return (next == null || beforeScore == null) ?
-                null :
-                next.singleScore() + beforeScore;
+    private int getStrikeTotalScore() {
+        return next.next.singleScore() + next.singleScore() + singleScore();
     }
 
     @Override

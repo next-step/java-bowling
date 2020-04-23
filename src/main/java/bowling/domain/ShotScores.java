@@ -2,8 +2,6 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 class ShotScores {
     private final List<ShotScore> shotScores;
@@ -41,8 +39,9 @@ class ShotScores {
     }
 
     int totalScore() {
-        return totalScoreStream()
-                .mapToInt(Integer::intValue)
+        return shotScores
+                .stream()
+                .mapToInt(ShotScore::totalScore)
                 .sum();
     }
 
@@ -54,14 +53,9 @@ class ShotScores {
     }
 
     boolean isScoreCalculated() {
-        return totalScoreStream()
-                .allMatch(Objects::nonNull);
-    }
-
-    private Stream<Integer> totalScoreStream() {
         return shotScores
                 .stream()
-                .map(ShotScore::totalScore);
+                .allMatch(ShotScore::isScoreCalculated);
     }
 
     List<ShotScore> shotScores() {

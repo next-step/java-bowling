@@ -28,20 +28,37 @@ class ShotScoreTest {
     }
 
     @Test
+    void isCalculated() {
+        ShotScore shotScore = ShotScore.init(10);
+        assertThat(shotScore.isScoreCalculated())
+                .isFalse();
+
+        shotScore.next(10).next(10);
+        assertThat(shotScore.isScoreCalculated())
+                .isTrue();
+
+        shotScore = ShotScore.init(4);
+        assertThat(shotScore.isScoreCalculated())
+                .isTrue();
+
+        shotScore = shotScore.next(6);
+        assertThat(shotScore.isScoreCalculated())
+                .isFalse();
+
+        shotScore.next(5);
+        assertThat(shotScore.isScoreCalculated())
+                .isTrue();
+    }
+
+    @Test
     void totalScore() {
         ShotScore shotScore = ShotScore.init(10);
-        assertThat(shotScore.totalScore())
-                .isEqualTo(null);
-
         shotScore.next(10).next(10);
         assertThat(shotScore.totalScore())
                 .isEqualTo(30);
 
         shotScore = ShotScore.init(4);
         shotScore = shotScore.next(6);
-        assertThat(shotScore.totalScore())
-                .isEqualTo(null);
-
         shotScore.next(5);
         assertThat(shotScore.totalScore())
                 .isEqualTo(11);
