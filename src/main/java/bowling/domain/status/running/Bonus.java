@@ -24,7 +24,7 @@ public class Bonus extends Running {
     @Override
     public Status throwBall(Point thirdPoint) {
         validate(thirdPoint);
-        return BonusEnd.of(firstPoint, secondPoint, thirdPoint);
+        return BonusEnd.of(this, thirdPoint);
     }
 
     @Override
@@ -50,7 +50,11 @@ public class Bonus extends Running {
         }
     }
 
-    private boolean isSpare() {
+    public Point getSecondPoint() {
+        return secondPoint;
+    }
+
+    public boolean isSpare() {
         return !firstPoint.isMaxPoint() && firstPoint.add(secondPoint) == Point.MAX_POINT;
     }
 }
