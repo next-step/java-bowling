@@ -1,14 +1,18 @@
 package bowling.domain;
 
-import java.util.Arrays;
-
 public enum ScoreType {
-    STRIKE,
-    SPARE,
-    MISS,
-    GUTTER;
+    STRIKE(true),
+    SPARE(true),
+    MISS(false),
+    GUTTER(false);
 
-    boolean isIn(ScoreType... scoreTypes) {
-        return Arrays.asList(scoreTypes).contains(this);
+    private final boolean isFinished;
+
+    ScoreType(boolean isFinished) {
+        this.isFinished = isFinished;
+    }
+
+    boolean finish() {
+        return isFinished;
     }
 }

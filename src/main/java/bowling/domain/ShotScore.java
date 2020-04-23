@@ -44,7 +44,7 @@ public class ShotScore {
     }
 
     boolean isClear() {
-        return scoreType.isIn(ScoreType.STRIKE, ScoreType.SPARE);
+        return scoreType.finish();
     }
 
     public ScoreType scoreType() {
@@ -56,11 +56,11 @@ public class ShotScore {
     }
 
     Integer totalScore() { //TODO nullable 제거
-        if (scoreType.isIn(ScoreType.STRIKE)) {
+        if (ScoreType.STRIKE.equals(scoreType)) {
             return getStrikeTotalScore();
         }
 
-        if (scoreType.isIn(ScoreType.SPARE)) {
+        if (ScoreType.SPARE.equals(scoreType)) {
             return getSpareTotalScore();
         }
 
