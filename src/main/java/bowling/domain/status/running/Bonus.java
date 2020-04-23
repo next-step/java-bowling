@@ -2,6 +2,7 @@ package bowling.domain.status.running;
 
 import bowling.domain.frame.OverThrowBallException;
 import bowling.domain.point.Point;
+import bowling.domain.score.NoneScoreException;
 import bowling.domain.score.Score;
 import bowling.domain.status.Status;
 import bowling.domain.status.finished.BonusEnd;
@@ -40,7 +41,7 @@ public class Bonus extends Running {
         if (isSpare()) {
             return Score.ofSpare();
         }
-        return null;
+        throw new NoneScoreException("스코어가 없습니다");
     }
 
     private void validate(Point point) {

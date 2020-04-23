@@ -1,6 +1,7 @@
 package bowling.domain.status.finished;
 
 import bowling.domain.point.Point;
+import bowling.domain.score.NoneScoreException;
 import bowling.domain.score.Score;
 import bowling.domain.status.running.Bonus;
 
@@ -30,6 +31,6 @@ public class BonusEnd extends Finished {
 
     @Override
     public Score getScore() {
-        return null;
+        throw new NoneScoreException("스코어가 없습니다");
     }
 }

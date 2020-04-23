@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.point.Point;
+import bowling.domain.score.NoneScoreException;
 import bowling.domain.score.Score;
 import bowling.domain.status.Status;
 
@@ -14,8 +15,9 @@ public abstract class Frame {
     }
 
     public void addScore() {
-        if (status.getScore() != null) {
+        try {
             this.score = status.getScore();
+        } catch (NoneScoreException e) {
         }
     }
 

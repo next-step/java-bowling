@@ -1,6 +1,7 @@
 package bowling.domain.status.running;
 
 import bowling.domain.point.Point;
+import bowling.domain.score.NoneScoreException;
 import bowling.domain.score.Score;
 import bowling.domain.status.Status;
 
@@ -22,6 +23,6 @@ public class FinalReady extends Running {
 
     @Override
     public Score getScore() {
-        return null;
+        throw new NoneScoreException("스코어가 없습니다");
     }
 }

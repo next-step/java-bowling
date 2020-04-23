@@ -2,6 +2,7 @@ package bowling.domain.status.running;
 
 import bowling.domain.frame.OverThrowBallException;
 import bowling.domain.point.Point;
+import bowling.domain.score.NoneScoreException;
 import bowling.domain.score.Score;
 import bowling.domain.status.Status;
 import bowling.domain.status.finished.Gutter;
@@ -41,7 +42,7 @@ public class FinalCover extends Running {
         if (firstPoint.isMaxPoint()) {
             return Score.ofStrike();
         }
-        return null;
+        throw new NoneScoreException("스코어가 없습니다");
     }
 
     private void validate(Point point) {
