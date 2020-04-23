@@ -5,7 +5,6 @@ import bowling.domain.player.Player;
 import bowling.domain.player.Players;
 import bowling.domain.point.Point;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -17,11 +16,9 @@ public class InputView {
         System.out.println("How many people?");
         int playerCount = scanner.nextInt();
         scanner.nextLine();
-        List<Player> players = IntStream.rangeClosed(1, playerCount)
+        return IntStream.rangeClosed(1, playerCount)
                 .mapToObj(i -> InputView.inputPlayer(i))
-                .collect(Collectors.toList());
-
-        return new Players(players);
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Players::new));
     }
 
     private static Player inputPlayer(int count) {
