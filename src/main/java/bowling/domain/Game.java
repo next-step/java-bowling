@@ -16,7 +16,7 @@ public class Game {
         this.board = board;
     }
 
-    public Frame startGame() {
+    public NormalFrame startGame() {
         NormalFrame normalFrame = new NormalFrame(FIRST_FRAME_NUMBER);
         return normalFrame;
     }
