@@ -3,9 +3,9 @@ package bowling.domain;
 import java.util.Objects;
 
 public class ShotScore {
-    private final Score score;
-    private final ScoreType scoreType;
-    private ShotScore next;
+    protected final Score score;
+    protected final ScoreType scoreType;
+    protected ShotScore next;
 
     protected ShotScore(Score score, ScoreType scoreType) {
         this.score = score;
@@ -14,31 +14,13 @@ public class ShotScore {
 
     static ShotScore init(int shotScore) {
         Score score = Score.of(shotScore);
-
-        if (score.isMax()) {
-            return new ShotScore(score, ScoreType.STRIKE);
-        }
-
-        if (score.isMin()) {
-            return new ShotScore(score, ScoreType.GUTTER_FIRST);
-        }
-
-        return new ShotScore(score, ScoreType.MISS_FIRST);
+        return new ShotScore(score, ScoreType.of(score));
     }
 
-    ShotScore next(int next) {//TODO 리팩토링
-        if (!scoreType.finish()) {
+    ShotScore next(int next) {
+        if (!scoreType.isFinished()) {
             Score nextScore = Score.of(next);
-            if (score.isLeftPins(next)) {
-                this.next = new ShotScore(nextScore, ScoreType.SPARE);
-                return this.next;
-            }
-            if (nextScore.isMin()) {
-                this.next = new ShotScore(nextScore, ScoreType.GUTTER_SECOND);
-                return this.next;
-            }
-
-            this.next = new ShotScore(nextScore, ScoreType.MISS_SECOND);
+            this.next = new ShotScore(nextScore, ScoreType.of(score, nextScore));
             return this.next;
         }
 
