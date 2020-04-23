@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.game;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
@@ -7,10 +7,12 @@ import bowling.domain.player.Player;
 import bowling.domain.point.Point;
 
 public class BowlingGame {
+    private final Player player;
     private Frames frames;
 
     public BowlingGame(Player player) {
-        this.frames = new Frames(player);
+        this.player = player;
+        this.frames = new Frames();
     }
 
     public void throwBall(Point point) {
@@ -24,15 +26,23 @@ public class BowlingGame {
         frames.calculateScores(point);
     }
 
+    public void makeNextFrame() {
+        this.frames.getNextFrame();
+    }
+
+    public String getPlayerName() {
+        return player.getName();
+    }
+
     public Frames getFrames() {
         return frames;
     }
 
-    public int currentFrameNo() {
-        return frames.size();
+    public boolean isCurrentRoundDone() {
+        return !frames.getLastFrame().isThrowable();
     }
 
     public boolean isEnd() {
-        return frames.isMax() && !frames.getLastFrame().isThrowable();
+        return frames.isEndLastFrame();
     }
 }

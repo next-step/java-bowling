@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.game;
 
 import bowling.domain.player.Player;
 import bowling.domain.point.Point;
@@ -28,20 +28,9 @@ public class BowlingGameTest {
     }
 
     @Test
-    @DisplayName("진행중인 프레임 번호 가져오기")
-    void currentFrameNoTest() {
-        for (int i = 0; i < 2; i++) {
-            bowlingGame.throwBall(Point.of(10));
-        }
-        assertThat(
-                bowlingGame.currentFrameNo()
-        ).isEqualTo(2);
-    }
-
-    @Test
     @DisplayName("게임 끝 테스트")
     void isEndTest() {
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 12; i++) {
             bowlingGame.throwBall(Point.of(10));
         }
         assertThat(

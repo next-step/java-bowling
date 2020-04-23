@@ -1,19 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.status.running.Ready;
+
 public class NormalFrame extends Frame {
     public NormalFrame() {
         super();
-    }
-
-    @Override
-    public boolean isThrowable() {
-        return points.isThrowableForNormalFrame();
-    }
-
-    @Override
-    public void addScore() {
-        if (!isThrowable()) {
-            this.score = points.makeScore();
-        }
+        this.status = Ready.of();
     }
 }

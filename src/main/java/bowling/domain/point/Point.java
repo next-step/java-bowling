@@ -35,6 +35,32 @@ public class Point {
         return point == MAX_POINT;
     }
 
+    public boolean isMinPoint() {
+        return point == MIN_POINT;
+    }
+
+    public int add(Point targetPoint) {
+        return this.point + targetPoint.getPoint();
+    }
+
+    public Point getLeftPoint() {
+        return Point.of(MAX_POINT - point);
+    }
+
+    public boolean isOver(Point secondPoint) {
+        return (this.point + secondPoint.getPoint()) > MAX_POINT;
+    }
+
+    public String print() {
+        if (isMaxPoint()) {
+            return "X";
+        }
+        if (isMinPoint()) {
+            return "-";
+        }
+        return String.valueOf(point);
+    }
+
     private static void validate(int input) {
         if (input < MIN_POINT || input > MAX_POINT) {
             throw new PointOutOfRangeException(String.format("포인트는 %s ~ %s 사이만 가능합니다.", MIN_POINT, MAX_POINT));
