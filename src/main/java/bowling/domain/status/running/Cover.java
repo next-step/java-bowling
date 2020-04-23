@@ -28,7 +28,7 @@ public class Cover extends Running {
             return Double.of();
         }
         if (sumPoint == Point.MAX_POINT) {
-            return Spare.of(firstPoint, point);
+            return Spare.of(firstPoint);
         }
         if (sumPoint == Point.MIN_POINT) {
             return Gutter.of();

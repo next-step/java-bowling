@@ -23,7 +23,7 @@ public class FinalSpare extends Running {
 
     @Override
     public Status throwBall(Point thirdPoint) {
-        return FinalSpareEnd.of(Spare.of(firstPoint, secondPoint), thirdPoint);
+        return FinalSpareEnd.of(Spare.of(firstPoint), thirdPoint);
     }
 
     @Override

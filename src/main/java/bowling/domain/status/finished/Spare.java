@@ -5,15 +5,13 @@ import bowling.domain.score.Score;
 
 public class Spare extends Finished {
     private final Point firstPoint;
-    private final Point secondPoint;
 
-    public static Spare of(Point firstPoint, Point secondPoint) {
-        return new Spare(firstPoint, secondPoint);
+    public static Spare of(Point firstPoint) {
+        return new Spare(firstPoint);
     }
 
-    private Spare(Point firstPoint, Point secondPoint) {
+    private Spare(Point firstPoint) {
         this.firstPoint = firstPoint;
-        this.secondPoint = secondPoint;
     }
 
     @Override
