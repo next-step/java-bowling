@@ -15,7 +15,7 @@ public class FinalCoverTest {
         FinalCover finalCover = FinalCover.of(Point.of(10));
         assertThat(
                 finalCover.throwBall(Point.of(7))
-        ).isInstanceOf(FinalStrike.class);
+        ).isInstanceOf(Bonus.class);
     }
 
     @Test
@@ -24,7 +24,7 @@ public class FinalCoverTest {
         FinalCover finalCover = FinalCover.of(Point.of(10));
         assertThat(
                 finalCover.throwBall(Point.of(10))
-        ).isInstanceOf(FinalStrike.class);
+        ).isInstanceOf(Bonus.class);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class FinalCoverTest {
         FinalCover finalCover = FinalCover.of(Point.of(3));
         assertThat(
                 finalCover.throwBall(Point.of(7))
-        ).isInstanceOf(FinalSpare.class);
+        ).isInstanceOf(Bonus.class);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class FinalCoverTest {
         FinalCover finalCover = FinalCover.of(Point.of(0));
         assertThat(
                 finalCover.throwBall(Point.of(10))
-        ).isInstanceOf(FinalSpare.class);
+        ).isInstanceOf(Bonus.class);
     }
 
     @Test

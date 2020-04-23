@@ -6,7 +6,6 @@ import bowling.domain.score.Score;
 import bowling.domain.status.Status;
 import bowling.domain.status.finished.Gutter;
 import bowling.domain.status.finished.Miss;
-import bowling.domain.status.finished.Spare;
 
 public class FinalCover extends Running {
     private final Point firstPoint;
@@ -23,11 +22,8 @@ public class FinalCover extends Running {
     public Status throwBall(Point secondPoint) {
         validate(secondPoint);
         int sumPoint = firstPoint.add(secondPoint);
-        if (firstPoint.isMaxPoint()) {
-            return FinalStrike.of(secondPoint);
-        }
-        if (sumPoint == Point.MAX_POINT) {
-            return FinalSpare.of(firstPoint, secondPoint);
+        if (firstPoint.isMaxPoint() || sumPoint == Point.MAX_POINT) {
+            return Bonus.of(firstPoint, secondPoint);
         }
         if (sumPoint == Point.MIN_POINT) {
             return Gutter.of();

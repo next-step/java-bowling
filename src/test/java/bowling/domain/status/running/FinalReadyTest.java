@@ -1,7 +1,6 @@
 package bowling.domain.status.running;
 
 import bowling.domain.point.Point;
-import bowling.domain.status.finished.Strike;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

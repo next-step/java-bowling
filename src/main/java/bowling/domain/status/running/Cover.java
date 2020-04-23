@@ -4,7 +4,6 @@ import bowling.domain.frame.OverThrowBallException;
 import bowling.domain.point.Point;
 import bowling.domain.score.Score;
 import bowling.domain.status.Status;
-import bowling.domain.status.finished.Double;
 import bowling.domain.status.finished.Gutter;
 import bowling.domain.status.finished.Miss;
 import bowling.domain.status.finished.Spare;
@@ -24,9 +23,6 @@ public class Cover extends Running {
     public Status throwBall(Point point) {
         validate(point);
         int sumPoint = firstPoint.add(point);
-        if (firstPoint.isMaxPoint() && point.isMaxPoint()) {
-            return Double.of();
-        }
         if (sumPoint == Point.MAX_POINT) {
             return Spare.of(firstPoint);
         }
