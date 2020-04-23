@@ -31,7 +31,7 @@ public class NormalFrame implements Frame {
             throw new IllegalArgumentException("끝나지 않은 상태에서는 새로운 프레임을 만들 수 없습니다.");
         }
         if (frameNum + 1 == MAX_FRAME_NUM) {
-            next = new FinalFrame(bonusFlag);
+            return new FinalFrame(bonusFlag);
         }
         return new NormalFrame(frameNum + 1);
     }

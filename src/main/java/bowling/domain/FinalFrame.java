@@ -42,6 +42,11 @@ public class FinalFrame implements Frame {
         board.add(getFrameResult());
     }
 
+    @Override
+    public Board createBoard() {
+        throw new UnsupportedOperationException();
+    }
+
     public FrameResult getFrameResult() {
         if (!state.isFinish()) {
             return new FrameResult(state.getDesc());
