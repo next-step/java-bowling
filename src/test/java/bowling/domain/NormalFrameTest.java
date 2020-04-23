@@ -48,12 +48,7 @@ class NormalFrameTest {
                    .bowl(10)
                    .bowl(10)
                    .bowl(10)
-                   .bowl(10).bowl(10).bowl(10);
+                   .bowl(10).bowl(10);
         Board board = normalFrame.createBoard();
-        List<FrameResult> frameResults = board.getFrameResults();
-        for (FrameResult frameResult : frameResults) {
-            System.out.println(frameResult);
-        }
-
     }
 }
