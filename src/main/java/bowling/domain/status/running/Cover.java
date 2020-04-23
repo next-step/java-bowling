@@ -1,5 +1,6 @@
 package bowling.domain.status.running;
 
+import bowling.domain.frame.OverThrowBallException;
 import bowling.domain.point.Point;
 import bowling.domain.score.Score;
 import bowling.domain.status.Status;
@@ -21,6 +22,7 @@ public class Cover extends Running {
 
     @Override
     public Status throwBall(Point point) {
+        validate(point);
         int sumPoint = firstPoint.add(point);
         if (firstPoint.isMaxPoint() && point.isMaxPoint()) {
             return Double.of();
@@ -42,5 +44,12 @@ public class Cover extends Running {
     @Override
     public Score getScore() {
         return null;
+    }
+
+    private void validate(Point point) {
+        Point leftPoint = firstPoint.getLeftPoint();
+        if (firstPoint.isOver(point)) {
+            throw new OverThrowBallException("다시 입력해주세요(남은 핀: " + leftPoint.getPoint() + ")");
+        }
     }
 }

@@ -43,6 +43,14 @@ public class Point {
         return this.point + targetPoint.getPoint();
     }
 
+    public Point getLeftPoint() {
+        return Point.of(MAX_POINT - point);
+    }
+
+    public boolean isOver(Point secondPoint) {
+        return (this.point + secondPoint.getPoint()) > MAX_POINT;
+    }
+
     public String print() {
         if (isMaxPoint()) {
             return "X";
