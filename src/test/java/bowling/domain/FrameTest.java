@@ -2,6 +2,7 @@ package bowling.domain;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
@@ -171,6 +172,42 @@ class FrameTest {
         frame.next(5);
         assertThat(frame.isScoreCalculated())
                 .isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource (strings = {
+            "10,4,3",
+            "4,3",
+            "1,9,2",
+            "10,10,3"
+    })
+    void isScoreCalculatedLastFrame(String shotString){
+        int[] shots = splitInts(shotString);
+        Frame frame = Frame.init();
+        frame = frame.last(shots[0]);
+        for (int i = 1; i < shots.length; i++) {
+            frame.shot(shots[i]);
+        }
+        assertThat(frame.isScoreCalculated())
+                .isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource (strings = {
+            "10,4",
+            "4",
+            "1,9",
+            "10,10"
+    })
+    void isNotScoreCalculatedLastFrame(String shotString){
+        int[] shots = splitInts(shotString);
+        Frame frame = Frame.init();
+        frame = frame.last(shots[0]);
+        for (int i = 1; i < shots.length; i++) {
+            frame.shot(shots[i]);
+        }
+        assertThat(frame.isScoreCalculated())
+                .isFalse();
     }
 
 }
