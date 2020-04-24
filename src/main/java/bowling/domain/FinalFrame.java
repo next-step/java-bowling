@@ -58,7 +58,7 @@ public class FinalFrame implements Frame {
 
   @Override
   public Score calculateBonusScore(int bonusBowlCount) {
-    if (bonusBowlCount == 2 && FrameState.of(regularResult) == FrameState.STRIKE) {
+    if (bonusBowlCount == MAX_BONUS_BOWL && FrameState.of(regularResult) == FrameState.STRIKE) {
       return Score.add(Score.of(regularResult.getFirst()), bonusResult.getScore(1));
     }
 

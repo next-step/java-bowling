@@ -36,7 +36,7 @@ public class NullFrame implements Frame {
 
   @Override
   public Score calculateBonusScore(int bonusBowlCount) {
-    if (bonusBowlCount == 0) {
+    if (bonusBowlCount == NO_BONUS_BOWL) {
       return Score.zero();
     }
 
