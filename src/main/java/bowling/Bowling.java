@@ -11,9 +11,13 @@ public class Bowling {
 
         List<String> result = new ArrayList<>();
 
-        if (falledPins.get(0) == 10) {
-            result.add("X");
-        };
+        for (Integer count : falledPins) {
+            if (count != 10) {
+                result.add(String.valueOf(count));
+            } else {
+                result.add("X");
+            }
+        }
 
         return result;
     }
