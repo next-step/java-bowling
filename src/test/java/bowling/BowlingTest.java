@@ -24,11 +24,11 @@ public class BowlingTest {
     @DisplayName("현재까지 진행된 프레임의 결과를 모두 가져온다")
     void createResultByFalledPinsCounts() {
         Bowling bowling = new Bowling();
-        List<String> result = bowling.createResult(Arrays.asList(10, 7, 9, 1, 8, 2));
+        List<String> result = bowling.createResult(Arrays.asList(10, 7, 3, 1, 8, 6, 0));
 
         assertThat(result.get(0)).isEqualTo("X");
-        assertThat(result.get(1)).isEqualTo("7");
-        assertThat(result.get(2)).isEqualTo("9/");
-        assertThat(result.get(3)).isEqualTo("8|2");
+        assertThat(result.get(1)).isEqualTo("7|/");
+        assertThat(result.get(2)).isEqualTo("1|8");
+        assertThat(result.get(3)).isEqualTo("6|-");
     }
 }
