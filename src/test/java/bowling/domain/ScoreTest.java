@@ -46,17 +46,11 @@ public class ScoreTest {
     }
 
     @Test
-    void isLeftPins() {
-        assertThat(Score.of(0).isLeftPins(9))
-                .isFalse();
+    void getLeftScore() {
+        assertThat(Score.of(0).getLeftScore())
+                .isEqualTo(Score.of(10));
 
-        assertThat(Score.of(1).isLeftPins(9))
-                .isTrue();
-    }
-
-    @Test
-    void isLeftPinsExpectException() {
-        assertThatThrownBy(()->Score.of(2).isLeftPins(9))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThat(Score.of(1).getLeftScore())
+                .isEqualTo(Score.of(9));
     }
 }

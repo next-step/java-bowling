@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.scoreType;
 
+import bowling.domain.Score;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 

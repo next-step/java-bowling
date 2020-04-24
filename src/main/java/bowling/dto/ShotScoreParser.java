@@ -1,6 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.ScoreType;
+import bowling.domain.scoreType.ScoreType;
 
 import java.util.Arrays;
 import java.util.EnumSet;

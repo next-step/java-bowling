@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.scoreType.ScoreType;
+
 import java.util.Objects;
 
 public class ShotScore {

@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Objects;
 
-class Score {
+public class Score {
     private static final int MAX = 10;
     private static final int MIN = 0;
 
@@ -12,7 +12,7 @@ class Score {
         this.score = score;
     }
 
-    static Score of(int score) {
+    public static Score of(int score) {
         if (score < MIN || MAX < score) {
             throw new IllegalArgumentException(String.format("create ShotScore fail, score must be %d~%d : score = %d", MIN, MAX, score));
         }
@@ -20,26 +20,23 @@ class Score {
         return new Score(score);
     }
 
-    boolean isMax() {
+    public boolean isMax() {
         return this.score == MAX;
     }
 
-    boolean isMin() {
+    public boolean isMin() {
         return this.score == MIN;
     }
 
-    boolean isLeftPins(int pinCount) {
-        int totalScore = this.score + pinCount;
-        if (MAX < totalScore) {
-            throw new IllegalArgumentException(
-                    String.format("check leftPins fail, pinCount must be less then leftPins : leftPins = %d, pinCount = %d",
-                            MAX-this.score,
-                            pinCount));
-        }
-        return totalScore == MAX;
+    public Score getLeftScore() {
+        return Score.of(MAX - score);
     }
 
-    int score() {
+    public boolean range(int includeMin, int excludeMax) {
+        return includeMin <= score && score < excludeMax;
+    }
+
+    public int score() {
         return score;
     }
 
