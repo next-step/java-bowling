@@ -43,35 +43,31 @@ public class ShotScore {
     }
 
     int totalScore() {
-        if (ScoreType.STRIKE.equals(scoreType)) {
-            return getStrikeTotalScore();
-        }
-
-        if (ScoreType.SPARE.equals(scoreType)) {
-            return getSpareTotalScore();
-        }
-
-        return singleScore();
+        return calculateTotalScore(scoreType.getBonusCount());
     }
 
     boolean isScoreCalculated() {
-        if (ScoreType.STRIKE.equals(scoreType)) {
-            return next != null && next.next != null;
-        }
-
-        if (ScoreType.SPARE.equals(scoreType)) {
-            return next != null;
-        }
-
-        return true;
+        return isNextCalculated(scoreType.getBonusCount());
     }
 
-    private Integer getSpareTotalScore() {
-        return next.singleScore() + singleScore();
+    private boolean isNextCalculated(int bonusCount) {
+        boolean calculated = true;
+        ShotScore shotScore = this;
+        for (int i = 0; (i < bonusCount) && calculated; i++) {
+            calculated = shotScore.next != null;
+            shotScore = shotScore.next;
+        }
+        return calculated;
     }
 
-    private int getStrikeTotalScore() {
-        return next.next.singleScore() + next.singleScore() + singleScore();
+    private int calculateTotalScore(int bonusCount) {
+        int score = singleScore();
+        ShotScore shotScore = this;
+        for (int i = 0; i < bonusCount; i++) {
+            shotScore = shotScore.next;
+            score += shotScore.singleScore();
+        }
+        return score;
     }
 
     @Override
