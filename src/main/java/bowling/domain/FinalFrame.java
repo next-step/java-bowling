@@ -28,6 +28,11 @@ public class FinalFrame implements Frame {
   }
 
   @Override
+  public int getRolledBowlCount() {
+    return regularResult.getRolledBowlCount() + bonusResult.getRolledBowlCount();
+  }
+
+  @Override
   public Frame getNextFrame() {
     return NullFrame.of(Round.of(Round.FINAL_ROUND).next());
   }
@@ -53,12 +58,18 @@ public class FinalFrame implements Frame {
 
   @Override
   public Score calculateBonusScore(int bonusBowlCount) {
-    return null;
-  }
+    if (bonusBowlCount == 2 && FrameState.of(regularResult) == FrameState.STRIKE) {
+      return Score.add(Score.of(regularResult.getFirst()), bonusResult.getScore(1));
+    }
+
+    return regularResult.getScore(bonusBowlCount);
+}
 
   @Override
   public Score calculateScore() {
-    return null;
+    Score regular = regularResult.getScoreAll();
+    Score bonus = bonusResult.getScoreAll();
+    return Score.add(regular, bonus);
   }
 
   @Override

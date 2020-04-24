@@ -20,6 +20,11 @@ public class NullFrame implements Frame {
   }
 
   @Override
+  public int getRolledBowlCount() {
+    return 0;
+  }
+
+  @Override
   public Frame getNextFrame() {
     return NullFrame.of(round.next());
   }
@@ -31,12 +36,16 @@ public class NullFrame implements Frame {
 
   @Override
   public Score calculateBonusScore(int bonusBowlCount) {
-    return null;
+    if (bonusBowlCount == 0) {
+      return Score.zero();
+    }
+
+    return Score.ofNull();
   }
 
   @Override
   public Score calculateScore() {
-    return null;
+    return Score.ofNull();
   }
 
   @Override

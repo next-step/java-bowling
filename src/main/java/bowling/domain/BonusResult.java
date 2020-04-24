@@ -65,6 +65,11 @@ public class BonusResult extends BowlResult {
     }
 
     @Override
+    public Score getScore(int trialCount) {
+      return Score.ofNull();
+    }
+
+    @Override
     public boolean isFinished() {
       return false;
     }

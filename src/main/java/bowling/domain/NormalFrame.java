@@ -30,6 +30,11 @@ public class NormalFrame implements Frame {
   }
 
   @Override
+  public int getRolledBowlCount() {
+    return frameInfo.getRolledBowlCount();
+  }
+
+  @Override
   public Frame getNextFrame() {
     return next;
   }
@@ -37,7 +42,7 @@ public class NormalFrame implements Frame {
   @Override
   public Frame roll(int pinCount) throws CannotBowlException {
     frameInfo.roll(pinCount);
-    if (frameInfo.isFull()) {
+    if (frameInfo.isFinished()) {
       next = Frame.of(frameInfo.nextRound());
       return next;
     }
@@ -47,12 +52,24 @@ public class NormalFrame implements Frame {
 
   @Override
   public Score calculateBonusScore(int bonusBowlCount) {
-    return null;
+    if (bonusBowlCount <= 0) {
+      return Score.zero();
+    }
+
+    Score additionalScore = next.calculateBonusScore(bonusBowlCount - getRolledBowlCount());
+    RegularResult regularResult = frameInfo.getRegularResult();
+    Score score = regularResult.getScore(bonusBowlCount);
+
+    return Score.add(score, additionalScore);
   }
 
   @Override
   public Score calculateScore() {
-    return null;
+    RegularResult regularResult = frameInfo.getRegularResult();
+    FrameState frameState = FrameState.of(regularResult);
+    Score score = frameInfo.getScore();
+
+    return Score.add(score, next.calculateBonusScore(frameState.getBonusBallCount()));
   }
 
   @Override

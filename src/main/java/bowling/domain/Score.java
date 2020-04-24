@@ -1,12 +1,15 @@
 package bowling.domain;
 
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Score {
 
   private static final Score NULL = new Score();
+  private static final Score ZERO = new Score(0);
 
   private int score;
+  private int bonusBallCount;
 
   private Score() {}
 
@@ -18,8 +21,28 @@ public class Score {
     return NULL;
   }
 
-  public static Score of(int score) {
-    return new Score(score);
+  public static Score zero() {
+    return ZERO;
+  }
+
+  public static Score of(int... scores) {
+    return new Score(IntStream.of(scores).sum());
+  }
+
+  public static Score of(Trial trial) {
+    if (trial.isNotPlayed()) {
+      return NULL;
+    }
+
+    return Score.of(trial.getPinCount());
+  }
+
+  public static Score add(Score score1, Score score2) {
+    if (score1 == NULL || score2 == NULL) {
+      return NULL;
+    }
+
+    return new Score(score1.score + score2.score);
   }
 
   public int getScore() {

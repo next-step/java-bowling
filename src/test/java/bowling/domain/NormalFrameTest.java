@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class NormalFrameTest {
-  private static final String DELIMITER = ",";
 
   @ParameterizedTest
   @CsvSource(value = {"0,6", "3,5", "3,0"})

@@ -54,8 +54,7 @@ public class FinalFrameTest {
 
   @ParameterizedTest
   @CsvSource(
-      value = {"10,7,0", "10,5,5", "10,3,4", "10,10,0", "10,10,10"},
-      delimiter = '='
+      value = {"10,7,0", "10,5,5", "10,3,4", "10,10,0", "10,10,10"}
   )
   public void testStrike(String firstTrial, String secondTrial, String thirdTrial)
       throws CannotBowlException

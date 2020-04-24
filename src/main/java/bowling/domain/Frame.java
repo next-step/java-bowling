@@ -14,6 +14,8 @@ public interface Frame {
 
   int getRound();
 
+  int getRolledBowlCount();
+
   Frame getNextFrame();
 
   Frame roll(int pinCount) throws CannotBowlException;
