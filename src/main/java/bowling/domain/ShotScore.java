@@ -34,14 +34,6 @@ public class ShotScore {
         return scoreType.isCleared();
     }
 
-    public ScoreType scoreType() {
-        return scoreType;
-    }
-
-    public int singleScore() {
-        return score.score();
-    }
-
     int totalScore() {
         return calculateTotalScore(scoreType.getBonusCount());
     }
@@ -68,6 +60,14 @@ public class ShotScore {
             score += shotScore.singleScore();
         }
         return score;
+    }
+
+    public ScoreType scoreType() {
+        return scoreType;
+    }
+
+    public int singleScore() {
+        return score.score();
     }
 
     @Override
