@@ -8,6 +8,7 @@ import bowling.domain.FrameInfo;
 import bowling.domain.FrameState;
 import bowling.domain.NormalFrame;
 import bowling.domain.RegularResult;
+import bowling.domain.Score;
 import bowling.domain.Trial;
 
 public class ResultView {
@@ -24,12 +25,11 @@ public class ResultView {
 
   public static void printBowlingScoreTable(BowlingGame bowlingGame) {
     System.out.println(FRAMES_META_DATA);
-    StringBuilder builder = getFrameStatus(bowlingGame);
-
-    System.out.println(builder);
+    printFrameStatus(bowlingGame);
+    printScore(bowlingGame);
   }
 
-  private static StringBuilder getFrameStatus(BowlingGame bowlingGame) {
+  private static void printFrameStatus(BowlingGame bowlingGame) {
     StringBuilder builder = new StringBuilder(String.format(NAME_FORMAT, bowlingGame.getPlayerName()));
     Frame frame = bowlingGame.getFrame();
 
@@ -39,7 +39,7 @@ public class ResultView {
     }
 
     builder.append(String.format(FRAME_STATUS_FORMAT, visualize(frame)));
-    return builder;
+    System.out.println(builder);
   }
 
   private static String visualize(Frame frame) {
@@ -105,4 +105,27 @@ public class ResultView {
 
     return visualizeTrial(bowlResult.getSecond());
   }
+
+  private static void printScore(BowlingGame bowlingGame) {
+    StringBuilder builder = new StringBuilder(SCORE_DELIMITER);
+    builder.append(String.format(FRAME_STATUS_FORMAT, NOT_PLAYED_SIGN));
+    Frame frame = bowlingGame.getFrame();
+
+    while (!frame.isFinalFrame()) {
+      builder.append(String.format(FRAME_STATUS_FORMAT, visualizeScore(frame.calculateScore())));
+      frame = frame.getNextFrame();
+    }
+
+    builder.append(String.format(FRAME_STATUS_FORMAT, visualizeScore(frame.calculateScore())));
+    System.out.println(builder);
+  }
+
+  private static String visualizeScore(Score score) {
+    if (score == Score.ofNull()) {
+      return NOT_PLAYED_SIGN;
+    }
+
+    return Integer.toString(score.getScore());
+  }
+
 }

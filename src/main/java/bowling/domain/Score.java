@@ -9,7 +9,6 @@ public class Score {
   private static final Score ZERO = new Score(0);
 
   private int score;
-  private int bonusBallCount;
 
   private Score() {}
 
