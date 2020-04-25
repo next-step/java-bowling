@@ -2,6 +2,7 @@ package bowling.ui;
 
 import bowling.dto.FrameShotDto;
 import bowling.dto.PlayerDto;
+import bowling.dto.PlayersDto;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,10 +17,12 @@ public class OutputView {
     private static final String SHOT_DELIMITER = "|";
     private static final int MAX = 10;
 
-    public void printFrame(PlayerDto player) {
+    public void printFrame(PlayersDto players) {
         System.out.println(FRAME_HEADER_STRING);
-        printFrameShots(player);
-        printFrameScores(player);
+        for (PlayerDto player : players.getPlayers()) {
+            printFrameShots(player);
+            printFrameScores(player);
+        }
         System.out.println();
     }
 
