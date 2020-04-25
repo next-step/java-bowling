@@ -127,5 +127,4 @@ public class ResultView {
 
     return Integer.toString(score.getScore());
   }
-
 }
