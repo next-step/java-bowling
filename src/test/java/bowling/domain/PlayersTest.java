@@ -7,6 +7,8 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 
 class PlayersTest {
@@ -26,11 +28,9 @@ class PlayersTest {
 
     @Test
     void ofException() {
-        assertThatThrownBy(() -> Players.of(null))
-                .isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> Players.of(Collections.emptyList()))
                 .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> Players.of(Arrays.asList(PLAYER1,PLAYER1)))
+        assertThatThrownBy(() -> Players.of(Arrays.asList(PLAYER1, PLAYER1)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -53,4 +53,21 @@ class PlayersTest {
                 .isEqualTo(PLAYER2);
     }
 
+    @Test
+    void isGameSet() {
+        Player player1 = spy(Player.of(PLAYER1));
+        Player player2 = spy(Player.of(PLAYER2));
+        Players players = Players.of(player1, player2);
+
+        assertThat(players.isGameSet())
+                .isFalse();
+
+        when(player1.isGameSet()).thenReturn(true);
+        assertThat(players.isGameSet())
+                .isFalse();
+
+        when(player2.isGameSet()).thenReturn(true);
+        assertThat(players.isGameSet())
+                .isTrue();
+    }
 }

@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,10 @@ public class Players {
         }
 
         return new Players(players.stream().map(Player::of).collect(Collectors.toList()));
+    }
+
+    static Players of(Player... players){
+        return new Players(Arrays.asList(players));
     }
 
     private static boolean isPlayersHaveSameName(List<String> players) {
@@ -59,5 +64,9 @@ public class Players {
 
     public List<Player> getPlayers() {
         return new ArrayList<>(players);
+    }
+
+    public boolean isGameSet(){
+        return players.stream().allMatch(Player::isGameSet);
     }
 }
