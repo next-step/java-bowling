@@ -44,4 +44,22 @@ class FramesTest {
         assertThat(frames.isGameSet())
                 .isTrue();
     }
+
+    @Test
+    void getCurrentFrameShotCount(){
+        Frames frames = new Frames();
+        assertThat(frames.getCurrentFrameShotCount())
+                .isEqualTo(0);
+        frames.shot(4);
+        assertThat(frames.getCurrentFrameShotCount())
+                .isEqualTo(1);
+
+        frames.shot(2);
+        assertThat(frames.getCurrentFrameShotCount())
+                .isEqualTo(0);
+
+        frames.shot(10);
+        assertThat(frames.getCurrentFrameShotCount())
+                .isEqualTo(0);
+    }
 }
