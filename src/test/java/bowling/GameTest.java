@@ -37,14 +37,26 @@ public class GameTest {
      * oneSpare game : 1게임 스페어, 2게임:3, 나머지 게임은 거터 게임
      * (5 + 5 + 3) + 3 = 16
      */
-    @Ignore
     @Test
     public void oneSpare() {
-        game.roll(5);
-        game.roll(5);   // spare
+        rollSpare();
         game.roll(3);
         rollMany(17,0);
         assertThat(game.getScore()).isEqualTo(16);
+    }
+
+    @Test
+    public void oneStrike() {
+        game.roll(10);
+        game.roll(5);
+        game.roll(3);
+        rollMany(16, 0);
+        assertThat(game.getScore()).isEqualTo(26);
+    }
+
+    private void rollSpare() {
+        game.roll(5);
+        game.roll(5);
     }
 
     private void rollMany(int pins, int frames) {
