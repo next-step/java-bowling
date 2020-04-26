@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import bowling.domain.Score;
+
 class PinsTest {
 
     @DisplayName("핀을 쓰러트릴 수 있는 범위에 해당되지 않을 경우 예외처리")
@@ -48,5 +50,13 @@ class PinsTest {
     void totalPins() {
         Pins pins = Pins.bowl(2);
         assertEquals(5, pins.totalPins(Pins.bowl(3)));
+    }
+
+    @DisplayName("그전 점수와 합산하여 점수를 돌려준다")
+    @Test
+    void sumScore() {
+        Score score = new Score(10, 1);
+        Pins pins = Pins.bowl(5);
+        assertThat(pins.sumScore(score)).isEqualTo(new Score(15, 0));
     }
 }
