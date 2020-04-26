@@ -1,6 +1,7 @@
 package bowling.domain.player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +21,10 @@ public class Players {
         List<Player> merge = new ArrayList<>(players);
         merge.add(player);
         return new Players(merge);
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
     @Override
