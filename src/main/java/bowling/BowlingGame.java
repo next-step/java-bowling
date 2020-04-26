@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.Player;
+import bowling.dto.PlayerDto;
 import bowling.ui.InputView;
 import bowling.ui.OutputView;
 
@@ -15,11 +16,11 @@ public class BowlingGame {
 
     public void start() {
         Player player = Player.of(inputView.getPlayer());
-        outputView.printFrame(player.getDto());
+        outputView.printFrame(new PlayerDto(player));
 
         while (!player.isGameSet()) {
             player.shot(inputView.getShot(player.getCurrentFrameNumber()));
-            outputView.printFrame(player.getDto());
+            outputView.printFrame(new PlayerDto(player));
         }
     }
 

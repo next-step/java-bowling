@@ -1,19 +1,41 @@
 package bowling.dto;
 
+import bowling.domain.Frame;
+import bowling.domain.Player;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class PlayerDto {
     private final String name;
-    private final FramesDto frames;
+    private final List<FrameShotDto> frameShots;
+    private final List<Integer> frameScores;
 
-    public PlayerDto(String name, FramesDto framesDto) {
-        this.name = name;
-        this.frames = framesDto;
+
+    public PlayerDto(Player player) {
+        this.name = player.name();
+        this.frameShots = player.frames()
+                .getFrames()
+                .stream()
+                .map(FrameShotDto::new)
+                .collect(Collectors.toList());
+        this.frameScores = player.frames()
+                .getFrames()
+                .stream()
+                .filter(Frame::isScoreCalculated)
+                .map(Frame::getFrameScore)
+                .collect(Collectors.toList());
     }
 
     public String getName() {
         return name;
     }
 
-    public FramesDto getFrames() {
-        return frames;
+    public List<FrameShotDto> getFrameShots() {
+        return frameShots;
+    }
+
+    public List<Integer> getFrameScores() {
+        return frameScores;
     }
 }

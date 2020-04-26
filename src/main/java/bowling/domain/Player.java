@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.dto.PlayerDto;
-
 public class Player {
     private final String name;
     private final Frames frames;
@@ -19,7 +17,6 @@ public class Player {
         return new Player(name, new Frames());
     }
 
-
     public int getCurrentFrameNumber() {
         return frames.getCurrentFrameNumber();
     }
@@ -28,11 +25,15 @@ public class Player {
         frames.shot(shot);
     }
 
-    public PlayerDto getDto() {
-        return new PlayerDto(name, frames.getDto());
-    }
-
     public boolean isGameSet() {
         return frames.isGameSet();
+    }
+
+    public String name() {
+        return name;
+    }
+
+    public Frames frames() {
+        return frames;
     }
 }

@@ -1,19 +1,17 @@
 package bowling.domain;
 
-import bowling.dto.FrameDto;
-
 import java.util.ArrayList;
 import java.util.List;
 
-class Frame {
+public class Frame {
     private static final int SHOT_LIMIT = 2;
 
     private final ShotScores shotScores;
-    private final boolean hasBonus;
+    private final boolean isLast;
 
-    protected Frame(List<ShotScore> shotScores, boolean hasBonus) {
-        this.shotScores = new ShotScores(shotScores);
-        this.hasBonus = hasBonus;
+    private Frame(List<ShotScore> shotScores, boolean isLast) {
+        this.shotScores = ShotScores.of(shotScores);
+        this.isLast = isLast;
     }
 
     static Frame init() {
@@ -21,42 +19,68 @@ class Frame {
     }
 
     Frame next(int shot) {
-        Frame frame = new Frame(new ArrayList<>(), false);
-        frame.shot(shot);
-        return frame;
+        Frame nextFrame = new Frame(new ArrayList<>(), false);
+        nextFrame.shot(shotScores.getNext(shot));
+        return nextFrame;
     }
 
     Frame last(int shot) {
-        Frame frame = new Frame(new ArrayList<>(), true);
-        frame.shot(shot);
-        return frame;
+        Frame nextFrame = new Frame(new ArrayList<>(), true);
+        nextFrame.shot(shotScores.getNext(shot));
+        return nextFrame;
     }
 
     void shot(int shot) {
-        if (shotScores.isSize(getShotLimit())) {
-            throw new IllegalStateException(String.format("shot NormalFrame fail. cannot shot over %d times", getShotLimit()));
+        shot(shotScores.getNext(shot));
+    }
+
+    private void shot(ShotScore shot) {
+        if (isShootLimitedSize()) {
+            throw new IllegalStateException(String.format("shot Frame fail. cannot shot over %d times", getShotLimit()));
         }
 
-        shotScores.add(shot, hasBonus);
+        shotScores.add(shot);
     }
 
     boolean isFrameSet() {
-        return shotScores.isSize(getShotLimit()) ||
-                (cannotShooting());
+        return isShootLimitedSize() ||
+                cannotShooting();
     }
 
-    private boolean cannotShooting() {
-        if (hasBonus) {
-            return shotScores.isSize(SHOT_LIMIT) && !shotScores.isClear();
+    private boolean isShootLimitedSize() {
+        return shotScores.hasSize(getShotLimit());
+    }
+
+    public boolean isScoreCalculated() {
+        if(isLast){
+            return isFrameSet();
         }
-        return shotScores.isClear();
-    }
-
-    FrameDto getDto() {
-        return new FrameDto(shotScores.getDtoList());
+        return isFrameSet() && shotScores.isScoreCalculated();
     }
 
     private int getShotLimit() {
-        return hasBonus ? SHOT_LIMIT + 1 : SHOT_LIMIT;
+        return isLast ? SHOT_LIMIT + 1 : SHOT_LIMIT;
+    }
+
+    private boolean cannotShooting() {
+        if (isLast) {
+            return shotScores.hasSize(SHOT_LIMIT) && !shotScores.hasClear();
+        }
+        return shotScores.hasClear();
+    }
+
+    public int getFrameScore() {
+        return score();
+    }
+
+    private int score() {
+        if (isLast) {
+            return shotScores.singleScore();
+        }
+        return shotScores.totalScore();
+    }
+
+    public List<ShotScore> shotScores() {
+        return shotScores.shotScores();
     }
 }

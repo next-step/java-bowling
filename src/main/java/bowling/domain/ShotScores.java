@@ -1,46 +1,64 @@
 package bowling.domain;
 
-import bowling.dto.ShotScoreDto;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 class ShotScores {
     private final List<ShotScore> shotScores;
 
-    ShotScores(List<ShotScore> shotScores) {
+    private ShotScores(List<ShotScore> shotScores) {
         this.shotScores = shotScores;
+    }
+
+    static ShotScores of(List<ShotScore> shotScores) {
+        return new ShotScores(shotScores);
+    }
+
+    void add(ShotScore shotScore) {
+        shotScores.add(shotScore);
+    }
+
+    ShotScore getNext(int shot) {
+        if (shotScores.isEmpty()) {
+            return ShotScore.init(shot);
+        }
+        return getLast().next(shot);
     }
 
     private ShotScore getLast() {
         return shotScores.get(shotScores.size() - 1);
     }
 
-    void add(int shotScore, boolean canShootingBonus) {
-        if (shotScores.isEmpty() || checkCanShootingBonus(canShootingBonus)) {
-            shotScores.add(ShotScore.of(shotScore));
-            return;
-        }
-
-        shotScores.add(this.getLast().next(shotScore));
-    }
-
-    private boolean checkCanShootingBonus(boolean hasBonusShot) {
-        return this.getLast().isClear() && hasBonusShot;
-    }
-
-    boolean isSize(int size) {
+    boolean hasSize(int size) {
         return shotScores.size() == size;
     }
 
-    boolean isClear() {
-        return !shotScores.isEmpty() && shotScores.stream()
+    boolean hasClear() {
+        return shotScores.stream()
                 .anyMatch(ShotScore::isClear);
     }
 
-    List<ShotScoreDto> getDtoList() {
-        return shotScores.stream()
-                .map(ShotScore::getDto)
-                .collect(Collectors.toList());
+    int totalScore() {
+        return shotScores
+                .stream()
+                .mapToInt(ShotScore::totalScore)
+                .sum();
+    }
+
+    int singleScore() {
+        return shotScores
+                .stream()
+                .mapToInt(ShotScore::singleScore)
+                .sum();
+    }
+
+    boolean isScoreCalculated() {
+        return shotScores
+                .stream()
+                .allMatch(ShotScore::isScoreCalculated);
+    }
+
+    List<ShotScore> shotScores() {
+        return new ArrayList<>(shotScores);
     }
 }

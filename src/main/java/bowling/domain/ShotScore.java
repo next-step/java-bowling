@@ -1,57 +1,73 @@
 package bowling.domain;
 
-import bowling.dto.ShotScoreDto;
+import bowling.domain.scoreType.ScoreType;
 
 import java.util.Objects;
 
-class ShotScore {
-    private static final int MAX = 10;
-    private static final int MIN = 0;
+public class ShotScore {
+    protected final Score score;
+    protected final ScoreType scoreType;
+    protected ShotScore next;
 
-    private final int score;
-    private final ScoreType scoreType;
-
-    private ShotScore(int score, ScoreType scoreType) {
+    protected ShotScore(Score score, ScoreType scoreType) {
         this.score = score;
         this.scoreType = scoreType;
     }
 
-    static ShotScore of(int score) {
-        if (score < MIN || MAX < score) {
-            throw new IllegalArgumentException(String.format("create ShotScore fail, score must be %d~%d : score = %d", MIN, MAX, score));
-        }
-        if (score == MAX) {
-            return new ShotScore(score, ScoreType.STRIKE);
-        }
-
-        if (score == MIN) {
-            return new ShotScore(score, ScoreType.GUTTER);
-        }
-
-        return new ShotScore(score, ScoreType.MISS);
+    static ShotScore init(int shotScore) {
+        Score score = Score.of(shotScore);
+        return new ShotScore(score, ScoreType.of(score));
     }
 
-    ShotScore next(int nextScore) {
-        int totalScore = this.score + nextScore;
-
-        if (MAX < totalScore) {
-            throw new IllegalArgumentException(String.format("next ShotScore fail, nextScore + score must be %d~%d : thisScore = %d, nextScore = %d", MIN, MAX, this.score, nextScore));
+    ShotScore next(int next) {
+        if (!scoreType.isFinished()) {
+            Score nextScore = Score.of(next);
+            this.next = new ShotScore(nextScore, ScoreType.of(score, nextScore));
+            return this.next;
         }
 
-        if (totalScore == MAX) {
-            return new ShotScore(nextScore, ScoreType.SPARE);
-        }
-
-        return of(nextScore);
+        this.next = init(next);
+        return this.next;
     }
 
     boolean isClear() {
-        return ScoreType.STRIKE.equals(scoreType) ||
-                ScoreType.SPARE.equals(scoreType);
+        return scoreType.isCleared();
     }
 
-    ShotScoreDto getDto() {
-        return new ShotScoreDto(scoreType, score);
+    int totalScore() {
+        return calculateTotalScore(scoreType.getBonusCount());
+    }
+
+    boolean isScoreCalculated() {
+        return isNextCalculated(scoreType.getBonusCount());
+    }
+
+    private boolean isNextCalculated(int bonusCount) {
+        boolean calculated = true;
+        ShotScore shotScore = this;
+        for (int i = 0; (i < bonusCount) && calculated; i++) {
+            calculated = shotScore.next != null;
+            shotScore = shotScore.next;
+        }
+        return calculated;
+    }
+
+    private int calculateTotalScore(int bonusCount) {
+        int score = singleScore();
+        ShotScore shotScore = this;
+        for (int i = 0; i < bonusCount; i++) {
+            shotScore = shotScore.next;
+            score += shotScore.singleScore();
+        }
+        return score;
+    }
+
+    public ScoreType scoreType() {
+        return scoreType;
+    }
+
+    public int singleScore() {
+        return score.score();
     }
 
     @Override
