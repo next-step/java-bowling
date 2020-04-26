@@ -1,17 +1,20 @@
 package bowling;
 
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 public class GameTest {
 
-    @Test
-    public void canCreate() {
-        Game game = new Game();
+    private Game game;
+
+    @Before
+    public void setUp() {
+        game = new Game();
     }
 
     @Test
     public void canRoll() {
-        Game game = new Game();
+        game = new Game();
         game.roll(0);
     }
 }
