@@ -13,18 +13,30 @@ public class Game {
         int firstRollInFrame = 0;
         for (int frame = 0; frame < 10; frame++) {
             if (isSpare(firstRollInFrame)) {
-                score += 10 + rolls[firstRollInFrame + 2];
+                score += 10 + nextBallForSpare(firstRollInFrame);
                 firstRollInFrame += 2;
             } else if (isStrike(rolls[firstRollInFrame])){
-                score += 10 + rolls[firstRollInFrame + 1] + rolls[firstRollInFrame + 2];
+                score += 10 + nextBallForStrike(firstRollInFrame);
                 firstRollInFrame += 1;
             }
             else {
-                score += rolls[firstRollInFrame] + rolls[firstRollInFrame + 1];
+                score += nextBallsForFrame(firstRollInFrame);
                 firstRollInFrame += 2;
             }
         }
         return score;
+    }
+
+    private int nextBallsForFrame(int firstRollInFrame) {
+        return rolls[firstRollInFrame] + rolls[firstRollInFrame + 1];
+    }
+
+    private int nextBallForStrike(int firstRollInFrame) {
+        return rolls[firstRollInFrame + 1] + rolls[firstRollInFrame + 2];
+    }
+
+    private int nextBallForSpare(int firstRollInFrame) {
+        return rolls[firstRollInFrame + 2];
     }
 
     private boolean isStrike(int roll) {
