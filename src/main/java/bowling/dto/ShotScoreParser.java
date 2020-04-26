@@ -22,9 +22,10 @@ enum ShotScoreParser {
 
     public static ShotScoreParser of(ScoreType scoreType) {
         return Arrays.stream(values())
-                .filter(v->v.scoreType.contains(scoreType))
+                .filter(v -> v.scoreType.contains(scoreType))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("ShotScoreParser of failed. not matching score type : argument scoreType=%s", scoreType)));
     }
 
     String parse(Integer score) {
