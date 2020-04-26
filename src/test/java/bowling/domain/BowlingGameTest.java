@@ -41,7 +41,7 @@ class BowlingGameTest {
         game.play(10);
         game.play(10);
 
-        assertTrue(game.isFinish());
+        assertTrue(game.isEnd());
     }
 
     @DisplayName("현재 진행된 프레임의 수를 반환 한다.")
@@ -146,5 +146,16 @@ class BowlingGameTest {
 
         //then
         assertThat(totalScore).isEqualTo(new Score(14));
+    }
+
+    @DisplayName("참가자가 동일한지 체크")
+    @Test
+    public void equalPlayer_success() throws Exception {
+        //given
+        BowlingGame game = new BowlingGame(new Player("aaa"));
+        Player player = new Player("aaa");
+
+        //then
+        assertTrue(game.equalPlayer(player));
     }
 }

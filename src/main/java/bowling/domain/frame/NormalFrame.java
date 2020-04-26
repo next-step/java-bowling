@@ -9,6 +9,7 @@ import bowling.exception.BowlingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class NormalFrame implements Frame {
 
@@ -61,6 +62,15 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public boolean isFrameFinish(final int frameNumber) {
+        Frame frame = findFrame(frameNumber);
+        if (Objects.isNull(frame)) {
+            return false;
+        }
+        return frame.isFinish();
+    }
+
+    @Override
     public Frame createNext() {
         if (frameNumber == MAX_FRAME_NUMBER - 1) {
             nextFrame = new FinalFrame();
@@ -104,8 +114,16 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score getTotalScore(int frameNumber) {
+        if (this.state instanceof Ready) {
+            return null;
+        }
+
         if (this.frameNumber == frameNumber) {
             return getCurrentScore();
+        }
+
+        if (Objects.isNull(nextFrame)) {
+            return new Score(getCurrentScore().getScore());
         }
 
         return new Score(getCurrentScore().getScore() + nextFrame.getTotalScore(frameNumber).getScore());
@@ -122,11 +140,35 @@ public class NormalFrame implements Frame {
             return this;
         }
 
+        if (Objects.isNull(nextFrame)) {
+            return null;
+        }
+
         return nextFrame.findFrame(frameNumber);
     }
 
     @Override
     public List<Pins> getPins() {
-        return new ArrayList<>(Arrays.asList(state.getPins()));
+        Pins pins = state.getPins();
+        if (Objects.isNull(pins)) {
+            return null;
+        }
+
+        return new ArrayList<>(Arrays.asList(pins));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame frame = (NormalFrame) o;
+        return frameNumber == frame.frameNumber &&
+                Objects.equals(nextFrame, frame.nextFrame) &&
+                Objects.equals(state, frame.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber, nextFrame, state);
     }
 }
