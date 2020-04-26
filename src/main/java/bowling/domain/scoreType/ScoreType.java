@@ -28,7 +28,7 @@ public enum ScoreType {
         return statusProvider.isClear();
     }
 
-    public int getBonusCount(){
+    public int getBonusCount() {
         return statusProvider.getBonusCount();
     }
 

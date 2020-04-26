@@ -1,6 +1,6 @@
 package bowling.domain.scoreType;
 
-class ClearProvider implements StatusProvider{
+class ClearProvider implements StatusProvider {
     private final int bonusCount;
 
     ClearProvider(int bonusCount) {

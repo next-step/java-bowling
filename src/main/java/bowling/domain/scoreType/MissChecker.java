@@ -15,7 +15,7 @@ public class MissChecker implements TypeChecker {
         if (!isFirst) {
             return false;
         }
-        return firstShot.range(1,10);
+        return firstShot.range(1, 10);
     }
 
     @Override

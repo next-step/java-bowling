@@ -146,7 +146,7 @@ class FrameTest {
     }
 
     @Test
-    void isScoreCalculated(){
+    void isScoreCalculated() {
         Frame frame = Frame.init();
         assertThat(frame.isScoreCalculated())
                 .isFalse();
@@ -175,13 +175,13 @@ class FrameTest {
     }
 
     @ParameterizedTest
-    @ValueSource (strings = {
+    @ValueSource(strings = {
             "10,4,3",
             "4,3",
             "1,9,2",
             "10,10,3"
     })
-    void isScoreCalculatedLastFrame(String shotString){
+    void isScoreCalculatedLastFrame(String shotString) {
         int[] shots = splitInts(shotString);
         Frame frame = Frame.init();
         frame = frame.last(shots[0]);
@@ -193,13 +193,13 @@ class FrameTest {
     }
 
     @ParameterizedTest
-    @ValueSource (strings = {
+    @ValueSource(strings = {
             "10,4",
             "4",
             "1,9",
             "10,10"
     })
-    void isNotScoreCalculatedLastFrame(String shotString){
+    void isNotScoreCalculatedLastFrame(String shotString) {
         int[] shots = splitInts(shotString);
         Frame frame = Frame.init();
         frame = frame.last(shots[0]);

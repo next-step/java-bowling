@@ -27,7 +27,7 @@ public class Players {
         return new Players(players.stream().map(Player::of).collect(Collectors.toList()));
     }
 
-    static Players of(Player... players){
+    static Players of(Player... players) {
         return new Players(Arrays.asList(players));
     }
 
@@ -66,7 +66,7 @@ public class Players {
         return new ArrayList<>(players);
     }
 
-    public boolean isGameSet(){
+    public boolean isGameSet() {
         return players.stream().allMatch(Player::isGameSet);
     }
 }

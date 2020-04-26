@@ -29,8 +29,8 @@ public class Frames {
         return frames.get(frames.size() - 1);
     }
 
-    int getCurrentFrameShotCount(){
-        if(isCurrentFrameDone()){
+    int getCurrentFrameShotCount() {
+        if (isCurrentFrameDone()) {
             return 0;
         }
         return getLast().shotScores().size();

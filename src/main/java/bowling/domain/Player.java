@@ -21,7 +21,7 @@ public class Player {
         return frames.getCurrentFrameNumber();
     }
 
-    int getCurrentFrameShotCount(){
+    int getCurrentFrameShotCount() {
         return frames.getCurrentFrameShotCount();
     }
 

@@ -8,14 +8,14 @@ import static org.assertj.core.api.Assertions.*;
 
 public class ScoreTest {
     @ParameterizedTest
-    @ValueSource(ints = {0,10})
+    @ValueSource(ints = {0, 10})
     void scoreRange(int score) {
         assertThatCode(() -> Score.of(score))
                 .doesNotThrowAnyException();
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1,11})
+    @ValueSource(ints = {-1, 11})
     void scoreExpectException(int outOfScoreValue) {
         assertThatThrownBy(() -> Score.of(outOfScoreValue))
                 .isInstanceOf(IllegalArgumentException.class);

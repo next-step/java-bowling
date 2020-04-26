@@ -46,7 +46,7 @@ class FramesTest {
     }
 
     @Test
-    void getCurrentFrameShotCount(){
+    void getCurrentFrameShotCount() {
         Frames frames = new Frames();
         assertThat(frames.getCurrentFrameShotCount())
                 .isEqualTo(0);

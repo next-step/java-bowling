@@ -2,7 +2,6 @@ package bowling;
 
 import bowling.domain.Player;
 import bowling.domain.Players;
-import bowling.dto.PlayerDto;
 import bowling.dto.PlayersDto;
 import bowling.ui.InputView;
 import bowling.ui.OutputView;
