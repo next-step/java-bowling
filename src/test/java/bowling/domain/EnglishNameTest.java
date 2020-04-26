@@ -2,6 +2,7 @@ package bowling.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -21,6 +22,15 @@ public class EnglishNameTest {
     @ParameterizedTest
     @ValueSource(strings = {"철수", "영희"})
     public void testEnglishInput(final String inputText) {
+        assertThatThrownBy(() -> {
+            new EnglishName(inputText);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName(value = "빈 문자열 또는 null 값을 입력할 경우 에러 발생.")
+    @ParameterizedTest
+    @NullAndEmptySource
+    void emptyOrNull(final String inputText) {
         assertThatThrownBy(() -> {
             new EnglishName(inputText);
         }).isInstanceOf(IllegalArgumentException.class);

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class EnglishName {
@@ -19,6 +20,10 @@ public class EnglishName {
     }
 
     private String validateName(final String inputText) {
+        if (Objects.isNull(inputText) || inputText.isEmpty()) {
+            throw new IllegalArgumentException("빈값이 입력될 수는 없습니다.");
+        }
+
         if (isNotEnglish(inputText)) {
             throw new IllegalArgumentException(ENGLISH_INPUT_ONLY);
         }
