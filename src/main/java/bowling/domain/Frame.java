@@ -52,7 +52,7 @@ public class Frame {
     }
 
     public boolean isScoreCalculated() {
-        if(isLast){
+        if (isLast) {
             return isFrameSet();
         }
         return isFrameSet() && shotScores.isScoreCalculated();
