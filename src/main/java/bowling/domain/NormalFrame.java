@@ -9,7 +9,7 @@ public class NormalFrame implements Frame {
 
   private NormalFrame(Round round) {
     frameInfo = new FrameInfo(round);
-    next = NULL_FRAME;
+    next = NullFrame.of(round.next());
   }
 
   public static NormalFrame initialize() {
@@ -20,9 +20,18 @@ public class NormalFrame implements Frame {
     return new NormalFrame(round);
   }
 
+  public FrameInfo getFrameInfo() {
+    return frameInfo;
+  }
+
   @Override
   public int getRound() {
     return frameInfo.getRound();
+  }
+
+  @Override
+  public int getRolledBowlCount() {
+    return frameInfo.getRolledBowlCount();
   }
 
   @Override
@@ -33,7 +42,7 @@ public class NormalFrame implements Frame {
   @Override
   public Frame roll(int pinCount) throws CannotBowlException {
     frameInfo.roll(pinCount);
-    if (frameInfo.isFull()) {
+    if (frameInfo.isFinished()) {
       next = Frame.of(frameInfo.nextRound());
       return next;
     }
@@ -43,21 +52,33 @@ public class NormalFrame implements Frame {
 
   @Override
   public Score calculateBonusScore(int bonusBowlCount) {
-    return null;
+    if (bonusBowlCount <= NO_BONUS_BOWL) {
+      return Score.zero();
+    }
+
+    Score additionalScore = next.calculateBonusScore(bonusBowlCount - getRolledBowlCount());
+    RegularResult regularResult = frameInfo.getRegularResult();
+    Score score = regularResult.getScore(bonusBowlCount);
+
+    return Score.add(score, additionalScore);
   }
 
   @Override
   public Score calculateScore() {
-    return null;
-  }
+    RegularResult regularResult = frameInfo.getRegularResult();
+    FrameState frameState = FrameState.of(regularResult);
+    Score score = frameInfo.getScore();
 
-  @Override
-  public String visualize() {
-    return frameInfo.visualize();
+    return Score.add(score, next.calculateBonusScore(frameState.getBonusBallCount()));
   }
 
   @Override
   public boolean isEnd() {
+    return false;
+  }
+
+  @Override
+  public boolean isFinalFrame() {
     return false;
   }
 }

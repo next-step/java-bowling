@@ -10,33 +10,43 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class FinalFrameTest {
 
   @ParameterizedTest
-  @CsvSource(value = {"0,6=-|6", "3,5=3|5", "3,0=3|-"}, delimiter = '=')
-  public void testMiss(String pins, String visualized) throws CannotBowlException {
+  @CsvSource(value = {"0,6", "3,5", "3,0"})
+  public void testMiss(String firstTrial, String secondTrial) throws CannotBowlException {
     FinalFrame finalFrame = new FinalFrame();
-    String[] pinCounts = pins.split(",");
-    finalFrame.roll(Integer.parseInt(pinCounts[0]));
-    finalFrame.roll(Integer.parseInt(pinCounts[1]));
+    int first = Integer.parseInt(firstTrial);
+    int second = Integer.parseInt(secondTrial);
+    int score = first + second;
 
+    finalFrame.roll(first);
+    assertThat(finalFrame.calculateScore()).isEqualTo(Score.ofNull());
+
+    finalFrame.roll(second);
     assertThat(finalFrame.isEnd()).isTrue();
-    assertThat(finalFrame.visualize()).isEqualTo(visualized);
+    assertThat(finalFrame.calculateScore()).isEqualTo(Score.of(score));
     assertThatThrownBy(() -> finalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }
 
   @ParameterizedTest
-  @CsvSource(
-      value = {"3,7,0=3|/|-", "3,7,5=3|/|5", "3,7,10=3|/|X", "0,10,0=-|/|-", "0,10,5=-|/|5"},
-      delimiter = '='
-  )
-  public void testSpare(String pins, String visualized) throws CannotBowlException {
+  @CsvSource(value = {"3,7,0", "3,7,5", "3,7,10", "0,10,0", "0,10,5"})
+  public void testSpare(String firstTrial, String secondTrial, String thirdTrial)
+      throws CannotBowlException
+  {
     FinalFrame finalFrame = new FinalFrame();
-    String[] pinCounts = pins.split(",");
-    finalFrame.roll(Integer.parseInt(pinCounts[0]));
-    finalFrame.roll(Integer.parseInt(pinCounts[1]));
-    finalFrame.roll(Integer.parseInt(pinCounts[2]));
+    int first = Integer.parseInt(firstTrial);
+    int second = Integer.parseInt(secondTrial);
+    int third = Integer.parseInt(thirdTrial);
+    int score = first + second + third;
 
+    finalFrame.roll(first);
+    assertThat(finalFrame.calculateScore()).isEqualTo(Score.ofNull());
+
+    finalFrame.roll(second);
+    assertThat(finalFrame.calculateScore()).isEqualTo(Score.ofNull());
+
+    finalFrame.roll(third);
     assertThat(finalFrame.isEnd()).isTrue();
-    assertThat(finalFrame.visualize()).isEqualTo(visualized);
+    assertThat(finalFrame.calculateScore()).isEqualTo(Score.of(score));
     assertThatThrownBy(() -> finalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }
@@ -44,18 +54,26 @@ public class FinalFrameTest {
 
   @ParameterizedTest
   @CsvSource(
-      value = {"10,7,0=X|7|-", "10,5,5=X|5|/", "10,3,4=X|3|4", "10,10,0=X|X|-", "10,10,10=X|X|X"},
-      delimiter = '='
+      value = {"10,7,0", "10,5,5", "10,3,4", "10,10,0", "10,10,10"}
   )
-  public void testStrike(String pins, String visualized) throws CannotBowlException {
+  public void testStrike(String firstTrial, String secondTrial, String thirdTrial)
+      throws CannotBowlException
+  {
     FinalFrame finalFrame = new FinalFrame();
-    String[] pinCounts = pins.split(",");
-    finalFrame.roll(Integer.parseInt(pinCounts[0]));
-    finalFrame.roll(Integer.parseInt(pinCounts[1]));
-    finalFrame.roll(Integer.parseInt(pinCounts[2]));
+    int first = Integer.parseInt(firstTrial);
+    int second = Integer.parseInt(secondTrial);
+    int third = Integer.parseInt(thirdTrial);
+    int score = first + second + third;
 
+    finalFrame.roll(first);
+    assertThat(finalFrame.calculateScore()).isEqualTo(Score.ofNull());
+
+    finalFrame.roll(second);
+    assertThat(finalFrame.calculateScore()).isEqualTo(Score.ofNull());
+
+    finalFrame.roll(third);
     assertThat(finalFrame.isEnd()).isTrue();
-    assertThat(finalFrame.visualize()).isEqualTo(visualized);
+    assertThat(finalFrame.calculateScore()).isEqualTo(Score.of(score));
     assertThatThrownBy(() -> finalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
   }

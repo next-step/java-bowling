@@ -12,8 +12,20 @@ public class FrameInfo {
     this.round = round;
   }
 
+  public RegularResult getRegularResult() {
+    return regularResult;
+  }
+
   public int getRound() {
     return round.getRound();
+  }
+
+  public int getRolledBowlCount() {
+    return regularResult.getRolledBowlCount();
+  }
+
+  public Score getScore() {
+    return regularResult.getScoreAll();
   }
 
   public void roll(int pinCount) throws CannotBowlException {
@@ -24,11 +36,7 @@ public class FrameInfo {
     return round.next();
   }
 
-  public String visualize() {
-    return regularResult.visualize();
-  }
-
-  public boolean isFull() {
+  public boolean isFinished() {
     return regularResult.isFinished();
   }
 }

@@ -3,7 +3,6 @@ package bowling.domain;
 import static bowling.domain.FrameState.MISS;
 import static bowling.domain.FrameState.SPARE;
 import static bowling.domain.FrameState.STRIKE;
-import static bowling.domain.Trial.NOT_PLAYED_SIGN;
 
 import bowling.exception.CannotBowlException;
 
@@ -44,7 +43,7 @@ public class BonusResult extends BowlResult {
     }
 
     second.roll(pinCount);
-    if (!first.isStrike()) {
+    if (!first.isMaxPin()) {
       second.validateSecondTrial(first);
     }
   }
@@ -52,22 +51,27 @@ public class BonusResult extends BowlResult {
   public static BonusResult NULL_RESULT = new BonusResult() {
 
     @Override
+    public Trial getFirst() {
+      return Trial.initialize();
+    }
+
+    @Override
+    public Trial getSecond() {
+      return Trial.initialize();
+    }
+
+    @Override
     public void roll(int pinCount) {
+    }
+
+    @Override
+    public Score getScore(int trialCount) {
+      return Score.ofNull();
     }
 
     @Override
     public boolean isFinished() {
       return false;
-    }
-
-    @Override
-    public FrameState getState() {
-      return null;
-    }
-
-    @Override
-    public String visualize() {
-      return NOT_PLAYED_SIGN;
     }
   };
 }

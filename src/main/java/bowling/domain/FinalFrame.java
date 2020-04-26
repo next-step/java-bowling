@@ -6,8 +6,6 @@ import bowling.exception.CannotBowlException;
 
 public class FinalFrame implements Frame {
 
-  private final String SCORE_DELIMITER = "|";
-
   private RegularResult regularResult;
   private BonusResult bonusResult;
 
@@ -16,14 +14,27 @@ public class FinalFrame implements Frame {
     bonusResult = NULL_RESULT;
   }
 
+  public RegularResult getRegularResult() {
+    return regularResult;
+  }
+
+  public BonusResult getBonusResult() {
+    return bonusResult;
+  }
+
   @Override
   public int getRound() {
     return Round.FINAL_ROUND;
   }
 
   @Override
+  public int getRolledBowlCount() {
+    return regularResult.getRolledBowlCount() + bonusResult.getRolledBowlCount();
+  }
+
+  @Override
   public Frame getNextFrame() {
-    return NULL_FRAME;
+    return NullFrame.of(Round.of(Round.FINAL_ROUND).next());
   }
 
   @Override
@@ -40,34 +51,34 @@ public class FinalFrame implements Frame {
 
   private void prepareBonusBowl() {
     if (regularResult.isFinished()) {
-      FrameState state = regularResult.getState();
+      FrameState state = FrameState.of(regularResult);
       bonusResult = new BonusResult(state.getBonusBallCount());
     }
   }
 
   @Override
   public Score calculateBonusScore(int bonusBowlCount) {
-    return null;
-  }
+    if (bonusBowlCount == MAX_BONUS_BOWL && FrameState.of(regularResult) == FrameState.STRIKE) {
+      return Score.add(Score.of(regularResult.getFirst()), bonusResult.getScore(1));
+    }
+
+    return regularResult.getScore(bonusBowlCount);
+}
 
   @Override
   public Score calculateScore() {
-    return null;
-  }
-
-  @Override
-  public String visualize() {
-    String visualized = regularResult.visualize();
-    String bonusVisualized = bonusResult.visualize();
-    if (!bonusVisualized.isEmpty()) {
-      visualized = String.join(SCORE_DELIMITER, visualized, bonusVisualized);
-    }
-
-    return visualized;
+    Score regular = regularResult.getScoreAll();
+    Score bonus = bonusResult.getScoreAll();
+    return Score.add(regular, bonus);
   }
 
   @Override
   public boolean isEnd() {
     return regularResult.isFinished() && bonusResult.isFinished();
+  }
+
+  @Override
+  public boolean isFinalFrame() {
+    return true;
   }
 }
