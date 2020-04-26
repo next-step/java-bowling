@@ -11,7 +11,6 @@ public class PlayerDto {
     private final List<FrameShotDto> frameShots;
     private final List<Integer> frameScores;
 
-
     public PlayerDto(Player player) {
         this.name = player.name();
         this.frameShots = player.frames()
