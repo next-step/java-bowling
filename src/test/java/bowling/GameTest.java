@@ -1,6 +1,5 @@
 package bowling;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class GameTest {
-
     private Game game;
 
     @BeforeEach
@@ -45,6 +43,10 @@ public class GameTest {
         assertThat(game.getScore()).isEqualTo(16);
     }
 
+    /**
+     * oneStrike game : 1게임 스트라이크, 2게임:5 + 3, 나머지 게임은 거터 게임
+     * (10 + 5 + 3) + (5 + 3) = 26
+     */
     @Test
     public void oneStrike() {
         game.roll(10);
@@ -52,6 +54,14 @@ public class GameTest {
         game.roll(3);
         rollMany(16, 0);
         assertThat(game.getScore()).isEqualTo(26);
+    }
+
+    @Test
+    public void perfectGame() {
+        rollMany(10, 10);
+        game.roll(10);
+        game.roll(10);
+        assertThat(game.getScore()).isEqualTo(300);
     }
 
     private void rollSpare() {
@@ -64,5 +74,4 @@ public class GameTest {
             game.roll(pins);
         }
     }
-
 }
