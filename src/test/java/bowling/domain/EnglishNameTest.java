@@ -16,4 +16,13 @@ public class EnglishNameTest {
             new EnglishName(inputText);
         }).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("입력값이 영어가 아니면 에러 발생")
+    @ParameterizedTest
+    @ValueSource(strings = {"철수", "영희"})
+    public void testEnglishInput(final String inputText) {
+        assertThatThrownBy(() -> {
+            new EnglishName(inputText);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
 }
