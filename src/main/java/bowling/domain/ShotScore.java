@@ -43,13 +43,15 @@ public class ShotScore {
     }
 
     private boolean isNextCalculated(int bonusCount) {
-        boolean calculated = true;
-        ShotScore shotScore = this;
-        for (int i = 0; (i < bonusCount) && calculated; i++) {
-            calculated = shotScore.next != null;
-            shotScore = shotScore.next;
+        ShotScore afterScore = this;
+        for (int i = 0; i < bonusCount; i++) {
+            afterScore = getNullableNext(afterScore);
         }
-        return calculated;
+        return afterScore != null;
+    }
+
+    private ShotScore getNullableNext(ShotScore shotScore) {
+        return shotScore == null ? null : shotScore.next;
     }
 
     private int calculateTotalScore(int bonusCount) {
