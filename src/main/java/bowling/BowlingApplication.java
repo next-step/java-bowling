@@ -22,16 +22,17 @@ public class BowlingApplication {
         int frameNumber = 1;
 
         while (!games.isAllEnd()) {
-            playGamePlayers(games, players, frameNumber);
+            frameNumber = playGamePlayers(games, players, frameNumber);
         }
     }
 
-    private static void playGamePlayers(final BowlingGames games,
-                                        final Players players,
-                                        int frameNumber) {
+    private static int playGamePlayers(final BowlingGames games,
+                                       final Players players,
+                                       int frameNumber) {
         for (Player player : players.getPlayers()) {
             frameNumber = playGamePlayer(games, player, frameNumber);
         }
+        return frameNumber;
     }
 
     private static int playGamePlayer(final BowlingGames games,
