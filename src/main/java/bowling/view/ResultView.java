@@ -1,9 +1,11 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.frame.state.Ready;
 import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
@@ -37,29 +39,29 @@ public class ResultView {
         System.out.println(SCORE_BOARD_TOP);
     }
 
-    private static void printPlayerName(String name) {
+    private static void printPlayerName(final String name) {
         System.out.print(String.format("%-3s%s   ", VERTICAL, name));
     }
 
-    private static String printGutter(Pins pins) {
+    private static String printGutter(final Pins pins) {
         if (pins.getFirstDownPin() == 0) {
             return GUTTER_STATE;
         }
         return String.format("%3d|-  ", pins.getFirstDownPin());
     }
 
-    private static String printSpare(Pins pins) {
+    private static String printSpare(final Pins pins) {
         return String.format(SPARE_STATE, pins.getFirstDownPin());
     }
 
-    public static String printFirstBlow(Pins pins) {
+    public static String printFirstBlow(final Pins pins) {
         if (pins.getFirstDownPin() == 0) {
             return "  -  ";
         }
         return String.format(FIRST_BLOW_STATE, pins.getFirstDownPin());
     }
 
-    public static String printMiss(Pins pins) {
+    public static String printMiss(final Pins pins) {
         if (pins.getFirstDownPin() == 0) {
             return String.format(" -|%d  ", pins.getSecondDownPin());
         }
@@ -71,7 +73,7 @@ public class ResultView {
         return String.format(MISS_STATE, pins.getFirstDownPin(), pins.getSecondDownPin());
     }
 
-    private static String printScore(Pins pins) {
+    private static String printScore(final Pins pins) {
         if (pins.isStrike()) {
             return STRIKE_STATE;
         }
@@ -96,11 +98,13 @@ public class ResultView {
     }
 
     private static void printNormalFrame(Frame frame) {
-        while (frame != null && frame instanceof NormalFrame) {
+        while (frame != null
+                && frame instanceof NormalFrame
+                && !(frame.getState() instanceof Ready)) {
 
 
-            String result = Optional.ofNullable(frame.getPins().get(0))
-                    .map(pins -> printScore(pins))
+            String result = Optional.ofNullable(frame.getPins())
+                    .map(pins -> printScore(pins.get(0)))
                     .orElse(EMPTY_FRAME);
 
 
@@ -110,7 +114,7 @@ public class ResultView {
         }
     }
 
-    private static void printFinalFrame(Frame frame) {
+    private static void printFinalFrame(final Frame frame) {
         if (frame == null || !(frame instanceof FinalFrame)) {
             return;
         }
@@ -133,13 +137,13 @@ public class ResultView {
                 buffer.toString()));
     }
 
-    private static void printEmptyFrame(int count) {
+    private static void printEmptyFrame(final int count) {
         for (int i = 0; i < count + 2; i++) {
             System.out.print(EMPTY_FRAME);
         }
     }
 
-    public static void printScoreBoardPlayer(BowlingGame bowlingGame) {
+    public static void printScoreBoardPlayer(final BowlingGame bowlingGame) {
         printPlayerName(bowlingGame.getPlayerName());
 
         Frame frame = bowlingGame.getFirstFrame();
@@ -151,7 +155,7 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printScore(Score score) {
+    private static void printScore(final Score score) {
         if (score != null) {
             System.out.print(String.format("%s%4d  ", VERTICAL, score.getScore()));
             return;
@@ -159,7 +163,8 @@ public class ResultView {
         System.out.print(EMPTY_FRAME);
     }
 
-    public static void printScorePlayer(BowlingGame bowlingGame, int frameNumber) {
+    public static void printScorePlayer(final BowlingGame bowlingGame,
+                                        final int frameNumber) {
         System.out.print(EMPTY_FRAME + "  ");
 
         for (int i = 1; i <= frameNumber; i++) {
@@ -168,5 +173,14 @@ public class ResultView {
 
         printEmptyFrame(9 - frameNumber);
         System.out.println();
+    }
+
+    public static void printAllPlayerBoard(final BowlingGames bowlingGames,
+                                           final int frameNumber) {
+
+        for (BowlingGame game : bowlingGames.getBowlingGames()) {
+            printScoreBoardPlayer(game);
+            printScorePlayer(game, frameNumber);
+        }
     }
 }
