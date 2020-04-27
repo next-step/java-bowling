@@ -158,4 +158,18 @@ class BowlingGameTest {
         //then
         assertTrue(game.equalPlayer(player));
     }
+
+    @DisplayName("전달 받은 번호의 프레임이 마무리 되었는지 체크")
+    @Test
+    public void isFrameFinish_success() throws Exception {
+        //given
+        BowlingGame game = new BowlingGame(new Player("aaa"));
+
+        //when
+        game.play(10);
+        game.play(10);
+
+        //then
+        assertTrue(game.isFrameFinish(1));
+    }
 }

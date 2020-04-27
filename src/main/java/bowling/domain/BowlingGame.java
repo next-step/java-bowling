@@ -2,7 +2,10 @@ package bowling.domain;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.player.Player;
 import bowling.domain.score.Score;
+
+import java.util.Objects;
 
 public class BowlingGame {
 
@@ -21,23 +24,31 @@ public class BowlingGame {
     public void play(final int pinCount) {
         Frame last = findLastFrame();
 
-        if (last.isFinish()) {
+        if (isLastFrameFinish()) {
             last.createNext();
         }
 
         last.findLast().bowl(pinCount);
     }
 
+    public boolean equalPlayer(Player player) {
+        return this.player.equals(player);
+    }
+
     public String getPlayerName() {
         return player.getName();
     }
 
-    public boolean isFinish() {
+    public boolean isEnd() {
         return findLastFrame().isEnd();
     }
 
     public boolean isLastFrameFinish() {
         return findLastFrame().isFinish();
+    }
+
+    public boolean isFrameFinish(final int frameNumber) {
+        return firstFrame.isFrameFinish(frameNumber);
     }
 
     public Frame getCurrentFrame() {
@@ -62,5 +73,19 @@ public class BowlingGame {
 
     public Score getTotalScore(int frameNumber) {
         return firstFrame.getTotalScore(frameNumber);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BowlingGame game = (BowlingGame) o;
+        return Objects.equals(player, game.player) &&
+                Objects.equals(firstFrame, game.firstFrame);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(player, firstFrame);
     }
 }
