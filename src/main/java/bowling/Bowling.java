@@ -68,9 +68,6 @@ public class Bowling {
     }
 
     private boolean isSpare(int first, int second) {
-        if (isStrike(first)) {
-            return false;
-        }
         return first + second == 10;
     }
 }
