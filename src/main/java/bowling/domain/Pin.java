@@ -7,6 +7,10 @@ public class Pin {
         this.pins = validatePinNumber(pins);
     }
 
+    public int getPins() {
+        return pins;
+    }
+
     private int validatePinNumber(final int pins) {
         if (pins < 0 || pins > 10) {
             throw new IllegalArgumentException("숫자의 범위는 0과 10사이에 있어야합니다.");
