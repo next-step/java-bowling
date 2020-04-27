@@ -17,11 +17,22 @@ public class Frame {
         if (isStrike(fallenPinCount)) {
             isFinished = true;
         }
+        if (isSpare()) {
+            isFinished = true;
+        }
         if (isFinish()) {
             return new Frame(number + 1);
         }
 
         return this;
+    }
+
+    public int getNumber() {
+        return this.number;
+    }
+
+    private boolean isSpare() {
+        return fallenPins.stream().reduce(0, (x, y) -> x + y) == 10;
     }
 
     private boolean isStrike(int fallenPinCount) {
@@ -30,9 +41,5 @@ public class Frame {
 
     private boolean isFinish() {
         return this.isFinished;
-    }
-
-    public int getNumber() {
-        return this.number;
     }
 }
