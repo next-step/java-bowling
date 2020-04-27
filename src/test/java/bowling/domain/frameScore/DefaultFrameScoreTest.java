@@ -1,57 +1,58 @@
-package bowling.domain;
+package bowling.domain.frameScore;
 
+import bowling.domain.Score;
 import bowling.domain.scoreType.ScoreType;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-class FrameScoreTest {
+class DefaultFrameScoreTest {
 
     @Test
     void of() {
-        assertThatCode(() -> FrameScore.of(Score.of(5), ScoreType.MISS_SECOND))
+        assertThatCode(() -> DefaultFrameScore.of(Score.of(5), ScoreType.MISS_SECOND))
                 .doesNotThrowAnyException();
     }
 
     @Test
     void ofException() {
-        assertThatThrownBy(() -> FrameScore.of(Score.of(5), ScoreType.MISS_FIRST))
+        assertThatThrownBy(() -> DefaultFrameScore.of(Score.of(5), ScoreType.MISS_FIRST))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void getScore() {
-        FrameScore frameScore = FrameScore.of(Score.of(5), ScoreType.MISS_SECOND);
+        DefaultFrameScore frameScore = DefaultFrameScore.of(Score.of(5), ScoreType.MISS_SECOND);
         assertThat(frameScore.getScore())
                 .isEqualTo(5);
     }
 
     @Test
     void getScoreException() {
-        FrameScore frameScore = FrameScore.of(Score.of(10), ScoreType.SPARE);
+        DefaultFrameScore frameScore = DefaultFrameScore.of(Score.of(10), ScoreType.SPARE);
         assertThatThrownBy(frameScore::getScore)
                 .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     void isScoreCalculated() {
-        FrameScore frameScore = FrameScore.of(Score.of(10), ScoreType.SPARE);
-        assertThat(frameScore.isScoreCalculated())
+        DefaultFrameScore frameScore = DefaultFrameScore.of(Score.of(10), ScoreType.SPARE);
+        assertThat(frameScore.isCalculated())
                 .isFalse();
 
-        frameScore = FrameScore.of(Score.of(6), ScoreType.MISS_SECOND);
-        assertThat(frameScore.isScoreCalculated())
+        frameScore = DefaultFrameScore.of(Score.of(6), ScoreType.MISS_SECOND);
+        assertThat(frameScore.isCalculated())
                 .isTrue();
     }
 
     @Test
     void addBonus() {
-        FrameScore frameScore = FrameScore.of(Score.of(10), ScoreType.SPARE);
-        assertThat(frameScore.isScoreCalculated())
+        DefaultFrameScore frameScore = DefaultFrameScore.of(Score.of(10), ScoreType.SPARE);
+        assertThat(frameScore.isCalculated())
                 .isFalse();
 
         frameScore.addBonus(4);
-        assertThat(frameScore.isScoreCalculated())
+        assertThat(frameScore.isCalculated())
                 .isTrue();
         assertThat(frameScore.getScore())
                 .isEqualTo(14);
@@ -59,7 +60,7 @@ class FrameScoreTest {
 
     @Test
     void addBonusException() {
-        FrameScore frameScore = FrameScore.of(Score.of(5), ScoreType.MISS_SECOND);
+        DefaultFrameScore frameScore = DefaultFrameScore.of(Score.of(5), ScoreType.MISS_SECOND);
         assertThatThrownBy(() -> frameScore.addBonus(4))
                 .isInstanceOf(IllegalStateException.class);
     }

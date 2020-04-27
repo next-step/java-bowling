@@ -1,7 +1,9 @@
 package bowling.dto;
 
 import bowling.domain.Frame;
+import bowling.domain.frameScore.DefaultFrameScore;
 import bowling.domain.Player;
+import bowling.domain.frameScore.FrameScore;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,8 +23,9 @@ public class PlayerDto {
         this.frameScores = player.frames()
                 .getFrames()
                 .stream()
-                .filter(Frame::isScoreCalculated)
                 .map(Frame::getFrameScore)
+                .filter(FrameScore::isCalculated)
+                .map(FrameScore::getScore)
                 .collect(Collectors.toList());
     }
 

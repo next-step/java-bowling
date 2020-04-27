@@ -83,7 +83,7 @@ class ShotScoresTest {
         ShotScores shotScores = ShotScores.of(new ArrayList<>(Collections.singletonList(firstShot)));
         shotScores.add(shotScores.getNext(6));
         assertThat(shotScores.getCalculateScore())
-                .matches(v -> !v.isScoreCalculated());
+                .matches(v -> !v.isCalculated());
     }
 
 }

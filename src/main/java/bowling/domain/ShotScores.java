@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frameScore.DefaultFrameScore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,9 +60,9 @@ class ShotScores {
                 .allMatch(ShotScore::isScoreCalculated);
     }
 
-    FrameScore getCalculateScore() {
+    DefaultFrameScore getCalculateScore() {
         try {
-            return FrameScore.of(Score.of(this.singleScore()), getLast().scoreType);
+            return DefaultFrameScore.of(Score.of(this.singleScore()), getLast().scoreType);
         } catch (IllegalArgumentException e) {
             throw new IllegalStateException("ShotScores cannot calculateScore", e);
         }

@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.frameScore.DefaultFrameScore;
+import bowling.domain.frameScore.FrameScore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +11,7 @@ public class Frame {
 
     private final ShotScores shotScores;
     private final boolean isLast;
-    private FrameScore frameScore;
+    private DefaultFrameScore frameScore;
 
     private Frame(List<ShotScore> shotScores, boolean isLast) {
         this.shotScores = ShotScores.of(shotScores);
@@ -62,7 +65,7 @@ public class Frame {
 
         if (isFrameSet()) {
             this.frameScore = frameScore != null ? frameScore : shotScores.getCalculateScore();
-            return frameScore.isScoreCalculated();
+            return frameScore.isCalculated();
         }
         return false;
     }
@@ -78,15 +81,11 @@ public class Frame {
         return shotScores.hasClear();
     }
 
-    public int getFrameScore() {
-        return score();
-    }
-
-    private int score() {
-        if (isLast) {
-            return shotScores.singleScore();
+    public FrameScore getFrameScore() {
+        if(!isFrameSet()){
+            return DefaultFrameScore.NULL;
         }
-        return shotScores.totalScore();
+        return frameScore != null ? frameScore : shotScores.getCalculateScore();
     }
 
     public List<ShotScore> shotScores() {

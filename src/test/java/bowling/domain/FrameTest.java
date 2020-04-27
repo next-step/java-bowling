@@ -3,6 +3,7 @@ package bowling.domain;
 import bowling.domain.scoreType.ScoreType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
@@ -116,33 +117,21 @@ class FrameTest {
                 .toArray();
     }
 
-    @Test
-    void getFrameScore() {
-        Frame firstFrame = Frame.init();
-        firstFrame.shot(4);
-        firstFrame.shot(4);
-        assertThat(firstFrame.getFrameScore())
-                .isEqualTo(8);
-
-
-        firstFrame = Frame.init();
-        firstFrame.shot(4);
-        firstFrame.shot(6);
-        firstFrame.next(10);
-        assertThat(firstFrame.getFrameScore())
-                .isEqualTo(20);
-
-        firstFrame = Frame.init();
-        firstFrame.shot(10);
-        firstFrame.next(10).next(10);
-        assertThat(firstFrame.getFrameScore())
-                .isEqualTo(30);
-
-        firstFrame = Frame.init();
-        firstFrame.shot(10);
-        firstFrame.next(4).shot(3);
-        assertThat(firstFrame.getFrameScore())
-                .isEqualTo(17);
+    @ParameterizedTest
+    @CsvSource(value = {
+            "4,4:8",
+            "4,6,10:20",
+            "10,10,10:30",
+            "10,4,3:17"
+    }, delimiter = ':')
+    void getFrameScore(String shotString, int expectScore) {
+        int[] shots = splitInts(shotString);
+        Frame frame = Frame.init();
+        for (int shot : shots) {
+            frame.shot(shot);
+        }
+        assertThat(frame.getFrameScore().getScore())
+                .isEqualTo(expectScore);
     }
 
     @ParameterizedTest
