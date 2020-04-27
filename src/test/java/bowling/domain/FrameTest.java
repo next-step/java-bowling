@@ -25,10 +25,10 @@ class FrameTest {
                 .anyMatch(v -> ScoreType.MISS_FIRST.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 4);
 
-        normalFrame.shot(6);
+        normalFrame.shot(4);
         assertThat(normalFrame.shotScores().stream())
-                .anyMatch(v -> ScoreType.SPARE.equals(v.scoreType()))
-                .anyMatch(v -> v.singleScore() == 6);
+                .anyMatch(v -> ScoreType.MISS_SECOND.equals(v.scoreType()))
+                .anyMatch(v -> v.singleScore() == 4);
 
         assertThatThrownBy(() -> normalFrame.shot(5))
                 .isInstanceOf(IllegalStateException.class);
@@ -145,33 +145,38 @@ class FrameTest {
                 .isEqualTo(17);
     }
 
-    @Test
-    void isScoreCalculated() {
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "10,4,3",
+            "4,3",
+            "1,9,2",
+            "10,10,3"
+    })
+    void isScoreCalculated(String shotString) {
+        int[] shots = splitInts(shotString);
         Frame frame = Frame.init();
-        assertThat(frame.isScoreCalculated())
-                .isFalse();
-
-        frame.shot(4);
-        frame.shot(5);
+        for (int shot : shots) {
+            frame.shot(shot);
+        }
         assertThat(frame.isScoreCalculated())
                 .isTrue();
+    }
 
-        frame = frame.next(10);
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "10,4",
+            "4",
+            "1,9",
+            "10,10"
+    })
+    void isScoreNotCalculated(String shotString) {
+        int[] shots = splitInts(shotString);
+        Frame frame = Frame.init();
+        for (int shot : shots) {
+            frame.shot(shot);
+        }
         assertThat(frame.isScoreCalculated())
                 .isFalse();
-
-        frame.next(4).shot(4);
-        assertThat(frame.isScoreCalculated())
-                .isTrue();
-
-        frame = frame.next(4);
-        frame.shot(6);
-        assertThat(frame.isScoreCalculated())
-                .isFalse();
-
-        frame.next(5);
-        assertThat(frame.isScoreCalculated())
-                .isTrue();
     }
 
     @ParameterizedTest

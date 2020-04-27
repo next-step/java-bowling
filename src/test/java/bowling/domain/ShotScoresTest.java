@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ShotScoresTest {
     private ShotScores shotScores;
@@ -66,6 +67,23 @@ class ShotScoresTest {
         shotScores.getNext(3);
         assertThat(shotScores.isScoreCalculated())
                 .isTrue();
+    }
+
+    @Test
+    void getFrameScoreException() {
+        ShotScore firstShot = ShotScore.init(4);
+        ShotScores shotScores = ShotScores.of(new ArrayList<>(Collections.singletonList(firstShot)));
+        assertThatThrownBy(shotScores::getCalculateScore)
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void getFrameScore() {
+        ShotScore firstShot = ShotScore.init(4);
+        ShotScores shotScores = ShotScores.of(new ArrayList<>(Collections.singletonList(firstShot)));
+        shotScores.add(shotScores.getNext(6));
+        assertThat(shotScores.getCalculateScore())
+                .matches(v -> !v.isScoreCalculated());
     }
 
 }

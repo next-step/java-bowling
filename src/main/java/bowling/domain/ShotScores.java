@@ -58,6 +58,14 @@ class ShotScores {
                 .allMatch(ShotScore::isScoreCalculated);
     }
 
+    FrameScore getCalculateScore() {
+        try {
+            return FrameScore.of(Score.of(this.singleScore()), getLast().scoreType);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalStateException("ShotScores cannot calculateScore", e);
+        }
+    }
+
     List<ShotScore> shotScores() {
         return new ArrayList<>(shotScores);
     }

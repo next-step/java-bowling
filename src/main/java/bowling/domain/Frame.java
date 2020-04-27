@@ -8,6 +8,7 @@ public class Frame {
 
     private final ShotScores shotScores;
     private final boolean isLast;
+    private FrameScore frameScore;
 
     private Frame(List<ShotScore> shotScores, boolean isLast) {
         this.shotScores = ShotScores.of(shotScores);
@@ -31,14 +32,17 @@ public class Frame {
     }
 
     void shot(int shot) {
+        if (isScoreCalculated()) {
+            throw new IllegalStateException(String.format("shot Frame fail. cannot shot over %d times", getShotLimit()));
+        }
+
+        if (isFrameSet()) {
+            frameScore.addBonus(shot);
+        }
         shot(shotScores.getNext(shot));
     }
 
     private void shot(ShotScore shot) {
-        if (isShootLimitedSize()) {
-            throw new IllegalStateException(String.format("shot Frame fail. cannot shot over %d times", getShotLimit()));
-        }
-
         shotScores.add(shot);
     }
 
@@ -55,7 +59,12 @@ public class Frame {
         if (isLast) {
             return isFrameSet();
         }
-        return isFrameSet() && shotScores.isScoreCalculated();
+
+        if (isFrameSet()) {
+            this.frameScore = frameScore != null ? frameScore : shotScores.getCalculateScore();
+            return frameScore.isScoreCalculated();
+        }
+        return false;
     }
 
     private int getShotLimit() {
