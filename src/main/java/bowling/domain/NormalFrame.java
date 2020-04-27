@@ -66,7 +66,7 @@ public class NormalFrame implements Frame {
   @Override
   public Score calculateScore() {
     RegularResult regularResult = frameInfo.getRegularResult();
-    FrameState frameState = FrameState.of(regularResult);
+    FrameState frameState = regularResult.getState();
     Score score = frameInfo.getScore();
 
     return Score.add(score, next.calculateBonusScore(frameState.getBonusBallCount()));

@@ -7,6 +7,7 @@ public abstract class BowlResult {
 
   Trial first;
   Trial second;
+  FrameState state;
 
   public Trial getFirst() {
     return first;
@@ -53,5 +54,9 @@ public abstract class BowlResult {
 
   public boolean isFinished() {
     return !first.isNotPlayed() && !second.isNotPlayed();
+  }
+
+  public FrameState getState() {
+    return state;
   }
 }

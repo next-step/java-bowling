@@ -1,14 +1,12 @@
 package bowling.domain;
 
-public enum FrameState {
-  IN_PROGRESS(0),
-  MISS(0),
-  SPARE(1),
-  STRIKE(2);
+import bowling.exception.CannotBowlException;
+
+public abstract class FrameState {
 
   private int bonusBallCount;
 
-  FrameState(int bonusBallCount) {
+  public FrameState(int bonusBallCount) {
     this.bonusBallCount = bonusBallCount;
   }
 
@@ -16,22 +14,5 @@ public enum FrameState {
     return bonusBallCount;
   }
 
-  public static FrameState of(BowlResult result) {
-    Trial first = result.getFirst();
-    Trial second = result.getSecond();
-
-    if (first.isMaxPin()) {
-      return FrameState.STRIKE;
-    }
-
-    if (second.isSpareOf(first)) {
-      return FrameState.SPARE;
-    }
-
-    if (result.isFinished()) {
-      return FrameState.MISS;
-    }
-
-    return FrameState.IN_PROGRESS;
-  }
+  public abstract FrameState bowl(int pinCount) throws CannotBowlException;
 }

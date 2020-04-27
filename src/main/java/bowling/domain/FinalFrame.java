@@ -51,14 +51,14 @@ public class FinalFrame implements Frame {
 
   private void prepareBonusBowl() {
     if (regularResult.isFinished()) {
-      FrameState state = FrameState.of(regularResult);
+      FrameState state = regularResult.getState();
       bonusResult = new BonusResult(state.getBonusBallCount());
     }
   }
 
   @Override
   public Score calculateBonusScore(int bonusBowlCount) {
-    if (bonusBowlCount == MAX_BONUS_BOWL && FrameState.of(regularResult) == FrameState.STRIKE) {
+    if (bonusBowlCount == MAX_BONUS_BOWL && regularResult.getState() == Strike.getInstance()) {
       return Score.add(Score.of(regularResult.getFirst()), bonusResult.getScore(1));
     }
 

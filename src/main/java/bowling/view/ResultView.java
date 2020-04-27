@@ -5,10 +5,10 @@ import bowling.domain.BowlingGame;
 import bowling.domain.FinalFrame;
 import bowling.domain.Frame;
 import bowling.domain.FrameInfo;
-import bowling.domain.FrameState;
 import bowling.domain.NormalFrame;
 import bowling.domain.RegularResult;
 import bowling.domain.Score;
+import bowling.domain.Spare;
 import bowling.domain.Trial;
 
 public class ResultView {
@@ -99,7 +99,7 @@ public class ResultView {
   }
 
   private static String visualizeSecondTrial(BowlResult bowlResult) {
-    if (FrameState.of(bowlResult).equals(FrameState.SPARE)) {
+    if (bowlResult.getState().equals(Spare.getInstance())) {
       return SPARE_SIGN;
     }
 
