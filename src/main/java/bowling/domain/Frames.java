@@ -1,8 +1,11 @@
 package bowling.domain;
 
+import bowling.domain.frameScore.FrameScore;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
     private static final int MAX_FRAMES = 10;
@@ -60,5 +63,14 @@ public class Frames {
 
     public Collection<Frame> getFrames() {
         return new ArrayList<>(frames);
+    }
+
+    public List<Integer> getScores() {
+        return frames
+                .stream()
+                .map(Frame::getFrameScore)
+                .filter(FrameScore::isCalculated)
+                .map(FrameScore::getScore)
+                .collect(Collectors.toList());
     }
 }
