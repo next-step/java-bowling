@@ -8,11 +8,9 @@ import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> players;
-    private Player currentPlayer;
 
     private Players(List<Player> players) {
         this.players = players;
-        currentPlayer = players.get(0);
     }
 
     public static Players of(List<String> players) {
@@ -39,27 +37,11 @@ public class Players {
         return players == null || players.size() < 1;
     }
 
-    public void shot(int shot) {
-        currentPlayer.shot(shot);
-        currentPlayer = getCurrentPlayer();
-    }
-
-    public String getCurrentPlayerName() {
-        return currentPlayer.name();
-    }
-
-    private Player getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return players.stream()
-                .filter(v -> v.getCurrentFrameNumber() == getMinimumFrameNumber())
-                .min(Comparator.comparing(Player::getCurrentFrameShotCount))
+                .min(Comparator.comparingInt(Player::getCurrentFrameNumber)
+                        .thenComparingInt(Player::getCurrentFrameShotCount))
                 .get();
-    }
-
-    private int getMinimumFrameNumber() {
-        return players.stream()
-                .mapToInt(Player::getCurrentFrameNumber)
-                .min()
-                .orElse(0);
     }
 
     public List<Player> getPlayers() {

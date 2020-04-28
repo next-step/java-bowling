@@ -19,8 +19,9 @@ public class BowlingGame {
         Players players = Players.of(inputView.getPlayers());
         outputView.printFrame(new PlayersDto(players));
 
-        while (!players.getPlayers().stream().allMatch(Player::isGameSet)) {
-            players.shot(inputView.getShot(players.getCurrentPlayerName()));
+        while (!players.isGameSet()) {
+            Player currentPlayer = players.getCurrentPlayer();
+            currentPlayer.shot(inputView.getShot(currentPlayer.name()));
             outputView.printFrame(new PlayersDto(players));
         }
     }

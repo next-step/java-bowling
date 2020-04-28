@@ -13,50 +13,50 @@ import static org.mockito.Mockito.when;
 
 class PlayersTest {
 
-    private static final String PLAYER1 = "JTH";
-    private static final String PLAYER2 = "POB";
-    private static final String PLAYER3 = "PJS";
+    private static final Player PLAYER1 = Player.of("JTH");
+    private static final Player PLAYER2 = Player.of("POB");
+    private static final Player PLAYER3 = Player.of("PJS");
 
     @Test
     void of() {
-        Players players = Players.of(Arrays.asList(PLAYER1, PLAYER2, PLAYER3));
+        Players players = Players.of(PLAYER1, PLAYER2, PLAYER3);
         assertThat(players.getPlayers())
-                .anyMatch(v -> PLAYER1.equals(v.name()))
-                .anyMatch(v -> PLAYER2.equals(v.name()))
-                .anyMatch(v -> PLAYER3.equals(v.name()));
+                .anyMatch(PLAYER1::equals)
+                .anyMatch(PLAYER2::equals)
+                .anyMatch(PLAYER3::equals);
     }
 
     @Test
     void ofException() {
         assertThatThrownBy(() -> Players.of(Collections.emptyList()))
                 .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> Players.of(Arrays.asList(PLAYER1, PLAYER1)))
+        assertThatThrownBy(() -> Players.of(Arrays.asList(PLAYER1.name(), PLAYER1.name())))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void getCurrentPlayerName() {
-        Players players = Players.of(Arrays.asList(PLAYER1, PLAYER2, PLAYER3));
-        assertThat(players.getCurrentPlayerName())
+    void getCurrentPlayer() {
+        Players players = Players.of(PLAYER1, PLAYER2, PLAYER3);
+        assertThat(players.getCurrentPlayer())
                 .isEqualTo(PLAYER1);
 
         players.shot(10);
-        assertThat(players.getCurrentPlayerName())
+        assertThat(players.getCurrentPlayer())
                 .isEqualTo(PLAYER2);
 
         players.shot(5);
-        assertThat(players.getCurrentPlayerName())
+        assertThat(players.getCurrentPlayer())
                 .isEqualTo(PLAYER3);
 
         players.shot(5);
-        assertThat(players.getCurrentPlayerName())
+        assertThat(players.getCurrentPlayer())
                 .isEqualTo(PLAYER2);
     }
 
     @Test
     void isGameSet() {
-        Player player1 = spy(Player.of(PLAYER1));
-        Player player2 = spy(Player.of(PLAYER2));
+        Player player1 = spy(PLAYER1);
+        Player player2 = spy(PLAYER2);
         Players players = Players.of(player1, player2);
 
         assertThat(players.isGameSet())
