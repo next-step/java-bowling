@@ -1,7 +1,6 @@
 package bowling.dto;
 
 import bowling.domain.Frame;
-import bowling.domain.frameScore.DefaultFrameScore;
 import bowling.domain.Player;
 import bowling.domain.frameScore.FrameScore;
 
