@@ -7,7 +7,6 @@ import java.util.Objects;
 public class ShotScore {
     protected final Score score;
     protected final ScoreType scoreType;
-    protected ShotScore next;
 
     protected ShotScore(Score score, ScoreType scoreType) {
         this.score = score;
@@ -22,46 +21,14 @@ public class ShotScore {
     ShotScore next(int next) {
         if (!scoreType.isFinished()) {
             Score nextScore = Score.of(next);
-            this.next = new ShotScore(nextScore, ScoreType.of(score, nextScore));
-            return this.next;
+            return new ShotScore(nextScore, ScoreType.of(score, nextScore));
         }
 
-        this.next = init(next);
-        return this.next;
+        return init(next);
     }
 
     boolean isClear() {
         return scoreType.isCleared();
-    }
-
-    int totalScore() {
-        return calculateTotalScore(scoreType.getBonusCount());
-    }
-
-    boolean isScoreCalculated() {
-        return isNextCalculated(scoreType.getBonusCount());
-    }
-
-    private boolean isNextCalculated(int bonusCount) {
-        ShotScore afterScore = this;
-        for (int i = 0; i < bonusCount; i++) {
-            afterScore = getNullableNext(afterScore);
-        }
-        return afterScore != null;
-    }
-
-    private ShotScore getNullableNext(ShotScore shotScore) {
-        return shotScore == null ? null : shotScore.next;
-    }
-
-    private int calculateTotalScore(int bonusCount) {
-        int score = singleScore();
-        ShotScore shotScore = this;
-        for (int i = 0; i < bonusCount; i++) {
-            shotScore = shotScore.next;
-            score += shotScore.singleScore();
-        }
-        return score;
     }
 
     public ScoreType scoreType() {

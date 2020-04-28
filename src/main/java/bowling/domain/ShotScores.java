@@ -40,24 +40,11 @@ class ShotScores {
                 .anyMatch(ShotScore::isClear);
     }
 
-    int totalScore() {
-        return shotScores
-                .stream()
-                .mapToInt(ShotScore::totalScore)
-                .sum();
-    }
-
-    int singleScore() {
+    private int singleScore() {
         return shotScores
                 .stream()
                 .mapToInt(ShotScore::singleScore)
                 .sum();
-    }
-
-    boolean isScoreCalculated() {
-        return shotScores
-                .stream()
-                .allMatch(ShotScore::isScoreCalculated);
     }
 
     DefaultFrameScore getCalculateScore() {

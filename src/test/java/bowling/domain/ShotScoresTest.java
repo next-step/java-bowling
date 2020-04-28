@@ -47,29 +47,6 @@ class ShotScoresTest {
     }
 
     @Test
-    void totalScore() {
-        ShotScores shotScores = ShotScores.of(Arrays.asList(ShotScore.init(4), ShotScore.init(5)));
-        assertThat(shotScores.totalScore())
-                .isEqualTo(9);
-    }
-
-    @Test
-    void isScoreCalculated() {
-        ShotScore firstShot = ShotScore.init(4);
-        ShotScores shotScores = ShotScores.of(new ArrayList<>(Collections.singletonList(firstShot)));
-        assertThat(shotScores.isScoreCalculated())
-                .isTrue();
-
-        shotScores.add(firstShot.next(6));
-        assertThat(shotScores.isScoreCalculated())
-                .isFalse();
-
-        shotScores.getNext(3);
-        assertThat(shotScores.isScoreCalculated())
-                .isTrue();
-    }
-
-    @Test
     void getFrameScoreException() {
         ShotScore firstShot = ShotScore.init(4);
         ShotScores shotScores = ShotScores.of(new ArrayList<>(Collections.singletonList(firstShot)));
