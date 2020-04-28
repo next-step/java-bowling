@@ -1,6 +1,12 @@
 # 볼링 점수판 구현
 
 ## Public
+- Players (Player들)
+  - getCurrentPlayer
+  - isGameSet
+  - dto
+    - getPlayers
+
 - Player (플레이어 및 Frames)
   - playerName
   - Frames
