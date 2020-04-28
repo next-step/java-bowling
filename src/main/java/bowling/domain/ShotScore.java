@@ -44,8 +44,8 @@ public class ShotScore {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ShotScore shotScore = (ShotScore) o;
-        return score == shotScore.score &&
-                scoreType == shotScore.scoreType;
+        return score.equals(shotScore.score) &&
+                scoreType.equals(shotScore.scoreType);
     }
 
     @Override

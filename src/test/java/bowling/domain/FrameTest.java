@@ -22,14 +22,15 @@ class FrameTest {
     void shot() {
         Frame normalFrame = Frame.init();
         normalFrame.shot(4);
-        assertThat(normalFrame.shotScores().stream())
-                .anyMatch(v -> ScoreType.MISS_FIRST.equals(v.scoreType()))
-                .anyMatch(v -> v.singleScore() == 4);
+        normalFrame.shot(6);
+        normalFrame.shot(5);
 
-        normalFrame.shot(4);
-        assertThat(normalFrame.shotScores().stream())
-                .anyMatch(v -> ScoreType.MISS_SECOND.equals(v.scoreType()))
-                .anyMatch(v -> v.singleScore() == 4);
+        assertThat(normalFrame.shotScores())
+                .anyMatch(ShotScore.init(4)::equals)
+                .anyMatch(ShotScore.init(4).next(6)::equals);
+
+        assertThat(normalFrame.shotScores())
+                .hasSize(2);
 
         assertThatThrownBy(() -> normalFrame.shot(5))
                 .isInstanceOf(IllegalStateException.class);

@@ -41,7 +41,9 @@ public class Frame {
 
         if (isFrameSet()) {
             frameScore.addBonus(shot);
+            return;
         }
+
         shot(shotScores.getNext(shot));
     }
 

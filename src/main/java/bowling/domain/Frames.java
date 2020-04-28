@@ -38,6 +38,9 @@ public class Frames {
 
     void shot(int shot) {
         if (isCurrentFrameDone()) {
+            frames.stream()
+                    .filter(v -> !v.isScoreCalculated())
+                    .forEach(v -> v.shot(shot));
             frames.add(getNextFrame(shot));
             return;
         }

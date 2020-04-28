@@ -25,10 +25,16 @@ class FramesTest {
     void shot() {
         Frames frames = new Frames();
         frames.shot(5);
+        frames.shot(5);
+        frames.shot(10);
 
         assertThat(frames.getFrames())
-                .anyMatch(v -> v.shotScores().get(0).singleScore() == 5)
-                .hasSize(1);
+                .hasSize(2)
+                .anyMatch(v -> v.isFrameSet() &&
+                        v.getFrameScore().getScore() == 20 &&
+                        v.shotScores().size() == 2)
+                .anyMatch(v -> v.isFrameSet() &&
+                        !v.getFrameScore().isCalculated());
     }
 
     @Test
