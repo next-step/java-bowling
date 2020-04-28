@@ -11,7 +11,7 @@ public class Frames {
 
     Frames() {
         this.frames = new ArrayList<>();
-        frames.add(Frame.init());
+        frames.add(Frame.normalFrame());
     }
 
     int getCurrentFrameNumber() {
@@ -38,21 +38,18 @@ public class Frames {
 
     void shot(int shot) {
         if (isCurrentFrameDone()) {
-            frames.stream()
-                    .filter(v -> !v.isScoreCalculated())
-                    .forEach(v -> v.shot(shot));
-            frames.add(getNextFrame(shot));
-            return;
+            frames.add(getNextFrame());
         }
-
-        getLast().shot(shot);
+        frames.stream()
+                .filter(v -> !v.isScoreCalculated())
+                .forEach(v -> v.shot(shot));
     }
 
-    private Frame getNextFrame(int shot) {
+    private Frame getNextFrame() {
         if (frames.size() < MAX_FRAMES - 1) {
-            return getLast().next(shot);
+            return Frame.normalFrame();
         }
-        return getLast().last(shot);
+        return Frame.lastFrame();
     }
 
     boolean isGameSet() {

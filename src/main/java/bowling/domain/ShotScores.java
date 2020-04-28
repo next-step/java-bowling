@@ -49,7 +49,7 @@ class ShotScores {
 
     DefaultFrameScore getCalculateScore() {
         try {
-            return DefaultFrameScore.of(Score.of(this.singleScore()), getLast().scoreType);
+            return DefaultFrameScore.of(Score.of(this.singleScore()), getLast().scoreType());
         } catch (IllegalArgumentException e) {
             throw new IllegalStateException("ShotScores cannot calculateScore", e);
         }

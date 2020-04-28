@@ -5,8 +5,8 @@ import bowling.domain.scoreType.ScoreType;
 import java.util.Objects;
 
 public class ShotScore {
-    protected final Score score;
-    protected final ScoreType scoreType;
+    private final Score score;
+    private final ScoreType scoreType;
 
     protected ShotScore(Score score, ScoreType scoreType) {
         this.score = score;

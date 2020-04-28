@@ -18,20 +18,12 @@ public class Frame {
         this.isLast = isLast;
     }
 
-    static Frame init() {
+    static Frame normalFrame() {
         return new Frame(new ArrayList<>(), false);
     }
 
-    Frame next(int shot) {
-        Frame nextFrame = new Frame(new ArrayList<>(), false);
-        nextFrame.shot(shotScores.getNext(shot));
-        return nextFrame;
-    }
-
-    Frame last(int shot) {
-        Frame nextFrame = new Frame(new ArrayList<>(), true);
-        nextFrame.shot(shotScores.getNext(shot));
-        return nextFrame;
+    static Frame lastFrame() {
+        return new Frame(new ArrayList<>(), true);
     }
 
     void shot(int shot) {
@@ -39,16 +31,30 @@ public class Frame {
             throw new IllegalStateException(String.format("shot Frame fail. cannot shot over %d times", getShotLimit()));
         }
 
-        if (isFrameSet()) {
+        if (isFrameScoreSet()) {
             frameScore.addBonus(shot);
-            return;
         }
 
-        shot(shotScores.getNext(shot));
+        if (!isFrameSet()) {
+            addShotScore(shot);
+        }
     }
 
-    private void shot(ShotScore shot) {
-        shotScores.add(shot);
+    private void addShotScore(int shot) {
+        ShotScore nextScore = shotScores.getNext(shot);
+        shotScores.add(nextScore);
+
+        if (nextScore.scoreType().isFinished()) {
+            setFrameScore();
+        }
+    }
+
+    private boolean isFrameScoreSet() {
+        return frameScore != null;
+    }
+
+    private void setFrameScore() {
+        this.frameScore = isFrameScoreSet() ? frameScore : shotScores.getCalculateScore();
     }
 
     boolean isFrameSet() {
@@ -66,7 +72,7 @@ public class Frame {
         }
 
         if (isFrameSet()) {
-            this.frameScore = frameScore != null ? frameScore : shotScores.getCalculateScore();
+            setFrameScore();
             return frameScore.isCalculated();
         }
         return false;
@@ -84,10 +90,10 @@ public class Frame {
     }
 
     public FrameScore getFrameScore() {
-        if(!isFrameSet()){
+        if (!isFrameSet()) {
             return DefaultFrameScore.NULL;
         }
-        return frameScore != null ? frameScore : shotScores.getCalculateScore();
+        return isFrameScoreSet() ? frameScore : shotScores.getCalculateScore();
     }
 
     public List<ShotScore> shotScores() {

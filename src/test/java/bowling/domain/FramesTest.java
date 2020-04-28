@@ -49,6 +49,9 @@ class FramesTest {
         frames.shot(5);
         assertThat(frames.isGameSet())
                 .isTrue();
+
+        assertThat(frames.getFrames())
+                .hasSize(10);
     }
 
     @Test

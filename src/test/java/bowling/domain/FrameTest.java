@@ -14,13 +14,13 @@ class FrameTest {
 
     @Test
     void of() {
-        assertThatCode(() -> Frame.init())
+        assertThatCode(() -> Frame.normalFrame())
                 .doesNotThrowAnyException();
     }
 
     @Test
     void shot() {
-        Frame normalFrame = Frame.init();
+        Frame normalFrame = Frame.normalFrame();
         normalFrame.shot(4);
         normalFrame.shot(6);
         normalFrame.shot(5);
@@ -36,20 +36,10 @@ class FrameTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    @Test
-    void next() {
-        Frame normalFrame = Frame.init();
-        assertThatCode(() -> normalFrame.next(5))
-                .doesNotThrowAnyException();
-
-        assertThatThrownBy(() -> normalFrame.next(11))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {"5,4", "10"})
     void isClosed(String shotString) {
-        Frame normalFrame = Frame.init();
+        Frame normalFrame = Frame.normalFrame();
         assertThat(normalFrame.isFrameSet())
                 .isFalse();
 
@@ -64,7 +54,8 @@ class FrameTest {
 
     @Test
     void shotLastFrame() {
-        Frame finalFrame = Frame.init().last(4);
+        Frame finalFrame = Frame.lastFrame();
+        finalFrame.shot(4);
         assertThat(finalFrame.shotScores().stream())
                 .anyMatch(v -> ScoreType.MISS_FIRST.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 4);
@@ -75,6 +66,8 @@ class FrameTest {
                 .anyMatch(v -> v.singleScore() == 6);
 
         finalFrame.shot(5);
+        assertThat(finalFrame.getFrameScore().getScore())
+                .isEqualTo(15);
 
         assertThatThrownBy(() -> finalFrame.shot(5))
                 .isInstanceOf(IllegalStateException.class);
@@ -84,12 +77,12 @@ class FrameTest {
     @ValueSource(strings = {"5,4", "10,10,10", "4,6,4", "10,4,5"})
     void isClosedLastFrame(String shotString) {
         int[] shots = splitInts(shotString);
-        Frame finalFrame = Frame.init().last(shots[0]);
+        Frame finalFrame = Frame.lastFrame();
         assertThat(finalFrame.isFrameSet())
                 .isFalse();
 
-        for (int i = 1; i < shots.length; i++) {
-            finalFrame.shot(shots[i]);
+        for (int shot : shots) {
+            finalFrame.shot(shot);
         }
 
         assertThat(finalFrame.isFrameSet())
@@ -100,11 +93,11 @@ class FrameTest {
     @ValueSource(strings = {"5", "10,10", "4,6", "10,4"})
     void isNotClosedFrame(String shotString) {
         int[] shots = splitInts(shotString);
-        Frame finalFrame = Frame.init().last(shots[0]);
+        Frame finalFrame = Frame.lastFrame();
         assertThat(finalFrame.isFrameSet())
                 .isFalse();
 
-        for (int i = 1; i < shots.length; i++) {
+        for (int i = 0; i < shots.length; i++) {
             finalFrame.shot(shots[i]);
         }
 
@@ -127,7 +120,7 @@ class FrameTest {
     }, delimiter = ':')
     void getFrameScore(String shotString, int expectScore) {
         int[] shots = splitInts(shotString);
-        Frame frame = Frame.init();
+        Frame frame = Frame.normalFrame();
         for (int shot : shots) {
             frame.shot(shot);
         }
@@ -144,7 +137,7 @@ class FrameTest {
     })
     void isScoreCalculated(String shotString) {
         int[] shots = splitInts(shotString);
-        Frame frame = Frame.init();
+        Frame frame = Frame.normalFrame();
         for (int shot : shots) {
             frame.shot(shot);
         }
@@ -161,7 +154,7 @@ class FrameTest {
     })
     void isScoreNotCalculated(String shotString) {
         int[] shots = splitInts(shotString);
-        Frame frame = Frame.init();
+        Frame frame = Frame.normalFrame();
         for (int shot : shots) {
             frame.shot(shot);
         }
@@ -178,12 +171,11 @@ class FrameTest {
     })
     void isScoreCalculatedLastFrame(String shotString) {
         int[] shots = splitInts(shotString);
-        Frame frame = Frame.init();
-        frame = frame.last(shots[0]);
-        for (int i = 1; i < shots.length; i++) {
-            frame.shot(shots[i]);
+        Frame finalFrame = Frame.lastFrame();
+        for (int shot : shots) {
+            finalFrame.shot(shot);
         }
-        assertThat(frame.isScoreCalculated())
+        assertThat(finalFrame.isScoreCalculated())
                 .isTrue();
     }
 
@@ -196,12 +188,11 @@ class FrameTest {
     })
     void isNotScoreCalculatedLastFrame(String shotString) {
         int[] shots = splitInts(shotString);
-        Frame frame = Frame.init();
-        frame = frame.last(shots[0]);
-        for (int i = 1; i < shots.length; i++) {
-            frame.shot(shots[i]);
+        Frame finalFrame = Frame.lastFrame();
+        for (int shot : shots) {
+            finalFrame.shot(shot);
         }
-        assertThat(frame.isScoreCalculated())
+        assertThat(finalFrame.isScoreCalculated())
                 .isFalse();
     }
 
