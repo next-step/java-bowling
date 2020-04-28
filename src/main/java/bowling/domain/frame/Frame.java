@@ -16,6 +16,8 @@ public interface Frame {
 
     boolean isEnd();
 
+    boolean isFrameFinish(int frameNumber);
+
     Frame createNext();
 
     Frame getNext();

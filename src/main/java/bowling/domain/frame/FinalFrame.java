@@ -41,6 +41,15 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public boolean isFrameFinish(final int frameNumber) {
+        Frame frame = findFrame(frameNumber);
+        if (Objects.isNull(frame)) {
+            return false;
+        }
+        return frame.isFinish();
+    }
+
+    @Override
     public Frame createNext() {
         throw new BowlingException(LAST_FRAME);
     }
@@ -58,19 +67,6 @@ public class FinalFrame implements Frame {
     @Override
     public Frame findLast() {
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FinalFrame that = (FinalFrame) o;
-        return Objects.equals(states, that.states);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(states);
     }
 
 
@@ -101,5 +97,18 @@ public class FinalFrame implements Frame {
         merge.add(states.getLastPins());
 
         return merge;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FinalFrame that = (FinalFrame) o;
+        return Objects.equals(states, that.states);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(states);
     }
 }

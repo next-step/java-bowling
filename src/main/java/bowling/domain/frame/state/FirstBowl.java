@@ -5,6 +5,8 @@ import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import bowling.exception.BowlingException;
 
+import java.util.Objects;
+
 public class FirstBowl implements State {
 
     private final Pins pins;
@@ -54,5 +56,18 @@ public class FirstBowl implements State {
     @Override
     public Pins getPins() {
         return pins;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FirstBowl firstBowl = (FirstBowl) o;
+        return Objects.equals(pins, firstBowl.pins);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pins);
     }
 }

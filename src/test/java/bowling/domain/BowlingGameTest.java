@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.player.Player;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ class BowlingGameTest {
         game.play(10);
         game.play(10);
 
-        assertTrue(game.isFinish());
+        assertTrue(game.isEnd());
     }
 
     @DisplayName("현재 진행된 프레임의 수를 반환 한다.")
@@ -145,5 +146,30 @@ class BowlingGameTest {
 
         //then
         assertThat(totalScore).isEqualTo(new Score(14));
+    }
+
+    @DisplayName("참가자가 동일한지 체크")
+    @Test
+    public void equalPlayer_success() throws Exception {
+        //given
+        BowlingGame game = new BowlingGame(new Player("aaa"));
+        Player player = new Player("aaa");
+
+        //then
+        assertTrue(game.equalPlayer(player));
+    }
+
+    @DisplayName("전달 받은 번호의 프레임이 마무리 되었는지 체크")
+    @Test
+    public void isFrameFinish_success() throws Exception {
+        //given
+        BowlingGame game = new BowlingGame(new Player("aaa"));
+
+        //when
+        game.play(10);
+        game.play(10);
+
+        //then
+        assertTrue(game.isFrameFinish(1));
     }
 }
