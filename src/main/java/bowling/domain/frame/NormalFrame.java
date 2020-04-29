@@ -1,14 +1,19 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.FrameNode;
+import bowling.domain.RegularResult;
+import bowling.domain.Round;
+import bowling.domain.Score;
+import bowling.domain.framestate.FrameState;
 import bowling.exception.CannotBowlException;
 
-public class NormalFrame implements Frame {
+public class NormalFrame implements FrameNode {
 
-  private FrameInfo frameInfo;
-  private Frame next;
+  private Frame frame;
+  private FrameNode next;
 
   private NormalFrame(Round round) {
-    frameInfo = new FrameInfo(round);
+    frame = new Frame(round);
     next = NullFrame.of(round.next());
   }
 
@@ -20,30 +25,25 @@ public class NormalFrame implements Frame {
     return new NormalFrame(round);
   }
 
-  public FrameInfo getFrameInfo() {
-    return frameInfo;
-  }
-
-  @Override
-  public int getRound() {
-    return frameInfo.getRound();
+  public Frame getFrame() {
+    return frame;
   }
 
   @Override
   public int getRolledBowlCount() {
-    return frameInfo.getRolledBowlCount();
+    return frame.getRolledBowlCount();
   }
 
   @Override
-  public Frame getNextFrame() {
+  public FrameNode getNextFrame() {
     return next;
   }
 
   @Override
-  public Frame roll(int pinCount) throws CannotBowlException {
-    frameInfo.roll(pinCount);
-    if (frameInfo.isFinished()) {
-      next = Frame.of(frameInfo.nextRound());
+  public FrameNode roll(int pinCount) throws CannotBowlException {
+    frame.roll(pinCount);
+    if (frame.isFinished()) {
+      next = FrameNode.of(frame.nextRound());
       return next;
     }
 
@@ -57,7 +57,7 @@ public class NormalFrame implements Frame {
     }
 
     Score additionalScore = next.calculateBonusScore(bonusBowlCount - getRolledBowlCount());
-    RegularResult regularResult = frameInfo.getRegularResult();
+    RegularResult regularResult = frame.getRegularResult();
     Score score = regularResult.getScore(bonusBowlCount);
 
     return Score.add(score, additionalScore);
@@ -65,16 +65,16 @@ public class NormalFrame implements Frame {
 
   @Override
   public Score calculateScore() {
-    RegularResult regularResult = frameInfo.getRegularResult();
+    RegularResult regularResult = frame.getRegularResult();
     FrameState frameState = regularResult.getState();
-    Score score = frameInfo.getScore();
+    Score score = frame.getScore();
 
     return Score.add(score, next.calculateBonusScore(frameState.getBonusBallCount()));
   }
 
   @Override
-  public boolean isEnd() {
-    return false;
+  public boolean isFinished() {
+    return frame.isFinished();
   }
 
   @Override

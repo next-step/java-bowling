@@ -1,5 +1,9 @@
 package bowling.domain;
 
+import bowling.domain.framestate.Miss;
+import bowling.domain.framestate.NotPlayed;
+import bowling.domain.framestate.Spare;
+import bowling.domain.framestate.Strike;
 import bowling.exception.CannotBowlException;
 
 public class BonusResult extends BowlResult {

@@ -1,12 +1,14 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.NormalFrame;
 import bowling.exception.CannotBowlException;
 
-public interface Frame {
+public interface FrameNode {
   int NO_BONUS_BOWL = 0;
   int MAX_BONUS_BOWL = 2;
 
-  static Frame of(Round round) {
+  static FrameNode of(Round round) {
     if (round.isFinal()) {
       return new FinalFrame();
     }
@@ -14,19 +16,17 @@ public interface Frame {
     return NormalFrame.of(round);
   }
 
-  int getRound();
-
   int getRolledBowlCount();
 
-  Frame getNextFrame();
+  FrameNode getNextFrame();
 
-  Frame roll(int pinCount) throws CannotBowlException;
+  FrameNode roll(int pinCount) throws CannotBowlException;
 
   Score calculateBonusScore(int bonusBowlCount);
 
   Score calculateScore();
 
-  boolean isEnd();
+  boolean isFinished();
 
   boolean isFinalFrame();
 }

@@ -1,23 +1,22 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.RegularResult;
+import bowling.domain.Round;
+import bowling.domain.Score;
 import bowling.exception.CannotBowlException;
 
-public class FrameInfo {
+public class Frame {
 
   private RegularResult regularResult;
   private Round round;
 
-  public FrameInfo(Round round) {
+  public Frame(Round round) {
     this.regularResult = new RegularResult();
     this.round = round;
   }
 
   public RegularResult getRegularResult() {
     return regularResult;
-  }
-
-  public int getRound() {
-    return round.getRound();
   }
 
   public int getRolledBowlCount() {

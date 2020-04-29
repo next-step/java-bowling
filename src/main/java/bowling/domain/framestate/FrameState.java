@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.framestate;
 
 import bowling.exception.CannotBowlException;
 

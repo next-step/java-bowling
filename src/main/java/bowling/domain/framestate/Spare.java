@@ -1,17 +1,17 @@
-package bowling.domain;
+package bowling.domain.framestate;
 
 import bowling.exception.CannotBowlException;
 
-public class Miss extends FrameState {
+public class Spare extends FrameState {
 
-  public static final int BONUS_BOWL = 0;
-  private static final Miss instance = new Miss();
+  public static final int BONUS_BOWL = 1;
+  private static final Spare instance = new Spare();
 
-  private Miss() {
+  private Spare() {
     super(BONUS_BOWL);
   }
 
-  public static Miss getInstance() {
+  public static Spare getInstance() {
     return instance;
   }
 

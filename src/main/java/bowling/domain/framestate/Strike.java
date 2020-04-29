@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.framestate;
 
 public class Strike extends FrameState {
 

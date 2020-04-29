@@ -1,8 +1,6 @@
-package bowling.domain;
+package bowling.domain.framestate;
 
 import static bowling.domain.PinCount.MAX_PIN;
-
-import bowling.exception.CannotBowlException;
 
 public class InProgress extends FrameState {
   private static final int BONUS_BOWL = 0;

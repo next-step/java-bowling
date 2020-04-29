@@ -1,10 +1,17 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import static bowling.domain.BonusResult.NULL_RESULT;
 
+import bowling.domain.BonusResult;
+import bowling.domain.FrameNode;
+import bowling.domain.RegularResult;
+import bowling.domain.Round;
+import bowling.domain.Score;
+import bowling.domain.framestate.FrameState;
+import bowling.domain.framestate.Strike;
 import bowling.exception.CannotBowlException;
 
-public class FinalFrame implements Frame {
+public class FinalFrame implements FrameNode {
 
   private RegularResult regularResult;
   private BonusResult bonusResult;
@@ -23,22 +30,17 @@ public class FinalFrame implements Frame {
   }
 
   @Override
-  public int getRound() {
-    return Round.FINAL_ROUND;
-  }
-
-  @Override
   public int getRolledBowlCount() {
     return regularResult.getRolledBowlCount() + bonusResult.getRolledBowlCount();
   }
 
   @Override
-  public Frame getNextFrame() {
+  public FrameNode getNextFrame() {
     return NullFrame.of(Round.of(Round.FINAL_ROUND).next());
   }
 
   @Override
-  public Frame roll(int pinCount) throws CannotBowlException {
+  public FrameNode roll(int pinCount) throws CannotBowlException {
     if (!regularResult.isFinished()) {
       regularResult.roll(pinCount);
       prepareBonusBowl();
@@ -63,7 +65,7 @@ public class FinalFrame implements Frame {
     }
 
     return regularResult.getScore(bonusBowlCount);
-}
+  }
 
   @Override
   public Score calculateScore() {
@@ -73,7 +75,7 @@ public class FinalFrame implements Frame {
   }
 
   @Override
-  public boolean isEnd() {
+  public boolean isFinished() {
     return regularResult.isFinished() && bonusResult.isFinished();
   }
 

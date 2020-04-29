@@ -1,7 +1,6 @@
-package bowling.domain;
+package bowling.domain.framestate;
 
 import static bowling.domain.PinCount.MAX_PIN;
-import static bowling.domain.PinCount.MIN_PIN;
 
 public class NotPlayed extends FrameState {
 

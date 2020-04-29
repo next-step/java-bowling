@@ -1,8 +1,11 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.FrameNode;
+import bowling.domain.Round;
+import bowling.domain.Score;
 import bowling.exception.CannotBowlException;
 
-public class NullFrame implements Frame {
+public class NullFrame implements FrameNode {
 
   private Round round;
 
@@ -15,22 +18,17 @@ public class NullFrame implements Frame {
   }
 
   @Override
-  public int getRound() {
-    return round.getRound();
-  }
-
-  @Override
   public int getRolledBowlCount() {
     return 0;
   }
 
   @Override
-  public Frame getNextFrame() {
+  public FrameNode getNextFrame() {
     return NullFrame.of(round.next());
   }
 
   @Override
-  public Frame roll(int pinCount) throws CannotBowlException {
+  public FrameNode roll(int pinCount) throws CannotBowlException {
     throw new CannotBowlException("유효하지 않은 프레임입니다.");
   }
 
@@ -49,7 +47,7 @@ public class NullFrame implements Frame {
   }
 
   @Override
-  public boolean isEnd() {
+  public boolean isFinished() {
     return false;
   }
 

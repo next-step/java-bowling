@@ -3,6 +3,10 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import bowling.domain.framestate.InProgress;
+import bowling.domain.framestate.Miss;
+import bowling.domain.framestate.Spare;
+import bowling.domain.framestate.Strike;
 import bowling.exception.CannotBowlException;
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;

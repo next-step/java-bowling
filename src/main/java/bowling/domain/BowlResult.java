@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.framestate.FrameState;
 import bowling.exception.CannotBowlException;
 
 public abstract class BowlResult {

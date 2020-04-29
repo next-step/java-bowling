@@ -1,8 +1,12 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import bowling.domain.FrameNode;
+import bowling.domain.PinCount;
+import bowling.domain.Round;
+import bowling.domain.Score;
 import bowling.exception.CannotBowlException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -39,7 +43,7 @@ public class NormalFrameTest {
     int score = first + second + third;
 
     normalFrame.roll(first);
-    Frame newFrame = normalFrame.roll(second);
+    FrameNode newFrame = normalFrame.roll(second);
     assertThatThrownBy(() -> normalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
 
@@ -55,7 +59,7 @@ public class NormalFrameTest {
     int second = Integer.parseInt(secondTrial);
     int score = first + second + PinCount.MAX_PIN;
 
-    Frame newFrame = normalFrame.roll(PinCount.MAX_PIN);
+    FrameNode newFrame = normalFrame.roll(PinCount.MAX_PIN);
     assertThat(normalFrame.calculateScore()).isEqualTo(Score.ofNull());
     assertThatThrownBy(() -> normalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
@@ -72,7 +76,7 @@ public class NormalFrameTest {
   public void testDouble(int pinCount) throws CannotBowlException {
     NormalFrame normalFrame = NormalFrame.initialize();
     int score = PinCount.MAX_PIN + PinCount.MAX_PIN + pinCount;
-    Frame newFrame = normalFrame.roll(PinCount.MAX_PIN);
+    FrameNode newFrame = normalFrame.roll(PinCount.MAX_PIN);
 
     assertThat(normalFrame.calculateScore()).isEqualTo(Score.ofNull());
     assertThatThrownBy(() -> normalFrame.roll(3))
@@ -95,7 +99,7 @@ public class NormalFrameTest {
     int second = Integer.parseInt(secondTrial);
     int score = first + second + PinCount.MAX_PIN;
 
-    Frame newFrame = normalFrame.roll(PinCount.MAX_PIN);
+    FrameNode newFrame = normalFrame.roll(PinCount.MAX_PIN);
     assertThat(newFrame instanceof FinalFrame).isTrue();
     assertThat(normalFrame.calculateScore()).isEqualTo(Score.ofNull());
 
@@ -120,7 +124,7 @@ public class NormalFrameTest {
     normalFrame.roll(first);
     assertThat(normalFrame.calculateScore()).isEqualTo(Score.ofNull());
 
-    Frame newFrame = normalFrame.roll(second);
+    FrameNode newFrame = normalFrame.roll(second);
     assertThat(newFrame instanceof FinalFrame).isTrue();
     assertThat(normalFrame.calculateScore()).isEqualTo(Score.ofNull());
 

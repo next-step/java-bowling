@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.framestate.NotPlayed;
 import bowling.exception.CannotBowlException;
 
 public class RegularResult extends BowlResult {

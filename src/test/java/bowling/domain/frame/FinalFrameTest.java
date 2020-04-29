@@ -1,8 +1,9 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import bowling.domain.Score;
 import bowling.exception.CannotBowlException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -21,7 +22,7 @@ public class FinalFrameTest {
     assertThat(finalFrame.calculateScore()).isEqualTo(Score.ofNull());
 
     finalFrame.roll(second);
-    assertThat(finalFrame.isEnd()).isTrue();
+    assertThat(finalFrame.isFinished()).isTrue();
     assertThat(finalFrame.calculateScore()).isEqualTo(Score.of(score));
     assertThatThrownBy(() -> finalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
@@ -45,7 +46,7 @@ public class FinalFrameTest {
     assertThat(finalFrame.calculateScore()).isEqualTo(Score.ofNull());
 
     finalFrame.roll(third);
-    assertThat(finalFrame.isEnd()).isTrue();
+    assertThat(finalFrame.isFinished()).isTrue();
     assertThat(finalFrame.calculateScore()).isEqualTo(Score.of(score));
     assertThatThrownBy(() -> finalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
@@ -72,7 +73,7 @@ public class FinalFrameTest {
     assertThat(finalFrame.calculateScore()).isEqualTo(Score.ofNull());
 
     finalFrame.roll(third);
-    assertThat(finalFrame.isEnd()).isTrue();
+    assertThat(finalFrame.isFinished()).isTrue();
     assertThat(finalFrame.calculateScore()).isEqualTo(Score.of(score));
     assertThatThrownBy(() -> finalFrame.roll(3))
         .isInstanceOf(CannotBowlException.class);
