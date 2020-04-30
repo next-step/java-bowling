@@ -40,15 +40,15 @@ class PlayersTest {
         assertThat(players.getCurrentPlayer())
                 .isEqualTo(PLAYER1);
 
-        players.shot(10);
+        players.getCurrentPlayer().shot(10);
         assertThat(players.getCurrentPlayer())
                 .isEqualTo(PLAYER2);
 
-        players.shot(5);
+        players.getCurrentPlayer().shot(5);
         assertThat(players.getCurrentPlayer())
                 .isEqualTo(PLAYER3);
 
-        players.shot(5);
+        players.getCurrentPlayer().shot(5);
         assertThat(players.getCurrentPlayer())
                 .isEqualTo(PLAYER2);
     }
