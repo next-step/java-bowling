@@ -1,19 +1,18 @@
 package bowling.domain;
 
 import bowling.domain.frame.FrameNode;
+import bowling.domain.frame.Frames;
 import bowling.domain.frame.NormalFrameNode;
 import bowling.exception.CannotBowlException;
 
 public class BowlingGame {
 
   private Player player;
-  private NormalFrameNode initialFrame;
-  private FrameNode currentFrame;
+  private Frames frames;
 
   public BowlingGame(Player player) {
     this.player = player;
-    this.initialFrame = NormalFrameNode.initialize();
-    this.currentFrame = this.initialFrame;
+    this.frames = new Frames();
   }
 
   public String getPlayerName() {
@@ -21,19 +20,18 @@ public class BowlingGame {
   }
 
   public NormalFrameNode getInitialFrame() {
-    return initialFrame;
+    return frames.getInitialFrame();
   }
 
   public FrameNode getCurrentFrame() {
-    return currentFrame;
+    return frames.getCurrentFrame();
   }
 
   public FrameNode roll(int pinCount) throws CannotBowlException {
-    currentFrame = currentFrame.roll(pinCount);
-    return currentFrame;
+    return frames.roll(pinCount);
   }
 
   public boolean isEnd() {
-    return currentFrame.isFinalFrame() && currentFrame.isFinished();
+    return frames.isEnd();
   }
 }
