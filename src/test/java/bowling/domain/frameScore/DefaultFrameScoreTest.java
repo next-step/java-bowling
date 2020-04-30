@@ -1,6 +1,5 @@
 package bowling.domain.frameScore;
 
-import bowling.domain.Score;
 import bowling.domain.scoreType.ScoreType;
 import org.junit.jupiter.api.Test;
 

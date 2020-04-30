@@ -37,6 +37,7 @@ class FramesTest {
         assertThat(frames.getNormalFrames())
                 .hasSize(2)
                 .anyMatch(v -> v.isFrameSet() &&
+                        v.getFrameScore().isCalculated() &&
                         v.getFrameScore().getScore() == 20 &&
                         v.shotScores().size() == 2)
                 .anyMatch(v -> v.isFrameSet() &&

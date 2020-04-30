@@ -40,4 +40,12 @@ public class Player {
     public Frames frames() {
         return frames;
     }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                ", frames=" + frames +
+                '}';
+    }
 }

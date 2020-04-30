@@ -28,17 +28,11 @@ public class NormalFrame implements Frame {
     }
 
     public void shot(int shot) {
-        if (isScoreCalculated()) {
+        if (isFrameSet()) {
             throw new IllegalStateException(String.format("shot Frame fail. this FinalFrame already calculated instance=%s", this));
         }
 
-        if (isFrameScoreSet()) {
-            frameScore.addBonus(shot);
-        }
-
-        if (!isFrameSet()) {
-            addShotScore(shot);
-        }
+        addShotScore(shot);
     }
 
     private void addShotScore(int shot) {

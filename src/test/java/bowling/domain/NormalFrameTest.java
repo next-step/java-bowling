@@ -22,7 +22,6 @@ class NormalFrameTest {
         NormalFrame normalFrame = NormalFrame.init();
         normalFrame.shot(4);
         normalFrame.shot(6);
-        normalFrame.shot(5);
 
         assertThat(normalFrame.shotScores())
                 .anyMatch(ShotScore.init(4)::equals)
@@ -54,9 +53,7 @@ class NormalFrameTest {
     @ParameterizedTest
     @CsvSource(value = {
             "4,4:8",
-            "4,6,10:20",
-            "10,10,10:30",
-            "10,4,3:17"
+            "0,0:0"
     }, delimiter = ':')
     void getFrameScore(String shotString, int expectScore) {
         int[] shots = splitInts(shotString);
@@ -69,37 +66,24 @@ class NormalFrameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-            "10,4,3",
-            "4,3",
-            "1,9,2",
-            "10,10,3"
-    })
-    void isScoreCalculated(String shotString) {
+    @CsvSource(value = {
+            "10:4,3:true",
+            "1,9:2:true",
+            "10:5:false",
+            "1,9::false"
+    }, delimiter = ':')
+    void isScoreCalculated(String shotString, String bonusesString, boolean expectCalculated) {
         int[] shots = splitInts(shotString);
+        int[] bonuses = bonusesString == null ? new int[0] : splitInts(bonusesString);
         NormalFrame normalFrame = NormalFrame.init();
         for (int shot : shots) {
             normalFrame.shot(shot);
         }
-        assertThat(normalFrame.isScoreCalculated())
-                .isTrue();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "10,4",
-            "4",
-            "1,9",
-            "10,10"
-    })
-    void isScoreNotCalculated(String shotString) {
-        int[] shots = splitInts(shotString);
-        NormalFrame normalFrame = NormalFrame.init();
-        for (int shot : shots) {
-            normalFrame.shot(shot);
+        for (int bonus : bonuses) {
+            normalFrame.getFrameScore().addBonus(bonus);
         }
         assertThat(normalFrame.isScoreCalculated())
-                .isFalse();
+                .isEqualTo(expectCalculated);
     }
 
     private int[] splitInts(String shotString) {

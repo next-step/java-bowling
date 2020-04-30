@@ -72,7 +72,7 @@ class FinalFrameTest {
     }, delimiter = ':')
     void getFrameScore(String shotString, int expectScore) {
         int[] shots = splitInts(shotString);
-        NormalFrame normalFrame = NormalFrame.init();
+        FinalFrame normalFrame = FinalFrame.of();
         for (int shot : shots) {
             normalFrame.shot(shot);
         }
