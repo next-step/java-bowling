@@ -6,16 +6,16 @@ import bowling.domain.Round;
 import bowling.domain.Score;
 import bowling.exception.CannotBowlException;
 
-public class NullFrame implements FrameNode {
+public class NullFrameNode implements FrameNode {
 
   private Round round;
 
-  private NullFrame(Round round) {
+  private NullFrameNode(Round round) {
     this.round = round;
   }
 
-  public static NullFrame of(Round round) {
-    return new NullFrame(round);
+  public static NullFrameNode of(Round round) {
+    return new NullFrameNode(round);
   }
 
   @Override
@@ -35,7 +35,7 @@ public class NullFrame implements FrameNode {
 
   @Override
   public FrameNode getNextFrame() {
-    return NullFrame.of(round.next());
+    return NullFrameNode.of(round.next());
   }
 
   @Override

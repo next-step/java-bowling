@@ -12,10 +12,10 @@ public interface FrameNode {
 
   static FrameNode of(Round round) {
     if (round.isFinal()) {
-      return new FinalFrame();
+      return new FinalFrameNode();
     }
 
-    return NormalFrame.of(round);
+    return NormalFrameNode.of(round);
   }
 
   int getRolledBowlCount();

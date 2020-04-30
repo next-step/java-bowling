@@ -23,10 +23,6 @@ public class Round {
     return new Round(FIRST_ROUND);
   }
 
-  public int getRound() {
-    return round;
-  }
-
   public boolean isFinal() {
     return round == FINAL_ROUND;
   }

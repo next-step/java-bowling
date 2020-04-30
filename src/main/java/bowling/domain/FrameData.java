@@ -1,16 +1,14 @@
-package bowling.domain.frame;
+package bowling.domain;
 
 import bowling.domain.bowlresult.RegularResult;
-import bowling.domain.Round;
-import bowling.domain.Score;
 import bowling.exception.CannotBowlException;
 
-public class Frame {
+public class FrameData {
 
   private RegularResult regularResult;
   private Round round;
 
-  public Frame(Round round) {
+  public FrameData(Round round) {
     this.regularResult = new RegularResult();
     this.round = round;
   }

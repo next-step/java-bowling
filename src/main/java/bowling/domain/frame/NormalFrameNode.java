@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import static bowling.domain.bowlresult.BonusResult.NULL_RESULT;
 
+import bowling.domain.FrameData;
 import bowling.domain.bowlresult.BonusResult;
 import bowling.domain.bowlresult.RegularResult;
 import bowling.domain.Round;
@@ -9,32 +10,32 @@ import bowling.domain.Score;
 import bowling.domain.framestate.FrameState;
 import bowling.exception.CannotBowlException;
 
-public class NormalFrame implements FrameNode {
+public class NormalFrameNode implements FrameNode {
 
-  private Frame frame;
+  private FrameData frameData;
   private FrameNode next;
 
-  private NormalFrame(Round round) {
-    frame = new Frame(round);
-    next = NullFrame.of(round.next());
+  private NormalFrameNode(Round round) {
+    frameData = new FrameData(round);
+    next = NullFrameNode.of(round.next());
   }
 
-  public static NormalFrame initialize() {
-    return new NormalFrame(Round.first());
+  public static NormalFrameNode initialize() {
+    return new NormalFrameNode(Round.first());
   }
 
-  public static NormalFrame of(Round round) {
-    return new NormalFrame(round);
+  public static NormalFrameNode of(Round round) {
+    return new NormalFrameNode(round);
   }
 
   @Override
   public int getRolledBowlCount() {
-    return frame.getRolledBowlCount();
+    return frameData.getRolledBowlCount();
   }
 
   @Override
   public RegularResult getRegularResult() {
-    return frame.getRegularResult();
+    return frameData.getRegularResult();
   }
 
   @Override
@@ -49,9 +50,9 @@ public class NormalFrame implements FrameNode {
 
   @Override
   public FrameNode roll(int pinCount) throws CannotBowlException {
-    frame.roll(pinCount);
-    if (frame.isFinished()) {
-      next = FrameNode.of(frame.nextRound());
+    frameData.roll(pinCount);
+    if (frameData.isFinished()) {
+      next = FrameNode.of(frameData.nextRound());
       return next;
     }
 
@@ -65,7 +66,7 @@ public class NormalFrame implements FrameNode {
     }
 
     Score additionalScore = next.calculateBonusScore(bonusBowlCount - getRolledBowlCount());
-    RegularResult regularResult = frame.getRegularResult();
+    RegularResult regularResult = frameData.getRegularResult();
     Score score = regularResult.getScore(bonusBowlCount);
 
     return Score.add(score, additionalScore);
@@ -73,16 +74,16 @@ public class NormalFrame implements FrameNode {
 
   @Override
   public Score calculateScore() {
-    RegularResult regularResult = frame.getRegularResult();
+    RegularResult regularResult = frameData.getRegularResult();
     FrameState frameState = regularResult.getState();
-    Score score = frame.getScore();
+    Score score = frameData.getScore();
 
     return Score.add(score, next.calculateBonusScore(frameState.getBonusBallCount()));
   }
 
   @Override
   public boolean isFinished() {
-    return frame.isFinished();
+    return frameData.isFinished();
   }
 
   @Override

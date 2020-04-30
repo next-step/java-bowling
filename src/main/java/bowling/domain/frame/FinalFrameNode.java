@@ -10,12 +10,12 @@ import bowling.domain.framestate.FrameState;
 import bowling.domain.framestate.Strike;
 import bowling.exception.CannotBowlException;
 
-public class FinalFrame implements FrameNode {
+public class FinalFrameNode implements FrameNode {
 
   private RegularResult regularResult;
   private BonusResult bonusResult;
 
-  public FinalFrame() {
+  public FinalFrameNode() {
     regularResult = new RegularResult();
     bonusResult = NULL_RESULT;
   }
@@ -35,7 +35,7 @@ public class FinalFrame implements FrameNode {
 
   @Override
   public FrameNode getNextFrame() {
-    return NullFrame.of(Round.of(Round.FINAL_ROUND).next());
+    return NullFrameNode.of(Round.of(Round.FINAL_ROUND).next());
   }
 
   @Override

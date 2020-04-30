@@ -8,12 +8,12 @@ import bowling.exception.CannotBowlException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class FinalFrameTest {
+public class FinalFrameNodeTest {
 
   @ParameterizedTest
   @CsvSource(value = {"0,6", "3,5", "3,0"})
   public void testMiss(String firstTrial, String secondTrial) throws CannotBowlException {
-    FinalFrame finalFrame = new FinalFrame();
+    FinalFrameNode finalFrame = new FinalFrameNode();
     int first = Integer.parseInt(firstTrial);
     int second = Integer.parseInt(secondTrial);
     int score = first + second;
@@ -33,7 +33,7 @@ public class FinalFrameTest {
   public void testSpare(String firstTrial, String secondTrial, String thirdTrial)
       throws CannotBowlException
   {
-    FinalFrame finalFrame = new FinalFrame();
+    FinalFrameNode finalFrame = new FinalFrameNode();
     int first = Integer.parseInt(firstTrial);
     int second = Integer.parseInt(secondTrial);
     int third = Integer.parseInt(thirdTrial);
@@ -60,7 +60,7 @@ public class FinalFrameTest {
   public void testStrike(String firstTrial, String secondTrial, String thirdTrial)
       throws CannotBowlException
   {
-    FinalFrame finalFrame = new FinalFrame();
+    FinalFrameNode finalFrame = new FinalFrameNode();
     int first = Integer.parseInt(firstTrial);
     int second = Integer.parseInt(secondTrial);
     int third = Integer.parseInt(thirdTrial);
