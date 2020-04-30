@@ -5,7 +5,7 @@ import bowling.domain.frameScore.FrameScore;
 
 import java.util.List;
 
-public class NormalFrame implements Frame{
+public class NormalFrame implements Frame {
     private static final int SHOT_LIMIT = 2;
 
     private final ShotScores shotScores;
@@ -17,7 +17,7 @@ public class NormalFrame implements Frame{
         this.isLast = isLast;
     }
 
-    public static NormalFrame init(){
+    public static NormalFrame init() {
         return new NormalFrame(ShotScores.of(), false);
     }
 
