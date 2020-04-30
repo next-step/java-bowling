@@ -14,4 +14,8 @@ public class Pins {
     public boolean isStrike() {
         return fallenPins.get(0) == MAX_PIN_COUNT;
     }
+
+    public boolean isSpare() {
+        return true;
+    }
 }
