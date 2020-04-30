@@ -13,17 +13,17 @@ public class Frame {
     private final boolean isLast;
     private DefaultFrameScore frameScore;
 
-    private Frame(List<ShotScore> shotScores, boolean isLast) {
-        this.shotScores = ShotScores.of(shotScores);
+    private Frame(ShotScores shotScores, boolean isLast) {
+        this.shotScores = shotScores;
         this.isLast = isLast;
     }
 
     static Frame normalFrame() {
-        return new Frame(new ArrayList<>(), false);
+        return new Frame(ShotScores.of(), false);
     }
 
     static Frame lastFrame() {
-        return new Frame(new ArrayList<>(), true);
+        return new Frame(ShotScores.of(), true);
     }
 
     void shot(int shot) {

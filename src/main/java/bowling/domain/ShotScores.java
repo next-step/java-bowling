@@ -16,6 +16,10 @@ class ShotScores {
         return new ShotScores(shotScores);
     }
 
+    static ShotScores of() {
+        return new ShotScores(new ArrayList<>());
+    }
+
     void add(ShotScore shotScore) {
         shotScores.add(shotScore);
     }
