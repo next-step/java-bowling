@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import bowling.domain.frameScore.FrameScore;
 
 import java.util.ArrayList;

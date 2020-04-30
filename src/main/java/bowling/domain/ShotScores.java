@@ -5,7 +5,7 @@ import bowling.domain.scoreType.ScoreType;
 import java.util.ArrayList;
 import java.util.List;
 
-class ShotScores {
+public class ShotScores {
     private final List<ShotScore> shotScores;
 
     private ShotScores(List<ShotScore> shotScores) {
@@ -16,15 +16,15 @@ class ShotScores {
         return new ShotScores(shotScores);
     }
 
-    static ShotScores of() {
+    public static ShotScores of() {
         return new ShotScores(new ArrayList<>());
     }
 
-    void add(ShotScore shotScore) {
+    public void add(ShotScore shotScore) {
         shotScores.add(shotScore);
     }
 
-    ShotScore getNext(int shot) {
+    public ShotScore getNext(int shot) {
         if (shotScores.isEmpty()) {
             return ShotScore.init(shot);
         }
@@ -35,11 +35,11 @@ class ShotScores {
         return shotScores.get(shotScores.size() - 1);
     }
 
-    boolean hasSize(int size) {
+    public boolean hasSize(int size) {
         return shotScores.size() == size;
     }
 
-    boolean hasClear() {
+    public boolean hasClear() {
         return shotScores.stream()
                 .anyMatch(ShotScore::isClear);
     }
@@ -55,7 +55,7 @@ class ShotScores {
         return getLast().scoreType();
     }
 
-    List<ShotScore> shotScores() {
+    public List<ShotScore> shotScores() {
         return new ArrayList<>(shotScores);
     }
 

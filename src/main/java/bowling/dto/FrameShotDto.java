@@ -1,7 +1,6 @@
 package bowling.dto;
 
-import bowling.domain.Frame;
-import bowling.domain.NormalFrame;
+import bowling.domain.frame.Frame;
 import bowling.domain.ShotScore;
 
 import java.util.List;
