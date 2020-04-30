@@ -42,11 +42,8 @@ public class ResultView {
   }
 
   private static String visualize(FrameNode frame) {
-    BowlResult regularResult = frame.getRegularResult();
-    BowlResult bonusResult = frame.getBonusResult();
-
-    String visualized = visualize(regularResult);
-    String bonusVisualized = visualize(bonusResult);
+    String visualized = visualize(frame.getRegularResult());
+    String bonusVisualized = visualize(frame.getBonusResult());
 
     if (!bonusVisualized.equals(NOT_PLAYED_SIGN)) {
       return String.join(SCORE_DELIMITER, visualized, bonusVisualized);
