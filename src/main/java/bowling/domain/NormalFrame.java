@@ -10,7 +10,7 @@ public class NormalFrame implements Frame {
 
     private final ShotScores shotScores;
     private final boolean isLast;
-    private DefaultFrameScore frameScore;
+    private HasBonusFrameScore frameScore;
 
     private NormalFrame(ShotScores shotScores, boolean isLast) {
         this.shotScores = shotScores;

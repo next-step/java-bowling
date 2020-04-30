@@ -4,7 +4,7 @@ import bowling.domain.scoreType.ScoreType;
 
 import java.util.Objects;
 
-public class DefaultFrameScore implements FrameScore {
+public class DefaultFrameScore implements HasBonusFrameScore {
     private int score;
     private int leftShotCount;
 
