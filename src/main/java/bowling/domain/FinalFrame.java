@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frameScore.DefaultFrameScore;
 import bowling.domain.frameScore.FrameScore;
 
 import java.util.List;
@@ -40,17 +41,10 @@ public class FinalFrame implements Frame {
 
     @Override
     public FrameScore getFrameScore() {
-        return new FrameScore() {
-            @Override
-            public boolean isCalculated() {
-                return isFrameSet();
-            }
-
-            @Override
-            public int getScore() {
-                return shotScores.totalScore();
-            }
-        };
+        if(!isFrameSet()){
+            return DefaultFrameScore.NULL;
+        }
+        return DefaultFrameScore.of(shotScores.totalScore(),0);
     }
 
     @Override

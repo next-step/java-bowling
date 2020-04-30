@@ -4,7 +4,7 @@ import bowling.domain.scoreType.ScoreType;
 
 import java.util.Objects;
 
-public class DefaultFrameScore implements HasBonusFrameScore {
+public class DefaultFrameScore implements FrameScore {
     private int score;
     private int leftShotCount;
 
@@ -20,6 +20,10 @@ public class DefaultFrameScore implements HasBonusFrameScore {
         return new DefaultFrameScore(score, scoreType.getBonusCount());
     }
 
+    public static DefaultFrameScore of(int score, int bonusCount) {
+        return new DefaultFrameScore(score, bonusCount);
+    }
+
     public final static FrameScore NULL = new FrameScore() {
         @Override
         public boolean isCalculated() {
@@ -28,6 +32,11 @@ public class DefaultFrameScore implements HasBonusFrameScore {
 
         @Override
         public int getScore() {
+            throw new IllegalStateException("this FrameScore is Null");
+        }
+
+        @Override
+        public void addBonus(int shot) {
             throw new IllegalStateException("this FrameScore is Null");
         }
     };

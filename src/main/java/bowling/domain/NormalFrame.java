@@ -2,7 +2,6 @@ package bowling.domain;
 
 import bowling.domain.frameScore.DefaultFrameScore;
 import bowling.domain.frameScore.FrameScore;
-import bowling.domain.frameScore.HasBonusFrameScore;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class NormalFrame implements Frame {
     private static final int SHOT_LIMIT = 2;
 
     private final ShotScores shotScores;
-    private HasBonusFrameScore frameScore;
+    private FrameScore frameScore;
 
     private NormalFrame(ShotScores shotScores) {
         this.shotScores = shotScores;
@@ -56,7 +55,7 @@ public class NormalFrame implements Frame {
     }
 
     private void setFrameScore() {
-        this.frameScore = isFrameScoreSet() ? frameScore : DefaultFrameScore.of(shotScores.totalScore(), shotScores.getLastType());
+        this.frameScore = isFrameScoreSet() ? frameScore : DefaultFrameScore.of(shotScores.totalScore(), shotScores.getLastType().getBonusCount());
     }
 
     public boolean isFrameSet() {

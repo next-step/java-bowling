@@ -4,4 +4,6 @@ public interface FrameScore {
     boolean isCalculated();
 
     int getScore();
+
+    void addBonus(int shot);
 }
