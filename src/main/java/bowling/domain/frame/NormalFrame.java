@@ -40,18 +40,6 @@ public class NormalFrame implements Frame {
     private void addShotScore(int shot) {
         ShotScore nextScore = shotScores.getNext(shot);
         shotScores.add(nextScore);
-
-        if (nextScore.scoreType().isFinished()) {
-            setFrameScore();
-        }
-    }
-
-    private boolean isFrameScoreSet() {
-        return frameScore != null;
-    }
-
-    private void setFrameScore() {
-        this.frameScore = isFrameScoreSet() ? frameScore : DefaultFrameScore.of(shotScores.totalScore(), shotScores.getLastType().getBonusCount());
     }
 
     public boolean isFrameSet() {
@@ -63,7 +51,11 @@ public class NormalFrame implements Frame {
         if (!isFrameSet()) {
             return DefaultFrameScore.NULL;
         }
-        setFrameScore();
+        return setAndGetFrameScore();
+    }
+
+    private FrameScore setAndGetFrameScore() {
+        frameScore = frameScore != null ? frameScore : DefaultFrameScore.of(shotScores.totalScore(), shotScores.getLastType().getBonusCount());
         return frameScore;
     }
 
@@ -75,7 +67,6 @@ public class NormalFrame implements Frame {
     public String toString() {
         return "NormalFrame{" +
                 "shotScores=" + shotScores +
-                ", frameScore=" + frameScore +
                 '}';
     }
 }

@@ -46,7 +46,6 @@ public class Frames {
             normalFrames.add(getNextFrame());
         }
         normalFrames.stream()
-                .filter(Frame::isFrameSet)
                 .map(Frame::getFrameScore)
                 .filter(v -> !v.isCalculated())
                 .forEach(v -> v.addBonus(shot));

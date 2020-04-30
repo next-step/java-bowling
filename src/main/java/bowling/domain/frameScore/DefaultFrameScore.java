@@ -37,7 +37,6 @@ public class DefaultFrameScore implements FrameScore {
 
         @Override
         public void addBonus(int shot) {
-            throw new IllegalStateException("this FrameScore is Null");
         }
     };
 
