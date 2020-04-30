@@ -17,8 +17,6 @@ public class InputView {
     }
 
     public List<String> getPlayers() {
-        System.out.print(GET_PLAYER_COUNT_MESSAGE);
-
         return IntStream.rangeClosed(1, getPlayerCount())
                 .mapToObj(this::getPlayer)
                 .collect(Collectors.toList());
