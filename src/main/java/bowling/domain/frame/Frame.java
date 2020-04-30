@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.shot.ShotScore;
+import bowling.domain.shot.Shot;
 import bowling.domain.frame.score.FrameScore;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public interface Frame {
 
     boolean isFrameSet();
 
-    List<ShotScore> shotScores();
+    List<Shot> shotScores();
 
     FrameScore getFrameScore();
 

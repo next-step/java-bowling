@@ -54,7 +54,7 @@ public class OutputView {
     }
 
     private String parseFrameShots(FrameShotDto frame) {
-        return String.join(SHOT_DELIMITER, frame.getShotScores());
+        return String.join(SHOT_DELIMITER, frame.getShots());
     }
 
     private Stream<String> getParsedFrameScoreStream(List<Integer> frameScores) {

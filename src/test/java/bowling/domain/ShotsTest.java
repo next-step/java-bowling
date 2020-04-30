@@ -1,7 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.shot.type.ScoreType;
-import bowling.domain.shot.ShotScore;
+import bowling.domain.shot.Shot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,39 +14,39 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ShotScoresTest {
-    private ShotScores shotScores;
+class ShotsTest {
+    private Shots shots;
 
     @BeforeEach
     void setting() {
-        shotScores = ShotScores.of(new ArrayList<>());
-        shotScores.add(ShotScore.init(4));
+        shots = Shots.of(new ArrayList<>());
+        shots.add(Shot.init(4));
     }
 
     @Test
     void add() {
-        shotScores.add(ShotScore.init(6));
-        assertThat(shotScores.hasSize(2))
+        shots.add(Shot.init(6));
+        assertThat(shots.hasSize(2))
                 .isTrue();
     }
 
     @Test
     void isSize() {
-        assertThat(shotScores.hasSize(1))
+        assertThat(shots.hasSize(1))
                 .isTrue();
 
-        assertThat(shotScores.hasSize(2))
+        assertThat(shots.hasSize(2))
                 .isFalse();
     }
 
     @Test
     void isClear() {
-        assertThat(shotScores.hasClear())
+        assertThat(shots.hasClear())
                 .isFalse();
 
-        shotScores.add(shotScores.getNext(6));
+        shots.add(shots.getNext(6));
 
-        assertThat(shotScores.hasClear())
+        assertThat(shots.hasClear())
                 .isTrue();
     }
 
@@ -63,7 +63,7 @@ class ShotScoresTest {
         List<Integer> shots = Arrays.stream(shotString.split(",")).map(Integer::parseInt).collect(Collectors.toList());
         List<ScoreType> expectTypes = Arrays.stream(expectTypeString.split(",")).map(ScoreType::valueOf).collect(Collectors.toList());
 
-        ShotScores shotScores = ShotScores.of();
+        Shots shotScores = Shots.of();
         for (int i = 0; i < shots.size(); i++) {
             shotScores.add(shotScores.getNext(shots.get(i)));
             assertThat(shotScores.getLastType())

@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.shot.ShotScore;
-import bowling.domain.ShotScores;
+import bowling.domain.shot.Shot;
+import bowling.domain.Shots;
 import bowling.domain.frame.score.DefaultFrameScore;
 import bowling.domain.frame.score.FrameScore;
 
@@ -10,19 +10,19 @@ import java.util.List;
 public class NormalFrame implements Frame {
     private static final int SHOT_LIMIT = 2;
 
-    private final ShotScores shotScores;
+    private final Shots shots;
     private FrameScore frameScore;
 
-    private NormalFrame(ShotScores shotScores) {
-        this.shotScores = shotScores;
+    private NormalFrame(Shots shots) {
+        this.shots = shots;
     }
 
     public static NormalFrame init() {
-        return new NormalFrame(ShotScores.of());
+        return new NormalFrame(Shots.of());
     }
 
     public Frame next() {
-        return new NormalFrame(ShotScores.of());
+        return new NormalFrame(Shots.of());
     }
 
     public Frame last() {
@@ -38,13 +38,13 @@ public class NormalFrame implements Frame {
     }
 
     private void addShotScore(int shot) {
-        ShotScore nextScore = shotScores.getNext(shot);
-        shotScores.add(nextScore);
+        Shot nextScore = shots.getNext(shot);
+        shots.add(nextScore);
     }
 
     public boolean isFrameSet() {
-        return shotScores.hasSize(SHOT_LIMIT) ||
-                shotScores.hasClear();
+        return shots.hasSize(SHOT_LIMIT) ||
+                shots.hasClear();
     }
 
     public FrameScore getFrameScore() {
@@ -55,18 +55,18 @@ public class NormalFrame implements Frame {
     }
 
     private FrameScore setAndGetFrameScore() {
-        frameScore = frameScore != null ? frameScore : DefaultFrameScore.of(shotScores.totalScore(), shotScores.getLastType().getBonusCount());
+        frameScore = frameScore != null ? frameScore : DefaultFrameScore.of(shots.totalScore(), shots.getLastType().getBonusCount());
         return frameScore;
     }
 
-    public List<ShotScore> shotScores() {
-        return shotScores.shotScores();
+    public List<Shot> shotScores() {
+        return shots.shotScores();
     }
 
     @Override
     public String toString() {
         return "NormalFrame{" +
-                "shotScores=" + shotScores +
+                "shotScores=" + shots +
                 '}';
     }
 }

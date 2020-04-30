@@ -7,49 +7,49 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.*;
 
-class ShotScoreTest {
+class ShotTest {
     @Test
     void of() {
-        assertThatCode(() -> ShotScore.init(5))
+        assertThatCode(() -> Shot.init(5))
                 .doesNotThrowAnyException();
     }
 
     @ParameterizedTest
     @ValueSource(ints = {-1, 11})
     void ofException(int score) {
-        assertThatThrownBy(() -> ShotScore.init(score))
+        assertThatThrownBy(() -> Shot.init(score))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void singleScore() {
-        ShotScore shotScore = ShotScore.init(10);
-        assertThat(shotScore.singleScore())
+        Shot shot = Shot.init(10);
+        assertThat(shot.singleScore())
                 .isEqualTo(10);
     }
 
     @Test
     void next() {
-        ShotScore shotScore = ShotScore.init(5);
-        assertThat(shotScore.next(5).scoreType())
+        Shot shot = Shot.init(5);
+        assertThat(shot.next(5).scoreType())
                 .isEqualTo(ScoreType.SPARE);
     }
 
     @Test
     void nextException() {
-        ShotScore shotScore = ShotScore.init(5);
-        assertThatThrownBy(() -> shotScore.next(6))
+        Shot shot = Shot.init(5);
+        assertThatThrownBy(() -> shot.next(6))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void isClear() {
-        ShotScore shotScore = ShotScore.init(10);
-        assertThat(shotScore.isClear())
+        Shot shot = Shot.init(10);
+        assertThat(shot.isClear())
                 .isTrue();
 
-        shotScore = ShotScore.init(4);
-        assertThat(shotScore.next(6).isClear())
+        shot = Shot.init(4);
+        assertThat(shot.next(6).isClear())
                 .isTrue();
     }
 }

@@ -4,24 +4,24 @@ import bowling.domain.shot.type.ScoreType;
 
 import java.util.Objects;
 
-public class ShotScore {
+public class Shot {
     private final Score score;
     private final ScoreType scoreType;
 
-    protected ShotScore(Score score, ScoreType scoreType) {
+    protected Shot(Score score, ScoreType scoreType) {
         this.score = score;
         this.scoreType = scoreType;
     }
 
-    static ShotScore init(int shotScore) {
+    static Shot init(int shotScore) {
         Score score = Score.of(shotScore);
-        return new ShotScore(score, ScoreType.of(score));
+        return new Shot(score, ScoreType.of(score));
     }
 
-    ShotScore next(int next) {
+    Shot next(int next) {
         if (!scoreType.isFinished()) {
             Score nextScore = Score.of(next);
-            return new ShotScore(nextScore, ScoreType.of(score, nextScore));
+            return new Shot(nextScore, ScoreType.of(score, nextScore));
         }
 
         return init(next);
@@ -43,9 +43,9 @@ public class ShotScore {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ShotScore shotScore = (ShotScore) o;
-        return score.equals(shotScore.score) &&
-                scoreType.equals(shotScore.scoreType);
+        Shot shot = (Shot) o;
+        return score.equals(shot.score) &&
+                scoreType.equals(shot.scoreType);
     }
 
     @Override

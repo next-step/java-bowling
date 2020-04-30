@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.shot.ShotScore;
-import bowling.domain.ShotScores;
+import bowling.domain.shot.Shot;
+import bowling.domain.Shots;
 import bowling.domain.frame.score.DefaultFrameScore;
 import bowling.domain.frame.score.FrameScore;
 
@@ -10,14 +10,14 @@ import java.util.List;
 public class FinalFrame implements Frame {
     private static final int SHOT_LIMIT = 3;
 
-    private final ShotScores shotScores;
+    private final Shots shots;
 
-    private FinalFrame(ShotScores shotScores) {
-        this.shotScores = shotScores;
+    private FinalFrame(Shots shots) {
+        this.shots = shots;
     }
 
     public static FinalFrame of() {
-        return new FinalFrame(ShotScores.of());
+        return new FinalFrame(Shots.of());
     }
 
     @Override
@@ -32,13 +32,13 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFrameSet() {
-        return shotScores.hasSize(SHOT_LIMIT) ||
-                (shotScores.hasSize(2) && !shotScores.hasClear());
+        return shots.hasSize(SHOT_LIMIT) ||
+                (shots.hasSize(2) && !shots.hasClear());
     }
 
     @Override
-    public List<ShotScore> shotScores() {
-        return shotScores.shotScores();
+    public List<Shot> shotScores() {
+        return shots.shotScores();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class FinalFrame implements Frame {
         if(!isFrameSet()){
             return DefaultFrameScore.NULL;
         }
-        return DefaultFrameScore.of(shotScores.totalScore(),0);
+        return DefaultFrameScore.of(shots.totalScore(),0);
     }
 
     @Override
@@ -55,13 +55,13 @@ public class FinalFrame implements Frame {
             throw new IllegalStateException(String.format("shot Frame fail. this FinalFrame already calculated instance=%s", this));
         }
 
-        shotScores.add(shotScores.getNext(shot));
+        shots.add(shots.getNext(shot));
     }
 
     @Override
     public String toString() {
         return "FinalFrame{" +
-                "shotScores=" + shotScores +
+                "shotScores=" + shots +
                 '}';
     }
 }
