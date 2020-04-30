@@ -1,4 +1,4 @@
-package bowling.domain.frameScore;
+package bowling.domain.frame.score;
 
 public interface FrameScore {
     boolean isCalculated();

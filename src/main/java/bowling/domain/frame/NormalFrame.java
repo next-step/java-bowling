@@ -2,8 +2,8 @@ package bowling.domain.frame;
 
 import bowling.domain.ShotScore;
 import bowling.domain.ShotScores;
-import bowling.domain.frameScore.DefaultFrameScore;
-import bowling.domain.frameScore.FrameScore;
+import bowling.domain.frame.score.DefaultFrameScore;
+import bowling.domain.frame.score.FrameScore;
 
 import java.util.List;
 
