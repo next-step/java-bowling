@@ -20,6 +20,6 @@ public class Pins {
     }
 
     public boolean isMiss() {
-        return true;
+        return fallenPins.get(0) + fallenPins.get(1) < MAX_PIN_COUNT;
     }
 }
