@@ -1,4 +1,4 @@
-package bowling.domain.scoreType;
+package bowling.domain.shot.type;
 
 class MissProvider implements StatusProvider {
     private final boolean isFirst;

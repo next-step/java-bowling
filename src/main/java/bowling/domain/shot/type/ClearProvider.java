@@ -1,4 +1,4 @@
-package bowling.domain.scoreType;
+package bowling.domain.shot.type;
 
 class ClearProvider implements StatusProvider {
     private final int bonusCount;

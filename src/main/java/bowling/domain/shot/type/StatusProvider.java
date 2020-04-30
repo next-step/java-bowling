@@ -1,4 +1,4 @@
-package bowling.domain.scoreType;
+package bowling.domain.shot.type;
 
 public interface StatusProvider {
     boolean isFinished();

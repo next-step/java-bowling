@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.shot;
 
 import java.util.Objects;
 

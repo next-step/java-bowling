@@ -1,6 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.scoreType.ScoreType;
+import bowling.domain.shot.type.ScoreType;
+import bowling.domain.shot.ShotScore;
 
 import java.util.ArrayList;
 import java.util.List;

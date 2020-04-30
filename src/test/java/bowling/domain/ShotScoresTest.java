@@ -1,6 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.scoreType.ScoreType;
+import bowling.domain.shot.type.ScoreType;
+import bowling.domain.shot.ShotScore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

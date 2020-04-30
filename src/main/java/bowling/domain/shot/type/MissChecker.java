@@ -1,11 +1,12 @@
-package bowling.domain.scoreType;
+package bowling.domain.shot.type;
 
-import bowling.domain.Score;
 
-public class GutterChecker implements TypeChecker {
+import bowling.domain.shot.Score;
+
+public class MissChecker implements TypeChecker {
     private final boolean isFirst;
 
-    public GutterChecker(boolean isFirst) {
+    public MissChecker(boolean isFirst) {
         this.isFirst = isFirst;
     }
 
@@ -14,7 +15,7 @@ public class GutterChecker implements TypeChecker {
         if (!isFirst) {
             return false;
         }
-        return firstShot.isMin();
+        return firstShot.range(1, 10);
     }
 
     @Override
@@ -22,6 +23,6 @@ public class GutterChecker implements TypeChecker {
         if (isFirst) {
             return false;
         }
-        return secondShot.isMin();
+        return secondShot.range(1, firstShot.getLeftScore().score());
     }
 }

@@ -1,4 +1,4 @@
-package bowling.domain.scoreType;
+package bowling.domain.shot.type;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
