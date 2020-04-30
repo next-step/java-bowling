@@ -38,8 +38,7 @@ public class NormalFrame implements Frame {
     }
 
     private void addShotScore(int shot) {
-        Shot nextScore = shots.getNext(shot);
-        shots.add(nextScore);
+        shots.add(shot);
     }
 
     public boolean isFrameSet() {

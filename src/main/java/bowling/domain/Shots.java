@@ -21,11 +21,11 @@ public class Shots {
         return new Shots(new ArrayList<>());
     }
 
-    public void add(Shot shot) {
-        shots.add(shot);
+    public void add(int shot) {
+        shots.add(getNext(shot));
     }
 
-    public Shot getNext(int shot) {
+    private Shot getNext(int shot) {
         if (shots.isEmpty()) {
             return Shot.init(shot);
         }

@@ -20,12 +20,12 @@ class ShotsTest {
     @BeforeEach
     void setting() {
         shots = Shots.of(new ArrayList<>());
-        shots.add(Shot.init(4));
+        shots.add(4);
     }
 
     @Test
     void add() {
-        shots.add(Shot.init(6));
+        shots.add(6);
         assertThat(shots.hasSize(2))
                 .isTrue();
     }
@@ -44,7 +44,7 @@ class ShotsTest {
         assertThat(shots.hasClear())
                 .isFalse();
 
-        shots.add(shots.getNext(6));
+        shots.add(6);
 
         assertThat(shots.hasClear())
                 .isTrue();
@@ -65,7 +65,7 @@ class ShotsTest {
 
         Shots shotScores = Shots.of();
         for (int i = 0; i < shots.size(); i++) {
-            shotScores.add(shotScores.getNext(shots.get(i)));
+            shotScores.add(shots.get(i));
             assertThat(shotScores.getLastType())
                     .isEqualTo(expectTypes.get(i));
         }

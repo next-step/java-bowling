@@ -55,7 +55,7 @@ public class FinalFrame implements Frame {
             throw new IllegalStateException(String.format("shot Frame fail. this FinalFrame already calculated instance=%s", this));
         }
 
-        shots.add(shots.getNext(shot));
+        shots.add(shot);
     }
 
     @Override

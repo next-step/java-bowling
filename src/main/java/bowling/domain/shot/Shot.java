@@ -13,12 +13,12 @@ public class Shot {
         this.scoreType = scoreType;
     }
 
-    static Shot init(int shotScore) {
+    public static Shot init(int shotScore) {
         Score score = Score.of(shotScore);
         return new Shot(score, ScoreType.of(score));
     }
 
-    Shot next(int next) {
+    public Shot next(int next) {
         if (!scoreType.isFinished()) {
             Score nextScore = Score.of(next);
             return new Shot(nextScore, ScoreType.of(score, nextScore));
@@ -27,7 +27,7 @@ public class Shot {
         return init(next);
     }
 
-    boolean isClear() {
+    public boolean isClear() {
         return scoreType.isCleared();
     }
 
