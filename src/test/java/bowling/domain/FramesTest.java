@@ -5,12 +5,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 
 class FramesTest {
 
@@ -36,7 +34,7 @@ class FramesTest {
         frames.shot(5);
         frames.shot(10);
 
-        assertThat(frames.getFrames())
+        assertThat(frames.getNormalFrames())
                 .hasSize(2)
                 .anyMatch(v -> v.isFrameSet() &&
                         v.getFrameScore().getScore() == 20 &&
@@ -58,7 +56,7 @@ class FramesTest {
         assertThat(frames.isGameSet())
                 .isTrue();
 
-        assertThat(frames.getFrames())
+        assertThat(frames.getNormalFrames())
                 .hasSize(10);
     }
 

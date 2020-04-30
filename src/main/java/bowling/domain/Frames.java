@@ -10,26 +10,26 @@ import java.util.stream.Collectors;
 public class Frames {
     private static final int MAX_FRAMES = 10;
 
-    private final List<Frame> frames;
+    private final List<NormalFrame> normalFrames;
 
     Frames() {
-        this.frames = new ArrayList<>();
-        frames.add(Frame.normalFrame());
+        this.normalFrames = new ArrayList<>();
+        normalFrames.add(NormalFrame.normalFrame());
     }
 
     int getCurrentFrameNumber() {
         if (isCurrentFrameDone()) {
-            return frames.size() + 1;
+            return normalFrames.size() + 1;
         }
-        return frames.size();
+        return normalFrames.size();
     }
 
     private boolean isCurrentFrameDone() {
         return getLast().isFrameSet();
     }
 
-    private Frame getLast() {
-        return frames.get(frames.size() - 1);
+    private NormalFrame getLast() {
+        return normalFrames.get(normalFrames.size() - 1);
     }
 
     int getCurrentFrameShotCount() {
@@ -41,34 +41,34 @@ public class Frames {
 
     void shot(int shot) {
         if (isCurrentFrameDone()) {
-            frames.add(getNextFrame());
+            normalFrames.add(getNextFrame());
         }
-        frames.stream()
+        normalFrames.stream()
                 .filter(v -> !v.isScoreCalculated())
                 .forEach(v -> v.shot(shot));
     }
 
-    private Frame getNextFrame() {
-        if (frames.size() < MAX_FRAMES - 1) {
-            return Frame.normalFrame();
+    private NormalFrame getNextFrame() {
+        if (normalFrames.size() < MAX_FRAMES - 1) {
+            return NormalFrame.normalFrame();
         }
-        return Frame.lastFrame();
+        return NormalFrame.lastFrame();
     }
 
     boolean isGameSet() {
-        return frames.stream()
-                .filter(Frame::isFrameSet)
+        return normalFrames.stream()
+                .filter(NormalFrame::isFrameSet)
                 .count() == MAX_FRAMES;
     }
 
-    public Collection<Frame> getFrames() {
-        return new ArrayList<>(frames);
+    public Collection<NormalFrame> getNormalFrames() {
+        return new ArrayList<>(normalFrames);
     }
 
     public List<Integer> getScores() {
-        return frames
+        return normalFrames
                 .stream()
-                .map(Frame::getFrameScore)
+                .map(NormalFrame::getFrameScore)
                 .filter(FrameScore::isCalculated)
                 .map(FrameScore::getScore)
                 .collect(Collectors.toList());

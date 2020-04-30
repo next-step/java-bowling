@@ -13,7 +13,7 @@ public class PlayerDto {
     public PlayerDto(Player player) {
         this.name = player.name();
         this.frameShots = player.frames()
-                .getFrames()
+                .getNormalFrames()
                 .stream()
                 .map(FrameShotDto::new)
                 .collect(Collectors.toList());

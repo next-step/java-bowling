@@ -3,27 +3,26 @@ package bowling.domain;
 import bowling.domain.frameScore.DefaultFrameScore;
 import bowling.domain.frameScore.FrameScore;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Frame {
+public class NormalFrame {
     private static final int SHOT_LIMIT = 2;
 
     private final ShotScores shotScores;
     private final boolean isLast;
     private DefaultFrameScore frameScore;
 
-    private Frame(ShotScores shotScores, boolean isLast) {
+    private NormalFrame(ShotScores shotScores, boolean isLast) {
         this.shotScores = shotScores;
         this.isLast = isLast;
     }
 
-    static Frame normalFrame() {
-        return new Frame(ShotScores.of(), false);
+    static NormalFrame normalFrame() {
+        return new NormalFrame(ShotScores.of(), false);
     }
 
-    static Frame lastFrame() {
-        return new Frame(ShotScores.of(), true);
+    static NormalFrame lastFrame() {
+        return new NormalFrame(ShotScores.of(), true);
     }
 
     void shot(int shot) {
