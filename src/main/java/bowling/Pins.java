@@ -22,4 +22,8 @@ public class Pins {
     public boolean isMiss() {
         return fallenPins.get(0) + fallenPins.get(1) < MAX_PIN_COUNT;
     }
+
+    public String getDescription() {
+        return "X";
+    }
 }

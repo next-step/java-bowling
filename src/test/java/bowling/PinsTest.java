@@ -34,4 +34,12 @@ public class PinsTest {
 
         assertThat(pins.isMiss()).isTrue();
     }
+
+    @Test
+    @DisplayName("보드에 기록될 프레임 결과 표시를 얻는다")
+    public void getDescriptionForRecordOnBoard() {
+        Pins pins = new Pins();
+        pins.bowl(10);
+        assertThat(pins.getDescription()).isEqualTo("X");
+    }
 }
