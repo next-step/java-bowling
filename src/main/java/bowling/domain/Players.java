@@ -41,7 +41,7 @@ public class Players {
         return players.stream()
                 .min(Comparator.comparingInt(Player::getCurrentFrameNumber)
                         .thenComparingInt(Player::getCurrentFrameShotCount))
-                .get();
+                .orElseThrow(()->new IllegalStateException("players have at least 1 player"));
     }
 
     public List<Player> getPlayers() {
