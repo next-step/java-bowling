@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.shot.type.ScoreType;
+import bowling.domain.shot.type.ShotType;
 import bowling.domain.shot.Shot;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class Shots {
                 .sum();
     }
 
-    public ScoreType getLastType() {
+    public ShotType getLastType() {
         return getLast().scoreType();
     }
 

@@ -1,7 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.shot.type.ScoreType;
-import bowling.domain.shot.Shot;
+import bowling.domain.shot.type.ShotType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -61,7 +60,7 @@ class ShotsTest {
     }, delimiter = ':')
     void getLastScoreType(String shotString, String expectTypeString) {
         List<Integer> shots = Arrays.stream(shotString.split(",")).map(Integer::parseInt).collect(Collectors.toList());
-        List<ScoreType> expectTypes = Arrays.stream(expectTypeString.split(",")).map(ScoreType::valueOf).collect(Collectors.toList());
+        List<ShotType> expectTypes = Arrays.stream(expectTypeString.split(",")).map(ShotType::valueOf).collect(Collectors.toList());
 
         Shots shotScores = Shots.of();
         for (int i = 0; i < shots.size(); i++) {

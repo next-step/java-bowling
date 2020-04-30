@@ -4,7 +4,7 @@ import bowling.domain.shot.Score;
 
 import java.util.Arrays;
 
-public enum ScoreType {
+public enum ShotType {
     STRIKE(new ClearProvider(2), new StrikeChecker()),
     SPARE(new ClearProvider(1), new SpareChecker()),
     MISS_FIRST(new MissProvider(true), new MissChecker(true)),
@@ -15,7 +15,7 @@ public enum ScoreType {
     private final StatusProvider statusProvider;
     private final TypeChecker typeChecker;
 
-    ScoreType(StatusProvider statusProvider, TypeChecker typeChecker) {
+    ShotType(StatusProvider statusProvider, TypeChecker typeChecker) {
         this.statusProvider = statusProvider;
         this.typeChecker = typeChecker;
     }
@@ -32,14 +32,14 @@ public enum ScoreType {
         return statusProvider.getBonusCount();
     }
 
-    public static ScoreType of(Score firstScore) {
+    public static ShotType of(Score firstScore) {
         return Arrays.stream(values())
                 .filter(v -> v.typeChecker.availableFirstShots(firstScore))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Not Matched Instance : firstScore=%s", firstScore)));
     }
 
-    public static ScoreType of(Score firstScore, Score secondScore) {
+    public static ShotType of(Score firstScore, Score secondScore) {
         return Arrays.stream(values())
                 .filter(v -> v.typeChecker.availableSecondShots(firstScore, secondScore))
                 .findFirst()

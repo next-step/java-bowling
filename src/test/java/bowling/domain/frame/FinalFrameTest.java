@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.shot.type.ScoreType;
+import bowling.domain.shot.type.ShotType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -119,12 +119,12 @@ class FinalFrameTest {
         
         finalFrame.shot(4);
         assertThat(finalFrame.shotScores().stream())
-                .anyMatch(v -> ScoreType.MISS_FIRST.equals(v.scoreType()))
+                .anyMatch(v -> ShotType.MISS_FIRST.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 4);
 
         finalFrame.shot(6);
         assertThat(finalFrame.shotScores().stream())
-                .anyMatch(v -> ScoreType.SPARE.equals(v.scoreType()))
+                .anyMatch(v -> ShotType.SPARE.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 6);
 
         finalFrame.shot(5);

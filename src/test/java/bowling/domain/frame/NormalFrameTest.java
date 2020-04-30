@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.shot.type.ScoreType;
+import bowling.domain.shot.type.ShotType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -25,8 +25,8 @@ class NormalFrameTest {
         normalFrame.shot(6);
 
         assertThat(normalFrame.shotScores())
-                .anyMatch(v -> ScoreType.MISS_FIRST.equals(v.scoreType()) && v.singleScore() == 4)
-                .anyMatch(v -> ScoreType.SPARE.equals(v.scoreType()) && v.singleScore() == 6);
+                .anyMatch(v -> ShotType.MISS_FIRST.equals(v.scoreType()) && v.singleScore() == 4)
+                .anyMatch(v -> ShotType.SPARE.equals(v.scoreType()) && v.singleScore() == 6);
 
         assertThat(normalFrame.shotScores())
                 .hasSize(2);

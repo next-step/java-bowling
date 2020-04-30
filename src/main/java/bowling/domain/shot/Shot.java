@@ -1,38 +1,38 @@
 package bowling.domain.shot;
 
-import bowling.domain.shot.type.ScoreType;
+import bowling.domain.shot.type.ShotType;
 
 import java.util.Objects;
 
 public class Shot {
     private final Score score;
-    private final ScoreType scoreType;
+    private final ShotType shotType;
 
-    protected Shot(Score score, ScoreType scoreType) {
+    protected Shot(Score score, ShotType shotType) {
         this.score = score;
-        this.scoreType = scoreType;
+        this.shotType = shotType;
     }
 
     public static Shot init(int shotScore) {
         Score score = Score.of(shotScore);
-        return new Shot(score, ScoreType.of(score));
+        return new Shot(score, ShotType.of(score));
     }
 
     public Shot next(int next) {
-        if (!scoreType.isFinished()) {
+        if (!shotType.isFinished()) {
             Score nextScore = Score.of(next);
-            return new Shot(nextScore, ScoreType.of(score, nextScore));
+            return new Shot(nextScore, ShotType.of(score, nextScore));
         }
 
         return init(next);
     }
 
     public boolean isClear() {
-        return scoreType.isCleared();
+        return shotType.isCleared();
     }
 
-    public ScoreType scoreType() {
-        return scoreType;
+    public ShotType scoreType() {
+        return shotType;
     }
 
     public int singleScore() {
@@ -45,19 +45,19 @@ public class Shot {
         if (o == null || getClass() != o.getClass()) return false;
         Shot shot = (Shot) o;
         return score.equals(shot.score) &&
-                scoreType.equals(shot.scoreType);
+                shotType.equals(shot.shotType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, scoreType);
+        return Objects.hash(score, shotType);
     }
 
     @Override
     public String toString() {
         return "ShotScore{" +
                 "score=" + score +
-                ", scoreType=" + scoreType +
+                ", scoreType=" + shotType +
                 '}';
     }
 }

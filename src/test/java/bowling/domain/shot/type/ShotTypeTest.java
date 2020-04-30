@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ScoreTypeTest {
+class ShotTypeTest {
     @ParameterizedTest
     @CsvSource(value = {
             "STRIKE,true",
@@ -15,8 +15,8 @@ class ScoreTypeTest {
             "MISS_SECOND,true",
             "GUTTER_FIRST,false",
             "GUTTER_SECOND,true"})
-    void isFinished(ScoreType scoreType, boolean isTrue) {
-        assertThat(scoreType.isFinished())
+    void isFinished(ShotType shotType, boolean isTrue) {
+        assertThat(shotType.isFinished())
                 .isEqualTo(isTrue);
     }
 
@@ -33,8 +33,8 @@ class ScoreTypeTest {
             "8,MISS_FIRST",
             "9,MISS_FIRST",
             "10,STRIKE"})
-    void ofFirst(int score, ScoreType expectType) {
-        assertThat(ScoreType.of(Score.of(score)))
+    void ofFirst(int score, ShotType expectType) {
+        assertThat(ShotType.of(Score.of(score)))
                 .isEqualTo(expectType);
     }
 
@@ -51,8 +51,8 @@ class ScoreTypeTest {
             "8,0,GUTTER_SECOND", "8,1,MISS_SECOND", "8,2,SPARE",
             "9,0,GUTTER_SECOND", "9,1,SPARE"
     })
-    void ofSecond(int first, int second, ScoreType expectType) {
-        assertThat(ScoreType.of(Score.of(first), Score.of(second)))
+    void ofSecond(int first, int second, ShotType expectType) {
+        assertThat(ShotType.of(Score.of(first), Score.of(second)))
                 .isEqualTo(expectType);
     }
 

@@ -1,6 +1,6 @@
 package bowling.domain.shot;
 
-import bowling.domain.shot.type.ScoreType;
+import bowling.domain.shot.type.ShotType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -32,7 +32,7 @@ class ShotTest {
     void next() {
         Shot shot = Shot.init(5);
         assertThat(shot.next(5).scoreType())
-                .isEqualTo(ScoreType.SPARE);
+                .isEqualTo(ShotType.SPARE);
     }
 
     @Test
