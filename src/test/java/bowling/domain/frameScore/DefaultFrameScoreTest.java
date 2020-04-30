@@ -10,44 +10,44 @@ class DefaultFrameScoreTest {
 
     @Test
     void of() {
-        assertThatCode(() -> DefaultFrameScore.of(Score.of(5), ScoreType.MISS_SECOND))
+        assertThatCode(() -> DefaultFrameScore.of(5, ScoreType.MISS_SECOND))
                 .doesNotThrowAnyException();
     }
 
     @Test
     void ofException() {
-        assertThatThrownBy(() -> DefaultFrameScore.of(Score.of(5), ScoreType.MISS_FIRST))
+        assertThatThrownBy(() -> DefaultFrameScore.of(5, ScoreType.MISS_FIRST))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void getScore() {
-        DefaultFrameScore frameScore = DefaultFrameScore.of(Score.of(5), ScoreType.MISS_SECOND);
+        DefaultFrameScore frameScore = DefaultFrameScore.of(5, ScoreType.MISS_SECOND);
         assertThat(frameScore.getScore())
                 .isEqualTo(5);
     }
 
     @Test
     void getScoreException() {
-        DefaultFrameScore frameScore = DefaultFrameScore.of(Score.of(10), ScoreType.SPARE);
+        DefaultFrameScore frameScore = DefaultFrameScore.of(10, ScoreType.SPARE);
         assertThatThrownBy(frameScore::getScore)
                 .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     void isScoreCalculated() {
-        DefaultFrameScore frameScore = DefaultFrameScore.of(Score.of(10), ScoreType.SPARE);
+        DefaultFrameScore frameScore = DefaultFrameScore.of(10, ScoreType.SPARE);
         assertThat(frameScore.isCalculated())
                 .isFalse();
 
-        frameScore = DefaultFrameScore.of(Score.of(6), ScoreType.MISS_SECOND);
+        frameScore = DefaultFrameScore.of(6, ScoreType.MISS_SECOND);
         assertThat(frameScore.isCalculated())
                 .isTrue();
     }
 
     @Test
     void addBonus() {
-        DefaultFrameScore frameScore = DefaultFrameScore.of(Score.of(10), ScoreType.SPARE);
+        DefaultFrameScore frameScore = DefaultFrameScore.of(10, ScoreType.SPARE);
         assertThat(frameScore.isCalculated())
                 .isFalse();
 
@@ -60,7 +60,7 @@ class DefaultFrameScoreTest {
 
     @Test
     void addBonusException() {
-        DefaultFrameScore frameScore = DefaultFrameScore.of(Score.of(5), ScoreType.MISS_SECOND);
+        DefaultFrameScore frameScore = DefaultFrameScore.of(5, ScoreType.MISS_SECOND);
         assertThatThrownBy(() -> frameScore.addBonus(4))
                 .isInstanceOf(IllegalStateException.class);
     }

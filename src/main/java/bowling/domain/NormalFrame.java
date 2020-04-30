@@ -57,7 +57,7 @@ public class NormalFrame implements Frame{
     }
 
     private void setFrameScore() {
-        this.frameScore = isFrameScoreSet() ? frameScore : shotScores.getCalculateScore();
+        this.frameScore = isFrameScoreSet() ? frameScore : DefaultFrameScore.of(shotScores.totalScore(), shotScores.getLastType());
     }
 
     public boolean isFrameSet() {
@@ -96,7 +96,8 @@ public class NormalFrame implements Frame{
         if (!isFrameSet()) {
             return DefaultFrameScore.NULL;
         }
-        return isFrameScoreSet() ? frameScore : shotScores.getCalculateScore();
+        setFrameScore();
+        return frameScore;
     }
 
     public List<ShotScore> shotScores() {
