@@ -15,9 +15,11 @@ public class Frame {
     public Frame bowl(int fallenPinCount) {
         fallenPins.add(fallenPinCount);
         if (isStrike(fallenPinCount)) {
+            isFinished = true;
             return new Frame(number + 1);
         }
         if (isFinish()) {
+            isFinished = true;
             return new Frame(number + 1);
         }
 
@@ -28,6 +30,10 @@ public class Frame {
         return this.number;
     }
 
+    public boolean isFinish() {
+        return fallenPins.size() == 2;
+    }
+
     private boolean isSpare() {
         return fallenPins.stream().reduce(0, (x, y) -> x + y) == 10;
     }
@@ -36,7 +42,7 @@ public class Frame {
         return fallenPinCount == 10;
     }
 
-    private boolean isFinish() {
-        return fallenPins.size() == 2;
+    public String getRecord() {
+        return "7|/";
     }
 }

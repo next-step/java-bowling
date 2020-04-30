@@ -39,4 +39,12 @@ public class FrameTest {
         nextFrame = frame.bowl(1);
         assertThat(nextFrame.getNumber()).isEqualTo(2);
     }
+
+    @Test
+    @DisplayName("보드에 각 프레임의 결과로 표시될 문자열을 얻어온다")
+    public void getRecordEachFrameForBoardDescription() {
+        Frame frame = new Frame(1);
+        String record = frame.bowl(7).bowl(3).getRecord();
+        assertThat(record).isEqualTo("7|/");
+    }
 }

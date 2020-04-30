@@ -7,15 +7,24 @@ import java.util.stream.Collectors;
 public class Bowling {
     public static final int BLANK_FOR_STRIKE = 0;
     private List<List<Integer>> frames;
+    private List<Frame> frames2;
 
     public Bowling() {
         this.frames = new ArrayList<>();
+        this.frames2 = new ArrayList<>();
     }
 
     public List<String> roll(int fallenPinCount) {
         List<Integer> currentFrame = frames.stream()
                 .filter(frame -> frame.size() != 2)
                 .findFirst().orElse(new ArrayList<>());
+
+        if (frames2.isEmpty()) {
+            frames2.add(new Frame(1));
+        }
+
+        Frame currentFrame2 = frames2.get(frames2.size() - 1).bowl(fallenPinCount);
+        frames2.add(currentFrame2.getNumber() - 1, currentFrame2);
 
         if (currentFrame.isEmpty()) {
             frames.add(recordFrameResult(currentFrame, fallenPinCount));
@@ -41,6 +50,9 @@ public class Bowling {
         List<String> result = new ArrayList<>();
         for (List<Integer> frame : frames) {
             result.add(status(frame));
+        }
+        for (Frame frame : frames2) {
+            result.add(frame.getRecord());
         }
 
         return result;
