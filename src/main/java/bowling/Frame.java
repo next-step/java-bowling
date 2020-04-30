@@ -31,6 +31,9 @@ public class Frame {
     }
 
     public String getRecord() {
+        if (fallenPins.isEmpty()) {
+            return "";
+        }
         if (isStrike(fallenPins.get(0))) {
             return "X";
         }
