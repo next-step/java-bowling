@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.frameScore.DefaultFrameScore;
 import bowling.domain.frameScore.FrameScore;
+import bowling.domain.frameScore.HasBonusFrameScore;
 
 import java.util.List;
 
@@ -9,29 +10,27 @@ public class NormalFrame implements Frame {
     private static final int SHOT_LIMIT = 2;
 
     private final ShotScores shotScores;
-    private final boolean isLast;
     private HasBonusFrameScore frameScore;
 
-    private NormalFrame(ShotScores shotScores, boolean isLast) {
+    private NormalFrame(ShotScores shotScores) {
         this.shotScores = shotScores;
-        this.isLast = isLast;
     }
 
     public static NormalFrame init() {
-        return new NormalFrame(ShotScores.of(), false);
+        return new NormalFrame(ShotScores.of());
     }
 
     public Frame next() {
-        return new NormalFrame(ShotScores.of(), false);
+        return new NormalFrame(ShotScores.of());
     }
 
     public Frame last() {
-        return new NormalFrame(ShotScores.of(), true);
+        return FinalFrame.of();
     }
 
     public void shot(int shot) {
         if (isScoreCalculated()) {
-            throw new IllegalStateException(String.format("shot Frame fail. cannot shot over %d times", getShotLimit()));
+            throw new IllegalStateException(String.format("shot Frame fail. this FinalFrame already calculated instance=%s", this));
         }
 
         if (isFrameScoreSet()) {
@@ -61,35 +60,16 @@ public class NormalFrame implements Frame {
     }
 
     public boolean isFrameSet() {
-        return isShootLimitedSize() ||
-                cannotShooting();
-    }
-
-    private boolean isShootLimitedSize() {
-        return shotScores.hasSize(getShotLimit());
+        return shotScores.hasSize(SHOT_LIMIT) ||
+                shotScores.hasClear();
     }
 
     public boolean isScoreCalculated() {
-        if (isLast) {
-            return isFrameSet();
-        }
-
         if (isFrameSet()) {
             setFrameScore();
             return frameScore.isCalculated();
         }
         return false;
-    }
-
-    private int getShotLimit() {
-        return isLast ? SHOT_LIMIT + 1 : SHOT_LIMIT;
-    }
-
-    private boolean cannotShooting() {
-        if (isLast) {
-            return shotScores.hasSize(SHOT_LIMIT) && !shotScores.hasClear();
-        }
-        return shotScores.hasClear();
     }
 
     public FrameScore getFrameScore() {
@@ -102,5 +82,13 @@ public class NormalFrame implements Frame {
 
     public List<ShotScore> shotScores() {
         return shotScores.shotScores();
+    }
+
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "shotScores=" + shotScores +
+                ", frameScore=" + frameScore +
+                '}';
     }
 }

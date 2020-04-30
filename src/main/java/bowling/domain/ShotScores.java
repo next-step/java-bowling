@@ -58,4 +58,11 @@ class ShotScores {
     List<ShotScore> shotScores() {
         return new ArrayList<>(shotScores);
     }
+
+    @Override
+    public String toString() {
+        return "ShotScores{" +
+                "shotScores=" + shotScores +
+                '}';
+    }
 }
