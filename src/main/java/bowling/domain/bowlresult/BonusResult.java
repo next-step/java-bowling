@@ -2,6 +2,7 @@ package bowling.domain.bowlresult;
 
 import bowling.domain.Score;
 import bowling.domain.Trial;
+import bowling.domain.framestate.FrameState;
 import bowling.domain.framestate.Miss;
 import bowling.domain.framestate.NotPlayed;
 import bowling.domain.framestate.Spare;
@@ -15,7 +16,6 @@ public class BonusResult extends BowlResult {
       throw new IllegalArgumentException("보너스 볼은 최소 0개 최대 2개입니다.");
     }
 
-    state = NotPlayed.getInstance();
     if (bonusBallCount == Strike.BONUS_BOWL) {
       first = Trial.initialize();
       second = Trial.initialize();
@@ -35,12 +35,16 @@ public class BonusResult extends BowlResult {
   public BonusResult() { }
 
   @Override
+  public FrameState getState() {
+    return NotPlayed.getInstance();
+  }
+
+  @Override
   public void roll(int pinCount) throws CannotBowlException {
     if (isFinished()) {
       throw new CannotBowlException("이번 프레임에서 가능한 최대 시도를 넘었습니다.");
     }
 
-    state = state.bowl(pinCount);
     if (first.isNotPlayed()) {
       first.roll(pinCount);
       return;

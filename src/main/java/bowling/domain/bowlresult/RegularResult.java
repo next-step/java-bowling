@@ -1,6 +1,7 @@
 package bowling.domain.bowlresult;
 
 import bowling.domain.Trial;
+import bowling.domain.framestate.FrameState;
 import bowling.domain.framestate.NotPlayed;
 import bowling.exception.CannotBowlException;
 
@@ -8,10 +9,17 @@ public class RegularResult extends BowlResult {
 
   public static RegularResult NULL_RESULT = new RegularResult();
 
+  private FrameState state;
+
   public RegularResult() {
     first = Trial.initialize();
     second = Trial.initialize();
     state = NotPlayed.getInstance();
+  }
+
+  @Override
+  public FrameState getState() {
+    return state;
   }
 
   @Override
