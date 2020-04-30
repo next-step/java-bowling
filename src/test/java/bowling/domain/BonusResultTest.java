@@ -3,6 +3,7 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import bowling.domain.bowlresult.BonusResult;
 import bowling.exception.CannotBowlException;
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.bowlresult;
 
+import bowling.domain.Trial;
 import bowling.domain.framestate.NotPlayed;
 import bowling.exception.CannotBowlException;
 

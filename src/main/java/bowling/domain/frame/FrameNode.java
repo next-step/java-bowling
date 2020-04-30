@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.BonusResult;
-import bowling.domain.RegularResult;
+import bowling.domain.bowlresult.BonusResult;
+import bowling.domain.bowlresult.RegularResult;
 import bowling.domain.Round;
 import bowling.domain.Score;
 import bowling.exception.CannotBowlException;

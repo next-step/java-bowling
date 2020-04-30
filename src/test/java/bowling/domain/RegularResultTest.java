@@ -3,6 +3,7 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import bowling.domain.bowlresult.RegularResult;
 import bowling.domain.framestate.InProgress;
 import bowling.domain.framestate.Miss;
 import bowling.domain.framestate.Spare;

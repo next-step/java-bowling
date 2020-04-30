@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.bowlresult;
 
+import bowling.domain.Score;
+import bowling.domain.Trial;
 import bowling.domain.framestate.Miss;
 import bowling.domain.framestate.NotPlayed;
 import bowling.domain.framestate.Spare;
