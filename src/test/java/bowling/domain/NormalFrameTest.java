@@ -82,7 +82,7 @@ class NormalFrameTest {
         for (int bonus : bonuses) {
             normalFrame.getFrameScore().addBonus(bonus);
         }
-        assertThat(normalFrame.isScoreCalculated())
+        assertThat(normalFrame.getFrameScore().isCalculated())
                 .isEqualTo(expectCalculated);
     }
 

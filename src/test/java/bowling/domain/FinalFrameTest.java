@@ -93,7 +93,7 @@ class FinalFrameTest {
         for (int shot : shots) {
             finalFrame.shot(shot);
         }
-        assertThat(finalFrame.isScoreCalculated())
+        assertThat(finalFrame.getFrameScore().isCalculated())
                 .isTrue();
     }
 
@@ -110,7 +110,7 @@ class FinalFrameTest {
         for (int shot : shots) {
             finalFrame.shot(shot);
         }
-        assertThat(finalFrame.isScoreCalculated())
+        assertThat(finalFrame.getFrameScore().isCalculated())
                 .isFalse();
     }
 

@@ -48,13 +48,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isScoreCalculated() {
-        return isFrameSet();
-    }
-
-    @Override
     public void shot(int shot) {
-        if (isScoreCalculated()) {
+        if (isFrameSet()) {
             throw new IllegalStateException(String.format("shot Frame fail. this FinalFrame already calculated instance=%s", this));
         }
 

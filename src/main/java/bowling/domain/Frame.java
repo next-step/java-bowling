@@ -15,7 +15,5 @@ public interface Frame {
 
     FrameScore getFrameScore();
 
-    boolean isScoreCalculated();
-
     void shot(int shot);
 }

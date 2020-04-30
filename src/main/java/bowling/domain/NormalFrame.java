@@ -57,14 +57,6 @@ public class NormalFrame implements Frame {
                 shotScores.hasClear();
     }
 
-    public boolean isScoreCalculated() {
-        if (isFrameSet()) {
-            setFrameScore();
-            return frameScore.isCalculated();
-        }
-        return false;
-    }
-
     public FrameScore getFrameScore() {
         if (!isFrameSet()) {
             return DefaultFrameScore.NULL;
