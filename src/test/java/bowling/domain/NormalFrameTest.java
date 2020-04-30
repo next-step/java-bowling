@@ -14,13 +14,13 @@ class NormalFrameTest {
 
     @Test
     void of() {
-        assertThatCode(() -> NormalFrame.normalFrame())
+        assertThatCode(NormalFrame::init)
                 .doesNotThrowAnyException();
     }
 
     @Test
     void shot() {
-        NormalFrame normalFrame = NormalFrame.normalFrame();
+        NormalFrame normalFrame = NormalFrame.init();
         normalFrame.shot(4);
         normalFrame.shot(6);
         normalFrame.shot(5);
@@ -39,7 +39,7 @@ class NormalFrameTest {
     @ParameterizedTest
     @ValueSource(strings = {"5,4", "10"})
     void isClosed(String shotString) {
-        NormalFrame normalFrame = NormalFrame.normalFrame();
+        NormalFrame normalFrame = NormalFrame.init();
         assertThat(normalFrame.isFrameSet())
                 .isFalse();
 
@@ -54,7 +54,7 @@ class NormalFrameTest {
 
     @Test
     void shotLastFrame() {
-        NormalFrame finalNormalFrame = NormalFrame.lastFrame();
+        Frame finalNormalFrame = NormalFrame.init().last();
         finalNormalFrame.shot(4);
         assertThat(finalNormalFrame.shotScores().stream())
                 .anyMatch(v -> ScoreType.MISS_FIRST.equals(v.scoreType()))
@@ -77,7 +77,7 @@ class NormalFrameTest {
     @ValueSource(strings = {"5,4", "10,10,10", "4,6,4", "10,4,5"})
     void isClosedLastFrame(String shotString) {
         int[] shots = splitInts(shotString);
-        NormalFrame finalNormalFrame = NormalFrame.lastFrame();
+        Frame finalNormalFrame = NormalFrame.init().last();
         assertThat(finalNormalFrame.isFrameSet())
                 .isFalse();
 
@@ -93,7 +93,7 @@ class NormalFrameTest {
     @ValueSource(strings = {"5", "10,10", "4,6", "10,4"})
     void isNotClosedFrame(String shotString) {
         int[] shots = splitInts(shotString);
-        NormalFrame finalNormalFrame = NormalFrame.lastFrame();
+        Frame finalNormalFrame = NormalFrame.init().last();
         assertThat(finalNormalFrame.isFrameSet())
                 .isFalse();
 
@@ -120,7 +120,7 @@ class NormalFrameTest {
     }, delimiter = ':')
     void getFrameScore(String shotString, int expectScore) {
         int[] shots = splitInts(shotString);
-        NormalFrame normalFrame = NormalFrame.normalFrame();
+        NormalFrame normalFrame = NormalFrame.init();
         for (int shot : shots) {
             normalFrame.shot(shot);
         }
@@ -137,7 +137,7 @@ class NormalFrameTest {
     })
     void isScoreCalculated(String shotString) {
         int[] shots = splitInts(shotString);
-        NormalFrame normalFrame = NormalFrame.normalFrame();
+        NormalFrame normalFrame = NormalFrame.init();
         for (int shot : shots) {
             normalFrame.shot(shot);
         }
@@ -154,7 +154,7 @@ class NormalFrameTest {
     })
     void isScoreNotCalculated(String shotString) {
         int[] shots = splitInts(shotString);
-        NormalFrame normalFrame = NormalFrame.normalFrame();
+        NormalFrame normalFrame = NormalFrame.init();
         for (int shot : shots) {
             normalFrame.shot(shot);
         }
@@ -171,7 +171,7 @@ class NormalFrameTest {
     })
     void isScoreCalculatedLastFrame(String shotString) {
         int[] shots = splitInts(shotString);
-        NormalFrame finalNormalFrame = NormalFrame.lastFrame();
+        Frame finalNormalFrame = NormalFrame.init().last();
         for (int shot : shots) {
             finalNormalFrame.shot(shot);
         }
@@ -188,7 +188,7 @@ class NormalFrameTest {
     })
     void isNotScoreCalculatedLastFrame(String shotString) {
         int[] shots = splitInts(shotString);
-        NormalFrame finalNormalFrame = NormalFrame.lastFrame();
+        Frame finalNormalFrame = NormalFrame.init().last();
         for (int shot : shots) {
             finalNormalFrame.shot(shot);
         }

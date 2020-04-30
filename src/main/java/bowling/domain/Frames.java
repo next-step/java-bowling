@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 public class Frames {
     private static final int MAX_FRAMES = 10;
 
-    private final List<NormalFrame> normalFrames;
+    private final List<Frame> normalFrames;
 
     Frames() {
         this.normalFrames = new ArrayList<>();
-        normalFrames.add(NormalFrame.normalFrame());
+        normalFrames.add(NormalFrame.init());
     }
 
     int getCurrentFrameNumber() {
@@ -28,7 +28,7 @@ public class Frames {
         return getLast().isFrameSet();
     }
 
-    private NormalFrame getLast() {
+    private Frame getLast() {
         return normalFrames.get(normalFrames.size() - 1);
     }
 
@@ -48,27 +48,27 @@ public class Frames {
                 .forEach(v -> v.shot(shot));
     }
 
-    private NormalFrame getNextFrame() {
+    private Frame getNextFrame() {
         if (normalFrames.size() < MAX_FRAMES - 1) {
-            return NormalFrame.normalFrame();
+            return getLast().next();
         }
-        return NormalFrame.lastFrame();
+        return getLast().last();
     }
 
     boolean isGameSet() {
         return normalFrames.stream()
-                .filter(NormalFrame::isFrameSet)
+                .filter(Frame::isFrameSet)
                 .count() == MAX_FRAMES;
     }
 
-    public Collection<NormalFrame> getNormalFrames() {
+    public Collection<Frame> getNormalFrames() {
         return new ArrayList<>(normalFrames);
     }
 
     public List<Integer> getScores() {
         return normalFrames
                 .stream()
-                .map(NormalFrame::getFrameScore)
+                .map(Frame::getFrameScore)
                 .filter(FrameScore::isCalculated)
                 .map(FrameScore::getScore)
                 .collect(Collectors.toList());

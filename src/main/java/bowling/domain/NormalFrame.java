@@ -5,7 +5,7 @@ import bowling.domain.frameScore.FrameScore;
 
 import java.util.List;
 
-public class NormalFrame {
+public class NormalFrame implements Frame{
     private static final int SHOT_LIMIT = 2;
 
     private final ShotScores shotScores;
@@ -17,15 +17,19 @@ public class NormalFrame {
         this.isLast = isLast;
     }
 
-    static NormalFrame normalFrame() {
+    public static NormalFrame init(){
         return new NormalFrame(ShotScores.of(), false);
     }
 
-    static NormalFrame lastFrame() {
+    public Frame next() {
+        return new NormalFrame(ShotScores.of(), false);
+    }
+
+    public Frame last() {
         return new NormalFrame(ShotScores.of(), true);
     }
 
-    void shot(int shot) {
+    public void shot(int shot) {
         if (isScoreCalculated()) {
             throw new IllegalStateException(String.format("shot Frame fail. cannot shot over %d times", getShotLimit()));
         }
@@ -56,7 +60,7 @@ public class NormalFrame {
         this.frameScore = isFrameScoreSet() ? frameScore : shotScores.getCalculateScore();
     }
 
-    boolean isFrameSet() {
+    public boolean isFrameSet() {
         return isShootLimitedSize() ||
                 cannotShooting();
     }

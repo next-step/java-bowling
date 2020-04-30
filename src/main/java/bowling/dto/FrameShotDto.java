@@ -1,5 +1,6 @@
 package bowling.dto;
 
+import bowling.domain.Frame;
 import bowling.domain.NormalFrame;
 import bowling.domain.ShotScore;
 
@@ -9,7 +10,7 @@ import java.util.stream.Collectors;
 public class FrameShotDto {
     private final List<ShotScore> shotScores;
 
-    public FrameShotDto(NormalFrame normalFrame) {
+    public FrameShotDto(Frame normalFrame) {
         this.shotScores = normalFrame.shotScores();
     }
 
