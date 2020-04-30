@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.frameScore.DefaultFrameScore;
+import bowling.domain.scoreType.ScoreType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,19 +44,15 @@ class ShotScores {
                 .anyMatch(ShotScore::isClear);
     }
 
-    private int singleScore() {
+    public int totalScore() {
         return shotScores
                 .stream()
                 .mapToInt(ShotScore::singleScore)
                 .sum();
     }
 
-    DefaultFrameScore getCalculateScore() {
-        try {
-            return DefaultFrameScore.of(Score.of(this.singleScore()), getLast().scoreType());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalStateException("ShotScores cannot calculateScore", e);
-        }
+    public ScoreType getLastType() {
+        return getLast().scoreType();
     }
 
     List<ShotScore> shotScores() {

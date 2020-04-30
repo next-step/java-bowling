@@ -1,13 +1,18 @@
 package bowling.domain;
 
+import bowling.domain.scoreType.ScoreType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ShotScoresTest {
     private ShotScores shotScores;
@@ -45,21 +50,25 @@ class ShotScoresTest {
                 .isTrue();
     }
 
-    @Test
-    void getFrameScoreException() {
-        ShotScore firstShot = ShotScore.init(4);
-        ShotScores shotScores = ShotScores.of(new ArrayList<>(Collections.singletonList(firstShot)));
-        assertThatThrownBy(shotScores::getCalculateScore)
-                .isInstanceOf(IllegalStateException.class);
-    }
+    @ParameterizedTest
+    @CsvSource(value = {
+            "4,6:MISS_FIRST,SPARE",
+            "0,0:GUTTER_FIRST,GUTTER_SECOND",
+            "3,3:MISS_FIRST,MISS_SECOND",
+            "10:STRIKE",
+            "4,6,5:MISS_FIRST,SPARE,MISS_FIRST",
+            "10,4,3:STRIKE,MISS_FIRST,MISS_SECOND"
+    }, delimiter = ':')
+    void getLastScoreType(String shotString, String expectTypeString) {
+        List<Integer> shots = Arrays.stream(shotString.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+        List<ScoreType> expectTypes = Arrays.stream(expectTypeString.split(",")).map(ScoreType::valueOf).collect(Collectors.toList());
 
-    @Test
-    void getFrameScore() {
-        ShotScore firstShot = ShotScore.init(4);
-        ShotScores shotScores = ShotScores.of(new ArrayList<>(Collections.singletonList(firstShot)));
-        shotScores.add(shotScores.getNext(6));
-        assertThat(shotScores.getCalculateScore())
-                .matches(v -> !v.isCalculated());
+        ShotScores shotScores = ShotScores.of();
+        for (int i = 0; i < shots.size(); i++) {
+            shotScores.add(shotScores.getNext(shots.get(i)));
+            assertThat(shotScores.getLastType())
+                    .isEqualTo(expectTypes.get(i));
+        }
     }
 
 }
