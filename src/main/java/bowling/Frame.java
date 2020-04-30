@@ -30,8 +30,17 @@ public class Frame {
         return this.number;
     }
 
-    public boolean isFinish() {
-        return fallenPins.size() == 2;
+    public String getRecord() {
+        if (isStrike(fallenPins.get(0))) {
+            return "X";
+        }
+        if (isSpare()) {
+            return getDescription(fallenPins.get(0)) + "|/";
+        }
+        if (isFinished) {
+            return getDescription(fallenPins.get(0)) + "|" + getDescription(fallenPins.get(1));
+        }
+        return getDescription(fallenPins.get(0));
     }
 
     private boolean isSpare() {
@@ -42,7 +51,17 @@ public class Frame {
         return fallenPinCount == 10;
     }
 
-    public String getRecord() {
-        return "7|/";
+    private boolean isFinish() {
+        return fallenPins.size() == 2;
+    }
+
+    private String getDescription(int pins) {
+        if (pins == 0) {
+            return "-";
+        }
+        if (pins == 10) {
+            return "X";
+        }
+        return pins + "";
     }
 }

@@ -44,7 +44,18 @@ public class FrameTest {
     @DisplayName("보드에 각 프레임의 결과로 표시될 문자열을 얻어온다")
     public void getRecordEachFrameForBoardDescription() {
         Frame frame = new Frame(1);
-        String record = frame.bowl(7).bowl(3).getRecord();
-        assertThat(record).isEqualTo("7|/");
+        Frame frame2 = frame.bowl(7).bowl(3);
+        assertThat(frame.getRecord()).isEqualTo("7|/");
+
+        Frame frame3 = frame2.bowl(10);
+        assertThat(frame2.getRecord()).isEqualTo("X");
+
+        frame3.bowl(8);
+        assertThat(frame3.getRecord()).isEqualTo("8");
+        Frame frame4 = frame3.bowl(1);
+        assertThat(frame3.getRecord()).isEqualTo("8|1");
+
+        frame4.bowl(0);
+        assertThat(frame4.getRecord()).isEqualTo("-");
     }
 }
