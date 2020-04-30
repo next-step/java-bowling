@@ -3,11 +3,7 @@ package bowling.view;
 import bowling.domain.BowlResult;
 import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGames;
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.FrameNode;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
-import bowling.domain.RegularResult;
+import bowling.domain.frame.FrameNode;
 import bowling.domain.Score;
 import bowling.domain.framestate.Spare;
 import bowling.domain.Trial;
@@ -46,30 +42,14 @@ public class ResultView {
   }
 
   private static String visualize(FrameNode frame) {
-    if (frame instanceof NormalFrame) {
-      return visualize((NormalFrame) frame);
-    }
+    BowlResult regularResult = frame.getRegularResult();
+    BowlResult bonusResult = frame.getBonusResult();
 
-    if (frame instanceof FinalFrame) {
-      return visualize((FinalFrame) frame);
-    }
+    String visualized = visualize(regularResult);
+    String bonusVisualized = visualize(bonusResult);
 
-    return NOT_PLAYED_SIGN;
-  }
-
-  private static String visualize(NormalFrame normalFrame) {
-    Frame frame = normalFrame.getFrame();
-    RegularResult regularResult = frame.getRegularResult();
-
-    return visualize(regularResult);
-  }
-
-  private static String visualize(FinalFrame frame) {
-    String visualized = visualize(frame.getRegularResult());
-    String bonusVisualized = visualize(frame.getBonusResult());
-
-    if (!bonusVisualized.isEmpty()) {
-      visualized = String.join(SCORE_DELIMITER, visualized, bonusVisualized);
+    if (!bonusVisualized.equals(NOT_PLAYED_SIGN)) {
+      return String.join(SCORE_DELIMITER, visualized, bonusVisualized);
     }
 
     return visualized;

@@ -5,6 +5,8 @@ import bowling.exception.CannotBowlException;
 
 public class RegularResult extends BowlResult {
 
+  public static RegularResult NULL_RESULT = new RegularResult();
+
   public RegularResult() {
     first = Trial.initialize();
     second = Trial.initialize();

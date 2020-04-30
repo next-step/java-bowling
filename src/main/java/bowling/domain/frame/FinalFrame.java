@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import static bowling.domain.BonusResult.NULL_RESULT;
 
 import bowling.domain.BonusResult;
-import bowling.domain.FrameNode;
 import bowling.domain.RegularResult;
 import bowling.domain.Round;
 import bowling.domain.Score;

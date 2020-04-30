@@ -2,7 +2,7 @@ package bowling.controller;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGames;
-import bowling.domain.FrameNode;
+import bowling.domain.frame.FrameNode;
 import bowling.domain.Players;
 import bowling.exception.CannotBowlException;
 import bowling.view.InputView;

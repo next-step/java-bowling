@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.FrameNode;
+import bowling.domain.BonusResult;
+import bowling.domain.RegularResult;
 import bowling.domain.Round;
 import bowling.domain.Score;
 import bowling.exception.CannotBowlException;
@@ -20,6 +21,16 @@ public class NullFrame implements FrameNode {
   @Override
   public int getRolledBowlCount() {
     return 0;
+  }
+
+  @Override
+  public RegularResult getRegularResult() {
+    return RegularResult.NULL_RESULT;
+  }
+
+  @Override
+  public BonusResult getBonusResult() {
+    return BonusResult.NULL_RESULT;
   }
 
   @Override

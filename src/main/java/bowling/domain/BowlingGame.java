@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.FrameNode;
 import bowling.domain.frame.NormalFrame;
 import bowling.exception.CannotBowlException;
 

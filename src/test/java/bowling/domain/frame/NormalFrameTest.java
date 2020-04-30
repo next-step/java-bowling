@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import bowling.domain.FrameNode;
 import bowling.domain.PinCount;
 import bowling.domain.Round;
 import bowling.domain.Score;

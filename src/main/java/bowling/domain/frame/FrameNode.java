@@ -1,7 +1,9 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.NormalFrame;
+import bowling.domain.BonusResult;
+import bowling.domain.RegularResult;
+import bowling.domain.Round;
+import bowling.domain.Score;
 import bowling.exception.CannotBowlException;
 
 public interface FrameNode {
@@ -17,6 +19,10 @@ public interface FrameNode {
   }
 
   int getRolledBowlCount();
+
+  RegularResult getRegularResult();
+
+  BonusResult getBonusResult();
 
   FrameNode getNextFrame();
 
