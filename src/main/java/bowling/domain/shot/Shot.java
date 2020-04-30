@@ -5,23 +5,23 @@ import bowling.domain.shot.type.ShotType;
 import java.util.Objects;
 
 public class Shot {
-    private final Score score;
+    private final Pins pins;
     private final ShotType shotType;
 
-    protected Shot(Score score, ShotType shotType) {
-        this.score = score;
+    protected Shot(Pins pins, ShotType shotType) {
+        this.pins = pins;
         this.shotType = shotType;
     }
 
     public static Shot init(int shotScore) {
-        Score score = Score.of(shotScore);
-        return new Shot(score, ShotType.of(score));
+        Pins pins = Pins.of(shotScore);
+        return new Shot(pins, ShotType.of(pins));
     }
 
     public Shot next(int next) {
         if (!shotType.isFinished()) {
-            Score nextScore = Score.of(next);
-            return new Shot(nextScore, ShotType.of(score, nextScore));
+            Pins nextPins = Pins.of(next);
+            return new Shot(nextPins, ShotType.of(pins, nextPins));
         }
 
         return init(next);
@@ -36,7 +36,7 @@ public class Shot {
     }
 
     public int singleScore() {
-        return score.score();
+        return pins.score();
     }
 
     @Override
@@ -44,19 +44,19 @@ public class Shot {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Shot shot = (Shot) o;
-        return score.equals(shot.score) &&
+        return pins.equals(shot.pins) &&
                 shotType.equals(shot.shotType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, shotType);
+        return Objects.hash(pins, shotType);
     }
 
     @Override
     public String toString() {
         return "ShotScore{" +
-                "score=" + score +
+                "score=" + pins +
                 ", scoreType=" + shotType +
                 '}';
     }

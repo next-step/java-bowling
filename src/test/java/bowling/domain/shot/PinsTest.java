@@ -1,57 +1,56 @@
 package bowling.domain.shot;
 
-import bowling.domain.shot.Score;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class ScoreTest {
+public class PinsTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 10})
     void scoreRange(int score) {
-        assertThatCode(() -> Score.of(score))
+        assertThatCode(() -> Pins.of(score))
                 .doesNotThrowAnyException();
     }
 
     @ParameterizedTest
     @ValueSource(ints = {-1, 11})
     void scoreExpectException(int outOfScoreValue) {
-        assertThatThrownBy(() -> Score.of(outOfScoreValue))
+        assertThatThrownBy(() -> Pins.of(outOfScoreValue))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void getScore() {
-        assertThat(Score.of(5).score())
+        assertThat(Pins.of(5).score())
                 .isEqualTo(5);
     }
 
     @Test
     void isMax() {
-        assertThat(Score.of(10).isMax())
+        assertThat(Pins.of(10).isMax())
                 .isTrue();
 
-        assertThat(Score.of(9).isMax())
+        assertThat(Pins.of(9).isMax())
                 .isFalse();
     }
 
     @Test
     void isMin() {
-        assertThat(Score.of(0).isMin())
+        assertThat(Pins.of(0).isMin())
                 .isTrue();
 
-        assertThat(Score.of(1).isMin())
+        assertThat(Pins.of(1).isMin())
                 .isFalse();
     }
 
     @Test
     void getLeftScore() {
-        assertThat(Score.of(0).getLeftScore())
-                .isEqualTo(Score.of(10));
+        assertThat(Pins.of(0).getLeftScore())
+                .isEqualTo(Pins.of(10));
 
-        assertThat(Score.of(1).getLeftScore())
-                .isEqualTo(Score.of(9));
+        assertThat(Pins.of(1).getLeftScore())
+                .isEqualTo(Pins.of(9));
     }
 }

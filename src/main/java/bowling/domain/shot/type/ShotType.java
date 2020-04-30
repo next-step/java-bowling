@@ -1,6 +1,6 @@
 package bowling.domain.shot.type;
 
-import bowling.domain.shot.Score;
+import bowling.domain.shot.Pins;
 
 import java.util.Arrays;
 
@@ -32,17 +32,17 @@ public enum ShotType {
         return statusProvider.getBonusCount();
     }
 
-    public static ShotType of(Score firstScore) {
+    public static ShotType of(Pins firstPins) {
         return Arrays.stream(values())
-                .filter(v -> v.typeChecker.availableFirstShots(firstScore))
+                .filter(v -> v.typeChecker.availableFirstShots(firstPins))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Not Matched Instance : firstScore=%s", firstScore)));
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Not Matched Instance : firstScore=%s", firstPins)));
     }
 
-    public static ShotType of(Score firstScore, Score secondScore) {
+    public static ShotType of(Pins firstPins, Pins secondPins) {
         return Arrays.stream(values())
-                .filter(v -> v.typeChecker.availableSecondShots(firstScore, secondScore))
+                .filter(v -> v.typeChecker.availableSecondShots(firstPins, secondPins))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Not Matched Instance : firstScore=%s, secondScore=%s", firstScore, secondScore)));
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Not Matched Instance : firstScore=%s, secondScore=%s", firstPins, secondPins)));
     }
 }

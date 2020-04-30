@@ -1,16 +1,16 @@
 package bowling.domain.shot.type;
 
-import bowling.domain.shot.Score;
+import bowling.domain.shot.Pins;
 
 class SpareChecker implements TypeChecker {
 
     @Override
-    public boolean availableFirstShots(Score firstShot) {
+    public boolean availableFirstShots(Pins firstShot) {
         return false;
     }
 
     @Override
-    public boolean availableSecondShots(Score firstShot, Score secondShot) {
+    public boolean availableSecondShots(Pins firstShot, Pins secondShot) {
         return firstShot.getLeftScore().equals(secondShot);
     }
 

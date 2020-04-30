@@ -1,6 +1,6 @@
 package bowling.domain.shot.type;
 
-import bowling.domain.shot.Score;
+import bowling.domain.shot.Pins;
 
 public class GutterChecker implements TypeChecker {
     private final boolean isFirst;
@@ -10,7 +10,7 @@ public class GutterChecker implements TypeChecker {
     }
 
     @Override
-    public boolean availableFirstShots(Score firstShot) {
+    public boolean availableFirstShots(Pins firstShot) {
         if (!isFirst) {
             return false;
         }
@@ -18,7 +18,7 @@ public class GutterChecker implements TypeChecker {
     }
 
     @Override
-    public boolean availableSecondShots(Score firstShot, Score secondShot) {
+    public boolean availableSecondShots(Pins firstShot, Pins secondShot) {
         if (isFirst) {
             return false;
         }

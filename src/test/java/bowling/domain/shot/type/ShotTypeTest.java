@@ -1,6 +1,6 @@
 package bowling.domain.shot.type;
 
-import bowling.domain.shot.Score;
+import bowling.domain.shot.Pins;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -34,7 +34,7 @@ class ShotTypeTest {
             "9,MISS_FIRST",
             "10,STRIKE"})
     void ofFirst(int score, ShotType expectType) {
-        assertThat(ShotType.of(Score.of(score)))
+        assertThat(ShotType.of(Pins.of(score)))
                 .isEqualTo(expectType);
     }
 
@@ -52,7 +52,7 @@ class ShotTypeTest {
             "9,0,GUTTER_SECOND", "9,1,SPARE"
     })
     void ofSecond(int first, int second, ShotType expectType) {
-        assertThat(ShotType.of(Score.of(first), Score.of(second)))
+        assertThat(ShotType.of(Pins.of(first), Pins.of(second)))
                 .isEqualTo(expectType);
     }
 
