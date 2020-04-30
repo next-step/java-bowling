@@ -56,7 +56,7 @@ public class Shots {
         return getLast().scoreType();
     }
 
-    public List<Shot> shotScores() {
+    public List<Shot> shots() {
         return new ArrayList<>(shots);
     }
 

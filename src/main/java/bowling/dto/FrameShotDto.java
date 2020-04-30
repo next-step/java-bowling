@@ -10,7 +10,7 @@ public class FrameShotDto {
     private final List<Shot> shots;
 
     public FrameShotDto(Frame normalFrame) {
-        this.shots = normalFrame.shotScores();
+        this.shots = normalFrame.shots();
     }
 
     public List<String> getShots() {

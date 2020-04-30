@@ -12,7 +12,7 @@ public interface Frame {
 
     boolean isFrameSet();
 
-    List<Shot> shotScores();
+    List<Shot> shots();
 
     FrameScore getFrameScore();
 

@@ -37,8 +37,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<Shot> shotScores() {
-        return shots.shotScores();
+    public List<Shot> shots() {
+        return shots.shots();
     }
 
     @Override

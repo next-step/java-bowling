@@ -24,11 +24,11 @@ class NormalFrameTest {
         normalFrame.shot(4);
         normalFrame.shot(6);
 
-        assertThat(normalFrame.shotScores())
+        assertThat(normalFrame.shots())
                 .anyMatch(v -> ShotType.MISS_FIRST.equals(v.scoreType()) && v.singleScore() == 4)
                 .anyMatch(v -> ShotType.SPARE.equals(v.scoreType()) && v.singleScore() == 6);
 
-        assertThat(normalFrame.shotScores())
+        assertThat(normalFrame.shots())
                 .hasSize(2);
 
         assertThatThrownBy(() -> normalFrame.shot(5))

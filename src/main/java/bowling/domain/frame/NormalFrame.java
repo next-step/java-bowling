@@ -58,8 +58,8 @@ public class NormalFrame implements Frame {
         return frameScore;
     }
 
-    public List<Shot> shotScores() {
-        return shots.shotScores();
+    public List<Shot> shots() {
+        return shots.shots();
     }
 
     @Override

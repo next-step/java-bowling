@@ -39,7 +39,7 @@ class FramesTest {
                 .anyMatch(v -> v.isFrameSet() &&
                         v.getFrameScore().isCalculated() &&
                         v.getFrameScore().getScore() == 20 &&
-                        v.shotScores().size() == 2)
+                        v.shots().size() == 2)
                 .anyMatch(v -> v.isFrameSet() &&
                         !v.getFrameScore().isCalculated());
     }

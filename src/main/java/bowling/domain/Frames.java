@@ -38,7 +38,7 @@ public class Frames {
         if (isCurrentFrameDone()) {
             return 0;
         }
-        return getLast().shotScores().size();
+        return getLast().shots().size();
     }
 
     void shot(int shot) {

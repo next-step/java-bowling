@@ -118,12 +118,12 @@ class FinalFrameTest {
     void shot() {
         
         finalFrame.shot(4);
-        assertThat(finalFrame.shotScores().stream())
+        assertThat(finalFrame.shots().stream())
                 .anyMatch(v -> ShotType.MISS_FIRST.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 4);
 
         finalFrame.shot(6);
-        assertThat(finalFrame.shotScores().stream())
+        assertThat(finalFrame.shots().stream())
                 .anyMatch(v -> ShotType.SPARE.equals(v.scoreType()))
                 .anyMatch(v -> v.singleScore() == 6);
 
