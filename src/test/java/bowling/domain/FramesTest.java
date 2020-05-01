@@ -34,7 +34,7 @@ class FramesTest {
         frames.shot(5);
         frames.shot(10);
 
-        assertThat(frames.getNormalFrames())
+        assertThat(frames.getFrames())
                 .hasSize(2)
                 .anyMatch(v -> v.isFrameSet() &&
                         v.getFrameScore().isCalculated() &&
@@ -57,7 +57,7 @@ class FramesTest {
         assertThat(frames.isGameSet())
                 .isTrue();
 
-        assertThat(frames.getNormalFrames())
+        assertThat(frames.getFrames())
                 .hasSize(10);
     }
 

@@ -12,18 +12,18 @@ import java.util.stream.Collectors;
 public class Frames {
     private static final int MAX_FRAMES = 10;
 
-    private final List<Frame> normalFrames;
+    private final List<Frame> frames;
 
     Frames() {
-        this.normalFrames = new ArrayList<>();
-        normalFrames.add(NormalFrame.init());
+        this.frames = new ArrayList<>();
+        frames.add(NormalFrame.init());
     }
 
     int getCurrentFrameNumber() {
         if (isCurrentFrameDone()) {
-            return normalFrames.size() + 1;
+            return frames.size() + 1;
         }
-        return normalFrames.size();
+        return frames.size();
     }
 
     private boolean isCurrentFrameDone() {
@@ -31,7 +31,7 @@ public class Frames {
     }
 
     private Frame getLast() {
-        return normalFrames.get(normalFrames.size() - 1);
+        return frames.get(frames.size() - 1);
     }
 
     int getCurrentFrameShotCount() {
@@ -43,9 +43,9 @@ public class Frames {
 
     void shot(int shot) {
         if (isCurrentFrameDone()) {
-            normalFrames.add(getNextFrame());
+            frames.add(getNextFrame());
         }
-        normalFrames.stream()
+        frames.stream()
                 .map(Frame::getFrameScore)
                 .filter(v -> !v.isCalculated())
                 .forEach(v -> v.addBonus(shot));
@@ -53,24 +53,24 @@ public class Frames {
     }
 
     private Frame getNextFrame() {
-        if (normalFrames.size() < MAX_FRAMES - 1) {
+        if (frames.size() < MAX_FRAMES - 1) {
             return getLast().next();
         }
         return getLast().last();
     }
 
     boolean isGameSet() {
-        return normalFrames.stream()
+        return frames.stream()
                 .filter(Frame::isFrameSet)
                 .count() == MAX_FRAMES;
     }
 
-    public Collection<Frame> getNormalFrames() {
-        return new ArrayList<>(normalFrames);
+    public Collection<Frame> getFrames() {
+        return new ArrayList<>(frames);
     }
 
     public List<Integer> getScores() {
-        return normalFrames
+        return frames
                 .stream()
                 .map(Frame::getFrameScore)
                 .filter(FrameScore::isCalculated)
