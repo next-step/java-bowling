@@ -130,7 +130,7 @@ class FinalFrameTest {
     }
 
     @Test
-    void getFrameNumber(){
+    void getFrameNumber() {
         assertThat(FinalFrame.of().getFrameNumber())
                 .isEqualTo(10);
     }

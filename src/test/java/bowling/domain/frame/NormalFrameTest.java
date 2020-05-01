@@ -88,7 +88,7 @@ class NormalFrameTest {
     }
 
     @Test
-    void getFrameNumber(){
+    void getFrameNumber() {
         Frame normalFrame = NormalFrame.init();
         for (int i = 1; i < 10; i++) {
             assertThat(normalFrame.getFrameNumber())
