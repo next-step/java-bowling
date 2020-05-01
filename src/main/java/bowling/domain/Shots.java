@@ -4,13 +4,14 @@ import bowling.domain.shot.Shot;
 import bowling.domain.shot.type.ShotType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Shots {
     private final List<Shot> shots;
 
     private Shots(List<Shot> shots) {
-        this.shots = shots;
+        this.shots = new ArrayList<>(shots);
     }
 
     static Shots of(List<Shot> shots) {
@@ -18,7 +19,7 @@ public class Shots {
     }
 
     public static Shots of() {
-        return new Shots(new ArrayList<>());
+        return new Shots(Collections.emptyList());
     }
 
     public void add(int shot) {
