@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
+import org.assertj.core.api.IterableAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -27,21 +29,20 @@ class FramesTest {
                 .isEqualTo(2);
     }
 
-    @Test
-    void shot() {
+    @ParameterizedTest
+    @CsvSource(value = {
+            "5,5,10:2:2,1"
+    })
+    void shot(String inputShots, int frameSize, String expectShotSizes) {
         Frames frames = new Frames();
-        frames.shot(5);
-        frames.shot(5);
-        frames.shot(10);
+        splitInts(inputShots)
+                .forEach(frames::shot);
 
-        assertThat(frames.getFrames())
-                .hasSize(2)
-                .anyMatch(v -> v.isFrameSet() &&
-                        v.getFrameScore().isCalculated() &&
-                        v.getFrameScore().getScore() == 20 &&
-                        v.shots().size() == 2)
-                .anyMatch(v -> v.isFrameSet() &&
-                        !v.getFrameScore().isCalculated());
+        IterableAssert<Frame> assertFrames = assertThat(frames.getFrames())
+                .hasSize(frameSize);
+        splitInts(expectShotSizes)
+                .forEach(size ->
+                        assertFrames.anyMatch(v -> v.shots().size() == size));
     }
 
     @Test
