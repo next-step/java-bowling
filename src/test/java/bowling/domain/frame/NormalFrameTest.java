@@ -87,6 +87,16 @@ class NormalFrameTest {
                 .isEqualTo(expectCalculated);
     }
 
+    @Test
+    void getFrameNumber(){
+        Frame normalFrame = NormalFrame.init();
+        for (int i = 1; i < 10; i++) {
+            assertThat(normalFrame.getFrameNumber())
+                    .isEqualTo(i);
+            normalFrame = normalFrame.next();
+        }
+    }
+
     private int[] splitInts(String shotString) {
         return Arrays.stream(shotString.split(","))
                 .mapToInt(Integer::parseInt)

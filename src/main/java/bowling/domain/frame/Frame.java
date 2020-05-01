@@ -17,4 +17,6 @@ public interface Frame {
     FrameScore getFrameScore();
 
     void shot(int shot);
+
+    int getFrameNumber();
 }

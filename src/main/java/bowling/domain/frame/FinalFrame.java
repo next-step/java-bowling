@@ -8,7 +8,10 @@ import bowling.domain.shot.Shot;
 import java.util.List;
 
 public class FinalFrame implements Frame {
+    public static final int FRAME_NUMBER = 10;
+
     private static final int SHOT_LIMIT = 3;
+    private static final int NOT_HAVE_BONUS_SHOT_LIMIT = 2;
 
     private final Shots shots;
 
@@ -33,7 +36,7 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isFrameSet() {
         return shots.hasSize(SHOT_LIMIT) ||
-                (shots.hasSize(2) && !shots.hasClear());
+                (shots.hasSize(NOT_HAVE_BONUS_SHOT_LIMIT) && !shots.hasClear());
     }
 
     @Override
@@ -56,6 +59,11 @@ public class FinalFrame implements Frame {
         }
 
         shots.add(shot);
+    }
+
+    @Override
+    public int getFrameNumber() {
+        return FRAME_NUMBER;
     }
 
     @Override

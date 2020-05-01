@@ -135,10 +135,15 @@ class FinalFrameTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
+    @Test
+    void getFrameNumber(){
+        assertThat(FinalFrame.of().getFrameNumber())
+                .isEqualTo(10);
+    }
+
     private int[] splitInts(String shotString) {
         return Arrays.stream(shotString.split(","))
                 .mapToInt(Integer::parseInt)
                 .toArray();
     }
-
 }

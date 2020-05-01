@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.score.FrameScore;
@@ -10,8 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frames {
-    private static final int MAX_FRAMES = 10;
-
     private final List<Frame> frames;
 
     Frames() {
@@ -20,10 +19,7 @@ public class Frames {
     }
 
     int getCurrentFrameNumber() {
-        if (isCurrentFrameDone()) {
-            return frames.size() + 1;
-        }
-        return frames.size();
+        return getLast().getFrameNumber();
     }
 
     private boolean isCurrentFrameDone() {
@@ -35,35 +31,35 @@ public class Frames {
     }
 
     int getCurrentFrameShotCount() {
-        if (isCurrentFrameDone()) {
-            return 0;
-        }
         return getLast().shots().size();
     }
 
     void shot(int shot) {
-        if (isCurrentFrameDone()) {
-            frames.add(getNextFrame());
-        }
         frames.stream()
                 .filter(Frame::isFrameSet)
                 .map(Frame::getFrameScore)
                 .filter(v -> !v.isCalculated())
                 .forEach(v -> v.addBonus(shot));
         getLast().shot(shot);
+
+        if (isCurrentFrameDone() && isNotFinalFrame()) {
+            frames.add(getNextFrame());
+        }
+    }
+
+    private boolean isNotFinalFrame() {
+        return getLast().getFrameNumber() != FinalFrame.FRAME_NUMBER;
     }
 
     private Frame getNextFrame() {
-        if (frames.size() < MAX_FRAMES - 1) {
+        if (getLast().getFrameNumber() < FinalFrame.FRAME_NUMBER - 1) {
             return getLast().next();
         }
         return getLast().last();
     }
 
     boolean isGameSet() {
-        return frames.stream()
-                .filter(Frame::isFrameSet)
-                .count() == MAX_FRAMES;
+        return getLast().isFrameSet() && !isNotFinalFrame();
     }
 
     public Collection<Frame> getFrames() {

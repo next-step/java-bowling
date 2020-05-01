@@ -31,8 +31,8 @@ class FramesTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "5,5,10:2:2,1"
-    })
+            "5,5,10:3:2,1,0"
+    }, delimiter = ':')
     void shot(String inputShots, int frameSize, String expectShotSizes) {
         Frames frames = new Frames();
         splitInts(inputShots)

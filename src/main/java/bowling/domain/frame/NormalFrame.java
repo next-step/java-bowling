@@ -12,18 +12,20 @@ public class NormalFrame implements Frame {
 
     private final Shots shots;
     private FrameScore frameScore;
+    private final int frameNumber;
 
-    private NormalFrame(Shots shots) {
+    private NormalFrame(Shots shots, int frameNumber) {
         this.shots = shots;
+        this.frameNumber = frameNumber;
     }
 
     public static NormalFrame init() {
-        return new NormalFrame(Shots.of());
+        return new NormalFrame(Shots.of(), 1);
     }
 
     @Override
     public Frame next() {
-        return new NormalFrame(Shots.of());
+        return new NormalFrame(Shots.of(), this.frameNumber + 1);
     }
 
     @Override
@@ -38,6 +40,11 @@ public class NormalFrame implements Frame {
         }
 
         addShotScore(shot);
+    }
+
+    @Override
+    public int getFrameNumber() {
+        return frameNumber;
     }
 
     private void addShotScore(int shot) {
