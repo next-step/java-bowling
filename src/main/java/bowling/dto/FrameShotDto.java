@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 public class FrameShotDto {
     private final List<Shot> shots;
 
-    public FrameShotDto(Frame normalFrame) {
-        this.shots = normalFrame.shots();
+    public FrameShotDto(Frame frame) {
+        this.shots = frame.shots();
     }
 
     public List<String> getShots() {

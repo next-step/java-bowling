@@ -72,11 +72,11 @@ class FinalFrameTest {
     }, delimiter = ':')
     void getFrameScore(String shotString, int expectScore) {
         int[] shots = splitInts(shotString);
-        FinalFrame normalFrame = FinalFrame.of();
+        FinalFrame finalFrame = FinalFrame.of();
         for (int shot : shots) {
-            normalFrame.shot(shot);
+            finalFrame.shot(shot);
         }
-        assertThat(normalFrame.getFrameScore().getScore())
+        assertThat(finalFrame.getFrameScore().getScore())
                 .isEqualTo(expectScore);
     }
 
