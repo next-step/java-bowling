@@ -13,8 +13,8 @@ public class Shot {
         this.shotType = shotType;
     }
 
-    public static Shot init(int shotScore) {
-        Pins pins = Pins.of(shotScore);
+    public static Shot init(int shot) {
+        Pins pins = Pins.of(shot);
         return new Shot(pins, ShotType.of(pins));
     }
 
@@ -55,9 +55,9 @@ public class Shot {
 
     @Override
     public String toString() {
-        return "ShotScore{" +
-                "score=" + pins +
-                ", scoreType=" + shotType +
+        return "Shot{" +
+                "pins=" + pins +
+                ", shotType=" + shotType +
                 '}';
     }
 }

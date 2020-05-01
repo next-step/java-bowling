@@ -59,13 +59,13 @@ class ShotsTest {
             "10,4,3:STRIKE,MISS_FIRST,MISS_SECOND"
     }, delimiter = ':')
     void getLastScoreType(String shotString, String expectTypeString) {
-        List<Integer> shots = Arrays.stream(shotString.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+        List<Integer> shotInts = Arrays.stream(shotString.split(",")).map(Integer::parseInt).collect(Collectors.toList());
         List<ShotType> expectTypes = Arrays.stream(expectTypeString.split(",")).map(ShotType::valueOf).collect(Collectors.toList());
 
-        Shots shotScores = Shots.of();
-        for (int i = 0; i < shots.size(); i++) {
-            shotScores.add(shots.get(i));
-            assertThat(shotScores.getLastType())
+        Shots shots = Shots.of();
+        for (int i = 0; i < shotInts.size(); i++) {
+            shots.add(shotInts.get(i));
+            assertThat(shots.getLastType())
                     .isEqualTo(expectTypes.get(i));
         }
     }

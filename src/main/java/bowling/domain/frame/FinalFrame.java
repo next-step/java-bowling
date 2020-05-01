@@ -64,7 +64,7 @@ public class FinalFrame implements Frame {
     @Override
     public String toString() {
         return "FinalFrame{" +
-                "shotScores=" + shots +
+                "shots=" + shots +
                 '}';
     }
 }

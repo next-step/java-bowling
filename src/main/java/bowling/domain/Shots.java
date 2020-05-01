@@ -63,8 +63,8 @@ public class Shots {
 
     @Override
     public String toString() {
-        return "ShotScores{" +
-                "shotScores=" + shots +
+        return "Shots{" +
+                "shots=" + shots +
                 '}';
     }
 }

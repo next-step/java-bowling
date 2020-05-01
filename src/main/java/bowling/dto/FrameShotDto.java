@@ -16,11 +16,11 @@ public class FrameShotDto {
     public List<String> getShots() {
         return shots
                 .stream()
-                .map(this::parseShotScore)
+                .map(this::parseShot)
                 .collect(Collectors.toList());
     }
 
-    private String parseShotScore(Shot shot) {
-        return ShotScoreParser.of(shot.scoreType()).parse(shot.singleScore());
+    private String parseShot(Shot shot) {
+        return ShotParser.of(shot.scoreType()).parse(shot.singleScore());
     }
 }

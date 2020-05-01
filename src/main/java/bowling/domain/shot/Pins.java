@@ -14,7 +14,7 @@ public class Pins {
 
     public static Pins of(int score) {
         if (score < MIN || MAX < score) {
-            throw new IllegalArgumentException(String.format("create ShotScore fail, score must be %d~%d : score = %d", MIN, MAX, score));
+            throw new IllegalArgumentException(String.format("create Pins fail, score must be %d~%d : score = %d", MIN, MAX, score));
         }
 
         return new Pins(score);

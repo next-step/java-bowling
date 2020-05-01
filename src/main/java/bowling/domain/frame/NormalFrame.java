@@ -37,7 +37,7 @@ public class NormalFrame implements Frame {
             throw new IllegalStateException(String.format("shot Frame fail. this FinalFrame already calculated instance=%s", this));
         }
 
-        addShotScore(shot);
+        addShot(shot);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class NormalFrame implements Frame {
         return frameNumber;
     }
 
-    private void addShotScore(int shot) {
+    private void addShot(int shot) {
         shots.add(shot);
     }
 
@@ -76,7 +76,7 @@ public class NormalFrame implements Frame {
     @Override
     public String toString() {
         return "NormalFrame{" +
-                "shotScores=" + shots +
+                "shots=" + shots +
                 '}';
     }
 }

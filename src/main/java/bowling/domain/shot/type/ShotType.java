@@ -36,13 +36,13 @@ public enum ShotType {
         return Arrays.stream(values())
                 .filter(v -> v.typeChecker.availableFirstShots(firstPins))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Not Matched Instance : firstScore=%s", firstPins)));
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Not Matched Instance : firstPins=%s", firstPins)));
     }
 
     public static ShotType of(Pins firstPins, Pins secondPins) {
         return Arrays.stream(values())
                 .filter(v -> v.typeChecker.availableSecondShots(firstPins, secondPins))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Not Matched Instance : firstScore=%s, secondScore=%s", firstPins, secondPins)));
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Not Matched Instance : firstPins=%s, secondPins=%s", firstPins, secondPins)));
     }
 }
