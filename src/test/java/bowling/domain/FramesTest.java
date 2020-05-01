@@ -84,8 +84,8 @@ class FramesTest {
             "4,5:9",
             "10,10,10:30",
             "10,9,1,4,3:20,14,7",
-    },delimiter = ':')
-    void getScores(String inputShots, String expectScores){
+    }, delimiter = ':')
+    void getScores(String inputShots, String expectScores) {
         Frames frames = new Frames();
         splitInts(inputShots)
                 .forEach(frames::shot);
@@ -93,7 +93,7 @@ class FramesTest {
                 .isEqualTo(splitInts(expectScores));
     }
 
-    private List<Integer> splitInts(String splittableString){
+    private List<Integer> splitInts(String splittableString) {
         return Arrays.stream(splittableString.split(","))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());

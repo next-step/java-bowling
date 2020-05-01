@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.shot.Shot;
 import bowling.domain.frame.score.FrameScore;
+import bowling.domain.shot.Shot;
 
 import java.util.List;
 

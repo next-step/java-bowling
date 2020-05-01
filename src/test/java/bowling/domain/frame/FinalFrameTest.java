@@ -51,7 +51,7 @@ class FinalFrameTest {
     @ValueSource(strings = {"5", "10,10", "4,6", "10,4"})
     void isFrameSetFalse(String shotString) {
         int[] shots = splitInts(shotString);
-        
+
         assertThat(finalFrame.isFrameSet())
                 .isFalse();
 
@@ -89,7 +89,7 @@ class FinalFrameTest {
     })
     void isScoreCalculatedLastFrame(String shotString) {
         int[] shots = splitInts(shotString);
-        
+
         for (int shot : shots) {
             finalFrame.shot(shot);
         }
@@ -106,7 +106,7 @@ class FinalFrameTest {
     })
     void isNotScoreCalculatedLastFrame(String shotString) {
         int[] shots = splitInts(shotString);
-        
+
         for (int shot : shots) {
             finalFrame.shot(shot);
         }
@@ -116,7 +116,7 @@ class FinalFrameTest {
 
     @Test
     void shot() {
-        
+
         finalFrame.shot(4);
         assertThat(finalFrame.shots().stream())
                 .anyMatch(v -> ShotType.MISS_FIRST.equals(v.scoreType()))
