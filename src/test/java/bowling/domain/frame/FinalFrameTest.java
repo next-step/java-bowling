@@ -26,12 +26,6 @@ class FinalFrameTest {
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 
-    @Test
-    void last() {
-        assertThatThrownBy(finalFrame::last)
-                .isInstanceOf(UnsupportedOperationException.class);
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {"5,4", "10,10,10", "4,6,4", "10,4,5"})
     void isFrameSet(String shotString) {

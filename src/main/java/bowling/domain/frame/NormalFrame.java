@@ -25,11 +25,9 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame next() {
-        return new NormalFrame(Shots.of(), this.frameNumber + 1);
-    }
-
-    @Override
-    public Frame last() {
+        if (frameNumber < FinalFrame.FRAME_NUMBER - 1) {
+            return new NormalFrame(Shots.of(), this.frameNumber + 1);
+        }
         return FinalFrame.of();
     }
 

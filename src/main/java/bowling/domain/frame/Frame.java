@@ -6,8 +6,6 @@ import bowling.domain.shot.Shot;
 import java.util.List;
 
 public interface Frame {
-    Frame last();
-
     Frame next();
 
     boolean isFrameSet();

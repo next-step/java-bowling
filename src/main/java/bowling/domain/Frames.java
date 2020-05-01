@@ -52,10 +52,7 @@ public class Frames {
     }
 
     private Frame getNextFrame() {
-        if (getLast().getFrameNumber() < FinalFrame.FRAME_NUMBER - 1) {
-            return getLast().next();
-        }
-        return getLast().last();
+        return getLast().next();
     }
 
     boolean isGameSet() {

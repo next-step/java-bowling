@@ -24,11 +24,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame last() {
-        throw new UnsupportedOperationException("FinalFrame can not get last");
-    }
-
-    @Override
     public Frame next() {
         throw new UnsupportedOperationException("FinalFrame can not get next");
     }
