@@ -2,7 +2,6 @@ package bowling.domain;
 
 import bowling.domain.frame.FrameNode;
 import bowling.domain.frame.Frames;
-import bowling.domain.frame.NormalFrameNode;
 import bowling.exception.CannotBowlException;
 
 public class BowlingGame {
@@ -19,7 +18,7 @@ public class BowlingGame {
     return player.getName();
   }
 
-  public NormalFrameNode getInitialFrame() {
+  public FrameNode getInitialFrame() {
     return frames.getInitialFrame();
   }
 

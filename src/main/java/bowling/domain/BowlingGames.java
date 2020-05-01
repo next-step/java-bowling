@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ public class BowlingGames {
   }
 
   public List<BowlingGame> getBowlingGames() {
-    return bowlingGames;
+    return Collections.unmodifiableList(bowlingGames);
   }
 
   public static BowlingGames of(Players players) {
