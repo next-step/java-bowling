@@ -1,7 +1,5 @@
 package bowling.domain.frame.score;
 
-import bowling.domain.shot.type.ShotType;
-
 import java.util.Objects;
 
 public class DefaultFrameScore implements FrameScore {
@@ -13,15 +11,15 @@ public class DefaultFrameScore implements FrameScore {
         this.leftShotCount = leftShotCount;
     }
 
-    public static DefaultFrameScore of(int score, ShotType shotType) {
-        if (!shotType.isFinished()) {
-            throw new IllegalArgumentException(String.format("scoreType must be Finished Type : scoreType = %s", score));
+    public static DefaultFrameScore of(int score, int bonusCount) {
+        if (isNegative(score) || isNegative(bonusCount)) {
+            throw new IllegalArgumentException(String.format("score and bonusCount must be positive number : score=%d, bonusCount=%d", score, bonusCount));
         }
-        return new DefaultFrameScore(score, shotType.getBonusCount());
+        return new DefaultFrameScore(score, bonusCount);
     }
 
-    public static DefaultFrameScore of(int score, int bonusCount) {
-        return new DefaultFrameScore(score, bonusCount);
+    private static boolean isNegative(int number) {
+        return number < 0;
     }
 
     public final static FrameScore NULL = new FrameScore() {
