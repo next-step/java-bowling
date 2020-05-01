@@ -1,9 +1,6 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Players {
@@ -34,7 +31,7 @@ public class Players {
     }
 
     private static boolean isPlayerNamesNullOrEmpty(List<String> players) {
-        return players == null || players.size() < 1;
+        return Objects.isNull(players) || players.isEmpty();
     }
 
     public Player getCurrentPlayer() {
