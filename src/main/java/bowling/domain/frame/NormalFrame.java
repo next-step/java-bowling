@@ -21,14 +21,17 @@ public class NormalFrame implements Frame {
         return new NormalFrame(Shots.of());
     }
 
+    @Override
     public Frame next() {
         return new NormalFrame(Shots.of());
     }
 
+    @Override
     public Frame last() {
         return FinalFrame.of();
     }
 
+    @Override
     public void shot(int shot) {
         if (isFrameSet()) {
             throw new IllegalStateException(String.format("shot Frame fail. this FinalFrame already calculated instance=%s", this));
@@ -41,11 +44,13 @@ public class NormalFrame implements Frame {
         shots.add(shot);
     }
 
+    @Override
     public boolean isFrameSet() {
         return shots.hasSize(SHOT_LIMIT) ||
                 shots.hasClear();
     }
 
+    @Override
     public FrameScore getFrameScore() {
         if (!isFrameSet()) {
             return DefaultFrameScore.NULL;
@@ -58,6 +63,7 @@ public class NormalFrame implements Frame {
         return frameScore;
     }
 
+    @Override
     public List<Shot> shots() {
         return shots.shots();
     }
