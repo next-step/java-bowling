@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pins {
-    public static final int MAX_PIN_COUNT = 10;
+    private static final int MAX_PIN_COUNT = 10;
+    private static final int GUTTER = 0;
+
     private final List<Integer> fallenPins = new ArrayList<>();
 
     public void bowl(int count) {
@@ -28,6 +30,9 @@ public class Pins {
     }
 
     public String getDescription() {
+        if (isReady()) {
+            return "";
+        }
         if (isStrike()) {
             return "X";
         }
@@ -40,8 +45,12 @@ public class Pins {
         return stringOf(fallenPins.get(0)) + "|" + stringOf(fallenPins.get(1));
     }
 
+    private boolean isReady() {
+        return fallenPins.isEmpty();
+    }
+
     private String stringOf(int pins) {
-        if (pins == 0) {
+        if (pins == GUTTER) {
             return "-";
         }
         return pins + "";
