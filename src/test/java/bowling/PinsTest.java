@@ -36,10 +36,32 @@ public class PinsTest {
     }
 
     @Test
+    @DisplayName("2번의 시도가 끝나면 프레임이 종료된다")
+    public void tryBowlingTwiceIsFinish() {
+        Pins pins = new Pins();
+        pins.bowl(6);
+        pins.bowl(2);
+
+        assertThat(pins.isFinish()).isTrue();
+    }
+
+    @Test
     @DisplayName("보드에 기록될 프레임 결과 표시를 얻는다")
     public void getDescriptionForRecordOnBoard() {
         Pins pins = new Pins();
         pins.bowl(10);
+
         assertThat(pins.getDescription()).isEqualTo("X");
+
+        Pins pins2 = new Pins();
+        pins2.bowl(8);
+        pins2.bowl(2);
+
+        assertThat(pins2.getDescription()).isEqualTo("8|/");
+
+        Pins pins3 = new Pins();
+        pins3.bowl(0);
+
+        assertThat(pins3.getDescription()).isEqualTo("-");
     }
 }

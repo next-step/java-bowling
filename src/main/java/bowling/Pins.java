@@ -23,7 +23,27 @@ public class Pins {
         return fallenPins.get(0) + fallenPins.get(1) < MAX_PIN_COUNT;
     }
 
+    public boolean isFinish() {
+        return fallenPins.size() == 2;
+    }
+
     public String getDescription() {
-        return "X";
+        if (isStrike()) {
+            return "X";
+        }
+        if (!isFinish()) {
+            return stringOf(fallenPins.get(0)) + "";
+        }
+        if (isSpare()) {
+            return stringOf(fallenPins.get(0)) + "|/";
+        }
+        return stringOf(fallenPins.get(0)) + "|" + stringOf(fallenPins.get(1));
+    }
+
+    private String stringOf(int pins) {
+        if (pins == 0) {
+            return "-";
+        }
+        return pins + "";
     }
 }
