@@ -42,7 +42,7 @@ class FramesTest {
                 .hasSize(frameSize);
         splitInts(expectShotSizes)
                 .forEach(size ->
-                        assertFrames.anyMatch(v -> v.shots().size() == size));
+                        assertFrames.anyMatch(v -> v.getShotsCount() == size));
     }
 
     @Test

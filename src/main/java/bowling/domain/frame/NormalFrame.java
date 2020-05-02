@@ -79,4 +79,9 @@ public class NormalFrame implements Frame {
                 "shots=" + shots +
                 '}';
     }
+
+    @Override
+    public int getShotsCount() {
+        return shots.shots().size();
+    }
 }

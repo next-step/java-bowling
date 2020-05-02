@@ -140,4 +140,14 @@ class FinalFrameTest {
                 .mapToInt(Integer::parseInt)
                 .toArray();
     }
+
+    @Test
+    void getShotCount() {
+        FinalFrame finalFrame = FinalFrame.of();
+        assertThat(finalFrame.getShotsCount())
+                .isEqualTo(0);
+        finalFrame.shot(1);
+        assertThat(finalFrame.getShotsCount())
+                .isEqualTo(1);
+    }
 }

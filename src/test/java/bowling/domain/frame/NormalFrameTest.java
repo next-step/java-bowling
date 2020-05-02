@@ -102,4 +102,14 @@ class NormalFrameTest {
                 .mapToInt(Integer::parseInt)
                 .toArray();
     }
+
+    @Test
+    void getShotCount() {
+        NormalFrame normalFrame = NormalFrame.init();
+        assertThat(normalFrame.getShotsCount())
+                .isEqualTo(0);
+        normalFrame.shot(1);
+        assertThat(normalFrame.getShotsCount())
+                .isEqualTo(1);
+    }
 }

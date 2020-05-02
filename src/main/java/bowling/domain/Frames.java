@@ -2,10 +2,10 @@ package bowling.domain;
 
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.score.FrameScore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,7 +31,7 @@ public class Frames {
     }
 
     int getCurrentFrameShotCount() {
-        return getLast().shots().size();
+        return getLast().getShotsCount();
     }
 
     void shot(int shot) {

@@ -67,4 +67,9 @@ public class FinalFrame implements Frame {
                 "shots=" + shots +
                 '}';
     }
+
+    @Override
+    public int getShotsCount() {
+        return shots.shots().size();
+    }
 }

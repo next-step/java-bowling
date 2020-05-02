@@ -17,4 +17,6 @@ public interface Frame {
     void shot(int shot);
 
     int getFrameNumber();
+
+    int getShotsCount();
 }
