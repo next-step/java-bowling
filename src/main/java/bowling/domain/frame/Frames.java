@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.FrameResults;
 import bowling.exception.CannotBowlException;
 
 public class Frames {
@@ -23,6 +24,20 @@ public class Frames {
   public FrameNode roll(int pinCount) throws CannotBowlException {
     currentFrame = currentFrame.roll(pinCount);
     return currentFrame;
+  }
+
+  public FrameResults produceResults() {
+    FrameResults frameResults = new FrameResults();
+    FrameNode frame = initialFrame;
+
+    while(!frame.isFinalFrame()) {
+      frame.addFrameResult(frameResults);
+      frame = frame.getNextFrame();
+    }
+
+    frame.addFrameResult(frameResults);
+
+    return frameResults;
   }
 
   public boolean isEnd() {

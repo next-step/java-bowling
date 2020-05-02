@@ -18,16 +18,16 @@ public class BowlingGame {
     return player.getName();
   }
 
-  public FrameNode getInitialFrame() {
-    return frames.getInitialFrame();
-  }
-
   public FrameNode getCurrentFrame() {
     return frames.getCurrentFrame();
   }
 
   public FrameNode roll(int pinCount) throws CannotBowlException {
     return frames.roll(pinCount);
+  }
+
+  public FrameResults produceResults() {
+    return frames.produceResults();
   }
 
   public boolean isEnd() {

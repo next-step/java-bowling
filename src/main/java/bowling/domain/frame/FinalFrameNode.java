@@ -2,6 +2,8 @@ package bowling.domain.frame;
 
 import static bowling.domain.bowlresult.BonusResult.NULL_RESULT;
 
+import bowling.domain.FrameResult;
+import bowling.domain.FrameResults;
 import bowling.domain.bowlresult.BonusResult;
 import bowling.domain.bowlresult.RegularResult;
 import bowling.domain.Round;
@@ -20,17 +22,9 @@ public class FinalFrameNode implements FrameNode {
     bonusResult = NULL_RESULT;
   }
 
-  public RegularResult getRegularResult() {
-    return regularResult;
-  }
-
-  public BonusResult getBonusResult() {
-    return bonusResult;
-  }
-
   @Override
-  public int getRolledBowlCount() {
-    return regularResult.getRolledBowlCount() + bonusResult.getRolledBowlCount();
+  public void addFrameResult(FrameResults frameResults) {
+    frameResults.add(new FrameResult(regularResult, bonusResult, calculateScore()));
   }
 
   @Override
