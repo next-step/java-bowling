@@ -1,11 +1,18 @@
 package bowling;
 
 public class LastFrame {
-    public LastFrame bowl(int i) {
+    private final Pins fallenPins;
+
+    public LastFrame() {
+        this.fallenPins = new Pins();
+    }
+
+    public LastFrame bowl(int fallenPinCount) {
+        fallenPins.bowl(fallenPinCount);
         return this;
     }
 
     public boolean isGameEnd() {
-        return true;
+        return fallenPins.isFinish();
     }
 }
