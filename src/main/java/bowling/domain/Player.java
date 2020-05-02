@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.NormalFrame;
+
 public class Player {
     private final String name;
     private final Frames frames;
@@ -14,7 +16,7 @@ public class Player {
             throw new IllegalArgumentException(String.format("create Player fail. name length must be under 4 characters, name = %s", name));
         }
 
-        return new Player(name, new Frames());
+        return new Player(name, new Frames(NormalFrame.init()));
     }
 
     public int getCurrentFrameNumber() {

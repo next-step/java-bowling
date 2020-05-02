@@ -1,15 +1,16 @@
 package bowling.domain;
 
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
     @Test
     void of() {
-        assertThatCode(() -> Player.of("SKT"))
-                .doesNotThrowAnyException();
+        assertThat(Player.of("SKT").frames().getFrames())
+                .containsExactly(NormalFrame.init());
     }
 
     @Test

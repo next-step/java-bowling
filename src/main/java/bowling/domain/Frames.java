@@ -13,9 +13,8 @@ import java.util.stream.Collectors;
 public class Frames {
     private final List<Frame> frames;
 
-    Frames() {
-        this.frames = new ArrayList<>();
-        frames.add(NormalFrame.init());
+    Frames(Frame... frames) {
+        this.frames = new ArrayList<>(Arrays.asList(frames));
     }
 
     int getCurrentFrameNumber() {

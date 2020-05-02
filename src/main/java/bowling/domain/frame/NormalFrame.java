@@ -6,6 +6,7 @@ import bowling.domain.frame.score.FrameScore;
 import bowling.domain.shot.Shot;
 
 import java.util.List;
+import java.util.Objects;
 
 public class NormalFrame implements Frame {
     private static final int SHOT_LIMIT = 2;
@@ -83,5 +84,18 @@ public class NormalFrame implements Frame {
     @Override
     public int getShotsCount() {
         return shots.shots().size();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame that = (NormalFrame) o;
+        return frameNumber == that.frameNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber);
     }
 }
