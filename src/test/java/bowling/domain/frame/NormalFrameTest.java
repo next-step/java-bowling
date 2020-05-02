@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.score.DefaultFrameScore;
+import bowling.domain.frame.score.FrameScore;
 import bowling.domain.shot.type.ShotType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,7 +39,7 @@ class NormalFrameTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"5,4", "10"})
-    void isClosed(String shotString) {
+    void isFrameSet(String shotString) {
         NormalFrame normalFrame = NormalFrame.init();
         assertThat(normalFrame.isFrameSet())
                 .isFalse();
@@ -53,38 +55,22 @@ class NormalFrameTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "4,4:8",
-            "0,0:0"
+            "4,4:8:true",
+            "1,9:10:false",
+            "10:10:false"
     }, delimiter = ':')
-    void getFrameScore(String shotString, int expectScore) {
+    void getFrameScore(String shotString, int expectScore, boolean expectCalculated) {
         int[] shots = splitInts(shotString);
         NormalFrame normalFrame = NormalFrame.init();
         for (int shot : shots) {
             normalFrame.shot(shot);
-        }
-        assertThat(normalFrame.getFrameScore().getScore())
-                .isEqualTo(expectScore);
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {
-            "10:4,3:true",
-            "1,9:2:true",
-            "10:5:false",
-            "1,9::false"
-    }, delimiter = ':')
-    void isScoreCalculated(String shotString, String bonusesString, boolean expectCalculated) {
-        int[] shots = splitInts(shotString);
-        int[] bonuses = bonusesString == null ? new int[0] : splitInts(bonusesString);
-        NormalFrame normalFrame = NormalFrame.init();
-        for (int shot : shots) {
-            normalFrame.shot(shot);
-        }
-        for (int bonus : bonuses) {
-            normalFrame.getFrameScore().addBonus(bonus);
         }
         assertThat(normalFrame.getFrameScore().isCalculated())
                 .isEqualTo(expectCalculated);
+        if (expectCalculated) {
+            assertThat(normalFrame.getFrameScore().getScore())
+                    .isEqualTo(expectScore);
+        }
     }
 
     @Test
@@ -111,5 +97,18 @@ class NormalFrameTest {
         normalFrame.shot(1);
         assertThat(normalFrame.getShotsCount())
                 .isEqualTo(1);
+    }
+
+    @Test
+    void addBonus() {
+        FrameScore frameScore = DefaultFrameScore.of(10, 1);
+        NormalFrame normalFrame = NormalFrame.init();
+        assertThat(normalFrame.addBonus(frameScore).isCalculated())
+                .isFalse();
+
+        normalFrame.shot(5);
+        assertThat(normalFrame.addBonus(frameScore))
+                .matches(FrameScore::isCalculated)
+                .matches(v -> v.getScore() == 15);
     }
 }

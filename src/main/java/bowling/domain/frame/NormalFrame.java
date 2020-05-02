@@ -12,7 +12,7 @@ public class NormalFrame implements Frame {
     private static final int SHOT_LIMIT = 2;
 
     private final Shots shots;
-    private FrameScore frameScore;
+    private Frame next;
     private final int frameNumber;
 
     private NormalFrame(Shots shots, int frameNumber) {
@@ -27,9 +27,11 @@ public class NormalFrame implements Frame {
     @Override
     public Frame next() {
         if (frameNumber < FinalFrame.FRAME_NUMBER - 1) {
-            return new NormalFrame(Shots.of(), this.frameNumber + 1);
+            next = new NormalFrame(Shots.of(), this.frameNumber + 1);
+            return next;
         }
-        return FinalFrame.of();
+        next = FinalFrame.of();
+        return next;
     }
 
     @Override
@@ -61,12 +63,29 @@ public class NormalFrame implements Frame {
         if (!isFrameSet()) {
             return DefaultFrameScore.NULL;
         }
-        return setAndGetFrameScore();
+        return getFrameScoreWithAddBonus();
     }
 
-    private FrameScore setAndGetFrameScore() {
-        frameScore = frameScore != null ? frameScore : DefaultFrameScore.of(shots.totalScore(), shots.getLastType().getBonusCount());
-        return frameScore;
+    private FrameScore getFrameScoreWithAddBonus() {
+        FrameScore frameScore = DefaultFrameScore.of(shots.totalScore(), shots.getLastType().getBonusCount());
+        return Objects.isNull(next) ? frameScore : next.addBonus(frameScore);
+    }
+
+    @Override
+    public FrameScore addBonus(FrameScore beforeScore) {
+        for (Shot shot : shots.shots()) {
+            addBonus(beforeScore, shot);
+        }
+        if (beforeScore.isCalculated() || Objects.isNull(next)) {
+            return beforeScore;
+        }
+        return next.addBonus(beforeScore);
+    }
+
+    private void addBonus(FrameScore beforeScore, Shot shot) {
+        if (!beforeScore.isCalculated()) {
+            beforeScore.addBonus(shot.singleScore());
+        }
     }
 
     @Override

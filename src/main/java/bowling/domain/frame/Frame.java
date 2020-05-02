@@ -19,4 +19,6 @@ public interface Frame {
     int getFrameNumber();
 
     int getShotsCount();
+
+    FrameScore addBonus(FrameScore beforScore);
 }

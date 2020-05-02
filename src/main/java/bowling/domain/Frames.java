@@ -34,11 +34,6 @@ public class Frames {
     }
 
     void shot(int shot) {
-        frames.stream()
-                .filter(Frame::isFrameSet)
-                .map(Frame::getFrameScore)
-                .filter(v -> !v.isCalculated())
-                .forEach(v -> v.addBonus(shot));
         getLast().shot(shot);
 
         if (isCurrentFrameDone() && isNotFinalFrame()) {

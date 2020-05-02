@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.frame.score.DefaultFrameScore;
+import bowling.domain.frame.score.FrameScore;
 import bowling.domain.shot.type.ShotType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -74,40 +76,6 @@ class FinalFrameTest {
                 .isEqualTo(expectScore);
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "10,4,3",
-            "4,3",
-            "1,9,2",
-            "10,10,3"
-    })
-    void isScoreCalculatedLastFrame(String shotString) {
-        int[] shots = splitInts(shotString);
-
-        for (int shot : shots) {
-            finalFrame.shot(shot);
-        }
-        assertThat(finalFrame.getFrameScore().isCalculated())
-                .isTrue();
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "10,4",
-            "4",
-            "1,9",
-            "10,10"
-    })
-    void isNotScoreCalculatedLastFrame(String shotString) {
-        int[] shots = splitInts(shotString);
-
-        for (int shot : shots) {
-            finalFrame.shot(shot);
-        }
-        assertThat(finalFrame.getFrameScore().isCalculated())
-                .isFalse();
-    }
-
     @Test
     void shot() {
 
@@ -149,5 +117,18 @@ class FinalFrameTest {
         finalFrame.shot(1);
         assertThat(finalFrame.getShotsCount())
                 .isEqualTo(1);
+    }
+
+    @Test
+    void addBonus() {
+        FrameScore frameScore = DefaultFrameScore.of(10, 1);
+        NormalFrame normalFrame = NormalFrame.init();
+        assertThat(normalFrame.addBonus(frameScore).isCalculated())
+                .isFalse();
+
+        normalFrame.shot(5);
+        assertThat(normalFrame.addBonus(frameScore))
+                .matches(FrameScore::isCalculated)
+                .matches(v -> v.getScore() == 15);
     }
 }

@@ -31,21 +31,15 @@ class FramesTest {
     @Test
     void shot() {
         Frame frame1 = getMockFrame(true);
-        Frame frame2 = getMockFrame(false);
-
-        FrameScore frameScore1 = mock(FrameScore.class);
-        when(frameScore1.isCalculated())
-                .thenReturn(false);
-        when(frame1.getFrameScore())
-                .thenReturn(frameScore1);
+        Frame frame2 = getMockFrame(true);
 
         Frames frames = new Frames(frame1, frame2);
         frames.shot(5);
 
-        verify(frameScore1)
-                .addBonus(5);
         verify(frame2)
                 .shot(5);
+        verify(frame2)
+                .next();
     }
 
     private Frame getMockFrame(boolean isFrameSet) {

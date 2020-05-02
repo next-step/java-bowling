@@ -72,4 +72,18 @@ public class FinalFrame implements Frame {
     public int getShotsCount() {
         return shots.shots().size();
     }
+
+    @Override
+    public FrameScore addBonus(FrameScore beforeScore) {
+        for (Shot shot : shots.shots()) {
+            addBonus(beforeScore, shot);
+        }
+        return beforeScore;
+    }
+
+    private void addBonus(FrameScore beforeScore, Shot shot) {
+        if (!beforeScore.isCalculated()) {
+            beforeScore.addBonus(shot.singleScore());
+        }
+    }
 }
