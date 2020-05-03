@@ -6,7 +6,7 @@ public class Player {
     private final String name;
     private final Frames frames;
 
-    private Player(String name, Frames frames) {
+    Player(String name, Frames frames) {
         this.name = name;
         this.frames = frames;
     }

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.MockFrame;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -7,8 +8,6 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 
 
 class PlayersTest {
@@ -55,18 +54,15 @@ class PlayersTest {
 
     @Test
     void isGameSet() {
-        Player player1 = spy(PLAYER1);
-        Player player2 = spy(PLAYER2);
+        Player player1 = new Player("tt1", new Frames(new MockFrame(10, true)));
+        Player player2 = new Player("tt1", new Frames(new MockFrame(10, false)));
         Players players = Players.of(player1, player2);
 
         assertThat(players.isGameSet())
                 .isFalse();
 
-        when(player1.isGameSet()).thenReturn(true);
-        assertThat(players.isGameSet())
-                .isFalse();
+        players = Players.of(player1);
 
-        when(player2.isGameSet()).thenReturn(true);
         assertThat(players.isGameSet())
                 .isTrue();
     }
