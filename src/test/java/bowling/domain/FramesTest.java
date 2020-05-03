@@ -2,64 +2,45 @@ package bowling.domain;
 
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.score.FrameScore;
+import bowling.domain.frame.MockFrame;
+import bowling.domain.frame.score.MockFrameScore;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 
 class FramesTest {
 
     @Test
     void getCurrentFrameNumber() {
-        Frame frame1 = getMockFrame(1, 0);
-        Frame frame2 = getMockFrame(2, 0);
+        Frame frame1 = new MockFrame(1);
+        Frame frame2 = new MockFrame(2);
         Frames frames = new Frames(frame1, frame2);
         assertThat(frames.getCurrentFrameNumber())
                 .isEqualTo(2);
     }
 
-    private Frame getMockFrame(int frameNumber, int shotCount) {
-        Frame frame = mock(Frame.class);
-        when(frame.getFrameNumber())
-                .thenReturn(frameNumber);
-        when(frame.getShotsCount())
-                .thenReturn(shotCount);
-        return frame;
-    }
-
     @Test
     void shot() {
-        Frame frame1 = getMockFrame(true);
-        Frame frame2 = getMockFrame(true);
+        MockFrame frame1 = new MockFrame(1, true);
 
-        Frames frames = new Frames(frame1, frame2);
+        Frames frames = new Frames(frame1);
         frames.shot(5);
 
-        verify(frame2)
-                .shot(5);
-        verify(frame2)
-                .next();
-    }
-
-    private Frame getMockFrame(boolean isFrameSet) {
-        Frame frame1 = mock(Frame.class);
-        when(frame1.isFrameSet())
-                .thenReturn(isFrameSet);
-        return frame1;
+        assertThat(frames.getCurrentFrameNumber())
+                .isEqualTo(2);
+        assertThat(frame1.getShotsCount())
+                .isEqualTo(1);
     }
 
     @Test
     void isGameSet() {
-        Frame finalFrame = mock(Frame.class);
-        when(finalFrame.getFrameNumber())
-                .thenReturn(FinalFrame.FRAME_NUMBER);
+        Frame finalFrame = FinalFrame.of();
         Frames frames = new Frames(finalFrame);
         assertThat(frames.isGameSet())
                 .isFalse();
 
-        when(finalFrame.isFrameSet())
-                .thenReturn(true);
+        finalFrame.shot(3);
+        finalFrame.shot(3);
 
         assertThat(frames.isGameSet())
                 .isTrue();
@@ -67,38 +48,24 @@ class FramesTest {
 
     @Test
     void getCurrentFrameShotCount() {
-        Frame frame1 = getMockFrame(1, 1);
-        Frame frame2 = getMockFrame(2, 2);
+        Frame frame1 = new MockFrame(1, 2);
+        Frame frame2 = new MockFrame(2, 1);
 
         Frames frames = new Frames(frame1, frame2);
 
         assertThat(frames.getCurrentFrameShotCount())
-                .isEqualTo(2);
+                .isEqualTo(1);
     }
 
     @Test
     void getScores() {
-        Frame frame1 = getMockFrame(true);
-        Frame frame2 = getMockFrame(true);
-        Frame frame3 = getMockFrame(false);
-
-        settingFrameScore(frame1, true, 11);
-        settingFrameScore(frame2, false, 12);
-        settingFrameScore(frame3, false, 13);
+        Frame frame1 = new MockFrame(true, new MockFrameScore(true, 25));
+        Frame frame2 = new MockFrame(true, new MockFrameScore(false, 15));
+        Frame frame3 = new MockFrame(false, new MockFrameScore(false, 5));
 
         Frames frames = new Frames(frame1, frame2, frame3);
         assertThat(frames.getScores())
                 .hasSize(1)
-                .containsExactly(11);
-    }
-
-    private void settingFrameScore(Frame mockFrame, boolean isCalculated, int getScore) {
-        FrameScore mockFrameScore = mock(FrameScore.class);
-        when(mockFrameScore.isCalculated())
-                .thenReturn(isCalculated);
-        when(mockFrameScore.getScore())
-                .thenReturn(getScore);
-        when(mockFrame.getFrameScore())
-                .thenReturn(mockFrameScore);
+                .containsExactly(25);
     }
 }
