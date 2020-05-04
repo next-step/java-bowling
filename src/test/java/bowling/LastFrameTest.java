@@ -23,4 +23,13 @@ public class LastFrameTest {
 
         assertThat(lastFrame.isGameEnd()).isFalse();
     }
+
+    @Test
+    @DisplayName("마지막 프레임에서 스페어이면 한 번을 더 투구할 수 있다")
+    public void bowlOneMoreWhenSpare() {
+        LastFrame lastFrame = new LastFrame();
+        lastFrame.bowl(9).bowl(1);
+
+        assertThat(lastFrame.isGameEnd()).isFalse();
+    }
 }
