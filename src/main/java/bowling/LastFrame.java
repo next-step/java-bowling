@@ -1,18 +1,20 @@
 package bowling;
 
-public class LastFrame {
-    private final Pins fallenPins;
+import java.util.ArrayList;
+import java.util.List;
 
-    public LastFrame() {
-        this.fallenPins = new Pins();
-    }
+public class LastFrame {
+    private final List<Pins> fallenPins = new ArrayList<>();
 
     public LastFrame bowl(int fallenPinCount) {
-        fallenPins.bowl(fallenPinCount);
+        Pins pins = new Pins();
+        pins.bowl(fallenPinCount);
+        fallenPins.add(pins);
+
         return this;
     }
 
     public boolean isGameEnd() {
-        return fallenPins.isFinish();
+        return fallenPins.size() == 2;
     }
 }
