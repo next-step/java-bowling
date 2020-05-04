@@ -32,4 +32,13 @@ public class LastFrameTest {
 
         assertThat(lastFrame.isGameEnd()).isFalse();
     }
+
+    @Test
+    @DisplayName("스페어가 나오고 한 번 더 투구하면 게임이 끝난다")
+    public void bowlOneMoreGameEndWhenSpare() {
+        LastFrame lastFrame = new LastFrame();
+        lastFrame.bowl(9).bowl(1).bowl(7);
+
+        assertThat(lastFrame.isGameEnd()).isTrue();
+    }
 }
