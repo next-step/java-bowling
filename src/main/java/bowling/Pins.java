@@ -6,11 +6,15 @@ import java.util.List;
 public class Pins {
     private static final int MAX_PIN_COUNT = 10;
     private static final int GUTTER = 0;
+    private static final int BLANK_FOR_STRIKE = 0;
 
     private final List<Integer> fallenPins = new ArrayList<>();
 
     public void bowl(int count) {
         fallenPins.add(count);
+        if (count == MAX_PIN_COUNT) {
+            fallenPins.add(BLANK_FOR_STRIKE);
+        }
     }
 
     public boolean isStrike() {
