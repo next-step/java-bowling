@@ -45,4 +45,12 @@ public class LastFrameTest {
 
         assertThat(lastFrame.isGameEnd()).isTrue();
     }
+
+    @Test
+    @DisplayName("스트라이크를 3번 연속으로 하면 X|X|X가 반환된다")
+    public void getRecordWhenStrike() {
+        lastFrame.bowl(10).bowl(10).bowl(10);
+
+        assertThat(lastFrame.getRecord()).isEqualTo("X|X|X");
+    }
 }

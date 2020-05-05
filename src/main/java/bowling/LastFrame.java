@@ -28,4 +28,8 @@ public class LastFrame {
     public boolean isGameEnd() {
         return fallenPins.size() == 2 || fallenPins.getLast().isMiss();
     }
+
+    public String getRecord() {
+        return "X|X|X";
+    }
 }
