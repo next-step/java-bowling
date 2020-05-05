@@ -1,6 +1,7 @@
 package bowling;
 
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public class LastFrame {
     private final LinkedList<Pins> fallenPins = new LinkedList<>();
@@ -30,6 +31,8 @@ public class LastFrame {
     }
 
     public String getRecord() {
-        return "X|X|X";
+        return fallenPins.stream()
+                .map(Pins::getDescription)
+                .collect(Collectors.joining("|"));
     }
 }
