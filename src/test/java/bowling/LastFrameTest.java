@@ -61,4 +61,12 @@ public class LastFrameTest {
 
         assertThat(lastFrame.getRecord()).isEqualTo("7|/|X");
     }
+
+    @Test
+    @DisplayName("미스가 나면 보너스 투구가 없는 기록을 반환한다")
+    public void getRecordWhenMiss() {
+        lastFrame.bowl(8).bowl(1);
+
+        assertThat(lastFrame.getRecord()).isEqualTo("8|1");
+    }
 }
