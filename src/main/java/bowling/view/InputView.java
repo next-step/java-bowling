@@ -1,12 +1,16 @@
 package bowling.view;
 
-import bowling.domain.Frame;
+import bowling.domain.BowlingGame;
 import bowling.domain.Player;
+import bowling.domain.Players;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-  private static final String PLAYER_NAME_QUESTION = "플레이어 이름은(3 english letters)?: ";
-  private static final String FRAME_BOWLING_MESSAGE = "%d 프레임 투구 : ";
+  private static final String PLAYER_COUNT_QUESTION = "How many people?";
+  private static final String PLAYER_NAME_QUESTION = "플레이어 %d의 이름은?(3 english letters): ";
+  private static final String FRAME_BOWLING_MESSAGE = "%s's turn : ";
 
   private Scanner scanner;
 
@@ -14,16 +18,31 @@ public class InputView {
     scanner = new Scanner(System.in);
   }
 
-  public Player acceptPlayer() {
-    printWithNewLine(PLAYER_NAME_QUESTION);
-    String name = scanner.nextLine();
+  public Players acceptPlayers() {
+    int playerCount = acceptPlayerCount();
 
-    return new Player(name);
+    List<String> playerNames = new ArrayList<>();
+
+    for (int i = 1; i <= playerCount; i++) {
+      playerNames.add(acceptPlayer(i));
+    }
+
+    return new Players(playerNames);
   }
 
-  public int inputPinCount(Frame frame) {
-    printWithNewLine(String.format(FRAME_BOWLING_MESSAGE, frame.getRound()));
-    return Integer.parseInt(scanner.nextLine());
+  private int acceptPlayerCount() {
+    printWithNewLine(PLAYER_COUNT_QUESTION);
+    return scanner.nextInt();
+  }
+
+  private String acceptPlayer(int playerIndex) {
+    System.out.println(String.format(PLAYER_NAME_QUESTION, playerIndex));
+    return scanner.next();
+  }
+
+  public int inputPinCount(String name) {
+    printWithNewLine(String.format(FRAME_BOWLING_MESSAGE, name));
+    return scanner.nextInt();
   }
 
   private void printWithNewLine(String sentence) {

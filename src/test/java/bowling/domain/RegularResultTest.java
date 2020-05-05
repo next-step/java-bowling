@@ -3,6 +3,11 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import bowling.domain.bowlresult.RegularResult;
+import bowling.domain.framestate.InProgress;
+import bowling.domain.framestate.Miss;
+import bowling.domain.framestate.Spare;
+import bowling.domain.framestate.Strike;
 import bowling.exception.CannotBowlException;
 import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +20,7 @@ public class RegularResultTest {
     RegularResult regularResult = new RegularResult();
 
     regularResult.roll(PinCount.MAX_PIN);
-    assertThat(FrameState.of(regularResult)).isEqualTo(FrameState.STRIKE);
+    assertThat(regularResult.getState() instanceof Strike).isTrue();
     assertThat(regularResult.isFinished()).isTrue();
     assertThatThrownBy(() -> regularResult.roll(3))
         .isInstanceOf(CannotBowlException.class);
@@ -28,11 +33,11 @@ public class RegularResultTest {
     String[] pinCounts = pins.split(",");
 
     regularResult.roll(Integer.parseInt(pinCounts[0]));
-    assertThat(FrameState.of(regularResult)).isEqualTo(FrameState.IN_PROGRESS);
+    assertThat(regularResult.getState() instanceof InProgress).isTrue();
     assertThat(regularResult.isFinished()).isFalse();
 
     regularResult.roll(Integer.parseInt(pinCounts[1]));
-    assertThat(FrameState.of(regularResult)).isEqualTo(FrameState.SPARE);
+    assertThat(regularResult.getState() instanceof Spare).isTrue();
     assertThat(regularResult.isFinished()).isTrue();
     assertThatThrownBy(() -> regularResult.roll(3))
         .isInstanceOf(CannotBowlException.class);
@@ -45,11 +50,11 @@ public class RegularResultTest {
     String[] pinCounts = pins.split(",");
 
     regularResult.roll(Integer.parseInt(pinCounts[0]));
-    assertThat(FrameState.of(regularResult)).isEqualTo(FrameState.IN_PROGRESS);
+    assertThat(regularResult.getState() instanceof InProgress).isTrue();
     assertThat(regularResult.isFinished()).isFalse();
 
     regularResult.roll(Integer.parseInt(pinCounts[1]));
-    assertThat(FrameState.of(regularResult)).isEqualTo(FrameState.MISS);
+    assertThat(regularResult.getState() instanceof Miss).isTrue();
     assertThat(regularResult.isFinished()).isTrue();
     assertThatThrownBy(() -> regularResult.roll(3))
         .isInstanceOf(CannotBowlException.class);

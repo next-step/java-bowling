@@ -2,7 +2,7 @@ package bowling.domain;
 
 public class Round {
   public static int FINAL_ROUND = 10;
-  static int ROUND_UNIT = 1;
+  public static int ROUND_UNIT = 1;
   private static int FIRST_ROUND = 1;
 
   private int round;
@@ -21,10 +21,6 @@ public class Round {
 
   public static Round first() {
     return new Round(FIRST_ROUND);
-  }
-
-  public int getRound() {
-    return round;
   }
 
   public boolean isFinal() {

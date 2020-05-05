@@ -1,5 +1,8 @@
-package bowling.domain;
+package bowling.domain.bowlresult;
 
+import bowling.domain.Score;
+import bowling.domain.Trial;
+import bowling.domain.framestate.FrameState;
 import bowling.exception.CannotBowlException;
 
 public abstract class BowlResult {
@@ -15,6 +18,8 @@ public abstract class BowlResult {
   public Trial getSecond() {
     return second;
   }
+
+  public abstract FrameState getState();
 
   public int getRolledBowlCount() {
     int bowlCount = 0;

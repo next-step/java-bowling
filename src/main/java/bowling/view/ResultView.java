@@ -1,14 +1,12 @@
 package bowling.view;
 
-import bowling.domain.BowlResult;
+import bowling.domain.FrameResult;
+import bowling.domain.FrameResults;
+import bowling.domain.bowlresult.BowlResult;
 import bowling.domain.BowlingGame;
-import bowling.domain.FinalFrame;
-import bowling.domain.Frame;
-import bowling.domain.FrameInfo;
-import bowling.domain.FrameState;
-import bowling.domain.NormalFrame;
-import bowling.domain.RegularResult;
+import bowling.domain.BowlingGames;
 import bowling.domain.Score;
+import bowling.domain.framestate.Spare;
 import bowling.domain.Trial;
 
 public class ResultView {
@@ -23,50 +21,31 @@ public class ResultView {
   private static final String SPARE_SIGN = "/";
 
 
-  public static void printBowlingScoreTable(BowlingGame bowlingGame) {
+  public static void printBowlingScoreTable(BowlingGames bowlingGames) {
     System.out.println(FRAMES_META_DATA);
-    printFrameStatus(bowlingGame);
-    printScore(bowlingGame);
+    for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
+      FrameResults results = bowlingGame.produceResults();
+      printFrameStatus(results, bowlingGame.getPlayerName());
+      printScore(results);
+    }
   }
 
-  private static void printFrameStatus(BowlingGame bowlingGame) {
-    StringBuilder builder = new StringBuilder(String.format(NAME_FORMAT, bowlingGame.getPlayerName()));
-    Frame frame = bowlingGame.getFrame();
+  private static void printFrameStatus(FrameResults results, String playerName) {
+    StringBuilder builder = new StringBuilder(String.format(NAME_FORMAT, playerName));
 
-    while (!frame.isFinalFrame()) {
-      builder.append(String.format(FRAME_STATUS_FORMAT, visualize(frame)));
-      frame = frame.getNextFrame();
+    for (FrameResult result : results.getFrameResults()) {
+      builder.append(String.format(FRAME_STATUS_FORMAT, visualize(result)));
     }
 
-    builder.append(String.format(FRAME_STATUS_FORMAT, visualize(frame)));
     System.out.println(builder);
   }
 
-  private static String visualize(Frame frame) {
-    if (frame instanceof NormalFrame) {
-      return visualize((NormalFrame) frame);
-    }
+  private static String visualize(FrameResult result) {
+    String visualized = visualize(result.getRegularResult());
+    String bonusVisualized = visualize(result.getBonusResult());
 
-    if (frame instanceof FinalFrame) {
-      return visualize((FinalFrame) frame);
-    }
-
-    return NOT_PLAYED_SIGN;
-  }
-
-  private static String visualize(NormalFrame frame) {
-    FrameInfo frameInfo = frame.getFrameInfo();
-    RegularResult regularResult = frameInfo.getRegularResult();
-
-    return visualize(regularResult);
-  }
-
-  private static String visualize(FinalFrame frame) {
-    String visualized = visualize(frame.getRegularResult());
-    String bonusVisualized = visualize(frame.getBonusResult());
-
-    if (!bonusVisualized.isEmpty()) {
-      visualized = String.join(SCORE_DELIMITER, visualized, bonusVisualized);
+    if (!bonusVisualized.equals(NOT_PLAYED_SIGN)) {
+      return String.join(SCORE_DELIMITER, visualized, bonusVisualized);
     }
 
     return visualized;
@@ -99,24 +78,20 @@ public class ResultView {
   }
 
   private static String visualizeSecondTrial(BowlResult bowlResult) {
-    if (FrameState.of(bowlResult).equals(FrameState.SPARE)) {
+    if (bowlResult.getState().equals(Spare.getInstance())) {
       return SPARE_SIGN;
     }
 
     return visualizeTrial(bowlResult.getSecond());
   }
 
-  private static void printScore(BowlingGame bowlingGame) {
+  private static void printScore(FrameResults results) {
     StringBuilder builder = new StringBuilder(SCORE_DELIMITER);
     builder.append(String.format(FRAME_STATUS_FORMAT, NOT_PLAYED_SIGN));
-    Frame frame = bowlingGame.getFrame();
 
-    while (!frame.isFinalFrame()) {
-      builder.append(String.format(FRAME_STATUS_FORMAT, visualizeScore(frame.calculateScore())));
-      frame = frame.getNextFrame();
+    for (FrameResult result : results.getFrameResults()) {
+      builder.append(String.format(FRAME_STATUS_FORMAT, visualizeScore(result.getScore())));
     }
-
-    builder.append(String.format(FRAME_STATUS_FORMAT, visualizeScore(frame.calculateScore())));
     System.out.println(builder);
   }
 

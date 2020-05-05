@@ -1,20 +1,36 @@
 package bowling.domain;
 
+import bowling.domain.frame.FrameNode;
+import bowling.domain.frame.Frames;
+import bowling.exception.CannotBowlException;
+
 public class BowlingGame {
 
   private Player player;
-  private NormalFrame frame;
+  private Frames frames;
 
   public BowlingGame(Player player) {
     this.player = player;
-    this.frame = NormalFrame.initialize();
+    this.frames = new Frames();
   }
 
   public String getPlayerName() {
     return player.getName();
   }
 
-  public NormalFrame getFrame() {
-    return frame;
+  public FrameNode getCurrentFrame() {
+    return frames.getCurrentFrame();
+  }
+
+  public FrameNode roll(int pinCount) throws CannotBowlException {
+    return frames.roll(pinCount);
+  }
+
+  public FrameResults produceResults() {
+    return frames.produceResults();
+  }
+
+  public boolean isEnd() {
+    return frames.isEnd();
   }
 }

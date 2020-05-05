@@ -1,44 +1,39 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import static bowling.domain.BonusResult.NULL_RESULT;
+import static bowling.domain.bowlresult.BonusResult.NULL_RESULT;
 
+import bowling.domain.FrameResult;
+import bowling.domain.FrameResults;
+import bowling.domain.bowlresult.BonusResult;
+import bowling.domain.bowlresult.RegularResult;
+import bowling.domain.Round;
+import bowling.domain.Score;
+import bowling.domain.framestate.FrameState;
+import bowling.domain.framestate.Strike;
 import bowling.exception.CannotBowlException;
 
-public class FinalFrame implements Frame {
+public class FinalFrameNode implements FrameNode {
 
   private RegularResult regularResult;
   private BonusResult bonusResult;
 
-  public FinalFrame() {
+  public FinalFrameNode() {
     regularResult = new RegularResult();
     bonusResult = NULL_RESULT;
   }
 
-  public RegularResult getRegularResult() {
-    return regularResult;
-  }
-
-  public BonusResult getBonusResult() {
-    return bonusResult;
+  @Override
+  public void addFrameResult(FrameResults frameResults) {
+    frameResults.add(new FrameResult(regularResult, bonusResult, calculateScore()));
   }
 
   @Override
-  public int getRound() {
-    return Round.FINAL_ROUND;
+  public FrameNode getNextFrame() {
+    return NullFrameNode.of(Round.of(Round.FINAL_ROUND).next());
   }
 
   @Override
-  public int getRolledBowlCount() {
-    return regularResult.getRolledBowlCount() + bonusResult.getRolledBowlCount();
-  }
-
-  @Override
-  public Frame getNextFrame() {
-    return NullFrame.of(Round.of(Round.FINAL_ROUND).next());
-  }
-
-  @Override
-  public Frame roll(int pinCount) throws CannotBowlException {
+  public FrameNode roll(int pinCount) throws CannotBowlException {
     if (!regularResult.isFinished()) {
       regularResult.roll(pinCount);
       prepareBonusBowl();
@@ -51,19 +46,19 @@ public class FinalFrame implements Frame {
 
   private void prepareBonusBowl() {
     if (regularResult.isFinished()) {
-      FrameState state = FrameState.of(regularResult);
+      FrameState state = regularResult.getState();
       bonusResult = new BonusResult(state.getBonusBallCount());
     }
   }
 
   @Override
   public Score calculateBonusScore(int bonusBowlCount) {
-    if (bonusBowlCount == MAX_BONUS_BOWL && FrameState.of(regularResult) == FrameState.STRIKE) {
+    if (bonusBowlCount == MAX_BONUS_BOWL && regularResult.getState() == Strike.getInstance()) {
       return Score.add(Score.of(regularResult.getFirst()), bonusResult.getScore(1));
     }
 
     return regularResult.getScore(bonusBowlCount);
-}
+  }
 
   @Override
   public Score calculateScore() {
@@ -73,7 +68,7 @@ public class FinalFrame implements Frame {
   }
 
   @Override
-  public boolean isEnd() {
+  public boolean isFinished() {
     return regularResult.isFinished() && bonusResult.isFinished();
   }
 
