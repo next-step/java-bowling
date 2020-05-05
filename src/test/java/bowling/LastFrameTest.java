@@ -47,10 +47,18 @@ public class LastFrameTest {
     }
 
     @Test
-    @DisplayName("스트라이크를 3번 연속으로 하면 X|X|X가 반환된다")
+    @DisplayName("스트라이크를 3번 연속으로 하면 X|X|X를 반환한다")
     public void getRecordWhenStrike() {
         lastFrame.bowl(10).bowl(10).bowl(10);
 
         assertThat(lastFrame.getRecord()).isEqualTo("X|X|X");
+    }
+
+    @Test
+    @DisplayName("스페어 처리 후 한 번 더 던진 기록을 반환한다")
+    public void getRecordWhenSpare() {
+        lastFrame.bowl(7).bowl(3).bowl(10);
+
+        assertThat(lastFrame.getRecord()).isEqualTo("7|/|X");
     }
 }
