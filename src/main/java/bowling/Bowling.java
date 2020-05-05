@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bowling {
-    private List<Frame> frames;
+    private List<NormalFrame> frames;
 
     public Bowling() {
         this.frames = new ArrayList<>();
@@ -12,11 +12,11 @@ public class Bowling {
 
     public List<String> roll(int fallenPinCount) {
         if (frames.isEmpty()) {
-            frames.add(new Frame(1));
+            frames.add(new NormalFrame(1));
         }
 
-        Frame currentFrame = frames.get(frames.size() - 1);
-        Frame nextFrame = currentFrame.bowl(fallenPinCount);
+        NormalFrame currentFrame = frames.get(frames.size() - 1);
+        NormalFrame nextFrame = currentFrame.bowl(fallenPinCount);
         if (nextFrame.getNumber() != currentFrame.getNumber()) {
             frames.add(nextFrame);
         }
@@ -26,7 +26,7 @@ public class Bowling {
 
     public List<String> createResult() {
         List<String> result = new ArrayList<>();
-        for (Frame frame : frames) {
+        for (NormalFrame frame : frames) {
             result.add(frame.getRecord());
         }
 

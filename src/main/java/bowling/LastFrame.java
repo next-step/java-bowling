@@ -3,14 +3,15 @@ package bowling;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
-public class LastFrame {
+public class LastFrame implements Frame {
     private final LinkedList<Pins> fallenPins = new LinkedList<>();
 
     public LastFrame() {
         fallenPins.add(new Pins());
     }
 
-    public LastFrame bowl(int fallenPinCount) {
+    @Override
+    public Frame bowl(int fallenPinCount) {
         Pins lastPins = fallenPins.getLast();
 
         if (lastPins.isFinish()) {
@@ -26,13 +27,19 @@ public class LastFrame {
         return this;
     }
 
-    public boolean isGameEnd() {
-        return fallenPins.size() == 2 || fallenPins.getLast().isMiss();
+    @Override
+    public int getNumber() {
+        return 10;
     }
 
+    @Override
     public String getRecord() {
         return fallenPins.stream()
                 .map(Pins::getDescription)
                 .collect(Collectors.joining("|"));
+    }
+
+    public boolean isGameEnd() {
+        return fallenPins.size() == 2 || fallenPins.getLast().isMiss();
     }
 }

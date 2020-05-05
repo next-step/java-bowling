@@ -1,31 +1,9 @@
 package bowling;
 
-public class Frame {
-    private final Pins fallenPins;
-    private int number;
+public interface Frame {
+    Frame bowl(int fallenPinCount);
 
-    public Frame(int number) {
-        this.number = number;
-        this.fallenPins = new Pins();
-    }
+    int getNumber();
 
-    public Frame bowl(int fallenPinCount) {
-        fallenPins.bowl(fallenPinCount);
-        if (fallenPins.isStrike()) {
-            return new Frame(number + 1);
-        }
-        if (fallenPins.isFinish()) {
-            return new Frame(number + 1);
-        }
-
-        return this;
-    }
-
-    public int getNumber() {
-        return this.number;
-    }
-
-    public String getRecord() {
-        return fallenPins.getDescription();
-    }
+    String getRecord();
 }
