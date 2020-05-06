@@ -1,6 +1,5 @@
 package bowling.dto;
 
-import bowling.domain.Frame;
 import bowling.domain.Player;
 
 import java.util.List;
@@ -11,7 +10,6 @@ public class PlayerDto {
     private final List<FrameShotDto> frameShots;
     private final List<Integer> frameScores;
 
-
     public PlayerDto(Player player) {
         this.name = player.name();
         this.frameShots = player.frames()
@@ -20,11 +18,7 @@ public class PlayerDto {
                 .map(FrameShotDto::new)
                 .collect(Collectors.toList());
         this.frameScores = player.frames()
-                .getFrames()
-                .stream()
-                .filter(Frame::isScoreCalculated)
-                .map(Frame::getFrameScore)
-                .collect(Collectors.toList());
+                .getScores();
     }
 
     public String getName() {
@@ -37,5 +31,14 @@ public class PlayerDto {
 
     public List<Integer> getFrameScores() {
         return frameScores;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerDto{" +
+                "name='" + name + '\'' +
+                ", frameShots=" + frameShots +
+                ", frameScores=" + frameScores +
+                '}';
     }
 }

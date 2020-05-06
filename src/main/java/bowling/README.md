@@ -1,6 +1,12 @@
 # 볼링 점수판 구현
 
 ## Public
+- Players (Player들)
+  - getCurrentPlayer
+  - isGameSet
+  - dto
+    - getPlayers
+
 - Player (플레이어 및 Frames)
   - playerName
   - Frames
@@ -24,19 +30,15 @@
   - last
   - shot
   - isFrameSet
-  - dto
-    - FrameDto(List<ShotScoreDto>)
 
-- ShotScores (ShotScore 일급 컬렉션)  
+- Shots (Shot 일급 컬렉션)  
     - add
     - isSize
     - isClear
-    - dto
-        - List<ShotScoreDto>
 
-- ShotScore (개별 점수)
+- Shot (개별 점수)
   - next
   - isClear (스페어 또는 스트라이크 처리인지)
   - dto
-    - getScoreType
-    - getScore
+    - getShotType
+    - getShot

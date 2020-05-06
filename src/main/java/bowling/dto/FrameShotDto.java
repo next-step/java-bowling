@@ -1,26 +1,33 @@
 package bowling.dto;
 
-import bowling.domain.Frame;
-import bowling.domain.ShotScore;
+import bowling.domain.frame.Frame;
+import bowling.domain.shot.Shot;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FrameShotDto {
-    private final List<ShotScore> shotScores;
+    private final List<Shot> shots;
 
     public FrameShotDto(Frame frame) {
-        this.shotScores = frame.shotScores();
+        this.shots = frame.shots();
     }
 
-    public List<String> getShotScores() {
-        return shotScores
+    public List<String> getShots() {
+        return shots
                 .stream()
-                .map(this::parseShotScore)
+                .map(this::parseShot)
                 .collect(Collectors.toList());
     }
 
-    private String parseShotScore(ShotScore shotScore) {
-        return ShotScoreParser.of(shotScore.scoreType()).parse(shotScore.singleScore());
+    private String parseShot(Shot shot) {
+        return ShotParser.of(shot.scoreType()).parse(shot.singleScore());
+    }
+
+    @Override
+    public String toString() {
+        return "FrameShotDto{" +
+                "shots=" + shots +
+                '}';
     }
 }

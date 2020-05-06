@@ -1,24 +1,29 @@
 package bowling.domain;
 
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.frame.score.FrameScore;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
-    private static final int MAX_FRAMES = 10;
-
     private final List<Frame> frames;
 
-    Frames() {
-        this.frames = new ArrayList<>();
-        frames.add(Frame.init());
+    Frames(Frame... frames) {
+        this.frames = new ArrayList<>(Arrays.asList(frames));
+    }
+
+    public static Frames ofDefaultInit(){
+        return new Frames(NormalFrame.init());
     }
 
     int getCurrentFrameNumber() {
-        if (isCurrentFrameDone()) {
-            return frames.size() + 1;
-        }
-        return frames.size();
+        return getLast().getFrameNumber();
     }
 
     private boolean isCurrentFrameDone() {
@@ -29,29 +34,40 @@ public class Frames {
         return frames.get(frames.size() - 1);
     }
 
-    void shot(int shot) {
-        if (isCurrentFrameDone()) {
-            frames.add(getNextFrame(shot));
-            return;
-        }
-
-        getLast().shot(shot);
+    int getCurrentFrameShotCount() {
+        return getLast().getShotsCount();
     }
 
-    private Frame getNextFrame(int shot) {
-        if (frames.size() < MAX_FRAMES - 1) {
-            return getLast().next(shot);
+    void shot(int shot) {
+        getLast().shot(shot);
+
+        if (isCurrentFrameDone() && isNotFinalFrame()) {
+            frames.add(getNextFrame());
         }
-        return getLast().last(shot);
+    }
+
+    private boolean isNotFinalFrame() {
+        return getLast().getFrameNumber() != FinalFrame.FRAME_NUMBER;
+    }
+
+    private Frame getNextFrame() {
+        return getLast().next();
     }
 
     boolean isGameSet() {
-        return frames.stream()
-                .filter(Frame::isFrameSet)
-                .count() == MAX_FRAMES;
+        return getLast().isFrameSet() && !isNotFinalFrame();
     }
 
     public Collection<Frame> getFrames() {
         return new ArrayList<>(frames);
+    }
+
+    public List<Integer> getScores() {
+        return frames
+                .stream()
+                .map(Frame::getFrameScore)
+                .filter(FrameScore::isCalculated)
+                .map(FrameScore::getScore)
+                .collect(Collectors.toList());
     }
 }
