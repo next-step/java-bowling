@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.score.FrameScore;
 
 import java.util.ArrayList;
@@ -15,6 +16,10 @@ public class Frames {
 
     Frames(Frame... frames) {
         this.frames = new ArrayList<>(Arrays.asList(frames));
+    }
+
+    public static Frames ofDefaultInit(){
+        return new Frames(NormalFrame.init());
     }
 
     int getCurrentFrameNumber() {

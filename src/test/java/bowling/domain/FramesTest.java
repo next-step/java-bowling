@@ -3,12 +3,20 @@ package bowling.domain;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.MockFrame;
+import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.score.MockFrameScore;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FramesTest {
+
+    @Test
+    void ofDefaultInit() {
+        Frames ofNormalInitFrames = Frames.ofDefaultInit();
+        assertThat(ofNormalInitFrames.getFrames())
+                .containsExactly(NormalFrame.init());
+    }
 
     @Test
     void getCurrentFrameNumber() {

@@ -9,13 +9,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PlayerTest {
     @Test
     void of() {
-        assertThat(Player.of("SKT").frames().getFrames())
+        assertThat(Player.ofName("SKT").frames().getFrames())
                 .containsExactly(NormalFrame.init());
     }
 
     @Test
     void ofException() {
-        assertThatThrownBy(() -> Player.of("tester"))
+        assertThatThrownBy(() -> Player.ofName("tester"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

@@ -16,7 +16,7 @@ public class BowlingGame {
     }
 
     public void start() {
-        Players players = Players.of(inputView.getPlayers());
+        Players players = Players.ofNames(inputView.getPlayers());
         outputView.printFrame(new PlayersDto(players));
 
         while (!players.isGameSet()) {

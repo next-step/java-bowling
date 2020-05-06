@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.frame.NormalFrame;
-
 public class Player {
     private final String name;
     private final Frames frames;
@@ -11,12 +9,12 @@ public class Player {
         this.frames = frames;
     }
 
-    public static Player of(String name) {
+    public static Player ofName(String name) {
         if (name.length() > 3) {
             throw new IllegalArgumentException(String.format("create Player fail. name length must be under 4 characters, name = %s", name));
         }
 
-        return new Player(name, new Frames(NormalFrame.init()));
+        return new Player(name, Frames.ofDefaultInit());
     }
 
     public int getCurrentFrameNumber() {

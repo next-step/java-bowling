@@ -10,7 +10,7 @@ public class Players {
         this.players = players;
     }
 
-    public static Players of(List<String> players) {
+    public static Players ofNames(List<String> players) {
         if (isPlayerNamesNullOrEmpty(players)) {
             throw new IllegalArgumentException("Create Players failed. players must have at least 1 player");
         }
@@ -19,10 +19,10 @@ public class Players {
             throw new IllegalArgumentException("Create Players failed. players are must have not same name");
         }
 
-        return new Players(players.stream().map(Player::of).collect(Collectors.toList()));
+        return new Players(players.stream().map(Player::ofName).collect(Collectors.toList()));
     }
 
-    static Players of(Player... players) {
+    static Players ofNames(Player... players) {
         return new Players(Arrays.asList(players));
     }
 
