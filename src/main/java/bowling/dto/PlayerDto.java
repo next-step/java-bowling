@@ -32,4 +32,13 @@ public class PlayerDto {
     public List<Integer> getFrameScores() {
         return frameScores;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerDto{" +
+                "name='" + name + '\'' +
+                ", frameShots=" + frameShots +
+                ", frameScores=" + frameScores +
+                '}';
+    }
 }

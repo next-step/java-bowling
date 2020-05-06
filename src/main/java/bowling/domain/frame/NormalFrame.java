@@ -94,13 +94,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String toString() {
-        return "NormalFrame{" +
-                "shots=" + shots +
-                '}';
-    }
-
-    @Override
     public int getShotsCount() {
         return shots.shots().size();
     }
@@ -116,5 +109,12 @@ public class NormalFrame implements Frame {
     @Override
     public int hashCode() {
         return Objects.hash(frameNumber);
+    }
+
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "shots=" + shots +
+                '}';
     }
 }

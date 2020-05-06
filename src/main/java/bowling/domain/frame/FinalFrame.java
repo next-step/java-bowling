@@ -6,6 +6,7 @@ import bowling.domain.frame.score.FrameScore;
 import bowling.domain.shot.Shot;
 
 import java.util.List;
+import java.util.Objects;
 
 public class FinalFrame implements Frame {
     public static final int FRAME_NUMBER = 10;
@@ -62,13 +63,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String toString() {
-        return "FinalFrame{" +
-                "shots=" + shots +
-                '}';
-    }
-
-    @Override
     public int getShotsCount() {
         return shots.shots().size();
     }
@@ -85,5 +79,25 @@ public class FinalFrame implements Frame {
         if (!beforeScore.isCalculated()) {
             beforeScore.addBonus(shot.singleScore());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FinalFrame that = (FinalFrame) o;
+        return Objects.equals(shots, that.shots);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shots);
+    }
+
+    @Override
+    public String toString() {
+        return "FinalFrame{" +
+                "shots=" + shots +
+                '}';
     }
 }

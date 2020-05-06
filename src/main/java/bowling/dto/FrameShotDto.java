@@ -23,4 +23,11 @@ public class FrameShotDto {
     private String parseShot(Shot shot) {
         return ShotParser.of(shot.scoreType()).parse(shot.singleScore());
     }
+
+    @Override
+    public String toString() {
+        return "FrameShotDto{" +
+                "shots=" + shots +
+                '}';
+    }
 }

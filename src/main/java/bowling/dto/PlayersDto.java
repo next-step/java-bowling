@@ -18,4 +18,11 @@ public class PlayersDto {
     public List<PlayerDto> getPlayers() {
         return players;
     }
+
+    @Override
+    public String toString() {
+        return "PlayersDto{" +
+                "players=" + players +
+                '}';
+    }
 }
