@@ -1,6 +1,8 @@
 package bowling;
 
 public class NormalFrame implements Frame {
+    private static final int LAST_FRAME_NUMBER = 10;
+
     private final Pins fallenPins;
     private int number;
 
@@ -10,13 +12,10 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public NormalFrame bowl(int fallenPinCount) {
+    public Frame bowl(int fallenPinCount) {
         fallenPins.bowl(fallenPinCount);
-        if (fallenPins.isStrike()) {
-            return new NormalFrame(number + 1);
-        }
         if (fallenPins.isFinish()) {
-            return new NormalFrame(number + 1);
+            return createNextFrame();
         }
 
         return this;
@@ -30,5 +29,12 @@ public class NormalFrame implements Frame {
     @Override
     public String getRecord() {
         return fallenPins.getDescription();
+    }
+
+    private Frame createNextFrame() {
+        if (number + 1 == LAST_FRAME_NUMBER) {
+            return new LastFrame();
+        }
+        return new NormalFrame(number + 1);
     }
 }

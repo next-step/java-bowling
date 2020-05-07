@@ -4,19 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bowling {
-    private List<NormalFrame> frames;
+    private List<Frame> frames = new ArrayList<>();
 
     public Bowling() {
-        this.frames = new ArrayList<>();
+        this.frames.add(new NormalFrame(1));
     }
 
     public List<String> roll(int fallenPinCount) {
-        if (frames.isEmpty()) {
-            frames.add(new NormalFrame(1));
+        Frame currentFrame = frames.get(frames.size() - 1);
+        if (currentFrame instanceof LastFrame) {
+            if (!((LastFrame) currentFrame).isGameEnd()) {
+                currentFrame.bowl(fallenPinCount);
+            }
+            return createResult();
         }
-
-        NormalFrame currentFrame = frames.get(frames.size() - 1);
-        NormalFrame nextFrame = currentFrame.bowl(fallenPinCount);
+        Frame nextFrame = currentFrame.bowl(fallenPinCount);
         if (nextFrame.getNumber() != currentFrame.getNumber()) {
             frames.add(nextFrame);
         }
@@ -26,10 +28,14 @@ public class Bowling {
 
     public List<String> createResult() {
         List<String> result = new ArrayList<>();
-        for (NormalFrame frame : frames) {
+        for (Frame frame : frames) {
             result.add(frame.getRecord());
         }
 
         return result;
+    }
+
+    public int getCurrentFrameNumber() {
+        return frames.size();
     }
 }

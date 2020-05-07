@@ -5,26 +5,56 @@ import java.util.stream.Collectors;
 
 public class LastFrame implements Frame {
     private final LinkedList<Pins> fallenPins = new LinkedList<>();
+    private int leftBonusCount;
 
     public LastFrame() {
         fallenPins.add(new Pins());
+        this.leftBonusCount = 2;
     }
 
     @Override
     public Frame bowl(int fallenPinCount) {
-        Pins lastPins = fallenPins.getLast();
-
-        if (lastPins.isFinish()) {
-            Pins bonusPins = new Pins();
-            bonusPins.bowl(fallenPinCount);
-            fallenPins.add(bonusPins);
-
+        if (isBonusLeft()) {
+            fallenPins.add(bonusBowl(fallenPinCount));
             return this;
         }
 
-        lastPins.bowl(fallenPinCount);
+        Pins firstPins = fallenPins.getFirst();
+
+        firstPins.bowl(fallenPinCount);
+        leftBonusCount -= 1;
+
+        if (firstPins.isFinish()) {
+            leftBonusCount += addBonusCount(firstPins);
+        }
 
         return this;
+    }
+
+    private Pins bonusBowl(int fallenPinCount) {
+        Pins bonusPins = new Pins();
+        bonusPins.bowl(fallenPinCount);
+        leftBonusCount -= 1;
+
+        return bonusPins;
+    }
+
+    private boolean isBonusLeft() {
+        Pins firstPins = fallenPins.getFirst();
+        if (firstPins.isFinish()) {
+            return leftBonusCount > 0;
+        }
+        return false;
+    }
+
+    private int addBonusCount(Pins firstPins) {
+        if (firstPins.isStrike()) {
+            return 1;
+        }
+        if (firstPins.isSpare()) {
+            return 1;
+        }
+        return 0;
     }
 
     @Override
@@ -40,6 +70,6 @@ public class LastFrame implements Frame {
     }
 
     public boolean isGameEnd() {
-        return fallenPins.size() == 2 || fallenPins.getLast().isMiss();
+        return leftBonusCount == 0;
     }
 }

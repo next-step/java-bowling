@@ -15,6 +15,14 @@ public class LastFrameTest {
     }
 
     @Test
+    @DisplayName("한 번만 던졌을 땐 게임이 종료되지 않는다")
+    public void name() {
+        lastFrame.bowl(8);
+
+        assertThat(lastFrame.isGameEnd()).isFalse();
+    }
+
+    @Test
     @DisplayName("마지막 프레임에서 미스가 나면 게임이 종료된다")
     public void bowlGameFinishWhenMissed() {
         lastFrame.bowl(8).bowl(1);
@@ -23,11 +31,19 @@ public class LastFrameTest {
     }
 
     @Test
-    @DisplayName("마지막 프레임에서 스트라이크이면 한 번을 더 투구할 수 있다")
+    @DisplayName("마지막 프레임에서 스트라이크이면 두 번을 더 투구할 수 있다")
     public void bowlOneMoreWhenStrike() {
         lastFrame.bowl(10);
 
         assertThat(lastFrame.isGameEnd()).isFalse();
+    }
+
+    @Test
+    @DisplayName("스트라이크 후 두 번을 더 투구하면 게임이 끝난다")
+    public void bowlTwoMoreWhenStrikeAndGameEnd() {
+        lastFrame.bowl(10).bowl(10).bowl(10);
+
+        assertThat(lastFrame.isGameEnd()).isTrue();
     }
 
     @Test
