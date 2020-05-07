@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bowling {
+    private static final int LAST_FRAME_NUMBER = 10;
+
     private List<Frame> frames = new ArrayList<>();
 
     public Bowling() {
@@ -28,7 +30,7 @@ public class Bowling {
     }
 
     private boolean isLastFrame() {
-        return frames.size() == 10;
+        return frames.size() == LAST_FRAME_NUMBER;
     }
 
     public List<String> createResult() {
