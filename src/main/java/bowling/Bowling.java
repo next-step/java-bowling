@@ -11,7 +11,7 @@ public class Bowling {
     }
 
     public List<String> roll(int fallenPinCount) {
-        if (frames.size() == 10) {
+        if (isLastFrame()) {
             LastFrame lastFrame = (LastFrame) frames.get(9);
             lastFrame.bowl(fallenPinCount);
 
@@ -27,6 +27,10 @@ public class Bowling {
         return createResult();
     }
 
+    private boolean isLastFrame() {
+        return frames.size() == 10;
+    }
+
     public List<String> createResult() {
         List<String> result = new ArrayList<>();
         for (Frame frame : frames) {
@@ -37,8 +41,11 @@ public class Bowling {
     }
 
     public boolean isGameEnd() {
-        LastFrame lastFrame = (LastFrame) frames.get(9);
-        return lastFrame.isGameEnd();
+        if (isLastFrame()) {
+            LastFrame lastFrame = (LastFrame) frames.get(9);
+            return lastFrame.isGameEnd();
+        }
+        return false;
     }
 
     public int getCurrentFrameNumber() {
