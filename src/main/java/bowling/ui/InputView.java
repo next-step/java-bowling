@@ -1,4 +1,4 @@
-package bowling;
+package bowling.ui;
 
 import java.util.Scanner;
 

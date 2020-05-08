@@ -1,5 +1,9 @@
 package bowling;
 
+import bowling.domain.Bowling;
+import bowling.ui.InputView;
+import bowling.ui.ResultView;
+
 import java.util.Collections;
 
 public class BowlingGameApplication {

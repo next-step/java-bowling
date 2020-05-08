@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public class NormalFrame implements Frame {
     private static final int LAST_FRAME_NUMBER = 10;
