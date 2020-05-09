@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.exception.InvalidThrowBallException;
+
 public class NormalFrame {
     private static final int KNOCKED_DOWN_PIN_COUNT_DEFAULT = -1;
     private static final int KNOCKED_DOWN_PIN_COUNT_STRIKE = 10;
@@ -14,6 +16,11 @@ public class NormalFrame {
     }
 
     public void rollingBall(int pinCount) {
+        if (firstRollingResult != KNOCKED_DOWN_PIN_COUNT_DEFAULT &&
+                secondRollingResult != KNOCKED_DOWN_PIN_COUNT_DEFAULT) {
+            throw new InvalidThrowBallException();
+        }
+
         if (firstRollingResult == KNOCKED_DOWN_PIN_COUNT_DEFAULT) {
             this.firstRollingResult = pinCount;
             return;
@@ -23,6 +30,11 @@ public class NormalFrame {
     }
 
     public boolean isRollable() {
+        if (firstRollingResult != KNOCKED_DOWN_PIN_COUNT_DEFAULT &&
+                secondRollingResult != KNOCKED_DOWN_PIN_COUNT_DEFAULT) {
+            return false;
+        }
+
         if (firstRollingResult == KNOCKED_DOWN_PIN_COUNT_STRIKE) {
             return false;
         }
