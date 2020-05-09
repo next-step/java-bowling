@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
     RollingResult rollingResult;
 
     public NormalFrame() {
