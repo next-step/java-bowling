@@ -1,11 +1,13 @@
 package bowling.domain.frame;
 
+import bowling.domain.exception.InvalidThrowBallException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class NormalFrameTest {
     @Test
@@ -25,5 +27,28 @@ public class NormalFrameTest {
 
         normalFrame.rollingBall(pinCount);
         assertThat(normalFrame.isRollable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("세번째 투구 시도 불가 확인")
+    public void throwBallThirdTimesNotRollable() {
+        NormalFrame normalFrame = new NormalFrame();
+
+        normalFrame.rollingBall(2);
+        normalFrame.rollingBall(2);
+        assertThat(normalFrame.isRollable()).isFalse();
+    }
+
+    @Test
+    @DisplayName("세번째 투구 시도 시 Exception 발생")
+    public void throwBallThirdTimesException() {
+        NormalFrame normalFrame = new NormalFrame();
+
+        normalFrame.rollingBall(2);
+        normalFrame.rollingBall(2);
+
+        assertThatExceptionOfType(InvalidThrowBallException.class).isThrownBy(
+                () -> normalFrame.rollingBall(2)
+        );
     }
 }
