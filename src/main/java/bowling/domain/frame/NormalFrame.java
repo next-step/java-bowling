@@ -1,13 +1,14 @@
 package bowling.domain.frame;
 
 public class NormalFrame implements Frame {
-    RollingResult rollingResult;
+    private final RollingResult rollingResult;
 
     public NormalFrame() {
         rollingResult = RollingResult.init();
     }
 
     public void rollingBall(int pinCount) {
+
         rollingResult.roll(pinCount);
     }
 
