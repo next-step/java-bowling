@@ -5,8 +5,10 @@ import java.util.List;
 
 public class Frames {
     private static final int COUNT_OF_FRAMES = 10;
+    private static final int FRAME_INDEX_INITIAL = 0;
 
     private final List<Frame> frames;
+    private int frameIndex;
 
     private Frames() {
         frames = new ArrayList<>();
@@ -16,6 +18,8 @@ public class Frames {
         }
 
         frames.add(new FinalFrame());
+
+        this.frameIndex = FRAME_INDEX_INITIAL;
     }
 
     public static Frames init() {

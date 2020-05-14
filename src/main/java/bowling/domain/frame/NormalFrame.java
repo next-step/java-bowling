@@ -1,19 +1,20 @@
 package bowling.domain.frame;
 
+import bowling.domain.rolling.NormalRollings;
+
 public class NormalFrame implements Frame {
-    private final RollingResult rollingResult;
+    private final NormalRollings normalRollings;
 
     public NormalFrame() {
-        rollingResult = RollingResult.init();
+        normalRollings = NormalRollings.init();
     }
 
     public void rollingBall(int pinCount) {
-
-        rollingResult.roll(pinCount);
+        normalRollings.roll(pinCount);
     }
 
     public boolean isRollable() {
-        return rollingResult.isRollable();
+        return normalRollings.isRollable();
     }
 
 }
