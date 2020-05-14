@@ -1,6 +1,7 @@
 package bowling.domain.rolling;
 
 import bowling.domain.exception.InvalidThrowBallException;
+import bowling.domain.frame.State;
 
 public class NormalRollings {
     private static final int KNOCKED_DOWN_PIN_COUNT_DEFAULT = -1;
@@ -50,6 +51,10 @@ public class NormalRollings {
             return true;
         }
 
+        return false;
+    }
+
+    public boolean isState(State strike) {
         return false;
     }
 }

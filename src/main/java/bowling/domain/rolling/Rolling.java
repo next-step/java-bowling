@@ -3,18 +3,15 @@ package bowling.domain.rolling;
 import bowling.domain.frame.State;
 
 public class Rolling {
-
     private State state;
+    private int knockedDownPinCount;
 
-    private Rolling(int knockedDownPinCount, State state) {
-
-    }
-
-    public static final Rolling roll(Rolling before, int knockedDownPinCount) {
-        return new Rolling(knockedDownPinCount, before.state);
+    public Rolling(State state, int knockedDownPinCount) {
+        this.state = state;
+        this.knockedDownPinCount = knockedDownPinCount;
     }
 
     public State getState() {
-        return null;
+        return state;
     }
 }
