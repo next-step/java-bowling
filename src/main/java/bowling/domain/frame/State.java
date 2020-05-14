@@ -5,6 +5,4 @@ public enum State {
     SPARE,
     MISS,
     GUTTER;
-
-    private int knockedDownPinCount;
 }

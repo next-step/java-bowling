@@ -1,19 +1,19 @@
 package bowling.domain.frame;
 
-import bowling.domain.rolling.FinalRolling;
+import bowling.domain.rolling.FinalRollings;
 
 public class FinalFrame implements  Frame {
-    private final FinalRolling rollingResult;
+    private final FinalRollings rollingResults;
 
     public FinalFrame() {
-        this.rollingResult = FinalRolling.init();
+        this.rollingResults = FinalRollings.init();
     }
 
     public void rollingBall(int pinCount) {
-        rollingResult.roll(pinCount);
+        rollingResults.roll(pinCount);
     }
 
     public boolean isRollable() {
-        return rollingResult.isRollable();
+        return rollingResults.isRollable();
     }
 }

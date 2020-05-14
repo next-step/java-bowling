@@ -2,7 +2,7 @@ package bowling.domain.rolling;
 
 import bowling.domain.exception.InvalidThrowBallException;
 
-public class FinalRolling {
+public class FinalRollings {
     private static final int KNOCKED_DOWN_PIN_COUNT_DEFAULT = -1;
     private static final int KNOCKED_DOWN_PIN_COUNT_STRIKE = 10;
 
@@ -10,14 +10,14 @@ public class FinalRolling {
     private Integer secondRollingResult;
     private Integer thirdRollingResult;
 
-    private FinalRolling() {
+    private FinalRollings() {
         this.firstRollingResult = KNOCKED_DOWN_PIN_COUNT_DEFAULT;
         this.secondRollingResult = KNOCKED_DOWN_PIN_COUNT_DEFAULT;
         this.thirdRollingResult = KNOCKED_DOWN_PIN_COUNT_DEFAULT;
     }
 
-    public static FinalRolling init() {
-        return new FinalRolling();
+    public static FinalRollings init() {
+        return new FinalRollings();
     }
 
     public void roll(int pinCount) {
