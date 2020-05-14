@@ -4,6 +4,7 @@ import bowling.domain.frame.State;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.data.repository.query.Param;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,7 +43,7 @@ public class NormalRollingsTest {
         assertThat(rollings.isState(State.MISS)).isTrue();
     }
 
-    @Test
+    @ParameterizedTest
     @ValueSource(ints = {1, 6})
     public void setRollingResultMissNotFirstRolling(int knockedPinCount) {
         NormalRollings rollings = NormalRollings.init();

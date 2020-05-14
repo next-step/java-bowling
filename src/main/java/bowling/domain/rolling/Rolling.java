@@ -3,6 +3,8 @@ package bowling.domain.rolling;
 import bowling.domain.frame.State;
 
 public class Rolling {
+    private static final int PIN_COUNT_MAX = 10;
+
     private State state;
     private int knockedDownPinCount;
 
@@ -13,5 +15,9 @@ public class Rolling {
 
     public State getState() {
         return state;
+    }
+
+    public int getRemainPinCount() {
+        return PIN_COUNT_MAX - knockedDownPinCount;
     }
 }

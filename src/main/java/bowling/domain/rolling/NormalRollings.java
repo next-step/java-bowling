@@ -3,16 +3,21 @@ package bowling.domain.rolling;
 import bowling.domain.exception.InvalidThrowBallException;
 import bowling.domain.frame.State;
 
-public class NormalRollings {
-    private static final int KNOCKED_DOWN_PIN_COUNT_DEFAULT = -1;
-    private static final int KNOCKED_DOWN_PIN_COUNT_STRIKE = 10;
+import java.util.ArrayList;
+import java.util.List;
 
-    private Integer firstRollingResult;
-    private Integer secondRollingResult;
+public class NormalRollings {
+    private static final String TRY_ROLLING_OVER_MAX_COUNT_MESSAGE = "2번의 투구까지 가능합니다!";
+    private static final int ROLLING_COUNT_INITIAL_VALUE = 0;
+    private static final int ROLLING_COUNT_FIRST_VALUE = 1;
+    private static final int ROLLING_COUNT_MAX_VALUE = 2;
+
+    private int rollingCount;
+    private List<Rolling> rollingList;
 
     private NormalRollings() {
-        this.firstRollingResult = KNOCKED_DOWN_PIN_COUNT_DEFAULT;
-        this.secondRollingResult = KNOCKED_DOWN_PIN_COUNT_DEFAULT;
+        this.rollingCount = ROLLING_COUNT_INITIAL_VALUE;
+        this.rollingList = new ArrayList<>();
     }
 
     public static NormalRollings init() {
@@ -20,41 +25,70 @@ public class NormalRollings {
     }
 
     public void roll(int pinCount) {
-        if (isFrameEnd()) {
-            throw new InvalidThrowBallException();
+        if (rollingCount >= ROLLING_COUNT_MAX_VALUE) {
+            throw new InvalidThrowBallException(TRY_ROLLING_OVER_MAX_COUNT_MESSAGE);
         }
 
-        if ((firstRollingResult == KNOCKED_DOWN_PIN_COUNT_DEFAULT)) {
-            this.firstRollingResult = pinCount;
+        if (rollingCount == ROLLING_COUNT_INITIAL_VALUE) {
+            setFirstRolling(pinCount);
             return;
         }
 
-        this.secondRollingResult = pinCount;
+        if (rollingCount == ROLLING_COUNT_FIRST_VALUE) {
+            setSecondRolling(pinCount);
+            return;
+        }
     }
 
+    private void setFirstRolling(int pinCount) {
+        State state = State.valueOf(pinCount);
+        Rolling rolling = new Rolling(state, pinCount);
+
+        rollingList.add(rolling);
+        ++rollingCount;
+    }
+
+    private void setSecondRolling(int pinCount) {
+        int remainPinCount = rollingList.get(getCurrentRollingIndex())
+                .getRemainPinCount();
+        State state = State.valueOf(remainPinCount, pinCount);
+        Rolling rolling = new Rolling(state, pinCount);
+
+        rollingList.add(rolling);
+        ++rollingCount;
+    }
 
     public boolean isRollable() {
-        if (isFrameEnd()) {
-            return false;
-        }
-
-        if (firstRollingResult == KNOCKED_DOWN_PIN_COUNT_STRIKE) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean isFrameEnd() {
-        if (firstRollingResult != KNOCKED_DOWN_PIN_COUNT_DEFAULT &&
-                secondRollingResult != KNOCKED_DOWN_PIN_COUNT_DEFAULT) {
+        if (!isRollingStarted()) {
             return true;
         }
 
-        return false;
+        return !isRollingEnd();
     }
 
-    public boolean isState(State strike) {
-        return false;
+    private boolean isRollingStarted() {
+        return rollingCount > ROLLING_COUNT_INITIAL_VALUE;
+    }
+
+    private boolean isRollingEnd() {
+        if (rollingCount == ROLLING_COUNT_MAX_VALUE) {
+            return true;
+        }
+
+        State lastRollingState = rollingList.get(getCurrentRollingIndex()).getState();
+        return lastRollingState == State.STRIKE || lastRollingState == State.SPARE;
+    }
+
+    public boolean isState(State state) {
+        if (rollingCount == ROLLING_COUNT_INITIAL_VALUE) {
+            return false;
+        }
+
+        Rolling lastRolling = rollingList.get(getCurrentRollingIndex());
+        return lastRolling.getState() == state;
+    }
+
+    private int getCurrentRollingIndex() {
+        return rollingCount - 1;
     }
 }
