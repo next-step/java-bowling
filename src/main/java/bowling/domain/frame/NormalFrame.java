@@ -14,7 +14,7 @@ public class NormalFrame implements Frame {
     }
 
     public boolean isRollable() {
-        return normalRollings.isRollable();
+        return normalRollings.isRollingPossible();
     }
 
 }

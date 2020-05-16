@@ -9,7 +9,6 @@ import java.util.List;
 public class NormalRollings {
     private static final String TRY_ROLLING_OVER_MAX_COUNT_MESSAGE = "2번의 투구까지 가능합니다!";
     private static final int ROLLING_COUNT_INITIAL_VALUE = 0;
-    private static final int ROLLING_COUNT_FIRST_VALUE = 1;
     private static final int ROLLING_COUNT_MAX_VALUE = 2;
 
     private int rollingCount;
@@ -25,19 +24,16 @@ public class NormalRollings {
     }
 
     public void roll(int pinCount) {
-        if (rollingCount >= ROLLING_COUNT_MAX_VALUE) {
+        if (isRollingEnd()) {
             throw new InvalidThrowBallException(TRY_ROLLING_OVER_MAX_COUNT_MESSAGE);
         }
 
-        if (rollingCount == ROLLING_COUNT_INITIAL_VALUE) {
+        if (!isRollingStarted()) {
             setFirstRolling(pinCount);
             return;
         }
 
-        if (rollingCount == ROLLING_COUNT_FIRST_VALUE) {
-            setSecondRolling(pinCount);
-            return;
-        }
+        setSecondRolling(pinCount);
     }
 
     private void setFirstRolling(int pinCount) {
@@ -58,7 +54,7 @@ public class NormalRollings {
         ++rollingCount;
     }
 
-    public boolean isRollable() {
+    public boolean isRollingPossible() {
         if (!isRollingStarted()) {
             return true;
         }
@@ -71,7 +67,7 @@ public class NormalRollings {
     }
 
     private boolean isRollingEnd() {
-        if (rollingCount == ROLLING_COUNT_MAX_VALUE) {
+        if (rollingCount >= ROLLING_COUNT_MAX_VALUE) {
             return true;
         }
 
