@@ -31,7 +31,7 @@ public class FinalFrameTest {
 
     @Test
     @DisplayName("스페어 후 보너스 투구")
-    public void throwBallThirdTimesNotRollable() {
+    public void throwBallThirdTimesRollingPossible() {
         FinalFrame finalFrame = new FinalFrame();
 
         finalFrame.rollingBall(2);
@@ -39,13 +39,14 @@ public class FinalFrameTest {
         assertThat(finalFrame.isRollable()).isTrue();
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(ints = {0, 2, 7})
     @DisplayName("보너스 투구가 아닌 세번째 투구 시도 시 Exception 발생")
-    public void throwBallThirdTimesException() {
+    public void throwBallThirdTimesException(int pinCount) {
         FinalFrame finalFrame = new FinalFrame();
 
         finalFrame.rollingBall(2);
-        finalFrame.rollingBall(2);
+        finalFrame.rollingBall(pinCount);
 
         assertThatExceptionOfType(InvalidThrowBallException.class).isThrownBy(
                 () -> finalFrame.rollingBall(2)
