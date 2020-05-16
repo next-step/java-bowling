@@ -2,7 +2,7 @@ package bowling.domain.rolling;
 
 import bowling.domain.frame.State;
 
-public class FinalRollings {
+public class FinalRollings implements Rollings {
 
     private NormalRollings normalRollings;
     private Rolling bonusRolling;
@@ -15,6 +15,7 @@ public class FinalRollings {
         return new FinalRollings();
     }
 
+    @Override
     public void roll(int pinCount) {
         if (normalRollings.isRollingPossible()) {
             normalRollings.roll(pinCount);
@@ -31,6 +32,7 @@ public class FinalRollings {
         bonusRolling = new Rolling(state, pinCount);
     }
 
+    @Override
     public boolean isRollingPossible() {
         if (bonusRolling != null) {
             return false;

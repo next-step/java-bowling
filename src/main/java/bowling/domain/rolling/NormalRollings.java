@@ -6,7 +6,7 @@ import bowling.domain.frame.State;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalRollings {
+public class NormalRollings implements Rollings {
     private static final String TRY_ROLLING_OVER_MAX_COUNT_MESSAGE = "2번의 투구까지 가능합니다!";
     private static final int ROLLING_COUNT_INITIAL_VALUE = 0;
     private static final int ROLLING_COUNT_MAX_VALUE = 2;
@@ -23,6 +23,7 @@ public class NormalRollings {
         return new NormalRollings();
     }
 
+    @Override
     public void roll(int pinCount) {
         if (isRollingEnd()) {
             throw new InvalidThrowBallException(TRY_ROLLING_OVER_MAX_COUNT_MESSAGE);
@@ -54,6 +55,7 @@ public class NormalRollings {
         ++rollingCount;
     }
 
+    @Override
     public boolean isRollingPossible() {
         if (!isRollingStarted()) {
             return true;
