@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.exception.InvalidThrowBallException;
 import bowling.domain.rolling.FinalRollings;
 
 public class FinalFrame implements  Frame {
@@ -10,10 +11,14 @@ public class FinalFrame implements  Frame {
     }
 
     public void rollingBall(int pinCount) {
+        if (!rollingResults.isRollingPossible()) {
+            throw new InvalidThrowBallException();
+        }
+
         rollingResults.roll(pinCount);
     }
 
     public boolean isRollable() {
-        return rollingResults.isRollable();
+        return rollingResults.isRollingPossible();
     }
 }

@@ -1,13 +1,19 @@
 package bowling.domain.frame;
 
 public enum State {
-    STRIKE,
-    SPARE,
-    MISS,
-    GUTTER;
+    STRIKE("X"),
+    SPARE("/"),
+    MISS("%d"),
+    GUTTER("-");
 
     public static final int PIN_COUNT_GUTTER = 0;
     public static final int PIN_COUNT_STRIKE = 10;
+
+    private String frameFormat;
+
+    State(String frameFormat) {
+        this.frameFormat = frameFormat;
+    }
 
     public static final State valueOf(int remainPinCount,
                                       int knockedDownPinCount) {

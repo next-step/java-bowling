@@ -71,6 +71,14 @@ public class NormalRollings {
             return true;
         }
 
+        return isStrikeOrSpare();
+    }
+
+    public boolean isStrikeOrSpare() {
+        if (!isRollingStarted()) {
+            return false;
+        }
+
         State lastRollingState = rollingList.get(getCurrentRollingIndex()).getState();
         return lastRollingState == State.STRIKE || lastRollingState == State.SPARE;
     }

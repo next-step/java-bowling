@@ -1,19 +1,14 @@
 package bowling.domain.rolling;
 
-import bowling.domain.exception.InvalidThrowBallException;
+import bowling.domain.frame.State;
 
 public class FinalRollings {
-    private static final int KNOCKED_DOWN_PIN_COUNT_DEFAULT = -1;
-    private static final int KNOCKED_DOWN_PIN_COUNT_STRIKE = 10;
 
-    private Integer firstRollingResult;
-    private Integer secondRollingResult;
-    private Integer thirdRollingResult;
+    private NormalRollings normalRollings;
+    private Rolling bonusRolling;
 
     private FinalRollings() {
-        this.firstRollingResult = KNOCKED_DOWN_PIN_COUNT_DEFAULT;
-        this.secondRollingResult = KNOCKED_DOWN_PIN_COUNT_DEFAULT;
-        this.thirdRollingResult = KNOCKED_DOWN_PIN_COUNT_DEFAULT;
+        this.normalRollings = NormalRollings.init();
     }
 
     public static FinalRollings init() {
@@ -21,54 +16,26 @@ public class FinalRollings {
     }
 
     public void roll(int pinCount) {
-        if (isFrameEnd()) {
-            throw new InvalidThrowBallException();
-        }
-
-        if (firstRollingResult == KNOCKED_DOWN_PIN_COUNT_DEFAULT) {
-            this.firstRollingResult = pinCount;
+        if (normalRollings.isRollingPossible()) {
+            normalRollings.roll(pinCount);
             return;
         }
 
-        if (secondRollingResult == KNOCKED_DOWN_PIN_COUNT_DEFAULT) {
-            this.secondRollingResult = pinCount;
-            return;
+        if (normalRollings.isStrikeOrSpare()) {
+            setBonusRolling(pinCount);
         }
-
-        this.thirdRollingResult = pinCount;
     }
 
+    private void setBonusRolling(int pinCount) {
+        State state = State.valueOf(pinCount);
+        bonusRolling = new Rolling(state, pinCount);
+    }
 
-    public boolean isRollable() {
-        if (isFrameEnd()) {
+    public boolean isRollingPossible() {
+        if (bonusRolling != null) {
             return false;
         }
 
-        return true;
-    }
-
-    private boolean isFrameEnd() {
-        if (firstRollingResult == KNOCKED_DOWN_PIN_COUNT_STRIKE) {
-            return true;
-        }
-
-        if (firstRollingResult != KNOCKED_DOWN_PIN_COUNT_DEFAULT &&
-                secondRollingResult != KNOCKED_DOWN_PIN_COUNT_DEFAULT) {
-            return !shouldBonus();
-        }
-
-        return false;
-    }
-
-    private boolean shouldBonus() {
-        if (firstRollingResult == KNOCKED_DOWN_PIN_COUNT_STRIKE) {
-            return true;
-        }
-
-        if (firstRollingResult + secondRollingResult == KNOCKED_DOWN_PIN_COUNT_STRIKE) {
-            return true;
-        }
-
-        return false;
+        return normalRollings.isRollingPossible() || normalRollings.isStrikeOrSpare();
     }
 }

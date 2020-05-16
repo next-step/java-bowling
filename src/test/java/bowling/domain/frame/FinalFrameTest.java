@@ -16,7 +16,7 @@ public class FinalFrameTest {
         FinalFrame finalFrame = new FinalFrame();
 
         finalFrame.rollingBall(10);
-        assertThat(finalFrame.isRollable()).isFalse();
+        assertThat(finalFrame.isRollable()).isTrue();
     }
 
     @ParameterizedTest

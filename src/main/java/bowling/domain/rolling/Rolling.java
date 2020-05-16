@@ -5,8 +5,8 @@ import bowling.domain.frame.State;
 public class Rolling {
     private static final int PIN_COUNT_MAX = 10;
 
-    private State state;
-    private int knockedDownPinCount;
+    private final State state;
+    private final int knockedDownPinCount;
 
     public Rolling(State state, int knockedDownPinCount) {
         this.state = state;
