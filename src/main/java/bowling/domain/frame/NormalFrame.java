@@ -2,19 +2,13 @@ package bowling.domain.frame;
 
 import bowling.domain.rolling.NormalRollings;
 
-public class NormalFrame implements Frame {
-    private final NormalRollings normalRollings;
-
+public class NormalFrame extends Frame {
     public NormalFrame() {
-        normalRollings = NormalRollings.init();
+        this.rollingResults = NormalRollings.init();
     }
 
+    @Override
     public void rollingBall(int pinCount) {
-        normalRollings.roll(pinCount);
+        this.rollingResults.roll(pinCount);
     }
-
-    public boolean isRollable() {
-        return normalRollings.isRollingPossible();
-    }
-
 }
