@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.exception.InvalidThrowBallException;
+import bowling.common.exception.InvalidThrowBallException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

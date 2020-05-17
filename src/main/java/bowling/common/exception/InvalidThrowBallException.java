@@ -1,4 +1,4 @@
-package bowling.domain.exception;
+package bowling.common.exception;
 
 public class InvalidThrowBallException extends RuntimeException {
     public InvalidThrowBallException() {

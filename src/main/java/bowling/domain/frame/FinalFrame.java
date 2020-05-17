@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.exception.InvalidThrowBallException;
+import bowling.common.exception.InvalidThrowBallException;
 import bowling.domain.rolling.FinalRollings;
 
 public class FinalFrame extends Frame {

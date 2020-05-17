@@ -1,6 +1,6 @@
 package bowling.domain.rolling;
 
-import bowling.domain.exception.InvalidThrowBallException;
+import bowling.common.exception.InvalidThrowBallException;
 import bowling.domain.frame.State;
 
 import java.util.ArrayList;
