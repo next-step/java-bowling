@@ -12,7 +12,7 @@ public class NormalRollings implements Rollings {
     private static final int ROLLING_COUNT_MAX_VALUE = 2;
 
     private int rollingCount;
-    private List<Rolling> rollingList;
+    private final List<Rolling> rollingList;
 
     private NormalRollings() {
         this.rollingCount = ROLLING_COUNT_INITIAL_VALUE;

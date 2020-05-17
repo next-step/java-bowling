@@ -4,7 +4,7 @@ import java.util.List;
 
 public class FinalRollings implements Rollings {
 
-    private NormalRollings normalRollings;
+    private final NormalRollings normalRollings;
     private Rolling bonusRolling;
 
     private FinalRollings() {
