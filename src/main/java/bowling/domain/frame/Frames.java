@@ -6,6 +6,7 @@ import java.util.List;
 public class Frames {
     private static final int COUNT_OF_FRAMES = 10;
     private static final int FRAME_INDEX_INITIAL = 0;
+    private static final int FRAME_DIFFERENCE_INDEX_COUNT = 1;
 
     private final List<Frame> frames;
     private int frameIndex;
@@ -53,5 +54,9 @@ public class Frames {
         if (!currentFrame.isRollable()) {
             ++frameIndex;
         }
+    }
+
+    public int getFrameNumber() {
+        return frameIndex + FRAME_DIFFERENCE_INDEX_COUNT;
     }
 }

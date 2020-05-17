@@ -11,5 +11,10 @@ public class BowlingApplication {
         Frames frames = Frames.init();
 
         ResultView.printFrame(player, frames);
+        while (frames.canPlay()) {
+            int knockedDownPinCount = InputView.getRollingCount(frames.getFrameNumber());
+            frames.play(knockedDownPinCount);
+            ResultView.printFrame(player, frames);
+        }
     }
 }
