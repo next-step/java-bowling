@@ -35,9 +35,23 @@ public class Frames {
     }
 
     public boolean canPlay() {
-        return false;
+        if (frameIndex == FRAME_INDEX_INITIAL) {
+            return true;
+        }
+
+        if (frameIndex >= COUNT_OF_FRAMES) {
+            return false;
+        }
+
+        return frames.get(frameIndex).isRollable();
     }
 
     public void play(int knockedDownPinCount) {
+        Frame currentFrame = frames.get(frameIndex);
+        currentFrame.rollingBall(knockedDownPinCount);
+
+        if (!currentFrame.isRollable()) {
+            ++frameIndex;
+        }
     }
 }

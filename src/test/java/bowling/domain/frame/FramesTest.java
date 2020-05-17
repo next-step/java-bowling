@@ -20,11 +20,22 @@ public class FramesTest {
     }
 
     @Test
-    public void playNextFrameImpossibleWhenLastFrame() {
+    public void playNextFrameImpossibleWhenLastFrameStrike() {
         Frames frames = Frames.init();
         for (int i = 0; i < 11; i++) {
             frames.play(10);
         }
+
+        assertThat(frames.canPlay()).isFalse();
+    }
+
+    @Test
+    public void playNextFrameImpossibleWhenLastFrameMiss() {
+        Frames frames = Frames.init();
+        for (int i = 0; i < 10; i++) {
+            frames.play(10);
+        }
+        frames.play(8);
 
         assertThat(frames.canPlay()).isFalse();
     }
