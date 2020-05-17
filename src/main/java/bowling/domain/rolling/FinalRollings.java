@@ -32,6 +32,14 @@ public class FinalRollings implements Rollings {
         bonusRolling = new Rolling(state, pinCount);
     }
 
+    public boolean islastState(State state) {
+        if (bonusRolling != null) {
+            return bonusRolling.getState() == state;
+        }
+
+        return normalRollings.isState(state);
+    }
+
     @Override
     public boolean isRollingPossible() {
         if (bonusRolling != null) {
