@@ -10,14 +10,14 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static String getPlayer() {
+    public static Player getPlayer() {
         String name = null;
 
         do {
             name = getString(GET_PLAYER_NAME_MESSAGE);
         } while (!InputValidChecker.isNameValid(name));
 
-        return name;
+        return Player.getInstance(name);
     }
 
     private static String getString(String message) {

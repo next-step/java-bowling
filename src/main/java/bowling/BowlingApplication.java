@@ -6,7 +6,7 @@ import bowling.view.InputView;
 
 public class BowlingApplication {
     public static void main(String[] args) {
-        Player player = Player.getInstance(InputView.getPlayer());
+        Player player = InputView.getPlayer();
         Frames frames = Frames.init();
     }
 }
