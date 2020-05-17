@@ -10,7 +10,6 @@ public class BowlingApplication {
         Player player = InputView.getPlayer();
         Frames frames = Frames.init();
 
-
         ResultView.printFrame(player, frames);
     }
 }

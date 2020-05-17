@@ -33,4 +33,11 @@ public class Frames {
     public List<Frame> getFrames() {
         return frames;
     }
+
+    public boolean canPlay() {
+        return false;
+    }
+
+    public void play(int knockedDownPinCount) {
+    }
 }

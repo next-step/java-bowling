@@ -11,4 +11,21 @@ public class FramesTest {
 
         assertThat(frames.size()).isEqualTo(10);
     }
+
+    @Test
+    public void playNextFramePossibleWhenFirstFrame() {
+        Frames frames = Frames.init();
+
+        assertThat(frames.canPlay()).isTrue();
+    }
+
+    @Test
+    public void playNextFrameImpossibleWhenLastFrame() {
+        Frames frames = Frames.init();
+        for (int i = 0; i < 11; i++) {
+            frames.play(10);
+        }
+
+        assertThat(frames.canPlay()).isFalse();
+    }
 }
