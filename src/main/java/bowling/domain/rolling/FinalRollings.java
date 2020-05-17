@@ -1,6 +1,6 @@
 package bowling.domain.rolling;
 
-import bowling.domain.frame.State;
+import java.util.List;
 
 public class FinalRollings implements Rollings {
 
@@ -39,5 +39,16 @@ public class FinalRollings implements Rollings {
         }
 
         return normalRollings.isRollingPossible() || normalRollings.isStrikeOrSpare();
+    }
+
+    @Override
+    public List<String> getStates() {
+        List<String> states = normalRollings.getStates();
+
+        if (bonusRolling != null) {
+            states.add(bonusRolling.getStateFormat());
+        }
+
+        return states;
     }
 }

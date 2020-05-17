@@ -29,4 +29,8 @@ public class Frames {
     public int size() {
         return frames.size();
     }
+
+    public List<Frame> getFrames() {
+        return frames;
+    }
 }

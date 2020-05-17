@@ -1,7 +1,5 @@
 package bowling.domain.rolling;
 
-import bowling.domain.frame.State;
-
 public class Rolling {
     private static final int PIN_COUNT_MAX = 10;
 
@@ -19,5 +17,9 @@ public class Rolling {
 
     public int getRemainPinCount() {
         return PIN_COUNT_MAX - knockedDownPinCount;
+    }
+
+    public String getStateFormat() {
+        return state.getState(knockedDownPinCount);
     }
 }

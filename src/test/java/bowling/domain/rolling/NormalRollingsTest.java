@@ -1,10 +1,8 @@
 package bowling.domain.rolling;
 
-import bowling.domain.frame.State;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.data.repository.query.Param;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

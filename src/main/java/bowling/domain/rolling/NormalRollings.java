@@ -1,10 +1,10 @@
 package bowling.domain.rolling;
 
 import bowling.common.exception.InvalidThrowBallException;
-import bowling.domain.frame.State;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NormalRollings implements Rollings {
     private static final String TRY_ROLLING_OVER_MAX_COUNT_MESSAGE = "2번의 투구까지 가능합니다!";
@@ -96,5 +96,12 @@ public class NormalRollings implements Rollings {
 
     private int getCurrentRollingIndex() {
         return rollingCount - 1;
+    }
+
+    @Override
+    public List<String> getStates() {
+        return rollingList.stream()
+                .map(Rolling::getStateFormat)
+                .collect(Collectors.toList());
     }
 }

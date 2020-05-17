@@ -1,4 +1,4 @@
-package bowling.domain.frame;
+package bowling.domain.rolling;
 
 public enum State {
     STRIKE("X"),
@@ -42,5 +42,9 @@ public enum State {
         }
 
         return MISS;
+    }
+
+    public String getState(int pinCount) {
+        return String.format(frameFormat, pinCount);
     }
 }

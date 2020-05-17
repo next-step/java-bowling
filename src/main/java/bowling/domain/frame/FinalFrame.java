@@ -16,4 +16,5 @@ public class FinalFrame extends Frame {
 
         rollingResults.roll(pinCount);
     }
+
 }
