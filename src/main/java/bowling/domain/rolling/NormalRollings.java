@@ -11,11 +11,9 @@ public class NormalRollings implements Rollings {
     private static final int ROLLING_COUNT_INITIAL_VALUE = 0;
     private static final int ROLLING_COUNT_MAX_VALUE = 2;
 
-    private int rollingCount;
     private final List<Rolling> rollingList;
 
     private NormalRollings() {
-        this.rollingCount = ROLLING_COUNT_INITIAL_VALUE;
         this.rollingList = new ArrayList<>();
     }
 
@@ -42,7 +40,6 @@ public class NormalRollings implements Rollings {
         Rolling rolling = new Rolling(state, pinCount);
 
         rollingList.add(rolling);
-        ++rollingCount;
     }
 
     private void setSecondRolling(int pinCount) {
@@ -52,7 +49,6 @@ public class NormalRollings implements Rollings {
         Rolling rolling = new Rolling(state, pinCount);
 
         rollingList.add(rolling);
-        ++rollingCount;
     }
 
     @Override
@@ -65,11 +61,11 @@ public class NormalRollings implements Rollings {
     }
 
     private boolean isRollingStarted() {
-        return rollingCount > ROLLING_COUNT_INITIAL_VALUE;
+        return rollingList.size() > ROLLING_COUNT_INITIAL_VALUE;
     }
 
     private boolean isRollingEnd() {
-        if (rollingCount >= ROLLING_COUNT_MAX_VALUE) {
+        if (rollingList.size() >= ROLLING_COUNT_MAX_VALUE) {
             return true;
         }
 
@@ -86,7 +82,7 @@ public class NormalRollings implements Rollings {
     }
 
     public boolean isState(State state) {
-        if (rollingCount == ROLLING_COUNT_INITIAL_VALUE) {
+        if (rollingList.size() == ROLLING_COUNT_INITIAL_VALUE) {
             return false;
         }
 
@@ -95,7 +91,7 @@ public class NormalRollings implements Rollings {
     }
 
     private int getCurrentRollingIndex() {
-        return rollingCount - 1;
+        return rollingList.size() - 1;
     }
 
     @Override
