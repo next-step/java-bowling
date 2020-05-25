@@ -15,6 +15,10 @@ public class Rolling {
         return state;
     }
 
+    public boolean isState(State state) {
+        return this.state == state;
+    }
+
     public int getRemainPinCount() {
         return PIN_COUNT_MAX - knockedDownPinCount;
     }

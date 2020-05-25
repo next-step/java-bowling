@@ -87,7 +87,7 @@ public class NormalRollings implements Rollings {
         }
 
         Rolling lastRolling = rollingList.get(getCurrentRollingIndex());
-        return lastRolling.getState() == state;
+        return lastRolling.isState(state);
     }
 
     private int getCurrentRollingIndex() {
