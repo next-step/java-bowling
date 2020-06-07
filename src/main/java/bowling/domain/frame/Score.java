@@ -5,8 +5,12 @@ import bowling.domain.rolling.State;
 public class Score {
     private static final int DEFAULT_SCORE_ADDABLE_COUNT = 0;
 
-    private int score;
+    private int score = -1;
     private int scoreAddableCount;
+
+    public Score() {
+
+    }
 
     public Score(State state, int knockedDownPinCount) {
         this.scoreAddableCount = DEFAULT_SCORE_ADDABLE_COUNT;
@@ -20,6 +24,11 @@ public class Score {
         }
 
         this.score = knockedDownPinCount;
+    }
+
+    public static Score calculateScore(Score score, State state, int knockedDownPinCount) {
+
+        return new Score();
     }
 
     public boolean isCalculateEnd() {
