@@ -12,26 +12,26 @@ public class ScoreTest {
     public void needNextRollingResult_whenStatusStrike() {
         Score score = Score.calculateScore(null, State.STRIKE, 10);
 
-        assertThat(score.isCalculateEnd()).isFalse();
+        assertThat(score.isCalculateDone()).isFalse();
     }
 
     @Test
     @DisplayName("Strke 이후 한번 더 투구한 상황에서 점수 계산 종료 확인")
     public void needNextRollingResult_whenStatusStrikeAndRollingOneTime() {
         Score score1 = Score.calculateScore(null, State.STRIKE, 10);
-        score1.calculate(State.MISS, 4);
+        score1.calculate(4);
 
-        assertThat(score1.isCalculateEnd()).isFalse();
+        assertThat(score1.isCalculateDone()).isFalse();
     }
 
     @Test
     @DisplayName("Strke 이후 두번 더 투구한 상황에서 점수 계산 종료 확인")
     public void needNextRollingResult_whenStatusStrikeAndRollingTwoTimes() {
         Score score1 = Score.calculateScore(null, State.STRIKE, 10);
-        score1.calculate(State.MISS, 4);
-        score1.calculate(State.GUTTER, 6);
+        score1.calculate(4);
+        score1.calculate(6);
 
-        assertThat(score1.isCalculateEnd()).isTrue();
+        assertThat(score1.isCalculateDone()).isTrue();
     }
 
     @Test
@@ -39,16 +39,16 @@ public class ScoreTest {
     public void needNextRollingResult_whenStatusSpare() {
         Score score = Score.calculateScore(null, State.SPARE, 8);
 
-        assertThat(score.isCalculateEnd()).isFalse();
+        assertThat(score.isCalculateDone()).isFalse();
     }
 
     @Test
     @DisplayName("Spare 이후 한번 더 투구한 상황에서 점수 계산 종료 확인")
     public void needNextRollingResult_whenStatusSpareAndRollingOneTime() {
         Score score1 = Score.calculateScore(null, State.SPARE, 4);
-        score1.calculate(State.MISS, 4);
+        score1.calculate(4);
 
-        assertThat(score1.isCalculateEnd()).isTrue();
+        assertThat(score1.isCalculateDone()).isTrue();
     }
 
     @Test
@@ -56,7 +56,7 @@ public class ScoreTest {
     public void calculateDone_whenStatusMiss() {
         Score score = Score.calculateScore(null, State.MISS, 8);
 
-        assertThat(score.isCalculateEnd()).isTrue();
+        assertThat(score.isCalculateDone()).isTrue();
     }
 
     @Test
@@ -64,6 +64,6 @@ public class ScoreTest {
     public void calculateDone_whenStatusGutter() {
         Score score = Score.calculateScore(null, State.GUTTER, 8);
 
-        assertThat(score.isCalculateEnd()).isTrue();
+        assertThat(score.isCalculateDone()).isTrue();
     }
 }

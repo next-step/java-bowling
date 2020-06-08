@@ -41,12 +41,12 @@ public class Score {
         return SCORE_ADDABLE_COUNT_DEFAULT;
     }
 
-    public void calculate(State state, int knockedDownPinCount) {
+    public void calculate(int knockedDownPinCount) {
         this.score += knockedDownPinCount;
         this.scoreAddableCount -= SCORE_ADDABLE_COUNT_DIFFERENCE;
     }
 
-    public boolean isCalculateEnd() {
+    public boolean isCalculateDone() {
         return scoreAddableCount == SCORE_ADDABLE_COUNT_DEFAULT;
     }
 }
