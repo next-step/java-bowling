@@ -2,37 +2,51 @@ package bowling.domain.frame;
 
 import bowling.domain.rolling.State;
 
-public class Score {
-    private static final int DEFAULT_SCORE_ADDABLE_COUNT = 0;
+import java.util.Objects;
 
-    private int score = -1;
+public class Score {
+    private static final int SCORE_ADDABLE_COUNT_DEFAULT = 0;
+    private static final int SCORE_ADDABLE_COUNT_STRIKE = 2;
+    private static final int SCORE_ADDABLE_COUNT_SPARE = 1;
+    private static final int SCORE_ADDABLE_COUNT_DIFFERENCE = 1;
+
+    private int score;
     private int scoreAddableCount;
 
-    public Score() {
-
+    private Score(int scoreAddableCount, int score) {
+        this.scoreAddableCount = scoreAddableCount;
+        this.score = score;
     }
 
-    public Score(State state, int knockedDownPinCount) {
-        this.scoreAddableCount = DEFAULT_SCORE_ADDABLE_COUNT;
+    public static Score calculateScore(Score lastScore, State state, int knockedDownPinCount) {
+        int addableCount = getAddableCount(lastScore, state);
+        int score = knockedDownPinCount;
 
-        if (state == State.STRIKE) {
-            this.scoreAddableCount = 2;
+        if (!Objects.isNull(lastScore)) {
+            score += lastScore.score;
         }
 
-        if (state == State.SPARE) {
-            this.scoreAddableCount = 1;
-        }
-
-        this.score = knockedDownPinCount;
+        return new Score(addableCount, score);
     }
 
-    public static Score calculateScore(Score score, State state, int knockedDownPinCount) {
+    private static int getAddableCount(Score score, State state) {
+        if (!Objects.isNull(score) && score.scoreAddableCount != SCORE_ADDABLE_COUNT_DEFAULT) {
+            score.scoreAddableCount -= SCORE_ADDABLE_COUNT_DIFFERENCE;
+        }
 
-        return new Score();
+        if (State.STRIKE.equals(state)) {
+            return SCORE_ADDABLE_COUNT_STRIKE;
+        }
+
+        if (State.SPARE.equals(state)) {
+            return SCORE_ADDABLE_COUNT_SPARE;
+        }
+
+        return SCORE_ADDABLE_COUNT_DEFAULT;
     }
 
     public boolean isCalculateEnd() {
-        return scoreAddableCount == DEFAULT_SCORE_ADDABLE_COUNT;
+        return scoreAddableCount == SCORE_ADDABLE_COUNT_DEFAULT;
     }
 }
 
