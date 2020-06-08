@@ -45,6 +45,10 @@ public class Score {
         return SCORE_ADDABLE_COUNT_DEFAULT;
     }
 
+    public Score calculate(State state, int knockedDownPinCount) {
+        return new Score(SCORE_ADDABLE_COUNT_STRIKE, knockedDownPinCount);
+    }
+
     public boolean isCalculateEnd() {
         return scoreAddableCount == SCORE_ADDABLE_COUNT_DEFAULT;
     }
