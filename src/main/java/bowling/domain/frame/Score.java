@@ -30,10 +30,6 @@ public class Score {
     }
 
     private static int getAddableCount(Score score, State state) {
-        if (!Objects.isNull(score) && score.scoreAddableCount != SCORE_ADDABLE_COUNT_DEFAULT) {
-            score.scoreAddableCount -= SCORE_ADDABLE_COUNT_DIFFERENCE;
-        }
-
         if (State.STRIKE.equals(state)) {
             return SCORE_ADDABLE_COUNT_STRIKE;
         }
@@ -45,8 +41,9 @@ public class Score {
         return SCORE_ADDABLE_COUNT_DEFAULT;
     }
 
-    public Score calculate(State state, int knockedDownPinCount) {
-        return new Score(SCORE_ADDABLE_COUNT_STRIKE, knockedDownPinCount);
+    public void calculate(State state, int knockedDownPinCount) {
+        this.score += knockedDownPinCount;
+        this.scoreAddableCount -= SCORE_ADDABLE_COUNT_DIFFERENCE;
     }
 
     public boolean isCalculateEnd() {
