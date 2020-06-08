@@ -16,4 +16,12 @@ public abstract class Frame {
     public List<String> getStates() {
         return rollingResults.getStates();
     }
+
+    public int getScore() {
+        return -1;
+    }
+
+    public boolean isCalculateDone() {
+        return false;
+    }
 }
