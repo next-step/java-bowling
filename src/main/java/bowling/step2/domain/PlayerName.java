@@ -17,9 +17,10 @@ import bowling.step2.exception.PlayerNameEmptyException;
 import bowling.step2.exception.PlayerNameMaximumException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerName {
-    private static final HashMap<String, PlayerName> FACTORY = new HashMap<>();
+    private static final Map<String, PlayerName> FACTORY = new HashMap<>();
     private final String value;
 
     private PlayerName (String value) {
