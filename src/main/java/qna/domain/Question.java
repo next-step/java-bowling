@@ -1,6 +1,7 @@
 package qna.domain;
 
 import qna.CannotDeleteException;
+import qna.NotAuthorizedDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -77,7 +78,7 @@ public class Question extends AbstractEntity {
 
     public void validateDelete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+            throw new NotAuthorizedDeleteException();
         }
         answers.validateDelete(loginUser);
     }
