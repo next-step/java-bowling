@@ -19,18 +19,18 @@ import bowling.step2.exception.PlayerNameMaximumException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerName {
-    private static final Map<String, PlayerName> FACTORY = new HashMap<>();
+public class Player {
+    private static final Map<String, Player> FACTORY = new HashMap<>();
     private final String value;
 
-    private PlayerName (String value) {
+    private Player(String value) {
         this.value = value;
     }
 
-    public static PlayerName valueOf (String value) {
+    public static Player valueOf (String value) {
         validateEmpty(value);
         validateMaximumLength(value);
-        return FACTORY.computeIfAbsent(value, PlayerName::new);
+        return FACTORY.computeIfAbsent(value, Player::new);
     }
 
     private static void validateEmpty (String value) {

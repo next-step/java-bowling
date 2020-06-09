@@ -1,6 +1,6 @@
 package bowling.step2.view;
 
-import bowling.step2.domain.PlayerName;
+import bowling.step2.domain.Player;
 
 import java.util.Scanner;
 
@@ -10,9 +10,9 @@ public class InputView {
 
     private InputView () {}
 
-    public PlayerName inputName () {
+    public Player inputName () {
         System.out.print("플레이어 이름은(3 english letters)?: ");
-        return PlayerName.valueOf(SCANNER.nextLine());
+        return Player.valueOf(SCANNER.nextLine());
     }
 
     public static InputView getInstance () {
