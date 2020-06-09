@@ -4,10 +4,7 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -29,8 +26,7 @@ public class Question extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Question() {
-    }
+    public Question() { }
 
     public Question(String title, String contents) {
         this.title = title;

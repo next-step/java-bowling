@@ -21,8 +21,7 @@ public class Answer extends AbstractEntity {
 
     private boolean deleted = false;
 
-    public Answer() {
-    }
+    public Answer() { }
 
     public Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
@@ -44,11 +43,6 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public DeleteHistory delete() {
         this.deleted = true;
         return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
@@ -56,6 +50,10 @@ public class Answer extends AbstractEntity {
 
     public boolean isOwner(User writer) {
         return this.writer.equals(writer);
+    }
+
+    public boolean isDeleted () {
+        return deleted;
     }
 
     public User getWriter() {
