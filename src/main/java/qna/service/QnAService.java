@@ -9,10 +9,6 @@ import qna.NotFoundException;
 import qna.domain.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 @Service("qnaService")
 public class QnAService {
     private static final Logger log = LoggerFactory.getLogger(QnAService.class);
