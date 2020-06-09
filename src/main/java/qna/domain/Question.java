@@ -1,13 +1,20 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 @Entity
 public class Question extends AbstractEntity {
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -18,10 +25,7 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -75,17 +79,26 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public void validateDelete(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+        answers.validateDelete(loginUser);
+    }
+
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        validateDelete(loginUser);
+
+        this.deleted = true;
+        return Stream.concat(
+            Stream.of(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now())),
+            answers.stream().map(Answer::delete)
+        ).collect(toList());
+
     }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
