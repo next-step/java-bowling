@@ -3,6 +3,7 @@ package bowling.step2.domain;
 import bowling.step2.exception.ScoreRangeException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Score {
@@ -26,4 +27,20 @@ public class Score {
             throw new ScoreRangeException();
         }
     }
+
+    public static Score getStrike () {
+        return Score.valueOf(MAX_SCORE);
+    }
+
+    public static Score sum (List<Score> scores) {
+        return valueOf(scores.stream()
+                             .map(score -> score.value)
+                             .reduce(0, Math::addExact));
+    }
+
+    @Override
+    public String toString () {
+        return String.format("%d", value);
+    }
+
 }
