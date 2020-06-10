@@ -38,6 +38,10 @@ public class Score {
                              .reduce(0, Math::addExact));
     }
 
+    public int getValue () {
+        return value;
+    }
+
     @Override
     public String toString () {
         return String.format("%d", value);
