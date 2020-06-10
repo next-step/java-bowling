@@ -1,13 +1,8 @@
 package bowling.step2.domain;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
 
 public class FrameScore {
     private final List<Score> scores;
@@ -40,5 +35,14 @@ public class FrameScore {
 
     public Stream<Score> stream () {
         return scores.stream();
+    }
+
+    public void addScore (FrameScore frameScore) {
+        scores.addAll(frameScore.scores);
+    }
+
+    public int totalScore () {
+        return stream().map(Score::getValue)
+                       .reduce(0, Math::addExact);
     }
 }
