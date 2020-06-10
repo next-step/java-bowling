@@ -25,17 +25,17 @@ public class FrameScore {
         return of(Collections.singletonList(strike));
     }
 
-    public boolean isStriked () {
-        Score strike = Score.getStrike();
-        return scores.size() == 1 &&
-               scores.contains(strike);
+    public boolean isStrike () {
+        return scores.get(0) == Score.getStrike();
     }
 
     public boolean isSpared () {
-        if (scores.size() != 2) {
+        if (scores.size() < 2) {
             return false;
         }
-        return Score.sum(scores) == Score.getStrike();
+        Score first = scores.get(0);
+        Score second = scores.get(1);
+        return Score.sumIsStrike(first, second);
     }
 
     public Stream<Score> stream () {
