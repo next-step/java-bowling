@@ -2,6 +2,11 @@ package bowling.step2.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public class Frames {
     private static final int LAST_FRAME = 10;
@@ -12,11 +17,9 @@ public class Frames {
         this.frames = frames;
     }
 
-    public static Frames of (List<Frame> frames) {
-        return new Frames(new ArrayList<>());
-    }
-
-    public void next (Frame frame) {
-        frames.add(frame.next());
+    public static Frames init (List<Frame> frames, Players players) {
+        return IntStream.range(0, LAST_FRAME)
+                        .mapToObj(frame -> Frame.init(frame, players))
+                        .collect(collectingAndThen(toList(), Frames::new));
     }
 }

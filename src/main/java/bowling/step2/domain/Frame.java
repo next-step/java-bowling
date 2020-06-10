@@ -1,6 +1,8 @@
 package bowling.step2.domain;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Frame {
 
@@ -16,9 +18,16 @@ public class Frame {
         return new Frame(frame, playerScore);
     }
 
+    public static Frame init (int frame, Players players) {
+        Map<PlayerName, FrameScore> playerScore = new HashMap<>();
+        players.stream()
+               .forEach(playerName -> playerScore.put(playerName, FrameScore.init()));
+        return of(frame, PlayerScore.of(playerScore));
+    }
+
     public Frame next () {
         int nextFrame = frame + 1;
-        return of(nextFrame, PlayerScore.of(new HashMap<>()));
+        return of(nextFrame, playerScore.initBy());
     }
 
     public int getValue () {

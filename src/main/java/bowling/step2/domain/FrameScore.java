@@ -1,5 +1,6 @@
 package bowling.step2.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -13,6 +14,10 @@ public class FrameScore {
 
     public static FrameScore of (List<Score> scores) {
         return new FrameScore(scores);
+    }
+
+    public static FrameScore init () {
+        return of(new ArrayList<>());
     }
 
     public static FrameScore ofStrike () {
