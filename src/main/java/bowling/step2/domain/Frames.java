@@ -19,13 +19,4 @@ public class Frames {
     public static Frames of (List<Frame> frames, Player player) {
         return new Frames(frames, player);
     }
-
-    public static Frames init (Player player) {
-        return of(
-            IntStream.rangeClosed(1, LAST_FRAME)
-                     .mapToObj(Frame::init)
-                     .collect(toList()),
-            player
-        );
-    }
 }
