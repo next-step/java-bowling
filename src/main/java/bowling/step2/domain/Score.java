@@ -36,10 +36,8 @@ public class Score {
         return Score.valueOf(MAX_SCORE);
     }
 
-    public static Score sum (List<Score> scores) {
-        return valueOf(scores.stream()
-                             .map(score -> score.value)
-                             .reduce(0, Math::addExact));
+    public static boolean sumIsStrike (Score first, Score second) {
+        return valueOf(first.value + second.value) == getStrike();
     }
 
     public int getValue () {
