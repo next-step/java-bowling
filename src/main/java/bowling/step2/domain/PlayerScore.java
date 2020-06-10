@@ -1,11 +1,10 @@
 package bowling.step2.domain;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
+import java.util.function.Function;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 public class PlayerScore {
     private final Map<PlayerName, FrameScore> playerScore;
@@ -26,5 +25,17 @@ public class PlayerScore {
         return players.stream()
                       .map(this::getScoreOfPlayer)
                       .collect(toList());
+    }
+
+    public PlayerScore initBy () {
+        return playerScore
+                .keySet()
+                .stream()
+                .collect(
+                    collectingAndThen(
+                        toMap(Function.identity(), v -> FrameScore.init()),
+                        PlayerScore::of
+                    )
+                );
     }
 }
