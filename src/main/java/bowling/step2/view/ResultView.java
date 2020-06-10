@@ -33,7 +33,7 @@ public class ResultView {
             frames.stream()
                   .map(Frame::getValue)
                   .map(frameNumber -> String.format(" %02d ", frameNumber))
-                  .collect(joining("|"))
+                  .collect(joining("  |  "))
         );
     }
 
@@ -44,7 +44,7 @@ public class ResultView {
                           playerName,
                           frames.scoresOfPlayerStream(playerName)
                                 .map(this::scoreOf)
-                                .collect(joining("|"))
+                                .collect(joining("  |  "))
                       ))
                       .collect(joining(NEW_LINE));
     }

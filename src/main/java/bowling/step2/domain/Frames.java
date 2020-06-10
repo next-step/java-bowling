@@ -16,7 +16,7 @@ public class Frames {
         this.frames = frames;
     }
 
-    public static Frames init (List<Frame> frames, Players players) {
+    public static Frames init (Players players) {
         return IntStream.rangeClosed(1, LAST_FRAME)
                         .mapToObj(frame -> Frame.init(frame, players))
                         .collect(collectingAndThen(toList(), Frames::new));
