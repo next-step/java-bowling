@@ -1,6 +1,9 @@
 package bowling.step2.domain;
 
+import java.util.ArrayList;
+
 public class Frame {
+
     private final int frame;
     private final FrameScore frameScore;
 
@@ -13,7 +16,8 @@ public class Frame {
         return new Frame(frame, frameScore);
     }
 
-    public static Frame init (int frame) {
-        return of(frame, null);
+    public Frame next () {
+        int nextFrame = frame + 1;
+        return of(nextFrame, FrameScore.of(new ArrayList<>()));
     }
 }

@@ -1,5 +1,6 @@
 package bowling.step2.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -17,6 +18,10 @@ public class Frames {
     }
 
     public static Frames of (List<Frame> frames, Player player) {
-        return new Frames(frames, player);
+        return new Frames(new ArrayList<>(), player);
+    }
+
+    public void next (Frame frame) {
+        frames.add(frame.next());
     }
 }
