@@ -1,5 +1,7 @@
 package bowling.step2.domain;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,8 +21,8 @@ public class FrameScore {
     }
 
     public static FrameScore ofStrike () {
-        return Stream.of(Score.getStrike())
-                     .collect(collectingAndThen(toList(), FrameScore::of));
+        Score strike = Score.getStrike();
+        return of(Collections.singletonList(strike));
     }
 
     public boolean isStriked () {
