@@ -1,24 +1,24 @@
 package bowling.step2.domain;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Frame {
 
     private final int frame;
-    private final FrameScore frameScore;
+    private final PlayerScore playerScore;
 
-    private Frame (int frame, FrameScore frameScore) {
+    private Frame (int frame, PlayerScore playerScore) {
         this.frame = frame;
-        this.frameScore = frameScore;
+        this.playerScore = playerScore;
     }
 
-    public static Frame of (int frame, FrameScore frameScore) {
-        return new Frame(frame, frameScore);
+    public static Frame of (int frame, PlayerScore playerScore) {
+        return new Frame(frame, playerScore);
     }
 
     public Frame next () {
         int nextFrame = frame + 1;
-        return of(nextFrame, FrameScore.of(new ArrayList<>()));
+        return of(nextFrame, PlayerScore.of(new HashMap<>()));
     }
 
     public int getValue () {
