@@ -20,4 +20,8 @@ public class Frame {
         int nextFrame = frame + 1;
         return of(nextFrame, FrameScore.of(new ArrayList<>()));
     }
+
+    public int getValue () {
+        return frame;
+    }
 }

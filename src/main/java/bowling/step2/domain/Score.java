@@ -17,6 +17,10 @@ public class Score {
         this.value = value;
     }
 
+    public static Score stringOf (String value) {
+        return valueOf(Integer.parseInt(value));
+    }
+
     public static Score valueOf (int value) {
         validate(value);
         return FACTORY.computeIfAbsent(value, Score::new);
