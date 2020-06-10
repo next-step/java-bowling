@@ -8,4 +8,6 @@ public class ResultView {
     public static ResultView getInstance () {
         return INSTANCE;
     }
+
+
 }
