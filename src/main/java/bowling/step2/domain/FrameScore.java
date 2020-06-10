@@ -26,6 +26,9 @@ public class FrameScore {
     }
 
     public boolean isStrike () {
+        if (scores.size() == 0) {
+            return false;
+        }
         return scores.get(0) == Score.getStrike();
     }
 
@@ -49,5 +52,17 @@ public class FrameScore {
     public int totalScore () {
         return stream().map(Score::getValue)
                        .reduce(0, Math::addExact);
+    }
+
+    public int size () {
+        return scores.size();
+    }
+
+    public Score firstScore () {
+        return scores.get(0);
+    }
+
+    public Score secondScore () {
+        return scores.get(1);
     }
 }

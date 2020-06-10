@@ -3,6 +3,7 @@ package bowling.step2.view;
 import bowling.step2.domain.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
@@ -11,7 +12,7 @@ public class ResultView {
     private static final ResultView INSTANCE = new ResultView();
     private static final String NEW_LINE = System.lineSeparator();
     private static final String NUMBERS_FORMAT = "| NAME |%s|";
-    private static final String SCORES_FORMAT = "| %4s |%s|";
+    private static final String SCORES_FORMAT = "| %4s |  %s|";
 
     private ResultView () {}
 
@@ -32,8 +33,8 @@ public class ResultView {
             NUMBERS_FORMAT,
             frames.stream()
                   .map(Frame::getValue)
-                  .map(frameNumber -> String.format(" %02d ", frameNumber))
-                  .collect(joining("  |  "))
+                  .map(frameNumber -> String.format("  %02d  ", frameNumber))
+                  .collect(joining("|"))
         );
     }
 
@@ -43,8 +44,8 @@ public class ResultView {
                           SCORES_FORMAT,
                           playerName,
                           frames.scoresOfPlayerStream(playerName)
-                                .map(this::scoreOf)
-                                .collect(joining("  |  "))
+                                .map(frameScore -> String.format("%-4s", scoreOf(frameScore)))
+                                .collect(joining("|  "))
                       ))
                       .collect(joining(NEW_LINE));
     }
@@ -53,23 +54,24 @@ public class ResultView {
         if (frameScore.isStrike()) {
             return ScoreType.STRIKE.getValue();
         }
-        List<Score> scores = frameScore.stream()
-                                       .limit(2L)
-                                       .collect(toList());
-        return String.format("%s|%s",
-                scores.get(0).getValue(),
-                secondScoreOf(frameScore.isSpared(), scores.get(1).getValue())
-        );
+        if (frameScore.size() == 0) {
+            return "";
+        }
+        if (frameScore.size() == 1) {
+            return frameScore.firstScore().toString();
+        }
+        return String.format("%s|%s", frameScore.firstScore(), secondScoreOf(frameScore));
     }
 
-    private String secondScoreOf (boolean spared, int secondScore) {
-        if (secondScore == Score.MIN_SCORE) {
+    private String secondScoreOf (FrameScore frameScore) {
+        Score secondScore = frameScore.secondScore();
+        if (secondScore == Score.valueOf(Score.MIN_SCORE)) {
             return ScoreType.GUTTER.getValue();
         }
-        if (spared) {
+        if (frameScore.isSpared()) {
             return ScoreType.SPARED.getValue();
         }
-        return String.valueOf(secondScore);
+        return secondScore.toString();
     }
 
 }

@@ -31,4 +31,9 @@ public class PlayerName {
             throw new PlayerNameMaximumException();
         }
     }
+
+    @Override
+    public String toString () {
+        return value;
+    }
 }
