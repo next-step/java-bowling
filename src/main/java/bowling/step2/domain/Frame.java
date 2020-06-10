@@ -30,6 +30,10 @@ public class Frame {
         return of(nextFrame, playerScore.initBy());
     }
 
+    public FrameScore scoreOfPlayer (PlayerName playerName) {
+        return playerScore.getScoreOfPlayer(playerName);
+    }
+
     public int getValue () {
         return frame;
     }
