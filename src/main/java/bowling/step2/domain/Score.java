@@ -35,11 +35,11 @@ public class Score {
         return Score.valueOf(MAX_SCORE);
     }
 
-    public boolean sumIsStrike (Score score) {
+    public Score sum (Score score) {
         if (score == null) {
-            return false;
+            return this;
         }
-        return valueOf(value + score.value) == getStrike();
+        return valueOf(value + score.value);
     }
 
     public int getValue () {

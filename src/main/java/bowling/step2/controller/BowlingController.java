@@ -15,20 +15,16 @@ public class BowlingController {
         Players players = Players.of(Collections.singletonList(playerName));
         Frames frames = Frames.init(players);
         resultView.printFrames(frames, players);
-        frames.stream().forEach(frame ->
-            players.stream().forEach(player -> {
-                Score firstScore = addScore(frame, player);
-                resultView.printFrames(frames, players);
-                if (firstScore != Score.getStrike()) {
-                  addScore(frame, player);
-                  resultView.printFrames(frames, players);
-                }
-            }));
-    }
-
-    public static Score addScore (Frame frame, PlayerName player) {
-        Score score = inputView.inputScore(frame);
-        frame.addScore(player, score);
-        return score;
+        frames.stream().forEach(frame -> {
+            Score firstScore = inputView.inputScore(frame);
+            frame.addScore(playerName, firstScore);
+            resultView.printFrames(frames, players);
+            if (firstScore == Score.getStrike()) {
+                return;
+            }
+            Score secondScore = inputView.inputScore(frame);
+            frame.addScore(playerName, secondScore);
+            resultView.printFrames(frames, players);
+        });
     }
 }
