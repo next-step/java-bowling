@@ -26,27 +26,19 @@ public class FrameScore {
     }
 
     public boolean isStrike () {
-        if (scores.size() == 0) {
-            return false;
-        }
-        return scores.get(0) == Score.getStrike();
+        return get(0) == Score.getStrike();
     }
 
     public boolean isSpared () {
-        if (scores.size() < 2) {
-            return false;
-        }
-        Score first = scores.get(0);
-        Score second = scores.get(1);
-        return Score.sumIsStrike(first, second);
+        return get(0) != null && get(0).sumIsStrike(get(1));
     }
 
     public Stream<Score> stream () {
         return scores.stream();
     }
 
-    public void addScore (FrameScore frameScore) {
-        scores.addAll(frameScore.scores);
+    public void addScore (Score score) {
+        scores.add(score);
     }
 
     public int totalScore () {
@@ -58,11 +50,7 @@ public class FrameScore {
         return scores.size();
     }
 
-    public Score firstScore () {
-        return scores.get(0);
-    }
-
-    public Score secondScore () {
-        return scores.get(1);
+    public Score get (int index) {
+        return size() > index ? scores.get(index) : null;
     }
 }
