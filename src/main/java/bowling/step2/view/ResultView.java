@@ -22,7 +22,7 @@ public class ResultView {
 
     public void printFrames (Frames frames, Players players) {
         System.out.printf(
-            NEW_LINE + "%s" + NEW_LINE + "%s" + NEW_LINE,
+            "%s" + NEW_LINE + "%s" + NEW_LINE + NEW_LINE,
             frameNumbers(frames),
             frameScores(frames, players)
         );
