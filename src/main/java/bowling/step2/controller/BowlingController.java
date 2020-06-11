@@ -4,6 +4,7 @@ import bowling.step2.view.*;
 import bowling.step2.domain.*;
 
 import java.util.Collections;
+import java.util.function.Function;
 
 public class BowlingController {
     private static final InputView inputView = InputView.getInstance();
@@ -14,16 +15,15 @@ public class BowlingController {
         Players players = Players.of(Collections.singletonList(playerName));
         Frames frames = Frames.init(players);
         resultView.printFrames(frames, players);
-        frames.stream()
-              .forEach(frame -> addScores(frame, players));
-    }
-
-    public static void addScores (Frame frame, Players players) {
-        players.stream().forEach(player -> {
-            if (addScore(frame, player) != Score.getStrike()) {
-                addScore(frame, player);
-            }
-        });
+        frames.stream().forEach(frame ->
+            players.stream().forEach(player -> {
+                Score firstScore = addScore(frame, player);
+                resultView.printFrames(frames, players);
+                if (firstScore != Score.getStrike()) {
+                  addScore(frame, player);
+                  resultView.printFrames(frames, players);
+                }
+            }));
     }
 
     public static Score addScore (Frame frame, PlayerName player) {
