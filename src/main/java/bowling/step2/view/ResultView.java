@@ -58,13 +58,13 @@ public class ResultView {
             return "";
         }
         if (frameScore.size() == 1) {
-            return frameScore.firstScore().toString();
+            return frameScore.get(0).toString();
         }
-        return String.format("%s|%s", frameScore.firstScore(), secondScoreOf(frameScore));
+        return String.format("%s|%s", frameScore.get(0), secondScoreOf(frameScore));
     }
 
     private String secondScoreOf (FrameScore frameScore) {
-        Score secondScore = frameScore.secondScore();
+        Score secondScore = frameScore.get(1);
         if (secondScore == Score.valueOf(Score.MIN_SCORE)) {
             return ScoreType.GUTTER.getValue();
         }

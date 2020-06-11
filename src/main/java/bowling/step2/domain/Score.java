@@ -3,7 +3,6 @@ package bowling.step2.domain;
 import bowling.step2.exception.ScoreRangeException;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Score {
@@ -36,8 +35,11 @@ public class Score {
         return Score.valueOf(MAX_SCORE);
     }
 
-    public static boolean sumIsStrike (Score first, Score second) {
-        return valueOf(first.value + second.value) == getStrike();
+    public boolean sumIsStrike (Score score) {
+        if (score == null) {
+            return false;
+        }
+        return valueOf(value + score.value) == getStrike();
     }
 
     public int getValue () {
