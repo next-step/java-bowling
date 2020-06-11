@@ -1,6 +1,5 @@
 package bowling.step2.domain;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,5 +35,10 @@ public class Frame {
 
     public int getValue () {
         return frame;
+    }
+
+    public void addScore (PlayerName playerName, Score score) {
+        playerScore.getScoreOfPlayer(playerName)
+                   .addScore(score);
     }
 }
