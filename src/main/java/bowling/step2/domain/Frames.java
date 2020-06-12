@@ -1,5 +1,7 @@
 package bowling.step2.domain;
 
+import bowling.step2.domain.frame.Frame;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
