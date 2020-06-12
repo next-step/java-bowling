@@ -17,11 +17,23 @@ public class FinalFrame implements Frame {
         return new FinalFrame(frame, scores);
     }
 
+    @Override
     public FinalScores getScores () {
         return scores;
     }
 
-    public Frame next () {
-        return of(frame + 1, FinalScores.init());
+    @Override
+    public Frame createNextFrame () {
+        return null;
+    }
+
+    @Override
+    public Frame getNextFrame () {
+        return null;
+    }
+
+    @Override
+    public boolean hasNext () {
+        return false;
     }
 }
