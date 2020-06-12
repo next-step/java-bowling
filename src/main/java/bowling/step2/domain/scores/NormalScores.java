@@ -2,6 +2,11 @@ package bowling.step2.domain.scores;
 
 import bowling.step2.domain.Score;
 
+import java.util.List;
+import java.util.stream.Stream;
+
+import static java.util.Arrays.asList;
+
 public class NormalScores implements Scores {
     private final Score firstScore;
     private final Score secondScore;
@@ -11,12 +16,16 @@ public class NormalScores implements Scores {
         this.secondScore = secondScore;
     }
 
-    public static Scores of (Score firstScore, Score secondScore) {
+    public static NormalScores of (Score firstScore, Score secondScore) {
         return new NormalScores(firstScore, secondScore);
     }
 
-    public static Scores init () {
+    public static NormalScores init () {
         return of(null, null);
+    }
+
+    public static boolean isSparedOf (List<Score> scores) {
+        return of(scores.get(0), scores.get(1)).isSpared();
     }
 
     @Override
@@ -40,7 +49,20 @@ public class NormalScores implements Scores {
     }
 
     @Override
+    public boolean isEmptyOf (int index) {
+        if (index > 1) {
+            return false;
+        }
+        return asList(firstScore, secondScore).get(index) == null;
+    }
+
+    @Override
     public int totalScore () {
         return firstScore.sum(secondScore).getValue();
+    }
+
+    @Override
+    public Stream<Score> stream () {
+        return Stream.of(firstScore, secondScore);
     }
 }

@@ -2,7 +2,10 @@ package bowling.step2.domain.scores;
 
 import bowling.step2.domain.Score;
 
+import java.util.List;
 import java.util.stream.Stream;
+
+import static java.util.Arrays.asList;
 
 public class FinalScores implements Scores {
     private final Score firstScore;
@@ -48,6 +51,14 @@ public class FinalScores implements Scores {
     }
 
     @Override
+    public boolean isEmptyOf (int index) {
+        if (index > 2) {
+            return false;
+        }
+        return asList(firstScore, secondScore, bonusScore).get(index) == null;
+    }
+
+    @Override
     public int totalScore () {
         return Stream.of(firstScore, secondScore, bonusScore)
                      .reduce(
@@ -55,5 +66,9 @@ public class FinalScores implements Scores {
                          (total, score) -> total + (score == null ? Score.MIN_SCORE : score.getValue()),
                          Integer::sum
                      );
+    }
+    @Override
+    public Stream<Score> stream () {
+        return Stream.of(firstScore, secondScore, bonusScore);
     }
 }
