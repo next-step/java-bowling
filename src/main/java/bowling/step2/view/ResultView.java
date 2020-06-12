@@ -1,9 +1,16 @@
 package bowling.step2.view;
 
 import bowling.step2.domain.*;
+import bowling.step2.domain.frame.Frame;
+import bowling.step2.domain.frame.NormalFrame;
+import bowling.step2.domain.scores.NormalScores;
+import bowling.step2.domain.scores.Scores;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
@@ -20,58 +27,60 @@ public class ResultView {
         return INSTANCE;
     }
 
-    public void printFrames (Frames frames, Players players) {
+    public void printFrames (PlayerFrames playerFrames, Players players) {
         System.out.printf(
             "%s" + NEW_LINE + "%s" + NEW_LINE + NEW_LINE,
-            frameNumbers(frames),
-            frameScores(frames, players)
+            frameNumbers(),
+            frameScores(playerFrames, players)
         );
     }
 
-    private String frameNumbers (Frames frames) {
+    private String frameNumbers () {
         return String.format(
             NUMBERS_FORMAT,
-            frames.stream()
-                  .map(Frame::getValue)
-                  .map(frameNumber -> String.format("  %02d  ", frameNumber))
-                  .collect(joining("|"))
+            IntStream.rangeClosed(1, Frames.LAST_FRAME)
+                     .mapToObj(frameNumber -> String.format("  %02d  ", frameNumber))
+                      .collect(joining("|"))
         );
     }
 
-    private String frameScores (Frames frames, Players players) {
+    private String frameScores (PlayerFrames playerFrames, Players players) {
         return players.stream()
                       .map(playerName -> String.format(
-                          SCORES_FORMAT,
-                          playerName,
-                          frames.scoresOfPlayerStream(playerName)
-                                .map(frameScore -> String.format("%-4s", scoreOf(frameScore)))
-                                .collect(joining("|  "))
+                          SCORES_FORMAT, playerName,
+                          playerFrames.getPreviewOf(playerName)
+                                      .map(frame -> String.format("%-4s", scoreOf(frame)))
+                                      .collect(joining("|  "))
                       ))
                       .collect(joining(NEW_LINE));
     }
 
-    private String scoreOf (FrameScore frameScore) {
-        if (frameScore.isStrike()) {
-            return ScoreType.STRIKE.getValue();
-        }
-        if (frameScore.size() == 0) {
-            return "";
-        }
-        if (frameScore.size() == 1) {
-            return frameScore.get(0).toString();
-        }
-        return String.format("%s|%s", frameScore.get(0), secondScoreOf(frameScore));
+    private String scoreOf (Frame frame) {
+        return eachScoreOf(frame.getScores()
+                                  .stream()
+                                  .collect(toList()));
     }
 
-    private String secondScoreOf (FrameScore frameScore) {
-        Score secondScore = frameScore.get(1);
-        if (secondScore == Score.valueOf(Score.MIN_SCORE)) {
+    private String eachScoreOf (List<Score> scores) {
+        return IntStream.rangeClosed(0, scores.size())
+                 .mapToObj(index -> scores.get(index) != null
+                                        ? toScoreType(scores, index)
+                                        : null)
+                 .filter(Objects::nonNull)
+                 .collect(joining("|"));
+    }
+
+    private String toScoreType (List<Score> scores, int index) {
+        if (scores.get(index) == Score.valueOf(Score.MIN_SCORE)) {
             return ScoreType.GUTTER.getValue();
         }
-        if (frameScore.isSpared()) {
+        if (scores.get(index) == Score.getStrike()) {
+            return ScoreType.STRIKE.getValue();
+        }
+        if (index == 2 && NormalScores.isSparedOf(scores)) {
             return ScoreType.SPARED.getValue();
         }
-        return secondScore.toString();
+        return scores.get(index).toString();
     }
 
 }
