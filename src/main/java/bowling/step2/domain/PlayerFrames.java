@@ -1,7 +1,10 @@
 package bowling.step2.domain;
 
+import bowling.step2.domain.frame.Frame;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toMap;
@@ -23,5 +26,10 @@ public class PlayerFrames {
                           toMap(player -> player, player -> Frames.init()),
                           PlayerFrames::of
                       ));
+    }
+
+    public Stream<Frame> getPreviewOf (Player player) {
+        return playerFrames.get(player)
+                           .preview();
     }
 }
