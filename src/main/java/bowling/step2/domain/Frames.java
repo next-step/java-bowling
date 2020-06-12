@@ -43,10 +43,9 @@ public class Frames {
         return frames.stream();
     }
 
-    public List<Frame> preview () {
+    public Stream<Frame> preview () {
         return IntStream.range(0, Frames.LAST_FRAME)
                         .mapToObj(index -> Optional.of(frames.get(index))
-                                                   .orElse(null))
-                        .collect(toList());
+                                                   .orElse(null));
     }
 }
