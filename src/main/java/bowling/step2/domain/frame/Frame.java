@@ -7,4 +7,5 @@ public interface Frame {
     Frame createNextFrame();
     Frame getNextFrame();
     boolean hasNext();
+    int getValue();
 }

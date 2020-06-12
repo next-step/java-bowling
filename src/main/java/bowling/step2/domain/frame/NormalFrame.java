@@ -1,5 +1,6 @@
 package bowling.step2.domain.frame;
 
+import bowling.step2.domain.Frames;
 import bowling.step2.domain.scores.FinalScores;
 import bowling.step2.domain.scores.NormalScores;
 import bowling.step2.domain.scores.Scores;
@@ -7,28 +8,28 @@ import bowling.step2.domain.scores.Scores;
 public class NormalFrame implements Frame {
 
     private final int frame;
-    private final NormalScores scores;
+    private final Scores scores;
     private Frame nextFrame;
 
-    private NormalFrame(int frame, NormalScores scores) {
+    private NormalFrame(int frame, Scores scores) {
         this.frame = frame;
         this.scores = scores;
     }
 
-    public static NormalFrame of (int frame, NormalScores scores) {
+    public static NormalFrame of (int frame, Scores scores) {
         return new NormalFrame(frame, scores);
     }
 
 
     @Override
-    public NormalScores getScores () {
+    public Scores getScores () {
         return scores;
     }
 
     @Override
     public Frame createNextFrame () {
         int nextFrame = frame + 1;
-        if (nextFrame < Frame.LAST_FRAME) {
+        if (nextFrame < Frames.LAST_FRAME) {
             this.nextFrame = of(nextFrame, NormalScores.init());
             return this.nextFrame;
         }
@@ -38,12 +39,17 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame getNextFrame () {
-        return this.nextFrame;
+        return nextFrame;
     }
 
 
     @Override
     public boolean hasNext () {
-        return this.nextFrame != null;
+        return nextFrame != null;
+    }
+
+    @Override
+    public int getValue () {
+        return frame;
     }
 }
