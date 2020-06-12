@@ -2,18 +2,18 @@ package bowling.step2.domain;
 
 import bowling.step2.domain.frame.Frame;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
 
 public class Frames {
-    private static final int FIRST_FRAME = 1;
-    private static final int LAST_FRAME = 10;
+
+    public static final int FIRST_FRAME = 1;
+    public static final int LAST_FRAME = 10;
 
     private final List<Frame> frames;
 
@@ -29,12 +29,22 @@ public class Frames {
         return new Frames(new ArrayList<>());
     }
 
+    public static Frames ofFirst (Frame firstFrame) {
+        List<Frame> frames = new ArrayList<>();
+        Frame temp = firstFrame;
+        do {
+            frames.add(temp);
+            temp = temp.getNextFrame();
+        } while (temp.hasNext());
+        return new Frames(frames);
+    }
+
     public Stream<Frame> stream () {
         return frames.stream();
     }
 
     public List<Frame> preview () {
-        return IntStream.range(0, LAST_FRAME)
+        return IntStream.range(0, Frames.LAST_FRAME)
                         .mapToObj(index -> Optional.of(frames.get(index))
                                                    .orElse(null))
                         .collect(toList());
