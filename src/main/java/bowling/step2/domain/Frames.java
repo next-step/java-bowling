@@ -26,7 +26,7 @@ public class Frames {
     }
 
     public static Frames init () {
-        return new Frames(new ArrayList<>());
+        return of(new ArrayList<>());
     }
 
     public static Frames ofFirst (Frame firstFrame) {
@@ -44,8 +44,8 @@ public class Frames {
     }
 
     public Stream<Frame> preview () {
+        int size = frames.size();
         return IntStream.range(0, Frames.LAST_FRAME)
-                        .mapToObj(index -> Optional.of(frames.get(index))
-                                                   .orElse(null));
+                        .mapToObj(index -> index < size ? frames.get(index) : null);
     }
 }

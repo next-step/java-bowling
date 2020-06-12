@@ -56,12 +56,16 @@ public class ResultView {
     }
 
     private String scoreOf (Frame frame) {
+        if (frame == null) {
+            return "";
+        }
         return eachScoreOf(frame.getScores()
                                   .stream()
                                   .collect(toList()));
     }
 
     private String eachScoreOf (List<Score> scores) {
+        System.out.println(scores);
         return IntStream.rangeClosed(0, scores.size())
                  .mapToObj(index -> scores.get(index) != null
                                         ? toScoreType(scores, index)

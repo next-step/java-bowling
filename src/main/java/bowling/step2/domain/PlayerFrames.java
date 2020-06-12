@@ -29,7 +29,6 @@ public class PlayerFrames {
     }
 
     public Stream<Frame> getPreviewOf (Player player) {
-        return playerFrames.get(player)
-                           .preview();
+        return playerFrames.get(player).preview();
     }
 }
