@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.step2.domain.frame.Frame;
 import bowling.step2.domain.frame.FinalFrame;
+import bowling.step2.domain.frame.NormalFrame;
 import bowling.step2.domain.scores.FinalScores;
 import bowling.step2.domain.scores.Scores;
 import org.junit.jupiter.api.DisplayName;
@@ -24,15 +25,16 @@ public class FinalFrameTest {
 
     private static Stream<Arguments> provideFrameAndNextFrame () {
         Scores scores = FinalScores.init();
-        Frame frame = FinalFrame.of(10, scores, null);
-        Frame nextFrame1 = frame.createNextFrame(scores);
+        Frame normalFrame = NormalFrame.of(9, scores, null);
+        Frame nextFrame1 = FinalFrame.of(10, scores, normalFrame);
         Frame nextFrame2 = nextFrame1.createNextFrame(scores);
-        Frame nextFrame3 = nextFrame2.createNextFrame(scores);
+        Frame nextFrame3 = nextFrame1.createNextFrame(scores);
+        Frame nextFrame4 = nextFrame2.createNextFrame(scores);
         return Stream.of(
-            Arguments.of(frame, null),
-            Arguments.of(nextFrame1, null),
-            Arguments.of(nextFrame2, null),
-            Arguments.of(nextFrame3, null)
+            Arguments.of(nextFrame1, normalFrame),
+            Arguments.of(nextFrame2, normalFrame),
+            Arguments.of(nextFrame3, normalFrame),
+            Arguments.of(nextFrame4, normalFrame)
         );
     }
 }
