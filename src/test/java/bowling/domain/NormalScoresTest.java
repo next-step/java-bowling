@@ -39,4 +39,31 @@ public class NormalScoresTest {
             )
         );
     }
+
+    @DisplayName("스코어의 값이 전부 채워졌는지 확인하는 테스트")
+    @ParameterizedTest
+    @MethodSource("provideFullyScores")
+    void 스코어_채워짐_확인_테스트 (Scores scores) {
+        assertEquals(true, scores.isFullOf());
+    }
+
+    private static Stream<Arguments> provideFullyScores () {
+        return Stream.of(
+            Arguments.of(
+                NormalScores.init()
+                    .nextInit(Score.valueOf(1))
+                    .nextInit(Score.valueOf(2))
+            ),
+            Arguments.of(
+                NormalScores.init()
+                    .nextInit(Score.valueOf(3))
+                    .nextInit(Score.valueOf(4))
+            ),
+            Arguments.of(
+                NormalScores.init()
+                    .nextInit(Score.valueOf(5))
+                    .nextInit(Score.valueOf(6))
+            )
+        );
+    }
 }
