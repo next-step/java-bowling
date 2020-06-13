@@ -39,8 +39,7 @@ public class BowlingController {
     }
 
     public static void main(String[] args) {
-        Player player = Player.valueOf("hji");
-
+        Player player = inputView.inputName();
         resultView.printFrames(PlayerFrames.init(player));
         Frame temp = NormalFrame.of(1, NormalScores.init(), null);
         while (temp instanceof NormalFrame) {
