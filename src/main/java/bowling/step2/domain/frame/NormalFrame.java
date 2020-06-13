@@ -1,6 +1,7 @@
 package bowling.step2.domain.frame;
 
 import bowling.step2.domain.Frames;
+import bowling.step2.domain.Score;
 import bowling.step2.domain.scores.FinalScores;
 import bowling.step2.domain.scores.NormalScores;
 import bowling.step2.domain.scores.Scores;
@@ -9,15 +10,16 @@ public class NormalFrame implements Frame {
 
     private final int frame;
     private final Scores scores;
-    private Frame nextFrame;
+    private final Frame prevFrame;
 
-    private NormalFrame(int frame, Scores scores) {
+    protected NormalFrame(int frame, Scores scores, Frame prevFrame) {
         this.frame = frame;
         this.scores = scores;
+        this.prevFrame = prevFrame;
     }
 
-    public static NormalFrame of (int frame, Scores scores) {
-        return new NormalFrame(frame, scores);
+    public static NormalFrame of (int frame, Scores scores, Frame prevFrame) {
+        return new NormalFrame(frame, scores, prevFrame);
     }
 
 
@@ -28,24 +30,16 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame createNextFrame () {
-        int nextFrame = frame + 1;
-        if (nextFrame < Frames.LAST_FRAME) {
-            this.nextFrame = of(nextFrame, NormalScores.init());
-            return this.nextFrame;
+        int nextFrameValue = frame + 1;
+        if (nextFrameValue < Frames.LAST_FRAME) {
+            return of(nextFrameValue, NormalScores.init(), this);
         }
-        this.nextFrame = FinalFrame.of(nextFrame, FinalScores.init());
-        return this.nextFrame;
+        return FinalFrame.of(nextFrameValue, FinalScores.init(), this);
     }
 
     @Override
-    public Frame getNextFrame () {
-        return nextFrame;
-    }
-
-
-    @Override
-    public boolean hasNext () {
-        return nextFrame != null;
+    public Frame getPrevFrame () {
+        return prevFrame;
     }
 
     @Override
