@@ -66,4 +66,41 @@ public class NormalScoresTest {
             )
         );
     }
+
+    @DisplayName("스코어가 스페어 되었는지 확인하는 테스트")
+    @ParameterizedTest
+    @MethodSource("provideSparedScores")
+    void 스코어_스페어_테스트 (Scores scores) {
+        assertEquals(true, scores.isSpared());
+    }
+
+    private static Stream<Arguments> provideSparedScores () {
+        return Stream.of(
+            Arguments.of(
+                NormalScores.init()
+                    .nextInit(Score.valueOf(1))
+                    .nextInit(Score.valueOf(9))
+            ),
+            Arguments.of(
+                NormalScores.init()
+                    .nextInit(Score.valueOf(2))
+                    .nextInit(Score.valueOf(8))
+            ),
+            Arguments.of(
+                NormalScores.init()
+                    .nextInit(Score.valueOf(3))
+                    .nextInit(Score.valueOf(7))
+            ),
+            Arguments.of(
+                NormalScores.init()
+                    .nextInit(Score.valueOf(4))
+                    .nextInit(Score.valueOf(6))
+            ),
+            Arguments.of(
+                NormalScores.init()
+                    .nextInit(Score.valueOf(5))
+                    .nextInit(Score.valueOf(5))
+            )
+        );
+    }
 }
