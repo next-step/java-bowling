@@ -27,11 +27,11 @@ public class ResultView {
         return INSTANCE;
     }
 
-    public void printFrames (PlayerFrames playerFrames, Players players) {
+    public void printFrames (PlayerFrames playerFrames) {
         System.out.printf(
             "%s" + NEW_LINE + "%s" + NEW_LINE + NEW_LINE,
             frameNumbers(),
-            frameScores(playerFrames, players)
+            frameScores(playerFrames)
         );
     }
 
@@ -44,15 +44,12 @@ public class ResultView {
         );
     }
 
-    private String frameScores (PlayerFrames playerFrames, Players players) {
-        return players.stream()
-                      .map(playerName -> String.format(
-                          SCORES_FORMAT, playerName,
-                          playerFrames.getPreviewOf(playerName)
-                                      .map(frame -> String.format("%-4s", scoreOf(frame)))
-                                      .collect(joining("|  "))
-                      ))
-                      .collect(joining(NEW_LINE));
+    private String frameScores (PlayerFrames playerFrames) {
+        return String.format(
+              SCORES_FORMAT, playerFrames.getPlayer(),
+              playerFrames.getPreview()
+                          .map(frame -> String.format("%-4s", scoreOf(frame)))
+                          .collect(joining("|  ")));
     }
 
     private String scoreOf (Frame frame) {

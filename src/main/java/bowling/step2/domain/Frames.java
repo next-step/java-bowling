@@ -6,9 +6,6 @@ import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
-
 
 public class Frames {
 
@@ -29,13 +26,14 @@ public class Frames {
         return of(new ArrayList<>());
     }
 
-    public static Frames ofFirst (Frame firstFrame) {
+    public static Frames ofLastFrame (Frame nowFrame) {
         List<Frame> frames = new ArrayList<>();
-        Frame temp = firstFrame;
+        Frame temp = nowFrame;
         do {
             frames.add(temp);
-            temp = temp.getNextFrame();
-        } while (temp.hasNext());
+            temp = temp.getPrevFrame();
+        } while (temp != null);
+        Collections.reverse(frames);
         return new Frames(frames);
     }
 

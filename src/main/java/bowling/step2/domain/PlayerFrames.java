@@ -2,33 +2,34 @@ package bowling.step2.domain;
 
 import bowling.step2.domain.frame.Frame;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toMap;
-
 public class PlayerFrames {
-    private final Map<Player, Frames> playerFrames;
+    private final Player player;
+    private final Frames frames;
 
-    private PlayerFrames (Map<Player, Frames> playerFrames) {
-        this.playerFrames = playerFrames;
+    private PlayerFrames (Player player, Frames frames) {
+        this.player = player;
+        this.frames = frames;
     }
 
-    public static PlayerFrames of (Map<Player, Frames> playerFrames) {
-        return new PlayerFrames(playerFrames);
+    public static PlayerFrames of (Player player, Frames frames) {
+        return new PlayerFrames(player, frames);
     }
 
-    public static PlayerFrames init (Players players) {
-        return players.stream()
-                      .collect(collectingAndThen(
-                          toMap(player -> player, player -> Frames.init()),
-                          PlayerFrames::of
-                      ));
+    public static PlayerFrames ofFrame (Player player, Frame frame) {
+        return of(player, Frames.ofLastFrame(frame));
     }
 
-    public Stream<Frame> getPreviewOf (Player player) {
-        return playerFrames.get(player).preview();
+    public static PlayerFrames init (Player player) {
+        return of(player, Frames.init());
+    }
+
+    public Stream<Frame> getPreview () {
+        return frames.preview();
+    }
+
+    public Player getPlayer () {
+        return player;
     }
 }

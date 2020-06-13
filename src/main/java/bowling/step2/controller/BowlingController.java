@@ -8,18 +8,28 @@ import bowling.step2.view.*;
 import bowling.step2.domain.*;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class BowlingController {
     private static final InputView inputView = InputView.getInstance();
     private static final ResultView resultView = ResultView.getInstance();
 
-    public static void main(String[] args) {
-        Player player = inputView.inputName();
-        Players players = Players.of(Collections.singletonList(player));
-        PlayerFrames playerFrames = PlayerFrames.init(players);
+    private BowlingController () {}
 
-        resultView.printFrames(playerFrames, players);
+    public static void newPlayerFrame (Player player, Frame frame) {
+
+    }
+
+    public static void main(String[] args) {
+        // Player player = inputView.inputName();
+        Player player = Player.valueOf("hji");
+        PlayerFrames playerFrames = PlayerFrames.init(player);
+
+        resultView.printFrames(playerFrames);
+
+
 
     }
 }
