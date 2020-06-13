@@ -63,7 +63,7 @@ public class ResultView {
 
     private String eachScoreOf (List<Score> scores) {
         System.out.println(scores);
-        return IntStream.rangeClosed(0, scores.size())
+        return IntStream.range(0, scores.size())
                  .mapToObj(index -> scores.get(index) != null
                                         ? toScoreType(scores, index)
                                         : null)
@@ -78,7 +78,7 @@ public class ResultView {
         if (scores.get(index) == Score.getStrike()) {
             return ScoreType.STRIKE.getValue();
         }
-        if (index == 2 && NormalScores.isSparedOf(scores)) {
+        if (index == 1 && NormalScores.isSparedOf(scores)) {
             return ScoreType.SPARED.getValue();
         }
         return scores.get(index).toString();
