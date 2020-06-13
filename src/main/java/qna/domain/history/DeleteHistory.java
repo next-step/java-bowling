@@ -1,4 +1,4 @@
-package qna.domain.histroy;
+package qna.domain.history;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

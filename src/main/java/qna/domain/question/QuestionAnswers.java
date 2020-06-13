@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import org.hibernate.annotations.Where;
-import qna.domain.histroy.DeleteHistory;
+import qna.domain.history.DeleteHistory;
 import qna.domain.user.User;
 
 @Embeddable

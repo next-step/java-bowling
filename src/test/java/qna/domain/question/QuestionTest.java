@@ -8,8 +8,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.domain.UserTest;
-import qna.domain.histroy.ContentType;
-import qna.domain.histroy.DeleteHistory;
+import qna.domain.history.ContentType;
+import qna.domain.history.DeleteHistory;
 
 public class QuestionTest {
 

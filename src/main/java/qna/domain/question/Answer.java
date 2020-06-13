@@ -9,8 +9,8 @@ import javax.persistence.ManyToOne;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 import qna.domain.AbstractEntity;
-import qna.domain.histroy.ContentType;
-import qna.domain.histroy.DeleteHistory;
+import qna.domain.history.ContentType;
+import qna.domain.history.DeleteHistory;
 import qna.domain.user.User;
 
 @Entity

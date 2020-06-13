@@ -6,8 +6,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import qna.domain.histroy.ContentType;
-import qna.domain.histroy.DeleteHistory;
+import qna.domain.history.ContentType;
+import qna.domain.history.DeleteHistory;
 import qna.domain.question.CannotDeleteException;
 import qna.domain.*;
 
