@@ -7,11 +7,11 @@ import java.util.stream.Stream;
 
 public interface Scores {
 
-    Scores firstInit (Score score);
-    Scores secondInit (Score score);
+    Scores nextInit (Score score);
     boolean isStrike ();
     boolean isSpared ();
     boolean isEmptyOf (int index);
+    boolean isFullOf ();
     int totalScore ();
     Stream<Score> stream ();
 

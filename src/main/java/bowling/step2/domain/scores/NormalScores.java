@@ -25,16 +25,17 @@ public class NormalScores implements Scores {
     }
 
     public static boolean isSparedOf (List<Score> scores) {
+        if (scores.get(0) == Score.getStrike()) {
+            return false;
+        }
         return of(scores.get(0), scores.get(1)).isSpared();
     }
 
     @Override
-    public Scores firstInit (Score score) {
-        return of(score, null);
-    }
-
-    @Override
-    public Scores secondInit (Score score) {
+    public Scores nextInit (Score score) {
+        if (firstScore == null) {
+            return of(score, null);
+        }
         return of(firstScore, score);
     }
 
@@ -54,6 +55,11 @@ public class NormalScores implements Scores {
             return false;
         }
         return asList(firstScore, secondScore).get(index) == null;
+    }
+
+    @Override
+    public boolean isFullOf () {
+        return firstScore != null && secondScore != null;
     }
 
     @Override

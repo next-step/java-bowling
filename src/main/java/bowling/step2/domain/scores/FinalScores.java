@@ -27,16 +27,13 @@ public class FinalScores implements Scores {
     }
 
     @Override
-    public FinalScores firstInit (Score score) {
-        return of(score, null);
-    }
-
-    @Override
-    public FinalScores secondInit (Score score) {
-        return of(firstScore, score);
-    }
-
-    public FinalScores bonusInit (Score score) {
+    public Scores nextInit (Score score) {
+        if (firstScore == null) {
+            return of(score, null);
+        }
+        if (secondScore == null) {
+            return of(firstScore, score);
+        }
         return new FinalScores(firstScore, secondScore, score);
     }
 
@@ -56,6 +53,10 @@ public class FinalScores implements Scores {
             return false;
         }
         return asList(firstScore, secondScore, bonusScore).get(index) == null;
+    }
+    @Override
+    public boolean isFullOf () {
+        return firstScore != null && secondScore != null && bonusScore != null;
     }
 
     @Override
