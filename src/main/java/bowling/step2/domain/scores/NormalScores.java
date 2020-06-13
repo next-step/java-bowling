@@ -50,14 +50,6 @@ public class NormalScores implements Scores {
     }
 
     @Override
-    public boolean isEmptyOf (int index) {
-        if (index > 1) {
-            return false;
-        }
-        return asList(firstScore, secondScore).get(index) == null;
-    }
-
-    @Override
     public boolean isFullOf () {
         return firstScore != null && secondScore != null;
     }
