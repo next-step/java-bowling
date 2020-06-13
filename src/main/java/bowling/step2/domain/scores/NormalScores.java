@@ -5,8 +5,6 @@ import bowling.step2.domain.Score;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static java.util.Arrays.asList;
-
 public class NormalScores implements Scores {
     private final Score firstScore;
     private final Score secondScore;
