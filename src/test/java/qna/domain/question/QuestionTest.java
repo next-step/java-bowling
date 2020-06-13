@@ -1,11 +1,11 @@
-package qna.domain;
+package qna.domain.question;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import qna.CannotDeleteException;
+import qna.domain.UserTest;
 
 public class QuestionTest {
 
@@ -25,19 +25,21 @@ public class QuestionTest {
 
     @DisplayName("로그인 사용자와 질문한 사람이 같지 않을 경우 삭제를 하면 예외가 발생한다.")
     @Test
-    void delete_then_throw_exception_if_other_user(){
+    void delete_then_throw_exception_if_other_user() {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
 
-        assertThatThrownBy(()->question.deleteBy(UserTest.SANJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> question.deleteBy(UserTest.SANJIGI))
+            .isInstanceOf(CannotDeleteException.class);
     }
 
     @DisplayName("다른 사람의 답변이 있을경우 삭제시 얘외가 발생한다.(질문자와 답변자가 다른경우 답변을 삭제 할 수 없다.)")
     @Test
-    void delete_then_throw_exception_if_other_user_question_exist(){
+    void delete_then_throw_exception_if_other_user_question_exist() {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         question.addAnswer(AnswerTest.SANJIGI);
 
-        assertThatThrownBy(()->question.deleteBy(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> question.deleteBy(UserTest.JAVAJIGI))
+            .isInstanceOf(CannotDeleteException.class);
     }
 
     @DisplayName("질문을 삭제하면 답변도 모두 삭제(deleted==true)된다.")

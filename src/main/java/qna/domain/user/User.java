@@ -1,10 +1,11 @@
-package qna.domain;
+package qna.domain.user;
 
 import qna.UnAuthorizedException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.Objects;
+import qna.domain.AbstractEntity;
 
 @Entity
 public class User extends AbstractEntity {

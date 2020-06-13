@@ -1,8 +1,9 @@
-package qna.domain;
+package qna.domain.histroy;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import qna.domain.user.User;
 
 @Entity
 public class DeleteHistory {
