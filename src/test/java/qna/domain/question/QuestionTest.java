@@ -3,9 +3,13 @@ package qna.domain.question;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.domain.UserTest;
+import qna.domain.histroy.ContentType;
+import qna.domain.histroy.DeleteHistory;
 
 public class QuestionTest {
 
@@ -21,6 +25,19 @@ public class QuestionTest {
         question.deleteBy(UserTest.JAVAJIGI);
 
         assertThat(question.isDeleted()).isTrue();
+    }
+
+    @DisplayName("질문을 삭제하면 답변, 질문에대한 히스토리를 반환한다.")
+    @Test
+    void delete_question_then_history() throws CannotDeleteException {
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.addAnswer(AnswerTest.JAVAJIGI);
+
+        List<DeleteHistory> histories = question.deleteBy(UserTest.JAVAJIGI);
+
+        assertThat(histories.size()).isEqualTo(2);
+        assertThat(histories).contains(new DeleteHistory(ContentType.QUESTION, question.getId(), UserTest.JAVAJIGI, LocalDateTime.now()));
+        assertThat(histories).contains(new DeleteHistory(ContentType.ANSWER, AnswerTest.JAVAJIGI.getId(), UserTest.JAVAJIGI, LocalDateTime.now()));
     }
 
     @DisplayName("로그인 사용자와 질문한 사람이 같지 않을 경우 삭제를 하면 예외가 발생한다.")
