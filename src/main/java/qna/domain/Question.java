@@ -72,13 +72,9 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
-
     public void verifyOwner(final User loginUser) {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("질문 작성자가 아닙니다.");
+        if (!writer.isSame(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
 

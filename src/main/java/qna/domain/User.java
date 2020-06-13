@@ -72,8 +72,8 @@ public class User extends AbstractEntity {
         return this;
     }
 
-    public void update(User loginUser, User target) {
-        if (!matchUserId(loginUser.getUserId())) {
+    public void update(final User loginUser, final User target) {
+        if (!isSame(loginUser)) {
             throw new UnAuthorizedException();
         }
 
@@ -85,8 +85,8 @@ public class User extends AbstractEntity {
         this.email = target.email;
     }
 
-    private boolean matchUserId(String userId) {
-        return this.userId.equals(userId);
+    public boolean isSame(final User loginUser) {
+        return this.equals(loginUser);
     }
 
     public boolean matchPassword(String targetPassword) {
