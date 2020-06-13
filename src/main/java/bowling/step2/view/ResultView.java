@@ -2,15 +2,11 @@ package bowling.step2.view;
 
 import bowling.step2.domain.*;
 import bowling.step2.domain.frame.Frame;
-import bowling.step2.domain.frame.NormalFrame;
 import bowling.step2.domain.scores.NormalScores;
-import bowling.step2.domain.scores.Scores;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
