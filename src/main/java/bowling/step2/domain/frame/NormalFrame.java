@@ -1,10 +1,7 @@
 package bowling.step2.domain.frame;
 
 import bowling.step2.domain.Frames;
-import bowling.step2.domain.Score;
-import bowling.step2.domain.scores.FinalScores;
-import bowling.step2.domain.scores.NormalScores;
-import bowling.step2.domain.scores.Scores;
+import bowling.step2.domain.scores.*;
 
 public class NormalFrame implements Frame {
 
