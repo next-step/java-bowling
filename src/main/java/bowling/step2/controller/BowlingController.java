@@ -1,17 +1,11 @@
 package bowling.step2.controller;
 
-import bowling.step2.domain.frame.FinalFrame;
 import bowling.step2.domain.frame.Frame;
 import bowling.step2.domain.frame.NormalFrame;
 import bowling.step2.domain.scores.NormalScores;
 import bowling.step2.domain.scores.Scores;
 import bowling.step2.view.*;
 import bowling.step2.domain.*;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class BowlingController {
     private static final InputView inputView = InputView.getInstance();
@@ -45,7 +39,6 @@ public class BowlingController {
     }
 
     public static void main(String[] args) {
-        // Player player = inputView.inputName();
         Player player = Player.valueOf("hji");
 
         resultView.printFrames(PlayerFrames.init(player));
