@@ -1,6 +1,9 @@
 package bowling.step2.domain.frame;
 
+import bowling.step2.domain.Frames;
 import bowling.step2.domain.Score;
+import bowling.step2.domain.scores.FinalScores;
+import bowling.step2.domain.scores.NormalScores;
 import bowling.step2.domain.scores.Scores;
 
 public class FinalFrame implements Frame {
@@ -25,8 +28,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame createNextFrame () {
-        return null;
+    public Frame createNextFrame (Scores scores) {
+        return of(frame, scores, prevFrame);
     }
 
     @Override

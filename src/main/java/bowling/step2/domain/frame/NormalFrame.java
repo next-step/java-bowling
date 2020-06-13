@@ -29,12 +29,15 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame createNextFrame () {
-        int nextFrameValue = frame + 1;
-        if (nextFrameValue < Frames.LAST_FRAME) {
-            return of(nextFrameValue, NormalScores.init(), this);
+    public Frame createNextFrame (Scores scores) {
+        Frame now = of(frame, scores, prevFrame);
+        if (!scores.isStrike() && !scores.isFullOf()) {
+            return now;
         }
-        return FinalFrame.of(nextFrameValue, FinalScores.init(), this);
+        int nextFrameValue = frame + 1;
+        return nextFrameValue < Frames.LAST_FRAME
+                ? of(nextFrameValue, NormalScores.init(), now)
+                : FinalFrame.of(nextFrameValue, FinalScores.init(), now);
     }
 
     @Override
