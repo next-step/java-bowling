@@ -1,8 +1,5 @@
 package qna.domain;
 
-import qna.CannotDeleteException;
-import qna.exception.ErrorMessage;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,14 +25,7 @@ public class Answers {
     }
 
     private void verifyDeletable(final User user) {
-        if (isExistOtherCommenter(user)) {
-            throw new CannotDeleteException(ErrorMessage.HAS_ANOTHER_COMMENTER);
-        }
-    }
-
-    private boolean isExistOtherCommenter(final User user) {
-        return answers.stream()
-                .anyMatch(answer -> !answer.isOwner(user));
+        answers.forEach(answer -> answer.verifyOwner(user));
     }
 
     public List<Answer> getAnswers() {
