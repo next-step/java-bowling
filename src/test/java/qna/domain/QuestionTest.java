@@ -16,11 +16,8 @@ public class QuestionTest {
     @DisplayName("로그인한 유저가 작성자가 아닌 경우 예외 발생")
     @Test
     public void verifyOwner() {
-        User loginUser = new User();
-        loginUser.setUserId("heejeong");
-
         assertThatExceptionOfType(CannotDeleteException.class)
-                .isThrownBy(() -> question1.verifyOwner(loginUser));
+                .isThrownBy(() -> question1.verifyOwner(Fixture.of().getSanjigi()));
     }
 
     @DisplayName("질문 삭제 시 삭제 상태(deleted)를 TRUE로 변경, (답변이 없는 경우)")
