@@ -3,59 +3,55 @@ package bowling;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class NormalFrameTest {
 
-    @Test
-    void play_then_strike(){
-        NormalFrame normalFrame = NormalFrame.first();
 
-        String result = normalFrame.play(10);
-        assertThat(result).isEqualTo("X");
+    @Test
+    void play_then_strike() {
+        NormalFrame normalFrame = NormalFrame.first();
+        normalFrame.play(10);
+
+        FrameResult frameResult = new FrameResult(Arrays.asList(10));
+
+        assertThat(normalFrame.getResult()).isEqualTo(frameResult);
     }
 
     @DisplayName("strike후에 플레이 하면 예외 발생한다.")
     @Test
-    void strike_and_play_then_throw_exception(){
+    void strike_and_play_then_throw_exception() {
         NormalFrame normalFrame = NormalFrame.first();
 
         normalFrame.play(10);
-        assertThatThrownBy(()->normalFrame.play(1))
+        assertThatThrownBy(() -> normalFrame.play(1))
             .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
-    void play_then_miss(){
+    void two_play() {
         NormalFrame normalFrame = NormalFrame.first();
 
-        String first = normalFrame.play(8);
-        String second = normalFrame.play(1);
+        normalFrame.play(8);
+        normalFrame.play(1);
 
-        assertThat(first).isEqualTo("8");
-        assertThat(second).isEqualTo("9");
+        FrameResult frameResult = new FrameResult(Arrays.asList(8, 1));
+
+        assertThat(normalFrame.getResult()).isEqualTo(frameResult);
     }
 
+    @DisplayName("3번의 플레이를 하면 예외가 발생한다.")
     @Test
-    void play_then_spare(){
+    void third_play_then_exception() {
         NormalFrame normalFrame = NormalFrame.first();
 
-        String first = normalFrame.play(9);
-        String second = normalFrame.play(1);
+        normalFrame.play(8);
+        normalFrame.play(1);
 
-        assertThat(first).isEqualTo("9");
-        assertThat(second).isEqualTo("/");
+        assertThatThrownBy(() -> normalFrame.play(1))
+            .isInstanceOf(IllegalStateException.class);
     }
 
-    @Test
-    void play_then_gutter(){
-        NormalFrame normalFrame = NormalFrame.first();
-
-        String first = normalFrame.play(0);
-        String second = normalFrame.play(0);
-
-        assertThat(first).isEqualTo("-");
-        assertThat(second).isEqualTo("-");
-    }
 }

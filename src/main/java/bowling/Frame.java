@@ -2,7 +2,9 @@ package bowling;
 
 public interface Frame {
 
-    String play(int numberOfDownPin);
+    void play(int numberOfDownPin);
 
-    boolean hasNextRound();
+    boolean hasTurn();
+
+    FrameResult getResult();
 }

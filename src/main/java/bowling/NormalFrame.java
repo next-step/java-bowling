@@ -1,13 +1,15 @@
 package bowling;
 
-public class NormalFrame implements Frame{
+import java.util.ArrayList;
+import java.util.List;
+
+public class NormalFrame implements Frame {
 
     private final static int MAX_ROUND = 2;
 
     private final int position;
 
-    private int numberOfDownPin;
-    private int round;
+    private final List<Integer> downPins = new ArrayList<>();
 
     private NormalFrame(int position) {
         this.position = position;
@@ -18,45 +20,37 @@ public class NormalFrame implements Frame{
     }
 
     NormalFrame next() {
-        return new NormalFrame(this.position +1);
+        return new NormalFrame(this.position + 1);
     }
 
     @Override
-    public String play(int pin) {
-        if (!hasNextRound()) {
+    public void play(int downPin) {
+        if (!hasTurn()) {
             throw new IllegalStateException("이미 종료된 frame입니다.");
         }
 
-        this.round++;
-        this.numberOfDownPin += pin;
-
-        if (pin == 0) {
-            return "-";
-        }
-
-        if (this.round == 1 && this.numberOfDownPin == 10) {
-            return "X";
-        }
-
-        if (this.round == 2 && this.numberOfDownPin == 10) {
-            return "/";
-        }
-
-        return String.valueOf(this.numberOfDownPin);
+        this.downPins.add(downPin);
     }
 
     @Override
-    public boolean hasNextRound() {
-        if (this.round == MAX_ROUND) {
+    public boolean hasTurn() {
+        if (this.downPins.size() == MAX_ROUND) {
             return false;
         }
 
-        if (this.numberOfDownPin == 10) {
+        if (sumDownPin() == 10) {
             return false;
         }
 
         return true;
     }
 
+    @Override
+    public FrameResult getResult() {
+        return new FrameResult(new ArrayList<>(this.downPins));
+    }
 
+    private int sumDownPin() {
+        return downPins.stream().reduce(0, Integer::sum);
+    }
 }

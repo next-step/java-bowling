@@ -1,44 +1,44 @@
 package bowling;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FinalFrame implements Frame{
 
-    private int numberOfDownPin;
-    private int round;
+    private final List<Integer> downPins = new ArrayList<>();
 
     @Override
-    public String play(int numberOfDownPin) {
-        if(!hasNextRound()){
+    public void play(int downPin) {
+        if(!hasTurn()){
             throw new IllegalStateException("can not play");
         }
 
-        this.round++;
-        this.numberOfDownPin += numberOfDownPin;
-
-        if (numberOfDownPin == 0) {
-            return "-";
-        }
-
-        if (numberOfDownPin == 10) {
-            return "X";
-        }
-
-        return String.valueOf(numberOfDownPin);
+        downPins.add(downPin);
     }
 
     @Override
-    public boolean hasNextRound() {
-        if(this.round > 2){
+    public boolean hasTurn() {
+        if(this.downPins.size() > 2){
             return false;
         }
 
-        if(this.round < 2){
+        if(this.downPins.size()  < 2){
             return true;
         }
 
-        if(this.round == 2 && this.numberOfDownPin >= 10){
+        if(this.downPins.size()  == 2 && sumDownPin() >= 10){
             return true;
         }
 
         return false;
+    }
+
+    @Override
+    public FrameResult getResult() {
+        return new FrameResult(new ArrayList<>(this.downPins));
+    }
+
+    private int sumDownPin() {
+        return this.downPins.stream().reduce(0, Integer::sum);
     }
 }
