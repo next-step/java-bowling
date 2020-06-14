@@ -1,6 +1,7 @@
 package qna.domain;
 
 import qna.CannotDeleteException;
+import qna.exception.ErrorMessage;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +29,7 @@ public class Answers {
 
     private void verifyDeletable(final User user) {
         if (isExistOtherCommenter(user)) {
-            throw new CannotDeleteException("다른 사용자가 답변글을 작성했습니다.");
+            throw new CannotDeleteException(ErrorMessage.HAS_ANOTHER_COMMENTER);
         }
     }
 
