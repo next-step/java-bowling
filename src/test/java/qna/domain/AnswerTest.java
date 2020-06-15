@@ -16,13 +16,13 @@ public class AnswerTest {
     @Test
     public void verifyOwner() {
         assertThatExceptionOfType(CannotDeleteException.class)
-                .isThrownBy(() -> answer1.verifyOwner(Fixture.of().getSanjigi()));
+                .isThrownBy(() -> answer1.delete(Fixture.of().getSanjigi()));
     }
 
     @DisplayName("답변 삭제 시 삭제 상태(deleted)를 TRUE로 변경")
     @Test
     public void deleteState() {
-        answer1.delete();
+        answer1.delete(Fixture.of().getJavajigi());
 
         assertThat(answer1.isDeleted()).isTrue();
     }

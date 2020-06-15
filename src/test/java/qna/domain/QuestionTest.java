@@ -36,7 +36,7 @@ public class QuestionTest {
         question1.addAnswer(answer);
         question1.addAnswer(answer);
 
-        question1.delete(UserTest.JAVAJIGI);
+        question1.delete(Fixture.of().getJavajigi());
 
         assertThat(question1.isDeleted()).isTrue();
     }
@@ -47,6 +47,6 @@ public class QuestionTest {
         question1.addAnswer(Fixture.of().getAnswer2());
 
         assertThatExceptionOfType(CannotDeleteException.class)
-                .isThrownBy(() -> question1.delete(UserTest.JAVAJIGI));
+                .isThrownBy(() -> question1.delete(Fixture.of().getJavajigi()));
     }
 }

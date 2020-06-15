@@ -46,16 +46,18 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public void verifyOwner(final User user) {
-        if (!writer.isSame(user)) {
-            throw new CannotDeleteException(ErrorMessage.HAS_ANOTHER_COMMENTER);
-        }
-    }
+    public DeleteHistory delete(final User user) {
+        verifyOwner(user);
 
-    public DeleteHistory delete() {
         deleted = Boolean.TRUE;
 
         return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
+    }
+
+    private void verifyOwner(final User user) {
+        if (!writer.isSame(user)) {
+            throw new CannotDeleteException(ErrorMessage.HAS_ANOTHER_COMMENTER);
+        }
     }
 
     public boolean isDeleted() {
