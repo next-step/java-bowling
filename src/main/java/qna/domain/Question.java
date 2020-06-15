@@ -41,9 +41,7 @@ public class Question extends AbstractEntity {
     }
 
     public void delete(User loginUser) throws CannotDeleteException {
-        if (!loginUser.equalsNameAndEmail(this.writer)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
+        validateDeleteAuthorization(loginUser);
         this.deleted = true;
     }
 
@@ -94,6 +92,12 @@ public class Question extends AbstractEntity {
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    private void validateDeleteAuthorization(User loginUser) throws CannotDeleteException {
+        if (!loginUser.equalsNameAndEmail(this.writer)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
     }
 
     @Override
