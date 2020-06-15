@@ -5,6 +5,7 @@ import bowling.step2.exception.PlayerNameMaximumException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Player {
     private final String name;
@@ -34,5 +35,22 @@ public class Player {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof Player) {
+            Player temp = (Player)obj;
+            return name.equals(temp.name);
+        }
+        return false;
     }
 }
