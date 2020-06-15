@@ -45,9 +45,7 @@ public class Answer extends AbstractEntity {
     }
 
     public void delete(User questionUser) {
-        if (!this.writer.equalsNameAndEmail(questionUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
+        validateDeleteAuthorization(questionUser);
         this.deleted = true;
     }
 
@@ -70,6 +68,12 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    private void validateDeleteAuthorization(User questionUser) {
+        if (!this.writer.equalsNameAndEmail(questionUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 
     @Override
