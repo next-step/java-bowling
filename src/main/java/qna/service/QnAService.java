@@ -9,9 +9,6 @@ import qna.NotFoundException;
 import qna.domain.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -37,18 +34,13 @@ public class QnAService {
         Question question = findQuestionById(questionId);
         question.validateDeleteRequestor(loginUser);
         question.validateAnswerWriters(loginUser);
-        question.delete();
 
         DeleteHistoriesGroup deleteHistoriesGroup = new DeleteHistoriesGroup();
+        question.delete();
         deleteHistoriesGroup.addQuestionHistory(question, questionId);
+        question.deleteAnswers();
+        deleteHistoriesGroup.addAnswersHistory(question);
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        List<Answer> answers = question.getAnswers();
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
-        deleteHistoryService.saveAll(deleteHistories);
+        deleteHistoryService.saveAll(deleteHistoriesGroup.getDeleteHistories());
     }
 }
