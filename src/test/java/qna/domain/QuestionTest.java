@@ -52,4 +52,12 @@ public class QuestionTest {
         }).isInstanceOf(CannotDeleteException.class)
                 .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
+
+    @DisplayName("Question의 답변이 없는 경우에도 validateAnswerWriters 정상 통과")
+    @Test
+    public void validateAnswerWriters_답변없음_정상() {
+        assertThatCode(() -> {
+            Q2.validateAnswerWriters(UserTest.SANJIGI);
+        }).doesNotThrowAnyException();
+    }
 }
