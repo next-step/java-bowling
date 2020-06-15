@@ -18,12 +18,13 @@ public class NormalFrame extends Frame {
 
     public void createNextFrame(Scores scores) {
         if (!scores.isType(ScoreType.STRIKE) && !scores.isFullOf()) {
+            this.scores = scores;
             return;
         }
         int nextFrameValue = frame + 1;
         this.nextFrame = nextFrameValue < Frames.LAST_FRAME
-                         ? of(nextFrameValue, NormalScores.init(), null)
-                         : FinalFrame.of(nextFrameValue, FinalScores.init());
+                            ? of(nextFrameValue, NormalScores.init(), null)
+                            : FinalFrame.of(nextFrameValue, FinalScores.init());
     }
 
     public Frame getNextFrame () {
