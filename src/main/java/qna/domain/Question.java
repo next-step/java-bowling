@@ -3,7 +3,6 @@ package qna.domain;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -42,24 +41,6 @@ public class Question extends AbstractEntity {
         this.deleted = true;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
-    }
-
     public User getWriter() {
         return writer;
     }
@@ -72,17 +53,6 @@ public class Question extends AbstractEntity {
     public Question setAnswers(Answers answers) {
         this.answers = answers;
         return this;
-    }
-
-    // TODO: 인터페이스 유지용 임시 메서드
-    public void addAnswer(Answer answer) {
-        List<Answer> newAnswers = this.answers.getValues();
-        newAnswers.add(answer);
-        this.answers = new Answers(newAnswers);
-    }
-
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
     }
 
     public Question setDeleted(boolean deleted) {
