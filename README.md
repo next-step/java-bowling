@@ -55,3 +55,5 @@ public class QnAService {
     * 인스턴스 변수의 수를 줄이기 위해 도전한다.
 #### 힌트2
 * 테스트하기 쉬운 부분과 테스트하기 어려운 부분을 분리해 테스트 가능한 부분만 단위테스트한다.
+
+![힌트](https://nextstep-storage.s3.ap-northeast-2.amazonaws.com/2020-04-08T11%3A45%3A40.213legacy_refactoring_3.png)
