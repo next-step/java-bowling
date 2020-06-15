@@ -36,7 +36,7 @@ public class QuestionTest {
         Q3.addAnswer(answer);
 
         assertThatCode(() -> {
-            Q3.validateAnswerWriters();
+            Q3.validateAnswerWriters(UserTest.JAVAJIGI);
         }).doesNotThrowAnyException();
     }
 
@@ -48,7 +48,7 @@ public class QuestionTest {
         Q3.addAnswer(answer);
 
         assertThatThrownBy(() -> {
-            Q3.validateAnswerWriters();
+            Q3.validateAnswerWriters(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class)
                 .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
