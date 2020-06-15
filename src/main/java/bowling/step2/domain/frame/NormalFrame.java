@@ -1,6 +1,7 @@
 package bowling.step2.domain.frame;
 
 import bowling.step2.domain.Frames;
+import bowling.step2.domain.ScoreType;
 import bowling.step2.domain.scores.*;
 
 public class NormalFrame extends Frame {
@@ -16,7 +17,7 @@ public class NormalFrame extends Frame {
     @Override
     public Frame createNextFrame(Scores scores) {
         Frame now = of(frame, scores, prevFrame);
-        if (!scores.isStrike() && !scores.isFullOf()) {
+        if (!scores.isType(ScoreType.STRIKE) && !scores.isFullOf()) {
             return now;
         }
         int nextFrameValue = frame + 1;

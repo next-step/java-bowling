@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.step2.domain.Score;
+import bowling.step2.domain.ScoreType;
 import bowling.step2.domain.scores.NormalScores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +18,7 @@ public class NormalScoresTest {
     @ParameterizedTest
     @MethodSource("provideStrikeScores")
     void 스트라이크_테스트(NormalScores scores) {
-        assertEquals(true, scores.isStrike());
+        assertEquals(true, scores.isType(ScoreType.STRIKE));
     }
 
     private static Stream<Arguments> provideStrikeScores() {
@@ -70,7 +71,7 @@ public class NormalScoresTest {
     @ParameterizedTest
     @MethodSource("provideSparedScores")
     void 스코어_스페어_테스트(NormalScores scores) {
-        assertEquals(true, scores.isSpared());
+        assertEquals(true, scores.isType(ScoreType.SPARED));
     }
 
     private static Stream<Arguments> provideSparedScores() {

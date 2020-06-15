@@ -23,7 +23,7 @@ public class BowlingController {
 
     public static Frame normalFrameView(Frame frame, Player player) {
         Frame nextFrame = frameView(frame, player);
-        if (!nextFrame.getScores().isStrike()) {
+        if (!nextFrame.getScores().isType(ScoreType.STRIKE)) {
             nextFrame = frameView(nextFrame, player);
         }
         return nextFrame;
@@ -33,7 +33,7 @@ public class BowlingController {
         Frame nextFrame = frameView(frame, player);
         nextFrame = frameView(nextFrame, player);
         Scores scores = nextFrame.getScores();
-        if (scores.isStrike() || scores.isSpared()) {
+        if (scores.isType(ScoreType.STRIKE) || scores.isType(ScoreType.SPARED)) {
             frameView(nextFrame, player);
         }
     }

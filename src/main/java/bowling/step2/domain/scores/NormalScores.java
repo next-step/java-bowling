@@ -1,6 +1,7 @@
 package bowling.step2.domain.scores;
 
 import bowling.step2.domain.Score;
+import bowling.step2.domain.ScoreType;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -23,7 +24,7 @@ public class NormalScores extends Scores {
         if (scores.get(0) == Score.getStrike()) {
             return false;
         }
-        return of(scores.get(0), scores.get(1)).isSpared();
+        return of(scores.get(0), scores.get(1)).isType(ScoreType.SPARED);
     }
 
     @Override
