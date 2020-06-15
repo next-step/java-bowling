@@ -90,9 +90,8 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public void delete() {
+        this.deleted = true;
     }
 
     public List<Answer> getAnswers() {

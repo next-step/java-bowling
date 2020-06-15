@@ -4,8 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -59,5 +58,14 @@ public class QuestionTest {
         assertThatCode(() -> {
             Q2.validateAnswerWriters(UserTest.SANJIGI);
         }).doesNotThrowAnyException();
+    }
+
+    @DisplayName("Question의 delete메소드를 수행하면 delted가 true로 변경됨")
+    @Test
+    public void delete_true() {
+        Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        Q3.delete();
+
+        assertThat(Q3.isDeleted()).isTrue();
     }
 }
