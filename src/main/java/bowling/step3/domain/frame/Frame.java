@@ -5,7 +5,7 @@ import bowling.step3.domain.scores.Scores;
 public class Frame {
 
     protected final int frame;
-    protected final Scores scores;
+    protected Scores scores;
 
     protected Frame(int frame, Scores scores) {
         this.frame = frame;
