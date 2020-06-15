@@ -69,17 +69,8 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public Answers getAnswers() {
-        return answers;
     }
 
     private void validateDeleteAuthorization(User loginUser) throws CannotDeleteException {

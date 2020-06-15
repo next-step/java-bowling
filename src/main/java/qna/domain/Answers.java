@@ -33,9 +33,4 @@ public class Answers {
                 .map(answer -> answer.delete(questionUser))
                 .collect(Collectors.toList());
     }
-
-    // TODO: 임시(서비스 인터페이스 유지용)
-    public List<Answer> getValues() {
-        return new ArrayList<>(this.answers);
-    }
 }
