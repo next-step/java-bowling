@@ -25,7 +25,7 @@ public class BowlingGame {
 
     public void normalFrameView(Frame nowFrame) {
         frameView(nowFrame);
-        if (nowFrame.getScores().isType(ScoreType.STRIKE)) {
+        if (!nowFrame.getScores().isType(ScoreType.STRIKE)) {
             frameView(nowFrame);
         }
     }

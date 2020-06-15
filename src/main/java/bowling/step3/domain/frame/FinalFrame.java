@@ -11,4 +11,8 @@ public class FinalFrame extends Frame {
     public static Frame of(int frame, Scores scores) {
         return new FinalFrame(frame, scores);
     }
+
+    public void createNextFrame (Scores scores) {
+        this.scores = scores;
+    }
 }

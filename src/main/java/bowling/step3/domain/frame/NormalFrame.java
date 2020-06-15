@@ -17,8 +17,8 @@ public class NormalFrame extends Frame {
     }
 
     public void createNextFrame(Scores scores) {
+        this.scores = scores;
         if (!scores.isType(ScoreType.STRIKE) && !scores.isFullOf()) {
-            this.scores = scores;
             return;
         }
         int nextFrameValue = frame + 1;
