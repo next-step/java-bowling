@@ -15,7 +15,6 @@ import static qna.domain.AnswerTest.*;
 public class AnswersTests {
     private List<Answer> twoAnswerListSameWithQuestion = new ArrayList<>();
     private List<Answer> twoAnswerListDifferentWithQuestion = new ArrayList<>();
-    private List<Answer> emptyAnswerList = new ArrayList<>();
 
     @Before
     public void setup() {
