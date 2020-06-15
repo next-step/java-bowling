@@ -15,7 +15,7 @@ public class Answers {
 
     public List<DeleteHistory> delete(User loginUser, List<DeleteHistory> deleteHistories) throws CannotDeleteException {
         for (Answer answer : answers) {
-            answer.deleted(loginUser);
+            answer.deleteByOwner(loginUser);
             DeleteHistory deleteHistory = new DeleteHistory(ContentType.ANSWER, answer.getId(), loginUser, LocalDateTime.now());
             deleteHistories.add(deleteHistory);
         }

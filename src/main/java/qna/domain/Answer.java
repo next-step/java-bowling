@@ -74,7 +74,7 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-    public void deleted(User loginUser) throws CannotDeleteException {
+    public void deleteByOwner(User loginUser) throws CannotDeleteException {
         this.availableDelete(loginUser);
         this.deleted = true;
     }

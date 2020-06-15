@@ -25,18 +25,18 @@ public class QuestionTest {
     @Test
     @DisplayName("질문의 작성자일 경우 정상 삭제")
     void deleteTest() {
-        assertThatCode(() -> Q1.deleted(UserTest.JAVAJIGI))
+        assertThatCode(() -> Q1.deleteByWriter(UserTest.JAVAJIGI))
                 .doesNotThrowAnyException();
-        assertThatCode(() -> Q2.deleted(UserTest.SANJIGI))
+        assertThatCode(() -> Q2.deleteByWriter(UserTest.SANJIGI))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("질문의 작성자가 아닐경우 Exception")
     void notAvailableDeleteTest() {
-        assertThatThrownBy(() -> Q1.deleted(UserTest.SANJIGI))
+        assertThatThrownBy(() -> Q1.deleteByWriter(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class);
-        assertThatThrownBy(() -> Q2.deleted(UserTest.JAVAJIGI))
+        assertThatThrownBy(() -> Q2.deleteByWriter(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class);
     }
 }
