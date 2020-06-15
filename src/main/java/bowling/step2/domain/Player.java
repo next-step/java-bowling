@@ -7,33 +7,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player {
-    private static final Map<String, Player> FACTORY = new HashMap<>();
-    private final String value;
+    private final String name;
 
-    private Player(String value) {
-        this.value = value;
+    private Player(String name) {
+        this.name = name;
     }
 
-    public static Player valueOf(String value) {
-        validateEmpty(value);
-        validateMaximumLength(value);
-        return FACTORY.computeIfAbsent(value, Player::new);
+    public static Player valueOf(String name) {
+        validateEmpty(name);
+        validateMaximumLength(name);
+        return new Player(name);
     }
 
-    private static void validateEmpty(String value) {
-        if (value == null || value.trim().equals("")) {
+    private static void validateEmpty(String name) {
+        if (name == null || name.trim().equals("")) {
             throw new PlayerNameEmptyException();
         }
     }
 
-    private static void validateMaximumLength(String value) {
-        if (value.length() > 3) {
+    private static void validateMaximumLength(String name) {
+        if (name.length() > 3) {
             throw new PlayerNameMaximumException();
         }
     }
 
     @Override
     public String toString() {
-        return value;
+        return name;
     }
 }
