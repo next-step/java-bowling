@@ -26,4 +26,10 @@ public class QuestionTest {
         }).isInstanceOf(CannotDeleteException.class)
                 .hasMessageContaining("질문을 삭제할 권한이 없습니다.");
     }
+
+    @DisplayName("Question으로부터 답변 목록을 요구하면 AnswersGroup 객체를 반환함")
+    @Test
+    public void 리턴타입_AnswersGroup() {
+        assertThat(Q1.getAnswersGroup().getClass()).isEqualTo(AnswersGroup.class);
+    }
 }
