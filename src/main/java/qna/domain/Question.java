@@ -46,14 +46,6 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public void validateAnswerWriters(User loginUser) throws CannotDeleteException {
-        boolean isAllWrittenByLoginUser = answers.stream()
-                .allMatch(answer -> answer.isOwner(loginUser));
-        if (!isAllWrittenByLoginUser) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
-    }
-
     public String getTitle() {
         return title;
     }
@@ -94,11 +86,7 @@ public class Question extends AbstractEntity {
         this.deleted = true;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public Answers getAnswers2() {
+    public Answers getAnswers() {
         return new Answers(answers);
     }
 

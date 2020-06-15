@@ -28,8 +28,10 @@ public class AnswersTest {
         Answer answer = new Answer(UserTest.JAVAJIGI, Q3, "질문 작성자가 답변 달았음.");
         Q3.addAnswer(answer);
 
+        Answers answers = Q3.getAnswers();
+
         assertThatCode(() -> {
-            Q3.validateAnswerWriters(UserTest.JAVAJIGI);
+            answers.validateDeleteCondition(UserTest.JAVAJIGI);
         }).doesNotThrowAnyException();
     }
 
@@ -40,10 +42,10 @@ public class AnswersTest {
         Answer answer = new Answer(UserTest.SANJIGI, Q3, "질문 작성자가 아닌 사람이 답변 달았음.");
         Q3.addAnswer(answer);
 
-        Answers answers = Q3.getAnswers2();
+        Answers answers = Q3.getAnswers();
 
         assertThatThrownBy(() -> {
-            answers.validateDeletionWriters(UserTest.JAVAJIGI);
+            answers.validateDeleteCondition(UserTest.JAVAJIGI);
         }).isInstanceOf(CannotDeleteException.class)
                 .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
@@ -52,8 +54,8 @@ public class AnswersTest {
     @Test
     public void validateAnswerWriters_답변없음_정상() {
         assertThatCode(() -> {
-            QuestionTest.Q2.getAnswers2()
-                    .validateDeletionWriters(UserTest.SANJIGI);
+            QuestionTest.Q2.getAnswers()
+                    .validateDeleteCondition(UserTest.SANJIGI);
         }).doesNotThrowAnyException();
     }
 
@@ -66,7 +68,7 @@ public class AnswersTest {
         Q3.addAnswer(answer);
         Q3.addAnswer(answer2);
 
-        Answers answers = Q3.getAnswers2();
+        Answers answers = Q3.getAnswers();
         answers.delete();
 
         assertThat(answer.isDeleted()).isEqualTo(true);

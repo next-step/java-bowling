@@ -34,14 +34,14 @@ public class QnAService {
         Question question = findQuestionById(questionId);
         question.validateDeleteRequestor(loginUser);
 
-        Answers answers = question.getAnswers2();
-        answers.validateDeletionWriters(loginUser);
+        Answers answers = question.getAnswers();
+        answers.validateDeleteCondition(loginUser);
 
         DeleteHistories deleteHistories = new DeleteHistories();
         question.delete();
         deleteHistories.addQuestionHistory(question, questionId);
         answers.delete();
-        deleteHistories.addAnswerHistories(question);
+        deleteHistories.addAnswerHistories(answers);
 
         deleteHistoryService.saveAll(deleteHistories.getDeleteHistories());
     }

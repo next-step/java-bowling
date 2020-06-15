@@ -12,7 +12,7 @@ public class Answers {
         this.answers = answers;
     }
 
-    public void validateDeletionWriters(User loginUser) throws CannotDeleteException {
+    public void validateDeleteCondition(User loginUser) throws CannotDeleteException {
         boolean isAllWrittenByLoginUser = answers.stream()
                 .allMatch(answer -> answer.isOwner(loginUser));
         if (!isAllWrittenByLoginUser) {
@@ -22,5 +22,9 @@ public class Answers {
 
     public void delete() {
         answers.forEach(Answer::delete);
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
     }
 }

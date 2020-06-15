@@ -39,10 +39,11 @@ class DeleteHistoriesTest {
         Answer answer2 = new Answer(UserTest.JAVAJIGI, Q3, "질문 작성자가 답변 달았음.");
         Q3.addAnswer(answer);
         Q3.addAnswer(answer2);
+        Answers answers = Q3.getAnswers();
 
         DeleteHistories deleteHistoriesGroup = new DeleteHistories();
         List<DeleteHistory> deleteHistories = deleteHistoriesGroup.getDeleteHistories();
-        deleteHistoriesGroup.addAnswerHistories(Q3);
+        deleteHistoriesGroup.addAnswerHistories(answers);
 
         assertThat(deleteHistories.size()).isEqualTo(2);
     }
