@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.step2.domain;
 
 import bowling.step2.domain.frame.Frame;
 import bowling.step2.domain.frame.FinalFrame;
