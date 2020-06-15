@@ -39,6 +39,10 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
+    public void delete() {
+        this.deleted = true;
+    }
+
     public String getTitle() {
         return title;
     }
