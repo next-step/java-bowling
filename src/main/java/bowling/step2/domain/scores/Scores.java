@@ -1,6 +1,7 @@
 package bowling.step2.domain.scores;
 
 import bowling.step2.domain.Score;
+import bowling.step2.domain.ScoreType;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,12 +19,14 @@ public class Scores {
         return null;
     }
 
-    public boolean isStrike() {
-        return firstScore == Score.getStrike();
-    }
-
-    public boolean isSpared() {
-        return firstScore.sum(secondScore) == Score.getStrike();
+    public boolean isType(ScoreType scoreType) {
+        if (scoreType.equals(ScoreType.STRIKE)) {
+            return firstScore == Score.getStrike();
+        }
+        if (scoreType.equals(ScoreType.SPARED)) {
+            return firstScore.sum(secondScore) == Score.getStrike();
+        }
+        return false;
     }
 
     public boolean isFullOf() {
