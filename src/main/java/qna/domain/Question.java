@@ -1,10 +1,8 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,10 +17,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -42,6 +38,7 @@ public class Question extends AbstractEntity {
 
     public void delete(User loginUser) throws CannotDeleteException {
         validateDeleteAuthorization(loginUser);
+        answers.delete(writer);
         this.deleted = true;
     }
 
@@ -72,9 +69,16 @@ public class Question extends AbstractEntity {
         return this;
     }
 
+    public Question setAnswers(Answers answers) {
+        this.answers = answers;
+        return this;
+    }
+
+    // TODO: 인터페이스 유지용 임시 메서드
     public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
+        List<Answer> newAnswers = this.answers.getValues();
+        newAnswers.add(answer);
+        this.answers = new Answers(newAnswers);
     }
 
     public boolean isOwner(User loginUser) {
@@ -90,7 +94,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 

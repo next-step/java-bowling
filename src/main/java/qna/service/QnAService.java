@@ -37,7 +37,7 @@ public class QnAService {
         Question question = findQuestionById(questionId);
         question.delete(loginUser);
 
-        List<Answer> answers = question.getAnswers();
+        List<Answer> answers = question.getAnswers().getValues();
         for (Answer answer : answers) {
             if (!answer.isOwner(loginUser)) {
                 throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
