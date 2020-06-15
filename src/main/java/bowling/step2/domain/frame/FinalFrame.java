@@ -8,12 +8,12 @@ public class FinalFrame extends Frame {
         super(frame, scores, prevFrame);
     }
 
-    public static Frame of (int frame, Scores scores, Frame prevFrame) {
+    public static Frame of(int frame, Scores scores, Frame prevFrame) {
         return new FinalFrame(frame, scores, prevFrame);
     }
 
     @Override
-    public Frame createNextFrame (Scores scores) {
+    public Frame createNextFrame(Scores scores) {
         return of(frame, scores, prevFrame);
     }
 }

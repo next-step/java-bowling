@@ -6,11 +6,11 @@ import java.util.stream.Stream;
 
 public interface Scores {
 
-    Scores nextInit (Score score);
-    boolean isStrike ();
-    boolean isSpared ();
-    boolean isFullOf ();
-    int totalScore ();
-    Stream<Score> stream ();
+    Scores nextInit(Score score);
+    boolean isStrike();
+    boolean isSpared();
+    boolean isFullOf();
+    int totalScore();
+    Stream<Score> stream();
 
 }

@@ -7,11 +7,11 @@ public enum ScoreType {
 
     private final String value;
 
-    ScoreType (String value) {
+    ScoreType(String value) {
         this.value = value;
     }
 
-    public String getValue () {
+    public String getValue() {
         return value;
     }
 }

@@ -14,26 +14,26 @@ public class Player {
         this.value = value;
     }
 
-    public static Player valueOf (String value) {
+    public static Player valueOf(String value) {
         validateEmpty(value);
         validateMaximumLength(value);
         return FACTORY.computeIfAbsent(value, Player::new);
     }
 
-    private static void validateEmpty (String value) {
+    private static void validateEmpty(String value) {
         if (value == null || value.trim().equals("")) {
             throw new PlayerNameEmptyException();
         }
     }
 
-    private static void validateMaximumLength (String value) {
+    private static void validateMaximumLength(String value) {
         if (value.length() > 3) {
             throw new PlayerNameMaximumException();
         }
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         return value;
     }
 }

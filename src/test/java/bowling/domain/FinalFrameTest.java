@@ -19,11 +19,11 @@ public class FinalFrameTest {
     @DisplayName("다음 프레임을 정상적으로 생성하고 있는지 확인")
     @ParameterizedTest
     @MethodSource("provideFrameAndNextFrame")
-    void 다음_프레임_생성_테스트 (Frame frame, Frame prevFrame) {
+    void 다음_프레임_생성_테스트(Frame frame, Frame prevFrame) {
         assertEquals(prevFrame, frame.getPrevFrame());
     }
 
-    private static Stream<Arguments> provideFrameAndNextFrame () {
+    private static Stream<Arguments> provideFrameAndNextFrame() {
         Scores scores = FinalScores.init();
         Frame normalFrame = NormalFrame.of(9, scores, null);
         Frame nextFrame1 = FinalFrame.of(10, scores, normalFrame);

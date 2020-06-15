@@ -21,22 +21,18 @@ public class FramesTest {
 
     @DisplayName("프레임의 최대 갯수가 10개인지 확인")
     @Test
-    void 프레임_갯수_확인 () {
-        assertEquals(10, Frames.init()
-                                        .preview()
-                                        .count());
+    void 프레임_갯수_확인() {
+        assertEquals(10, Frames.init().preview().count());
     }
 
     @DisplayName("마지막 프레임으로 부터 전체 프레임이 생성되는지 확인")
     @ParameterizedTest
     @MethodSource("provideFrameAndFrames")
-    void 프레임_생성_확인 (Frame lastFrame, long expected) {
-        assertEquals(expected, Frames.ofLastFrame(lastFrame)
-                                     .stream()
-                                     .count());
+    void 프레임_생성_확인(Frame lastFrame, long expected) {
+        assertEquals(expected, Frames.ofLastFrame(lastFrame).stream().count());
     }
 
-    private static Stream<Arguments> provideFrameAndFrames () {
+    private static Stream<Arguments> provideFrameAndFrames() {
         Scores normalScores = NormalScores.init();
         Scores finalScores = FinalScores.init();
         Frame frame1 = NormalFrame.of(1, normalScores, null);

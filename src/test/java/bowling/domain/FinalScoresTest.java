@@ -16,11 +16,11 @@ public class FinalScoresTest {
     @DisplayName("스코어의 첫 번째 값이 스트라이크인지 확인하는 테스트")
     @ParameterizedTest
     @MethodSource("provideStrikeScores")
-    void 스트라이크_테스트 (FinalScores scores) {
+    void 스트라이크_테스트(FinalScores scores) {
         assertEquals(true, scores.isStrike());
     }
 
-    private static Stream<Arguments> provideStrikeScores () {
+    private static Stream<Arguments> provideStrikeScores() {
         return Stream.of(
             Arguments.of(
                 FinalScores.init()
@@ -42,11 +42,11 @@ public class FinalScoresTest {
     @DisplayName("스코어의 값이 전부 채워졌는지 확인하는 테스트")
     @ParameterizedTest
     @MethodSource("provideFullyScores")
-    void 스코어_채워짐_확인_테스트 (FinalScores scores) {
+    void 스코어_채워짐_확인_테스트(FinalScores scores) {
         assertEquals(true, scores.isFullOf());
     }
 
-    private static Stream<Arguments> provideFullyScores () {
+    private static Stream<Arguments> provideFullyScores() {
         return Stream.of(
             Arguments.of(
                 FinalScores.init()
@@ -72,11 +72,11 @@ public class FinalScoresTest {
     @DisplayName("스코어가 스페어 되었는지 확인하는 테스트")
     @ParameterizedTest
     @MethodSource("provideSparedScores")
-    void 스코어_스페어_테스트 (FinalScores scores) {
+    void 스코어_스페어_테스트(FinalScores scores) {
         assertEquals(true, scores.isSpared());
     }
 
-    private static Stream<Arguments> provideSparedScores () {
+    private static Stream<Arguments> provideSparedScores() {
         return Stream.of(
             Arguments.of(
                 FinalScores.init()
@@ -139,11 +139,11 @@ public class FinalScoresTest {
     @DisplayName("스코어들의 합계를 확인하는 테스트")
     @ParameterizedTest
     @MethodSource("provideScoresAndSum")
-    void 스코어_합계_테스트 (FinalScores scores, int expected) {
+    void 스코어_합계_테스트(FinalScores scores, int expected) {
         assertEquals(expected, scores.totalScore());
     }
 
-    private static Stream<Arguments> provideScoresAndSum () {
+    private static Stream<Arguments> provideScoresAndSum() {
         return Stream.of(
             Arguments.of(
                 FinalScores.init()

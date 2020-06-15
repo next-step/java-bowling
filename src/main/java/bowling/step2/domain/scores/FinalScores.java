@@ -36,22 +36,22 @@ public class FinalScores implements Scores {
     }
 
     @Override
-    public boolean isStrike () {
+    public boolean isStrike() {
         return firstScore == Score.getStrike();
     }
 
     @Override
-    public boolean isSpared () {
+    public boolean isSpared() {
         return firstScore.sum(secondScore) == Score.getStrike();
     }
 
     @Override
-    public boolean isFullOf () {
+    public boolean isFullOf() {
         return firstScore != null && secondScore != null && bonusScore != null;
     }
 
     @Override
-    public int totalScore () {
+    public int totalScore() {
         return Stream.of(firstScore, secondScore, bonusScore)
                      .reduce(
                          Score.MIN_SCORE,
@@ -60,7 +60,7 @@ public class FinalScores implements Scores {
                      );
     }
     @Override
-    public Stream<Score> stream () {
+    public Stream<Score> stream() {
         return Stream.of(firstScore, secondScore, bonusScore);
     }
 }

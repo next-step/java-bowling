@@ -11,9 +11,9 @@ public class BowlingController {
     private static final InputView inputView = InputView.getInstance();
     private static final ResultView resultView = ResultView.getInstance();
 
-    private BowlingController () {}
+    private BowlingController() { }
 
-    public static Frame frameView (Frame frame, Player player) {
+    public static Frame frameView(Frame frame, Player player) {
         Score score = inputView.inputScore(frame.getValue());
         Scores scores = frame.getScores().nextInit(score);
         Frame nextFrame = frame.createNextFrame(scores);
@@ -21,7 +21,7 @@ public class BowlingController {
         return nextFrame;
     }
 
-    public static Frame normalFrameView (Frame frame, Player player) {
+    public static Frame normalFrameView(Frame frame, Player player) {
         Frame nextFrame = frameView(frame, player);
         if (!nextFrame.getScores().isStrike()) {
             nextFrame = frameView(nextFrame, player);
@@ -29,7 +29,7 @@ public class BowlingController {
         return nextFrame;
     }
 
-    public static void finalFrameView (Frame frame, Player player) {
+    public static void finalFrameView(Frame frame, Player player) {
         Frame nextFrame = frameView(frame, player);
         nextFrame = frameView(nextFrame, player);
         Scores scores = nextFrame.getScores();

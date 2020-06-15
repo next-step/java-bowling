@@ -14,15 +14,15 @@ public class NormalScores implements Scores {
         this.secondScore = secondScore;
     }
 
-    public static NormalScores of (Score firstScore, Score secondScore) {
+    public static NormalScores of(Score firstScore, Score secondScore) {
         return new NormalScores(firstScore, secondScore);
     }
 
-    public static NormalScores init () {
+    public static NormalScores init() {
         return of(null, null);
     }
 
-    public static boolean isSparedOf (List<Score> scores) {
+    public static boolean isSparedOf(List<Score> scores) {
         if (scores.get(0) == Score.getStrike()) {
             return false;
         }
@@ -30,7 +30,7 @@ public class NormalScores implements Scores {
     }
 
     @Override
-    public Scores nextInit (Score score) {
+    public Scores nextInit(Score score) {
         if (firstScore == null) {
             return of(score, null);
         }
@@ -38,27 +38,27 @@ public class NormalScores implements Scores {
     }
 
     @Override
-    public boolean isStrike () {
+    public boolean isStrike() {
         return firstScore == Score.getStrike();
     }
 
     @Override
-    public boolean isSpared () {
+    public boolean isSpared() {
         return firstScore.sum(secondScore) == Score.getStrike();
     }
 
     @Override
-    public boolean isFullOf () {
+    public boolean isFullOf() {
         return firstScore != null && secondScore != null;
     }
 
     @Override
-    public int totalScore () {
+    public int totalScore() {
         return firstScore.sum(secondScore).getValue();
     }
 
     @Override
-    public Stream<Score> stream () {
+    public Stream<Score> stream() {
         return Stream.of(firstScore, secondScore);
     }
 }

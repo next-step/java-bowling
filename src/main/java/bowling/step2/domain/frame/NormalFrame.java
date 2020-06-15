@@ -9,12 +9,12 @@ public class NormalFrame extends Frame {
         super(frame, scores, prevFrame);
     }
 
-    public static NormalFrame of (int frame, Scores scores, Frame prevFrame) {
+    public static NormalFrame of(int frame, Scores scores, Frame prevFrame) {
         return new NormalFrame(frame, scores, prevFrame);
     }
 
     @Override
-    public Frame createNextFrame (Scores scores) {
+    public Frame createNextFrame(Scores scores) {
         Frame now = of(frame, scores, prevFrame);
         if (!scores.isStrike() && !scores.isFullOf()) {
             return now;

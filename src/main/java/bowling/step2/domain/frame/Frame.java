@@ -14,19 +14,19 @@ public class Frame {
         this.prevFrame = prevFrame;
     }
 
-    public Scores getScores () {
+    public Scores getScores() {
         return scores;
     }
 
-    public Frame createNextFrame (Scores scores) {
+    public Frame createNextFrame(Scores scores) {
         return null;
     }
 
-    public Frame getPrevFrame () {
+    public Frame getPrevFrame() {
         return prevFrame;
     }
 
-    public int getValue () {
+    public int getValue() {
         return frame;
     }
 }
