@@ -8,6 +8,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -27,8 +28,10 @@ public class Answers {
         return this.answers.size();
     }
 
-    public void delete(User questionUser) {
-        answers.forEach(answer -> answer.delete(questionUser));
+    public List<DeleteHistory> delete(User questionUser) {
+        return answers.stream()
+                .map(answer -> answer.delete(questionUser))
+                .collect(Collectors.toList());
     }
 
     // TODO: 임시(서비스 인터페이스 유지용)

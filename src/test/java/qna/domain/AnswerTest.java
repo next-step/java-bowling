@@ -12,8 +12,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class AnswerTest {
     public static final Answer A1 = new Answer(1L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
 
-    public static final Answer A1J = new Answer(UserTest.JAVAJIGI, QuestionTest.Q2, "Answers Contents1");
-    public static final Answer A2J = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents2");
+    public static final Answer A1J = new Answer(1L, UserTest.JAVAJIGI, QuestionTest.Q2, "Answers Contents1");
+    public static final Answer A2J = new Answer(2L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents2");
     public static final Answer A3J = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
     public static final Answer A1S = new Answer(UserTest.SANJIGI, QuestionTest.Q2, "Answers Contents2");
 

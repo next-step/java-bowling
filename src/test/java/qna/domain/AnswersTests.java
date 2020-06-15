@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,19 @@ public class AnswersTests {
 
         assertThat(A1J.isDeleted()).isTrue();
         assertThat(A2J.isDeleted()).isTrue();
+    }
+
+    @DisplayName("정상적으로 삭제 처리한 뒤 삭제 이력 컬렉션을 반환해야 한다.")
+    @Test
+    public void getHistoryAfterDelete() {
+        Answers answers = new Answers(twoAnswerListSameWithQuestion);
+
+        List<DeleteHistory> deleteHistories =  answers.delete(UserTest.JAVAJIGI);
+
+        assertThat(deleteHistories)
+                .contains(new DeleteHistory(ContentType.ANSWER, 1L, UserTest.JAVAJIGI, LocalDateTime.now()));
+        assertThat(deleteHistories)
+                .contains(new DeleteHistory(ContentType.ANSWER, 2L, UserTest.JAVAJIGI, LocalDateTime.now()));
     }
 
     @DisplayName("답변의 작성자 중 한명이라도 질문자와 다른 경우 예외 발생 - CannotDeleteException")
