@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -31,8 +32,8 @@ public class Answers {
         answers.add(answer);
     }
 
-    public Stream<DeleteHistory> delete() {
+    public Stream<DeleteHistory> delete(ContentType contentType, LocalDateTime createTime) {
         return answers.stream()
-                .map(Answer::delete);
+                .map(answer -> answer.delete(contentType, createTime));
     }
 }

@@ -31,10 +31,6 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static DeleteHistory recordMoment(ContentType contentType, Long contentId, User deletedBy) {
-        return new DeleteHistory(contentType, contentId, deletedBy, LocalDateTime.now());
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
