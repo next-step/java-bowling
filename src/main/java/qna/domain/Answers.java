@@ -1,5 +1,7 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +16,11 @@ public class Answers {
         return this.answers.size();
     }
 
-    public void delete() {
+    public void delete(User questionUser) throws CannotDeleteException {
+        long count = answers.stream().filter(answer -> !answer.getWriter().equalsNameAndEmail(questionUser)).count();
+        if (count > 0) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
         answers.forEach(Answer::delete);
-    }
-
-    public boolean isDeleted(int answerIndex) {
-        return this.answers.get(answerIndex).isDeleted();
     }
 }
