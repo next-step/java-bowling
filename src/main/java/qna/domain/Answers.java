@@ -1,9 +1,11 @@
 package qna.domain;
 
+import javax.persistence.Embeddable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Embeddable
 public class Answers {
 
     private List<Answer> answers;
@@ -20,6 +22,10 @@ public class Answers {
         return answers.stream()
                 .map(answer -> answer.delete(user))
                 .collect(Collectors.toList());
+    }
+
+    public void add(final Answer answer) {
+        answers.add(answer);
     }
 
     public List<Answer> getAnswers() {

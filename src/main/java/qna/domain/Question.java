@@ -25,7 +25,8 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = Answers.of(new ArrayList<>());
 
     private boolean deleted = false;
 
@@ -60,7 +61,7 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void addAnswer(Answer answer) {
+    public void addAnswer(final Answer answer) {
         answer.toQuestion(this);
         answers.add(answer);
     }
@@ -89,15 +90,11 @@ public class Question extends AbstractEntity {
     }
 
     private List<DeleteHistory> deleteAnswers(final User user) {
-        return Answers.of(getAnswers()).delete(user);
+        return answers.delete(user);
     }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override
