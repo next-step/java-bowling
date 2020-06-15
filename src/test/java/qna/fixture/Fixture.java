@@ -27,7 +27,9 @@ public class Fixture {
         question1 = new Question("title1", "contents1").writeBy(javajigi);
         answer1 = new Answer(javajigi, question1, "Answers Contents1");
         answer2 = new Answer(sanjigi, question1, "Answers Contents2");
-        answers = Answers.of(Arrays.asList(answer1, answer2));
+        answers = new Answers();
+        answers.add(answer1);
+        answers.add(answer2);
 
         question2 = new Question("title2", "contents2").writeBy(sanjigi);
     }

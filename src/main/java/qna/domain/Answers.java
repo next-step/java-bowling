@@ -1,6 +1,11 @@
 package qna.domain;
 
+import org.hibernate.annotations.Where;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,14 +13,12 @@ import java.util.stream.Collectors;
 @Embeddable
 public class Answers {
 
-    private List<Answer> answers;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @Where(clause = "deleted = false")
+    @OrderBy("id ASC")
+    private List<Answer> answers = new ArrayList<>();
 
-    private Answers(final List<Answer> answers) {
-        this.answers = new ArrayList<>(answers);
-    }
-
-    public static Answers of(final List<Answer> answers) {
-        return new Answers(answers);
+    public Answers() {
     }
 
     public List<DeleteHistory> delete(final User user) {
