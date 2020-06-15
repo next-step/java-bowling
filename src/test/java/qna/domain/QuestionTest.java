@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import qna.CannotDeleteException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,7 +13,8 @@ import static qna.domain.UserTest.JAVAJIGI;
 import static qna.domain.UserTest.SANJIGI;
 
 public class QuestionTest {
-    public static final Question Q1 = new Question("title1", "contents1").writeBy(JAVAJIGI);
+    public static final Question Q1 = new Question("title1", "contents1").writeBy(JAVAJIGI)
+            .setAnswers(new Answers(new ArrayList<>()));
     public static final Question Q2 = new Question("title2", "contents2").writeBy(SANJIGI)
             .setAnswers(new Answers(Arrays.asList(
                     new Answer(JAVAJIGI, new Question(), "Answers Contents2"))));
