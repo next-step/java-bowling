@@ -39,6 +39,8 @@ public class QnAService {
         question.validateAnswerWriters(loginUser);
         question.delete();
 
+        DeleteHistoriesGroup deleteHistoriesGroup = new DeleteHistoriesGroup();
+
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
         List<Answer> answers = question.getAnswers();
