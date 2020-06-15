@@ -5,14 +5,11 @@ import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
 
-public class FinalScores implements Scores {
-    private final Score firstScore;
-    private final Score secondScore;
+public class FinalScores extends Scores {
     private final Score bonusScore;
 
     private FinalScores(Score firstScore, Score secondScore, Score bonusScore) {
-        this.firstScore = firstScore;
-        this.secondScore = secondScore;
+        super(firstScore, secondScore);
         this.bonusScore = bonusScore;
     }
 
@@ -36,16 +33,6 @@ public class FinalScores implements Scores {
     }
 
     @Override
-    public boolean isStrike() {
-        return firstScore == Score.getStrike();
-    }
-
-    @Override
-    public boolean isSpared() {
-        return firstScore.sum(secondScore) == Score.getStrike();
-    }
-
-    @Override
     public boolean isFullOf() {
         return firstScore != null && secondScore != null && bonusScore != null;
     }
@@ -59,6 +46,7 @@ public class FinalScores implements Scores {
                          Integer::sum
                      );
     }
+
     @Override
     public Stream<Score> stream() {
         return Stream.of(firstScore, secondScore, bonusScore);

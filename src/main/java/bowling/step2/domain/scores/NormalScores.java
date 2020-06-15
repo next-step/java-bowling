@@ -5,13 +5,10 @@ import bowling.step2.domain.Score;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class NormalScores implements Scores {
-    private final Score firstScore;
-    private final Score secondScore;
+public class NormalScores extends Scores {
 
     private NormalScores(Score firstScore, Score secondScore) {
-        this.firstScore = firstScore;
-        this.secondScore = secondScore;
+        super(firstScore, secondScore);
     }
 
     public static NormalScores of(Score firstScore, Score secondScore) {
@@ -35,30 +32,5 @@ public class NormalScores implements Scores {
             return of(score, null);
         }
         return of(firstScore, score);
-    }
-
-    @Override
-    public boolean isStrike() {
-        return firstScore == Score.getStrike();
-    }
-
-    @Override
-    public boolean isSpared() {
-        return firstScore.sum(secondScore) == Score.getStrike();
-    }
-
-    @Override
-    public boolean isFullOf() {
-        return firstScore != null && secondScore != null;
-    }
-
-    @Override
-    public int totalScore() {
-        return firstScore.sum(secondScore).getValue();
-    }
-
-    @Override
-    public Stream<Score> stream() {
-        return Stream.of(firstScore, secondScore);
     }
 }
