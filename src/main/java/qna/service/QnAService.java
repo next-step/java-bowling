@@ -40,6 +40,7 @@ public class QnAService {
         question.delete();
 
         DeleteHistoriesGroup deleteHistoriesGroup = new DeleteHistoriesGroup();
+        deleteHistoriesGroup.addQuestionHistory(question, questionId);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));

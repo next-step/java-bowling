@@ -9,13 +9,13 @@ public class DeleteHistoriesGroup {
 
     private final List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-    public List<DeleteHistory> getDeleteHistories() {
-        return Collections.unmodifiableList(deleteHistories);
-    }
-
     public void addQuestionHistory(Question question, long questionId) {
         DeleteHistory deleteHistory =
                 new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now());
         deleteHistories.add(deleteHistory);
+    }
+
+    public List<DeleteHistory> getDeleteHistories() {
+        return Collections.unmodifiableList(deleteHistories);
     }
 }

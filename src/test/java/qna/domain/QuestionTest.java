@@ -62,10 +62,20 @@ public class QuestionTest {
 
     @DisplayName("Question의 delete메소드를 수행하면 delted가 true로 변경됨")
     @Test
-    public void delete_true() {
+    public void delete_question_true() {
         Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
         Q3.delete();
 
         assertThat(Q3.isDeleted()).isTrue();
+    }
+
+    @DisplayName("Question 객체에게 지니고 있는 Answer들의 삭제를 요청하면 정상 수행")
+    @Test
+    public void delete_answer_true() {
+        Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        Answer answer = new Answer(UserTest.SANJIGI, Q3, "질문 작성자가 아닌 사람이 답변 달았음.");
+        Q3.addAnswer(answer);
+        Q3.deleteAnswers();
+        assertThat(answer.isDeleted()).isEqualTo(true);
     }
 }
