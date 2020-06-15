@@ -1,11 +1,11 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -19,10 +19,7 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -38,6 +35,14 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
+    }
+
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        validateDeleteRequestor(loginUser);
+        answers.validateDeleteCondition(loginUser);
+        Stream<DeleteHistory> stream1 = Stream.of(delete());
+        Stream<DeleteHistory> stream2 = answers.delete();
+        return Stream.concat(stream1, stream2).collect(Collectors.toList());
     }
 
     public void validateDeleteRequestor(User loginUser) throws CannotDeleteException {
@@ -87,12 +92,12 @@ public class Question extends AbstractEntity {
         return DeleteHistory.recordMoment(ContentType.QUESTION, getId(), getWriter());
     }
 
-    public Answers getAnswers() {
-        return new Answers(answers);
-    }
-
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public Answers getAnswers() {
+        return answers;
     }
 }
