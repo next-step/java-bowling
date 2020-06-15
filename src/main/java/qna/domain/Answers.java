@@ -35,8 +35,4 @@ public class Answers {
         return answers.stream()
                 .map(Answer::delete);
     }
-
-    public List<Answer> getAnswers() {
-        return answers;
-    }
 }

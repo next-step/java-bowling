@@ -37,12 +37,13 @@ public class AnswersTest {
                 .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 
-    @DisplayName("Question의 답변이 없는 경우에도 삭제 유효성 정상 통과")
+    @DisplayName("Question의 답변이 없는 경우에도 삭제 유효성 통과 및 정상 삭제")
     @Test
     public void validateAnswerWriters_답변없음_정상() {
         assertThatCode(() -> {
             QuestionTest.Q2.getAnswers()
                     .validateDeleteCondition(UserTest.SANJIGI);
+            QuestionTest.Q2.delete(UserTest.SANJIGI);
         }).doesNotThrowAnyException();
     }
 

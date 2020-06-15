@@ -40,15 +40,23 @@ public class Question extends AbstractEntity {
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateDeleteRequestor(loginUser);
         answers.validateDeleteCondition(loginUser);
-        Stream<DeleteHistory> stream1 = Stream.of(delete());
-        Stream<DeleteHistory> stream2 = answers.delete();
-        return Stream.concat(stream1, stream2).collect(Collectors.toList());
+        Stream<DeleteHistory> questionDeleteHistory = this.delete();
+        Stream<DeleteHistory> answersDeleteHistory = answers.delete();
+        return Stream.concat(questionDeleteHistory, answersDeleteHistory)
+                .collect(Collectors.toList());
     }
 
-    public void validateDeleteRequestor(User loginUser) throws CannotDeleteException {
+    private void validateDeleteRequestor(User loginUser) throws CannotDeleteException {
         if (!writer.equals(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
+    }
+
+    public Stream<DeleteHistory> delete() {
+        this.deleted = true;
+        return Stream.of(
+                DeleteHistory.recordMoment(ContentType.QUESTION, getId(), getWriter())
+        );
     }
 
     public String getTitle() {
@@ -85,11 +93,6 @@ public class Question extends AbstractEntity {
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public DeleteHistory delete() {
-        this.deleted = true;
-        return DeleteHistory.recordMoment(ContentType.QUESTION, getId(), getWriter());
     }
 
     @Override

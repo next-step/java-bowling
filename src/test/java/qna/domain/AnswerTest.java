@@ -13,7 +13,9 @@ public class AnswerTest {
     @Test
     public void delete_true() {
         A1.delete();
+        A2.delete();
 
         assertThat(A1.isDeleted()).isTrue();
+        assertThat(A2.isDeleted()).isTrue();
     }
 }
