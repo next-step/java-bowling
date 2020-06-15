@@ -76,6 +76,7 @@ public class QuestionTest {
         Answer answer = new Answer(UserTest.JAVAJIGI, Q3, "질문 작성자가 답변 달았음.");
         Q3.addAnswer(answer);
         Q3.deleteAnswers();
+
         assertThat(answer.isDeleted()).isEqualTo(true);
     }
 }

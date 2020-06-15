@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DeleteHistoriesGroup {
+public class DeleteHistories {
 
     private final List<DeleteHistory> deleteHistories = new ArrayList<>();
 
@@ -15,7 +15,7 @@ public class DeleteHistoriesGroup {
         deleteHistories.add(deleteHistory);
     }
 
-    public void addAnswersHistory(Question question) {
+    public void addAnswerHistories(Question question) {
         List<Answer> answers = question.getAnswers();
         for (Answer answer : answers) {
             DeleteHistory deleteHistory =
