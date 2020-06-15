@@ -94,12 +94,12 @@ public class Question extends AbstractEntity {
         this.deleted = true;
     }
 
-    public void deleteAnswers() {
-        answers.forEach(Answer::delete);
-    }
-
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public Answers getAnswers2() {
+        return new Answers(answers);
     }
 
     @Override

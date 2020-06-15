@@ -4,7 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class QuestionTest {
     public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -27,39 +28,6 @@ public class QuestionTest {
                 .hasMessageContaining("질문을 삭제할 권한이 없습니다.");
     }
 
-    @DisplayName("Question의 답변이 작성자 본인이 작성한 답변만 있는 경우는 정상")
-    @Test
-    public void validateAnswerWriters_정상() {
-        Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        Answer answer = new Answer(UserTest.JAVAJIGI, Q3, "질문 작성자가 답변 달았음.");
-        Q3.addAnswer(answer);
-
-        assertThatCode(() -> {
-            Q3.validateAnswerWriters(UserTest.JAVAJIGI);
-        }).doesNotThrowAnyException();
-    }
-
-    @DisplayName("Question의 답변 중 작성자가 쓰지 않은 답변이 있는 경우 예외 발생")
-    @Test
-    public void validateAnswerWriters_에러() {
-        Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        Answer answer = new Answer(UserTest.SANJIGI, Q3, "질문 작성자가 아닌 사람이 답변 달았음.");
-        Q3.addAnswer(answer);
-
-        assertThatThrownBy(() -> {
-            Q3.validateAnswerWriters(UserTest.JAVAJIGI);
-        }).isInstanceOf(CannotDeleteException.class)
-                .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-    }
-
-    @DisplayName("Question의 답변이 없는 경우에도 validateAnswerWriters 정상 통과")
-    @Test
-    public void validateAnswerWriters_답변없음_정상() {
-        assertThatCode(() -> {
-            Q2.validateAnswerWriters(UserTest.SANJIGI);
-        }).doesNotThrowAnyException();
-    }
-
     @DisplayName("Question의 delete메소드를 수행하면 delted가 true로 변경됨")
     @Test
     public void delete_question_true() {
@@ -67,16 +35,5 @@ public class QuestionTest {
         Q3.delete();
 
         assertThat(Q3.isDeleted()).isTrue();
-    }
-
-    @DisplayName("Question 객체에게 지니고 있는 Answer들의 삭제를 요청하면 정상 수행")
-    @Test
-    public void delete_answer_true() {
-        Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        Answer answer = new Answer(UserTest.JAVAJIGI, Q3, "질문 작성자가 답변 달았음.");
-        Q3.addAnswer(answer);
-        Q3.deleteAnswers();
-
-        assertThat(answer.isDeleted()).isEqualTo(true);
     }
 }
