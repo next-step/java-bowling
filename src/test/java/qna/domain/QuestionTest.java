@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import qna.CannotDeleteException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +15,8 @@ import static qna.domain.UserTest.SANJIGI;
 
 public class QuestionTest {
     public static final Question Q1 = new Question(1L, "title1", "contents1").writeBy(JAVAJIGI)
-            .setAnswers(new Answers(new ArrayList<>()));
+            .setAnswers(new Answers(Collections.singletonList(
+                    new Answer(2L, JAVAJIGI, new Question(), "Answers Contents2"))));
     public static final Question Q2 = new Question("title2", "contents2").writeBy(SANJIGI)
             .setAnswers(new Answers(Collections.singletonList(
                     new Answer(JAVAJIGI, new Question(), "Answers Contents2"))));
@@ -31,13 +31,15 @@ public class QuestionTest {
         assertThat(Q1.isDeleted()).isTrue();
     }
 
-    @DisplayName("삭제 시 삭제한 질문 반환")
+    @DisplayName("삭제 시 삭제한 질문과 답변 이력 컬렉션 반환")
     @Test
     public void returnHistoryAfterDelete() {
         List<DeleteHistory> deleteHistories = Q1.delete(JAVAJIGI);
 
         assertThat(deleteHistories)
                 .contains(new DeleteHistory(ContentType.QUESTION, 1L, JAVAJIGI, LocalDateTime.now()));
+        assertThat(deleteHistories)
+                .contains(new DeleteHistory(ContentType.ANSWER, 2L, JAVAJIGI, LocalDateTime.now()));
     }
 
     @DisplayName("로그인한 사용자와 질문자가 다른 상태에서 삭제 시도 시 예외 발생 - CannotDeleteException")

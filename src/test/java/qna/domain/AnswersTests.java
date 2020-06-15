@@ -38,9 +38,6 @@ public class AnswersTests {
     @DisplayName("답변의 작성자가 모두 질문자인 경우 전체 삭제가 가능하다.")
     @Test
     public void deleteTest() throws CannotDeleteException {
-        assertThat(A1J.isDeleted()).isFalse();
-        assertThat(A2J.isDeleted()).isFalse();
-
         Answers answers = new Answers(twoAnswerListSameWithQuestion);
         answers.delete(UserTest.JAVAJIGI);
 
