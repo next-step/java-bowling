@@ -82,8 +82,9 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public void delete() {
+    public DeleteHistory delete() {
         this.deleted = true;
+        return DeleteHistory.recordMoment(ContentType.QUESTION, getId(), getWriter());
     }
 
     public Answers getAnswers() {

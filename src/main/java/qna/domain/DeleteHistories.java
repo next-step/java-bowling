@@ -9,10 +9,8 @@ public class DeleteHistories {
 
     private final List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-    public void addQuestionHistory(Question question, long questionId) {
-        DeleteHistory deleteHistory =
-                new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now());
-        deleteHistories.add(deleteHistory);
+    public void addQuestionDelete(Question question) {
+        deleteHistories.add(question.delete());
     }
 
     public void addAnswerHistories(Answers answers) {

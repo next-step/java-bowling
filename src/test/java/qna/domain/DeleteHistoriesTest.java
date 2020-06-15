@@ -26,7 +26,7 @@ class DeleteHistoriesTest {
 
         assertThat(deleteHistories.size()).isEqualTo(0);
 
-        deleteHistoriesGroup.addQuestionHistory(QuestionTest.Q1, 1);
+        deleteHistoriesGroup.addQuestionDelete(QuestionTest.Q1);
 
         assertThat(deleteHistories.size()).isEqualTo(1);
     }

@@ -21,7 +21,7 @@ public class AnswersTest {
         }).doesNotThrowAnyException();
     }
 
-    @DisplayName("Question의 답변이 작성자 본인이 작성한 답변만 있는 경우는 정상")
+    @DisplayName("Question의 답변이 작성자 본인이 작성한 답변만 있는 경우는 삭제 유효성 정상")
     @Test
     public void validateAnswerWriters_정상() {
         Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -35,7 +35,7 @@ public class AnswersTest {
         }).doesNotThrowAnyException();
     }
 
-    @DisplayName("Question의 답변 중 작성자가 쓰지 않은 답변이 있는 경우 예외 발생")
+    @DisplayName("Question의 답변 중 작성자가 쓰지 않은 답변이 있는 경우 삭제 유효성 예외 발생")
     @Test
     public void validateAnswerWriters_에러() {
         Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
@@ -50,7 +50,7 @@ public class AnswersTest {
                 .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 
-    @DisplayName("Question의 답변이 없는 경우에도 validateAnswerWriters 정상 통과")
+    @DisplayName("Question의 답변이 없는 경우에도 삭제 유효성 정상 통과")
     @Test
     public void validateAnswerWriters_답변없음_정상() {
         assertThatCode(() -> {
