@@ -5,32 +5,37 @@ import bowling.step3.domain.frame.*;
 import bowling.step3.domain.scores.*;
 import bowling.step3.view.*;
 
+import java.util.Optional;
+
 public class BowlingGame {
     private static final InputView inputView = InputView.getInstance();
     private static final ResultView resultView = ResultView.getInstance();
 
-    private BowlingGame() { }
+    private final PlayerFrames playerFrames;
 
-    public static void frameView(Frame frame, PlayerFrames playerFrames) {
-        frame.createNextFrame(
-            frame.getScores()
-                 .nextInit(inputView.inputScore(frame.getValue())));
+    public BowlingGame(PlayerFrames playerFrames) {
+        this.playerFrames = playerFrames;
+    }
+
+    private void frameView(Frame frame) {
+        Scores scores = frame.getScores();
+        frame.createNextFrame(scores.nextInit(inputView.inputScore(frame.getValue())));
         resultView.printFrames(playerFrames);
     }
 
-    public static void normalFrameView(Frame frame, PlayerFrames playerFrames) {
-        frameView(frame, playerFrames);
-        if (frame.getScores().isType(ScoreType.STRIKE)) {
-            frameView(frame, playerFrames);
+    public void normalFrameView(Frame nowFrame) {
+        frameView(nowFrame);
+        if (nowFrame.getScores().isType(ScoreType.STRIKE)) {
+            frameView(nowFrame);
         }
     }
 
-    public static void finalFrameView(Frame frame, PlayerFrames playerFrames) {
-        frameView(frame, playerFrames);
-        frameView(frame, playerFrames);
+    public void finalFrameView(Frame frame) {
+        frameView(frame);
+        frameView(frame);
         Scores scores = frame.getScores();
         if (scores.isType(ScoreType.STRIKE) || scores.isType(ScoreType.SPARED)) {
-            frameView(frame, playerFrames);
+            frameView(frame);
         }
     }
 
@@ -38,11 +43,15 @@ public class BowlingGame {
         Player player = inputView.inputName();
         Frame temp = NormalFrame.of(1, NormalScores.init(), null);
         PlayerFrames playerFrames = PlayerFrames.of(player, temp);
+
+        BowlingGame game = new BowlingGame(playerFrames);
+
         resultView.printFrames(playerFrames);
         while (temp instanceof NormalFrame) {
-            normalFrameView(temp, playerFrames);
-            temp = temp.getNextFrame();
+            game.normalFrameView(temp);
+            temp = Optional.ofNullable(temp.getNextFrame())
+                           .orElse(temp);
         }
-        finalFrameView(temp, playerFrames);
+        game.finalFrameView(temp);
     }
 }

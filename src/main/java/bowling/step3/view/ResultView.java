@@ -62,6 +62,7 @@ public class ResultView {
     }
 
     private String eachScoreOf(List<Score> scores) {
+        System.out.println(scores);
         return IntStream.range(0, scores.size())
             .mapToObj(index -> scores.get(index) != null
                                  ? toScoreType(scores, index)
