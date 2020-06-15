@@ -7,11 +7,11 @@ import bowling.step2.domain.scores.Scores;
 import bowling.step2.view.*;
 import bowling.step2.domain.*;
 
-public class BowlingController {
+public class BowlingGame {
     private static final InputView inputView = InputView.getInstance();
     private static final ResultView resultView = ResultView.getInstance();
 
-    private BowlingController() { }
+    private BowlingGame() { }
 
     public static Frame frameView(Frame frame, Player player) {
         Score score = inputView.inputScore(frame.getValue());
