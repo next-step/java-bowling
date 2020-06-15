@@ -43,7 +43,7 @@ public class AnswersTest {
         assertThatCode(() -> {
             QuestionTest.Q2.getAnswers()
                     .validateDeleteCondition(UserTest.SANJIGI);
-            QuestionTest.Q2.delete(UserTest.SANJIGI);
+            QuestionTest.Q2.deleteQnA(UserTest.SANJIGI);
         }).doesNotThrowAnyException();
     }
 
@@ -56,7 +56,7 @@ public class AnswersTest {
         Q3.addAnswer(answer);
         Q3.addAnswer(answer2);
 
-        Q3.delete(UserTest.JAVAJIGI);
+        Q3.deleteQnA(UserTest.JAVAJIGI);
 
         assertThat(answer.isDeleted()).isEqualTo(true);
         assertThat(answer2.isDeleted()).isEqualTo(true);

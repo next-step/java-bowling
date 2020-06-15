@@ -37,7 +37,7 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> deleteQnA(User loginUser) throws CannotDeleteException {
         validateDeleteRequestor(loginUser);
         answers.validateDeleteCondition(loginUser);
         Stream<DeleteHistory> questionDeleteHistory = this.delete();

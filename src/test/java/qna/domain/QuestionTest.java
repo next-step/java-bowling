@@ -15,7 +15,7 @@ public class QuestionTest {
     @Test
     public void validateQuestionWriter_정상() {
         assertThatCode(() -> {
-            Q1.delete(UserTest.JAVAJIGI);
+            Q1.deleteQnA(UserTest.JAVAJIGI);
         }).doesNotThrowAnyException();
     }
 
@@ -23,7 +23,7 @@ public class QuestionTest {
     @Test
     public void validateQuestionWriter_에러() {
         assertThatCode(() -> {
-            Q1.delete(UserTest.SANJIGI);
+            Q1.deleteQnA(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class)
                 .hasMessageContaining("질문을 삭제할 권한이 없습니다.");
     }
