@@ -23,4 +23,6 @@ public abstract class Frame {
     abstract public void createNextFrame(Scores scores);
 
     abstract public Frame getNextFrame();
+
+    abstract int calculateScore();
 }

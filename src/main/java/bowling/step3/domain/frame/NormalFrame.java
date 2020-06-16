@@ -6,7 +6,7 @@ import bowling.step3.domain.scores.*;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class NormalFrame extends Frame implements CalculationFrame {
+public class NormalFrame extends Frame {
     private static final int EMPTY_CALC = -1;
 
     private Frame nextFrame;
