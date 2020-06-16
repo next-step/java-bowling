@@ -3,9 +3,8 @@ package bowling.step3.domain;
 import bowling.step3.domain.frame.Frame;
 import bowling.step3.domain.frame.NormalFrame;
 import bowling.step3.domain.scores.NormalScores;
-import bowling.step3.domain.scores.Scores;
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,7 +17,7 @@ public class NormalFrameTest {
 
     @DisplayName("현재 프레임이 종료되지 않은 상태에서 createNextFrame을 했을 때 null로 할당하는지 확인")
     @Test
-    public void 다음_프레임_생성_테스트() {
+    public void 다음_프레임_NULL_생성_테스트() {
         Frame frame = NormalFrame.of(1, NormalScores.init(), null);
         frame.createNextFrameOfScores(frame.getScores().nextInit(Score.valueOf(1)));
         assertEquals(null, frame.getNextFrame());
@@ -27,7 +26,7 @@ public class NormalFrameTest {
     @DisplayName("현재 프레임이 완료 되었을 때 다음 프레임이 정상적으로 생성되는지 확인")
     @ParameterizedTest
     @MethodSource("provideFrameAndNextFrame")
-    void 다음_프레임_생성_테스트(Frame frame) {
+    public void 다음_프레임_생성_테스트(NormalFrame frame) {
         assertEquals(true, frame.getNextFrame() != null);
     }
 
@@ -41,6 +40,38 @@ public class NormalFrameTest {
         return Stream.of(
             Arguments.of(frame1),
             Arguments.of(frame2)
+        );
+    }
+
+    @DisplayName("Miss 점수 계산 테스트")
+    @ParameterizedTest
+    @MethodSource("provideFrameAndNextFrameAndScore")
+    public void Miss_계산_테스트(NormalFrame frame, int expected) {
+        assertEquals(expected, frame.calculateScore());
+    }
+
+    private static Stream<Arguments> provideFrameAndNextFrameAndScore() {
+        return Stream.of(
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(1), Score.valueOf(2)), null),
+                3
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(0), Score.valueOf(9)), null),
+                9
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(8), Score.valueOf(0)), null),
+                8
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(5), Score.valueOf(4)), null),
+                9
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(0), Score.valueOf(0)), null),
+                0
+            )
         );
     }
 }
