@@ -49,6 +49,10 @@ public class Answer extends AbstractEntity {
         return new DeleteHistory(contentType, getId(), getWriter(), createTime);
     }
 
+    public void delete2() {
+        this.deleted = true;
+    }
+
     public boolean isDeleted() {
         return deleted;
     }

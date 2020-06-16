@@ -20,13 +20,18 @@ public class Answers {
     @OrderBy("id ASC")
     private final List<Answer> answers = new ArrayList<>();
 
-    public Stream<DeleteHistory> delete2(User loginUser, ContentType contentType, LocalDateTime createTime) throws CannotDeleteException {
-        validateDeleteCondition2(loginUser);
+    public Stream<DeleteHistory> delete(User loginUser, ContentType contentType, LocalDateTime createTime) throws CannotDeleteException {
+        validateDeleteCondition(loginUser);
         return answers.stream()
                 .map(answer -> answer.delete(contentType, createTime));
     }
 
-    private void validateDeleteCondition2(User loginUser) throws CannotDeleteException {
+    public void delete2(User loginUser) throws CannotDeleteException {
+        validateDeleteCondition(loginUser);
+        answers.forEach(Answer::delete2);
+    }
+
+    private void validateDeleteCondition(User loginUser) throws CannotDeleteException {
         boolean isAllWrittenByLoginUser = answers.stream()
                 .allMatch(answer -> answer.isOwner(loginUser));
         if (!isAllWrittenByLoginUser) {
@@ -36,10 +41,5 @@ public class Answers {
 
     public void add(Answer answer) {
         answers.add(answer);
-    }
-
-    public Stream<DeleteHistory> delete(ContentType contentType, LocalDateTime createTime) {
-        return answers.stream()
-                .map(answer -> answer.delete(contentType, createTime));
     }
 }

@@ -20,7 +20,7 @@ public class AnswersTest {
         Answers answers = Q3.getAnswers();
 
         assertThatCode(() -> {
-            answers.delete2(UserTest.JAVAJIGI, ContentType.ANSWER, LocalDateTime.now());
+            answers.delete(UserTest.JAVAJIGI, ContentType.ANSWER, LocalDateTime.now());
         }).doesNotThrowAnyException();
     }
 
@@ -34,7 +34,7 @@ public class AnswersTest {
         Answers answers = Q3.getAnswers();
 
         assertThatThrownBy(() -> {
-            answers.delete2(UserTest.JAVAJIGI, ContentType.ANSWER, LocalDateTime.now());
+            answers.delete(UserTest.JAVAJIGI, ContentType.ANSWER, LocalDateTime.now());
         }).isInstanceOf(CannotDeleteException.class)
                 .hasMessageContaining("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }

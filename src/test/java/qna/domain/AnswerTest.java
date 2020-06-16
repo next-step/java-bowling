@@ -3,8 +3,6 @@ package qna.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnswerTest {
@@ -14,8 +12,8 @@ public class AnswerTest {
     @DisplayName("delete 요청시 isDeleted가 true로 변경")
     @Test
     public void delete_true() {
-        A1.delete(ContentType.ANSWER, LocalDateTime.now());
-        A2.delete(ContentType.ANSWER, LocalDateTime.now());
+        A1.delete2();
+        A2.delete2();
 
         assertThat(A1.isDeleted()).isTrue();
         assertThat(A2.isDeleted()).isTrue();
