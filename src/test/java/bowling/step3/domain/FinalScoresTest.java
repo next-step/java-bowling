@@ -1,6 +1,10 @@
 package bowling.step3.domain;
 
+import bowling.step3.domain.frame.FinalFrame;
+import bowling.step3.domain.frame.Frame;
+import bowling.step3.domain.frame.NormalFrame;
 import bowling.step3.domain.scores.FinalScores;
+import bowling.step3.domain.scores.NormalScores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -202,6 +206,178 @@ public class FinalScoresTest {
                            .nextInit(Score.valueOf(0))
                            .nextInit(Score.valueOf(0)),
                 0
+            )
+        );
+    }
+
+    @DisplayName("Miss 점수 계산 테스트")
+    @ParameterizedTest
+    @MethodSource("provideFrameAndMissScore")
+    public void Miss_계산_테스트(FinalFrame frame, int expected) {
+        assertEquals(expected, frame.calculateScore());
+    }
+
+    private static Stream<Arguments> provideFrameAndMissScore() {
+        return Stream.of(
+            Arguments.of(
+                FinalFrame.of(10, NormalScores.of(Score.valueOf(1), Score.valueOf(2))),
+                3
+            ),
+            Arguments.of(
+                FinalFrame.of(10, NormalScores.of(Score.valueOf(0), Score.valueOf(9))),
+                9
+            ),
+            Arguments.of(
+                FinalFrame.of(10, NormalScores.of(Score.valueOf(8), Score.valueOf(0))),
+                8
+            ),
+            Arguments.of(
+                FinalFrame.of(10, NormalScores.of(Score.valueOf(5), Score.valueOf(4))),
+                9
+            ),
+            Arguments.of(
+                FinalFrame.of(10, NormalScores.of(Score.valueOf(0), Score.valueOf(0))),
+                0
+            )
+        );
+    }
+
+    @DisplayName("Spared 점수 계산 테스트")
+    @ParameterizedTest
+    @MethodSource("provideFrameAndSparedScore")
+    public void Spared_계산_테스트(NormalFrame frame, int expected) {
+        assertEquals(expected, frame.calculateScore());
+    }
+
+    private static Stream<Arguments> provideFrameAndSparedScore() {
+        return Stream.of(
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(0), Score.getStrike()),
+                    NormalFrame.of(2, NormalScores.of(Score.valueOf(5), null), null)),
+                15
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(9), Score.valueOf(1)),
+                    NormalFrame.of(2, NormalScores.of(Score.getStrike(), null), null)),
+                20
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(5), Score.valueOf(5)),
+                    NormalFrame.of(2, NormalScores.of(Score.valueOf(0), null), null)),
+                10
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(4), Score.valueOf(6)),
+                    FinalFrame.of(2, FinalScores.of(Score.valueOf(7), null))),
+                17
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(4), Score.valueOf(6)),
+                    NormalFrame.of(2, NormalScores.init(), null)),
+                Frame.EMPTY_CALC
+            ),
+            Arguments.of(
+                NormalFrame.of(9, NormalScores.of(Score.valueOf(4), Score.valueOf(6)),
+                    FinalFrame.of(10, FinalScores.init())),
+                Frame.EMPTY_CALC
+            )
+        );
+    }
+
+    @DisplayName("Strike 점수 계산 테스트")
+    @ParameterizedTest
+    @MethodSource("provideFrameAndStrikeScore")
+    public void Strike_계산_테스트(NormalFrame frame, int expected) {
+        assertEquals(expected, frame.calculateScore());
+    }
+
+    private static Stream<Arguments> provideFrameAndStrikeScore() {
+        return Stream.of(
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.getStrike(), null),
+                    NormalFrame.of(2, NormalScores.of(Score.valueOf(5), Score.valueOf(4)), null)),
+                19
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.getStrike(), null),
+                    NormalFrame.of(2, NormalScores.of(Score.valueOf(0), Score.getStrike()), null)),
+                20
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.getStrike(), null),
+                    NormalFrame.of(2, NormalScores.of(Score.valueOf(0), Score.valueOf(5)), null)),
+                15
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.getStrike(), null),
+                    NormalFrame.of(2, NormalScores.init(), null)),
+                Frame.EMPTY_CALC
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.getStrike(), null),
+                    NormalFrame.of(2, NormalScores.of(Score.valueOf(5), null), null)),
+                Frame.EMPTY_CALC
+            )
+        );
+    }
+
+    @DisplayName("Two Strike 점수 계산 테스트")
+    @ParameterizedTest
+    @MethodSource("provideFrameAndTwoStrikeScore")
+    public void Two_Strike_계산_테스트(NormalFrame frame, int expected) {
+        assertEquals(expected, frame.calculateScore());
+    }
+
+    private static Stream<Arguments> provideFrameAndTwoStrikeScore() {
+        return Stream.of(
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.getStrike(), null),
+                    NormalFrame.of(2, NormalScores.of(Score.getStrike(), null),
+                        NormalFrame.of(3, NormalScores.of(Score.getStrike(), null), null))),
+                30
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.getStrike(), null),
+                    NormalFrame.of(2, NormalScores.of(Score.getStrike(), null),
+                        NormalFrame.of(3, NormalScores.of(Score.valueOf(0), null), null))),
+                20
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.getStrike(), null),
+                    NormalFrame.of(2, NormalScores.of(Score.getStrike(), null),
+                        NormalFrame.of(3, NormalScores.of(Score.valueOf(5), null), null))),
+                25
+            ),
+            Arguments.of(
+                NormalFrame.of(9, NormalScores.of(Score.getStrike(), null),
+                    FinalFrame.of(10, FinalScores.of(Score.getStrike(), Score.valueOf(9)))),
+                29
+            ),
+            Arguments.of(
+                NormalFrame.of(9, NormalScores.of(Score.getStrike(), null),
+                    FinalFrame.of(10, FinalScores.of(Score.getStrike(), Score.getStrike()))),
+                30
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.getStrike(), null),
+                    NormalFrame.of(2, NormalScores.init(), null)),
+                Frame.EMPTY_CALC
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.getStrike(), null),
+                    NormalFrame.of(2, NormalScores.init(),
+                        NormalFrame.of(3, NormalScores.init(), null))),
+                Frame.EMPTY_CALC
+            ),
+            Arguments.of(
+                NormalFrame.of(9, NormalScores.of(Score.getStrike(), null),
+                    FinalFrame.of(10, FinalScores.init())),
+                Frame.EMPTY_CALC
+            ),
+            Arguments.of(
+                NormalFrame.of(9, NormalScores.of(Score.getStrike(), null),
+                    FinalFrame.of(10, FinalScores.of(Score.getStrike(), null))),
+                Frame.EMPTY_CALC
             )
         );
     }
