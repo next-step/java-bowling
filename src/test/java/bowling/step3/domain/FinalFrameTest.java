@@ -13,25 +13,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FinalFrameTest {
 
-    @DisplayName("다음 프레임을 정상적으로 생성하고 있는지 확인")
+    @DisplayName("FinalFrame의 경우 다음 프레임은 항상 null이다.")
     @ParameterizedTest
     @MethodSource("provideFrameAndNextFrame")
-    void 다음_프레임_생성_테스트(Frame frame, Frame prevFrame) {
-        assertEquals(prevFrame, frame.getPrevFrame());
+    void 다음_프레임_생성_테스트(Frame frame, Frame nextFrame) {
+        assertEquals(nextFrame, frame.getNextFrame());
     }
 
     private static Stream<Arguments> provideFrameAndNextFrame() {
-        Scores scores = FinalScores.init();
-        Frame normalFrame = NormalFrame.of(9, scores, null);
-        Frame nextFrame1 = FinalFrame.of(10, scores, normalFrame);
-        Frame nextFrame2 = nextFrame1.createNextFrame(scores);
-        Frame nextFrame3 = nextFrame1.createNextFrame(scores);
-        Frame nextFrame4 = nextFrame2.createNextFrame(scores);
+        Frame finalFrame = FinalFrame.of(10, FinalScores.init());
+        finalFrame.createNextFrameOfScores(
+            finalFrame.getScores().nextInit(Score.valueOf(1))
+        );
+        Frame nextFrame = finalFrame.getNextFrame();
         return Stream.of(
-            Arguments.of(nextFrame1, normalFrame),
-            Arguments.of(nextFrame2, normalFrame),
-            Arguments.of(nextFrame3, normalFrame),
-            Arguments.of(nextFrame4, normalFrame)
+            Arguments.of(finalFrame, null),
+            Arguments.of(finalFrame, nextFrame)
         );
     }
 }
