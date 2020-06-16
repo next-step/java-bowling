@@ -113,7 +113,7 @@ public class NormalFrameTest {
             ),
             Arguments.of(
                 NormalFrame.of(9, NormalScores.of(Score.valueOf(4), Score.valueOf(6)),
-                    FinalFrame.of(10, FinalScores.init())),
+                    FinalFrame.of(Frames.LAST_FRAME, FinalScores.init())),
                 Frame.EMPTY_CALC
             )
         );
@@ -185,12 +185,12 @@ public class NormalFrameTest {
             ),
             Arguments.of(
                 NormalFrame.of(9, NormalScores.of(Score.getStrike(), null),
-                    FinalFrame.of(10, FinalScores.of(Score.getStrike(), Score.valueOf(9)))),
+                    FinalFrame.of(Frames.LAST_FRAME, FinalScores.of(Score.getStrike(), Score.valueOf(9)))),
                 29
             ),
             Arguments.of(
                 NormalFrame.of(9, NormalScores.of(Score.getStrike(), null),
-                    FinalFrame.of(10, FinalScores.of(Score.getStrike(), Score.getStrike()))),
+                    FinalFrame.of(Frames.LAST_FRAME, FinalScores.of(Score.getStrike(), Score.getStrike()))),
                 30
             ),
             Arguments.of(
@@ -206,12 +206,12 @@ public class NormalFrameTest {
             ),
             Arguments.of(
                 NormalFrame.of(9, NormalScores.of(Score.getStrike(), null),
-                    FinalFrame.of(10, FinalScores.init())),
+                    FinalFrame.of(Frames.LAST_FRAME, FinalScores.init())),
                 Frame.EMPTY_CALC
             ),
             Arguments.of(
                 NormalFrame.of(9, NormalScores.of(Score.getStrike(), null),
-                    FinalFrame.of(10, FinalScores.of(Score.getStrike(), null))),
+                    FinalFrame.of(Frames.LAST_FRAME, FinalScores.of(Score.getStrike(), null))),
                 Frame.EMPTY_CALC
             )
         );
