@@ -20,7 +20,13 @@ public class Answers {
     @OrderBy("id ASC")
     private final List<Answer> answers = new ArrayList<>();
 
-    public void validateDeleteCondition(User loginUser) throws CannotDeleteException {
+    public Stream<DeleteHistory> delete2(User loginUser, ContentType contentType, LocalDateTime createTime) throws CannotDeleteException {
+        validateDeleteCondition2(loginUser);
+        return answers.stream()
+                .map(answer -> answer.delete(contentType, createTime));
+    }
+
+    private void validateDeleteCondition2(User loginUser) throws CannotDeleteException {
         boolean isAllWrittenByLoginUser = answers.stream()
                 .allMatch(answer -> answer.isOwner(loginUser));
         if (!isAllWrittenByLoginUser) {
