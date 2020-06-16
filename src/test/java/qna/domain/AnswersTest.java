@@ -1,28 +1,22 @@
 package qna.domain;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnswersTest {
-
-    private Question question;
-    private Answer answer;
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-        question.addAnswer(answer);
-    }
-
     @DisplayName("답변이 잘 삭제 되는지 확인")
     @Test
     public void deleteAllTest() {
+        // given
+        Answer answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        Answers answers = new Answers(Arrays.asList(answer));
+
         // when
-        question.getAnswers().deleteAll();
+        answers.delete();
 
         // then
         assertThat(answer.isDeleted()).isTrue();
@@ -31,8 +25,12 @@ public class AnswersTest {
     @DisplayName("질문자와 다른 답변자가 없는지 확인")
     @Test
     public void containOthersFalseTest() {
+        // given
+        Answer answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        Answers answers = new Answers(Arrays.asList(answer));
+
         // when
-        boolean result = question.getAnswers().containOthers(UserTest.JAVAJIGI);
+        boolean result = answers.containOthers(UserTest.JAVAJIGI);
 
         // then
         assertThat(result).isFalse();
@@ -42,11 +40,12 @@ public class AnswersTest {
     @Test
     public void containOthersTrueTest() {
         // given
+        Answer answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         Answer other = new Answer(11L, UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents1");
-        question.addAnswer(other);
+        Answers answers = new Answers(Arrays.asList(answer, other));
 
         // when
-        boolean result = question.getAnswers().containOthers(UserTest.JAVAJIGI);
+        boolean result = answers.containOthers(UserTest.JAVAJIGI);
 
         // then
         assertThat(result).isTrue();

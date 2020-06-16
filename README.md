@@ -64,12 +64,12 @@ public class QnAService {
 * [x] [fix#3][Answers.java] anyMatch 활용
     * <pre><code>return answers.stream()
                     .anyMatch(answer -> !answer.isOwner(user));</code></pre> 
-* [ ] [fix#4][DeleteHistories.java] 질문과 답변이 삭제되고 반드시 DeleteHistory에 대한 정보를 남겨야 한다면 DeleteHistory는 질문과 답변에 대해서 종속적인 구조처럼 느껴짐, 따라서 Question과 Answer에게 삭제 요청 후 삭제된 정보를 바탕으로 DeleteHistory를 전달받도록 수정
+* [x] [fix#4][DeleteHistories.java] 질문과 답변이 삭제되고 반드시 DeleteHistory에 대한 정보를 남겨야 한다면 DeleteHistory는 질문과 답변에 대해서 종속적인 구조처럼 느껴짐, 따라서 Question과 Answer에게 삭제 요청 후 삭제된 정보를 바탕으로 DeleteHistory를 전달받도록 수정
     <pre><code>DeleteHistory questionDeleteHistory = question.delete();</code></pre>
-* [ ] [fix#5][QnAService.java] Question의 **내부에 있는 값을 꺼내 비교하기 보다는** Question 에게는 답변의 삭제 요청만을 하고, Question 내부의 Answers 에서 다른 사용자의 답변이 있다는 예외를 발생시키도록 수정
-* [ ] [fix#6][QnAService.java] Question의 **내부에 있는 값을 꺼내서 삭제요청하기 보다는** Question 에게 답변을 모두 삭제해 달라고 요청 
-* [ ] [fix#7][AnswersTest.java] Answer를 테스트 하는데 Question에 대한 의존성은 필요 없음
-* [ ] [fix#8][DeleteHistoriesTest.java] 한번 씩만 사용되는 값 이라면 테스트 내부에서 선언해서 사용 
+* [x] [fix#5][QnAService.java] Question의 **내부에 있는 값을 꺼내 비교하기 보다는** Question 에게는 답변의 삭제 요청만을 하고, Question 내부의 Answers 에서 다른 사용자의 답변이 있다는 예외를 발생시키도록 수정
+* [x] [fix#6][QnAService.java] Question의 **내부에 있는 값을 꺼내서 삭제요청하기 보다는** Question 에게 답변을 모두 삭제해 달라고 요청 
+* [x] [fix#7][AnswersTest.java] Answer를 테스트 하는데 Question에 대한 의존성은 필요 없음
+* [x] [fix#8][DeleteHistoriesTest.java] 한번 씩만 사용되는 값 이라면 테스트 내부에서 선언해서 사용 
 
 # 2단계 - 볼링 점수판(그리기)
 ### 기능 요구사항

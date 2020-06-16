@@ -2,6 +2,7 @@ package qna.domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class Answers {
@@ -20,7 +21,9 @@ public class Answers {
                 .anyMatch(answer -> !answer.isOwner(user));
     }
 
-    public void delete() {
-        answers.forEach(answer -> answer.delete());
+    public List<DeleteHistory> delete() {
+        return answers.stream()
+                .map(answers -> answers.delete())
+                .collect(Collectors.toList());
     }
 }
