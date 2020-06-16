@@ -61,6 +61,15 @@ public class NormalScoresTest {
                 NormalScores.init()
                             .nextInit(Score.valueOf(5))
                             .nextInit(Score.valueOf(6))
+            ),
+            Arguments.of(
+                NormalScores.init()
+                            .nextInit(Score.getStrike())
+            ),
+            Arguments.of(
+                NormalScores.init()
+                            .nextInit(Score.valueOf(0))
+                            .nextInit(Score.getStrike())
             )
         );
     }
