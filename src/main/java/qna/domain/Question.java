@@ -38,11 +38,11 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public List<DeleteHistory> deleteQnA(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> deleteQnA(User loginUser, LocalDateTime createTime) throws CannotDeleteException {
         validateDeleteRequestor(loginUser);
         answers.validateDeleteCondition(loginUser);
-        Stream<DeleteHistory> questionDeleteHistory = this.delete(ContentType.QUESTION, LocalDateTime.now());
-        Stream<DeleteHistory> answersDeleteHistory = answers.delete(ContentType.ANSWER, LocalDateTime.now());
+        Stream<DeleteHistory> questionDeleteHistory = this.delete(ContentType.QUESTION, createTime);
+        Stream<DeleteHistory> answersDeleteHistory = answers.delete(ContentType.ANSWER, createTime);
         return Stream.concat(questionDeleteHistory, answersDeleteHistory)
                 .collect(Collectors.toList());
     }

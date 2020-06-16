@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class AnswersTest {
@@ -43,7 +45,7 @@ public class AnswersTest {
         assertThatCode(() -> {
             QuestionTest.Q2.getAnswers()
                     .validateDeleteCondition(UserTest.SANJIGI);
-            QuestionTest.Q2.deleteQnA(UserTest.SANJIGI);
+            QuestionTest.Q2.deleteQnA(UserTest.SANJIGI, LocalDateTime.now());
         }).doesNotThrowAnyException();
     }
 
@@ -56,7 +58,7 @@ public class AnswersTest {
         Q3.addAnswer(answer);
         Q3.addAnswer(answer2);
 
-        Q3.deleteQnA(UserTest.JAVAJIGI);
+        Q3.deleteQnA(UserTest.JAVAJIGI, LocalDateTime.now());
 
         assertThat(answer.isDeleted()).isEqualTo(true);
         assertThat(answer2.isDeleted()).isEqualTo(true);
