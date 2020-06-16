@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 
 
 public class Frames {
-
     public static final int LAST_FRAME = 10;
 
     private final List<Frame> frames;
