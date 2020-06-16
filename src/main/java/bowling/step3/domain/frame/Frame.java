@@ -23,7 +23,7 @@ public abstract class Frame {
     }
 
     public int calculateScore() {
-        if (scores == null || !scores.isFullOf()) {
+        if (scores == null || !scores.isFull()) {
             return EMPTY_CALC;
         }
         if (scores.isType(ScoreType.STRIKE)) {
@@ -35,9 +35,11 @@ public abstract class Frame {
         return scores.totalScore();
     }
 
+    abstract protected int calculateScoreOfSpared();
+
     abstract protected int calculateScoreOfStrike();
 
-    abstract protected int calculateScoreOfSpared();
+    abstract protected int calculateScoreOfTwoStrike(int totalScore);
 
     abstract public void createNextFrame(Scores scores);
 
