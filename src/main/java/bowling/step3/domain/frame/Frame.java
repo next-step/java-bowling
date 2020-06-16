@@ -1,8 +1,10 @@
 package bowling.step3.domain.frame;
 
+import bowling.step3.domain.ScoreType;
 import bowling.step3.domain.scores.Scores;
 
 public abstract class Frame {
+    public static final int EMPTY_CALC = -1;
 
     protected final int frame;
     protected Scores scores;
@@ -24,5 +26,17 @@ public abstract class Frame {
 
     abstract public Frame getNextFrame();
 
-    abstract int calculateScore();
+    public int calculateScore() {
+        if (scores.isType(ScoreType.STRIKE)) {
+            return calculateScoreOfStrike();
+        }
+        if (scores.isType(ScoreType.SPARED)) {
+            return calculateScoreOfSpared();
+        }
+        return scores.totalScore();
+    }
+
+    abstract protected int calculateScoreOfStrike();
+
+    abstract protected int calculateScoreOfSpared();
 }
