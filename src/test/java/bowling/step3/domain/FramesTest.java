@@ -17,14 +17,15 @@ public class FramesTest {
     @DisplayName("프레임의 최대 갯수가 10개인지 확인")
     @Test
     void 프레임_갯수_확인() {
-        assertEquals(10, Frames.init().preview().count());
+        Frame firstFrame = NormalFrame.of(1, NormalScores.init(), null);
+        assertEquals(10, Frames.preview(firstFrame).count());
     }
 
     @DisplayName("마지막 프레임으로 부터 전체 프레임이 생성되는지 확인")
     @ParameterizedTest
     @MethodSource("provideFrameAndFrames")
-    void 프레임_생성_확인(Frame lastFrame, long expected) {
-        assertEquals(expected, Frames.ofLastFrame(lastFrame).stream().count());
+    void 프레임_생성_확인(Frame firstFrame, long expected) {
+        assertEquals(expected, Frames.framesByFirst(firstFrame).stream().count());
     }
 
     private static Stream<Arguments> provideFrameAndFrames() {
@@ -39,18 +40,18 @@ public class FramesTest {
         Frame frame7 = NormalFrame.of(7, normalScores, frame6);
         Frame frame8 = NormalFrame.of(8, normalScores, frame7);
         Frame frame9 = NormalFrame.of(9, normalScores, frame8);
-        Frame frame10 = FinalFrame.of(10, finalScores, frame9);
+        Frame frame10 = FinalFrame.of(10, finalScores);
         return Stream.of(
-            Arguments.of(frame1, 1),
-            Arguments.of(frame2, 2),
-            Arguments.of(frame3, 3),
-            Arguments.of(frame4, 4),
-            Arguments.of(frame5, 5),
-            Arguments.of(frame6, 6),
-            Arguments.of(frame7, 7),
-            Arguments.of(frame8, 8),
-            Arguments.of(frame9, 9),
-            Arguments.of(frame10, 10)
+            Arguments.of(frame10, 1),
+            Arguments.of(frame9, 2),
+            Arguments.of(frame8, 3),
+            Arguments.of(frame7, 4),
+            Arguments.of(frame6, 5),
+            Arguments.of(frame5, 6),
+            Arguments.of(frame4, 7),
+            Arguments.of(frame3, 8),
+            Arguments.of(frame2, 9),
+            Arguments.of(frame1, 10)
         );
     }
 }
