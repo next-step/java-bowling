@@ -20,6 +20,10 @@ public class FinalScores extends Scores {
         return of(null, null);
     }
 
+    public boolean filledBonus() {
+        return bonusScore != null;
+    }
+
     @Override
     public Scores nextInit (Score score) {
         if (firstScore == null) {
@@ -29,11 +33,6 @@ public class FinalScores extends Scores {
             return of(firstScore, score);
         }
         return new FinalScores(firstScore, secondScore, score);
-    }
-
-    @Override
-    public boolean isFullOf() {
-        return firstScore != null && secondScore != null && bonusScore != null;
     }
 
     @Override

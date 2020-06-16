@@ -14,8 +14,6 @@ public abstract class Scores {
         this.secondScore = secondScore;
     }
 
-    abstract public Scores nextInit(Score score);
-
     public boolean isType(ScoreType scoreType) {
         if (scoreType.equals(ScoreType.STRIKE)) {
             return firstScore == Score.getStrike();
@@ -26,16 +24,20 @@ public abstract class Scores {
         return false;
     }
 
-    public boolean isFullOf() {
-        return firstScore != null && secondScore != null;
-    }
-
     public int totalScore() {
         return firstScore.sum(secondScore).getValue();
     }
 
-    public Stream<Score> stream() {
-        return Stream.of(firstScore, secondScore);
+    public boolean isFullOf() {
+        return isType(ScoreType.STRIKE) || (firstScore != null && secondScore != null);
     }
+
+    public boolean isEmpty () {
+        return firstScore == null && secondScore == null;
+    }
+
+    abstract public Scores nextInit(Score score);
+
+    abstract public Stream<Score> stream();
 
 }

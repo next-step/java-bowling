@@ -9,6 +9,7 @@ import bowling.step3.domain.frame.Frame;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.joining;
@@ -19,7 +20,6 @@ public class ResultView {
     private static final String NEW_LINE = System.lineSeparator();
     private static final String NUMBERS_FORMAT = "| NAME |%s|";
     private static final String SCORES_FORMAT = "| %4s |  %s|";
-    private static final String CALC_FORMAT = "|      |%s|";
 
     private ResultView() {
     }
@@ -29,11 +29,12 @@ public class ResultView {
     }
 
     public void printFrames(PlayerFrames playerFrames) {
+        String playerName = playerFrames.getPlayer().toString();
         System.out.printf(
-            "%s" + NEW_LINE + "%s" + NEW_LINE + NEW_LINE,
+            "%s" + NEW_LINE + "%s" + NEW_LINE + "%s" + NEW_LINE + NEW_LINE,
             frameNumbers(),
-            frameScores(playerFrames),
-            frameScoreCalculation(playerFrames)
+            frameScores(playerFrames, playerName, frame -> String.format("%-4s", scoreOf(frame))),
+            frameScores(playerFrames, "", frame -> String.format("%-4s", calculationOf(frame)))
         );
     }
 
@@ -46,11 +47,11 @@ public class ResultView {
         );
     }
 
-    private String frameScores(PlayerFrames playerFrames) {
+    private String frameScores(PlayerFrames playerFrames, String label, Function<Frame, String> mapper) {
         return String.format(
-            SCORES_FORMAT, playerFrames.getPlayer(),
+            SCORES_FORMAT, label,
             playerFrames.getPreview()
-                        .map(frame -> String.format("%-4s", scoreOf(frame)))
+                        .map(mapper)
                         .collect(joining("|  ")));
     }
 
@@ -86,19 +87,11 @@ public class ResultView {
         return scores.get(index).toString();
     }
 
-    private String frameScoreCalculation (PlayerFrames playerFrames) {
-         return String.format(
-             CALC_FORMAT,
-             playerFrames.getPreview()
-                         .map(frame -> String.format("%-4s", calcuationOf(frame)))
-                         .collect(joining("  |  "))
-         );
-    }
-
-    private String calcuationOf(Frame frame) {
+    private String calculationOf(Frame frame) {
         if (frame == null) {
             return "";
         }
-        return "";
+        int calculatedScore = frame.calculateScore();
+        return calculatedScore == Frame.EMPTY_CALC ? "" : String.valueOf(calculatedScore);
     }
 }
