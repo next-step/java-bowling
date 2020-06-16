@@ -22,11 +22,10 @@ public abstract class Frame {
         return frame;
     }
 
-    abstract public void createNextFrame(Scores scores);
-
-    abstract public Frame getNextFrame();
-
     public int calculateScore() {
+        if (scores == null || !scores.isFullOf()) {
+            return EMPTY_CALC;
+        }
         if (scores.isType(ScoreType.STRIKE)) {
             return calculateScoreOfStrike();
         }
@@ -39,4 +38,8 @@ public abstract class Frame {
     abstract protected int calculateScoreOfStrike();
 
     abstract protected int calculateScoreOfSpared();
+
+    abstract public void createNextFrame(Scores scores);
+
+    abstract public Frame getNextFrame();
 }
