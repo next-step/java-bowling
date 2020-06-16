@@ -2,6 +2,7 @@ package bowling.step3.domain;
 
 import bowling.step3.domain.frame.Frame;
 import bowling.step3.domain.frame.NormalFrame;
+import bowling.step3.domain.scores.FinalScores;
 import bowling.step3.domain.scores.NormalScores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,12 +46,12 @@ public class NormalFrameTest {
 
     @DisplayName("Miss 점수 계산 테스트")
     @ParameterizedTest
-    @MethodSource("provideFrameAndNextFrameAndScore")
+    @MethodSource("provideFrameAndMissScore")
     public void Miss_계산_테스트(NormalFrame frame, int expected) {
         assertEquals(expected, frame.calculateScore());
     }
 
-    private static Stream<Arguments> provideFrameAndNextFrameAndScore() {
+    private static Stream<Arguments> provideFrameAndMissScore() {
         return Stream.of(
             Arguments.of(
                 NormalFrame.of(1, NormalScores.of(Score.valueOf(1), Score.valueOf(2)), null),
@@ -71,6 +72,38 @@ public class NormalFrameTest {
             Arguments.of(
                 NormalFrame.of(1, NormalScores.of(Score.valueOf(0), Score.valueOf(0)), null),
                 0
+            )
+        );
+    }
+
+    @DisplayName("Spared 점수 계산 테스트")
+    @ParameterizedTest
+    @MethodSource("provideFrameAndSparedScore")
+    public void Spared_계산_테스트(NormalFrame frame, int expected) {
+        assertEquals(expected, frame.calculateScore());
+    }
+
+    private static Stream<Arguments> provideFrameAndSparedScore() {
+        return Stream.of(
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(0), Score.valueOf(10)),
+                    NormalFrame.of(2, NormalScores.of(Score.valueOf(5), null), null)),
+                15
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(9), Score.valueOf(1)),
+                    NormalFrame.of(2, NormalScores.of(Score.valueOf(10), null), null)),
+                20
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(5), Score.valueOf(5)),
+                    NormalFrame.of(2, NormalScores.of(Score.valueOf(0), null), null)),
+                10
+            ),
+            Arguments.of(
+                NormalFrame.of(1, NormalScores.of(Score.valueOf(4), Score.valueOf(6)),
+                    NormalFrame.of(2, FinalScores.of(Score.valueOf(7), null), null)),
+                17
             )
         );
     }
