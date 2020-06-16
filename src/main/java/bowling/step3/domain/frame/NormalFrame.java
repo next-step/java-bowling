@@ -35,7 +35,7 @@ public class NormalFrame extends Frame {
 
     @Override
     protected int calculateScoreOfSpared() {
-        if (nextFrame == null) {
+        if (nextFrame == null || nextFrame.scores.isEmpty()) {
             return EMPTY_CALC;
         }
         return nextFrame.scores

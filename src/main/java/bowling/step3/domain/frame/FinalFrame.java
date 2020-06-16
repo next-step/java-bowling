@@ -23,9 +23,6 @@ public class FinalFrame extends Frame {
 
     @Override
     protected int calculateScoreOfStrike() {
-        if (!scores.isFullOf()) {
-            return EMPTY_CALC;
-        }
         return scores.stream()
                      .reduce(0, (total, score) -> total + score.getValue(), Integer::sum);
     }
