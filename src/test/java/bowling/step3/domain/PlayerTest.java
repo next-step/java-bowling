@@ -41,10 +41,10 @@ public class PlayerTest {
         );
     }
 
-    @DisplayName("객체를 재사용 하고 있는지 확인하는 테스트")
+    @DisplayName("객체의 Equals와 HashCode Method의 정상 작동 여부 확인 테스트")
     @ParameterizedTest
     @ValueSource(strings = {"123", "hji", "abc"})
-    void 객체_재사용_테스트(String value) {
+    void 객체_equals_및_hashCode_테스트(String value) {
         Player player = Player.valueOf(value);
         assertEquals(player, Player.valueOf(value));
     }

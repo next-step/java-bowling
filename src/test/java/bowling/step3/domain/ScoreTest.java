@@ -37,7 +37,7 @@ public class ScoreTest {
         assertEquals(true, Score.valueOf(value).isType(scoreType));
     }
 
-    private static Stream<Arguments> provideScoreAndScoreType () {
+    private static Stream<Arguments> provideScoreAndScoreType() {
         return Stream.of(
             Arguments.of(Score.MAX_SCORE, ScoreType.STRIKE),
             Arguments.of(Score.MIN_SCORE, ScoreType.GUTTER)
