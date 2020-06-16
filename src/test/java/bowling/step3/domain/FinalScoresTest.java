@@ -1,8 +1,6 @@
 package bowling.step3.domain;
 
-import bowling.step2.domain.Score;
-import bowling.step2.domain.ScoreType;
-import bowling.step2.domain.scores.FinalScores;
+import bowling.step3.domain.scores.FinalScores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -40,11 +38,11 @@ public class FinalScoresTest {
         );
     }
 
-    @DisplayName("스코어의 값이 전부 채워졌는지 확인하는 테스트")
+    @DisplayName("첫 번째 스코어와 두 번째 스코어가 채워졌는지 확인하는 테스트")
     @ParameterizedTest
     @MethodSource("provideFullyScores")
     void 스코어_채워짐_확인_테스트(FinalScores scores) {
-        assertEquals(true, scores.isFullOf());
+        assertEquals(true, scores.isFull());
     }
 
     private static Stream<Arguments> provideFullyScores() {
@@ -53,13 +51,12 @@ public class FinalScoresTest {
                 FinalScores.init()
                            .nextInit(Score.valueOf(1))
                            .nextInit(Score.valueOf(2))
-                           .nextInit(Score.valueOf(3))
             ),
             Arguments.of(
                 FinalScores.init()
                            .nextInit(Score.valueOf(3))
                            .nextInit(Score.valueOf(4))
-                           .nextInit(Score.valueOf(5))
+                           .nextInit(null)
             ),
             Arguments.of(
                 FinalScores.init()

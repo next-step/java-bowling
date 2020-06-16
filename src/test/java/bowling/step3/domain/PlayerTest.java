@@ -1,8 +1,6 @@
 package bowling.step3.domain;
 
-import bowling.step2.domain.Player;
-import bowling.step2.exception.PlayerNameEmptyException;
-import bowling.step2.exception.PlayerNameMaximumException;
+import bowling.step3.exception.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
