@@ -11,4 +11,12 @@ public class BowlingGameInput {
         }
         throw new IllegalArgumentException("입력된 값이 없습니다");
     }
+
+    public static int getHitCount(int frame) {
+        System.out.print(frame + " 프레임 투구 : ");
+        if(SCANNER.hasNextInt()) {
+            return SCANNER.nextInt();
+        }
+        throw new IllegalArgumentException("입력된 값이 없습니다");
+    }
 }
