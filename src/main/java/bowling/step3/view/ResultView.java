@@ -19,6 +19,7 @@ public class ResultView {
     private static final String NEW_LINE = System.lineSeparator();
     private static final String NUMBERS_FORMAT = "| NAME |%s|";
     private static final String SCORES_FORMAT = "| %4s |  %s|";
+    private static final String CALC_FORMAT = "|      |%s|";
 
     private ResultView() {
     }
@@ -31,7 +32,8 @@ public class ResultView {
         System.out.printf(
             "%s" + NEW_LINE + "%s" + NEW_LINE + NEW_LINE,
             frameNumbers(),
-            frameScores(playerFrames)
+            frameScores(playerFrames),
+            frameScoreCalculation(playerFrames)
         );
     }
 
@@ -72,16 +74,31 @@ public class ResultView {
     }
 
     private String toScoreType(List<Score> scores, int index) {
-        if (scores.get(index) == Score.valueOf(Score.MIN_SCORE)) {
+        if (scores.get(index).isType(ScoreType.GUTTER)) {
             return ScoreType.GUTTER.getValue();
         }
-        if (scores.get(index) == Score.getStrike()) {
+        if (scores.get(index).isType(ScoreType.STRIKE)) {
             return ScoreType.STRIKE.getValue();
         }
-        if (index == 1 && NormalScores.isSparedOf(scores)) {
+        if (index == 1 && NormalScores.isTypeOf(scores, ScoreType.SPARED)) {
             return ScoreType.SPARED.getValue();
         }
         return scores.get(index).toString();
     }
 
+    private String frameScoreCalculation (PlayerFrames playerFrames) {
+         return String.format(
+             CALC_FORMAT,
+             playerFrames.getPreview()
+                         .map(frame -> String.format("%-4s", calcuationOf(frame)))
+                         .collect(joining("  |  "))
+         );
+    }
+
+    private String calcuationOf(Frame frame) {
+        if (frame == null) {
+            return "";
+        }
+        return "";
+    }
 }
