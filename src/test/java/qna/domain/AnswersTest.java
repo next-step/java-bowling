@@ -16,8 +16,7 @@ public class AnswersTest {
     @Test
     public void validateAnswerWriters_정상() {
         Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        Answer answer = new Answer(UserTest.JAVAJIGI, Q3, "질문 작성자가 답변 달았음.");
-        Q3.addAnswer(answer);
+        Q3.addAnswer(new Answer(UserTest.JAVAJIGI, Q3, "질문 작성자가 답변 달았음."));
 
         Answers answers = Q3.getAnswers();
 
@@ -30,8 +29,7 @@ public class AnswersTest {
     @Test
     public void validateAnswerWriters_에러() {
         Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        Answer answer = new Answer(UserTest.SANJIGI, Q3, "질문 작성자가 아닌 사람이 답변 달았음.");
-        Q3.addAnswer(answer);
+        Q3.addAnswer(new Answer(UserTest.SANJIGI, Q3, "질문 작성자가 아닌 사람이 답변 달았음."));
 
         Answers answers = Q3.getAnswers();
 
@@ -45,7 +43,7 @@ public class AnswersTest {
     @Test
     public void validateAnswerWriters_답변없음_정상() {
         assertThatCode(() -> {
-            QuestionTest.Q2.deleteQnA(UserTest.SANJIGI, LocalDateTime.now());
+            QuestionTest.Q2.deleteQnA(UserTest.SANJIGI);
         }).doesNotThrowAnyException();
     }
 
@@ -58,7 +56,7 @@ public class AnswersTest {
         Q3.addAnswer(answer);
         Q3.addAnswer(answer2);
 
-        Q3.deleteQnA(UserTest.JAVAJIGI, LocalDateTime.now());
+        Q3.deleteQnA(UserTest.JAVAJIGI);
 
         assertThat(answer.isDeleted()).isEqualTo(true);
         assertThat(answer2.isDeleted()).isEqualTo(true);

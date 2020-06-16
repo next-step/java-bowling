@@ -37,15 +37,10 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public List<DeleteHistory> deleteQnA(User loginUser, LocalDateTime createTime) throws CannotDeleteException {
+    public void deleteQnA(User loginUser) throws CannotDeleteException {
         validateDeleteRequestor(loginUser);
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
         this.delete();
         answers.delete(loginUser);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), createTime));
-        answers.recordDeleteHistories(deleteHistories, ContentType.ANSWER, createTime);
-
-        return deleteHistories;
     }
 
     private void validateDeleteRequestor(User loginUser) throws CannotDeleteException {
@@ -56,6 +51,18 @@ public class Question extends AbstractEntity {
 
     private void delete() {
         this.deleted = true;
+    }
+
+    public List<DeleteHistory> recordDeleteHistories(LocalDateTime createTime) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        this.recordDeleteHistory(deleteHistories, ContentType.QUESTION, createTime);
+        answers.recordDeleteHistories(deleteHistories, ContentType.ANSWER, createTime);
+        return deleteHistories;
+    }
+
+    private void recordDeleteHistory(List<DeleteHistory> deleteHistories, ContentType contentType,
+                                     LocalDateTime createTime) {
+        deleteHistories.add(new DeleteHistory(contentType, getId(), getWriter(), createTime));
     }
 
     public String getTitle() {

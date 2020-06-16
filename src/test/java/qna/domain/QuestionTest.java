@@ -17,7 +17,7 @@ public class QuestionTest {
     @Test
     public void validateQuestionWriter_정상() {
         assertThatCode(() -> {
-            Q1.deleteQnA(UserTest.JAVAJIGI, LocalDateTime.now());
+            Q1.deleteQnA(UserTest.JAVAJIGI);
         }).doesNotThrowAnyException();
     }
 
@@ -25,7 +25,7 @@ public class QuestionTest {
     @Test
     public void validateQuestionWriter_에러() {
         assertThatCode(() -> {
-            Q1.deleteQnA(UserTest.SANJIGI, LocalDateTime.now());
+            Q1.deleteQnA(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class)
                 .hasMessageContaining("질문을 삭제할 권한이 없습니다.");
     }
@@ -34,7 +34,7 @@ public class QuestionTest {
     @Test
     public void delete_question_true() throws CannotDeleteException {
         Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        Q3.deleteQnA(UserTest.JAVAJIGI, LocalDateTime.now());
+        Q3.deleteQnA(UserTest.JAVAJIGI);
 
         assertThat(Q3.isDeleted()).isTrue();
     }
@@ -46,7 +46,7 @@ public class QuestionTest {
         Q3.addAnswer(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1"));
         Q3.addAnswer(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1"));
 
-        assertThat(Q3.deleteQnA(UserTest.JAVAJIGI, LocalDateTime.now()).size())
+        assertThat(Q3.recordDeleteHistories(LocalDateTime.now()).size())
                 .isEqualTo(3);
     }
 }

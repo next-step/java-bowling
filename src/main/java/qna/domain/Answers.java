@@ -32,7 +32,8 @@ public class Answers {
         }
     }
 
-    public void recordDeleteHistories(List<DeleteHistory> deleteHistories, ContentType contentType, LocalDateTime createTime) {
+    public void recordDeleteHistories(List<DeleteHistory> deleteHistories, ContentType contentType,
+                                      LocalDateTime createTime) {
         for (Answer answer : answers) {
             DeleteHistory deleteHistory = answer.recordDeleteHistory(contentType, createTime);
             deleteHistories.add(deleteHistory);
