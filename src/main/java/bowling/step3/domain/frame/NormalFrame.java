@@ -46,21 +46,22 @@ public class NormalFrame extends Frame {
 
     @Override
     protected int calculateScoreOfStrike() {
-        if (nextFrame == null) {
+        if (nextFrame == null || !nextFrame.scores.isFullOf()) {
             return EMPTY_CALC;
         }
-        if (nextFrame.scores.isType(ScoreType.STRIKE) && nextFrame.getNextFrame() != null) {
+        if (nextFrame.scores.isType(ScoreType.STRIKE)) {
             return calculateScoreOfTwoStrike();
-        }
-        if (!nextFrame.scores.isFullOf()) {
-            return EMPTY_CALC;
         }
         return scores.totalScore() + nextFrame.scores.totalScore();
     }
 
     private int calculateScoreOfTwoStrike() {
+        Frame nextNextFrame = nextFrame.getNextFrame();
+        if (nextNextFrame == null || nextNextFrame.getScores().isEmpty()) {
+            return EMPTY_CALC;
+        }
         return Stream.concat(nextFrame.getScores().stream(),
-                             nextFrame.getNextFrame().getScores().stream())
+                             nextNextFrame.getScores().stream())
                      .filter(Objects::nonNull)
                      .limit(2)
                      .reduce(scores.totalScore(), (total, score) -> total + score.getValue(), Integer::sum);

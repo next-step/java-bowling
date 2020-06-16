@@ -19,7 +19,8 @@ public abstract class Scores {
             return firstScore == Score.getStrike();
         }
         if (scoreType.equals(ScoreType.SPARED)) {
-            return firstScore.sum(secondScore) == Score.getStrike();
+            return secondScore != null &&
+                   firstScore.sum(secondScore) == Score.getStrike();
         }
         return false;
     }
