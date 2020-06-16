@@ -2,7 +2,7 @@ package bowling.step3.domain.frame;
 
 import bowling.step3.domain.scores.Scores;
 
-public class Frame {
+public abstract class Frame {
 
     protected final int frame;
     protected Scores scores;
@@ -20,9 +20,7 @@ public class Frame {
         return frame;
     }
 
-    public void createNextFrame (Scores scores) {}
+    abstract public void createNextFrame(Scores scores);
 
-    public Frame getNextFrame () {
-        return null;
-    }
+    abstract public Frame getNextFrame();
 }
