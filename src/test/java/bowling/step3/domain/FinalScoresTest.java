@@ -220,23 +220,23 @@ public class FinalScoresTest {
     private static Stream<Arguments> provideFrameAndMissScore() {
         return Stream.of(
             Arguments.of(
-                FinalFrame.of(10, NormalScores.of(Score.valueOf(1), Score.valueOf(2))),
+                FinalFrame.of(10, FinalScores.of(Score.valueOf(1), Score.valueOf(2))),
                 3
             ),
             Arguments.of(
-                FinalFrame.of(10, NormalScores.of(Score.valueOf(0), Score.valueOf(9))),
+                FinalFrame.of(10, FinalScores.of(Score.valueOf(0), Score.valueOf(9))),
                 9
             ),
             Arguments.of(
-                FinalFrame.of(10, NormalScores.of(Score.valueOf(8), Score.valueOf(0))),
+                FinalFrame.of(10, FinalScores.of(Score.valueOf(8), Score.valueOf(0))),
                 8
             ),
             Arguments.of(
-                FinalFrame.of(10, NormalScores.of(Score.valueOf(5), Score.valueOf(4))),
+                FinalFrame.of(10, FinalScores.of(Score.valueOf(5), Score.valueOf(4))),
                 9
             ),
             Arguments.of(
-                FinalFrame.of(10, NormalScores.of(Score.valueOf(0), Score.valueOf(0))),
+                FinalFrame.of(10, FinalScores.of(Score.valueOf(0), Score.valueOf(0))),
                 0
             )
         );
@@ -245,40 +245,34 @@ public class FinalScoresTest {
     @DisplayName("Spared 점수 계산 테스트")
     @ParameterizedTest
     @MethodSource("provideFrameAndSparedScore")
-    public void Spared_계산_테스트(NormalFrame frame, int expected) {
+    public void Spared_계산_테스트(FinalFrame frame, int expected) {
         assertEquals(expected, frame.calculateScore());
     }
 
     private static Stream<Arguments> provideFrameAndSparedScore() {
         return Stream.of(
             Arguments.of(
-                NormalFrame.of(1, NormalScores.of(Score.valueOf(0), Score.getStrike()),
-                    NormalFrame.of(2, NormalScores.of(Score.valueOf(5), null), null)),
+                FinalFrame.of(1, FinalScores.of(Score.valueOf(0), Score.getStrike(), Score.valueOf(5))),
                 15
             ),
             Arguments.of(
-                NormalFrame.of(1, NormalScores.of(Score.valueOf(9), Score.valueOf(1)),
-                    NormalFrame.of(2, NormalScores.of(Score.getStrike(), null), null)),
+                FinalFrame.of(1, FinalScores.of(Score.valueOf(9), Score.valueOf(1), Score.getStrike())),
                 20
             ),
             Arguments.of(
-                NormalFrame.of(1, NormalScores.of(Score.valueOf(5), Score.valueOf(5)),
-                    NormalFrame.of(2, NormalScores.of(Score.valueOf(0), null), null)),
+                FinalFrame.of(1, FinalScores.of(Score.valueOf(5), Score.valueOf(5), Score.valueOf(0))),
                 10
             ),
             Arguments.of(
-                NormalFrame.of(1, NormalScores.of(Score.valueOf(4), Score.valueOf(6)),
-                    FinalFrame.of(2, FinalScores.of(Score.valueOf(7), null))),
+                FinalFrame.of(1, FinalScores.of(Score.valueOf(4), Score.valueOf(6), Score.valueOf(7))),
                 17
             ),
             Arguments.of(
-                NormalFrame.of(1, NormalScores.of(Score.valueOf(4), Score.valueOf(6)),
-                    NormalFrame.of(2, NormalScores.init(), null)),
+                FinalFrame.of(1, FinalScores.of(Score.valueOf(4), Score.valueOf(6), null)),
                 Frame.EMPTY_CALC
             ),
             Arguments.of(
-                NormalFrame.of(9, NormalScores.of(Score.valueOf(4), Score.valueOf(6)),
-                    FinalFrame.of(10, FinalScores.init())),
+                FinalFrame.of(9, FinalScores.of(Score.valueOf(4), Score.valueOf(6), null)),
                 Frame.EMPTY_CALC
             )
         );
