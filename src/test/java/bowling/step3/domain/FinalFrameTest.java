@@ -131,4 +131,36 @@ public class FinalFrameTest {
             )
         );
     }
+
+    @DisplayName("Two Strike 점수 계산 테스트")
+    @ParameterizedTest
+    @MethodSource("provideFrameAndTwoStrikeScore")
+    public void Two_Strike_계산_테스트(FinalFrame frame, int expected) {
+        assertEquals(expected, frame.calculateScore());
+    }
+
+    private static Stream<Arguments> provideFrameAndTwoStrikeScore() {
+        return Stream.of(
+            Arguments.of(
+                FinalFrame.of(Frames.LAST_FRAME, FinalScores.of(Score.getStrike(), Score.getStrike(), Score.valueOf(5))),
+                25
+            ),
+            Arguments.of(
+                FinalFrame.of(Frames.LAST_FRAME, FinalScores.of(Score.getStrike(), Score.getStrike(), Score.getStrike())),
+                30
+            ),
+            Arguments.of(
+                FinalFrame.of(Frames.LAST_FRAME, FinalScores.of(Score.getStrike(), Score.getStrike(), Score.valueOf(0))),
+                20
+            ),
+            Arguments.of(
+                FinalFrame.of(Frames.LAST_FRAME, FinalScores.of(Score.getStrike(), Score.getStrike(), Score.valueOf(7))),
+                27
+            ),
+            Arguments.of(
+                FinalFrame.of(Frames.LAST_FRAME, FinalScores.of(Score.getStrike(), Score.getStrike(), null)),
+                Frame.EMPTY_CALC
+            )
+        );
+    }
 }
