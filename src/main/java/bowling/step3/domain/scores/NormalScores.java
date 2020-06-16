@@ -19,11 +19,8 @@ public class NormalScores extends Scores {
         return of(null, null);
     }
 
-    public static boolean isSparedOf(List<Score> scores) {
-        if (scores.get(0) == Score.getStrike()) {
-            return false;
-        }
-        return of(scores.get(0), scores.get(1)).isType(ScoreType.SPARED);
+    public static boolean isTypeOf(List<Score> scores, ScoreType scoreType) {
+        return of(scores.get(0), scores.get(1)).isType(scoreType);
     }
 
     @Override

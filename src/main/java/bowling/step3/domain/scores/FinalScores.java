@@ -37,16 +37,6 @@ public class FinalScores extends Scores {
     }
 
     @Override
-    public int totalScore() {
-        return Stream.of(firstScore, secondScore, bonusScore)
-                     .reduce(
-                         Score.MIN_SCORE,
-                         (total, score) -> total + (score == null ? Score.MIN_SCORE : score.getValue()),
-                         Integer::sum
-                     );
-    }
-
-    @Override
     public Stream<Score> stream() {
         return Stream.of(firstScore, secondScore, bonusScore);
     }
