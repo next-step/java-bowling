@@ -13,7 +13,11 @@ public class FinalScores extends Scores {
     }
 
     public static FinalScores of(Score firstScore, Score secondScore) {
-        return new FinalScores(firstScore, secondScore, null);
+        return of(firstScore, secondScore, null);
+    }
+
+    public static FinalScores of(Score firstScore, Score secondScore, Score bonusScore) {
+        return new FinalScores(firstScore, secondScore, bonusScore);
     }
 
     public static FinalScores init() {
