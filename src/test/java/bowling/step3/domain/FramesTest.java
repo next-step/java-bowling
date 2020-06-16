@@ -25,7 +25,7 @@ public class FramesTest {
     @ParameterizedTest
     @MethodSource("provideFrameAndFrames")
     void 프레임_생성_확인(Frame firstFrame, long expected) {
-        assertEquals(expected, Frames.framesByFirst(firstFrame).stream().count());
+        assertEquals(expected, Frames.framesByFirst(firstFrame).size());
     }
 
     private static Stream<Arguments> provideFrameAndFrames() {
@@ -42,16 +42,16 @@ public class FramesTest {
         Frame frame9 = NormalFrame.of(9, normalScores, frame8);
         Frame frame10 = FinalFrame.of(10, finalScores);
         return Stream.of(
-            Arguments.of(frame10, 1),
-            Arguments.of(frame9, 2),
-            Arguments.of(frame8, 3),
-            Arguments.of(frame7, 4),
-            Arguments.of(frame6, 5),
-            Arguments.of(frame5, 6),
-            Arguments.of(frame4, 7),
-            Arguments.of(frame3, 8),
-            Arguments.of(frame2, 9),
-            Arguments.of(frame1, 10)
+            Arguments.of(frame1, 1),
+            Arguments.of(frame2, 2),
+            Arguments.of(frame3, 3),
+            Arguments.of(frame4, 4),
+            Arguments.of(frame5, 5),
+            Arguments.of(frame6, 6),
+            Arguments.of(frame7, 7),
+            Arguments.of(frame8, 8),
+            Arguments.of(frame9, 9),
+            Arguments.of(frame10, 1)
         );
     }
 }
