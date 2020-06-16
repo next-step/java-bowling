@@ -79,7 +79,7 @@ public class ResultView {
         if (scores.get(index).isType(ScoreType.STRIKE)) {
             return ScoreType.STRIKE.getValue();
         }
-        if (index == 1 && NormalScores.isTypeOf(scores, ScoreType.SPARED)) {
+        if (index == 1 && NormalScores.isType(scores, ScoreType.SPARED)) {
             return ScoreType.SPARED.getValue();
         }
         return scores.get(index).toString();

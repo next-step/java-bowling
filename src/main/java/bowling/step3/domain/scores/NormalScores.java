@@ -20,8 +20,9 @@ public class NormalScores extends Scores {
         return of(null, null);
     }
 
-    public static boolean isTypeOf(List<Score> scores, ScoreType scoreType) {
-        return of(scores.get(0), scores.get(1)).isType(scoreType);
+    public static boolean isType(List<Score> scores, ScoreType scoreType) {
+        return !scores.get(0).isType(ScoreType.STRIKE) &&
+               of(scores.get(0), scores.get(1)).isType(scoreType);
     }
 
     @Override
