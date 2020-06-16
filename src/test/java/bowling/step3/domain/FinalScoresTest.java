@@ -40,12 +40,12 @@ public class FinalScoresTest {
 
     @DisplayName("첫 번째 스코어와 두 번째 스코어가 채워졌는지 확인하는 테스트")
     @ParameterizedTest
-    @MethodSource("provideFullyScores")
+    @MethodSource("provideFullyFirstAndSecondScore")
     void 스코어_채워짐_확인_테스트(FinalScores scores) {
         assertEquals(true, scores.isFull());
     }
 
-    private static Stream<Arguments> provideFullyScores() {
+    private static Stream<Arguments> provideFullyFirstAndSecondScore() {
         return Stream.of(
             Arguments.of(
                 FinalScores.init()
@@ -64,6 +64,22 @@ public class FinalScoresTest {
                            .nextInit(Score.valueOf(6))
                            .nextInit(Score.valueOf(7))
             )
+        );
+    }
+
+    @DisplayName("보너스 스코어가 채워졌는지 확인")
+    @ParameterizedTest
+    @MethodSource("provideFullyBonusScore")
+    void 보너스_채워짐_확인_테스트(FinalScores scores) {
+        assertEquals(true, scores.filledBonus());
+    }
+
+    private static Stream<Arguments> provideFullyBonusScore() {
+        return Stream.of(
+            Arguments.of(FinalScores.of(null, null, Score.valueOf(1))),
+            Arguments.of(FinalScores.of(null, Score.valueOf(2), Score.valueOf(3))),
+            Arguments.of(FinalScores.of(Score.valueOf(4), null, Score.valueOf(5))),
+            Arguments.of(FinalScores.of(Score.valueOf(6), Score.valueOf(7), Score.valueOf(8)))
         );
     }
 
@@ -178,7 +194,7 @@ public class FinalScoresTest {
                            .nextInit(Score.valueOf(0))
                            .nextInit(Score.valueOf(7))
                            .nextInit(Score.valueOf(7)),
-                14
+                7
             ),
             Arguments.of(
                 FinalScores.init()
