@@ -29,7 +29,7 @@ public abstract class Scores {
         return firstScore.sum(secondScore).getValue();
     }
 
-    public boolean isFullOf() {
+    public boolean isFull() {
         return isType(ScoreType.STRIKE) || (firstScore != null && secondScore != null);
     }
 
