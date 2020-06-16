@@ -19,7 +19,7 @@ public class BowlingGame {
 
     private void frameView(Frame frame) {
         Scores scores = frame.getScores();
-        frame.createNextFrame(scores.nextInit(inputView.inputScore(frame.getValue())));
+        frame.createNextFrameOfScores(scores.nextInit(inputView.inputScore(frame.getValue())));
         resultView.printFrames(playerFrames);
     }
 

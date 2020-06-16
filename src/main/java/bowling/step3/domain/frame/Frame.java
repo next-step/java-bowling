@@ -41,7 +41,7 @@ public abstract class Frame {
 
     abstract protected int calculateScoreOfTwoStrike(int totalScore);
 
-    abstract public void createNextFrame(Scores scores);
+    abstract public void createNextFrameOfScores(Scores scores);
 
     abstract public Frame getNextFrame();
 }

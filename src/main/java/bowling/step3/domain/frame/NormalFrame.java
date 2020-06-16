@@ -18,7 +18,7 @@ public class NormalFrame extends Frame {
         return new NormalFrame(frame, scores, nextFrame);
     }
 
-    public void createNextFrame(Scores scores) {
+    public void createNextFrameOfScores(Scores scores) {
         this.scores = scores;
         if (!scores.isFull()) {
             return;
