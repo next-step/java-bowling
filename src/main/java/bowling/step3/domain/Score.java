@@ -35,6 +35,16 @@ public class Score {
         return Score.valueOf(MAX_SCORE);
     }
 
+    public boolean isType (ScoreType scoreType) {
+        if (scoreType.equals(ScoreType.STRIKE)) {
+            return this.value == MAX_SCORE;
+        }
+        if (scoreType.equals(ScoreType.GUTTER)) {
+            return this.value == MIN_SCORE;
+        }
+        return false;
+    }
+
     public Score sum(Score score) {
         if (score == null) {
             return this;
