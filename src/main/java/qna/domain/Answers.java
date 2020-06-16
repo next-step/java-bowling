@@ -17,16 +17,10 @@ public class Answers {
 
     public boolean containOthers(User user) {
         return answers.stream()
-                .filter(answer -> !answer.isOwner(user))
-                .count() > 0;
+                .anyMatch(answer -> !answer.isOwner(user));
     }
 
-    public void deleteAll() {
-        answers.stream()
-                .forEach(this::delete);
-    }
-
-    private void delete(Answer answer) {
-        answer.setDeleted(true);
+    public void delete() {
+        answers.forEach(answer -> answer.delete());
     }
 }
