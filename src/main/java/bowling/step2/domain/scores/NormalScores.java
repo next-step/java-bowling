@@ -34,4 +34,14 @@ public class NormalScores extends Scores {
         }
         return of(firstScore, score);
     }
+
+    @Override
+    public boolean isFullOf() {
+        return firstScore != null && secondScore != null;
+    }
+
+    @Override
+    public Stream<Score> stream() {
+        return Stream.of(firstScore, secondScore);
+    }
 }

@@ -3,10 +3,9 @@ package bowling.step2.domain.scores;
 import bowling.step2.domain.Score;
 import bowling.step2.domain.ScoreType;
 
-import java.util.List;
 import java.util.stream.Stream;
 
-public class Scores {
+public abstract class Scores {
     protected final Score firstScore;
     protected final Score secondScore;
 
@@ -15,9 +14,11 @@ public class Scores {
         this.secondScore = secondScore;
     }
 
-    public Scores nextInit(Score score) {
-        return null;
-    }
+    abstract public Scores nextInit(Score score);
+
+    abstract public boolean isFullOf();
+
+    abstract public Stream<Score> stream();
 
     public boolean isType(ScoreType scoreType) {
         if (scoreType.equals(ScoreType.STRIKE)) {
@@ -29,16 +30,8 @@ public class Scores {
         return false;
     }
 
-    public boolean isFullOf() {
-        return firstScore != null && secondScore != null;
-    }
-
     public int totalScore() {
         return firstScore.sum(secondScore).getValue();
-    }
-
-    public Stream<Score> stream() {
-        return Stream.of(firstScore, secondScore);
     }
 
 }

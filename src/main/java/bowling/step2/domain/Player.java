@@ -21,7 +21,7 @@ public class Player {
     }
 
     private static void validateEmpty(String name) {
-        if (name == null || name.trim().equals("")) {
+        if (name == null || "".equals(name.trim())) {
             throw new PlayerNameEmptyException();
         }
     }
