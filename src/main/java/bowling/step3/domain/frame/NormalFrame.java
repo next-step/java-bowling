@@ -20,7 +20,7 @@ public class NormalFrame extends Frame {
 
     public void createNextFrame(Scores scores) {
         this.scores = scores;
-        if (!scores.isType(ScoreType.STRIKE) && !scores.isFullOf()) {
+        if (!scores.isFull()) {
             return;
         }
         int nextFrameValue = frame + 1;
@@ -46,24 +46,23 @@ public class NormalFrame extends Frame {
 
     @Override
     protected int calculateScoreOfStrike() {
-        if (nextFrame == null || !nextFrame.scores.isFullOf()) {
+        if (nextFrame == null || !nextFrame.scores.isFull()) {
             return EMPTY_CALC;
         }
         if (nextFrame.scores.isType(ScoreType.STRIKE)) {
-            return calculateScoreOfTwoStrike();
+            return nextFrame.calculateScoreOfTwoStrike(scores.totalScore());
         }
         return scores.totalScore() + nextFrame.scores.totalScore();
     }
 
-    private int calculateScoreOfTwoStrike() {
-        Frame nextNextFrame = nextFrame.getNextFrame();
-        if (nextNextFrame == null || nextNextFrame.getScores().isEmpty()) {
+    @Override
+    protected int calculateScoreOfTwoStrike(int totalScore) {
+        if (nextFrame.scores.isEmpty()) {
             return EMPTY_CALC;
         }
-        return Stream.concat(nextFrame.getScores().stream(),
-                             nextNextFrame.getScores().stream())
+        return Stream.concat(scores.stream(), nextFrame.scores.stream())
                      .filter(Objects::nonNull)
                      .limit(2)
-                     .reduce(scores.totalScore(), (total, score) -> total + score.getValue(), Integer::sum);
+                     .reduce(totalScore, (total, score) -> total + score.getValue(), Integer::sum);
     }
 }
