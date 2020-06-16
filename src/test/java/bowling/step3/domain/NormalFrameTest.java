@@ -4,6 +4,7 @@ import bowling.step3.domain.frame.Frame;
 import bowling.step3.domain.frame.NormalFrame;
 import bowling.step3.domain.scores.NormalScores;
 import bowling.step3.domain.scores.Scores;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,30 +16,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NormalFrameTest {
 
-    @DisplayName("다음 프레임을 정상적으로 생성하고 있는지 확인")
+    @DisplayName("현재 프레임이 종료되지 않은 상태에서 createNextFrame을 했을 때 null로 할당하는지 확인")
+    @Test
+    public void 다음_프레임_생성_테스트() {
+        Frame frame = NormalFrame.of(1, NormalScores.init(), null);
+        frame.createNextFrameOfScores(frame.getScores().nextInit(Score.valueOf(1)));
+        assertEquals(null, frame.getNextFrame());
+    }
+
+    @DisplayName("현재 프레임이 완료 되었을 때 다음 프레임이 정상적으로 생성되는지 확인")
     @ParameterizedTest
     @MethodSource("provideFrameAndNextFrame")
-    void 다음_프레임_생성_테스트(Frame frame, Scores prevFrameScores) {
-        assertEquals(prevFrameScores, frame.getPrevFrame().getScores());
+    void 다음_프레임_생성_테스트(Frame frame) {
+        assertEquals(true, frame.getNextFrame() != null);
     }
 
     private static Stream<Arguments> provideFrameAndNextFrame() {
-        Score score1 = Score.valueOf(1);
-        Score score2 = Score.valueOf(2);
-        Score score3 = Score.valueOf(3);
-        Score score4 = Score.valueOf(4);
-        Scores scores1 = NormalScores.init().nextInit(score1);
-        Scores scores2 = scores1.nextInit(score2);
-        Scores scores3 = NormalScores.init().nextInit(score3);
-        Scores scores4 = scores3.nextInit(score4);
-        Frame frame = NormalFrame.of(1, scores1, null);
-        Frame nextFrame1 = frame.createNextFrame(scores2);
-        Frame nextFrame2 = nextFrame1.createNextFrame(scores3);
-        Frame nextFrame3 = nextFrame2.createNextFrame(scores4);
+        Frame frame1 = NormalFrame.of(1, NormalScores.init(), null);
+        Frame frame2 = NormalFrame.of(2, NormalScores.init(), null);
+
+        frame1.createNextFrameOfScores(frame1.getScores().nextInit(Score.getStrike()));
+        frame2.createNextFrameOfScores(frame2.getScores().nextInit(Score.valueOf(1)));
+        frame2.createNextFrameOfScores(frame2.getScores().nextInit(Score.valueOf(2)));
         return Stream.of(
-            Arguments.of(nextFrame1, scores2),
-            Arguments.of(nextFrame2, scores2),
-            Arguments.of(nextFrame3, scores4)
+            Arguments.of(frame1),
+            Arguments.of(frame2)
         );
     }
 }
