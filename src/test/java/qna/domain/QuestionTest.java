@@ -32,10 +32,21 @@ public class QuestionTest {
 
     @DisplayName("Question의 delete메소드를 수행하면 delted가 true로 변경됨")
     @Test
-    public void delete_question_true() {
+    public void delete_question_true() throws CannotDeleteException {
         Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        Q3.delete(ContentType.QUESTION, LocalDateTime.now());
+        Q3.deleteQnA(UserTest.JAVAJIGI, LocalDateTime.now());
 
         assertThat(Q3.isDeleted()).isTrue();
+    }
+
+    @DisplayName("QnA를 삭제하여 얻은 List<DeleteHistory>의 크기는 삭제된 게시글의 수와 동일")
+    @Test
+    public void delete_result_사이즈_동일() throws CannotDeleteException {
+        Question Q3 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        Q3.addAnswer(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1"));
+        Q3.addAnswer(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1"));
+
+        assertThat(Q3.deleteQnA(UserTest.JAVAJIGI, LocalDateTime.now()).size())
+                .isEqualTo(3);
     }
 }

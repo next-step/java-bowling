@@ -10,7 +10,6 @@ import javax.persistence.OrderBy;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Embeddable
 public class Answers {
@@ -20,15 +19,9 @@ public class Answers {
     @OrderBy("id ASC")
     private final List<Answer> answers = new ArrayList<>();
 
-    public Stream<DeleteHistory> delete(User loginUser, ContentType contentType, LocalDateTime createTime) throws CannotDeleteException {
+    public void delete(User loginUser) throws CannotDeleteException {
         validateDeleteCondition(loginUser);
-        return answers.stream()
-                .map(answer -> answer.delete(contentType, createTime));
-    }
-
-    public void delete2(User loginUser) throws CannotDeleteException {
-        validateDeleteCondition(loginUser);
-        answers.forEach(Answer::delete2);
+        answers.forEach(Answer::delete);
     }
 
     private void validateDeleteCondition(User loginUser) throws CannotDeleteException {
@@ -36,6 +29,13 @@ public class Answers {
                 .allMatch(answer -> answer.isOwner(loginUser));
         if (!isAllWrittenByLoginUser) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
+    public void recordDeleteHistories(List<DeleteHistory> deleteHistories, ContentType contentType, LocalDateTime createTime) {
+        for (Answer answer : answers) {
+            DeleteHistory deleteHistory = answer.recordDeleteHistory(contentType, createTime);
+            deleteHistories.add(deleteHistory);
         }
     }
 

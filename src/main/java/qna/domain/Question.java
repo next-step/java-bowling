@@ -6,8 +6,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -41,17 +39,12 @@ public class Question extends AbstractEntity {
 
     public List<DeleteHistory> deleteQnA(User loginUser, LocalDateTime createTime) throws CannotDeleteException {
         validateDeleteRequestor(loginUser);
-        Stream<DeleteHistory> questionDeleteHistory = this.delete(ContentType.QUESTION, createTime);
-        Stream<DeleteHistory> answersDeleteHistory = answers.delete(loginUser, ContentType.ANSWER, createTime);
-        return Stream.concat(questionDeleteHistory, answersDeleteHistory)
-                .collect(Collectors.toList());
-    }
-
-    public List<DeleteHistory> deleteQnA2(User loginUser, LocalDateTime createTime) throws CannotDeleteException {
-        validateDeleteRequestor(loginUser);
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        this.delete2();
-        answers.delete2(loginUser);
+        this.delete();
+        answers.delete(loginUser);
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), createTime));
+        answers.recordDeleteHistories(deleteHistories, ContentType.ANSWER, createTime);
+
         return deleteHistories;
     }
 
@@ -61,15 +54,7 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public Stream<DeleteHistory> delete(ContentType contentType, LocalDateTime createTime) {
-        this.deleted = true;
-        return Stream.of(
-                new DeleteHistory(contentType, getId(), getWriter(), createTime)
-        );
-    }
-
-
-    private void delete2() {
+    private void delete() {
         this.deleted = true;
     }
 
