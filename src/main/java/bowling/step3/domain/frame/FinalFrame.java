@@ -15,4 +15,23 @@ public class FinalFrame extends Frame {
     public void createNextFrame (Scores scores) {
         this.scores = scores;
     }
+
+    @Override
+    public Frame getNextFrame() {
+        return null;
+    }
+
+    @Override
+    protected int calculateScoreOfStrike() {
+        if (!scores.isFullOf()) {
+            return EMPTY_CALC;
+        }
+        return scores.stream()
+                     .reduce(0, (total, score) -> total + score.getValue(), Integer::sum);
+    }
+
+    @Override
+    protected int calculateScoreOfSpared() {
+        return calculateScoreOfStrike();
+    }
 }

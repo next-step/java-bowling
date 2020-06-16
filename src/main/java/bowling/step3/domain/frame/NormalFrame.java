@@ -7,8 +7,6 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public class NormalFrame extends Frame {
-    private static final int EMPTY_CALC = -1;
-
     private Frame nextFrame;
 
     private NormalFrame(int frame, Scores scores, Frame nextFrame) {
@@ -36,17 +34,18 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public int calculateScore() {
-        if (scores.isType(ScoreType.STRIKE)) {
-            return calculateScoreOfStrike();
+    protected int calculateScoreOfSpared() {
+        if (nextFrame == null) {
+            return EMPTY_CALC;
         }
-        if (scores.isType(ScoreType.SPARED)) {
-            return calculateScoreOfSpared();
-        }
-        return scores.totalScore();
+        return nextFrame.scores
+                        .stream()
+                        .limit(1)
+                        .reduce(scores.totalScore(), (total, score) -> total + score.getValue(), Integer::sum);
     }
 
-    private int calculateScoreOfStrike() {
+    @Override
+    protected int calculateScoreOfStrike() {
         if (nextFrame == null) {
             return EMPTY_CALC;
         }
@@ -65,15 +64,5 @@ public class NormalFrame extends Frame {
                      .filter(Objects::nonNull)
                      .limit(2)
                      .reduce(scores.totalScore(), (total, score) -> total + score.getValue(), Integer::sum);
-    }
-
-    private int calculateScoreOfSpared() {
-        if (nextFrame == null) {
-            return EMPTY_CALC;
-        }
-        return nextFrame.scores
-                        .stream()
-                        .limit(1)
-                        .reduce(scores.totalScore(), (total, score) -> total + score.getValue(), Integer::sum);
     }
 }
