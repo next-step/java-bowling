@@ -1,8 +1,10 @@
-package bowling;
+package bowling.domain;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.domain.FinalFrame;
+import bowling.domain.FrameResult;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
