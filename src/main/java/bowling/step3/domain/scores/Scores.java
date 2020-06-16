@@ -5,7 +5,7 @@ import bowling.step3.domain.ScoreType;
 
 import java.util.stream.Stream;
 
-public class Scores {
+public abstract class Scores {
     protected final Score firstScore;
     protected final Score secondScore;
 
@@ -14,9 +14,7 @@ public class Scores {
         this.secondScore = secondScore;
     }
 
-    public Scores nextInit(Score score) {
-        return null;
-    }
+    abstract public Scores nextInit(Score score);
 
     public boolean isType(ScoreType scoreType) {
         if (scoreType.equals(ScoreType.STRIKE)) {
