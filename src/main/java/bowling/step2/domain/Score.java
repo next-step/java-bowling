@@ -8,8 +8,8 @@ import java.util.Map;
 public class Score {
     public static final int MIN_SCORE = 0;
     public static final int MAX_SCORE = 10;
-
     private static final Map<Integer, Score> FACTORY = new HashMap<>();
+
     private final int value;
 
     private Score(int value) {
