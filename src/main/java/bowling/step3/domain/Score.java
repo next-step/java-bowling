@@ -35,7 +35,7 @@ public class Score {
         return Score.valueOf(MAX_SCORE);
     }
 
-    public boolean isType (ScoreType scoreType) {
+    public boolean isType(ScoreType scoreType) {
         if (scoreType.equals(ScoreType.STRIKE)) {
             return this.value == MAX_SCORE;
         }

@@ -12,11 +12,11 @@ public class FinalScores extends Scores {
         this.bonusScore = bonusScore;
     }
 
-    public static FinalScores of (Score firstScore, Score secondScore) {
+    public static FinalScores of(Score firstScore, Score secondScore) {
         return new FinalScores(firstScore, secondScore, null);
     }
 
-    public static FinalScores init () {
+    public static FinalScores init() {
         return of(null, null);
     }
 
@@ -25,7 +25,7 @@ public class FinalScores extends Scores {
     }
 
     @Override
-    public Scores nextInit (Score score) {
+    public Scores nextInit(Score score) {
         if (firstScore == null) {
             return of(score, null);
         }

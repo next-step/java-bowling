@@ -25,8 +25,8 @@ public class NormalFrame extends Frame {
         }
         int nextFrameValue = frame + 1;
         this.nextFrame = nextFrameValue < Frames.LAST_FRAME
-                            ? of(nextFrameValue, NormalScores.init(), null)
-                            : FinalFrame.of(nextFrameValue, FinalScores.init());
+            ? of(nextFrameValue, NormalScores.init(), null)
+            : FinalFrame.of(nextFrameValue, FinalScores.init());
     }
 
     public Frame getNextFrame() {
@@ -39,9 +39,9 @@ public class NormalFrame extends Frame {
             return EMPTY_CALC;
         }
         return nextFrame.scores
-                        .stream()
-                        .limit(1)
-                        .reduce(scores.totalScore(), (total, score) -> total + score.getValue(), Integer::sum);
+            .stream()
+            .limit(1)
+            .reduce(scores.totalScore(), (total, score) -> total + score.getValue(), Integer::sum);
     }
 
     @Override
@@ -61,8 +61,8 @@ public class NormalFrame extends Frame {
             return EMPTY_CALC;
         }
         return Stream.concat(scores.stream(), nextFrame.scores.stream())
-                     .filter(Objects::nonNull)
-                     .limit(2)
-                     .reduce(totalScore, (total, score) -> total + score.getValue(), Integer::sum);
+            .filter(Objects::nonNull)
+            .limit(2)
+            .reduce(totalScore, (total, score) -> total + score.getValue(), Integer::sum);
     }
 }

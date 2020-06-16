@@ -21,8 +21,7 @@ public class ResultView {
     private static final String NUMBERS_FORMAT = "| NAME |%s|";
     private static final String SCORES_FORMAT = "| %4s |  %s|";
 
-    private ResultView() {
-    }
+    private ResultView() { }
 
     public static ResultView getInstance() {
         return INSTANCE;
@@ -60,16 +59,16 @@ public class ResultView {
             return "";
         }
         return eachScoreOf(frame.getScores()
-                                .stream()
-                                .collect(toList()));
+            .stream()
+            .collect(toList()));
     }
 
     private String eachScoreOf(List<Score> scores) {
         System.out.println(scores);
         return IntStream.range(0, scores.size())
             .mapToObj(index -> scores.get(index) != null
-                                 ? toScoreType(scores, index)
-                                 : null)
+                ? toScoreType(scores, index)
+                : null)
             .filter(Objects::nonNull)
             .collect(joining("|"));
     }

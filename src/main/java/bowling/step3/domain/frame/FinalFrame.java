@@ -18,7 +18,7 @@ public class FinalFrame extends Frame {
         return new FinalFrame(frame, scores);
     }
 
-    public void createNextFrame (Scores scores) {
+    public void createNextFrame(Scores scores) {
         this.scores = scores;
     }
 
@@ -29,12 +29,12 @@ public class FinalFrame extends Frame {
 
     @Override
     protected int calculateScoreOfStrike() {
-        FinalScores finalScores = (FinalScores)scores;
+        FinalScores finalScores = (FinalScores) scores;
         if (!finalScores.filledBonus()) {
             return EMPTY_CALC;
         }
         return scores.stream()
-                     .reduce(0, (total, score) -> total + score.getValue(), Integer::sum);
+            .reduce(0, (total, score) -> total + score.getValue(), Integer::sum);
     }
 
     @Override

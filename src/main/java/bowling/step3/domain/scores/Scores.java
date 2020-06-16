@@ -20,7 +20,7 @@ public abstract class Scores {
         }
         if (scoreType.equals(ScoreType.SPARED)) {
             return secondScore != null &&
-                   firstScore.sum(secondScore) == Score.getStrike();
+                firstScore.sum(secondScore) == Score.getStrike();
         }
         return false;
     }
@@ -33,7 +33,7 @@ public abstract class Scores {
         return isType(ScoreType.STRIKE) || (firstScore != null && secondScore != null);
     }
 
-    public boolean isEmpty () {
+    public boolean isEmpty() {
         return firstScore == null && secondScore == null;
     }
 
