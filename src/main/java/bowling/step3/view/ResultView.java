@@ -66,23 +66,10 @@ public class ResultView {
     private String eachScoreOf(List<Score> scores) {
         return IntStream.range(0, scores.size())
                         .mapToObj(index -> scores.get(index) != null
-                                              ? toScoreType(scores, index)
+                                              ? ScoreType.toScoreTypeValue(scores, index)
                                               : null)
                         .filter(Objects::nonNull)
                         .collect(joining("|"));
-    }
-
-    private String toScoreType(List<Score> scores, int index) {
-        if (scores.get(index).isType(ScoreType.GUTTER)) {
-            return ScoreType.GUTTER.getValue();
-        }
-        if (scores.get(index).isType(ScoreType.STRIKE)) {
-            return ScoreType.STRIKE.getValue();
-        }
-        if (index == 1 && NormalScores.isType(scores, ScoreType.SPARED)) {
-            return ScoreType.SPARED.getValue();
-        }
-        return scores.get(index).toString();
     }
 
     private String calculationOf(Frame frame) {
