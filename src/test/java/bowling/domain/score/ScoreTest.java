@@ -13,21 +13,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ScoreTest {
 
-    private Score createScore(int point) {
-        return new Score(point);
-    }
-
     @Test
     @DisplayName("0보다 작은 점수 입력시 Exception")
     void negativeNumberTest() {
-        assertThatThrownBy(() -> this.createScore(-1))
+        assertThatThrownBy(() -> Score.generateFirstScore(-1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("10보다 큰 점수 입력시 Exception")
     void biggerThanTenTest() {
-        assertThatThrownBy(() -> this.createScore(11))
+        assertThatThrownBy(() -> Score.generateFirstScore(11))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -35,7 +31,7 @@ class ScoreTest {
     @MethodSource("providePoint")
     @DisplayName("정상 점수 생성")
     void createScoreTest(int point) {
-        Score score = this.createScore(point);
+        Score score = Score.generateFirstScore(point);
         assertThat(score.getPoint()).isEqualTo(point);
     }
 
@@ -52,6 +48,38 @@ class ScoreTest {
                 Arguments.of(9),
                 Arguments.of(10)
         );
+    }
+
+    @Test
+    @DisplayName("첫번째 점수가 10점인 경우 STRIKE")
+    void strikeTest() {
+        Score score = Score.generateFirstScore(10);
+        assertThat(score.getPoint()).isEqualTo(10);
+        assertThat(score.getScoreType()).isEqualTo(ScoreType.STRIKE);
+    }
+
+    @Test
+    @DisplayName("하나도 맞추지 못했을 경우 GUTTER")
+    void gutterTest() {
+        Score score = Score.generateFirstScore(0);
+        assertThat(score.getScoreType()).isEqualTo(ScoreType.GUTTER);
+    }
+
+    @Test
+    @DisplayName("첫번째 점수의 합과 두번째 점수의 합이 10점인 경우 Spare")
+    void spareTest() {
+        Score firstScore = Score.generateFirstScore(5);
+        Score secondScore = Score.generateSecondScore(firstScore, 5);
+        assertThat(secondScore.getPoint()).isEqualTo(5);
+        assertThat(secondScore.getScoreType()).isEqualTo(ScoreType.SPARE);
+    }
+
+    @Test
+    @DisplayName("두번재 투구에서도 모든 핀이 쓰러지지 않은 경우 MISS")
+    void missTest() {
+        Score firstScore = Score.generateFirstScore(5);
+        Score secondScore = Score.generateSecondScore(firstScore, 3);
+        assertThat(secondScore.getScoreType()).isEqualTo(ScoreType.MISS);
     }
 
 }
