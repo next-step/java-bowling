@@ -20,7 +20,7 @@ public abstract class Scores {
         }
         if (scoreType.equals(ScoreType.SPARED)) {
             return secondScore != null &&
-                firstScore.sum(secondScore) == Score.getStrike();
+                   firstScore.sum(secondScore) == Score.getStrike();
         }
         return false;
     }

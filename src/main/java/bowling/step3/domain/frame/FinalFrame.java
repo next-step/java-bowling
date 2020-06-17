@@ -34,7 +34,7 @@ public class FinalFrame extends Frame {
             return EMPTY_CALC;
         }
         return scores.stream()
-            .reduce(0, (total, score) -> total + score.getValue(), Integer::sum);
+                     .reduce(0, (total, score) -> total + score.getValue(), Integer::sum);
     }
 
     @Override
