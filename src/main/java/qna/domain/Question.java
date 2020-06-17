@@ -1,10 +1,14 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -18,10 +22,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -39,22 +41,18 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public String getTitle() {
-        return title;
-    }
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
+        validateDeleteAuthorization(loginUser);
+        List<DeleteHistory> deletedAnswerHistories = answers.delete(writer);
+        this.deleted = true;
 
-    public String getContents() {
-        return contents;
-    }
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
 
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
+        return Stream.of(deleteHistories, deletedAnswerHistories)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
     public User getWriter() {
@@ -66,17 +64,8 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
-    }
-
-    public boolean isOwner(User loginUser) {
-        return writer.equals(loginUser);
-    }
-
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public Question setAnswers(Answers answers) {
+        this.answers = answers;
         return this;
     }
 
@@ -84,8 +73,10 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    private void validateDeleteAuthorization(User loginUser) throws CannotDeleteException {
+        if (!loginUser.equalsNameAndEmail(this.writer)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
     }
 
     @Override
