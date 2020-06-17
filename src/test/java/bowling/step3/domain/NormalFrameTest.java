@@ -20,7 +20,7 @@ public class NormalFrameTest {
     @DisplayName("현재 프레임이 종료되지 않은 상태에서 createNextFrame을 했을 때 null로 할당하는지 확인")
     @Test
     public void 다음_프레임_NULL_생성_테스트() {
-        Frame frame = NormalFrame.of(1, NormalScores.init(), null);
+        Frame frame = NormalFrame.start();
         frame.createNextFrameOfScores(frame.getScores().nextInit(Score.valueOf(1)));
         assertEquals(null, frame.getNextFrame());
     }
@@ -33,7 +33,7 @@ public class NormalFrameTest {
     }
 
     private static Stream<Arguments> provideFrameAndNextFrame() {
-        Frame frame1 = NormalFrame.of(1, NormalScores.init(), null);
+        Frame frame1 = NormalFrame.start();
         Frame frame2 = NormalFrame.of(2, NormalScores.init(), null);
 
         frame1.createNextFrameOfScores(frame1.getScores().nextInit(Score.getStrike()));

@@ -17,7 +17,7 @@ public class FramesTest {
     @DisplayName("프레임의 최대 갯수가 10개인지 확인")
     @Test
     void 프레임_갯수_확인() {
-        Frame firstFrame = NormalFrame.of(1, NormalScores.init(), null);
+        Frame firstFrame = NormalFrame.start();
         assertEquals(10, Frames.preview(firstFrame).count());
     }
 
@@ -31,7 +31,7 @@ public class FramesTest {
     private static Stream<Arguments> provideFrameAndFrames() {
         Scores normalScores = NormalScores.init();
         Scores finalScores = FinalScores.init();
-        Frame frame1 = NormalFrame.of(1, normalScores, null);
+        Frame frame1 = NormalFrame.start();
         Frame frame2 = NormalFrame.of(2, normalScores, frame1);
         Frame frame3 = NormalFrame.of(3, normalScores, frame2);
         Frame frame4 = NormalFrame.of(4, normalScores, frame3);

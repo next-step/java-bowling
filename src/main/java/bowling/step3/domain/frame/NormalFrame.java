@@ -18,6 +18,10 @@ public class NormalFrame extends Frame {
         return new NormalFrame(frame, scores, nextFrame);
     }
 
+    public static Frame start() {
+        return of(Frames.START_FRAME, NormalScores.init(), null);
+    }
+
     public void createNextFrameOfScores(Scores scores) {
         this.scores = scores;
         if (!scores.isFull()) {

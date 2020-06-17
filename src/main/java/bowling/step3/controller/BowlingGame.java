@@ -41,7 +41,7 @@ public class BowlingGame {
 
     public static void main(String[] args) {
         Player player = inputView.inputName();
-        Frame temp = NormalFrame.of(1, NormalScores.init(), null);
+        Frame temp = NormalFrame.start();
         PlayerFrames playerFrames = PlayerFrames.of(player, temp);
 
         BowlingGame game = new BowlingGame(playerFrames);
