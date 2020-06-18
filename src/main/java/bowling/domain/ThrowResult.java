@@ -17,6 +17,10 @@ public class ThrowResult {
         this.numberOfHitPin = numberOfHitPin;
     }
 
+    int getNumberOfHitPin() {
+        return numberOfHitPin;
+    }
+
     private void validate(int numberOfHitPin) {
         if (numberOfHitPin < MIN_NUMBER_OF_HIT_PIN || numberOfHitPin > MAX_NUMBER_OF_HIT_PIN) {
             throw new InvalidNumberOfHitPinException(ERROR_COMMENT);
