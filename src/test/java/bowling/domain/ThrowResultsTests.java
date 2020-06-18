@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -49,5 +50,12 @@ class ThrowResultsTests {
                 Arguments.of(new ThrowResult(5), new ThrowResult(9)),
                 Arguments.of(new ThrowResult(5), new ThrowResult(6))
         );
+    }
+
+    @DisplayName("스트라이크인 경우를 만들 수 있다.")
+    @Test
+    void strikeTest() {
+        assertThat(ThrowResults.strike())
+                .isEqualTo(new ThrowResults(Collections.singletonList(new ThrowResult(10))));
     }
 }

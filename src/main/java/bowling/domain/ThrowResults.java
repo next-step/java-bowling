@@ -4,6 +4,7 @@ import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 import bowling.domain.exceptions.TooManyThrowResultsException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,6 +18,10 @@ public class ThrowResults {
         validate(throwResults);
 
         this.throwResults = new ArrayList<>(throwResults);
+    }
+
+    public static ThrowResults strike() {
+        return new ThrowResults(Collections.singletonList(new ThrowResult(10)));
     }
 
     private void validate(List<ThrowResult> throwResults) {
