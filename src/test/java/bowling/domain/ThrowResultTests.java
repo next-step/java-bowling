@@ -25,4 +25,13 @@ public class ThrowResultTests {
         assertThatThrownBy(() -> new ThrowResult(invalidValue))
                 .isInstanceOf(InvalidNumberOfHitPinException.class);
     }
+
+    @DisplayName("두 개의 객체를 더할 수 있다.")
+    @Test
+    public void plusTest() {
+        ThrowResult firstThrowResult = new ThrowResult(3);
+        
+        assertThat(firstThrowResult.plus(new ThrowResult(5)))
+                .isEqualTo(new ThrowResult(8));
+    }
 }

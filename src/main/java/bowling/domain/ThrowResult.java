@@ -17,6 +17,10 @@ public class ThrowResult {
         this.numberOfHitPin = numberOfHitPin;
     }
 
+    public ThrowResult plus(ThrowResult throwResult) {
+        return new ThrowResult(this.numberOfHitPin + throwResult.numberOfHitPin);
+    }
+
     int getNumberOfHitPin() {
         return numberOfHitPin;
     }
