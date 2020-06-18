@@ -27,7 +27,7 @@ public class PlayerCount {
     }
 
     public PlayersFrames ofPlayersFrames(Function<Integer, PlayerFrames> mapper) {
-        return IntStream.rangeClosed(0, count)
+        return IntStream.rangeClosed(1, count)
                         .mapToObj(mapper::apply)
                         .collect(collectingAndThen(toList(), PlayersFrames::of));
     }
