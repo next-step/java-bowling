@@ -12,7 +12,7 @@ public enum ScoresType {
     STRIKE(scores -> scores.get(0) == Score.getStrike()),
     SPARED(scores -> scores.get(0) != null
                      && scores.get(1) != null
-                     && scores.get(1).sum(scores.get(2)) == Score.getStrike()),
+                     && scores.get(0).sum(scores.get(1)) == Score.getStrike()),
     EMPTY(scores -> scores.get(0) == null && scores.get(1) == null),
     FULL(scores -> scores.get(0) == Score.getStrike() ||
                    (scores.get(0) != null && scores.get(1) != null));
