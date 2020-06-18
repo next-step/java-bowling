@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
 public enum ScoresType {
     STRIKE(scores -> scores.get(0) == Score.getStrike()),
-    SPARED(scores -> scores.get(0) != null
+    SPARED(scores -> !asList(null, Score.getStrike()).contains(scores.get(0))
                      && scores.get(1) != null
                      && scores.get(0).sum(scores.get(1)) == Score.getStrike()),
     EMPTY(scores -> scores.get(0) == null && scores.get(1) == null),
