@@ -1,8 +1,6 @@
 package bowling.step4.domain;
 
-import bowling.step3.domain.Score;
-import bowling.step3.domain.ScoreType;
-import bowling.step3.exception.ScoreRangeException;
+import bowling.step4.exception.ScoreRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

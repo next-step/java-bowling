@@ -1,9 +1,7 @@
 package bowling.step4.domain;
 
-import bowling.step3.domain.Player;
-import bowling.step3.domain.PlayerFrames;
-import bowling.step3.domain.frame.NormalFrame;
-import bowling.step3.domain.scores.NormalScores;
+import bowling.step4.domain.frame.NormalFrame;
+import bowling.step4.domain.scores.NormalScores;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 

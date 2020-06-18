@@ -1,12 +1,7 @@
 package bowling.step4.domain;
 
-import bowling.step3.domain.Frames;
-import bowling.step3.domain.frame.FinalFrame;
-import bowling.step3.domain.frame.Frame;
-import bowling.step3.domain.frame.NormalFrame;
-import bowling.step3.domain.scores.FinalScores;
-import bowling.step3.domain.scores.NormalScores;
-import bowling.step3.domain.scores.Scores;
+import bowling.step4.domain.frame.*;
+import bowling.step4.domain.scores.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
