@@ -16,7 +16,7 @@ public class FinalScoresTest {
     @ParameterizedTest
     @MethodSource("provideStrikeScores")
     void 스트라이크_테스트(FinalScores scores) {
-        assertEquals(true, scores.isType(ScoreType.STRIKE));
+        assertEquals(true, ScoresType.STRIKE.of(scores));
     }
 
     private static Stream<Arguments> provideStrikeScores() {
@@ -42,7 +42,7 @@ public class FinalScoresTest {
     @ParameterizedTest
     @MethodSource("provideFullyFirstAndSecondScore")
     void 스코어_채워짐_확인_테스트(FinalScores scores) {
-        assertEquals(true, scores.isFull());
+        assertEquals(true, ScoresType.FULL.of(scores));
     }
 
     private static Stream<Arguments> provideFullyFirstAndSecondScore() {
@@ -87,7 +87,7 @@ public class FinalScoresTest {
     @ParameterizedTest
     @MethodSource("provideSparedScores")
     void 스코어_스페어_테스트(FinalScores scores) {
-        assertEquals(true, scores.isType(ScoreType.SPARED));
+        assertEquals(true, ScoresType.SPARED.of(scores));
     }
 
     private static Stream<Arguments> provideSparedScores() {
