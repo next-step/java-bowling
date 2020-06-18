@@ -30,8 +30,14 @@ public class ThrowResultTests {
     @Test
     public void plusTest() {
         ThrowResult firstThrowResult = new ThrowResult(3);
-        
+
         assertThat(firstThrowResult.plus(new ThrowResult(5)))
                 .isEqualTo(new ThrowResult(8));
+    }
+
+    @DisplayName("대소 비교가 가능하다")
+    @Test
+    public void compareTest() {
+        assertThat(new ThrowResult(5).compareTo(new ThrowResult(4)) > 0).isTrue();
     }
 }
