@@ -2,6 +2,8 @@ package bowling.domain;
 
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 
+import java.util.Objects;
+
 public class ThrowResult {
     private static final int MIN_NUMBER_OF_HIT_PIN = 0;
     private static final int MAX_NUMBER_OF_HIT_PIN = 10;
@@ -19,5 +21,18 @@ public class ThrowResult {
         if (numberOfHitPin < MIN_NUMBER_OF_HIT_PIN || numberOfHitPin > MAX_NUMBER_OF_HIT_PIN) {
             throw new InvalidNumberOfHitPinException(ERROR_COMMENT);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ThrowResult that = (ThrowResult) o;
+        return numberOfHitPin == that.numberOfHitPin;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numberOfHitPin);
     }
 }

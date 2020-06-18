@@ -13,8 +13,9 @@ public class ThrowResultTests {
     @DisplayName("볼링공으로 맞춘 핀의 수를 입력받아서 객체를 생성할 수 있다.")
     @Test
     public void createTest() {
-        ThrowResult throwResult = new ThrowResult(3);
-        assertThat(throwResult).isNotNull();
+        int numberOfHitPin = 3;
+        ThrowResult throwResult = new ThrowResult(numberOfHitPin);
+        assertThat(throwResult).isEqualTo(new ThrowResult(numberOfHitPin));
     }
 
     @DisplayName("맞춘 핀의 수는 0 ~ 10 범위를 벗어날 수 없다.")
