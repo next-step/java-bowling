@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class ThrowResults {
     private static final int MAX_NUMBER_OF_THROW_RESULTS = 2;
-    private static final int MAX_NUMBER_OF_HIT_PINS = 10;
+    private static final ThrowResult MAX_NUMBER_OF_HIT_PINS = new ThrowResult(10);
 
     private final List<ThrowResult> throwResults;
 
@@ -25,7 +25,7 @@ public class ThrowResults {
     }
 
     private void validateNumberOfHitPins(List<ThrowResult> throwResults) {
-        if (throwResults.get(0).plus(throwResults.get(1)) > MAX_NUMBER_OF_HIT_PINS) {
+        if (sumThrowResults(throwResults).compareTo(MAX_NUMBER_OF_HIT_PINS) > 0) {
             throw new InvalidNumberOfHitPinException("쓰러뜨린 핀의 총합은 0 ~ 10을 벗어날 수 없습니다.");
         }
     }
@@ -34,6 +34,11 @@ public class ThrowResults {
         if (throwResults.size() > MAX_NUMBER_OF_THROW_RESULTS) {
             throw new TooManyThrowResultsException("투구 수는 2를 넘을 수 없습니다.");
         }
+    }
+
+    private ThrowResult sumThrowResults(List<ThrowResult> throwResults) {
+        return throwResults.stream()
+                .reduce(new ThrowResult(0), ThrowResult::plus);
     }
 
     @Override
