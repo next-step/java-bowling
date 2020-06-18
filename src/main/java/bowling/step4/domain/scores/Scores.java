@@ -14,27 +14,8 @@ public abstract class Scores {
         this.secondScore = secondScore;
     }
 
-    public boolean isType(ScoreType scoreType) {
-        if (scoreType.equals(ScoreType.STRIKE)) {
-            return firstScore == Score.getStrike();
-        }
-        if (scoreType.equals(ScoreType.SPARED)) {
-            return secondScore != null &&
-                   firstScore.sum(secondScore) == Score.getStrike();
-        }
-        return false;
-    }
-
     public int totalScore() {
         return firstScore.sum(secondScore).getValue();
-    }
-
-    public boolean isFull() {
-        return isType(ScoreType.STRIKE) || (firstScore != null && secondScore != null);
-    }
-
-    public boolean isEmpty() {
-        return firstScore == null && secondScore == null;
     }
 
     abstract public Scores nextInit(Score score);
