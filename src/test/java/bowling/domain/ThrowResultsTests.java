@@ -26,6 +26,16 @@ class ThrowResultsTests {
         assertThat(new ThrowResults(throwResultList)).isEqualTo(new ThrowResults(throwResultList));
     }
 
+    @DisplayName("맞춘 핀 수들을 입력받아서 객체를 생성할 수 있다.")
+    @Test
+    void createByFactoryTest() {
+        int firstNumberOfHitPin = 3;
+        int secondNumberOfHitPin = 4;
+
+        assertThat(ThrowResults.of(firstNumberOfHitPin, secondNumberOfHitPin))
+                .isEqualTo(ThrowResults.of(firstNumberOfHitPin, secondNumberOfHitPin));
+    }
+
     @DisplayName("최대 2개까지만 관리할 수 있다.")
     @Test
     void createValidationTest() {

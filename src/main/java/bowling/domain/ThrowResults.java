@@ -3,10 +3,7 @@ package bowling.domain;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 import bowling.domain.exceptions.TooManyThrowResultsException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ThrowResults {
     private static final int MAX_NUMBER_OF_THROW_RESULTS = 2;
@@ -18,6 +15,11 @@ public class ThrowResults {
         validate(throwResults);
 
         this.throwResults = new ArrayList<>(throwResults);
+    }
+
+    public static ThrowResults of(int firstNumberOfHitPin, int secondNumberOfHitPin) {
+        return new ThrowResults(
+                Arrays.asList(new ThrowResult(firstNumberOfHitPin), new ThrowResult(secondNumberOfHitPin)));
     }
 
     public static ThrowResults strike() {
