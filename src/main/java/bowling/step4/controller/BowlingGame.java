@@ -2,7 +2,7 @@ package bowling.step4.controller;
 
 import bowling.step4.domain.Player;
 import bowling.step4.domain.PlayerFrames;
-import bowling.step4.domain.ScoreType;
+import bowling.step4.domain.ScoresType;
 import bowling.step4.domain.frame.Frame;
 import bowling.step4.domain.frame.NormalFrame;
 import bowling.step4.domain.scores.Scores;
@@ -29,7 +29,7 @@ public class BowlingGame {
 
     public void normalFrameView(Frame nowFrame) {
         frameView(nowFrame);
-        if (!nowFrame.getScores().isType(ScoreType.STRIKE)) {
+        if (!ScoresType.STRIKE.of(nowFrame.getScores())) {
             frameView(nowFrame);
         }
     }
@@ -38,7 +38,7 @@ public class BowlingGame {
         frameView(frame);
         frameView(frame);
         Scores scores = frame.getScores();
-        if (scores.isType(ScoreType.STRIKE) || scores.isType(ScoreType.SPARED)) {
+        if (ScoresType.STRIKE.of(scores) || ScoresType.SPARED.of(scores)) {
             frameView(frame);
         }
     }
