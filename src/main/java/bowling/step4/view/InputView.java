@@ -11,6 +11,11 @@ public class InputView {
 
     private InputView() { }
 
+    public int inputPlayerCount() {
+        System.out.print("How many people?");
+        return Integer.parseInt(SCANNER.nextLine());
+    }
+
     public Player inputName() {
         System.out.print("플레이어 이름은(3 english letters)?: ");
         return Player.valueOf(SCANNER.nextLine());
