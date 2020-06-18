@@ -1,7 +1,5 @@
 package bowling.step4.domain;
 
-import bowling.step4.domain.scores.NormalScores;
-
 import java.util.List;
 
 public enum ScoreType {
@@ -26,7 +24,7 @@ public enum ScoreType {
         if (scores.get(index).isType(ScoreType.STRIKE)) {
             return ScoreType.STRIKE.getValue();
         }
-        if (index == 1 && NormalScores.isType(scores, ScoreType.SPARED)) {
+        if (index == 1 && ScoresType.SPARED.of(scores)) {
             return ScoreType.SPARED.getValue();
         }
         return scores.get(index).toString();

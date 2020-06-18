@@ -2,6 +2,7 @@ package bowling.step4.domain.scores;
 
 import bowling.step4.domain.ScoreType;
 import bowling.step4.domain.Score;
+import bowling.step4.domain.ScoresType;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,11 +19,6 @@ public class NormalScores extends Scores {
 
     public static NormalScores init() {
         return of(null, null);
-    }
-
-    public static boolean isType(List<Score> scores, ScoreType scoreType) {
-        return !scores.get(0).isType(ScoreType.STRIKE) &&
-               of(scores.get(0), scores.get(1)).isType(scoreType);
     }
 
     @Override

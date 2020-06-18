@@ -1,7 +1,7 @@
 package bowling.step4.domain.frame;
 
 import bowling.step4.domain.Frames;
-import bowling.step4.domain.ScoreType;
+import bowling.step4.domain.ScoresType;
 import bowling.step4.domain.scores.NormalScores;
 import bowling.step4.domain.scores.Scores;
 import bowling.step4.domain.scores.FinalScores;
@@ -27,7 +27,7 @@ public class NormalFrame extends Frame {
 
     public void createNextFrameOfScores(Scores scores) {
         this.scores = scores;
-        if (!scores.isFull()) {
+        if (!ScoresType.FULL.of(scores)) {
             return;
         }
         int nextFrameValue = frame + 1;
@@ -42,7 +42,7 @@ public class NormalFrame extends Frame {
 
     @Override
     protected int calculateScoreOfSpared() {
-        if (nextFrame == null || nextFrame.scores.isEmpty()) {
+        if (nextFrame == null || ScoresType.EMPTY.of(nextFrame.scores)) {
             return EMPTY_CALC;
         }
         return nextFrame.scores
@@ -53,10 +53,10 @@ public class NormalFrame extends Frame {
 
     @Override
     protected int calculateScoreOfStrike() {
-        if (nextFrame == null || !nextFrame.scores.isFull()) {
+        if (nextFrame == null || !ScoresType.FULL.of(nextFrame.scores)) {
             return EMPTY_CALC;
         }
-        if (nextFrame.scores.isType(ScoreType.STRIKE)) {
+        if (ScoresType.STRIKE.of(nextFrame.scores)) {
             return nextFrame.calculateScoreOfTwoStrike(scores.totalScore());
         }
         return scores.totalScore() + nextFrame.scores.totalScore();
@@ -64,7 +64,7 @@ public class NormalFrame extends Frame {
 
     @Override
     protected int calculateScoreOfTwoStrike(int totalScore) {
-        if (nextFrame.scores.isEmpty()) {
+        if (ScoresType.EMPTY.of(nextFrame.scores)) {
             return EMPTY_CALC;
         }
         return Stream.concat(scores.stream(), nextFrame.scores.stream())
