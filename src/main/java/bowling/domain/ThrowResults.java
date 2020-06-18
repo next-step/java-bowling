@@ -19,12 +19,19 @@ public class ThrowResults {
     }
 
     private void validate(List<ThrowResult> throwResults) {
-        if (throwResults.size() > MAX_NUMBER_OF_THROW_RESULTS) {
-            throw new TooManyThrowResultsException("투구 수는 2를 넘을 수 없습니다.");
-        }
+        validateNumberOfThrowResults(throwResults);
+        validateNumberOfHitPins(throwResults);
+    }
 
+    private void validateNumberOfHitPins(List<ThrowResult> throwResults) {
         if (throwResults.get(0).getNumberOfHitPin() + throwResults.get(1).getNumberOfHitPin() > 10) {
             throw new InvalidNumberOfHitPinException("쓰러뜨린 핀의 총합은 0 ~ 10을 벗어날 수 없습니다.");
+        }
+    }
+
+    private void validateNumberOfThrowResults(List<ThrowResult> throwResults) {
+        if (throwResults.size() > MAX_NUMBER_OF_THROW_RESULTS) {
+            throw new TooManyThrowResultsException("투구 수는 2를 넘을 수 없습니다.");
         }
     }
 
