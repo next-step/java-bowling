@@ -33,10 +33,4 @@ public class ThrowResultTests {
 
         assertThat(firstThrowResult.plus(new ThrowResult(5))).isEqualTo(8);
     }
-
-    @DisplayName("대소 비교가 가능하다")
-    @Test
-    public void compareTest() {
-        assertThat(new ThrowResult(5).compareTo(new ThrowResult(4)) > 0).isTrue();
-    }
 }
