@@ -1,12 +1,12 @@
-package bowling.domain;
+package bowling.step4.domain;
 
-import bowling.step2.domain.Frames;
-import bowling.step2.domain.frame.FinalFrame;
-import bowling.step2.domain.frame.Frame;
-import bowling.step2.domain.frame.NormalFrame;
-import bowling.step2.domain.scores.FinalScores;
-import bowling.step2.domain.scores.NormalScores;
-import bowling.step2.domain.scores.Scores;
+import bowling.step3.domain.Frames;
+import bowling.step3.domain.frame.FinalFrame;
+import bowling.step3.domain.frame.Frame;
+import bowling.step3.domain.frame.NormalFrame;
+import bowling.step3.domain.scores.FinalScores;
+import bowling.step3.domain.scores.NormalScores;
+import bowling.step3.domain.scores.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,20 +22,21 @@ public class FramesTest {
     @DisplayName("프레임의 최대 갯수가 10개인지 확인")
     @Test
     void 프레임_갯수_확인() {
-        assertEquals(10, Frames.init().preview().count());
+        Frame firstFrame = NormalFrame.start();
+        assertEquals(10, Frames.preview(firstFrame).count());
     }
 
     @DisplayName("마지막 프레임으로 부터 전체 프레임이 생성되는지 확인")
     @ParameterizedTest
     @MethodSource("provideFrameAndFrames")
-    void 프레임_생성_확인(Frame lastFrame, long expected) {
-        assertEquals(expected, Frames.ofLastFrame(lastFrame).stream().count());
+    void 프레임_생성_확인(Frame firstFrame, long expected) {
+        assertEquals(expected, Frames.framesByFirst(firstFrame).size());
     }
 
     private static Stream<Arguments> provideFrameAndFrames() {
         Scores normalScores = NormalScores.init();
         Scores finalScores = FinalScores.init();
-        Frame frame1 = NormalFrame.of(1, normalScores, null);
+        Frame frame1 = NormalFrame.start();
         Frame frame2 = NormalFrame.of(2, normalScores, frame1);
         Frame frame3 = NormalFrame.of(3, normalScores, frame2);
         Frame frame4 = NormalFrame.of(4, normalScores, frame3);
@@ -44,7 +45,7 @@ public class FramesTest {
         Frame frame7 = NormalFrame.of(7, normalScores, frame6);
         Frame frame8 = NormalFrame.of(8, normalScores, frame7);
         Frame frame9 = NormalFrame.of(9, normalScores, frame8);
-        Frame frame10 = FinalFrame.of(10, finalScores, frame9);
+        Frame frame10 = FinalFrame.of(10, finalScores);
         return Stream.of(
             Arguments.of(frame1, 1),
             Arguments.of(frame2, 2),
@@ -55,7 +56,7 @@ public class FramesTest {
             Arguments.of(frame7, 7),
             Arguments.of(frame8, 8),
             Arguments.of(frame9, 9),
-            Arguments.of(frame10, 10)
+            Arguments.of(frame10, 1)
         );
     }
 }

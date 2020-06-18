@@ -1,7 +1,8 @@
-package bowling.domain;
+package bowling.step4.domain;
 
-import bowling.step2.domain.Score;
-import bowling.step2.exception.ScoreRangeException;
+import bowling.step3.domain.Score;
+import bowling.step3.domain.ScoreType;
+import bowling.step3.exception.ScoreRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -31,20 +32,25 @@ public class ScoreTest {
         assertEquals(Score.valueOf(value), score);
     }
 
-    @DisplayName("스코어의 스트라이크 확인 테스트")
+    @DisplayName("스코어의 타입에 대한 검증 테스트")
     @ParameterizedTest
-    @ValueSource(ints = {10})
-    void 스코어_스트라이크_일치_테스트(int value) {
-        Score score = Score.valueOf(value);
-        assertEquals(Score.getStrike(), score);
+    @MethodSource("provideScoreAndScoreType")
+    void 스코어_타입_일치_테스트(int value, ScoreType scoreType) {
+        assertEquals(true, Score.valueOf(value).isType(scoreType));
+    }
+
+    private static Stream<Arguments> provideScoreAndScoreType() {
+        return Stream.of(
+            Arguments.of(Score.MAX_SCORE, ScoreType.STRIKE),
+            Arguments.of(Score.MIN_SCORE, ScoreType.GUTTER)
+        );
     }
 
     @DisplayName("스코어의 스트라이크 불일치 테스트")
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
     void 스코어_스트라이크_불일치_테스트(int value) {
-        Score score = Score.valueOf(value);
-        assertEquals(false, score == Score.getStrike());
+        assertEquals(false, Score.valueOf(value).isType(ScoreType.STRIKE));
     }
 
     @DisplayName("스코어의 합계를 확인하는 테스트")
