@@ -30,10 +30,10 @@ public abstract class Frame {
         return Stream.of(calculatorOfEmpty(!ScoresType.FULL.of(scores), () -> EMPTY_CALC),
                          calculatorOfEmpty(ScoresType.STRIKE.of(scores), this::calculateScoreOfStrike),
                          calculatorOfEmpty(ScoresType.SPARED.of(scores), this::calculateScoreOfSpared))
-              .filter(Objects::nonNull)
-              .findFirst()
-              .orElse(scores::totalScore)
-              .get();
+                     .filter(Objects::nonNull)
+                     .findFirst()
+                     .orElse(scores::totalScore)
+                     .get();
     }
 
     private Supplier<Integer> calculatorOfEmpty (boolean type, Supplier<Integer> calculator) {

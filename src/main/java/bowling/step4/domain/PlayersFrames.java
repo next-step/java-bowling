@@ -1,4 +1,4 @@
-package bowling.step4;
+package bowling.step4.domain;
 
 import bowling.step3.domain.PlayerFrames;
 import bowling.step3.domain.Players;
