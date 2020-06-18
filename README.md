@@ -27,9 +27,9 @@
 
 ## Step2. Todo List
 - Frame
-    - [ ] 투구 결과들(throwResults), 다음 프레임(nextFrame)을 속성으로 갖는다.
+    - [X] 투구 결과들(throwResults), 다음 프레임(nextFrame)을 속성으로 갖는다.
     - [ ] 현재 프레임에서 다음 프레임을 생성할 수 있다.
-        - [ ] FrameResults를 입력받아서 생성할 수 있다.
+        - [X] ThrowResults를 입력받아서 생성할 수 있다.
         - [ ] 스트라이크를 처리해서 생성할 수 있다.
 - Frames
     - [ ] Frame을 관리하는 일급 컬렉션
