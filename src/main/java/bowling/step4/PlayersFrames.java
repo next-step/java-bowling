@@ -1,10 +1,10 @@
-package bowling.step3.domain;
+package bowling.step4;
 
-import bowling.step3.domain.frame.Frame;
+import bowling.step3.domain.PlayerFrames;
+import bowling.step3.domain.Players;
 import bowling.step3.domain.frame.NormalFrame;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.collectingAndThen;
