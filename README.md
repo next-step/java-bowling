@@ -62,7 +62,7 @@ public class QnAService {
 * [x] [fix#1][Answers.java] forEach 만을 사용할 때는 stream()으로 변환하지 않아도 사용 가능
 * [x] [fix#2][Answers.java] Answer에게 상태 값을 직접 설정 하기 보다는 Answer에게 삭제 요청을 보낼 것
 * [x] [fix#3][Answers.java] anyMatch 활용
-* <pre><code>return answers.stream()
+    <pre><code>return answers.stream()
                 .anyMatch(answer -> !answer.isOwner(user));</code></pre> 
 * [x] [fix#4][DeleteHistories.java] 질문과 답변이 삭제되고 반드시 DeleteHistory에 대한 정보를 남겨야 한다면 DeleteHistory는 질문과 답변에 대해서 종속적인 구조처럼 느껴짐, 따라서 Question과 Answer에게 삭제 요청 후 삭제된 정보를 바탕으로 DeleteHistory를 전달받도록 수정
     <pre><code>DeleteHistory questionDeleteHistory = question.delete();</code></pre>
