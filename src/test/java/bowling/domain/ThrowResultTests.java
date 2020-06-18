@@ -31,8 +31,7 @@ public class ThrowResultTests {
     public void plusTest() {
         ThrowResult firstThrowResult = new ThrowResult(3);
 
-        assertThat(firstThrowResult.plus(new ThrowResult(5)))
-                .isEqualTo(new ThrowResult(8));
+        assertThat(firstThrowResult.plus(new ThrowResult(5))).isEqualTo(8);
     }
 
     @DisplayName("대소 비교가 가능하다")

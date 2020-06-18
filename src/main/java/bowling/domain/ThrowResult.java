@@ -17,12 +17,8 @@ public class ThrowResult implements Comparable<ThrowResult> {
         this.numberOfHitPin = numberOfHitPin;
     }
 
-    public ThrowResult plus(ThrowResult throwResult) {
-        return new ThrowResult(this.numberOfHitPin + throwResult.numberOfHitPin);
-    }
-
-    int getNumberOfHitPin() {
-        return numberOfHitPin;
+    public int plus(ThrowResult throwResult) {
+        return this.numberOfHitPin + throwResult.numberOfHitPin;
     }
 
     private void validate(int numberOfHitPin) {
