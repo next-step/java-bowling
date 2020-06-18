@@ -27,7 +27,13 @@
 
 ## Step2. Todo List
 - Frame
-    - [ ] 프레임 번호(number), 투구 결과들(throwResults)을 속성으로 갖는다.
+    - [ ] 투구 결과들(throwResults), 다음 프레임(nextFrame)을 속성으로 갖는다.
+    - [ ] 현재 프레임에서 다음 프레임을 생성할 수 있다.
+        - [ ] FrameResults를 입력받아서 생성할 수 있다.
+        - [ ] 스트라이크를 처리해서 생성할 수 있다.
+- Frames
+    - [ ] Frame을 관리하는 일급 컬렉션
+    - [ ] 관리하는 Frame은 최대 10개를 넘지 못한다. 
 - ThrowResult
     - [X] 프레임에서 한 회에 던져서 맞춘 갯수를 나타낸다.
     - [X] 0 ~ 10 사이의 값을 갖는다.
@@ -40,6 +46,3 @@
     - [X] 스트라이크인 경우 값이 10인 ThrowResult 한개만 관리한다.
 - FrameResult
     - [ ] 스트라이크, 스페어, 미스, 거터를 갖는 enum이다.
-- Frames
-    - [ ] Frame을 관리하는 일급 컬렉션
-    - [ ] 관리하는 Frame은 최대 10개를 넘지 못한다. 
