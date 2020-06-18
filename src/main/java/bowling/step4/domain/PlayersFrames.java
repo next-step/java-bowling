@@ -1,8 +1,6 @@
 package bowling.step4.domain;
 
-import bowling.step3.domain.PlayerFrames;
-import bowling.step3.domain.Players;
-import bowling.step3.domain.frame.NormalFrame;
+import bowling.step4.domain.frame.NormalFrame;
 
 import java.util.List;
 import java.util.stream.Stream;
