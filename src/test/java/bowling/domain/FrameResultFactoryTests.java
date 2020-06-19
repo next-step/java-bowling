@@ -29,7 +29,7 @@ class FrameResultFactoryTests {
                 Arguments.of(0, false, false)
         );
     }
-    
+
     @DisplayName("0 ~ 10을 벗어난 값으로 생성 시도 시 예외 발생")
     @ParameterizedTest
     @ValueSource(ints = { -1, 11 })
