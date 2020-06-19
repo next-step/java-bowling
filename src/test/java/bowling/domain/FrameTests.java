@@ -26,4 +26,17 @@ class FrameTests {
         assertThatThrownBy(() -> Frame.bowlFirst(invalidValue))
                 .isInstanceOf(InvalidNumberOfHitPinException.class);
     }
+
+    @DisplayName("FrameResult가 마무리되지 않은 경우 두번째 투구를 진행할 수 있다.")
+    @Test
+    void bowlSecondTest() {
+        int firstNumberOfHitPin = 5;
+        int secondNumberOfHitPin = 3;
+
+        NormalFrameResult expectFirstResult = (NormalFrameResult) FrameResultFactory.create(firstNumberOfHitPin);
+        NormalFrameResult expectedSecondResult = expectFirstResult.secondThrow(secondNumberOfHitPin);
+
+        assertThat(new Frame(expectFirstResult, null).bowlSecond(secondNumberOfHitPin))
+                .isEqualTo(new Frame(expectedSecondResult, null));
+    }
 }

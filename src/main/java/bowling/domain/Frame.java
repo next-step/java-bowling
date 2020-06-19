@@ -15,6 +15,13 @@ public class Frame {
         return new Frame(FrameResultFactory.create(numberOfHitPin), null);
     }
 
+    public Frame bowlSecond(int secondNumberOfHitPin) {
+        NormalFrameResult previousFrameResult = (NormalFrameResult) this.frameResult;
+        NormalFrameResult afterFrameResult = previousFrameResult.secondThrow(secondNumberOfHitPin);
+
+        return new Frame(afterFrameResult, null);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -29,10 +29,6 @@ public class NormalFrameResult implements FrameResult {
         return new NormalFrameResult(this.firstNumberOfHitPin, secondNumberOfHitPin);
     }
 
-    public boolean isCompleted() {
-        return (this.firstNumberOfHitPin != null && this.secondNumberOfHitPin != null);
-    }
-
     private static void validateFirstThrow(NumberOfHitPin numberOfHitPin) {
         if (numberOfHitPin.compareTo(MAX_NUMBER_OF_FIRST_HIT_PIN) > 0) {
             throw new InvalidNumberOfHitPinException("맞춘 핀의 수가 0 ~ 9를 벗어났습니다.");
@@ -46,6 +42,11 @@ public class NormalFrameResult implements FrameResult {
     @Override
     public boolean isStrike() {
         return false;
+    }
+
+    @Override
+    public boolean isCompleted() {
+        return (this.firstNumberOfHitPin != null && this.secondNumberOfHitPin != null);
     }
 
     @Override
