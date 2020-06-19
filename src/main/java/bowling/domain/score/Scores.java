@@ -1,12 +1,15 @@
 package bowling.domain.score;
 
+import org.springframework.util.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Scores {
-    private final static int MAX_SCORE = 10;
-    private final static int FIRST_SCORE_INDEX = 0;
-    private final static int SECOND_SCORE_INDEX = 1;
+    private final static int FIRST_SCORE = 1;
+    private final static int SECOND_SCORE = 2;
+    private final static int THIRD_SCORE = 3;
+    private final static int ONE = 1;
 
     private final List<Score> scores;
 
@@ -15,18 +18,16 @@ public class Scores {
     }
 
     public void addScore(int point) {
-        if (firstScore()) {
-            this.scores.add(Score.generateFirstScore(point));
-            return;
+        scores.add(createScore(point));
+    }
+
+    private Score createScore(int point) {
+        if (CollectionUtils.isEmpty(scores)) {
+            return Score.generateFirstScore(point);
         }
 
-        if (secondScore()) {
-            this.scores.add(Score.generateSecondScore(scores.get(FIRST_SCORE_INDEX), point));
-        }
-
-        if (totalScore() > MAX_SCORE) {
-            throw new IllegalArgumentException("score not valid");
-        }
+        int lastIndex = scores.size() - ONE;
+        return Score.generateNextScore(scores.get(lastIndex), point);
     }
 
     public int totalScore() {
@@ -35,11 +36,30 @@ public class Scores {
                 .sum();
     }
 
-    public boolean secondScore() {
-        return scores.size() == SECOND_SCORE_INDEX;
+    public boolean firstScore() {
+        return scores.size() == FIRST_SCORE;
     }
 
-    public boolean firstScore() {
-        return scores.size() == FIRST_SCORE_INDEX;
+    public boolean secondScore() {
+        return scores.size() == SECOND_SCORE;
+    }
+
+    public boolean thirdScore() {
+        return scores.size() == THIRD_SCORE;
+    }
+
+    public boolean isStrikeOrSpare() {
+        return isStrike() || isSpare();
+    }
+
+    public boolean isStrike() {
+        return scores.get(FIRST_SCORE - ONE).isStrike();
+    }
+
+    public boolean isSpare() {
+        if (secondScore() || thirdScore()) {
+            return scores.get(SECOND_SCORE - ONE).isSpare();
+        }
+        return false;
     }
 }

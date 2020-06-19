@@ -69,7 +69,7 @@ class ScoreTest {
     @DisplayName("첫번째 점수의 합과 두번째 점수의 합이 10점인 경우 Spare")
     void spareTest() {
         Score firstScore = Score.generateFirstScore(5);
-        Score secondScore = Score.generateSecondScore(firstScore, 5);
+        Score secondScore = Score.generateNextScore(firstScore, 5);
         assertThat(secondScore.getPoint()).isEqualTo(5);
         assertThat(secondScore.getScoreType()).isEqualTo(ScoreType.SPARE);
     }
@@ -78,7 +78,7 @@ class ScoreTest {
     @DisplayName("두번재 투구에서도 모든 핀이 쓰러지지 않은 경우 MISS")
     void missTest() {
         Score firstScore = Score.generateFirstScore(5);
-        Score secondScore = Score.generateSecondScore(firstScore, 3);
+        Score secondScore = Score.generateNextScore(firstScore, 3);
         assertThat(secondScore.getScoreType()).isEqualTo(ScoreType.MISS);
     }
 

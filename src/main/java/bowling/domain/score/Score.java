@@ -27,8 +27,8 @@ public class Score {
         return new Score(point, generateFirstScoreType(point));
     }
 
-    public static Score generateSecondScore(Score beforeScore, int point) {
-        return new Score(point, generateSecondScoreType(beforeScore, point));
+    public static Score generateNextScore(Score beforeScore, int point) {
+        return new Score(point, generateScoreType(beforeScore, point));
     }
 
     private static ScoreType generateFirstScoreType(int point) {
@@ -43,7 +43,7 @@ public class Score {
         return ScoreType.MISS;
     }
 
-    private static ScoreType generateSecondScoreType(Score beforeScore, int point) {
+    private static ScoreType generateScoreType(Score beforeScore, int point) {
         if (beforeScore.getPoint() + point == MAX_SCORE) {
             return ScoreType.SPARE;
         }
@@ -57,5 +57,13 @@ public class Score {
 
     public ScoreType getScoreType() {
         return scoreType;
+    }
+
+    public boolean isStrike() {
+        return scoreType == ScoreType.STRIKE;
+    }
+
+    public boolean isSpare() {
+        return scoreType == ScoreType.SPARE;
     }
 }

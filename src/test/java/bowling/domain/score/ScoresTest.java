@@ -31,13 +31,4 @@ class ScoresTest {
                 Arguments.of(5, 3, 8)
         );
     }
-
-    @Test
-    @DisplayName("두 점수의 합이 10점이 넘으면 Exception")
-    void maxPointTest() {
-        Scores scores = new Scores();
-        scores.addScore(5);
-        assertThatThrownBy(() -> scores.addScore(6))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
 }
