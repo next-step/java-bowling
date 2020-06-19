@@ -1,10 +1,6 @@
 package bowling.step4.domain.scores;
 
-import bowling.step4.domain.ScoreType;
 import bowling.step4.domain.Score;
-import bowling.step4.domain.ScoresType;
-
-import java.util.List;
 import java.util.stream.Stream;
 
 public class NormalScores extends Scores {

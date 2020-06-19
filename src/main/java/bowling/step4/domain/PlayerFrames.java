@@ -1,10 +1,6 @@
 package bowling.step4.domain;
 
-import bowling.step4.domain.frame.FinalFrame;
 import bowling.step4.domain.frame.Frame;
-import bowling.step4.domain.scores.FinalScores;
-
-import java.util.List;
 import java.util.stream.Stream;
 
 public class PlayerFrames {

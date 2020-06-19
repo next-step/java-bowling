@@ -2,12 +2,10 @@ package bowling.step4.domain.frame;
 
 import bowling.step4.domain.Frames;
 import bowling.step4.domain.Score;
-import bowling.step4.domain.ScoresType;
 import bowling.step4.domain.scores.FinalScores;
 import bowling.step4.domain.scores.Scores;
 
 import java.util.List;
-import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
 
