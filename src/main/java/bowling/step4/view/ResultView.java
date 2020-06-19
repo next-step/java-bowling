@@ -1,10 +1,7 @@
 package bowling.step4.view;
 
-import bowling.step4.domain.Frames;
-import bowling.step4.domain.PlayerFrames;
-import bowling.step4.domain.ScoreType;
+import bowling.step4.domain.*;
 import bowling.step4.domain.frame.Frame;
-import bowling.step4.domain.Score;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,13 +23,11 @@ public class ResultView {
         return INSTANCE;
     }
 
-    public void printFrames(PlayerFrames playerFrames) {
-        String playerName = playerFrames.getPlayer().toString();
+    public void printFrames(PlayersFrames playersFrames) {
         System.out.printf(
-            "%s" + NEW_LINE + "%s" + NEW_LINE + "%s" + NEW_LINE + NEW_LINE,
+            "%s" + NEW_LINE + "%s" + NEW_LINE + NEW_LINE,
             frameNumbers(),
-            frameScores(playerFrames, playerName, frame -> String.format("%-4s", scoreOf(frame))),
-            frameScores(playerFrames, "", frame -> String.format("%-4s", calculationOf(frame)))
+            playersFramesScores(playersFrames)
         );
     }
 
@@ -43,6 +38,16 @@ public class ResultView {
                      .mapToObj(frameNumber -> String.format("  %02d  ", frameNumber))
                      .collect(joining("|"))
         );
+    }
+
+    private String playersFramesScores(PlayersFrames playersFrames) {
+        return playersFrames.stream()
+                .map(playerFrames -> String.format(
+                    "%s" + NEW_LINE + "%s",
+                    frameScores(playerFrames, playerFrames.getPlayerName(), frame -> String.format("%-4s", scoreOf(frame))),
+                    frameScores(playerFrames, "", frame -> String.format("%-4s", calculationOf(frame)))
+                ))
+                .collect(joining(NEW_LINE));
     }
 
     private String frameScores(PlayerFrames playerFrames, String label, Function<Frame, String> mapper) {
