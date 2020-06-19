@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.exceptions.ExceedMaxNumberOfHitPinSumException;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,7 @@ class NormalFrameResultTests {
         NormalFrameResult afterSecondThrow = normalFrameResult.secondThrow(numberOfHitPin);
 
         assertThat(afterSecondThrow.isCompleted()).isTrue();
-        assertThat(afterSecondThrow).isEqualTo(new NormalFrameResult(5, 5));
+        assertThat(afterSecondThrow).isEqualTo(new NormalFrameResult(new NumberOfHitPin(5), new NumberOfHitPin(5)));
     }
 
     @DisplayName("두번째 투구로 맞춘 핀의 수가 0 이하일 수 없다.")
@@ -56,6 +55,6 @@ class NormalFrameResultTests {
 
         NormalFrameResult normalFrameResult = NormalFrameResult.firstThrow(firstNumberOfHitPin);
         assertThatThrownBy(() -> normalFrameResult.secondThrow(secondNumberOfHitPin))
-            .isInstanceOf(ExceedMaxNumberOfHitPinSumException.class);
+            .isInstanceOf(InvalidNumberOfHitPinException.class);
     }
 }
