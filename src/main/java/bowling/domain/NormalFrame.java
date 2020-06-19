@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.List;
+
 public class NormalFrame implements Frame {
     private static final int FIRST_INDEX = 1;
     private static final int NEXT_INDEX = 1;
@@ -16,6 +18,7 @@ public class NormalFrame implements Frame {
         return new NormalFrame(FIRST_INDEX);
     }
 
+    @Override
     public Frame next() {
         if (pitchesGroup.isMovableToNextFrame() && index == 9) {
             return new FinalFrame();
@@ -30,5 +33,16 @@ public class NormalFrame implements Frame {
 
     public int getIndex() {
         return index;
+    }
+
+    @Override
+    public int getScore() {
+        List<Pitch> pitches = pitchesGroup.getPitches();
+        return pitches.get(pitches.size() - 1).getHitCounts();
+    }
+
+    @Override
+    public PitchesGroup getPitchesGroup() {
+        return pitchesGroup;
     }
 }

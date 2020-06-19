@@ -29,4 +29,25 @@ class FramesGroupTest {
 
         assertThat(normalFrame.getIndex()).isEqualTo(2);
     }
+
+    @DisplayName("플레이 할 Frame이 있으면 True 반환")
+    @Test
+    public void hasNextFrame_True() {
+        FramesGroup framesGroup = FramesGroup.initiate();
+        framesGroup.bowl(9);
+
+        assertThat(framesGroup.hasNextFrame()).isTrue();
+    }
+
+    @DisplayName("더이상 플레이할 프레임이 없으면 false 반환")
+    @Test
+    public void hasNextFrame_False() {
+        FramesGroup framesGroup = FramesGroup.initiate();
+        for (int i = 0; i < 11; i++) {
+            framesGroup.bowl(10);
+            framesGroup.getCurrentFrame();
+        }
+
+        assertThat(framesGroup.hasNextFrame()).isFalse();
+    }
 }

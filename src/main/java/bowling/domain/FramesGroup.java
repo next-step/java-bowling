@@ -27,11 +27,18 @@ public class FramesGroup {
     }
 
     public Frame getCurrentFrame() {
-        NormalFrame frame = (NormalFrame) frames.get(frames.size() - 1);
-        NormalFrame nextFrame = (NormalFrame) frame.next();
+        Frame frame = frames.get(frames.size() - 1);
+        Frame nextFrame = frame.next();
         if (frame != nextFrame) {
             frames.add(nextFrame);
         }
         return nextFrame;
+    }
+
+    public boolean hasNextFrame() {
+        if (frames.get(frames.size() - 1) == null) {
+            return false;
+        }
+        return true;
     }
 }
