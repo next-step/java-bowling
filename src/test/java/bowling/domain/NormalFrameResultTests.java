@@ -25,4 +25,15 @@ class NormalFrameResultTests {
         assertThatThrownBy(() -> NormalFrameResult.firstThrow(invalidValue))
                 .isInstanceOf(InvalidNumberOfHitPinException.class);
     }
+
+    @DisplayName("두번째 투구로 맞춘 핀의 수를 입력받을 수 있다.")
+    @Test
+    void secondNumberOfHitPinTest() {
+        int numberOfHitPin = 5;
+        NormalFrameResult normalFrameResult = NormalFrameResult.firstThrow(numberOfHitPin);
+        NormalFrameResult afterSecondThrow = normalFrameResult.secondThrow(numberOfHitPin);
+
+        assertThat(afterSecondThrow.isCompleted()).isTrue();
+        assertThat(afterSecondThrow).isEqualTo(new NormalFrameResult(5, 5));
+    }
 }
