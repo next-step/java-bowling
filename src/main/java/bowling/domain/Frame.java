@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.exceptions.CannotBowlException;
+
 import java.util.Objects;
 
 public class Frame {
@@ -16,6 +18,10 @@ public class Frame {
     }
 
     public Frame bowlSecond(int secondNumberOfHitPin) {
+        if (this.frameResult.isCompleted()) {
+            throw new CannotBowlException("점수 계산이 완료된 Frame에서는 추가로 공을 굴릴 수 없습니다.");
+        }
+
         NormalFrameResult previousFrameResult = (NormalFrameResult) this.frameResult;
         NormalFrameResult afterFrameResult = previousFrameResult.secondThrow(secondNumberOfHitPin);
 

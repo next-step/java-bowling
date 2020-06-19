@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.exceptions.CannotBowlException;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,5 +39,17 @@ class FrameTests {
 
         assertThat(new Frame(expectFirstResult, null).bowlSecond(secondNumberOfHitPin))
                 .isEqualTo(new Frame(expectedSecondResult, null));
+    }
+
+    @DisplayName("FrameResult가 마무리 된 경우 두번째 투구를 진행할 수 없다.")
+    @Test
+    void bowlSecondValidationTest() {
+        int firstNumberOfHitPin = 5;
+        int secondNumberOfHitPin = 3;
+
+        Frame frame = Frame.bowlFirst(firstNumberOfHitPin).bowlSecond(secondNumberOfHitPin);
+
+        assertThatThrownBy(() -> frame.bowlSecond(secondNumberOfHitPin))
+                .isInstanceOf(CannotBowlException.class);
     }
 }
