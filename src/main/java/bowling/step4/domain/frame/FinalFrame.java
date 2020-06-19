@@ -35,14 +35,6 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isFull() {
-        if (ScoresType.STRIKE.of(scores) || ScoresType.SPARED.of(scores)) {
-            return scores.stream().noneMatch(Objects::isNull);
-        }
-        return ScoresType.FULL.of(scores);
-    }
-
-    @Override
     protected int calculateScoreOfStrike() {
         FinalScores finalScores = (FinalScores) scores;
         if (!finalScores.filledBonus()) {

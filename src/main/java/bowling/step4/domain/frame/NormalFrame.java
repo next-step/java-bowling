@@ -42,12 +42,6 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isFull() {
-        return ScoresType.FULL.of(scores) ||
-               ScoresType.STRIKE.of(scores);
-    }
-
-    @Override
     protected int calculateScoreOfSpared() {
         if (nextFrame == null || ScoresType.EMPTY.of(nextFrame.scores)) {
             return EMPTY_CALC;

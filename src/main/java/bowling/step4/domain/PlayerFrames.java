@@ -31,10 +31,4 @@ public class PlayerFrames {
     public Frame getLastFrame() {
         return Frames.getLastFrameOf(firstFrame);
     }
-
-    public boolean isFull() {
-        Frame lastFrame = getLastFrame();
-        return lastFrame instanceof FinalFrame &&
-               lastFrame.isFull();
-    }
 }

@@ -29,11 +29,6 @@ public class PlayersFrames {
         return playersFrames.stream();
     }
 
-    public boolean isFull() {
-        return playersFrames.stream()
-                            .allMatch(PlayerFrames::isFull);
-    }
-
     public boolean isLast() {
         return playersFrames.stream()
                             .map(PlayerFrames::getLastFrame)
