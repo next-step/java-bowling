@@ -1,8 +1,6 @@
 package bowling.step4.controller;
 
-import bowling.step4.domain.Player;
-import bowling.step4.domain.PlayerFrames;
-import bowling.step4.domain.ScoresType;
+import bowling.step4.domain.*;
 import bowling.step4.domain.frame.Frame;
 import bowling.step4.domain.frame.NormalFrame;
 import bowling.step4.domain.scores.Scores;
@@ -10,21 +8,23 @@ import bowling.step4.view.InputView;
 import bowling.step4.view.ResultView;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class BowlingGame {
     private static final InputView inputView = InputView.getInstance();
     private static final ResultView resultView = ResultView.getInstance();
 
-    private final PlayerFrames playerFrames;
+    private final PlayersFrames playersFrames;
 
-    public BowlingGame(PlayerFrames playerFrames) {
-        this.playerFrames = playerFrames;
+    public BowlingGame(PlayersFrames playersFrames) {
+        this.playersFrames = playersFrames;
     }
 
-    private void frameView(Frame frame) {
-        Scores scores = frame.getScores();
-        frame.createNextFrameOfScores(scores.nextInit(inputView.inputScore(frame.getValue())));
-        resultView.printFrames(playerFrames);
+    private Consumer<Frame> selectFrameView(Frame frame) {
+        if (frame instanceof NormalFrame) {
+            return this::normalFrameView;
+        }
+        return this::finalFrameView;
     }
 
     public void normalFrameView(Frame nowFrame) {
@@ -43,19 +43,26 @@ public class BowlingGame {
         }
     }
 
+    private void frameView(Frame frame) {
+        Scores scores = frame.getScores();
+        frame.createNextFrameOfScores(scores.nextInit(inputView.inputScore(frame.getValue())));
+        resultView.printFrames(playersFrames);
+    }
+
+
     public static void main(String[] args) {
-        Player player = inputView.inputName();
-        Frame temp = NormalFrame.start();
-        PlayerFrames playerFrames = PlayerFrames.of(player, temp);
+        PlayersFrames playersFrames = PlayerCount
+                                        .of(inputView.inputPlayerCount())
+                                        .ofPlayersFrames(i -> {
+                                            Player player = inputView.inputName(i);
+                                            return PlayerFrames.of(player, NormalFrame.start());
+                                        });
 
-        BowlingGame game = new BowlingGame(playerFrames);
-
-        resultView.printFrames(playerFrames);
-        while (temp instanceof NormalFrame) {
-            game.normalFrameView(temp);
-            temp = Optional.ofNullable(temp.getNextFrame())
-                           .orElse(temp);
+        BowlingGame game = new BowlingGame(playersFrames);
+        while (!playersFrames.isFull()) {
+            playersFrames.stream()
+                         .map(PlayerFrames::getLastFrame)
+                         .forEach(frame -> game.selectFrameView(frame).accept(frame));
         }
-        game.finalFrameView(temp);
     }
 }
