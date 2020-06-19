@@ -21,7 +21,7 @@ public class PlayerFrames {
         return Frames.preview(firstFrame);
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getPlayerName() {
+        return player.toString();
     }
 }
