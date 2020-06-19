@@ -22,7 +22,7 @@ public class PlayerCount {
     }
 
     private static void validate(int count) {
-        if (count < 0) {
+        if (count < 1) {
             throw new PlayerMinimumCountException();
         }
     }
