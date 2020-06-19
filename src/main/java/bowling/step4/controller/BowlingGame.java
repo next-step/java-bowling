@@ -1,14 +1,12 @@
 package bowling.step4.controller;
 
 import bowling.step4.domain.*;
-import bowling.step4.domain.frame.Frame;
 import bowling.step4.domain.frame.NormalFrame;
 import bowling.step4.domain.scores.Scores;
 import bowling.step4.view.InputView;
 import bowling.step4.view.ResultView;
 
-import java.util.Optional;
-import java.util.function.Consumer;
+import static java.util.stream.Collectors.toList;
 
 public class BowlingGame {
     private static final InputView inputView = InputView.getInstance();
@@ -20,25 +18,20 @@ public class BowlingGame {
         this.playersFrames = playersFrames;
     }
 
-    public void selectFrameView() {
-        if (playersFrames.isLast()) {
-            finalFrameView();
-        }
-        normalFrameView();
-    }
-
-    private void normalFrameView() {
+    public void normalFrameView() {
         playersFrames.stream()
                      .map(PlayerFrame::of)
                      .peek(this::frameView)
                      .filter(playerFrame -> !ScoresType.STRIKE.of(playerFrame.getFrameScores()))
+                     .collect(toList())
                      .forEach(this::frameView);
     }
 
-    private void finalFrameView() {
+    public void finalFrameView() {
         playersFrames.stream()
                      .map(PlayerFrame::of)
                      .peek(this::frameView)
+                     .collect(toList()).stream()
                      .peek(this::frameView)
                      .filter(playerFrame -> ScoresType.BONUS.of(playerFrame.getFrameScores()))
                      .forEach(this::frameView);
@@ -59,8 +52,11 @@ public class BowlingGame {
                                         .ofPlayersFrames(i -> PlayerFrames.of(inputView.inputName(i), NormalFrame.start()));
 
         BowlingGame game = new BowlingGame(playersFrames);
-        while (!playersFrames.isFull()) {
-            game.selectFrameView();
+        resultView.printFrames(playersFrames);
+
+        while (!playersFrames.isLast()) {
+            game.normalFrameView();
         }
+        game.finalFrameView();
     }
 }
