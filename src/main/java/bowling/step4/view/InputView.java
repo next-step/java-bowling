@@ -21,8 +21,8 @@ public class InputView {
         return Player.valueOf(SCANNER.nextLine());
     }
 
-    public Score inputScore(int frame) {
-        System.out.printf("%d프레임 투구 : ", frame);
+    public Score inputScore(String playerName) {
+        System.out.printf("%s's turn : ", playerName);
         return Score.stringOf(SCANNER.nextLine());
     }
 
