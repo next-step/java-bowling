@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PitchesGroup {
+public class Pitches {
     private static final int FIRST_PITCH_INDEX = 0;
     private static final int STRIKE_PIN_COUNTS = 10;
     private static final int MAXIMUM_PITCHES_COUNT = 2;
@@ -25,6 +25,13 @@ public class PitchesGroup {
 
     private boolean isFinishingPitches() {
         return pitches.size() == MAXIMUM_PITCHES_COUNT;
+    }
+
+    public boolean isMovableToNextPitch() {
+        int pitchesSum = pitches.stream()
+                .mapToInt(Pitch::getHitCounts)
+                .sum();
+        return pitches.size() != MAXIMUM_PITCHES_COUNT || pitchesSum == MAXIMUM_PITCHES_COUNT;
     }
 
     public List<Pitch> getPitches() {

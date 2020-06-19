@@ -19,7 +19,7 @@ class NormalFrameTest {
     @DisplayName("다음 NormalFrame 객체 생성 : 첫 번째 투구에서 스트라이크를 쳤을 때")
     @Test
     public void nextNormalFrame_스트라이크() {
-        NormalFrame normalFrame = NormalFrame.initiate();
+        NormalFrame normalFrame = (NormalFrame) NormalFrame.initiate();
         normalFrame.bowl(10);
 
         assertThat(normalFrame.getIndex()).isEqualTo(1);
@@ -32,7 +32,7 @@ class NormalFrameTest {
     @DisplayName("다음 NormalFrame 객체 생성 : 투구를 두 번 완료 했을 때")
     @Test
     public void nextNormalFrame_두번_투구() {
-        NormalFrame normalFrame = NormalFrame.initiate();
+        NormalFrame normalFrame = (NormalFrame) NormalFrame.initiate();
         normalFrame.bowl(3);
         normalFrame.bowl(4);
 
@@ -46,7 +46,7 @@ class NormalFrameTest {
     @DisplayName("다음 NormalFrame 객체 생성 : 조건이 충족되지 않으면 현재 Frame을 반환함")
     @Test
     public void nextNormalFrame_그외() {
-        NormalFrame normalFrame = NormalFrame.initiate();
+        NormalFrame normalFrame = (NormalFrame) NormalFrame.initiate();
         normalFrame.bowl(3);
 
         assertThat(normalFrame.getIndex()).isEqualTo(1);
@@ -60,7 +60,7 @@ class NormalFrameTest {
     @DisplayName("10번째 인덱스에 해당하는 프레임을 생성할 시 FinalFrame을 생성함")
     @Test
     public void nextFrame_Final() {
-        NormalFrame frame = NormalFrame.initiate();
+        Frame frame = NormalFrame.initiate();
         for (int i = 0; i < 8; i++) {
             frame.bowl(10);
             frame = (NormalFrame) frame.next();
