@@ -84,7 +84,10 @@ public class Question extends AbstractEntity {
     private List<DeleteHistory> deleteQuestion() {
         deleted = Boolean.TRUE;
 
-        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now());
+        DeleteHistory deleteHistory = new DeleteHistory.Builder(ContentType.QUESTION, getId())
+                .deletedBy(writer)
+                .createDate(LocalDateTime.now())
+                .build();
         return Collections.singletonList(deleteHistory);
     }
 
