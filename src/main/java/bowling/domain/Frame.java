@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.exceptions.CannotBowlException;
+import bowling.domain.exceptions.ParseNormalFrameException;
 
 import java.util.Objects;
 
@@ -20,8 +21,7 @@ public class Frame {
     public Frame bowlSecond(int secondNumberOfHitPin) {
         validateSecondBowl();
 
-        NormalFrameResult previousFrameResult = (NormalFrameResult) this.frameResult;
-        NormalFrameResult afterFrameResult = previousFrameResult.secondThrow(secondNumberOfHitPin);
+        NormalFrameResult afterFrameResult = parseToNormalFrameResult(this.frameResult).secondThrow(secondNumberOfHitPin);
 
         return new Frame(afterFrameResult, null);
     }
@@ -30,6 +30,13 @@ public class Frame {
         if (this.frameResult.isCompleted()) {
             throw new CannotBowlException("점수 계산이 완료된 Frame에서는 추가로 공을 굴릴 수 없습니다.");
         }
+    }
+
+    private NormalFrameResult parseToNormalFrameResult(FrameResult frameResult) {
+        if (frameResult.isStrike()) {
+            throw new ParseNormalFrameException("Strike cannot convert to NormalFrameResult");
+        }
+        return (NormalFrameResult) frameResult;
     }
 
     @Override

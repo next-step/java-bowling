@@ -41,15 +41,26 @@ class FrameTests {
                 .isEqualTo(new Frame(expectedSecondResult, null));
     }
 
-    @DisplayName("FrameResult가 마무리 된 경우 두번째 투구를 진행할 수 없다.")
+    @DisplayName("스트라이크 처리된 프레임에 두번째 투구를 진행할 수 없다.")
+    @Test
+    void bowlSecondToStrikeTest() {
+        int strikePin = 10;
+        int secondPin = 2;
+
+        Frame frame = Frame.bowlFirst(strikePin);
+
+        assertThatThrownBy(() -> frame.bowlSecond(secondPin))
+                .isInstanceOf(CannotBowlException.class);
+    }
+
+    @DisplayName("스트라이크가 아닌 프레임에 세번째 투구를 진행할 수 없다.")
     @Test
     void bowlSecondValidationTest() {
-        int firstNumberOfHitPin = 5;
-        int secondNumberOfHitPin = 3;
+        int numberOfHitPin = 2;
 
-        Frame frame = Frame.bowlFirst(firstNumberOfHitPin).bowlSecond(secondNumberOfHitPin);
+        Frame frame = Frame.bowlFirst(numberOfHitPin).bowlSecond(numberOfHitPin);
 
-        assertThatThrownBy(() -> frame.bowlSecond(secondNumberOfHitPin))
+        assertThatThrownBy(() -> frame.bowlSecond(numberOfHitPin))
                 .isInstanceOf(CannotBowlException.class);
     }
 }
