@@ -40,6 +40,8 @@ public abstract class Frame {
         return type ? calculator : null;
     }
 
+    abstract public boolean isFull();
+
     abstract protected int calculateScoreOfSpared();
 
     abstract protected int calculateScoreOfStrike();

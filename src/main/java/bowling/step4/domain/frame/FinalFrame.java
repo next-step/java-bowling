@@ -1,10 +1,13 @@
 package bowling.step4.domain.frame;
 
+import bowling.step4.domain.Frames;
 import bowling.step4.domain.Score;
+import bowling.step4.domain.ScoresType;
 import bowling.step4.domain.scores.FinalScores;
 import bowling.step4.domain.scores.Scores;
 
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
 
@@ -18,6 +21,10 @@ public class FinalFrame extends Frame {
         return new FinalFrame(frame, scores);
     }
 
+    public static Frame init() {
+        return of(Frames.LAST_FRAME, FinalScores.init());
+    }
+
     public void createNextFrameOfScores(Scores scores) {
         this.scores = scores;
     }
@@ -25,6 +32,14 @@ public class FinalFrame extends Frame {
     @Override
     public Frame getNextFrame() {
         return null;
+    }
+
+    @Override
+    public boolean isFull() {
+        if (ScoresType.STRIKE.of(scores) || ScoresType.SPARED.of(scores)) {
+            return scores.stream().noneMatch(Objects::isNull);
+        }
+        return ScoresType.FULL.of(scores);
     }
 
     @Override

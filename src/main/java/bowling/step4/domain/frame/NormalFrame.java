@@ -36,8 +36,15 @@ public class NormalFrame extends Frame {
             : FinalFrame.of(nextFrameValue, FinalScores.init());
     }
 
+    @Override
     public Frame getNextFrame() {
         return nextFrame;
+    }
+
+    @Override
+    public boolean isFull() {
+        return ScoresType.FULL.of(scores) ||
+               ScoresType.STRIKE.of(scores);
     }
 
     @Override
