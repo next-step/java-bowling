@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.exceptions.CannotBowlException;
+import bowling.domain.exceptions.CannotDoNextFrameException;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -75,5 +76,16 @@ class FrameTests {
 
         assertThat(nextFrame).isEqualTo(Frame.bowlFirst(numberOfHitPin));
         assertThat(frame).isEqualTo(new Frame(new StrikeFrameResult(), nextFrame));
+    }
+
+    @DisplayName("현재 프레임 결과가 마무리되지 않으면 다음 프레임을 생성할 수 없다.")
+    @Test
+    void createNextFrameValidationTest() {
+        int numberOfHitPin = 3;
+
+        Frame frame = Frame.bowlFirst(numberOfHitPin);
+
+        assertThatThrownBy(() -> frame.next(numberOfHitPin))
+                .isInstanceOf(CannotDoNextFrameException.class);
     }
 }

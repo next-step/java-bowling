@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.exceptions.CannotBowlException;
+import bowling.domain.exceptions.CannotDoNextFrameException;
 import bowling.domain.exceptions.ParseNormalFrameException;
 
 import java.util.Objects;
@@ -21,12 +22,17 @@ public class Frame {
     public Frame bowlSecond(int secondNumberOfHitPin) {
         validateSecondBowl();
 
-        NormalFrameResult afterFrameResult = parseToNormalFrameResult(this.frameResult).secondThrow(secondNumberOfHitPin);
+        NormalFrameResult afterFrameResult = parseToNormalFrameResult(this.frameResult)
+                .secondThrow(secondNumberOfHitPin);
 
         return new Frame(afterFrameResult, null);
     }
 
     public Frame next(int numberOfHitPin) {
+        if (!this.frameResult.isCompleted()) {
+            throw new CannotDoNextFrameException("현재 프레임을 마무리하기 전에는 다음 프레임으로 넘어갈 수 없습니다.");
+        }
+
         Frame nextFrame = Frame.bowlFirst(numberOfHitPin);
         this.nextFrame = nextFrame;
 
