@@ -32,7 +32,25 @@ class PitchesGroupTest {
         pitchesGroup.recordPitch(hitCounts);
 
         assertThat(pitches.size()).isEqualTo(1);
-        assertThat(pitches.get(0).getHitCounts())
-                .isEqualTo(hitCounts);
+        assertThat(pitches.get(0).getHitCounts()).isEqualTo(hitCounts);
+    }
+
+    @DisplayName("Normal Frame의 경우 다음 프레임으로의 이동 조건 : 스트라이크")
+    @Test
+    public void isMovableToNextFrame_스트라이크() {
+        PitchesGroup pitchesGroup = new PitchesGroup();
+        pitchesGroup.recordPitch(10);
+
+        assertThat(pitchesGroup.isMovableToNextFrame()).isTrue();
+    }
+
+    @DisplayName("Normal Frame의 경우 다음 프레임으로의 이동 조건 : 2번 투구 했을 경우")
+    @Test
+    public void isMovableToNextFrame_2번_투구() {
+        PitchesGroup pitchesGroup = new PitchesGroup();
+        pitchesGroup.recordPitch(3);
+        pitchesGroup.recordPitch(5);
+
+        assertThat(pitchesGroup.isMovableToNextFrame()).isTrue();
     }
 }

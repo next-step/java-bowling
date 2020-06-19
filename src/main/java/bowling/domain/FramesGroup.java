@@ -14,7 +14,7 @@ public class FramesGroup {
 
     public static FramesGroup initiate() {
         List<NormalFrame> frames = new ArrayList<>();
-        frames.add(new NormalFrame(new PitchesGroup()));
+        frames.add(NormalFrame.initiate());
         return new FramesGroup(frames);
     }
 

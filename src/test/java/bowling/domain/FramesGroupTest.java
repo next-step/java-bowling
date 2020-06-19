@@ -19,4 +19,15 @@ class FramesGroupTest {
         assertThat(frames.size()).isEqualTo(1);
     }
 
+    @DisplayName("현재 투구중인 Frame 반환")
+    @Test
+    public void getCurrentFrame_첫번째() {
+        FramesGroup framesGroup = FramesGroup.initiate();
+/*
+        NormalFrame normalFrame = framesGroup.getCurrentFrame();
+
+        assertThat(normalFrame.getIndex()).isEqualTo(1);*/
+    }
+
+
 }
