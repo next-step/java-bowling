@@ -26,6 +26,13 @@ public class Frame {
         return new Frame(afterFrameResult, null);
     }
 
+    public Frame next(int numberOfHitPin) {
+        Frame nextFrame = Frame.bowlFirst(numberOfHitPin);
+        this.nextFrame = nextFrame;
+
+        return nextFrame;
+    }
+
     private void validateSecondBowl() {
         if (this.frameResult.isCompleted()) {
             throw new CannotBowlException("점수 계산이 완료된 Frame에서는 추가로 공을 굴릴 수 없습니다.");

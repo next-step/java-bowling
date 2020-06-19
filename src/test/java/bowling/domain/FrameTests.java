@@ -11,6 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FrameTests {
+    private static final int STRIKE_HIT_PIN_NUMBER = 10;
+
     @DisplayName("첫번째 투구로 맞춘 핀의 수를 입력받아서 객체를 생성할 수 있다.")
     @Test
     void createTEst() {
@@ -44,10 +46,9 @@ class FrameTests {
     @DisplayName("스트라이크 처리된 프레임에 두번째 투구를 진행할 수 없다.")
     @Test
     void bowlSecondToStrikeTest() {
-        int strikePin = 10;
         int secondPin = 2;
 
-        Frame frame = Frame.bowlFirst(strikePin);
+        Frame frame = Frame.bowlFirst(STRIKE_HIT_PIN_NUMBER);
 
         assertThatThrownBy(() -> frame.bowlSecond(secondPin))
                 .isInstanceOf(CannotBowlException.class);
@@ -62,5 +63,17 @@ class FrameTests {
 
         assertThatThrownBy(() -> frame.bowlSecond(numberOfHitPin))
                 .isInstanceOf(CannotBowlException.class);
+    }
+
+    @DisplayName("현재 프레임에서 다음 프레임을 생성할 수 있다.")
+    @Test
+    void createNextFrameTest() {
+        int numberOfHitPin = 3;
+
+        Frame frame = Frame.bowlFirst(STRIKE_HIT_PIN_NUMBER);
+        Frame nextFrame = frame.next(numberOfHitPin);
+
+        assertThat(nextFrame).isEqualTo(Frame.bowlFirst(numberOfHitPin));
+        assertThat(frame).isEqualTo(new Frame(new StrikeFrameResult(), nextFrame));
     }
 }
