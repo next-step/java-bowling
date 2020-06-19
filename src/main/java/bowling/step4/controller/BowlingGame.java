@@ -20,27 +20,27 @@ public class BowlingGame {
 
     public void normalFrameView() {
         playersFrames.stream()
-                     .map(PlayerFrame::of)
+                     .map(PlayerFrameDTO::of)
                      .peek(this::frameView)
-                     .filter(playerFrame -> !ScoresType.STRIKE.of(playerFrame.getFrameScores()))
+                     .filter(playerFrameDTO -> !ScoresType.STRIKE.of(playerFrameDTO.getFrameScores()))
                      .collect(toList())
                      .forEach(this::frameView);
     }
 
     public void finalFrameView() {
         playersFrames.stream()
-                     .map(PlayerFrame::of)
+                     .map(PlayerFrameDTO::of)
                      .peek(this::frameView)
                      .collect(toList()).stream()
                      .peek(this::frameView)
-                     .filter(playerFrame -> ScoresType.BONUS.of(playerFrame.getFrameScores()))
+                     .filter(playerFrameDTO -> ScoresType.BONUS.of(playerFrameDTO.getFrameScores()))
                      .forEach(this::frameView);
     }
 
-    private void frameView(PlayerFrame playerFrame) {
-        Scores scores = playerFrame.getFrameScores();
-        Score nextScore = inputView.inputScore(playerFrame.playerName());
-        playerFrame.getFrame()
+    private void frameView(PlayerFrameDTO playerFrameDTO) {
+        Scores scores = playerFrameDTO.getFrameScores();
+        Score nextScore = inputView.inputScore(playerFrameDTO.playerName());
+        playerFrameDTO.getFrame()
                    .createNextFrameOfScores(scores.nextInit(nextScore));
         resultView.printFrames(playersFrames);
     }
