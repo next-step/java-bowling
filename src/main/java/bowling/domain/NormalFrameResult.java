@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.exceptions.ExceedMaxNumberOfHitPinSumException;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 
 import java.util.Objects;
@@ -23,6 +24,10 @@ public class NormalFrameResult implements FrameResult {
     }
 
     public NormalFrameResult secondThrow(int numberOfHitPin) {
+        if (this.firstNumberOfHitPin + numberOfHitPin > 10) {
+            throw new ExceedMaxNumberOfHitPinSumException("맞춘 핀 수의 총합은 10을 넘을 수 없습니다.");
+        }
+
         return new NormalFrameResult(this.firstNumberOfHitPin, numberOfHitPin);
     }
 

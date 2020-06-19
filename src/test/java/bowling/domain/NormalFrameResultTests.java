@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.exceptions.ExceedMaxNumberOfHitPinSumException;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,5 +36,16 @@ class NormalFrameResultTests {
 
         assertThat(afterSecondThrow.isCompleted()).isTrue();
         assertThat(afterSecondThrow).isEqualTo(new NormalFrameResult(5, 5));
+    }
+
+    @DisplayName("맞춘 핀 수의 총합이 10을 넘길 수 없다.")
+    @Test
+    void secondNumberOfHitPinValidationTest() {
+        int firstNumberOfHitPin = 5;
+        int secondNumberOfHitPin = 6;
+
+        NormalFrameResult normalFrameResult = NormalFrameResult.firstThrow(firstNumberOfHitPin);
+        assertThatThrownBy(() -> normalFrameResult.secondThrow(secondNumberOfHitPin))
+            .isInstanceOf(ExceedMaxNumberOfHitPinSumException.class);
     }
 }
