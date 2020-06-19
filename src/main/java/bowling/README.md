@@ -59,22 +59,21 @@
 ## 기능 구현 목록
 
 ### Domain
-* BowlingPin
-    * 매 경기마다 사용하는 볼링 핀을 정의한 객체이다.
-    * 볼링 공에 의해 쓰러진 상태와 쓰러지지 않은 상태를 boolean isStanding으로 정의한다.
-    * 객체를 재활용한다.
-        * 볼링 핀은 2개 라운드로 구성된 각 프레임에서 10개밖에 사용하지 않는다.
-        * 매 프레임마다 볼링핀의 상태가 초기화되며 재활용 할 수 있다.
-            
-* BowlingPinsGroup
+* Player
+    * 게임 참가자 객체이다.
+    * 이름이 3글자가 아닌 경우 예외를 발생시킨다.
+    
+* NormalFrame
+    * 볼링 게임의 1번 ~ 9번 프레임을 정의한 객체이다.
+    * 2개 Round로 구성되어 있다.
 
 * BowlingBuildingException
-    * RuntimeException을 상속받은 커스텀 예외이다.
+    * Runtime Exception을 상속받는 커스텀 예외이다.
     
-
 ### View
 * InputView
     * 플레이어 이름을 입력받는다.
+    * 각 프레임의 투구를 입력받는다.
     
 * OutputView
     * 볼링 점수판을 그린다.
