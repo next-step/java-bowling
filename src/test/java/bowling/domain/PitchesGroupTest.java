@@ -25,14 +25,14 @@ class PitchesGroupTest {
     @ValueSource(ints = {0, 4, 10})
     public void recordPitch_추가(int hitCounts) {
         PitchesGroup pitchesGroup = new PitchesGroup();
-        List<Pitch> pitchesGroupList = pitchesGroup.getPitchesGroup();
+        List<Pitch> pitches = pitchesGroup.getPitches();
 
-        assertThat(pitchesGroupList.size()).isEqualTo(0);
+        assertThat(pitches.size()).isEqualTo(0);
 
         pitchesGroup.recordPitch(hitCounts);
 
-        assertThat(pitchesGroupList.size()).isEqualTo(1);
-        assertThat(pitchesGroupList.get(0).getHitCounts())
+        assertThat(pitches.size()).isEqualTo(1);
+        assertThat(pitches.get(0).getHitCounts())
                 .isEqualTo(hitCounts);
     }
 }
