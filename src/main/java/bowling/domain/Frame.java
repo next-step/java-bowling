@@ -6,5 +6,7 @@ public interface Frame {
 
     public Frame next();
 
+    public int getIndex();
+
     public Pitches getPitches();
 }

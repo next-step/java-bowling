@@ -21,7 +21,8 @@ public class NormalFrame implements Frame {
         if (!pitches.isMovableToNextFrame()) {
             return this;
         }
-        return index == MAXIMUM_NORMAL_FRAME_INDEX ? new FinalFrame() : new NormalFrame(index + NEXT_INDEX);
+        return index == MAXIMUM_NORMAL_FRAME_INDEX ?
+                FinalFrame.last(index + NEXT_INDEX) : new NormalFrame(index + NEXT_INDEX);
     }
 
     @Override

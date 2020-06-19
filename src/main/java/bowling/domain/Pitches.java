@@ -31,7 +31,7 @@ public class Pitches {
         int pitchesSum = pitches.stream()
                 .mapToInt(Pitch::getHitCounts)
                 .sum();
-        return pitches.size() != MAXIMUM_PITCHES_COUNT || pitchesSum == MAXIMUM_PITCHES_COUNT;
+        return pitches.size() != MAXIMUM_PITCHES_COUNT || pitchesSum == STRIKE_PIN_COUNTS;
     }
 
     public List<Pitch> getPitches() {

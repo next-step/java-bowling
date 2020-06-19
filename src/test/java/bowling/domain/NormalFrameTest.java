@@ -19,12 +19,12 @@ class NormalFrameTest {
     @DisplayName("다음 NormalFrame 객체 생성 : 첫 번째 투구에서 스트라이크를 쳤을 때")
     @Test
     public void nextNormalFrame_스트라이크() {
-        NormalFrame normalFrame = (NormalFrame) NormalFrame.initiate();
+        Frame normalFrame = NormalFrame.initiate();
         normalFrame.bowl(10);
 
         assertThat(normalFrame.getIndex()).isEqualTo(1);
 
-        NormalFrame nextFrame = (NormalFrame) normalFrame.next();
+        Frame nextFrame = normalFrame.next();
 
         assertThat(nextFrame.getIndex()).isEqualTo(2);
     }
@@ -32,13 +32,13 @@ class NormalFrameTest {
     @DisplayName("다음 NormalFrame 객체 생성 : 투구를 두 번 완료 했을 때")
     @Test
     public void nextNormalFrame_두번_투구() {
-        NormalFrame normalFrame = (NormalFrame) NormalFrame.initiate();
+        Frame normalFrame = NormalFrame.initiate();
         normalFrame.bowl(3);
         normalFrame.bowl(4);
 
         assertThat(normalFrame.getIndex()).isEqualTo(1);
 
-        NormalFrame nextFrame = (NormalFrame) normalFrame.next();
+        Frame nextFrame = normalFrame.next();
 
         assertThat(nextFrame.getIndex()).isEqualTo(2);
     }
@@ -46,12 +46,12 @@ class NormalFrameTest {
     @DisplayName("다음 NormalFrame 객체 생성 : 조건이 충족되지 않으면 현재 Frame을 반환함")
     @Test
     public void nextNormalFrame_그외() {
-        NormalFrame normalFrame = (NormalFrame) NormalFrame.initiate();
+        Frame normalFrame = NormalFrame.initiate();
         normalFrame.bowl(3);
 
         assertThat(normalFrame.getIndex()).isEqualTo(1);
 
-        NormalFrame nextFrame = (NormalFrame) normalFrame.next();
+        Frame nextFrame = normalFrame.next();
 
         assertThat(nextFrame.getIndex()).isEqualTo(1);
         assertThat(normalFrame).isEqualTo(nextFrame);
@@ -61,13 +61,11 @@ class NormalFrameTest {
     @Test
     public void nextFrame_Final() {
         Frame frame = NormalFrame.initiate();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             frame.bowl(10);
-            frame = (NormalFrame) frame.next();
+            frame = frame.next();
         }
-        frame.bowl(10);
-        Frame finalFrame = frame.next();
 
-        assertThat(finalFrame.getClass()).isEqualTo(FinalFrame.class);
+        assertThat(frame.getClass()).isEqualTo(FinalFrame.class);
     }
 }
