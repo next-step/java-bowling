@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.pitch;
+
+import bowling.domain.exception.BowlingBuildingException;
 
 public class Pitch {
     private static final int MINIMUM_HIT_COUNTS = 0;

@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.pitch.Pitches;
 
 public class NormalFrame implements Frame {
     private static final int FIRST_INDEX = 1;

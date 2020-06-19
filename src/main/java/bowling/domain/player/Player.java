@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.player;
+
+import bowling.domain.exception.BowlingBuildingException;
 
 public class Player {
     private static final int MANDATORY_NAME_LENGTH = 3;

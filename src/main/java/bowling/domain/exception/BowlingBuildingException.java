@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.exception;
 
 public class BowlingBuildingException extends RuntimeException {
     public static final String INVALID_PLAYER_NAME = "참가 선수 이름은 3글자만 허용됩니다.";

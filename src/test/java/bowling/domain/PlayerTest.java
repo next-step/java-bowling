@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
