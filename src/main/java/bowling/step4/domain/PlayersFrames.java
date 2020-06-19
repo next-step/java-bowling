@@ -1,6 +1,6 @@
 package bowling.step4.domain;
 
-import bowling.step4.domain.frame.NormalFrame;
+import bowling.step4.domain.frame.*;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -32,5 +32,11 @@ public class PlayersFrames {
     public boolean isFull() {
         return playersFrames.stream()
                             .allMatch(PlayerFrames::isFull);
+    }
+
+    public boolean isLast() {
+        return playersFrames.stream()
+                            .map(PlayerFrames::getLastFrame)
+                            .allMatch(frame -> frame instanceof FinalFrame);
     }
 }

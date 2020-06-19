@@ -20,32 +20,35 @@ public class BowlingGame {
         this.playersFrames = playersFrames;
     }
 
-    private Consumer<Frame> selectFrameView(Frame frame) {
-        if (frame instanceof NormalFrame) {
-            return this::normalFrameView;
+    public void selectFrameView() {
+        if (playersFrames.isLast()) {
+            finalFrameView();
         }
-        return this::finalFrameView;
+        normalFrameView();
     }
 
-    public void normalFrameView(Frame nowFrame) {
-        frameView(nowFrame);
-        if (!ScoresType.STRIKE.of(nowFrame.getScores())) {
-            frameView(nowFrame);
-        }
+    private void normalFrameView() {
+        playersFrames.stream()
+                     .map(PlayerFrame::of)
+                     .peek(this::frameView)
+                     .filter(playerFrame -> !ScoresType.STRIKE.of(playerFrame.getFrameScores()))
+                     .forEach(this::frameView);
     }
 
-    public void finalFrameView(Frame frame) {
-        frameView(frame);
-        frameView(frame);
-        Scores scores = frame.getScores();
-        if (ScoresType.STRIKE.of(scores) || ScoresType.SPARED.of(scores)) {
-            frameView(frame);
-        }
+    private void finalFrameView() {
+        playersFrames.stream()
+                     .map(PlayerFrame::of)
+                     .peek(this::frameView)
+                     .peek(this::frameView)
+                     .filter(playerFrame -> ScoresType.BONUS.of(playerFrame.getFrameScores()))
+                     .forEach(this::frameView);
     }
 
-    private void frameView(Frame frame) {
-        Scores scores = frame.getScores();
-        frame.createNextFrameOfScores(scores.nextInit(inputView.inputScore(frame.getValue())));
+    private void frameView(PlayerFrame playerFrame) {
+        Scores scores = playerFrame.getFrameScores();
+        Score nextScore = inputView.inputScore(playerFrame.playerName());
+        playerFrame.getFrame()
+                   .createNextFrameOfScores(scores.nextInit(nextScore));
         resultView.printFrames(playersFrames);
     }
 
@@ -57,9 +60,7 @@ public class BowlingGame {
 
         BowlingGame game = new BowlingGame(playersFrames);
         while (!playersFrames.isFull()) {
-            playersFrames.stream()
-                         .map(PlayerFrames::getLastFrame)
-                         .forEach(frame -> game.selectFrameView(frame).accept(frame));
+            game.selectFrameView();
         }
     }
 }
