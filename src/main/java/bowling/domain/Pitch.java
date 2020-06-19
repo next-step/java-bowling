@@ -16,4 +16,8 @@ public class Pitch {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_PITCH);
         }
     }
+
+    public int getHitCounts() {
+        return hitCounts;
+    }
 }
