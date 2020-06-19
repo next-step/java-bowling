@@ -29,14 +29,18 @@ public class Frame {
     }
 
     public Frame next(int numberOfHitPin) {
-        if (!this.frameResult.isCompleted()) {
-            throw new CannotDoNextFrameException("현재 프레임을 마무리하기 전에는 다음 프레임으로 넘어갈 수 없습니다.");
-        }
+        validateNextFrame();
 
         Frame nextFrame = Frame.bowlFirst(numberOfHitPin);
         this.nextFrame = nextFrame;
 
         return nextFrame;
+    }
+
+    private void validateNextFrame() {
+        if (!this.frameResult.isCompleted()) {
+            throw new CannotDoNextFrameException("현재 프레임을 마무리하기 전에는 다음 프레임으로 넘어갈 수 없습니다.");
+        }
     }
 
     private void validateSecondBowl() {
