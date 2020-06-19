@@ -24,7 +24,7 @@ class NormalFrameTest {
 
         assertThat(normalFrame.getIndex()).isEqualTo(1);
 
-        NormalFrame nextFrame = normalFrame.next();
+        NormalFrame nextFrame = (NormalFrame) normalFrame.next();
 
         assertThat(nextFrame.getIndex()).isEqualTo(2);
     }
@@ -38,7 +38,7 @@ class NormalFrameTest {
 
         assertThat(normalFrame.getIndex()).isEqualTo(1);
 
-        NormalFrame nextFrame = normalFrame.next();
+        NormalFrame nextFrame = (NormalFrame) normalFrame.next();
 
         assertThat(nextFrame.getIndex()).isEqualTo(2);
     }
@@ -51,17 +51,23 @@ class NormalFrameTest {
 
         assertThat(normalFrame.getIndex()).isEqualTo(1);
 
-        NormalFrame nextFrame = normalFrame.next();
+        NormalFrame nextFrame = (NormalFrame) normalFrame.next();
 
         assertThat(nextFrame.getIndex()).isEqualTo(1);
         assertThat(normalFrame).isEqualTo(nextFrame);
     }
 
-    @DisplayName("1번 투구(Bowling) 하면 인스턴스 변수 PitchesGroup에 기록함")
+    @DisplayName("10번째 인덱스에 해당하는 프레임을 생성할 시 FinalFrame을 생성함")
     @Test
-    public void bowling_기록() { //테스트 변경 필요
-        NormalFrame normalFrame = NormalFrame.initiate();
+    public void nextFrame_Final() {
+        NormalFrame frame = NormalFrame.initiate();
+        for (int i = 0; i < 8; i++) {
+            frame.bowl(10);
+            frame = (NormalFrame) frame.next();
+        }
+        frame.bowl(10);
+        Frame finalFrame = frame.next();
 
-        normalFrame.bowl(4);
+        assertThat(finalFrame.getClass()).isEqualTo(FinalFrame.class);
     }
 }

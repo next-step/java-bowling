@@ -74,10 +74,17 @@
 
 * BowlingRank
     * Strike, Spare, Miss, Gutter 등을 정의한 Enum이다.
+
+* Frame
+    * Frame 인터페이스.
     
 * NormalFrame
     * 볼링 게임의 1번 ~ 9번 프레임을 정의한 객체이다.
     * bowl을 할 경우 내부 PitchesGroup에 해당 Pitch를 저장한다.
+    
+* FinalFrame
+    * 볼링 게임의 10번 프레임을 정의한 객체이다.
+    * bowl을 해서 Strike나 Spare를 하는 경우 1번의 추가 투구가 가능하다.
 
 * FramesGroup
     * List<Frame> 일급 컬렉션이다.

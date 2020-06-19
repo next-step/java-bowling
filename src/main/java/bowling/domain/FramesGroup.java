@@ -6,19 +6,32 @@ import java.util.List;
 
 public class FramesGroup {
 
-    private final List<NormalFrame> frames;
+    private final List<Frame> frames;
 
-    private FramesGroup(List<NormalFrame> frames) {
+    private FramesGroup(List<Frame> frames) {
         this.frames = frames;
     }
 
     public static FramesGroup initiate() {
-        List<NormalFrame> frames = new ArrayList<>();
+        List<Frame> frames = new ArrayList<>();
         frames.add(NormalFrame.initiate());
         return new FramesGroup(frames);
     }
 
-    public List<NormalFrame> getFrames() {
+    public void bowl(int hitCounts) {
+        frames.get(frames.size() - 1).bowl(hitCounts);
+    }
+
+    public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
+    }
+
+    public Frame getCurrentFrame() {
+        NormalFrame frame = (NormalFrame) frames.get(frames.size() - 1);
+        NormalFrame nextFrame = (NormalFrame) frame.next();
+        if (frame != nextFrame) {
+            frames.add(nextFrame);
+        }
+        return nextFrame;
     }
 }

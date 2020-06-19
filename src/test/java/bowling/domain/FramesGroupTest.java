@@ -14,7 +14,7 @@ class FramesGroupTest {
     public void initiateFramesGroup_일번_프레임_자동_생성() {
         FramesGroup framesGroup = FramesGroup.initiate();
 
-        List<NormalFrame> frames = framesGroup.getFrames();
+        List<Frame> frames = framesGroup.getFrames();
 
         assertThat(frames.size()).isEqualTo(1);
     }
@@ -23,11 +23,10 @@ class FramesGroupTest {
     @Test
     public void getCurrentFrame_첫번째() {
         FramesGroup framesGroup = FramesGroup.initiate();
-/*
-        NormalFrame normalFrame = framesGroup.getCurrentFrame();
+        framesGroup.bowl(10);
 
-        assertThat(normalFrame.getIndex()).isEqualTo(1);*/
+        NormalFrame normalFrame = (NormalFrame) framesGroup.getCurrentFrame();
+
+        assertThat(normalFrame.getIndex()).isEqualTo(2);
     }
-
-
 }

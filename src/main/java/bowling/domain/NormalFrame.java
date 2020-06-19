@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
     private static final int FIRST_INDEX = 1;
     private static final int NEXT_INDEX = 1;
 
@@ -16,12 +16,16 @@ public class NormalFrame {
         return new NormalFrame(FIRST_INDEX);
     }
 
-    public void bowl(int hitCounts) {
-        pitchesGroup.recordPitch(hitCounts);
+    public Frame next() {
+        if (pitchesGroup.isMovableToNextFrame() && index == 9) {
+            return new FinalFrame();
+        }
+        return pitchesGroup.isMovableToNextFrame() ? new NormalFrame(index + NEXT_INDEX) : this;
     }
 
-    public NormalFrame next() {
-        return pitchesGroup.isMovableToNextFrame() ? new NormalFrame(index + NEXT_INDEX) : this;
+    @Override
+    public void bowl(int hitCounts) {
+        pitchesGroup.recordPitch(hitCounts);
     }
 
     public int getIndex() {
