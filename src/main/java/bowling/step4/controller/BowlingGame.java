@@ -53,10 +53,7 @@ public class BowlingGame {
     public static void main(String[] args) {
         PlayersFrames playersFrames = PlayerCount
                                         .of(inputView.inputPlayerCount())
-                                        .ofPlayersFrames(i -> {
-                                            Player player = inputView.inputName(i);
-                                            return PlayerFrames.of(player, NormalFrame.start());
-                                        });
+                                        .ofPlayersFrames(i -> PlayerFrames.of(inputView.inputName(i), NormalFrame.start()));
 
         BowlingGame game = new BowlingGame(playersFrames);
         while (!playersFrames.isFull()) {

@@ -33,9 +33,8 @@ public class PlayerFrames {
     }
 
     public boolean isFull() {
-        return getPreview().skip(Frames.LAST_FRAME - 1)
-                           .findFirst()
-                           .orElseGet(FinalFrame::init)
-                           .isFull();
+        Frame lastFrame = getLastFrame();
+        return lastFrame instanceof FinalFrame &&
+               lastFrame.isFull();
     }
 }
