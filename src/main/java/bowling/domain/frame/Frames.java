@@ -59,7 +59,11 @@ public class Frames {
     }
 
     public boolean gameOver() {
-        return frames.size() == MAX_FRAME;
+        if (frames.size() == MAX_FRAME) {
+            Frame lastFrame = frames.get(MAX_FRAME - ONE);
+            return !lastFrame.availablePlay();
+        }
+        return false;
     }
 
     public int getFrameSize() {
@@ -69,4 +73,9 @@ public class Frames {
     public List<Frame> getFrames() {
         return frames;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
 }

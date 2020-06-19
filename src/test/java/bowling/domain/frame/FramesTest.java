@@ -40,15 +40,22 @@ class FramesTest {
         );
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("provideNotValidFullPoint")
     @DisplayName("마지막 frame에서 새로운 frame 추가 시 Exception")
-    void addLastFrameException() {
+    void addLastFrameException(List<Integer> points) {
         Frames frames = createFrame("WIJ");
-        for (int i = 0; i < 10; i++) {
-            frames.addPoint(10);
+        for (Integer point : points) {
+            frames.addPoint(point);
         }
 
         assertThatThrownBy(() -> frames.addPoint(1))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Arguments> provideNotValidFullPoint() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 5, 4))
+        );
     }
 }

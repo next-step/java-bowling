@@ -1,9 +1,14 @@
 package bowling.domain.score;
 
+import bowling.domain.dto.ScoreResultDto;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public class Scores {
     private final static int FIRST_SCORE = 1;
@@ -61,5 +66,11 @@ public class Scores {
             return scores.get(SECOND_SCORE - ONE).isSpare();
         }
         return false;
+    }
+
+    public List<ScoreResultDto> convertSoreResultDtos() {
+        return scores.stream()
+                .map(ScoreResultDto::new)
+                .collect(collectingAndThen(toList(), Collections::unmodifiableList));
     }
 }

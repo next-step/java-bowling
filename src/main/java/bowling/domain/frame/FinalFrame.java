@@ -25,7 +25,7 @@ public class FinalFrame extends Frame {
     @Override
     public boolean availablePlay() {
         if (scores.isStrike()) {
-            return scores.secondScore();
+            return scores.firstScore();
         }
 
         if (scores.isSpare()) {

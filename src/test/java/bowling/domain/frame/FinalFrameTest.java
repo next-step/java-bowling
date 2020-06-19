@@ -10,8 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class FinalFrameTest {
 
@@ -32,7 +31,7 @@ class FinalFrameTest {
 
     private static Stream<Arguments> provideCountAndAvailablePlay() {
         return Stream.of(
-                Arguments.of(Arrays.asList(10), false),
+                Arguments.of(Arrays.asList(10), true),
                 Arguments.of(Arrays.asList(5, 5), true),
                 Arguments.of(Arrays.asList(0, 0), false),
                 Arguments.of(Arrays.asList(5, 4), false),
