@@ -65,8 +65,11 @@
     
 * NormalFrame
     * 볼링 게임의 1번 ~ 9번 프레임을 정의한 객체이다.
-    * 2개 Round로 구성되어 있다.
 
+* Pitch
+    * 경기에서의 한 번씩 공을 던지는 '투구' 관련 객체이다.
+    * 해당 객체는 투구를 하고 그 결과를 저장한다.
+    
 * BowlingBuildingException
     * Runtime Exception을 상속받는 커스텀 예외이다.
     
