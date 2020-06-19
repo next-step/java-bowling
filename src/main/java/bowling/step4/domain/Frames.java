@@ -45,4 +45,12 @@ public class Frames {
         return IntStream.range(0, Frames.LAST_FRAME)
                         .mapToObj(index -> index < size ? frames.get(index) : null);
     }
+
+    public static Frame getLastFrameOf(Frame firstFrame) {
+        Frame temp = firstFrame;
+        while (temp.getNextFrame() != null) {
+            temp = temp.getNextFrame();
+        }
+        return temp;
+    }
 }
