@@ -62,9 +62,6 @@
 * Player
     * 게임 참가자 객체이다.
     * 이름이 3글자가 아닌 경우 예외를 발생시킨다.
-    
-* NormalFrame
-    * 볼링 게임의 1번 ~ 9번 프레임을 정의한 객체이다.
 
 * Pitch
     * 경기에서의 한 번씩 공을 던지는 '투구' 관련 객체이다.
@@ -74,6 +71,16 @@
     * List<Pitch> 일급 컬렉션이다.
     * Frame 관련 객체들이 인스턴스 변수로 가진다.
     * 입력값으로 받은 투구에서 볼링핀을 넘어뜨린 개수(hitCounts)를 받아 List에 추가한다.
+    
+* NormalFrame
+    * 볼링 게임의 1번 ~ 9번 프레임을 정의한 객체이다.
+    * bowl을 할 경우 내부 PitchesGroup에 해당 Pitch를 저장한다.
+
+* FramesGroup
+    * List<Frame> 일급 컬렉션이다.
+    * bowl을 지시하면 현재 게임을 진행중인 Frame에게 bowl을 요청한다.
+    * 그 다음 플레이할 프레임을 반환한다.
+        * 현재 프레임에서 투구할 것이 더 남았다면, 해당 프레임을 제시한다.
     
 * BowlingBuildingException
     * Runtime Exception을 상속받는 커스텀 예외이다.
