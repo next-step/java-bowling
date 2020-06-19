@@ -20,10 +20,10 @@ class ThrowResultsTests {
     @DisplayName("ThrowResult 컬렉션 전달 받아서 객체를 생성할 수 있다.")
     @Test
     void createTest() {
-        List<ThrowResult> throwResultList
-                = Arrays.asList(new ThrowResult(5), new ThrowResult(5));
+        List<NumberOfHitPin> numberOfHitPinList
+                = Arrays.asList(new NumberOfHitPin(5), new NumberOfHitPin(5));
 
-        assertThat(new ThrowResults(throwResultList)).isEqualTo(new ThrowResults(throwResultList));
+        assertThat(new ThrowResults(numberOfHitPinList)).isEqualTo(new ThrowResults(numberOfHitPinList));
     }
 
     @DisplayName("맞춘 핀 수들을 입력받아서 객체를 생성할 수 있다.")
@@ -39,8 +39,8 @@ class ThrowResultsTests {
     @DisplayName("최대 2개까지만 관리할 수 있다.")
     @Test
     void createValidationTest() {
-        List<ThrowResult> invalidList = Arrays.asList(
-                new ThrowResult(2), new ThrowResult(2), new ThrowResult(1));
+        List<NumberOfHitPin> invalidList = Arrays.asList(
+                new NumberOfHitPin(2), new NumberOfHitPin(2), new NumberOfHitPin(1));
 
         assertThatThrownBy(() -> new ThrowResults(invalidList))
                 .isInstanceOf(TooManyThrowResultsException.class);
@@ -49,16 +49,16 @@ class ThrowResultsTests {
     @DisplayName("던져서 맞춘 핀 수의 총합은 0 ~ 10을 벗어날 수 없다.")
     @ParameterizedTest
     @MethodSource("invalidTotalCounts")
-    void totalHitPinValidationTest(ThrowResult first, ThrowResult second) {
-        List<ThrowResult> invalidList = Arrays.asList(first, second);
+    void totalHitPinValidationTest(NumberOfHitPin first, NumberOfHitPin second) {
+        List<NumberOfHitPin> invalidList = Arrays.asList(first, second);
 
         assertThatThrownBy(() -> new ThrowResults(invalidList))
                 .isInstanceOf(InvalidNumberOfHitPinException.class);
     }
     public static Stream<Arguments> invalidTotalCounts() {
         return Stream.of(
-                Arguments.of(new ThrowResult(5), new ThrowResult(9)),
-                Arguments.of(new ThrowResult(5), new ThrowResult(6))
+                Arguments.of(new NumberOfHitPin(5), new NumberOfHitPin(9)),
+                Arguments.of(new NumberOfHitPin(5), new NumberOfHitPin(6))
         );
     }
 
@@ -66,6 +66,6 @@ class ThrowResultsTests {
     @Test
     void strikeTest() {
         assertThat(ThrowResults.strike())
-                .isEqualTo(new ThrowResults(Collections.singletonList(new ThrowResult(10))));
+                .isEqualTo(new ThrowResults(Collections.singletonList(new NumberOfHitPin(10))));
     }
 }
