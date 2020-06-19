@@ -38,6 +38,16 @@ class NormalFrameResultTests {
         assertThat(afterSecondThrow).isEqualTo(new NormalFrameResult(5, 5));
     }
 
+    @DisplayName("두번째 투구로 맞춘 핀의 수가 0 이하일 수 없다.")
+    @ParameterizedTest
+    @ValueSource(ints = { -1, -2 })
+    void secondNumberOfHitPinMinValidationTest(int invalidSecondHitPin) {
+        int numberOfHitPin = 5;
+        NormalFrameResult normalFrameResult = NormalFrameResult.firstThrow(numberOfHitPin);
+        assertThatThrownBy(() -> normalFrameResult.secondThrow(invalidSecondHitPin))
+            .isInstanceOf(InvalidNumberOfHitPinException.class);
+    }
+
     @DisplayName("맞춘 핀 수의 총합이 10을 넘길 수 없다.")
     @Test
     void secondNumberOfHitPinValidationTest() {
