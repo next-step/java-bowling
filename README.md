@@ -27,10 +27,10 @@
 
 ## Step2. Todo List
 - Frame
-    - [ ] FrameResult, 다음 프레임(nextFrame)을 속성으로 갖는다.
-    - [ ] 첫번째 투구로 맞춘 핀의 수를 입력받아서 객체를 생성할 수 있다.
+    - [X] FrameResult, 다음 프레임(nextFrame)을 속성으로 갖는다.
+    - [X] 첫번째 투구로 맞춘 핀의 수를 입력받아서 객체를 생성할 수 있다.
     - [ ] 두번째 투구를 실행할 수 있다.
-        - [ ] 스트라이크인 경우 실행할 수 없다.
+        - [ ] 현재 FrameResult가 완료됐다면 실행할 수 없다.
     - [ ] 현재 프레임에서 다음 프레임을 생성할 수 있다.
         - [ ] FrameResult가 온전하지 않은 경우 다음 프레임으로 넘어갈 수 없다.
 - FrameResult(interface)

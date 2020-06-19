@@ -3,22 +3,16 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Frame {
-    private final ThrowResults throwResults;
+    private FrameResult frameResult;
     private Frame nextFrame;
 
-    public Frame(ThrowResults throwResults){
-        this(throwResults, null);
-    }
-
-    Frame(ThrowResults throwResults, Frame nextFrame) {
-        this.throwResults = throwResults;
+    Frame(FrameResult frameResult, Frame nextFrame) {
+        this.frameResult = frameResult;
         this.nextFrame = nextFrame;
     }
 
-    public Frame next(int firstNumberHitPin, int secondNumberOfHitPin) {
-        Frame nextFrame = new Frame(ThrowResults.of(firstNumberHitPin, secondNumberOfHitPin));
-        this.nextFrame = nextFrame;
-        return nextFrame;
+    public static Frame bowlFirst(int numberOfHitPin) {
+        return new Frame(FrameResultFactory.create(numberOfHitPin), null);
     }
 
     @Override
@@ -26,19 +20,19 @@ public class Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Frame frame = (Frame) o;
-        return Objects.equals(throwResults, frame.throwResults) &&
+        return Objects.equals(frameResult, frame.frameResult) &&
                 Objects.equals(nextFrame, frame.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(throwResults, nextFrame);
+        return Objects.hash(frameResult, nextFrame);
     }
 
     @Override
     public String toString() {
         return "Frame{" +
-                "throwResults=" + throwResults +
+                "frameResult=" + frameResult +
                 ", nextFrame=" + nextFrame +
                 '}';
     }
