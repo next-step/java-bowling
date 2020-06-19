@@ -28,4 +28,9 @@ public class PlayersFrames {
     public Stream<PlayerFrames> stream() {
         return playersFrames.stream();
     }
+
+    public boolean isFull() {
+        return playersFrames.stream()
+                            .allMatch(PlayerFrames::isFull);
+    }
 }
