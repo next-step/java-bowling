@@ -7,8 +7,11 @@ import qna.exception.ErrorMessage;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -74,15 +77,13 @@ public class Question extends AbstractEntity {
     public List<DeleteHistory> delete(final User user) {
         verifyOwner(user);
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.addAll(deleteQuestion());
-        deleteHistories.addAll(deleteAnswers(user));
-
-        return deleteHistories;
+        return Stream.of(deleteQuestion(), deleteAnswers(user))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
     private List<DeleteHistory> deleteQuestion() {
-        deleted = Boolean.TRUE;
+        this.deleted = true;
 
         DeleteHistory deleteHistory = new DeleteHistory.Builder(ContentType.QUESTION, getId())
                 .deletedBy(writer)
