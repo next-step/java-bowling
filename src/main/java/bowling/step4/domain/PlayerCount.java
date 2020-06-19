@@ -17,6 +17,7 @@ public class PlayerCount {
     }
 
     public static PlayerCount of(int count) {
+        validate(count);
         return new PlayerCount(count);
     }
 
