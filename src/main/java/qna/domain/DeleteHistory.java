@@ -1,5 +1,7 @@
 package qna.domain;
 
+import qna.builder.Buildable;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -29,6 +31,39 @@ public class DeleteHistory {
         this.contentId = contentId;
         this.deletedBy = deletedBy;
         this.createDate = createDate;
+    }
+
+    private DeleteHistory(Builder builder) {
+        this.contentType = builder.contentType;
+        this.contentId = builder.contentId;
+        this.deletedBy = builder.deletedBy;
+        this.createDate = builder.createDate;
+    }
+
+    public static class Builder implements Buildable {
+        private final ContentType contentType;
+        private final Long contentId;
+        private User deletedBy;
+        private LocalDateTime createDate;
+
+        public Builder(final ContentType contentType, final Long contentId) {
+            this.contentType = contentType;
+            this.contentId = contentId;
+        }
+
+        public Builder deletedBy(final User deletedBy) {
+            this.deletedBy = deletedBy;
+            return this;
+        }
+
+        public Builder createDate(final LocalDateTime createDate) {
+            this.createDate = createDate;
+            return this;
+        }
+
+        public DeleteHistory build() {
+            return new DeleteHistory(this);
+        }
     }
 
     @Override
