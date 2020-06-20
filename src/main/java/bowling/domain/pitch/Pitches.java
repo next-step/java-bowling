@@ -30,11 +30,12 @@ public class Pitches {
     }
 
     public boolean isSpare() {
-        return pitches.get(FIRST_PITCH_INDEX).getHitCounts() + pitches.get(SECOND_PITCH_INDEX).getHitCounts() == STRIKE_PIN_COUNTS;
+        return pitches.get(FIRST_PITCH_INDEX).getHitCounts() + pitches.get(SECOND_PITCH_INDEX).getHitCounts()
+                == STRIKE_PIN_COUNTS;
     }
 
     public boolean isMovableToNextPitch() {
-        return getPitchCounts() < MAXIMUM_PITCH_COUNTS || getPitchesSum() == STRIKE_PIN_COUNTS;
+        return getPitchCounts() != 3 && (getPitchCounts() < MAXIMUM_PITCH_COUNTS || getPitchesSum() % STRIKE_PIN_COUNTS == 0);
     }
 
     private void validatePitchesSum() {
@@ -59,5 +60,9 @@ public class Pitches {
 
     public List<Pitch> getPitches() {
         return Collections.unmodifiableList(pitches);
+    }
+
+    public Pitch getPitchByIndex(int index) {
+        return pitches.get(index);
     }
 }

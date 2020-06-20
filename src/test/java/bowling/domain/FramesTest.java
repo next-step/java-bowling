@@ -45,7 +45,7 @@ class FramesTest {
     @Test
     public void hasNextFrame_False() {
         Frames frames = Frames.initiate();
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 12; i++) {
             frames.bowl(10);
             frames.moveToNextFrame();
         }

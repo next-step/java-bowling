@@ -1,14 +1,11 @@
 package bowling.domain;
 
 import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.pitch.Pitch;
 import bowling.domain.pitch.Pitches;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -27,14 +24,13 @@ class PitchesTest {
     @ValueSource(ints = {0, 4, 10})
     public void recordPitch_추가(int hitCounts) {
         Pitches pitches = new Pitches();
-        List<Pitch> pitchesList = pitches.getPitches();
 
-        assertThat(pitchesList.size()).isEqualTo(0);
+        assertThat(pitches.getPitchCounts()).isEqualTo(0);
 
         pitches.recordPitch(hitCounts);
 
-        assertThat(pitchesList.size()).isEqualTo(1);
-        assertThat(pitchesList.get(0).getHitCounts()).isEqualTo(hitCounts);
+        assertThat(pitches.getPitchCounts()).isEqualTo(1);
+        assertThat(pitches.getPitchByIndex(0).getHitCounts()).isEqualTo(hitCounts);
     }
 
     @DisplayName("Normal Frame의 경우 다음 프레임으로의 이동 조건 : 스트라이크")

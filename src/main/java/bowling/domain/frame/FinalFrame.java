@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.bowling.BowlingScore;
 import bowling.domain.pitch.Pitches;
 
 public class FinalFrame implements Frame {
@@ -34,10 +33,5 @@ public class FinalFrame implements Frame {
     @Override
     public Pitches getPitches() {
         return pitches;
-    }
-
-    @Override
-    public BowlingScore getScore() {
-        return new BowlingScore(pitches);
     }
 }

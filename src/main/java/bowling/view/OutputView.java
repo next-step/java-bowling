@@ -18,8 +18,7 @@ public class OutputView {
 
     public static void printBowlingScoreBoard(Frames frames, Player player) {
         System.out.println(ViewMessages.SCORE_BOARD_HEADER);
-        System.out.printf(ViewMessages.SOCRE_BOARD_NAME, player.getName());
-
+        System.out.printf(ViewMessages.SCORE_BOARD_NAME, player.getName());
         List<Frame> frameList = frames.getFrames();
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -31,7 +30,7 @@ public class OutputView {
 
     private static void printFrame(Frame frame, StringBuilder stringBuilder) {
         stringBuilder.append("  ");
-        String score = frame.getScore().getScore();
+        String score = BowlingScoreParser.parseScore(frame.getPitches());
         if (score.length() == 1) {
             score += "  ";
         }
