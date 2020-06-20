@@ -104,7 +104,7 @@ class FrameTests {
     public static Stream<Arguments> isFinalFrameResource() {
         return Stream.of(
                 Arguments.of(FrameResultFactory.create(5), false),
-                Arguments.of(FrameResultFactory.create(5), true)
+                Arguments.of(FrameResultFactory.createFinal(5), true)
         );
     }
 }
