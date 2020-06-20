@@ -50,15 +50,15 @@ public class Answer extends AbstractEntity {
         if (!isOwner(user)) {
             throw new IllegalArgumentException(user.getName() + "는 답변을 삭제할 수 있는 권한이 없습니다.");
         }
-        return Optional.ofNullable(createDeleteHistory());
+        if (!isDeleted()) {
+            deleted = true;
+            return Optional.ofNullable(createDeleteHistory());
+        }
+        return Optional.empty();
     }
 
     private DeleteHistory createDeleteHistory() {
-        if(!isDeleted()) {
-            deleted = true;
-            return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
-        }
-        return null;
+        return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 
     public boolean isDeleted() {
