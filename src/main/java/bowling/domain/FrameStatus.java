@@ -36,4 +36,11 @@ public enum FrameStatus {
                 .findFirst()
                 .orElseThrow(() -> new NoFrameStatusException("잘못된 프레임 상태입니다."));
     }
+
+    public static FrameStatus find(Integer firstValue, Integer secondValue) {
+        if (firstValue + secondValue == 10) {
+            return SPARE;
+        }
+        return FrameStatus.find(secondValue);
+    }
 }
