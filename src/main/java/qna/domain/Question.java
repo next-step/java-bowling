@@ -73,11 +73,21 @@ public class Question extends AbstractEntity {
     }
 
     public void delete(User loginUser) throws CannotDeleteException {
+        validateEqualUser(loginUser);
+        deleteAnswers(loginUser);
+        this.deleted = true;
+    }
+
+    private void validateEqualUser(User loginUser) throws CannotDeleteException {
         if (!writer.equals(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
+    }
 
-        this.deleted = true;
+    private void deleteAnswers(User loginUser) throws CannotDeleteException {
+        for (Answer answer : answers) {
+            answer.delete(loginUser);
+        }
     }
 
     public boolean isDeleted() {

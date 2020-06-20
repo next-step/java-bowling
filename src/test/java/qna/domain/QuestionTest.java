@@ -17,8 +17,23 @@ public class QuestionTest {
     }
 
     @Test
+    void delete_답변삭제_성공() throws CannotDeleteException {
+        Q1.addAnswer(AnswerTest.A1);
+        Q1.delete(UserTest.JAVAJIGI);
+        assertThat(AnswerTest.A1.isDeleted()).isTrue();
+    }
+
+    @Test
     void delete_다른_사람이_쓴_질문() {
         assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
+                .isInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    void delete_다른_사람이_쓴_답변_포함() {
+        Q1.addAnswer(AnswerTest.A2);
+
+        assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class);
     }
 }
