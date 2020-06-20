@@ -84,7 +84,7 @@
     
 * FinalFrame
     * 볼링 게임의 10번 프레임을 정의한 객체이다.
-    * bowl을 해서 Strike나 Spare를 하는 경우 1번의 추가 투구가 가능하다.
+    * bowl을 해서 Strike나 Spare를 하는 경우 추가 투구가 가능하며, 최대 3번투구할 수 있다.
 
 * FramesGroup
     * List<Frame> 일급 컬렉션이다.
