@@ -99,13 +99,13 @@ public class Question extends AbstractEntity {
         validateOwner(loginUser);
 
         DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), this.writer, LocalDateTime.now()));
 
         for (Answer answer : answers) {
             deleteHistories.add(answer.delete(this.writer));
         }
 
         this.deleted = true;
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), this.writer, LocalDateTime.now()));
 
         return deleteHistories;
     }
