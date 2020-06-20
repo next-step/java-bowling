@@ -73,10 +73,15 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public void delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser, LocalDateTime now) throws CannotDeleteException {
         validateEqualUser(loginUser);
-        deleteAnswers(loginUser);
+
         this.deleted = true;
+
+        List<DeleteHistory> deleteHistories = deleteAnswers(loginUser, now);
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), loginUser, now));
+
+        return deleteHistories;
     }
 
     private void validateEqualUser(User loginUser) throws CannotDeleteException {
@@ -85,10 +90,15 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private void deleteAnswers(User loginUser) throws CannotDeleteException {
+    private List<DeleteHistory> deleteAnswers(User loginUser, LocalDateTime now) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
         for (Answer answer : answers) {
-            answer.delete(loginUser, LocalDateTime.now());
+            DeleteHistory deleteHistory = answer.delete(loginUser, now);
+            deleteHistories.add(deleteHistory);
         }
+
+        return deleteHistories;
     }
 
     public boolean isDeleted() {

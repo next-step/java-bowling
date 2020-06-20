@@ -3,6 +3,9 @@ package qna.domain;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static qna.TestObjectFactory.*;
@@ -13,10 +16,12 @@ public class QuestionTest {
     void delete_성공() throws CannotDeleteException {
         User user = createUser1();
         Question question = createQuestion1(user);
+        LocalDateTime now = LocalDateTime.now();
 
-        question.delete(user);
+        List<DeleteHistory> deleteHistory = question.delete(user, now);
 
-        assertThat(question.isDeleted()).isTrue();
+        DeleteHistory expected = new DeleteHistory(ContentType.QUESTION, question.getId(), user, now);
+        assertThat(deleteHistory.get(0)).isEqualTo(expected);
     }
 
     @Test
@@ -26,7 +31,7 @@ public class QuestionTest {
         Answer answer = createAnswer1(user, question);
         question.addAnswer(answer);
 
-        question.delete(user);
+        question.delete(user, LocalDateTime.now());
 
         assertThat(answer.isDeleted()).isTrue();
     }
@@ -37,7 +42,7 @@ public class QuestionTest {
         User user2 = createUser2();
         Question question = createQuestion1(user1);
 
-        assertThatThrownBy(() -> question.delete(user2))
+        assertThatThrownBy(() -> question.delete(user2, LocalDateTime.now()))
                 .isInstanceOf(CannotDeleteException.class);
     }
 
@@ -49,7 +54,7 @@ public class QuestionTest {
         Answer answer = createAnswer1(user2, question);
         question.addAnswer(answer);
 
-        assertThatThrownBy(() -> question.delete(user1))
+        assertThatThrownBy(() -> question.delete(user1, LocalDateTime.now()))
                 .isInstanceOf(CannotDeleteException.class);
     }
 }
