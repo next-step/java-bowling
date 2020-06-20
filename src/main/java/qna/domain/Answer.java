@@ -1,9 +1,12 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
+import qna.exception.ErrorMessage;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -43,17 +46,25 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public DeleteHistory delete(final User user) {
+        verifyOwner(user);
+
+        this.deleted = true;
+
+        return new DeleteHistory.Builder(ContentType.ANSWER, getId())
+                .deletedBy(getWriter())
+                .createDate(LocalDateTime.now())
+                .build();
+    }
+
+    private void verifyOwner(final User user) {
+        if (!writer.isSame(user)) {
+            throw new CannotDeleteException(ErrorMessage.HAS_ANOTHER_COMMENTER);
+        }
     }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
     }
 
     public User getWriter() {

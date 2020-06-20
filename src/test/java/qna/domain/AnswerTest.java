@@ -1,6 +1,29 @@
 package qna.domain;
 
+import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import qna.CannotDeleteException;
+import qna.fixture.Fixture;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
 public class AnswerTest {
-    public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-    public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+
+    private final Answer answer1 = Fixture.of().getAnswer1();
+
+    @DisplayName("답변자가 자신이 아니면 예외 반환")
+    @Test
+    public void verifyOwner() {
+        assertThatExceptionOfType(CannotDeleteException.class)
+                .isThrownBy(() -> answer1.delete(Fixture.of().getSanjigi()));
+    }
+
+    @DisplayName("답변 삭제 시 삭제 상태(deleted)를 TRUE로 변경")
+    @Test
+    public void deleteState() {
+        answer1.delete(Fixture.of().getJavajigi());
+
+        assertThat(answer1.isDeleted()).isTrue();
+    }
 }

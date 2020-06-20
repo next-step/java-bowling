@@ -40,40 +40,21 @@ public class User extends AbstractEntity {
         return userId;
     }
 
-    public User setUserId(String userId) {
-        this.userId = userId;
-        return this;
-    }
 
     public String getPassword() {
         return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public User setName(String name) {
-        this.name = name;
-        return this;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public void update(User loginUser, User target) {
-        if (!matchUserId(loginUser.getUserId())) {
+    public void update(final User loginUser, final User target) {
+        if (!isSame(loginUser)) {
             throw new UnAuthorizedException();
         }
 
@@ -85,8 +66,8 @@ public class User extends AbstractEntity {
         this.email = target.email;
     }
 
-    private boolean matchUserId(String userId) {
-        return this.userId.equals(userId);
+    public boolean isSame(final User loginUser) {
+        return this.equals(loginUser);
     }
 
     public boolean matchPassword(String targetPassword) {
@@ -116,5 +97,19 @@ public class User extends AbstractEntity {
     @Override
     public String toString() {
         return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        if (!super.equals(o)) return false;
+        User user = (User) o;
+        return Objects.equals(userId, user.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), userId);
     }
 }
