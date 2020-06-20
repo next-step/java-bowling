@@ -1,5 +1,6 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -43,6 +44,14 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
+    public void delete(User loginUser) throws CannotDeleteException {
+        if (!writer.equals(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        this.deleted = true;
+    }
+
     public Answer setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
@@ -50,10 +59,6 @@ public class Answer extends AbstractEntity {
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
     }
 
     public User getWriter() {
