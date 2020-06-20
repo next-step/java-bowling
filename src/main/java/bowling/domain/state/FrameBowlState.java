@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.state;
 
 
 import java.util.Objects;

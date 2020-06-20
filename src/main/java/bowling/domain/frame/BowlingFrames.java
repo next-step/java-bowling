@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.state.FrameBowlStates;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public class BowlingFrames {
         this.frames = new ArrayList<>(frames);
     }
 
-    static BowlingFrames newInstance() {
+    public static BowlingFrames newInstance() {
         List<Frame> frames = new ArrayList<>();
 
         NormalFrame normalFrame = NormalFrame.first();

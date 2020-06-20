@@ -1,8 +1,10 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import bowling.domain.state.FrameBowlState;
+import bowling.domain.state.ScoreType;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

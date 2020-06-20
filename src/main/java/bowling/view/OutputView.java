@@ -1,8 +1,8 @@
 package bowling.view;
 
-import bowling.domain.FrameBowlState;
-import bowling.domain.FrameBowlStates;
-import bowling.domain.ScoreType;
+import bowling.domain.state.FrameBowlState;
+import bowling.domain.state.FrameBowlStates;
+import bowling.domain.state.ScoreType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

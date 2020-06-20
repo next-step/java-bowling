@@ -1,5 +1,8 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.state.FrameBowlState;
+import bowling.domain.state.FrameBowlStates;
+import bowling.domain.state.ScoreType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

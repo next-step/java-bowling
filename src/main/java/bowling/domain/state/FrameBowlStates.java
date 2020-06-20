@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.state;
 
 
 import java.util.ArrayList;
@@ -12,18 +12,18 @@ public class FrameBowlStates {
         this.frameBowlStates = new ArrayList<>(frameBowlStates);
     }
 
-    void add(FrameBowlState frameBowlState) {
+    public void add(FrameBowlState frameBowlState) {
         this.frameBowlStates.add(frameBowlState);
     }
 
-    boolean isStrike() {
+    public boolean isStrike() {
         return this.frameBowlStates.stream()
             .filter(frameBowlState -> frameBowlState.getScoreType() == ScoreType.STRIKE)
             .findFirst()
             .isPresent();
     }
 
-    boolean isSpare() {
+    public boolean isSpare() {
         return this.frameBowlStates.stream()
             .filter(frameBowlState -> frameBowlState.getScoreType() == ScoreType.SPARE)
             .findFirst()

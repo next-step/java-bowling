@@ -1,5 +1,8 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.state.FrameBowlState;
+import bowling.domain.state.FrameBowlStates;
+import bowling.domain.state.ScoreType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +11,6 @@ public class FinalFrame implements Frame {
     private final List<Integer> downPins = new ArrayList<>();
 
     private final Frame normalFrame = NormalFrame.first();
-
 
     @Override
     public void play(int downPin) {

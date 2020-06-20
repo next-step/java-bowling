@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.BowlingFrames;
+import bowling.domain.state.FrameBowlStates;
 import java.util.List;
 
 public class BowlingGame {
