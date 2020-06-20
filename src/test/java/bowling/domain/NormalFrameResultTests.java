@@ -14,7 +14,7 @@ class NormalFrameResultTests {
     @Test
     void createTest() {
         int numberOfHitPin = 9;
-        NormalFrameResult normalFrameResult = NormalFrameResult.firstThrow(numberOfHitPin);
+        NormalFrameResult normalFrameResult = NormalFrameResult.firstBowl(numberOfHitPin);
         assertThat(normalFrameResult.isStrikeResult()).isFalse();
     }
 
@@ -22,7 +22,7 @@ class NormalFrameResultTests {
     @ParameterizedTest
     @ValueSource(ints = { -1, 10 })
     void createValidationTest(int invalidValue) {
-        assertThatThrownBy(() -> NormalFrameResult.firstThrow(invalidValue))
+        assertThatThrownBy(() -> NormalFrameResult.firstBowl(invalidValue))
                 .isInstanceOf(InvalidNumberOfHitPinException.class);
     }
 
@@ -30,8 +30,8 @@ class NormalFrameResultTests {
     @Test
     void secondNumberOfHitPinTest() {
         int numberOfHitPin = 5;
-        NormalFrameResult normalFrameResult = NormalFrameResult.firstThrow(numberOfHitPin);
-        NormalFrameResult afterSecondThrow = normalFrameResult.secondThrow(numberOfHitPin);
+        NormalFrameResult normalFrameResult = NormalFrameResult.firstBowl(numberOfHitPin);
+        NormalFrameResult afterSecondThrow = normalFrameResult.secondBowl(numberOfHitPin);
 
         assertThat(afterSecondThrow.isCompleted()).isTrue();
         assertThat(afterSecondThrow).isEqualTo(new NormalFrameResult(new NumberOfHitPin(5), new NumberOfHitPin(5)));
@@ -42,8 +42,8 @@ class NormalFrameResultTests {
     @ValueSource(ints = { -1, -2 })
     void secondNumberOfHitPinMinValidationTest(int invalidSecondHitPin) {
         int numberOfHitPin = 5;
-        NormalFrameResult normalFrameResult = NormalFrameResult.firstThrow(numberOfHitPin);
-        assertThatThrownBy(() -> normalFrameResult.secondThrow(invalidSecondHitPin))
+        NormalFrameResult normalFrameResult = NormalFrameResult.firstBowl(numberOfHitPin);
+        assertThatThrownBy(() -> normalFrameResult.secondBowl(invalidSecondHitPin))
             .isInstanceOf(InvalidNumberOfHitPinException.class);
     }
 
@@ -53,8 +53,8 @@ class NormalFrameResultTests {
         int firstNumberOfHitPin = 5;
         int secondNumberOfHitPin = 6;
 
-        NormalFrameResult normalFrameResult = NormalFrameResult.firstThrow(firstNumberOfHitPin);
-        assertThatThrownBy(() -> normalFrameResult.secondThrow(secondNumberOfHitPin))
+        NormalFrameResult normalFrameResult = NormalFrameResult.firstBowl(firstNumberOfHitPin);
+        assertThatThrownBy(() -> normalFrameResult.secondBowl(secondNumberOfHitPin))
             .isInstanceOf(InvalidNumberOfHitPinException.class);
     }
 }

@@ -15,14 +15,14 @@ public class NormalFrameResult implements FrameResult {
         this.secondNumberOfHitPin = secondNumberOfHitPin;
     }
 
-    public static NormalFrameResult firstThrow(int numberOfHitPin) {
+    public static NormalFrameResult firstBowl(int numberOfHitPin) {
         NumberOfHitPin firstNumberOfHitPin = new NumberOfHitPin(numberOfHitPin);
         validateFirstThrow(firstNumberOfHitPin);
 
         return new NormalFrameResult(firstNumberOfHitPin, null);
     }
 
-    public NormalFrameResult secondThrow(int numberOfHitPin) {
+    public NormalFrameResult secondBowl(int numberOfHitPin) {
         NumberOfHitPin secondNumberOfHitPin = new NumberOfHitPin(numberOfHitPin);
         validateSecondThrow(secondNumberOfHitPin);
 

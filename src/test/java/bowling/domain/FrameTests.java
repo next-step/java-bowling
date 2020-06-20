@@ -6,7 +6,11 @@ import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -38,7 +42,7 @@ class FrameTests {
         int secondNumberOfHitPin = 3;
 
         NormalFrameResult expectFirstResult = (NormalFrameResult) FrameResultFactory.create(firstNumberOfHitPin);
-        NormalFrameResult expectedSecondResult = expectFirstResult.secondThrow(secondNumberOfHitPin);
+        NormalFrameResult expectedSecondResult = expectFirstResult.secondBowl(secondNumberOfHitPin);
 
         assertThat(new Frame(expectFirstResult, null).bowlSecond(secondNumberOfHitPin))
                 .isEqualTo(new Frame(expectedSecondResult, null));
@@ -87,5 +91,20 @@ class FrameTests {
 
         assertThatThrownBy(() -> frame.next(numberOfHitPin))
                 .isInstanceOf(CannotDoNextFrameException.class);
+    }
+
+    @DisplayName("마지막 프레임인지 알려줄 수 있다.")
+    @ParameterizedTest
+    @MethodSource("isFinalFrameResource")
+    void isFinalFrameTest(FrameResult frameResult, boolean expectedResult) {
+        Frame frame = new Frame(frameResult, null);
+
+        assertThat(frame.isFinal()).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> isFinalFrameResource() {
+        return Stream.of(
+                Arguments.of(FrameResultFactory.create(5), false),
+                Arguments.of(FrameResultFactory.create(5), true)
+        );
     }
 }

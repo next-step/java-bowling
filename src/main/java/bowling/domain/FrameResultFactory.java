@@ -7,6 +7,10 @@ public class FrameResultFactory {
         if (numberOfHitPin == STRIKE_NUMBER) {
             return new StrikeFrameResult();
         }
-        return NormalFrameResult.firstThrow(numberOfHitPin);
+        return NormalFrameResult.firstBowl(numberOfHitPin);
+    }
+
+    public static FrameResult createFinal(int numberOfHitPin) {
+        return FinalFrameResult.firstBowl(numberOfHitPin);
     }
 }

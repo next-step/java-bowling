@@ -23,7 +23,7 @@ public class Frame {
         validateSecondBowl();
 
         NormalFrameResult afterFrameResult = parseToNormalFrameResult(this.frameResult)
-                .secondThrow(secondNumberOfHitPin);
+                .secondBowl(secondNumberOfHitPin);
 
         return new Frame(afterFrameResult, null);
     }
@@ -54,6 +54,10 @@ public class Frame {
             throw new ParseNormalFrameException("Strike cannot convert to NormalFrameResult");
         }
         return (NormalFrameResult) frameResult;
+    }
+
+    public boolean isFinal() {
+        return this.frameResult.isFinalFrame();
     }
 
     @Override
