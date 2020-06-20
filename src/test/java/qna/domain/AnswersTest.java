@@ -20,8 +20,7 @@ public class AnswersTest {
     @DisplayName("전체 삭제 예외 테스트")
     void deleteAllException(){
         Answers answers = new Answers();
-        answers.add(AnswerTest.A1);
-        answers.add(AnswerTest.A2);
+        answers.add(new Answer(User.GUEST_USER, QuestionTest.Q1, "answer 1234567"));
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> answers.deleteAll(AnswerTest.A1.getWriter()));
@@ -31,10 +30,12 @@ public class AnswersTest {
     @DisplayName("전체 삭제 검증 테스트")
     void deleteAll(){
         Answers answers = new Answers();
-        answers.add(AnswerTest.A1);
+        answers.add(new Answer(User.GUEST_USER, QuestionTest.Q1, "answer 1234567"));
+        answers.add(new Answer(User.GUEST_USER, QuestionTest.Q2, "answer 1234567"));
 
-        List<DeleteHistory> deleteHistoryList = answers.deleteAll(AnswerTest.A1.getWriter());
+        List<DeleteHistory> deleteHistoryList = answers.deleteAll(User.GUEST_USER);
 
         assertThat(deleteHistoryList).isNotEmpty();
+        assertThat(deleteHistoryList).hasSize(2);
     }
 }
