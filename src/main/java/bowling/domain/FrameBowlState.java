@@ -4,6 +4,7 @@ package bowling.domain;
 import java.util.Objects;
 
 public class FrameBowlState {
+
     private int downPin;
     private ScoreType scoreType;
 

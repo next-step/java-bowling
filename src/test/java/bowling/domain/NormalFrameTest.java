@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 class NormalFrameTest {
 
-
     @Test
     void play_then_strike() {
         NormalFrame normalFrame = NormalFrame.first();

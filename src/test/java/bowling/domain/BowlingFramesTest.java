@@ -3,10 +3,6 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import bowling.domain.BowlingFrames;
-import bowling.domain.Frame;
-import bowling.domain.FrameResult;
-import bowling.domain.NormalFrame;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

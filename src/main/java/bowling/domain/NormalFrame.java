@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class NormalFrame implements Frame {
 
-    private final static int MAX_ROUND = 2;
+    private static final int MAX_ROUND = 2;
 
     private final int position;
 
@@ -49,21 +49,24 @@ public class NormalFrame implements Frame {
 
 
     @Override
-    public List<FrameBowlState> getBowlStates() {
+    public FrameBowlStates getBowlStates() {
         if (isStrike()) {
-            return Arrays.asList(new FrameBowlState(10, ScoreType.STRIKE));
+            return new FrameBowlStates(Arrays.asList(new FrameBowlState(10, ScoreType.STRIKE)));
         }
 
         if (isSpare()) {
-            return Arrays.asList(
+            return new FrameBowlStates(Arrays.asList(
                 new FrameBowlState(this.downPins.get(0), ScoreType.MISS),
                 new FrameBowlState(this.downPins.get(1), ScoreType.SPARE)
-            );
+            ));
         }
 
-        return this.downPins.stream()
-            .map(downPin -> new FrameBowlState(downPin, downPin== 0? ScoreType.GUTTER : ScoreType.MISS))
-            .collect(Collectors.toList());
+        return new FrameBowlStates(
+            this.downPins.stream()
+                .map(downPin -> new FrameBowlState(downPin,
+                    downPin == 0 ? ScoreType.GUTTER : ScoreType.MISS))
+                .collect(Collectors.toList())
+        );
     }
 
     private boolean isSpare() {
@@ -72,7 +75,6 @@ public class NormalFrame implements Frame {
         }
 
         return false;
-
     }
 
     private boolean isStrike() {

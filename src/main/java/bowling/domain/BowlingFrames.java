@@ -2,7 +2,6 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BowlingFrames {
@@ -36,22 +35,25 @@ public class BowlingFrames {
 
     public void play(int downPin) {
         Frame frame = this.frames.get(this.currentPosition);
-        if (!frame.hasTurn()) {
-            frame = this.frames.get(++this.currentPosition);
-        }
-
         frame.play(downPin);
+
+        if (!frame.hasTurn()) {
+            this.currentPosition++;
+        }
     }
 
-    public List<FrameResult> getResults(){
+    public List<FrameBowlStates> getFrameStates() {
         return this.frames.stream()
-            .map(new Function<Frame, FrameResult>() {
-                @Override
-                public FrameResult apply(Frame frame) {
-                    return new FrameResult(frame.getBowlStates());
-                }
-            })
+            .map(Frame::getBowlStates)
             .limit(this.currentPosition + 1)
             .collect(Collectors.toList());
+    }
+
+    public int getCurrentPosition() {
+        return this.currentPosition;
+    }
+
+    public boolean isFinished() {
+        return !this.frames.get(this.frames.size() - 1).hasTurn();
     }
 }
