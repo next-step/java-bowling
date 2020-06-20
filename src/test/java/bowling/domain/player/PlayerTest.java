@@ -41,9 +41,9 @@ class PlayerTest {
     @ParameterizedTest
     @MethodSource("provideNames")
     @DisplayName("정상 생성")
-    void createPlayer() {
-        Player player = this.createPlayer("AB");
-        assertThat(player.getName()).isEqualTo("AB");
+    void createTest(String name) {
+        Player player = this.createPlayer(name);
+        assertThat(player.getName()).isEqualTo(name);
     }
 
     private static final Stream<Arguments> provideNames() {
