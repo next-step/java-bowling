@@ -28,7 +28,6 @@ public class Answers {
         return answers.stream()
                 .map(answer -> answer.delete(user))
                 .map(Optional::get)
-                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
