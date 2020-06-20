@@ -19,6 +19,8 @@ public class AnswerTest {
         DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now());
 
         Optional<DeleteHistory> deleteHistory = A1.delete(UserTest.JAVAJIGI);
+
+        assertThat(A1.isDeleted()).isTrue();
         assertThat(deleteHistory.isPresent()).isTrue();
         assertThat(deleteHistory.get()).isEqualTo(expected);
     }
