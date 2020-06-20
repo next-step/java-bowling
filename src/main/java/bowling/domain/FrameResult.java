@@ -1,7 +1,7 @@
 package bowling.domain;
 
 public interface FrameResult {
-    boolean isStrike();
+    boolean isStrikeResult();
     boolean isCompleted();
     boolean isFinalFrame();
 }

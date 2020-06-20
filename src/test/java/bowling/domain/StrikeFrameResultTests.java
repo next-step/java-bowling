@@ -11,7 +11,7 @@ class StrikeFrameResultTests {
     void createTest() {
         StrikeFrameResult strikeFrameResult = new StrikeFrameResult();
 
-        assertThat(strikeFrameResult.isStrike()).isTrue();
+        assertThat(strikeFrameResult.isStrikeResult()).isTrue();
         assertThat(strikeFrameResult.isCompleted()).isTrue();
     }
 }

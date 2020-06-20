@@ -40,7 +40,7 @@ public class NormalFrameResult implements FrameResult {
     }
 
     @Override
-    public boolean isStrike() {
+    public boolean isStrikeResult() {
         return false;
     }
 

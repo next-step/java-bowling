@@ -15,7 +15,7 @@ class NormalFrameResultTests {
     void createTest() {
         int numberOfHitPin = 9;
         NormalFrameResult normalFrameResult = NormalFrameResult.firstThrow(numberOfHitPin);
-        assertThat(normalFrameResult.isStrike()).isFalse();
+        assertThat(normalFrameResult.isStrikeResult()).isFalse();
     }
 
     @DisplayName("첫번째 투구로 맞춘 핀의 수는 0 ~ 9의 범위를 벗어날 수 없다.")

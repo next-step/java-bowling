@@ -50,7 +50,7 @@ public class Frame {
     }
 
     private NormalFrameResult parseToNormalFrameResult(FrameResult frameResult) {
-        if (frameResult.isStrike()) {
+        if (frameResult.isStrikeResult()) {
             throw new ParseNormalFrameException("Strike cannot convert to NormalFrameResult");
         }
         return (NormalFrameResult) frameResult;

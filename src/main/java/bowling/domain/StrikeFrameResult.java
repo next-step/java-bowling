@@ -6,7 +6,7 @@ public class StrikeFrameResult implements FrameResult {
     private final int NUMBER_OF_HIT_PIN = 10;
 
     @Override
-    public boolean isStrike() {
+    public boolean isStrikeResult() {
         return true;
     }
 
