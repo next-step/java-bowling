@@ -31,7 +31,11 @@ public class OutputView {
 
     private static void printFrame(Frame frame, StringBuilder stringBuilder) {
         stringBuilder.append("  ");
-        stringBuilder.append(frame.getScore());
+        String score = frame.getScore().getScore();
+        if (score.length() == 1) {
+            score += "  ";
+        }
+        stringBuilder.append(score);
         stringBuilder.append(" |");
     }
 

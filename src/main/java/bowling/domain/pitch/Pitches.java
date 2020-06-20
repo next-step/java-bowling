@@ -8,8 +8,9 @@ import java.util.List;
 
 public class Pitches {
     private static final int FIRST_PITCH_INDEX = 0;
+    private static final int SECOND_PITCH_INDEX = 1;
     private static final int STRIKE_PIN_COUNTS = 10;
-    private static final int MAXIMUM_PITCHES_COUNT = 2;
+    private static final int MAXIMUM_PITCH_COUNTS = 2;
 
     private final List<Pitch> pitches = new ArrayList<>();
 
@@ -17,15 +18,6 @@ public class Pitches {
         pitches.add(new Pitch(hitCounts));
         if (isFinishingPitches()) {
             validatePitchesSum();
-        }
-    }
-
-    private void validatePitchesSum() {
-        int pitchesSum = pitches.stream()
-                .mapToInt(Pitch::getHitCounts)
-                .sum();
-        if (pitchesSum > STRIKE_PIN_COUNTS) {
-            throw new BowlingBuildingException();
         }
     }
 
@@ -37,15 +29,28 @@ public class Pitches {
         return pitches.get(FIRST_PITCH_INDEX).getHitCounts() == STRIKE_PIN_COUNTS;
     }
 
-    private boolean isFinishingPitches() {
-        return pitches.size() == MAXIMUM_PITCHES_COUNT;
+    public boolean isSpare() {
+        return pitches.get(FIRST_PITCH_INDEX).getHitCounts() + pitches.get(SECOND_PITCH_INDEX).getHitCounts() == STRIKE_PIN_COUNTS;
     }
 
     public boolean isMovableToNextPitch() {
-        int pitchesSum = pitches.stream()
+        return getPitchCounts() < MAXIMUM_PITCH_COUNTS || getPitchesSum() == STRIKE_PIN_COUNTS;
+    }
+
+    private void validatePitchesSum() {
+        if (getPitchesSum() > STRIKE_PIN_COUNTS && !isStrike()) {
+            throw new BowlingBuildingException();
+        }
+    }
+
+    public boolean isFinishingPitches() {
+        return getPitchCounts() == MAXIMUM_PITCH_COUNTS;
+    }
+
+    private int getPitchesSum() {
+        return pitches.stream()
                 .mapToInt(Pitch::getHitCounts)
                 .sum();
-        return pitches.size() < MAXIMUM_PITCHES_COUNT || pitchesSum == STRIKE_PIN_COUNTS;
     }
 
     public int getPitchCounts() {

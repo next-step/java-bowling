@@ -19,6 +19,10 @@ public class Pitch {
         }
     }
 
+    public boolean isGutter() {
+        return hitCounts == MINIMUM_HIT_COUNTS;
+    }
+
     public int getHitCounts() {
         return hitCounts;
     }

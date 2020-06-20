@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.bowling.BowlingScore;
 import bowling.domain.pitch.Pitches;
 
 public interface Frame {
@@ -12,5 +13,5 @@ public interface Frame {
 
     public Pitches getPitches();
 
-    public String getScore();
+    public BowlingScore getScore();
 }
