@@ -1,8 +1,6 @@
-package bowling.domain;
+package bowling.step4.domain;
 
-import bowling.step2.domain.Score;
-import bowling.step2.domain.ScoreType;
-import bowling.step2.domain.scores.*;
+import bowling.step4.domain.scores.FinalScores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,7 +16,7 @@ public class FinalScoresTest {
     @ParameterizedTest
     @MethodSource("provideStrikeScores")
     void 스트라이크_테스트(FinalScores scores) {
-        assertEquals(true, scores.isType(ScoreType.STRIKE));
+        assertEquals(true, ScoresType.STRIKE.of(scores));
     }
 
     private static Stream<Arguments> provideStrikeScores() {
@@ -40,26 +38,25 @@ public class FinalScoresTest {
         );
     }
 
-    @DisplayName("스코어의 값이 전부 채워졌는지 확인하는 테스트")
+    @DisplayName("첫 번째 스코어와 두 번째 스코어가 채워졌는지 확인하는 테스트")
     @ParameterizedTest
-    @MethodSource("provideFullyScores")
+    @MethodSource("provideFullyFirstAndSecondScore")
     void 스코어_채워짐_확인_테스트(FinalScores scores) {
-        assertEquals(true, scores.isFullOf());
+        assertEquals(true, ScoresType.FULL.of(scores));
     }
 
-    private static Stream<Arguments> provideFullyScores() {
+    private static Stream<Arguments> provideFullyFirstAndSecondScore() {
         return Stream.of(
             Arguments.of(
                 FinalScores.init()
                            .nextInit(Score.valueOf(1))
                            .nextInit(Score.valueOf(2))
-                           .nextInit(Score.valueOf(3))
             ),
             Arguments.of(
                 FinalScores.init()
                            .nextInit(Score.valueOf(3))
                            .nextInit(Score.valueOf(4))
-                           .nextInit(Score.valueOf(5))
+                           .nextInit(null)
             ),
             Arguments.of(
                 FinalScores.init()
@@ -70,11 +67,27 @@ public class FinalScoresTest {
         );
     }
 
+    @DisplayName("보너스 스코어가 채워졌는지 확인")
+    @ParameterizedTest
+    @MethodSource("provideFullyBonusScore")
+    void 보너스_채워짐_확인_테스트(FinalScores scores) {
+        assertEquals(true, scores.filledBonus());
+    }
+
+    private static Stream<Arguments> provideFullyBonusScore() {
+        return Stream.of(
+            Arguments.of(FinalScores.of(null, null, Score.valueOf(1))),
+            Arguments.of(FinalScores.of(null, Score.valueOf(2), Score.valueOf(3))),
+            Arguments.of(FinalScores.of(Score.valueOf(4), null, Score.valueOf(5))),
+            Arguments.of(FinalScores.of(Score.valueOf(6), Score.valueOf(7), Score.valueOf(8)))
+        );
+    }
+
     @DisplayName("스코어가 스페어 되었는지 확인하는 테스트")
     @ParameterizedTest
     @MethodSource("provideSparedScores")
     void 스코어_스페어_테스트(FinalScores scores) {
-        assertEquals(true, scores.isType(ScoreType.SPARED));
+        assertEquals(true, ScoresType.SPARED.of(scores));
     }
 
     private static Stream<Arguments> provideSparedScores() {
@@ -181,7 +194,7 @@ public class FinalScoresTest {
                            .nextInit(Score.valueOf(0))
                            .nextInit(Score.valueOf(7))
                            .nextInit(Score.valueOf(7)),
-                14
+                7
             ),
             Arguments.of(
                 FinalScores.init()

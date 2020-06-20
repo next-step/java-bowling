@@ -1,8 +1,6 @@
-package bowling.domain;
+package bowling.step4.domain;
 
-import bowling.step2.domain.Score;
-import bowling.step2.domain.ScoreType;
-import bowling.step2.domain.scores.NormalScores;
+import bowling.step4.domain.scores.NormalScores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,7 +16,7 @@ public class NormalScoresTest {
     @ParameterizedTest
     @MethodSource("provideStrikeScores")
     void 스트라이크_테스트(NormalScores scores) {
-        assertEquals(true, scores.isType(ScoreType.STRIKE));
+        assertEquals(true, ScoresType.STRIKE.of(scores));
     }
 
     private static Stream<Arguments> provideStrikeScores() {
@@ -44,7 +42,7 @@ public class NormalScoresTest {
     @ParameterizedTest
     @MethodSource("provideFullyScores")
     void 스코어_채워짐_확인_테스트(NormalScores scores) {
-        assertEquals(true, scores.isFullOf());
+        assertEquals(true, ScoresType.FULL.of(scores));
     }
 
     private static Stream<Arguments> provideFullyScores() {
@@ -63,6 +61,15 @@ public class NormalScoresTest {
                 NormalScores.init()
                             .nextInit(Score.valueOf(5))
                             .nextInit(Score.valueOf(6))
+            ),
+            Arguments.of(
+                NormalScores.init()
+                            .nextInit(Score.getStrike())
+            ),
+            Arguments.of(
+                NormalScores.init()
+                            .nextInit(Score.valueOf(0))
+                            .nextInit(Score.getStrike())
             )
         );
     }
@@ -71,7 +78,7 @@ public class NormalScoresTest {
     @ParameterizedTest
     @MethodSource("provideSparedScores")
     void 스코어_스페어_테스트(NormalScores scores) {
-        assertEquals(true, scores.isType(ScoreType.SPARED));
+        assertEquals(true, ScoresType.SPARED.of(scores));
     }
 
     private static Stream<Arguments> provideSparedScores() {
