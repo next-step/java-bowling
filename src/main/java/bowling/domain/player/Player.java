@@ -5,11 +5,15 @@ import bowling.domain.exception.BowlingBuildingException;
 public class Player {
     private static final int MANDATORY_NAME_LENGTH = 3;
 
-    private static String name;
+    private final String name;
 
     public Player(String name) {
         validateName(name);
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     private void validateName(String name) {

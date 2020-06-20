@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.exception.BowlingBuildingException;
 import bowling.domain.pitch.Pitch;
 import bowling.domain.pitch.Pitches;
 import org.junit.jupiter.api.DisplayName;
@@ -9,8 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.*;
 
 class PitchesTest {
 
@@ -64,5 +64,16 @@ class PitchesTest {
         pitches.recordPitch(1);
 
         assertThat(pitches.isMovableToNextPitch()).isFalse();
+    }
+
+    @DisplayName("첫 번째 투구와 두 번째 투구의 합이 10을 넘어가면 예외 발생")
+    @Test
+    public void pitchSum_10초과_예외() {
+        Pitches pitches = new Pitches();
+        pitches.recordPitch(5);
+
+        assertThatThrownBy(() -> {
+            pitches.recordPitch(9);
+        }).isInstanceOf(BowlingBuildingException.class);
     }
 }

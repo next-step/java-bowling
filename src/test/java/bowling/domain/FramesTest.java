@@ -27,9 +27,9 @@ class FramesTest {
         Frames frames = Frames.initiate();
         frames.bowl(10);
 
-        Frame nextFrame = frames.getNextFrame();
+        frames.moveToNextFrame();
 
-        assertThat(nextFrame.getIndex()).isEqualTo(2);
+        assertThat(frames.getCurrentFrameIndex()).isEqualTo(2);
     }
 
     @DisplayName("플레이 할 Frame이 있으면 True 반환")
@@ -47,7 +47,7 @@ class FramesTest {
         Frames frames = Frames.initiate();
         for (int i = 0; i < 11; i++) {
             frames.bowl(10);
-            frames.getNextFrame();
+            frames.moveToNextFrame();
         }
 
         assertThat(frames.hasNextFrame()).isFalse();

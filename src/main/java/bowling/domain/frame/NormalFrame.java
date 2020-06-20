@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.bowling.BowlingScoreParser;
 import bowling.domain.pitch.Pitches;
 
 public class NormalFrame implements Frame {
@@ -32,12 +33,17 @@ public class NormalFrame implements Frame {
         pitches.recordPitch(hitCounts);
     }
 
+    public int getIndex() {
+        return index;
+    }
+
     @Override
     public Pitches getPitches() {
         return pitches;
     }
 
-    public int getIndex() {
-        return index;
+    @Override
+    public String getScore() {
+        return BowlingScoreParser.parse(pitches);
     }
 }

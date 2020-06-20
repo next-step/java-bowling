@@ -1,5 +1,7 @@
 package bowling.domain.pitch;
 
+import bowling.domain.exception.BowlingBuildingException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,13 +15,25 @@ public class Pitches {
 
     public void recordPitch(int hitCounts) {
         pitches.add(new Pitch(hitCounts));
+        if (isFinishingPitches()) {
+            validatePitchesSum();
+        }
+    }
+
+    private void validatePitchesSum() {
+        int pitchesSum = pitches.stream()
+                .mapToInt(Pitch::getHitCounts)
+                .sum();
+        if (pitchesSum > STRIKE_PIN_COUNTS) {
+            throw new BowlingBuildingException();
+        }
     }
 
     public boolean isMovableToNextFrame() {
         return isStrike() || isFinishingPitches();
     }
 
-    private boolean isStrike() {
+    public boolean isStrike() {
         return pitches.get(FIRST_PITCH_INDEX).getHitCounts() == STRIKE_PIN_COUNTS;
     }
 
@@ -31,7 +45,11 @@ public class Pitches {
         int pitchesSum = pitches.stream()
                 .mapToInt(Pitch::getHitCounts)
                 .sum();
-        return pitches.size() != MAXIMUM_PITCHES_COUNT || pitchesSum == STRIKE_PIN_COUNTS;
+        return pitches.size() < MAXIMUM_PITCHES_COUNT || pitchesSum == STRIKE_PIN_COUNTS;
+    }
+
+    public int getPitchCounts() {
+        return pitches.size();
     }
 
     public List<Pitch> getPitches() {
