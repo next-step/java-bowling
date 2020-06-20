@@ -3,9 +3,8 @@ package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.domain.FinalFrame;
-import bowling.domain.FrameResult;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +17,12 @@ class FinalFrameTest {
         finalFrame.play(1);
         finalFrame.play(2);
 
-        FrameResult frameResult = new FrameResult(Arrays.asList(1,2));
-        assertThat(finalFrame.getResult()).isEqualTo(frameResult);
+        List<FrameBowlState> bowlStates = new ArrayList<>();
+        bowlStates.add(new FrameBowlState(1, ScoreType.MISS));
+        bowlStates.add(new FrameBowlState(2, ScoreType.MISS));
+
+        assertThat(finalFrame.getBowlStates()).isEqualTo(bowlStates);
+        //assertThat(finalFrame.()).isEqualTo(frameResult);
     }
 
     @DisplayName("spare는 세번의 라운드를 진행할수있다.")
@@ -30,8 +33,13 @@ class FinalFrameTest {
         finalFrame.play(9);
         finalFrame.play(9);
 
-        FrameResult frameResult = new FrameResult(Arrays.asList(1,9,9));
-        assertThat(finalFrame.getResult()).isEqualTo(frameResult);
+        List<FrameBowlState> bowlStates = new ArrayList<>();
+        bowlStates.add(new FrameBowlState(1, ScoreType.MISS));
+        bowlStates.add(new FrameBowlState(9, ScoreType.SPARE));
+        bowlStates.add(new FrameBowlState(9, ScoreType.MISS));
+
+        assertThat(finalFrame.getBowlStates()).isEqualTo(bowlStates);
+        //assertThat(finalFrame.getResult()).isEqualTo(frameResult);
     }
 
     @DisplayName("strike는 세번의 라운드를 진행할수있다.")
@@ -43,8 +51,13 @@ class FinalFrameTest {
         finalFrame.play(9);
         finalFrame.play(9);
 
-        FrameResult frameResult = new FrameResult(Arrays.asList(10,9,9));
-        assertThat(finalFrame.getResult()).isEqualTo(frameResult);
+        List<FrameBowlState> bowlStates = new ArrayList<>();
+        bowlStates.add(new FrameBowlState(10, ScoreType.STRIKE));
+        bowlStates.add(new FrameBowlState(9, ScoreType.MISS));
+        bowlStates.add(new FrameBowlState(9, ScoreType.MISS));
+
+        assertThat(finalFrame.getBowlStates()).isEqualTo(bowlStates);
+        //assertThat(finalFrame.getResult()).isEqualTo(frameResult);
     }
 
 }

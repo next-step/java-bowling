@@ -23,20 +23,4 @@ class BowlingFramesTest {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("프레임들의 결과를 조회한다.")
-    @Test
-    void play(){
-        BowlingFrames bowlingFrames = BowlingFrames.newInstance();
-        bowlingFrames.play(10);
-        bowlingFrames.play(1);
-        bowlingFrames.play(2);
-
-        List<FrameResult> frameResults = bowlingFrames.getResults();
-
-        List<FrameResult> expect= Arrays.asList(
-            new FrameResult(Arrays.asList(10)),
-            new FrameResult(Arrays.asList(1,2))
-        );
-        assertThat(frameResults).isEqualTo(expect);
-    }
 }

@@ -2,31 +2,38 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame{
 
     private final List<Integer> downPins = new ArrayList<>();
 
+    private final Frame normalFrame = NormalFrame.first();
+
+
     @Override
     public void play(int downPin) {
-        if(!hasTurn()){
+        if(this.normalFrame.hasTurn()){
+            this.normalFrame.play(downPin);
+            return;
+        }
+
+        if (!hasTurn()) {
             throw new IllegalStateException("can not play");
         }
+
 
         downPins.add(downPin);
     }
 
     @Override
     public boolean hasTurn() {
-        if(this.downPins.size() > 2){
-            return false;
-        }
-
-        if(this.downPins.size()  < 2){
+        if (normalFrame.hasTurn()) {
             return true;
         }
 
-        if(this.downPins.size()  == 2 && sumDownPin() >= 10){
+
+        if(this.downPins.size() < getBonusCount()){
             return true;
         }
 
@@ -34,11 +41,40 @@ public class FinalFrame implements Frame{
     }
 
     @Override
-    public FrameResult getResult() {
-        return new FrameResult(new ArrayList<>(this.downPins));
+    public List<FrameBowlState> getBowlStates() {
+        List<FrameBowlState> bowlStates = new ArrayList<>(normalFrame.getBowlStates());
+
+        bowlStates.addAll(this.downPins.stream().map(
+            integer -> new FrameBowlState(integer, integer == 10 ? ScoreType.STRIKE : ScoreType.MISS))
+            .collect(Collectors.toList())
+        );
+
+        return bowlStates;
     }
 
-    private int sumDownPin() {
-        return this.downPins.stream().reduce(0, Integer::sum);
+
+    private int getBonusCount() {
+        List<FrameBowlState> states = normalFrame.getBowlStates();
+
+        boolean hasStrike = states.stream()
+            .filter(frameBowlState -> frameBowlState.getScoreType() == ScoreType.STRIKE)
+            .findFirst()
+            .isPresent();
+
+        if (hasStrike) {
+            return 2;
+        }
+
+        boolean hasSpare = states.stream()
+            .filter(frameBowlState -> frameBowlState.getScoreType() == ScoreType.SPARE)
+            .findFirst()
+            .isPresent();
+
+        if (hasSpare) {
+            return 1;
+        }
+
+        return 0;
     }
+
 }

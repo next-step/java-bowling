@@ -3,9 +3,8 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import bowling.domain.FrameResult;
-import bowling.domain.NormalFrame;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +16,9 @@ class NormalFrameTest {
         NormalFrame normalFrame = NormalFrame.first();
         normalFrame.play(10);
 
-        FrameResult frameResult = new FrameResult(Arrays.asList(10));
+        List<FrameBowlState> expect = Arrays.asList(new FrameBowlState(10, ScoreType.STRIKE));
 
-        assertThat(normalFrame.getResult()).isEqualTo(frameResult);
+        assertThat(normalFrame.getBowlStates()).isEqualTo(expect);
     }
 
     @DisplayName("strike후에 플레이 하면 예외 발생한다.")
@@ -39,9 +38,12 @@ class NormalFrameTest {
         normalFrame.play(8);
         normalFrame.play(1);
 
-        FrameResult frameResult = new FrameResult(Arrays.asList(8, 1));
+        List<FrameBowlState> expect = Arrays.asList(
+            new FrameBowlState(8, ScoreType.MISS),
+            new FrameBowlState(1, ScoreType.MISS)
+        );
 
-        assertThat(normalFrame.getResult()).isEqualTo(frameResult);
+        assertThat(normalFrame.getBowlStates()).isEqualTo(expect);
     }
 
     @DisplayName("3번의 플레이를 하면 예외가 발생한다.")
@@ -55,5 +57,4 @@ class NormalFrameTest {
         assertThatThrownBy(() -> normalFrame.play(1))
             .isInstanceOf(IllegalStateException.class);
     }
-
 }

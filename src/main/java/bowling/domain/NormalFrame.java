@@ -1,7 +1,9 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NormalFrame implements Frame {
 
@@ -45,9 +47,40 @@ public class NormalFrame implements Frame {
         return true;
     }
 
+
     @Override
-    public FrameResult getResult() {
-        return new FrameResult(new ArrayList<>(this.downPins));
+    public List<FrameBowlState> getBowlStates() {
+        if (isStrike()) {
+            return Arrays.asList(new FrameBowlState(10, ScoreType.STRIKE));
+        }
+
+        if (isSpare()) {
+            return Arrays.asList(
+                new FrameBowlState(this.downPins.get(0), ScoreType.MISS),
+                new FrameBowlState(this.downPins.get(1), ScoreType.SPARE)
+            );
+        }
+
+        return this.downPins.stream()
+            .map(downPin -> new FrameBowlState(downPin, downPin== 0? ScoreType.GUTTER : ScoreType.MISS))
+            .collect(Collectors.toList());
+    }
+
+    private boolean isSpare() {
+        if (this.downPins.size() == 2 && sumDownPin() == 10) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    private boolean isStrike() {
+        if (this.downPins.size() == 1 && this.downPins.get(0) == 10) {
+            return true;
+        }
+
+        return false;
     }
 
     private int sumDownPin() {
