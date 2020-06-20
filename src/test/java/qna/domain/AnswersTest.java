@@ -22,7 +22,7 @@ public class AnswersTest {
         Answers answers = new Answers();
         answers.add(new Answer(User.GUEST_USER, QuestionTest.Q1, "answer 1234567"));
 
-        assertThatIllegalArgumentException()
+        assertThatExceptionOfType(RuntimeException.class)
                 .isThrownBy(() -> answers.deleteAll(AnswerTest.A1.getWriter()));
     }
 

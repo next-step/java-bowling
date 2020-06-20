@@ -1,11 +1,11 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -46,18 +46,13 @@ public class Answer extends AbstractEntity {
     }
 
 
-    public Optional<DeleteHistory> delete(User user) {
+    public DeleteHistory delete(User user) throws CannotDeleteException {
         if (!isOwner(user)) {
-            throw new IllegalArgumentException(user.getName() + "는 답변을 삭제할 수 있는 권한이 없습니다.");
+            throw new CannotDeleteException(user.getName() + "는 답변을 삭제할 수 있는 권한이 없습니다.");
         }
         if (!isDeleted()) {
             deleted = true;
-            return Optional.ofNullable(createDeleteHistory());
         }
-        return Optional.empty();
-    }
-
-    private DeleteHistory createDeleteHistory() {
         return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 
