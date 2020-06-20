@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -15,9 +16,11 @@ public class AnswerTest {
     @Test
     @DisplayName("답변을 삭제하면 답변 기록을 반환하고 검증한다.")
     void deleteByUser() {
-        DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, 1l, A1.getWriter(), LocalDateTime.now());
-        assertThat(A1.delete(UserTest.JAVAJIGI).isPresent()).isTrue();
-        assertThat(A1.delete(UserTest.JAVAJIGI).get()).isEqualTo(expected);
+        DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now());
+
+        Optional<DeleteHistory> deleteHistory = A1.delete(UserTest.JAVAJIGI);
+        assertThat(deleteHistory.isPresent()).isTrue();
+        assertThat(deleteHistory.get()).isEqualTo(expected);
     }
 
     @Test
@@ -30,7 +33,7 @@ public class AnswerTest {
     @Test
     @DisplayName("이미 삭제된 답변은 빈 Optional을 리턴한다.")
     void deletedAnswerReturnEmptyOptional() {
-        A1.delete(UserTest.JAVAJIGI);
-        assertThat(A1.delete(UserTest.JAVAJIGI)).isNull();
+        A2.delete(UserTest.SANJIGI);
+        assertThat(A2.delete(UserTest.SANJIGI).isPresent()).isFalse();
     }
 }
