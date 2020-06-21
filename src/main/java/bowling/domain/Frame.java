@@ -39,7 +39,7 @@ public class Frame {
         return nextFrame;
     }
 
-    public FrameStatus calculateCurrentStatus() {
+    public FrameStatuses calculateCurrentStatus() {
         return this.frameResult.calculateCurrentStatus();
     }
 

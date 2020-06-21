@@ -1,11 +1,11 @@
 package bowling.domain.frameResult;
 
-import bowling.domain.FrameStatus;
+import bowling.domain.FrameStatuses;
 
 public interface FrameResult {
     boolean isStrikeResult();
     boolean isCompleted();
     boolean isFinalFrame();
-    FrameStatus calculateCurrentStatus();
+    FrameStatuses calculateCurrentStatus();
 }
 

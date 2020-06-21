@@ -1,6 +1,6 @@
 package bowling.domain.frameResult;
 
-import bowling.domain.FrameStatus;
+import bowling.domain.FrameStatuses;
 import bowling.domain.NumberOfHitPin;
 
 public class FinalFrameResult implements FrameResult {
@@ -31,7 +31,7 @@ public class FinalFrameResult implements FrameResult {
     }
 
     @Override
-    public FrameStatus calculateCurrentStatus() {
+    public FrameStatuses calculateCurrentStatus() {
         // TODO
         return null;
     }

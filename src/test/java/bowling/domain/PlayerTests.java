@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class PlayerTests {
@@ -40,7 +43,8 @@ class PlayerTests {
     void bowlFirstTest() {
         int numberOfHitPin = 3;
 
-        assertThat(player.bowlFirst(numberOfHitPin)).isEqualTo(FrameStatus.THREE);
+        assertThat(player.bowlFirst(numberOfHitPin))
+                .isEqualTo(new FrameStatuses(Collections.singletonList(FrameStatus.THREE)));
         assertThat(player.checkWhere()).isEqualTo(1);
     }
 
@@ -51,7 +55,8 @@ class PlayerTests {
         int secondNumberOfHitPin = 5;
 
         player.bowlFirst(firstNumberOfHitPin);
-        assertThat(player.bowl(secondNumberOfHitPin)).isEqualTo(FrameStatus.FIVE);
+        assertThat(player.bowl(secondNumberOfHitPin))
+                .isEqualTo(new FrameStatuses(Collections.singletonList(FrameStatus.FIVE)));
         assertThat(player.checkWhere()).isEqualTo(2);
     }
 
@@ -64,7 +69,8 @@ class PlayerTests {
 
         player.bowlFirst(firstNumberOfHitPin);
         player.bowl(secondNumberOfHitPin);
-        assertThat(player.bowl(thirdNumberOfHitPin)).isEqualTo(FrameStatus.SPARE);
+        assertThat(player.bowl(thirdNumberOfHitPin))
+                .isEqualTo(new FrameStatuses(Arrays.asList(FrameStatus.FIVE, FrameStatus.SPARE)));
         assertThat(player.checkWhere()).isEqualTo(2);
     }
 }

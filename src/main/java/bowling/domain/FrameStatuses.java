@@ -35,4 +35,11 @@ public class FrameStatuses {
     public int hashCode() {
         return Objects.hash(frameStatusList);
     }
+
+    @Override
+    public String toString() {
+        return "FrameStatuses{" +
+                "frameStatusList=" + frameStatusList +
+                '}';
+    }
 }

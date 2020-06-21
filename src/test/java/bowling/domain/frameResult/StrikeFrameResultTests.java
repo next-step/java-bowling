@@ -1,8 +1,11 @@
 package bowling.domain.frameResult;
 
 import bowling.domain.FrameStatus;
+import bowling.domain.FrameStatuses;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,6 +24,7 @@ class StrikeFrameResultTests {
     void getStatusTest() {
         StrikeFrameResult strikeFrameResult = new StrikeFrameResult();
 
-        assertThat(strikeFrameResult.calculateCurrentStatus()).isEqualTo(FrameStatus.STRIKE);
+        assertThat(strikeFrameResult.calculateCurrentStatus())
+                .isEqualTo(new FrameStatuses(Collections.singletonList(FrameStatus.STRIKE)));
     }
 }

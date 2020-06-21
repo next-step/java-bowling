@@ -1,9 +1,12 @@
 package bowling.domain.frameResult;
 
 import bowling.domain.FrameStatus;
+import bowling.domain.FrameStatuses;
 import bowling.domain.NumberOfHitPin;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 
 public class NormalFrameResult implements FrameResult {
@@ -57,11 +60,14 @@ public class NormalFrameResult implements FrameResult {
     }
 
     @Override
-    public FrameStatus calculateCurrentStatus() {
+    public FrameStatuses calculateCurrentStatus() {
         if (this.isCompleted()) {
-            return FrameStatus.find(this.firstNumberOfHitPin, this.secondNumberOfHitPin);
+            return new FrameStatuses(Arrays.asList(
+                    FrameStatus.find(this.firstNumberOfHitPin),
+                    FrameStatus.find(this.firstNumberOfHitPin, this.secondNumberOfHitPin)
+            ));
         }
-        return FrameStatus.find(this.firstNumberOfHitPin);
+        return new FrameStatuses(Collections.singletonList(FrameStatus.find(this.firstNumberOfHitPin)));
     }
 
     @Override

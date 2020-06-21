@@ -1,7 +1,9 @@
 package bowling.domain.frameResult;
 
 import bowling.domain.FrameStatus;
+import bowling.domain.FrameStatuses;
 
+import java.util.Collections;
 import java.util.Objects;
 
 public class StrikeFrameResult implements FrameResult {
@@ -23,8 +25,8 @@ public class StrikeFrameResult implements FrameResult {
     }
 
     @Override
-    public FrameStatus calculateCurrentStatus() {
-        return FrameStatus.STRIKE;
+    public FrameStatuses calculateCurrentStatus() {
+        return new FrameStatuses(Collections.singletonList(FrameStatus.STRIKE));
     }
 
     @Override

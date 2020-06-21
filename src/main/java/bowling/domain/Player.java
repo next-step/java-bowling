@@ -9,14 +9,14 @@ public class Player {
         this.name = playerName;
     }
 
-    public FrameStatus bowlFirst(int numberOfHitPin) {
+    public FrameStatuses bowlFirst(int numberOfHitPin) {
         Frame firstFrame = Frame.bowlFirst(numberOfHitPin);
         this.firstFrame = firstFrame;
         this.currentFrame = firstFrame;
         return calculateCurrentStatus();
     }
 
-    public FrameStatus bowl(int numberOfHitPin) {
+    public FrameStatuses bowl(int numberOfHitPin) {
         if (this.currentFrame.isCompleted()) {
             this.currentFrame = currentFrame.next(numberOfHitPin);
             return calculateCurrentStatus();
@@ -25,7 +25,7 @@ public class Player {
         return calculateCurrentStatus();
     }
 
-    public FrameStatus calculateCurrentStatus() {
+    public FrameStatuses calculateCurrentStatus() {
         return this.currentFrame.calculateCurrentStatus();
     }
 

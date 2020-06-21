@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Collections;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -115,16 +116,16 @@ class FrameTests {
     @DisplayName("프레임의 현재 상태를 알려줄 수 있다.")
     @ParameterizedTest
     @MethodSource("statusResource")
-    void calculateStatusTest(int numberOfHitPin, FrameStatus expectedResult) {
+    void calculateStatusTest(int numberOfHitPin, FrameStatuses expectedResult) {
         Frame frame = Frame.bowlFirst(numberOfHitPin);
 
         assertThat(frame.calculateCurrentStatus()).isEqualTo(expectedResult);
     }
     public static Stream<Arguments> statusResource() {
         return Stream.of(
-                Arguments.of(0, FrameStatus.GUTTER),
-                Arguments.of(5, FrameStatus.FIVE),
-                Arguments.of(10, FrameStatus.STRIKE)
+                Arguments.of(0, new FrameStatuses(Collections.singletonList(FrameStatus.GUTTER))),
+                Arguments.of(5, new FrameStatuses(Collections.singletonList(FrameStatus.FIVE))),
+                Arguments.of(10, new FrameStatuses(Collections.singletonList(FrameStatus.STRIKE)))
         );
     }
 }
