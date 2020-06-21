@@ -3,6 +3,8 @@ package bowling.domain.dto;
 import bowling.exception.message.ErrorMessage;
 import bowling.util.StringUtil;
 
+import java.util.Objects;
+
 public class FrameResult {
 
     private final String desc;
@@ -24,5 +26,18 @@ public class FrameResult {
 
     public String getDesc() {
         return desc;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FrameResult)) return false;
+        FrameResult that = (FrameResult) o;
+        return Objects.equals(desc, that.desc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(desc);
     }
 }
