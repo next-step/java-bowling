@@ -12,4 +12,9 @@ public class Player {
         this.frame = Frame.bowlFirst(numberOfHitPin);
         return this.frame.calculateCurrentStatus();
     }
+
+    public FrameStatus bowl(int secondNumberOfHitPin) {
+        Frame nextFrame = frame.next(secondNumberOfHitPin);
+        return nextFrame.calculateCurrentStatus();
+    }
 }
