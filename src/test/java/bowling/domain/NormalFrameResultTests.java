@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.FrameResult.NormalFrameResult;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

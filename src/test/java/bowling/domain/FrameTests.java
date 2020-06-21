@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.FrameResult.FrameResult;
+import bowling.domain.FrameResult.NormalFrameResult;
+import bowling.domain.FrameResult.StrikeFrameResult;
 import bowling.domain.exceptions.CannotBowlException;
 import bowling.domain.exceptions.CannotDoNextFrameException;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;

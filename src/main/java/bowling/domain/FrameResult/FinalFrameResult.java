@@ -1,4 +1,7 @@
-package bowling.domain;
+package bowling.domain.FrameResult;
+
+import bowling.domain.FrameStatus;
+import bowling.domain.NumberOfHitPin;
 
 public class FinalFrameResult implements FrameResult {
     private NumberOfHitPin firstNumberOfHitPin;
@@ -25,5 +28,11 @@ public class FinalFrameResult implements FrameResult {
     @Override
     public boolean isFinalFrame() {
         return true;
+    }
+
+    @Override
+    public FrameStatus calculateCurrentStatus() {
+        // TODO
+        return null;
     }
 }

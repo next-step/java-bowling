@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.FrameResult;
 
+import bowling.domain.FrameStatus;
+import bowling.domain.NumberOfHitPin;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 
 import java.util.Objects;
@@ -10,7 +12,7 @@ public class NormalFrameResult implements FrameResult {
     private NumberOfHitPin firstNumberOfHitPin;
     private NumberOfHitPin secondNumberOfHitPin;
 
-    NormalFrameResult(NumberOfHitPin firstNumberOfHitPin, NumberOfHitPin secondNumberOfHitPin) {
+    public NormalFrameResult(NumberOfHitPin firstNumberOfHitPin, NumberOfHitPin secondNumberOfHitPin) {
         this.firstNumberOfHitPin = firstNumberOfHitPin;
         this.secondNumberOfHitPin = secondNumberOfHitPin;
     }
@@ -52,6 +54,12 @@ public class NormalFrameResult implements FrameResult {
     @Override
     public boolean isFinalFrame() {
         return false;
+    }
+
+    @Override
+    public FrameStatus calculateCurrentStatus() {
+        // TODO
+        return null;
     }
 
     @Override

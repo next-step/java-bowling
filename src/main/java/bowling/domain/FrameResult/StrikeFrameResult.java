@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.FrameResult;
+
+import bowling.domain.FrameStatus;
 
 import java.util.Objects;
 
@@ -18,6 +20,12 @@ public class StrikeFrameResult implements FrameResult {
     @Override
     public boolean isFinalFrame() {
         return false;
+    }
+
+    @Override
+    public FrameStatus calculateCurrentStatus() {
+        // TODO
+        return null;
     }
 
     @Override

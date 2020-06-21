@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.FrameResult;
+
+import bowling.domain.FrameStatus;
 
 public interface FrameResult {
     boolean isStrikeResult();
