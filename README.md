@@ -40,7 +40,7 @@
     - [ ] 현재 프레임의 상태를 계산해서 FrameStatus 일급 컬렉션을 반환할 수 있음
     - [ ] 현재 프레임이 마지막 프레임인지 알려줄 수 있음
 - NormalFrame
-    - [X] FrameResult, 다음 프레임(nextFrame)을 속성으로 갖는다.
+    - [X] FrameResult, 다음 프레임(nextNormalFrame)을 속성으로 갖는다.
     - [X] 첫번째 투구로 맞춘 핀의 수를 입력받아서 객체를 생성할 수 있다.
     - [X] 두번째 투구를 실행할 수 있다.
         - [X] 현재 FrameResult가 완료됐다면 실행할 수 없다.

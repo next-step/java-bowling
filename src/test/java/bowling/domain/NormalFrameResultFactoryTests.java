@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class FrameResultFactoryTests {
+class NormalFrameResultFactoryTests {
     @DisplayName("첫번째 투구로 맞춘 핀의 수에 따라 알맞는 FrameResult를 반환한다.")
     @ParameterizedTest
     @MethodSource("factoryArguments")

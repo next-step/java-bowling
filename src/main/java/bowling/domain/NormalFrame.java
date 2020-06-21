@@ -8,35 +8,35 @@ import bowling.domain.exceptions.ParseNormalFrameException;
 
 import java.util.Objects;
 
-public class Frame {
+public class NormalFrame {
     private FrameResult frameResult;
-    private Frame nextFrame;
+    private NormalFrame nextNormalFrame;
 
-    Frame(FrameResult frameResult, Frame nextFrame) {
+    NormalFrame(FrameResult frameResult, NormalFrame nextNormalFrame) {
         this.frameResult = frameResult;
-        this.nextFrame = nextFrame;
+        this.nextNormalFrame = nextNormalFrame;
     }
 
-    public static Frame bowlFirst(int numberOfHitPin) {
-        return new Frame(FrameResultFactory.create(numberOfHitPin), null);
+    public static NormalFrame bowlFirst(int numberOfHitPin) {
+        return new NormalFrame(FrameResultFactory.create(numberOfHitPin), null);
     }
 
-    public Frame bowlSecond(int secondNumberOfHitPin) {
+    public NormalFrame bowlSecond(int secondNumberOfHitPin) {
         validateSecondBowl();
 
         NormalFrameResult afterFrameResult = parseToNormalFrameResult(this.frameResult)
                 .secondBowl(secondNumberOfHitPin);
 
-        return new Frame(afterFrameResult, null);
+        return new NormalFrame(afterFrameResult, null);
     }
 
-    public Frame next(int numberOfHitPin) {
+    public NormalFrame next(int numberOfHitPin) {
         validateNextFrame();
 
-        Frame nextFrame = Frame.bowlFirst(numberOfHitPin);
-        this.nextFrame = nextFrame;
+        NormalFrame nextNormalFrame = NormalFrame.bowlFirst(numberOfHitPin);
+        this.nextNormalFrame = nextNormalFrame;
 
-        return nextFrame;
+        return nextNormalFrame;
     }
 
     public FrameStatuses calculateCurrentStatus() {
@@ -70,29 +70,29 @@ public class Frame {
         return false;
     }
 
-    public Frame toNext() {
-        return this.nextFrame;
+    public NormalFrame toNext() {
+        return this.nextNormalFrame;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Frame frame = (Frame) o;
-        return Objects.equals(frameResult, frame.frameResult) &&
-                Objects.equals(nextFrame, frame.nextFrame);
+        NormalFrame normalFrame = (NormalFrame) o;
+        return Objects.equals(frameResult, normalFrame.frameResult) &&
+                Objects.equals(nextNormalFrame, normalFrame.nextNormalFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameResult, nextFrame);
+        return Objects.hash(frameResult, nextNormalFrame);
     }
 
     @Override
     public String toString() {
         return "Frame{" +
                 "frameResult=" + frameResult +
-                ", nextFrame=" + nextFrame +
+                ", nextFrame=" + nextNormalFrame +
                 '}';
     }
 }

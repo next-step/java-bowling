@@ -2,36 +2,36 @@ package bowling.domain;
 
 public class Player {
     private final String name;
-    private Frame firstFrame;
-    private Frame currentFrame;
+    private NormalFrame firstNormalFrame;
+    private NormalFrame currentNormalFrame;
 
     public Player(String playerName) {
         this.name = playerName;
     }
 
     public FrameStatuses bowlFirst(int numberOfHitPin) {
-        Frame firstFrame = Frame.bowlFirst(numberOfHitPin);
-        this.firstFrame = firstFrame;
-        this.currentFrame = firstFrame;
+        NormalFrame firstNormalFrame = NormalFrame.bowlFirst(numberOfHitPin);
+        this.firstNormalFrame = firstNormalFrame;
+        this.currentNormalFrame = firstNormalFrame;
         return calculateCurrentStatus();
     }
 
     public FrameStatuses bowl(int numberOfHitPin) {
-        if (this.currentFrame.isCompleted()) {
-            this.currentFrame = currentFrame.next(numberOfHitPin);
+        if (this.currentNormalFrame.isCompleted()) {
+            this.currentNormalFrame = currentNormalFrame.next(numberOfHitPin);
             return calculateCurrentStatus();
         }
-        this.currentFrame = this.currentFrame.bowlSecond(numberOfHitPin);
+        this.currentNormalFrame = this.currentNormalFrame.bowlSecond(numberOfHitPin);
         return calculateCurrentStatus();
     }
 
     public FrameStatuses calculateCurrentStatus() {
-        return this.currentFrame.calculateCurrentStatus();
+        return this.currentNormalFrame.calculateCurrentStatus();
     }
 
     public int checkWhere() {
         int count = 1;
-        Frame current = this.firstFrame;
+        NormalFrame current = this.firstNormalFrame;
         while (current.toNext() != null) {
             current = current.toNext();
             count += 1;

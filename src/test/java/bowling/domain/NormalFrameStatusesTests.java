@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class FrameStatusesTests {
+class NormalFrameStatusesTests {
     @DisplayName("FrameStatus 리스트를 전달받아서 객체를 생성할 수 있다.")
     @Test
     void createTest() {

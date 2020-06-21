@@ -9,7 +9,7 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StrikeFrameResultTests {
+class StrikeNormalFrameResultTests {
     @DisplayName("언제나 온전한 stike FrameResult임을 보장한다.")
     @Test
     void createTest() {

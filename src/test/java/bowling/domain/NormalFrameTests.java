@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class FrameTests {
+class NormalFrameTests {
     private static final int STRIKE_HIT_PIN_NUMBER = 10;
 
     @DisplayName("첫번째 투구로 맞춘 핀의 수를 입력받아서 객체를 생성할 수 있다.")
@@ -29,14 +29,14 @@ class FrameTests {
         int numberOfHitPin = 5;
         FrameResult expectResult = FrameResultFactory.create(numberOfHitPin);
 
-        Assertions.assertThat(Frame.bowlFirst(numberOfHitPin)).isEqualTo(new Frame(expectResult, null));
+        Assertions.assertThat(NormalFrame.bowlFirst(numberOfHitPin)).isEqualTo(new NormalFrame(expectResult, null));
     }
 
     @DisplayName("잘못된 값의 맞춘 핀의 수를 입력하면 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(ints = { -1, 11 })
     void createValidationTest(int invalidValue) {
-        assertThatThrownBy(() -> Frame.bowlFirst(invalidValue))
+        assertThatThrownBy(() -> NormalFrame.bowlFirst(invalidValue))
                 .isInstanceOf(InvalidNumberOfHitPinException.class);
     }
 
@@ -49,8 +49,8 @@ class FrameTests {
         NormalFrameResult expectFirstResult = (NormalFrameResult) FrameResultFactory.create(firstNumberOfHitPin);
         NormalFrameResult expectedSecondResult = expectFirstResult.secondBowl(secondNumberOfHitPin);
 
-        assertThat(new Frame(expectFirstResult, null).bowlSecond(secondNumberOfHitPin))
-                .isEqualTo(new Frame(expectedSecondResult, null));
+        assertThat(new NormalFrame(expectFirstResult, null).bowlSecond(secondNumberOfHitPin))
+                .isEqualTo(new NormalFrame(expectedSecondResult, null));
     }
 
     @DisplayName("스트라이크 처리된 프레임에 두번째 투구를 진행할 수 없다.")
@@ -58,9 +58,9 @@ class FrameTests {
     void bowlSecondToStrikeTest() {
         int secondPin = 2;
 
-        Frame frame = Frame.bowlFirst(STRIKE_HIT_PIN_NUMBER);
+        NormalFrame normalFrame = NormalFrame.bowlFirst(STRIKE_HIT_PIN_NUMBER);
 
-        assertThatThrownBy(() -> frame.bowlSecond(secondPin))
+        assertThatThrownBy(() -> normalFrame.bowlSecond(secondPin))
                 .isInstanceOf(CannotBowlException.class);
     }
 
@@ -69,9 +69,9 @@ class FrameTests {
     void bowlSecondValidationTest() {
         int numberOfHitPin = 2;
 
-        Frame frame = Frame.bowlFirst(numberOfHitPin).bowlSecond(numberOfHitPin);
+        NormalFrame normalFrame = NormalFrame.bowlFirst(numberOfHitPin).bowlSecond(numberOfHitPin);
 
-        assertThatThrownBy(() -> frame.bowlSecond(numberOfHitPin))
+        assertThatThrownBy(() -> normalFrame.bowlSecond(numberOfHitPin))
                 .isInstanceOf(CannotBowlException.class);
     }
 
@@ -80,11 +80,11 @@ class FrameTests {
     void createNextFrameTest() {
         int numberOfHitPin = 3;
 
-        Frame frame = Frame.bowlFirst(STRIKE_HIT_PIN_NUMBER);
-        Frame nextFrame = frame.next(numberOfHitPin);
+        NormalFrame normalFrame = NormalFrame.bowlFirst(STRIKE_HIT_PIN_NUMBER);
+        NormalFrame nextNormalFrame = normalFrame.next(numberOfHitPin);
 
-        assertThat(nextFrame).isEqualTo(Frame.bowlFirst(numberOfHitPin));
-        assertThat(frame).isEqualTo(new Frame(new StrikeFrameResult(), nextFrame));
+        assertThat(nextNormalFrame).isEqualTo(NormalFrame.bowlFirst(numberOfHitPin));
+        assertThat(normalFrame).isEqualTo(new NormalFrame(new StrikeFrameResult(), nextNormalFrame));
     }
 
     @DisplayName("현재 프레임 결과가 마무리되지 않으면 다음 프레임을 생성할 수 없다.")
@@ -92,9 +92,9 @@ class FrameTests {
     void createNextFrameValidationTest() {
         int numberOfHitPin = 3;
 
-        Frame frame = Frame.bowlFirst(numberOfHitPin);
+        NormalFrame normalFrame = NormalFrame.bowlFirst(numberOfHitPin);
 
-        assertThatThrownBy(() -> frame.next(numberOfHitPin))
+        assertThatThrownBy(() -> normalFrame.next(numberOfHitPin))
                 .isInstanceOf(CannotDoNextFrameException.class);
     }
 
@@ -102,18 +102,18 @@ class FrameTests {
     @Test
     void isFinalFrameTest() {
         int numberOfHitPin = 5;
-        Frame frame = Frame.bowlFirst(numberOfHitPin);
+        NormalFrame normalFrame = NormalFrame.bowlFirst(numberOfHitPin);
 
-        assertThat(frame.isFinal()).isFalse();
+        assertThat(normalFrame.isFinal()).isFalse();
     }
 
     @DisplayName("프레임의 현재 상태를 알려줄 수 있다.")
     @ParameterizedTest
     @MethodSource("statusResource")
     void calculateStatusTest(int numberOfHitPin, FrameStatuses expectedResult) {
-        Frame frame = Frame.bowlFirst(numberOfHitPin);
+        NormalFrame normalFrame = NormalFrame.bowlFirst(numberOfHitPin);
 
-        assertThat(frame.calculateCurrentStatus()).isEqualTo(expectedResult);
+        assertThat(normalFrame.calculateCurrentStatus()).isEqualTo(expectedResult);
     }
     public static Stream<Arguments> statusResource() {
         return Stream.of(

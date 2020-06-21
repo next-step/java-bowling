@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FrameStatusTests {
+class NormalFrameStatusTests {
     @DisplayName("값을 하나만 입력받아서 알맞는 상태를 찾을 수 있다.")
     @ParameterizedTest
     @MethodSource("findByOneResource")
