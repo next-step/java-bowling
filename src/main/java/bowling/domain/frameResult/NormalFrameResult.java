@@ -78,4 +78,12 @@ public class NormalFrameResult implements FrameResult {
     public int hashCode() {
         return Objects.hash(firstNumberOfHitPin, secondNumberOfHitPin);
     }
+
+    @Override
+    public String toString() {
+        return "NormalFrameResult{" +
+                "firstNumberOfHitPin=" + firstNumberOfHitPin +
+                ", secondNumberOfHitPin=" + secondNumberOfHitPin +
+                '}';
+    }
 }

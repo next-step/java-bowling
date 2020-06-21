@@ -21,13 +21,9 @@ public class NormalFrame implements Frame {
         return new NormalFrame(FrameResultFactory.create(numberOfHitPin), null);
     }
 
-    public NormalFrame bowlSecond(int secondNumberOfHitPin) {
+    public void bowlSecond(int secondNumberOfHitPin) {
         validateSecondBowl();
-
-        NormalFrameResult afterFrameResult = parseToNormalFrameResult(this.frameResult)
-                .secondBowl(secondNumberOfHitPin);
-
-        return new NormalFrame(afterFrameResult, null);
+        this.frameResult = parseToNormalFrameResult(this.frameResult).secondBowl(secondNumberOfHitPin);
     }
 
     public NormalFrame next(int numberOfHitPin) {
@@ -37,6 +33,10 @@ public class NormalFrame implements Frame {
         this.nextNormalFrame = nextNormalFrame;
 
         return nextNormalFrame;
+    }
+
+    public NormalFrame toNext() {
+        return this.nextNormalFrame;
     }
 
     private void validateNextFrame() {
@@ -56,10 +56,6 @@ public class NormalFrame implements Frame {
             throw new ParseNormalFrameException("Strike cannot convert to NormalFrameResult");
         }
         return (NormalFrameResult) frameResult;
-    }
-
-    public NormalFrame toNext() {
-        return this.nextNormalFrame;
     }
 
     @Override

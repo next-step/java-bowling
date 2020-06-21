@@ -41,6 +41,13 @@ public class NumberOfHitPin implements Comparable<NumberOfHitPin> {
     }
 
     @Override
+    public String toString() {
+        return "NumberOfHitPin{" +
+                "numberOfHitPin=" + numberOfHitPin +
+                '}';
+    }
+
+    @Override
     public int compareTo(NumberOfHitPin o) {
         return Integer.compare(this.numberOfHitPin, o.numberOfHitPin);
     }

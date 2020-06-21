@@ -21,7 +21,7 @@ public class Player {
             this.currentNormalFrame = currentNormalFrame.next(numberOfHitPin);
             return calculateCurrentStatus();
         }
-        this.currentNormalFrame = this.currentNormalFrame.bowlSecond(numberOfHitPin);
+        this.currentNormalFrame.bowlSecond(numberOfHitPin);
         return calculateCurrentStatus();
     }
 

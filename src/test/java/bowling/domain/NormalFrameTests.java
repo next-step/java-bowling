@@ -48,9 +48,10 @@ class NormalFrameTests {
 
         NormalFrameResult expectFirstResult = (NormalFrameResult) FrameResultFactory.create(firstNumberOfHitPin);
         NormalFrameResult expectedSecondResult = expectFirstResult.secondBowl(secondNumberOfHitPin);
+        NormalFrame normalFrame = new NormalFrame(expectFirstResult, null);
+        normalFrame.bowlSecond(secondNumberOfHitPin);
 
-        assertThat(new NormalFrame(expectFirstResult, null).bowlSecond(secondNumberOfHitPin))
-                .isEqualTo(new NormalFrame(expectedSecondResult, null));
+        assertThat(normalFrame).isEqualTo(new NormalFrame(expectedSecondResult, null));
     }
 
     @DisplayName("스트라이크 처리된 프레임에 두번째 투구를 진행할 수 없다.")
@@ -69,13 +70,14 @@ class NormalFrameTests {
     void bowlSecondValidationTest() {
         int numberOfHitPin = 2;
 
-        NormalFrame normalFrame = NormalFrame.bowlFirst(numberOfHitPin).bowlSecond(numberOfHitPin);
+        NormalFrame normalFrame = NormalFrame.bowlFirst(numberOfHitPin);
+        normalFrame.bowlSecond(numberOfHitPin);
 
         assertThatThrownBy(() -> normalFrame.bowlSecond(numberOfHitPin))
                 .isInstanceOf(CannotBowlException.class);
     }
 
-    @DisplayName("현재 프레임에서 다음 프레임을 생성할 수 있다.")
+    @DisplayName("현재 프레임에서 다음 프레임을 생성하고 진행할 수 있다.")
     @Test
     void createNextFrameTest() {
         int numberOfHitPin = 3;
@@ -85,6 +87,11 @@ class NormalFrameTests {
 
         assertThat(nextNormalFrame).isEqualTo(NormalFrame.bowlFirst(numberOfHitPin));
         assertThat(normalFrame).isEqualTo(new NormalFrame(new StrikeFrameResult(), nextNormalFrame));
+
+        nextNormalFrame.bowlSecond(numberOfHitPin);
+        assertThat(nextNormalFrame)
+                .isEqualTo(new NormalFrame(
+                        NormalFrameResult.firstBowl(numberOfHitPin).secondBowl(numberOfHitPin), null));
     }
 
     @DisplayName("현재 프레임 결과가 마무리되지 않으면 다음 프레임을 생성할 수 없다.")
