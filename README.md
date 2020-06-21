@@ -33,6 +33,7 @@
     - [ ] 투구해서 볼링 게임을 진행할 수 있다. (투구 후 현재 진행한 Frame의 상태를 확인할 수 있다.)
         - [X] 1 ~ 9 프레임에서 스트라이크로 종료 시 다음 Frame의 투구를 진행할 수 있다.
         - [X] 1 ~ 9 프레임에서 스트라이크가 아닌 경우 두번의 투구 후 다음 Frame을 진행 할 수 있다.
+        - [ ] 투구 후 FrameStatus가 아니라 현재까지의 FrameResult 컬렉션을 내보내도록 리팩토링
         - [ ] 마지막 프레임(10 프레임)의 마지막 투구를 완료한 후에는 더이상 투구할 수 없다. 
 - Frame
     - [X] FrameResult, 다음 프레임(nextFrame)을 속성으로 갖는다.
@@ -50,10 +51,12 @@
     - [X] 해당 Frame의 종료 여부를 알려줄 수 있다.
     - [X] 해당 프레임이 마지막 프레임인지 알려줄 수 있다.
     - [X] 현재 프레임 상태를 알려줄 수 있다.
+        - [ ] FrameStatus 컬렉션을 반환하도록 리팩토링
     - [X] Strike
         - [X] strike 여부를 물어보면 true를 반환한다.
         - [X] 완료 여부를 물어보면 true를 반환한다.
         - [X] 언제나 현재 프레임 상태는 Strike이다.
+        - [ ] 상태 확인 시 Strike 상태를 가진 길이 1짜리 컬렉션 반환 (일급 컬렉션 활용)
     - [X] Normal
         - [X] 첫번째 맞춘 핀의 수를 입력받아서 객체를 생성할 수 있다.
             - [X] 첫번째 맞춘 핀의 수는 0 ~ 9 사이의 값을 갖는다.
@@ -63,8 +66,18 @@
         - [X] 상황에 맞는 현재 프레임 상태를 알려줄 수 있다.
             - [X] 아직 진행중일 때(첫번째 투구만 진행됐을 때)의 상태를 알려줄 수 있다.
             - [X] 완료됐을 때(두번째 투구까지 진행됐을 때)의 상태를 알려줄 수 있다.
+        - [ ] 변경된 인터페이스에 맞게 리팩토링 진행
     - [ ] Final
         - 마지막 Frame은 진행과 결과 모두 특이하기 때문에 별도 관리
+        - 실제로는 StrikeFrameResult와 NormalFrameResult가 조합된 특수 프레임
+        - [ ] 첫 투구가 Strike인 경우
+            - [ ] 두번째 투구도 Strike이면 해당 프레임 마무리 (총 2회 투구, StrikeFrameResult * 2)
+            - [ ] 두번째 투구가 Strike가 아니면 한번 더 진행 (총 3회 투구, StrikeFrameResult * 1, NormalFrameResult * 1)
+        - [ ] 첫 투구가 Strike가 아닌 경우
+            - [ ] 두번째 투구가 Spare 처리를 못한 경우 해당 프레임 마무리 (총 2회 투구, NormalFrameResult * 1)
+            - [ ] 두번째 투구가 Spare 처리한 경우 한번 더 진행 (총 3회 투구)
+                - [ ] 세번째 투구가 Strike인 경우 온전하게 마무리 (NormalFrameResult * 1, StrikeFrameResult)
+                - [ ] 세번째 투구가 Strike가 아닌 경우 반푼이 NormalFrameResult로 마무리 (NormalFrameResult * 2, 하나는 반쪼가리)
         - [ ] 상황에 맞는 현재 프레임 상태를 알려줄 수 있다.(Final 요구사항 분석 및 구현 후 마지막에 구현)
 - FrameResultFactory
     - [X] 각 프레임의 첫번째 투구로 맞춘 핀의 수를 입력받아서 FrameResult를 생성할 수 있다.
