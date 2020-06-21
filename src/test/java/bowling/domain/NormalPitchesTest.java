@@ -31,7 +31,7 @@ class NormalPitchesTest {
         assertThatThrownBy(() -> {
             normalPitches.recordPitch(8);
         }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_FRAME_RESULT);
+                .hasMessageContaining(BowlingBuildingException.INVALID_FRAME_RESULT);
     }
 
     @DisplayName("Strike인지 판별함")

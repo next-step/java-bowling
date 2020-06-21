@@ -21,7 +21,7 @@ public class NormalPitches {
                 .mapToInt(Pitch::getHitCounts)
                 .sum();
         if (pitchesSum > MAXIMUM_PITCHES_SUM) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_FRAME_RESULT);
+            throw new BowlingBuildingException(BowlingBuildingException.INVALID_FRAME_RESULT);
         }
     }
 
