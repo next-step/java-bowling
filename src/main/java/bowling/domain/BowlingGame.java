@@ -13,7 +13,7 @@ public class BowlingGame {
     }
 
     public void addPoint(int point) {
-        if (frames.gameOver()) {
+        if (gameOver()) {
             throw new IllegalArgumentException("bowlingGame is finish");
         }
 
@@ -26,5 +26,9 @@ public class BowlingGame {
 
     public Frames getFrames() {
         return frames;
+    }
+
+    public int getFameSize() {
+        return frames.getFrameSize();
     }
 }

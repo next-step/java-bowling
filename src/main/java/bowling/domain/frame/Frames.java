@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.player.Player;
+import bowling.utils.ElementFindUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -31,11 +32,9 @@ public class Frames {
             return generateNextFrame();
         }
 
-        int currentIndex = frames.size() - ONE;
-        Frame currentFrame = frames.get(currentIndex);
+        Frame currentFrame = ElementFindUtils.findLastElement(frames);
         if (!currentFrame.availablePlay()) {
-            currentFrame = generateNextFrame();
-            return currentFrame;
+            return generateNextFrame();
         }
 
         return currentFrame;

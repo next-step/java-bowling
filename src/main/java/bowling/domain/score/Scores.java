@@ -1,6 +1,7 @@
 package bowling.domain.score;
 
 import bowling.domain.dto.ScoreResultDto;
+import bowling.utils.ElementFindUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -31,8 +32,7 @@ public class Scores {
             return ScoreFactory.generateScore(point);
         }
 
-        int lastIndex = scores.size() - ONE;
-        return scores.get(lastIndex).nextScore(point);
+        return ElementFindUtils.findFirstElement(scores).nextScore(point);
     }
 
     public int totalScore() {
@@ -61,12 +61,12 @@ public class Scores {
         if (isEmpty()) {
             return false;
         }
-        return scores.get(FIRST_SCORE - ONE).isStrike();
+        return ElementFindUtils.findFirstElement(scores).isStrike();
     }
 
     public boolean isSpare() {
         if (secondScore() || thirdScore()) {
-            return scores.get(SECOND_SCORE - ONE).isSpare();
+            return ElementFindUtils.findFirstElement(scores).isSpare();
         }
         return false;
     }
