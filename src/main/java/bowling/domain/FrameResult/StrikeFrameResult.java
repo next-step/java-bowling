@@ -24,8 +24,7 @@ public class StrikeFrameResult implements FrameResult {
 
     @Override
     public FrameStatus calculateCurrentStatus() {
-        // TODO
-        return null;
+        return FrameStatus.STRIKE;
     }
 
     @Override

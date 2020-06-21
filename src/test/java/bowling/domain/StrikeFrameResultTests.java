@@ -15,4 +15,12 @@ class StrikeFrameResultTests {
         assertThat(strikeFrameResult.isStrikeResult()).isTrue();
         assertThat(strikeFrameResult.isCompleted()).isTrue();
     }
+
+    @DisplayName("현재 상태를 알려줄 수 있다.")
+    @Test
+    void getStatusTest() {
+        StrikeFrameResult strikeFrameResult = new StrikeFrameResult();
+
+        assertThat(strikeFrameResult.calculateCurrentStatus()).isEqualTo(FrameStatus.STRIKE);
+    }
 }
