@@ -1,11 +1,14 @@
-package bowling.domain;
+package bowling.domain.frameResult;
 
-import bowling.domain.FrameResult.FrameResult;
-import bowling.domain.FrameResult.NormalFrameResult;
-import bowling.domain.FrameResult.StrikeFrameResult;
+import bowling.domain.Frame;
+import bowling.domain.FrameResultFactory;
+import bowling.domain.frameResult.FrameResult;
+import bowling.domain.frameResult.NormalFrameResult;
+import bowling.domain.frameResult.StrikeFrameResult;
 import bowling.domain.exceptions.CannotBowlException;
 import bowling.domain.exceptions.CannotDoNextFrameException;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +30,7 @@ class FrameTests {
         int numberOfHitPin = 5;
         FrameResult expectResult = FrameResultFactory.create(numberOfHitPin);
 
-        assertThat(Frame.bowlFirst(numberOfHitPin)).isEqualTo(new Frame(expectResult, null));
+        Assertions.assertThat(Frame.bowlFirst(numberOfHitPin)).isEqualTo(new Frame(expectResult, null));
     }
 
     @DisplayName("잘못된 값의 맞춘 핀의 수를 입력하면 예외가 발생한다.")

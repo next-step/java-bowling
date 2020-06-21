@@ -1,4 +1,4 @@
-package bowling.domain.FrameResult;
+package bowling.domain.frameResult;
 
 import bowling.domain.FrameStatus;
 import bowling.domain.NumberOfHitPin;

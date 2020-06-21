@@ -1,9 +1,9 @@
 package bowling.domain;
 
-import bowling.domain.FrameResult.FinalFrameResult;
-import bowling.domain.FrameResult.FrameResult;
-import bowling.domain.FrameResult.NormalFrameResult;
-import bowling.domain.FrameResult.StrikeFrameResult;
+import bowling.domain.frameResult.FinalFrameResult;
+import bowling.domain.frameResult.FrameResult;
+import bowling.domain.frameResult.NormalFrameResult;
+import bowling.domain.frameResult.StrikeFrameResult;
 
 public class FrameResultFactory {
     private static final int STRIKE_NUMBER = 10;

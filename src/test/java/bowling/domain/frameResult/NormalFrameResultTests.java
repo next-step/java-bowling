@@ -1,6 +1,8 @@
-package bowling.domain;
+package bowling.domain.frameResult;
 
-import bowling.domain.FrameResult.NormalFrameResult;
+import bowling.domain.FrameStatus;
+import bowling.domain.NumberOfHitPin;
+import bowling.domain.frameResult.NormalFrameResult;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
