@@ -8,7 +8,7 @@ import bowling.domain.exceptions.ParseNormalFrameException;
 
 import java.util.Objects;
 
-public class NormalFrame {
+public class NormalFrame implements Frame {
     private FrameResult frameResult;
     private NormalFrame nextNormalFrame;
 
@@ -39,14 +39,6 @@ public class NormalFrame {
         return nextNormalFrame;
     }
 
-    public FrameStatuses calculateCurrentStatus() {
-        return this.frameResult.calculateCurrentStatus();
-    }
-
-    public boolean isCompleted() {
-        return this.frameResult.isCompleted();
-    }
-
     private void validateNextFrame() {
         if (!this.frameResult.isCompleted()) {
             throw new CannotDoNextFrameException("현재 프레임을 마무리하기 전에는 다음 프레임으로 넘어갈 수 없습니다.");
@@ -66,12 +58,23 @@ public class NormalFrame {
         return (NormalFrameResult) frameResult;
     }
 
+    public NormalFrame toNext() {
+        return this.nextNormalFrame;
+    }
+
+    @Override
     public boolean isFinal() {
         return false;
     }
 
-    public NormalFrame toNext() {
-        return this.nextNormalFrame;
+    @Override
+    public FrameStatuses calculateCurrentStatus() {
+        return this.frameResult.calculateCurrentStatus();
+    }
+
+    @Override
+    public boolean isCompleted() {
+        return this.frameResult.isCompleted();
     }
 
     @Override
