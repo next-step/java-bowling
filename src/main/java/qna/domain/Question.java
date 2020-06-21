@@ -102,8 +102,12 @@ public class Question extends AbstractEntity {
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), loginUser, LocalDateTime.now()));
 
         for (Answer answer : answers) {
-
+            deleteHistories.add(answer.deleteHistory(loginUser));
         }
+
+        this.deleted = true;
+
+        return deleteHistories;
     }
 
     private void validateOwner(User loginUser) throws CannotDeleteException{
