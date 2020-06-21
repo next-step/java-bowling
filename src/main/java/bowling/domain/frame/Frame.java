@@ -13,8 +13,8 @@ public abstract class Frame {
     }
 
     public void addPoint(int point) {
-        scores.addScore(point);
         validateScores();
+        scores.addScore(point);
     }
 
     public int totalScore() {
