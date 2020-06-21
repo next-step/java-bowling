@@ -15,4 +15,13 @@ class PlayerTests {
 
         assertThat(player).isNotNull();
     }
+
+    @DisplayName("첫번재 투구를 진행하고 상태를 확인할 수 있다.")
+    @Test
+    void bowlFirstTest() {
+        Player player = new Player(playerName);
+        int numberOfHitPin = 3;
+
+        assertThat(player.bowlFirst(numberOfHitPin)).isEqualTo(FrameStatus.THREE);
+    }
 }
