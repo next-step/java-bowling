@@ -2,12 +2,19 @@ package qna.domain;
 
 import org.hibernate.annotations.Where;
 
+import qna.CannotDeleteException;
+
 import javax.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity // JPA를 사용해서 테이블과 매핑할 클래스는 @Entity 어노테이션을 필수로 붙여야 합니다.
 public class Question extends AbstractEntity {
+	
+	private static final String CANNOT_DELETE_AUTHORITY = "질문을 삭제할 권한이 없습니다.";
+	
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -18,7 +25,7 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL) // CascadeType.ALL – 모든 Cascade 적용
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
@@ -92,4 +99,19 @@ public class Question extends AbstractEntity {
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
+
+	public DeleteHistory delete(User loginUser) throws CannotDeleteException{
+		// 2. 로그인 사용자와 질문한 사용자가 같은 경우 삭제
+		if(!isOwner(loginUser)) {
+			throw new CannotDeleteException(CANNOT_DELETE_AUTHORITY);
+		}
+		// 1. soft delete
+		this.deleted = true;
+		
+		DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
+		
+		return deleteHistory;
+		
+		
+	}
 }
