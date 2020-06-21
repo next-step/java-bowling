@@ -37,4 +37,16 @@ class PlayerTests {
         player.bowlFirst(firstNumberOfHitPin);
         assertThat(player.bowl(secondNumberOfHitPin)).isEqualTo(FrameStatus.FIVE);
     }
+
+    @DisplayName("해당 프레임이 마무리되지 않았다면 현재 프레임을 진행할 수 있다.")
+    @Test
+    void doCurrentFrameWhenNotFinished() {
+        int firstNumberOfHitPin = 10;
+        int secondNumberOfHitPin = 5;
+        int thirdNumberOfHitPin = 5;
+
+        player.bowlFirst(firstNumberOfHitPin);
+        player.bowl(secondNumberOfHitPin);
+        assertThat(player.bowl(thirdNumberOfHitPin)).isEqualTo(FrameStatus.SPARE);
+    }
 }
