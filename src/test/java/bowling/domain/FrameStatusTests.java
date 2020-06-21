@@ -13,14 +13,14 @@ class FrameStatusTests {
     @DisplayName("값을 하나만 입력받아서 알맞는 상태를 찾을 수 있다.")
     @ParameterizedTest
     @MethodSource("findByOneResource")
-    void findByOneTest(int inputValue, FrameStatus expectedStatus) {
+    void findByOneTest(NumberOfHitPin inputValue, FrameStatus expectedStatus) {
         assertThat(FrameStatus.find(inputValue)).isEqualTo(expectedStatus);
     }
     public static Stream<Arguments> findByOneResource() {
         return Stream.of(
-                Arguments.of(0, FrameStatus.GUTTER),
-                Arguments.of(3, FrameStatus.THREE),
-                Arguments.of(10, FrameStatus.STRIKE)
+                Arguments.of(new NumberOfHitPin(0), FrameStatus.GUTTER),
+                Arguments.of(new NumberOfHitPin(3), FrameStatus.THREE),
+                Arguments.of(new NumberOfHitPin(10), FrameStatus.STRIKE)
         );
     }
 

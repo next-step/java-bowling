@@ -4,7 +4,11 @@ import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -38,5 +42,19 @@ public class NumberOfHitPinTests {
     @Test
     public void compareTest() {
         assertThat(new NumberOfHitPin(5).compareTo(new NumberOfHitPin(4)) > 0).isTrue();
+    }
+
+    @DisplayName("String 타입을 인자로 객체를 생성할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("frameStatusSource")
+    public void createByFrameStatus(String frameStatus, NumberOfHitPin expectedResult) {
+        assertThat(new NumberOfHitPin(frameStatus)).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> frameStatusSource() {
+        return Stream.of(
+                Arguments.of("0", new NumberOfHitPin(0)),
+                Arguments.of("3", new NumberOfHitPin(3)),
+                Arguments.of("10", new NumberOfHitPin(10))
+        );
     }
 }

@@ -58,7 +58,7 @@ public class NormalFrameResult implements FrameResult {
 
     @Override
     public FrameStatus calculateCurrentStatus() {
-        // TODO
+        // TODO: FrameStatus에서 NumberOfHitPin으로 처리하도록 변경 후 다시 구현
         return null;
     }
 

@@ -17,6 +17,10 @@ public class NumberOfHitPin implements Comparable<NumberOfHitPin> {
         this.numberOfHitPin = numberOfHitPin;
     }
 
+    public NumberOfHitPin(String numberOfHitPin) {
+        this(Integer.parseInt(numberOfHitPin));
+    }
+
     public NumberOfHitPin plus(NumberOfHitPin numberOfHitPin) {
         return new NumberOfHitPin(this.numberOfHitPin + numberOfHitPin.numberOfHitPin);
     }

@@ -24,23 +24,24 @@ public enum FrameStatus {
         this.value = value;
     }
 
-    public static FrameStatus find(Integer inputValue) {
-        if (inputValue == 10) {
+    public static FrameStatus find(NumberOfHitPin numberOfHitPin) {
+        if (numberOfHitPin.equals(new NumberOfHitPin(10))) {
             return STRIKE;
         }
-        if (inputValue == 0) {
+        if (numberOfHitPin.equals(new NumberOfHitPin(0))) {
             return GUTTER;
         }
         return Arrays.stream(FrameStatus.values())
-                .filter(frameStatus -> frameStatus.value.equals(inputValue.toString()))
+                .filter(frameStatus -> frameStatus.value.equals(numberOfHitPin.toString()))
                 .findFirst()
                 .orElseThrow(() -> new NoFrameStatusException("잘못된 프레임 상태입니다."));
     }
 
     public static FrameStatus find(Integer firstValue, Integer secondValue) {
-        if (firstValue + secondValue == 10) {
-            return SPARE;
-        }
-        return FrameStatus.find(secondValue);
+//        if (firstValue + secondValue == 10) {
+//            return SPARE;
+//        }
+//        return FrameStatus.find(secondValue);
+        return null;
     }
 }

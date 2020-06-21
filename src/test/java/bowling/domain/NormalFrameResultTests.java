@@ -5,7 +5,11 @@ import bowling.domain.exceptions.InvalidNumberOfHitPinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -57,5 +61,21 @@ class NormalFrameResultTests {
         NormalFrameResult normalFrameResult = NormalFrameResult.firstBowl(firstNumberOfHitPin);
         assertThatThrownBy(() -> normalFrameResult.secondBowl(secondNumberOfHitPin))
             .isInstanceOf(InvalidNumberOfHitPinException.class);
+    }
+
+    @DisplayName("첫번째 투구만 진행됐을 때 상황에 맞는 상태를 알려줄 수 있다.")
+    @ParameterizedTest
+    @MethodSource("inProgressResource")
+    void calculateCurrentStatusWhenInProgress(int numberOfHitPin, FrameStatus expectedStatus) {
+        NormalFrameResult normalFrameResult = NormalFrameResult.firstBowl(numberOfHitPin);
+        
+        assertThat(normalFrameResult.calculateCurrentStatus()).isEqualTo(expectedStatus);
+    }
+    public static Stream<Arguments> inProgressResource() {
+        return Stream.of(
+                Arguments.of(0, FrameStatus.GUTTER),
+                Arguments.of(2, FrameStatus.TWO),
+                Arguments.of(9, FrameStatus.NINE)
+        );
     }
 }
