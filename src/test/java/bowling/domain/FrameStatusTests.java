@@ -27,14 +27,14 @@ class FrameStatusTests {
     @DisplayName("값을 두개 입력받아서 알맞는 상태를 찾을 수 있다.")
     @ParameterizedTest
     @MethodSource("findByTwoResource")
-    void findByTwoTest(int firstValue, int secondValue, FrameStatus expectedStatus) {
+    void findByTwoTest(NumberOfHitPin firstValue, NumberOfHitPin secondValue, FrameStatus expectedStatus) {
         assertThat(FrameStatus.find(firstValue, secondValue)).isEqualTo(expectedStatus);
     }
     public static Stream<Arguments> findByTwoResource() {
         return Stream.of(
-                Arguments.of(5, 5, FrameStatus.SPARE),
-                Arguments.of(5, 4, FrameStatus.FOUR),
-                Arguments.of(5, 0, FrameStatus.GUTTER)
+                Arguments.of(new NumberOfHitPin(5), new NumberOfHitPin(5), FrameStatus.SPARE),
+                Arguments.of(new NumberOfHitPin(5), new NumberOfHitPin(4), FrameStatus.FOUR),
+                Arguments.of(new NumberOfHitPin(5), new NumberOfHitPin(0), FrameStatus.GUTTER)
         );
     }
 }
