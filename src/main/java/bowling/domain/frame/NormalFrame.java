@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.bowling.BowlingPinsGroup;
 import bowling.domain.pitch.NormalPitches;
 import bowling.domain.pitch.Pitches;
 
@@ -34,6 +35,11 @@ public class NormalFrame implements Frame {
     @Override
     public void bowl(int hitCounts) {
         normalPitches.recordPitch(hitCounts);
+    }
+
+    @Override
+    public void bowl2(int hitCounts, BowlingPinsGroup bowlingPinsGroup) {
+        normalPitches.throwBall(hitCounts, bowlingPinsGroup);
     }
 
     public int getIndex() {

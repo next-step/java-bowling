@@ -17,7 +17,7 @@ public class PitchTest {
     public void resetBowlingPins() {
         BowlingPinsGroup.initiate().hitByBall(10);
     }
-    
+
     @DisplayName("Pitch 객체 정상 생성 테스트")
     @ParameterizedTest
     @ValueSource(ints = {0, 3, 10})
@@ -45,7 +45,7 @@ public class PitchTest {
 
         pitch.throwBall(bowlingPinsGroup);
 
-        assertThat(bowlingPinsGroup.next().getBowlingPinCounts()).isEqualTo(6);
+        assertThat(bowlingPinsGroup.next(false).getBowlingPinCounts()).isEqualTo(6);
     }
 
 

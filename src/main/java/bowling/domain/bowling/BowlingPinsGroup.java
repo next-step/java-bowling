@@ -23,7 +23,11 @@ public class BowlingPinsGroup {
         return new BowlingPinsGroup(bowlingPins);
     }
 
-    public BowlingPinsGroup next() {
+    public BowlingPinsGroup next(boolean isMovableToNextFrame) {
+        return isMovableToNextFrame ? initiate() : filterStandingBowlingPins();
+    }
+
+    private BowlingPinsGroup filterStandingBowlingPins() {
         List<BowlingPin> nextBowlingPins = bowlingPins.stream()
                 .filter(BowlingPin::isStanding)
                 .collect(Collectors.toList());

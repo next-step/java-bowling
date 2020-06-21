@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.bowling.BowlingPinsGroup;
 import bowling.domain.pitch.Pitches;
 
 public interface Frame {
@@ -10,6 +11,8 @@ public interface Frame {
     public Frame next();
 
     public void bowl(int hitCounts);
+
+    public void bowl2(int hitCounts, BowlingPinsGroup bowlingPinsGroup);
 
     public int getIndex();
 

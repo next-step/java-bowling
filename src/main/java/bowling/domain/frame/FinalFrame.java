@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.bowling.BowlingPinsGroup;
 import bowling.domain.pitch.FinalPitches;
 import bowling.domain.pitch.Pitches;
 
@@ -39,6 +40,11 @@ public class FinalFrame implements Frame {
     @Override
     public void bowl(int hitCounts) {
         finalPitches.recordPitch(hitCounts);
+    }
+
+    @Override
+    public void bowl2(int hitCounts, BowlingPinsGroup bowlingPinsGroup) {
+
     }
 
     @Override

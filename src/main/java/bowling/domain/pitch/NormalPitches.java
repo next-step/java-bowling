@@ -1,5 +1,6 @@
 package bowling.domain.pitch;
 
+import bowling.domain.bowling.BowlingPinsGroup;
 import bowling.domain.exception.BowlingBuildingException;
 
 import java.util.ArrayList;
@@ -14,6 +15,12 @@ public class NormalPitches {
     public void recordPitch(int hitCounts) {
         pitches.add(new Pitch(hitCounts));
         validateNormalPitches();
+    }
+
+    public void throwBall(int hitCounts, BowlingPinsGroup bowlingPinsGroup) {
+        Pitch pitch = new Pitch(hitCounts);
+        pitch.throwBall(bowlingPinsGroup);
+        pitches.add(pitch);
     }
 
     private void validateNormalPitches() {
