@@ -1,7 +1,9 @@
 package bowling.domain;
 
+import bowling.domain.bowling.BowlingPinsGroup;
 import bowling.domain.exception.BowlingBuildingException;
 import bowling.domain.pitch.Pitch;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,6 +13,11 @@ import static org.assertj.core.api.Assertions.*;
 
 public class PitchTest {
 
+    @AfterEach
+    public void resetBowlingPins() {
+        BowlingPinsGroup.initiate().hitByBall(10);
+    }
+    
     @DisplayName("Pitch 객체 정상 생성 테스트")
     @ParameterizedTest
     @ValueSource(ints = {0, 3, 10})
@@ -29,6 +36,18 @@ public class PitchTest {
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_PITCH);
     }
+
+    @DisplayName("Pitch 객체가 공을 던지면 파라미터로 받은 볼링 핀 객체에게 메시지를 보냄")
+    @Test
+    public void throwBall() {
+        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
+        Pitch pitch = new Pitch(4);
+
+        pitch.throwBall(bowlingPinsGroup);
+
+        assertThat(bowlingPinsGroup.next().getBowlingPinCounts()).isEqualTo(6);
+    }
+
 
     @DisplayName("Strike인지 판별")
     @Test
