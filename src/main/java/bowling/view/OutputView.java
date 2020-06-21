@@ -1,17 +1,11 @@
 package bowling.view;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
-import bowling.domain.player.Player;
-
-import java.util.List;
-
 public class OutputView {
 
     private OutputView() {
     }
 
-    public static void printDefaultScoreBoard(Player player) {
+/*    public static void printDefaultScoreBoard(Player player) {
         System.out.println(ViewMessages.SCORE_BOARD_HEADER);
         System.out.printf(ViewMessages.SCORE_BOARD_DEFAULT, player.getName());
     }
@@ -31,7 +25,7 @@ public class OutputView {
     private static void printFrame(Frame frame, StringBuilder stringBuilder) {
         stringBuilder.append("  ");
         String score = BowlingScoreParser.parseScore(frame.getPitches());
-        if (score.length() == 1) {
+                if (score.length() == 1) {
             score += "  ";
         }
         stringBuilder.append(score);
@@ -42,5 +36,5 @@ public class OutputView {
         for (int i = 0; i < 10 - frames.getCurrentFrameIndex(); i++) {
             stringBuilder.append("      |");
         }
-    }
+    }*/
 }

@@ -1,7 +1,6 @@
-package bowling.domain;
+package bowling.domain.pitch;
 
 import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.pitch.FinalPitches;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

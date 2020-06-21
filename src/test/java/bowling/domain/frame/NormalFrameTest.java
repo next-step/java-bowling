@@ -1,8 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
+import bowling.domain.bowling.BowlingPinsGroup;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +9,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 class NormalFrameTest {
+
+    @AfterEach
+    public void resetBowlingPins() {
+        BowlingPinsGroup.initiate().hitByBall(10);
+    }
 
     @DisplayName("NormalFrame 객체 정상 생성(첫 번째)")
     @Test
@@ -23,7 +27,8 @@ class NormalFrameTest {
     @Test
     public void nextNormalFrame_스트라이크() {
         Frame normalFrame = NormalFrame.initiate();
-        normalFrame.bowl(10);
+        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
+        normalFrame.bowl(10, bowlingPinsGroup);
 
         assertThat(normalFrame.getIndex()).isEqualTo(1);
 
@@ -36,8 +41,9 @@ class NormalFrameTest {
     @Test
     public void nextNormalFrame_두번_투구() {
         Frame normalFrame = NormalFrame.initiate();
-        normalFrame.bowl(3);
-        normalFrame.bowl(4);
+        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
+        normalFrame.bowl(3, bowlingPinsGroup);
+        normalFrame.bowl(4, bowlingPinsGroup);
 
         assertThat(normalFrame.getIndex()).isEqualTo(1);
 
@@ -50,7 +56,9 @@ class NormalFrameTest {
     @Test
     public void nextNormalFrame_그외() {
         Frame normalFrame = NormalFrame.initiate();
-        normalFrame.bowl(3);
+        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
+
+        normalFrame.bowl(3, bowlingPinsGroup);
 
         assertThat(normalFrame.getIndex()).isEqualTo(1);
 
@@ -64,8 +72,10 @@ class NormalFrameTest {
     @Test
     public void nextFrame_Final() {
         Frame frame = NormalFrame.initiate();
+        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
         for (int i = 0; i < 9; i++) {
-            frame.bowl(10);
+            frame.bowl(10, bowlingPinsGroup);
+            bowlingPinsGroup = bowlingPinsGroup.next(true);
             frame = frame.next();
         }
 

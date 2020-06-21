@@ -2,14 +2,11 @@ package bowling.domain.frame;
 
 import bowling.domain.bowling.BowlingPinsGroup;
 import bowling.domain.pitch.NormalPitches;
-import bowling.domain.pitch.Pitches;
 
 public class NormalFrame implements Frame {
 
     private final int index;
     private final NormalPitches normalPitches = new NormalPitches();
-
-    private final Pitches pitches = new Pitches(); //삭제 예정
 
     private NormalFrame(int index) {
         this.index = index;
@@ -33,12 +30,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public void bowl(int hitCounts) {
-        normalPitches.recordPitch(hitCounts);
-    }
-
-    @Override
-    public void bowl2(int hitCounts, BowlingPinsGroup bowlingPinsGroup) {
+    public void bowl(int hitCounts, BowlingPinsGroup bowlingPinsGroup) {
         normalPitches.throwBall(hitCounts, bowlingPinsGroup);
     }
 
@@ -46,8 +38,4 @@ public class NormalFrame implements Frame {
         return index;
     }
 
-    @Override
-    public Pitches getPitches() {
-        return pitches;
-    }
 }

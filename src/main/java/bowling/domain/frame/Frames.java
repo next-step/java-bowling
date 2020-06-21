@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.bowling.BowlingPinsGroup;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,8 +33,8 @@ public class Frames {
         return getCurrentFrame() != null;
     }
 
-    public void bowl(int hitCounts) {
-        getCurrentFrame().bowl(hitCounts);
+    public void bowl(int hitCounts, BowlingPinsGroup bowlingPinsGroup) {
+        getCurrentFrame().bowl(hitCounts, bowlingPinsGroup);
     }
 
     private Frame getCurrentFrame() {

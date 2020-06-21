@@ -1,8 +1,7 @@
-package bowling.domain;
+package bowling.domain.pitch;
 
 import bowling.domain.bowling.BowlingPinsGroup;
 import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.pitch.Pitch;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

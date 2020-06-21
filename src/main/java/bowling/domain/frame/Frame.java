@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.bowling.BowlingPinsGroup;
-import bowling.domain.pitch.Pitches;
 
 public interface Frame {
     public static final int FIRST_INDEX = 1;
@@ -10,11 +9,7 @@ public interface Frame {
 
     public Frame next();
 
-    public void bowl(int hitCounts);
-
-    public void bowl2(int hitCounts, BowlingPinsGroup bowlingPinsGroup);
+    public void bowl(int hitCounts, BowlingPinsGroup bowlingPinsGroup);
 
     public int getIndex();
-
-    public Pitches getPitches();
 }

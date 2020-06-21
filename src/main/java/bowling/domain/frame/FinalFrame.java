@@ -2,15 +2,12 @@ package bowling.domain.frame;
 
 import bowling.domain.bowling.BowlingPinsGroup;
 import bowling.domain.pitch.FinalPitches;
-import bowling.domain.pitch.Pitches;
 
 public class FinalFrame implements Frame {
 
     private final int index;
     private final FinalPitches finalPitches = new FinalPitches();
-
-    private final Pitches pitches = new Pitches(); //삭제 예정
-
+    
     private FinalFrame(int index) {
         this.index = index;
     }
@@ -38,22 +35,12 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public void bowl(int hitCounts) {
-        finalPitches.recordPitch(hitCounts);
-    }
-
-    @Override
-    public void bowl2(int hitCounts, BowlingPinsGroup bowlingPinsGroup) {
+    public void bowl(int hitCounts, BowlingPinsGroup bowlingPinsGroup) {
 
     }
 
     @Override
     public int getIndex() {
         return index;
-    }
-
-    @Override
-    public Pitches getPitches() {
-        return pitches;
     }
 }

@@ -1,8 +1,7 @@
-package bowling.domain;
+package bowling.domain.pitch;
 
 import bowling.domain.bowling.BowlingPinsGroup;
 import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.pitch.NormalPitches;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,37 +29,28 @@ class NormalPitchesTest {
         assertThat(normalPitches.getPitchCounts()).isEqualTo(1);
     }
 
-    //새로 추가한 기능 테스트
-
-    @DisplayName("투구를 하면 NormalPitches에 기록을 남기며, 투구 회수는 갱신됨")
-    @Test
-    public void bowl_추가() {
-        NormalPitches normalPitches = new NormalPitches();
-
-        assertThat(normalPitches.getPitchCounts()).isEqualTo(0);
-
-        normalPitches.recordPitch(3);
-
-        assertThat(normalPitches.getPitchCounts()).isEqualTo(1);
-    }
-
     @DisplayName("1~9번 프레임에서 투구를 했을 때 넘어뜨린 볼링 핀의 개수는 10개 이하")
     @Test
-    public void bowl_예외() {
+    public void throwBall_예외() {
         NormalPitches normalPitches = new NormalPitches();
-        normalPitches.recordPitch(3);
+        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
+
+        normalPitches.throwBall(3, bowlingPinsGroup);
+        BowlingPinsGroup nextBowlingPinsGroup = bowlingPinsGroup.next(false);
 
         assertThatThrownBy(() -> {
-            normalPitches.recordPitch(8);
+            normalPitches.throwBall(8, nextBowlingPinsGroup);
         }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_FRAME_RESULT);
+                .hasMessageContaining(BowlingBuildingException.INVALID_PITCH);
     }
 
     @DisplayName("Strike인지 판별함")
     @Test
     public void isStrike_True() {
         NormalPitches normalPitches = new NormalPitches();
-        normalPitches.recordPitch(10);
+        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
+
+        normalPitches.throwBall(10, bowlingPinsGroup);
 
         assertThat(normalPitches.isStrike()).isTrue();
     }
