@@ -12,7 +12,7 @@ public class BowlingApplication {
 
         BowlingGame bowlingGame = new BowlingGame(playerName);
 
-        while (!bowlingGame.gameOver()) {
+        while (!bowlingGame.isGameOver()) {
             int point = InputView.inputScore(bowlingGame.getFameSize());
             bowlingGame.addPoint(point);
 

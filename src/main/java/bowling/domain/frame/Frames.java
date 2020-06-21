@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Frames {
     private static final int MAX_FRAME = 10;
@@ -33,11 +34,9 @@ public class Frames {
         }
 
         Frame currentFrame = ElementFindUtils.findLastElement(frames);
-        if (!currentFrame.availablePlay()) {
-            return generateNextFrame();
-        }
-
-        return currentFrame;
+        return Optional.of(currentFrame)
+                .filter(Frame::availablePlay)
+                .orElseGet(this::generateNextFrame);
     }
 
     private Frame generateNextFrame() {
@@ -57,7 +56,7 @@ public class Frames {
         return MAX_FRAME - ONE == frames.size();
     }
 
-    public boolean gameOver() {
+    public boolean isGameOver() {
         if (frames.size() == MAX_FRAME) {
             Frame lastFrame = frames.get(MAX_FRAME - ONE);
             return !lastFrame.availablePlay();

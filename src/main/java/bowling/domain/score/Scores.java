@@ -15,7 +15,6 @@ public class Scores {
     private final static int FIRST_SCORE = 1;
     private final static int SECOND_SCORE = 2;
     private final static int THIRD_SCORE = 3;
-    private final static int ONE = 1;
 
     private final List<Score> scores;
 
@@ -66,7 +65,7 @@ public class Scores {
 
     public boolean isSpare() {
         if (secondScore() || thirdScore()) {
-            return ElementFindUtils.findFirstElement(scores).isSpare();
+            return ElementFindUtils.findLastElement(scores).isSpare();
         }
         return false;
     }
@@ -80,4 +79,5 @@ public class Scores {
     private boolean isEmpty() {
         return CollectionUtils.isEmpty(scores);
     }
+
 }

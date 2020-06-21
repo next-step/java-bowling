@@ -13,15 +13,15 @@ public class BowlingGame {
     }
 
     public void addPoint(int point) {
-        if (gameOver()) {
+        if (isGameOver()) {
             throw new IllegalArgumentException("bowlingGame is finish");
         }
 
         frames.addPoint(point);
     }
 
-    public boolean gameOver() {
-        return frames.gameOver();
+    public boolean isGameOver() {
+        return frames.isGameOver();
     }
 
     public Frames getFrames() {
