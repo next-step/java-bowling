@@ -1,9 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.frameResult.FrameResult;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
+import bowling.domain.frameResult.FrameResult;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -38,15 +37,5 @@ class FrameResultFactoryTests {
     void createValidationTest(int invalidValue) {
         assertThatThrownBy(() -> FrameResultFactory.create(invalidValue))
                 .isInstanceOf(InvalidNumberOfHitPinException.class);
-    }
-
-    @DisplayName("마지막 프레임의 첫번째 투구로 맞춘 핀의 수를 입력받아 객체를 생성할 수 있다.")
-    @Test
-    void createFinalTest() {
-        int numberOfHitPin = 6;
-
-        FrameResult frameResult = FrameResultFactory.createFinal(numberOfHitPin);
-
-        assertThat(frameResult.isFinalFrame()).isTrue();
     }
 }

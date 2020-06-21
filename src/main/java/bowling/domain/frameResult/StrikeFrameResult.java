@@ -20,11 +20,6 @@ public class StrikeFrameResult implements FrameResult {
     }
 
     @Override
-    public boolean isFinalFrame() {
-        return false;
-    }
-
-    @Override
     public FrameStatuses calculateCurrentStatus() {
         return new FrameStatuses(Collections.singletonList(FrameStatus.STRIKE));
     }

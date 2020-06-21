@@ -67,7 +67,7 @@ public class Frame {
     }
 
     public boolean isFinal() {
-        return this.frameResult.isFinalFrame();
+        return false;
     }
 
     public Frame toNext() {

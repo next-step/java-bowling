@@ -99,18 +99,12 @@ class FrameTests {
     }
 
     @DisplayName("마지막 프레임인지 알려줄 수 있다.")
-    @ParameterizedTest
-    @MethodSource("isFinalFrameResource")
-    void isFinalFrameTest(FrameResult frameResult, boolean expectedResult) {
-        Frame frame = new Frame(frameResult, null);
+    @Test
+    void isFinalFrameTest() {
+        int numberOfHitPin = 5;
+        Frame frame = Frame.bowlFirst(numberOfHitPin);
 
-        assertThat(frame.isFinal()).isEqualTo(expectedResult);
-    }
-    public static Stream<Arguments> isFinalFrameResource() {
-        return Stream.of(
-                Arguments.of(FrameResultFactory.create(5), false),
-                Arguments.of(FrameResultFactory.createFinal(5), true)
-        );
+        assertThat(frame.isFinal()).isFalse();
     }
 
     @DisplayName("프레임의 현재 상태를 알려줄 수 있다.")

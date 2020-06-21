@@ -55,11 +55,6 @@ public class NormalFrameResult implements FrameResult {
     }
 
     @Override
-    public boolean isFinalFrame() {
-        return false;
-    }
-
-    @Override
     public FrameStatuses calculateCurrentStatus() {
         if (this.isCompleted()) {
             return new FrameStatuses(Arrays.asList(
