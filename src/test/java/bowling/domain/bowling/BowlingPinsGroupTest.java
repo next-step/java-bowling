@@ -1,6 +1,8 @@
 package bowling.domain.bowling;
 
 import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,10 +20,12 @@ class BowlingPinsGroupTest {
     @DisplayName("다음 투구로 넘어가는 next 요청을 보내면, 현재 넘어지지 않은 볼링핀만을 모아 리턴함")
     @Test
     public void next_6개() {
+        Frame frame = Frames.initiate().getCurrentFrame();
         BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
-        bowlingPinsGroup.hitByBall(4);
+        frame.bowl(4, bowlingPinsGroup);
+        ;
 
-        BowlingPinsGroup nextPitchBowlingPinsGroup = bowlingPinsGroup.next(false);
+        BowlingPinsGroup nextPitchBowlingPinsGroup = bowlingPinsGroup.next(frame);
 
         assertThat(nextPitchBowlingPinsGroup.getBowlingPinCounts())
                 .isEqualTo(6);
@@ -30,13 +34,16 @@ class BowlingPinsGroupTest {
     @DisplayName("다음 프레임으로 넘어가는 next 요청을 보내면, 볼링핀 10개를 초기화하여 리턴함")
     @Test
     public void next_초기화() {
+        Frame frame = Frames.initiate().getCurrentFrame();
         BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
-        bowlingPinsGroup.hitByBall(4);
-        BowlingPinsGroup nextPitchBowlingPinsGroup = bowlingPinsGroup.next(false);
+        frame.bowl(4, bowlingPinsGroup);
+        BowlingPinsGroup nextPitchBowlingPinsGroup = bowlingPinsGroup.next(frame);
 
         assertThat(nextPitchBowlingPinsGroup.getBowlingPinCounts()).isEqualTo(6);
 
-        BowlingPinsGroup nextFrameBowlingPinsGroup = nextPitchBowlingPinsGroup.next(true);
+        frame.bowl(6, bowlingPinsGroup);
+
+        BowlingPinsGroup nextFrameBowlingPinsGroup = nextPitchBowlingPinsGroup.next(frame);
 
         assertThat(nextFrameBowlingPinsGroup.getBowlingPinCounts()).isEqualTo(10);
     }
@@ -44,9 +51,10 @@ class BowlingPinsGroupTest {
     @DisplayName("hit 요청을 보낼 때 현재 서있는 볼링핀 개수보다 많은 수를 입력하면 예외 발생")
     @Test
     public void hitByBall_예외() {
+        Frame frame = Frames.initiate().getCurrentFrame();
         BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
-        bowlingPinsGroup.hitByBall(4);
-        BowlingPinsGroup nextPitchBowlingPinsGroup = bowlingPinsGroup.next(false);
+        frame.bowl(4, bowlingPinsGroup);
+        BowlingPinsGroup nextPitchBowlingPinsGroup = bowlingPinsGroup.next(frame);
 
         assertThatThrownBy(() -> {
             nextPitchBowlingPinsGroup.hitByBall(7);

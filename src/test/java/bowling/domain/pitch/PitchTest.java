@@ -36,18 +36,6 @@ public class PitchTest {
                 .hasMessageContaining(BowlingBuildingException.INVALID_PITCH);
     }
 
-    @DisplayName("Pitch 객체가 공을 던지면 파라미터로 받은 볼링 핀 객체에게 메시지를 보냄")
-    @Test
-    public void throwBall() {
-        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
-        Pitch pitch = new Pitch(4);
-
-        pitch.throwBall(bowlingPinsGroup);
-
-        assertThat(bowlingPinsGroup.next(false).getBowlingPinCounts()).isEqualTo(6);
-    }
-
-
     @DisplayName("Strike인지 판별")
     @Test
     public void isStrike_True() {

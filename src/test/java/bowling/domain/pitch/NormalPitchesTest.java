@@ -2,6 +2,8 @@ package bowling.domain.pitch;
 
 import bowling.domain.bowling.BowlingPinsGroup;
 import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,14 +34,15 @@ class NormalPitchesTest {
     @DisplayName("1~9번 프레임에서 투구를 했을 때 넘어뜨린 볼링 핀의 개수는 10개 이하")
     @Test
     public void throwBall_예외() {
-        NormalPitches normalPitches = new NormalPitches();
+        Frames frames = Frames.initiate();
+        Frame frame = frames.getCurrentFrame();
         BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
 
-        normalPitches.throwBall(3, bowlingPinsGroup);
-        BowlingPinsGroup nextBowlingPinsGroup = bowlingPinsGroup.next(false);
+        frame.bowl(3, bowlingPinsGroup);
+        BowlingPinsGroup nextBowlingPinsGroup = bowlingPinsGroup.next(frame);
 
         assertThatThrownBy(() -> {
-            normalPitches.throwBall(8, nextBowlingPinsGroup);
+            frame.bowl(8, nextBowlingPinsGroup);
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_PITCH);
     }

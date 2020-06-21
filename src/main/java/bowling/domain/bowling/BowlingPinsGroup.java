@@ -1,6 +1,7 @@
 package bowling.domain.bowling;
 
 import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.frame.Frame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,8 @@ public class BowlingPinsGroup {
         return new BowlingPinsGroup(bowlingPins);
     }
 
-    public BowlingPinsGroup next(boolean isMovableToNextFrame) {
-        return isMovableToNextFrame ? initiate() : filterStandingBowlingPins();
+    public BowlingPinsGroup next(Frame frame) {
+        return frame.isRequestingNewBowlingPinsGroup() ? initiate() : filterStandingBowlingPins();
     }
 
     private BowlingPinsGroup filterStandingBowlingPins() {
