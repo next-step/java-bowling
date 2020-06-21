@@ -32,6 +32,10 @@ public class BowlingPin {
         this.isStanding = true;
     }
 
+    public void hitByBall() {
+        this.isStanding = false;
+    }
+
     public boolean isStanding() {
         return isStanding;
     }

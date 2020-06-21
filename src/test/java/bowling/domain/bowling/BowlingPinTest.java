@@ -1,6 +1,7 @@
 package bowling.domain.bowling;
 
 import bowling.domain.exception.BowlingBuildingException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,6 +12,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class BowlingPinTest {
+
+    @AfterEach
+    public void resetBowlingPin() {
+        BowlingPin.of(0).hitByBall();
+    }
 
     @DisplayName("BowlingPin 객체는 index 번호를 통해 cache에서 가져옴")
     @ParameterizedTest
@@ -41,5 +47,18 @@ class BowlingPinTest {
         bowlingPin.initiate();
 
         assertThat(bowlingPin.isStanding()).isTrue();
+    }
+
+    @DisplayName("공에 맞으면 상태인 isStanding을 false로 변경")
+    @Test
+    public void hitByBall_False() {
+        BowlingPin bowlingPin = BowlingPin.of(0);
+        bowlingPin.initiate();
+
+        assertThat(bowlingPin.isStanding()).isTrue();
+
+        bowlingPin.hitByBall();
+
+        assertThat(bowlingPin.isStanding()).isFalse();
     }
 }
