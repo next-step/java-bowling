@@ -14,4 +14,12 @@ public class FinalFrame {
     public static FinalFrame firstBowl(int numberOfHitPin) {
         return new FinalFrame(FrameResultFactory.create(numberOfHitPin), null);
     }
+
+    public void bowl(int numberOfHitPin) {
+        this.secondFrameResult = FrameResultFactory.create(numberOfHitPin);
+    }
+
+    public boolean isCompleted() {
+        return (firstFrameResult.isCompleted() && secondFrameResult.isCompleted());
+    }
 }
