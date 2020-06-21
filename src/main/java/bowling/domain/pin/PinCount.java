@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public class PinCount {
 
-    static final int MIN_COUNT = 0;
-    static final int MAX_COUNT = 10;
+    public static final int MIN_COUNT = 0;
+    public static final int MAX_COUNT = 10;
 
     private final int count;
 
