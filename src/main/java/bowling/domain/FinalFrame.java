@@ -1,9 +1,17 @@
 package bowling.domain;
 
-public class FinalFrame {
+import bowling.domain.frameResult.FrameResult;
 
+public class FinalFrame {
+    private FrameResult firstFrameResult;
+    private FrameResult secondFrameResult;
+
+    FinalFrame(FrameResult firstFrameResult, FrameResult secondFrameResult) {
+        this.firstFrameResult = firstFrameResult;
+        this.secondFrameResult = secondFrameResult;
+    }
 
     public static FinalFrame firstBowl(int numberOfHitPin) {
-        return null;
+        return new FinalFrame(FrameResultFactory.create(numberOfHitPin), null);
     }
 }

@@ -52,7 +52,7 @@
 - FinalFrame
     - 마지막 Frame은 진행과 결과 모두 특이하기 때문에 별도 관리
     - 실제로는 StrikeFrameResult와 NormalFrameResult가 조합된 특수 프레임
-    - [ ] FrameResult 두개 (FirstFrameResult, SecondFrameResult)를 속성으로 갖는다.
+    - [X] FrameResult 두개 (FirstFrameResult, SecondFrameResult)를 속성으로 갖는다.
     - [ ] 첫 투구가 Strike인 경우
         - [ ] 두번째 투구도 Strike이면 해당 프레임 마무리 (총 2회 투구, StrikeFrameResult * 2)
         - [ ] 두번째 투구가 Strike가 아니면 한번 더 진행 (총 3회 투구, StrikeFrameResult * 1, NormalFrameResult * 1)
