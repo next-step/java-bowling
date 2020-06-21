@@ -68,7 +68,7 @@ class NormalFrameResultTests {
     @MethodSource("inProgressResource")
     void calculateCurrentStatusWhenInProgress(int numberOfHitPin, FrameStatus expectedStatus) {
         NormalFrameResult normalFrameResult = NormalFrameResult.firstBowl(numberOfHitPin);
-        
+
         assertThat(normalFrameResult.calculateCurrentStatus()).isEqualTo(expectedStatus);
     }
     public static Stream<Arguments> inProgressResource() {
@@ -76,6 +76,24 @@ class NormalFrameResultTests {
                 Arguments.of(0, FrameStatus.GUTTER),
                 Arguments.of(2, FrameStatus.TWO),
                 Arguments.of(9, FrameStatus.NINE)
+        );
+    }
+
+    @DisplayName("두번째 투구도 진행됐을 때 상황에 맞는 상태를 알려줄 수 있다.")
+    @ParameterizedTest
+    @MethodSource("completedResource")
+    void calculateCurrentStatusWhenFinished(
+            int firstNumberOfHitPin, int secondNumberOfHitPin, FrameStatus expectedStatus) {
+        NormalFrameResult inProgressFrameResult = NormalFrameResult.firstBowl(firstNumberOfHitPin);
+        NormalFrameResult finishedFrameResult = inProgressFrameResult.secondBowl(secondNumberOfHitPin);
+
+        assertThat(finishedFrameResult.calculateCurrentStatus()).isEqualTo(expectedStatus);
+    }
+    public static Stream<Arguments> completedResource() {
+        return Stream.of(
+                Arguments.of(5, 5, FrameStatus.SPARE),
+                Arguments.of(5, 0, FrameStatus.GUTTER),
+                Arguments.of(5, 4, FrameStatus.FOUR)
         );
     }
 }
