@@ -13,7 +13,7 @@ class DeleteHistoriesTest {
 
     @Test
     @DisplayName("DeleteHistories 추가 테스트")
-    void add() {
+    void deleteHistoriesTest_add() {
         Long questionId = 1L;
 
         User writer = new User();
@@ -28,7 +28,7 @@ class DeleteHistoriesTest {
 
     @Test
     @DisplayName("DeleteHistories get 테스트")
-    void getDeleteHistories() {
+    void deleteHistories_getDeleteHistories() {
         Long questionId = 1L;
 
         User writer = new User();
