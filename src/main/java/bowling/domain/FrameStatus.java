@@ -5,23 +5,25 @@ import bowling.domain.exceptions.NoFrameStatusException;
 import java.util.Arrays;
 
 public enum FrameStatus {
-    STRIKE("X"),
-    NINE("9"),
-    EIGHT("8"),
-    SEVEN("7"),
-    SIX("6"),
-    FIVE("5"),
-    FOUR("4"),
-    THREE("3"),
-    TWO("2"),
-    ONE("1"),
-    GUTTER("-"),
-    SPARE("/");
+    STRIKE("X", new NumberOfHitPin(10)),
+    NINE("9", new NumberOfHitPin(9)),
+    EIGHT("8", new NumberOfHitPin(8)),
+    SEVEN("7", new NumberOfHitPin(7)),
+    SIX("6", new NumberOfHitPin(6)),
+    FIVE("5", new NumberOfHitPin(5)),
+    FOUR("4", new NumberOfHitPin(4)),
+    THREE("3", new NumberOfHitPin(3)),
+    TWO("2", new NumberOfHitPin(2)),
+    ONE("1", new NumberOfHitPin(1)),
+    GUTTER("-", new NumberOfHitPin(0)),
+    SPARE("/", null);
 
     private String value;
+    private NumberOfHitPin numberOfHitPin;
 
-    FrameStatus(String value) {
+    FrameStatus(String value, NumberOfHitPin numberOfHitPin) {
         this.value = value;
+        this.numberOfHitPin = numberOfHitPin;
     }
 
     public static FrameStatus find(NumberOfHitPin numberOfHitPin) {
@@ -32,7 +34,7 @@ public enum FrameStatus {
             return GUTTER;
         }
         return Arrays.stream(FrameStatus.values())
-                .filter(frameStatus -> frameStatus.value.equals(numberOfHitPin.toString()))
+                .filter(frameStatus -> frameStatus.numberOfHitPin.equals(numberOfHitPin))
                 .findFirst()
                 .orElseThrow(() -> new NoFrameStatusException("잘못된 프레임 상태입니다."));
     }
