@@ -6,7 +6,8 @@ public enum ScoreType {
     STRIKE(point -> "X"),
     SPARE(point -> "/"),
     GUTTER(point -> "-"),
-    MISS(point -> point.toString());
+    MISS(point -> point.toString()),
+    NORMAL(point -> point.toString());
 
     private Function<Integer, String> expression;
 

@@ -27,7 +27,6 @@ class ScoresTest {
         return Stream.of(
                 Arguments.of(1, 3, 4),
                 Arguments.of(2, 4, 6),
-                Arguments.of(10, 0, 10),
                 Arguments.of(5, 3, 8)
         );
     }

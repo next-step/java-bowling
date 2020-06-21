@@ -28,11 +28,11 @@ public class Scores {
 
     private Score createScore(int point) {
         if (CollectionUtils.isEmpty(scores)) {
-            return Score.generateFirstScore(point);
+            return ScoreFactory.generateScore(point);
         }
 
         int lastIndex = scores.size() - ONE;
-        return Score.generateNextScore(scores.get(lastIndex), point);
+        return scores.get(lastIndex).nextScore(point);
     }
 
     public int totalScore() {
@@ -58,6 +58,9 @@ public class Scores {
     }
 
     public boolean isStrike() {
+        if (isEmpty()) {
+            return false;
+        }
         return scores.get(FIRST_SCORE - ONE).isStrike();
     }
 
@@ -72,5 +75,9 @@ public class Scores {
         return scores.stream()
                 .map(ScoreResultDto::new)
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));
+    }
+
+    private boolean isEmpty() {
+        return CollectionUtils.isEmpty(scores);
     }
 }
