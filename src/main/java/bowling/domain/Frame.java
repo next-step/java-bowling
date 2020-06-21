@@ -70,6 +70,10 @@ public class Frame {
         return this.frameResult.isFinalFrame();
     }
 
+    public Frame toNext() {
+        return this.nextFrame;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -2,6 +2,7 @@ package bowling.domain;
 
 public class Player {
     private final String name;
+    private Frame firstFrame;
     private Frame currentFrame;
 
     public Player(String playerName) {
@@ -9,8 +10,10 @@ public class Player {
     }
 
     public FrameStatus bowlFirst(int numberOfHitPin) {
-        this.currentFrame = Frame.bowlFirst(numberOfHitPin);
-        return this.currentFrame.calculateCurrentStatus();
+        Frame firstFrame = Frame.bowlFirst(numberOfHitPin);
+        this.firstFrame = firstFrame;
+        this.currentFrame = firstFrame;
+        return calculateCurrentStatus();
     }
 
     public FrameStatus bowl(int numberOfHitPin) {
@@ -24,5 +27,15 @@ public class Player {
 
     public FrameStatus calculateCurrentStatus() {
         return this.currentFrame.calculateCurrentStatus();
+    }
+
+    public int checkWhere() {
+        int count = 1;
+        Frame current = this.firstFrame;
+        while (current.toNext() != null) {
+            current = current.toNext();
+            count += 1;
+        }
+        return count;
     }
 }

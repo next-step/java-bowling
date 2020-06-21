@@ -20,12 +20,28 @@ class PlayerTests {
         assertThat(player).isNotNull();
     }
 
+    @DisplayName("현재 진행중인 프레임이 어디인지 알 수 있다.")
+    @Test
+    void checkWhereTest() {
+        int firstNumberOfHitPin = 10;
+        int secondNumberOfHitPin = 5;
+        int thirdNumberOfHitPin = 4;
+
+        player.bowlFirst(firstNumberOfHitPin);
+        assertThat(player.checkWhere()).isEqualTo(1);
+        player.bowl(secondNumberOfHitPin);
+        assertThat(player.checkWhere()).isEqualTo(2);
+        player.bowl(thirdNumberOfHitPin);
+        assertThat(player.checkWhere()).isEqualTo(2);
+    }
+
     @DisplayName("첫번재 투구를 진행하고 상태를 확인할 수 있다.")
     @Test
     void bowlFirstTest() {
         int numberOfHitPin = 3;
 
         assertThat(player.bowlFirst(numberOfHitPin)).isEqualTo(FrameStatus.THREE);
+        assertThat(player.checkWhere()).isEqualTo(1);
     }
 
     @DisplayName("프레임을 마무리하면 다음 프레임을 진행할 수 있다.")
@@ -36,6 +52,7 @@ class PlayerTests {
 
         player.bowlFirst(firstNumberOfHitPin);
         assertThat(player.bowl(secondNumberOfHitPin)).isEqualTo(FrameStatus.FIVE);
+        assertThat(player.checkWhere()).isEqualTo(2);
     }
 
     @DisplayName("해당 프레임이 마무리되지 않았다면 현재 프레임을 진행할 수 있다.")
@@ -48,5 +65,6 @@ class PlayerTests {
         player.bowlFirst(firstNumberOfHitPin);
         player.bowl(secondNumberOfHitPin);
         assertThat(player.bowl(thirdNumberOfHitPin)).isEqualTo(FrameStatus.SPARE);
+        assertThat(player.checkWhere()).isEqualTo(2);
     }
 }
