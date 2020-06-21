@@ -25,16 +25,16 @@ public class AnswerTest {
     @Test
     @DisplayName("정상 삭제")
     void deletedTest() {
-        assertThatCode(() -> A1.deleted(UserTest.JAVAJIGI)).doesNotThrowAnyException();
-        assertThatCode(() -> A2.deleted(UserTest.SANJIGI)).doesNotThrowAnyException();
+        assertThatCode(() -> A1.deleteByOwner(UserTest.JAVAJIGI)).doesNotThrowAnyException();
+        assertThatCode(() -> A2.deleteByOwner(UserTest.SANJIGI)).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("작성 유저가 아닐경우 Exception")
     void notAvailableDeletedTest() {
-        assertThatThrownBy(() -> A2.deleted(UserTest.JAVAJIGI))
+        assertThatThrownBy(() -> A2.deleteByOwner(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class);
-        assertThatThrownBy(() -> A1.deleted(UserTest.SANJIGI))
+        assertThatThrownBy(() -> A1.deleteByOwner(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class);
     }
 }

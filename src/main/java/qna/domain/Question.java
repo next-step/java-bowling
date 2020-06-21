@@ -99,11 +99,14 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> deleted(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> deleteByWriter(User loginUser) throws CannotDeleteException {
         this.availableDeleted(loginUser);
-        deleted = true;
 
-        return this.deletedAnswer(loginUser);
+        deleted = true;
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+
+        return this.delete(loginUser, deleteHistories);
     }
 
     private void availableDeleted(User loginUser) throws CannotDeleteException {
@@ -112,17 +115,8 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private List<DeleteHistory> deletedAnswer(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
-
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+    private List<DeleteHistory> delete(User loginUser, List<DeleteHistory> deleteHistories) throws CannotDeleteException {
         Answers answers = new Answers(getAnswers());
-
         return answers.delete(loginUser, deleteHistories);
     }
 }
