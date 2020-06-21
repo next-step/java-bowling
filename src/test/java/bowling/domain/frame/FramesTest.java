@@ -1,9 +1,6 @@
-/*
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.domain.bowling.BowlingPinsGroup;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,11 +25,12 @@ class FramesTest {
     public void getCurrentFrame_첫번째() {
         Frames frames = Frames.initiate();
         BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
-        frames.bowl(10, bowlingPinsGroup);
+        Frame frame = frames.getCurrentFrame();
+        frame.bowl(10, bowlingPinsGroup);
 
-        frames.moveToNextFrame();
+        frames.moveToNextFrame(frame);
 
-        assertThat(frames.getCurrentFrameIndex()).isEqualTo(2);
+        assertThat(frames.getCurrentFrame().getIndex()).isEqualTo(2);
     }
 
     @DisplayName("플레이 할 Frame이 있으면 True 반환")
@@ -40,13 +38,13 @@ class FramesTest {
     public void hasNextFrame_True() {
         Frames frames = Frames.initiate();
         BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
-
-        frames.bowl(9, bowlingPinsGroup);
+        Frame frame = frames.getCurrentFrame();
+        frame.bowl(10, bowlingPinsGroup);
 
         assertThat(frames.hasNextFrame()).isTrue();
     }
 
-    @DisplayName("더이상 플레이할 프레임이 없으면 false 반환")
+/*    @DisplayName("더이상 플레이할 프레임이 없으면 false 반환")
     @Test
     public void hasNextFrame_False() {
         Frames frames = Frames.initiate();
@@ -57,6 +55,5 @@ class FramesTest {
         }
 
         assertThat(frames.hasNextFrame()).isFalse();
-    }
+    }*/
 }
-*/

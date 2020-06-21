@@ -21,11 +21,13 @@ public class Frames {
         return new Frames(frames);
     }
 
-    public void moveToNextFrame() {
-        Frame currentFrame = getCurrentFrame();
-        Frame nextFrame = currentFrame.next();
-        if (!currentFrame.equals(nextFrame)) {
-            frames.add(nextFrame);
+    public void bowl(int hitCounts, BowlingPinsGroup bowlingPinsGroup) {
+        getCurrentFrame().bowl(hitCounts, bowlingPinsGroup);
+    }
+
+    public void moveToNextFrame(Frame frame) {
+        if (frame.isMovableToNextFrame()) {
+            frames.add(frame.next());
         }
     }
 
@@ -33,16 +35,8 @@ public class Frames {
         return getCurrentFrame() != null;
     }
 
-    public void bowl(int hitCounts, BowlingPinsGroup bowlingPinsGroup) {
-        getCurrentFrame().bowl(hitCounts, bowlingPinsGroup);
-    }
-
-    private Frame getCurrentFrame() {
-        return frames.get(getCurrentFrameIndex() - FRAMES_INDEX_CONST);
-    }
-
-    public int getCurrentFrameIndex() {
-        return frames.size();
+    public Frame getCurrentFrame() {
+        return frames.get(frames.size() - FRAMES_INDEX_CONST);
     }
 
     public List<Frame> getFrames() {

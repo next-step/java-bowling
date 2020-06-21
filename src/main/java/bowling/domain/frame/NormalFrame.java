@@ -18,15 +18,18 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame next() {
-        if (!isMovableToNextFrame()) {
-            return this;
-        }
         return index == MAXIMUM_NORMAL_FRAME_INDEX ?
                 FinalFrame.last(index + NEXT_INDEX) : new NormalFrame(index + NEXT_INDEX);
     }
 
-    private boolean isMovableToNextFrame() {
-        return normalPitches.getPitchCounts() == 2 || normalPitches.isStrike();
+    @Override
+    public boolean isMovableToNextFrame() {
+        return normalPitches.getPitchCounts() == MAXIMUM_NORMAL_PITCH_COUNTS || normalPitches.isStrike();
+    }
+
+    @Override
+    public boolean isRequestingNewBowlingPinsGroup() {
+        return normalPitches.getPitchCounts() == 0;
     }
 
     @Override
@@ -37,5 +40,4 @@ public class NormalFrame implements Frame {
     public int getIndex() {
         return index;
     }
-
 }

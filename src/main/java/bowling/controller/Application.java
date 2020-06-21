@@ -13,13 +13,11 @@ public class Application {
 /*
         OutputView.printDefaultScoreBoard(player);
 */
+        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
         while (frames.hasNextFrame()) {
-            BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
-            frames.bowl(InputView.inputPitch(frames), bowlingPinsGroup);
-/*
-            OutputView.printBowlingScoreBoard(frames, player);
-*/
-            frames.moveToNextFrame();
+            //  frames.bowl(InputView.inputPitch(frames), bowlingPinsGroup);
+
+
         }
     }
 }

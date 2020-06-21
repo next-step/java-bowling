@@ -7,13 +7,23 @@ public class FinalFrame implements Frame {
 
     private final int index;
     private final FinalPitches finalPitches = new FinalPitches();
-    
+
     private FinalFrame(int index) {
         this.index = index;
     }
 
     public static FinalFrame last(int index) {
         return new FinalFrame(index);
+    }
+
+    @Override
+    public boolean isRequestingNewBowlingPinsGroup() {
+        return false;
+    }
+
+    @Override
+    public boolean isMovableToNextFrame() {
+        return false;
     }
 
     @Override
