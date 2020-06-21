@@ -1,7 +1,6 @@
 package bowling.domain.dto;
 
 import bowling.exception.message.ErrorMessage;
-import bowling.util.StringUtil;
 
 import java.util.Objects;
 
@@ -15,7 +14,7 @@ public class FrameResult {
     }
 
     private void validate(final String desc) {
-        if (StringUtil.isEmpty(desc)) {
+        if (Objects.isNull(desc)) {
             throw new IllegalArgumentException(ErrorMessage.IS_NULL_OR_EMPTY);
         }
     }

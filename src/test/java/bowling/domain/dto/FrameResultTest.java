@@ -3,7 +3,7 @@ package bowling.domain.dto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -12,9 +12,9 @@ public class FrameResultTest {
 
     static final String desc = "9|/";
 
-    @DisplayName("FrameResult 생성 실패: null 또는 빈 문자열")
+    @DisplayName("FrameResult 생성 실패: null")
     @ParameterizedTest
-    @NullAndEmptySource
+    @NullSource
     void createFailure(final String desc) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> FrameResult.of(desc));
