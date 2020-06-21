@@ -3,11 +3,11 @@ package bowling.domain;
 import bowling.domain.exception.BowlingBuildingException;
 import bowling.domain.pitch.Pitch;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 public class PitchTest {
 
@@ -28,5 +28,21 @@ public class PitchTest {
             new Pitch(hitCounts);
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_PITCH);
+    }
+
+    @DisplayName("Strike인지 판별")
+    @Test
+    public void isStrike_True() {
+        Pitch pitch = new Pitch(10);
+
+        assertThat(pitch.isStrike()).isTrue();
+    }
+
+    @DisplayName("Gutter인지 판별")
+    @Test
+    public void isGutter_True() {
+        Pitch pitch = new Pitch(0);
+
+        assertThat(pitch.isGutter()).isTrue();
     }
 }

@@ -1,14 +1,14 @@
 package bowling.domain.frame;
 
+import bowling.domain.pitch.NormalPitches;
 import bowling.domain.pitch.Pitches;
 
 public class NormalFrame implements Frame {
-    private static final int FIRST_INDEX = 1;
-    private static final int NEXT_INDEX = 1;
-    private static final int MAXIMUM_NORMAL_FRAME_INDEX = 9;
 
     private final int index;
-    private final Pitches pitches = new Pitches();
+    private final NormalPitches normalPitches = new NormalPitches();
+
+    private final Pitches pitches = new Pitches(); //삭제 예정
 
     private NormalFrame(int index) {
         this.index = index;
@@ -20,16 +20,20 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame next() {
-        if (!pitches.isMovableToNextFrame()) {
+        if (!isMovableToNextFrame()) {
             return this;
         }
         return index == MAXIMUM_NORMAL_FRAME_INDEX ?
                 FinalFrame.last(index + NEXT_INDEX) : new NormalFrame(index + NEXT_INDEX);
     }
 
+    private boolean isMovableToNextFrame() {
+        return normalPitches.getPitchCounts() == 2 || normalPitches.isStrike();
+    }
+
     @Override
     public void bowl(int hitCounts) {
-        pitches.recordPitch(hitCounts);
+        normalPitches.recordPitch(hitCounts);
     }
 
     public int getIndex() {

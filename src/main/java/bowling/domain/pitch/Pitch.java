@@ -19,6 +19,10 @@ public class Pitch {
         }
     }
 
+    public boolean isStrike() {
+        return hitCounts == MAXIMUM_HIT_COUNTS;
+    }
+
     public boolean isGutter() {
         return hitCounts == MINIMUM_HIT_COUNTS;
     }
