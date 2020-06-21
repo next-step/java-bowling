@@ -39,6 +39,10 @@ public class Frame {
         return nextFrame;
     }
 
+    public FrameStatus calculateCurrentStatus() {
+        return this.frameResult.calculateCurrentStatus();
+    }
+
     private void validateNextFrame() {
         if (!this.frameResult.isCompleted()) {
             throw new CannotDoNextFrameException("현재 프레임을 마무리하기 전에는 다음 프레임으로 넘어갈 수 없습니다.");

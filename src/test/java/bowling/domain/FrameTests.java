@@ -1,13 +1,11 @@
-package bowling.domain.frameResult;
+package bowling.domain;
 
-import bowling.domain.Frame;
-import bowling.domain.FrameResultFactory;
-import bowling.domain.frameResult.FrameResult;
-import bowling.domain.frameResult.NormalFrameResult;
-import bowling.domain.frameResult.StrikeFrameResult;
 import bowling.domain.exceptions.CannotBowlException;
 import bowling.domain.exceptions.CannotDoNextFrameException;
 import bowling.domain.exceptions.InvalidNumberOfHitPinException;
+import bowling.domain.frameResult.FrameResult;
+import bowling.domain.frameResult.NormalFrameResult;
+import bowling.domain.frameResult.StrikeFrameResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -111,6 +109,22 @@ class FrameTests {
         return Stream.of(
                 Arguments.of(FrameResultFactory.create(5), false),
                 Arguments.of(FrameResultFactory.createFinal(5), true)
+        );
+    }
+
+    @DisplayName("프레임의 현재 상태를 알려줄 수 있다.")
+    @ParameterizedTest
+    @MethodSource("statusResource")
+    void calculateStatusTest(int numberOfHitPin, FrameStatus expectedResult) {
+        Frame frame = Frame.bowlFirst(numberOfHitPin);
+
+        assertThat(frame.calculateCurrentStatus()).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> statusResource() {
+        return Stream.of(
+                Arguments.of(0, FrameStatus.GUTTER),
+                Arguments.of(5, FrameStatus.FIVE),
+                Arguments.of(10, FrameStatus.STRIKE)
         );
     }
 }
