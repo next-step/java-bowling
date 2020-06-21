@@ -1,7 +1,6 @@
 package bowling.domain.pitch;
 
 import bowling.domain.bowling.BowlingPinsGroup;
-import bowling.domain.exception.BowlingBuildingException;
 
 public class Pitch {
     private static final int MINIMUM_HIT_COUNTS = 0;
@@ -10,14 +9,7 @@ public class Pitch {
     private final int hitCounts;
 
     public Pitch(int hitCounts) {
-        validateHitCounts(hitCounts);
         this.hitCounts = hitCounts;
-    }
-
-    private void validateHitCounts(int hitCounts) {
-        if (hitCounts < MINIMUM_HIT_COUNTS || hitCounts > MAXIMUM_HIT_COUNTS) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_PITCH);
-        }
     }
 
     public void throwBall(BowlingPinsGroup bowlingPinsGroup) {

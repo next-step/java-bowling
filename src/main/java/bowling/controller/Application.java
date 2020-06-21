@@ -17,13 +17,9 @@ public class Application {
         BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
         while (frames.hasNextFrame()) {
             Frame frame = frames.getCurrentFrame();
-            //bowlingPinsGroup = bowlingPinsGroup.next();
+            bowlingPinsGroup = bowlingPinsGroup.next(frame);
             frame.bowl(InputView.inputPitch(frame), bowlingPinsGroup);
             frames.moveToNextFrame(frame);
-
-            //  frames.bowl(InputView.inputPitch(frames), bowlingPinsGroup);
-
-
         }
     }
 }

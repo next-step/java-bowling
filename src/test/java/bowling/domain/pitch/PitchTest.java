@@ -26,12 +26,14 @@ public class PitchTest {
         }).doesNotThrowAnyException();
     }
 
-    @DisplayName("Pitch 객체 정상 생성 실패 (hitCounts가 음수이거나 10을 초과)")
-    @ParameterizedTest
-    @ValueSource(ints = {-1, 11})
-    public void makePitch_예외(int hitCounts) {
+    @DisplayName("현재 가지고 있는 볼링핀의 개수보다 많은 hitCount로 볼링핀을 치면 예외 발생")
+    @Test
+    public void throwBall_예외() {
+        Pitch pitch = new Pitch(11);
+        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
+
         assertThatThrownBy(() -> {
-            new Pitch(hitCounts);
+            pitch.throwBall(bowlingPinsGroup);
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_PITCH);
     }
