@@ -5,7 +5,7 @@ import bowling.domain.bowling.BowlingPinsGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinalPitches {
+public class FinalPitches implements Pitches {
 
     private final List<Pitch> pitches = new ArrayList<>();
 
@@ -24,16 +24,9 @@ public class FinalPitches {
         return isContainingStrike || isSpareOrAllStrike;
     }
 
+    @Override
     public int getPitchCounts() {
         return pitches.size();
-    }
-
-    public boolean isStrike() {
-        return pitches.get(0).isStrike();
-    }
-
-    public boolean isSpare() {
-        return pitches.get(0).getHitCounts() + pitches.get(1).getHitCounts() == 10;
     }
 
     public int getPitchesSum() {

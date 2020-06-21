@@ -5,7 +5,7 @@ import bowling.domain.bowling.BowlingPinsGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalPitches {
+public class NormalPitches implements Pitches {
     private static final int FIRST_PITCH_INDEX = 0;
 
     private final List<Pitch> pitches = new ArrayList<>();
@@ -20,6 +20,7 @@ public class NormalPitches {
         return pitches.get(FIRST_PITCH_INDEX).isStrike();
     }
 
+    @Override
     public int getPitchCounts() {
         return pitches.size();
     }

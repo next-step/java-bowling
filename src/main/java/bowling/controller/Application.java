@@ -5,6 +5,7 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 import bowling.view.InputView;
+import bowling.view.OutputView;
 
 public class Application {
 
@@ -12,13 +13,14 @@ public class Application {
         Player player = new Player(InputView.inputPlayerName());
         Frames frames = Frames.initiate();
 
-        //  OutputView.printDefaultScoreBoard(player);
+        OutputView.printDefaultScoreBoard(player);
 
         BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
         while (frames.hasNextFrame()) {
             Frame frame = frames.getCurrentFrame();
             bowlingPinsGroup = bowlingPinsGroup.next(frame);
             frame.bowl(InputView.inputPitch(frame), bowlingPinsGroup);
+            //OutputView.printBowlingScoreBoard(frames, player);
             frames.moveToNextFrame(frame);
         }
     }

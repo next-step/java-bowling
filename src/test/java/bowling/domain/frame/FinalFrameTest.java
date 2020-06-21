@@ -9,21 +9,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FinalFrameTest {
 
-
-/*
-
-    FinalPitch의 종료 조건
-    1) 2번 투구시 미스인 경우 -> 종료
-    2) 스트라이크 인 경우 -> 2번 더 칠 수 있음. (그 2번이 스트라이크여도됨.)
-    3) 스페어인 경우 -> 1번 더 칠 수 있음. (그 1번은 스트라이크여도됨.)
-
-*/
-
-
     @AfterEach
     public void resetBowlingPins() {
         BowlingPinsGroup.initiate().hitByBall(10);
     }
+
+    @DisplayName("마지막 프레임에서 처음 두 번의 투구가 미스이면 보너스 기회를 못 받고 경기 종료")
+    @Test
+    public void isMovableToNextFrame_True_미스() {
+        Frame finalFrame = FinalFrame.last(10);
+        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
+
+        finalFrame.bowl(3, bowlingPinsGroup);
+        finalFrame.bowl(3, bowlingPinsGroup.next(finalFrame));
+
+        assertThat(finalFrame.isMovableToNextFrame()).isTrue();
+    }
+
 
     @DisplayName("마지막 프레임에서 처음 두 번의 투구 중 스트라이크가 존재하는 경우 보너스 투구가 가능해 경기가 종료되지 않음")
     @Test
@@ -46,6 +48,20 @@ public class FinalFrameTest {
         finalFrame.bowl(7, bowlingPinsGroup.next(finalFrame));
 
         assertThat(finalFrame.isMovableToNextFrame()).isFalse();
+    }
+
+    @DisplayName("X|7|3 과 같이 첫 3번 투구하면 경기 종료")
+    @Test
+    public void isMovableToNextFrame_True_3번() {
+        Frame finalFrame = FinalFrame.last(10);
+        BowlingPinsGroup bowlingPinsGroup = BowlingPinsGroup.initiate();
+
+        finalFrame.bowl(10, bowlingPinsGroup);
+        BowlingPinsGroup nextBowlingPins = bowlingPinsGroup.next(finalFrame);
+        finalFrame.bowl(7, nextBowlingPins);
+        finalFrame.bowl(3, nextBowlingPins.next(finalFrame));
+
+        assertThat(finalFrame.isMovableToNextFrame()).isTrue();
     }
 
     @DisplayName("마지막 프레임에서 두 번 연속 스트라이크를 쳐도 보너스 투구가 가능해 경기가 종료되지 않음")
