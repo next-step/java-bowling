@@ -100,7 +100,7 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-	public DeleteHistory delete(User loginUser) throws CannotDeleteException{
+	public DeleteHistories delete(User loginUser) throws CannotDeleteException{
 		// 2. 로그인 사용자와 질문한 사용자가 같은 경우 삭제
 		if(!isOwner(loginUser)) {
 			throw new CannotDeleteException(CANNOT_DELETE_AUTHORITY);
@@ -109,8 +109,10 @@ public class Question extends AbstractEntity {
 		this.deleted = true;
 		
 		DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
+		DeleteHistories deleteHistories = new DeleteHistories(deleteHistory);
 		
-		return deleteHistory;
+		
+		return deleteHistories;
 		
 		
 	}

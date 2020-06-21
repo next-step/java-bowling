@@ -4,6 +4,8 @@ import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 @Entity
@@ -77,14 +79,14 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-	public Object deleteByOthers(User user) throws CannotDeleteException {
+	public DeleteHistory deleteByOthers(User user) throws CannotDeleteException {
 		// 6. 질문자와 답변자가 다른 경우 답변을 삭제할 수 없다.
 		if(!isOwner(user)) {
 			throw new CannotDeleteException(CANNOT_DELETE_ANSWERS_BY_OTHERS);
-		}
+		}		
+		DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
 		
-		
-		return null;
+		return deleteHistory;
 	}
     
     
