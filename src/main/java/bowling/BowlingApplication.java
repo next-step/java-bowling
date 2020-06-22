@@ -13,8 +13,8 @@ public class BowlingApplication {
         BowlingGame bowlingGame = new BowlingGame(playerName);
 
         while (!bowlingGame.isGameOver()) {
-            int point = InputView.inputScore(bowlingGame.getFameSize());
-            bowlingGame.addPoint(point);
+            int point = InputView.inputScore(bowlingGame.currentPlayFrameIndex());
+            bowlingGame.playGame(point);
 
             OutputView.outputFrames(bowlingGame.getFrames());
         }
