@@ -121,8 +121,12 @@
 ## Step2. Todo List(new)
 - NumberOfHitPin
     - 1회 투구로 맞춘 핀의 수를 나타낸다.
+    - [ ] 0 ~ 10 사이의 값으로 생성할 수 있다.
+    - [ ] 같은 타입끼리 더할 수 있다.
+    - [ ] 같은 타입끼리 대소 비교를 할 수 있다.
 - FrameResult (interface)
-    - 해당 프레임의 결과를 나타낸다
+    - 해당 프레임의 결과를 나타낸다.
+    - 현재 프레임 내에서 다음 단계로 진행 할 수 있는지 여부에 관심을 갖는다.
     - NumberOfHitPin들을 갖고 있으며, 해당 내용을 기반으로 점수를 계산할 수 있다.
     - 현재 상태를 기반으로 해당 프레임의 다음 투구 상황을 진행할 수 있다.
 - NormalFrameResult
@@ -131,6 +135,7 @@
     - NumberOfHitPin을 최대 세개 가질 수 있는 FrameResult의 구현체
 - Frame (interface)
     - 현재 프레임의 결과와 번호를 나타낸다
+    - 현재 프레임에서 다음 프레임으로 진행 할 수 있는지 여부에 관심을 갖는다.
     - 현재 FrameResult를 기반으로 점수를 계산할 수 있다.
     - 현재 FrameResult 상태를 기반으로 다음 프레임을 진행할 수 있다.
 - NormalFrame
