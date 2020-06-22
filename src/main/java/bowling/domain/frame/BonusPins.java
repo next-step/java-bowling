@@ -12,8 +12,8 @@ public class BonusPins implements Pins {
     private final Pins pins;
 
     private BonusPins(Pins pins) {
-         this.pins = pins;
-         this.downPins = new ArrayList<>();
+        this.pins = pins;
+        this.downPins = new ArrayList<>();
     }
 
     public static Pins newInstance() {
@@ -58,11 +58,11 @@ public class BonusPins implements Pins {
     }
 
     private void validate(int downPin) {
-        if(downPin < 0 || downPin > 10){
+        if (downPin < 0 || downPin > 10) {
             throw new IllegalArgumentException("invalid downPin");
         }
 
-        if(!hasTurn()){
+        if (!hasTurn()) {
             throw new IllegalStateException("invalid state");
         }
     }

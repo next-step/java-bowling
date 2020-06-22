@@ -8,7 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class NormalPins implements Pins{
+public class NormalPins implements Pins {
+
     private static final int PIN_COUNT = 10;
     private static final int MAX_ROUND = 2;
 
@@ -55,20 +56,20 @@ public class NormalPins implements Pins{
     }
 
     private void validate(int downPin) {
-        if(!hasTurn()){
+        if (!hasTurn()) {
             throw new IllegalStateException("max down limit");
         }
 
-        if(downPin < 0){
+        if (downPin < 0) {
             throw new IllegalArgumentException("invalid downPin");
         }
 
-        if(sumOfDownPin() + downPin > PIN_COUNT){
+        if (sumOfDownPin() + downPin > PIN_COUNT) {
             throw new IllegalArgumentException("invalid downPin");
         }
     }
 
-    private int sumOfDownPin(){
+    private int sumOfDownPin() {
         return this.downPins.stream().reduce(0, Integer::sum);
     }
 

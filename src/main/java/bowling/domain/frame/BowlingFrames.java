@@ -18,19 +18,13 @@ public class BowlingFrames {
         this.frames = new ArrayList<>(frames);
     }
 
-    private void validate(List<Frame> frames) {
-        if (frames.size() != FRAME_COUNT) {
-            throw new IllegalArgumentException("invalid frames");
-        }
-    }
-
     public static BowlingFrames newInstance() {
         List<Frame> frames = new ArrayList<>();
 
         NormalFrame normalFrame = NormalFrame.first();
         frames.add(normalFrame);
 
-        for (int i = 1; i < FRAME_COUNT -1 ; i++) {
+        for (int i = 1; i < FRAME_COUNT - 1; i++) {
             normalFrame = normalFrame.next();
             frames.add(normalFrame);
         }
@@ -38,6 +32,12 @@ public class BowlingFrames {
         frames.add(FinalFrame.newInstance());
 
         return new BowlingFrames(frames);
+    }
+
+    private void validate(List<Frame> frames) {
+        if (frames.size() != FRAME_COUNT) {
+            throw new IllegalArgumentException("invalid frames");
+        }
     }
 
     public void play(int downPin) {

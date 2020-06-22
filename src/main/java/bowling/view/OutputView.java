@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
     private static final int FRAME_COUNT = 10;
 
     private static final Map<ScoreType, String> displayMap = new HashMap<>();

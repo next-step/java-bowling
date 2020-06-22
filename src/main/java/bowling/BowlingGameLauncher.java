@@ -6,14 +6,14 @@ import bowling.view.OutputView;
 
 public class BowlingGameLauncher {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         InputView inputView = new InputView();
         String name = inputView.requestPlayer();
 
         BowlingGame bowlingGame = BowlingGame.newInstance();
         OutputView outputView = new OutputView();
 
-        while(!bowlingGame.isFinished()){
+        while (!bowlingGame.isFinished()) {
             int framePosition = bowlingGame.getFramePosition();
             int downPin = inputView.requestDownPin(framePosition);
             bowlingGame.play(downPin);
