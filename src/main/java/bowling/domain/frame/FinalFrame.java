@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.FrameResults;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.frameStatus.FinalFrameStatus;
 
@@ -16,6 +17,10 @@ public class FinalFrame {
         this.index = index;
         this.finalFrameStatus = finalFrameStatus;
         this.prevFrame = ninthFrame;
+    }
+
+    FinalFrame(NormalFrame ninthFrame, FinalFrameStatus finalFrameStatus) {
+        this(TEN, finalFrameStatus, ninthFrame);
     }
 
     public static FinalFrame firstBowl(int numberOfHitPin, NormalFrame ninthFrame) {
@@ -35,6 +40,10 @@ public class FinalFrame {
         if (isCompleted()) {
             throw new InvalidTryBowlException("종료된 프레임에는 투구할 수 없습니다.");
         }
+    }
+
+    public FrameResults calculateCurrentResults() {
+        return this.finalFrameStatus.calculateCurrentResult();
     }
 
     @Override
