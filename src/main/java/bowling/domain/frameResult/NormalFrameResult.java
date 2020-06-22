@@ -5,6 +5,8 @@ import bowling.domain.NumberOfHitPin;
 import java.util.Objects;
 
 public class NormalFrameResult {
+    private static final NumberOfHitPin STRIKE = new NumberOfHitPin(10);
+
     private final NumberOfHitPin firstNumberOfHitPin;
     private final NumberOfHitPin secondNumberOfHitPin;
 
@@ -13,12 +15,23 @@ public class NormalFrameResult {
         this.secondNumberOfHitPin = secondNumberOfHitPin;
     }
 
-    public static NormalFrameResult firstBowl(int numberOfHitPin) {
+    public static NormalFrameResult bowlFirst(int numberOfHitPin) {
         return new NormalFrameResult(new NumberOfHitPin(numberOfHitPin), null);
     }
 
-    public NormalFrameResult secondBowl(int numberOfHitPin) {
+    public NormalFrameResult bowlSecond(int numberOfHitPin) {
         return new NormalFrameResult(firstNumberOfHitPin, new NumberOfHitPin(numberOfHitPin));
+    }
+
+    public boolean isStrike() {
+        return this.firstNumberOfHitPin.equals(STRIKE);
+    }
+
+    public boolean isCompleted() {
+        if (this.firstNumberOfHitPin != null && isStrike()) {
+            return true;
+        }
+        return this.firstNumberOfHitPin != null && this.secondNumberOfHitPin != null;
     }
 
     @Override
