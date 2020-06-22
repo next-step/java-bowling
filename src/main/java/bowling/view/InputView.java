@@ -16,10 +16,21 @@ public class InputView {
         return inputString(PLAYER_NAMES_MESSAGE);
     }
 
+    public static int inputHitCount(final int frameNumber) {
+        return inputInt(String.format(HIT_COUNT_MESSAGE, frameNumber));
+    }
+
     private static String inputString(final String message) {
         System.out.println();
         System.out.print(message);
 
         return SCANNER.nextLine();
+    }
+
+    private static int inputInt(final String message) {
+        System.out.println();
+        System.out.print(message);
+
+        return Integer.parseInt(SCANNER.nextLine());
     }
 }
