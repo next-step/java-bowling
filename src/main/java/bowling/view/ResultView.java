@@ -1,11 +1,15 @@
 package bowling.view;
 
+import bowling.domain.dto.FrameResult;
+import bowling.domain.frame.FrameNumber;
 import bowling.domain.player.Player;
 import bowling.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ResultView {
 
@@ -19,10 +23,14 @@ public class ResultView {
     }
 
     public static void printHeader(final Player player) {
+        printShape(new ArrayList<>(), player);
+    }
+
+    public static void printShape(final List<FrameResult> frameResults, final Player player) {
         printFramesHeader();
 
         printNameInfo(player.getName());
-        printFrame(new ArrayList<>(Collections.nCopies(10, StringUtil.EMPTY)));
+        printResult(frameResults);
         System.out.println();
     }
 
@@ -32,6 +40,24 @@ public class ResultView {
 
     private static void printNameInfo(final String name) {
         System.out.print(DELIMITER + StringUtil.format(name, NAME_FORMAT) + DELIMITER);
+    }
+
+    private static void printResult(final List<FrameResult> results) {
+        if (Objects.isNull(results)) {
+            printLine(Collections.emptyList());
+            return;
+        }
+
+        printLine(results.stream()
+                .map(FrameResult::getDesc)
+                .collect(Collectors.toList())
+        );
+    }
+
+    private static void printLine(final List<String> strings) {
+        printFrame(strings);
+        printFrame(new ArrayList<>(
+                Collections.nCopies(FrameNumber.MAX_NUMBER - strings.size(), StringUtil.EMPTY)));
     }
 
     private static void printFrame(final List<String> strings) {

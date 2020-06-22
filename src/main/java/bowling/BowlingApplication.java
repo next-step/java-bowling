@@ -13,7 +13,10 @@ public class BowlingApplication {
 
         ResultView.printHeader(player);
 
-        int hitCount = InputView.inputHitCount(bowlingGame.getFrameNumber());
-        bowlingGame.play(hitCount);
+        while (!bowlingGame.isGameOver()) {
+            int hitCount = InputView.inputHitCount(bowlingGame.getFrameNumber());
+            bowlingGame.play(hitCount);
+            ResultView.printShape(bowlingGame.getFrameResults(), player);
+        }
     }
 }
