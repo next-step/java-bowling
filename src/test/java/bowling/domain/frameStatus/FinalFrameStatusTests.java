@@ -66,7 +66,7 @@ class FinalFrameStatusTests {
         assertThat(afterSecond.isCompleted()).isFalse();
 
         FinalFrameStatus afterThird = afterSecond.bowl(FIVE);
-        assertThat(afterThird.isCompleted()).isFalse();
+        assertThat(afterThird.isCompleted()).isTrue();
     }
 
     @DisplayName("초구가 스트라이크가 아니고 두번째가 미스인 경우 2회만 투구해도 프레임 결과가 마무리된다.")

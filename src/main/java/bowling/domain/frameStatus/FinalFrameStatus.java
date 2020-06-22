@@ -100,10 +100,17 @@ public class FinalFrameStatus implements FrameStatus {
         return this.firstNumberOfHitPin.plus(this.secondNumberOfHitPin).compareTo(STRIKE) < 0;
     }
 
+    private boolean isSpare() {
+        return this.firstNumberOfHitPin.plus(this.secondNumberOfHitPin).equals(STRIKE);
+    }
+
     @Override
     public boolean isCompleted() {
         if (this.firstNumberOfHitPin.equals(STRIKE)) {
             return this.secondNumberOfHitPin != null && this.thirdNumberOfHitPin != null;
+        }
+        if (this.secondNumberOfHitPin != null && isSpare()) {
+            return this.thirdNumberOfHitPin != null;
         }
         return this.secondNumberOfHitPin != null && isMiss();
     }

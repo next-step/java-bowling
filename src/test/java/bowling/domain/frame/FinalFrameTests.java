@@ -9,13 +9,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FinalFrameTests {
     private static final int TEN = 10;
     private static final int FIVE = 5;
+    private static final NormalFrame NINTH_FRAME = NormalFrame.start(FIVE).bowl(FIVE);
 
     @DisplayName("초구로 맞춘 핀의 수와 아홉번째 프레임을 입력 받아서 객체를 생성할 수 있다.")
     @Test
     void createTest() {
-        NormalFrame ninthFrame = NormalFrame.start(FIVE).bowl(FIVE);
-        FinalFrame finalFrame = FinalFrame.firstBowl(FIVE, ninthFrame);
+        FinalFrame finalFrame = FinalFrame.firstBowl(FIVE, NINTH_FRAME);
 
-        assertThat(finalFrame).isEqualTo(new FinalFrame(10, FinalFrameStatus.bowlFirst(FIVE), ninthFrame));
+        assertThat(finalFrame).isEqualTo(new FinalFrame(10, FinalFrameStatus.bowlFirst(FIVE), NINTH_FRAME));
+    }
+
+    @DisplayName("종료될 때까지 마지막 프레임을 진행할 수 있다.")
+    @Test
+    void bowlTest() {
+        FinalFrame finalFrame = FinalFrame.firstBowl(FIVE, NINTH_FRAME);
+        assertThat(finalFrame.isCompleted()).isFalse();
+
+        FinalFrame secondBowled = finalFrame.bowl(FIVE);
+        assertThat(secondBowled.isCompleted()).isFalse();
+
+        FinalFrame thirdBowled = secondBowled.bowl(TEN);
+        assertThat(thirdBowled.isCompleted()).isTrue();
     }
 }

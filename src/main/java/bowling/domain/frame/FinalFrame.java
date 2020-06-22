@@ -21,6 +21,14 @@ public class FinalFrame {
         return new FinalFrame(TEN, FinalFrameStatus.bowlFirst(numberOfHitPin), ninthFrame);
     }
 
+    public FinalFrame bowl(int numberOfHitPin) {
+        return new FinalFrame(TEN, this.finalFrameStatus.bowl(numberOfHitPin), prevFrame);
+    }
+
+    public boolean isCompleted() {
+        return this.finalFrameStatus.isCompleted();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
