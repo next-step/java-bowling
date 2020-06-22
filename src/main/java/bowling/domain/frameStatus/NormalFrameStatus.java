@@ -35,6 +35,7 @@ public class NormalFrameStatus implements FrameStatus {
         return false;
     }
 
+    @Override
     public FrameResults calculateCurrentResult() {
         if (this.firstNumberOfHitPin != null && this.secondNumberOfHitPin == null) {
             return new FrameResults(Collections.singletonList(FrameResult.find(firstNumberOfHitPin)));

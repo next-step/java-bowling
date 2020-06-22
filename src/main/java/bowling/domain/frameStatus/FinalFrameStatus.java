@@ -1,8 +1,13 @@
 package bowling.domain.frameStatus;
 
+import bowling.domain.FrameResult;
+import bowling.domain.FrameResults;
 import bowling.domain.NumberOfHitPin;
+import bowling.domain.exceptions.CannotCalculateFrameResultException;
 import bowling.domain.exceptions.InvalidTryBowlException;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 
 public class FinalFrameStatus implements FrameStatus {
@@ -36,15 +41,71 @@ public class FinalFrameStatus implements FrameStatus {
     }
 
     @Override
+    public FrameResults calculateCurrentResult() {
+        if (this.firstNumberOfHitPin != null && this.secondNumberOfHitPin == null && this.thirdNumberOfHitPin == null) {
+            return calculateFirstProgress();
+        }
+        if (this.firstNumberOfHitPin != null && this.secondNumberOfHitPin != null && this.thirdNumberOfHitPin == null) {
+            return calculateSecondProgress();
+        }
+        if (this.firstNumberOfHitPin != null && this.secondNumberOfHitPin != null) {
+            return calculateCompleted();
+        }
+        throw new CannotCalculateFrameResultException("결과를 계산할 수 없는 상태입니다.");
+    }
+
+    private FrameResults calculateFirstProgress() {
+        return new FrameResults(Collections.singletonList(FrameResult.find(firstNumberOfHitPin)));
+    }
+
+    private FrameResults calculateSecondProgress() {
+        if (this.firstNumberOfHitPin.equals(STRIKE)) {
+            return new FrameResults(
+                    Arrays.asList(
+                            FrameResult.find(this.firstNumberOfHitPin), FrameResult.find(this.secondNumberOfHitPin)));
+        }
+        return new FrameResults(
+                Arrays.asList(
+                        FrameResult.find(this.firstNumberOfHitPin),
+                        FrameResult.find(this.firstNumberOfHitPin, this.secondNumberOfHitPin)
+                ));
+    }
+
+    private FrameResults calculateCompleted() {
+        if (this.firstNumberOfHitPin.equals(STRIKE) && this.secondNumberOfHitPin.equals(STRIKE)) {
+            return new FrameResults(
+                    Arrays.asList(
+                            FrameResult.find(this.firstNumberOfHitPin),
+                            FrameResult.find(this.secondNumberOfHitPin),
+                            FrameResult.find(this.thirdNumberOfHitPin)
+                    ));
+        }
+        if (this.firstNumberOfHitPin.equals(STRIKE) && !this.secondNumberOfHitPin.equals(STRIKE)) {
+            return new FrameResults(
+                    Arrays.asList(
+                            FrameResult.find(this.firstNumberOfHitPin),
+                            FrameResult.find(this.secondNumberOfHitPin),
+                            FrameResult.find(this.secondNumberOfHitPin, this.thirdNumberOfHitPin)
+                    ));
+        }
+        return new FrameResults(
+                Arrays.asList(
+                        FrameResult.find(this.firstNumberOfHitPin),
+                        FrameResult.find(this.firstNumberOfHitPin, this.secondNumberOfHitPin),
+                        FrameResult.find(this.thirdNumberOfHitPin)
+                ));
+    }
+
+    private boolean isMiss() {
+        return this.firstNumberOfHitPin.plus(this.secondNumberOfHitPin).compareTo(STRIKE) < 0;
+    }
+
+    @Override
     public boolean isCompleted() {
         if (this.firstNumberOfHitPin.equals(STRIKE)) {
             return this.secondNumberOfHitPin != null && this.thirdNumberOfHitPin != null;
         }
         return this.secondNumberOfHitPin != null && isMiss();
-    }
-
-    private boolean isMiss() {
-        return this.firstNumberOfHitPin.plus(this.secondNumberOfHitPin).compareTo(STRIKE) < 0;
     }
 
     @Override
