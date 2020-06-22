@@ -68,4 +68,13 @@ public class NormalFrame implements Frame {
     public int hashCode() {
         return Objects.hash(index, currentStatus, previousFrame);
     }
+
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "index=" + index +
+                ", currentStatus=" + currentStatus +
+                ", previousFrame=" + previousFrame +
+                '}';
+    }
 }

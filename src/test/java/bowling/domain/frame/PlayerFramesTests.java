@@ -43,4 +43,18 @@ class PlayerFramesTests {
         assertThat(sizeTwoFrames)
                 .isEqualTo(new PlayerFrames(Arrays.asList(NormalFrame.start(TEN), NormalFrame.start(FIVE))));
     }
+
+    @DisplayName("현재 컬렉션의 마지막 프레임이 완료되지 않았다면 새로운 Frame으로 업데이트한다.")
+    @Test
+    void doLastUpdateTest() {
+        PlayerFrames empty = PlayerFrames.createEmpty();
+        NormalFrame normalFrame = NormalFrame.start(FIVE);
+        PlayerFrames sizeOneInProgressFrames = empty.lastValue(normalFrame);
+
+        PlayerFrames sizeOneFinishedFrames = sizeOneInProgressFrames.lastValue(normalFrame.bowl(FIVE));
+
+        assertThat(sizeOneFinishedFrames.size()).isEqualTo(1);
+        assertThat(sizeOneFinishedFrames)
+                .isEqualTo(new PlayerFrames(Collections.singletonList(NormalFrame.start(FIVE).bowl(FIVE))));
+    }
 }

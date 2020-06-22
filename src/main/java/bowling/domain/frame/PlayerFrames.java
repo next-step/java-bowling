@@ -22,8 +22,15 @@ public class PlayerFrames {
             return new PlayerFrames(Collections.singletonList(frame));
         }
 
+        if (this.playerFrameList.get(this.playerFrameList.size() - 1).isCompleted()) {
+            ArrayList<Frame> resultFrames = new ArrayList<>(playerFrameList);
+            resultFrames.add(frame);
+
+            return new PlayerFrames(resultFrames);
+        }
+
         ArrayList<Frame> resultFrames = new ArrayList<>(playerFrameList);
-        resultFrames.add(frame);
+        resultFrames.set(this.playerFrameList.size() - 1, frame);
 
         return new PlayerFrames(resultFrames);
     }
@@ -39,5 +46,12 @@ public class PlayerFrames {
     @Override
     public int hashCode() {
         return Objects.hash(playerFrameList);
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerFrames{" +
+                "playerFrameList=" + playerFrameList +
+                '}';
     }
 }
