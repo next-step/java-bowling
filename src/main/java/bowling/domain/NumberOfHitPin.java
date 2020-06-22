@@ -1,12 +1,25 @@
 package bowling.domain;
 
+import bowling.domain.exceptions.ExceedLimitOfNumberOfHitPinException;
+
 import java.util.Objects;
 
 public class NumberOfHitPin {
+    private static final int MIN_VALUE = 0;
+    private static final int MAX_VALUE = 10;
+
     private final int value;
 
     public NumberOfHitPin(int value) {
+        validate(value);
+
         this.value = value;
+    }
+
+    private void validate(int value) {
+        if (value < MIN_VALUE || value > MAX_VALUE) {
+            throw new ExceedLimitOfNumberOfHitPinException("생성 가능한 범위를 벗어났습니다.");
+        }
     }
 
     @Override
