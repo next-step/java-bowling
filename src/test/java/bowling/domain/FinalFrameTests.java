@@ -33,6 +33,7 @@ class FinalFrameTests {
         FinalFrame finalFrame = FinalFrame.firstBowl(HIT_PIN_STRIKE);
 
         finalFrame.bowl(HIT_PIN_FIVE);
+        assertThat(finalFrame.isCompleted()).isFalse();
         finalFrame.bowl(HIT_PIN_FOUR);
         assertThat(finalFrame.isCompleted()).isTrue();
     }

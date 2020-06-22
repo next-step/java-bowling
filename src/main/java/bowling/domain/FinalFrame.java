@@ -18,12 +18,16 @@ public class FinalFrame {
     }
 
     public void bowl(int numberOfHitPin) {
+        if (firstFrameResult.isStrikeResult()) {
+            this.secondFrameResult = bowlAfterFirstStrike(numberOfHitPin);
+        }
+    }
+
+    private FrameResult bowlAfterFirstStrike(int numberOfHitPin) {
         if (this.secondFrameResult == null) {
-            this.secondFrameResult = FrameResultFactory.create(numberOfHitPin);
+            return this.secondFrameResult = FrameResultFactory.create(numberOfHitPin);
         }
-        if (!this.secondFrameResult.isCompleted()) {
-            this.secondFrameResult = parseToNormal(this.secondFrameResult).secondBowl(numberOfHitPin);
-        }
+        return this.secondFrameResult = parseToNormal(this.secondFrameResult).secondBowl(numberOfHitPin);
     }
 
     public boolean isCompleted() {

@@ -53,14 +53,14 @@
     - 마지막 Frame은 진행과 결과 모두 특이하기 때문에 별도 관리
     - 실제로는 StrikeFrameResult와 NormalFrameResult가 조합된 특수 프레임
     - [X] FrameResult 두개 (FirstFrameResult, SecondFrameResult)를 속성으로 갖는다.
-    - [ ] 첫 투구가 Strike인 경우
+    - [X] 첫 투구가 Strike인 경우
         - [X] 두번째 투구도 Strike이면 해당 프레임 마무리 (총 2회 투구, StrikeFrameResult * 2)
         - [X] 두번째 투구가 Strike가 아니면 한번 더 진행 (총 3회 투구, StrikeFrameResult * 1, NormalFrameResult * 1)
     - [ ] 첫 투구가 Strike가 아닌 경우
-        - [ ] 두번째 투구가 Spare 처리를 못한 경우(미스인 경우) 해당 프레임 마무리 (총 2회 투구, NormalFrameResult * 1)
         - [ ] 두번째 투구가 Spare 처리한 경우 한번 더 진행 (총 3회 투구)
             - [ ] 세번째 투구가 Strike인 경우 온전하게 마무리 (NormalFrameResult * 1, StrikeFrameResult)
             - [ ] 세번째 투구가 Strike가 아닌 경우 반푼이 NormalFrameResult로 마무리 (NormalFrameResult * 2, 하나는 반쪼가리)
+        - [ ] 두번째 투구가 Spare 처리를 못한 경우(미스인 경우) 해당 프레임 마무리 (총 2회 투구, NormalFrameResult * 1)
     - [ ] 상황에 맞는 현재 프레임 상태를 알려줄 수 있다.(Final 요구사항 분석 및 구현 후 마지막에 구현)
 - FrameResult(interface)
     - 프레임 결과에 대한 관심사를 다형성으로 처리하기 위해 인터페이스 구현
