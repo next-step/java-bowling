@@ -4,7 +4,7 @@ import bowling.domain.NumberOfHitPin;
 
 import java.util.Objects;
 
-public class NormalFrameResult {
+public class NormalFrameResult implements FrameResult {
     private static final NumberOfHitPin STRIKE = new NumberOfHitPin(10);
 
     private final NumberOfHitPin firstNumberOfHitPin;
