@@ -57,4 +57,23 @@ class PlayerFramesTests {
         assertThat(sizeOneFinishedFrames)
                 .isEqualTo(new PlayerFrames(Collections.singletonList(NormalFrame.start(FIVE).bowl(FIVE))));
     }
+
+    @DisplayName("상황에 맞게 마지막 요소를 추가하거나 업데이트 할 수 있다.")
+    @Test
+    void lastValueTest() {
+        PlayerFrames empty = PlayerFrames.createEmpty();
+        assertThat(empty.size()).isEqualTo(0);
+
+        PlayerFrames sizeOne = empty.lastValue(NormalFrame.start(TEN));
+        assertThat(sizeOne.size()).isEqualTo(1);
+
+        PlayerFrames sizeTwoInProgress = sizeOne.lastValue(NormalFrame.start(FIVE));
+        assertThat(sizeTwoInProgress.size()).isEqualTo(2);
+
+        PlayerFrames sizeTwoCompleted = sizeTwoInProgress.lastValue(NormalFrame.start(FIVE).bowl(FIVE));
+        assertThat(sizeTwoCompleted.size()).isEqualTo(2);
+
+        PlayerFrames sizeThree = sizeTwoCompleted.lastValue(NormalFrame.start(FIVE));
+        assertThat(sizeThree.size()).isEqualTo(3);
+    }
 }
