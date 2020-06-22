@@ -23,12 +23,20 @@ public class PlayerFrames {
         }
 
         if (this.playerFrameList.get(this.playerFrameList.size() - 1).isCompleted()) {
-            ArrayList<Frame> resultFrames = new ArrayList<>(playerFrameList);
-            resultFrames.add(frame);
-
-            return new PlayerFrames(resultFrames);
+            return addNewFrame(frame);
         }
 
+        return updateLastFrame(frame);
+    }
+
+    private PlayerFrames addNewFrame(Frame frame) {
+        ArrayList<Frame> resultFrames = new ArrayList<>(playerFrameList);
+        resultFrames.add(frame);
+
+        return new PlayerFrames(resultFrames);
+    }
+
+    private PlayerFrames updateLastFrame(Frame frame) {
         ArrayList<Frame> resultFrames = new ArrayList<>(playerFrameList);
         resultFrames.set(this.playerFrameList.size() - 1, frame);
 
