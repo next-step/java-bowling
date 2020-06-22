@@ -1,6 +1,11 @@
 package bowling.domain.frame;
 
-import java.util.*;
+import bowling.domain.exceptions.CannotDoInEmptyPlayerFramesException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public class PlayerFrames {
     private final List<Frame> playerFrameList;
@@ -18,11 +23,11 @@ public class PlayerFrames {
     }
 
     public PlayerFrames lastValue(Frame frame) {
-        if (this.playerFrameList.size() == 0) {
+        if (this.size() == 0) {
             return new PlayerFrames(Collections.singletonList(frame));
         }
 
-        if (this.playerFrameList.get(this.playerFrameList.size() - 1).isCompleted()) {
+        if (getLast().isCompleted()) {
             return addNewFrame(frame);
         }
 
@@ -41,6 +46,14 @@ public class PlayerFrames {
         resultFrames.set(this.playerFrameList.size() - 1, frame);
 
         return new PlayerFrames(resultFrames);
+    }
+
+    private Frame getLast() {
+        if (playerFrameList.size() == 0) {
+            throw new CannotDoInEmptyPlayerFramesException("빈 컬렉션에서 할수 없는 동작입니다.");
+        }
+
+        return this.playerFrameList.get(this.size() - 1);
     }
 
     @Override
