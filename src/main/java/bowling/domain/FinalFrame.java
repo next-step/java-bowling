@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.exceptions.ParseNormalFrameException;
 import bowling.domain.frameResult.FrameResult;
 import bowling.domain.frameResult.NormalFrameResult;
 
@@ -21,12 +22,18 @@ public class FinalFrame {
             this.secondFrameResult = FrameResultFactory.create(numberOfHitPin);
         }
         if (!this.secondFrameResult.isCompleted()) {
-            NormalFrameResult parsed = (NormalFrameResult) this.secondFrameResult;
-            this.secondFrameResult = parsed.secondBowl(numberOfHitPin);
+            this.secondFrameResult = parseToNormal(this.secondFrameResult).secondBowl(numberOfHitPin);
         }
     }
 
     public boolean isCompleted() {
         return (this.firstFrameResult.isCompleted() && this.secondFrameResult.isCompleted());
+    }
+
+    private NormalFrameResult parseToNormal(FrameResult frameResult) {
+        if (!frameResult.isStrikeResult()) {
+            return (NormalFrameResult) frameResult;
+        }
+        throw new ParseNormalFrameException("StrikeFrameResult는 NormalFrameResult로 변경할 수 없습니다.");
     }
 }
