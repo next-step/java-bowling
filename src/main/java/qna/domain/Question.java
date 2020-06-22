@@ -95,14 +95,14 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+    public DeleteHistories delete(User loginUser, LocalDateTime createdAt) throws CannotDeleteException {
         validateOwner(loginUser);
 
         DeleteHistories deleteHistories = new DeleteHistories();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), this.writer, LocalDateTime.now()));
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), this.writer, createdAt));
 
         for (Answer answer : answers) {
-            deleteHistories.add(answer.delete(this.writer));
+            deleteHistories.add(answer.delete(this.writer, createdAt));
         }
 
         this.deleted = true;
