@@ -34,12 +34,21 @@ class NumberOfHitPinTests {
         NumberOfHitPin fiveHitPin = new NumberOfHitPin(FIVE);
         assertThat(fiveHitPin.plus(new NumberOfHitPin(FIVE))).isEqualTo(new NumberOfHitPin(TEN));
     }
-    
+
     @DisplayName("더해서 10 이상의 값을 지닌 객체를 만들 수 없다.")
     @Test
     void plusValidationTest() {
         NumberOfHitPin tenHitPin = new NumberOfHitPin(TEN);
         assertThatThrownBy(() -> tenHitPin.plus(new NumberOfHitPin(FIVE)))
                 .isInstanceOf(ExceedLimitOfNumberOfHitPinException.class);
+    }
+
+    @DisplayName("같은 객체끼리 대소 비교를 할 수 있다.")
+    @Test
+    void compareTest() {
+        NumberOfHitPin tenHitPin = new NumberOfHitPin(TEN);
+        NumberOfHitPin fiveHitPin = new NumberOfHitPin(FIVE);
+
+        assertThat(tenHitPin.compareTo(fiveHitPin) > 0).isTrue();
     }
 }

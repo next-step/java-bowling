@@ -4,7 +4,7 @@ import bowling.domain.exceptions.ExceedLimitOfNumberOfHitPinException;
 
 import java.util.Objects;
 
-public class NumberOfHitPin {
+public class NumberOfHitPin implements Comparable<NumberOfHitPin> {
     private static final int MIN_VALUE = 0;
     private static final int MAX_VALUE = 10;
 
@@ -37,5 +37,10 @@ public class NumberOfHitPin {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public int compareTo(NumberOfHitPin o) {
+        return Integer.compare(this.value, o.value);
     }
 }
