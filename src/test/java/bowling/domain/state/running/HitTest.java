@@ -5,6 +5,7 @@ import bowling.domain.pin.Pins;
 import bowling.domain.state.StateExpression;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -71,5 +72,19 @@ public class HitTest {
                 Arguments.of(Hit.of(Pins.of(PinCount.MIN_COUNT)), StateExpression.GUTTER + StateExpression.BLANK),
                 Arguments.of(Hit.of(Pins.of(2)), 2 + StateExpression.BLANK)
         );
+    }
+
+    @DisplayName("종료 조건을 만족하지 않음")
+    @Test
+    public void isFinish() {
+        assertThat(Hit.of(Pins.of(PinCount.MIN_COUNT)).isFinish())
+                .isFalse();
+    }
+
+    @DisplayName("Miss 상태가 될 수 없음")
+    @Test
+    public void isMiss() {
+        assertThat(Hit.of(Pins.of(PinCount.MIN_COUNT)).isMiss())
+                .isFalse();
     }
 }

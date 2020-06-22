@@ -37,4 +37,18 @@ public class ReadyTest {
         assertThat(Ready.of().getDesc())
                 .isEqualTo(StateExpression.READY);
     }
+
+    @DisplayName("종료 조건을 만족하지 않음")
+    @Test
+    public void isFinish() {
+        assertThat(Ready.of().isFinish())
+                .isFalse();
+    }
+
+    @DisplayName("Miss 상태가 될 수 없음")
+    @Test
+    public void isMiss() {
+        assertThat(Ready.of().isMiss())
+                .isFalse();
+    }
 }
