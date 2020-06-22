@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,16 +24,23 @@ class PlayerFramesTests {
     @Test
     void addNewToEmptyTest() {
         PlayerFrames empty = PlayerFrames.createEmpty();
-        NormalFrame normalFrame = NormalFrame.start(TEN);
 
-        PlayerFrames playerFrames = empty.lastValue(normalFrame);
+        PlayerFrames playerFrames = empty.lastValue(NormalFrame.start(TEN));
 
         assertThat(playerFrames.size()).isEqualTo(1);
-        assertThat(playerFrames).isEqualTo(new PlayerFrames(Collections.singletonList(normalFrame)));
+        assertThat(playerFrames).isEqualTo(new PlayerFrames(Collections.singletonList(NormalFrame.start(TEN))));
     }
 
-    @DisplayName("컬렉션의 가장 마지막 Frame이 완료됐다면 다음 Frame을 추가한다.")
+    @DisplayName("현재 컬렉션의 마지막 프레임이 완료됐다면 새로운 Frame을 추가한다.")
     @Test
     void doLastTest() {
+        PlayerFrames empty = PlayerFrames.createEmpty();
+        PlayerFrames sizeOneFrames = empty.lastValue(NormalFrame.start(TEN));
+
+        PlayerFrames sizeTwoFrames = sizeOneFrames.lastValue(NormalFrame.start(FIVE));
+
+        assertThat(sizeTwoFrames.size()).isEqualTo(2);
+        assertThat(sizeTwoFrames)
+                .isEqualTo(new PlayerFrames(Arrays.asList(NormalFrame.start(TEN), NormalFrame.start(FIVE))));
     }
 }

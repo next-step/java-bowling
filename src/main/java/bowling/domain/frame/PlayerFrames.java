@@ -17,8 +17,15 @@ public class PlayerFrames {
         return this.playerFrameList.size();
     }
 
-    public PlayerFrames lastValue(NormalFrame normalFrame) {
-        return new PlayerFrames(Collections.singletonList(normalFrame));
+    public PlayerFrames lastValue(Frame frame) {
+        if (this.playerFrameList.size() == 0) {
+            return new PlayerFrames(Collections.singletonList(frame));
+        }
+
+        ArrayList<Frame> resultFrames = new ArrayList<>(playerFrameList);
+        resultFrames.add(frame);
+
+        return new PlayerFrames(resultFrames);
     }
 
     @Override
