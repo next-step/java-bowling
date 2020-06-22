@@ -27,6 +27,13 @@ public class NormalFrameResult {
         return this.firstNumberOfHitPin.equals(STRIKE);
     }
 
+    public boolean isSpare() {
+        if (this.firstNumberOfHitPin != null && this.secondNumberOfHitPin != null) {
+            return this.firstNumberOfHitPin.plus(this.secondNumberOfHitPin).equals(STRIKE);
+        }
+        return false;
+    }
+
     public boolean isCompleted() {
         if (this.firstNumberOfHitPin != null && isStrike()) {
             return true;

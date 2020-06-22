@@ -38,4 +38,14 @@ class NormalFrameResultTests {
 
         assertThat(normalFrameResult.isStrike()).isTrue();
     }
+
+    @DisplayName("스페어 여부를 알 수 있다.")
+    @Test
+    void checkSpareTest() {
+        NormalFrameResult normalFrameResult = NormalFrameResult.bowlFirst(FIVE);
+        assertThat(normalFrameResult.isSpare()).isFalse();
+
+        NormalFrameResult secondBowled = normalFrameResult.bowlSecond(FIVE);
+        assertThat(secondBowled.isSpare()).isTrue();
+    }
 }
