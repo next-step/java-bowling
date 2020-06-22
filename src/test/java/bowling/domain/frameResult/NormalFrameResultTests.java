@@ -25,7 +25,7 @@ class NormalFrameResultTests {
         NormalFrameResult normalFrameResult = NormalFrameResult.bowlFirst(FIVE);
         assertThat(normalFrameResult.isCompleted()).isFalse();
 
-        NormalFrameResult secondBowled = normalFrameResult.bowlSecond(FIVE);
+        NormalFrameResult secondBowled = normalFrameResult.bowl(FIVE);
         assertThat(secondBowled)
                 .isEqualTo(new NormalFrameResult(new NumberOfHitPin(FIVE), new NumberOfHitPin(FIVE)));
         assertThat(secondBowled.isCompleted()).isTrue();
@@ -45,7 +45,7 @@ class NormalFrameResultTests {
         NormalFrameResult normalFrameResult = NormalFrameResult.bowlFirst(FIVE);
         assertThat(normalFrameResult.isSpare()).isFalse();
 
-        NormalFrameResult secondBowled = normalFrameResult.bowlSecond(FIVE);
+        NormalFrameResult secondBowled = normalFrameResult.bowl(FIVE);
         assertThat(secondBowled.isSpare()).isTrue();
     }
 }

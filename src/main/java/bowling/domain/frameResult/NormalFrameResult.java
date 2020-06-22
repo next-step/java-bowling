@@ -19,10 +19,6 @@ public class NormalFrameResult implements FrameResult {
         return new NormalFrameResult(new NumberOfHitPin(numberOfHitPin), null);
     }
 
-    public NormalFrameResult bowlSecond(int numberOfHitPin) {
-        return new NormalFrameResult(firstNumberOfHitPin, new NumberOfHitPin(numberOfHitPin));
-    }
-
     public boolean isStrike() {
         return this.firstNumberOfHitPin.equals(STRIKE);
     }
@@ -34,6 +30,12 @@ public class NormalFrameResult implements FrameResult {
         return false;
     }
 
+    @Override
+    public NormalFrameResult bowl(int numberOfHitPin) {
+        return new NormalFrameResult(firstNumberOfHitPin, new NumberOfHitPin(numberOfHitPin));
+    }
+
+    @Override
     public boolean isCompleted() {
         if (this.firstNumberOfHitPin != null && isStrike()) {
             return true;
