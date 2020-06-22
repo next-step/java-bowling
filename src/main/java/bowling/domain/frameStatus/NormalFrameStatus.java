@@ -3,6 +3,7 @@ package bowling.domain.frameStatus;
 import bowling.domain.FrameResult;
 import bowling.domain.FrameResults;
 import bowling.domain.NumberOfHitPin;
+import bowling.domain.exceptions.CannotCalculateFrameResultException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,17 +36,17 @@ public class NormalFrameStatus implements FrameStatus {
     }
 
     public FrameResults calculateCurrentResult() {
-        if (isStrike()) {
+        if (this.firstNumberOfHitPin != null && this.secondNumberOfHitPin == null) {
             return new FrameResults(Collections.singletonList(FrameResult.find(firstNumberOfHitPin)));
         }
-        if (secondNumberOfHitPin == null) {
-            return new FrameResults(Collections.singletonList(FrameResult.find(firstNumberOfHitPin)));
+        if (this.firstNumberOfHitPin != null) {
+            return new FrameResults(
+                    Arrays.asList(
+                            FrameResult.find(firstNumberOfHitPin),
+                            FrameResult.find(firstNumberOfHitPin, secondNumberOfHitPin))
+            );
         }
-        return new FrameResults(
-                Arrays.asList(
-                        FrameResult.find(firstNumberOfHitPin),
-                        FrameResult.find(firstNumberOfHitPin, secondNumberOfHitPin))
-        );
+        throw new CannotCalculateFrameResultException("첫 투구를 진행하지 않은 상태에서 결과를 계산할 수 없습니다.");
     }
 
     @Override
