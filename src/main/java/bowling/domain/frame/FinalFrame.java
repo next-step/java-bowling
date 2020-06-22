@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.dto.ScoreResultDto;
+import bowling.domain.score.Gutter;
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreFactory;
 import bowling.domain.score.Scores;
@@ -65,11 +66,9 @@ public class FinalFrame extends Frame {
 
     @Override
     public int totalScore() {
-        // TODO optional 적용
-        if (Objects.nonNull(bonusScore)) {
-            return scores.totalScore() + bonusScore.getPoint();
-        }
-        return scores.totalScore();
+        return Optional.ofNullable(bonusScore)
+                .map(bonusScore -> bonusScore.getPoint())
+                .orElse(0) + scores.totalScore();
     }
 
     @Override
