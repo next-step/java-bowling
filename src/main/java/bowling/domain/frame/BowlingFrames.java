@@ -7,15 +7,21 @@ import java.util.stream.Collectors;
 
 public class BowlingFrames {
 
+    private static final int FRAME_COUNT = 10;
+
     private final List<Frame> frames;
     private int currentPosition;
 
     BowlingFrames(List<Frame> frames) {
-        if (frames.size() != 10) {
-            throw new IllegalArgumentException("invalid frames");
-        }
+        validate(frames);
 
         this.frames = new ArrayList<>(frames);
+    }
+
+    private void validate(List<Frame> frames) {
+        if (frames.size() != FRAME_COUNT) {
+            throw new IllegalArgumentException("invalid frames");
+        }
     }
 
     public static BowlingFrames newInstance() {
@@ -24,12 +30,12 @@ public class BowlingFrames {
         NormalFrame normalFrame = NormalFrame.first();
         frames.add(normalFrame);
 
-        for (int i = 1; i < 9; i++) {
+        for (int i = 1; i < FRAME_COUNT -1 ; i++) {
             normalFrame = normalFrame.next();
             frames.add(normalFrame);
         }
 
-        frames.add(new FinalFrame());
+        frames.add(FinalFrame.newInstance());
 
         return new BowlingFrames(frames);
     }

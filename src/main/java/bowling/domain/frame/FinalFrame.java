@@ -1,65 +1,34 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.FrameBowlState;
 import bowling.domain.state.FrameBowlStates;
-import bowling.domain.state.ScoreType;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FinalFrame implements Frame {
 
-    private final List<Integer> downPins = new ArrayList<>();
+    private final Pins bonusPins;
 
-    private final Frame normalFrame = NormalFrame.first();
+    private FinalFrame(Pins pins) {
+        this.bonusPins = pins;
+    }
+
+    public static FinalFrame newInstance() {
+        return new FinalFrame(BonusPins.newInstance());
+    }
 
     @Override
     public void play(int downPin) {
-        if (this.normalFrame.hasTurn()) {
-            this.normalFrame.play(downPin);
-            return;
-        }
-
         if (!hasTurn()) {
             throw new IllegalStateException("can not play");
         }
-
-        downPins.add(downPin);
+        this.bonusPins.down(downPin);
     }
 
     @Override
     public boolean hasTurn() {
-        if (normalFrame.hasTurn()) {
-            return true;
-        }
-
-        if (this.downPins.size() < getBonusCount()) {
-            return true;
-        }
-
-        return false;
+        return this.bonusPins.hasTurn();
     }
 
     @Override
     public FrameBowlStates getBowlStates() {
-        FrameBowlStates bowlStates = normalFrame.getBowlStates();
-        this.downPins.forEach(
-            integer -> bowlStates
-                .add(new FrameBowlState(integer, integer == 10 ? ScoreType.STRIKE : ScoreType.MISS))
-        );
-
-        return bowlStates;
+        return this.bonusPins.getBowlStates();
     }
-
-    private int getBonusCount() {
-        FrameBowlStates states = normalFrame.getBowlStates();
-        if (states.isStrike()) {
-            return 2;
-        }
-        if (states.isSpare()) {
-            return 1;
-        }
-
-        return 0;
-    }
-
 }

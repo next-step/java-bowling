@@ -4,5 +4,7 @@ public enum ScoreType {
     STRIKE,
     SPARE,
     GUTTER,
-    MISS;
+    MISS,
+
+    NUMS;
 }

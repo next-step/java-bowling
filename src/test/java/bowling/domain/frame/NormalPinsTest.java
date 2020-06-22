@@ -11,16 +11,31 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class NormalFrameTest {
+class NormalPinsTest {
 
     @Test
-    void play_then_strike() {
-        NormalFrame normalFrame = NormalFrame.first();
-        normalFrame.play(10);
+    void invalid_negative(){
+        NormalPins normalPins = new NormalPins();
 
-        FrameBowlStates expect = new FrameBowlStates(Arrays.asList(new FrameBowlState(10, ScoreType.STRIKE)));
+        assertThatThrownBy(()->normalPins.down(-1))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
 
-        assertThat(normalFrame.getBowlStates()).isEqualTo(expect);
+    @Test
+    void invalid_more_than_10(){
+        NormalPins normalPins = new NormalPins();
+
+        assertThatThrownBy(()->normalPins.down(11))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void invalid_sum_more_than_10(){
+        NormalPins normalPins = new NormalPins();
+        normalPins.down(9);
+
+        assertThatThrownBy(()->normalPins.down(2))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("strike후에 플레이 하면 예외 발생한다.")
@@ -35,28 +50,27 @@ class NormalFrameTest {
 
     @Test
     void two_play() {
-        NormalFrame normalFrame = NormalFrame.first();
-
-        normalFrame.play(8);
-        normalFrame.play(1);
+        Pins pins = new NormalPins();
+        pins.down(8);
+        pins.down(1);
 
         List<FrameBowlState> expect = Arrays.asList(
             new FrameBowlState(8, ScoreType.NUMS),
             new FrameBowlState(1, ScoreType.NUMS)
         );
 
-        assertThat(normalFrame.getBowlStates()).isEqualTo(new FrameBowlStates(expect));
+        assertThat(pins.getBowlStates()).isEqualTo(new FrameBowlStates(expect));
     }
 
     @DisplayName("3번의 플레이를 하면 예외가 발생한다.")
     @Test
     void third_play_then_exception() {
-        NormalFrame normalFrame = NormalFrame.first();
+        Pins pins = new NormalPins();
+        pins.down(8);
+        pins.down(1);
 
-        normalFrame.play(8);
-        normalFrame.play(1);
-
-        assertThatThrownBy(() -> normalFrame.play(1))
+        assertThatThrownBy(() -> pins.down(1))
             .isInstanceOf(IllegalStateException.class);
     }
+
 }

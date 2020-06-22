@@ -1,23 +1,15 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.FrameBowlState;
 import bowling.domain.state.FrameBowlStates;
-import bowling.domain.state.ScoreType;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class NormalFrame implements Frame {
 
-    private static final int MAX_ROUND = 2;
-
     private final int position;
-
-    private final List<Integer> downPins = new ArrayList<>();
+    private final NormalPins pins;
 
     private NormalFrame(int position) {
         this.position = position;
+        this.pins = new NormalPins();
     }
 
     static NormalFrame first() {
@@ -34,61 +26,19 @@ public class NormalFrame implements Frame {
             throw new IllegalStateException("이미 종료된 frame입니다.");
         }
 
-        this.downPins.add(downPin);
+        this.pins.down(downPin);
     }
 
     @Override
     public boolean hasTurn() {
-        if (this.downPins.size() == MAX_ROUND) {
-            return false;
-        }
-
-        if (sumDownPin() == 10) {
-            return false;
-        }
-
-        return true;
+        return this.pins.hasTurn();
     }
 
 
     @Override
     public FrameBowlStates getBowlStates() {
-        if (isStrike()) {
-            return new FrameBowlStates(Arrays.asList(new FrameBowlState(10, ScoreType.STRIKE)));
-        }
+        return this.pins.getBowlStates();
 
-        if (isSpare()) {
-            return new FrameBowlStates(Arrays.asList(
-                new FrameBowlState(this.downPins.get(0), ScoreType.MISS),
-                new FrameBowlState(this.downPins.get(1), ScoreType.SPARE)
-            ));
-        }
-
-        return new FrameBowlStates(
-            this.downPins.stream()
-                .map(downPin -> new FrameBowlState(downPin,
-                    downPin == 0 ? ScoreType.GUTTER : ScoreType.MISS))
-                .collect(Collectors.toList())
-        );
     }
 
-    private boolean isSpare() {
-        if (this.downPins.size() == 2 && sumDownPin() == 10) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean isStrike() {
-        if (this.downPins.size() == 1 && this.downPins.get(0) == 10) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private int sumDownPin() {
-        return downPins.stream().reduce(0, Integer::sum);
-    }
 }
