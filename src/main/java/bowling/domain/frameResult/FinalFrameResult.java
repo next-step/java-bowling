@@ -1,6 +1,7 @@
 package bowling.domain.frameResult;
 
 import bowling.domain.NumberOfHitPin;
+import bowling.domain.exceptions.InvalidTryBowlException;
 
 import java.util.Objects;
 
@@ -25,6 +26,9 @@ public class FinalFrameResult implements FrameResult {
 
     @Override
     public FinalFrameResult bowl(int numberOfHitPin) {
+        if (this.firstNumberOfHitPin == null) {
+            throw new InvalidTryBowlException("초구를 던지지 않은 상태에서 시도할 수 없습니다.");
+        }
         if (this.secondNumberOfHitPin != null) {
             return new FinalFrameResult(firstNumberOfHitPin, secondNumberOfHitPin, new NumberOfHitPin(numberOfHitPin));
         }
