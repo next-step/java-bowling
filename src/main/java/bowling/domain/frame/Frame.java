@@ -12,7 +12,10 @@ public abstract class Frame {
     abstract int getNo();
 
     void addFrame(Frames frames) {
-        return;
+        if (frames.isSameCurrentFrame(this)) {
+            return;
+        }
+        frames.add(this);
     }
 
     abstract FrameResult getFrameResult();
