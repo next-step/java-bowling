@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.exceptions.InvalidTryBowlException;
+import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.frameStatus.NormalFrameStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,5 +39,23 @@ class NormalFrameTests {
 
         assertThatThrownBy(() -> normalFrame.bowl(FIVE))
                 .isInstanceOf(InvalidTryBowlException.class);
+    }
+
+    @DisplayName("현재 프레임이 마무리 된 상태에서 다음 프레임을 시작할 수 있다.")
+    @Test
+    void nextFrameTest() {
+        NormalFrame normalFrame = NormalFrame.start(TEN);
+
+        assertThat(normalFrame.next(FIVE))
+                .isEqualTo(new NormalFrame(2, NormalFrameStatus.bowlFirst(FIVE), normalFrame));
+    }
+
+    @DisplayName("현재 프레임이 마무리 되지 않은 상태에서 다음 프레임을 시작할 수 없다.")
+    @Test
+    void nextFrameValidationTest() {
+        NormalFrame normalFrame = NormalFrame.start(FIVE);
+
+        assertThatThrownBy(() -> normalFrame.next(FIVE))
+                .isInstanceOf(InvalidTryNextFrameException.class);
     }
 }

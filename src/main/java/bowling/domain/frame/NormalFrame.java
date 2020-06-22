@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.exceptions.InvalidTryBowlException;
+import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.frameStatus.NormalFrameStatus;
 
 import java.util.Objects;
@@ -21,10 +22,29 @@ public class NormalFrame {
     }
 
     public NormalFrame bowl(int numberOfHitPin) {
-        if (this.currentStatus.isCompleted()) {
+        validateBowl();
+        return new NormalFrame(index, currentStatus.bowl(numberOfHitPin), previousFrame);
+    }
+
+    public NormalFrame next(int numberOfHitPin) {
+        validateNext();
+        return new NormalFrame(index + 1, NormalFrameStatus.bowlFirst(numberOfHitPin), this);
+    }
+
+    public boolean isCompleted() {
+        return this.currentStatus.isCompleted();
+    }
+
+    private void validateBowl() {
+        if (isCompleted()) {
             throw new InvalidTryBowlException("완료된 프레임에서 추가로 투구할 수 없습니다.");
         }
-        return new NormalFrame(index, currentStatus.bowl(numberOfHitPin), previousFrame);
+    }
+
+    private void validateNext() {
+        if (!isCompleted()) {
+            throw new InvalidTryNextFrameException("현재 프레임이 완료되지 않은 상태에서 다음 프레임을 진행할 수 없습니다.");
+        }
     }
 
     @Override
