@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.frameStatus.FinalFrameStatus;
 
 import java.util.Objects;
@@ -22,11 +23,18 @@ public class FinalFrame {
     }
 
     public FinalFrame bowl(int numberOfHitPin) {
+        validateBowl();
         return new FinalFrame(TEN, this.finalFrameStatus.bowl(numberOfHitPin), prevFrame);
     }
 
     public boolean isCompleted() {
         return this.finalFrameStatus.isCompleted();
+    }
+
+    private void validateBowl() {
+        if (isCompleted()) {
+            throw new InvalidTryBowlException("종료된 프레임에는 투구할 수 없습니다.");
+        }
     }
 
     @Override
