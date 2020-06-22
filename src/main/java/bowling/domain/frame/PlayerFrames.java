@@ -1,14 +1,12 @@
 package bowling.domain.frame;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class PlayerFrames {
     private final List<Frame> playerFrameList;
 
-    public PlayerFrames(List<Frame> playerFrameList) {
-        this.playerFrameList = playerFrameList;
+    PlayerFrames(List<Frame> playerFrameList) {
+        this.playerFrameList = new ArrayList<>(playerFrameList);
     }
 
     public static PlayerFrames createEmpty() {
@@ -17,6 +15,10 @@ public class PlayerFrames {
 
     public int size() {
         return this.playerFrameList.size();
+    }
+
+    public PlayerFrames lastValue(NormalFrame normalFrame) {
+        return new PlayerFrames(Collections.singletonList(normalFrame));
     }
 
     @Override
