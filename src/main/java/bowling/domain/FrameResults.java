@@ -35,4 +35,11 @@ public class FrameResults {
     public int hashCode() {
         return Objects.hash(frameResultList);
     }
+
+    @Override
+    public String toString() {
+        return "FrameResults{" +
+                "frameResultList=" + frameResultList +
+                '}';
+    }
 }

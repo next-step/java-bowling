@@ -1,7 +1,11 @@
 package bowling.domain.frameStatus;
 
+import bowling.domain.FrameResult;
+import bowling.domain.FrameResults;
 import bowling.domain.NumberOfHitPin;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 
 public class NormalFrameStatus implements FrameStatus {
@@ -28,6 +32,20 @@ public class NormalFrameStatus implements FrameStatus {
             return this.firstNumberOfHitPin.plus(this.secondNumberOfHitPin).equals(STRIKE);
         }
         return false;
+    }
+
+    public FrameResults calculateCurrentResult() {
+        if (isStrike()) {
+            return new FrameResults(Collections.singletonList(FrameResult.find(firstNumberOfHitPin)));
+        }
+        if (secondNumberOfHitPin == null) {
+            return new FrameResults(Collections.singletonList(FrameResult.find(firstNumberOfHitPin)));
+        }
+        return new FrameResults(
+                Arrays.asList(
+                        FrameResult.find(firstNumberOfHitPin),
+                        FrameResult.find(firstNumberOfHitPin, secondNumberOfHitPin))
+        );
     }
 
     @Override
