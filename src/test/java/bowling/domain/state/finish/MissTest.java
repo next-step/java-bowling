@@ -1,5 +1,6 @@
 package bowling.domain.state.finish;
 
+import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
 import bowling.domain.state.State;
 import org.junit.Test;
@@ -10,8 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 
 public class MissTest {
 
@@ -43,5 +43,20 @@ public class MissTest {
                 Arguments.of(Miss.of(Pins.of(0), Pins.of(0)), "-|-"),
                 Arguments.of(Miss.of(Pins.of(2), Pins.of(3)), "2|3")
         );
+    }
+
+    @DisplayName("해당 상태에서 공을 굴리면 예외를 반환")
+    @Test
+    public void bowl() {
+        assertThatThrownBy(() -> Miss.of(Pins.of(0), Pins.of(1))
+                .bowl(PinCount.of(PinCount.MAX_COUNT))
+        ).isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @DisplayName("종료 조건을 만족")
+    @Test
+    public void isFinish() {
+        assertThat(Miss.of(Pins.of(0), Pins.of(1)).isFinish())
+                .isTrue();
     }
 }
