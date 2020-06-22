@@ -8,6 +8,7 @@ import bowling.domain.score.Scores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class FinalFrame extends Frame {
     private final static int BONUS_MAX_SCORE = 20;
@@ -64,6 +65,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public int totalScore() {
+        // TODO optional 적용
         if (Objects.nonNull(bonusScore)) {
             return scores.totalScore() + bonusScore.getPoint();
         }

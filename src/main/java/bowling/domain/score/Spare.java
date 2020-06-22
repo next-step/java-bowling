@@ -1,13 +1,14 @@
 package bowling.domain.score;
 
+import bowling.domain.point.Point;
+
 public class Spare implements Score {
-    private static final int MAX_SCORE = 10;
     private static final ScoreType SCORE_TYPE = ScoreType.SPARE;
 
-    private final int point;
+    private final Point point;
 
     public Spare(int point) {
-        this.point = point;
+        this.point = new Point(point);
     }
 
     @Override
@@ -22,7 +23,7 @@ public class Spare implements Score {
 
     @Override
     public int getPoint() {
-        return point;
+        return point.getPoint();
     }
 
     @Override

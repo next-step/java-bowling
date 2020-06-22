@@ -1,15 +1,17 @@
 package bowling.domain.score;
 
+import bowling.domain.point.Point;
+
 public class Normal implements Score {
     private static final ScoreType SCORE_TYPE = ScoreType.NORMAL;
     private static final int STRIKE_SCORE = 10;
     private static final int GUTTER_SCORE = 0;
 
-    private final int point;
+    private final Point point;
 
     public Normal(int point) {
         validatePoint(point);
-        this.point = point;
+        this.point = new Point(point);
     }
 
     private void validatePoint(int point) {
@@ -20,7 +22,7 @@ public class Normal implements Score {
 
     @Override
     public Score nextScore(int point) {
-        int totalPoint = this.point + point;
+        int totalPoint = this.point.getPoint() + point;
         if (totalPoint > STRIKE_SCORE) {
             throw new IllegalArgumentException("total Score less than 10");
         }
@@ -38,7 +40,7 @@ public class Normal implements Score {
 
     @Override
     public int getPoint() {
-        return point;
+        return point.getPoint();
     }
 
     @Override

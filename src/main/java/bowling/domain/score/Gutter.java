@@ -1,7 +1,9 @@
 package bowling.domain.score;
 
+import bowling.domain.point.Point;
+
 public class Gutter implements Score {
-    private static final int POINT = 0;
+    private static final Point POINT = new Point(0);
     private static final ScoreType SCORE_TYPE = ScoreType.GUTTER;
 
     @Override
@@ -23,7 +25,7 @@ public class Gutter implements Score {
 
     @Override
     public int getPoint() {
-        return POINT;
+        return POINT.getPoint();
     }
 
     @Override
