@@ -1,36 +1,42 @@
 package camp.nextstep.edu.nextstep8.bowling;
 
+import java.util.Optional;
+
 public class BowlingGame {
     public static void main(String[] args) {
-//        String player = BowlingGameInput.getPlayer();
-//        System.out.println(player);
         String player = BowlingGameInput.getPlayer();
-        int frame = 1;
-
         ScoreBoard scoreBoard = new ScoreBoard();
 
+        int frame = 1;
+        int score = 0;
+        int spare = 0;
 
         while(true) {
-            System.out.print(String.format("|%5s", "NAME"));
-            for(int i = 0; i < 10; i++) {
-                System.out.print(String.format("|%5s", String.format("%02d", i+1)));
+            System.out.print(String.format("|%5s\t", "NAME"));
+            for(int i = 1; i < 11; i++) {
+                System.out.print(String.format("|%5s\t", String.format("%02d", i)));
             }
             System.out.println("|");
 
-            System.out.print(String.format("|%5s", player));
-            for(int i = 0; i < 10; i++) {
+            System.out.print(String.format("|%5s\t", player));
+            for(int i = 1; i < 11; i++) {
+
                 System.out.print(
-                        String.format("|%5s", scoreBoard.get(i)
-                                .map(f -> String.valueOf(f.score()))
-                                .orElse(""))
+                        String.format("|%5s\t", Optional.ofNullable(scoreBoard.getFrame(i)).map(Frame::getFrameResultSymbol).orElse(""))
                 );
             }
             System.out.println("|");
 
-            int score = BowlingGameInput.getHitCount(frame);
-            scoreBoard.markScore(frame, score);
+            score = BowlingGameInput.getHitCount(frame);
+            if(score < 10) {
+                spare = BowlingGameInput.getHitCount(frame);
+            }
 
-            if(frame++ == 10) {
+            scoreBoard.markScore(frame, score, spare);
+
+            spare = 0;
+
+            if(frame++ == 11) {
                 break;
             }
         }
