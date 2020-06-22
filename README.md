@@ -55,7 +55,7 @@
     - [X] FrameResult 두개 (FirstFrameResult, SecondFrameResult)를 속성으로 갖는다.
     - [ ] 첫 투구가 Strike인 경우
         - [X] 두번째 투구도 Strike이면 해당 프레임 마무리 (총 2회 투구, StrikeFrameResult * 2)
-        - [ ] 두번째 투구가 Strike가 아니면 한번 더 진행 (총 3회 투구, StrikeFrameResult * 1, NormalFrameResult * 1)
+        - [X] 두번째 투구가 Strike가 아니면 한번 더 진행 (총 3회 투구, StrikeFrameResult * 1, NormalFrameResult * 1)
     - [ ] 첫 투구가 Strike가 아닌 경우
         - [ ] 두번째 투구가 Spare 처리를 못한 경우(미스인 경우) 해당 프레임 마무리 (총 2회 투구, NormalFrameResult * 1)
         - [ ] 두번째 투구가 Spare 처리한 경우 한번 더 진행 (총 3회 투구)

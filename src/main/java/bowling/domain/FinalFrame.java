@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.frameResult.FrameResult;
+import bowling.domain.frameResult.NormalFrameResult;
 
 public class FinalFrame {
     private FrameResult firstFrameResult;
@@ -16,10 +17,16 @@ public class FinalFrame {
     }
 
     public void bowl(int numberOfHitPin) {
-        this.secondFrameResult = FrameResultFactory.create(numberOfHitPin);
+        if (this.secondFrameResult == null) {
+            this.secondFrameResult = FrameResultFactory.create(numberOfHitPin);
+        }
+        if (!this.secondFrameResult.isCompleted()) {
+            NormalFrameResult parsed = (NormalFrameResult) this.secondFrameResult;
+            this.secondFrameResult = parsed.secondBowl(numberOfHitPin);
+        }
     }
 
     public boolean isCompleted() {
-        return (firstFrameResult.isCompleted() && secondFrameResult.isCompleted());
+        return (this.firstFrameResult.isCompleted() && this.secondFrameResult.isCompleted());
     }
 }

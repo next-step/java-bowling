@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FinalFrameTests {
+    private static final int HIT_PIN_FOUR = 4;
     private static final int HIT_PIN_FIVE = 5;
     private static final int HIT_PIN_STRIKE = 10;
 
@@ -23,6 +24,16 @@ class FinalFrameTests {
         FinalFrame finalFrame = FinalFrame.firstBowl(HIT_PIN_STRIKE);
         finalFrame.bowl(HIT_PIN_STRIKE);
 
+        assertThat(finalFrame.isCompleted()).isTrue();
+    }
+
+    @DisplayName("2회 연속 스트라이크를 못하면 총 3회 투구해야 프레임이 마무리된다.")
+    @Test
+    void strikeAndNormalTest() {
+        FinalFrame finalFrame = FinalFrame.firstBowl(HIT_PIN_STRIKE);
+
+        finalFrame.bowl(HIT_PIN_FIVE);
+        finalFrame.bowl(HIT_PIN_FOUR);
         assertThat(finalFrame.isCompleted()).isTrue();
     }
 }
