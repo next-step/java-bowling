@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FinalFrameResultTests {
+    private static final int FOUR = 4;
     private static final int FIVE = 5;
     private static final int TEN = 10;
 
@@ -43,5 +44,28 @@ class FinalFrameResultTests {
 
         FinalFrameResult afterThird = afterSecond.bowl(FIVE);
         assertThat(afterThird.isCompleted()).isTrue();
+    }
+
+    @DisplayName("초구가 스트라이크가 아니고 두번째에 스페어 처리한 경우 3회 투구해야 해당 프레임 결과가 마무리된다.")
+    @Test
+    void completeWhenSpare() {
+        FinalFrameResult finalFrameResult = FinalFrameResult.bowlFirst(FIVE);
+        assertThat(finalFrameResult.isCompleted()).isFalse();
+
+        FinalFrameResult afterSecond = finalFrameResult.bowl(FIVE);
+        assertThat(afterSecond.isCompleted()).isFalse();
+
+        FinalFrameResult afterThird = afterSecond.bowl(FIVE);
+        assertThat(afterThird.isCompleted()).isFalse();
+    }
+
+    @DisplayName("초구가 스트라이크가 아니고 두번째가 미스인 경우 2회만 투구해도 프레임 결과가 마무리된다.")
+    @Test
+    void completeWhenMiss() {
+        FinalFrameResult finalFrameResult = FinalFrameResult.bowlFirst(FIVE);
+        assertThat(finalFrameResult.isCompleted()).isFalse();
+
+        FinalFrameResult afterSecond = finalFrameResult.bowl(FOUR);
+        assertThat(afterSecond.isCompleted()).isTrue();
     }
 }

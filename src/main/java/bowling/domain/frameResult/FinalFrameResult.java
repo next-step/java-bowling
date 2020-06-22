@@ -40,7 +40,11 @@ public class FinalFrameResult implements FrameResult {
         if (this.firstNumberOfHitPin.equals(STRIKE)) {
             return this.secondNumberOfHitPin != null && this.thirdNumberOfHitPin != null;
         }
-        return false;
+        return this.secondNumberOfHitPin != null && isMiss();
+    }
+
+    private boolean isMiss() {
+        return this.firstNumberOfHitPin.plus(this.secondNumberOfHitPin).compareTo(STRIKE) < 0;
     }
 
     @Override
