@@ -1,22 +1,22 @@
-package bowling.domain.frameResult;
+package bowling.domain.frameStatus;
 
 import bowling.domain.NumberOfHitPin;
 
 import java.util.Objects;
 
-public class NormalFrameResult implements FrameResult {
+public class NormalFrameStatus implements FrameStatus {
     private static final NumberOfHitPin STRIKE = new NumberOfHitPin(10);
 
     private final NumberOfHitPin firstNumberOfHitPin;
     private final NumberOfHitPin secondNumberOfHitPin;
 
-    NormalFrameResult(NumberOfHitPin firstNumberOfHitPin, NumberOfHitPin secondNumberOfHitPin) {
+    NormalFrameStatus(NumberOfHitPin firstNumberOfHitPin, NumberOfHitPin secondNumberOfHitPin) {
         this.firstNumberOfHitPin = firstNumberOfHitPin;
         this.secondNumberOfHitPin = secondNumberOfHitPin;
     }
 
-    public static NormalFrameResult bowlFirst(int numberOfHitPin) {
-        return new NormalFrameResult(new NumberOfHitPin(numberOfHitPin), null);
+    public static NormalFrameStatus bowlFirst(int numberOfHitPin) {
+        return new NormalFrameStatus(new NumberOfHitPin(numberOfHitPin), null);
     }
 
     public boolean isStrike() {
@@ -31,8 +31,8 @@ public class NormalFrameResult implements FrameResult {
     }
 
     @Override
-    public NormalFrameResult bowl(int numberOfHitPin) {
-        return new NormalFrameResult(firstNumberOfHitPin, new NumberOfHitPin(numberOfHitPin));
+    public NormalFrameStatus bowl(int numberOfHitPin) {
+        return new NormalFrameStatus(firstNumberOfHitPin, new NumberOfHitPin(numberOfHitPin));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class NormalFrameResult implements FrameResult {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NormalFrameResult that = (NormalFrameResult) o;
+        NormalFrameStatus that = (NormalFrameStatus) o;
         return Objects.equals(firstNumberOfHitPin, that.firstNumberOfHitPin) &&
                 Objects.equals(secondNumberOfHitPin, that.secondNumberOfHitPin);
     }
