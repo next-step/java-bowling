@@ -16,6 +16,10 @@ public class NumberOfHitPin {
         this.value = value;
     }
 
+    public NumberOfHitPin plus(NumberOfHitPin numberOfHitPin) {
+        return new NumberOfHitPin(this.value + numberOfHitPin.value);
+    }
+
     private void validate(int value) {
         if (value < MIN_VALUE || value > MAX_VALUE) {
             throw new ExceedLimitOfNumberOfHitPinException("생성 가능한 범위를 벗어났습니다.");
