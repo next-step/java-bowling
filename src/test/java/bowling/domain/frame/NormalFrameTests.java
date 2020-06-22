@@ -1,10 +1,19 @@
 package bowling.domain.frame;
 
+import bowling.domain.FrameResult;
+import bowling.domain.FrameResults;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.frameStatus.NormalFrameStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -57,5 +66,22 @@ class NormalFrameTests {
 
         assertThatThrownBy(() -> normalFrame.next(FIVE))
                 .isInstanceOf(InvalidTryNextFrameException.class);
+    }
+
+    @DisplayName("현재 프레임의 결과를 보여줄 수 있다.")
+    @ParameterizedTest
+    @MethodSource("calculateResources")
+    void calculateCurrentResultsTest(NormalFrame normalFrame, FrameResults expectedResult) {
+        assertThat(normalFrame.calculateCurrentResults()).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> calculateResources() {
+        return Stream.of(
+                Arguments.of(NormalFrame.start(FIVE), new FrameResults(Collections.singletonList(FrameResult.FIVE))),
+                Arguments.of(NormalFrame.start(TEN), new FrameResults(Collections.singletonList(FrameResult.STRIKE))),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FIVE),
+                        new FrameResults(Arrays.asList(FrameResult.FIVE, FrameResult.SPARE))
+                )
+        );
     }
 }

@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.FrameResults;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.frameStatus.NormalFrameStatus;
@@ -33,6 +34,10 @@ public class NormalFrame {
 
     public boolean isCompleted() {
         return this.currentStatus.isCompleted();
+    }
+
+    public FrameResults calculateCurrentResults() {
+        return this.currentStatus.calculateCurrentResult();
     }
 
     private void validateBowl() {
