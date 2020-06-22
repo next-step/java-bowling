@@ -4,7 +4,9 @@ import bowling.domain.NumberOfHitPin;
 
 import java.util.Objects;
 
-public class FinalFrameResult {
+public class FinalFrameResult implements FrameResult {
+    private static final NumberOfHitPin STRIKE = new NumberOfHitPin(10);
+
     private final NumberOfHitPin firstNumberOfHitPin;
     private final NumberOfHitPin secondNumberOfHitPin;
     private final NumberOfHitPin thirdNumberOfHitPin;
@@ -19,6 +21,22 @@ public class FinalFrameResult {
 
     public static FinalFrameResult bowlFirst(int numberOfHitPin) {
         return new FinalFrameResult(new NumberOfHitPin(numberOfHitPin), null, null);
+    }
+
+    @Override
+    public FinalFrameResult bowl(int numberOfHitPin) {
+        if (this.secondNumberOfHitPin != null) {
+            return new FinalFrameResult(firstNumberOfHitPin, secondNumberOfHitPin, new NumberOfHitPin(numberOfHitPin));
+        }
+        return new FinalFrameResult(firstNumberOfHitPin, new NumberOfHitPin(numberOfHitPin), null);
+    }
+
+    @Override
+    public boolean isCompleted() {
+        if (this.firstNumberOfHitPin.equals(STRIKE)) {
+            return this.secondNumberOfHitPin != null && this.thirdNumberOfHitPin != null;
+        }
+        return false;
     }
 
     @Override

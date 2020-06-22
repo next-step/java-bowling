@@ -19,4 +19,17 @@ class FinalFrameResultTests {
                 .isEqualTo(new FinalFrameResult(
                         new NumberOfHitPin(FIVE), null, null));
     }
+
+    @DisplayName("초구가 스트라이크면 무조건 3회 투구해야 해당 프레임 결과가 마무리된다.")
+    @Test
+    void completeWhenFirstStrike() {
+        FinalFrameResult finalFrameResult = FinalFrameResult.bowlFirst(TEN);
+        assertThat(finalFrameResult.isCompleted()).isFalse();
+
+        FinalFrameResult afterSecond = finalFrameResult.bowl(FIVE);
+        assertThat(afterSecond.isCompleted()).isFalse();
+
+        FinalFrameResult afterThird = afterSecond.bowl(FIVE);
+        assertThat(afterThird.isCompleted()).isTrue();
+    }
 }
