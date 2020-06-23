@@ -1,5 +1,6 @@
 package qna.domain;
 
+import java.util.List;
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;

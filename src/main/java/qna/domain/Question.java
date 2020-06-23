@@ -1,5 +1,6 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -106,5 +107,29 @@ public class Question extends AbstractEntity {
     for (Answer answer : answers) {
       answer.delete(loginUser);
     }
+  }
+
+  public List<DeleteHistory> getDeleteHistories(User loginUser) {
+    List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+    if(deleted) {
+      deleteHistories.add(new DeleteHistory(
+          ContentType.QUESTION,
+          getId(),
+          loginUser,
+          LocalDateTime.now()));
+    }
+
+    for(Answer answer : answers) {
+      if(answer.isDeleted()){
+        deleteHistories.add(new DeleteHistory(
+            ContentType.ANSWER,
+            answer.getId(),
+            loginUser,
+            LocalDateTime.now()));
+      }
+    }
+
+    return deleteHistories;
   }
 }
