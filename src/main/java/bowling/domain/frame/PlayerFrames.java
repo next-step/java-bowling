@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.FrameResults;
 import bowling.domain.exceptions.CannotDoInEmptyPlayerFramesException;
 import bowling.domain.exceptions.ExceedLimitOfFramesException;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class PlayerFrames {
     private static final int MAX_SIZE = 10;
@@ -65,6 +67,12 @@ public class PlayerFrames {
         }
 
         return this.playerFrameList.get(this.size() - 1);
+    }
+
+    public List<FrameResults> calculateResult() {
+        return playerFrameList.stream()
+                .map(Frame::calculateCurrentResults)
+                .collect(Collectors.toList());
     }
 
     @Override

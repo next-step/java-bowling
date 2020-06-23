@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.FrameResult;
+import bowling.domain.FrameResults;
 import bowling.domain.exceptions.ExceedLimitOfFramesException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -112,6 +114,19 @@ class PlayerFramesTests {
         return Stream.of(
                 NormalFrame.start(FIVE),
                 FinalFrame.firstBowl(FIVE, NormalFrame.start(TEN))
+        );
+    }
+
+    @DisplayName("결과를 계산할 수 있다.")
+    @Test
+    void calculateTest() {
+        PlayerFrames playerFrames = new PlayerFrames(
+                Arrays.asList(NormalFrame.start(TEN), NormalFrame.start(FIVE).bowl(FIVE), NormalFrame.start(FIVE)));
+
+        assertThat(playerFrames.calculateResult()).contains(
+                new FrameResults(Collections.singletonList(FrameResult.STRIKE)),
+                new FrameResults(Arrays.asList(FrameResult.FIVE, FrameResult.SPARE)),
+                new FrameResults(Collections.singletonList(FrameResult.FIVE))
         );
     }
 }
