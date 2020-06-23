@@ -23,12 +23,15 @@ public class FinalFrame implements Frame {
 
     @Override
     public void bowl(Score score) {
-
+        finalPitches.throwBall(score);
     }
 
     @Override
     public boolean isMovableToNextFrame() {
-        return false;
+        if (finalPitches.isFinishingNormalPitches() && finalPitches.isNotContainingStrikeOrSpare()) {
+            return true;
+        }
+        return finalPitches.isFinishingPitchesWithBonus();
     }
 
     @Override

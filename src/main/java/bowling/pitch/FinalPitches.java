@@ -21,9 +21,7 @@ public class FinalPitches implements Pitches {
     }
 
     private void validateFinalPitches() {
-        boolean isContainingStrikeOrSpare = pitches.stream()
-                .anyMatch(pitch -> pitch.isStrike() || pitch.isSpare());
-        if (!isContainingStrikeOrSpare || pitches.size() == MAXIMUM_FINAL_PITCH_COUNTS) {
+        if (isNotContainingStrikeOrSpare() || pitches.size() == MAXIMUM_FINAL_PITCH_COUNTS) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
         }
     }
@@ -34,6 +32,19 @@ public class FinalPitches implements Pitches {
         }
         Pitch lastPitch = pitches.get(pitches.size() - INDEX_CONSTANT);
         return lastPitch.isSpare() || lastPitch.isStrike() ? Pitch.initiate(score) : lastPitch.next(score);
+    }
+
+    public boolean isNotContainingStrikeOrSpare() {
+        return pitches.stream()
+                .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
+    }
+
+    public boolean isFinishingNormalPitches() {
+        return pitches.size() == MAXIMUM_NORMAL_PITCH_COUNTS;
+    }
+
+    public boolean isFinishingPitchesWithBonus() {
+        return pitches.size() == MAXIMUM_FINAL_PITCH_COUNTS;
     }
 
     @Override
