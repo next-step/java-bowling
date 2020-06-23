@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class NormalPitches {
+public class NormalPitches implements Pitches {
     private static final int FIRST_INDEX = 0;
     private static final int MAXIMUM_NORMAL_PITCH_COUNTS = 2;
 
     private final List<Pitch> pitches = new ArrayList<>();
 
+    @Override
     public void throwBall(Score score) {
         validateNormalPitchCounts();
         Pitch pitch = createPitch(score);
@@ -32,6 +33,7 @@ public class NormalPitches {
         return pitches.get(FIRST_INDEX).next(score);
     }
 
+    @Override
     public List<Pitch> getPitches() {
         return Collections.unmodifiableList(pitches);
     }
