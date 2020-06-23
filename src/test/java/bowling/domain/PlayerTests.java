@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.exceptions.AlreadyStartedPlayerException;
+import bowling.domain.exceptions.NotStartedPlayerException;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
 import org.junit.jupiter.api.DisplayName;
@@ -57,6 +58,14 @@ class PlayerTests {
 
         assertThat(bowledPlayer.calculateResult())
                 .contains(new FrameResults(Collections.singletonList(FrameResult.FIVE)));
+    }
+
+    @DisplayName("초구를 굴리지 않은 플레이어는 진행한 결과를 확인 할 수 없다.")
+    @Test
+    void calculateValidationTest() {
+        Player player = Player.createByName(PLAYER_NAME);
+
+        assertThatThrownBy(player::calculateResult).isInstanceOf(NotStartedPlayerException.class);
     }
 
     @DisplayName("현재 프레임이 마무리됐다면 다음 프레임을 진행할 수 있다.")

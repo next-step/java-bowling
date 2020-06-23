@@ -47,7 +47,7 @@ public class PlayerFrames {
                 .collect(Collectors.toList());
     }
 
-    private boolean isLastCompleted() {
+    boolean isLastCompleted() {
         return this.getLast().isCompleted();
     }
 

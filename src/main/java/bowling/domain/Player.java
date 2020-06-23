@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.exceptions.AlreadyStartedPlayerException;
+import bowling.domain.exceptions.NotStartedPlayerException;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
@@ -9,9 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player {
-    private final String name;
-    private final PlayerFrames playerFrames;
-    private final Frame currentFrame;
+    private String name;
+    private PlayerFrames playerFrames;
+    private Frame currentFrame;
 
     Player(String name, PlayerFrames playerFrames, Frame currentFrame) {
         this.name = name;
@@ -32,6 +33,8 @@ public class Player {
     }
 
     public List<FrameResults> calculateResult() {
+        validateIsStarted();
+
         return this.playerFrames.calculateResult();
     }
 
@@ -39,6 +42,12 @@ public class Player {
         NormalFrame newFrame = NormalFrame.start(numberOfHitPin);
 
         return new Player(name, playerFrames.lastValue(newFrame), newFrame);
+    }
+
+    private void validateIsStarted() {
+        if (this.currentFrame == null) {
+            throw new NotStartedPlayerException("초구를 굴리지 않은 상태에서 할 수 없는 동작입니다.");
+        }
     }
 
     private void validateBowlFirst() {
