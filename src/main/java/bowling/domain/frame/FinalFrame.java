@@ -4,7 +4,6 @@ import bowling.domain.dto.FrameResult;
 import bowling.domain.pin.PinCount;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
-import bowling.domain.state.finish.Spare;
 
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -12,11 +11,12 @@ import java.util.stream.Collectors;
 public class FinalFrame extends Frame {
 
     private static final int MAX_COUNT = 3;
-    private static final int COMMON_COUNT = MAX_COUNT - 1;
 
     private final Stack<State> states = new Stack<>();
+    private int playCount;
 
     private FinalFrame() {
+        this.playCount = 0;
         this.states.push(StateFactory.ready());
     }
 
@@ -26,6 +26,8 @@ public class FinalFrame extends Frame {
 
     @Override
     public void bowl(final PinCount hitCount) {
+        this.increasePlayCount();
+
         State currentState = this.getLastState();
 
         if (currentState.isFinish()) {
@@ -33,6 +35,10 @@ public class FinalFrame extends Frame {
             return;
         }
         this.updateLastState(currentState.bowl(hitCount));
+    }
+
+    private void increasePlayCount() {
+        this.playCount++;
     }
 
     @Override
@@ -50,8 +56,7 @@ public class FinalFrame extends Frame {
     }
 
     private boolean isEndedBonusBowl() {
-        return this.states.size() == MAX_COUNT ||
-                (this.states.stream().anyMatch(Spare.class::isInstance) && this.states.size() == COMMON_COUNT);
+        return this.playCount == MAX_COUNT;
     }
 
     private State getLastState() {
