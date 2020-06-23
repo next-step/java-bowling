@@ -28,6 +28,10 @@ public class Pitch {
         return scoreType == ScoreType.STRIKE;
     }
 
+    public boolean isSpare() {
+        return scoreType == ScoreType.SPARE;
+    }
+
     public int calculateScoresSum(Score nextScore) {
         return getScore() + nextScore.getScore();
     }

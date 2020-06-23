@@ -42,12 +42,24 @@ class ScoreTypeFactoryTest {
 
     @DisplayName("next ScoreType을 만들 때 이전의 ScoreType이 Strike면 예외 발생")
     @Test
-    public void nextStrike_예외() {
+    public void next_Strike_예외() {
         Pitch pitch = Pitch.initiate(Score.valueOf(10));
         Score score = Score.valueOf(3);
 
         assertThatThrownBy(() -> {
             ScoreTypeFactory.next(pitch, score);
+        }).isInstanceOf(BowlingBuildingException.class)
+                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES);
+    }
+
+    @DisplayName("next ScoreType을 만들 때 이전의 ScoreType이 Spare면 예외 발생")
+    @Test
+    public void next_Spare_예외() {
+        Pitch pitch = Pitch.initiate(Score.valueOf(0));
+        Pitch nextPitch = pitch.next(Score.valueOf(10));
+
+        assertThatThrownBy(() -> {
+            ScoreTypeFactory.next(nextPitch, Score.valueOf(5));
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES);
     }
