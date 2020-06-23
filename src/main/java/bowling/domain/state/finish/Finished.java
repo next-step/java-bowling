@@ -19,4 +19,9 @@ public abstract class Finished implements State {
     public boolean isMiss() {
         return false;
     }
+
+    @Override
+    public boolean isCleanState() {
+        return this.isFinish() && !this.isMiss();
+    }
 }

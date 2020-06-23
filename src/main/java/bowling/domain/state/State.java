@@ -10,5 +10,7 @@ public interface State {
 
     boolean isMiss();
 
+    boolean isCleanState();
+
     String getDesc();
 }

@@ -13,4 +13,9 @@ public abstract class Running implements State {
     public boolean isMiss() {
         return false;
     }
+
+    @Override
+    public boolean isCleanState() {
+        return false;
+    }
 }

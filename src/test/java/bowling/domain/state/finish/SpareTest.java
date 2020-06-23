@@ -22,13 +22,6 @@ public class SpareTest {
                 .isThrownBy(() -> Spare.of(Pins.of(2), Pins.of(3)));
     }
 
-    @DisplayName("Miss 상태가 아님을 반환")
-    @Test
-    public void isMiss() {
-        assertThat(Spare.of(Pins.of(2), Pins.of(8)).isMiss())
-                .isFalse();
-    }
-
     @DisplayName("Spare 점수에 대한 문자열을 반환")
     @ParameterizedTest
     @MethodSource
@@ -57,6 +50,20 @@ public class SpareTest {
     @Test
     public void isFinish() {
         assertThat(Spare.of(Pins.of(0), Pins.of(10)).isFinish())
+                .isTrue();
+    }
+
+    @DisplayName("Miss 상태가 아님을 반환")
+    @Test
+    public void isMiss() {
+        assertThat(Spare.of(Pins.of(2), Pins.of(8)).isMiss())
+                .isFalse();
+    }
+
+    @DisplayName("볼링 핀이 남아있지 않은 상태 만족")
+    @Test
+    public void isCleanState() {
+        assertThat(Spare.of(Pins.of(2), Pins.of(8)).isCleanState())
                 .isTrue();
     }
 }

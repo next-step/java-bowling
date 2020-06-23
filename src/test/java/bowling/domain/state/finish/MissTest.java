@@ -59,4 +59,11 @@ public class MissTest {
         assertThat(Miss.of(Pins.of(0), Pins.of(1)).isFinish())
                 .isTrue();
     }
+
+    @DisplayName("볼링 핀이 남아있지 않은 상태를 만족하지 않음")
+    @Test
+    public void isCleanState() {
+        assertThat(Miss.of(Pins.of(0), Pins.of(1)).isCleanState())
+                .isFalse();
+    }
 }

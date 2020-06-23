@@ -85,4 +85,11 @@ public class FirstHitTest {
         assertThat(FirstHit.of(Pins.of(PinCount.MIN_COUNT)).isMiss())
                 .isFalse();
     }
+
+    @DisplayName("볼링 핀이 남아있지 않은 상태를 만족하지 않음")
+    @Test
+    public void isCleanState() {
+        assertThat(FirstHit.of(Pins.of(PinCount.MIN_COUNT)).isCleanState())
+                .isFalse();
+    }
 }

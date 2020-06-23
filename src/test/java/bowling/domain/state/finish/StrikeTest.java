@@ -37,4 +37,11 @@ public class StrikeTest {
         assertThat(Strike.getInstance().isFinish())
                 .isTrue();
     }
+
+    @DisplayName("볼링 핀이 남아있지 않은 상태 만족")
+    @Test
+    public void isCleanState() {
+        assertThat(Strike.getInstance().isCleanState())
+                .isTrue();
+    }
 }
