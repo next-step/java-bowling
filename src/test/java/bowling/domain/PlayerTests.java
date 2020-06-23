@@ -150,7 +150,7 @@ class PlayerTests {
         assertThat(finalFramePlayer)
                 .isEqualTo(new Player(PLAYER_NAME, NINE_STRIKE_AND_FINAL_FIRST_FIVE, FIRST_FIVE_FINAL_FRAME));
     }
-    
+
     @DisplayName("10프레임을 진행할 수 있다.")
     @Test
     void bowlFinalFrameTest() {
@@ -159,5 +159,14 @@ class PlayerTests {
 
         assertThat(player)
                 .isEqualTo(new Player(PLAYER_NAME, NINE_STRIKE_AND_FINAL_FIVE_SPARE, FIVE_SPARE_FINAL_FRAME));
+    }
+
+    @DisplayName("10 프레임을 진행했거나 마무리 한 플레이어가 다음 프레임을 시도할 수 없다.")
+    @Test
+    void toNextInFinalFrameValidationTest() {
+        Player finalFramePlayer = NINE_STRIKE_SUPER_PLAYER.toFinalFrame(FIVE);
+
+        assertThatThrownBy(() -> finalFramePlayer.toNextFrame(FIVE))
+                .isInstanceOf(InvalidTryNextFrameException.class);
     }
 }
