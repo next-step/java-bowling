@@ -33,7 +33,8 @@ public class Answers {
         }
     }
 
-    public List<DeleteHistory> delete() {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        checkOwner(loginUser);
         return answers.stream().map(Answer::delete).collect(Collectors.toList());
     }
 }
