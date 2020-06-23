@@ -34,11 +34,11 @@ public class Frames {
     }
 
     public boolean isSameCurrentFrame(final Frame frame) {
-        return this.getFrameNumber() == frame.getNo();
+        return this.getFrameNumber() == frame.getFrameNo();
     }
 
     public int getFrameNumber() {
-        return getCurrentFrame().getNo();
+        return getCurrentFrame().getFrameNo();
     }
 
     private Frame getCurrentFrame() {

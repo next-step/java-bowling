@@ -9,7 +9,7 @@ public abstract class Frame {
 
     abstract boolean isGameOver();
 
-    abstract int getNo();
+    abstract int getFrameNo();
 
     void addFrame(Frames frames) {
         if (frames.isSameCurrentFrame(this)) {

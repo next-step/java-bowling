@@ -18,7 +18,7 @@ public class FrameTest {
         frame.addFrame(frames);
 
         assertThat(frames.getFrameNumber())
-                .isEqualTo(frame.getNo());
+                .isEqualTo(frame.getFrameNo());
     }
 
     @DisplayName("현재 프레임과 동일하지 않은 프레임은 Frames 에 추가")
@@ -30,6 +30,6 @@ public class FrameTest {
         frame.addFrame(frames);
 
         assertThat(frames.getFrameNumber())
-                .isEqualTo(frame.getNo());
+                .isEqualTo(frame.getFrameNo());
     }
 }

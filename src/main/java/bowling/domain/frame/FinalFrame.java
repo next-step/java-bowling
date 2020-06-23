@@ -57,7 +57,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public int getNo() {
+    public int getFrameNo() {
         return FrameNumber.MAX_NUMBER;
     }
 

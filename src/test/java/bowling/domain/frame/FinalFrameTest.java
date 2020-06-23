@@ -26,7 +26,7 @@ public class FinalFrameTest {
     @DisplayName("자신의 프레임 번호 반환 : 항상 MAX_NUMBER")
     @Test
     public void getNo() {
-        assertThat(FinalFrame.newInstance().getNo())
+        assertThat(FinalFrame.newInstance().getFrameNo())
                 .isEqualTo(FrameNumber.MAX_NUMBER);
     }
 

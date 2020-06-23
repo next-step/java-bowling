@@ -26,7 +26,7 @@ public class NormalFrameTest {
     @DisplayName("자신의 프레임 번호 반환")
     @Test
     public void getNo() {
-        assertThat(NormalFrame.newInstance(FrameNumber.of(FrameNumber.MIN_NUMBER)).getNo())
+        assertThat(NormalFrame.newInstance(FrameNumber.of(FrameNumber.MIN_NUMBER)).getFrameNo())
                 .isEqualTo(FrameNumber.MIN_NUMBER);
     }
 
@@ -36,7 +36,7 @@ public class NormalFrameTest {
         Frame nextFrame = NormalFrame.ofFirst()
                 .bowl(PinCount.of(PinCount.MAX_COUNT));
 
-        assertThat(nextFrame.getNo())
+        assertThat(nextFrame.getFrameNo())
                 .isEqualTo(FrameNumber.MIN_NUMBER + 1);
     }
 
@@ -46,7 +46,7 @@ public class NormalFrameTest {
         Frame nextFrame = NormalFrame.ofFirst()
                 .bowl(PinCount.of(PinCount.MIN_COUNT));
 
-        assertThat(nextFrame.getNo())
+        assertThat(nextFrame.getFrameNo())
                 .isEqualTo(FrameNumber.MIN_NUMBER);
     }
 
