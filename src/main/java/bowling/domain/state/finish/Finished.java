@@ -14,4 +14,9 @@ public abstract class Finished implements State {
     public boolean isFinish() {
         return true;
     }
+
+    @Override
+    public boolean isMiss() {
+        return false;
+    }
 }

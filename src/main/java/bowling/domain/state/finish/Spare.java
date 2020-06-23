@@ -20,11 +20,6 @@ public class Spare extends Finished {
     }
 
     @Override
-    public boolean isMiss() {
-        return false;
-    }
-
-    @Override
     public String getDesc() {
         return firstPins.getHitCount() + "|" + StateExpression.SPARE;
     }

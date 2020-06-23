@@ -16,11 +16,6 @@ public class Strike extends Finished {
     }
 
     @Override
-    public boolean isMiss() {
-        return false;
-    }
-
-    @Override
     public String getDesc() {
         return StateExpression.STRIKE;
     }
