@@ -39,7 +39,7 @@ public class QuestionTest {
     @Test
     void checkDeleteHistory() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        Q1.delete(deleteHistories);
+        deleteHistories.add(Q1.delete());
         assertThat(deleteHistories.size()).isEqualTo(1);
         assertThat(deleteHistories.get(0)).isInstanceOf(DeleteHistory.class);
     }
@@ -48,7 +48,7 @@ public class QuestionTest {
     @Test
     void checkDelete() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        Q1.delete(deleteHistories);
+        deleteHistories.add(Q1.delete());
         assertThat(Q1.isDeleted()).isTrue();
     }
 }
