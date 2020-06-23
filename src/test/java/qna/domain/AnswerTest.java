@@ -17,13 +17,14 @@ public class AnswerTest {
     @DisplayName("Answer를 삭제할 수 있다.")
     @Test
     void delete_success() throws CannotDeleteException {
-        DeleteHistory deleteHistory = A1.delete(UserTest.JAVAJIGI, LocalDateTime.now());
+        A1.delete(UserTest.JAVAJIGI);
+        DeleteHistory deleteHistory = A1.createDeleteHistory(LocalDateTime.now());
         assertThat(deleteHistory).isEqualTo(new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now()));
     }
 
     @DisplayName("다른 사람이 쓴 답변이 있는 경우 예외를 반환한다.")
     @Test
     void delete_fail() {
-        assertThatThrownBy(() -> A2.delete(UserTest.JAVAJIGI, LocalDateTime.now())).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> A2.delete(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 }
