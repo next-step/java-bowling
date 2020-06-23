@@ -31,7 +31,7 @@ public class FinalFrame extends Frame {
         State currentState = this.getLastState();
 
         if (currentState.isFinish()) {
-            states.push(StateFactory.hit(hitCount));
+            states.push(StateFactory.bowl(hitCount));
             return;
         }
         this.updateLastState(currentState.bowl(hitCount));

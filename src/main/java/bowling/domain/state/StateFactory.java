@@ -9,7 +9,7 @@ public class StateFactory {
         return Ready.getInstance();
     }
 
-    public static State hit(final PinCount count) {
+    public static State bowl(final PinCount count) {
         return ready().bowl(count);
     }
 }

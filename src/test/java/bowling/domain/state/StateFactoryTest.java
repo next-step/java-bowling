@@ -28,7 +28,7 @@ public class StateFactoryTest {
     @ParameterizedTest
     @MethodSource
     public void hit(final PinCount pinCount, final State expected) {
-        assertThat(StateFactory.hit(pinCount))
+        assertThat(StateFactory.bowl(pinCount))
                 .isInstanceOf(expected.getClass());
     }
 
