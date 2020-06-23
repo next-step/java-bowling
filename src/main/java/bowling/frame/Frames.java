@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
+    private static final int INDEX_CONSTANT = 1;
 
     private final List<Frame> frames;
 
@@ -20,18 +21,22 @@ public class Frames {
     }
 
     public void bowl(Score score) {
-        frames.get(frames.size() - 1).bowl(score);
+        getCurrentFrame().bowl(score);
     }
 
     public void moveToNextFrame() {
-        Frame currentFrame = frames.get(frames.size() - 1);
+        Frame currentFrame = getCurrentFrame();
         if (currentFrame.isMovableToNextFrame()) {
             frames.add(currentFrame.next());
         }
     }
 
     public boolean hasNextTurn() {
-        return frames.get(frames.size() - 1) != null;
+        return getCurrentFrame() != null;
+    }
+
+    private Frame getCurrentFrame() {
+        return frames.get(frames.size() - INDEX_CONSTANT);
     }
 
     public List<Frame> getFrames() {
