@@ -23,13 +23,17 @@ public class Player {
     }
 
     public Player bowlFirst(int numberOfHitPin) {
-        if (this.currentFrame != null) {
-            throw new AlreadyStartedPlayerException("이미 투구한 참가자는 초구를 굴릴 수 없습니다.");
-        }
+        validateBowlFirst();
 
         NormalFrame firstFrame = NormalFrame.start(numberOfHitPin);
 
         return new Player(name, playerFrames.lastValue(firstFrame), firstFrame);
+    }
+
+    private void validateBowlFirst() {
+        if (this.currentFrame != null) {
+            throw new AlreadyStartedPlayerException("이미 투구한 참가자는 초구를 굴릴 수 없습니다.");
+        }
     }
 
     @Override
