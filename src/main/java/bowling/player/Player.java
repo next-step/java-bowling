@@ -1,9 +1,8 @@
-package bowling.domain.player;
+package bowling.player;
 
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.exception.BowlingBuildingException;
 
 public class Player {
-    private static final int MANDATORY_NAME_LENGTH = 3;
 
     private final String name;
 
@@ -12,12 +11,8 @@ public class Player {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
     private void validateName(String name) {
-        if (name == null || name.length() != MANDATORY_NAME_LENGTH) {
+        if (name == null || name.length() != 3) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_PLAYER_NAME);
         }
     }

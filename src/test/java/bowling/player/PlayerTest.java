@@ -1,15 +1,14 @@
-package bowling.domain;
+package bowling.player;
 
-import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.player.Player;
+import bowling.exception.BowlingBuildingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
 
@@ -21,11 +20,11 @@ class PlayerTest {
         }).doesNotThrowAnyException();
     }
 
-    @DisplayName("Player 객체 생성 실패(이름이 3글자가 아닌 경우")
+    @DisplayName("Player 객체 생성 실패 (이름이 3글자가 아니거나 null)")
     @ParameterizedTest
     @NullAndEmptySource
-    @ValueSource(strings = {"PJHA", "PJ"})
-    public void makePlayer_예외(String name) {
+    @ValueSource(strings = {"PJHA", "P"})
+    public void makePlayer_실패(String name) {
         assertThatThrownBy(() -> {
             new Player(name);
         }).isInstanceOf(BowlingBuildingException.class)
