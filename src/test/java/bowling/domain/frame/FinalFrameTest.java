@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.dto.FrameResult;
 import bowling.domain.pin.PinCount;
 import bowling.domain.state.StateExpression;
+import bowling.fixture.FinalFrameFixture;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,8 +34,8 @@ public class FinalFrameTest {
     @DisplayName("현재 상태가 종료 상태의 경우, 상태값을 추가")
     @Test
     public void finishedAfterBowl() {
-        Frame nextFrame = FinalFrame.newInstance()
-                .bowl(PinCount.of(PinCount.MAX_COUNT));
+        Frame nextFrame = FinalFrame.newInstance();
+        nextFrame.bowl(PinCount.of(PinCount.MAX_COUNT));
 
         assertThat(nextFrame.getFrameResult())
                 .isEqualTo(FrameResult.of(StateExpression.STRIKE));
@@ -50,18 +51,9 @@ public class FinalFrameTest {
 
     private static Stream<Arguments> runningAfterBowl() {
         return Stream.of(
-                Arguments.of(FinalFrame.newInstance()
-                                .bowl(PinCount.of(PinCount.MAX_COUNT)),
-                        FrameResult.of(StateExpression.STRIKE)),
-                Arguments.of(FinalFrame.newInstance()
-                                .bowl(PinCount.of(PinCount.MAX_COUNT))
-                                .bowl(PinCount.of(PinCount.MIN_COUNT)),
-                        FrameResult.of("X|- ")),
-                Arguments.of(FinalFrame.newInstance()
-                                .bowl(PinCount.of(9))
-                                .bowl(PinCount.of(1))
-                                .bowl(PinCount.of(PinCount.MAX_COUNT)),
-                        FrameResult.of("9|/|X"))
+                Arguments.of(FinalFrameFixture.getOneStrikeFrame(), FrameResult.of(StateExpression.STRIKE)),
+                Arguments.of(FinalFrameFixture.getStrikeGutterFrame(), FrameResult.of("X|- ")),
+                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame(), FrameResult.of("9|/|X"))
         );
     }
 
@@ -75,25 +67,11 @@ public class FinalFrameTest {
 
     private static Stream<Arguments> isGameOver() {
         return Stream.of(
-                Arguments.of(FinalFrame.newInstance()
-                                .bowl(PinCount.of(PinCount.MAX_COUNT))
-                                .bowl(PinCount.of(PinCount.MAX_COUNT))
-                                .bowl(PinCount.of(PinCount.MAX_COUNT))),
-                Arguments.of(FinalFrame.newInstance()
-                                .bowl(PinCount.of(9))
-                                .bowl(PinCount.of(1))
-                                .bowl(PinCount.of(PinCount.MAX_COUNT))),
-                Arguments.of(FinalFrame.newInstance()
-                                .bowl(PinCount.of(9))
-                                .bowl(PinCount.of(1))
-                                .bowl(PinCount.of(2))),
-                Arguments.of(FinalFrame.newInstance()
-                                .bowl(PinCount.of(5))
-                                .bowl(PinCount.of(1))),
-                Arguments.of(FinalFrame.newInstance()
-                                .bowl(PinCount.of(PinCount.MAX_COUNT))
-                                .bowl(PinCount.of(5))
-                                .bowl(PinCount.of(1)))
+                Arguments.of(FinalFrameFixture.getThreeStrikeFrame()),
+                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame()),
+                Arguments.of(FinalFrameFixture.getHitSpareHitFrame()),
+                Arguments.of(FinalFrameFixture.getHitMissFrame()),
+                Arguments.of(FinalFrameFixture.getStrikeHitMissFrame())
         );
     }
 }

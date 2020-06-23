@@ -21,7 +21,9 @@ public class Frames {
     }
 
     public void bowl(final PinCount hitCount) {
-        Frame frame = getCurrentFrame().bowl(hitCount);
+        Frame frame = getCurrentFrame();
+
+        frame.bowl(hitCount);
         frame.addFrame(this);
     }
 
@@ -31,10 +33,6 @@ public class Frames {
 
     public boolean isGameOver() {
         return getCurrentFrame().isGameOver();
-    }
-
-    public boolean isSameCurrentFrame(final Frame frame) {
-        return this.getFrameNumber() == frame.getFrameNo();
     }
 
     public int getFrameNumber() {

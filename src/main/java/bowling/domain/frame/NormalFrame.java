@@ -25,9 +25,12 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public Frame bowl(final PinCount hitCount) {
-        state = state.bowl(hitCount);
+    public void bowl(final PinCount hitCount) {
+        this.state = this.state.bowl(hitCount);
+    }
 
+    @Override
+    public Frame initNextFrame() {
         if (this.isFinish()) {
             return createNextFrame();
         }
@@ -45,6 +48,13 @@ public class NormalFrame extends Frame {
             return FinalFrame.newInstance();
         }
         return NormalFrame.newInstance(nextNumber);
+    }
+
+    @Override
+    void addFrame(final Frames frames) {
+        if (isFinish()) {
+            frames.add(initNextFrame());
+        }
     }
 
     @Override

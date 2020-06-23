@@ -14,17 +14,18 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class FramesTest {
 
-    @DisplayName("처음 생성했을 때 NormalFrame 을 리스트에 추가")
+    @DisplayName("Frames 생성 성공")
     @Test
     public void create() {
-        assertThat(Frames.newInstance().isSameCurrentFrame(NormalFrame.ofFirst()))
-                .isTrue();
+        assertThatCode(Frames::newInstance)
+                .doesNotThrowAnyException();
     }
 
-    @DisplayName("현재 프레임 번호를 반환")
+    @DisplayName("처음 생성했을 때 NormalFrame 을 리스트에 추가 및 현재 프레임 번호를 반환")
     @Test
     public void getFrameNumber() {
         assertThat(Frames.newInstance().getFrameNumber())

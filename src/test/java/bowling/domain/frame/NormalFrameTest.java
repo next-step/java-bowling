@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.dto.FrameResult;
-import bowling.domain.pin.PinCount;
 import bowling.domain.state.StateExpression;
+import bowling.fixture.NormalFrameFixture;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,24 +30,57 @@ public class NormalFrameTest {
                 .isEqualTo(FrameNumber.MIN_NUMBER);
     }
 
-    @DisplayName("종료 상태가 되면 다음 프레임을 반환")
-    @Test
-    public void finishedAfterBowl() {
-        Frame nextFrame = NormalFrame.ofFirst()
-                .bowl(PinCount.of(PinCount.MAX_COUNT));
-
-        assertThat(nextFrame.getFrameNo())
-                .isEqualTo(FrameNumber.MIN_NUMBER + 1);
+    @DisplayName("initNextFrame: 종료 상태(Strike, Spare, Miss) - 다음 프레임을 생성하여 반환")
+    @ParameterizedTest
+    @MethodSource("finishedStateCase")
+    public void initNextFrameByFinishedState(final NormalFrame normalFrame) {
+        assertThat(normalFrame.initNextFrame().getFrameNo())
+                .isEqualTo(normalFrame.getFrameNo() + 1);
     }
 
-    @DisplayName("진행 상태면 자기 자신 프레임을 반환")
-    @Test
-    public void runningAfterBowl() {
-        Frame nextFrame = NormalFrame.ofFirst()
-                .bowl(PinCount.of(PinCount.MIN_COUNT));
+    private static Stream<Arguments> finishedStateCase() {
+        return Stream.of(
+                Arguments.of(NormalFrameFixture.getStrikeFrame()),
+                Arguments.of(NormalFrameFixture.getSpareFrame()),
+                Arguments.of(NormalFrameFixture.getMissFrame())
+        );
+    }
 
-        assertThat(nextFrame.getFrameNo())
-                .isEqualTo(FrameNumber.MIN_NUMBER);
+    @DisplayName("initNextFrame: 진행 상태 - 현재 프레임을 반환")
+    @ParameterizedTest
+    @MethodSource("runningStateCase")
+    public void initNextFrameByRunningState(final NormalFrame normalFrame) {
+        assertThat(normalFrame.initNextFrame().getFrameNo())
+                .isEqualTo(normalFrame.getFrameNo());
+    }
+
+    private static Stream<Arguments> runningStateCase() {
+        return Stream.of(
+                Arguments.of(NormalFrameFixture.getOneHitFrame()),
+                Arguments.of(NormalFrameFixture.getGutterFrame())
+        );
+    }
+
+    @DisplayName("addFrame: 종료 상태 - 다음 프레임을 추가")
+    @ParameterizedTest
+    @MethodSource("finishedStateCase")
+    public void addFrameWhenFinishedState(final NormalFrame normalFrame) {
+        Frames frames = Frames.newInstance();
+        normalFrame.addFrame(frames);
+
+        assertThat(frames.getFrameNumber())
+                .isEqualTo(normalFrame.getFrameNo() + 1);
+    }
+
+    @DisplayName("addFrame: 진행 상태 - 프레임 추가하지 않음")
+    @ParameterizedTest
+    @MethodSource("runningStateCase")
+    public void addFrameWhenRunningState(final NormalFrame normalFrame) {
+        Frames frames = Frames.newInstance();
+        normalFrame.addFrame(frames);
+
+        assertThat(frames.getFrameNumber())
+                .isEqualTo(normalFrame.getFrameNo());
     }
 
     @DisplayName("게임 종료 불가능 상태")
@@ -66,11 +99,12 @@ public class NormalFrameTest {
     }
 
     private static Stream<Arguments> getFrameResult() {
+        Frame gutterStateFrame = NormalFrameFixture.getGutterFrame();
+        Frame strikeFrame = NormalFrameFixture.getStrikeFrame();
+
         return Stream.of(
-                Arguments.of(NormalFrame.ofFirst().bowl(PinCount.of(PinCount.MIN_COUNT)),
-                        FrameResult.of(StateExpression.GUTTER + StateExpression.BLANK)),
-                Arguments.of(NormalFrame.ofFirst().bowl(PinCount.of(PinCount.MAX_COUNT)),
-                        FrameResult.of(StateExpression.READY))
+                Arguments.of(gutterStateFrame, FrameResult.of(StateExpression.GUTTER + StateExpression.BLANK)),
+                Arguments.of(strikeFrame, FrameResult.of(StateExpression.STRIKE))
         );
     }
 }

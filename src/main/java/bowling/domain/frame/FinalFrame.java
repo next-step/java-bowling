@@ -25,16 +25,23 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public FinalFrame bowl(final PinCount hitCount) {
+    public void bowl(final PinCount hitCount) {
         State currentState = this.getLastState();
 
         if (currentState.isFinish()) {
             states.push(StateFactory.hit(hitCount));
-            return this;
+            return;
         }
-
         this.updateLastState(currentState.bowl(hitCount));
+    }
+
+    @Override
+    public Frame initNextFrame() {
         return this;
+    }
+
+    @Override
+    void addFrame(Frames frames) {
     }
 
     @Override
