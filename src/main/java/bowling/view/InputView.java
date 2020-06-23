@@ -28,9 +28,6 @@ public class InputView {
     }
 
     private static int inputInt(final String message) {
-        System.out.println();
-        System.out.print(message);
-
-        return Integer.parseInt(SCANNER.nextLine());
+        return Integer.parseInt(inputString(message));
     }
 }
