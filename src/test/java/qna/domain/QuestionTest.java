@@ -15,8 +15,8 @@ import qna.CannotDeleteException;
 
 public class QuestionTest {
 
-  public static Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-  public static Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+  public static Question Q1;
+  public static Question Q2;
   private static Question QUESTION_WITH_ANSWER_SAME_WRITER;
   private static Question QUESTION_WITH_ANSWER_DIFF_WRITER;
   private static Question QUESTION_HAS_NO_WRITER_AND_ANSWER1;
@@ -24,59 +24,44 @@ public class QuestionTest {
   private static Answer ANSWER_FOR_INSERT1;
   private static Answer ANSWER_FOR_INSERT2;
 
-  static{
-    QUESTION_WITH_ANSWER_SAME_WRITER = new Question("title3", "contents3");
-    QUESTION_WITH_ANSWER_SAME_WRITER
-        .writeBy(UserTest.JAVAJIGI)
-        .addAnswer(new Answer(
-            UserTest.JAVAJIGI,
-            QuestionTest.QUESTION_WITH_ANSWER_SAME_WRITER,
-            "Answers Contents1"
-        ));
-
-    QUESTION_WITH_ANSWER_DIFF_WRITER = new Question("title4", "contents4");
-    QUESTION_WITH_ANSWER_DIFF_WRITER
-        .writeBy(UserTest.JAVAJIGI)
-        .addAnswer(new Answer(
-            UserTest.SANJIGI,
-            QuestionTest.QUESTION_WITH_ANSWER_DIFF_WRITER,
-            "Answers Contents2"
-        ));
-
-    QUESTION_HAS_NO_WRITER_AND_ANSWER1 = new Question("title5", "contents5");
-    QUESTION_HAS_NO_WRITER_AND_ANSWER2 = new Question("title6", "contents6");
-
-    ANSWER_FOR_INSERT1 = new Answer(
-        UserTest.JAVAJIGI,
-        QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER1,
-        "Answers For Insert1"
-    );
-
-    ANSWER_FOR_INSERT2 = new Answer(
-        UserTest.SANJIGI,
-        QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER2,
-        "Answers For Insert2"
-    );
+  static {
+    setupMethod();
   }
 
   @AfterEach
   void tearDown() {
+    setupMethod();
+  }
+
+  static void setupMethod() {
     Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
-    QUESTION_WITH_ANSWER_SAME_WRITER = new Question("title3", "contents3");
+    QUESTION_WITH_ANSWER_SAME_WRITER = new Question("title3", "contents3")
+        .writeBy(UserTest.JAVAJIGI);
     QUESTION_WITH_ANSWER_SAME_WRITER
-        .writeBy(UserTest.JAVAJIGI)
         .addAnswer(new Answer(
             UserTest.JAVAJIGI,
             QuestionTest.QUESTION_WITH_ANSWER_SAME_WRITER,
             "Answers Contents1"
         ));
+    QUESTION_WITH_ANSWER_SAME_WRITER
+        .addAnswer2(new Answer(
+            UserTest.JAVAJIGI,
+            QuestionTest.QUESTION_WITH_ANSWER_SAME_WRITER,
+            "Answers Contents1"
+        ));
 
-    QUESTION_WITH_ANSWER_DIFF_WRITER = new Question("title4", "contents4");
+    QUESTION_WITH_ANSWER_DIFF_WRITER = new Question("title4", "contents4")
+        .writeBy(UserTest.JAVAJIGI);
     QUESTION_WITH_ANSWER_DIFF_WRITER
-        .writeBy(UserTest.JAVAJIGI)
         .addAnswer(new Answer(
+            UserTest.SANJIGI,
+            QuestionTest.QUESTION_WITH_ANSWER_DIFF_WRITER,
+            "Answers Contents2"
+        ));
+    QUESTION_WITH_ANSWER_DIFF_WRITER
+        .addAnswer2(new Answer(
             UserTest.SANJIGI,
             QuestionTest.QUESTION_WITH_ANSWER_DIFF_WRITER,
             "Answers Contents2"
@@ -86,17 +71,18 @@ public class QuestionTest {
     QUESTION_HAS_NO_WRITER_AND_ANSWER2 = new Question("title6", "contents6");
 
     ANSWER_FOR_INSERT1 = new Answer(
+        (long) 1,
         UserTest.JAVAJIGI,
         QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER1,
         "Answers For Insert1"
     );
 
     ANSWER_FOR_INSERT2 = new Answer(
+        (long) 2,
         UserTest.SANJIGI,
         QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER2,
         "Answers For Insert2"
     );
-
   }
 
   @ParameterizedTest
@@ -123,11 +109,10 @@ public class QuestionTest {
 
   @ParameterizedTest
   @MethodSource("provideQuestionWithAnswer")
-  void addAnswer(Question question, Answer answer) {
-    question.addAnswer(answer);
+  void addAnswer2(Question question, Answer answer) {
+    question.addAnswer2(answer);
 
-    assertThat(question.getAnswers().size()).isEqualTo(1);
-    assertThat(question.getAnswers().get(0)).isEqualTo(answer);
+    assertThat(question.getAnswerById(answer.getId())).isEqualTo(answer);
   }
 
   static Stream<Arguments> provideQuestionWithAnswer() {
@@ -152,8 +137,8 @@ public class QuestionTest {
 
   @ParameterizedTest
   @MethodSource("provideQuestionWithValidLoginUser")
-  void delete_성공(Question question, User loginUser) throws Exception {
-    question.delete(loginUser);
+  void delete_success2(Question question, User loginUser) throws Exception {
+    question.delete2(loginUser);
 
     assertThat(question.isDeleted()).isTrue();
   }
@@ -177,10 +162,10 @@ public class QuestionTest {
 
   @ParameterizedTest
   @MethodSource("provideQuestionWithInvalidLoginUser")
-  void delete_실패(Question question, User loginUser) throws Exception {
+  void delete_failure2(Question question, User loginUser) {
 
     assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(() -> {
-      question.delete(loginUser);
+      question.delete2(loginUser);
     });
   }
 
@@ -198,21 +183,21 @@ public class QuestionTest {
   }
 
   @Test
-  void delete_실패_다른사람의_답변존재() throws Exception {
+  void delete_failure_AnswerOfOtherUserExists2() {
     Question question = QUESTION_WITH_ANSWER_DIFF_WRITER;
 
     assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(() -> {
-      question.delete(UserTest.JAVAJIGI);
+      question.delete2(UserTest.JAVAJIGI);
     }).withMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
   }
 
   @ParameterizedTest
   @MethodSource("provideQuestionWithLoginUserToGetDeleteHistories")
-  void getDeleteHistories(Question question, User loginUser, List<DeleteHistory> expected)
+  void getDeleteHistories2(Question question, User loginUser, List<DeleteHistory> expected)
       throws Exception {
-    question.delete(loginUser);
+    question.delete2(loginUser);
 
-    assertThat(question.getDeleteHistories(loginUser)).isEqualTo(expected);
+    assertThat(question.getDeleteHistories2(loginUser)).isEqualTo(expected);
   }
 
   static Stream<Arguments> provideQuestionWithLoginUserToGetDeleteHistories() {

@@ -26,6 +26,9 @@ public class Question extends AbstractEntity {
   @OrderBy("id ASC")
   private List<Answer> answers = new ArrayList<>();
 
+  @Embedded
+  private Answers answers2 = new Answers();
+
   private boolean deleted = false;
 
   public Question() {
@@ -112,7 +115,7 @@ public class Question extends AbstractEntity {
   public List<DeleteHistory> getDeleteHistories(User loginUser) {
     List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-    if(deleted) {
+    if (deleted) {
       deleteHistories.add(new DeleteHistory(
           ContentType.QUESTION,
           getId(),
@@ -120,14 +123,47 @@ public class Question extends AbstractEntity {
           LocalDateTime.now()));
     }
 
-    for(Answer answer : answers) {
-      if(answer.isDeleted()){
+    for (Answer answer : answers) {
+      if (answer.isDeleted()) {
         deleteHistories.add(new DeleteHistory(
             ContentType.ANSWER,
             answer.getId(),
             loginUser,
             LocalDateTime.now()));
       }
+    }
+
+    return deleteHistories;
+  }
+
+  public void addAnswer2(Answer answer) {
+    answer.toQuestion(this);
+    answers2.addAnswer(answer);
+  }
+
+  public Answer getAnswerById(long id) {
+
+    return answers2.getAnswerById(id);
+  }
+
+  public void delete2(User loginUser) throws CannotDeleteException {
+    if (!writer.equals(loginUser)) {
+      throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+    }
+
+    deleted = true;
+
+    answers2.delete(loginUser);
+  }
+
+  public List<DeleteHistory> getDeleteHistories2(User loginUser) {
+    List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+    if (deleted) {
+      deleteHistories.add(
+          new DeleteHistory(ContentType.QUESTION, getId(), loginUser, LocalDateTime.now()));
+
+      deleteHistories.addAll(answers2.getDeleteHistories());
     }
 
     return deleteHistories;
