@@ -3,6 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.pitch.FinalPitches;
 import bowling.domain.score.Score;
 
+import java.util.List;
+
 public class FinalFrame implements Frame {
 
     private final FinalPitches finalPitches = new FinalPitches();
@@ -32,6 +34,10 @@ public class FinalFrame implements Frame {
             return true;
         }
         return finalPitches.isFinished(MAXIMUM_FINAL_PITCH_COUNTS);
+    }
+
+    public List<String> getScores() {
+        return finalPitches.getScores();
     }
 
     @Override

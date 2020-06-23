@@ -6,6 +6,7 @@ import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FinalPitches implements Pitches {
     private static final int INDEX_CONSTANT = 1;
@@ -42,6 +43,12 @@ public class FinalPitches implements Pitches {
 
     public boolean isFinished(int pitchCounts) {
         return pitches.size() == pitchCounts;
+    }
+
+    public List<String> getScores() {
+        return pitches.stream()
+                .map(Pitch::getScoreSignature)
+                .collect(Collectors.toList());
     }
 
     @Override

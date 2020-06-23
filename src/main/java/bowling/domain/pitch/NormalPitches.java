@@ -48,6 +48,5 @@ public class NormalPitches implements Pitches {
         return pitches.stream()
                 .map(Pitch::getScoreSignature)
                 .collect(Collectors.toList());
-
     }
 }

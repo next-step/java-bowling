@@ -3,6 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.pitch.NormalPitches;
 import bowling.domain.score.Score;
 
+import java.util.List;
+
 public class NormalFrame implements Frame {
     private static final int FIRST_INDEX = 1;
     private static final int NEXT_INDEX = 1;
@@ -33,6 +35,10 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isMovableToNextFrame() {
         return normalPitches.isFinished(MAXIMUM_NORMAL_PITCH_COUNTS) || normalPitches.isStrike();
+    }
+
+    public List<String> getScores() {
+        return normalPitches.getScores();
     }
 
     @Override
