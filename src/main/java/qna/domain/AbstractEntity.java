@@ -10,9 +10,8 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class AbstractEntity {
-    @Id // primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // @GeneratedValue는 주키의 값을 위한 자동 생성 전략을 명시하는데 사용
-    													//  GenerationType.IDENTITY : DB의 identity 컬럼을 이용
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)     													
     private Long id;
 
     @Column(nullable = false, updatable = false)

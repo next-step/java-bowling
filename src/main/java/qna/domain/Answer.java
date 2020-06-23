@@ -21,7 +21,7 @@ public class Answer extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
     private Question question;
 
-    @Lob // 필드의 길이 제한이 없다. CLOB,BLOB 타입을 매핑할 수 있다.
+    @Lob 
     private String contents;
 
     private boolean deleted = false;
