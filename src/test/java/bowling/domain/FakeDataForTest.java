@@ -37,6 +37,7 @@ public class FakeDataForTest {
             = new NormalFrame(9, NormalFrameStatus.bowlFirst(TEN), STRIKE_EIGHTH_NORMAL_FRAME);
 
     public static final FinalFrame FIRST_FIVE_FINAL_FRAME = FinalFrame.bowlFirst(FIVE, STRIKE_NINTH_NORMAL_FRAME);
+    public static final FinalFrame FIVE_SPARE_FINAL_FRAME = FIRST_FIVE_FINAL_FRAME.bowl(FIVE);
 
     public static final PlayerFrames NINE_STRIKE_SUPER_PLAYER_FRAMES = new PlayerFrames(Arrays.asList(
             STRIKE_FIRST_NORMAL_FRAME,
@@ -61,5 +62,18 @@ public class FakeDataForTest {
             STRIKE_EIGHTH_NORMAL_FRAME,
             STRIKE_NINTH_NORMAL_FRAME,
             FIRST_FIVE_FINAL_FRAME
+    ));
+
+    public static final PlayerFrames NINE_STRIKE_AND_FINAL_FIVE_SPARE = new PlayerFrames(Arrays.asList(
+            STRIKE_FIRST_NORMAL_FRAME,
+            STRIKE_SECOND_NORMAL_FRAME,
+            STRIKE_THIRD_NORMAL_FRAME,
+            STRIKE_FOURTH_NORMAL_FRAME,
+            STRIKE_FIFTH_NORMAL_FRAME,
+            STRIKE_SIXTH_NORMAL_FRAME,
+            STRIKE_SEVENTH_NORMAL_FRAME,
+            STRIKE_EIGHTH_NORMAL_FRAME,
+            STRIKE_NINTH_NORMAL_FRAME,
+            FIVE_SPARE_FINAL_FRAME
     ));
 }

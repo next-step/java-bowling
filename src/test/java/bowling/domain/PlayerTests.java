@@ -144,10 +144,20 @@ class PlayerTests {
 
     @DisplayName("9 프레임까지 완료한 플레이어는 마지막 프레임으로 넘어갈 수 있다.")
     @Test
-    void bowlFinalFrameTest() {
+    void bowlToFinalFrameTest() {
         Player finalFramePlayer = NINE_STRIKE_SUPER_PLAYER.toFinalFrame(FIVE);
 
         assertThat(finalFramePlayer)
                 .isEqualTo(new Player(PLAYER_NAME, NINE_STRIKE_AND_FINAL_FIRST_FIVE, FIRST_FIVE_FINAL_FRAME));
+    }
+    
+    @DisplayName("10프레임을 진행할 수 있다.")
+    @Test
+    void bowlFinalFrameTest() {
+        Player finalFramePlayer = NINE_STRIKE_SUPER_PLAYER.toFinalFrame(FIVE);
+        Player player = finalFramePlayer.bowlCurrentFrame(FIVE);
+
+        assertThat(player)
+                .isEqualTo(new Player(PLAYER_NAME, NINE_STRIKE_AND_FINAL_FIVE_SPARE, FIVE_SPARE_FINAL_FRAME));
     }
 }
