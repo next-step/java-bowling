@@ -4,6 +4,7 @@ import bowling.exception.BowlingBuildingException;
 import bowling.pitch.Pitch;
 
 public class ScoreTypeFactory {
+    private static final int MAXIMUM_NORMAL_FRAME_SCORE_TOTAL = 10;
 
     private ScoreTypeFactory() {
     }
@@ -16,15 +17,20 @@ public class ScoreTypeFactory {
     }
 
     public static ScoreType next(Pitch pitch, Score score) {
-        if (pitch.isStrike()) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES);
-        }
-        if (pitch.getScore() + score.getScore() > 10) {
-            throw new BowlingBuildingException((BowlingBuildingException.OVER_SCORE));
-        }
-        if (pitch.getScore() + score.getScore() == 10) {
+        int scoresSum = pitch.calculateScoresSum(score);
+        validateNextCondition(pitch, scoresSum);
+        if (scoresSum == MAXIMUM_NORMAL_FRAME_SCORE_TOTAL) {
             return ScoreType.SPARE;
         }
         return score.isMinimumScore() ? ScoreType.GUTTER : ScoreType.MISS;
+    }
+
+    private static void validateNextCondition(Pitch pitch, int scoresSum) {
+        if (pitch.isStrike()) {
+            throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES);
+        }
+        if (scoresSum > MAXIMUM_NORMAL_FRAME_SCORE_TOTAL) {
+            throw new BowlingBuildingException((BowlingBuildingException.OVER_SCORE));
+        }
     }
 }

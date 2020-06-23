@@ -23,6 +23,10 @@ public class Pitch {
         return scoreType == ScoreType.STRIKE;
     }
 
+    public int calculateScoresSum(Score nextScore) {
+        return getScore() + nextScore.getScore();
+    }
+
     public int getScore() {
         return score.getScore();
     }
