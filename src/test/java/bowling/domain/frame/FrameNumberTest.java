@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.exception.ValueOutOfRangeException;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +14,7 @@ public class FrameNumberTest {
     @ParameterizedTest
     @ValueSource(ints = { -1, 0, 11 })
     void validRange(final int count) {
-        assertThatExceptionOfType(ValueOutOfRangeException.class)
+        assertThatExceptionOfType(IndexOutOfBoundsException.class)
                 .isThrownBy(() -> FrameNumber.of(count)
         );
     }

@@ -3,13 +3,21 @@ package bowling.domain.frame;
 import bowling.exception.ValueOutOfRangeException;
 import bowling.exception.message.ErrorMessage;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class FrameNumber {
 
     static final int FRAME_STEP = 1;
     static final int MIN_NUMBER = 1;
     public static final int MAX_NUMBER = 10;
+    private static final List<FrameNumber> NUMBERS =
+            IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
+                    .boxed()
+                    .map(FrameNumber::new)
+                    .collect(Collectors.toList());
 
     private final int no;
 
@@ -19,7 +27,7 @@ public class FrameNumber {
     }
 
     public static FrameNumber of(final int no) {
-        return new FrameNumber(no);
+        return getFrameNumber(no);
     }
 
     private void validateRange(final int no) {
@@ -29,7 +37,7 @@ public class FrameNumber {
     }
 
     public FrameNumber increase() {
-        return new FrameNumber(this.no + FRAME_STEP);
+        return getFrameNumber(this.no + FRAME_STEP);
     }
 
     public boolean isFinal() {
@@ -38,6 +46,10 @@ public class FrameNumber {
 
     public int getNo() {
         return this.no;
+    }
+
+    private static FrameNumber getFrameNumber(final int no) {
+        return NUMBERS.get(no - MIN_NUMBER);
     }
 
     @Override
