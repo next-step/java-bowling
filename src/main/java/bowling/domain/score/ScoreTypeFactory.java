@@ -34,11 +34,3 @@ public class ScoreTypeFactory {
         }
     }
 }
-
-/*
-FinalPitches?
-1) 첫 번째라면? new initiatePitch()
-1) 이전 것이 Strike면? new initiatePitch() \X\NEW
-2) 이전 것이 Spare면? new initiatePitch() \3//\NEW
-3) 이전것이 miss면? \-|
- */
