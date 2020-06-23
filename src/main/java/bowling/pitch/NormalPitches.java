@@ -33,4 +33,8 @@ public class NormalPitches implements Pitches {
     public List<Pitch> getPitches() {
         return Collections.unmodifiableList(pitches);
     }
+
+    public boolean isStrike() {
+        return pitches.get(FIRST_INDEX).isStrike();
+    }
 }
