@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import bowling.domain.dto.FrameResult;
 import bowling.domain.pin.PinCount;
 import bowling.domain.state.State;
-import bowling.domain.state.StateFactory;
 import bowling.domain.state.running.Ready;
 
 import java.util.Stack;
@@ -18,7 +17,7 @@ public class FinalFrame extends Frame {
 
     private FinalFrame() {
         this.playCount = 0;
-        this.states.push(StateFactory.ready());
+        this.states.push(Ready.getInstance());
     }
 
     public static FinalFrame newInstance() {

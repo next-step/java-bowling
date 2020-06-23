@@ -4,7 +4,7 @@ package bowling.domain.frame;
 import bowling.domain.dto.FrameResult;
 import bowling.domain.pin.PinCount;
 import bowling.domain.state.State;
-import bowling.domain.state.StateFactory;
+import bowling.domain.state.running.Ready;
 
 public class NormalFrame extends Frame {
 
@@ -12,7 +12,7 @@ public class NormalFrame extends Frame {
     private final FrameNumber frameNumber;
 
     private NormalFrame(final FrameNumber frameNumber) {
-        this.state = StateFactory.ready();
+        this.state = Ready.getInstance();
         this.frameNumber = frameNumber;
     }
 
