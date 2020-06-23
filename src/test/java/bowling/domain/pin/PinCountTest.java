@@ -1,6 +1,5 @@
 package bowling.domain.pin;
 
-import bowling.exception.PinCountOutOfRangeException;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +15,7 @@ public class PinCountTest {
     @ParameterizedTest
     @ValueSource(ints = { -1, 11 })
     void validRange(final int count) {
-        assertThatExceptionOfType(PinCountOutOfRangeException.class)
+        assertThatExceptionOfType(IndexOutOfBoundsException.class)
                 .isThrownBy(() -> PinCount.of(count)
         );
     }

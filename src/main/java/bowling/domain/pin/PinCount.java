@@ -2,12 +2,20 @@ package bowling.domain.pin;
 
 import bowling.exception.PinCountOutOfRangeException;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class PinCount {
 
     public static final int MIN_COUNT = 0;
     public static final int MAX_COUNT = 10;
+    private static final List<PinCount> COUNTS =
+            IntStream.rangeClosed(MIN_COUNT, MAX_COUNT)
+                    .boxed()
+                    .map(PinCount::new)
+                    .collect(Collectors.toList());
 
     private final int count;
 
@@ -17,7 +25,7 @@ public class PinCount {
     }
 
     public static PinCount of(final int count) {
-        return new PinCount(count);
+        return COUNTS.get(count);
     }
 
     private void validateRange(final int count) {
@@ -27,7 +35,7 @@ public class PinCount {
     }
 
     public PinCount sum(final PinCount pinCount) {
-        return new PinCount(this.count + pinCount.count);
+        return COUNTS.get(this.count + pinCount.count);
     }
 
     public boolean isMaxCount() {
