@@ -7,8 +7,12 @@ public class Strike extends Finished {
     private Strike() {
     }
 
-    public static Strike newInstance() {
-        return new Strike();
+    private static class InnerInstanceClass {
+        private static final Strike instance = new Strike();
+    }
+
+    public static Strike getInstance() {
+        return InnerInstanceClass.instance;
     }
 
     @Override

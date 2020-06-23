@@ -6,7 +6,7 @@ import bowling.domain.state.running.Ready;
 public class StateFactory {
 
     public static State ready() {
-        return Ready.newInstance();
+        return Ready.getInstance();
     }
 
     public static State hit(final PinCount count) {

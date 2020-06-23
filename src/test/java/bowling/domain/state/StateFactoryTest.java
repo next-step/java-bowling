@@ -36,7 +36,7 @@ public class StateFactoryTest {
         final PinCount minCount = PinCount.of(PinCount.MIN_COUNT);
 
         return Stream.of(
-                Arguments.of(PinCount.of(PinCount.MAX_COUNT), Strike.newInstance()),
+                Arguments.of(PinCount.of(PinCount.MAX_COUNT), Strike.getInstance()),
                 Arguments.of(minCount, Hit.of(Pins.of(minCount)))
         );
     }

@@ -11,8 +11,12 @@ public class Ready extends Running {
     private Ready() {
     }
 
-    public static Ready newInstance() {
-        return new Ready();
+    private static class InnerInstanceClass {
+        private static final Ready instance = new Ready();
+    }
+
+    public static Ready getInstance() {
+        return Ready.InnerInstanceClass.instance;
     }
 
     @Override
@@ -20,7 +24,7 @@ public class Ready extends Running {
         Pins pins = Pins.of(hitCount);
 
         if (pins.isStrike()) {
-            return Strike.newInstance();
+            return Strike.getInstance();
         }
         return Hit.of(pins);
     }

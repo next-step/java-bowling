@@ -17,7 +17,7 @@ public class ReadyTest {
     public void returnStrike() {
         PinCount pinCount = PinCount.of(PinCount.MAX_COUNT);
 
-        assertThat(Ready.newInstance().bowl(pinCount))
+        assertThat(Ready.getInstance().bowl(pinCount))
                 .isInstanceOf(Strike.class);
     }
 
@@ -27,28 +27,28 @@ public class ReadyTest {
     void returnHit(final int count) {
         PinCount pinCount = PinCount.of(count);
 
-        assertThat(Ready.newInstance().bowl(pinCount))
+        assertThat(Ready.getInstance().bowl(pinCount))
                 .isInstanceOf(Hit.class);
     }
 
     @DisplayName("Ready에 대한 문자열을 반환")
     @Test
     public void getDesc() {
-        assertThat(Ready.newInstance().getDesc())
+        assertThat(Ready.getInstance().getDesc())
                 .isEqualTo(StateExpression.READY);
     }
 
     @DisplayName("종료 조건을 만족하지 않음")
     @Test
     public void isFinish() {
-        assertThat(Ready.newInstance().isFinish())
+        assertThat(Ready.getInstance().isFinish())
                 .isFalse();
     }
 
     @DisplayName("Miss 상태가 될 수 없음")
     @Test
     public void isMiss() {
-        assertThat(Ready.newInstance().isMiss())
+        assertThat(Ready.getInstance().isMiss())
                 .isFalse();
     }
 }
