@@ -63,11 +63,14 @@
 ### 객체
     
 - Player
-    - [x] 이름은 3글자 알파벳이다.
     - [x] 이름이 3글자 알파벳이 아닐시 IllegalArgumentException이 발생한다.
+    
+- Score
+    - [x] 투구의 점수가 0~10이 아닐시 IllegalArgumentException이 발생한다.
     
 - InputView
     - [ ] 플레이어의 이름을 입력받는다.
+    - [ ] 투구 점수를 입력받는다.
     
 - OutputView
     - [ ] 맨 처음에 플레이어의 이름을 출력한다.
