@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.exceptions.AlreadyStartedPlayerException;
+import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.exceptions.NotStartedPlayerException;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
@@ -104,5 +105,14 @@ class PlayerTests {
 
         assertThat(player).isEqualTo(new Player(
                         PLAYER_NAME, new PlayerFrames(Collections.singletonList(expectedNewFrame)), expectedNewFrame));
+    }
+
+    @DisplayName("현재 프레임이 완료됐으면 현재 프레임을 진행할 수 없다.")
+    @Test
+    void bowlCurrentFrameValidationTest() {
+        Player completedPlayer = Player.createByName(PLAYER_NAME).bowlFirst(TEN);
+
+        assertThatThrownBy(() -> completedPlayer.bowlCurrentFrame(FIVE))
+                .isInstanceOf(InvalidTryBowlException.class);
     }
 }
