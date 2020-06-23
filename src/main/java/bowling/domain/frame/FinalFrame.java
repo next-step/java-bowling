@@ -4,6 +4,7 @@ import bowling.domain.dto.FrameResult;
 import bowling.domain.pin.PinCount;
 import bowling.domain.state.State;
 import bowling.domain.state.StateFactory;
+import bowling.domain.state.running.Ready;
 
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -26,23 +27,29 @@ public class FinalFrame extends Frame {
 
     @Override
     public void bowl(final PinCount hitCount) {
-        this.increasePlayCount();
+        increasePlayCount();
 
-        State currentState = this.getLastState();
-
-        if (this.isCleanState(currentState)) {
-            states.push(StateFactory.bowl(hitCount));
-            return;
-        }
-        this.updateLastState(currentState.bowl(hitCount));
-    }
-
-    private boolean isCleanState(final State state) {
-        return state.isFinish() && !state.isMiss();
+        updateLastState(getLastState().bowl(hitCount));
+        giveBonusBowl();
     }
 
     private void increasePlayCount() {
         this.playCount++;
+    }
+
+    private State getLastState() {
+        return this.states.peek();
+    }
+
+    private void updateLastState(final State state) {
+        this.states.pop();
+        this.states.push(state);
+    }
+
+    private void giveBonusBowl() {
+        if (getLastState().isCleanState()) {
+            states.push(Ready.getInstance());
+        }
     }
 
     @Override
@@ -56,20 +63,11 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isGameOver() {
-        return this.isEndedBonusBowl() || getLastState().isMiss();
+        return isEndedBonusBowl() || getLastState().isMiss();
     }
 
     private boolean isEndedBonusBowl() {
         return this.playCount == MAX_COUNT;
-    }
-
-    private State getLastState() {
-        return this.states.peek();
-    }
-
-    private void updateLastState(final State state) {
-        this.states.pop();
-        this.states.push(state);
     }
 
     @Override

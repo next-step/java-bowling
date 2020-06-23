@@ -38,7 +38,7 @@ public class FinalFrameTest {
         nextFrame.bowl(PinCount.of(PinCount.MAX_COUNT));
 
         assertThat(nextFrame.getFrameResult())
-                .isEqualTo(FrameResult.of(StateExpression.STRIKE));
+                .isEqualTo(FrameResult.of(StateExpression.STRIKE + "|"));
     }
 
     @DisplayName("현재 상태가 진행 상태의 경우, 현재 상태를 제거하고 새로 던진 볼링공의 상태를 추가 및 상태값 반환")
@@ -51,9 +51,9 @@ public class FinalFrameTest {
 
     private static Stream<Arguments> runningAfterBowl() {
         return Stream.of(
-                Arguments.of(FinalFrameFixture.getOneStrikeFrame(), FrameResult.of(StateExpression.STRIKE)),
+                Arguments.of(FinalFrameFixture.getOneStrikeFrame(), FrameResult.of("X" + "|")),
                 Arguments.of(FinalFrameFixture.getStrikeGutterFrame(), FrameResult.of("X|- ")),
-                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame(), FrameResult.of("9|/|X"))
+                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame(), FrameResult.of("9|/|X" + "|"))
         );
     }
 
