@@ -26,4 +26,8 @@ public class Score {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_SCORE_RANGE);
         }
     }
+
+    public int getScore() {
+        return score;
+    }
 }
