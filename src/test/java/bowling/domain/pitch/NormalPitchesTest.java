@@ -2,7 +2,6 @@ package bowling.domain.pitch;
 
 import bowling.domain.exception.BowlingBuildingException;
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +23,7 @@ class NormalPitchesTest {
         Pitch currentPitch = normalPitchesList.get(0);
 
         assertThat(currentPitch.getScore()).isEqualTo(5);
-        assertThat(currentPitch.getScoreType()).isEqualTo(ScoreType.NORMAL);
+        assertThat(currentPitch.getScoreSignature()).isEqualTo("5");
     }
 
     @DisplayName("두 번째 투구면 Pitch를 next를 통해 생성하여 내부 컬렉션에 추가하며, 스페어임")
@@ -40,7 +39,7 @@ class NormalPitchesTest {
         Pitch currentPitch = normalPitchesList.get(1);
 
         assertThat(currentPitch.getScore()).isEqualTo(5);
-        assertThat(currentPitch.getScoreType()).isEqualTo(ScoreType.SPARE);
+        assertThat(currentPitch.getScoreSignature()).isEqualTo("/");
     }
 
     @DisplayName("Normal Frame의 Normal Pitches는 2번 초과 투구시 예외 발생")
@@ -54,5 +53,17 @@ class NormalPitchesTest {
             normalPitches.throwBall(Score.valueOf(3));
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES_TRY);
+    }
+
+    @DisplayName("Score들의 List를 요청")
+    @Test
+    public void getScores() {
+        NormalPitches normalPitches = new NormalPitches();
+        normalPitches.throwBall(Score.valueOf(0));
+        normalPitches.throwBall(Score.valueOf(3));
+
+        List<String> scores = normalPitches.getScores();
+
+        assertThat(scores).containsExactly("-", "3");
     }
 }

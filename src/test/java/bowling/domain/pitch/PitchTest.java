@@ -1,7 +1,6 @@
 package bowling.domain.pitch;
 
 import bowling.domain.score.Score;
-import bowling.domain.score.ScoreType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ class PitchTest {
         Pitch pitch = Pitch.initiate(score);
 
         assertThat(pitch.getScore()).isEqualTo(10);
-        assertThat(pitch.getScoreType()).isEqualTo(ScoreType.STRIKE);
+        assertThat(pitch.getScoreSignature()).isEqualTo("X");
     }
 
     @DisplayName("기존 Pitch 객체로 스페어를 지닌 다음 객체를 생성")
@@ -28,6 +27,6 @@ class PitchTest {
 
         Pitch nextPitch = lastPitch.next(score);
 
-        assertThat(nextPitch.getScoreType()).isEqualTo(ScoreType.SPARE);
+        assertThat(nextPitch.getScoreSignature()).isEqualTo("/");
     }
 }

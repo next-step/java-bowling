@@ -35,6 +35,10 @@ public class Frames {
         return getCurrentFrame() != null;
     }
 
+    public int getCurrentIndex() {
+        return getCurrentFrame().getIndex();
+    }
+
     private Frame getCurrentFrame() {
         return frames.get(frames.size() - INDEX_CONSTANT);
     }

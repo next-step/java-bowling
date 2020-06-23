@@ -7,6 +7,7 @@ import bowling.domain.score.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NormalPitches implements Pitches {
     private static final int FIRST_INDEX = 0;
@@ -41,5 +42,12 @@ public class NormalPitches implements Pitches {
     @Override
     public List<Pitch> getPitches() {
         return Collections.unmodifiableList(pitches);
+    }
+
+    public List<String> getScores() {
+        return pitches.stream()
+                .map(Pitch::getScoreSignature)
+                .collect(Collectors.toList());
+
     }
 }

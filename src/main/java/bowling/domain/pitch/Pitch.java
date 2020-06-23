@@ -40,7 +40,7 @@ public class Pitch {
         return score.getScore();
     }
 
-    public ScoreType getScoreType() {
-        return scoreType;
+    public String getScoreSignature() {
+        return scoreType.getSignature(this);
     }
 }
