@@ -9,9 +9,6 @@ import qna.NotFoundException;
 import qna.domain.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -36,8 +33,8 @@ public class QnAService {
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
 
-        question.delete2(loginUser);
+        question.delete(loginUser);
 
-        deleteHistoryService.saveAll(question.getDeleteHistories2(loginUser));
+        deleteHistoryService.saveAll(question.getDeleteHistories(loginUser));
     }
 }

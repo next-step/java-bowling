@@ -72,11 +72,6 @@ public class Question extends AbstractEntity {
     return this;
   }
 
-  public void addAnswer(Answer answer) {
-    answer.toQuestion(this);
-    answers.add(answer);
-  }
-
   public boolean isOwner(User loginUser) {
     return writer.equals(loginUser);
   }
@@ -90,53 +85,7 @@ public class Question extends AbstractEntity {
     return deleted;
   }
 
-  public List<Answer> getAnswers() {
-    return answers;
-  }
-
-  @Override
-  public String toString() {
-    return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer="
-        + writer + "]";
-  }
-
-  public void delete(User loginUser) throws CannotDeleteException {
-    if (!writer.equals(loginUser)) {
-      throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-    }
-
-    deleted = true;
-
-    for (Answer answer : answers) {
-      answer.delete(loginUser);
-    }
-  }
-
-  public List<DeleteHistory> getDeleteHistories(User loginUser) {
-    List<DeleteHistory> deleteHistories = new ArrayList<>();
-
-    if (deleted) {
-      deleteHistories.add(new DeleteHistory(
-          ContentType.QUESTION,
-          getId(),
-          loginUser,
-          LocalDateTime.now()));
-    }
-
-    for (Answer answer : answers) {
-      if (answer.isDeleted()) {
-        deleteHistories.add(new DeleteHistory(
-            ContentType.ANSWER,
-            answer.getId(),
-            loginUser,
-            LocalDateTime.now()));
-      }
-    }
-
-    return deleteHistories;
-  }
-
-  public void addAnswer2(Answer answer) {
+  public void addAnswer(Answer answer) {
     answer.toQuestion(this);
     answers2.addAnswer(answer);
   }
@@ -146,7 +95,7 @@ public class Question extends AbstractEntity {
     return answers2.getAnswerById(id);
   }
 
-  public void delete2(User loginUser) throws CannotDeleteException {
+  public void delete(User loginUser) throws CannotDeleteException {
     if (!writer.equals(loginUser)) {
       throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
     }
@@ -156,7 +105,7 @@ public class Question extends AbstractEntity {
     answers2.delete(loginUser);
   }
 
-  public List<DeleteHistory> getDeleteHistories2(User loginUser) {
+  public List<DeleteHistory> getDeleteHistories(User loginUser) {
     List<DeleteHistory> deleteHistories = new ArrayList<>();
 
     if (deleted) {
@@ -167,5 +116,11 @@ public class Question extends AbstractEntity {
     }
 
     return deleteHistories;
+  }
+
+  @Override
+  public String toString() {
+    return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer="
+        + writer + "]";
   }
 }

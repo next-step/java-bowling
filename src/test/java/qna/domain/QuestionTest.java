@@ -45,23 +45,11 @@ public class QuestionTest {
             QuestionTest.QUESTION_WITH_ANSWER_SAME_WRITER,
             "Answers Contents1"
         ));
-    QUESTION_WITH_ANSWER_SAME_WRITER
-        .addAnswer2(new Answer(
-            UserTest.JAVAJIGI,
-            QuestionTest.QUESTION_WITH_ANSWER_SAME_WRITER,
-            "Answers Contents1"
-        ));
 
     QUESTION_WITH_ANSWER_DIFF_WRITER = new Question("title4", "contents4")
         .writeBy(UserTest.JAVAJIGI);
     QUESTION_WITH_ANSWER_DIFF_WRITER
         .addAnswer(new Answer(
-            UserTest.SANJIGI,
-            QuestionTest.QUESTION_WITH_ANSWER_DIFF_WRITER,
-            "Answers Contents2"
-        ));
-    QUESTION_WITH_ANSWER_DIFF_WRITER
-        .addAnswer2(new Answer(
             UserTest.SANJIGI,
             QuestionTest.QUESTION_WITH_ANSWER_DIFF_WRITER,
             "Answers Contents2"
@@ -110,7 +98,7 @@ public class QuestionTest {
   @ParameterizedTest
   @MethodSource("provideQuestionWithAnswer")
   void addAnswer2(Question question, Answer answer) {
-    question.addAnswer2(answer);
+    question.addAnswer(answer);
 
     assertThat(question.getAnswerById(answer.getId())).isEqualTo(answer);
   }
@@ -138,7 +126,7 @@ public class QuestionTest {
   @ParameterizedTest
   @MethodSource("provideQuestionWithValidLoginUser")
   void delete_success2(Question question, User loginUser) throws Exception {
-    question.delete2(loginUser);
+    question.delete(loginUser);
 
     assertThat(question.isDeleted()).isTrue();
   }
@@ -165,7 +153,7 @@ public class QuestionTest {
   void delete_failure2(Question question, User loginUser) {
 
     assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(() -> {
-      question.delete2(loginUser);
+      question.delete(loginUser);
     });
   }
 
@@ -187,7 +175,7 @@ public class QuestionTest {
     Question question = QUESTION_WITH_ANSWER_DIFF_WRITER;
 
     assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(() -> {
-      question.delete2(UserTest.JAVAJIGI);
+      question.delete(UserTest.JAVAJIGI);
     }).withMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
   }
 
@@ -195,9 +183,9 @@ public class QuestionTest {
   @MethodSource("provideQuestionWithLoginUserToGetDeleteHistories")
   void getDeleteHistories2(Question question, User loginUser, List<DeleteHistory> expected)
       throws Exception {
-    question.delete2(loginUser);
+    question.delete(loginUser);
 
-    assertThat(question.getDeleteHistories2(loginUser)).isEqualTo(expected);
+    assertThat(question.getDeleteHistories(loginUser)).isEqualTo(expected);
   }
 
   static Stream<Arguments> provideQuestionWithLoginUserToGetDeleteHistories() {
