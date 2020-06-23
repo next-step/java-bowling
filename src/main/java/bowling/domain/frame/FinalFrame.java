@@ -30,11 +30,15 @@ public class FinalFrame extends Frame {
 
         State currentState = this.getLastState();
 
-        if (currentState.isFinish()) {
+        if (this.isCleanState(currentState)) {
             states.push(StateFactory.bowl(hitCount));
             return;
         }
         this.updateLastState(currentState.bowl(hitCount));
+    }
+
+    private boolean isCleanState(final State state) {
+        return state.isFinish() && !state.isMiss();
     }
 
     private void increasePlayCount() {
