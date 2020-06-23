@@ -9,7 +9,7 @@ import java.util.List;
 import qna.CannotDeleteException;
 
 @Entity
-public class Question extends AbstractEntity {
+public class Question extends AbstractEntity implements Deletable {
 
   @Column(length = 100, nullable = false)
   private String title;
@@ -95,6 +95,7 @@ public class Question extends AbstractEntity {
     return answers2.getAnswerById(id);
   }
 
+  @Override
   public void delete(User loginUser) throws CannotDeleteException {
     if (!writer.equals(loginUser)) {
       throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
@@ -105,12 +106,13 @@ public class Question extends AbstractEntity {
     answers2.delete(loginUser);
   }
 
-  public List<DeleteHistory> getDeleteHistories(User loginUser) {
+  @Override
+  public List<DeleteHistory> getDeleteHistories() {
     List<DeleteHistory> deleteHistories = new ArrayList<>();
 
     if (deleted) {
       deleteHistories.add(
-          new DeleteHistory(ContentType.QUESTION, getId(), loginUser, LocalDateTime.now()));
+          new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
 
       deleteHistories.addAll(answers2.getDeleteHistories());
     }

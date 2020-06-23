@@ -97,7 +97,7 @@ public class QuestionTest {
 
   @ParameterizedTest
   @MethodSource("provideQuestionWithAnswer")
-  void addAnswer2(Question question, Answer answer) {
+  void addAnswer(Question question, Answer answer) {
     question.addAnswer(answer);
 
     assertThat(question.getAnswerById(answer.getId())).isEqualTo(answer);
@@ -125,7 +125,7 @@ public class QuestionTest {
 
   @ParameterizedTest
   @MethodSource("provideQuestionWithValidLoginUser")
-  void delete_success2(Question question, User loginUser) throws Exception {
+  void delete_success(Question question, User loginUser) throws Exception {
     question.delete(loginUser);
 
     assertThat(question.isDeleted()).isTrue();
@@ -150,7 +150,7 @@ public class QuestionTest {
 
   @ParameterizedTest
   @MethodSource("provideQuestionWithInvalidLoginUser")
-  void delete_failure2(Question question, User loginUser) {
+  void delete_failure(Question question, User loginUser) {
 
     assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(() -> {
       question.delete(loginUser);
@@ -181,11 +181,11 @@ public class QuestionTest {
 
   @ParameterizedTest
   @MethodSource("provideQuestionWithLoginUserToGetDeleteHistories")
-  void getDeleteHistories2(Question question, User loginUser, List<DeleteHistory> expected)
+  void getDeleteHistories(Question question, User loginUser, List<DeleteHistory> expected)
       throws Exception {
     question.delete(loginUser);
 
-    assertThat(question.getDeleteHistories(loginUser)).isEqualTo(expected);
+    assertThat(question.getDeleteHistories()).isEqualTo(expected);
   }
 
   static Stream<Arguments> provideQuestionWithLoginUserToGetDeleteHistories() {
