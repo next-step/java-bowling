@@ -26,7 +26,9 @@ class QuestionAnswersTest {
         List<DeleteHistory> histories = questionAnswers.deleteAllBy(UserTest.JAVAJIGI);
 
         assertThat(histories.size()).isEqualTo(1);
-        assertThat(histories).contains(new DeleteHistory(ContentType.ANSWER, answer.getId(), UserTest.JAVAJIGI, LocalDateTime.now()));
+        assertThat(histories).contains(
+            new DeleteHistory(ContentType.ANSWER, answer.getId(), UserTest.JAVAJIGI,
+                LocalDateTime.now()));
     }
 
     @DisplayName("로그인 사용자와 질문한 사람이 같지 않을 경우 삭제를 하면 예외가 발생한다.")
@@ -35,7 +37,7 @@ class QuestionAnswersTest {
         QuestionAnswers questionAnswers = new QuestionAnswers();
         questionAnswers.add(answer);
 
-        assertThatThrownBy(()->questionAnswers.deleteAllBy(UserTest.SANJIGI))
+        assertThatThrownBy(() -> questionAnswers.deleteAllBy(UserTest.SANJIGI))
             .isInstanceOf(CannotDeleteException.class);
     }
 }
