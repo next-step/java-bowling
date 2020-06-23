@@ -63,7 +63,8 @@
 ### 객체
     
 - Player
-    - [ ] 이름은 3글자 영어이다.
+    - [x] 이름은 3글자 알파벳이다.
+    - [x] 이름이 3글자 알파벳이 아닐시 IllegalArgumentException이 발생한다.
     
 - InputView
     - [ ] 플레이어의 이름을 입력받는다.
