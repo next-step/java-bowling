@@ -4,9 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static qna.domain.QuestionTest.DELETE_HISTORIES;
@@ -25,7 +22,7 @@ public class AnswerTest {
     @Test
     @DisplayName("질문자와 답변자가 다른 경우 삭제 실패")
     void delete_fail() {
-        assertThatThrownBy(()-> A1.delete(UserTest.SANJIGI, DELETE_HISTORIES))
+        assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI, DELETE_HISTORIES))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }

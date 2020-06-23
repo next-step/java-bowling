@@ -23,7 +23,7 @@ public class QuestionTest {
 
     @Test
     @DisplayName("다른 사람이 쓴 글 삭제시 오류 ")
-    void delete_fail(){
+    void delete_fail() {
         assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI, DELETE_HISTORIES))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("질문을 삭제할 권한이 없습니다.");
