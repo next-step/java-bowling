@@ -1,12 +1,17 @@
 package bowling.domain.frame;
 
+import bowling.domain.exceptions.ExceedLimitOfFramesException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerFramesTests {
     private static final int TEN = 10;
@@ -75,5 +80,38 @@ class PlayerFramesTests {
 
         PlayerFrames sizeThree = sizeTwoCompleted.lastValue(NormalFrame.start(FIVE));
         assertThat(sizeThree.size()).isEqualTo(3);
+    }
+
+    @DisplayName("10개의 완료된 프레임이 있는 컬렉션을 더이상 변경할 수 없다.")
+    @Test
+    void validationSizeLimit() {
+        PlayerFrames completedPlayerFrames = new PlayerFrames(Arrays.asList(NormalFrame.start(TEN),
+                NormalFrame.start(TEN), NormalFrame.start(TEN), NormalFrame.start(TEN), NormalFrame.start(TEN),
+                NormalFrame.start(TEN), NormalFrame.start(TEN), NormalFrame.start(TEN), NormalFrame.start(TEN),
+                NormalFrame.start(TEN)));
+        assertThat(completedPlayerFrames.size()).isEqualTo(10);
+
+        assertThatThrownBy(() -> completedPlayerFrames.lastValue(NormalFrame.start(FIVE)))
+                .isInstanceOf(ExceedLimitOfFramesException.class);
+    }
+
+    @DisplayName("크기가 10이더라도 마지막 프레임이 완료되지 않았다면 업데이트가 가능하다.")
+    @ParameterizedTest
+    @MethodSource("notCompletedFrameResource")
+    void canUpdateFullButNotCompletedTest(Frame notCompletedFrame) {
+        PlayerFrames notCompletedFullPlayerFrames = new PlayerFrames(Arrays.asList(NormalFrame.start(TEN),
+                NormalFrame.start(TEN), NormalFrame.start(TEN), NormalFrame.start(TEN), NormalFrame.start(TEN),
+                NormalFrame.start(TEN), NormalFrame.start(TEN), NormalFrame.start(TEN), NormalFrame.start(TEN),
+                notCompletedFrame));
+        assertThat(notCompletedFullPlayerFrames.size()).isEqualTo(10);
+
+        notCompletedFullPlayerFrames.lastValue(NormalFrame.start(FIVE).bowl(FIVE));
+        assertThat(notCompletedFullPlayerFrames.size()).isEqualTo(10);
+    }
+    public static Stream<Frame> notCompletedFrameResource() {
+        return Stream.of(
+                NormalFrame.start(FIVE),
+                FinalFrame.firstBowl(FIVE, NormalFrame.start(TEN))
+        );
     }
 }

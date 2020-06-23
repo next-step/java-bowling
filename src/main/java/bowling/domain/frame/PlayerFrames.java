@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.exceptions.CannotDoInEmptyPlayerFramesException;
+import bowling.domain.exceptions.ExceedLimitOfFramesException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +9,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class PlayerFrames {
+    private static final int MAX_SIZE = 10;
+
     private final List<Frame> playerFrameList;
 
     PlayerFrames(List<Frame> playerFrameList) {
@@ -23,6 +26,8 @@ public class PlayerFrames {
     }
 
     public PlayerFrames lastValue(Frame frame) {
+        validateSize();
+
         if (this.size() == 0) {
             return new PlayerFrames(Collections.singletonList(frame));
         }
@@ -32,6 +37,12 @@ public class PlayerFrames {
         }
 
         return updateLastFrame(frame);
+    }
+
+    private void validateSize() {
+        if (this.size() == MAX_SIZE && getLast().isCompleted()) {
+            throw new ExceedLimitOfFramesException("더이상 프레임을 추가하거나 업데이트 할 수 없습니다.");
+        }
     }
 
     private PlayerFrames addNewFrame(Frame frame) {

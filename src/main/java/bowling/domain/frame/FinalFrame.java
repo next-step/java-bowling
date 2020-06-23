@@ -6,7 +6,7 @@ import bowling.domain.frameStatus.FinalFrameStatus;
 
 import java.util.Objects;
 
-public class FinalFrame {
+public class FinalFrame implements Frame {
     private static int TEN = 10;
 
     private final int index;
@@ -32,16 +32,18 @@ public class FinalFrame {
         return new FinalFrame(TEN, this.finalFrameStatus.bowl(numberOfHitPin), prevFrame);
     }
 
-    public boolean isCompleted() {
-        return this.finalFrameStatus.isCompleted();
-    }
-
     private void validateBowl() {
         if (isCompleted()) {
             throw new InvalidTryBowlException("종료된 프레임에는 투구할 수 없습니다.");
         }
     }
 
+    @Override
+    public boolean isCompleted() {
+        return this.finalFrameStatus.isCompleted();
+    }
+
+    @Override
     public FrameResults calculateCurrentResults() {
         return this.finalFrameStatus.calculateCurrentResult();
     }
