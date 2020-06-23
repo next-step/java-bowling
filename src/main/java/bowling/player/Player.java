@@ -3,6 +3,7 @@ package bowling.player;
 import bowling.exception.BowlingBuildingException;
 
 public class Player {
+    private static final int REQUIRED_NAME_LENGTH = 3;
 
     private final String name;
 
@@ -12,7 +13,7 @@ public class Player {
     }
 
     private void validateName(String name) {
-        if (name == null || name.length() != 3) {
+        if (name == null || name.length() != REQUIRED_NAME_LENGTH) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_PLAYER_NAME);
         }
     }
