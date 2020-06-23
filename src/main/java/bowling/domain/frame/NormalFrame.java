@@ -37,6 +37,7 @@ public class NormalFrame implements Frame {
         return normalPitches.isFinished(MAXIMUM_NORMAL_PITCH_COUNTS) || normalPitches.isStrike();
     }
 
+    @Override
     public List<String> getScores() {
         return normalPitches.getScores();
     }

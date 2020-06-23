@@ -36,6 +36,7 @@ public class FinalFrame implements Frame {
         return finalPitches.isFinished(MAXIMUM_FINAL_PITCH_COUNTS);
     }
 
+    @Override
     public List<String> getScores() {
         return finalPitches.getScores();
     }

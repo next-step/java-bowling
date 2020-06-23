@@ -39,10 +39,6 @@ public class Frames {
         return getCurrentFrame().getIndex();
     }
 
-    public List<String> getScores() {
-        return getCurrentFrame().getScores();
-    }
-
     private Frame getCurrentFrame() {
         return frames.get(frames.size() - INDEX_CONSTANT);
     }
