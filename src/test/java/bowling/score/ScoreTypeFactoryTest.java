@@ -49,7 +49,7 @@ class ScoreTypeFactoryTest {
         assertThatThrownBy(() -> {
             ScoreTypeFactory.next(pitch, score);
         }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES);
+                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES_SCORE);
     }
 
     @DisplayName("next ScoreType을 만들 때 이전의 ScoreType이 Spare면 예외 발생")
@@ -61,7 +61,7 @@ class ScoreTypeFactoryTest {
         assertThatThrownBy(() -> {
             ScoreTypeFactory.next(nextPitch, Score.valueOf(5));
         }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES);
+                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES_SCORE);
     }
 
     @DisplayName("next ScoreType을 만들 때 두 Pitch의 합이 10을 넘으면 예외 발생")

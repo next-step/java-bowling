@@ -1,5 +1,6 @@
 package bowling.pitch;
 
+import bowling.exception.BowlingBuildingException;
 import bowling.score.Score;
 import bowling.score.ScoreType;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalPitchesTest {
 
@@ -39,5 +41,18 @@ class NormalPitchesTest {
 
         assertThat(currentPitch.getScore()).isEqualTo(5);
         assertThat(currentPitch.getScoreType()).isEqualTo(ScoreType.SPARE);
+    }
+
+    @DisplayName("Normal Frame의 Normal Pitches는 2번 초과 투구시 예외 발생")
+    @Test
+    public void throwBall_세번째_예외() {
+        NormalPitches normalPitches = new NormalPitches();
+        normalPitches.throwBall(Score.valueOf(0));
+        normalPitches.throwBall(Score.valueOf(3));
+
+        assertThatThrownBy(() -> {
+            normalPitches.throwBall(Score.valueOf(3));
+        }).isInstanceOf(BowlingBuildingException.class)
+                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES_TRY);
     }
 }

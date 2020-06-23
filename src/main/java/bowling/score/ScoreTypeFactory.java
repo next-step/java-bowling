@@ -27,7 +27,7 @@ public class ScoreTypeFactory {
 
     private static void validateNextCondition(Pitch pitch, int scoresSum) {
         if (pitch.isStrike() || pitch.isSpare()) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES);
+            throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES_SCORE);
         }
         if (scoresSum > MAXIMUM_NORMAL_FRAME_SCORE_TOTAL) {
             throw new BowlingBuildingException((BowlingBuildingException.OVER_SCORE));
