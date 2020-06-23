@@ -10,10 +10,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity // JPA를 사용해서 테이블과 매핑할 클래스는 @Entity 어노테이션을 필수로 붙여야 합니다.
+@Entity 
 public class Question extends AbstractEntity {
 	
 	private static final String CANNOT_DELETE_AUTHORITY = "질문을 삭제할 권한이 없습니다.";
+	private Answers answers = new Answers();
 	
     @Column(length = 100, nullable = false)
     private String title;
@@ -24,11 +25,6 @@ public class Question extends AbstractEntity {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
-
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL) // CascadeType.ALL – 모든 Cascade 적용
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
 
     private boolean deleted = false;
 
@@ -91,10 +87,6 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
@@ -110,7 +102,7 @@ public class Question extends AbstractEntity {
 		
 		DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
 		DeleteHistories deleteHistories = new DeleteHistories(deleteHistory);
-		
+		deleteHistories.add(answers.deleteByOthers(loginUser));
 		
 		return deleteHistories;
 		

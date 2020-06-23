@@ -83,8 +83,9 @@ public class Answer extends AbstractEntity {
 		// 6. 질문자와 답변자가 다른 경우 답변을 삭제할 수 없다.
 		if(!isOwner(user)) {
 			throw new CannotDeleteException(CANNOT_DELETE_ANSWERS_BY_OTHERS);
-		}		
-		DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
+		}
+		this.deleted = true;
+		DeleteHistory deleteHistory = new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now());
 		
 		return deleteHistory;
 	}
