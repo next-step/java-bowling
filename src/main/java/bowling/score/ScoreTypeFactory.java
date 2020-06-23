@@ -6,12 +6,9 @@ public class ScoreTypeFactory {
     }
 
     public static ScoreType initiate(Score score) {
-        if (score.getScore() == 10) {
+        if (score.isMaximumScore()) {
             return ScoreType.STRIKE;
         }
-        if (score.getScore() == 0) {
-            return ScoreType.GUTTER;
-        }
-        return ScoreType.NORMAL;
+        return score.isMinimumScore() ? ScoreType.GUTTER : ScoreType.NORMAL;
     }
 }
