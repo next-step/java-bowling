@@ -60,7 +60,7 @@ public class QuestionTest {
   }
 
   @AfterEach
-  void setUp() {
+  void tearDown() {
     Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
     Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
