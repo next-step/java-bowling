@@ -9,28 +9,24 @@ import java.util.List;
 
 public class NormalPitches implements Pitches {
     private static final int FIRST_INDEX = 0;
-    private static final int MAXIMUM_NORMAL_PITCH_COUNTS = 2;
 
     private final List<Pitch> pitches = new ArrayList<>();
 
     @Override
     public void throwBall(Score score) {
-        validateNormalPitchCounts();
+        validateNormalPitches();
         Pitch pitch = createPitch(score);
         pitches.add(pitch);
     }
 
-    private void validateNormalPitchCounts() {
+    private void validateNormalPitches() {
         if (pitches.size() == MAXIMUM_NORMAL_PITCH_COUNTS) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES_TRY);
         }
     }
 
     private Pitch createPitch(Score score) {
-        if (pitches.isEmpty()) {
-            return Pitch.initiate(score);
-        }
-        return pitches.get(FIRST_INDEX).next(score);
+        return pitches.isEmpty() ? Pitch.initiate(score) : pitches.get(FIRST_INDEX).next(score);
     }
 
     @Override

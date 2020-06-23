@@ -7,23 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FinalPitches implements Pitches {
+    private static final int INDEX_CONSTANT = 1;
 
     private final List<Pitch> pitches = new ArrayList<>();
 
     @Override
     public void throwBall(Score score) {
-        validateFinalPitches();
+        if (pitches.size() >= MAXIMUM_NORMAL_PITCH_COUNTS) {
+            validateFinalPitches();
+        }
         Pitch pitch = createPitch(score);
         pitches.add(pitch);
     }
 
     private void validateFinalPitches() {
-        if (pitches.size() < 2) {
-            return;
-        }
         boolean isContainingStrikeOrSpare = pitches.stream()
                 .anyMatch(pitch -> pitch.isStrike() || pitch.isSpare());
-        if (!isContainingStrikeOrSpare || pitches.size() == 3) {
+        if (!isContainingStrikeOrSpare || pitches.size() == MAXIMUM_FINAL_PITCH_COUNTS) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
         }
     }
@@ -32,15 +32,8 @@ public class FinalPitches implements Pitches {
         if (pitches.isEmpty()) {
             return Pitch.initiate(score);
         }
-        Pitch pitch = getCurrentPitch();
-        if (pitch.isSpare() || pitch.isStrike()) {
-            return Pitch.initiate(score);
-        }
-        return pitch.next(score);
-    }
-
-    private Pitch getCurrentPitch() {
-        return pitches.get(pitches.size() - 1);
+        Pitch lastPitch = pitches.get(pitches.size() - INDEX_CONSTANT);
+        return lastPitch.isSpare() || lastPitch.isStrike() ? Pitch.initiate(score) : lastPitch.next(score);
     }
 
     @Override
