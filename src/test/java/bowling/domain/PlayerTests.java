@@ -6,9 +6,13 @@ import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -66,6 +70,29 @@ class PlayerTests {
         Player player = Player.createByName(PLAYER_NAME);
 
         assertThatThrownBy(player::calculateResult).isInstanceOf(NotStartedPlayerException.class);
+    }
+
+    @DisplayName("현재 프레임의 완료 여부를 알 수 있다.")
+    @ParameterizedTest
+    @MethodSource("isCompletedResource")
+    void isCompletedTest(int numberOfHitPin, boolean expectedResult) {
+        Player player = Player.createByName(PLAYER_NAME).bowlFirst(numberOfHitPin);
+        assertThat(player.isCurrentFrameCompleted()).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> isCompletedResource() {
+        return Stream.of(
+                Arguments.of(TEN, true),
+                Arguments.of(FIVE, false)
+        );
+    }
+
+    @DisplayName("초구를 던지지 않은 플레이어는 현재 프레임 완료 여부를 알 수 없다.")
+    @Test
+    void isCompletedValidationTest() {
+        Player notBowlFirstPlayer = Player.createByName(PLAYER_NAME);
+
+        assertThatThrownBy(notBowlFirstPlayer::isCurrentFrameCompleted)
+                .isInstanceOf(NotStartedPlayerException.class);
     }
 
     @DisplayName("현재 프레임이 마무리됐다면 다음 프레임을 진행할 수 있다.")

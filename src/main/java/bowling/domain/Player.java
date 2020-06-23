@@ -44,6 +44,11 @@ public class Player {
         return new Player(name, playerFrames.lastValue(newFrame), newFrame);
     }
 
+    public boolean isCurrentFrameCompleted() {
+        validateIsStarted();
+        return this.currentFrame.isCompleted();
+    }
+
     private void validateIsStarted() {
         if (this.currentFrame == null) {
             throw new NotStartedPlayerException("초구를 굴리지 않은 상태에서 할 수 없는 동작입니다.");
