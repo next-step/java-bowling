@@ -21,9 +21,6 @@ public class NormalFrame implements Frame {
     }
 
     public boolean isMovableToNextFrame() {
-        if (normalPitches.getPitches().size() == 2 || normalPitches.isStrike()) {
-            return true;
-        }
-        return false;
+        return normalPitches.isFinished() || normalPitches.isStrike();
     }
 }

@@ -20,7 +20,7 @@ public class NormalPitches implements Pitches {
     }
 
     private void validateNormalPitches() {
-        if (pitches.size() == MAXIMUM_NORMAL_PITCH_COUNTS) {
+        if (this.isFinished()) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES_TRY);
         }
     }
@@ -29,12 +29,16 @@ public class NormalPitches implements Pitches {
         return pitches.isEmpty() ? Pitch.initiate(score) : pitches.get(FIRST_INDEX).next(score);
     }
 
-    @Override
-    public List<Pitch> getPitches() {
-        return Collections.unmodifiableList(pitches);
+    public boolean isFinished() {
+        return pitches.size() == MAXIMUM_NORMAL_PITCH_COUNTS;
     }
 
     public boolean isStrike() {
         return pitches.get(FIRST_INDEX).isStrike();
+    }
+
+    @Override
+    public List<Pitch> getPitches() {
+        return Collections.unmodifiableList(pitches);
     }
 }
