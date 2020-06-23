@@ -59,6 +59,6 @@ public class OutputView {
         int blankFrameCounts = TOTAL_FRAME_COUNTS - frameList.size();
         IntStream.rangeClosed(ZERO, blankFrameCounts)
                 .forEach(i -> System.out.print(ViewMessage.BLANK_FRAME));
-        System.out.println();
+        System.out.println(ViewMessage.NEW_LINE);
     }
 }

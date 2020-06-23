@@ -5,7 +5,6 @@ import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,19 +30,16 @@ public class NormalPitches implements Pitches {
         return pitches.isEmpty() ? Pitch.initiate(score) : pitches.get(FIRST_INDEX).next(score);
     }
 
-    public boolean isFinished(int pitchCounts) {
-        return pitches.size() == pitchCounts;
-    }
-
     public boolean isStrike() {
         return pitches.get(FIRST_INDEX).isStrike();
     }
 
     @Override
-    public List<Pitch> getPitches() {
-        return Collections.unmodifiableList(pitches);
+    public boolean isFinished(int pitchCounts) {
+        return pitches.size() == pitchCounts;
     }
 
+    @Override
     public List<String> getScores() {
         return pitches.stream()
                 .map(Pitch::getScoreSignature)

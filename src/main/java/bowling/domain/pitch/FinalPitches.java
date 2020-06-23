@@ -41,18 +41,15 @@ public class FinalPitches implements Pitches {
                 .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
     }
 
+    @Override
     public boolean isFinished(int pitchCounts) {
         return pitches.size() == pitchCounts;
     }
 
+    @Override
     public List<String> getScores() {
         return pitches.stream()
                 .map(Pitch::getScoreSignature)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Pitch> getPitches() {
-        return pitches;
     }
 }

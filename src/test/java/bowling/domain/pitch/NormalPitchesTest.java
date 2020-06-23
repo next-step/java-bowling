@@ -17,13 +17,10 @@ class NormalPitchesTest {
     public void throwBall_첫_투구() {
         Score score = Score.valueOf(5);
         NormalPitches normalPitches = new NormalPitches();
-        List<Pitch> normalPitchesList = normalPitches.getPitches();
 
         normalPitches.throwBall(score);
-        Pitch currentPitch = normalPitchesList.get(0);
 
-        assertThat(currentPitch.getScore()).isEqualTo(5);
-        assertThat(currentPitch.getScoreSignature()).isEqualTo("5");
+        assertThat(normalPitches.getScores().get(0)).isEqualTo("5");
     }
 
     @DisplayName("두 번째 투구면 Pitch를 next를 통해 생성하여 내부 컬렉션에 추가하며, 스페어임")
@@ -31,15 +28,11 @@ class NormalPitchesTest {
     public void throwBall_두번째_투구() {
         Score score = Score.valueOf(5);
         NormalPitches normalPitches = new NormalPitches();
-        List<Pitch> normalPitchesList = normalPitches.getPitches();
 
         normalPitches.throwBall(score);
         normalPitches.throwBall(Score.valueOf(5));
 
-        Pitch currentPitch = normalPitchesList.get(1);
-
-        assertThat(currentPitch.getScore()).isEqualTo(5);
-        assertThat(currentPitch.getScoreSignature()).isEqualTo("/");
+        assertThat(normalPitches.getScores().get(1)).isEqualTo("/");
     }
 
     @DisplayName("Normal Frame의 Normal Pitches는 2번 초과 투구시 예외 발생")

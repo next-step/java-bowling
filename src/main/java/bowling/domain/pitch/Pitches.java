@@ -8,5 +8,7 @@ public interface Pitches {
 
     public void throwBall(Score score);
 
-    public List<Pitch> getPitches();
+    public boolean isFinished(int pitchCounts);
+
+    public List<String> getScores();
 }

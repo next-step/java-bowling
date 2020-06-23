@@ -12,7 +12,7 @@ public class InputView {
 
     public static String inputPlayerName() {
         System.out.print(ViewMessage.INSTRUCTION_PLAYER_NAME);
-        return SCANNER.nextLine().toUpperCase();
+        return SCANNER.nextLine().toUpperCase().trim();
     }
 
     public static int inputPitch(Frames frames) {
