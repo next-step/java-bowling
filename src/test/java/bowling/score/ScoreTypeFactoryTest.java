@@ -1,9 +1,12 @@
 package bowling.score;
 
+import bowling.exception.BowlingBuildingException;
+import bowling.pitch.Pitch;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ScoreTypeFactoryTest {
 
@@ -35,5 +38,51 @@ class ScoreTypeFactoryTest {
         ScoreType scoreType = ScoreTypeFactory.initiate(score);
 
         assertThat(scoreType).isEqualTo(ScoreType.NORMAL);
+    }
+
+    @DisplayName("next ScoreType을 만들 때 이전의 ScoreType이 Strike면 예외 발생")
+    @Test
+    public void nextStrike_예외() {
+        Pitch pitch = Pitch.initiate(Score.valueOf(10));
+        Score score = Score.valueOf(3);
+
+        assertThatThrownBy(() -> {
+            ScoreTypeFactory.next(pitch, score);
+        }).isInstanceOf(BowlingBuildingException.class)
+                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES);
+    }
+
+    @DisplayName("next ScoreType을 만들 때 두 Pitch의 합이 10을 넘으면 예외 발생")
+    @Test
+    public void nextStrike_10_초과_예외() {
+        Pitch pitch = Pitch.initiate(Score.valueOf(3));
+        Score score = Score.valueOf(9);
+
+        assertThatThrownBy(() -> {
+            ScoreTypeFactory.next(pitch, score);
+        }).isInstanceOf(BowlingBuildingException.class)
+                .hasMessageContaining(BowlingBuildingException.OVER_SCORE);
+    }
+
+    @DisplayName("next ScoreType을 만들 때 스페어면 / 반환")
+    @Test
+    public void nextStrike_스페어() {
+        Pitch pitch = Pitch.initiate(Score.valueOf(3));
+        Score score = Score.valueOf(7);
+
+        ScoreType nextScoreType = ScoreTypeFactory.next(pitch, score);
+
+        assertThat(nextScoreType).isEqualTo(ScoreType.SPARE);
+    }
+
+    @DisplayName("next ScoreType을 만들 때 총합이 10점이 되지 못하면 Miss반환")
+    @Test
+    public void nextStrike_미스() {
+        Pitch pitch = Pitch.initiate(Score.valueOf(3));
+        Score score = Score.valueOf(6);
+
+        ScoreType nextScoreType = ScoreTypeFactory.next(pitch, score);
+
+        assertThat(nextScoreType).isEqualTo(ScoreType.MISS);
     }
 }
