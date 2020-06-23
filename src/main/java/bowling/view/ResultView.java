@@ -17,7 +17,7 @@ public class ResultView {
     private static final String RESULT_FORMAT = "  %-4s";
     private static final String NAME_FORMAT = " %4s ";
     private static final String NAME = "NAME";
-    private static final String FRAME_HEADER_NUMBER_FORMAT = "  0%s  ";
+    private static final String FRAME_HEADER_NUMBER_FORMAT = "  %02d  ";
     private static final String DELIMITER = "|";
 
     private ResultView() {
@@ -48,7 +48,7 @@ public class ResultView {
     private static void printFrameNumber() {
         IntStream.rangeClosed(FrameNumber.MIN_NUMBER, FrameNumber.MAX_NUMBER)
                 .forEach(no -> System.out.print(
-                        StringUtil.format(String.valueOf(no), FRAME_HEADER_NUMBER_FORMAT) + DELIMITER));
+                        String.format(FRAME_HEADER_NUMBER_FORMAT, no) + DELIMITER));
     }
 
     private static void printResult(final List<FrameResult> results) {

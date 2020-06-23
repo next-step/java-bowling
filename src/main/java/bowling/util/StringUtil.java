@@ -14,4 +14,8 @@ public class StringUtil {
     public static String format(final String str, final String formatExp) {
         return String.format(formatExp, str);
     }
+
+    public static String formatInt(final Integer integer, final String formatExp) {
+        return format(String.valueOf(integer), formatExp);
+    }
 }
