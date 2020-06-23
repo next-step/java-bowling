@@ -6,6 +6,7 @@ import bowling.domain.frame.PlayerFrames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,5 +57,17 @@ class PlayerTests {
 
         assertThat(bowledPlayer.calculateResult())
                 .contains(new FrameResults(Collections.singletonList(FrameResult.FIVE)));
+    }
+
+    @DisplayName("현재 프레임이 마무리됐다면 다음 프레임을 진행할 수 있다.")
+    @Test
+    void bowlTest() {
+        Player player = Player.createByName(PLAYER_NAME)
+                .bowlFirst(TEN)
+                .bowl(FIVE);
+
+        assertThat(player).isEqualTo(new Player(PLAYER_NAME,
+                new PlayerFrames(Arrays.asList(NormalFrame.start(TEN), NormalFrame.start(FIVE))),
+                NormalFrame.start(FIVE)));
     }
 }

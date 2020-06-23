@@ -35,6 +35,12 @@ public class Player {
         return this.playerFrames.calculateResult();
     }
 
+    public Player bowl(int numberOfHitPin) {
+        NormalFrame newFrame = NormalFrame.start(numberOfHitPin);
+
+        return new Player(name, playerFrames.lastValue(newFrame), newFrame);
+    }
+
     private void validateBowlFirst() {
         if (this.currentFrame != null) {
             throw new AlreadyStartedPlayerException("이미 투구한 참가자는 초구를 굴릴 수 없습니다.");
