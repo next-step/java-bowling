@@ -17,6 +17,10 @@ public class FrameResults {
         this.frameResultList = new ArrayList<>(frameResultList);
     }
 
+    public List<FrameResult> getList() {
+        return new ArrayList<>(frameResultList);
+    }
+
     private void validate(List<FrameResult> frameResultList) {
         if (frameResultList.size() > MAX_SIZE) {
             throw new TooManyFrameResultsException("길이가 4이상인 FrameResult 컬렉션은 생성할 수 없습니다.");

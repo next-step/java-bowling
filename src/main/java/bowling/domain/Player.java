@@ -66,6 +66,14 @@ public class Player {
         return new Player(name, this.playerFrames.lastValue(finalFrame), finalFrame);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getCurrentFrameIndex() {
+        return this.playerFrames.size();
+    }
+
     private void validateNextFrame() {
         if (this.playerFrames.size() == MAX_NORMAL_FRAME_SIZE && this.currentFrame.isCompleted()) {
             throw new NormalFrameFinishedException("9 프레임 이후부터는 일반적인 방법으로 진행할 수 없습니다.");

@@ -45,4 +45,8 @@ public enum FrameResult {
         }
         return FrameResult.find(secondValue);
     }
+
+    public String getValue() {
+        return value;
+    }
 }
