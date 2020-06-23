@@ -20,9 +20,14 @@ class PitchTest {
         assertThat(pitch.getScoreType()).isEqualTo(ScoreType.STRIKE);
     }
 
-    @DisplayName("기존 Pitch 객체로 다음 Pitch 객체 생성")
+    @DisplayName("기존 Pitch 객체로 스페어를 지닌 다음 객체를 생성")
     @Test
-    public void next() {
+    public void next_스페어() {
+        Score score = Score.valueOf(5);
+        Pitch lastPitch = Pitch.initiate(score);
 
+        Pitch nextPitch = lastPitch.next(score);
+
+        assertThat(nextPitch.getScoreType()).isEqualTo(ScoreType.SPARE);
     }
 }

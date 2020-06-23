@@ -19,6 +19,11 @@ public class Pitch {
         return new Pitch(score, scoreType);
     }
 
+    public Pitch next(Score score) {
+        ScoreType scoreType = ScoreTypeFactory.next(this, score);
+        return new Pitch(score, scoreType);
+    }
+
     public boolean isStrike() {
         return scoreType == ScoreType.STRIKE;
     }
