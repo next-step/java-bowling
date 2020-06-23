@@ -20,6 +20,9 @@ class PlayerTests {
     private static final int TEN = 10;
     private static final int FIVE = 5;
     private static final String PLAYER_NAME = "JBJ";
+    private static final Player NINE_STRIKE_SUPER_USER = Player.createByName(PLAYER_NAME).bowlFirst(TEN).nextFrame(TEN)
+            .nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN)
+            .nextFrame(TEN);
 
     @DisplayName("이름을 입력받아서 객체를 생성할 수 있다.")
     @Test
@@ -137,11 +140,18 @@ class PlayerTests {
     @DisplayName("9 프레임까지 완료된 상태에서 일반적인 방법으로 다음 프레임을 진행할 수 없다.")
     @Test
     void bowlNextFrameLimitValidationTest() {
-        Player ninthFrameCompletedPlayer = Player.createByName(PLAYER_NAME).bowlFirst(TEN).nextFrame(TEN)
-                .nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN)
-                .nextFrame(TEN);
-
-        assertThatThrownBy(() -> ninthFrameCompletedPlayer.nextFrame(FIVE))
+        assertThatThrownBy(() -> NINE_STRIKE_SUPER_USER.nextFrame(FIVE))
                 .isInstanceOf(NormalFrameFinishedException.class);
+    }
+
+    @DisplayName("9 프레임까지 완료한 플레이어는 마지막 프레임을 진행할 수 있다.")
+    @Test
+    void bowlFinalFrameTest() {
+        Player finalFramePlayer = NINE_STRIKE_SUPER_USER.finalFrame(FIVE);
+
+        assertThat(finalFramePlayer.calculateResult())
+                .hasSize(10)
+                .contains(new FrameResults(Collections.singletonList(FrameResult.STRIKE)))
+                .containsOnlyOnce(new FrameResults(Collections.singletonList(FrameResult.FIVE)));
     }
 }

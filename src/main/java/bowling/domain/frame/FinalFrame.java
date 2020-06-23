@@ -12,9 +12,9 @@ public class FinalFrame implements Frame {
 
     private final int index;
     private final FinalFrameStatus finalFrameStatus;
-    private final NormalFrame prevFrame;
+    private final Frame prevFrame;
 
-    FinalFrame(int index, FinalFrameStatus finalFrameStatus, NormalFrame ninthFrame) {
+    FinalFrame(int index, FinalFrameStatus finalFrameStatus, Frame ninthFrame) {
         this.index = index;
         this.finalFrameStatus = finalFrameStatus;
         this.prevFrame = ninthFrame;
@@ -24,7 +24,7 @@ public class FinalFrame implements Frame {
         this(TEN, finalFrameStatus, ninthFrame);
     }
 
-    public static FinalFrame firstBowl(int numberOfHitPin, NormalFrame ninthFrame) {
+    public static FinalFrame firstBowl(int numberOfHitPin, Frame ninthFrame) {
         return new FinalFrame(TEN, FinalFrameStatus.bowlFirst(numberOfHitPin), ninthFrame);
     }
 

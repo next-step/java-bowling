@@ -3,6 +3,7 @@ package bowling.domain;
 import bowling.domain.exceptions.AlreadyStartedPlayerException;
 import bowling.domain.exceptions.NormalFrameFinishedException;
 import bowling.domain.exceptions.NotStartedPlayerException;
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
@@ -58,6 +59,11 @@ public class Player {
         Frame nextFrame = this.currentFrame.next(numberOfHitPin);
 
         return new Player(name, this.playerFrames.lastValue(nextFrame), nextFrame);
+    }
+
+    public Player finalFrame(int numberOfHitPin) {
+        FinalFrame finalFrame = FinalFrame.firstBowl(numberOfHitPin, currentFrame);
+        return new Player(name, this.playerFrames.lastValue(finalFrame), finalFrame);
     }
 
     private void validateNextFrame() {
