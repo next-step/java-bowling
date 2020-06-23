@@ -75,9 +75,12 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-    public DeleteHistory delete(User writer, LocalDateTime createdAt) throws CannotDeleteException {
+    public void delete(User writer) throws CannotDeleteException {
         validateOwner(writer);
-        this.deleted = true;
+        setDeleted(true);
+    }
+
+    public DeleteHistory createDeleteHistory(LocalDateTime createdAt) {
         return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), createdAt);
     }
 
