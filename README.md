@@ -67,6 +67,8 @@
     
 - Score
     - [x] 투구의 점수가 0~10이 아닐시 IllegalArgumentException이 발생한다.
+    - [x] 다른 점수와의 합을 계산한다.
+    - [x] 다른 점수와의 크기를 비교한다.
     
 - InputView
     - [ ] 플레이어의 이름을 입력받는다.
