@@ -18,7 +18,7 @@ class NormalFrameTest {
 
         PinsState expect = new PinsState(Arrays.asList(10), Arrays.asList(ScoreType.STRIKE));
 
-        assertThat(normalFrame.getPinsState()).isEqualTo(expect);
+        assertThat(normalFrame.createPinState()).isEqualTo(expect);
     }
 
     @DisplayName("strike후에 플레이 하면 예외 발생한다.")
@@ -39,7 +39,7 @@ class NormalFrameTest {
         normalFrame.play(1);
 
         PinsState expect = new PinsState(Arrays.asList(8, 1), Arrays.asList(ScoreType.MISS));
-        assertThat(normalFrame.getPinsState()).isEqualTo(expect);
+        assertThat(normalFrame.createPinState()).isEqualTo(expect);
     }
 
     @DisplayName("3번의 플레이를 하면 예외가 발생한다.")

@@ -51,7 +51,7 @@ public class BowlingFrames {
 
     public List<PinsState> getPinsStates() {
         return this.frames.stream()
-            .map(Frame::getPinsState)
+            .map(Frame::createPinState)
             .collect(Collectors.toList());
     }
 

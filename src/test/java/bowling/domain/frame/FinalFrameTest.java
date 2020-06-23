@@ -18,7 +18,7 @@ class FinalFrameTest {
         finalFrame.play(1);
         finalFrame.play(2);
 
-        assertThat(finalFrame.getPinsState())
+        assertThat(finalFrame.createPinState())
             .isEqualTo(new PinsState(Arrays.asList(1, 2), Arrays.asList(ScoreType.MISS)));
     }
 
@@ -30,7 +30,7 @@ class FinalFrameTest {
         finalFrame.play(9);
         finalFrame.play(9);
 
-        assertThat(finalFrame.getPinsState())
+        assertThat(finalFrame.createPinState())
             .isEqualTo(new PinsState(Arrays.asList(1, 9, 9), Arrays.asList(ScoreType.SPARE)));
     }
 
@@ -43,7 +43,7 @@ class FinalFrameTest {
         finalFrame.play(9);
         finalFrame.play(9);
 
-        assertThat(finalFrame.getPinsState())
+        assertThat(finalFrame.createPinState())
             .isEqualTo(new PinsState(Arrays.asList(10, 9, 9), Arrays.asList(ScoreType.STRIKE)));
     }
 

@@ -32,8 +32,7 @@ public class Frame {
         return this.pins.hasTurn();
     }
 
-
-    public PinsState getPinsState() {
+    public PinsState createPinState() {
         return this.pins.getPinsState();
     }
 
