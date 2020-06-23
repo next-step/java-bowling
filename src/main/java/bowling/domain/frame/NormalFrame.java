@@ -12,7 +12,7 @@ public class NormalFrame implements Frame {
     private final NormalFrameStatus currentStatus;
     private final NormalFrame previousFrame;
 
-    NormalFrame(int index, NormalFrameStatus currentStatus, NormalFrame previousFrame) {
+    public NormalFrame(int index, NormalFrameStatus currentStatus, NormalFrame previousFrame) {
         this.index = index;
         this.currentStatus = currentStatus;
         this.previousFrame = previousFrame;

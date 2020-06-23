@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Stream;
 
+import static bowling.domain.FakeDataForTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -20,9 +21,6 @@ class PlayerTests {
     private static final int TEN = 10;
     private static final int FIVE = 5;
     private static final String PLAYER_NAME = "JBJ";
-    private static final Player NINE_STRIKE_SUPER_USER = Player.createByName(PLAYER_NAME).bowlFirst(TEN).toNextFrame(TEN)
-            .toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN)
-            .toNextFrame(TEN);
 
     @DisplayName("이름을 입력받아서 객체를 생성할 수 있다.")
     @Test
@@ -140,18 +138,16 @@ class PlayerTests {
     @DisplayName("9 프레임까지 완료된 상태에서 일반적인 방법으로 다음 프레임을 진행할 수 없다.")
     @Test
     void bowlNextFrameLimitValidationTest() {
-        assertThatThrownBy(() -> NINE_STRIKE_SUPER_USER.toNextFrame(FIVE))
+        assertThatThrownBy(() -> NINE_STRIKE_SUPER_PLAYER.toNextFrame(FIVE))
                 .isInstanceOf(NormalFrameFinishedException.class);
     }
 
-    @DisplayName("9 프레임까지 완료한 플레이어는 마지막 프레임을 진행할 수 있다.")
+    @DisplayName("9 프레임까지 완료한 플레이어는 마지막 프레임으로 넘어갈 수 있다.")
     @Test
     void bowlFinalFrameTest() {
-        Player finalFramePlayer = NINE_STRIKE_SUPER_USER.toFinalFrame(FIVE);
+        Player finalFramePlayer = NINE_STRIKE_SUPER_PLAYER.toFinalFrame(FIVE);
 
-        assertThat(finalFramePlayer.calculateResult())
-                .hasSize(10)
-                .contains(new FrameResults(Collections.singletonList(FrameResult.STRIKE)))
-                .containsOnlyOnce(new FrameResults(Collections.singletonList(FrameResult.FIVE)));
+        assertThat(finalFramePlayer)
+                .isEqualTo(new Player(PLAYER_NAME, NINE_STRIKE_AND_FINAL_FIRST_FIVE, FIRST_FIVE_FINAL_FRAME));
     }
 }
