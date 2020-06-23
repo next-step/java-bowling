@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.exceptions.AlreadyStartedPlayerException;
+import bowling.domain.exceptions.NormalFrameFinishedException;
 import bowling.domain.exceptions.NotStartedPlayerException;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
@@ -10,6 +11,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player {
+    private static final int MAX_NORMAL_FRAME_SIZE = 9;
+
     private final String name;
     private final PlayerFrames playerFrames;
     private final Frame currentFrame;
@@ -50,9 +53,17 @@ public class Player {
     }
 
     public Player nextFrame(int numberOfHitPin) {
+        validateNextFrame();
+
         Frame nextFrame = this.currentFrame.next(numberOfHitPin);
 
         return new Player(name, this.playerFrames.lastValue(nextFrame), nextFrame);
+    }
+
+    private void validateNextFrame() {
+        if (this.playerFrames.size() == MAX_NORMAL_FRAME_SIZE && this.currentFrame.isCompleted()) {
+            throw new NormalFrameFinishedException("9 프레임 이후부터는 일반적인 방법으로 진행할 수 없습니다.");
+        }
     }
 
     private void validateIsStarted() {

@@ -1,9 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.exceptions.AlreadyStartedPlayerException;
-import bowling.domain.exceptions.InvalidTryBowlException;
-import bowling.domain.exceptions.InvalidTryNextFrameException;
-import bowling.domain.exceptions.NotStartedPlayerException;
+import bowling.domain.exceptions.*;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
 import org.junit.jupiter.api.DisplayName;
@@ -135,5 +132,16 @@ class PlayerTests {
         Player initPlayer = Player.createByName(PLAYER_NAME).bowlFirst(FIVE);
 
         assertThatThrownBy(() -> initPlayer.nextFrame(TEN)).isInstanceOf(InvalidTryNextFrameException.class);
+    }
+
+    @DisplayName("9 프레임까지 완료된 상태에서 일반적인 방법으로 다음 프레임을 진행할 수 없다.")
+    @Test
+    void bowlNextFrameLimitValidationTest() {
+        Player ninthFrameCompletedPlayer = Player.createByName(PLAYER_NAME).bowlFirst(TEN).nextFrame(TEN)
+                .nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN)
+                .nextFrame(TEN);
+
+        assertThatThrownBy(() -> ninthFrameCompletedPlayer.nextFrame(FIVE))
+                .isInstanceOf(NormalFrameFinishedException.class);
     }
 }
