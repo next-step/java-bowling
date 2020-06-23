@@ -6,7 +6,6 @@ import qna.UnAuthorizedException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -71,10 +70,9 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public Answer delete(List<DeleteHistory> deleteHistories) {
+    public DeleteHistory delete() {
         this.deleted = true;
-        deleteHistories.add(new DeleteHistory(ContentType.ANSWER, this.getId(), this.getWriter(), LocalDateTime.now()));
-        return this;
+        return new DeleteHistory(ContentType.ANSWER, this.getId(), this.getWriter(), LocalDateTime.now());
     }
 
     public void checkOwner(User loginUser) throws CannotDeleteException {

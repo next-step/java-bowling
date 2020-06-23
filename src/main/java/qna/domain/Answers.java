@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -32,9 +33,7 @@ public class Answers {
         }
     }
 
-    public void delete(List<DeleteHistory> deleteHistories) {
-        for(Answer answer : answers) {
-            answer.delete(deleteHistories);
-        }
+    public List<DeleteHistory> delete() {
+        return answers.stream().map(Answer::delete).collect(Collectors.toList());
     }
 }
