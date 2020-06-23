@@ -26,7 +26,7 @@ public class NormalFrameTest {
     @DisplayName("자신의 프레임 번호 반환")
     @Test
     public void getNo() {
-        assertThat(NormalFrame.of(FrameNumber.of(FrameNumber.MIN_NUMBER)).getNo())
+        assertThat(NormalFrame.newInstance(FrameNumber.of(FrameNumber.MIN_NUMBER)).getNo())
                 .isEqualTo(FrameNumber.MIN_NUMBER);
     }
 

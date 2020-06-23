@@ -16,7 +16,7 @@ public class Frames {
         frames.add(NormalFrame.ofFirst());
     }
 
-    public static Frames of() {
+    public static Frames newInstance() {
         return new Frames();
     }
 

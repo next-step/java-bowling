@@ -19,21 +19,21 @@ public class FinalFrameTest {
     @DisplayName("생성 성공")
     @Test
     public void ofFirst() {
-        assertThatCode(FinalFrame::of)
+        assertThatCode(FinalFrame::newInstance)
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("자신의 프레임 번호 반환 : 항상 MAX_NUMBER")
     @Test
     public void getNo() {
-        assertThat(FinalFrame.of().getNo())
+        assertThat(FinalFrame.newInstance().getNo())
                 .isEqualTo(FrameNumber.MAX_NUMBER);
     }
 
     @DisplayName("현재 상태가 종료 상태의 경우, 상태값을 추가")
     @Test
     public void finishedAfterBowl() {
-        Frame nextFrame = FinalFrame.of()
+        Frame nextFrame = FinalFrame.newInstance()
                 .bowl(PinCount.of(PinCount.MAX_COUNT));
 
         assertThat(nextFrame.getFrameResult())
@@ -50,14 +50,14 @@ public class FinalFrameTest {
 
     private static Stream<Arguments> runningAfterBowl() {
         return Stream.of(
-                Arguments.of(FinalFrame.of()
+                Arguments.of(FinalFrame.newInstance()
                                 .bowl(PinCount.of(PinCount.MAX_COUNT)),
                         FrameResult.of(StateExpression.STRIKE)),
-                Arguments.of(FinalFrame.of()
+                Arguments.of(FinalFrame.newInstance()
                                 .bowl(PinCount.of(PinCount.MAX_COUNT))
                                 .bowl(PinCount.of(PinCount.MIN_COUNT)),
                         FrameResult.of("X|- ")),
-                Arguments.of(FinalFrame.of()
+                Arguments.of(FinalFrame.newInstance()
                                 .bowl(PinCount.of(9))
                                 .bowl(PinCount.of(1))
                                 .bowl(PinCount.of(PinCount.MAX_COUNT)),
@@ -75,22 +75,22 @@ public class FinalFrameTest {
 
     private static Stream<Arguments> isGameOver() {
         return Stream.of(
-                Arguments.of(FinalFrame.of()
+                Arguments.of(FinalFrame.newInstance()
                                 .bowl(PinCount.of(PinCount.MAX_COUNT))
                                 .bowl(PinCount.of(PinCount.MAX_COUNT))
                                 .bowl(PinCount.of(PinCount.MAX_COUNT))),
-                Arguments.of(FinalFrame.of()
+                Arguments.of(FinalFrame.newInstance()
                                 .bowl(PinCount.of(9))
                                 .bowl(PinCount.of(1))
                                 .bowl(PinCount.of(PinCount.MAX_COUNT))),
-                Arguments.of(FinalFrame.of()
+                Arguments.of(FinalFrame.newInstance()
                                 .bowl(PinCount.of(9))
                                 .bowl(PinCount.of(1))
                                 .bowl(PinCount.of(2))),
-                Arguments.of(FinalFrame.of()
+                Arguments.of(FinalFrame.newInstance()
                                 .bowl(PinCount.of(5))
                                 .bowl(PinCount.of(1))),
-                Arguments.of(FinalFrame.of()
+                Arguments.of(FinalFrame.newInstance()
                                 .bowl(PinCount.of(PinCount.MAX_COUNT))
                                 .bowl(PinCount.of(5))
                                 .bowl(PinCount.of(1)))

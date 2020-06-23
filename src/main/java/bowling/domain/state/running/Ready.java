@@ -11,7 +11,7 @@ public class Ready extends Running {
     private Ready() {
     }
 
-    public static Ready of() {
+    public static Ready newInstance() {
         return new Ready();
     }
 
@@ -20,7 +20,7 @@ public class Ready extends Running {
         Pins pins = Pins.of(hitCount);
 
         if (pins.isStrike()) {
-            return Strike.of();
+            return Strike.newInstance();
         }
         return Hit.of(pins);
     }

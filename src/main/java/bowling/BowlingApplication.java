@@ -9,7 +9,7 @@ public class BowlingApplication {
 
     public static void main(String[] args) {
         Player player = Player.of(InputView.inputPlayer());
-        BowlingGame bowlingGame = BowlingGame.of();
+        BowlingGame bowlingGame = BowlingGame.newInstance();
 
         ResultView.printHeader(player);
 

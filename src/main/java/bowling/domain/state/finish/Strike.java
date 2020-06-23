@@ -7,7 +7,7 @@ public class Strike extends Finished {
     private Strike() {
     }
 
-    public static Strike of() {
+    public static Strike newInstance() {
         return new Strike();
     }
 

@@ -20,7 +20,7 @@ public class NormalFrame extends Frame {
         return new NormalFrame(FrameNumber.of(FrameNumber.MIN_NUMBER));
     }
 
-    public static NormalFrame of(final FrameNumber frameNumber) {
+    public static NormalFrame newInstance(final FrameNumber frameNumber) {
         return new NormalFrame(frameNumber);
     }
 
@@ -42,9 +42,9 @@ public class NormalFrame extends Frame {
         FrameNumber nextNumber = this.frameNumber.increase();
 
         if (nextNumber.isFinal()) {
-            return FinalFrame.of();
+            return FinalFrame.newInstance();
         }
-        return NormalFrame.of(nextNumber);
+        return NormalFrame.newInstance(nextNumber);
     }
 
     @Override

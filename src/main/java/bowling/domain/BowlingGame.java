@@ -11,10 +11,10 @@ public class BowlingGame {
     private final Frames frames;
 
     private BowlingGame() {
-        frames = Frames.of();
+        frames = Frames.newInstance();
     }
 
-    public static BowlingGame of() {
+    public static BowlingGame newInstance() {
         return new BowlingGame();
     }
 

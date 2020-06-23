@@ -20,7 +20,7 @@ public class FinalFrame extends Frame {
         this.states.add(StateFactory.ready());
     }
 
-    public static FinalFrame of() {
+    public static FinalFrame newInstance() {
         return new FinalFrame();
     }
 
