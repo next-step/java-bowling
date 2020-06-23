@@ -46,4 +46,15 @@ class PlayerTests {
         assertThatThrownBy(() -> bowledPlayer.bowlFirst(FIVE))
                 .isInstanceOf(AlreadyStartedPlayerException.class);
     }
+
+    @DisplayName("현재까지 진행한 결과를 확인 할 수 있다.")
+    @Test
+    void calculateTest() {
+        NormalFrame startFrame = NormalFrame.start(FIVE);
+        Player bowledPlayer =
+                new Player(PLAYER_NAME, new PlayerFrames(Collections.singletonList(startFrame)), startFrame);
+
+        assertThat(bowledPlayer.calculateResult())
+                .contains(new FrameResults(Collections.singletonList(FrameResult.FIVE)));
+    }
 }

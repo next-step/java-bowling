@@ -5,6 +5,7 @@ import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Player {
@@ -28,6 +29,10 @@ public class Player {
         NormalFrame firstFrame = NormalFrame.start(numberOfHitPin);
 
         return new Player(name, playerFrames.lastValue(firstFrame), firstFrame);
+    }
+
+    public List<FrameResults> calculateResult() {
+        return this.playerFrames.calculateResult();
     }
 
     private void validateBowlFirst() {
