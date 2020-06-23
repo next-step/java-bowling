@@ -26,7 +26,7 @@ public class Ready extends Running {
         if (pins.isStrike()) {
             return Strike.getInstance();
         }
-        return Hit.of(pins);
+        return FirstHit.of(pins);
     }
 
     @Override

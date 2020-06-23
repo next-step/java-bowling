@@ -28,7 +28,7 @@ public class ReadyTest {
         PinCount pinCount = PinCount.of(count);
 
         assertThat(Ready.getInstance().bowl(pinCount))
-                .isInstanceOf(Hit.class);
+                .isInstanceOf(FirstHit.class);
     }
 
     @DisplayName("Ready에 대한 문자열을 반환")

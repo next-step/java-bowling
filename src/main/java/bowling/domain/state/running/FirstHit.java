@@ -8,19 +8,19 @@ import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import bowling.exception.CannotMatchStateException;
 
-public class Hit extends Running {
+public class FirstHit extends Running {
 
     private final Pins firstPins;
 
-    private Hit(final Pins firstPins) {
+    private FirstHit(final Pins firstPins) {
         if (firstPins.isStrike()) {
             throw new CannotMatchStateException(this.getClass().getName());
         }
         this.firstPins = firstPins;
     }
 
-    public static Hit of(final Pins firstPins) {
-        return new Hit(firstPins);
+    public static FirstHit of(final Pins firstPins) {
+        return new FirstHit(firstPins);
     }
 
     @Override

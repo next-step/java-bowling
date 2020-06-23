@@ -17,74 +17,74 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-public class HitTest {
+public class FirstHitTest {
 
     @DisplayName("Spare 상태를 가질 수 없으면 예외 반환")
     @ParameterizedTest
     @ValueSource(ints = { -1, 10 })
     public void createFailure(final int count) {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> Hit.of(Pins.of(count)));
+                .isThrownBy(() -> FirstHit.of(Pins.of(count)));
     }
 
     @DisplayName("두번째 투구에서 나머지 볼링 핀이 모두 넘어지면 Spare 반환")
     @ParameterizedTest
     @MethodSource
-    public void returnSpare(final Hit hit, final PinCount pinCount) {
+    public void returnSpare(final FirstHit hit, final PinCount pinCount) {
         assertThat(hit.bowl(pinCount))
                 .isInstanceOf(Spare.class);
     }
 
     private static Stream<Arguments> returnSpare() {
         return Stream.of(
-                Arguments.of(Hit.of(Pins.of(9)), PinCount.of(PinCount.MAX_COUNT - 9)),
-                Arguments.of(Hit.of(Pins.of(2)), PinCount.of(PinCount.MAX_COUNT - 2)),
-                Arguments.of(Hit.of(Pins.of(PinCount.MIN_COUNT)), PinCount.of(PinCount.MAX_COUNT))
+                Arguments.of(FirstHit.of(Pins.of(9)), PinCount.of(PinCount.MAX_COUNT - 9)),
+                Arguments.of(FirstHit.of(Pins.of(2)), PinCount.of(PinCount.MAX_COUNT - 2)),
+                Arguments.of(FirstHit.of(Pins.of(PinCount.MIN_COUNT)), PinCount.of(PinCount.MAX_COUNT))
         );
     }
 
     @DisplayName("두번째 투구에서 볼링 핀이 1개라도 남아있으면 Miss 반환")
     @ParameterizedTest
     @MethodSource
-    public void returnMiss(final Hit hit, final PinCount pinCount) {
+    public void returnMiss(final FirstHit hit, final PinCount pinCount) {
         assertThat(hit.bowl(pinCount))
                 .isInstanceOf(Miss.class);
     }
 
     private static Stream<Arguments> returnMiss() {
         return Stream.of(
-                Arguments.of(Hit.of(Pins.of(9)), PinCount.of(PinCount.MIN_COUNT)),
-                Arguments.of(Hit.of(Pins.of(2)), PinCount.of(PinCount.MIN_COUNT)),
-                Arguments.of(Hit.of(Pins.of(PinCount.MIN_COUNT)), PinCount.of(PinCount.MIN_COUNT))
+                Arguments.of(FirstHit.of(Pins.of(9)), PinCount.of(PinCount.MIN_COUNT)),
+                Arguments.of(FirstHit.of(Pins.of(2)), PinCount.of(PinCount.MIN_COUNT)),
+                Arguments.of(FirstHit.of(Pins.of(PinCount.MIN_COUNT)), PinCount.of(PinCount.MIN_COUNT))
         );
     }
 
     @DisplayName("Hit 상태에 대한 문자열을 반환")
     @ParameterizedTest
     @MethodSource
-    public void getDesc(final Hit hit, final String expected) {
+    public void getDesc(final FirstHit hit, final String expected) {
         assertThat(hit.getDesc())
                 .isEqualTo(expected);
     }
 
     private static Stream<Arguments> getDesc() {
         return Stream.of(
-                Arguments.of(Hit.of(Pins.of(PinCount.MIN_COUNT)), StateExpression.GUTTER + StateExpression.BLANK),
-                Arguments.of(Hit.of(Pins.of(2)), 2 + StateExpression.BLANK)
+                Arguments.of(FirstHit.of(Pins.of(PinCount.MIN_COUNT)), StateExpression.GUTTER + StateExpression.BLANK),
+                Arguments.of(FirstHit.of(Pins.of(2)), 2 + StateExpression.BLANK)
         );
     }
 
     @DisplayName("종료 조건을 만족하지 않음")
     @Test
     public void isFinish() {
-        assertThat(Hit.of(Pins.of(PinCount.MIN_COUNT)).isFinish())
+        assertThat(FirstHit.of(Pins.of(PinCount.MIN_COUNT)).isFinish())
                 .isFalse();
     }
 
     @DisplayName("Miss 상태가 될 수 없음")
     @Test
     public void isMiss() {
-        assertThat(Hit.of(Pins.of(PinCount.MIN_COUNT)).isMiss())
+        assertThat(FirstHit.of(Pins.of(PinCount.MIN_COUNT)).isMiss())
                 .isFalse();
     }
 }

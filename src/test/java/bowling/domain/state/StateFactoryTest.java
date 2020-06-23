@@ -3,7 +3,7 @@ package bowling.domain.state;
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
 import bowling.domain.state.finish.Strike;
-import bowling.domain.state.running.Hit;
+import bowling.domain.state.running.FirstHit;
 import bowling.domain.state.running.Ready;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -37,7 +37,7 @@ public class StateFactoryTest {
 
         return Stream.of(
                 Arguments.of(PinCount.of(PinCount.MAX_COUNT), Strike.getInstance()),
-                Arguments.of(minCount, Hit.of(Pins.of(minCount)))
+                Arguments.of(minCount, FirstHit.of(Pins.of(minCount)))
         );
     }
 }
