@@ -17,4 +17,8 @@ public class Player {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_PLAYER_NAME);
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }

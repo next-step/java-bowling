@@ -33,7 +33,7 @@ public class Pitch {
     }
 
     public int calculateScoresSum(Score nextScore) {
-        return getScore() + nextScore.getScore();
+        return this.getScore() + nextScore.getScore();
     }
 
     public int getScore() {
