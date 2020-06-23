@@ -13,7 +13,7 @@ public class PlayerFrames {
 
     private final List<Frame> playerFrameList;
 
-    PlayerFrames(List<Frame> playerFrameList) {
+    public PlayerFrames(List<Frame> playerFrameList) {
         this.playerFrameList = new ArrayList<>(playerFrameList);
     }
 
