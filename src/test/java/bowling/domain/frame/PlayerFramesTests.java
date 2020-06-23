@@ -6,6 +6,7 @@ import bowling.domain.exceptions.ExceedLimitOfFramesException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
@@ -127,6 +128,19 @@ class PlayerFramesTests {
                 new FrameResults(Collections.singletonList(FrameResult.STRIKE)),
                 new FrameResults(Arrays.asList(FrameResult.FIVE, FrameResult.SPARE)),
                 new FrameResults(Collections.singletonList(FrameResult.FIVE))
+        );
+    }
+
+    @DisplayName("현재 컬렉션 가장 최근 프레임의 완료 여부를 알 수 있다.")
+    @ParameterizedTest
+    @MethodSource("isLastCompletedResource")
+    void isLastCompletedTest(PlayerFrames playerFrames, boolean expectedResult) {
+        assertThat(playerFrames.isLastCompleted()).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> isLastCompletedResource() {
+        return Stream.of(
+                Arguments.of(PlayerFrames.createEmpty().lastValue(NormalFrame.start(TEN)), true),
+                Arguments.of(PlayerFrames.createEmpty().lastValue(NormalFrame.start(FIVE)), false)
         );
     }
 }

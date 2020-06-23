@@ -34,15 +34,25 @@ public class PlayerFrames {
             return new PlayerFrames(Collections.singletonList(frame));
         }
 
-        if (getLast().isCompleted()) {
+        if (this.isLastCompleted()) {
             return addNewFrame(frame);
         }
 
         return updateLastFrame(frame);
     }
 
+    public List<FrameResults> calculateResult() {
+        return playerFrameList.stream()
+                .map(Frame::calculateCurrentResults)
+                .collect(Collectors.toList());
+    }
+
+    public boolean isLastCompleted() {
+        return this.getLast().isCompleted();
+    }
+
     private void validateSize() {
-        if (this.size() == MAX_SIZE && getLast().isCompleted()) {
+        if (this.size() == MAX_SIZE && isLastCompleted()) {
             throw new ExceedLimitOfFramesException("더이상 프레임을 추가하거나 업데이트 할 수 없습니다.");
         }
     }
@@ -67,12 +77,6 @@ public class PlayerFrames {
         }
 
         return this.playerFrameList.get(this.size() - 1);
-    }
-
-    public List<FrameResults> calculateResult() {
-        return playerFrameList.stream()
-                .map(Frame::calculateCurrentResults)
-                .collect(Collectors.toList());
     }
 
     @Override
