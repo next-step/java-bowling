@@ -19,7 +19,7 @@ public class Answers {
     @OrderBy("id ASC")
     private List<Answer> answers;
 
-    public Answers() {
+    protected Answers() {
         this.answers = new ArrayList<>();
     }
 
