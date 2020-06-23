@@ -1,8 +1,8 @@
 package bowling.view;
 
-import bowling.domain.state.FrameBowlState;
-import bowling.domain.state.FrameBowlStates;
+import bowling.domain.state.PinsState;
 import bowling.domain.state.ScoreType;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +17,13 @@ public class OutputView {
     static {
         displayMap.put(ScoreType.STRIKE, "X");
         displayMap.put(ScoreType.SPARE, "/");
-        displayMap.put(ScoreType.GUTTER, "-");
     }
 
-    public void printResult(String name, List<FrameBowlStates> frameResults) {
+    public void printResult(String name, List<PinsState> pinsStates) {
         printFramesRounds();
-        printFramesResult(name, frameResults);
+        printFramesResult(name, pinsStates);
+        System.out.print(System.lineSeparator());
+
     }
 
     private void printFramesRounds() {
@@ -32,31 +33,53 @@ public class OutputView {
         for (int i = 0; i < FRAME_COUNT; i++) {
             framesBuilder.append(String.format("  %02d  |", i + 1));
         }
-        framesBuilder.append(System.lineSeparator());
         System.out.println(framesBuilder.toString());
     }
 
-    private void printFramesResult(String name, List<FrameBowlStates> frameResults) {
+    private void printFramesResult(String name, List<PinsState> pinsStates) {
         StringBuilder downPinBuilder = new StringBuilder();
         downPinBuilder.append(String.format("|  %s |", name));
 
-        for (FrameBowlStates frameBowlStates : frameResults) {
-            String downPinDisplay = createDisplay(frameBowlStates.getFrameBowlStates());
+        for (PinsState pinsState : pinsStates) {
+            String downPinDisplay = createDisplay(pinsState);
             downPinBuilder.append(String.format("  %-4s|", downPinDisplay));
         }
 
         System.out.println(downPinBuilder.toString());
     }
 
+    private String createDisplay(PinsState pinsState) {
 
-    private String createDisplay(List<FrameBowlState> bowls) {
-        if (bowls.size() == 0) {
-            return "";
+        List<Integer> downPins = pinsState.getDownPins();
+
+        List<String> components = new ArrayList<>();
+
+        int downPinIndex = 0;
+        for (ScoreType scoreType : pinsState.getScoreTypes()) {
+            if (scoreType == ScoreType.STRIKE) {
+                downPinIndex++;
+                components.add("X");
+                continue;
+            }
+
+            if (scoreType == ScoreType.SPARE) {
+                int downPin = pinsState.getDownPins().get(downPinIndex++);
+                components.add(createPin(downPin));
+
+                downPinIndex++;
+                components.add("/");
+            }
         }
 
-        return bowls.stream()
-            .map(frameBowlState -> displayMap.getOrDefault(frameBowlState.getScoreType(),
-                String.valueOf(frameBowlState.getDownPin())))
-            .collect(Collectors.joining("|"));
+        for (; downPinIndex < downPins.size(); downPinIndex++) {
+            components.add(createPin(pinsState.getDownPins().get(downPinIndex)));
+        }
+
+        return components.stream().collect(Collectors.joining("|"));
     }
+
+    private String createPin(int downPin) {
+        return downPin == 0 ? "-" : String.valueOf(downPin);
+    }
+
 }

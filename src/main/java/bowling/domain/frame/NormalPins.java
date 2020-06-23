@@ -1,12 +1,11 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.FrameBowlState;
-import bowling.domain.state.FrameBowlStates;
+import bowling.domain.state.PinsState;
 import bowling.domain.state.ScoreType;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class NormalPins implements Pins {
 
@@ -35,24 +34,20 @@ public class NormalPins implements Pins {
     }
 
     @Override
-    public FrameBowlStates getBowlStates() {
+    public PinsState getPinsState() {
         if (isStrike()) {
-            return new FrameBowlStates(Arrays.asList(new FrameBowlState(10, ScoreType.STRIKE)));
+            return new PinsState(new ArrayList<>(this.downPins), Arrays.asList(ScoreType.STRIKE));
         }
 
         if (isSpare()) {
-            return new FrameBowlStates(Arrays.asList(
-                new FrameBowlState(this.downPins.get(0), ScoreType.NUMS),
-                new FrameBowlState(this.downPins.get(1), ScoreType.SPARE)
-            ));
+            return new PinsState(new ArrayList<>(this.downPins), Arrays.asList(ScoreType.SPARE));
         }
 
-        return new FrameBowlStates(
-            this.downPins.stream()
-                .map(downPin -> new FrameBowlState(downPin,
-                    downPin == 0 ? ScoreType.GUTTER : ScoreType.NUMS))
-                .collect(Collectors.toList())
-        );
+        if (this.downPins.size() == MAX_ROUND) {
+            return new PinsState(new ArrayList<>(this.downPins), Arrays.asList(ScoreType.MISS));
+        }
+
+        return new PinsState(new ArrayList<>(this.downPins), Collections.EMPTY_LIST);
     }
 
     private void validate(int downPin) {

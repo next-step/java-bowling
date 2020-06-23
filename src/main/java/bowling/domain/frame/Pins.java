@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.FrameBowlStates;
+import bowling.domain.state.PinsState;
 
 public interface Pins {
 
@@ -8,5 +8,5 @@ public interface Pins {
 
     boolean hasTurn();
 
-    FrameBowlStates getBowlStates();
+    PinsState getPinsState();
 }

@@ -13,7 +13,8 @@ import qna.domain.history.DeleteHistory;
 
 public class QuestionTest {
 
-    public static final Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+    public static final Question Q1 = new Question("title1", "contents1")
+        .writeBy(UserTest.JAVAJIGI);
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
     @DisplayName("질문을 삭제하면 질문의 상태가 deleted로 변경된다.")
@@ -36,8 +37,12 @@ public class QuestionTest {
         List<DeleteHistory> histories = question.deleteBy(UserTest.JAVAJIGI);
 
         assertThat(histories.size()).isEqualTo(2);
-        assertThat(histories).contains(new DeleteHistory(ContentType.QUESTION, question.getId(), UserTest.JAVAJIGI, LocalDateTime.now()));
-        assertThat(histories).contains(new DeleteHistory(ContentType.ANSWER, AnswerTest.JAVAJIGI.getId(), UserTest.JAVAJIGI, LocalDateTime.now()));
+        assertThat(histories).contains(
+            new DeleteHistory(ContentType.QUESTION, question.getId(), UserTest.JAVAJIGI,
+                LocalDateTime.now()));
+        assertThat(histories).contains(
+            new DeleteHistory(ContentType.ANSWER, AnswerTest.JAVAJIGI.getId(), UserTest.JAVAJIGI,
+                LocalDateTime.now()));
     }
 
     @DisplayName("로그인 사용자와 질문한 사람이 같지 않을 경우 삭제를 하면 예외가 발생한다.")

@@ -11,8 +11,11 @@ import qna.domain.history.ContentType;
 import qna.domain.history.DeleteHistory;
 
 public class AnswerTest {
-    public static final Answer JAVAJIGI = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-    public static final Answer SANJIGI = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
+
+    public static final Answer JAVAJIGI = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1,
+        "Answers Contents1");
+    public static final Answer SANJIGI = new Answer(UserTest.SANJIGI, QuestionTest.Q1,
+        "Answers Contents2");
 
     private Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
 
@@ -29,13 +32,15 @@ public class AnswerTest {
     void delete_question_then_history() throws CannotDeleteException {
         DeleteHistory deleteHistory = answer.deleteBy(UserTest.JAVAJIGI);
 
-        assertThat(deleteHistory).isEqualTo(new DeleteHistory(ContentType.ANSWER, answer.getId(), UserTest.JAVAJIGI, LocalDateTime.now()));
+        assertThat(deleteHistory).isEqualTo(
+            new DeleteHistory(ContentType.ANSWER, answer.getId(), UserTest.JAVAJIGI,
+                LocalDateTime.now()));
     }
 
     @DisplayName("로그인 사용자와 질문한 사람이 같지 않을 경우 삭제를 하면 예외가 발생한다.")
     @Test
     void delete_then_throw_exception_if_other_user() {
-        assertThatThrownBy(()->answer.deleteBy(UserTest.SANJIGI))
+        assertThatThrownBy(() -> answer.deleteBy(UserTest.SANJIGI))
             .isInstanceOf(CannotDeleteException.class);
     }
 }

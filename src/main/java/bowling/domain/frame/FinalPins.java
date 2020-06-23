@@ -1,23 +1,24 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.FrameBowlState;
-import bowling.domain.state.FrameBowlStates;
+import bowling.domain.state.PinsState;
 import bowling.domain.state.ScoreType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class BonusPins implements Pins {
+public class FinalPins implements Pins {
 
+    private static final int MAX_PIN = 10;
     private final List<Integer> downPins;
     private final Pins pins;
 
-    private BonusPins(Pins pins) {
+    private FinalPins(Pins pins) {
         this.pins = pins;
         this.downPins = new ArrayList<>();
     }
 
     public static Pins newInstance() {
-        Pins bonusPins = new BonusPins(new NormalPins());
+        Pins bonusPins = new FinalPins(new NormalPins());
         return bonusPins;
     }
 
@@ -47,18 +48,25 @@ public class BonusPins implements Pins {
     }
 
     @Override
-    public FrameBowlStates getBowlStates() {
-        FrameBowlStates bowlStates = pins.getBowlStates();
-        this.downPins.forEach(
-            integer -> bowlStates
-                .add(new FrameBowlState(integer, integer == 10 ? ScoreType.STRIKE : ScoreType.NUMS))
-        );
+    public PinsState getPinsState() {
+        PinsState pinsState = this.pins.getPinsState();
 
-        return bowlStates;
+        List<ScoreType> strikes = this.downPins.stream()
+            .filter(integer -> integer.equals(MAX_PIN))
+            .map(integer -> ScoreType.STRIKE)
+            .collect(Collectors.toList());
+
+        List<Integer> downPins = new ArrayList<>(pinsState.getDownPins());
+        downPins.addAll(this.downPins);
+
+        List<ScoreType> scoreTypes = new ArrayList<>(pinsState.getScoreTypes());
+        scoreTypes.addAll(strikes);
+
+        return new PinsState(downPins, scoreTypes);
     }
 
     private void validate(int downPin) {
-        if (downPin < 0 || downPin > 10) {
+        if (downPin < 0 || downPin > MAX_PIN) {
             throw new IllegalArgumentException("invalid downPin");
         }
 
@@ -68,11 +76,11 @@ public class BonusPins implements Pins {
     }
 
     private int getBonusCount() {
-        FrameBowlStates states = this.pins.getBowlStates();
-        if (states.hasStrike()) {
+        PinsState pinsState = this.pins.getPinsState();
+        if (pinsState.hasStrike()) {
             return 2;
         }
-        if (states.hasSpare()) {
+        if (pinsState.hasSpare()) {
             return 1;
         }
         return 0;
