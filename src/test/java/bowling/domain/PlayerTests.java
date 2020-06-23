@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.exceptions.AlreadyStartedPlayerException;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTests {
     private static final int TEN = 10;
@@ -32,5 +34,16 @@ class PlayerTests {
 
         assertThat(firstBowledPlayer)
                 .isEqualTo(new Player(PLAYER_NAME, new PlayerFrames(Collections.singletonList(startFrame)), startFrame));
+    }
+
+    @DisplayName("첫 프레임이 아닌 상태에서 초구를 굴릴 수 없다.")
+    @Test
+    void bowlFirstValidationTest() {
+        NormalFrame startFrame = NormalFrame.start(FIVE);
+        Player bowledPlayer =
+                new Player(PLAYER_NAME, new PlayerFrames(Collections.singletonList(startFrame)), startFrame);
+
+        assertThatThrownBy(() -> bowledPlayer.bowlFirst(FIVE))
+                .isInstanceOf(AlreadyStartedPlayerException.class);
     }
 }

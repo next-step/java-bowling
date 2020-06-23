@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.exceptions.AlreadyStartedPlayerException;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
@@ -22,6 +23,10 @@ public class Player {
     }
 
     public Player bowlFirst(int numberOfHitPin) {
+        if (this.currentFrame != null) {
+            throw new AlreadyStartedPlayerException("이미 투구한 참가자는 초구를 굴릴 수 없습니다.");
+        }
+
         NormalFrame firstFrame = NormalFrame.start(numberOfHitPin);
 
         return new Player(name, playerFrames.lastValue(firstFrame), firstFrame);
