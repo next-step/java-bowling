@@ -1,5 +1,6 @@
 package bowling.pitch;
 
+import bowling.exception.BowlingBuildingException;
 import bowling.score.Score;
 
 import java.util.ArrayList;
@@ -11,15 +12,19 @@ public class FinalPitches implements Pitches {
 
     @Override
     public void throwBall(Score score) {
+        validateFinalPitches();
         Pitch pitch = createPitch(score);
-        if (pitches.isEmpty()) {
-            pitches.add(Pitch.initiate(score));
+        pitches.add(pitch);
+    }
+
+    private void validateFinalPitches() {
+        if (pitches.size() < 2) {
             return;
         }
-        if (pitches.get(pitches.size() - 1).isStrike() || pitches.get(pitches.size() - 1).isSpare()) {
-            pitches.add(Pitch.initiate(score));
-            return;
-
+        boolean isContainingStrikeOrSpare = pitches.stream()
+                .anyMatch(pitch -> pitch.isStrike() || pitch.isSpare());
+        if (!isContainingStrikeOrSpare || pitches.size() == 3) {
+            throw new BowlingBuildingException(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
         }
     }
 
