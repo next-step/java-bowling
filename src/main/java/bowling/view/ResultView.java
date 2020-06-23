@@ -10,14 +10,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ResultView {
 
     private static final String RESULT_FORMAT = "  %-4s";
     private static final String NAME_FORMAT = " %4s ";
+    private static final String NAME = "NAME";
+    private static final String FRAME_HEADER_NUMBER_FORMAT = "  0%s  ";
     private static final String DELIMITER = "|";
-    private static final String FRAMES_HEADER =
-            "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
 
     private ResultView() {
     }
@@ -35,11 +36,19 @@ public class ResultView {
     }
 
     private static void printFramesHeader() {
-        System.out.println(FRAMES_HEADER);
+        printNameInfo(NAME);
+        printFrameNumber();
+        System.out.println();
     }
 
     private static void printNameInfo(final String name) {
         System.out.print(DELIMITER + StringUtil.format(name, NAME_FORMAT) + DELIMITER);
+    }
+
+    private static void printFrameNumber() {
+        IntStream.rangeClosed(FrameNumber.MIN_NUMBER, FrameNumber.MAX_NUMBER)
+                .forEach(no -> System.out.print(
+                        StringUtil.format(String.valueOf(no), FRAME_HEADER_NUMBER_FORMAT) + DELIMITER));
     }
 
     private static void printResult(final List<FrameResult> results) {

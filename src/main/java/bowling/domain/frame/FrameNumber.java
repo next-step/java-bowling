@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 public class FrameNumber {
 
     static final int FRAME_STEP = 1;
-    static final int MIN_NUMBER = 1;
+    public static final int MIN_NUMBER = 1;
     public static final int MAX_NUMBER = 10;
     private static final List<FrameNumber> NUMBERS =
             IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
