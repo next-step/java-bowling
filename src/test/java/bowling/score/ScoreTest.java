@@ -2,6 +2,7 @@ package bowling.score;
 
 import bowling.exception.BowlingBuildingException;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -27,5 +28,19 @@ class ScoreTest {
             Score.valueOf(score);
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_SCORE_RANGE);
+    }
+
+    @DisplayName("Score가 10이면 isMaximumScore은 True")
+    @Test
+    public void isMaximumScore_True() {
+        assertThat(Score.valueOf(10).isMaximumScore()).isTrue();
+        assertThat(Score.valueOf(9).isMaximumScore()).isFalse();
+    }
+
+    @DisplayName("Score가 0이면 isMinimumScore은 True")
+    @Test
+    public void isMinimumScore_True() {
+        assertThat(Score.valueOf(0).isMinimumScore()).isTrue();
+        assertThat(Score.valueOf(1).isMinimumScore()).isFalse();
     }
 }

@@ -27,6 +27,14 @@ public class Score {
         }
     }
 
+    public boolean isMaximumScore() {
+        return score == MAXIMUM_SCORE;
+    }
+
+    public boolean isMinimumScore() {
+        return score == MINIMUM_SCORE;
+    }
+
     public int getScore() {
         return score;
     }
