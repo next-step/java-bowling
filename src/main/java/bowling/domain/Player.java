@@ -49,6 +49,12 @@ public class Player {
         return new Player(name, this.playerFrames.lastValue(frame), frame);
     }
 
+    public Player nextFrame(int numberOfHitPin) {
+        Frame nextFrame = this.currentFrame.next(numberOfHitPin);
+
+        return new Player(name, this.playerFrames.lastValue(nextFrame), nextFrame);
+    }
+
     private void validateIsStarted() {
         if (this.currentFrame == null) {
             throw new NotStartedPlayerException("초구를 굴리지 않은 상태에서 할 수 없는 동작입니다.");
@@ -74,5 +80,14 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name, playerFrames, currentFrame);
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                ", playerFrames=" + playerFrames +
+                ", currentFrame=" + currentFrame +
+                '}';
     }
 }

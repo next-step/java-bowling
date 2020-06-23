@@ -2,6 +2,7 @@ package bowling.domain;
 
 import bowling.domain.exceptions.AlreadyStartedPlayerException;
 import bowling.domain.exceptions.InvalidTryBowlException;
+import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.exceptions.NotStartedPlayerException;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
@@ -11,6 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Stream;
 
@@ -114,5 +116,24 @@ class PlayerTests {
 
         assertThatThrownBy(() -> completedPlayer.bowlCurrentFrame(FIVE))
                 .isInstanceOf(InvalidTryBowlException.class);
+    }
+
+    @DisplayName("현재 프레임이 완료됐으면 다음 프레임을 진행할 수 있다.")
+    @Test
+    void bowlNextFrameTest() {
+        Player initPlayer = Player.createByName(PLAYER_NAME).bowlFirst(TEN);
+        Player player = initPlayer.nextFrame(TEN);
+
+        assertThat(player).isEqualTo(new Player(PLAYER_NAME,
+                new PlayerFrames(Arrays.asList(NormalFrame.start(TEN), NormalFrame.start(TEN).next(TEN))),
+                NormalFrame.start(TEN).next(TEN)));
+    }
+
+    @DisplayName("현재 프레임이 완료되지 않았으면 다음 프레임을 진행할 수 없다.")
+    @Test
+    void bowlNextFrameValidationTest() {
+        Player initPlayer = Player.createByName(PLAYER_NAME).bowlFirst(FIVE);
+
+        assertThatThrownBy(() -> initPlayer.nextFrame(TEN)).isInstanceOf(InvalidTryNextFrameException.class);
     }
 }

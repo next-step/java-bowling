@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.FrameResults;
 import bowling.domain.exceptions.InvalidTryBowlException;
+import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.frameStatus.FinalFrameStatus;
 
 import java.util.Objects;
@@ -31,6 +32,11 @@ public class FinalFrame implements Frame {
         if (isCompleted()) {
             throw new InvalidTryBowlException("종료된 프레임에는 투구할 수 없습니다.");
         }
+    }
+
+    @Override
+    public Frame next(int numberOfHitPin) {
+        throw new InvalidTryNextFrameException("10 프레임 이후 프레임은 존재하지 않습니다.");
     }
 
     @Override
