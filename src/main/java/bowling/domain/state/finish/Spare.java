@@ -7,14 +7,12 @@ import bowling.exception.CannotMatchStateException;
 public class Spare extends Finished {
 
     private final Pins firstPins;
-    private final Pins secondPins;
 
     private Spare(final Pins firstPins, final Pins secondPins) {
         if (!firstPins.isSpare(secondPins)) {
             throw new CannotMatchStateException(this.getClass().getName());
         }
         this.firstPins = firstPins;
-        this.secondPins = secondPins;
     }
 
     public static Spare of(final Pins firstPins, final Pins secondPins) {
