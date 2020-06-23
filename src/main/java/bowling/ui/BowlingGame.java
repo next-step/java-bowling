@@ -7,7 +7,8 @@ public class BowlingGame {
         Player initPlayer = initGame();
 
         // 1 프레임 처리
-        Player player = doFirstFrame(initPlayer);
+        FirstFrameController firstFrameController = new FirstFrameController(initPlayer);
+        Player player = firstFrameController.doFirstFrame();
 
         // 2 ~ 9 프레임 처리
         player = doMiddleFrame(player);
@@ -22,28 +23,6 @@ public class BowlingGame {
         OutputView.printEmptyResult(userName);
 
         return Player.createByName(userName);
-    }
-
-    private static Player doFirstFrame(Player initPlayer) {
-        Player player = bowlFirst(initPlayer);
-        player = doNotCompletedFirstFrame(player);
-        return player;
-    }
-
-    private static Player bowlFirst(Player initPlayer) {
-        Player player = initPlayer.bowlFirst(InputView.getNumberOfHitPin(1));
-
-        OutputView.printPlayerResult(player);
-        return player;
-    }
-
-    private static Player doNotCompletedFirstFrame(Player player) {
-        if (!player.isCurrentFrameCompleted()) {
-            player = player.bowlCurrentFrame(InputView.getNumberOfHitPin(1));
-
-            OutputView.printPlayerResult(player);
-        }
-        return player;
     }
 
     private static Player doMiddleFrame(Player player) {
