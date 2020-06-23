@@ -24,7 +24,7 @@ public class FinalFrame implements Frame {
         this(TEN, finalFrameStatus, ninthFrame);
     }
 
-    public static FinalFrame firstBowl(int numberOfHitPin, Frame ninthFrame) {
+    public static FinalFrame bowlFirst(int numberOfHitPin, Frame ninthFrame) {
         return new FinalFrame(TEN, FinalFrameStatus.bowlFirst(numberOfHitPin), ninthFrame);
     }
 

@@ -27,7 +27,7 @@ class FinalFrameTests {
     @DisplayName("초구로 맞춘 핀의 수와 아홉번째 프레임을 입력 받아서 객체를 생성할 수 있다.")
     @Test
     void createTest() {
-        FinalFrame finalFrame = FinalFrame.firstBowl(FIVE, NINTH_FRAME);
+        FinalFrame finalFrame = FinalFrame.bowlFirst(FIVE, NINTH_FRAME);
 
         assertThat(finalFrame).isEqualTo(new FinalFrame(10, FinalFrameStatus.bowlFirst(FIVE), NINTH_FRAME));
     }
@@ -35,7 +35,7 @@ class FinalFrameTests {
     @DisplayName("종료될 때까지 마지막 프레임을 진행할 수 있다.")
     @Test
     void bowlTest() {
-        FinalFrame finalFrame = FinalFrame.firstBowl(FIVE, NINTH_FRAME);
+        FinalFrame finalFrame = FinalFrame.bowlFirst(FIVE, NINTH_FRAME);
         assertThat(finalFrame.isCompleted()).isFalse();
 
         FinalFrame secondBowled = finalFrame.bowl(FIVE);
@@ -48,7 +48,7 @@ class FinalFrameTests {
     @DisplayName("종료된 이후에는 프레임을 진행할 수 없다.")
     @Test
     void bowlValidationTest() {
-        FinalFrame finalFrame = FinalFrame.firstBowl(FIVE, NINTH_FRAME);
+        FinalFrame finalFrame = FinalFrame.bowlFirst(FIVE, NINTH_FRAME);
         assertThat(finalFrame.isCompleted()).isFalse();
 
         FinalFrame secondBowled = finalFrame.bowl(FOUR);

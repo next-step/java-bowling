@@ -20,9 +20,9 @@ class PlayerTests {
     private static final int TEN = 10;
     private static final int FIVE = 5;
     private static final String PLAYER_NAME = "JBJ";
-    private static final Player NINE_STRIKE_SUPER_USER = Player.createByName(PLAYER_NAME).bowlFirst(TEN).nextFrame(TEN)
-            .nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN).nextFrame(TEN)
-            .nextFrame(TEN);
+    private static final Player NINE_STRIKE_SUPER_USER = Player.createByName(PLAYER_NAME).bowlFirst(TEN).toNextFrame(TEN)
+            .toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN)
+            .toNextFrame(TEN);
 
     @DisplayName("이름을 입력받아서 객체를 생성할 수 있다.")
     @Test
@@ -122,7 +122,7 @@ class PlayerTests {
     @Test
     void bowlNextFrameTest() {
         Player initPlayer = Player.createByName(PLAYER_NAME).bowlFirst(TEN);
-        Player player = initPlayer.nextFrame(TEN);
+        Player player = initPlayer.toNextFrame(TEN);
 
         assertThat(player).isEqualTo(new Player(PLAYER_NAME,
                 new PlayerFrames(Arrays.asList(NormalFrame.start(TEN), NormalFrame.start(TEN).next(TEN))),
@@ -134,20 +134,20 @@ class PlayerTests {
     void bowlNextFrameValidationTest() {
         Player initPlayer = Player.createByName(PLAYER_NAME).bowlFirst(FIVE);
 
-        assertThatThrownBy(() -> initPlayer.nextFrame(TEN)).isInstanceOf(InvalidTryNextFrameException.class);
+        assertThatThrownBy(() -> initPlayer.toNextFrame(TEN)).isInstanceOf(InvalidTryNextFrameException.class);
     }
 
     @DisplayName("9 프레임까지 완료된 상태에서 일반적인 방법으로 다음 프레임을 진행할 수 없다.")
     @Test
     void bowlNextFrameLimitValidationTest() {
-        assertThatThrownBy(() -> NINE_STRIKE_SUPER_USER.nextFrame(FIVE))
+        assertThatThrownBy(() -> NINE_STRIKE_SUPER_USER.toNextFrame(FIVE))
                 .isInstanceOf(NormalFrameFinishedException.class);
     }
 
     @DisplayName("9 프레임까지 완료한 플레이어는 마지막 프레임을 진행할 수 있다.")
     @Test
     void bowlFinalFrameTest() {
-        Player finalFramePlayer = NINE_STRIKE_SUPER_USER.finalFrame(FIVE);
+        Player finalFramePlayer = NINE_STRIKE_SUPER_USER.toFinalFrame(FIVE);
 
         assertThat(finalFramePlayer.calculateResult())
                 .hasSize(10)

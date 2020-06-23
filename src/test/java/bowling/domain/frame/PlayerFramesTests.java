@@ -114,7 +114,7 @@ class PlayerFramesTests {
     public static Stream<Frame> notCompletedFrameResource() {
         return Stream.of(
                 NormalFrame.start(FIVE),
-                FinalFrame.firstBowl(FIVE, NormalFrame.start(TEN))
+                FinalFrame.bowlFirst(FIVE, NormalFrame.start(TEN))
         );
     }
 

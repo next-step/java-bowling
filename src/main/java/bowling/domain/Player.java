@@ -53,7 +53,7 @@ public class Player {
         return new Player(name, this.playerFrames.lastValue(frame), frame);
     }
 
-    public Player nextFrame(int numberOfHitPin) {
+    public Player toNextFrame(int numberOfHitPin) {
         validateNextFrame();
 
         Frame nextFrame = this.currentFrame.next(numberOfHitPin);
@@ -61,8 +61,8 @@ public class Player {
         return new Player(name, this.playerFrames.lastValue(nextFrame), nextFrame);
     }
 
-    public Player finalFrame(int numberOfHitPin) {
-        FinalFrame finalFrame = FinalFrame.firstBowl(numberOfHitPin, currentFrame);
+    public Player toFinalFrame(int numberOfHitPin) {
+        FinalFrame finalFrame = FinalFrame.bowlFirst(numberOfHitPin, currentFrame);
         return new Player(name, this.playerFrames.lastValue(finalFrame), finalFrame);
     }
 
