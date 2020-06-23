@@ -33,8 +33,7 @@ public class FinalFrame extends Frame {
             return this;
         }
 
-        this.states.removeLast();
-        this.states.add(currentState.bowl(hitCount));
+        this.updateLastState(currentState.bowl(hitCount));
         return this;
     }
 
@@ -50,6 +49,11 @@ public class FinalFrame extends Frame {
 
     private State getLastState() {
         return this.states.getLast();
+    }
+
+    private void updateLastState(final State state) {
+        this.states.removeLast();
+        this.states.add(state);
     }
 
     @Override
