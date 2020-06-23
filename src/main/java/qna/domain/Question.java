@@ -98,14 +98,33 @@ public class Question extends AbstractEntity {
     public DeleteHistories delete(User loginUser, LocalDateTime createdAt) throws CannotDeleteException {
         validateOwner(loginUser);
 
+        DeleteHistories QuestionDeleteHistories = deleteQuestion(createdAt);
+        DeleteHistories AnswersDeleteHistories = deleteAnswers(createdAt);
+
+        QuestionDeleteHistories.addAll(AnswersDeleteHistories);
+
+        return QuestionDeleteHistories;
+    }
+
+    private DeleteHistories deleteQuestion(LocalDateTime createdAt) {
+        setDeleted(true);
+        return createDeleteHistories(createdAt);
+    }
+
+    private DeleteHistories createDeleteHistories(LocalDateTime createdAt) {
         DeleteHistories deleteHistories = new DeleteHistories();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), this.writer, createdAt));
 
-        for (Answer answer : answers) {
-            deleteHistories.add(answer.delete(this.writer, createdAt));
-        }
+        return deleteHistories;
+    }
 
-        this.deleted = true;
+    private DeleteHistories deleteAnswers(LocalDateTime createdAt) throws CannotDeleteException {
+        DeleteHistories deleteHistories = new DeleteHistories();
+
+        for (Answer answer : answers) {
+            answer.delete(this.writer);
+            deleteHistories.add(answer.createDeleteHistory(createdAt));
+        }
 
         return deleteHistories;
     }
