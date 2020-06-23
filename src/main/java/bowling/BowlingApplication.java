@@ -9,14 +9,14 @@ public class BowlingApplication {
 
     public static void main(String[] args) {
         Player player = Player.of(InputView.inputPlayer());
-        BowlingGame bowlingGame = BowlingGame.newInstance();
+        BowlingGame bowlingGame = BowlingGame.of(player);
 
-        ResultView.printHeader(player);
+        ResultView.printHeader(bowlingGame);
 
         while (!bowlingGame.isGameOver()) {
             int hitCount = InputView.inputHitCount(bowlingGame.getFrameNumber());
             bowlingGame.play(hitCount);
-            ResultView.printShape(bowlingGame.getFrameResults(), player);
+            ResultView.printShape(bowlingGame);
         }
     }
 }

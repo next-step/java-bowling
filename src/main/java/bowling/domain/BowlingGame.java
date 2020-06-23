@@ -3,19 +3,22 @@ package bowling.domain;
 import bowling.domain.dto.FrameResult;
 import bowling.domain.frame.Frames;
 import bowling.domain.pin.PinCount;
+import bowling.domain.player.Player;
 
 import java.util.List;
 
 public class BowlingGame {
 
+    private final Player player;
     private final Frames frames;
 
-    private BowlingGame() {
+    private BowlingGame(final Player player) {
+        this.player = player;
         frames = Frames.newInstance();
     }
 
-    public static BowlingGame newInstance() {
-        return new BowlingGame();
+    public static BowlingGame of(final Player player) {
+        return new BowlingGame(player);
     }
 
     public void play(final int hitCount) {
@@ -24,6 +27,10 @@ public class BowlingGame {
 
     public boolean isGameOver() {
         return this.frames.isGameOver();
+    }
+
+    public String getPlayerName() {
+        return this.player.getName();
     }
 
     public int getFrameNumber() {

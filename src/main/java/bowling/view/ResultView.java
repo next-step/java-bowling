@@ -1,8 +1,8 @@
 package bowling.view;
 
+import bowling.domain.BowlingGame;
 import bowling.domain.dto.FrameResult;
 import bowling.domain.frame.FrameNumber;
-import bowling.domain.player.Player;
 import bowling.util.StringUtil;
 
 import java.util.ArrayList;
@@ -22,15 +22,15 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printHeader(final Player player) {
-        printShape(new ArrayList<>(), player);
+    public static void printHeader(final BowlingGame bowlingGame) {
+        printShape(bowlingGame);
     }
 
-    public static void printShape(final List<FrameResult> frameResults, final Player player) {
+    public static void printShape(final BowlingGame bowlingGame) {
         printFramesHeader();
 
-        printNameInfo(player.getName());
-        printResult(frameResults);
+        printNameInfo(bowlingGame.getPlayerName());
+        printResult(bowlingGame.getFrameResults());
         System.out.println();
     }
 
