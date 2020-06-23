@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player {
-    private String name;
-    private PlayerFrames playerFrames;
-    private Frame currentFrame;
+    private final String name;
+    private final PlayerFrames playerFrames;
+    private final Frame currentFrame;
 
     Player(String name, PlayerFrames playerFrames, Frame currentFrame) {
         this.name = name;
@@ -38,15 +38,15 @@ public class Player {
         return this.playerFrames.calculateResult();
     }
 
-    public Player bowl(int numberOfHitPin) {
-        NormalFrame newFrame = NormalFrame.start(numberOfHitPin);
-
-        return new Player(name, playerFrames.lastValue(newFrame), newFrame);
-    }
-
     public boolean isCurrentFrameCompleted() {
         validateIsStarted();
         return this.currentFrame.isCompleted();
+    }
+
+    public Player bowlCurrentFrame(int numberOfHitPin) {
+        Frame frame = this.currentFrame.bowl(numberOfHitPin);
+
+        return new Player(name, this.playerFrames.lastValue(frame), frame);
     }
 
     private void validateIsStarted() {

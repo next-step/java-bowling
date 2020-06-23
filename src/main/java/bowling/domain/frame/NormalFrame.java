@@ -22,11 +22,6 @@ public class NormalFrame implements Frame {
         return new NormalFrame(1, NormalFrameStatus.bowlFirst(numberOfHitPin), null);
     }
 
-    public NormalFrame bowl(int numberOfHitPin) {
-        validateBowl();
-        return new NormalFrame(index, currentStatus.bowl(numberOfHitPin), previousFrame);
-    }
-
     public NormalFrame next(int numberOfHitPin) {
         validateNext();
         return new NormalFrame(index + 1, NormalFrameStatus.bowlFirst(numberOfHitPin), this);
@@ -42,6 +37,12 @@ public class NormalFrame implements Frame {
         if (!isCompleted()) {
             throw new InvalidTryNextFrameException("현재 프레임이 완료되지 않은 상태에서 다음 프레임을 진행할 수 없습니다.");
         }
+    }
+
+    @Override
+    public NormalFrame bowl(int numberOfHitPin) {
+        validateBowl();
+        return new NormalFrame(index, currentStatus.bowl(numberOfHitPin), previousFrame);
     }
 
     @Override

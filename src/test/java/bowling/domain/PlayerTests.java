@@ -10,7 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Stream;
 
@@ -95,15 +94,15 @@ class PlayerTests {
                 .isInstanceOf(NotStartedPlayerException.class);
     }
 
-    @DisplayName("현재 프레임이 마무리됐다면 다음 프레임을 진행할 수 있다.")
+    @DisplayName("현재 프레임이 완료되지 않았으면 현재 프레임을 진행할 수 있다.")
     @Test
-    void bowlTest() {
-        Player player = Player.createByName(PLAYER_NAME)
-                .bowlFirst(TEN)
-                .bowl(FIVE);
+    void bowlCurrentFrameTest() {
+        Player initPlayer = Player.createByName(PLAYER_NAME).bowlFirst(FIVE);
+        NormalFrame expectedNewFrame = NormalFrame.start(FIVE).bowl(FIVE);
 
-        assertThat(player).isEqualTo(new Player(PLAYER_NAME,
-                new PlayerFrames(Arrays.asList(NormalFrame.start(TEN), NormalFrame.start(FIVE))),
-                NormalFrame.start(FIVE)));
+        Player player = initPlayer.bowlCurrentFrame(FIVE);
+
+        assertThat(player).isEqualTo(new Player(
+                        PLAYER_NAME, new PlayerFrames(Collections.singletonList(expectedNewFrame)), expectedNewFrame));
     }
 }

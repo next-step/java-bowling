@@ -27,15 +27,16 @@ public class FinalFrame implements Frame {
         return new FinalFrame(TEN, FinalFrameStatus.bowlFirst(numberOfHitPin), ninthFrame);
     }
 
-    public FinalFrame bowl(int numberOfHitPin) {
-        validateBowl();
-        return new FinalFrame(TEN, this.finalFrameStatus.bowl(numberOfHitPin), prevFrame);
-    }
-
     private void validateBowl() {
         if (isCompleted()) {
             throw new InvalidTryBowlException("종료된 프레임에는 투구할 수 없습니다.");
         }
+    }
+
+    @Override
+    public FinalFrame bowl(int numberOfHitPin) {
+        validateBowl();
+        return new FinalFrame(TEN, this.finalFrameStatus.bowl(numberOfHitPin), prevFrame);
     }
 
     @Override
