@@ -6,6 +6,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,33 +15,150 @@ import qna.CannotDeleteException;
 
 public class QuestionTest {
 
-  public static final Question Q1 = new Question("title1", "contents1")
-      .writeBy(UserTest.JAVAJIGI);
-  public static final Question Q2 = new Question("title2", "contents2")
-      .writeBy(UserTest.SANJIGI);
-  public static final Question QUESTION_WITH_ANSWER_SAME_WRITER =
-      new Question("title3", "contents3")
-          .writeBy(UserTest.JAVAJIGI);
-  public static final Question QUESTION_WITH_ANSWER_DIFF_WRITER =
-      new Question("title4", "contents4")
-          .writeBy(UserTest.JAVAJIGI);
+  public static Question Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+  public static Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+  private static Question QUESTION_WITH_ANSWER_SAME_WRITER;
+  private static Question QUESTION_WITH_ANSWER_DIFF_WRITER;
+  private static Question QUESTION_HAS_NO_WRITER_AND_ANSWER1;
+  private static Question QUESTION_HAS_NO_WRITER_AND_ANSWER2;
+  private static Answer ANSWER_FOR_INSERT1;
+  private static Answer ANSWER_FOR_INSERT2;
 
+  static{
+    QUESTION_WITH_ANSWER_SAME_WRITER = new Question("title3", "contents3");
+    QUESTION_WITH_ANSWER_SAME_WRITER
+        .writeBy(UserTest.JAVAJIGI)
+        .addAnswer(new Answer(
+            UserTest.JAVAJIGI,
+            QuestionTest.QUESTION_WITH_ANSWER_SAME_WRITER,
+            "Answers Contents1"
+        ));
 
-  static {
-    QUESTION_WITH_ANSWER_SAME_WRITER.addAnswer(AnswerTest.A1);
-    QUESTION_WITH_ANSWER_DIFF_WRITER.addAnswer(AnswerTest.A2);
+    QUESTION_WITH_ANSWER_DIFF_WRITER = new Question("title4", "contents4");
+    QUESTION_WITH_ANSWER_DIFF_WRITER
+        .writeBy(UserTest.JAVAJIGI)
+        .addAnswer(new Answer(
+            UserTest.SANJIGI,
+            QuestionTest.QUESTION_WITH_ANSWER_DIFF_WRITER,
+            "Answers Contents2"
+        ));
+
+    QUESTION_HAS_NO_WRITER_AND_ANSWER1 = new Question("title5", "contents5");
+    QUESTION_HAS_NO_WRITER_AND_ANSWER2 = new Question("title6", "contents6");
+
+    ANSWER_FOR_INSERT1 = new Answer(
+        UserTest.JAVAJIGI,
+        QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER1,
+        "Answers For Insert1"
+    );
+
+    ANSWER_FOR_INSERT2 = new Answer(
+        UserTest.SANJIGI,
+        QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER2,
+        "Answers For Insert2"
+    );
+  }
+
+  @AfterEach
+  void setUp() {
+    Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+    Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+
+    QUESTION_WITH_ANSWER_SAME_WRITER = new Question("title3", "contents3");
+    QUESTION_WITH_ANSWER_SAME_WRITER
+        .writeBy(UserTest.JAVAJIGI)
+        .addAnswer(new Answer(
+            UserTest.JAVAJIGI,
+            QuestionTest.QUESTION_WITH_ANSWER_SAME_WRITER,
+            "Answers Contents1"
+        ));
+
+    QUESTION_WITH_ANSWER_DIFF_WRITER = new Question("title4", "contents4");
+    QUESTION_WITH_ANSWER_DIFF_WRITER
+        .writeBy(UserTest.JAVAJIGI)
+        .addAnswer(new Answer(
+            UserTest.SANJIGI,
+            QuestionTest.QUESTION_WITH_ANSWER_DIFF_WRITER,
+            "Answers Contents2"
+        ));
+
+    QUESTION_HAS_NO_WRITER_AND_ANSWER1 = new Question("title5", "contents5");
+    QUESTION_HAS_NO_WRITER_AND_ANSWER2 = new Question("title6", "contents6");
+
+    ANSWER_FOR_INSERT1 = new Answer(
+        UserTest.JAVAJIGI,
+        QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER1,
+        "Answers For Insert1"
+    );
+
+    ANSWER_FOR_INSERT2 = new Answer(
+        UserTest.SANJIGI,
+        QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER2,
+        "Answers For Insert2"
+    );
+
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideQuestionWithLoginUser")
+  void writeBy(Question question, User loginUser) {
+    question.writeBy(loginUser);
+
+    assertThat(question.getWriter()).isEqualTo(loginUser);
+  }
+
+  static Stream<Arguments> provideQuestionWithLoginUser() {
+    return Stream.of(
+        arguments(
+            QUESTION_HAS_NO_WRITER_AND_ANSWER1,
+            UserTest.JAVAJIGI
+        ),
+        arguments(
+            QUESTION_HAS_NO_WRITER_AND_ANSWER2,
+            UserTest.SANJIGI
+        )
+    );
   }
 
 
   @ParameterizedTest
-  @MethodSource("provideQuestionWithLoginUser")
+  @MethodSource("provideQuestionWithAnswer")
+  void addAnswer(Question question, Answer answer) {
+    question.addAnswer(answer);
+
+    assertThat(question.getAnswers().size()).isEqualTo(1);
+    assertThat(question.getAnswers().get(0)).isEqualTo(answer);
+  }
+
+  static Stream<Arguments> provideQuestionWithAnswer() {
+    return Stream.of(
+        arguments(
+            QUESTION_HAS_NO_WRITER_AND_ANSWER1,
+            ANSWER_FOR_INSERT1
+        ),
+        arguments(
+            QUESTION_HAS_NO_WRITER_AND_ANSWER2,
+            ANSWER_FOR_INSERT2
+        )
+    );
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideQuestionWithValidLoginUser")
+  void isOwner(Question question, User user) {
+    assertThat(question.isOwner(user)).isTrue();
+  }
+
+
+  @ParameterizedTest
+  @MethodSource("provideQuestionWithValidLoginUser")
   void delete_성공(Question question, User loginUser) throws Exception {
     question.delete(loginUser);
 
     assertThat(question.isDeleted()).isTrue();
   }
 
-  static Stream<Arguments> provideQuestionWithLoginUser() {
+  static Stream<Arguments> provideQuestionWithValidLoginUser() {
     return Stream.of(
         arguments(
             Q1,
