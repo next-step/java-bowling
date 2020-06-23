@@ -48,11 +48,6 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isGameOver() {
-        return false;
-    }
-
-    @Override
     public int getFrameNo() {
         return this.frameNumber.getNo();
     }

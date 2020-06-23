@@ -7,7 +7,9 @@ public abstract class Frame {
 
     abstract Frame bowl(PinCount countOfPin);
 
-    abstract boolean isGameOver();
+    boolean isGameOver() {
+        return false;
+    }
 
     abstract int getFrameNo();
 
