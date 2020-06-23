@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -20,11 +19,10 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 public class FirstHitTest {
 
     @DisplayName("Spare 상태를 가질 수 없으면 예외 반환")
-    @ParameterizedTest
-    @ValueSource(ints = { -1, 10 })
-    public void createFailure(final int count) {
+    @Test
+    public void createFailure() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> FirstHit.of(Pins.of(count)));
+                .isThrownBy(() -> FirstHit.of(Pins.of(PinCount.MAX_COUNT)));
     }
 
     @DisplayName("두번째 투구에서 나머지 볼링 핀이 모두 넘어지면 Spare 반환")
