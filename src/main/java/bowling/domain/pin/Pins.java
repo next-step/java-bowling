@@ -31,7 +31,7 @@ public class Pins {
     }
 
     private PinCount totalPins(final Pins secondPins) {
-        return this.hitCount.increase(secondPins.hitCount);
+        return this.hitCount.sum(secondPins.hitCount);
     }
 
     public String getHitCount() {

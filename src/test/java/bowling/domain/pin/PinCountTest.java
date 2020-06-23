@@ -33,7 +33,7 @@ public class PinCountTest {
     @ParameterizedTest
     @CsvSource({ "0,0,0", "1,2,3" })
     void increase(final int operandA, final int operandB, final int expected) {
-        assertThat(PinCount.of(operandA).increase(PinCount.of(operandB)).getCount())
+        assertThat(PinCount.of(operandA).sum(PinCount.of(operandB)).getCount())
                 .isEqualTo(expected);
     }
 

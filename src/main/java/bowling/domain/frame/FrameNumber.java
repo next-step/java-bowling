@@ -14,7 +14,7 @@ public class FrameNumber {
     private final int no;
 
     private FrameNumber(final int no) {
-        validRange(no);
+        validateRange(no);
         this.no = no;
     }
 
@@ -22,7 +22,7 @@ public class FrameNumber {
         return new FrameNumber(no);
     }
 
-    private void validRange(final int no) {
+    private void validateRange(final int no) {
         if (no < MIN_NUMBER || no > MAX_NUMBER) {
             throw new ValueOutOfRangeException(ErrorMessage.REQUIRED_FRAME_RANGE);
         }

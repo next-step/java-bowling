@@ -12,7 +12,7 @@ public class PinCount {
     private final int count;
 
     private PinCount(final int count) {
-        validRange(count);
+        validateRange(count);
         this.count = count;
     }
 
@@ -20,13 +20,13 @@ public class PinCount {
         return new PinCount(count);
     }
 
-    private void validRange(final int count) {
+    private void validateRange(final int count) {
         if (count < MIN_COUNT || count > MAX_COUNT) {
             throw new PinCountOutOfRangeException(count);
         }
     }
 
-    public PinCount increase(final PinCount pinCount) {
+    public PinCount sum(final PinCount pinCount) {
         return new PinCount(this.count + pinCount.count);
     }
 
