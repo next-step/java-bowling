@@ -14,10 +14,10 @@ public class FinalFrame extends Frame {
     private static final int MAX_COUNT = 3;
     private static final int COMMON_COUNT = MAX_COUNT - 1;
 
-    private final Stack<State> states2 = new Stack<>();
+    private final Stack<State> states = new Stack<>();
 
     private FinalFrame() {
-        this.states2.push(StateFactory.ready());
+        this.states.push(StateFactory.ready());
     }
 
     public static FinalFrame newInstance() {
@@ -29,7 +29,7 @@ public class FinalFrame extends Frame {
         State currentState = this.getLastState();
 
         if (currentState.isFinish()) {
-            states2.push(StateFactory.hit(hitCount));
+            states.push(StateFactory.hit(hitCount));
             return this;
         }
 
@@ -43,17 +43,17 @@ public class FinalFrame extends Frame {
     }
 
     private boolean isEndedBonusBowl() {
-        return this.states2.size() == MAX_COUNT ||
-                (this.states2.stream().anyMatch(Spare.class::isInstance) && this.states2.size() == COMMON_COUNT);
+        return this.states.size() == MAX_COUNT ||
+                (this.states.stream().anyMatch(Spare.class::isInstance) && this.states.size() == COMMON_COUNT);
     }
 
     private State getLastState() {
-        return this.states2.peek();
+        return this.states.peek();
     }
 
     private void updateLastState(final State state) {
-        this.states2.pop();
-        this.states2.push(state);
+        this.states.pop();
+        this.states.push(state);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class FinalFrame extends Frame {
     }
 
     private String getDesc() {
-        return this.states2.stream()
+        return this.states.stream()
                 .map(State::getDesc)
                 .collect(Collectors.joining("|"));
     }
