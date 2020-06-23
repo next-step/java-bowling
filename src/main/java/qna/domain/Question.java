@@ -1,7 +1,6 @@
 package qna.domain;
 
 import java.time.LocalDateTime;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,13 +20,8 @@ public class Question extends AbstractEntity implements Deletable {
   @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
   private User writer;
 
-  @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-  @Where(clause = "deleted = false")
-  @OrderBy("id ASC")
-  private List<Answer> answers = new ArrayList<>();
-
   @Embedded
-  private Answers answers2 = new Answers();
+  private final Answers answers = new Answers();
 
   private boolean deleted = false;
 
@@ -87,12 +81,12 @@ public class Question extends AbstractEntity implements Deletable {
 
   public void addAnswer(Answer answer) {
     answer.toQuestion(this);
-    answers2.addAnswer(answer);
+    answers.addAnswer(answer);
   }
 
   public Answer getAnswerById(long id) {
 
-    return answers2.getAnswerById(id);
+    return answers.getAnswerById(id);
   }
 
   @Override
@@ -103,7 +97,7 @@ public class Question extends AbstractEntity implements Deletable {
 
     deleted = true;
 
-    answers2.delete(loginUser);
+    answers.delete(loginUser);
   }
 
   @Override
@@ -114,7 +108,7 @@ public class Question extends AbstractEntity implements Deletable {
       deleteHistories.add(
           new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
 
-      deleteHistories.addAll(answers2.getDeleteHistories());
+      deleteHistories.addAll(answers.getDeleteHistories());
     }
 
     return deleteHistories;

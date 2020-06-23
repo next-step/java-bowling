@@ -8,7 +8,6 @@ import qna.domain.DeleteHistory;
 import qna.domain.DeleteHistoryRepository;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service("deleteHistoryService")
 public class DeleteHistoryService {
