@@ -1,6 +1,7 @@
 package bowling.pitch;
 
 import bowling.exception.BowlingBuildingException;
+import bowling.frame.Frame;
 import bowling.score.Score;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class NormalPitches implements Pitches {
     }
 
     private void validateNormalPitches() {
-        if (this.isFinished()) {
+        if (isFinished(Frame.MAXIMUM_NORMAL_PITCH_COUNTS)) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES_TRY);
         }
     }
@@ -29,8 +30,8 @@ public class NormalPitches implements Pitches {
         return pitches.isEmpty() ? Pitch.initiate(score) : pitches.get(FIRST_INDEX).next(score);
     }
 
-    public boolean isFinished() {
-        return pitches.size() == MAXIMUM_NORMAL_PITCH_COUNTS;
+    public boolean isFinished(int pitchCounts) {
+        return pitches.size() == pitchCounts;
     }
 
     public boolean isStrike() {

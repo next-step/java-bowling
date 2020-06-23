@@ -28,10 +28,10 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isMovableToNextFrame() {
-        if (finalPitches.isFinishingNormalPitches() && finalPitches.isNotContainingStrikeOrSpare()) {
+        if (finalPitches.isFinished(MAXIMUM_NORMAL_PITCH_COUNTS) && finalPitches.isNotContainingStrikeOrSpare()) {
             return true;
         }
-        return finalPitches.isFinishingPitchesWithBonus();
+        return finalPitches.isFinished(MAXIMUM_FINAL_PITCH_COUNTS);
     }
 
     @Override

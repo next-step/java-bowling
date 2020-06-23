@@ -1,6 +1,7 @@
 package bowling.pitch;
 
 import bowling.exception.BowlingBuildingException;
+import bowling.frame.Frame;
 import bowling.score.Score;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class FinalPitches implements Pitches {
 
     @Override
     public void throwBall(Score score) {
-        if (pitches.size() >= MAXIMUM_NORMAL_PITCH_COUNTS) {
+        if (pitches.size() >= Frame.MAXIMUM_NORMAL_PITCH_COUNTS) {
             validateFinalPitches();
         }
         Pitch pitch = createPitch(score);
@@ -21,7 +22,7 @@ public class FinalPitches implements Pitches {
     }
 
     private void validateFinalPitches() {
-        if (isNotContainingStrikeOrSpare() || pitches.size() == MAXIMUM_FINAL_PITCH_COUNTS) {
+        if (isNotContainingStrikeOrSpare() || isFinished(Frame.MAXIMUM_FINAL_PITCH_COUNTS)) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
         }
     }
@@ -39,12 +40,8 @@ public class FinalPitches implements Pitches {
                 .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
     }
 
-    public boolean isFinishingNormalPitches() {
-        return pitches.size() == MAXIMUM_NORMAL_PITCH_COUNTS;
-    }
-
-    public boolean isFinishingPitchesWithBonus() {
-        return pitches.size() == MAXIMUM_FINAL_PITCH_COUNTS;
+    public boolean isFinished(int pitchCounts) {
+        return pitches.size() == pitchCounts;
     }
 
     @Override

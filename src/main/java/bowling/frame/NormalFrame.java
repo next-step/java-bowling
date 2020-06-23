@@ -32,7 +32,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isMovableToNextFrame() {
-        return normalPitches.isFinished() || normalPitches.isStrike();
+        return normalPitches.isFinished(MAXIMUM_NORMAL_PITCH_COUNTS) || normalPitches.isStrike();
     }
 
     @Override
