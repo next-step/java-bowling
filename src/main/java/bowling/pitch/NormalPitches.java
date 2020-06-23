@@ -7,16 +7,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class NormalPitches {
+    private static final int FIRST_INDEX = 0;
 
     private final List<Pitch> pitches = new ArrayList<>();
 
     public void throwBall(Score score) {
-        if (pitches.size() == 0) {
-            pitches.add(Pitch.initiate(score));
-            return;
+        Pitch pitch = createPitch(score);
+        pitches.add(pitch);
+    }
+
+    private Pitch createPitch(Score score) {
+        if (pitches.isEmpty()) {
+            return Pitch.initiate(score);
         }
-        Pitch pitch = pitches.get(0);
-        pitches.add(pitch.next(score));
+        return pitches.get(FIRST_INDEX).next(score);
     }
 
     public List<Pitch> getPitches() {
