@@ -1,12 +1,22 @@
 package bowling.domain;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Player {
+    private static final int NAME_MAX_LENGTH = 3;
+    private static final String PATTERN = "^[a-zA-Z]*$";
     private final String name;
 
     public Player(String name) {
+        validateName(name);
         this.name = name;
+    }
+
+    private void validateName(String name) {
+        if (name.length() != NAME_MAX_LENGTH || !Pattern.matches(PATTERN, name)) {
+            throw new IncorrectPlayerNameException();
+        }
     }
 
     @Override
