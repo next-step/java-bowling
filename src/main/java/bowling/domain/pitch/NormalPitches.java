@@ -1,7 +1,6 @@
 package bowling.domain.pitch;
 
 import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
 
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class NormalPitches implements Pitches {
     }
 
     private void validateNormalPitches() {
-        if (isFinished(Frame.MAXIMUM_NORMAL_PITCH_COUNTS)) {
+        if (isHavingSameCounts(MAXIMUM_NORMAL_PITCH_COUNTS)) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES_TRY);
         }
     }
@@ -31,13 +30,18 @@ public class NormalPitches implements Pitches {
         return pitches.isEmpty() ? Pitch.initiate(score) : pitches.get(FIRST_INDEX).next(score);
     }
 
+    @Override
+    public boolean isHavingSameCounts(int pitchCounts) {
+        return pitches.size() == pitchCounts;
+    }
+
     public boolean isStrike() {
         return pitches.get(FIRST_INDEX).isStrike();
     }
 
     @Override
-    public boolean isFinished(int pitchCounts) {
-        return pitches.size() == pitchCounts;
+    public boolean isSpare() {
+        return isHavingSameCounts(MAXIMUM_NORMAL_PITCH_COUNTS) && pitches.get(SECOND_INDEX).isSpare();
     }
 
     @Override
@@ -48,14 +52,9 @@ public class NormalPitches implements Pitches {
     }
 
     @Override
-    public int getScoresSum() {
+    public int getPitchScoreSum() {
         return pitches.stream()
                 .mapToInt(Pitch::getScore)
                 .sum();
-    }
-
-    @Override
-    public boolean isSpare() {
-        return isFinished(Frame.MAXIMUM_NORMAL_PITCH_COUNTS) && pitches.get(SECOND_INDEX).isSpare();
     }
 }

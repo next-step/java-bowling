@@ -1,12 +1,14 @@
 package bowling.domain.frame;
 
 import bowling.domain.pitch.FinalPitches;
+import bowling.domain.pitch.Pitches;
 import bowling.domain.score.FrameNumericScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
 
 public class FinalFrame implements Frame {
+    private static final int MAXIMUM_FINAL_FRAME_INDEX = 11;
 
     private final FinalPitches finalPitches = new FinalPitches();
     private final int index;
@@ -21,7 +23,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame next() {
-        return new FinalFrame(index + 1);
+        return new FinalFrame(index + NEXT_INDEX);
     }
 
     @Override
@@ -30,40 +32,30 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isMovableToNextFrame() {
-        if (finalPitches.isFinished(MAXIMUM_NORMAL_PITCH_COUNTS) && finalPitches.isNotContainingStrikeOrSpare()) {
-            return true;
-        }
-        return finalPitches.isFinished(MAXIMUM_FINAL_PITCH_COUNTS);
-    }
-
-    @Override
-    public List<String> getScoreSignatures() {
-        return finalPitches.getScoreSignatures();
-    }
-
-    @Override
-    public int getIndex() {
-        return index;
-    }
-
-    @Override
     public FrameNumericScore calculateFrameScore(Frame lastFrame) {
-        if (index == 11) {
-            return FrameNumericScore.of(lastFrame.getScoresSum());
+        if (index == MAXIMUM_FINAL_FRAME_INDEX) {
+            return FrameNumericScore.of(lastFrame.getPitchScoreSum());
         }
-        if (lastFrame.isSpare() || lastFrame.isStrike()) {
-            return calculateFrameScoreWhenStrikeOrSpare(lastFrame);
-        }
-        return FrameNumericScore.of(lastFrame.getScoresSum());
+        return lastFrame.isStrike() || lastFrame.isSpare() ?
+                calculateFrameScoreWhenStrikeOrSpare(lastFrame) : FrameNumericScore.of(lastFrame.getPitchScoreSum());
     }
 
     private FrameNumericScore calculateFrameScoreWhenStrikeOrSpare(Frame lastFrame) {
-        int frameScore = lastFrame.getScoresSum() + finalPitches.getScoresSum();
-        if (lastFrame.isStrike() && finalPitches.isFinished(MAXIMUM_NORMAL_PITCH_COUNTS)) {
+        int frameScore = lastFrame.getPitchScoreSum() + finalPitches.getPitchScoreSum();
+        if (lastFrame.isStrike() && finalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_STRIKE)) {
             return FrameNumericScore.of(frameScore);
         }
-        return lastFrame.isSpare() && finalPitches.isFinished(1) ? FrameNumericScore.of(frameScore) : null;
+        return lastFrame.isSpare() && finalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_SPARE) ?
+                FrameNumericScore.of(frameScore) : null;
+    }
+
+    @Override
+    public boolean isMovableToNextFrame() {
+        if (finalPitches.isHavingSameCounts(Pitches.MAXIMUM_NORMAL_PITCH_COUNTS)
+                && finalPitches.isNotContainingStrikeOrSpare()) {
+            return true;
+        }
+        return finalPitches.isHavingSameCounts(Pitches.MAXIMUM_FINAL_PITCH_COUNTS);
     }
 
     @Override
@@ -72,12 +64,22 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int getScoresSum() {
-        return finalPitches.getScoresSum();
+    public boolean isSpare() {
+        return false;
     }
 
     @Override
-    public boolean isSpare() {
-        return false;
+    public List<String> getScoreSignatures() {
+        return finalPitches.getScoreSignatures();
+    }
+
+    @Override
+    public int getPitchScoreSum() {
+        return finalPitches.getPitchScoreSum();
+    }
+
+    @Override
+    public int getIndex() {
+        return index;
     }
 }

@@ -1,7 +1,6 @@
 package bowling.domain.pitch;
 
 import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.frame.Frame;
 import bowling.domain.score.Score;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ public class FinalPitches implements Pitches {
 
     @Override
     public void throwBall(Score score) {
-        if (pitches.size() >= Frame.MAXIMUM_NORMAL_PITCH_COUNTS) {
+        if (pitches.size() >= MAXIMUM_NORMAL_PITCH_COUNTS) {
             validateFinalPitches();
         }
         Pitch pitch = createPitch(score);
@@ -23,7 +22,7 @@ public class FinalPitches implements Pitches {
     }
 
     private void validateFinalPitches() {
-        if (isNotContainingStrikeOrSpare() || isFinished(Frame.MAXIMUM_FINAL_PITCH_COUNTS)) {
+        if (isNotContainingStrikeOrSpare() || isHavingSameCounts(MAXIMUM_FINAL_PITCH_COUNTS)) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
         }
     }
@@ -36,14 +35,19 @@ public class FinalPitches implements Pitches {
         return lastPitch.isSpare() || lastPitch.isStrike() ? Pitch.initiate(score) : lastPitch.next(score);
     }
 
-    public boolean isNotContainingStrikeOrSpare() {
-        return pitches.stream()
-                .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
+    @Override
+    public boolean isHavingSameCounts(int pitchCounts) {
+        return pitches.size() == pitchCounts;
     }
 
     @Override
-    public boolean isFinished(int pitchCounts) {
-        return pitches.size() == pitchCounts;
+    public boolean isSpare() {
+        return false;
+    }
+
+    public boolean isNotContainingStrikeOrSpare() {
+        return pitches.stream()
+                .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
     }
 
     @Override
@@ -54,14 +58,9 @@ public class FinalPitches implements Pitches {
     }
 
     @Override
-    public int getScoresSum() {
+    public int getPitchScoreSum() {
         return pitches.stream()
                 .mapToInt(Pitch::getScore)
                 .sum();
-    }
-
-    @Override
-    public boolean isSpare() {
-        return false;
     }
 }

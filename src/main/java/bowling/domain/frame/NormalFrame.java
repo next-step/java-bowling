@@ -1,14 +1,13 @@
 package bowling.domain.frame;
 
 import bowling.domain.pitch.NormalPitches;
+import bowling.domain.pitch.Pitches;
 import bowling.domain.score.FrameNumericScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
 
 public class NormalFrame implements Frame {
-    private static final int FIRST_INDEX = 1;
-    private static final int NEXT_INDEX = 1;
     private static final int MAXIMUM_NORMAL_FRAME_INDEX = 9;
 
     private final NormalPitches normalPitches = new NormalPitches();
@@ -34,34 +33,25 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean isMovableToNextFrame() {
-        return normalPitches.isFinished(MAXIMUM_NORMAL_PITCH_COUNTS) || normalPitches.isStrike();
-    }
-
-    @Override
-    public List<String> getScoreSignatures() {
-        return normalPitches.getScoreSignatures();
-    }
-
-    @Override
-    public int getIndex() {
-        return index;
-    }
-
-    @Override
     public FrameNumericScore calculateFrameScore(Frame lastFrame) {
-        if (lastFrame.isSpare() || lastFrame.isStrike()) {
+        if (lastFrame.isStrike() || lastFrame.isSpare()) {
             return calculateFrameScoreWhenStrikeOrSpare(lastFrame);
         }
-        return FrameNumericScore.of(lastFrame.getScoresSum());
+        return FrameNumericScore.of(lastFrame.getPitchScoreSum());
     }
 
     private FrameNumericScore calculateFrameScoreWhenStrikeOrSpare(Frame lastFrame) {
-        int frameScore = lastFrame.getScoresSum() + normalPitches.getScoresSum();
-        if (lastFrame.isStrike() && normalPitches.isFinished(MAXIMUM_NORMAL_PITCH_COUNTS)) {
+        int frameScore = lastFrame.getPitchScoreSum() + normalPitches.getPitchScoreSum();
+        if (lastFrame.isStrike() && normalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_STRIKE)) {
             return FrameNumericScore.of(frameScore);
         }
-        return lastFrame.isSpare() && normalPitches.isFinished(FIRST_INDEX) ? FrameNumericScore.of(frameScore) : null;
+        return lastFrame.isSpare() && normalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_SPARE) ?
+                FrameNumericScore.of(frameScore) : null;
+    }
+
+    @Override
+    public boolean isMovableToNextFrame() {
+        return normalPitches.isHavingSameCounts(Pitches.MAXIMUM_NORMAL_PITCH_COUNTS) || normalPitches.isStrike();
     }
 
     @Override
@@ -75,7 +65,17 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int getScoresSum() {
-        return normalPitches.getScoresSum();
+    public List<String> getScoreSignatures() {
+        return normalPitches.getScoreSignatures();
+    }
+
+    @Override
+    public int getPitchScoreSum() {
+        return normalPitches.getPitchScoreSum();
+    }
+
+    @Override
+    public int getIndex() {
+        return index;
     }
 }
