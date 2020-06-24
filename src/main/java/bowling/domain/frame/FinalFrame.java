@@ -48,29 +48,22 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int calculateFrameScore(Frame lastFrame) {
+    public FrameNumericScore calculateFrameScore(Frame lastFrame) {
         if (index == 11) {
-            return lastFrame.getScoresSum();
+            return FrameNumericScore.of(lastFrame.getScoresSum());
         }
         if (lastFrame.isSpare() || lastFrame.isStrike()) {
-            return strikeOrSpare(lastFrame);
+            return calculateFrameScoreWhenStrikeOrSpare(lastFrame);
         }
-        return lastFrame.getScoresSum();
+        return FrameNumericScore.of(lastFrame.getScoresSum());
     }
 
-    @Override
-    public FrameNumericScore calculateFrameScore2(Frame nextFrame) {
-        return null;
-    }
-
-    private int strikeOrSpare(Frame lastFrame) {
-        if (lastFrame.isStrike() && this.finalPitches.isFinished(2)) {
-            return lastFrame.getScoresSum() + finalPitches.getScoresSum();
+    private FrameNumericScore calculateFrameScoreWhenStrikeOrSpare(Frame lastFrame) {
+        int frameScore = lastFrame.getScoresSum() + finalPitches.getScoresSum();
+        if (lastFrame.isStrike() && finalPitches.isFinished(MAXIMUM_NORMAL_PITCH_COUNTS)) {
+            return FrameNumericScore.of(frameScore);
         }
-        if (lastFrame.isSpare() && this.finalPitches.isFinished(1)) {
-            return lastFrame.getScoresSum() + finalPitches.getScoresSum();
-        }
-        return 0;
+        return lastFrame.isSpare() && finalPitches.isFinished(1) ? FrameNumericScore.of(frameScore) : null;
     }
 
     @Override

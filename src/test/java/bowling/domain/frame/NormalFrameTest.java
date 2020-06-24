@@ -70,12 +70,12 @@ class NormalFrameTest {
         Frame nextFrame = lastFrame.next();
         nextFrame.bowl(Score.valueOf(5));
 
-        FrameNumericScore result = nextFrame.calculateFrameScore2(lastFrame);
+        FrameNumericScore result = nextFrame.calculateFrameScore(lastFrame);
 
         assertThat(result).isEqualTo(null);
 
         nextFrame.bowl(Score.valueOf(5));
-        result = nextFrame.calculateFrameScore2(lastFrame);
+        result = nextFrame.calculateFrameScore(lastFrame);
 
         assertThat(result.getFrameScoreTotal()).isEqualTo(20);
     }
@@ -88,12 +88,12 @@ class NormalFrameTest {
         lastFrame.bowl(Score.valueOf(7));
         Frame nextFrame = lastFrame.next();
 
-        FrameNumericScore result = nextFrame.calculateFrameScore2(lastFrame);
+        FrameNumericScore result = nextFrame.calculateFrameScore(lastFrame);
 
         assertThat(result).isEqualTo(null);
 
         nextFrame.bowl(Score.valueOf(5));
-        result = nextFrame.calculateFrameScore2(lastFrame);
+        result = nextFrame.calculateFrameScore(lastFrame);
 
         assertThat(result.getFrameScoreTotal()).isEqualTo(15);
     }
@@ -106,7 +106,7 @@ class NormalFrameTest {
         lastFrame.bowl(Score.valueOf(0));
         Frame nextFrame = lastFrame.next();
 
-        FrameNumericScore result = nextFrame.calculateFrameScore2(lastFrame);
+        FrameNumericScore result = nextFrame.calculateFrameScore(lastFrame);
 
         assertThat(result.getFrameScoreTotal()).isEqualTo(4);
     }

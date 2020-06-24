@@ -19,9 +19,7 @@ public interface Frame {
 
     public int getIndex();
 
-    public int calculateFrameScore(Frame nextFrame);
-
-    public FrameNumericScore calculateFrameScore2(Frame lastFrame);
+    public FrameNumericScore calculateFrameScore(Frame lastFrame);
 
 
     public boolean isStrike();

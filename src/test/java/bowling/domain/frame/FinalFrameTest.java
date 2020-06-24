@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.FrameNumericScore;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -75,11 +76,13 @@ class FinalFrameTest {
         lastFrame.bowl(Score.valueOf(10));
         Frame finalFrame = FinalFrame.last(10);
 
-        assertThat(finalFrame.calculateFrameScore(lastFrame)).isEqualTo(0);
+        assertThat(finalFrame.calculateFrameScore(lastFrame)).isNull();
         finalFrame.bowl(Score.valueOf(10));
-        assertThat(finalFrame.calculateFrameScore(lastFrame)).isEqualTo(0);
+        assertThat(finalFrame.calculateFrameScore(lastFrame)).isNull();
         finalFrame.bowl(Score.valueOf(10));
-        assertThat(finalFrame.calculateFrameScore(lastFrame)).isEqualTo(30);
+
+        FrameNumericScore result = finalFrame.calculateFrameScore(lastFrame);
+        assertThat(result.getFrameScoreTotal()).isEqualTo(30);
     }
 
     @DisplayName("이전 9프레임의 결과가 스페어라면 마지막 프레임 1번 투구 전까지 점수 상계 안됨")
@@ -91,9 +94,11 @@ class FinalFrameTest {
 
         Frame finalFrame = FinalFrame.last(10);
 
-        assertThat(finalFrame.calculateFrameScore(lastFrame)).isEqualTo(0);
+        assertThat(finalFrame.calculateFrameScore(lastFrame)).isNull();
         finalFrame.bowl(Score.valueOf(10));
-        assertThat(finalFrame.calculateFrameScore(lastFrame)).isEqualTo(20);
+
+        FrameNumericScore result = finalFrame.calculateFrameScore(lastFrame);
+        assertThat(result.getFrameScoreTotal()).isEqualTo(20);
     }
 
     @DisplayName("현재 호출하는 객체가 null일 경우 마지막 프레임의 결과(단순 합산) 반환")
@@ -105,7 +110,8 @@ class FinalFrameTest {
         finalFrame.bowl(Score.valueOf(10));
 
         Frame nextFrame = finalFrame.next();
+        FrameNumericScore result = nextFrame.calculateFrameScore(finalFrame);
 
-        assertThat(nextFrame.calculateFrameScore(finalFrame)).isEqualTo(30);
+        assertThat(result.getFrameScoreTotal()).isEqualTo(30);
     }
 }

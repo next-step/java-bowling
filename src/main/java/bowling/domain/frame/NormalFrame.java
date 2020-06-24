@@ -49,37 +49,19 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int calculateFrameScore(Frame lastFrame) {
+    public FrameNumericScore calculateFrameScore(Frame lastFrame) {
         if (lastFrame.isSpare() || lastFrame.isStrike()) {
-            return strikeOrSpare(lastFrame);
-        }
-        return lastFrame.getScoresSum();
-    }
-
-    @Override
-    public FrameNumericScore calculateFrameScore2(Frame lastFrame) {
-        if (lastFrame.isSpare() || lastFrame.isStrike()) {
-            return calculateFrameScoreStrikeOrSpare(lastFrame);
+            return calculateFrameScoreWhenStrikeOrSpare(lastFrame);
         }
         return FrameNumericScore.of(lastFrame.getScoresSum());
     }
 
-    private FrameNumericScore calculateFrameScoreStrikeOrSpare(Frame lastFrame) {
+    private FrameNumericScore calculateFrameScoreWhenStrikeOrSpare(Frame lastFrame) {
         int frameScore = lastFrame.getScoresSum() + normalPitches.getScoresSum();
-        if (lastFrame.isStrike() && normalPitches.isFinished(2)) {
+        if (lastFrame.isStrike() && normalPitches.isFinished(MAXIMUM_NORMAL_PITCH_COUNTS)) {
             return FrameNumericScore.of(frameScore);
         }
-        return lastFrame.isSpare() && normalPitches.isFinished(1) ? FrameNumericScore.of(frameScore) : null;
-    }
-
-    private int strikeOrSpare(Frame lastFrame) {
-        if (lastFrame.isStrike() && this.normalPitches.isFinished(2)) {
-            return lastFrame.getScoresSum() + normalPitches.getScoresSum();
-        }
-        if (lastFrame.isSpare() && this.normalPitches.isFinished(1)) {
-            return lastFrame.getScoresSum() + normalPitches.getScoresSum();
-        }
-        return 0;
+        return lastFrame.isSpare() && normalPitches.isFinished(FIRST_INDEX) ? FrameNumericScore.of(frameScore) : null;
     }
 
     @Override
