@@ -19,9 +19,7 @@ public class Answers {
     }
 
     private void isExistOtherOwner(User user) throws CannotDeleteException {
-        if (answers.stream()
-                .filter(answer -> !answer.isOwner(user))
-                .count() >= USER_CHECK_COUNT) {
+        if (answers.stream().anyMatch(answer -> !answer.isOwner(user))) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
     }
@@ -29,10 +27,7 @@ public class Answers {
     public void deleteALL(User user, DeleteHistories deleteHistories) throws CannotDeleteException {
         isExistOtherOwner(user);
         answers.stream()
-                .forEach(answer -> {
-                    answer.setDeleted(true);
-                    deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter()));
-                });
+                .forEach(answer -> answer.delete(deleteHistories));
     }
 
 }
