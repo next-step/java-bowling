@@ -34,4 +34,12 @@ public class Scores {
 
         return Result.STRIKE;
     }
+
+    public Score getFirst() {
+        return Score.of(first.getContent());
+    }
+
+    public Score getSecond() {
+        return Score.of(second.getContent());
+    }
 }
