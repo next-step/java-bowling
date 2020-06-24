@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -8,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @DisplayName("State enum 테스트")
 public class StateTest {
@@ -36,5 +38,60 @@ public class StateTest {
                 Arguments.of(10, State.STRIKE, false),
                 Arguments.of(10, State.SPARE, true)
         );
+    }
+
+    @Test
+    void strike() {
+        int previousFallenPins = 0;
+        int nextFallenPins = 10;
+        int statesLength = 0;
+
+        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength);
+
+        assertThat(actual).isEqualTo(State.STRIKE);
+    }
+
+    @Test
+    void gutter() {
+        int previousFallenPins = 0;
+        int nextFallenPins = 0;
+        int statesLength = 0;
+
+        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength);
+
+        assertThat(actual).isEqualTo(State.GUTTER);
+    }
+
+    @Test
+    void spare() {
+        int previousFallenPins = 2;
+        int nextFallenPins = 8;
+        int statesLength = 0;
+
+        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength);
+
+        assertThat(actual).isEqualTo(State.SPARE);
+    }
+
+    @Test
+    void one() {
+        int previousFallenPins = 0;
+        int nextFallenPins = 1;
+        int statesLength = 0;
+
+        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength);
+
+        assertThat(actual).isEqualTo(State.ONE);
+    }
+
+    @Test
+    void validateFallenPinSum() {
+        int previousFallenPins = 2;
+        int nextFallenPins = 9;
+        int statesLength = 0;
+
+        assertThatExceptionOfType(FallenPinsSumException.class)
+                .isThrownBy(() -> State.bowl(previousFallenPins, nextFallenPins, statesLength))
+                .withMessage(FallenPinsSumException.MESSAGE);
     }
 }
