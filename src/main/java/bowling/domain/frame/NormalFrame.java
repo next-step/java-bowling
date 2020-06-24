@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pitch.NormalPitches;
 import bowling.domain.pitch.Pitches;
-import bowling.domain.score.FrameNumericScore;
+import bowling.domain.score.FrameScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
@@ -33,20 +33,20 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public FrameNumericScore calculateFrameScore(Frame lastFrame) {
+    public FrameScore calculateFrameScore(Frame lastFrame) {
         if (lastFrame.isStrike() || lastFrame.isSpare()) {
             return calculateFrameScoreWhenStrikeOrSpare(lastFrame);
         }
-        return FrameNumericScore.of(lastFrame.getPitchScoreSum());
+        return FrameScore.of(lastFrame.getPitchScoreSum());
     }
 
-    private FrameNumericScore calculateFrameScoreWhenStrikeOrSpare(Frame lastFrame) {
+    private FrameScore calculateFrameScoreWhenStrikeOrSpare(Frame lastFrame) {
         int frameScore = lastFrame.getPitchScoreSum() + normalPitches.getPitchScoreSum();
         if (lastFrame.isStrike() && normalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_STRIKE)) {
-            return FrameNumericScore.of(frameScore);
+            return FrameScore.of(frameScore);
         }
         return lastFrame.isSpare() && normalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_SPARE) ?
-                FrameNumericScore.of(frameScore) : null;
+                FrameScore.of(frameScore) : null;
     }
 
     @Override

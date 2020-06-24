@@ -1,15 +1,15 @@
 package bowling.domain.score;
 
-public class FrameNumericScore {
+public class FrameScore {
 
     private final int frameScoreTotal;
 
-    private FrameNumericScore(int frameScoreTotal) {
+    private FrameScore(int frameScoreTotal) {
         this.frameScoreTotal = frameScoreTotal;
     }
 
-    public static FrameNumericScore of(int frameScoreTotal) {
-        return new FrameNumericScore(frameScoreTotal);
+    public static FrameScore of(int frameScoreTotal) {
+        return new FrameScore(frameScoreTotal);
     }
 
     public int getFrameScoreTotal() {

@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pitch.FinalPitches;
 import bowling.domain.pitch.Pitches;
-import bowling.domain.score.FrameNumericScore;
+import bowling.domain.score.FrameScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
@@ -32,21 +32,21 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public FrameNumericScore calculateFrameScore(Frame lastFrame) {
+    public FrameScore calculateFrameScore(Frame lastFrame) {
         if (index == MAXIMUM_FINAL_FRAME_INDEX) {
-            return FrameNumericScore.of(lastFrame.getPitchScoreSum());
+            return FrameScore.of(lastFrame.getPitchScoreSum());
         }
         return lastFrame.isStrike() || lastFrame.isSpare() ?
-                calculateFrameScoreWhenStrikeOrSpare(lastFrame) : FrameNumericScore.of(lastFrame.getPitchScoreSum());
+                calculateFrameScoreWhenStrikeOrSpare(lastFrame) : FrameScore.of(lastFrame.getPitchScoreSum());
     }
 
-    private FrameNumericScore calculateFrameScoreWhenStrikeOrSpare(Frame lastFrame) {
+    private FrameScore calculateFrameScoreWhenStrikeOrSpare(Frame lastFrame) {
         int frameScore = lastFrame.getPitchScoreSum() + finalPitches.getPitchScoreSum();
         if (lastFrame.isStrike() && finalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_STRIKE)) {
-            return FrameNumericScore.of(frameScore);
+            return FrameScore.of(frameScore);
         }
         return lastFrame.isSpare() && finalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_SPARE) ?
-                FrameNumericScore.of(frameScore) : null;
+                FrameScore.of(frameScore) : null;
     }
 
     @Override

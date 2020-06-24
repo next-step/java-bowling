@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.FrameNumericScore;
+import bowling.domain.score.FrameScore;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -82,7 +82,7 @@ class FinalFrameTest {
         assertThat(finalFrame.calculateFrameScore(lastFrame)).isNull();
 
         finalFrame.bowl(Score.valueOf(10));
-        FrameNumericScore result = finalFrame.calculateFrameScore(lastFrame);
+        FrameScore result = finalFrame.calculateFrameScore(lastFrame);
         assertThat(result.getFrameScoreTotal()).isEqualTo(30);
     }
 
@@ -97,7 +97,7 @@ class FinalFrameTest {
         assertThat(finalFrame.calculateFrameScore(lastFrame)).isNull();
 
         finalFrame.bowl(Score.valueOf(10));
-        FrameNumericScore result = finalFrame.calculateFrameScore(lastFrame);
+        FrameScore result = finalFrame.calculateFrameScore(lastFrame);
         assertThat(result.getFrameScoreTotal()).isEqualTo(20);
     }
 
@@ -110,7 +110,7 @@ class FinalFrameTest {
         finalFrame.bowl(Score.valueOf(5));
 
         Frame nextFrame = finalFrame.next();
-        FrameNumericScore result = nextFrame.calculateFrameScore(finalFrame);
+        FrameScore result = nextFrame.calculateFrameScore(finalFrame);
 
         assertThat(result.getFrameScoreTotal()).isEqualTo(20);
     }

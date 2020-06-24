@@ -40,14 +40,14 @@ public class FinalPitches implements Pitches {
         return pitches.size() == pitchCounts;
     }
 
-    @Override
-    public boolean isSpare() {
-        return false;
-    }
-
     public boolean isNotContainingStrikeOrSpare() {
         return pitches.stream()
                 .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.FrameNumericScore;
-import bowling.domain.score.FrameNumericScores;
+import bowling.domain.score.FrameScore;
+import bowling.domain.score.FrameScores;
 import bowling.domain.score.Score;
 
 import java.util.ArrayList;
@@ -50,14 +50,14 @@ public class Frames {
     }
 
     public List<Integer> getFrameScores() {
-        FrameNumericScores frameNumericScores = new FrameNumericScores();
+        FrameScores frameScores = new FrameScores();
         int frameSize = frames.size();
         for (int i = 0; i < frameSize - 1; i++) {
             Frame lastFrame = frames.get(i);
             Frame nextFrame = frames.get(i + 1);
-            FrameNumericScore frameNumericScore = nextFrame.calculateFrameScore(lastFrame);
-            frameNumericScores.add(frameNumericScore);
+            FrameScore frameScore = nextFrame.calculateFrameScore(lastFrame);
+            frameScores.add(frameScore);
         }
-        return frameNumericScores.getScores();
+        return frameScores.getCumulativeFrameScores();
     }
 }

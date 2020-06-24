@@ -59,4 +59,13 @@ class NormalPitchesTest {
 
         assertThat(scores).containsExactly("-", "3");
     }
+
+    @DisplayName("스트라이크인 경우 isSpare 테스트 (Index 예외 발생하지 않음)")
+    @Test
+    public void isSpare_False() {
+        NormalPitches normalPitches = new NormalPitches();
+        normalPitches.throwBall(Score.valueOf(10));
+
+        assertThat(normalPitches.isSpare()).isFalse();
+    }
 }

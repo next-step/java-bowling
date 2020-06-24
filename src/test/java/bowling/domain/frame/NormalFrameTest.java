@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.FrameNumericScore;
+import bowling.domain.score.FrameScore;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -85,7 +85,7 @@ class NormalFrameTest {
         nextFrame.bowl(Score.valueOf(5));
         nextFrame.bowl(Score.valueOf(5));
 
-        FrameNumericScore result = nextFrame.calculateFrameScore(lastFrame);
+        FrameScore result = nextFrame.calculateFrameScore(lastFrame);
 
         assertThat(result.getFrameScoreTotal()).isEqualTo(20);
     }
@@ -112,7 +112,7 @@ class NormalFrameTest {
         Frame nextFrame = lastFrame.next();
         nextFrame.bowl(Score.valueOf(5));
 
-        FrameNumericScore result = nextFrame.calculateFrameScore(lastFrame);
+        FrameScore result = nextFrame.calculateFrameScore(lastFrame);
 
         assertThat(result.getFrameScoreTotal()).isEqualTo(15);
     }
@@ -125,7 +125,7 @@ class NormalFrameTest {
         lastFrame.bowl(Score.valueOf(0));
         Frame nextFrame = lastFrame.next();
 
-        FrameNumericScore result = nextFrame.calculateFrameScore(lastFrame);
+        FrameScore result = nextFrame.calculateFrameScore(lastFrame);
 
         assertThat(result.getFrameScoreTotal()).isEqualTo(4);
     }
