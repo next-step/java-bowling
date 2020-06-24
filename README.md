@@ -206,3 +206,11 @@
 - 초구가 스트라이크 아닌 경우
     - 2구째에 미스나면 2회로 끝난다.
     - 그 외 무조건 3회 던진다.
+    
+## Step2. 피드백 반영
+- [X] FrameResult 계산에서 불필요한 if 제거
+- [ ] FinalFrame 생성을 NormalFrame의 next에서 진행 가능하도록 개선
+- [ ] Player와 기존 BowlingGame 객체의 책임 일부를 새로운 BowlingGame객체로 이관
+    - [ ] Player, BowlingGameResults(BowlingGameResult 일급컬렉션)을 속성으로 가짐
+    - [ ] BowlingGameResults는 기존 PlayerFrames와 매우 유사하나 게임이 진행된 결과만을 저장하도록 구현
+    - [ ] 모든 기능 동작 확인되면 Player에서 PlayerFrames 일급 컬렉셔 제거 (currentFrame만 관리)

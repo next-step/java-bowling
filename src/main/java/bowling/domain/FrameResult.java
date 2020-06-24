@@ -27,12 +27,6 @@ public enum FrameResult {
     }
 
     public static FrameResult find(NumberOfHitPin numberOfHitPin) {
-        if (numberOfHitPin.equals(new NumberOfHitPin(10))) {
-            return STRIKE;
-        }
-        if (numberOfHitPin.equals(new NumberOfHitPin(0))) {
-            return GUTTER;
-        }
         return Arrays.stream(FrameResult.values())
                 .filter(frameStatus -> frameStatus.numberOfHitPin.equals(numberOfHitPin))
                 .findFirst()
