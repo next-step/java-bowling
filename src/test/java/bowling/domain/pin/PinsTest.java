@@ -1,6 +1,5 @@
 package bowling.domain.pin;
 
-import bowling.domain.state.StateExpression;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -48,18 +47,18 @@ public class PinsTest {
                 .isTrue();
     }
 
-    @DisplayName("각 상태에 해당하는 넘어진 핀의 개수를 문자열로 반환")
+    @DisplayName("각 상태에 해당하는 넘어진 핀의 개수 반환")
     @ParameterizedTest
     @MethodSource
-    public void getHitCount(final Pins pins, final String expected) {
-        assertThat(pins.getDescOfHitCount())
+    public void getHitCount(final Pins pins, final int expected) {
+        assertThat(pins.getHitCount())
                 .isEqualTo(expected);
     }
 
     private static Stream<Arguments> getHitCount() {
         return Stream.of(
-                Arguments.of(Pins.of(0), StateExpression.GUTTER),
-                Arguments.of(Pins.of(8), "8")
+                Arguments.of(Pins.of(0), 0),
+                Arguments.of(Pins.of(8), 8)
         );
     }
 }

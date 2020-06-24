@@ -57,31 +57,31 @@ public class StateDtoTest {
     @DisplayName("첫 번째 볼링핀의 출력값을 반환")
     @ParameterizedTest
     @MethodSource
-    void getFirstPins(final StateDto stateDto, final String desc) {
+    void getFirstPins(final StateDto stateDto, final int expected) {
         assertThat(stateDto.getFirstPins())
-                .isEqualTo(desc);
+                .isEqualTo(expected);
     }
 
     private static Stream<Arguments> getFirstPins() {
         return Stream.of(
-                Arguments.of(StateDtoFixture.getFirstHitState(), "9"),
-                Arguments.of(StateDtoFixture.getSpareState(), "9"),
-                Arguments.of(StateDtoFixture.getMissState(), "8")
+                Arguments.of(StateDtoFixture.getFirstHitState(), 9),
+                Arguments.of(StateDtoFixture.getSpareState(), 9),
+                Arguments.of(StateDtoFixture.getMissState(), 8)
         );
     }
 
     @DisplayName("두 번째 볼링핀의 출력값을 반환")
     @ParameterizedTest
     @MethodSource
-    void getSecondPins(final StateDto stateDto, final String desc) {
+    void getSecondPins(final StateDto stateDto, final int expected) {
         assertThat(stateDto.getSecondPins())
-                .isEqualTo(desc);
+                .isEqualTo(expected);
     }
 
     private static Stream<Arguments> getSecondPins() {
         return Stream.of(
-                Arguments.of(StateDtoFixture.getSpareState(), "1"),
-                Arguments.of(StateDtoFixture.getMissState(), "1")
+                Arguments.of(StateDtoFixture.getSpareState(), 1),
+                Arguments.of(StateDtoFixture.getMissState(), 1)
         );
     }
 

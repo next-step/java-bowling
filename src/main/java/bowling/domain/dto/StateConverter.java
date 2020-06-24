@@ -1,5 +1,6 @@
 package bowling.domain.dto;
 
+import bowling.domain.pin.PinExpression;
 import bowling.domain.state.State;
 import bowling.domain.state.StateExpression;
 import bowling.domain.state.finish.Miss;
@@ -18,13 +19,17 @@ public enum StateConverter {
     READY(Ready.class,
             stateDto -> StateExpression.READY),
     FIRST_HIT(FirstHit.class,
-            StateDto::getFirstPins),
+            stateDto -> PinExpression.convert(stateDto.getFirstPins())),
     STRIKE(Strike.class,
             stateDto -> StateExpression.STRIKE),
     SPARE(Spare.class,
-            stateDto -> stateDto.getFirstPins() + StateExpression.DELIMITER + StateExpression.SPARE),
+            stateDto -> PinExpression.convert(stateDto.getFirstPins())
+                    + StateExpression.DELIMITER
+                    + StateExpression.SPARE),
     MISS(Miss.class,
-            stateDto -> stateDto.getFirstPins() + StateExpression.DELIMITER + stateDto.getSecondPins());
+            stateDto -> PinExpression.convert(stateDto.getFirstPins())
+                    + StateExpression.DELIMITER
+                    + PinExpression.convert(stateDto.getSecondPins()));
 
     private final Class<? extends State> stateClassType;
     private final Function<StateDto, String> converter;

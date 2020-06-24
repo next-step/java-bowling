@@ -83,8 +83,8 @@ public class FirstHitTest {
     public void getFirstPinsAndSecondPins() {
         FirstHit firstHit = FirstHit.of(Pins.of(9));
 
-        assertThat(firstHit.getFirstPins().getDescOfHitCount())
-                .isEqualTo("9");
+        assertThat(firstHit.getFirstPins().getHitCount())
+                .isEqualTo(9);
         assertThatIllegalArgumentException()
                 .isThrownBy(firstHit::getSecondPins);
     }

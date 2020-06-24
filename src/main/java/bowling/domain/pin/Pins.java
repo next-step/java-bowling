@@ -1,7 +1,5 @@
 package bowling.domain.pin;
 
-import bowling.domain.state.StateExpression;
-
 public class Pins {
 
     private final PinCount hitCount;
@@ -36,16 +34,5 @@ public class Pins {
 
     public int getHitCount() {
         return this.hitCount.getCount();
-    }
-
-    public String getDescOfHitCount() {
-        if (this.isGutter()) {
-            return StateExpression.GUTTER;
-        }
-        return String.valueOf(hitCount.getCount());
-    }
-
-    private boolean isGutter() {
-        return this.hitCount.isMinCount();
     }
 }
