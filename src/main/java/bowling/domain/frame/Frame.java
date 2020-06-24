@@ -14,7 +14,7 @@ public interface Frame {
 
     public boolean isMovableToNextFrame();
 
-    public List<String> getScores();
+    public List<String> getScoreSignatures();
 
     public int getIndex();
 }

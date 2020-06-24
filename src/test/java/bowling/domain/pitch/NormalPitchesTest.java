@@ -20,7 +20,7 @@ class NormalPitchesTest {
 
         normalPitches.throwBall(score);
 
-        assertThat(normalPitches.getScores().get(0)).isEqualTo("5");
+        assertThat(normalPitches.getScoreSignatures().get(0)).isEqualTo("5");
     }
 
     @DisplayName("두 번째 투구면 Pitch를 next를 통해 생성하여 내부 컬렉션에 추가하며, 스페어임")
@@ -32,7 +32,7 @@ class NormalPitchesTest {
         normalPitches.throwBall(score);
         normalPitches.throwBall(Score.valueOf(5));
 
-        assertThat(normalPitches.getScores().get(1)).isEqualTo("/");
+        assertThat(normalPitches.getScoreSignatures().get(1)).isEqualTo("/");
     }
 
     @DisplayName("Normal Frame의 Normal Pitches는 2번 초과 투구시 예외 발생")
@@ -55,7 +55,7 @@ class NormalPitchesTest {
         normalPitches.throwBall(Score.valueOf(0));
         normalPitches.throwBall(Score.valueOf(3));
 
-        List<String> scores = normalPitches.getScores();
+        List<String> scores = normalPitches.getScoreSignatures();
 
         assertThat(scores).containsExactly("-", "3");
     }

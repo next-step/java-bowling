@@ -38,8 +38,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public List<String> getScores() {
-        return normalPitches.getScores();
+    public List<String> getScoreSignatures() {
+        return normalPitches.getScoreSignatures();
     }
 
     @Override

@@ -33,19 +33,19 @@ public class OutputView {
     }
 
     private static void printVisibleFrames(Frame frame) {
-        List<String> scores = frame.getScores();
+        List<String> scoreSignatures = frame.getScoreSignatures();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(ViewMessage.FRAME_BLANK_PREFIX);
-        scores.forEach(score -> appendScore(score, stringBuilder));
+        scoreSignatures.forEach(scoreSignature -> appendScoreSignature(scoreSignature, stringBuilder));
         appendFrameBlankSuffix(stringBuilder);
         System.out.print(stringBuilder.toString());
     }
 
-    private static void appendScore(String score, StringBuilder stringBuilder) {
+    private static void appendScoreSignature(String scoreSignature, StringBuilder stringBuilder) {
         if (stringBuilder.length() > ViewMessage.FRAME_BLANK_PREFIX.length()) {
             stringBuilder.append(ViewMessage.VERTICAL_LINE);
         }
-        stringBuilder.append(score);
+        stringBuilder.append(scoreSignature);
     }
 
     private static void appendFrameBlankSuffix(StringBuilder stringBuilder) {

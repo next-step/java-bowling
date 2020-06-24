@@ -40,7 +40,7 @@ public class NormalPitches implements Pitches {
     }
 
     @Override
-    public List<String> getScores() {
+    public List<String> getScoreSignatures() {
         return pitches.stream()
                 .map(Pitch::getScoreSignature)
                 .collect(Collectors.toList());

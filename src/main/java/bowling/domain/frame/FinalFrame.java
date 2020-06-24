@@ -37,8 +37,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<String> getScores() {
-        return finalPitches.getScores();
+    public List<String> getScoreSignatures() {
+        return finalPitches.getScoreSignatures();
     }
 
     @Override

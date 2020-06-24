@@ -10,5 +10,5 @@ public interface Pitches {
 
     public boolean isFinished(int pitchCounts);
 
-    public List<String> getScores();
+    public List<String> getScoreSignatures();
 }
