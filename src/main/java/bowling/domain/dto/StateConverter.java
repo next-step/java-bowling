@@ -40,7 +40,8 @@ public enum StateConverter {
 
     public static String convertToDesc(final StateDto stateDto) {
         return CONVERTERS.get(stateDto.getStateClassType())
-                .converter.apply(stateDto);
+                .converter
+                .apply(stateDto);
     }
 
     private Class<? extends State> getStateClassType() {
