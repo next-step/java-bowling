@@ -1,6 +1,9 @@
 package bowling.domain;
 
-import bowling.domain.exceptions.*;
+import bowling.domain.exceptions.AlreadyStartedPlayerException;
+import bowling.domain.exceptions.InvalidTryBowlException;
+import bowling.domain.exceptions.InvalidTryNextFrameException;
+import bowling.domain.exceptions.NotStartedPlayerException;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +16,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Stream;
 
-import static bowling.domain.FakeDataForTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -133,40 +135,5 @@ class PlayerTests {
         Player initPlayer = Player.createByName(PLAYER_NAME).bowlFirst(FIVE);
 
         assertThatThrownBy(() -> initPlayer.toNextFrame(TEN)).isInstanceOf(InvalidTryNextFrameException.class);
-    }
-
-    @DisplayName("9 프레임까지 완료된 상태에서 일반적인 방법으로 다음 프레임을 진행할 수 없다.")
-    @Test
-    void bowlNextFrameLimitValidationTest() {
-        assertThatThrownBy(() -> NINE_STRIKE_SUPER_PLAYER.toNextFrame(FIVE))
-                .isInstanceOf(NormalFrameFinishedException.class);
-    }
-
-    @DisplayName("9 프레임까지 완료한 플레이어는 마지막 프레임으로 넘어갈 수 있다.")
-    @Test
-    void bowlToFinalFrameTest() {
-        Player finalFramePlayer = NINE_STRIKE_SUPER_PLAYER.toFinalFrame(FIVE);
-
-        assertThat(finalFramePlayer)
-                .isEqualTo(new Player(PLAYER_NAME, NINE_STRIKE_AND_FINAL_FIRST_FIVE, FIRST_FIVE_FINAL_FRAME));
-    }
-
-    @DisplayName("10프레임을 진행할 수 있다.")
-    @Test
-    void bowlFinalFrameTest() {
-        Player finalFramePlayer = NINE_STRIKE_SUPER_PLAYER.toFinalFrame(FIVE);
-        Player player = finalFramePlayer.bowlCurrentFrame(FIVE);
-
-        assertThat(player)
-                .isEqualTo(new Player(PLAYER_NAME, NINE_STRIKE_AND_FINAL_FIVE_SPARE, FIVE_SPARE_FINAL_FRAME));
-    }
-
-    @DisplayName("10 프레임을 진행했거나 마무리 한 플레이어가 다음 프레임을 시도할 수 없다.")
-    @Test
-    void toNextInFinalFrameValidationTest() {
-        Player finalFramePlayer = NINE_STRIKE_SUPER_PLAYER.toFinalFrame(FIVE);
-
-        assertThatThrownBy(() -> finalFramePlayer.toNextFrame(FIVE))
-                .isInstanceOf(InvalidTryNextFrameException.class);
     }
 }

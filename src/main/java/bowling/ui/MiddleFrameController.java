@@ -9,15 +9,14 @@ public class MiddleFrameController {
         this.player = player;
     }
 
-    public Player doMiddleFrame() {
+    public void doMiddleFrame() {
         while(true) {
             player = doInCurrentFrame(player);
-            if (isBeforeFinal(player)) {
+            if (isFinished(player)) {
                 break;
             }
             player = doNextFrame(player);
         }
-        return player;
     }
 
     private Player doNextFrame(Player player) {
@@ -38,7 +37,7 @@ public class MiddleFrameController {
         return player;
     }
 
-    private boolean isBeforeFinal(Player player) {
-        return (player.getCurrentFrameIndex() == 9) && (player.isCurrentFrameCompleted());
+    private boolean isFinished(Player player) {
+        return (player.getCurrentFrameIndex() == 10) && (player.isCurrentFrameCompleted());
     }
 }

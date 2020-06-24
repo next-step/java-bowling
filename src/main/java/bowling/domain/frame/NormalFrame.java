@@ -8,6 +8,8 @@ import bowling.domain.frameStatus.NormalFrameStatus;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
+    private static final int FINAL_FRAME_INDEX = 10;
+
     private final int index;
     private final NormalFrameStatus currentStatus;
     private final NormalFrame previousFrame;
@@ -35,8 +37,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public NormalFrame next(int numberOfHitPin) {
+    public Frame next(int numberOfHitPin) {
         validateNext();
+        if (index + 1 == FINAL_FRAME_INDEX) {
+            return FinalFrame.bowlFirst(numberOfHitPin, this);
+        }
         return new NormalFrame(index + 1, NormalFrameStatus.bowlFirst(numberOfHitPin), this);
     }
 

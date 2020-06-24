@@ -19,7 +19,8 @@ public class OutputView {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
         System.out.println("|  " +
                 player.getName() + " |" +
-                parsePlayerResult(player.calculateResult())
+                parsePlayerResult(player.calculateResult()) +
+                "|"
         );
     }
 

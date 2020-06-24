@@ -10,13 +10,9 @@ public class BowlingGame {
         FirstFrameController firstFrameController = new FirstFrameController(initPlayer);
         Player firstFrameCompletedPlayer = firstFrameController.doFirstFrame();
 
-        // 2 ~ 9 프레임 처리
+        // 프레임 처리
         MiddleFrameController middleFrameController = new MiddleFrameController(firstFrameCompletedPlayer);
-        Player middleFrameCompletedPlayer = middleFrameController.doMiddleFrame();
-
-        // 10 프레임 처리
-        FinalFrameController finalFrameController = new FinalFrameController(middleFrameCompletedPlayer);
-        finalFrameController.doFinalFrame();
+        middleFrameController.doMiddleFrame();
     }
 
     private static Player initGame() {
