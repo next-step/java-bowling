@@ -52,7 +52,7 @@ public class PinsTest {
     @ParameterizedTest
     @MethodSource
     public void getHitCount(final Pins pins, final String expected) {
-        assertThat(pins.getHitCount())
+        assertThat(pins.getDescOfHitCount())
                 .isEqualTo(expected);
     }
 

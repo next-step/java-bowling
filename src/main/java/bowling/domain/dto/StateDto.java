@@ -34,10 +34,10 @@ public class StateDto {
     }
 
     public String getFirstPins() {
-        return this.state.getFirstPins().getHitCount();
+        return this.state.getFirstPins().getDescOfHitCount();
     }
 
     public String getSecondPins() {
-        return this.state.getSecondPins().getHitCount();
+        return this.state.getSecondPins().getDescOfHitCount();
     }
 }

@@ -53,10 +53,10 @@ public class SpareTest {
     @DisplayName("첫 번째와 두 번째 투구 결과인 볼링 핀을 반환")
     @Test
     public void getFirstPinsAndSecondPins() {
-        assertThat(spare.getFirstPins().getHitCount())
-                .isEqualTo(firstPins.getHitCount());
-        assertThat(spare.getSecondPins().getHitCount())
-                .isEqualTo(secondPins.getHitCount());
+        assertThat(spare.getFirstPins().getDescOfHitCount())
+                .isEqualTo(firstPins.getDescOfHitCount());
+        assertThat(spare.getSecondPins().getDescOfHitCount())
+                .isEqualTo(secondPins.getDescOfHitCount());
     }
 
     @DisplayName("해당 프레임이 가지는 모든 상태값을 반환")

@@ -34,11 +34,11 @@ public class Pins {
         return this.hitCount.sum(secondPins.hitCount);
     }
 
-    public int getCount() {
+    public int getHitCount() {
         return this.hitCount.getCount();
     }
 
-    public String getHitCount() {
+    public String getDescOfHitCount() {
         if (this.isGutter()) {
             return StateExpression.GUTTER;
         }

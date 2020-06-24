@@ -25,6 +25,6 @@ public class Spare extends Finished {
     }
 
     public Pins getSecondPins() {
-        return Pins.of(PinCount.MAX_COUNT - this.firstPins.getCount());
+        return Pins.of(PinCount.MAX_COUNT - this.firstPins.getHitCount());
     }
 }
