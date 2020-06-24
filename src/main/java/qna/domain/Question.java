@@ -4,9 +4,8 @@ import qna.CannotDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -38,13 +37,10 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
-    public List<DeleteHistory> deleteQnA(User loginUser) throws CannotDeleteException {
+    public void deleteQnA(User loginUser) throws CannotDeleteException {
         validateDeleteRequestor(loginUser);
-        answers.validateDeleteCondition(loginUser);
-        Stream<DeleteHistory> questionDeleteHistory = this.delete(ContentType.QUESTION, LocalDateTime.now());
-        Stream<DeleteHistory> answersDeleteHistory = answers.delete(ContentType.ANSWER, LocalDateTime.now());
-        return Stream.concat(questionDeleteHistory, answersDeleteHistory)
-                .collect(Collectors.toList());
+        this.delete();
+        answers.delete(loginUser);
     }
 
     private void validateDeleteRequestor(User loginUser) throws CannotDeleteException {
@@ -53,11 +49,20 @@ public class Question extends AbstractEntity {
         }
     }
 
-    public Stream<DeleteHistory> delete(ContentType contentType, LocalDateTime createTime) {
+    private void delete() {
         this.deleted = true;
-        return Stream.of(
-                new DeleteHistory(contentType, getId(), getWriter(), createTime)
-        );
+    }
+
+    public List<DeleteHistory> recordDeleteHistories(LocalDateTime createTime) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        this.recordDeleteHistory(deleteHistories, ContentType.QUESTION, createTime);
+        answers.recordDeleteHistories(deleteHistories, ContentType.ANSWER, createTime);
+        return deleteHistories;
+    }
+
+    private void recordDeleteHistory(List<DeleteHistory> deleteHistories, ContentType contentType,
+                                     LocalDateTime createTime) {
+        deleteHistories.add(new DeleteHistory(contentType, getId(), getWriter(), createTime));
     }
 
     public String getTitle() {

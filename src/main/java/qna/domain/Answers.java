@@ -10,7 +10,6 @@ import javax.persistence.OrderBy;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Embeddable
 public class Answers {
@@ -20,7 +19,12 @@ public class Answers {
     @OrderBy("id ASC")
     private final List<Answer> answers = new ArrayList<>();
 
-    public void validateDeleteCondition(User loginUser) throws CannotDeleteException {
+    public void delete(User loginUser) throws CannotDeleteException {
+        validateDeleteCondition(loginUser);
+        answers.forEach(Answer::delete);
+    }
+
+    private void validateDeleteCondition(User loginUser) throws CannotDeleteException {
         boolean isAllWrittenByLoginUser = answers.stream()
                 .allMatch(answer -> answer.isOwner(loginUser));
         if (!isAllWrittenByLoginUser) {
@@ -28,12 +32,15 @@ public class Answers {
         }
     }
 
-    public void add(Answer answer) {
-        answers.add(answer);
+    public void recordDeleteHistories(List<DeleteHistory> deleteHistories, ContentType contentType,
+                                      LocalDateTime createTime) {
+        for (Answer answer : answers) {
+            DeleteHistory deleteHistory = answer.recordDeleteHistory(contentType, createTime);
+            deleteHistories.add(deleteHistory);
+        }
     }
 
-    public Stream<DeleteHistory> delete(ContentType contentType, LocalDateTime createTime) {
-        return answers.stream()
-                .map(answer -> answer.delete(contentType, createTime));
+    public void add(Answer answer) {
+        answers.add(answer);
     }
 }
