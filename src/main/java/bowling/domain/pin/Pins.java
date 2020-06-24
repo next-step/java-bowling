@@ -34,6 +34,10 @@ public class Pins {
         return this.hitCount.sum(secondPins.hitCount);
     }
 
+    public int getCount() {
+        return this.hitCount.getCount();
+    }
+
     public String getHitCount() {
         if (this.isGutter()) {
             return StateExpression.GUTTER;
