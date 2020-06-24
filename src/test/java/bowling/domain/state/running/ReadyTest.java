@@ -1,7 +1,6 @@
 package bowling.domain.state.running;
 
 import bowling.domain.pin.PinCount;
-import bowling.domain.state.StateExpression;
 import bowling.domain.state.finish.Strike;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -32,13 +31,6 @@ public class ReadyTest {
 
         assertThat(Ready.getInstance().bowl(pinCount))
                 .isInstanceOf(FirstHit.class);
-    }
-
-    @DisplayName("Ready에 대한 문자열을 반환")
-    @Test
-    public void getDesc() {
-        assertThat(Ready.getInstance().getDesc())
-                .isEqualTo(StateExpression.READY);
     }
 
     @DisplayName("종료 조건을 만족하지 않음")

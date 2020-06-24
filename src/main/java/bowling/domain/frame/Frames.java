@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.dto.FrameResult;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.pin.PinCount;
 
@@ -42,12 +41,6 @@ public class Frames {
 
     private Frame getCurrentFrame() {
         return frames.get(frames.size() - 1);
-    }
-
-    public List<FrameResult> getFrameResult() {
-        return frames.stream()
-                .map(Frame::getFrameResult)
-                .collect(Collectors.toList());
     }
 
     public List<StateDtos> getFrameResult2() {

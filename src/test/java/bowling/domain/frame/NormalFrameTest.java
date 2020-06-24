@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.dto.FrameResult;
 import bowling.domain.state.StateExpression;
 import bowling.fixture.NormalFrameFixture;
 import org.junit.Test;
@@ -90,11 +89,11 @@ public class NormalFrameTest {
                 .isFalse();
     }
 
-    @DisplayName("쓰러진 공에 따라 상태값이 변경 및 자신의 상태값을 반환 : gutter, nextFrame(ready)")
+    @DisplayName("쓰러진 공에 따라 상태값이 변경 및 자신의 상태값을 반환")
     @ParameterizedTest
     @MethodSource
-    public void getFrameResult(final Frame frame, final FrameResult expected) {
-        assertThat(frame.getFrameResult())
+    public void getFrameResult(final Frame frame, final String expected) {
+        assertThat(frame.getFrameResult2().getDesc())
                 .isEqualTo(expected);
     }
 
@@ -103,8 +102,8 @@ public class NormalFrameTest {
         Frame strikeFrame = NormalFrameFixture.getStrikeFrame();
 
         return Stream.of(
-                Arguments.of(gutterStateFrame, FrameResult.of(StateExpression.GUTTER + StateExpression.BLANK)),
-                Arguments.of(strikeFrame, FrameResult.of(StateExpression.STRIKE))
+                Arguments.of(gutterStateFrame, StateExpression.GUTTER),
+                Arguments.of(strikeFrame, StateExpression.STRIKE)
         );
     }
 }

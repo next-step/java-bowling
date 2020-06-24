@@ -15,8 +15,6 @@ public interface State {
 
     boolean isCleanState();
 
-    String getDesc();
-
     Pins getFirstPins();
 
     Pins getSecondPins();

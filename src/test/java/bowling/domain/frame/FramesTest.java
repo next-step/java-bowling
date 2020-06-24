@@ -1,7 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.dto.FrameResult;
+import bowling.domain.dto.StateDtos;
 import bowling.domain.pin.PinCount;
+import bowling.domain.state.StateExpression;
+import bowling.fixture.FramesFixture;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,22 +43,10 @@ public class FramesTest {
     }
 
     public static Stream<Arguments> bowl() {
-        Frames frames1 = Frames.newInstance();
-        frames1.bowl(PinCount.of(9));
-        frames1.bowl(PinCount.of(1));
-
-        Frames frames2 = Frames.newInstance();
-        frames2.bowl(PinCount.of(PinCount.MAX_COUNT));
-        frames2.bowl(PinCount.of(PinCount.MAX_COUNT));
-
-        Frames frames3 = Frames.newInstance();
-        frames3.bowl(PinCount.of(PinCount.MAX_COUNT));
-        frames3.bowl(PinCount.of(9));
-
         return Stream.of(
-                Arguments.of(frames1, 2),
-                Arguments.of(frames2, 3),
-                Arguments.of(frames3, 2)
+                Arguments.of(FramesFixture.getSpareFrames(), 2),
+                Arguments.of(FramesFixture.getTwoStrikeFrames(), 3),
+                Arguments.of(FramesFixture.getStrikeHitFrames(), 2)
         );
     }
 
@@ -78,29 +68,19 @@ public class FramesTest {
     @DisplayName("모든 프레임의 상태값을 반환")
     @ParameterizedTest
     @MethodSource
-    public void getFrameResult(final Frames frames, final List<FrameResult> expected) {
-        assertThat(frames.getFrameResult())
-                .isEqualTo(expected);
+    public void getFrameResult(final Frames frames, final List<StateDtos> expected) {
+        IntStream.range(0, frames.getFrameResult2().size())
+                .forEach(index ->
+                    assertThat(frames.getFrameResult2().get(index).getDesc())
+                            .isEqualTo(expected.get(index))
+                );
     }
 
     public static Stream<Arguments> getFrameResult() {
-        Frames frames1 = Frames.newInstance();
-        frames1.bowl(PinCount.of(9));
-        frames1.bowl(PinCount.of(1));
-
-        Frames frames2 = Frames.newInstance();
-        PinCount maxCount = PinCount.of(PinCount.MAX_COUNT);
-        frames2.bowl(maxCount);
-        frames2.bowl(maxCount);
-
-        Frames frames3 = Frames.newInstance();
-        frames3.bowl(maxCount);
-        frames3.bowl(PinCount.of(9));
-
         return Stream.of(
-                Arguments.of(frames1, Arrays.asList(FrameResult.of("9|/"), FrameResult.of(""))),
-                Arguments.of(frames2, Arrays.asList(FrameResult.of("X"), FrameResult.of("X"), FrameResult.of(""))),
-                Arguments.of(frames3, Arrays.asList(FrameResult.of("X"), FrameResult.of("9 ")))
+                Arguments.of(FramesFixture.getSpareFrames(), Arrays.asList("9|/", StateExpression.READY)),
+                Arguments.of(FramesFixture.getTwoStrikeFrames(), Arrays.asList("X", "X", StateExpression.READY)),
+                Arguments.of(FramesFixture.getStrikeHitFrames(), Arrays.asList("X", "9"))
         );
     }
 }

@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.dto.FrameResult;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.pin.PinCount;
 import bowling.domain.state.State;
@@ -9,7 +8,6 @@ import bowling.domain.state.running.Ready;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
 
@@ -75,17 +73,6 @@ public class FinalFrame extends Frame {
     @Override
     public int getFrameNo() {
         return FrameNumber.MAX_NUMBER;
-    }
-
-    @Override
-    public FrameResult getFrameResult() {
-        return FrameResult.of(getDesc());
-    }
-
-    private String getDesc() {
-        return this.states.stream()
-                .map(State::getDesc)
-                .collect(Collectors.joining("|"));
     }
 
     @Override

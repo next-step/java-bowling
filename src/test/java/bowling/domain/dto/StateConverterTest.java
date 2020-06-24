@@ -1,5 +1,10 @@
 package bowling.domain.dto;
 
+import bowling.domain.pin.Pins;
+import bowling.domain.state.StateExpression;
+import bowling.domain.state.finish.Miss;
+import bowling.domain.state.finish.Spare;
+import bowling.domain.state.running.FirstHit;
 import bowling.fixture.StateDtoFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,11 +27,22 @@ public class StateConverterTest {
 
     private static Stream<Arguments> getDesc() {
         return Stream.of(
-                Arguments.of(StateDtoFixture.getReadyState(), ""),
+                Arguments.of(StateDtoFixture.getReadyState(), StateExpression.READY),
                 Arguments.of(StateDtoFixture.getFirstHitState(), "9"),
-                Arguments.of(StateDtoFixture.getStrikeState(), "X"),
+                Arguments.of(StateDtoFixture.getStrikeState(), StateExpression.STRIKE),
                 Arguments.of(StateDtoFixture.getSpareState(), "9|/"),
-                Arguments.of(StateDtoFixture.getMissState(), "8|1")
+                Arguments.of(StateDtoFixture.getMissState(), "8|1"),
+
+                Arguments.of(StateDto.of(Miss.of(Pins.of(9), Pins.of(0))), "9|-"),
+                Arguments.of(StateDto.of(Miss.of(Pins.of(0), Pins.of(0))), "-|-"),
+                Arguments.of(StateDto.of(Miss.of(Pins.of(2), Pins.of(3))), "2|3"),
+
+                Arguments.of(StateDto.of(Spare.of(Pins.of(9), Pins.of(1))), "9|/"),
+                Arguments.of(StateDto.of(Spare.of(Pins.of(2), Pins.of(8))), "2|/"),
+                Arguments.of(StateDto.of(Spare.of(Pins.of(0), Pins.of(10))), "-|/"),
+
+                Arguments.of(StateDto.of(FirstHit.of(Pins.of(0))), StateExpression.GUTTER),
+                Arguments.of(StateDto.of(FirstHit.of(Pins.of(2))), "2")
         );
     }
 }

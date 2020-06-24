@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.dto.FrameResult;
 import bowling.domain.pin.PinCount;
 import bowling.domain.state.StateExpression;
 import bowling.fixture.FinalFrameFixture;
@@ -37,23 +36,23 @@ public class FinalFrameTest {
         Frame nextFrame = FinalFrame.newInstance();
         nextFrame.bowl(PinCount.of(PinCount.MAX_COUNT));
 
-        assertThat(nextFrame.getFrameResult())
-                .isEqualTo(FrameResult.of(StateExpression.STRIKE + "|"));
+        assertThat(nextFrame.getFrameResult2().getDesc())
+                .isEqualTo(StateExpression.STRIKE);
     }
 
     @DisplayName("현재 상태가 진행 상태의 경우, 현재 상태를 제거하고 새로 던진 볼링공의 상태를 추가 및 상태값 반환")
     @ParameterizedTest
     @MethodSource
-    public void runningAfterBowl(final Frame nextFrame, final FrameResult frameResult) {
-        assertThat(nextFrame.getFrameResult())
-                .isEqualTo(frameResult);
+    public void runningAfterBowl(final Frame nextFrame, final String expected) {
+        assertThat(nextFrame.getFrameResult2().getDesc())
+                .isEqualTo(expected);
     }
 
     private static Stream<Arguments> runningAfterBowl() {
         return Stream.of(
-                Arguments.of(FinalFrameFixture.getOneStrikeFrame(), FrameResult.of("X" + "|")),
-                Arguments.of(FinalFrameFixture.getStrikeGutterFrame(), FrameResult.of("X|- ")),
-                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame(), FrameResult.of("9|/|X" + "|"))
+                Arguments.of(FinalFrameFixture.getOneStrikeFrame(), "X"),
+                Arguments.of(FinalFrameFixture.getStrikeGutterFrame(), "X|-"),
+                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame(), "9|/|X")
         );
     }
 

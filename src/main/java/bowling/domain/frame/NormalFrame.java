@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 
-import bowling.domain.dto.FrameResult;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.pin.PinCount;
 import bowling.domain.state.State;
@@ -61,11 +60,6 @@ public class NormalFrame extends Frame {
     @Override
     public int getFrameNo() {
         return this.frameNumber.getNo();
-    }
-
-    @Override
-    public FrameResult getFrameResult() {
-        return FrameResult.of(state.getDesc());
     }
 
     @Override

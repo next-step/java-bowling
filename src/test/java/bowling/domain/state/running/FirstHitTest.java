@@ -2,7 +2,6 @@ package bowling.domain.state.running;
 
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
-import bowling.domain.state.StateExpression;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import org.junit.Test;
@@ -55,21 +54,6 @@ public class FirstHitTest {
                 Arguments.of(FirstHit.of(Pins.of(9)), PinCount.of(PinCount.MIN_COUNT)),
                 Arguments.of(FirstHit.of(Pins.of(2)), PinCount.of(PinCount.MIN_COUNT)),
                 Arguments.of(FirstHit.of(Pins.of(PinCount.MIN_COUNT)), PinCount.of(PinCount.MIN_COUNT))
-        );
-    }
-
-    @DisplayName("Hit 상태에 대한 문자열을 반환")
-    @ParameterizedTest
-    @MethodSource
-    public void getDesc(final FirstHit hit, final String expected) {
-        assertThat(hit.getDesc())
-                .isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> getDesc() {
-        return Stream.of(
-                Arguments.of(FirstHit.of(Pins.of(PinCount.MIN_COUNT)), StateExpression.GUTTER + StateExpression.BLANK),
-                Arguments.of(FirstHit.of(Pins.of(2)), 2 + StateExpression.BLANK)
         );
     }
 

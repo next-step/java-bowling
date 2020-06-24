@@ -3,7 +3,6 @@ package bowling.domain.state.running;
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
 import bowling.domain.state.State;
-import bowling.domain.state.StateExpression;
 import bowling.domain.state.finish.Strike;
 
 public class Ready extends Running {
@@ -27,10 +26,5 @@ public class Ready extends Running {
             return Strike.getInstance();
         }
         return FirstHit.of(pins);
-    }
-
-    @Override
-    public String getDesc() {
-        return StateExpression.READY;
     }
 }

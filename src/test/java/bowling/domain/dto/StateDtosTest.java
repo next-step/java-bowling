@@ -1,6 +1,7 @@
 package bowling.domain.dto;
 
 import bowling.domain.state.State;
+import bowling.domain.state.StateExpression;
 import bowling.fixture.StateDtosFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,9 +35,9 @@ public class StateDtosTest {
 
     private static Stream<Arguments> getDesc() {
         return Stream.of(
-                Arguments.of(StateDtosFixture.getReadyState(), ""),
+                Arguments.of(StateDtosFixture.getReadyState(), StateExpression.READY),
                 Arguments.of(StateDtosFixture.getFirstHitState(), "9"),
-                Arguments.of(StateDtosFixture.getStrikeState(), "X"),
+                Arguments.of(StateDtosFixture.getStrikeState(), StateExpression.STRIKE),
                 Arguments.of(StateDtosFixture.getSpareState(), "9|/"),
                 Arguments.of(StateDtosFixture.getMissState(), "8|1"),
                 Arguments.of(StateDtosFixture.getThreeStrikeFinalFrame(), "X|X|X"),

@@ -2,7 +2,6 @@ package bowling.domain.state.finish;
 
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
-import bowling.domain.state.StateExpression;
 
 public class Strike extends Finished {
 
@@ -15,11 +14,6 @@ public class Strike extends Finished {
 
     public static Strike getInstance() {
         return InnerInstanceClass.instance;
-    }
-
-    @Override
-    public String getDesc() {
-        return StateExpression.STRIKE;
     }
 
     @Override

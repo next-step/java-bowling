@@ -1,7 +1,6 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
-import bowling.domain.dto.FrameResult;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.frame.FrameNumber;
 import bowling.util.StringUtil;
@@ -32,8 +31,6 @@ public class ResultView {
         printFramesHeader();
 
         printNameInfo(bowlingGame.getPlayerName());
-//        printResult(bowlingGame.getFrameResults());
-//        System.out.println();
         printResult2(bowlingGame.getFrameResults2());
         System.out.println();
     }
@@ -52,18 +49,6 @@ public class ResultView {
         IntStream.rangeClosed(FrameNumber.MIN_NUMBER, FrameNumber.MAX_NUMBER)
                 .forEach(no -> System.out.print(
                         String.format(FRAME_HEADER_NUMBER_FORMAT, no) + DELIMITER));
-    }
-
-    private static void printResult(final List<FrameResult> results) {
-        if (Objects.isNull(results)) {
-            printLine(Collections.emptyList());
-            return;
-        }
-
-        printLine(results.stream()
-                .map(FrameResult::getDesc)
-                .collect(Collectors.toList())
-        );
     }
 
     private static void printResult2(final List<StateDtos> results) {

@@ -3,7 +3,6 @@ package bowling.domain.state.running;
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
 import bowling.domain.state.State;
-import bowling.domain.state.StateExpression;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import bowling.exception.CannotMatchStateException;
@@ -31,11 +30,6 @@ public class FirstHit extends Running {
             return Spare.of(firstPins, pins);
         }
         return Miss.of(firstPins, pins);
-    }
-
-    @Override
-    public String getDesc() {
-        return firstPins.getHitCount() + StateExpression.BLANK;
     }
 
     @Override

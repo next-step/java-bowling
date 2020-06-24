@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.dto.FrameResult;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.pin.PinCount;
 
@@ -17,8 +16,6 @@ public abstract class Frame {
     }
 
     abstract int getFrameNo();
-
-    abstract FrameResult getFrameResult();
 
     abstract StateDtos getFrameResult2();
 }
