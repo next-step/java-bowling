@@ -71,7 +71,7 @@ public class FramesTest {
     public void getFrameResult(final Frames frames, final List<StateDtos> expected) {
         IntStream.range(0, frames.getFrameResult().size())
                 .forEach(index ->
-                    assertThat(frames.getFrameResult().get(index).getDesc())
+                    assertThat(frames.getFrameResult().get(index).getSymbol())
                             .isEqualTo(expected.get(index))
                 );
     }

@@ -20,12 +20,12 @@ public class StateConverterTest {
     @DisplayName("특정 상태값을 알맞는 출력값으로 변환")
     @ParameterizedTest
     @MethodSource
-    void getDesc(final StateDto stateDto, final String expected) {
-        assertThat(StateConverter.convertToDesc(stateDto))
+    void getSymbol(final StateDto stateDto, final String expected) {
+        assertThat(StateConverter.convertToSymbol(stateDto))
                 .isEqualTo(expected);
     }
 
-    private static Stream<Arguments> getDesc() {
+    private static Stream<Arguments> getSymbol() {
         return Stream.of(
                 Arguments.of(StateDtoFixture.getReadyState(), StateExpression.READY),
                 Arguments.of(StateDtoFixture.getFirstHitState(), "9"),

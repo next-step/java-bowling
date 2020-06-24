@@ -29,10 +29,10 @@ public class StateDtos {
         return new StateDtos(states);
     }
 
-    public String getDesc() {
+    public String getSymbol() {
         return this.stateDtos.stream()
                 .filter(stateDto -> !stateDto.isReady())
-                .map(StateConverter::convertToDesc)
+                .map(StateConverter::convertToSymbol)
                 .collect(Collectors.joining(StateExpression.DELIMITER));
     }
 }

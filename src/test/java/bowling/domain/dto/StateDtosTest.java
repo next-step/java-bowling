@@ -29,7 +29,7 @@ public class StateDtosTest {
     @ParameterizedTest
     @MethodSource
     void getDesc(final StateDtos stateDtos, final String expected) {
-        assertThat(stateDtos.getDesc())
+        assertThat(stateDtos.getSymbol())
                 .isEqualTo(expected);
     }
 

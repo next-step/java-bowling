@@ -58,7 +58,7 @@ public class ResultView {
         }
 
         printLine(results.stream()
-                .map(StateDtos::getDesc)
+                .map(StateDtos::getSymbol)
                 .collect(Collectors.toList())
         );
     }

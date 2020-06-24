@@ -43,7 +43,7 @@ public enum StateConverter {
         this.converter = converter;
     }
 
-    public static String convertToDesc(final StateDto stateDto) {
+    public static String convertToSymbol(final StateDto stateDto) {
         return CONVERTERS.get(stateDto.getStateClassType())
                 .converter
                 .apply(stateDto);
