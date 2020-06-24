@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.FrameNumericScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
@@ -18,12 +19,15 @@ public interface Frame {
 
     public int getIndex();
 
-    public int calculateScore(Frame nextFrame);
+    public int calculateFrameScore(Frame nextFrame);
+
+    public FrameNumericScore calculateFrameScore2(Frame lastFrame);
+
 
     public boolean isStrike();
 
     public int getScoresSum();
 
-    boolean isSpare();
+    public boolean isSpare();
 
 }

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pitch.NormalPitches;
+import bowling.domain.score.FrameNumericScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
@@ -48,11 +49,27 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int calculateScore(Frame lastFrame) {
+    public int calculateFrameScore(Frame lastFrame) {
         if (lastFrame.isSpare() || lastFrame.isStrike()) {
             return strikeOrSpare(lastFrame);
         }
         return lastFrame.getScoresSum();
+    }
+
+    @Override
+    public FrameNumericScore calculateFrameScore2(Frame lastFrame) {
+        if (lastFrame.isSpare() || lastFrame.isStrike()) {
+            return calculateFrameScoreStrikeOrSpare(lastFrame);
+        }
+        return FrameNumericScore.of(lastFrame.getScoresSum());
+    }
+
+    private FrameNumericScore calculateFrameScoreStrikeOrSpare(Frame lastFrame) {
+        int frameScore = lastFrame.getScoresSum() + normalPitches.getScoresSum();
+        if (lastFrame.isStrike() && normalPitches.isFinished(2)) {
+            return FrameNumericScore.of(frameScore);
+        }
+        return lastFrame.isSpare() && normalPitches.isFinished(1) ? FrameNumericScore.of(frameScore) : null;
     }
 
     private int strikeOrSpare(Frame lastFrame) {
@@ -71,12 +88,12 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int getScoresSum() {
-        return normalPitches.getScoresSum();
+    public boolean isSpare() {
+        return normalPitches.isSpare();
     }
 
     @Override
-    public boolean isSpare() {
-        return normalPitches.isFinished(2) && normalPitches.getScoresSum() == 10;
+    public int getScoresSum() {
+        return normalPitches.getScoresSum();
     }
 }

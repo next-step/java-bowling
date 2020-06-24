@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.FrameNumericScore;
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,14 +70,14 @@ class NormalFrameTest {
         Frame nextFrame = lastFrame.next();
         nextFrame.bowl(Score.valueOf(5));
 
-        int result = nextFrame.calculateScore(lastFrame);
+        FrameNumericScore result = nextFrame.calculateFrameScore2(lastFrame);
 
-        assertThat(result).isEqualTo(0);
+        assertThat(result).isEqualTo(null);
 
         nextFrame.bowl(Score.valueOf(5));
-        result = nextFrame.calculateScore(lastFrame);
+        result = nextFrame.calculateFrameScore2(lastFrame);
 
-        assertThat(result).isEqualTo(20);
+        assertThat(result.getFrameScoreTotal()).isEqualTo(20);
     }
 
     @DisplayName("점수 상계 시 lastFrame이 스페어인 경우 NextFrame이 1번 투구를 하지 않으면 점수는 0")
@@ -87,14 +88,14 @@ class NormalFrameTest {
         lastFrame.bowl(Score.valueOf(7));
         Frame nextFrame = lastFrame.next();
 
-        int result = nextFrame.calculateScore(lastFrame);
+        FrameNumericScore result = nextFrame.calculateFrameScore2(lastFrame);
 
-        assertThat(result).isEqualTo(0);
+        assertThat(result).isEqualTo(null);
 
         nextFrame.bowl(Score.valueOf(5));
-        result = nextFrame.calculateScore(lastFrame);
+        result = nextFrame.calculateFrameScore2(lastFrame);
 
-        assertThat(result).isEqualTo(15);
+        assertThat(result.getFrameScoreTotal()).isEqualTo(15);
     }
 
     @DisplayName("lastFrame에 스페어나 스트라이크가 없는 경우 이전 프레임의 점수를 반환함")
@@ -105,6 +106,8 @@ class NormalFrameTest {
         lastFrame.bowl(Score.valueOf(0));
         Frame nextFrame = lastFrame.next();
 
-        assertThat(nextFrame.calculateScore(lastFrame)).isEqualTo(4);
+        FrameNumericScore result = nextFrame.calculateFrameScore2(lastFrame);
+
+        assertThat(result.getFrameScoreTotal()).isEqualTo(4);
     }
 }

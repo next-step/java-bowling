@@ -59,4 +59,9 @@ public class FinalPitches implements Pitches {
                 .mapToInt(Pitch::getScore)
                 .sum();
     }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
 }

@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pitch.FinalPitches;
+import bowling.domain.score.FrameNumericScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int calculateScore(Frame lastFrame) {
+    public int calculateFrameScore(Frame lastFrame) {
         if (index == 11) {
             return lastFrame.getScoresSum();
         }
@@ -55,6 +56,11 @@ public class FinalFrame implements Frame {
             return strikeOrSpare(lastFrame);
         }
         return lastFrame.getScoresSum();
+    }
+
+    @Override
+    public FrameNumericScore calculateFrameScore2(Frame nextFrame) {
+        return null;
     }
 
     private int strikeOrSpare(Frame lastFrame) {

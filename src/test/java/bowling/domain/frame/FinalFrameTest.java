@@ -75,11 +75,11 @@ class FinalFrameTest {
         lastFrame.bowl(Score.valueOf(10));
         Frame finalFrame = FinalFrame.last(10);
 
-        assertThat(finalFrame.calculateScore(lastFrame)).isEqualTo(0);
+        assertThat(finalFrame.calculateFrameScore(lastFrame)).isEqualTo(0);
         finalFrame.bowl(Score.valueOf(10));
-        assertThat(finalFrame.calculateScore(lastFrame)).isEqualTo(0);
+        assertThat(finalFrame.calculateFrameScore(lastFrame)).isEqualTo(0);
         finalFrame.bowl(Score.valueOf(10));
-        assertThat(finalFrame.calculateScore(lastFrame)).isEqualTo(30);
+        assertThat(finalFrame.calculateFrameScore(lastFrame)).isEqualTo(30);
     }
 
     @DisplayName("이전 9프레임의 결과가 스페어라면 마지막 프레임 1번 투구 전까지 점수 상계 안됨")
@@ -91,9 +91,9 @@ class FinalFrameTest {
 
         Frame finalFrame = FinalFrame.last(10);
 
-        assertThat(finalFrame.calculateScore(lastFrame)).isEqualTo(0);
+        assertThat(finalFrame.calculateFrameScore(lastFrame)).isEqualTo(0);
         finalFrame.bowl(Score.valueOf(10));
-        assertThat(finalFrame.calculateScore(lastFrame)).isEqualTo(20);
+        assertThat(finalFrame.calculateFrameScore(lastFrame)).isEqualTo(20);
     }
 
     @DisplayName("현재 호출하는 객체가 null일 경우 마지막 프레임의 결과(단순 합산) 반환")
@@ -106,6 +106,6 @@ class FinalFrameTest {
 
         Frame nextFrame = finalFrame.next();
 
-        assertThat(nextFrame.calculateScore(finalFrame)).isEqualTo(30);
+        assertThat(nextFrame.calculateFrameScore(finalFrame)).isEqualTo(30);
     }
 }

@@ -13,4 +13,6 @@ public interface Pitches {
     public List<String> getScoreSignatures();
 
     public int getScoresSum();
+
+    boolean isSpare();
 }

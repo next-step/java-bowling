@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class NormalPitches implements Pitches {
     private static final int FIRST_INDEX = 0;
+    private static final int SECOND_INDEX = 1;
 
     private final List<Pitch> pitches = new ArrayList<>();
 
@@ -51,5 +52,10 @@ public class NormalPitches implements Pitches {
         return pitches.stream()
                 .mapToInt(Pitch::getScore)
                 .sum();
+    }
+
+    @Override
+    public boolean isSpare() {
+        return isFinished(Frame.MAXIMUM_NORMAL_PITCH_COUNTS) && pitches.get(SECOND_INDEX).isSpare();
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public class FrameNumericScores {
 
     private final List<FrameNumericScore> frameNumericScores = new ArrayList<>();
-    
+
     public void add(FrameNumericScore firstFrameScore) {
         frameNumericScores.add(firstFrameScore);
     }
