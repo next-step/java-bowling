@@ -75,13 +75,13 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-    public DeleteHistory deleteHistory(User writer) throws CannotDeleteException {
+    public DeleteHistory deleteAnswer(User writer) {
         validateOwner(writer);
         this.deleted = true;
         return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 
-    private void validateOwner(User writer) throws CannotDeleteException {
+    private void validateOwner(User writer) {
         if (!isOwner(writer)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }

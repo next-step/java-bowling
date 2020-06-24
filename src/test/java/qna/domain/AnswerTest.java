@@ -14,12 +14,12 @@ public class AnswerTest {
 
     @Test
     void deleteAnswerTest_성공() throws CannotDeleteException {
-        DeleteHistory deleteHistory = A1.deleteHistory(UserTest.JAVAJIGI);
+        DeleteHistory deleteHistory = A1.deleteAnswer(UserTest.JAVAJIGI);
         assertThat(deleteHistory).isEqualTo(new DeleteHistory(ContentType.ANSWER, A1.getId(), A1.getWriter(), LocalDateTime.now()));
     }
 
     @Test
     void deleteAnswerTest_실패() throws CannotDeleteException {
-        assertThatThrownBy(() -> A2.deleteHistory(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> A2.deleteAnswer(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
     }
 }

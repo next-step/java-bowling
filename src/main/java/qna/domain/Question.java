@@ -95,14 +95,14 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public DeleteHistories deleteHistories(User loginUser) throws CannotDeleteException {
+    public DeleteHistories deleteQuestion(User loginUser) {
         validateOwner(loginUser);
 
         DeleteHistories deleteHistories = new DeleteHistories();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), loginUser, LocalDateTime.now()));
 
         for (Answer answer : answers) {
-            deleteHistories.add(answer.deleteHistory(loginUser));
+            deleteHistories.add(answer.deleteAnswer(loginUser));
         }
 
         this.deleted = true;
@@ -110,9 +110,10 @@ public class Question extends AbstractEntity {
         return deleteHistories;
     }
 
-    private void validateOwner(User loginUser) throws CannotDeleteException{
+    private void validateOwner(User loginUser) {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
+
 }
