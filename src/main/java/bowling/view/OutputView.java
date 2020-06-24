@@ -20,6 +20,14 @@ public class OutputView {
         System.out.printf(ViewMessage.DEFAULT_SCORE_BOARD, player.getName());
     }
 
+    public static void printNumericScore(Frames frames) {
+        List<Integer> scoreList = frames.getFrameScores();
+        for (int i = 0; i < scoreList.size(); i++) {
+            System.out.printf("  " + scoreList.get(i) + "  ");
+        }
+        System.out.println();
+    }
+
     public static void printScoreBoard(Player player, Frames frames) {
         List<Frame> frameList = frames.getFrames();
         printDefaultLayout(player);

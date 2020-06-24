@@ -62,43 +62,62 @@ class NormalFrameTest {
         assertThat(nextFrame.getClass()).isEqualTo(FinalFrame.class);
     }
 
-    @DisplayName("점수 상계 시 lastFrame이 스트라이크인 경우 NextFrame이 2번 투구를 하지 않으면 점수는 0")
+    @DisplayName("점수 계산시 lastFrame이 스트라이크인 경우 NextFrame이 2번 투구를 하지 않으면 점수는 0(null)")
     @Test
-    public void calculateScore_스트라이크() {
+    public void calculateScore_스트라이크_Null() {
         Frame lastFrame = NormalFrame.initiate();
         lastFrame.bowl(Score.valueOf(10));
+
         Frame nextFrame = lastFrame.next();
+        assertThat(nextFrame.calculateFrameScore(lastFrame)).isNull();
+
+        nextFrame.bowl(Score.valueOf(5));
+        assertThat(nextFrame.calculateFrameScore(lastFrame)).isNull();
+    }
+
+    @DisplayName("점수 계산시 lastFrame이 스트라이크인 경우 NextFrame이 2번 투구를 해야 정상 집계")
+    @Test
+    public void calculateScore_스트라이크_20점() {
+        Frame lastFrame = NormalFrame.initiate();
+        lastFrame.bowl(Score.valueOf(10));
+
+        Frame nextFrame = lastFrame.next();
+        nextFrame.bowl(Score.valueOf(5));
         nextFrame.bowl(Score.valueOf(5));
 
         FrameNumericScore result = nextFrame.calculateFrameScore(lastFrame);
-
-        assertThat(result).isEqualTo(null);
-
-        nextFrame.bowl(Score.valueOf(5));
-        result = nextFrame.calculateFrameScore(lastFrame);
 
         assertThat(result.getFrameScoreTotal()).isEqualTo(20);
     }
 
-    @DisplayName("점수 상계 시 lastFrame이 스페어인 경우 NextFrame이 1번 투구를 하지 않으면 점수는 0")
+    @DisplayName("점수 계산시 lastFrame이 스페어인 경우 NextFrame이 1번 투구를 하지 않으면 점수는 0(null)")
     @Test
-    public void calculateScore_스페어() {
+    public void calculateScore_스페어_Null() {
         Frame lastFrame = NormalFrame.initiate();
         lastFrame.bowl(Score.valueOf(3));
         lastFrame.bowl(Score.valueOf(7));
+
         Frame nextFrame = lastFrame.next();
 
-        FrameNumericScore result = nextFrame.calculateFrameScore(lastFrame);
+        assertThat(nextFrame.calculateFrameScore(lastFrame)).isNull();
+    }
 
-        assertThat(result).isEqualTo(null);
+    @DisplayName("점수 계산시 lastFrame이 스페어인 경우 NextFrame이 1번 투구를 해야 정상 집계")
+    @Test
+    public void calculateScore_스페어_15점() {
+        Frame lastFrame = NormalFrame.initiate();
+        lastFrame.bowl(Score.valueOf(3));
+        lastFrame.bowl(Score.valueOf(7));
 
+        Frame nextFrame = lastFrame.next();
         nextFrame.bowl(Score.valueOf(5));
-        result = nextFrame.calculateFrameScore(lastFrame);
+
+        FrameNumericScore result = nextFrame.calculateFrameScore(lastFrame);
 
         assertThat(result.getFrameScoreTotal()).isEqualTo(15);
     }
 
-    @DisplayName("lastFrame에 스페어나 스트라이크가 없는 경우 이전 프레임의 점수를 반환함")
+    @DisplayName("lastFrame에 스페어나 스트라이크가 없는 경우 이전 프레임의 점수의 합을 바로 반환")
     @Test
     public void lastFrameScores_미스() {
         Frame lastFrame = NormalFrame.initiate();

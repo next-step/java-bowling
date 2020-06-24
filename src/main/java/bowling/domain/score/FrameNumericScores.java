@@ -9,7 +9,9 @@ public class FrameNumericScores {
     private final List<FrameNumericScore> frameNumericScores = new ArrayList<>();
 
     public void add(FrameNumericScore firstFrameScore) {
-        frameNumericScores.add(firstFrameScore);
+        if (firstFrameScore != null) {
+            frameNumericScores.add(firstFrameScore);
+        }
     }
 
     public List<FrameNumericScore> getFrameNumericScores() {

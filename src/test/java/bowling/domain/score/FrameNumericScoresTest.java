@@ -23,6 +23,20 @@ class FrameNumericScoresTest {
         assertThat(frameNumericScoreList.size()).isEqualTo(1);
     }
 
+    @DisplayName("예외값인 null은 추가하지 않음")
+    @Test
+    public void addScore_null_예외() {
+        FrameNumericScores frameNumericScores = new FrameNumericScores();
+        FrameNumericScore firstFrameScore = null;
+        List<FrameNumericScore> frameNumericScoreList = frameNumericScores.getFrameNumericScores();
+
+        assertThat(frameNumericScoreList.size()).isEqualTo(0);
+
+        frameNumericScores.add(firstFrameScore);
+
+        assertThat(frameNumericScoreList.size()).isEqualTo(0);
+    }
+
     @DisplayName("점수들의 리스트를 요청하면 프레임의 오름차순으로 점수를 누계하여 리스트로 반환함")
     @Test
     public void getScores_누계_검사() {
@@ -38,7 +52,6 @@ class FrameNumericScoresTest {
         List<Integer> frameScores = frameNumericScores.getScores();
 
         assertThat(frameScores).containsExactly(17, 24, 32);
-
     }
 
 }

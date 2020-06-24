@@ -21,7 +21,6 @@ public interface Frame {
 
     public FrameNumericScore calculateFrameScore(Frame lastFrame);
 
-
     public boolean isStrike();
 
     public int getScoresSum();

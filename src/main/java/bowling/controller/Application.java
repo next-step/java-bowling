@@ -19,6 +19,7 @@ public class Application {
             frames.bowl(score);
             OutputView.printScoreBoard(player, frames);
             frames.moveToNextFrame();
+            OutputView.printNumericScore(frames);
         }
     }
 }
