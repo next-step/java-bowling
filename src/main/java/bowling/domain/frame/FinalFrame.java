@@ -59,6 +59,7 @@ public class FinalFrame extends Frame {
 
     @Override
     void addFrame(Frames frames) {
+        // do nothing
     }
 
     @Override
