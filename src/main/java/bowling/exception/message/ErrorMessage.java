@@ -10,6 +10,8 @@ public class ErrorMessage {
     public static final String NOT_ALLOW_FIRST_BOWL = "첫 번째 투구에 대한 볼링 핀 정보가 없습니다.";
     public static final String NOT_ALLOW_SECOND_BOWL = "두 번째 투구에 대한 볼링 핀 정보가 없습니다.";
 
+    public static final String NOT_EXIST_STATE = "존재하지 않는 상태값입니다.";
+
     private ErrorMessage() {
     }
 }

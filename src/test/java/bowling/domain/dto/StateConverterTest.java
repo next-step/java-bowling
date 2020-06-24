@@ -2,20 +2,50 @@ package bowling.domain.dto;
 
 import bowling.domain.pin.Pins;
 import bowling.domain.state.StateExpression;
+import bowling.domain.state.finish.Finished;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import bowling.domain.state.running.FirstHit;
 import bowling.fixture.StateDtoFixture;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class StateConverterTest {
+
+    @DisplayName("convert 실패: null 값")
+    @ParameterizedTest
+    @NullSource
+    void failureConvertToSymbolByNull(final StateDto stateDto) {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> StateConverter.convertToSymbol(stateDto));
+    }
+
+    @DisplayName("convert 실패: 존재하지 않는 상태값")
+    @Test
+    void failureConvertToSymbolByNotExistState() {
+        StateDto stateDto = StateDto.of(new TestState());
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> StateConverter.convertToSymbol(stateDto));
+    }
+
+    private static class TestState extends Finished {
+        TestState() {
+        }
+
+        @Override
+        public Pins getFirstPins() {
+            return null;
+        }
+    }
 
     @DisplayName("특정 상태값을 알맞는 출력값으로 변환")
     @ParameterizedTest

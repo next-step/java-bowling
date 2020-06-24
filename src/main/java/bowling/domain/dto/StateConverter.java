@@ -8,9 +8,11 @@ import bowling.domain.state.finish.Spare;
 import bowling.domain.state.finish.Strike;
 import bowling.domain.state.running.FirstHit;
 import bowling.domain.state.running.Ready;
+import bowling.exception.message.ErrorMessage;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -44,9 +46,19 @@ public enum StateConverter {
     }
 
     public static String convertToSymbol(final StateDto stateDto) {
+        validate(stateDto);
         return CONVERTERS.get(stateDto.getStateClassType())
                 .converter
                 .apply(stateDto);
+    }
+
+    private static void validate(final StateDto stateDto) {
+        if (Objects.isNull(stateDto)) {
+            throw new IllegalArgumentException(ErrorMessage.NULL_VALUE);
+        }
+        if (!CONVERTERS.containsKey(stateDto.getStateClassType())) {
+            throw new IllegalArgumentException(ErrorMessage.NOT_EXIST_STATE);
+        }
     }
 
     private Class<? extends State> getStateClassType() {
