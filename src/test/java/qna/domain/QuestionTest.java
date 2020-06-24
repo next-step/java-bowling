@@ -1,6 +1,6 @@
 package qna.domain;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
@@ -14,7 +14,7 @@ public class QuestionTest {
 
     private User loginUser;
 
-    @BeforeClass
+    @BeforeEach
     void setUp() {
         loginUser = UserTest.JAVAJIGI;
     }
