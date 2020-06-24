@@ -19,17 +19,17 @@ public enum StateConverter {
     READY(Ready.class,
             stateDto -> StateExpression.READY),
     FIRST_HIT(FirstHit.class,
-            stateDto -> PinExpression.convert(stateDto.getFirstPins())),
+            stateDto -> PinExpression.convert(stateDto.getFirstPinCount())),
     STRIKE(Strike.class,
             stateDto -> StateExpression.STRIKE),
     SPARE(Spare.class,
-            stateDto -> PinExpression.convert(stateDto.getFirstPins())
+            stateDto -> PinExpression.convert(stateDto.getFirstPinCount())
                     + StateExpression.DELIMITER
                     + StateExpression.SPARE),
     MISS(Miss.class,
-            stateDto -> PinExpression.convert(stateDto.getFirstPins())
+            stateDto -> PinExpression.convert(stateDto.getFirstPinCount())
                     + StateExpression.DELIMITER
-                    + PinExpression.convert(stateDto.getSecondPins()));
+                    + PinExpression.convert(stateDto.getSecondPinCount()));
 
     private final Class<? extends State> stateClassType;
     private final Function<StateDto, String> converter;

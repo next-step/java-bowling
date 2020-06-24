@@ -33,11 +33,11 @@ public class StateDto {
         return getStateClassType().equals(Ready.class);
     }
 
-    public int getFirstPins() {
+    public int getFirstPinCount() {
         return this.state.getFirstPins().getHitCount();
     }
 
-    public int getSecondPins() {
+    public int getSecondPinCount() {
         return this.state.getSecondPins().getHitCount();
     }
 }

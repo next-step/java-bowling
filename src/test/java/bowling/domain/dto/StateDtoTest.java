@@ -58,7 +58,7 @@ public class StateDtoTest {
     @ParameterizedTest
     @MethodSource
     void getFirstPins(final StateDto stateDto, final int expected) {
-        assertThat(stateDto.getFirstPins())
+        assertThat(stateDto.getFirstPinCount())
                 .isEqualTo(expected);
     }
 
@@ -74,7 +74,7 @@ public class StateDtoTest {
     @ParameterizedTest
     @MethodSource
     void getSecondPins(final StateDto stateDto, final int expected) {
-        assertThat(stateDto.getSecondPins())
+        assertThat(stateDto.getSecondPinCount())
                 .isEqualTo(expected);
     }
 
@@ -89,7 +89,7 @@ public class StateDtoTest {
     @Test
     void exceptionGetFirstPins() {
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> StateDtoFixture.getReadyState().getFirstPins());
+                .isThrownBy(() -> StateDtoFixture.getReadyState().getFirstPinCount());
     }
 
     @DisplayName("두 번째 볼링핀이 없는 경우 예외 반환")
@@ -97,7 +97,7 @@ public class StateDtoTest {
     @MethodSource
     void exceptionGetSecondPins(final StateDto stateDto) {
         assertThatIllegalArgumentException()
-                .isThrownBy(stateDto::getSecondPins);
+                .isThrownBy(stateDto::getSecondPinCount);
     }
 
     private static Stream<Arguments> exceptionGetSecondPins() {
