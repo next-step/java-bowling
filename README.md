@@ -73,6 +73,7 @@
 - Scores
     - [x] 첫번째와 두번째 투구의 점수의 합이 10을 넘으면 IllegalArgumentException이 발생한다.
     - [x] 두번째 투구의 점수를 입력하지 않은채 결과를 확인하면 IllegalStateException이 발생한다.
+    - [x] 첫번째 투구의 점수가 10이면 두번째 투구의 점수를 입력하지 않아도 결과를 확인할 수 있다.
     
 - InputView
     - [ ] 플레이어의 이름을 입력받는다.

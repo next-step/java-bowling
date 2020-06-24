@@ -7,6 +7,10 @@ public class Scores {
 
     private Scores(Score first) {
         this.first = first;
+
+        if (first.equals(Score.MAX_SCORE)) {
+            inputSecondScore(Score.MIN_SCORE);
+        }
     }
 
     public static Scores from(Score first) {

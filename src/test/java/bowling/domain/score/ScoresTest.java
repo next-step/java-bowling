@@ -43,4 +43,15 @@ public class ScoresTest {
 
         assertThat(result).isNotNull();
     }
+
+    @DisplayName("첫번째 투구의 점수가 10이면 두번째 투구의 점수를 입력하지 않아도 결과를 확인할 수 있다")
+    @Test
+    void first10_inputSecondScore() {
+        Score firstScore = Score.of(10);
+        Scores scores = Scores.from(firstScore);
+
+        Result result = scores.checkResult();
+
+        assertThat(result).isNotNull();
+    }
 }
