@@ -8,9 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @DisplayName("Answers 로직 테스트")
 class AnswersTest {
@@ -45,7 +43,7 @@ class AnswersTest {
     @ParameterizedTest
     @MethodSource("source_delete_allAnswers_shouldSucess")
     public void delete_allAnswers_shouldSucess(Answers answers) {
-        answers.deleteAll();
+        answers.deleteAllAndGetHistory();
         for (Answer answer : answers.getAnswers()) {
             assertThat(answer.isDeleted()).isTrue();
         }

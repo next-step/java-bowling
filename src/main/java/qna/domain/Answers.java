@@ -1,6 +1,7 @@
 package qna.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Answers {
 
@@ -23,10 +24,7 @@ public class Answers {
         return true;
     }
 
-    public Answers deleteAll() {
-        for (Answer answer : answers) {
-            answer.delete();
-        }
-        return this;
+    public List<DeleteHistory> deleteAllAndGetHistory() {
+        return answers.stream().map(Answer::deleteAndGetHistory).collect(Collectors.toList());
     }
 }
