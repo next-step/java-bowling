@@ -5,15 +5,13 @@ import bowling.domain.pin.Pins;
 
 public class Strike extends Finished {
 
+    private static final Strike INSTANCE = new Strike();
+
     private Strike() {
     }
 
-    private static class InnerInstanceClass {
-        private static final Strike instance = new Strike();
-    }
-
     public static Strike getInstance() {
-        return InnerInstanceClass.instance;
+        return INSTANCE;
     }
 
     @Override

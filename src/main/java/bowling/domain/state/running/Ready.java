@@ -7,15 +7,13 @@ import bowling.domain.state.finish.Strike;
 
 public class Ready extends Running {
 
+    private static final Ready INSTANCE = new Ready();
+
     private Ready() {
     }
 
-    private static class InnerInstanceClass {
-        private static final Ready instance = new Ready();
-    }
-
     public static Ready getInstance() {
-        return Ready.InnerInstanceClass.instance;
+        return INSTANCE;
     }
 
     @Override
