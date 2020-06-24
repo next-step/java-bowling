@@ -37,7 +37,7 @@ public class BowlingGame {
         return this.frames.getFrameNumber();
     }
 
-    public List<StateDtos> getFrameResults2() {
-        return frames.getFrameResult2();
+    public List<StateDtos> getFrameResults() {
+        return frames.getFrameResult();
     }
 }

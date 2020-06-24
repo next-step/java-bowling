@@ -93,7 +93,7 @@ public class NormalFrameTest {
     @ParameterizedTest
     @MethodSource
     public void getFrameResult(final Frame frame, final String expected) {
-        assertThat(frame.getFrameResult2().getDesc())
+        assertThat(frame.getFrameResult().getDesc())
                 .isEqualTo(expected);
     }
 

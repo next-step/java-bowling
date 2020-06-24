@@ -69,9 +69,9 @@ public class FramesTest {
     @ParameterizedTest
     @MethodSource
     public void getFrameResult(final Frames frames, final List<StateDtos> expected) {
-        IntStream.range(0, frames.getFrameResult2().size())
+        IntStream.range(0, frames.getFrameResult().size())
                 .forEach(index ->
-                    assertThat(frames.getFrameResult2().get(index).getDesc())
+                    assertThat(frames.getFrameResult().get(index).getDesc())
                             .isEqualTo(expected.get(index))
                 );
     }

@@ -36,7 +36,7 @@ public class FinalFrameTest {
         Frame nextFrame = FinalFrame.newInstance();
         nextFrame.bowl(PinCount.of(PinCount.MAX_COUNT));
 
-        assertThat(nextFrame.getFrameResult2().getDesc())
+        assertThat(nextFrame.getFrameResult().getDesc())
                 .isEqualTo(StateExpression.STRIKE);
     }
 
@@ -44,7 +44,7 @@ public class FinalFrameTest {
     @ParameterizedTest
     @MethodSource
     public void runningAfterBowl(final Frame nextFrame, final String expected) {
-        assertThat(nextFrame.getFrameResult2().getDesc())
+        assertThat(nextFrame.getFrameResult().getDesc())
                 .isEqualTo(expected);
     }
 

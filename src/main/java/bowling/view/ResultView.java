@@ -31,7 +31,7 @@ public class ResultView {
         printFramesHeader();
 
         printNameInfo(bowlingGame.getPlayerName());
-        printResult2(bowlingGame.getFrameResults2());
+        printResult(bowlingGame.getFrameResults());
         System.out.println();
     }
 
@@ -51,7 +51,7 @@ public class ResultView {
                         String.format(FRAME_HEADER_NUMBER_FORMAT, no) + DELIMITER));
     }
 
-    private static void printResult2(final List<StateDtos> results) {
+    private static void printResult(final List<StateDtos> results) {
         if (Objects.isNull(results)) {
             printLine(Collections.emptyList());
             return;

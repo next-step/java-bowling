@@ -17,5 +17,5 @@ public abstract class Frame {
 
     abstract int getFrameNo();
 
-    abstract StateDtos getFrameResult2();
+    abstract StateDtos getFrameResult();
 }

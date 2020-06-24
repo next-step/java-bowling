@@ -43,9 +43,9 @@ public class Frames {
         return frames.get(frames.size() - 1);
     }
 
-    public List<StateDtos> getFrameResult2() {
+    public List<StateDtos> getFrameResult() {
         return frames.stream()
-                .map(Frame::getFrameResult2)
+                .map(Frame::getFrameResult)
                 .collect(Collectors.toList());
     }
 }

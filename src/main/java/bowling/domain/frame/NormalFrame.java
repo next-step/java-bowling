@@ -63,7 +63,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public StateDtos getFrameResult2() {
+    public StateDtos getFrameResult() {
         return StateDtos.of(state.getState());
     }
 }
