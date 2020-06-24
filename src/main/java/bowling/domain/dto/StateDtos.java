@@ -20,8 +20,8 @@ public class StateDtos {
     }
 
     private void validate(final List<State> states) {
-        if (Objects.isNull(states)) {
-            throw new IllegalArgumentException(ErrorMessage.NULL_VALUE);
+        if (Objects.isNull(states) || states.size() == 0) {
+            throw new IllegalArgumentException(ErrorMessage.IS_NULL_OR_EMPTY);
         }
     }
 
