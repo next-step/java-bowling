@@ -52,7 +52,7 @@ public class NormalFrame implements Frame {
         if (lastFrame.isSpare() || lastFrame.isStrike()) {
             return strikeOrSpare(lastFrame);
         }
-        return this.normalPitches.isFinished(2) ? normalPitches.getScoresSum() + lastFrame.getScoresSum() : 0;
+        return lastFrame.getScoresSum();
     }
 
     private int strikeOrSpare(Frame lastFrame) {

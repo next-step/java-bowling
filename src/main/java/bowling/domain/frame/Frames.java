@@ -32,7 +32,7 @@ public class Frames {
     }
 
     public boolean hasNextTurn() {
-        return getCurrentFrame() != null;
+        return getCurrentIndex() != 11;
     }
 
     public int getCurrentIndex() {

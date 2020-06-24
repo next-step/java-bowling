@@ -20,7 +20,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame next() {
-        return null;
+        return new FinalFrame(index + 1);
     }
 
     @Override
@@ -47,7 +47,23 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int calculateScore(Frame nextFrame) {
+    public int calculateScore(Frame lastFrame) {
+        if (index == 11) {
+            return lastFrame.getScoresSum();
+        }
+        if (lastFrame.isSpare() || lastFrame.isStrike()) {
+            return strikeOrSpare(lastFrame);
+        }
+        return lastFrame.getScoresSum();
+    }
+
+    private int strikeOrSpare(Frame lastFrame) {
+        if (lastFrame.isStrike() && this.finalPitches.isFinished(2)) {
+            return lastFrame.getScoresSum() + finalPitches.getScoresSum();
+        }
+        if (lastFrame.isSpare() && this.finalPitches.isFinished(1)) {
+            return lastFrame.getScoresSum() + finalPitches.getScoresSum();
+        }
         return 0;
     }
 
@@ -58,7 +74,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public int getScoresSum() {
-        return 0;
+        return finalPitches.getScoresSum();
     }
 
     @Override

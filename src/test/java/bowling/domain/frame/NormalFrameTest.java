@@ -97,5 +97,14 @@ class NormalFrameTest {
         assertThat(result).isEqualTo(15);
     }
 
+    @DisplayName("lastFrame에 스페어나 스트라이크가 없는 경우 이전 프레임의 점수를 반환함")
+    @Test
+    public void lastFrameScores_미스() {
+        Frame lastFrame = NormalFrame.initiate();
+        lastFrame.bowl(Score.valueOf(4));
+        lastFrame.bowl(Score.valueOf(0));
+        Frame nextFrame = lastFrame.next();
 
+        assertThat(nextFrame.calculateScore(lastFrame)).isEqualTo(4);
+    }
 }
