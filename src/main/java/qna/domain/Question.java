@@ -1,8 +1,10 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +19,16 @@ public class Question extends AbstractEntity {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
-
+/*
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
+
+    */
+
+    private Answers answers = new Answers();
+
 
     private boolean deleted = false;
 
@@ -75,6 +82,12 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
+    public void checkOwner(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
@@ -84,7 +97,14 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Question delete(List<DeleteHistory> deleteHistories) {
+        this.setDeleted(true);
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
+        answers.delete(deleteHistories);
+        return this;
+    }
+
+    public Answers getAnswers() {
         return answers;
     }
 
