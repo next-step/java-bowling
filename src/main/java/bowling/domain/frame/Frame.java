@@ -17,4 +17,13 @@ public interface Frame {
     public List<String> getScoreSignatures();
 
     public int getIndex();
+
+    public int calculateScore(Frame nextFrame);
+
+    public boolean isStrike();
+
+    public int getScoresSum();
+
+    boolean isSpare();
+
 }

@@ -45,4 +45,11 @@ public class NormalPitches implements Pitches {
                 .map(Pitch::getScoreSignature)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public int getScoresSum() {
+        return pitches.stream()
+                .mapToInt(Pitch::getScore)
+                .sum();
+    }
 }

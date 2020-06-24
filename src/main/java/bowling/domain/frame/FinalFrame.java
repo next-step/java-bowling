@@ -45,4 +45,24 @@ public class FinalFrame implements Frame {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public int calculateScore(Frame nextFrame) {
+        return 0;
+    }
+
+    @Override
+    public boolean isStrike() {
+        return false;
+    }
+
+    @Override
+    public int getScoresSum() {
+        return 0;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
 }

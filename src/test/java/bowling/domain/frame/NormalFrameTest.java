@@ -60,4 +60,42 @@ class NormalFrameTest {
         assertThat(nextFrame.getIndex()).isEqualTo(10);
         assertThat(nextFrame.getClass()).isEqualTo(FinalFrame.class);
     }
+
+    @DisplayName("점수 상계 시 lastFrame이 스트라이크인 경우 NextFrame이 2번 투구를 하지 않으면 점수는 0")
+    @Test
+    public void calculateScore_스트라이크() {
+        Frame lastFrame = NormalFrame.initiate();
+        lastFrame.bowl(Score.valueOf(10));
+        Frame nextFrame = lastFrame.next();
+        nextFrame.bowl(Score.valueOf(5));
+
+        int result = nextFrame.calculateScore(lastFrame);
+
+        assertThat(result).isEqualTo(0);
+
+        nextFrame.bowl(Score.valueOf(5));
+        result = nextFrame.calculateScore(lastFrame);
+
+        assertThat(result).isEqualTo(20);
+    }
+
+    @DisplayName("점수 상계 시 lastFrame이 스페어인 경우 NextFrame이 1번 투구를 하지 않으면 점수는 0")
+    @Test
+    public void calculateScore_스페어() {
+        Frame lastFrame = NormalFrame.initiate();
+        lastFrame.bowl(Score.valueOf(3));
+        lastFrame.bowl(Score.valueOf(7));
+        Frame nextFrame = lastFrame.next();
+
+        int result = nextFrame.calculateScore(lastFrame);
+
+        assertThat(result).isEqualTo(0);
+
+        nextFrame.bowl(Score.valueOf(5));
+        result = nextFrame.calculateScore(lastFrame);
+
+        assertThat(result).isEqualTo(15);
+    }
+
+
 }

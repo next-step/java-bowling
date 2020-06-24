@@ -46,4 +46,37 @@ public class NormalFrame implements Frame {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public int calculateScore(Frame lastFrame) {
+        if (lastFrame.isSpare() || lastFrame.isStrike()) {
+            return strikeOrSpare(lastFrame);
+        }
+        return this.normalPitches.isFinished(2) ? normalPitches.getScoresSum() + lastFrame.getScoresSum() : 0;
+    }
+
+    private int strikeOrSpare(Frame lastFrame) {
+        if (lastFrame.isStrike() && this.normalPitches.isFinished(2)) {
+            return lastFrame.getScoresSum() + normalPitches.getScoresSum();
+        }
+        if (lastFrame.isSpare() && this.normalPitches.isFinished(1)) {
+            return lastFrame.getScoresSum() + normalPitches.getScoresSum();
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean isStrike() {
+        return normalPitches.isStrike();
+    }
+
+    @Override
+    public int getScoresSum() {
+        return normalPitches.getScoresSum();
+    }
+
+    @Override
+    public boolean isSpare() {
+        return normalPitches.isFinished(2) && normalPitches.getScoresSum() == 10;
+    }
 }
