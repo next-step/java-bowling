@@ -32,4 +32,28 @@ public enum State {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바른 값이 아닙니다."));
     }
+
+    public static State bowl(int previousFallenPins, int nextFallenPins, int statesLength) {
+        if (statesLength == 0 && STRIKE == State.valueOf(nextFallenPins, false)) {
+            return STRIKE;
+        }
+
+        if (GUTTER == State.valueOf(nextFallenPins, false)) {
+            return GUTTER;
+        }
+
+        validateFallenPinSum(previousFallenPins, nextFallenPins);
+
+        if (previousFallenPins + nextFallenPins == 10) {
+            return SPARE;
+        }
+
+        return State.valueOf(nextFallenPins, false);
+    }
+
+    private static void validateFallenPinSum(int previousFallenPins, int nextFallenPins) {
+        if(previousFallenPins + nextFallenPins > 10) {
+            throw new FallenPinsSumException();
+        }
+    }
 }
