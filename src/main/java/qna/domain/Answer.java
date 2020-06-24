@@ -74,13 +74,7 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-    public Answer delete(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이여서 삭제할 수 없습니다.");
-        }
-
-        this.deleted = true;
-
-        return this;
+    public Answer delete() {
+        return setDeleted(true);
     }
 }
