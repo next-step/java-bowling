@@ -3,6 +3,7 @@ package bowling.domain.state.finish;
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
 import bowling.domain.state.State;
+import bowling.exception.message.ErrorMessage;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +31,7 @@ public abstract class Finished implements State {
     }
 
     public Pins getSecondPins() {
-        throw new IllegalArgumentException("두 번째 투구에 대한 볼링 핀 정보가 없습니다.");
+        throw new IllegalArgumentException(ErrorMessage.NOT_ALLOW_SECOND_BOWL);
     }
 
     @Override

@@ -7,6 +7,9 @@ public class ErrorMessage {
 
     public static final String REQUIRED_FRAME_RANGE = "프레임 번호는 1~10 까지만 가능합니다.";
 
+    public static final String NOT_ALLOW_FIRST_BOWL = "첫 번째 투구에 대한 볼링 핀 정보가 없습니다.";
+    public static final String NOT_ALLOW_SECOND_BOWL = "두 번째 투구에 대한 볼링 핀 정보가 없습니다.";
+
     private ErrorMessage() {
     }
 }
