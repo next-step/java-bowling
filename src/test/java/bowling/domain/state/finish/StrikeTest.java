@@ -5,8 +5,9 @@ import bowling.domain.state.StateExpression;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import java.util.Collections;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class StrikeTest {
 
@@ -43,5 +44,21 @@ public class StrikeTest {
     public void isCleanState() {
         assertThat(Strike.getInstance().isCleanState())
                 .isTrue();
+    }
+
+    @DisplayName("첫 번째 투구 결과 반환, 두 번째 투구 결과 반환 불가능")
+    @Test
+    public void getFirstPinsAndSecondPins() {
+        assertThat(Strike.getInstance().getFirstPins().getHitCount())
+                .isEqualTo("10");
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Strike.getInstance().getSecondPins());
+    }
+
+    @DisplayName("해당 프레임이 가지는 모든 상태값을 반환")
+    @Test
+    public void getState() {
+        assertThat(Strike.getInstance().getState())
+                .isEqualTo(Collections.singletonList(Strike.getInstance()));
     }
 }

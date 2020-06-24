@@ -1,7 +1,11 @@
 package bowling.domain.state.finish;
 
 import bowling.domain.pin.PinCount;
+import bowling.domain.pin.Pins;
 import bowling.domain.state.State;
+
+import java.util.Collections;
+import java.util.List;
 
 public abstract class Finished implements State {
 
@@ -23,5 +27,14 @@ public abstract class Finished implements State {
     @Override
     public boolean isCleanState() {
         return this.isFinish() && !this.isMiss();
+    }
+
+    public Pins getSecondPins() {
+        throw new IllegalArgumentException("두 번째 투구에 대한 볼링 핀 정보가 없습니다.");
+    }
+
+    @Override
+    public List<State> getState() {
+        return Collections.singletonList(this);
     }
 }

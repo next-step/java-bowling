@@ -1,5 +1,6 @@
 package bowling.domain.state.finish;
 
+import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
 import bowling.domain.state.StateExpression;
 import bowling.exception.CannotMatchStateException;
@@ -22,5 +23,14 @@ public class Spare extends Finished {
     @Override
     public String getDesc() {
         return firstPins.getHitCount() + "|" + StateExpression.SPARE;
+    }
+
+    @Override
+    public Pins getFirstPins() {
+        return this.firstPins;
+    }
+
+    public Pins getSecondPins() {
+        return Pins.of(PinCount.MAX_COUNT - this.firstPins.getCount());
     }
 }

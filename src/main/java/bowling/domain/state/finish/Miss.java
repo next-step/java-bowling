@@ -29,4 +29,14 @@ public class Miss extends Finished {
     public String getDesc() {
         return firstPins.getHitCount() + "|" + secondPins.getHitCount();
     }
+
+    @Override
+    public Pins getFirstPins() {
+        return this.firstPins;
+    }
+
+    @Override
+    public Pins getSecondPins() {
+        return this.secondPins;
+    }
 }

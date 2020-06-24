@@ -37,4 +37,9 @@ public class FirstHit extends Running {
     public String getDesc() {
         return firstPins.getHitCount() + StateExpression.BLANK;
     }
+
+    @Override
+    public Pins getFirstPins() {
+        return this.firstPins;
+    }
 }

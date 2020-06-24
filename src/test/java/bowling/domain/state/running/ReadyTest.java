@@ -8,7 +8,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class ReadyTest {
 
@@ -57,5 +60,21 @@ public class ReadyTest {
     public void isCleanState() {
         assertThat(Ready.getInstance().isCleanState())
                 .isFalse();
+    }
+
+    @DisplayName("첫 번째 투구 결과, 두 번째 투구 결과 모두 반환 불가능")
+    @Test
+    public void getFirstPinsAndSecondPins() {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Ready.getInstance().getSecondPins());
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Ready.getInstance().getSecondPins());
+    }
+
+    @DisplayName("해당 프레임이 가지는 모든 상태값을 반환")
+    @Test
+    public void getState() {
+        assertThat(Ready.getInstance().getState())
+                .isEqualTo(Collections.singletonList(Ready.getInstance()));
     }
 }

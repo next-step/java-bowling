@@ -1,6 +1,9 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.PinCount;
+import bowling.domain.pin.Pins;
+
+import java.util.List;
 
 public interface State {
 
@@ -13,4 +16,10 @@ public interface State {
     boolean isCleanState();
 
     String getDesc();
+
+    Pins getFirstPins();
+
+    Pins getSecondPins();
+
+    List<State> getState();
 }

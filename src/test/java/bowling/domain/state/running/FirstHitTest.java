@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Collections;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -91,5 +92,25 @@ public class FirstHitTest {
     public void isCleanState() {
         assertThat(FirstHit.of(Pins.of(PinCount.MIN_COUNT)).isCleanState())
                 .isFalse();
+    }
+
+    @DisplayName("첫 번째 투구 결과 반환, 두 번째 투구 결과 반환 불가능")
+    @Test
+    public void getFirstPinsAndSecondPins() {
+        FirstHit firstHit = FirstHit.of(Pins.of(9));
+
+        assertThat(firstHit.getFirstPins().getHitCount())
+                .isEqualTo("9");
+        assertThatIllegalArgumentException()
+                .isThrownBy(firstHit::getSecondPins);
+    }
+
+    @DisplayName("해당 프레임이 가지는 모든 상태값을 반환")
+    @Test
+    public void getState() {
+        FirstHit firstHit = FirstHit.of(Pins.of(9));
+
+        assertThat(firstHit.getState())
+                .isEqualTo(Collections.singletonList(firstHit));
     }
 }
