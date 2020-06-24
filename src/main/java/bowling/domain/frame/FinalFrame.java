@@ -1,10 +1,13 @@
 package bowling.domain.frame;
 
 import bowling.domain.dto.FrameResult;
+import bowling.domain.dto.StateDtos;
 import bowling.domain.pin.PinCount;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -83,6 +86,15 @@ public class FinalFrame extends Frame {
         return this.states.stream()
                 .map(State::getDesc)
                 .collect(Collectors.joining("|"));
+    }
+
+    @Override
+    public StateDtos getFrameResult2() {
+        return StateDtos.of(getStates());
+    }
+
+    private List<State> getStates() {
+        return new ArrayList<>(this.states);
     }
 }
 
