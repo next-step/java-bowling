@@ -9,4 +9,12 @@ public class States {
     public States() {
         this.states = new ArrayList<>();
     }
+
+    public void add(State state) {
+        this.states.add(state);
+    }
+
+    public List<State> getStates() {
+        return states;
+    }
 }
