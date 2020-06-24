@@ -1,7 +1,5 @@
 package qna.domain;
 
-import qna.CannotDeleteException;
-
 import java.util.List;
 
 public class Answers {
@@ -23,5 +21,12 @@ public class Answers {
             }
         }
         return true;
+    }
+
+    public Answers deleteAll() {
+        for (Answer answer : answers) {
+            answer.delete();
+        }
+        return this;
     }
 }

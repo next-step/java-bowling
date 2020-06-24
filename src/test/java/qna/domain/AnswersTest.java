@@ -40,4 +40,20 @@ class AnswersTest {
                 Arguments.of(new Answers(Arrays.asList(AnswerTest.A1)), UserTest.SANJIGI)
         );
     }
+
+    @DisplayName("답변 전체 삭제 성공")
+    @ParameterizedTest
+    @MethodSource("source_delete_allAnswers_shouldSucess")
+    public void delete_allAnswers_shouldSucess(Answers answers) {
+        answers.deleteAll();
+        for (Answer answer : answers.getAnswers()) {
+            assertThat(answer.isDeleted()).isTrue();
+        }
+    }
+
+    public static Stream<Arguments> source_delete_allAnswers_shouldSucess() {
+        return Stream.of(
+                Arguments.of(new Answers(Arrays.asList(AnswerTest.A1, AnswerTest.A2)))
+        );
+    }
 }
