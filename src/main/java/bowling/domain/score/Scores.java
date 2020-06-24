@@ -22,4 +22,12 @@ public class Scores {
 
         second = secondScore;
     }
+
+    public Result checkResult() {
+        if (second == null) {
+            throw new IllegalStateException("두번째 투구의 점수가 입력되지 않았습니다");
+        }
+
+        return Result.STRIKE;
+    }
 }

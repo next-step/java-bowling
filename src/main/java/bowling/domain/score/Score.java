@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Score {
 
     public static final Score MAX_SCORE = new Score(10);
-    private static final Score MIN_SCORE = new Score(0);
+    public static final Score MIN_SCORE = new Score(0);
 
     private final int score;
 
