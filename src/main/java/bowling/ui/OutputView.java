@@ -3,7 +3,6 @@ package bowling.ui;
 import bowling.domain.BowlingGameResult;
 import bowling.domain.FrameResult;
 import bowling.domain.FrameResults;
-import bowling.domain.Player;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,15 +13,6 @@ public class OutputView {
         System.out.println("|  " +
                 userName +
                 " |      |      |      |      |      |      |      |      |      |      |");
-    }
-
-    public static void printPlayerResult(Player player) {
-        System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        System.out.println("|  " +
-                player.getName() + " |" +
-                parsePlayerResult(player.calculateResult()) +
-                "|"
-        );
     }
 
     public static void printBowlingGameResult(String playerName, List<BowlingGameResult> bowlingGameResults) {
