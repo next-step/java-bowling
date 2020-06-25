@@ -33,7 +33,7 @@ public enum State {
                 .orElseThrow(() -> new IllegalArgumentException("올바른 값이 아닙니다."));
     }
 
-    public static State bowl(int previousFallenPins, int nextFallenPins, int statesLength) {
+    public static State bowl(int previousFallenPins, int nextFallenPins, int statesLength, boolean isFinal) {
         if (statesLength == 0 && STRIKE == State.valueOf(nextFallenPins, false)) {
             return STRIKE;
         }
@@ -42,7 +42,9 @@ public enum State {
             return GUTTER;
         }
 
-        validateFallenPinSum(previousFallenPins, nextFallenPins);
+        if(!isFinal) {
+            validateFallenPinSum(previousFallenPins, nextFallenPins);
+        }
 
         if (previousFallenPins + nextFallenPins == 10) {
             return SPARE;
