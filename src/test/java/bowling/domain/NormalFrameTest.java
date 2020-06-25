@@ -29,4 +29,16 @@ public class NormalFrameTest {
 
         assertThat(actual).isTrue();
     }
+
+    @DisplayName("다음 프레임을 생성 후 반환할 수 있다.")
+    @Test
+    void getNextFrame() {
+        NormalFrame normalFrame = new NormalFrame();
+
+        Frame actual1 = normalFrame.getNextFrame(8);
+        Frame actual2 = normalFrame.getNextFrame(9);
+
+        assertThat(actual1).isInstanceOf(NormalFrame.class);
+        assertThat(actual2).isInstanceOf(FinalFrame.class);
+    }
 }
