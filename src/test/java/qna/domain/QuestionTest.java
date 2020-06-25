@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -45,5 +47,12 @@ public class QuestionTest {
         assertThatThrownBy(() -> Q2.deleteBy(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("질문 삭제 시 DeleteHistory를 반환한다.")
+    void delete_성공_DeleteHistory_반환() throws CannotDeleteException {
+        assertThat(Q1.deleteBy(UserTest.JAVAJIGI))
+                .isEqualTo(Arrays.asList(DeleteHistory.deleteQuestion(Q1.getId(), UserTest.JAVAJIGI)));
     }
 }

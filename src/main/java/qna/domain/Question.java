@@ -89,21 +89,28 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public void deleteBy(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> deleteBy(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         validateUser(loginUser);
-        setDeleted();
-        deleteAnswers(loginUser);
+        deleteHistories.add(delete());
+        deleteHistories.addAll(deleteAnswers(loginUser));
+
+        return deleteHistories;
     }
 
-    private void deleteAnswers(User loginUser) throws CannotDeleteException {
+    private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+
         for (Answer answer : answers) {
-            deleteAnswer(loginUser, answer);
+            deleteHistories.add(deleteAnswer(loginUser, answer));
         }
+
+        return deleteHistories;
     }
 
-    private void deleteAnswer(User loginUser, Answer answer) throws CannotDeleteException {
+    private DeleteHistory deleteAnswer(User loginUser, Answer answer) throws CannotDeleteException {
         try {
-            answer.deleteBy(loginUser);
+            return answer.deleteBy(loginUser);
         } catch (CannotDeleteException e) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
@@ -115,7 +122,8 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private void setDeleted() {
+    private DeleteHistory delete() {
         this.deleted = true;
+        return DeleteHistory.deleteQuestion(super.getId(), writer);
     }
 }
