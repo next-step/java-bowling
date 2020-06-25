@@ -69,15 +69,18 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public void deleteByOwner(User loginUser) throws CannotDeleteException {
-        this.availableDelete(loginUser);
-        this.deleted = true;
+    public boolean deleteByOwner(User loginUser) throws CannotDeleteException {
+        if(this.availableDelete(loginUser)){
+            this.deleted = true;
+        }
+        return deleted;
     }
 
-    private void availableDelete(User loginUser) throws CannotDeleteException {
+    private boolean availableDelete(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
+        return true;
     }
 
     @Override
