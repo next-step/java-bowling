@@ -218,7 +218,7 @@
         - [X] Player 리팩토링 필요(진행한 Frame 반환)
     - [X] 현재 프레임 진행 가능
         - [X] Player 리팩토링 필요(진행한 Frame 반환)
-    - [ ] 다음 프레임 진행 가능
+    - [X] 다음 프레임 진행 가능
         - [X] Player 리팩토링 필요(진행한 Frame 반환)
     - [ ] 진행중인 프레임 완료 여부를 알려줄 수 있음
     - [X] BowlingGameResults는 기존 PlayerFrames와 매우 유사하나 게임이 진행된 결과만을 저장하도록 구현

@@ -28,7 +28,7 @@ public class BowlingGame {
 
         this.bowlingGameResults.add(bowlingGameResult);
 
-        return this.bowlingGameResults;
+        return new ArrayList<>(this.bowlingGameResults);
     }
 
     public List<BowlingGameResult> bowlCurrentFrame(int numberOfHitPin) {
@@ -37,7 +37,16 @@ public class BowlingGame {
 
         this.bowlingGameResults.set(lastIndexOfBowlingGameResults(), bowlingGameResult);
 
-        return this.bowlingGameResults;
+        return new ArrayList<>(this.bowlingGameResults);
+    }
+
+    public List<BowlingGameResult> toNextFrame(int numberOfHitPin) {
+        Frame frame = player.toNextFrameRefactor(numberOfHitPin);
+        BowlingGameResult bowlingGameResult = new BowlingGameResult(frame.calculateCurrentResults());
+
+        this.bowlingGameResults.add(bowlingGameResult);
+
+        return new ArrayList<>(this.bowlingGameResults);
     }
 
     private int lastIndexOfBowlingGameResults() {

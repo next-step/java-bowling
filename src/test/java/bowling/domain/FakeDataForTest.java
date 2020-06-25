@@ -84,6 +84,8 @@ public class FakeDataForTest {
 
     public static final FrameResults NORMAL_STRIKE_FRAME_RESULT
             = new FrameResults(Collections.singletonList(FrameResult.STRIKE));
+    public static final FrameResults NORMAL_FIVE_IN_PROGRESS_FRAME_RESULT
+            = new FrameResults(Collections.singletonList(FrameResult.FIVE));
     public static final FrameResults NORMAL_FIVE_SPARE_FRAME_RESULT
             = new FrameResults(Arrays.asList(FrameResult.FIVE, FrameResult.SPARE));
 }
