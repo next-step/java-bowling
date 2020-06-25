@@ -16,8 +16,7 @@ public class Main {
         BowlingGame bowlingGame = new BowlingGame(player);
 
         while (!bowlingGame.isEndGame()) {
-            int pin = InputView.inputFramePitches(bowlingGame.getCurrentFrameNumber());
-            bowlingGame.play(new Pin(pin));
+            bowlingGame.play(new Pin(InputView.inputFramePitches(bowlingGame.getCurrentFrameNumber())));
             OutputView.printResult(bowlingGame);
         }
     }
