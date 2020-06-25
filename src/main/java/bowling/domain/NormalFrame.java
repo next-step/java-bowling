@@ -1,16 +1,32 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class NormalFrame {
-    private List<Roll> rolls;
+    private static final int FIRST_FRAME = 1;
     private int score;
-    private String status;
+    private int index;
 
-    public NormalFrame() {
+    private NormalFrame(final int index) {
         this.score = 0;
+        this.index = index;
     }
 
+    public static NormalFrame firstFrame() {
+        return new NormalFrame(FIRST_FRAME);
+    }
 
+    public NormalFrame nextFrame() {
+        return new NormalFrame(index + 1);
+    }
+
+    public void sumScore(int score) {
+        this.score += score;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public int getScore() {
+        return score;
+    }
 }
