@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    private static final int MAX_LENGTH = 2;
+    private static final int FRAME_MAX_LENGTH = 2;
     private static final int LAST_FRAME = 9;
 
     private Pin pin;
@@ -16,14 +16,14 @@ public class NormalFrame implements Frame {
 
     @Override
     public void bowl(Pin fallenPin) {
-        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getStatesLength());
+        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getStatesLength(), false);
         setStates(state);
         setPin(fallenPin);
     }
 
     @Override
     public boolean isEndFrame() {
-        return this.states.getStatesLength() == MAX_LENGTH || State.STRIKE == State.valueOf(this.pin.getFallenPin(), false);
+        return this.states.getStatesLength() == FRAME_MAX_LENGTH || State.STRIKE == State.valueOf(this.pin.getFallenPin(), false);
     }
 
     @Override

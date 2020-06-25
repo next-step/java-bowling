@@ -3,25 +3,26 @@ package bowling.domain;
 import java.util.Objects;
 
 public class FinalFrame implements Frame {
+    private static final int FRAME_MAX_LENGTH = 3;
 
     private Pin pin;
     private final States states;
 
-    public FinalFrame(){
+    public FinalFrame() {
         this.pin = new Pin(Pin.MIN_PIN);
         this.states = new States();
     }
 
     @Override
     public void bowl(Pin fallenPin) {
-        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getStatesLength());
+        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getStatesLength(), true);
         setStates(state);
         setPin(fallenPin);
     }
 
     @Override
     public boolean isEndFrame() {
-        return false;
+        return this.states.getStatesLength() > FRAME_MAX_LENGTH;
     }
 
     @Override
