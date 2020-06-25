@@ -59,7 +59,12 @@ public class OutputView {
     private static List<String> getScores(Frames frames) {
         return frames.getFrames()
                 .stream()
-                .map(frame -> frame.getStates().getStates().stream().map(State::getValue).collect(Collectors.joining("|")))
+                .map(frame -> frame.getStates()
+                        .getStates()
+                        .stream()
+                        .map(State::getValue)
+                        .collect(Collectors.joining("|"))
+                )
                 .collect(Collectors.toList());
     }
 }
