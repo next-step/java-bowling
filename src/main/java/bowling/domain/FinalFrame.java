@@ -13,7 +13,10 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public void bowl(Pin pin) {
+    public void bowl(Pin fallenPin) {
+        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getStatesLength());
+        setStates(state);
+        setPin(fallenPin);
     }
 
     @Override
@@ -29,6 +32,22 @@ public class FinalFrame implements Frame {
     @Override
     public Frame getNextFrame(int frameNumber) {
         return null;
+    }
+
+    private void setStates(State state) {
+        this.states.add(state);
+    }
+
+    private void setPin(Pin fallenPin) {
+        this.pin = fallenPin;
+    }
+
+    public Pin getPin() {
+        return pin;
+    }
+
+    public States getStates() {
+        return states;
     }
 
     @Override
