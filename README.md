@@ -201,7 +201,7 @@
     - [X] 현재 상태를 계산할 수 있다.
 
 ### 참고사항: 마지막 프레임 결과 계산
-- 초구 스트라이크인 경우ㄹ
+- 초구 스트라이크인 경우
     - 무조건 3회 던진다.
 - 초구가 스트라이크 아닌 경우
     - 2구째에 미스나면 2회로 끝난다.
@@ -213,5 +213,9 @@
     - [X] 실행 과정에서 FinalFrame을 별도로 관리하지 않고 일반 프레임처럼 다룰 수 있도록 개선 
 - [ ] Player와 기존 BowlingGame 객체의 책임 일부를 새로운 BowlingGame객체로 이관
     - [ ] Player, BowlingGameResults(BowlingGameResult 일급컬렉션)을 속성으로 가짐
+        - [ ] 1차적으로 List<BowlingGameResult>로 구현
+    - [ ] 현재 프레임 진행 가능
+    - [ ] 진행중인 프레임 완료 여부를 알려줄 수 있음
+    - [ ] 다음 프레임 진행 가능
     - [ ] BowlingGameResults는 기존 PlayerFrames와 매우 유사하나 게임이 진행된 결과만을 저장하도록 구현
     - [ ] 모든 기능 동작 확인되면 Player에서 PlayerFrames 일급 컬렉셔 제거 (currentFrame만 관리)

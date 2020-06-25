@@ -2,7 +2,7 @@ package bowling.ui;
 
 import bowling.domain.Player;
 
-public class BowlingGame {
+public class BowlingGameApplication {
     public static void main(String[] args) {
         Player initPlayer = initGame();
 
