@@ -15,7 +15,7 @@ public class NormalFrameStatus implements FrameStatus {
     private final NumberOfHitPin firstNumberOfHitPin;
     private final NumberOfHitPin secondNumberOfHitPin;
 
-    NormalFrameStatus(NumberOfHitPin firstNumberOfHitPin, NumberOfHitPin secondNumberOfHitPin) {
+    public NormalFrameStatus(NumberOfHitPin firstNumberOfHitPin, NumberOfHitPin secondNumberOfHitPin) {
         this.firstNumberOfHitPin = firstNumberOfHitPin;
         this.secondNumberOfHitPin = secondNumberOfHitPin;
     }

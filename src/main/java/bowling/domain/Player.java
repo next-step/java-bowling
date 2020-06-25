@@ -71,6 +71,13 @@ public class Player {
         return new Player(name, this.playerFrames.lastValue(nextFrame), nextFrame);
     }
 
+    public Frame toNextFrameRefactor(int numberOfHitPin) {
+        Frame nextFrame = this.currentFrame.next(numberOfHitPin);
+        this.currentFrame = nextFrame;
+
+        return nextFrame;
+    }
+
     public String getName() {
         return name;
     }
