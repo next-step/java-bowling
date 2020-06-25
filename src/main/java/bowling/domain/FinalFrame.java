@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class FinalFrame implements Frame {
     private static final int FRAME_MAX_LENGTH = 3;
+    private static final int MAX_PIN_SUM = 10;
 
     private Pin pin;
     private final States states;
@@ -27,7 +28,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isEndGame() {
-        if(states.getSize() == NormalFrame.FRAME_MAX_LENGTH && states.getStates().stream().mapToInt(State::getFallenPins).sum() < 10) {
+        if (states.getSize() == NormalFrame.FRAME_MAX_LENGTH && getStatesPinSum() < MAX_PIN_SUM) {
             return true;
         }
         return this.states.getSize() == FRAME_MAX_LENGTH;
@@ -36,6 +37,13 @@ public class FinalFrame implements Frame {
     @Override
     public Frame getNextFrame(int frameNumber) {
         return null;
+    }
+
+    private int getStatesPinSum() {
+        return this.states.getStates()
+                .stream()
+                .mapToInt(State::getFallenPins)
+                .sum();
     }
 
     private void setStates(State state) {
