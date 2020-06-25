@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ public class BowlingGame {
 
     public BowlingGame(Player player, List<BowlingGameResult> bowlingGameResults) {
         this.player = player;
-        this.bowlingGameResults = bowlingGameResults;
+        this.bowlingGameResults = new ArrayList<>(bowlingGameResults);
     }
 
     public static BowlingGame start(String playerName) {
@@ -18,5 +20,15 @@ public class BowlingGame {
 
     public int checkWhereFrame() {
         return this.bowlingGameResults.size();
+    }
+
+    public List<BowlingGameResult> bowlFirst(int numberOfHitPin) {
+        Frame frame = player.bowlFirstRefactor(numberOfHitPin);
+        BowlingGameResult bowlingGameResult = new BowlingGameResult(frame.calculateCurrentResults());
+
+        List<BowlingGameResult> temp = new ArrayList<>(bowlingGameResults);
+        temp.add(bowlingGameResult);
+
+        return temp;
     }
 }

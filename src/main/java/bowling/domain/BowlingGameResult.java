@@ -21,4 +21,11 @@ public class BowlingGameResult {
     public int hashCode() {
         return Objects.hash(frameResults);
     }
+
+    @Override
+    public String toString() {
+        return "BowlingGameResult{" +
+                "frameResults=" + frameResults +
+                '}';
+    }
 }

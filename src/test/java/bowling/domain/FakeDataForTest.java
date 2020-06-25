@@ -6,6 +6,7 @@ import bowling.domain.frame.PlayerFrames;
 import bowling.domain.frameStatus.NormalFrameStatus;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class FakeDataForTest {
     public static final String PLAYER_NAME = "JBJ";
@@ -17,6 +18,8 @@ public class FakeDataForTest {
             .toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN).toNextFrame(TEN)
             .toNextFrame(TEN);
 
+    public static final NormalFrame FIVE_IN_PROGRESS_NORMAL_FRAME
+            = new NormalFrame(1, NormalFrameStatus.bowlFirst(FIVE), null);
     public static final NormalFrame STRIKE_FIRST_NORMAL_FRAME
             = new NormalFrame(1, NormalFrameStatus.bowlFirst(TEN), null);
     public static final NormalFrame STRIKE_SECOND_NORMAL_FRAME
@@ -76,4 +79,9 @@ public class FakeDataForTest {
             STRIKE_NINTH_NORMAL_FRAME,
             FIVE_SPARE_FINAL_FRAME
     ));
+
+    public static final FrameResults NORMAL_STRIKE_FRAME_RESULT
+            = new FrameResults(Collections.singletonList(FrameResult.STRIKE));
+    public static final FrameResults NORMAL_FIVE_SPARE_FRAME_RESULT
+            = new FrameResults(Arrays.asList(FrameResult.FIVE, FrameResult.SPARE));
 }

@@ -4,6 +4,7 @@ import bowling.domain.exceptions.AlreadyStartedPlayerException;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.exceptions.NotStartedPlayerException;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.PlayerFrames;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Stream;
 
+import static bowling.domain.FakeDataForTest.FIVE_IN_PROGRESS_NORMAL_FRAME;
+import static bowling.domain.FakeDataForTest.STRIKE_FIRST_NORMAL_FRAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -135,5 +138,22 @@ class PlayerTests {
         Player initPlayer = Player.createByName(PLAYER_NAME).bowlFirst(FIVE);
 
         assertThatThrownBy(() -> initPlayer.toNextFrame(TEN)).isInstanceOf(InvalidTryNextFrameException.class);
+    }
+
+    @DisplayName("초구를 굴리고 굴린 결과 프레임을 반환할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("bowlFirstRefactorResource")
+    void bowlFirstRefactorTest() {
+        Player initPlayer = Player.createByName(PLAYER_NAME);
+        Frame frame = initPlayer.bowlFirstRefactor(TEN);
+
+        assertThat(frame).isEqualTo(STRIKE_FIRST_NORMAL_FRAME);
+        assertThat(initPlayer.getCurrentFrame()).isEqualTo(frame);
+    }
+    public static Stream<Arguments> bowlFirstRefactorResource() {
+        return Stream.of(
+                Arguments.of(TEN, STRIKE_FIRST_NORMAL_FRAME),
+                Arguments.of(FIVE, FIVE_IN_PROGRESS_NORMAL_FRAME)
+        );
     }
 }

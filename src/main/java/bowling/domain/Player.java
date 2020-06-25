@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Player {
     private final String name;
     private final PlayerFrames playerFrames;
-    private final Frame currentFrame;
+    private Frame currentFrame;
 
     Player(String name, PlayerFrames playerFrames, Frame currentFrame) {
         this.name = name;
@@ -30,6 +30,15 @@ public class Player {
         NormalFrame firstFrame = NormalFrame.start(numberOfHitPin);
 
         return new Player(name, playerFrames.lastValue(firstFrame), firstFrame);
+    }
+
+    public Frame bowlFirstRefactor(int numberOfHitPin) {
+        validateBowlFirst();
+
+        NormalFrame firstFrame = NormalFrame.start(numberOfHitPin);
+        this.currentFrame = firstFrame;
+
+        return firstFrame;
     }
 
     public List<FrameResults> calculateResult() {
@@ -61,6 +70,10 @@ public class Player {
 
     public int getCurrentFrameIndex() {
         return this.playerFrames.size();
+    }
+
+    Frame getCurrentFrame() {
+        return this.currentFrame;
     }
 
     private void validateIsStarted() {
