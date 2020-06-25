@@ -18,4 +18,17 @@ public class FinalFrameTest {
         assertThat(finalFrame.getPin()).isEqualTo(new Pin(10));
     }
 
+    @DisplayName("현재 프레임 종료 여부를 반환할 수 있다.")
+    @Test
+    void isEndFrame() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(new Pin(10));
+        finalFrame.bowl(new Pin(10));
+        finalFrame.bowl(new Pin(10));
+
+        boolean actual = finalFrame.isEndFrame();
+
+        assertThat(actual).isFalse();
+    }
+
 }
