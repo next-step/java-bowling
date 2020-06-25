@@ -49,6 +49,10 @@ public class BowlingGame {
         return new ArrayList<>(this.bowlingGameResults);
     }
 
+    public boolean isCurrentFrameCompleted() {
+        return this.player.isCurrentFrameCompleted();
+    }
+
     private int lastIndexOfBowlingGameResults() {
         return this.bowlingGameResults.size() - 1;
     }

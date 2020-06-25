@@ -4,8 +4,12 @@ import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.exceptions.InvalidTryNextFrameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static bowling.domain.FakeDataForTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -73,5 +77,21 @@ class BowlingGameTests {
         bowlingGame.bowlFirst(FIVE);
 
         assertThatThrownBy(() -> bowlingGame.toNextFrame(FIVE)).isInstanceOf(InvalidTryNextFrameException.class);
+    }
+
+    @DisplayName("현재 프레임의 완료 여부를 알려줄 수 있다.")
+    @ParameterizedTest
+    @MethodSource("isCompletedResource")
+    void isCompleteTest(int numberOfHitPin, boolean expectedResult) {
+        BowlingGame bowlingGame = BowlingGame.start(PLAYER_NAME);
+        bowlingGame.bowlFirst(numberOfHitPin);
+
+        assertThat(bowlingGame.isCurrentFrameCompleted()).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> isCompletedResource() {
+        return Stream.of(
+                Arguments.of(FIVE, false),
+                Arguments.of(TEN, true)
+        );
     }
 }
