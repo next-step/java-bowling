@@ -43,11 +43,6 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
@@ -60,20 +55,17 @@ public class Answer extends AbstractEntity {
         return writer;
     }
 
-    public String getContents() {
-        return contents;
-    }
 
     public void toQuestion(Question question) {
         this.question = question;
     }
 
+    public void delete() {
+        this.deleted = true;
+    }
+
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
-    }
-
-    public void delete() {
-        this.deleted = true;
     }
 }

@@ -17,7 +17,7 @@ public class Question extends AbstractEntity {
     private User writer;
 
     @Embedded
-    private Answers answers = new Answers();
+    private final Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -67,18 +67,13 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public boolean enableDelete() {
-        return false;
-    }
 
-    public boolean checkEnableDelete(final User loginUser) {
+    public void checkEnableDelete(final User loginUser) {
         if (!this.writer.equalsNameAndEmail(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        if (this.answers.isEnableDeletedBy(loginUser)) {
-
+        if (!this.answers.isEnableDeletedBy(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
-        return true;
-
     }
 }

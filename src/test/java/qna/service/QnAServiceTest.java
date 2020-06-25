@@ -1,11 +1,12 @@
 package qna.service;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import qna.CannotDeleteException;
 import qna.domain.*;
 
@@ -15,8 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class QnaServiceTest {
+@ExtendWith(MockitoExtension.class)
+class QnAServiceTest {
+
     @Mock
     private QuestionRepository questionRepository;
 
@@ -29,49 +31,43 @@ public class QnaServiceTest {
     private Question question;
     private Answer answer;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         question.addAnswer(answer);
     }
 
+    @DisplayName("다른사람이 쓴 글을 삭제하려고하면 익셉션")
     @Test
-    public void delete_성공() throws Exception {
+    public void delete_다른_사람이_쓴_글() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
-        assertThat(question.isDeleted()).isFalse();
-        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
-
-        assertThat(question.isDeleted()).isTrue();
+        assertThatThrownBy(() -> qnAService.deleteQuestion(UserTest.SANJIGI, question.getId()))
+                .isInstanceOf(CannotDeleteException.class);
     }
 
+    @DisplayName("다른사람이 쓴 댓글이 있는 글을 삭제하려고하면 익셉션")
     @Test
-    public void delete_다른_사람이_쓴_글() throws Exception {
+    public void delete_다른_사람이_쓴_댓글() {
+        Answer anotherAnswer = new Answer(11L, UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents1 ");
+        question.addAnswer(new Answer(11L, UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents1"));
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
-        assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> qnAService.deleteQuestion(UserTest.SANJIGI, question.getId()))
+                .isInstanceOf(CannotDeleteException.class);
+        anotherAnswer.delete();
     }
 
+    @DisplayName("게시글 정상삭제 테스트")
     @Test
-    public void delete_성공_질문자_답변자_같음() throws Exception {
+    public void delete_성공_질문자_답변자_같음() {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
 
         assertThat(question.isDeleted()).isTrue();
         assertThat(answer.isDeleted()).isTrue();
-    }
-
-    @Test
-    public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
-        when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
-
-        assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
     }
 
 }

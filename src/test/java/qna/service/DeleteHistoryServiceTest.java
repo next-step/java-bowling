@@ -1,11 +1,12 @@
 package qna.service;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import qna.domain.*;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class DeleteHistoryServiceTest {
 
     @Mock
@@ -26,15 +27,16 @@ public class DeleteHistoryServiceTest {
     private Question question;
     private Answer answer;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         question.addAnswer(answer);
     }
 
+    @DisplayName("게시글과 댓글의 삭제내역을 기록한다")
     @Test
-    public void 게시글을_기록하면_게시글과_댓글_함께_기록된다() {
+    public void delete() {
         deleteHistoryService.save(question);
         verifyDeleteHistories();
     }
