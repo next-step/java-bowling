@@ -8,7 +8,7 @@ import bowling.view.OutputView;
 
 public class Main {
     public static void main(String[] args) {
-        String playerName = InputView.printPlayerName();
+        String playerName = InputView.inputPlayerName();
         Player player = new Player(playerName);
 
         OutputView.printDefault(player.getName());
@@ -16,7 +16,7 @@ public class Main {
         BowlingGame bowlingGame = new BowlingGame(player);
 
         while (!bowlingGame.isEndGame()) {
-            int pin = InputView.printFramePitches(bowlingGame.getCurrentFrameNumber());
+            int pin = InputView.inputFramePitches(bowlingGame.getCurrentFrameNumber());
             bowlingGame.play(new Pin(pin));
             OutputView.printResult(bowlingGame);
         }
