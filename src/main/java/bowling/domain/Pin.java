@@ -3,6 +3,7 @@ package bowling.domain;
 public class Pin {
     public static final int MAXIMUM_PIN_NUMBER = 10;
     public static final int MINIMUM_PIN_NUMBER = 0;
+
     public static final String PIN_MAX_ERROR = "10개보다 핀이 더 생길 수 없습니다.";
     public static final String PIN_MIN_ERROR = "볼링 핀은 최초 0 미만이 될 수 없습니다. ";
 
@@ -13,11 +14,7 @@ public class Pin {
     }
 
     public Pin(int pins) {
-        this.pins += validatePin(pins);
-    }
-
-    public void addPins(int pins) {
-        this.pins += validatePin(pins);
+        this.pins = validatePin(pins);
     }
 
     private int validatePin(int pins) {

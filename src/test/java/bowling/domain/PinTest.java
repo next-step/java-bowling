@@ -13,9 +13,8 @@ class PinTest {
     @ParameterizedTest
     @ValueSource(ints = {11, -1})
     public void testRollNumber(final int pins) {
-        Pin pin = new Pin();
         assertThatThrownBy(() -> {
-            pin.addPins(pins);
+            new Pin(pins);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -23,8 +22,7 @@ class PinTest {
     @ParameterizedTest
     @ValueSource(ints = {10})
     public void testStrike(final int pins) {
-        Pin pin = new Pin();
-        pin.addPins(10);
+        Pin pin = new Pin(pins);
         assertThat(pin.isStrike()).isTrue();
     }
 
