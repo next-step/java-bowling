@@ -22,16 +22,22 @@ public class Answers {
         this.answers.add(answer);
     }
 
-    public void deleteBy(final User loginUser) {
+    public void delete() {
         for (Answer answer : this.answers) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
             answer.delete();
         }
     }
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public boolean isEnableDeletedBy(final User loginUser) {
+        for (Answer answer : this.answers) {
+            if (!answer.isOwner(loginUser)) {
+                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+            }
+        }
+        return true;
     }
 }

@@ -13,7 +13,11 @@ import java.util.List;
 @Service("deleteHistoryService")
 public class DeleteHistoryService {
     @Resource(name = "deleteHistoryRepository")
-    private DeleteHistoryRepository deleteHistoryRepository;
+    private final DeleteHistoryRepository deleteHistoryRepository;
+
+    public DeleteHistoryService(final DeleteHistoryRepository deleteHistoryRepository) {
+        this.deleteHistoryRepository = deleteHistoryRepository;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveAll(List<DeleteHistory> deleteHistories) {

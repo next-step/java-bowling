@@ -53,11 +53,9 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public void deleteBy(final User loginUser) {
-        if (!this.writer.equalsNameAndEmail(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-        this.answers.deleteBy(loginUser);
+    public void delete() {
+        this.deleted = true;
+        this.answers.delete();
     }
 
     public Answers getAnswers() {
@@ -67,5 +65,20 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public boolean enableDelete() {
+        return false;
+    }
+
+    public boolean checkEnableDelete(final User loginUser) {
+        if (!this.writer.equalsNameAndEmail(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+        if (this.answers.isEnableDeletedBy(loginUser)) {
+
+        }
+        return true;
+
     }
 }
