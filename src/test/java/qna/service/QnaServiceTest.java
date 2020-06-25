@@ -9,9 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import qna.CannotDeleteException;
 import qna.domain.*;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,7 +44,6 @@ public class QnaServiceTest {
 
         assertThat(question.isDeleted()).isFalse();
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
-
         assertThat(question.isDeleted()).isTrue();
         verifyDeleteHistories();
     }
@@ -81,9 +78,9 @@ public class QnaServiceTest {
     }
 
     private void verifyDeleteHistories() {
-        List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        verify(deleteHistoryService).saveAll(deleteHistories);
+        DeleteHistories deleteHistories = new DeleteHistories(Arrays.asList(
+                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter()),
+                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter())));
+        verify(deleteHistoryService).saveAll(deleteHistories.getHistories());
     }
 }
