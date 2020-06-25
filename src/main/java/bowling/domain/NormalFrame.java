@@ -16,14 +16,14 @@ public class NormalFrame implements Frame {
 
     @Override
     public void bowl(Pin fallenPin) {
-        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getStatesLength(), false);
+        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getSize(), false);
         setStates(state);
         setPin(fallenPin);
     }
 
     @Override
     public boolean isEndFrame() {
-        return this.states.getStatesLength() == FRAME_MAX_LENGTH || State.STRIKE == State.valueOf(this.pin.getFallenPin(), false);
+        return this.states.getSize() == FRAME_MAX_LENGTH || State.STRIKE == State.valueOf(this.pin.getFallenPin(), false);
     }
 
     @Override

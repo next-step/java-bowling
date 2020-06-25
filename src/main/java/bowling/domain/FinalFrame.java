@@ -15,22 +15,22 @@ public class FinalFrame implements Frame {
 
     @Override
     public void bowl(Pin fallenPin) {
-        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getStatesLength(), true);
+        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getSize(), true);
         setStates(state);
         setPin(fallenPin);
     }
 
     @Override
     public boolean isEndFrame() {
-        return this.states.getStatesLength() > FRAME_MAX_LENGTH;
+        return this.states.getSize() > FRAME_MAX_LENGTH;
     }
 
     @Override
     public boolean isEndGame() {
-        if(states.getStatesLength() == NormalFrame.FRAME_MAX_LENGTH && states.getStates().stream().mapToInt(State::getFallenPins).sum() < 10) {
+        if(states.getSize() == NormalFrame.FRAME_MAX_LENGTH && states.getStates().stream().mapToInt(State::getFallenPins).sum() < 10) {
             return true;
         }
-        return this.states.getStatesLength() == FRAME_MAX_LENGTH;
+        return this.states.getSize() == FRAME_MAX_LENGTH;
     }
 
     @Override

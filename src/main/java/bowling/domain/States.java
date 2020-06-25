@@ -18,7 +18,7 @@ public class States {
         return states;
     }
 
-    public int getStatesLength() {
+    public int getSize() {
         return this.states.size();
     }
 }
