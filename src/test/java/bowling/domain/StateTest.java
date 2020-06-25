@@ -41,7 +41,7 @@ public class StateTest {
     }
 
     @Test
-    void strike() {
+    void normalFrame_strike() {
         int previousFallenPins = 0;
         int nextFallenPins = 10;
         int statesLength = 0;
@@ -52,7 +52,7 @@ public class StateTest {
     }
 
     @Test
-    void gutter() {
+    void normalFrame_gutter() {
         int previousFallenPins = 0;
         int nextFallenPins = 0;
         int statesLength = 0;
@@ -63,7 +63,7 @@ public class StateTest {
     }
 
     @Test
-    void spare() {
+    void normalFrame_spare() {
         int previousFallenPins = 2;
         int nextFallenPins = 8;
         int statesLength = 0;
@@ -74,7 +74,7 @@ public class StateTest {
     }
 
     @Test
-    void one() {
+    void normalFrame_one() {
         int previousFallenPins = 0;
         int nextFallenPins = 1;
         int statesLength = 0;
@@ -85,13 +85,73 @@ public class StateTest {
     }
 
     @Test
-    void validateFallenPinSum() {
+    void normalFrame_validateFallenPinSum() {
         int previousFallenPins = 2;
         int nextFallenPins = 9;
         int statesLength = 0;
 
         assertThatExceptionOfType(FallenPinsSumException.class)
                 .isThrownBy(() -> State.bowl(previousFallenPins, nextFallenPins, statesLength))
+                .withMessage(FallenPinsSumException.MESSAGE);
+    }
+
+    @Test
+    void finalFrame_strike() {
+        int previousFallenPins = 0;
+        int nextFallenPins = 10;
+
+        State actual = State.finalBowl(previousFallenPins, nextFallenPins, State.STRIKE);
+
+        assertThat(actual).isEqualTo(State.STRIKE);
+    }
+
+    @Test
+    void finalFrame_gutter() {
+        int previousFallenPins = 0;
+        int nextFallenPins = 0;
+
+        State actual = State.finalBowl(previousFallenPins, nextFallenPins, State.GUTTER);
+
+        assertThat(actual).isEqualTo(State.GUTTER);
+    }
+
+    @Test
+    void finalFrame_spare_success() {
+        int previousFallenPins = 2;
+        int nextFallenPins = 8;
+
+        State actual = State.finalBowl(previousFallenPins, nextFallenPins, State.ONE);
+
+        assertThat(actual).isEqualTo(State.SPARE);
+    }
+
+    @Test
+    void finalFrame_spare_fail() {
+        int previousFallenPins = 2;
+        int nextFallenPins = 8;
+
+        State actual = State.finalBowl(previousFallenPins, nextFallenPins, State.SPARE);
+
+        assertThat(actual).isNotEqualTo(State.SPARE);
+    }
+
+    @Test
+    void finalFrame_one() {
+        int previousFallenPins = 0;
+        int nextFallenPins = 1;
+
+        State actual = State.finalBowl(previousFallenPins, nextFallenPins, State.THREE);
+
+        assertThat(actual).isEqualTo(State.ONE);
+    }
+
+    @Test
+    void validateFallenPinSumForFinalFrame() {
+        int previousFallenPins = 2;
+        int nextFallenPins = 9;
+
+        assertThatExceptionOfType(FallenPinsSumException.class)
+                .isThrownBy(() -> State.finalBowl(previousFallenPins, nextFallenPins, State.GUTTER))
                 .withMessage(FallenPinsSumException.MESSAGE);
     }
 }
