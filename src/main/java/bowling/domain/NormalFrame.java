@@ -2,11 +2,11 @@ package bowling.domain;
 
 public class NormalFrame {
     private static final int FIRST_FRAME = 1;
-    private int score;
+    private Pin pin;
     private int index;
 
     private NormalFrame(final int index) {
-        this.score = 0;
+        this.pin = new Pin();
         this.index = index;
     }
 
@@ -18,15 +18,15 @@ public class NormalFrame {
         return new NormalFrame(index + 1);
     }
 
-    public void sumScore(int score) {
-        this.score += score;
+    public void addPins(int pin) {
+        this.pin.addPins(pin);
     }
 
     public int getIndex() {
         return index;
     }
 
-    public int getScore() {
-        return score;
+    public int getPin() {
+        return pin.getPin();
     }
 }

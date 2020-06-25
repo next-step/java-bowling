@@ -23,14 +23,14 @@ public class NormalFrameTest {
         assertThat(firstFrame.nextFrame().getIndex()).isEqualTo(2);
     }
 
-    @DisplayName("점수 추가")
+    @DisplayName("핀 추가")
     @ParameterizedTest
     @ValueSource(ints = {10, 8, 2, 7})
-    void createNextFrame(int score) {
+    void createNextFrame(int pins) {
         NormalFrame firstFrame = NormalFrame.firstFrame();
-        firstFrame.sumScore(score);
+        firstFrame.addPins(pins);
 
-        assertThat(firstFrame.getScore()).isEqualTo(score);
+        assertThat(firstFrame.getPin()).isEqualTo(pins);
     }
 
 

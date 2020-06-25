@@ -7,14 +7,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class RollTest {
+class PinTest {
 
     @DisplayName("유효한 볼링핀의 범위인지 테스트")
     @ParameterizedTest
     @ValueSource(ints = {11})
     public void testRollNumber(final int pins) {
         assertThatThrownBy(() -> {
-            new Roll(pins);
+            new Pin(pins);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -22,7 +22,7 @@ class RollTest {
     @ParameterizedTest
     @ValueSource(ints = {10})
     public void testStrike(final int pins) {
-        Roll roll = new Roll(pins);
-        assertThat(roll.isStrike()).isTrue();
+        Pin pin = new Pin(pins);
+        assertThat(pin.isStrike()).isTrue();
     }
 }
