@@ -58,6 +58,13 @@ public class Player {
         return new Player(name, this.playerFrames.lastValue(frame), frame);
     }
 
+    public Frame bowlCurrentFrameRefactor(int numberOfHitPin) {
+        Frame bowledFrame = this.currentFrame.bowl(numberOfHitPin);
+        this.currentFrame = bowledFrame;
+
+        return bowledFrame;
+    }
+
     public Player toNextFrame(int numberOfHitPin) {
         Frame nextFrame = this.currentFrame.next(numberOfHitPin);
 

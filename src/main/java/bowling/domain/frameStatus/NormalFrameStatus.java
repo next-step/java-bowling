@@ -76,4 +76,12 @@ public class NormalFrameStatus implements FrameStatus {
     public int hashCode() {
         return Objects.hash(firstNumberOfHitPin, secondNumberOfHitPin);
     }
+
+    @Override
+    public String toString() {
+        return "NormalFrameStatus{" +
+                "firstNumberOfHitPin=" + firstNumberOfHitPin +
+                ", secondNumberOfHitPin=" + secondNumberOfHitPin +
+                '}';
+    }
 }

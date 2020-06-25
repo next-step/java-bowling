@@ -17,8 +17,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Stream;
 
-import static bowling.domain.FakeDataForTest.FIVE_IN_PROGRESS_NORMAL_FRAME;
-import static bowling.domain.FakeDataForTest.STRIKE_FIRST_NORMAL_FRAME;
+import static bowling.domain.FakeDataForTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -155,5 +154,28 @@ class PlayerTests {
                 Arguments.of(TEN, STRIKE_FIRST_NORMAL_FRAME),
                 Arguments.of(FIVE, FIVE_IN_PROGRESS_NORMAL_FRAME)
         );
+    }
+
+    @DisplayName("현재 프레임이 완료되지 않았으면 현재 프레임을 진행할 수 있다.")
+    @Test
+    void bowlCurrentFrameRefactorTest() {
+        Player initPlayer = Player.createByName(PLAYER_NAME);
+        initPlayer.bowlFirstRefactor(FIVE);
+        NormalFrame expectedCurrentFrame = NormalFrame.start(FIVE).bowl(FIVE);
+
+        Frame frame = initPlayer.bowlCurrentFrameRefactor(FIVE);
+
+        assertThat(frame).isEqualTo(FIVE_FIVE_IN_PROGRESS_NORMAL_FRAME);
+        assertThat(initPlayer.getCurrentFrame()).isEqualTo(expectedCurrentFrame);
+    }
+
+    // TODO
+    @DisplayName("현재 프레임이 완료됐으면 현재 프레임을 진행할 수 없다.")
+    @Test
+    void bowlCurrentFrameRefactorValidationTest() {
+        Player completedPlayer = Player.createByName(PLAYER_NAME).bowlFirst(TEN);
+
+        assertThatThrownBy(() -> completedPlayer.bowlCurrentFrame(FIVE))
+                .isInstanceOf(InvalidTryBowlException.class);
     }
 }

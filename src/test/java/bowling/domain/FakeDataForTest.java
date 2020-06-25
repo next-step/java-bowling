@@ -20,6 +20,8 @@ public class FakeDataForTest {
 
     public static final NormalFrame FIVE_IN_PROGRESS_NORMAL_FRAME
             = new NormalFrame(1, NormalFrameStatus.bowlFirst(FIVE), null);
+    public static final NormalFrame FIVE_FIVE_IN_PROGRESS_NORMAL_FRAME
+            = new NormalFrame(1, NormalFrameStatus.bowlFirst(FIVE).bowl(FIVE), null);
     public static final NormalFrame STRIKE_FIRST_NORMAL_FRAME
             = new NormalFrame(1, NormalFrameStatus.bowlFirst(TEN), null);
     public static final NormalFrame STRIKE_SECOND_NORMAL_FRAME
