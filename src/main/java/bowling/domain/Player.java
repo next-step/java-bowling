@@ -83,7 +83,7 @@ public class Player {
     }
 
     public int getCurrentFrameIndex() {
-        return this.playerFrames.size();
+        return this.currentFrame.getIndex();
     }
 
     Frame getCurrentFrame() {
@@ -101,6 +101,8 @@ public class Player {
             throw new AlreadyStartedPlayerException("이미 투구한 참가자는 초구를 굴릴 수 없습니다.");
         }
     }
+
+
 
     @Override
     public boolean equals(Object o) {

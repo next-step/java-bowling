@@ -222,7 +222,7 @@
         - [X] Player 리팩토링 필요(진행한 Frame 반환)
     - [X] 진행중인 프레임 완료 여부를 알려줄 수 있음
     - [X] BowlingGameResults는 기존 PlayerFrames와 매우 유사하나 게임이 진행된 결과만을 저장하도록 구현
-    - [ ] BowlingGameApplication에서 BowlingGame을 의존하도록 리팩토링
+    - [X] BowlingGameApplication에서 BowlingGame을 의존하도록 리팩토링
     - [ ] 모든 기능 동작 확인되면 Player에서 PlayerFrames 일급 컬렉셔 제거 (currentFrame만 관리)
 - [X] BowlingGameResult
     - [X] FrameResults를 속성으로 갖는다.

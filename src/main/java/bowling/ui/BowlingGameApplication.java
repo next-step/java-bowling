@@ -1,7 +1,10 @@
 package bowling.ui;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGameResult;
 import bowling.domain.Player;
+
+import java.util.List;
 
 public class BowlingGameApplication {
     public static void main(String[] args) {
@@ -9,16 +12,9 @@ public class BowlingGameApplication {
 
         BowlingGame bowlingGame = BowlingGame.play(initPlayer);
 
-        FirstFrameControllerRefactor firstFrameControllerRefactor = new FirstFrameControllerRefactor(bowlingGame);
-        firstFrameControllerRefactor.doFirstFrame();
+        firstBowl(bowlingGame);
 
-        // 1 프레임 처리
-//        FirstFrameController firstFrameController = new FirstFrameController(initPlayer);
-//        Player firstFrameCompletedPlayer = firstFrameController.doFirstFrame();
-
-        // 프레임 처리
-//        MiddleFrameController middleFrameController = new MiddleFrameController(firstFrameCompletedPlayer);
-//        middleFrameController.doMiddleFrame();
+        bowlRemainFrames(bowlingGame);
     }
 
     private static Player initGame() {
@@ -27,5 +23,36 @@ public class BowlingGameApplication {
         OutputView.printEmptyResult(userName);
 
         return Player.createByName(userName);
+    }
+
+    private static void firstBowl(BowlingGame bowlingGame) {
+        List<BowlingGameResult> firstResults = bowlingGame.bowlFirst(InputView.getNumberOfHitPin(1));
+        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), firstResults);
+    }
+
+    private static void bowlRemainFrames(BowlingGame bowlingGame) {
+        for (int frameIndex = 1; frameIndex < 11; frameIndex++) {
+            doNotCompletedFrame(bowlingGame, frameIndex);
+            if (breakWhenFinalFrame(frameIndex)) break;
+            doNextFrame(bowlingGame, frameIndex);
+        }
+    }
+
+    private static void doNotCompletedFrame(BowlingGame bowlingGame, int frameIndex) {
+        while (!bowlingGame.isCurrentFrameCompleted()) {
+            List<BowlingGameResult> currentFrameResults =
+                    bowlingGame.bowlCurrentFrame(InputView.getNumberOfHitPin(frameIndex));
+            OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), currentFrameResults);
+        }
+    }
+
+    private static boolean breakWhenFinalFrame(int frameIndex) {
+        return frameIndex == 10;
+    }
+
+    private static void doNextFrame(BowlingGame bowlingGame, int frameIndex) {
+        List<BowlingGameResult> nextFrameResults =
+                bowlingGame.toNextFrame(InputView.getNumberOfHitPin(frameIndex + 1));
+        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), nextFrameResults);
     }
 }

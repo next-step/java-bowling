@@ -35,6 +35,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public int getIndex() {
+        return index;
+    }
+
+    @Override
     public Frame next(int numberOfHitPin) {
         throw new InvalidTryNextFrameException("10 프레임 이후 프레임은 존재하지 않습니다.");
     }
