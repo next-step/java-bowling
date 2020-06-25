@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public enum State {
     GUTTER("-", 0, false),
+    READY("0",0,false),
     ONE("1", 1, false),
     TWO("2", 2, false),
     THREE("3", 3, false),
@@ -33,28 +34,58 @@ public enum State {
                 .orElseThrow(() -> new IllegalArgumentException("올바른 값이 아닙니다."));
     }
 
-    public static State bowl(int previousFallenPins, int nextFallenPins, int statesLength, boolean isFinal) {
-        if (statesLength == 0 && STRIKE == State.valueOf(nextFallenPins, false)) {
-            return STRIKE;
-        }
+    public static State bowl(int previousFallenPins, int nextFallenPins, int statesLength) {
+        if (checkNormalFrameStrike(nextFallenPins, statesLength)) return STRIKE;
 
-        if (GUTTER == State.valueOf(nextFallenPins, false)) {
-            return GUTTER;
-        }
+        if (checkGutter(nextFallenPins)) return GUTTER;
 
-        if(!isFinal) {
-            validateFallenPinSum(previousFallenPins, nextFallenPins);
-        }
+        validateFallenPinSum(previousFallenPins, nextFallenPins);
 
-        if (previousFallenPins + nextFallenPins == 10) {
-            return SPARE;
-        }
+        if (checkNormalFrameSpare(previousFallenPins, nextFallenPins)) return SPARE;
 
         return State.valueOf(nextFallenPins, false);
     }
 
+    public static State finalBowl(int previousFallenPins, int nextFallenPins, State lastState) {
+        validateFallenPinSumForFinalFrame(previousFallenPins, nextFallenPins, lastState);
+
+        if (checkStrike(nextFallenPins, STRIKE)) return STRIKE;
+
+        if (checkGutter(nextFallenPins)) return GUTTER;
+
+        if (checkFinalFrameSpare(previousFallenPins, nextFallenPins, lastState)) return SPARE;
+
+        return State.valueOf(nextFallenPins, false);
+    }
+
+    private static boolean checkFinalFrameSpare(int previousFallenPins, int nextFallenPins, State lastState) {
+        return lastState != SPARE && checkNormalFrameSpare(previousFallenPins, nextFallenPins);
+    }
+
+    private static boolean checkNormalFrameSpare(int previousFallenPins, int nextFallenPins) {
+        return previousFallenPins + nextFallenPins == FinalFrame.MAX_PIN_SUM;
+    }
+
+    private static boolean checkGutter(int nextFallenPins) {
+        return checkStrike(nextFallenPins, GUTTER);
+    }
+
+    private static boolean checkNormalFrameStrike(int nextFallenPins, int statesLength) {
+        return statesLength == 0 && checkStrike(nextFallenPins, STRIKE);
+    }
+
+    private static boolean checkStrike(int nextFallenPins, State strike) {
+        return strike == State.valueOf(nextFallenPins, false);
+    }
+
+    private static void validateFallenPinSumForFinalFrame(int previousFallenPins, int nextFallenPins, State lastState) {
+        if(lastState != STRIKE && lastState != SPARE && previousFallenPins + nextFallenPins > FinalFrame.MAX_PIN_SUM) {
+            throw new FallenPinsSumException();
+        }
+    }
+
     private static void validateFallenPinSum(int previousFallenPins, int nextFallenPins) {
-        if(previousFallenPins + nextFallenPins > 10) {
+        if (previousFallenPins + nextFallenPins > FinalFrame.MAX_PIN_SUM) {
             throw new FallenPinsSumException();
         }
     }

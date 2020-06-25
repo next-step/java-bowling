@@ -21,4 +21,11 @@ public class States {
     public int getSize() {
         return this.states.size();
     }
+
+    public State getLastState() {
+        if (this.states.size() == 0) {
+            return State.READY;
+        }
+        return this.states.get(this.states.size() - 1);
+    }
 }

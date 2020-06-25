@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class FinalFrame implements Frame {
     private static final int FRAME_MAX_LENGTH = 3;
-    private static final int MAX_PIN_SUM = 10;
+    public static final int MAX_PIN_SUM = 10;
 
     private Pin pin;
     private final States states;
@@ -16,7 +16,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public void bowl(Pin fallenPin) {
-        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getSize(), true);
+        State state = State.finalBowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getLastState());
         setStates(state);
         setPin(fallenPin);
     }

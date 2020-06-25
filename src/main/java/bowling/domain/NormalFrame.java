@@ -16,7 +16,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public void bowl(Pin fallenPin) {
-        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getSize(), false);
+        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getSize());
         setStates(state);
         setPin(fallenPin);
     }
