@@ -59,6 +59,10 @@ public enum State {
         }
     }
 
+    public String getValue() {
+        return value;
+    }
+
     public int getFallenPins() {
         return fallenPins;
     }

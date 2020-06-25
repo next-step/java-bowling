@@ -50,6 +50,7 @@ public class FinalFrame implements Frame {
         return pin;
     }
 
+    @Override
     public States getStates() {
         return states;
     }

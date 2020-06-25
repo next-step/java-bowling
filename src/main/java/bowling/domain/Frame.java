@@ -5,4 +5,5 @@ public interface Frame {
     boolean isEndFrame();
     boolean isEndGame();
     Frame getNextFrame(int frameNumber);
+    States getStates();
 }

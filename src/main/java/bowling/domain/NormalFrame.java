@@ -51,6 +51,7 @@ public class NormalFrame implements Frame {
         return pin;
     }
 
+    @Override
     public States getStates() {
         return states;
     }
