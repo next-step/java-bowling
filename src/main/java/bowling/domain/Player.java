@@ -18,8 +18,4 @@ public class Player {
             throw new IllegalArgumentException("이름을 입력해 주세요");
         }
     }
-
-    public String getName() {
-        return name;
-    }
 }
