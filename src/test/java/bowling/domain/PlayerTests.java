@@ -169,13 +169,13 @@ class PlayerTests {
         assertThat(initPlayer.getCurrentFrame()).isEqualTo(expectedCurrentFrame);
     }
 
-    // TODO
     @DisplayName("현재 프레임이 완료됐으면 현재 프레임을 진행할 수 없다.")
     @Test
     void bowlCurrentFrameRefactorValidationTest() {
-        Player completedPlayer = Player.createByName(PLAYER_NAME).bowlFirst(TEN);
+        Player initPlayer = Player.createByName(PLAYER_NAME);
+        initPlayer.bowlFirstRefactor(TEN);
 
-        assertThatThrownBy(() -> completedPlayer.bowlCurrentFrame(FIVE))
+        assertThatThrownBy(() -> initPlayer.bowlCurrentFrame(FIVE))
                 .isInstanceOf(InvalidTryBowlException.class);
     }
 }
