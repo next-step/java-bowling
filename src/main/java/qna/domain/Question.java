@@ -92,6 +92,21 @@ public class Question extends AbstractEntity {
     public void deleteBy(User loginUser) throws CannotDeleteException {
         validateUser(loginUser);
         setDeleted();
+        deleteAnswers(loginUser);
+    }
+
+    private void deleteAnswers(User loginUser) throws CannotDeleteException {
+        for (Answer answer : answers) {
+            deleteAnswer(loginUser, answer);
+        }
+    }
+
+    private void deleteAnswer(User loginUser, Answer answer) throws CannotDeleteException {
+        try {
+            answer.deleteBy(loginUser);
+        } catch (CannotDeleteException e) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
     }
 
     private void validateUser(User loginUser) throws CannotDeleteException {
