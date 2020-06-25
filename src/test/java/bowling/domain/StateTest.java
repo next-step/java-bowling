@@ -46,7 +46,7 @@ public class StateTest {
         int nextFallenPins = 10;
         int statesLength = 0;
 
-        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength, false);
+        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength);
 
         assertThat(actual).isEqualTo(State.STRIKE);
     }
@@ -57,7 +57,7 @@ public class StateTest {
         int nextFallenPins = 0;
         int statesLength = 0;
 
-        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength, false);
+        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength);
 
         assertThat(actual).isEqualTo(State.GUTTER);
     }
@@ -68,7 +68,7 @@ public class StateTest {
         int nextFallenPins = 8;
         int statesLength = 0;
 
-        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength, false);
+        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength);
 
         assertThat(actual).isEqualTo(State.SPARE);
     }
@@ -79,7 +79,7 @@ public class StateTest {
         int nextFallenPins = 1;
         int statesLength = 0;
 
-        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength, false);
+        State actual = State.bowl(previousFallenPins, nextFallenPins, statesLength);
 
         assertThat(actual).isEqualTo(State.ONE);
     }
@@ -91,7 +91,7 @@ public class StateTest {
         int statesLength = 0;
 
         assertThatExceptionOfType(FallenPinsSumException.class)
-                .isThrownBy(() -> State.bowl(previousFallenPins, nextFallenPins, statesLength, false))
+                .isThrownBy(() -> State.bowl(previousFallenPins, nextFallenPins, statesLength))
                 .withMessage(FallenPinsSumException.MESSAGE);
     }
 }
