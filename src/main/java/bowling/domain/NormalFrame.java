@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    private static final int FRAME_MAX_LENGTH = 2;
+    public static final int FRAME_MAX_LENGTH = 2;
     private static final int LAST_FRAME = 9;
 
     private Pin pin;

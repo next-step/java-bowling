@@ -58,4 +58,8 @@ public enum State {
             throw new FallenPinsSumException();
         }
     }
+
+    public int getFallenPins() {
+        return fallenPins;
+    }
 }

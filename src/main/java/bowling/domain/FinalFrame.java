@@ -27,7 +27,10 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isEndGame() {
-        return false;
+        if(states.getStatesLength() == NormalFrame.FRAME_MAX_LENGTH && states.getStates().stream().mapToInt(State::getFallenPins).sum() < 10) {
+            return true;
+        }
+        return this.states.getStatesLength() == FRAME_MAX_LENGTH;
     }
 
     @Override
