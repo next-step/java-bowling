@@ -9,4 +9,6 @@ public interface Pins {
     boolean hasTurn();
 
     PinsState getPinsState();
+
+    int sum();
 }

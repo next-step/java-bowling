@@ -65,6 +65,11 @@ public class FinalPins implements Pins {
         return new PinsState(downPins, scoreTypes);
     }
 
+    @Override
+    public int sum() {
+        return this.pins.sum() + this.downPins.stream().reduce(0, Integer::sum);
+    }
+
     private void validate(int downPin) {
         if (downPin < 0 || downPin > MAX_PIN) {
             throw new IllegalArgumentException("invalid downPin");

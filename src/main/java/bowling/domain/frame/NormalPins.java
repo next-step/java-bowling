@@ -50,6 +50,11 @@ public class NormalPins implements Pins {
         return new PinsState(new ArrayList<>(this.downPins), Collections.EMPTY_LIST);
     }
 
+    @Override
+    public int sum() {
+        return this.downPins.stream().reduce(0, Integer::sum);
+    }
+
     private void validate(int downPin) {
         if (!hasTurn()) {
             throw new IllegalStateException("max down limit");

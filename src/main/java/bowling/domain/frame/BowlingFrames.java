@@ -29,7 +29,7 @@ public class BowlingFrames {
             frames.add(normalFrame);
         }
 
-        frames.add(Frame.last());
+        frames.add(frames.get(frames.size()-1).last());
 
         return new BowlingFrames(frames);
     }

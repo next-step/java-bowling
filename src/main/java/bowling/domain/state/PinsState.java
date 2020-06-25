@@ -22,6 +22,10 @@ public class PinsState {
         return new ArrayList<>(this.scoreTypes);
     }
 
+    public boolean hasMiss(){
+        return this.scoreTypes.contains(ScoreType.MISS);
+    }
+
     public boolean hasStrike() {
         return this.scoreTypes.contains(ScoreType.STRIKE);
     }
