@@ -31,4 +31,17 @@ public class FinalFrameTest {
         assertThat(actual).isFalse();
     }
 
+    @DisplayName("BowlingGame 종료 여부를 반환할 수 있다.")
+    @Test
+    void isEndGame() {
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(new Pin(10));
+        finalFrame.bowl(new Pin(10));
+        finalFrame.bowl(new Pin(10));
+
+        boolean actual = finalFrame.isEndGame();
+
+        assertThat(actual).isTrue();
+    }
+
 }
