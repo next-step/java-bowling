@@ -24,4 +24,17 @@ public class Name {
             throw new IllegalArgumentException("이름의 길이는 3 이어야 합니다. - " + name);
         }
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Name)) return false;
+        Name name1 = (Name) o;
+        return name.equals(name1.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }
