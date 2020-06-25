@@ -3,6 +3,7 @@ package qna.domain;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,8 +76,13 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public DeleteHistory deleteAndGetHistory() {
+        delete();
+        return DeleteHistory.fromQuestion(this);
+    }
+
+    private Question delete() {
+        this.deleted = true;
         return this;
     }
 
@@ -84,8 +90,8 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public Answers getAnswers() {
+        return new Answers(answers);
     }
 
     @Override
