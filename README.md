@@ -14,7 +14,8 @@
 2. 참여자의 이름 Name
 3. 볼링의 한 프레임 Frame - 인터페이스
 4. 프레임의 번호 FrameNumber
-5. 프레임의 핀의 상태 State
-6. Frame의 일급 컬렉션 Frames
-7. Player와 해당하는 Frame을 Map으로 관리하는 Players
-8. Players로 게임을 진행하는 BowlingGame
+5. 프레임 각 투구 정보 Pitch
+6. 투구의 상태 State
+8. Frame의 일급 컬렉션 Frames
+9. Player와 해당하는 Frame을 Map으로 관리하는 Players
+10. Players로 게임을 진행하는 BowlingGame
