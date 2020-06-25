@@ -22,4 +22,16 @@ public class StatesTest {
 
         assertThat(states.getStates().get(0)).isEqualTo(State.ONE);
     }
+
+    @Test
+    void getLastState() {
+        States states = new States();
+
+        assertThat(states.getLastState()).isEqualTo(State.READY);
+
+        states.add(State.STRIKE);
+        states.add(State.SPARE);
+
+        assertThat(states.getLastState()).isEqualTo(State.SPARE);
+    }
 }
