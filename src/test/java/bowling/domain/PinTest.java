@@ -11,10 +11,11 @@ class PinTest {
 
     @DisplayName("유효한 볼링핀의 범위인지 테스트")
     @ParameterizedTest
-    @ValueSource(ints = {11})
+    @ValueSource(ints = {11, -1})
     public void testRollNumber(final int pins) {
+        Pin pin = new Pin();
         assertThatThrownBy(() -> {
-            new Pin(pins);
+            pin.addPins(pins);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -22,7 +23,10 @@ class PinTest {
     @ParameterizedTest
     @ValueSource(ints = {10})
     public void testStrike(final int pins) {
-        Pin pin = new Pin(pins);
+        Pin pin = new Pin();
+        pin.addPins(10);
         assertThat(pin.isStrike()).isTrue();
     }
+
+
 }
