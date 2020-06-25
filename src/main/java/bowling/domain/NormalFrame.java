@@ -16,6 +16,16 @@ public class NormalFrame implements Frame {
         setPin(fallenPin);
     }
 
+    @Override
+    public boolean isEndFrame() {
+        return this.states.getStatesLength() == 2 || State.STRIKE == State.valueOf(this.pin.getFallenPin(), false);
+    }
+
+    @Override
+    public boolean isEndGame() {
+        return false;
+    }
+
     private void setStates(State state) {
         this.states.add(state);
     }
