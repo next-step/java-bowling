@@ -1,5 +1,6 @@
 package bowling.ui;
 
+import bowling.domain.BowlingGameResult;
 import bowling.domain.FrameResult;
 import bowling.domain.FrameResults;
 import bowling.domain.Player;
@@ -20,6 +21,19 @@ public class OutputView {
         System.out.println("|  " +
                 player.getName() + " |" +
                 parsePlayerResult(player.calculateResult()) +
+                "|"
+        );
+    }
+
+    public static void printBowlingGameResult(String playerName, List<BowlingGameResult> bowlingGameResults) {
+        List<FrameResults> frameResults = bowlingGameResults.stream()
+                .map(BowlingGameResult::getFrameResults)
+                .collect(Collectors.toList());
+
+        System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
+        System.out.println("|  " +
+                playerName + " |" +
+                parsePlayerResult(frameResults) +
                 "|"
         );
     }

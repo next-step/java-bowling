@@ -9,6 +9,10 @@ public class BowlingGameResult {
         this.frameResults = frameResults;
     }
 
+    public FrameResults getFrameResults() {
+        return this.frameResults;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

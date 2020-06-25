@@ -6,12 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BowlingGame {
-    private Player player;
+    private final Player player;
     private List<BowlingGameResult> bowlingGameResults;
 
     public BowlingGame(Player player, List<BowlingGameResult> bowlingGameResults) {
         this.player = player;
         this.bowlingGameResults = new ArrayList<>(bowlingGameResults);
+    }
+
+    public static BowlingGame play(Player player) {
+        return new BowlingGame(player, new ArrayList<>());
     }
 
     public static BowlingGame start(String playerName) {
@@ -51,6 +55,10 @@ public class BowlingGame {
 
     public boolean isCurrentFrameCompleted() {
         return this.player.isCurrentFrameCompleted();
+    }
+
+    public String getPlayerName() {
+        return this.player.getName();
     }
 
     private int lastIndexOfBowlingGameResults() {
