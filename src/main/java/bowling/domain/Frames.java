@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import aTest.Frame;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +17,14 @@ public class Frames {
 
     public Frame getCurrentFrame() {
         return this.frames.get(frames.size() - 1);
+    }
+
+    public int getCurrentFrameNumber() {
+        return this.frames.indexOf(getCurrentFrame()) + 1;
+    }
+
+    public boolean isEndGame() {
+        return getCurrentFrame().isEndGame();
     }
 
     public List<Frame> getFrames() {
