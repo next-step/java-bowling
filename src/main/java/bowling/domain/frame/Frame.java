@@ -7,5 +7,4 @@ public interface Frame {
     FrameResults calculateCurrentResults();
     Frame bowl(int numberOfHitPin);
     Frame next(int numberOfHitPin);
-    int getIndex();
 }

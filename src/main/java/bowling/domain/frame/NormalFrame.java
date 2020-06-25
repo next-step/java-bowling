@@ -37,11 +37,6 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int getIndex() {
-        return index;
-    }
-
-    @Override
     public Frame next(int numberOfHitPin) {
         validateNext();
         if (index + 1 == FINAL_FRAME_INDEX) {

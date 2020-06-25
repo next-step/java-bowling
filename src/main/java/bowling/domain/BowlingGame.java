@@ -61,10 +61,6 @@ public class BowlingGame {
         return this.player.getName();
     }
 
-    public int getCurrentFrameIndex() {
-        return this.player.getCurrentFrameIndex();
-    }
-
     private int lastIndexOfBowlingGameResults() {
         return this.bowlingGameResults.size() - 1;
     }

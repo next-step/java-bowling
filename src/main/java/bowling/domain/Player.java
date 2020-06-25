@@ -52,10 +52,6 @@ public class Player {
         return name;
     }
 
-    public int getCurrentFrameIndex() {
-        return this.currentFrame.getIndex();
-    }
-
     Frame getCurrentFrame() {
         return this.currentFrame;
     }
