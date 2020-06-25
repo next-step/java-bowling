@@ -3,6 +3,8 @@ package bowling.domain.frame;
 import bowling.domain.state.PinsState;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class BowlingFrames {
@@ -52,6 +54,14 @@ public class BowlingFrames {
     public List<PinsState> getPinsStates() {
         return this.frames.stream()
             .map(Frame::createPinState)
+            .collect(Collectors.toList());
+    }
+
+    public List<Integer> computeScores(){
+        return this.frames.stream()
+            .map(Frame::getScore)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
             .collect(Collectors.toList());
     }
 

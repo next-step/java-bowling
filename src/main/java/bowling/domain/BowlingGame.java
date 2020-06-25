@@ -29,6 +29,10 @@ public class BowlingGame {
         return this.bowlingFrames.getPinsStates();
     }
 
+    public List<Integer> getScores(){
+        return this.bowlingFrames.computeScores();
+    }
+
     public boolean isFinished() {
         return this.bowlingFrames.isFinished();
     }

@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.state.PinsState;
 import bowling.domain.state.ScoreType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +20,11 @@ public class OutputView {
         displayMap.put(ScoreType.SPARE, "/");
     }
 
-    public void printResult(String name, List<PinsState> pinsStates) {
+    public void printResult(String name, List<PinsState> pinsStates, List<Integer> scores) {
         printFramesRounds();
-        printFramesResult(name, pinsStates);
+        printBowlsResult(name, pinsStates);
+        printScores(scores);
         System.out.print(System.lineSeparator());
-
     }
 
     private void printFramesRounds() {
@@ -36,24 +37,21 @@ public class OutputView {
         System.out.println(framesBuilder.toString());
     }
 
-    private void printFramesResult(String name, List<PinsState> pinsStates) {
+    private void printBowlsResult(String name, List<PinsState> pinsStates) {
         StringBuilder downPinBuilder = new StringBuilder();
         downPinBuilder.append(String.format("|  %s |", name));
 
         for (PinsState pinsState : pinsStates) {
-            String downPinDisplay = createDisplay(pinsState);
+            String downPinDisplay = createBowlDisplay(pinsState);
             downPinBuilder.append(String.format("  %-4s|", downPinDisplay));
         }
 
         System.out.println(downPinBuilder.toString());
     }
 
-    private String createDisplay(PinsState pinsState) {
-
+    private String createBowlDisplay(PinsState pinsState) {
         List<Integer> downPins = pinsState.getDownPins();
-
         List<String> components = new ArrayList<>();
-
         int downPinIndex = 0;
         for (ScoreType scoreType : pinsState.getScoreTypes()) {
             if (scoreType == ScoreType.STRIKE) {
@@ -76,6 +74,22 @@ public class OutputView {
         }
 
         return components.stream().collect(Collectors.joining("|"));
+    }
+
+    private void printScores(List<Integer> scores) {
+        StringBuilder scoreDisplays = new StringBuilder();
+        scoreDisplays.append("|      |");
+        int frameIndex = 0;
+        int sum = 0;
+        for(; frameIndex < scores.size(); frameIndex++){
+            sum+= scores.get(frameIndex);
+            scoreDisplays.append(String.format("  %-4s|", sum));
+        }
+        for(; frameIndex < 10; frameIndex++){
+            scoreDisplays.append("      |");
+        }
+
+        System.out.println(scoreDisplays.toString());
     }
 
     private String createPin(int downPin) {
