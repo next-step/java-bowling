@@ -33,11 +33,11 @@ public class QuestionTest {
 
     @DisplayName("삭제상태")
     @Test
-    public void deleteOk() {
+    public void deleteOk() throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        Q1.delete(deleteHistories);
+        Q1.delete(deleteHistories, UserTest.JAVAJIGI);
         assertThat(Q1.isDeleted()).isTrue();
-        Q2.delete(deleteHistories);
+        Q2.delete(deleteHistories, UserTest.SANJIGI);
         assertThat(Q2.isDeleted()).isTrue();
         assertThat(deleteHistories.size()).isEqualTo(2);
     }

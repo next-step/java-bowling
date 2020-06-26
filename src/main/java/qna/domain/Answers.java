@@ -26,12 +26,6 @@ public class Answers {
         answers.add(answer);
     }
 
-    public void checkOwner(User loginUser) throws CannotDeleteException {
-        for(Answer answer : answers) {
-            answer.checkOwner(loginUser);
-        };
-    }
-
     public void delete(List<DeleteHistory> deleteHistories) {
         answers.stream().forEachOrdered(answer -> answer.delete(deleteHistories));
     }
