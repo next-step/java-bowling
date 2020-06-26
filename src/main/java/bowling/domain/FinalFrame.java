@@ -4,9 +4,18 @@ public class FinalFrame implements Frame {
     private BowlResult bowlResult;
     private int left;
 
+    private FinalFrame() {
+        this(null, 0);
+    }
+
+
     private FinalFrame(BowlResult bowlResult, int left) {
         this.bowlResult = bowlResult;
         this.left = left;
+    }
+
+    public static Frame init() {
+        return new FinalFrame();
     }
 
     public static Frame firstBowl(int downPin, int left) {
@@ -16,6 +25,7 @@ public class FinalFrame implements Frame {
         }
         return new FinalFrame(bowlResult, --left);
     }
+
 
     @Override
     public Frame nextBowl(int downPin) {
