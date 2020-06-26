@@ -14,6 +14,14 @@ public class Pitch {
         this.state = findState(pinCount, leftPinCount);
     }
 
+    public static Pitch firstPitch(final int pinCount) {
+        return new Pitch(pinCount, PIN_COUNT_MAX - pinCount);
+    }
+
+    public Pitch nextPitch(final int pinCount) {
+        return new Pitch(pinCount, PIN_COUNT_MAX - this.pinCount - pinCount);
+    }
+
     private void validatePinCount(final int pinCount) {
         if (pinCount < PIN_COUNT_MIN || pinCount > PIN_COUNT_MAX) {
             throw new IllegalArgumentException("쓰러진 핀의 갯수는 0 ~ 10 사이어야 합니다. - " + pinCount);
@@ -22,7 +30,7 @@ public class Pitch {
 
     private void validateLeftPinCount(final int leftPinCount) {
         if (leftPinCount < PIN_COUNT_MIN || leftPinCount > PIN_COUNT_MAX) {
-            throw new IllegalArgumentException("남은 핀의 갯수는 0 ~ 10 사이어야 합니다. - " + leftPinCount);
+            throw new IllegalArgumentException("쓰러트릴 핀의 갯수보다 남은 핀의 갯수가 적습니다. 남게될 핀 - " + leftPinCount);
         }
     }
 

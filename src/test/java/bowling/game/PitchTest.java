@@ -15,18 +15,19 @@ class PitchTest {
     @ParameterizedTest
     @ValueSource(ints = {-1, 11})
     void validatePinCount(int pinCount) {
-        assertThatThrownBy(() -> new Pitch(pinCount, 10 - pinCount))
+        assertThatThrownBy(() -> Pitch.firstPitch(pinCount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("쓰러진 핀의 갯수는 0 ~ 10 사이어야 합니다. - " + pinCount);
     }
 
-    @DisplayName("남은 핀의 개수가 0 ~ 10 사이가 아니면 IllegalArgumentsException throw")
+    @DisplayName("남은핀 보다 쓰러트릴 핀이 크면 아니면 IllegalArgumentsException throw")
     @ParameterizedTest
-    @ValueSource(ints = {-1, 11})
-    void validateLeftPinCount(int leftPinCount) {
-        assertThatThrownBy(() -> new Pitch(3, leftPinCount))
+    @CsvSource({"7, 4", "3, 9"})
+    void validateLeftPinCount(int firstPinCount, int nextPinCount) {
+        Pitch pitch = Pitch.firstPitch(firstPinCount);
+        assertThatThrownBy(() -> pitch.nextPitch(nextPinCount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("남은 핀의 갯수는 0 ~ 10 사이어야 합니다. - " + leftPinCount);
+                .hasMessage("쓰러트릴 핀의 갯수보다 남은 핀의 갯수가 적습니다. 남게될 핀 - " + (10 - firstPinCount - nextPinCount));
     }
 
     @DisplayName("현재 투구에 맞는 상태를 가져온다.")
