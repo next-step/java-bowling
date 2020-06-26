@@ -1,46 +1,60 @@
 package camp.nextstep.edu.nextstep8.bowling;
 
-import java.util.Optional;
+import static camp.nextstep.edu.nextstep8.bowling.constant.BowlingRule.MAX_FRAME;
+import static camp.nextstep.edu.nextstep8.bowling.constant.BowlingRule.MAX_SCORE;
 
 public class BowlingGame {
-    public static void main(String[] args) {
-        String player = BowlingGameInput.getPlayer();
-        ScoreBoard scoreBoard = new ScoreBoard();
+    private int score;
+    private int spare;
+    private int frame = 1;
+    private ScoreBoard scoreBoard = new ScoreBoard();
 
-        int frame = 1;
-        int score = 0;
-        int spare = 0;
+    public void play() {
+        String player = BowlingGameInput.getPlayer();
 
         while(true) {
-            System.out.print(String.format("|%5s\t", "NAME"));
-            for(int i = 1; i < 11; i++) {
-                System.out.print(String.format("|%5s\t", String.format("%02d", i)));
-            }
-            System.out.println("|");
-
-            System.out.print(String.format("|%5s\t", player));
-            for(int i = 1; i < 11; i++) {
-
-                System.out.print(
-                        String.format("|%5s\t", Optional.ofNullable(scoreBoard.getFrame(i)).map(Frame::getFrameResultSymbol).orElse(""))
-                );
-            }
-            System.out.println("|");
+            BowlingGameView.showDashboard(player, scoreBoard);
 
             score = BowlingGameInput.getHitCount(frame);
-            if(score < 10) {
+            validateScore(score);
+
+            if(score < MAX_SCORE) {
                 spare = BowlingGameInput.getHitCount(frame);
+                validateSpare(score, spare);
             }
 
             scoreBoard.markScore(frame, score, spare);
-
             spare = 0;
+            frame++;
 
-            if(frame++ == 11) {
+            if(meetGameOverCondition(frame, score)) {
                 break;
             }
         }
     }
+
+    private void validateScore(int score) {
+        if(MAX_SCORE < score) {
+            throw new IllegalArgumentException(MAX_SCORE + "점 을 넘을 수 없습니다");
+        }
+    }
+
+    public void validateSpare(int score, int spare) {
+        if(MAX_SCORE < score + spare) {
+            throw new IllegalArgumentException("잔여 Spare 점수를 초과하였습니다");
+        }
+    }
+
+    private boolean meetGameOverCondition(int frame, int score) {
+        if(meetOneMoreChance(frame, score)) {
+            return false;
+        }
+
+        return MAX_FRAME < frame;
+    }
+
+    private boolean meetOneMoreChance(int frame, int score) {
+        return MAX_FRAME == frame &&
+                (MAX_SCORE == score || MAX_SCORE == (frame + score));
+    }
 }
-
-

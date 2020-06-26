@@ -1,8 +1,11 @@
 package camp.nextstep.edu.nextstep8.bowling;
 
+import static camp.nextstep.edu.nextstep8.bowling.constant.BowlingRule.MAX_SCORE;
+
 public class Frame {
     private final int score;
     private final int spare;
+    private static String STRIKE = "X";
 
     public Frame(int score, int spare) {
         this.score = score;
@@ -14,17 +17,21 @@ public class Frame {
     }
 
     public String getFrameResultSymbol() {
-        if(score == 10 && spare == 0) {
-            return "X";
-        }
-
-        if(score + spare == 10) {
-            return score + "|" + "/";
-        }
-
-        return score + "|" + spare;
-
+        return checkStatus().makeSymbol(score, spare);
     }
 
-//    프레임이 스트라이크이면 "X", 스페어이면 "9 | /", 미스이면 "8 | 1", 과 같이 출력하도록 구현
+    private FrameStatus checkStatus() {
+        if(MAX_SCORE == score && 0 == spare) {
+            return FrameStatus.STRIKE;
+        }
+
+        if(MAX_SCORE == score + spare) {
+            return FrameStatus.SPARE;
+        }
+
+        if(0 == score + spare) {
+            return FrameStatus.GUTTER;
+        }
+        return FrameStatus.MISS;
+    }
 }

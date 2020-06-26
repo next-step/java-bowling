@@ -12,4 +12,8 @@ public class ScoreBoard {
     public Frame getFrame(int frameNumber) {
         return frames.get(frameNumber);
     }
+
+    public int getFrameCount() {
+        return frames.size();
+    }
 }
