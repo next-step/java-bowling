@@ -11,6 +11,10 @@ public class Player {
         this.name = new Name(name);
     }
 
+    public boolean isSameName(final String name) {
+        return this.name.equals(new Name(name));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
