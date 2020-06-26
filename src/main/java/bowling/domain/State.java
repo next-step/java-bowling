@@ -75,7 +75,7 @@ public enum State {
     }
 
     private static boolean checkNormalFrameSpare(int previousFallenPins, int nextFallenPins) {
-        return previousFallenPins + nextFallenPins == FinalFrame.MAX_PIN_SUM;
+        return previousFallenPins + nextFallenPins == Pin.MAX_PIN;
     }
 
     private static boolean checkGutter(int nextFallenPins) {
@@ -91,13 +91,13 @@ public enum State {
     }
 
     private static void validateFallenPinSumForFinalFrame(int previousFallenPins, int nextFallenPins, State lastState) {
-        if(lastState != STRIKE && lastState != SPARE && previousFallenPins + nextFallenPins > FinalFrame.MAX_PIN_SUM) {
+        if(lastState != STRIKE && lastState != SPARE && previousFallenPins + nextFallenPins > Pin.MAX_PIN) {
             throw new FallenPinsSumException();
         }
     }
 
     private static void validateFallenPinSum(int previousFallenPins, int nextFallenPins) {
-        if (previousFallenPins + nextFallenPins > FinalFrame.MAX_PIN_SUM) {
+        if (previousFallenPins + nextFallenPins > Pin.MAX_PIN) {
             throw new FallenPinsSumException();
         }
     }
