@@ -12,8 +12,8 @@ public class AnswerTest {
 
     @Test
     public void testDelete() {
-        DeleteHistory deleteHistory = A2.delete();
-        DeleteHistory comparison = new DeleteHistory(ContentType.ANSWER, null, UserTest.SANJIGI, LocalDateTime.now());
+        DeleteHistory deleteHistory = new Answer().delete();
+        DeleteHistory comparison = new DeleteHistory(ContentType.ANSWER, null, null, null);
         assertThat(deleteHistory).isEqualTo(comparison);
     }
 }
