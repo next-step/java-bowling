@@ -35,13 +35,19 @@ public enum State {
     }
 
     public static State bowl(int previousFallenPins, int nextFallenPins, int statesLength) {
-        if (checkNormalFrameStrike(nextFallenPins, statesLength)) return STRIKE;
+        if (checkNormalFrameStrike(nextFallenPins, statesLength)) {
+            return STRIKE;
+        }
 
-        if (checkGutter(nextFallenPins)) return GUTTER;
+        if (checkGutter(nextFallenPins)) {
+            return GUTTER;
+        }
 
         validateFallenPinSum(previousFallenPins, nextFallenPins);
 
-        if (checkNormalFrameSpare(previousFallenPins, nextFallenPins)) return SPARE;
+        if (checkNormalFrameSpare(previousFallenPins, nextFallenPins)) {
+            return SPARE;
+        }
 
         return State.valueOf(nextFallenPins, false);
     }
@@ -49,11 +55,17 @@ public enum State {
     public static State finalBowl(int previousFallenPins, int nextFallenPins, State lastState) {
         validateFallenPinSumForFinalFrame(previousFallenPins, nextFallenPins, lastState);
 
-        if (checkStrike(nextFallenPins, STRIKE)) return STRIKE;
+        if (checkStrike(nextFallenPins, STRIKE)) {
+            return STRIKE;
+        }
 
-        if (checkGutter(nextFallenPins)) return GUTTER;
+        if (checkGutter(nextFallenPins)) {
+            return GUTTER;
+        }
 
-        if (checkFinalFrameSpare(previousFallenPins, nextFallenPins, lastState)) return SPARE;
+        if (checkFinalFrameSpare(previousFallenPins, nextFallenPins, lastState)) {
+            return SPARE;
+        }
 
         return State.valueOf(nextFallenPins, false);
     }
