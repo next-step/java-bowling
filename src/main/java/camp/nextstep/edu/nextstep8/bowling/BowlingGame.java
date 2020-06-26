@@ -25,11 +25,12 @@ public class BowlingGame {
 
             scoreBoard.markScore(frame, score, spare);
             spare = 0;
-            frame++;
 
             if(meetGameOverCondition(frame, score)) {
+                BowlingGameView.showDashboard(player, scoreBoard);
                 break;
             }
+            frame++;
         }
     }
 

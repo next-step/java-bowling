@@ -1,6 +1,5 @@
 package camp.nextstep.edu.nextstep8.bowling;
 
-
 import java.util.Optional;
 
 import static camp.nextstep.edu.nextstep8.bowling.constant.BowlingRule.MAX_FRAME;
