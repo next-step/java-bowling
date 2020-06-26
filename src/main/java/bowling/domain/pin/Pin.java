@@ -30,7 +30,6 @@ public class Pin {
         return pins;
     }
 
-
     public Boolean isStrike() {
         return pins == MAXIMUM_PIN_NUMBER;
     }

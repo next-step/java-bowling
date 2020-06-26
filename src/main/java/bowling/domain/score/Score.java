@@ -1,9 +1,8 @@
 package bowling.domain.score;
 
 public class Score {
-
-    private int score; // 현재까지 점수
-    private int left; // 남은 시도 횟수
+    private int score;
+    private int left;
 
     private Score(int score, int left) {
         this.score = score;

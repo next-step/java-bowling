@@ -9,7 +9,7 @@ public class NormalFrame {
     private static final int PINS_LIMIT = 10;
     private static final String PIN_MAX_ERROR = "핀의 합계가 10개보다 클 수 없습니다.";
     private static final String ROLL_COUNT_ERRORS = "일반 게임에서는 두번만 던질 수 있습니다.";
-    private static final int CAN_ROLL_NORMAL_FRAME = 2;
+    private static final int CAN_ROLL_LIMIT = 2;
     private static final int FIRST_ROLL = 1;
 
     private Pins pins;
@@ -37,15 +37,23 @@ public class NormalFrame {
             throw new IllegalArgumentException(PIN_MAX_ERROR);
         }
 
+        if (isPinTotalOverTen(pin)) {
+            throw new IllegalArgumentException(PIN_MAX_ERROR);
+        }
+
         pins.addPins(pin);
     }
 
     private boolean isRolledTwice() {
-        return pins.rollCount() == CAN_ROLL_NORMAL_FRAME;
+        return pins.rollCount() == CAN_ROLL_LIMIT;
     }
 
     private boolean isAlreadyStrike() {
         return pins.rollCount() == FIRST_ROLL && pins.getTotalPins() == PINS_LIMIT;
+    }
+
+    private boolean isPinTotalOverTen(int pin) {
+        return this.getPins() + pin > PINS_LIMIT;
     }
 
     public int getPins() {

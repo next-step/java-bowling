@@ -25,15 +25,7 @@ public class Pins {
     }
 
     public void addPins(int pin) {
-        if (isPinTotalOverTen(pin)) {
-            throw new IllegalArgumentException(PIN_MAX_ERROR);
-        }
-
         this.pins.add(new Pin(pin));
-    }
-
-    private boolean isPinTotalOverTen(int pin) {
-        return this.getTotalPins() + pin > PINS_LIMIT;
     }
 
     public int rollCount() {

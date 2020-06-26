@@ -9,14 +9,14 @@ public class EnglishName {
     private static final String ALLOW_THREE_WORD = "3글자까지 입력이 가능합니다.";
     private static final int MAXIMUM_NAME_LENGTH = 3;
 
-    private final String userName;
+    private final String name;
 
     public EnglishName(final String inputText) {
-        this.userName = validateName(inputText);
+        this.name = validateName(inputText);
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
     private String validateName(final String inputText) {
@@ -43,11 +43,11 @@ public class EnglishName {
         if (this == o) return true;
         if (!(o instanceof EnglishName)) return false;
         EnglishName that = (EnglishName) o;
-        return Objects.equals(getUserName(), that.getUserName());
+        return Objects.equals(getName(), that.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserName());
+        return Objects.hash(getName());
     }
 }

@@ -1,9 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
-import bowling.domain.frame.NormalFrame;
-import bowling.domain.pin.Pins;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -54,7 +52,7 @@ class NormalFrameTest {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("스트라이크 이후 던지기 테스트")
+    @DisplayName("두번 이상 던지기 테스트")
     @Test
     void testRollThree() {
         NormalFrame normalFrame = NormalFrame.firstFrame();
