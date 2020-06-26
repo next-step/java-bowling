@@ -44,4 +44,14 @@ public class StatesTest {
 
         assertThat(states.isLastStateStrike()).isTrue();
     }
+
+    @Test
+    void getStatesPinSum() {
+        States states = new States();
+
+        states.add(State.ONE);
+        states.add(State.TWO);
+
+        assertThat(states.getStatesPinSum()).isEqualTo(3);
+    }
 }
