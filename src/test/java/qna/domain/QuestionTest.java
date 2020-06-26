@@ -34,11 +34,11 @@ public class QuestionTest {
   }
 
   static void setupMethod() {
-    Q1 = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-    Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
+    Q1 = new Question("title1", "contents1").writtenBy(UserTest.JAVAJIGI);
+    Q2 = new Question("title2", "contents2").writtenBy(UserTest.SANJIGI);
 
     QUESTION_WITH_ANSWER_SAME_WRITER = new Question("title3", "contents3")
-        .writeBy(UserTest.JAVAJIGI);
+        .writtenBy(UserTest.JAVAJIGI);
     QUESTION_WITH_ANSWER_SAME_WRITER
         .addAnswer(new Answer(
             UserTest.JAVAJIGI,
@@ -47,7 +47,7 @@ public class QuestionTest {
         ));
 
     QUESTION_WITH_ANSWER_DIFF_WRITER = new Question("title4", "contents4")
-        .writeBy(UserTest.JAVAJIGI);
+        .writtenBy(UserTest.JAVAJIGI);
     QUESTION_WITH_ANSWER_DIFF_WRITER
         .addAnswer(new Answer(
             UserTest.SANJIGI,
@@ -76,7 +76,7 @@ public class QuestionTest {
   @ParameterizedTest
   @MethodSource("provideQuestionWithLoginUser")
   void writeBy(Question question, User loginUser) {
-    question.writeBy(loginUser);
+    question.writtenBy(loginUser);
 
     assertThat(question.getWriter()).isEqualTo(loginUser);
   }

@@ -60,7 +60,7 @@ public class Question extends AbstractEntity implements Deletable {
     return writer;
   }
 
-  public Question writeBy(User loginUser) {
+  public Question writtenBy(User loginUser) {
     this.writer = loginUser;
     return this;
   }
