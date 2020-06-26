@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
+    private final int FRAME_SIZE_CALCULATION = 1;
     private final List<Frame> frames;
 
     public Frames(Frame frame) {
@@ -16,11 +17,11 @@ public class Frames {
     }
 
     public Frame getCurrentFrame() {
-        return this.frames.get(frames.size() - 1);
+        return this.frames.get(frames.size() - FRAME_SIZE_CALCULATION);
     }
 
     public int getCurrentFrameNumber() {
-        return this.frames.indexOf(getCurrentFrame()) + 1;
+        return this.frames.indexOf(getCurrentFrame()) + FRAME_SIZE_CALCULATION;
     }
 
     public boolean isEndGame() {
