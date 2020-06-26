@@ -23,7 +23,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isEndFrame() {
-        return this.states.getSize() == FRAME_MAX_LENGTH || State.STRIKE == State.valueOf(this.pin.getFallenPin(), false);
+        return this.states.getSize() == FRAME_MAX_LENGTH || states.isLastStateStrike();
     }
 
     @Override

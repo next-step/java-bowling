@@ -28,4 +28,8 @@ public class States {
         }
         return this.states.get(this.states.size() - 1);
     }
+
+    public boolean isLastStateStrike() {
+        return getLastState() == State.STRIKE;
+    }
 }
