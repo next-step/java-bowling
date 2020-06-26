@@ -2,8 +2,8 @@ package bowling;
 
 public class Validator {
     private static final int PLAYER_NAME_LENGTH = 3;
-    private static final int MIN_HIT_PIN = 0;
-    private static final int MAX_HIT_PIN = 10;
+    public static final int MIN_HIT_PIN = 0;
+    public static final int MAX_HIT_PIN = 10;
 
     public static String checkPlayerName(String playerName) {
         playerName = playerName.toUpperCase();
