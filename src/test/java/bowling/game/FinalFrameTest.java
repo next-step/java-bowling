@@ -36,7 +36,7 @@ class FinalFrameTest {
 
         finalFrame.bowl(10);
 
-        assertThat(finalFrame.isRemainChance()).isTrue();
+        assertThat(finalFrame.hasRemainChance()).isTrue();
     }
 
     @DisplayName("마지막 프레임은 두번째 투구가 Spare 면 투구 기회가 있다.")
@@ -47,7 +47,7 @@ class FinalFrameTest {
         finalFrame.bowl(8);
         finalFrame.bowl(2);
 
-        assertThat(finalFrame.isRemainChance()).isTrue();
+        assertThat(finalFrame.hasRemainChance()).isTrue();
     }
 
     @DisplayName("마지막 프레임은 두번째 투구가 Spare가 아니면 투구 기회가 없다")
@@ -58,6 +58,6 @@ class FinalFrameTest {
         finalFrame.bowl(8);
         finalFrame.bowl(1);
 
-        assertThat(finalFrame.isRemainChance()).isFalse();
+        assertThat(finalFrame.hasRemainChance()).isFalse();
     }
 }

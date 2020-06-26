@@ -3,11 +3,8 @@ package bowling.game;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,7 +38,7 @@ class NormalFrameTest {
 
         normalFrame.bowl(firstPinCount);
 
-        assertThat(normalFrame.isRemainChance()).isEqualTo(true);
+        assertThat(normalFrame.hasRemainChance()).isEqualTo(true);
     }
 
     @DisplayName("첫 투구가 Strike면 그 프레임은 더 이상 투구 기회가 없다.")
@@ -51,7 +48,7 @@ class NormalFrameTest {
 
         normalFrame.bowl(10);
 
-        assertThat(normalFrame.isRemainChance()).isEqualTo(false);
+        assertThat(normalFrame.hasRemainChance()).isEqualTo(false);
     }
 
     @DisplayName("2개의 투구를 모두 완료하면 그 프레임은 더 이상 투구 기회가 없다.")
@@ -63,7 +60,7 @@ class NormalFrameTest {
         normalFrame.bowl(firstPinCount);
         normalFrame.bowl(nextPinCount);
 
-        assertThat(normalFrame.isRemainChance()).isEqualTo(false);
+        assertThat(normalFrame.hasRemainChance()).isEqualTo(false);
     }
 
     @DisplayName("나보다 번호가 1 큰 프레임을 만든다.")

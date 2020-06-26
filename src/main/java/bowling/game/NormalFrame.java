@@ -18,7 +18,7 @@ public class NormalFrame extends Frame {
         if (pitches.isEmpty()) {
             pitches.add(Pitch.firstPitch(pinCount));
 
-            return 10 - pitches.stream()
+            return FrameNumber.FRAME_NUMBER_MAX - pitches.stream()
                     .mapToInt(Pitch::getPinCount)
                     .sum();
         }
@@ -26,13 +26,13 @@ public class NormalFrame extends Frame {
         Pitch lastPitch = pitches.getLast();
         pitches.add(lastPitch.nextPitch(pinCount));
 
-        return 10 - pitches.stream()
+        return FrameNumber.FRAME_NUMBER_MAX - pitches.stream()
                 .mapToInt(Pitch::getPinCount)
                 .sum();
     }
 
     @Override
-    public boolean isRemainChance() {
+    public boolean hasRemainChance() {
         Pitch firstPitch = pitches.getFirst();
 
         if (firstPitch.getState().equals(State.STRIKE)) {
@@ -57,5 +57,10 @@ public class NormalFrame extends Frame {
 
     public FrameNumber getFrameNumber() {
         return frameNumber;
+    }
+
+    @Override
+    boolean isLastFrame() {
+        return false;
     }
 }
