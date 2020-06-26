@@ -17,5 +17,5 @@
 5. 프레임 각 투구 정보 Pitch
 6. 투구의 상태 State
 8. Frame의 일급 컬렉션 Frames
-9. Player와 해당하는 Frame을 Map으로 관리하는 Players
+9. Player와 해당하는 Frame을 Map으로 관리하는 ScoreBoard
 10. Players로 게임을 진행하는 BowlingGame
