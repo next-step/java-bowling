@@ -13,7 +13,9 @@ public class AnswerTest {
     @Test
     public void testDelete() {
         DeleteHistory deleteHistory = new Answer().delete();
-        DeleteHistory comparison = new DeleteHistory(ContentType.ANSWER, null, null, null);
+        DeleteHistory comparison = new DeleteHistory.Builder()
+                .contentType(ContentType.ANSWER)
+                .build();
         assertThat(deleteHistory).isEqualTo(comparison);
     }
 }
