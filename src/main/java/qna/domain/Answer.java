@@ -25,10 +25,6 @@ public class Answer extends AbstractEntity {
   public Answer() {
   }
 
-  public Answer(User writer, Question question, String contents) {
-    this(null, writer, question, contents);
-  }
-
   private Answer(Long id, User writer, Question question, String contents) {
     super(id);
 

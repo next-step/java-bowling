@@ -40,20 +40,16 @@ public class QuestionTest {
     QUESTION_WITH_ANSWER_SAME_WRITER = new Question("title3", "contents3")
         .writtenBy(UserTest.JAVAJIGI);
     QUESTION_WITH_ANSWER_SAME_WRITER
-        .addAnswer(new Answer(
-            UserTest.JAVAJIGI,
-            QuestionTest.QUESTION_WITH_ANSWER_SAME_WRITER,
-            "Answers Contents1"
-        ));
+        .addAnswer(Answer.getBuilder(UserTest.JAVAJIGI, QuestionTest.QUESTION_WITH_ANSWER_SAME_WRITER)
+                .contents("Answers Contents1")
+                .build());
 
     QUESTION_WITH_ANSWER_DIFF_WRITER = new Question("title4", "contents4")
         .writtenBy(UserTest.JAVAJIGI);
     QUESTION_WITH_ANSWER_DIFF_WRITER
-        .addAnswer(new Answer(
-            UserTest.SANJIGI,
-            QuestionTest.QUESTION_WITH_ANSWER_DIFF_WRITER,
-            "Answers Contents2"
-        ));
+        .addAnswer(Answer.getBuilder(UserTest.SANJIGI, QuestionTest.QUESTION_WITH_ANSWER_DIFF_WRITER)
+            .contents("Answers Contents2")
+            .build());
 
     QUESTION_HAS_NO_WRITER_AND_ANSWER1 = new Question("title5", "contents5");
     QUESTION_HAS_NO_WRITER_AND_ANSWER2 = new Question("title6", "contents6");

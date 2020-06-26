@@ -12,36 +12,34 @@ import qna.CannotDeleteException;
 
 public class AnswerTest {
 
-  public static Answer A1 = new Answer(
-      UserTest.JAVAJIGI,
-      QuestionTest.Q1,
-      "Answers Contents1"
-  );
-  public static Answer A2 = new Answer(
-      UserTest.SANJIGI,
-      QuestionTest.Q1,
-      "Answers Contents2"
-  );
+  public static Answer A1;
+  public static Answer A2;
+
+  static {
+    initAnswerTest();
+  }
 
   @AfterEach
   void tearDown() {
-    A1 = new Answer(
-        UserTest.JAVAJIGI,
-        QuestionTest.Q1,
-        "Answers Contents1"
-    );
-    A2 = new Answer(
-        UserTest.SANJIGI,
-        QuestionTest.Q1,
-        "Answers Contents2"
-    );
+    initAnswerTest();
+  }
+
+  public static void initAnswerTest() {
+    A1 = Answer.getBuilder(UserTest.JAVAJIGI, QuestionTest.Q1)
+        .contents("Answers Contents1")
+        .build();
+
+    A2 = Answer.getBuilder(UserTest.SANJIGI, QuestionTest.Q1)
+        .contents("Answers Contents2")
+        .build();
   }
 
   @ParameterizedTest
   @MethodSource("provideAnswerWithValidLoginUser")
   void isOwner(Answer answer, User loginUser) {
-        assertThat(answer.isOwner(loginUser)).isTrue();
+    assertThat(answer.isOwner(loginUser)).isTrue();
   }
+
   static Stream<Arguments> provideAnswerWithValidLoginUser() {
     return Stream.of(
         arguments(
@@ -62,33 +60,26 @@ public class AnswerTest {
 
     assertThat(answer).isEqualTo(expected);
   }
+
   static Stream<Arguments> provideAnswerWithQuestion() {
     return Stream.of(
         arguments(
-            new Answer(
-                UserTest.JAVAJIGI,
-                QuestionTest.Q1,
-                "Answers Contents1"
-            ),
+            Answer.getBuilder(UserTest.JAVAJIGI, QuestionTest.Q1)
+                .contents("Answers Contents1")
+                .build(),
             QuestionTest.Q2,
-            new Answer(
-                UserTest.JAVAJIGI,
-                QuestionTest.Q2,
-                "Answers Contents1"
-            )
+            Answer.getBuilder(UserTest.JAVAJIGI, QuestionTest.Q2)
+                .contents("Answers Contents2")
+                .build()
         ),
         arguments(
-            new Answer(
-                UserTest.JAVAJIGI,
-                QuestionTest.Q2,
-                "Answers Contents2"
-            ),
+            Answer.getBuilder(UserTest.JAVAJIGI, QuestionTest.Q2)
+                .contents("Answers Contents2")
+                .build(),
             QuestionTest.Q1,
-            new Answer(
-                UserTest.JAVAJIGI,
-                QuestionTest.Q1,
-                "Answers Contents2"
-            )
+            Answer.getBuilder(UserTest.JAVAJIGI, QuestionTest.Q1)
+                .contents("Answers Contents2")
+                .build()
         )
     );
   }
