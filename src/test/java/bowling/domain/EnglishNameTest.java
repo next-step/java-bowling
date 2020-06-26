@@ -8,12 +8,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class EnglishNameTest {
+class EnglishNameTest {
 
     @DisplayName("입력값이 3자가 넘어가면 에러 발생")
     @ParameterizedTest
     @ValueSource(strings = {"next", "step"})
-    public void testNameThreeWord(final String inputText) {
+    void testNameThreeWord(final String inputText) {
         assertThatThrownBy(() -> {
             new EnglishName(inputText);
         }).isInstanceOf(IllegalArgumentException.class);
@@ -22,7 +22,7 @@ public class EnglishNameTest {
     @DisplayName("입력값이 영어가 아니면 에러 발생")
     @ParameterizedTest
     @ValueSource(strings = {"철수", "영희"})
-    public void testEnglishInput(final String inputText) {
+    void testEnglishInput(final String inputText) {
         assertThatThrownBy(() -> {
             new EnglishName(inputText);
         }).isInstanceOf(IllegalArgumentException.class);

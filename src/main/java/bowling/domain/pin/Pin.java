@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.pin;
 
 public class Pin {
     public static final int MAXIMUM_PIN_NUMBER = 10;
