@@ -36,7 +36,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame getNextFrame(int frameNumber) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     private int getStatesPinSum() {
