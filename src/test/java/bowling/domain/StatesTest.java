@@ -34,4 +34,14 @@ public class StatesTest {
 
         assertThat(states.getLastState()).isEqualTo(State.SPARE);
     }
+
+    @Test
+    void isLastStateStrike() {
+        States states = new States();
+
+        states.add(State.SPARE);
+        states.add(State.STRIKE);
+
+        assertThat(states.isLastStateStrike()).isTrue();
+    }
 }
