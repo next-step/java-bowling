@@ -43,9 +43,8 @@ public class Question extends AbstractEntity implements Deletable {
     return title;
   }
 
-  public Question setTitle(String title) {
+  public void setTitle(String title) {
     this.title = title;
-    return this;
   }
 
   public String getContents() {
