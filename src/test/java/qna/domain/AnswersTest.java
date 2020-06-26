@@ -17,36 +17,41 @@ class AnswersTest {
 
   public static Answers ANSWERS1 = new Answers();
   public static Answers ANSWERS2 = new Answers();
-  private static Answer ANSWER1 = new Answer(
-      (long) 1,
-      UserTest.JAVAJIGI,
-      QuestionTest.Q1,
-      "Answers Contents1"
-  );
-  private static Answer ANSWER2 = new Answer(
-      (long) 2,
-      UserTest.SANJIGI,
-      QuestionTest.Q1,
-      "Answers Contents2"
-  );
+  private static Answer ANSWER1 = Answer
+      .getBuilder(UserTest.JAVAJIGI, QuestionTest.Q1)
+      .id(1)
+      .contents("Answers Contents1")
+      .build();
+
+  private static Answer ANSWER2 = Answer
+      .getBuilder(UserTest.SANJIGI, QuestionTest.Q1)
+      .id(2)
+      .contents("Answers Contents2")
+      .build();
+
+  static {
+    initAnswerTest();
+  }
 
   @AfterEach
   void tearDown() {
+    initAnswerTest();
+  }
+
+  static void initAnswerTest() {
     ANSWERS1 = new Answers();
     ANSWERS2 = new Answers();
+    ANSWER1 = Answer
+        .getBuilder(UserTest.JAVAJIGI, QuestionTest.Q1)
+        .id(1)
+        .contents("Answers Contents1")
+        .build();
 
-    ANSWER1 = new Answer(
-        (long) 1,
-        UserTest.JAVAJIGI,
-        QuestionTest.Q1,
-        "Answers Contents1"
-    );
-    ANSWER2 = new Answer(
-        (long) 2,
-        UserTest.SANJIGI,
-        QuestionTest.Q1,
-        "Answers Contents2"
-    );
+    ANSWER2 = Answer
+        .getBuilder(UserTest.SANJIGI, QuestionTest.Q1)
+        .id(2)
+        .contents("Answers Contents2")
+        .build();
   }
 
   @ParameterizedTest
@@ -60,21 +65,17 @@ class AnswersTest {
   static Stream<Arguments> provideAnswerWithId() {
     return Stream.of(
         arguments(
-            new Answer(
-                (long) 1,
-                UserTest.JAVAJIGI,
-                QuestionTest.Q1,
-                "Answers Contents1"
-            ),
+            Answer.getBuilder(UserTest.JAVAJIGI, QuestionTest.Q1)
+                .id(1)
+                .contents("Answers Contents1")
+                .build(),
             1
         ),
         arguments(
-            new Answer(
-                (long) 2,
-                UserTest.JAVAJIGI,
-                QuestionTest.Q1,
-                "Answers Contents1"
-            ),
+            Answer.getBuilder(UserTest.JAVAJIGI, QuestionTest.Q1)
+                .id(2)
+                .contents("Answers Contents2")
+                .build(),
             2
         )
     );
@@ -93,21 +94,17 @@ class AnswersTest {
   static Stream<Arguments> provideAnswerWithInvalidId() {
     return Stream.of(
         arguments(
-            new Answer(
-                (long) 1,
-                UserTest.JAVAJIGI,
-                QuestionTest.Q1,
-                "Answers Contents1"
-            ),
+            Answer.getBuilder(UserTest.JAVAJIGI, QuestionTest.Q1)
+                .id(1)
+                .contents("Answers Contents1")
+                .build(),
             2
         ),
         arguments(
-            new Answer(
-                (long) 2,
-                UserTest.JAVAJIGI,
-                QuestionTest.Q1,
-                "Answers Contents1"
-            ),
+            Answer.getBuilder(UserTest.JAVAJIGI, QuestionTest.Q1)
+                .id(2)
+                .contents("Answers Contents2")
+                .build(),
             1
         )
     );

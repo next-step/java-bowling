@@ -29,7 +29,7 @@ public class Answer extends AbstractEntity {
     this(null, writer, question, contents);
   }
 
-  public Answer(Long id, User writer, Question question, String contents) {
+  private Answer(Long id, User writer, Question question, String contents) {
     super(id);
 
     if (writer == null) {
@@ -43,6 +43,41 @@ public class Answer extends AbstractEntity {
     this.writer = writer;
     this.question = question;
     this.contents = contents;
+  }
+
+  public Answer(Builder builder) {
+    this(builder.id, builder.writer, builder.question, builder.contents);
+  }
+
+  public static class Builder {
+
+    private long id = 0;
+    private User writer;
+    private Question question;
+    private String contents = "";
+
+    public Builder(User writer, Question question) {
+      this.writer = writer;
+      this.question = question;
+    }
+
+    public Builder id(long id) {
+      this.id = id;
+      return this;
+    }
+
+    public Builder contents(String contents) {
+      this.contents = contents;
+      return this;
+    }
+
+    public Answer build() {
+      return new Answer(this);
+    }
+  }
+
+  public static Builder getBuilder(User writer, Question question) {
+    return new Builder(writer, question);
   }
 
   public void setDeleted(boolean deleted) {

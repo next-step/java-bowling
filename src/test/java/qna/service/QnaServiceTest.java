@@ -9,9 +9,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import qna.CannotDeleteException;
 import qna.domain.*;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,6 +18,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QnaServiceTest {
+
     @Mock
     private QuestionRepository questionRepository;
 
@@ -36,7 +34,11 @@ public class QnaServiceTest {
     @Before
     public void setUp() throws Exception {
         question = new Question(1L, "title1", "contents1").writtenBy(UserTest.JAVAJIGI);
-        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        answer = Answer.getBuilder(UserTest.JAVAJIGI, QuestionTest.Q1)
+            .id(11L)
+            .contents("Answers Contents1")
+            .build();
+
         question.addAnswer(answer);
     }
 

@@ -58,19 +58,17 @@ public class QuestionTest {
     QUESTION_HAS_NO_WRITER_AND_ANSWER1 = new Question("title5", "contents5");
     QUESTION_HAS_NO_WRITER_AND_ANSWER2 = new Question("title6", "contents6");
 
-    ANSWER_FOR_INSERT1 = new Answer(
-        (long) 1,
-        UserTest.JAVAJIGI,
-        QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER1,
-        "Answers For Insert1"
-    );
+    ANSWER_FOR_INSERT1 = Answer
+        .getBuilder(UserTest.JAVAJIGI, QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER1)
+        .id(1)
+        .contents("Answers For Insert1")
+        .build();
 
-    ANSWER_FOR_INSERT2 = new Answer(
-        (long) 2,
-        UserTest.SANJIGI,
-        QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER2,
-        "Answers For Insert2"
-    );
+    ANSWER_FOR_INSERT2 = Answer
+        .getBuilder(UserTest.SANJIGI, QuestionTest.QUESTION_HAS_NO_WRITER_AND_ANSWER2)
+        .id(2)
+        .contents("Answers For Insert2")
+        .build();
   }
 
   @ParameterizedTest
