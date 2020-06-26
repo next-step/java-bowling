@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.Pins;
 
 public class NormalFrame {
     private static final int FIRST_FRAME = 1;
