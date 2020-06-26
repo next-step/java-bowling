@@ -32,4 +32,11 @@ public class States {
     public boolean isLastStateStrike() {
         return getLastState() == State.STRIKE;
     }
+
+    public int getStatesPinSum() {
+        return this.states
+                .stream()
+                .mapToInt(State::getFallenPins)
+                .sum();
+    }
 }
