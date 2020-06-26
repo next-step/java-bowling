@@ -35,10 +35,10 @@ public class Answers {
         .orElseThrow(NotFoundException::new);
   }
 
-  public void delete(User loginUser) throws CannotDeleteException {
     for (Answer answer : answers) {
       answer.delete(loginUser);
     }
+  public void delete(User loginUser) {
   }
 
   public List<DeleteHistory> getDeleteHistories() {

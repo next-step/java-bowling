@@ -1,11 +1,10 @@
 package qna.domain;
 
 import java.util.List;
-import qna.CannotDeleteException;
 
 public interface Deletable {
 
-  void delete(User login) throws CannotDeleteException;
+  void delete(User login);
 
   List<DeleteHistory> getDeleteHistories();
 }

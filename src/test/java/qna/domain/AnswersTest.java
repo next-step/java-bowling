@@ -115,7 +115,7 @@ class AnswersTest {
 
   @ParameterizedTest
   @MethodSource("provideAnswersContainAnswerWithLoginUserAndId")
-  void delete(Answers answers, User loginUser, long id) throws CannotDeleteException {
+  void delete(Answers answers, User loginUser, long id) {
     answers.delete(loginUser);
 
     assertThat(answers.getAnswerById(id).isDeleted()).isTrue();
@@ -136,7 +136,7 @@ class AnswersTest {
 
   @ParameterizedTest
   @MethodSource("provideAnswersContainAnswerWithInvalidLoginUserAndId")
-  void delete_실패(Answers answers, User loginUser, long id) throws CannotDeleteException {
+  void delete_실패(Answers answers, User loginUser, long id) {
 
     assertThatExceptionOfType(CannotDeleteException.class).isThrownBy(() -> {
       answers.delete(loginUser);
@@ -164,7 +164,7 @@ class AnswersTest {
     assertThat(deleteHistories).isEqualTo(expected);
   }
 
-  static Stream<Arguments> provideAnswersDeleted() throws CannotDeleteException {
+  static Stream<Arguments> provideAnswersDeleted() {
     ANSWERS1.addAnswer(ANSWER1);
 
     ANSWERS1.delete(ANSWER1.getWriter());
