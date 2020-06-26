@@ -57,7 +57,7 @@ public class BowlResult {
     }
 
 
-    private boolean isStrike(int downPin) {
+    public boolean isStrike(int downPin) {
         return downPin == 10;
     }
 

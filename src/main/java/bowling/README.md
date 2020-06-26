@@ -24,13 +24,14 @@
 2. NormalFrame
     - 1 ~ 9 프레임에 해당하는 BowlResult를 가진다
     - 기본 투구 회수를 가진다
+    - n번의 투구를 한다.
     - 남은 투구 회수를 반환한다.
     
 3. FinalFrame   
     - 10 프레임에 해당하는 BowlResult를 가진다
     - 기본 투구 회수를 가진다
-    - 보너스 투구 회수를 가진다
     - 남은 투구 회수를 반환한다
+    - 보너스 투구 회수를 가진다
     
 4. Frame
     - NormalFrame, FinalFrame 구현을 위한 Frame 인터페이스
