@@ -15,12 +15,12 @@ class PinsTest {
     @DisplayName("쓰러뜨린 핀 갯수 테스트")
     @ParameterizedTest
     @ValueSource(ints = {0,1,2,3,4,5})
-    void rollTest(int pin) {
+    void addTest(int pin) {
         // given
         Pins pins = new Pins();
 
         // when
-        pins.roll(pin);
+        pins.addPins(pin);
 
         // then
         assertThat(pins.getTotalPins()).isEqualTo(pin);
@@ -30,22 +30,13 @@ class PinsTest {
     @Test
     void rollOverTen() {
         Pins pins = new Pins();
+
         assertThatThrownBy(() -> {
-            pins.roll(5);
-            pins.roll(6);
+            pins.addPins(5);
+            pins.addPins(6);
 
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("스트라이크 이후 던지기 테스트")
-    @Test
-    void testRollAfterStrike() {
-        Pins pins = new Pins();
-        assertThatThrownBy(() -> {
-            pins.roll(10);
-            pins.roll(3);
-
-        }).isInstanceOf(IllegalArgumentException.class);
-    }
 }
 
