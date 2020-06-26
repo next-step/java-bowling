@@ -53,7 +53,7 @@ public class FinalPins implements Pins {
 
     @Override
     public List<Integer> getDownPins() {
-        List<Integer> downPins =  new ArrayList<>(this.pins.getDownPins());
+        List<Integer> downPins = new ArrayList<>(this.pins.getDownPins());
         downPins.addAll(this.downPins);
         return downPins;
     }

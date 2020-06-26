@@ -6,11 +6,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class FrameResult {
+
     private final List<Integer> downPins;
     private final Optional<ScoreType> scoreType;
     private final Optional<Integer> score;
 
-    public FrameResult(List<Integer> downPins, Optional<ScoreType> scoreType, Optional<Integer> score) {
+    public FrameResult(List<Integer> downPins, Optional<ScoreType> scoreType,
+        Optional<Integer> score) {
         this.downPins = downPins;
         this.score = score;
         this.scoreType = scoreType;

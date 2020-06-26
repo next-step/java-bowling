@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BowlingFrames {
@@ -29,7 +28,7 @@ public class BowlingFrames {
             frames.add(normalFrame);
         }
 
-        frames.add(frames.get(frames.size()-1).last());
+        frames.add(frames.get(frames.size() - 1).last());
 
         return new BowlingFrames(frames);
     }

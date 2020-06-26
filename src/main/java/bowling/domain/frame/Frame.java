@@ -44,7 +44,7 @@ public class Frame {
             return Optional.empty();
         }
 
-        if(isLast() && isFinished()){
+        if (isLast() && isFinished()) {
             return Optional.ofNullable(this.pins.sum());
         }
 
@@ -58,7 +58,7 @@ public class Frame {
         return Optional.of(score);
     }
 
-    public FrameResult getFrameResult(){
+    public FrameResult getFrameResult() {
         return new FrameResult(this.pins.getDownPins(), this.pins.getScoreType(), getScore());
     }
 
@@ -66,22 +66,22 @@ public class Frame {
         return this.position == 9;
     }
 
-    private boolean isFinished(){
+    private boolean isFinished() {
         return !this.pins.hasTurn();
     }
 
 
     private List<Integer> getNextDownPins(int count) {
-        if(this.nextFrame == null){
+        if (this.nextFrame == null) {
             return new ArrayList<>();
         }
 
         List<Integer> nextDownPins = this.nextFrame.getDownPins();
-        if(nextDownPins.isEmpty()){
+        if (nextDownPins.isEmpty()) {
             return new ArrayList<>();
         }
 
-        if(nextDownPins.size() >= count){
+        if (nextDownPins.size() >= count) {
             return nextDownPins.subList(0, count);
         }
 
