@@ -194,30 +194,22 @@ public class QuestionTest {
             Q1,
             UserTest.JAVAJIGI,
             Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), null)
+                DeleteHistory.createBy(Q1)
             )
         ),
         arguments(
             Q2,
             UserTest.SANJIGI,
             Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, Q2.getId(), Q2.getWriter(), null)
+                DeleteHistory.createBy(Q2)
             )
         ),
         arguments(
             QUESTION_WITH_ANSWER_SAME_WRITER,
             UserTest.JAVAJIGI,
             Arrays.asList(
-                new DeleteHistory(
-                    ContentType.QUESTION,
-                    QUESTION_WITH_ANSWER_SAME_WRITER.getId(),
-                    UserTest.JAVAJIGI,
-                    null),
-                new DeleteHistory(
-                    ContentType.ANSWER,
-                    AnswerTest.A1.getId(),
-                    UserTest.JAVAJIGI,
-                    null)
+                DeleteHistory.createBy(QUESTION_WITH_ANSWER_SAME_WRITER),
+                DeleteHistory.createBy(AnswerTest.A1)
             )
         )
     );

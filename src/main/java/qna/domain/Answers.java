@@ -44,8 +44,6 @@ public class Answers {
   public List<DeleteHistory> getDeleteHistories() {
     return answers.stream()
         .filter(Answer::isDeleted)
-        .map(answer -> new DeleteHistory(
-            ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()
-        )).collect(Collectors.toList());
+        .map(DeleteHistory::createBy).collect(Collectors.toList());
   }
 }

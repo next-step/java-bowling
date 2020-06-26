@@ -173,12 +173,7 @@ class AnswersTest {
         arguments(
             ANSWERS1,
             Arrays.asList(
-                new DeleteHistory(
-                    ContentType.ANSWER,
-                    ANSWER1.getId(),
-                    ANSWER1.getWriter(),
-                    null
-                )
+                DeleteHistory.createBy(ANSWER1)
             )
         )
     );

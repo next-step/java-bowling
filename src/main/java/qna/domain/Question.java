@@ -104,8 +104,7 @@ public class Question extends AbstractEntity implements Deletable {
     List<DeleteHistory> deleteHistories = new ArrayList<>();
 
     if (deleted) {
-      deleteHistories.add(
-          new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+      deleteHistories.add(DeleteHistory.createBy(this));
 
       deleteHistories.addAll(answers.getDeleteHistories());
     }
