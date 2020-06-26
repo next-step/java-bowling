@@ -63,4 +63,9 @@ public class FinalPitches implements Pitches {
                 .mapToInt(Pitch::getScore)
                 .sum();
     }
+
+    @Override
+    public int getCurrentScore() {
+        return 0;
+    }
 }

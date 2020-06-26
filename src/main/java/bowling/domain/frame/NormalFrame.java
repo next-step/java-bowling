@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.pitch.NormalPitches;
 import bowling.domain.pitch.Pitches;
-import bowling.domain.score.FrameScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
@@ -10,34 +9,34 @@ import java.util.List;
 public class NormalFrame implements Frame {
     private static final int MAXIMUM_NORMAL_FRAME_INDEX = 9;
 
-    private final NormalPitches normalPitches = new NormalPitches();
     private final int index;
+    private final NormalPitches normalPitches = new NormalPitches();
+    private Frame nextFrame;
+    private Pitches pitches;
 
-    private NormalFrame(int index) {
+    private NormalFrame(int index, Pitches pitches) {
         this.index = index;
+        this.pitches = pitches;
     }
 
     public static NormalFrame initiate() {
-        return new NormalFrame(FIRST_INDEX);
+        return new NormalFrame(FIRST_INDEX, new NormalPitches());
     }
 
-    @Override
-    public Frame next() {
-        return index == MAXIMUM_NORMAL_FRAME_INDEX ?
-                FinalFrame.last(index + NEXT_INDEX) : new NormalFrame(index + NEXT_INDEX);
+    public Frame next2() {
+        this.nextFrame = new NormalFrame(index + NEXT_INDEX, new NormalPitches());
+        return this.nextFrame;
+    }
+
+    public Frame last() {
+        this.nextFrame = FinalFrame.last(index + NEXT_INDEX);
+        return this.nextFrame;
     }
 
     @Override
     public void bowl(Score score) {
         normalPitches.throwBall(score);
     }
-
-
-    @Override
-    public FrameScore calculateFrameScore(FrameScore lastFrameScore) {
-        return null;
-    }
-
 
     @Override
     public boolean isMovableToNextFrame() {
@@ -62,10 +61,5 @@ public class NormalFrame implements Frame {
     @Override
     public int getPitchScoreSum() {
         return normalPitches.getPitchScoreSum();
-    }
-
-    @Override
-    public int getIndex() {
-        return index;
     }
 }

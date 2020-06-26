@@ -57,4 +57,9 @@ public class NormalPitches implements Pitches {
                 .mapToInt(Pitch::getScore)
                 .sum();
     }
+
+    @Override
+    public int getCurrentScore() {
+        return pitches.get(pitches.size() - 1).getScore();
+    }
 }

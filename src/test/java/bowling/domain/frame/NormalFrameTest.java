@@ -41,23 +41,16 @@ class NormalFrameTest {
     public void next_2번() {
         NormalFrame normalFrame = NormalFrame.initiate();
 
-        assertThat(normalFrame.getIndex()).isEqualTo(1);
-
-        Frame nextFrame = normalFrame.next();
-
-        assertThat(nextFrame.getIndex()).isEqualTo(2);
+        Frame nextFrame = normalFrame.next2();
     }
 
     @DisplayName("기존 Frame의 인덱스가 9이면 다음 Frame은 FinalFrame을 생성함")
     @Test
     public void next_마지막() {
         NormalFrame normalFrame = NormalFrame.initiate();
-        Frame nextFrame = normalFrame.next();
-        for (int i = 0; i < 8; i++) {
-            nextFrame = nextFrame.next();
-        }
+        Frame nextFrame = normalFrame.last();
+        //TODO-LAST로 생성
 
-        assertThat(nextFrame.getIndex()).isEqualTo(10);
         assertThat(nextFrame.getClass()).isEqualTo(FinalFrame.class);
     }
 }

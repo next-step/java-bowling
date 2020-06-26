@@ -17,7 +17,6 @@ class FramesTest {
         List<Frame> frameList = frames.getFrames();
 
         assertThat(frameList.size()).isEqualTo(1);
-        assertThat(frameList.get(0).getIndex()).isEqualTo(1);
     }
 
     @DisplayName("bowl 요청을 보내고 다음 프레임으로 넘어가면 프레임 리스트의 사이즈가 증가")

@@ -17,4 +17,6 @@ public interface Pitches {
     public List<String> getScoreSignatures();
 
     public int getPitchScoreSum();
+
+    public int getCurrentScore();
 }
