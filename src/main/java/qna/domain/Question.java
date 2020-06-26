@@ -48,6 +48,13 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
+    public static Question create(Question question) {
+        Question newQuestion = new Question(question.title, question.contents);
+        newQuestion.writeBy(question.writer);
+
+        return newQuestion;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -102,15 +109,14 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public List<DeleteHistory> deleteByUser(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> deleteByUser(User loginUser, LocalDateTime now) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
-
-        this.deleted = true;
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, now));
+        setDeleted(true);
         deleteHistories.addAll(deleteAnswers(loginUser));
         
         return deleteHistories;
@@ -119,5 +125,4 @@ public class Question extends AbstractEntity {
     private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
         return new Answers(answers).deleteAll(loginUser);
     }
-
 }
