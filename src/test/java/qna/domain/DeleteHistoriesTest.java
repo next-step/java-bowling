@@ -28,4 +28,25 @@ class DeleteHistoriesTest {
         );
     }
 
+    @DisplayName("DeleteHistory 객체 여러개를 추가할 수 있다.")
+    @Test
+    void addAll() {
+        Long questionId = 1L;
+        User writer = new User();
+        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, questionId, writer, LocalDateTime.now());
+
+        DeleteHistory deleteHistory1 = new DeleteHistory(ContentType.QUESTION, questionId, writer, LocalDateTime.now());
+        DeleteHistory deleteHistory2 = new DeleteHistory(ContentType.QUESTION, questionId, writer, LocalDateTime.now());
+
+        DeleteHistories deleteHistories = new DeleteHistories();
+        deleteHistories.add(deleteHistory);
+
+        DeleteHistories deleteHistories2 = new DeleteHistories();
+        deleteHistories.add(deleteHistory1);
+        deleteHistories.add(deleteHistory2);
+
+        deleteHistories.addAll(deleteHistories2);
+
+        assertThat(deleteHistories.getDeleteHistories()).hasSize(3);
+    }
 }

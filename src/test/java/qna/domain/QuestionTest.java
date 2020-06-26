@@ -17,7 +17,7 @@ public class QuestionTest {
     @DisplayName("Question을 삭제할 수 있다.")
     @Test
     void delete_success() throws CannotDeleteException {
-        DeleteHistories deleteHistories = Q1.delete(UserTest.JAVAJIGI);
+        DeleteHistories deleteHistories = Q1.delete(UserTest.JAVAJIGI, LocalDateTime.now());
         assertThat(deleteHistories.getDeleteHistories().get(0))
                 .isEqualTo(new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now()));
     }
@@ -25,6 +25,6 @@ public class QuestionTest {
     @DisplayName("로그인 사용자와 질문한 사람이 다른 경우 예외를 반환한다.")
     @Test
     void delete_fail() {
-        assertThatThrownBy(() -> Q2.delete(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> Q2.delete(UserTest.JAVAJIGI, LocalDateTime.now())).isInstanceOf(CannotDeleteException.class);
     }
 }
