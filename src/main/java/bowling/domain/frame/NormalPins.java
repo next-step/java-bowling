@@ -1,11 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.PinsState;
-import bowling.domain.state.ScoreType;
+import bowling.domain.ScoreType;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class NormalPins implements Pins {
 
@@ -34,20 +32,24 @@ public class NormalPins implements Pins {
     }
 
     @Override
-    public PinsState getPinsState() {
-        if (isStrike()) {
-            return new PinsState(new ArrayList<>(this.downPins), Arrays.asList(ScoreType.STRIKE));
+    public Optional<ScoreType> getScoreType() {
+        if(isStrike()){
+            return Optional.ofNullable(ScoreType.STRIKE);
         }
 
-        if (isSpare()) {
-            return new PinsState(new ArrayList<>(this.downPins), Arrays.asList(ScoreType.SPARE));
+        if(isSpare()){
+            return Optional.ofNullable(ScoreType.SPARE);
         }
 
-        if (this.downPins.size() == MAX_ROUND) {
-            return new PinsState(new ArrayList<>(this.downPins), Arrays.asList(ScoreType.MISS));
+        if(!hasTurn()){
+            return Optional.ofNullable(ScoreType.MISS);
         }
+        return Optional.empty();
+    }
 
-        return new PinsState(new ArrayList<>(this.downPins), Collections.EMPTY_LIST);
+    @Override
+    public List<Integer> getDownPins() {
+        return new ArrayList<>(this.downPins);
     }
 
     @Override

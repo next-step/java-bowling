@@ -17,7 +17,7 @@ public class BowlingGameLauncher {
             int framePosition = bowlingGame.getFramePosition();
             int downPin = inputView.requestDownPin(framePosition);
             bowlingGame.play(downPin);
-            outputView.printResult(name, bowlingGame.getResult(), bowlingGame.getScores());
+            outputView.printResult(name, bowlingGame.getResult());
         }
     }
 }

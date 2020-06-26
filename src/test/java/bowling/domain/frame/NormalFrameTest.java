@@ -3,8 +3,7 @@ package bowling.domain.frame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import bowling.domain.state.PinsState;
-import bowling.domain.state.ScoreType;
+import bowling.domain.ScoreType;
 import java.util.Arrays;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -17,9 +16,9 @@ class NormalFrameTest {
         Frame normalFrame = Frame.first();
         normalFrame.play(10);
 
-        PinsState expect = new PinsState(Arrays.asList(10), Arrays.asList(ScoreType.STRIKE));
+        FrameResult expect = new FrameResult(Arrays.asList(10), Optional.ofNullable(ScoreType.STRIKE), Optional.empty());
 
-        assertThat(normalFrame.createPinState()).isEqualTo(expect);
+        assertThat(normalFrame.getFrameResult()).isEqualTo(expect);
     }
 
     @DisplayName("strike후에 플레이 하면 예외 발생한다.")
@@ -35,12 +34,12 @@ class NormalFrameTest {
     @Test
     void two_play() {
         Frame normalFrame = Frame.first();
-
         normalFrame.play(8);
         normalFrame.play(1);
 
-        PinsState expect = new PinsState(Arrays.asList(8, 1), Arrays.asList(ScoreType.MISS));
-        assertThat(normalFrame.createPinState()).isEqualTo(expect);
+        FrameResult expect = new FrameResult(Arrays.asList(8,1), Optional.ofNullable(ScoreType.MISS), Optional.of(9));
+
+        assertThat(normalFrame.getFrameResult()).isEqualTo(expect);
     }
 
     @DisplayName("3번의 플레이를 하면 예외가 발생한다.")

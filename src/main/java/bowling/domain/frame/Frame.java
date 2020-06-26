@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.PinsState;
+import bowling.domain.ScoreType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,32 +39,17 @@ public class Frame {
         return this.pins.hasTurn();
     }
 
-    public PinsState createPinState() {
-        return this.pins.getPinsState();
-    }
-
     public Optional<Integer> getScore() {
-        if (this.pins.hasTurn()) {
+        if (!isFinished()) {
             return Optional.empty();
         }
 
-        PinsState pinsState = createPinState();
-        if (pinsState.hasMiss()) {
+        if(isLast() && isFinished()){
             return Optional.ofNullable(this.pins.sum());
         }
 
-        if(this.nextFrame == null && !this.pins.hasTurn()){
-            return Optional.ofNullable(this.pins.sum());
-        }
-
-        int nextBowlCount = 0;
-        if (pinsState.hasStrike()) {
-            nextBowlCount = 2;
-        } else if (pinsState.hasSpare()) {
-            nextBowlCount = 1;
-        }
-
-        List<Integer> downPins = this.getNextDownPins(nextBowlCount);
+        int nextBowlCount = this.pins.getScoreType().map(ScoreType::getBonusBowlCount).orElse(0);
+        List<Integer> downPins = getNextDownPins(nextBowlCount);
         if (downPins.size() < nextBowlCount) {
             return Optional.empty();
         }
@@ -73,12 +58,25 @@ public class Frame {
         return Optional.of(score);
     }
 
+    public FrameResult getFrameResult(){
+        return new FrameResult(this.pins.getDownPins(), this.pins.getScoreType(), getScore());
+    }
+
+    private boolean isLast() {
+        return this.position == 9;
+    }
+
+    private boolean isFinished(){
+        return !this.pins.hasTurn();
+    }
+
+
     private List<Integer> getNextDownPins(int count) {
         if(this.nextFrame == null){
             return new ArrayList<>();
         }
 
-        List<Integer> nextDownPins = this.nextFrame.createPinState().getDownPins();
+        List<Integer> nextDownPins = this.nextFrame.getDownPins();
         if(nextDownPins.isEmpty()){
             return new ArrayList<>();
         }
@@ -89,5 +87,9 @@ public class Frame {
 
         nextDownPins.addAll(this.nextFrame.getNextDownPins(count - nextDownPins.size()));
         return nextDownPins;
+    }
+
+    private List<Integer> getDownPins() {
+        return this.pins.getDownPins();
     }
 }

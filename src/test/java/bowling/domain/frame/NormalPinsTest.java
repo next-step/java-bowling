@@ -3,9 +3,8 @@ package bowling.domain.frame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import bowling.domain.state.PinsState;
-import bowling.domain.state.ScoreType;
-import java.util.Arrays;
+import bowling.domain.ScoreType;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -52,8 +51,8 @@ class NormalPinsTest {
         pins.down(8);
         pins.down(1);
 
-        assertThat(pins.getPinsState())
-            .isEqualTo(new PinsState(Arrays.asList(8, 1), Arrays.asList(ScoreType.MISS)));
+        assertThat(pins.getScoreType())
+            .isEqualTo(Optional.of(ScoreType.MISS));
     }
 
     @DisplayName("3번의 플레이를 하면 예외가 발생한다.")

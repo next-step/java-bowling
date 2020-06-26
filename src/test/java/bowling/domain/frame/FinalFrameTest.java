@@ -3,9 +3,6 @@ package bowling.domain.frame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.domain.state.PinsState;
-import bowling.domain.state.ScoreType;
-import java.util.Arrays;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,8 +16,8 @@ class FinalFrameTest {
         finalFrame.play(1);
         finalFrame.play(2);
 
-        assertThat(finalFrame.createPinState())
-            .isEqualTo(new PinsState(Arrays.asList(1, 2), Arrays.asList(ScoreType.MISS)));
+        assertThat(finalFrame.hasTurn()).isEqualTo(false);
+        assertThat(finalFrame.getScore()).isEqualTo(Optional.of(3));
     }
 
     @DisplayName("spare는 세번의 라운드를 진행할수있다.")
@@ -31,8 +28,8 @@ class FinalFrameTest {
         finalFrame.play(9);
         finalFrame.play(9);
 
-        assertThat(finalFrame.createPinState())
-            .isEqualTo(new PinsState(Arrays.asList(1, 9, 9), Arrays.asList(ScoreType.SPARE)));
+        assertThat(finalFrame.hasTurn()).isEqualTo(false);
+        assertThat(finalFrame.getScore()).isEqualTo(Optional.of(19));
     }
 
     @DisplayName("strike는 세번의 라운드를 진행할수있다.")
@@ -44,8 +41,8 @@ class FinalFrameTest {
         finalFrame.play(9);
         finalFrame.play(9);
 
-        assertThat(finalFrame.createPinState())
-            .isEqualTo(new PinsState(Arrays.asList(10, 9, 9), Arrays.asList(ScoreType.STRIKE)));
+        assertThat(finalFrame.hasTurn()).isEqualTo(false);
+        assertThat(finalFrame.getScore()).isEqualTo(Optional.of(28));
     }
 
     @Test
