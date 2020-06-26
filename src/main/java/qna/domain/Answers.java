@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,15 @@ public class Answers {
 
     public boolean add(Answer answer) {
         return answers.add(answer);
+    }
+
+    public List<DeleteHistory> deleteAll() {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        for (Answer answer : answers) {
+            DeleteHistory deleteHistory = answer.delete();
+            deleteHistories.add(deleteHistory);
+        }
+        return deleteHistories;
     }
 
     public int size() {
