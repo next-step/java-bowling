@@ -37,4 +37,17 @@ public class EnglishName {
     private static boolean isNotEnglish(final String inputText) {
         return !Pattern.matches(ENGLISH_PATTERN, inputText);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EnglishName)) return false;
+        EnglishName that = (EnglishName) o;
+        return Objects.equals(getUserName(), that.getUserName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserName());
+    }
 }

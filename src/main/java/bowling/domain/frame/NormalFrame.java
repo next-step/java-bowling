@@ -2,11 +2,15 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
 
+import java.util.Objects;
+
 public class NormalFrame {
     private static final int FIRST_FRAME = 1;
     private static final int PINS_LIMIT = 10;
     private static final String PIN_MAX_ERROR = "핀의 합계가 10개보다 클 수 없습니다.";
     private static final String ROLL_COUNT_ERRORS = "일반 게임에서는 두번만 던질 수 있습니다.";
+    private static final int CAN_ROLL_NORMAL_FRAME = 2;
+    private static final int FIRST_ROLL = 1;
 
     private Pins pins;
     private int index;
@@ -37,11 +41,11 @@ public class NormalFrame {
     }
 
     private boolean isRolledTwice() {
-        return pins.rollCount() == 2;
+        return pins.rollCount() == CAN_ROLL_NORMAL_FRAME;
     }
 
     private boolean isAlreadyStrike() {
-        return pins.rollCount() == 1 && pins.getTotalPins() == PINS_LIMIT;
+        return pins.rollCount() == FIRST_ROLL && pins.getTotalPins() == PINS_LIMIT;
     }
 
     public int getPins() {
@@ -52,4 +56,18 @@ public class NormalFrame {
         return index;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NormalFrame)) return false;
+        NormalFrame that = (NormalFrame) o;
+        return getIndex() == that.getIndex() &&
+                Objects.equals(getPins(), that.getPins());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPins(), getIndex());
+    }
 }
