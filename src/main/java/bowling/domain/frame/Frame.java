@@ -15,7 +15,8 @@ public interface Frame {
 
     public void bowl(Score score);
 
-    public FrameScore calculateFrameScore(Frame lastFrame);
+    public FrameScore calculateFrameScore(FrameScore lastFrameScore);
+
 
     public boolean isMovableToNextFrame();
 

@@ -7,6 +7,7 @@ public class BowlingBuildingException extends RuntimeException {
     public static final String OVER_SCORE = "1~9번 프레임은 두 투구의 합이 10점을 초과할 수 없습니다.";
     public static final String INVALID_NORMAL_PITCHES_TRY = "1~9번 프레임은 2번을 초과하여 투구할 수 없습니다.";
     public static final String INVALID_FINAL_PITCH_TRY = "주어진 마지막 프레임 투구 회수를 초과하여 투구할 수 없습니다.";
+    public static final String INVALID_SCORE_CALCULATION = "다음 투구가 이전 투구의 점수 계산에 관여할 수 없습니다.";
 
     public BowlingBuildingException() {
         super();

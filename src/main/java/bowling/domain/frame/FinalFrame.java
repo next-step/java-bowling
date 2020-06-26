@@ -32,21 +32,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public FrameScore calculateFrameScore(Frame lastFrame) {
-        if (index == MAXIMUM_FINAL_FRAME_INDEX) {
-            return FrameScore.of(lastFrame.getPitchScoreSum());
-        }
-        return lastFrame.isStrike() || lastFrame.isSpare() ?
-                calculateFrameScoreWhenStrikeOrSpare(lastFrame) : FrameScore.of(lastFrame.getPitchScoreSum());
-    }
-
-    private FrameScore calculateFrameScoreWhenStrikeOrSpare(Frame lastFrame) {
-        int frameScore = lastFrame.getPitchScoreSum() + finalPitches.getPitchScoreSum();
-        if (lastFrame.isStrike() && finalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_STRIKE)) {
-            return FrameScore.of(frameScore);
-        }
-        return lastFrame.isSpare() && finalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_SPARE) ?
-                FrameScore.of(frameScore) : null;
+    public FrameScore calculateFrameScore(FrameScore lastFrameScore) {
+        return null;
     }
 
     @Override

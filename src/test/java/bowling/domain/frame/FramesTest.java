@@ -54,31 +54,5 @@ class FramesTest {
         assertThat(frames.hasNextTurn()).isFalse();
     }
 
-    @DisplayName("프레임 숫자 점수 리스트 : 1번 프레임 7|2 == 9점")
-    @Test
-    public void getFrameScoreList_미스() {
-        Frames frames = Frames.initiate();
-        frames.bowl(Score.valueOf(7));
-        frames.bowl(Score.valueOf(2));
-        frames.moveToNextFrame();
 
-        List<Integer> frameScores = frames.getFrameScores();
-
-        assertThat(frameScores).containsExactly(9);
-    }
-
-    @DisplayName("프레임 숫자 점수 리스트 : 1번 프레임 스트라이크, 2번 프레임 3|6  == 19, 28")
-    @Test
-    public void getFrameScoreList_스트라이크() {
-        Frames frames = Frames.initiate();
-        frames.bowl(Score.valueOf(10));
-        frames.moveToNextFrame();
-        frames.bowl(Score.valueOf(3));
-        frames.bowl(Score.valueOf(6));
-        frames.moveToNextFrame();
-
-        List<Integer> frameScores = frames.getFrameScores();
-
-        assertThat(frameScores).containsExactly(19, 28);
-    }
 }

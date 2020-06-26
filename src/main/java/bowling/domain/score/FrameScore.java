@@ -2,17 +2,35 @@ package bowling.domain.score;
 
 public class FrameScore {
 
-    private final int frameScoreTotal;
+    private final int frameScore;
+    private final int leftPitchCounts;
 
-    private FrameScore(int frameScoreTotal) {
-        this.frameScoreTotal = frameScoreTotal;
+    private FrameScore(int frameScore, int leftPitchCounts) {
+        this.frameScore = frameScore;
+        this.leftPitchCounts = leftPitchCounts;
     }
 
-    public static FrameScore of(int frameScoreTotal) {
-        return new FrameScore(frameScoreTotal);
+    public static FrameScore ofMiss(int frameScore) {
+        return new FrameScore(frameScore, 0);
     }
 
-    public int getFrameScoreTotal() {
-        return frameScoreTotal;
+    public static FrameScore ofSpare() {
+        return new FrameScore(10, 1);
+    }
+
+    public static FrameScore ofStrike() {
+        return new FrameScore(10, 2);
+    }
+
+    public FrameScore next(int hitCounts) {
+        return new FrameScore(frameScore + hitCounts, leftPitchCounts - 1);
+    }
+
+    public int getFrameScore() {
+        return frameScore;
+    }
+
+    public boolean isAvailableToCalculate() {
+        return leftPitchCounts == 0;
     }
 }

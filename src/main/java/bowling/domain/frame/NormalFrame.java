@@ -32,22 +32,12 @@ public class NormalFrame implements Frame {
         normalPitches.throwBall(score);
     }
 
+
     @Override
-    public FrameScore calculateFrameScore(Frame lastFrame) {
-        if (lastFrame.isStrike() || lastFrame.isSpare()) {
-            return calculateFrameScoreWhenStrikeOrSpare(lastFrame);
-        }
-        return FrameScore.of(lastFrame.getPitchScoreSum());
+    public FrameScore calculateFrameScore(FrameScore lastFrameScore) {
+        return null;
     }
 
-    private FrameScore calculateFrameScoreWhenStrikeOrSpare(Frame lastFrame) {
-        int frameScore = lastFrame.getPitchScoreSum() + normalPitches.getPitchScoreSum();
-        if (lastFrame.isStrike() && normalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_STRIKE)) {
-            return FrameScore.of(frameScore);
-        }
-        return lastFrame.isSpare() && normalPitches.isHavingSameCounts(PITCH_COUNT_FOR_CALCULATING_SPARE) ?
-                FrameScore.of(frameScore) : null;
-    }
 
     @Override
     public boolean isMovableToNextFrame() {
