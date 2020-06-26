@@ -33,11 +33,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
-        if(question == null) {
+        if (question == null) {
             throw new NotFoundException();
         }
 
@@ -55,10 +55,10 @@ public class Answer extends AbstractEntity {
         return deleted;
     }
 
-    public Answer delete(List<DeleteHistory> deleteHistories) {
+    public DeleteHistory delete(User loginUser) throws CannotDeleteException {
+        checkOwner(loginUser);
         this.deleted = true; // delete flag
-        deleteHistories.add(new DeleteHistory(ContentType.ANSWER, this.getId(), this.getWriter(), LocalDateTime.now()));
-        return this;
+        return DeleteHistory.answer(this.getId(), this.getWriter());
     }
 
     public boolean isOwner(User writer) {
@@ -76,13 +76,14 @@ public class Answer extends AbstractEntity {
     public void toQuestion(Question question) {
         this.question = question;
     }
+
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
     public void checkOwner(User loginUser) throws CannotDeleteException {
-        if(!this.isOwner(loginUser)) {
+        if (!this.isOwner(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
 
