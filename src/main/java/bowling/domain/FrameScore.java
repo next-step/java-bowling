@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class FrameScore {
     private final FrameScoreStatus frameScoreStatus;
-    private final int score;
+    private final Integer score;
 
     public FrameScore(FrameScoreStatus frameScoreStatus, int score) {
         validate(score);
@@ -37,6 +37,10 @@ public class FrameScore {
             return new FrameScore(FrameScoreStatus.COMPLETE, this.score + bonusScore.getStrikeBonus());
         }
         return new FrameScore(FrameScoreStatus.NOT_READY, this.score + bonusScore.getStrikeBonus());
+    }
+
+    public String getScore() {
+        return this.score.toString();
     }
 
     private void validateApplyBonus() {

@@ -267,3 +267,5 @@
         - [X] bowlFirst 메서드 적용
         - [X] bowlCurrentFrame 메서드 적용
         - [X] toNextFrame 메서드 적용
+- [ ] OutputView
+    - [ ] 스코어 출력 기능 구현
