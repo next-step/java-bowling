@@ -49,27 +49,24 @@ public class User extends AbstractEntity {
         return password;
     }
 
-    public User setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public User setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public User setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
-        return this;
     }
 
     public void update(User loginUser, User target) {
