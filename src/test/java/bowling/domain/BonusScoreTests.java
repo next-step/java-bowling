@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.exceptions.ExceedBonusLimitException;
 import bowling.domain.exceptions.InvalidBonusScoreArgumentException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -53,13 +52,6 @@ class BonusScoreTests {
     void nullValidationTest() {
         assertThatThrownBy(() -> BonusScore.of(null, new NumberOfHitPin(5)))
                 .isInstanceOf(InvalidBonusScoreArgumentException.class);
-    }
-
-    @DisplayName("보너스 점수의 합산은 10을 넘을 수 없다.")
-    @Test
-    void maxValidationTest() {
-        assertThatThrownBy(() -> BonusScore.of(new NumberOfHitPin(5), new NumberOfHitPin(6)))
-                .isInstanceOf(ExceedBonusLimitException.class);
     }
 
     @DisplayName("현재 보너스 점수가 스트라이크용 보너스로 사용될 수 있는지 상태를 관리한다.")

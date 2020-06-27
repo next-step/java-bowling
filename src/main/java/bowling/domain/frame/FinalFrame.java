@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.BonusScore;
 import bowling.domain.FrameResults;
 import bowling.domain.FrameScore;
 import bowling.domain.FrameScoreStatus;
@@ -14,12 +15,12 @@ public class FinalFrame implements Frame {
 
     private final int index;
     private final FinalFrameStatus finalFrameStatus;
-    private final NormalFrame prevFrame;
+    private final NormalFrame previousFrame;
 
     FinalFrame(int index, FinalFrameStatus finalFrameStatus, NormalFrame ninthFrame) {
         this.index = index;
         this.finalFrameStatus = finalFrameStatus;
-        this.prevFrame = ninthFrame;
+        this.previousFrame = ninthFrame;
     }
 
     FinalFrame(NormalFrame ninthFrame, FinalFrameStatus finalFrameStatus) {
@@ -45,10 +46,17 @@ public class FinalFrame implements Frame {
         return new FrameScore(FrameScoreStatus.NOT_READY, currentScore);
     }
 
+    private BonusScore calculateBonusScore() {
+        return this.finalFrameStatus.calculateBonusScore();
+    }
+
     @Override
     public FrameScore calculatePreviousScore() {
-        // TODO
-        return null;
+        FrameScore previousFrameScore = this.previousFrame.calculateCurrentScore();
+        if (this.previousFrame.isSpare()) {
+            return previousFrameScore.applySpareBonus(calculateBonusScore().getFirstThrowScore());
+        }
+        return previousFrameScore;
     }
 
     @Override
@@ -59,7 +67,7 @@ public class FinalFrame implements Frame {
     @Override
     public FinalFrame bowl(int numberOfHitPin) {
         validateBowl();
-        return new FinalFrame(TEN, this.finalFrameStatus.bowl(numberOfHitPin), prevFrame);
+        return new FinalFrame(TEN, this.finalFrameStatus.bowl(numberOfHitPin), previousFrame);
     }
 
     @Override
@@ -79,11 +87,11 @@ public class FinalFrame implements Frame {
         FinalFrame that = (FinalFrame) o;
         return index == that.index &&
                 Objects.equals(finalFrameStatus, that.finalFrameStatus) &&
-                Objects.equals(prevFrame, that.prevFrame);
+                Objects.equals(previousFrame, that.previousFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(index, finalFrameStatus, prevFrame);
+        return Objects.hash(index, finalFrameStatus, previousFrame);
     }
 }

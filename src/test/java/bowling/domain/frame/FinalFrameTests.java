@@ -178,5 +178,35 @@ class FinalFrameTests {
         );
     }
 
-//    @DisplayName("이전 프레임 점수를 계산할 수 있다.")
+    @DisplayName("이전 프레임 점수를 계산할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("calculatePreviousFrameResource")
+    void calculatePreviousFrameTest(FinalFrame finalFrame, FrameScore expectedResult) {
+        assertThat(finalFrame.calculatePreviousScore()).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> calculatePreviousFrameResource() {
+        return Stream.of(
+                // 이전 프레임이 스페어인 경우
+                Arguments.of(
+                        FinalFrame.bowlFirst(10, NormalFrame.start(5).bowl(5)),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(10, NormalFrame.start(5).bowl(5)).bowl(10),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(10, NormalFrame.start(5).bowl(5)).bowl(10).bowl(10),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(10, NormalFrame.start(5).bowl(5)).bowl(10).bowl(5),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, NormalFrame.start(5).bowl(5)).bowl(4),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 15)
+                )
+        );
+    }
 }

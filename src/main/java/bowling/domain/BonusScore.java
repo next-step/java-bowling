@@ -6,7 +6,7 @@ import bowling.domain.exceptions.InvalidBonusScoreArgumentException;
 import java.util.Objects;
 
 public class BonusScore {
-    private static final int MAXIMUM_BONUS_SCORE = 10;
+    private static final int MAXIMUM_BONUS_SCORE = 20;
 
     private final int firstThrowScore;
     private final int secondThrowScore;
@@ -14,7 +14,7 @@ public class BonusScore {
 
     public BonusScore(int firstThrowScore, int secondThrowScore, boolean strikeBonus) {
         if (firstThrowScore + secondThrowScore > MAXIMUM_BONUS_SCORE) {
-            throw new ExceedBonusLimitException("보너스 점수는 최대 10점까지만 생성 가능합니다.");
+            throw new ExceedBonusLimitException("보너스 점수는 최대 20점까지만 생성 가능합니다.");
         }
         this.firstThrowScore = firstThrowScore;
         this.secondThrowScore = secondThrowScore;
