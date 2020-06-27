@@ -30,7 +30,7 @@ public class OutputView {
 
         Stream.generate(() -> "")
                 .limit(FRAME_COUNT_MAX - states.size())
-                .map(empty -> String.format("  %-4s", empty))
+                .map(empty -> String.format("  %-4s|", empty))
                 .forEach(System.out::print);
 
         System.out.println();
