@@ -21,7 +21,7 @@ class FrameScoresTest {
 
         FrameScores frameScores = FrameScores.of(frames.getFrames());
 
-        assertThat(frameScores.getSize()).isEqualTo(1);
+        assertThat(frameScores.getFrameScoreCounts()).isEqualTo(1);
     }
 
     @DisplayName("각 프레임의 점수를 누적 계산하여 리턴함")
@@ -46,10 +46,11 @@ class FrameScoresTest {
     @Test
     public void getFrameScores_300점() {
         Frames frames = Frames.initiate();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 11; i++) {
             frames.bowl(Score.valueOf(10));
             frames.moveToNextFrame();
         }
+        frames.bowl(Score.valueOf(10));
 
         FrameScores frameScores = FrameScores.of(frames.getFrames());
         List<Integer> cumulativeFrameScores = frameScores.getFrameScores();

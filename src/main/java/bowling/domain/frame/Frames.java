@@ -1,8 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.FrameScores;
 import bowling.domain.score.Score;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Frames {
@@ -28,7 +30,7 @@ public class Frames {
         Frame currentFrame = getCurrentFrame();
         if (currentFrame.isFinished()) {
             Frame nextFrame = currentFrame.next(getCurrentIndex());
-            frames.add(nextFrame);//변경
+            frames.add(nextFrame);
         }
     }
 
@@ -45,10 +47,10 @@ public class Frames {
     }
 
     public List<Frame> getFrames() {
-        return frames;
+        return Collections.unmodifiableList(frames);
     }
 
-    public List<Integer> getFrameScores() {
-        return null;
+    public FrameScores getFrameScores() {
+        return FrameScores.of(getFrames());
     }
 }

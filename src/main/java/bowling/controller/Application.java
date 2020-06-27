@@ -16,9 +16,8 @@ public class Application {
         while (frames.hasNextTurn()) {
             Score score = Score.valueOf(InputView.inputPitch(frames));
             frames.bowl(score);
-            OutputView.printScoreBoard(player, frames);
+            OutputView.printBowlingScoreBoard(player, frames);
             frames.moveToNextFrame();
-            OutputView.printNumericScore(frames);
         }
     }
 }
