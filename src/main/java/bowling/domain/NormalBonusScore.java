@@ -6,7 +6,7 @@ import bowling.domain.exceptions.InvalidBonusScoreArgumentException;
 import java.util.Objects;
 
 public class NormalBonusScore implements BonusScore{
-    private static final int MAXIMUM_BONUS_SCORE = 20;
+    private static final int MAXIMUM_BONUS_SCORE = 10;
 
     private final int firstThrowScore;
     private final int secondThrowScore;

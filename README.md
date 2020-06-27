@@ -233,11 +233,11 @@
     - 투구가 끝날 때마다 새로 계산된다.
     - [X] 준비 상태, 점수값을 상태로 갖는다.
     - [X] 준비 상태를 알려줄 수 있다.
-- [X] BonusScore
+- [X] NormalBonusScore
     - FrameStatus에서 보너스 점수를 계산하면 생성된다.
     - [X] spareBonus, strikeBonus를 속성으로 갖는다.
     - [X] NumberOfHitPin 두개를 입력받아서 객체를 생성할 수 있다.
-    - [ ] 보너스 점수는 최대 10을 넘을 수 없다. (<- 10으로 재조정 필요)
+    - [X] 보너스 점수는 최대 10을 넘을 수 없다. (<- 10으로 재조정 필요)
     - [X] null을 받은 경우 0으로 계산한다.
 - [X] FinalBonusScore
     - [X] 기본적으로 BonusScore와 동일
