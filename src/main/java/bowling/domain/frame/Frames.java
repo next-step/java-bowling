@@ -20,36 +20,25 @@ public class Frames {
         this.player = player;
     }
 
-    public void addPoint(int point) {
-        Frame currentFrame = findFrame();
-        currentFrame.addPoint(point);
-        if (frames.size() > MAX_FRAME) {
-            throw new IllegalArgumentException(String.format("limit frame is %d", MAX_FRAME));
-        }
-    }
-
-    private Frame findFrame() {
+    public void createNextFrame() {
         if (CollectionUtils.isEmpty(frames)) {
-            return generateNextFrame();
+            frames.add(NormalFrame.createFirstFrame());
+            return;
         }
 
-        Frame currentFrame = ElementFindUtils.findLastElement(frames);
-        return Optional.of(currentFrame)
-                .filter(Frame::availablePlay)
-                .orElseGet(this::generateNextFrame);
-    }
+        if (frames.size() == MAX_FRAME) {
+            throw new IllegalArgumentException("frame is maxFrame");
+        }
 
-    private Frame generateNextFrame() {
-        Frame frame = null;
+        NormalFrame normalFrame = (NormalFrame) ElementFindUtils.findLastElement(frames);
+        int currentFameIndex = frames.size() - ONE;
         if (isLast()) {
-            frame = new FinalFrame();
-            frames.add(frame);
-            return frame;
+            frames.add(normalFrame.createLastFrame(currentFameIndex));
+            return;
         }
 
-        frame = new NormalFrame();
-        frames.add(frame);
-        return frame;
+        frames.add(normalFrame.createNextFrame(currentFameIndex));
+        return;
     }
 
     private boolean isLast() {
@@ -76,4 +65,7 @@ public class Frames {
         return player;
     }
 
+    public Frame findCurrentFrame() {
+        return ElementFindUtils.findLastElement(frames);
+    }
 }

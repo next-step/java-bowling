@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.bonus.BonusScore;
+import bowling.domain.bonus.BonusScores;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,28 +18,38 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class FinalFrameTest {
 
     private Frame createFrame() {
-        return new FinalFrame();
+        return new FinalFrame(new BonusScores());
     }
 
-    @ParameterizedTest
-    @MethodSource("provideCountAndAvailablePlay")
-    @DisplayName("동일 frame에 값을 넣을 수 있는지 확인")
-    void availablePlayTest(List<Integer> points, boolean availablePlay) {
-        Frame frame = createFrame();
-        for (Integer point : points) {
-            frame.addPoint(point);
-        }
-        assertThat(frame.availablePlay()).isEqualTo(availablePlay);
+    private Frame createHasBonusScoreStrikeFrame() {
+        BonusScores bonusScores = new BonusScores();
+        bonusScores.addBonusScore(BonusScore.strikeBonusScore(9));
+        return new FinalFrame(bonusScores);
     }
 
-    private static Stream<Arguments> provideCountAndAvailablePlay() {
-        return Stream.of(
-                Arguments.of(Arrays.asList(10), true),
-                Arguments.of(Arrays.asList(5, 5), true),
-                Arguments.of(Arrays.asList(0, 0), false),
-                Arguments.of(Arrays.asList(5, 4), false),
-                Arguments.of(Arrays.asList(4), true)
-        );
+    private Frame createHasBonusScoreSpareFrame() {
+        BonusScores bonusScores = new BonusScores();
+        bonusScores.addBonusScore(BonusScore.spareBonusScore(9));
+        return new FinalFrame(bonusScores);
+    }
+
+    @Test
+    @DisplayName("strike frame에 값을 넣을 수 있는지 확인")
+    void availableStrikePlayTest() {
+        Frame frame = createHasBonusScoreStrikeFrame();
+        frame.addPoint(10);
+        assertThat(frame.availablePlay()).isTrue();
+        frame.addPoint(5);
+        assertThat(frame.availablePlay()).isFalse();
+    }
+
+    @Test
+    @DisplayName("spare Frame에 값을 넣을 수 있는지 확인")
+    void availableSparePlayTest() {
+        Frame frame = createHasBonusScoreSpareFrame();
+        assertThat(frame.availablePlay()).isTrue();
+        frame.addPoint(5);
+        assertThat(frame.availablePlay()).isFalse();
     }
 
     @ParameterizedTest
@@ -56,43 +69,24 @@ class FinalFrameTest {
         );
     }
 
-    @ParameterizedTest
-    @MethodSource("provideStrikeOrSpare")
-    @DisplayName("Strike나 Spare일 경우 한번 더 게임이 가능")
-    void afterStrikeOrSparePlayTest(List<Integer> points, int thirdPoint, int totalCount) {
-        Frame frame = createFrame();
-        for (Integer point : points) {
-            frame.addPoint(point);
-        }
-        assertThat(frame.availablePlay()).isTrue();
-        frame.addPoint(thirdPoint);
-        assertThat(frame.totalScore()).isEqualTo(totalCount);
-    }
+    @Test
+    @DisplayName("strike일 경우 총합이 20이 넘어가는 경우 Exception")
+    void validateAddStrike() {
+        Frame frame = createHasBonusScoreStrikeFrame();
+        frame.addPoint(10);
 
-    private static Stream<Arguments> provideStrikeOrSpare() {
-        return Stream.of(
-                Arguments.of(Arrays.asList(10), 5, 15),
-                Arguments.of(Arrays.asList(5, 5), 5, 15)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideNotValidStrikeOrSpare")
-    @DisplayName("Strike나 Spare일 경우 총합이 20이 넘는 경우 Exception")
-    void validateAddStrikeOrSpare(List<Integer> points, int thirdPoint) {
-        Frame frame = createFrame();
-        for (Integer point : points) {
-            frame.addPoint(point);
-        }
-
-        assertThatThrownBy(() -> frame.addPoint(thirdPoint))
+        assertThatThrownBy(() -> frame.addPoint(11))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    private static Stream<Arguments> provideNotValidStrikeOrSpare() {
-        return Stream.of(
-                Arguments.of(Arrays.asList(10), 11),
-                Arguments.of(Arrays.asList(5, 5), 11)
-        );
+    @Test
+    @DisplayName("spare일 경우 총합이 20이 넘는 경우 Exception")
+    void validateAddSpare() {
+        Frame frame = createHasBonusScoreSpareFrame();
+        frame.addPoint(5);
+        frame.addPoint(5);
+
+        assertThatThrownBy(() -> frame.addPoint(11))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

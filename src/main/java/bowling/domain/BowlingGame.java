@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 
@@ -12,12 +13,8 @@ public class BowlingGame {
         this.frames = new Frames(player);
     }
 
-    public void playGame(int point) {
-        if (isGameOver()) {
-            throw new IllegalArgumentException("bowlingGame is finish");
-        }
-
-        frames.addPoint(point);
+    public void addNextFrame() {
+        frames.createNextFrame();
     }
 
     public boolean isGameOver() {
@@ -30,5 +27,9 @@ public class BowlingGame {
 
     public int currentPlayFrameIndex() {
         return frames.getFrameSize();
+    }
+
+    public Frame findCurrentFrame() {
+        return frames.findCurrentFrame();
     }
 }

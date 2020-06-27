@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class NormalFrameTest {
 
     private Frame createFrame() {
-        return new NormalFrame();
+        return NormalFrame.createFirstFrame();
     }
 
     @ParameterizedTest

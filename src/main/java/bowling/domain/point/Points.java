@@ -19,4 +19,8 @@ public class Points {
                 .mapToInt(Point::getPoint)
                 .sum();
     }
+
+    public int size() {
+        return points.size();
+    }
 }

@@ -76,8 +76,35 @@ public class Scores {
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return CollectionUtils.isEmpty(scores);
     }
 
+    public boolean isAvailableAdd() {
+        if (CollectionUtils.isEmpty(scores)) {
+            return true;
+        }
+
+        if (isStrike() || isSpare()) {
+            return false;
+        }
+
+        return secondScore();
+    }
+
+    public boolean isAvailableBonusScoreAdd() {
+        if (CollectionUtils.isEmpty(scores)) {
+            return true;
+        }
+
+        if (isStrike()) {
+            return secondScore();
+        }
+
+        if (isSpare()) {
+            return thirdScore();
+        }
+
+        return false;
+    }
 }

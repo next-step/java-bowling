@@ -30,4 +30,11 @@ public class BonusScores {
                 .filter(BonusScore::isAvailableAddBonusPoint)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), BonusScores::new));
     }
+
+    public boolean isAvailableAdd() {
+        return bonusScores.stream()
+                .filter(BonusScore::isAvailableAddBonusPoint)
+                .findAny()
+                .isPresent();
+    }
 }
