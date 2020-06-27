@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.BonusScore;
+import bowling.domain.NormalBonusScore;
 import bowling.domain.FrameResults;
 import bowling.domain.FrameScore;
 import bowling.domain.FrameScoreStatus;
@@ -37,7 +37,7 @@ public class FinalFrame implements Frame {
         }
     }
 
-    private BonusScore calculateBonusScore() {
+    private NormalBonusScore calculateBonusScore() {
         return this.finalFrameStatus.calculateBonusScore();
     }
 

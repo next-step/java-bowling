@@ -1,9 +1,6 @@
 package bowling.domain.frameStatus;
 
-import bowling.domain.BonusScore;
-import bowling.domain.FrameResult;
-import bowling.domain.FrameResults;
-import bowling.domain.NumberOfHitPin;
+import bowling.domain.*;
 import bowling.domain.exceptions.CannotCalculateFrameResultException;
 import bowling.domain.exceptions.InvalidTryBowlException;
 
@@ -31,9 +28,8 @@ public class FinalFrameStatus implements FrameStatus {
     }
 
     @Override
-    public BonusScore calculateBonusScore() {
-        // TODO: FinalBonusScore를 반환하도록 구현
-        return BonusScore.of(this.firstNumberOfHitPin, this.secondNumberOfHitPin);
+    public FinalBonusScore calculateBonusScore() {
+        return FinalBonusScore.of(this.firstNumberOfHitPin, this.secondNumberOfHitPin);
     }
 
     @Override

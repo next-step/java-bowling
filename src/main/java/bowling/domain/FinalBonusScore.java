@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class FinalBonusScore {
+public class FinalBonusScore implements BonusScore {
     private final int firstThrowScore;
     private final int secondThrowScore;
     private final boolean strikeBonus;

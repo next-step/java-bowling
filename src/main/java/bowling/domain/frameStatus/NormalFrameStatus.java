@@ -1,6 +1,6 @@
 package bowling.domain.frameStatus;
 
-import bowling.domain.BonusScore;
+import bowling.domain.NormalBonusScore;
 import bowling.domain.FrameResult;
 import bowling.domain.FrameResults;
 import bowling.domain.NumberOfHitPin;
@@ -37,8 +37,8 @@ public class NormalFrameStatus implements FrameStatus {
     }
 
     @Override
-    public BonusScore calculateBonusScore() {
-        return BonusScore.of(this.firstNumberOfHitPin, this.secondNumberOfHitPin);
+    public NormalBonusScore calculateBonusScore() {
+        return NormalBonusScore.of(this.firstNumberOfHitPin, this.secondNumberOfHitPin);
     }
 
     @Override
