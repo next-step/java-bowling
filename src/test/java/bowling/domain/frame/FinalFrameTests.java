@@ -228,6 +228,20 @@ class FinalFrameTests {
                 Arguments.of(
                         FinalFrame.bowlFirst(5, NormalFrame.start(10)).bowl(5).bowl(10),
                         new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+
+                // 스트라이크, 스페어도 아닌 일반 상태일 때
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, NormalFrame.start(5).bowl(4)),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 9)
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, NormalFrame.start(5).bowl(4)).bowl(5),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 9)
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, NormalFrame.start(5).bowl(4)).bowl(5).bowl(10),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 9)
                 )
         );
     }
