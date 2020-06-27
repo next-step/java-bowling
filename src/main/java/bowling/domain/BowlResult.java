@@ -6,13 +6,18 @@ public class BowlResult {
     private static final String GUTTER_NOTATION = "-";
     private static final String STRIKE_NOTATION = "X";
 
-    private String result;
     private int downPin;
+    private String result;
+
+    public BowlResult() {
+        this.downPin = 0;
+        this.result = "";
+    }
 
     private BowlResult(int downPin) {
         valid(downPin);
-        this.result = makeResult(downPin);
         this.downPin = downPin;
+        this.result = makeResult(downPin);
     }
 
     public static BowlResult of(int pinCount) {

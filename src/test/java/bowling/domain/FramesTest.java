@@ -12,7 +12,6 @@ class FramesTest {
     @Test
     @DisplayName("생성 테스트")
     void init() {
-        assertThatCode(() -> Frames.init(Arrays.asList(NormalFrame.init())))
-                .doesNotThrowAnyException();
+        assertThatCode(() -> Frames.init()).doesNotThrowAnyException();
     }
 }

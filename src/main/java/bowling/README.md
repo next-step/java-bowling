@@ -21,33 +21,25 @@
     - 핀의 개수가 0 ~ 10 사이의 값인지 검증한다.
     - 결과를 반환한다
     
-2. NormalFrame
-    - 1 ~ 9 프레임에 해당하는 BowlResult를 가진다
-    - 기본 투구 회수를 가진다
+2. Frame
+    - BowlResult와 투구 시도 횟 수를 가진다
     - n번의 투구를 한다.
-    - 남은 투구 회수를 반환한다.
     
-3. FinalFrame   
+~~3. FinalFrame~~   
     - 10 프레임에 해당하는 BowlResult를 가진다
     - 기본 투구 회수를 가진다
     - 남은 투구 회수를 반환한다
     - 보너스 투구 회수를 가진다
     
-4. Frame
+~~4. Frame~~
     - NormalFrame, FinalFrame 구현을 위한 Frame 인터페이스
     
 5. Frames
-    - List<Frame> frames 를 가지는 1급 컬렉션
-    - 10개 프레임을 가진다
-    - 프레임을 생성한다
-    - 값을 추가한다?
+    - List<Frame> frames 와 frameIndex를 가지는 객체
+    - 다음 프레임을 생성한다
+    - 프레임 값을 업데이트한다.
 
-6. ScoreBoard
-    - Frames, 현재 진행 프레임 인덱스를 가진다
-    - 10개 프레임을 가진 Frames를 생성한다 
-    - 현재 프레임 인덱스를 반환한다.
-
-7. Player
+6. Player
     - String name을 가진다
     - 이름이 3글자인지 검증
 

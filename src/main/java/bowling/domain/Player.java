@@ -17,4 +17,8 @@ public class Player {
             throw new IllegalArgumentException("이름은 3글자까지 허용합니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
