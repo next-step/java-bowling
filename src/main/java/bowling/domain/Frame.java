@@ -19,13 +19,13 @@ public class Frame {
     }
 
     public Frame bowl(int downPin) {
-        if (trying == 0) { //first
+        if (trying == 0) { 
             return firstBowl(downPin);
         }
         return nextBowl(downPin);
     }
 
-    public Frame firstBowl(int downPin) {
+    private Frame firstBowl(int downPin) {
         BowlResult bowlResult = BowlResult.of(downPin);
         if (bowlResult.isStrike(downPin)) {
             return new Frame(bowlResult, 2);
@@ -33,7 +33,7 @@ public class Frame {
         return new Frame(bowlResult, ++trying);
     }
 
-    public Frame nextBowl(int downPin) {
+    private Frame nextBowl(int downPin) {
         this.bowlResult = bowlResult.next(downPin);
         this.trying++;
         return this;
@@ -43,11 +43,7 @@ public class Frame {
         return trying == lastTrying;
     }
 
-    @Override
-    public String toString() {
-        return "Frame{" +
-                "bowlResult=" + bowlResult.getResult() +
-                ", trying=" + trying +
-                '}';
+    public String getResult() {
+        return bowlResult.getResult();
     }
 }

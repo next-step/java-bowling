@@ -9,27 +9,25 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 class FrameTest {
 
     @Test
-    @DisplayName("한 프레임의 첫 번째 투구 생성 테스트")
-    void firstBowl() {
-        assertThatCode(() -> Frame.newInstance().firstBowl(3))
-                .doesNotThrowAnyException();
+    @DisplayName(" 생성 테스트")
+    void init() {
+        assertThatCode(() -> Frame.newInstance()).doesNotThrowAnyException();
     }
 
     @Test
-    @DisplayName("다음 투구 생성 테스트 ")
-    void nextBowl() {
-        assertThatCode(() -> Frame.newInstance().firstBowl(3)
-                .nextBowl(5))
+    @DisplayName("투구 테스트")
+    void bowl() {
+        assertThatCode(() -> Frame.newInstance().bowl(3))
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("마지막 투구인지 알려준다")
     void isLast() {
-        Frame frame = Frame.newInstance().firstBowl(3);
+        Frame frame = Frame.newInstance().bowl(3);
         assertThat(frame.isLast(2)).isFalse();
 
-        frame = frame.nextBowl(3);
+        frame = frame.bowl(3);
         assertThat(frame.isLast(2)).isTrue();
     }
 }
