@@ -32,7 +32,7 @@ public class FinalFrameStatus implements FrameStatus {
 
     @Override
     public BonusScore calculateBonusScore() {
-        // TODO: 맞는지 확인
+        // TODO: FinalBonusScore를 반환하도록 구현
         return BonusScore.of(this.firstNumberOfHitPin, this.secondNumberOfHitPin);
     }
 

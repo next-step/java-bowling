@@ -235,10 +235,13 @@
     - [X] 준비 상태를 알려줄 수 있다.
 - [X] BonusScore
     - FrameStatus에서 보너스 점수를 계산하면 생성된다.
-    - [X] spareBonus, strikeExtraBonus를 속성으로 갖는다.
+    - [X] spareBonus, strikeBonus를 속성으로 갖는다.
     - [X] NumberOfHitPin 두개를 입력받아서 객체를 생성할 수 있다.
-    - [X] 보너스 점수는 최대 10을 넘을 수 없다.
+    - [ ] 보너스 점수는 최대 10을 넘을 수 없다. (<- 10으로 재조정 필요)
     - [X] null을 받은 경우 0으로 계산한다.
+- [ ] FinalBonusScore
+    - [ ] 기본적으로 BonusScore와 동일
+    - [ ] Strike 보너스 판단 여부만 다르다 (생성시 둘다 null이 아니어야 한다.)
 - [X] FrameResults
     - [X] 현재 상태 점수를 계산할 수 있다.
         - [X] 컬렉션에 있는 모든 점수를 합산해서 반환한다.

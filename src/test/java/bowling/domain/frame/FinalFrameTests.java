@@ -206,6 +206,28 @@ class FinalFrameTests {
                 Arguments.of(
                         FinalFrame.bowlFirst(5, NormalFrame.start(5).bowl(5)).bowl(4),
                         new FrameScore(FrameScoreStatus.COMPLETE, 15)
+                ),
+
+                // 이전 프레임이 스트라이크인 경우
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, NormalFrame.start(10)),
+                        new FrameScore(FrameScoreStatus.NOT_READY, 15)
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(10, NormalFrame.start(10)),
+                        new FrameScore(FrameScoreStatus.NOT_READY, 20)
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, NormalFrame.start(10)).bowl(5),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, NormalFrame.start(10)).bowl(4),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 19)
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, NormalFrame.start(10)).bowl(5).bowl(10),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
                 )
         );
     }

@@ -56,6 +56,9 @@ public class FinalFrame implements Frame {
         if (this.previousFrame.isSpare()) {
             return previousFrameScore.applySpareBonus(calculateBonusScore().getFirstThrowScore());
         }
+        if (this.previousFrame.isStrike()) {
+            return previousFrameScore.applyStrikeBonus(calculateBonusScore());
+        }
         return previousFrameScore;
     }
 
