@@ -20,9 +20,9 @@ public class QuestionTest {
     @DisplayName("Question 삭제 성공")
     @ParameterizedTest
     @MethodSource("source_delete_question_shouldSuccess")
-    public void delete_question_shouldSuccess(Question q, User loginUser) throws CannotDeleteException {
-        q.delete(loginUser);
-        assertThat(q.isDeleted()).isTrue();
+    public void delete_question_shouldSuccess(Question question, User owner) throws CannotDeleteException {
+        question.delete(owner);
+        assertThat(question.isDeleted()).isTrue();
     }
 
     public static Stream<Arguments> source_delete_question_shouldSuccess() {
@@ -35,12 +35,12 @@ public class QuestionTest {
     @DisplayName("Question 삭제 시에 삭제 이력이 생성된다")
     @ParameterizedTest
     @MethodSource("source_get_deleteHistory_shouldSuccess")
-    public void get_deleteHistory_shouldSuccess(Question q, User loginUser) throws CannotDeleteException {
-        DeleteHistory deleteHistory = q.delete(loginUser);
+    public void get_deleteHistory_shouldSuccess(Question question, User owner) throws CannotDeleteException {
+        DeleteHistory deleteHistory = question.delete(owner);
         assertAll(
                 () -> assertThat(deleteHistory.getContentType()).isEqualTo(ContentType.QUESTION),
-                () -> assertThat(deleteHistory.getContentId()).isEqualTo(q.getId()),
-                () -> assertThat(deleteHistory.getDeletedBy()).isEqualTo(q.getWriter())
+                () -> assertThat(deleteHistory.getContentId()).isEqualTo(question.getId()),
+                () -> assertThat(deleteHistory.getDeletedBy()).isEqualTo(question.getWriter())
         );
     }
 
@@ -54,9 +54,9 @@ public class QuestionTest {
     @DisplayName("다른 사람이 쓴 Question 삭제 시에는 예외 발생")
     @ParameterizedTest
     @MethodSource("source_delete_anotherWriter_shouldFail")
-    public void delete_anotherWriter_shouldFail(Question q, User loginUser) {
+    public void delete_anotherWriter_shouldFail(Question question, User owner) {
         assertThatThrownBy(() -> {
-            q.delete(loginUser);
+            question.delete(owner);
         }).isInstanceOf(CannotDeleteException.class);
     }
 
