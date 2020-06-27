@@ -43,4 +43,14 @@ public enum FrameResult {
     public String getValue() {
         return value;
     }
+
+    public int parseToNumber() {
+        if (this.value.equals("-")) {
+            return 0;
+        }
+        if (this.value.equals("/") || this.value.equals("X")) {
+            return 10;
+        }
+        return Integer.parseInt(this.value);
+    }
 }
