@@ -30,12 +30,6 @@ class BowlResultTest {
         assertThatCode(() -> BowlResult.of(2).next(8)).doesNotThrowAnyException();
     }
 
-    @Test
-    @DisplayName("투구 합이 핀 개수를  넘는 경우 오류를 발생시킨다.")
-    void next_fail() {
-        assertThatThrownBy(() -> BowlResult.of(10).next(10))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
 
     @Test
     @DisplayName("점수판에 표출 할 결과값을 반환한다")

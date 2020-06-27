@@ -4,10 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Frames {
-    public static final int LAST_FRAME = 10;
+    private static final int LAST_FRAME = 10;
 
-    List<Frame> frames;
-    int frameIndex;
+    private List<Frame> frames;
+    private int frameIndex;
 
     private Frames(List<Frame> frames, int frameIndex) {
         this.frames = frames;
@@ -16,41 +16,58 @@ public class Frames {
 
     public static Frames init() {
         List<Frame> frames = new LinkedList<>();
-        frames.add(Frame.newInstance());
+        frames.add(NormalFrame.newInstance());
         return new Frames(frames, 0);
     }
 
-    public int size() {
-        return frames.size();
+    public Frames bowling(int downPin) {
+        Frame frame = frames.get(frameIndex).bowl(downPin);
+        updateFrame(frame);
+        return this;
+    }
+
+    public void next() {
+        if (frames.get(frameIndex).isLastTrying()) {
+            frames.add(createNextFrame());
+            frameIndex++;
+        }
     }
 
     public boolean isLast() {
         return frameIndex == LAST_FRAME;
     }
 
-    public int getFrameIndex() {
-        return frameIndex;
-    }
-
-    public Frames bowling(int downPin) {
-        Frame frame = frames.get(frameIndex).bowl(downPin);
-        update(frame);
-        return this;
-    }
-
-    private void update(Frame frame) {
-        frames.remove(frameIndex);
-        frames.add(frame);
-    }
-
     public List<Frame> getFrames() {
         return frames;
     }
 
-    public void next() {
-        if (frames.get(frameIndex).isLast(2)) {
-            frames.add(Frame.newInstance());
-            frameIndex++;
-        }
+    public int getFrameIndex() {
+        return frameIndex;
     }
+
+    public String getResult(int index){
+        return frames.get(index).getResult();
+    }
+
+    public int size() {
+        return frames.size();
+    }
+
+    private void updateFrame(Frame frame) {
+        frames.remove(frameIndex);
+        frames.add(frame);
+    }
+
+    private Frame createNextFrame() {
+        if (isBeforeLastIndex()) {
+            return FinalFrame.newInstance();
+        }
+        return NormalFrame.newInstance();
+    }
+
+    private boolean isBeforeLastIndex() {
+        return frameIndex == 8;
+    }
+
+
 }

@@ -25,9 +25,10 @@ public class BowlResult {
     }
 
     public BowlResult next(int downPin) {
+        valid(downPin);
         this.result = makeNextResult(downPin);
         this.downPin += downPin;
-        valid(this.downPin);
+
         return this;
     }
 
@@ -55,6 +56,9 @@ public class BowlResult {
         if (isSpare(downPin)) {
             return this.result + SEPARATOR + SPARE_NOTATION;
         }
+        if (isStrike(downPin)) {
+            return this.result + SEPARATOR + STRIKE_NOTATION;
+        }
         if (isGutter(downPin)) {
             return this.result + SEPARATOR + GUTTER_NOTATION;
         }
@@ -66,7 +70,7 @@ public class BowlResult {
         return downPin == 10;
     }
 
-    private boolean isSpare(int downPin) {
+    public boolean isSpare(int downPin) {
         return this.downPin + downPin == 10;
     }
 
