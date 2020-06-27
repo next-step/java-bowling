@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.bonusScore;
+
+import bowling.domain.NumberOfHitPin;
 
 import java.util.Objects;
 

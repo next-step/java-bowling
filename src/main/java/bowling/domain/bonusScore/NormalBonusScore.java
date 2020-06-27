@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.bonusScore;
 
+import bowling.domain.NumberOfHitPin;
 import bowling.domain.exceptions.ExceedBonusLimitException;
 import bowling.domain.exceptions.InvalidBonusScoreArgumentException;
 

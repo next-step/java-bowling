@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.*;
+import bowling.domain.bonusScore.FinalBonusScore;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.frameStatus.FinalFrameStatus;

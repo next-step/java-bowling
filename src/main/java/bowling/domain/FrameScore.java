@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.bonusScore.BonusScore;
 import bowling.domain.exceptions.InvalidScoreValueException;
 import bowling.domain.exceptions.InvalidTryOfApplyBonusException;
 

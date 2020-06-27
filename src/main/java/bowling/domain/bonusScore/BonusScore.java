@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.bonusScore;
 
 public interface BonusScore {
     int getFirstThrowScore();

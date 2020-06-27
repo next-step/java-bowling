@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.bonusScore;
 
+import bowling.domain.NumberOfHitPin;
 import bowling.domain.exceptions.InvalidBonusScoreArgumentException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
