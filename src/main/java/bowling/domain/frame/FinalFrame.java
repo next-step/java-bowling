@@ -39,11 +39,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<String> getScoreSignatures() {
-        return pitches.getScoreSignatures();
-    }
-
-    @Override
     public FrameScore calculateFrameScore() {
         return isFinished() ? FrameScore.ofMiss(pitches.getPitchScoreSum()) : null;
     }
@@ -51,14 +46,19 @@ public class FinalFrame implements Frame {
     @Override
     public FrameScore delegateCalculation(FrameScore frameScore) {
         int pitchCounts = pitches.getPitchCounts();
-        for (int i = FIRST_INDEX; i <= pitchCounts; i++) {
+        for (int i = ZERO_INDEX; i < pitchCounts; i++) {
             frameScore = accumulateFrameScore(i, frameScore);
         }
         return frameScore.isAbleToCalculate() ? frameScore : null;
     }
 
     private FrameScore accumulateFrameScore(int index, FrameScore frameScore) {
-        int currentPitchScore = pitches.getPitchScoreByIndex(index - 1);
+        int currentPitchScore = pitches.getPitchScoreByIndex(index);
         return frameScore.isAbleToCalculate() ? frameScore : frameScore.next(currentPitchScore);
+    }
+
+    @Override
+    public List<String> getScoreSignatures() {
+        return pitches.getScoreSignatures();
     }
 }

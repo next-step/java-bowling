@@ -6,7 +6,7 @@ import bowling.domain.score.Score;
 import java.util.List;
 
 public interface Frame {
-    public static final int FIRST_INDEX = 1;
+    public static final int ZERO_INDEX = 0;
     public static final int MAXIMUM_NORMAL_FRAME_INDEX = 9;
 
     public Frame next(int index);
@@ -15,9 +15,9 @@ public interface Frame {
 
     public boolean isFinished();
 
-    public List<String> getScoreSignatures();
-
     public FrameScore calculateFrameScore();
 
-    FrameScore delegateCalculation(FrameScore frameScore);
+    public FrameScore delegateCalculation(FrameScore frameScore);
+
+    public List<String> getScoreSignatures();
 }
