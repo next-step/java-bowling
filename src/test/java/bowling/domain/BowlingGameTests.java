@@ -25,14 +25,29 @@ class BowlingGameTests {
     }
 
     @DisplayName("초구를 굴려서 게임을 진행하고 결과를 확인 할 수 있다.")
-    @Test
-    void bowlFirstTest() {
+    @ParameterizedTest
+    @MethodSource("bowlFirstResource")
+    void bowlFirstTest(int numberOfHitPin, FrameResults frameResults, FrameScore frameScore) {
         BowlingGame bowlingGame = BowlingGame.start(PLAYER_NAME);
 
-        List<BowlingGameResult> bowlingGameResults = bowlingGame.bowlFirst(TEN);
+        List<BowlingGameResult> bowlingGameResults = bowlingGame.bowlFirst(numberOfHitPin);
 
         assertThat(bowlingGameResults.size()).isEqualTo(1);
-        assertThat(bowlingGameResults.get(0)).isEqualTo(new BowlingGameResult(NORMAL_STRIKE_FRAME_RESULT));
+        assertThat(bowlingGameResults.get(0)).isEqualTo(new BowlingGameResult(frameResults, frameScore));
+    }
+    public static Stream<Arguments> bowlFirstResource() {
+        return Stream.of(
+                Arguments.of(
+                        TEN,
+                        NORMAL_STRIKE_FRAME_RESULT,
+                        new FrameScore(FrameScoreStatus.NOT_READY, 10)
+                ),
+                Arguments.of(
+                        FIVE,
+                        NORMAL_FIVE_IN_PROGRESS_FRAME_RESULT,
+                        new FrameScore(FrameScoreStatus.NOT_READY, 5)
+                )
+        );
     }
 
     @DisplayName("현재 프레임을 진행하고 전체 결과를 확인할 수 있다.")

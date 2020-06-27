@@ -28,8 +28,11 @@ public class BowlingGame {
 
     public List<BowlingGameResult> bowlFirst(int numberOfHitPin) {
         Frame frame = player.bowlFirstRefactor(numberOfHitPin);
-        BowlingGameResult bowlingGameResult = new BowlingGameResult(frame.calculateCurrentResults());
 
+        BowlingGameResult bowlingGameResult = new BowlingGameResult(
+                frame.calculateCurrentResults(),
+                frame.calculateCurrentScore()
+        );
         this.bowlingGameResults.add(bowlingGameResult);
 
         return new ArrayList<>(this.bowlingGameResults);

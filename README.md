@@ -260,5 +260,10 @@
         - [X] 이전 프레임이 스페어일 때 점수를 계산할 수 있다. - 파이널
         - [X] 이전 프레임이 스트라이크일 때 점수를 계산할 수 있다. - 파이널
         - [X] 이전 프레임이 일반 상태일 때 점수를 계산할 수 있다. - 파이널
-- [ ] BowlingGameResult
-    - [ ] FrameScore도 속성으로 추가
+- [X] BowlingGameResult
+    - [X] FrameScore도 속성으로 추가
+- [ ] BowlingGame
+    - [ ] FrameScore가 추가 된 BowlingGameResult 반영
+        - [X] bowlFirst 메서드 적용
+        - [ ] bowlCurrentFrame 메서드 적용
+        - [ ] toNextFrame 메서드 적용
