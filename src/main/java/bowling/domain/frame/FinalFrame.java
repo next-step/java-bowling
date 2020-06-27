@@ -58,8 +58,8 @@ public class FinalFrame implements Frame {
     }
 
     private FrameScore accumulateFrameScore(int index, FrameScore frameScore) {
-        int currentPitchScore = pitches.getPitchScoreByIndex(index);
-        return frameScore.isAbleToCalculate() ? frameScore : frameScore.next(currentPitchScore);
+        int pitchScore = pitches.getPitchScoreByIndex(index);
+        return frameScore.isAbleToCalculate() ? frameScore : frameScore.next(pitchScore);
     }
 
     @Override
