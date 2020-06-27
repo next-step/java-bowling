@@ -7,19 +7,26 @@ public class Pitch {
     private final int pinCount;
     private final State state;
 
-    public Pitch(final int pinCount, final int leftPinCount) {
+    private Pitch(final int pinCount, final State state) {
         validatePinCount(pinCount);
-        validateLeftPinCount(leftPinCount);
         this.pinCount = pinCount;
-        this.state = findState(pinCount, leftPinCount);
+        this.state = state;
     }
 
     public static Pitch firstPitch(final int pinCount) {
-        return new Pitch(pinCount, PIN_COUNT_MAX - pinCount);
+        if (pinCount == PIN_COUNT_MAX) {
+            return new Pitch(pinCount, State.STRIKE);
+        }
+
+        return new Pitch(pinCount, findState(pinCount));
     }
 
-    public Pitch nextPitch(final int pinCount) {
-        return new Pitch(pinCount, PIN_COUNT_MAX - this.pinCount - pinCount);
+    private static State findState(final int pinCount) {
+        if (pinCount == PIN_COUNT_MIN) {
+            return State.GUTTER;
+        }
+
+        return State.MISS;
     }
 
     private void validatePinCount(final int pinCount) {
@@ -28,26 +35,19 @@ public class Pitch {
         }
     }
 
-    private void validateLeftPinCount(final int leftPinCount) {
-        if (leftPinCount < PIN_COUNT_MIN || leftPinCount > PIN_COUNT_MAX) {
-            throw new IllegalArgumentException("쓰러트릴 핀의 갯수보다 남은 핀의 갯수가 적습니다. 남게될 핀 - " + leftPinCount);
+    public Pitch nextPitch(final int pinCount) {
+        validateNextPinCount(pinCount);
+        if (pinCount + this.pinCount == PIN_COUNT_MAX) {
+            return new Pitch(pinCount, State.SPARE);
         }
+
+        return new Pitch(pinCount, findState(pinCount));
     }
 
-    private State findState(final int pinCount, final int leftPinCount) {
-        if (pinCount == PIN_COUNT_MAX) {
-            return State.STRIKE;
+    private void validateNextPinCount(final int pinCount) {
+        if (this.pinCount + pinCount > PIN_COUNT_MAX) {
+            throw new IllegalArgumentException(String.format("쓰러트릴 핀의 갯수보다 남은 핀의 갯수가 적습니다. 남은 핀 - %d", this.pinCount));
         }
-
-        if (leftPinCount == PIN_COUNT_MIN) {
-            return State.SPARE;
-        }
-
-        if (pinCount == PIN_COUNT_MIN) {
-            return State.GUTTER;
-        }
-
-        return State.MISS;
     }
 
     public int getPinCount() {

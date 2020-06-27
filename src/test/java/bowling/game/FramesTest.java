@@ -45,17 +45,8 @@ class FramesTest {
     void hasRemainChance() {
         Frames frames = new Frames();
 
-        assertAll(
-                () -> {
-                    frames.bowlCurrentFrame(8);
-                    assertThat(frames.hasRemainChance()).isTrue();
-                },
-
-                () -> {
-                    frames.bowlCurrentFrame(1);
-                    assertThat(frames.hasRemainChance()).isFalse();
-                }
-        );
+        frames.bowlCurrentFrame(8);
+        assertThat(frames.hasRemainChance()).isTrue();
     }
 
     @DisplayName("게임이 끝났는지 반환한다.")

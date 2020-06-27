@@ -20,22 +20,32 @@ class PitchTest {
                 .hasMessage("쓰러진 핀의 갯수는 0 ~ 10 사이어야 합니다. - " + pinCount);
     }
 
-    @DisplayName("남은핀 보다 쓰러트릴 핀이 크면 아니면 IllegalArgumentsException throw")
+    @DisplayName("남은핀 보다 쓰러트릴 핀이 크면 IllegalArgumentsException throw")
     @ParameterizedTest
     @CsvSource({"7, 4", "3, 9"})
     void validateLeftPinCount(int firstPinCount, int nextPinCount) {
         Pitch pitch = Pitch.firstPitch(firstPinCount);
         assertThatThrownBy(() -> pitch.nextPitch(nextPinCount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("쓰러트릴 핀의 갯수보다 남은 핀의 갯수가 적습니다. 남게될 핀 - " + (10 - firstPinCount - nextPinCount));
+                .hasMessage("쓰러트릴 핀의 갯수보다 남은 핀의 갯수가 적습니다. 남은 핀 - %d", firstPinCount);
     }
 
     @DisplayName("현재 투구에 맞는 상태를 가져온다.")
     @ParameterizedTest
-    @CsvSource({"10, 0, STRIKE", "1, 0, SPARE", "8, 2, MISS", "0, 3, GUTTER"})
-    void getPitchState(int pinCount, int leftPinCount, State expectedState) {
-        Pitch pitch = new Pitch(pinCount, leftPinCount);
+    @CsvSource({"10, STRIKE", "8, MISS", "0, GUTTER"})
+    void getPitchState(int pinCount, State expectedState) {
+        Pitch pitch = Pitch.firstPitch(pinCount);
 
         assertThat(pitch.getState()).isEqualTo(expectedState);
+    }
+
+    @DisplayName("두번째 투구의 상태를 가져온다.")
+    @ParameterizedTest
+    @CsvSource({"8, 2, SPARE", "7, 2, MISS", "8, 0, GUTTER"})
+    void getNextPitchState(int firstPinCount, int nextPinCount, State expectedState) {
+        Pitch firstPitch = Pitch.firstPitch(firstPinCount);
+        Pitch nextPitch = firstPitch.nextPitch(nextPinCount);
+
+        assertThat(nextPitch.getState()).isEqualTo(expectedState);
     }
 }
