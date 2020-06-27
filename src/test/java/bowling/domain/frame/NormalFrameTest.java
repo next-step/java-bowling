@@ -37,14 +37,6 @@ class NormalFrameTest {
         assertThat(normalFrame.isFinished()).isFalse();
     }
 
-    @DisplayName("기존 Frame을 통해 다음 Frame을 생성함")
-    @Test
-    public void next_2번() {
-        Frame normalFrame = NormalFrame.initiate();
-
-        Frame nextFrame = normalFrame.next(1);
-    }
-
     @DisplayName("기존 Frame의 인덱스가 9이면 다음 Frame은 FinalFrame을 생성함")
     @Test
     public void next_마지막() {
@@ -67,7 +59,7 @@ class NormalFrameTest {
         assertThat(frameScore.isAbleToCalculate()).isTrue();
     }
 
-    @DisplayName("Spare인 경우 프레임으로 점수 계산을 위임함")
+    @DisplayName("Spare인 경우 다음 프레임으로 점수 계산을 위임함")
     @Test
     public void getFrameScore_Spare() {
         Frame frame = NormalFrame.initiate();
@@ -75,7 +67,6 @@ class NormalFrameTest {
 
         frame.bowl(PitchScore.valueOf(3));
         frame.bowl(PitchScore.valueOf(7));
-
         nextFrame.bowl(PitchScore.valueOf(4));
 
         FrameScore frameScore = frame.calculateFrameScore().get();
@@ -84,7 +75,7 @@ class NormalFrameTest {
         assertThat(frameScore.isAbleToCalculate()).isTrue();
     }
 
-    @DisplayName("결과가 Strike이고 그 다음 1번밖에 안 친 경우 null을 리턴함")
+    @DisplayName("결과가 Strike이고 그 다음 1번밖에 안 친 경우 empty Optional 객체를 리턴함")
     @Test
     public void getFrameScore_Strike_추가투구_1번() {
         Frame frame = NormalFrame.initiate();
@@ -114,17 +105,17 @@ class NormalFrameTest {
     @DisplayName("스트라이크가 3연속인 경우 가장 처음 프레임의 점수는 30점이며 두 번째 프레임은 점수 집계 불가능")
     @Test
     public void getFrameScore_Strike_연속3번() {
-        Frame frame = NormalFrame.initiate();
-        Frame nextFrame = frame.next(2);
-        Frame thirdFrame = nextFrame.next(3);
+        Frame firstFrame = NormalFrame.initiate();
+        Frame secondFrame = firstFrame.next(2);
+        Frame thirdFrame = secondFrame.next(3);
 
-        frame.bowl(PitchScore.valueOf(10));
-        nextFrame.bowl(PitchScore.valueOf(10));
+        firstFrame.bowl(PitchScore.valueOf(10));
+        secondFrame.bowl(PitchScore.valueOf(10));
         thirdFrame.bowl(PitchScore.valueOf(10));
 
-        FrameScore frameScore = frame.calculateFrameScore().get();
+        FrameScore firstFrameScore = firstFrame.calculateFrameScore().get();
 
-        assertThat(frameScore.getFrameScore()).isEqualTo(30);
-        assertThat(nextFrame.calculateFrameScore()).isEmpty();
+        assertThat(firstFrameScore.getFrameScore()).isEqualTo(30);
+        assertThat(secondFrame.calculateFrameScore()).isEmpty();
     }
 }

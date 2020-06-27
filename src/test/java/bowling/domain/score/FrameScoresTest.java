@@ -12,7 +12,7 @@ class FrameScoresTest {
 
     @DisplayName("값이 존재하는 FrameScore만 내부 컬렉션에 추가함")
     @Test
-    public void makeFrameScores_정상() {
+    public void makeFrameScores_크기_1() {
         Frames frames = Frames.initiate();
         frames.bowl(PitchScore.valueOf(5));
         frames.bowl(PitchScore.valueOf(3));
@@ -35,7 +35,6 @@ class FrameScoresTest {
         frames.moveToNextFrame();
         frames.bowl(PitchScore.valueOf(3));
         frames.bowl(PitchScore.valueOf(4));
-
 
         FrameScores frameScores = FrameScores.of(frames.getFrames());
 

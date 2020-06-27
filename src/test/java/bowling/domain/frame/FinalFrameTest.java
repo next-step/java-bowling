@@ -81,9 +81,9 @@ class FinalFrameTest {
         assertThat(frameScore.getFrameScore()).isEqualTo(20);
     }
 
-    @DisplayName("FinalFrame도 동일하게 계산을 delegate함")
+    @DisplayName("FinalFrame도 동일하게 계산을 delegate 작업을 수행")
     @Test
-    public void delegate_마짐작_프레임() {
+    public void delegate_마지막_프레임() {
         Frame normalFrame = NormalFrame.initiate();
         Frame finalFrame = normalFrame.next(9);
 

@@ -26,7 +26,7 @@ public class OutputView {
         FrameScores frameScores = frames.getFrameScores();
 
         printDefaultLayout(player);
-        frameList.forEach(OutputView::printVisibleFrameSignatures);
+        frameList.forEach(OutputView::printVisibleFrameSignature);
         printBlankFrames(frameList.size());
 
         printVisibleFrameScores(frameScores);
@@ -39,12 +39,12 @@ public class OutputView {
         System.out.printf(ViewMessage.PLAYER_NAME, player.getName());
     }
 
-    private static void printVisibleFrameSignatures(Frame frame) {
+    private static void printVisibleFrameSignature(Frame frame) {
         List<String> scoreSignatures = frame.getPitchScoreSignatures();
         StringBuilder stringBuilder = new StringBuilder();
         scoreSignatures.forEach(scoreSignature -> appendScoreSignature(scoreSignature, stringBuilder));
-        String frameSignatures = String.format(ViewMessage.FRAME_SIGNATURE_ROW_FORMAT, stringBuilder.toString());
-        System.out.print(frameSignatures);
+        String frameSignature = String.format(ViewMessage.FRAME_SIGNATURE_ROW_FORMAT, stringBuilder.toString());
+        System.out.print(frameSignature);
     }
 
     private static void appendScoreSignature(String scoreSignature, StringBuilder stringBuilder) {
@@ -62,7 +62,7 @@ public class OutputView {
         System.out.print(stringBuilder.toString());
     }
 
-    private static void appendScore(Integer score, StringBuilder stringBuilder) {
+    private static void appendScore(int score, StringBuilder stringBuilder) {
         String frameScore = String.format(ViewMessage.FRAME_SCORE_ROW_FORMAT, score);
         stringBuilder.append(frameScore);
     }

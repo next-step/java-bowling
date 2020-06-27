@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FramePitchScoreTest {
+class FrameScoreTest {
 
     @DisplayName("Miss일 때의 FrameScore 계산이 가능함")
     @Test
@@ -35,6 +35,8 @@ class FramePitchScoreTest {
     @Test
     public void next_차감_확인() {
         FrameScore frameScore = FrameScore.ofSpare();
+
+        assertThat(frameScore.isAbleToCalculate()).isFalse();
 
         FrameScore nextFrameScore = frameScore.next(5);
 
