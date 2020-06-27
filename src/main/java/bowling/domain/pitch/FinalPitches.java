@@ -22,7 +22,7 @@ public class FinalPitches implements Pitches {
     }
 
     private void validateFinalPitches() {
-        if (isNotContainingStrikeOrSpare() || isHavingSameCounts(MAXIMUM_FINAL_PITCH_COUNTS)) {
+        if (hasNotStrikeOrSpare() || pitches.size() == MAXIMUM_FINAL_PITCH_COUNTS) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
         }
     }
@@ -35,29 +35,26 @@ public class FinalPitches implements Pitches {
         return lastPitch.isSpare() || lastPitch.isStrike() ? Pitch.initiate(score) : lastPitch.next(score);
     }
 
-    @Override
-    public boolean isHavingSameCounts(int pitchCounts) {
-        return pitches.size() == pitchCounts;
-    }
-
-    private boolean isNotContainingStrikeOrSpare() {
+    private boolean hasNotStrikeOrSpare() {
         return pitches.stream()
                 .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
     }
 
     @Override
-    public int getCounts() {
-        return pitches.size();
+    public boolean hasSamePitchCounts(int pitchCounts) {
+        return pitches.size() == pitchCounts;
     }
 
     @Override
-    public boolean isStrike() {
-        return pitches.get(0).isStrike();
+    public boolean hasStrike() {
+        return pitches.stream()
+                .anyMatch(Pitch::isStrike);
     }
 
     @Override
-    public boolean isSpare() {
-        return isHavingSameCounts(MAXIMUM_NORMAL_PITCH_COUNTS) && pitches.get(1).isSpare();
+    public boolean hasSpare() {
+        return pitches.stream()
+                .anyMatch(Pitch::isSpare);
     }
 
     @Override
@@ -75,7 +72,12 @@ public class FinalPitches implements Pitches {
     }
 
     @Override
-    public int getCurrentScoreByIndex(int index) {
+    public int getPitchScoreByIndex(int index) {
         return pitches.get(index).getScore();
+    }
+
+    @Override
+    public int getPitchCounts() {
+        return pitches.size();
     }
 }

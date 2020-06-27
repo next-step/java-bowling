@@ -8,7 +8,6 @@ import bowling.domain.score.Score;
 import java.util.List;
 
 public class FinalFrame implements Frame {
-    private static final int MAXIMUM_FINAL_FRAME_INDEX = 11;
 
     private final Pitches pitches;
 
@@ -32,11 +31,11 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        if (pitches.isHavingSameCounts(Pitches.MAXIMUM_NORMAL_PITCH_COUNTS) &&
-                !pitches.isSpare() && !pitches.isStrike()) {
+        if (pitches.hasSamePitchCounts(Pitches.MAXIMUM_NORMAL_PITCH_COUNTS)
+                && !pitches.hasSpare() && !pitches.hasStrike()) {
             return true;
         }
-        return pitches.isHavingSameCounts(Pitches.MAXIMUM_FINAL_PITCH_COUNTS);
+        return pitches.hasSamePitchCounts(Pitches.MAXIMUM_FINAL_PITCH_COUNTS);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public FrameScore delegateCalculation(FrameScore frameScore) {
-        int pitchCounts = pitches.getCounts();
+        int pitchCounts = pitches.getPitchCounts();
         for (int i = FIRST_INDEX; i <= pitchCounts; i++) {
             frameScore = accumulateFrameScore(i, frameScore);
         }
@@ -59,7 +58,7 @@ public class FinalFrame implements Frame {
     }
 
     private FrameScore accumulateFrameScore(int index, FrameScore frameScore) {
-        int currentPitchScore = pitches.getCurrentScoreByIndex(index - 1);
+        int currentPitchScore = pitches.getPitchScoreByIndex(index - 1);
         return frameScore.isAbleToCalculate() ? frameScore : frameScore.next(currentPitchScore);
     }
 }

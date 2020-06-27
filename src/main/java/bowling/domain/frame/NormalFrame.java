@@ -8,7 +8,6 @@ import bowling.domain.score.Score;
 import java.util.List;
 
 public class NormalFrame implements Frame {
-    private static final int MAXIMUM_NORMAL_FRAME_INDEX = 9;
 
     private final Pitches pitches;
     private Frame nextFrame;
@@ -21,6 +20,7 @@ public class NormalFrame implements Frame {
         return new NormalFrame(new NormalPitches());
     }
 
+    @Override
     public Frame next(int index) {
         this.nextFrame = (index != MAXIMUM_NORMAL_FRAME_INDEX) ? NormalFrame.initiate() : FinalFrame.ofFinal();
         return this.nextFrame;
@@ -33,7 +33,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        return pitches.isHavingSameCounts(Pitches.MAXIMUM_NORMAL_PITCH_COUNTS) || pitches.isStrike();
+        return pitches.hasSamePitchCounts(Pitches.MAXIMUM_NORMAL_PITCH_COUNTS) || pitches.hasStrike();
     }
 
     @Override
@@ -49,15 +49,15 @@ public class NormalFrame implements Frame {
     }
 
     private FrameScore createFrameScore() {
-        if (pitches.isStrike()) {
+        if (pitches.hasStrike()) {
             return FrameScore.ofStrike();
         }
-        return pitches.isSpare() ? FrameScore.ofSpare() : FrameScore.ofMiss(pitches.getPitchScoreSum());
+        return pitches.hasSpare() ? FrameScore.ofSpare() : FrameScore.ofMiss(pitches.getPitchScoreSum());
     }
 
     @Override
     public FrameScore delegateCalculation(FrameScore frameScore) {
-        int pitchCounts = pitches.getCounts();
+        int pitchCounts = pitches.getPitchCounts();
         for (int i = FIRST_INDEX; i <= pitchCounts; i++) {
             frameScore = accumulateFrameScore(i, frameScore);
         }
@@ -68,7 +68,7 @@ public class NormalFrame implements Frame {
     }
 
     private FrameScore accumulateFrameScore(int index, FrameScore frameScore) {
-        int currentPitchScore = pitches.getCurrentScoreByIndex(index - 1);
+        int currentPitchScore = pitches.getPitchScoreByIndex(index - 1);
         return frameScore.isAbleToCalculate() ? frameScore : frameScore.next(currentPitchScore);
     }
 

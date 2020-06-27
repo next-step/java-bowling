@@ -66,6 +66,6 @@ class NormalPitchesTest {
         NormalPitches normalPitches = new NormalPitches();
         normalPitches.throwBall(Score.valueOf(10));
 
-        assertThat(normalPitches.isSpare()).isFalse();
+        assertThat(normalPitches.hasSpare()).isFalse();
     }
 }

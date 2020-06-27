@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 public class NormalPitches implements Pitches {
     private static final int FIRST_INDEX = 0;
-    private static final int SECOND_INDEX = 1;
 
     private final List<Pitch> pitches = new ArrayList<>();
 
@@ -21,7 +20,7 @@ public class NormalPitches implements Pitches {
     }
 
     private void validateNormalPitches() {
-        if (isHavingSameCounts(MAXIMUM_NORMAL_PITCH_COUNTS)) {
+        if (pitches.size() == MAXIMUM_NORMAL_PITCH_COUNTS) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES_TRY);
         }
     }
@@ -31,18 +30,20 @@ public class NormalPitches implements Pitches {
     }
 
     @Override
-    public boolean isHavingSameCounts(int pitchCounts) {
+    public boolean hasSamePitchCounts(int pitchCounts) {
         return pitches.size() == pitchCounts;
     }
 
     @Override
-    public boolean isStrike() {
-        return pitches.get(FIRST_INDEX).isStrike();
+    public boolean hasStrike() {
+        return pitches.stream()
+                .anyMatch(Pitch::isStrike);
     }
 
     @Override
-    public boolean isSpare() {
-        return isHavingSameCounts(MAXIMUM_NORMAL_PITCH_COUNTS) && pitches.get(SECOND_INDEX).isSpare();
+    public boolean hasSpare() {
+        return pitches.stream()
+                .anyMatch(Pitch::isSpare);
     }
 
     @Override
@@ -60,12 +61,12 @@ public class NormalPitches implements Pitches {
     }
 
     @Override
-    public int getCurrentScoreByIndex(int index) {
+    public int getPitchScoreByIndex(int index) {
         return pitches.get(index).getScore();
     }
 
     @Override
-    public int getCounts() {
+    public int getPitchCounts() {
         return pitches.size();
     }
 }

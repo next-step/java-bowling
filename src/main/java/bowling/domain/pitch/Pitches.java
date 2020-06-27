@@ -10,17 +10,17 @@ public interface Pitches {
 
     public void throwBall(Score score);
 
-    public boolean isHavingSameCounts(int pitchCounts);
+    public boolean hasSamePitchCounts(int pitchCounts);
 
-    public boolean isStrike();
+    public boolean hasStrike();
 
-    public boolean isSpare();
+    public boolean hasSpare();
 
     public List<String> getScoreSignatures();
 
     public int getPitchScoreSum();
 
-    public int getCurrentScoreByIndex(int index);
+    public int getPitchScoreByIndex(int index);
 
-    int getCounts();
+    public int getPitchCounts();
 }
