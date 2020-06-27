@@ -37,6 +37,10 @@ public class FinalFrame implements Frame {
         }
     }
 
+    private BonusScore calculateBonusScore() {
+        return this.finalFrameStatus.calculateBonusScore();
+    }
+
     @Override
     public FrameScore calculateCurrentScore() {
         Integer currentScore = this.calculateCurrentResults().calculateScore();
@@ -44,10 +48,6 @@ public class FinalFrame implements Frame {
             return new FrameScore(FrameScoreStatus.COMPLETE, currentScore);
         }
         return new FrameScore(FrameScoreStatus.NOT_READY, currentScore);
-    }
-
-    private BonusScore calculateBonusScore() {
-        return this.finalFrameStatus.calculateBonusScore();
     }
 
     @Override
