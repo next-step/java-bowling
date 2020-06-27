@@ -53,19 +53,21 @@ public class OutputView {
 
     private String createBowlDisplay(FrameResult frameResult) {
         List<Integer> downPins = frameResult.getDownPins();
+        if(downPins.isEmpty()){
+            return "";
+        }
+
         List<String> components = new ArrayList<>();
 
         int downPinIndex = 0;
+        components.add(createPin(downPins.get(downPinIndex++)));
 
         ScoreType scoreType = frameResult.getScoreType().orElse(ScoreType.MISS);
-        if (scoreType == ScoreType.STRIKE) {
-            downPinIndex++;
-            components.add("X");
-        } else if (scoreType == ScoreType.SPARE) {
-            components.add(createPin(downPins.get(downPinIndex++)));
+        if (scoreType == ScoreType.SPARE) {
             components.add("/");
             downPinIndex++;
         }
+
         for (; downPinIndex < downPins.size(); downPinIndex++) {
             components.add(createPin(downPins.get(downPinIndex)));
         }

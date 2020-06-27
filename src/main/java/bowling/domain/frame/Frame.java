@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.ScoreType;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,7 +74,7 @@ public class Frame {
 
     private List<Integer> getNextDownPins(int count) {
         if (this.nextFrame == null) {
-            return new ArrayList<>();
+            return Collections.EMPTY_LIST;
         }
 
         List<Integer> nextDownPins = this.nextFrame.getDownPins();
