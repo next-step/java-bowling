@@ -77,7 +77,7 @@ class FinalFrameTest {
         finalFrame.bowl(Score.valueOf(7));
         finalFrame.bowl(Score.valueOf(10));
 
-        FrameScore frameScore = finalFrame.calculateFrameScore();
+        FrameScore frameScore = finalFrame.calculateFrameScore().get();
         assertThat(frameScore.getFrameScore()).isEqualTo(20);
     }
 
@@ -91,7 +91,7 @@ class FinalFrameTest {
         finalFrame.bowl(Score.valueOf(10));
         finalFrame.bowl(Score.valueOf(5));
 
-        FrameScore frameScore = normalFrame.calculateFrameScore();
+        FrameScore frameScore = normalFrame.calculateFrameScore().get();
         assertThat(frameScore.getFrameScore()).isEqualTo(25);
     }
 }

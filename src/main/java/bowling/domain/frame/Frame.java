@@ -4,6 +4,7 @@ import bowling.domain.score.FrameScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Frame {
     public static final int ZERO_INDEX = 0;
@@ -15,9 +16,9 @@ public interface Frame {
 
     public boolean isFinished();
 
-    public FrameScore calculateFrameScore();
+    public Optional<FrameScore> calculateFrameScore();
 
-    public FrameScore delegateCalculation(FrameScore frameScore);
+    public Optional<FrameScore> delegateCalculation(FrameScore frameScore);
 
     public List<String> getScoreSignatures();
 }

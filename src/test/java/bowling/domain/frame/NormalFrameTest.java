@@ -61,7 +61,7 @@ class NormalFrameTest {
         frame.bowl(Score.valueOf(3));
         frame.bowl(Score.valueOf(6));
 
-        FrameScore frameScore = frame.calculateFrameScore();
+        FrameScore frameScore = frame.calculateFrameScore().get();
 
         assertThat(frameScore.getFrameScore()).isEqualTo(9);
         assertThat(frameScore.isAbleToCalculate()).isTrue();
@@ -78,7 +78,7 @@ class NormalFrameTest {
 
         nextFrame.bowl(Score.valueOf(4));
 
-        FrameScore frameScore = frame.calculateFrameScore();
+        FrameScore frameScore = frame.calculateFrameScore().get();
 
         assertThat(frameScore.getFrameScore()).isEqualTo(14);
         assertThat(frameScore.isAbleToCalculate()).isTrue();
@@ -93,9 +93,7 @@ class NormalFrameTest {
         frame.bowl(Score.valueOf(10));
         nextFrame.bowl(Score.valueOf(4));
 
-        FrameScore frameScore = frame.calculateFrameScore();
-
-        assertThat(frameScore).isNull();
+        assertThat(frame.calculateFrameScore()).isEmpty();
     }
 
     @DisplayName("결과가 Strike이고 그 다음 2번 투구한 경우 점수 계산이 가능함")
@@ -108,7 +106,7 @@ class NormalFrameTest {
         nextFrame.bowl(Score.valueOf(4));
         nextFrame.bowl(Score.valueOf(3));
 
-        FrameScore frameScore = frame.calculateFrameScore();
+        FrameScore frameScore = frame.calculateFrameScore().get();
 
         assertThat(frameScore.getFrameScore()).isEqualTo(17);
     }
@@ -124,9 +122,9 @@ class NormalFrameTest {
         nextFrame.bowl(Score.valueOf(10));
         thirdFrame.bowl(Score.valueOf(10));
 
-        FrameScore frameScore = frame.calculateFrameScore();
+        FrameScore frameScore = frame.calculateFrameScore().get();
 
         assertThat(frameScore.getFrameScore()).isEqualTo(30);
-        assertThat(nextFrame.calculateFrameScore()).isNull();
+        assertThat(nextFrame.calculateFrameScore()).isEmpty();
     }
 }

@@ -6,6 +6,7 @@ import bowling.domain.score.FrameScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
+import java.util.Optional;
 
 public class NormalFrame implements Frame {
 
@@ -37,15 +38,15 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public FrameScore calculateFrameScore() {
+    public Optional<FrameScore> calculateFrameScore() {
         if (!isFinished()) {
-            return null;
+            return Optional.empty();
         }
         FrameScore frameScore = createFrameScore();
         if (frameScore.isAbleToCalculate()) {
-            return frameScore;
+            return Optional.of(frameScore);
         }
-        return hasNextFrame() ? nextFrame.delegateCalculation(frameScore) : null;
+        return hasNextFrame() ? nextFrame.delegateCalculation(frameScore) : Optional.empty();
     }
 
     private FrameScore createFrameScore() {
@@ -60,15 +61,15 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public FrameScore delegateCalculation(FrameScore frameScore) {
+    public Optional<FrameScore> delegateCalculation(FrameScore frameScore) {
         int pitchCounts = pitches.getPitchCounts();
         for (int i = ZERO_INDEX; i < pitchCounts; i++) {
             frameScore = accumulateFrameScore(i, frameScore);
         }
         if (frameScore.isAbleToCalculate()) {
-            return frameScore;
+            return Optional.of(frameScore);
         }
-        return isFinished() && hasNextFrame() ? nextFrame.delegateCalculation(frameScore) : null;
+        return isFinished() && hasNextFrame() ? nextFrame.delegateCalculation(frameScore) : Optional.empty();
     }
 
     private FrameScore accumulateFrameScore(int index, FrameScore frameScore) {
