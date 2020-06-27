@@ -11,66 +11,42 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class BonusScoresTest {
 
-    @Test
-    @DisplayName("Strike BonusScore일때 2개 이상의 점수를 넣는경우 Exception")
-    void strikeBonusScoreExceptionTest() {
-        BonusScores strikeBonusScores = BonusScores.strikeBonusScore();
-        strikeBonusScores.addPoint(5);
-        strikeBonusScores.addPoint(5);
-        assertThatThrownBy(() -> strikeBonusScores.addPoint(5))
-                .isInstanceOf(IllegalArgumentException.class);
+    private BonusScores createBonusScores() {
+        return new BonusScores();
     }
 
     @Test
-    @DisplayName("Spare BonusScores일때 1개 이상의 점수를 넣는경우 Exception")
-    void spareBonusScoreExceptionTest() {
-        BonusScores spareBonusScores = BonusScores.spareBonusScore();
-        spareBonusScores.addPoint(5);
-        assertThatThrownBy(() -> spareBonusScores.addPoint(5))
-                .isInstanceOf(IllegalArgumentException.class);
+    @DisplayName("생성한 BonusScore에 각 케이스 생성 테스트")
+    void createAddableBonusScores() {
+        BonusScores bonusScores = createBonusScores();
+
+        assertThatCode(() -> bonusScores.addBonusScore(BonusScore.strikeBonusScore(0)));
+        assertThatCode(() -> bonusScores.addBonusScore(BonusScore.spareBonusScore(1)));
+        assertThatCode(() -> bonusScores.addBonusScore(BonusScore.noneBonusScores(2)));
+
     }
 
     @ParameterizedTest
-    @MethodSource("provideStrikeBonusScore")
-    @DisplayName("Strike BonusScore 점수 계산")
-    void calculateStrikeBonusScore(List<Integer> points, int sum) {
-        BonusScores strikeBonusScores = BonusScores.strikeBonusScore();
+    @MethodSource("provideStrikeBonusScores")
+    @DisplayName("strike bonusScore test")
+    void addStrikeBonusPoint(List<Integer> points, int totalPoint) {
+        BonusScores bonusScores = createBonusScores();
+        BonusScore strikeBonusScore = BonusScore.strikeBonusScore(0);
+        bonusScores.addBonusScore(strikeBonusScore);
         for (Integer point : points) {
-            strikeBonusScores.addPoint(point);
+            bonusScores.addBonusPoint(point);
         }
-        assertThat(strikeBonusScores.calculateBonusScore()).isEqualTo(sum);
+        assertThat(strikeBonusScore.calculateBonusPoints()).isEqualTo(totalPoint);
     }
 
-    private static Stream<Arguments> provideStrikeBonusScore() {
+    private static Stream<Arguments> provideStrikeBonusScores() {
         return Stream.of(
-                Arguments.of(Arrays.asList(5, 5), 10),
-                Arguments.of(Arrays.asList(1, 4), 5),
-                Arguments.of(Arrays.asList(9, 0), 9)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideSpareBonusScore")
-    @DisplayName("Spare BonusScore 점수 계산")
-    void calculateSpareBonusScore(int point) {
-        BonusScores spareBonusScores = BonusScores.spareBonusScore();
-        spareBonusScores.addPoint(point);
-
-        assertThat(spareBonusScores.calculateBonusScore()).isEqualTo(point);
-    }
-
-    private static Stream<Arguments> provideSpareBonusScore() {
-        return Stream.of(
-                Arguments.of(5),
-                Arguments.of(2),
-                Arguments.of(10),
-                Arguments.of(6),
-                Arguments.of(0),
-                Arguments.of(1)
+                Arguments.of(Arrays.asList(10, 1), 11),
+                Arguments.of(Arrays.asList(5, 4), 9)
         );
     }
 }

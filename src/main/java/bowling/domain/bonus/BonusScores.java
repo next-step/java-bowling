@@ -1,40 +1,33 @@
 package bowling.domain.bonus;
 
-import bowling.domain.point.Points;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BonusScores {
-    private static final int STRIKE_COUNT = 2;
-    private static final int SPARE_COUNT = 1;
+    private List<BonusScore> bonusScores;
 
-    private int bonusCount;
-    private Points points;
-
-    private BonusScores(int bonusCount) {
-        this.bonusCount = bonusCount;
-        this.points = new Points();
+    public BonusScores() {
+        this(new ArrayList<>());
     }
 
-    public static BonusScores strikeBonusScore() {
-        return new BonusScores(STRIKE_COUNT);
+    private BonusScores(List<BonusScore> bonusScores) {
+        this.bonusScores = bonusScores;
     }
 
-    public static BonusScores spareBonusScore() {
-        return new BonusScores(SPARE_COUNT);
+    public void addBonusScore(BonusScore bonusScore) {
+        bonusScores.add(bonusScore);
     }
 
-    public void addPoint(int point) {
-        if (!availableAddBonusScore()) {
-            throw new IllegalArgumentException("bonusScores can not add point");
-        }
-        points.addPoint(point);
-        bonusCount--;
+    public void addBonusPoint(int point) {
+        bonusScores.stream()
+                .filter(BonusScore::isAvailableAddBonusPoint)
+                .forEach(bonusScore -> bonusScore.addPoint(point));
     }
 
-    public boolean availableAddBonusScore() {
-        return bonusCount > 0;
-    }
-
-    public int calculateBonusScore() {
-        return points.sumPoints();
+    public BonusScores findAvailableAddBonusScores() {
+        return bonusScores.stream()
+                .filter(BonusScore::isAvailableAddBonusPoint)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), BonusScores::new));
     }
 }
