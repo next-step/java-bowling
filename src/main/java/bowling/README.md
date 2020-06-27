@@ -21,17 +21,17 @@
     - 핀의 개수가 0 ~ 10 사이의 값인지 검증한다.
     - 결과를 반환한다
     
-2. Frame
+2. NormalFrame
     - BowlResult와 투구 시도 횟 수를 가진다
-    - n번의 투구를 한다.
+    - n 번의 투구를 한다.
     
-~~3. FinalFrame~~   
+3. FinalFrame   
     - 10 프레임에 해당하는 BowlResult를 가진다
     - 기본 투구 회수를 가진다
     - 남은 투구 회수를 반환한다
     - 보너스 투구 회수를 가진다
     
-~~4. Frame~~
+4. Frame
     - NormalFrame, FinalFrame 구현을 위한 Frame 인터페이스
     
 5. Frames
