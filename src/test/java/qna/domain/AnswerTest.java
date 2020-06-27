@@ -14,7 +14,11 @@ public class AnswerTest {
     void validate() {
         assertThatThrownBy(() -> A1.validate(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class);
+    }
 
-
+    @Test
+    void delete_deleted이_true() {
+        A1.delete();
+        assertThat(A1.isDeleted()).isTrue();
     }
 }
