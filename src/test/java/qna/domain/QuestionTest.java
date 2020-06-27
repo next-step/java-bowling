@@ -3,6 +3,9 @@ package qna.domain;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -17,8 +20,15 @@ public class QuestionTest {
     }
 
     @Test
-    void isDelete() {
+    void delete_deleted이_true() {
         Q1.delete();
         assertThat(Q1.isDeleted()).isTrue();
+    }
+
+    @Test
+    void delete_삭제시_deleteHistory_확인() {
+        List<DeleteHistory> deleteHistories = Q1.delete();
+        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, null, UserTest.JAVAJIGI, LocalDateTime.now());
+        assertThat(deleteHistories).contains(deleteHistory);
     }
 }
