@@ -15,17 +15,11 @@ public interface Frame {
 
     public void bowl(Score score);
 
-    public boolean isMovableToNextFrame();
-
-    public boolean isStrike();
-
-    public boolean isSpare();
+    public boolean isFinished();
 
     public List<String> getScoreSignatures();
 
-    public int getPitchScoreSum();
+    public FrameScore calculateFrameScore();
 
-    public FrameScore getFrameScore();
-
-    FrameScore delegate(FrameScore frameScore);
+    FrameScore delegateCalculation(FrameScore frameScore);
 }

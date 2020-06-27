@@ -65,7 +65,7 @@ public class NormalPitches implements Pitches {
     }
 
     @Override
-    public boolean isNotContainingStrikeOrSpare() {
-        return false;
+    public int getCounts() {
+        return pitches.size();
     }
 }

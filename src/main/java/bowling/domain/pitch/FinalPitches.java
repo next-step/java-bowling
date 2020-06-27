@@ -40,19 +40,24 @@ public class FinalPitches implements Pitches {
         return pitches.size() == pitchCounts;
     }
 
-    @Override
-    public boolean isStrike() {
-        return false;
-    }
-
-    public boolean isNotContainingStrikeOrSpare() {
+    private boolean isNotContainingStrikeOrSpare() {
         return pitches.stream()
                 .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
     }
 
     @Override
+    public int getCounts() {
+        return pitches.size();
+    }
+
+    @Override
+    public boolean isStrike() {
+        return pitches.get(0).isStrike();
+    }
+
+    @Override
     public boolean isSpare() {
-        return false;
+        return isHavingSameCounts(MAXIMUM_NORMAL_PITCH_COUNTS) && pitches.get(1).isSpare();
     }
 
     @Override
@@ -71,6 +76,6 @@ public class FinalPitches implements Pitches {
 
     @Override
     public int getCurrentScoreByIndex(int index) {
-        return 0;
+        return pitches.get(index).getScore();
     }
 }

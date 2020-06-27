@@ -26,7 +26,7 @@ public class Frames {
 
     public void moveToNextFrame() {
         Frame currentFrame = getCurrentFrame();
-        if (currentFrame.isMovableToNextFrame()) {
+        if (currentFrame.isFinished()) {
             Frame nextFrame = currentFrame.next(getCurrentIndex());
             frames.add(nextFrame);//변경
         }

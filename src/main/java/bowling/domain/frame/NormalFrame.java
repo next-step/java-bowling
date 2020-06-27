@@ -22,8 +22,7 @@ public class NormalFrame implements Frame {
     }
 
     public Frame next(int index) {
-        this.nextFrame =
-                (index != MAXIMUM_NORMAL_FRAME_INDEX) ? new NormalFrame(new NormalPitches()) : FinalFrame.ofFinal();
+        this.nextFrame = (index != MAXIMUM_NORMAL_FRAME_INDEX) ? NormalFrame.initiate() : FinalFrame.ofFinal();
         return this.nextFrame;
     }
 
@@ -33,32 +32,12 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean isMovableToNextFrame() {
+    public boolean isFinished() {
         return pitches.isHavingSameCounts(Pitches.MAXIMUM_NORMAL_PITCH_COUNTS) || pitches.isStrike();
     }
 
     @Override
-    public boolean isStrike() {
-        return pitches.isStrike();
-    }
-
-    @Override
-    public boolean isSpare() {
-        return pitches.isSpare();
-    }
-
-    @Override
-    public List<String> getScoreSignatures() {
-        return pitches.getScoreSignatures();
-    }
-
-    @Override
-    public int getPitchScoreSum() {
-        return pitches.getPitchScoreSum();
-    }
-
-    @Override
-    public FrameScore getFrameScore() {
+    public FrameScore calculateFrameScore() {
         if (!isFinished()) {
             return null;
         }
@@ -66,24 +45,7 @@ public class NormalFrame implements Frame {
         if (frameScore.isAbleToCalculate()) {
             return frameScore;
         }
-        return nextFrame == null ? null : nextFrame.delegate(frameScore);
-    }
-
-    private boolean isFinished() {
-        return isStrike() || pitches.isHavingSameCounts(2);
-    }
-
-    @Override
-    public FrameScore delegate(FrameScore frameScore) {
-        FrameScore nextFrameScore = frameScore.next(pitches.getCurrentScoreByIndex(0));
-        if (nextFrameScore.isAbleToCalculate()) {
-            return nextFrameScore;
-        }
-        if (pitches.isStrike() && nextFrame != null) {
-            return nextFrame.delegate(nextFrameScore);
-        }
-        return pitches.isHavingSameCounts(2)
-                ? nextFrameScore.next(pitches.getCurrentScoreByIndex(1)) : null;
+        return nextFrame != null ? nextFrame.delegateCalculation(frameScore) : null;
     }
 
     private FrameScore createFrameScore() {
@@ -91,5 +53,27 @@ public class NormalFrame implements Frame {
             return FrameScore.ofStrike();
         }
         return pitches.isSpare() ? FrameScore.ofSpare() : FrameScore.ofMiss(pitches.getPitchScoreSum());
+    }
+
+    @Override
+    public FrameScore delegateCalculation(FrameScore frameScore) {
+        int pitchCounts = pitches.getCounts();
+        for (int i = FIRST_INDEX; i <= pitchCounts; i++) {
+            frameScore = accumulateFrameScore(i, frameScore);
+        }
+        if (frameScore.isAbleToCalculate()) {
+            return frameScore;
+        }
+        return isFinished() && nextFrame != null ? nextFrame.delegateCalculation(frameScore) : null;
+    }
+
+    private FrameScore accumulateFrameScore(int index, FrameScore frameScore) {
+        int currentPitchScore = pitches.getCurrentScoreByIndex(index - 1);
+        return frameScore.isAbleToCalculate() ? frameScore : frameScore.next(currentPitchScore);
+    }
+
+    @Override
+    public List<String> getScoreSignatures() {
+        return pitches.getScoreSignatures();
     }
 }

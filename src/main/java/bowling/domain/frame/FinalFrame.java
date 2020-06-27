@@ -31,22 +31,12 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean isMovableToNextFrame() {
-        if (pitches.isHavingSameCounts(Pitches.MAXIMUM_NORMAL_PITCH_COUNTS)
-                && pitches.isNotContainingStrikeOrSpare()) {
+    public boolean isFinished() {
+        if (pitches.isHavingSameCounts(Pitches.MAXIMUM_NORMAL_PITCH_COUNTS) &&
+                !pitches.isSpare() && !pitches.isStrike()) {
             return true;
         }
         return pitches.isHavingSameCounts(Pitches.MAXIMUM_FINAL_PITCH_COUNTS);
-    }
-
-    @Override
-    public boolean isStrike() {
-        return false;
-    }
-
-    @Override
-    public boolean isSpare() {
-        return false;
     }
 
     @Override
@@ -55,17 +45,21 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int getPitchScoreSum() {
-        return pitches.getPitchScoreSum();
+    public FrameScore calculateFrameScore() {
+        return isFinished() ? FrameScore.ofMiss(pitches.getPitchScoreSum()) : null;
     }
 
     @Override
-    public FrameScore getFrameScore() {
-        return null;
+    public FrameScore delegateCalculation(FrameScore frameScore) {
+        int pitchCounts = pitches.getCounts();
+        for (int i = FIRST_INDEX; i <= pitchCounts; i++) {
+            frameScore = accumulateFrameScore(i, frameScore);
+        }
+        return frameScore.isAbleToCalculate() ? frameScore : null;
     }
 
-    @Override
-    public FrameScore delegate(FrameScore frameScore) {
-        return null;
+    private FrameScore accumulateFrameScore(int index, FrameScore frameScore) {
+        int currentPitchScore = pitches.getCurrentScoreByIndex(index - 1);
+        return frameScore.isAbleToCalculate() ? frameScore : frameScore.next(currentPitchScore);
     }
 }

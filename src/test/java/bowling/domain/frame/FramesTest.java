@@ -27,7 +27,7 @@ class FramesTest {
 
         frames.bowl(Score.valueOf(10));
 
-        assertThat(frameList.get(0).isMovableToNextFrame()).isTrue();
+        assertThat(frameList.get(0).isFinished()).isTrue();
 
         frames.moveToNextFrame();
 

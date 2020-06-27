@@ -16,7 +16,7 @@ class NormalFrameTest {
         normalFrame.bowl(Score.valueOf(5));
         normalFrame.bowl(Score.valueOf(5));
 
-        assertThat(normalFrame.isMovableToNextFrame()).isTrue();
+        assertThat(normalFrame.isFinished()).isTrue();
     }
 
     @DisplayName("Strike를 한 경우 Frame으로 넘어감")
@@ -25,7 +25,7 @@ class NormalFrameTest {
         Frame normalFrame = NormalFrame.initiate();
         normalFrame.bowl(Score.valueOf(10));
 
-        assertThat(normalFrame.isMovableToNextFrame()).isTrue();
+        assertThat(normalFrame.isFinished()).isTrue();
     }
 
     @DisplayName("1번 투구한 경우 넘어갈수 없음")
@@ -34,7 +34,7 @@ class NormalFrameTest {
         Frame normalFrame = NormalFrame.initiate();
         normalFrame.bowl(Score.valueOf(3));
 
-        assertThat(normalFrame.isMovableToNextFrame()).isFalse();
+        assertThat(normalFrame.isFinished()).isFalse();
     }
 
     @DisplayName("기존 Frame을 통해 다음 Frame을 생성함")
@@ -61,7 +61,7 @@ class NormalFrameTest {
         frame.bowl(Score.valueOf(3));
         frame.bowl(Score.valueOf(6));
 
-        FrameScore frameScore = frame.getFrameScore();
+        FrameScore frameScore = frame.calculateFrameScore();
 
         assertThat(frameScore.getFrameScore()).isEqualTo(9);
         assertThat(frameScore.isAbleToCalculate()).isTrue();
@@ -78,7 +78,7 @@ class NormalFrameTest {
 
         nextFrame.bowl(Score.valueOf(4));
 
-        FrameScore frameScore = frame.getFrameScore();
+        FrameScore frameScore = frame.calculateFrameScore();
 
         assertThat(frameScore.getFrameScore()).isEqualTo(14);
         assertThat(frameScore.isAbleToCalculate()).isTrue();
@@ -93,7 +93,7 @@ class NormalFrameTest {
         frame.bowl(Score.valueOf(10));
         nextFrame.bowl(Score.valueOf(4));
 
-        FrameScore frameScore = frame.getFrameScore();
+        FrameScore frameScore = frame.calculateFrameScore();
 
         assertThat(frameScore).isNull();
     }
@@ -108,7 +108,7 @@ class NormalFrameTest {
         nextFrame.bowl(Score.valueOf(4));
         nextFrame.bowl(Score.valueOf(3));
 
-        FrameScore frameScore = frame.getFrameScore();
+        FrameScore frameScore = frame.calculateFrameScore();
 
         assertThat(frameScore.getFrameScore()).isEqualTo(17);
     }
@@ -124,9 +124,9 @@ class NormalFrameTest {
         nextFrame.bowl(Score.valueOf(10));
         thirdFrame.bowl(Score.valueOf(10));
 
-        FrameScore frameScore = frame.getFrameScore();
+        FrameScore frameScore = frame.calculateFrameScore();
 
         assertThat(frameScore.getFrameScore()).isEqualTo(30);
-        assertThat(nextFrame.getFrameScore()).isNull();
+        assertThat(nextFrame.calculateFrameScore()).isNull();
     }
 }
