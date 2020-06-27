@@ -37,10 +37,8 @@ public class QnAService {
         Question question = findQuestionById(questionId);
         question.validate(loginUser);
 
+        // TODO : 삭제 예정
         List<Answer> answers = question.getAnswers();
-        for (Answer answer : answers) {
-            answer.validate(loginUser);
-        }
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         question.setDeleted(true);
