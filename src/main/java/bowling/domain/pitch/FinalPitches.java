@@ -1,7 +1,7 @@
 package bowling.domain.pitch;
 
 import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.score.Score;
+import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +13,11 @@ public class FinalPitches implements Pitches {
     private final List<Pitch> pitches = new ArrayList<>();
 
     @Override
-    public void throwBall(Score score) {
+    public void throwBall(PitchScore pitchScore) {
         if (pitches.size() >= MAXIMUM_NORMAL_PITCH_COUNTS) {
             validateFinalPitches();
         }
-        Pitch pitch = createPitch(score);
+        Pitch pitch = createPitch(pitchScore);
         pitches.add(pitch);
     }
 
@@ -27,12 +27,12 @@ public class FinalPitches implements Pitches {
         }
     }
 
-    private Pitch createPitch(Score score) {
+    private Pitch createPitch(PitchScore pitchScore) {
         if (pitches.isEmpty()) {
-            return Pitch.initiate(score);
+            return Pitch.initiate(pitchScore);
         }
         Pitch lastPitch = pitches.get(pitches.size() - INDEX_CONSTANT);
-        return lastPitch.isSpare() || lastPitch.isStrike() ? Pitch.initiate(score) : lastPitch.next(score);
+        return lastPitch.isSpare() || lastPitch.isStrike() ? Pitch.initiate(pitchScore) : lastPitch.next(pitchScore);
     }
 
     private boolean hasNotStrikeOrSpare() {
@@ -67,13 +67,13 @@ public class FinalPitches implements Pitches {
     @Override
     public int getPitchScoreSum() {
         return pitches.stream()
-                .mapToInt(Pitch::getScore)
+                .mapToInt(Pitch::getPitchScore)
                 .sum();
     }
 
     @Override
     public int getPitchScoreByIndex(int index) {
-        return pitches.get(index).getScore();
+        return pitches.get(index).getPitchScore();
     }
 
     @Override

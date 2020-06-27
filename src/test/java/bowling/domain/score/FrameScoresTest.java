@@ -14,10 +14,10 @@ class FrameScoresTest {
     @Test
     public void makeFrameScores_정상() {
         Frames frames = Frames.initiate();
-        frames.bowl(Score.valueOf(5));
-        frames.bowl(Score.valueOf(3));
+        frames.bowl(PitchScore.valueOf(5));
+        frames.bowl(PitchScore.valueOf(3));
         frames.moveToNextFrame();
-        frames.bowl(Score.valueOf(10));
+        frames.bowl(PitchScore.valueOf(10));
 
         FrameScores frameScores = FrameScores.of(frames.getFrames());
 
@@ -28,13 +28,13 @@ class FrameScoresTest {
     @Test
     public void getFrameScores_8점_25점_32점() {
         Frames frames = Frames.initiate();
-        frames.bowl(Score.valueOf(5));
-        frames.bowl(Score.valueOf(3));
+        frames.bowl(PitchScore.valueOf(5));
+        frames.bowl(PitchScore.valueOf(3));
         frames.moveToNextFrame();
-        frames.bowl(Score.valueOf(10));
+        frames.bowl(PitchScore.valueOf(10));
         frames.moveToNextFrame();
-        frames.bowl(Score.valueOf(3));
-        frames.bowl(Score.valueOf(4));
+        frames.bowl(PitchScore.valueOf(3));
+        frames.bowl(PitchScore.valueOf(4));
 
 
         FrameScores frameScores = FrameScores.of(frames.getFrames());
@@ -47,10 +47,10 @@ class FrameScoresTest {
     public void getFrameScores_300점() {
         Frames frames = Frames.initiate();
         for (int i = 0; i < 11; i++) {
-            frames.bowl(Score.valueOf(10));
+            frames.bowl(PitchScore.valueOf(10));
             frames.moveToNextFrame();
         }
-        frames.bowl(Score.valueOf(10));
+        frames.bowl(PitchScore.valueOf(10));
 
         FrameScores frameScores = FrameScores.of(frames.getFrames());
         List<Integer> cumulativeFrameScores = frameScores.getFrameScores();

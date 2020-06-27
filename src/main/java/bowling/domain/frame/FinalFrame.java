@@ -3,7 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.pitch.FinalPitches;
 import bowling.domain.pitch.Pitches;
 import bowling.domain.score.FrameScore;
-import bowling.domain.score.Score;
+import bowling.domain.score.PitchScore;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +26,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public void bowl(Score score) {
-        pitches.throwBall(score);
+    public void bowl(PitchScore pitchScore) {
+        pitches.throwBall(pitchScore);
     }
 
     @Override

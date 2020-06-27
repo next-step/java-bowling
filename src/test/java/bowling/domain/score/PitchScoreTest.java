@@ -9,13 +9,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ScoreTest {
+class PitchScoreTest {
 
     @DisplayName("Score 객체 정상 생성")
     @ParameterizedTest
     @ValueSource(ints = {0, 3, 10})
     public void makeScore_정상(int score) {
-        Score object = Score.valueOf(score);
+        PitchScore object = PitchScore.valueOf(score);
 
         assertThat(object.getScore()).isEqualTo(score);
     }
@@ -25,7 +25,7 @@ class ScoreTest {
     @ValueSource(ints = {-1, 11})
     public void makeScore_예외(int score) {
         assertThatThrownBy(() -> {
-            Score.valueOf(score);
+            PitchScore.valueOf(score);
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_SCORE_RANGE);
     }
@@ -33,14 +33,14 @@ class ScoreTest {
     @DisplayName("Score가 10이면 isMaximumScore은 True")
     @Test
     public void isMaximumScore_True() {
-        assertThat(Score.valueOf(10).isMaximumScore()).isTrue();
-        assertThat(Score.valueOf(9).isMaximumScore()).isFalse();
+        assertThat(PitchScore.valueOf(10).isMaximumScore()).isTrue();
+        assertThat(PitchScore.valueOf(9).isMaximumScore()).isFalse();
     }
 
     @DisplayName("Score가 0이면 isMinimumScore은 True")
     @Test
     public void isMinimumScore_True() {
-        assertThat(Score.valueOf(0).isMinimumScore()).isTrue();
-        assertThat(Score.valueOf(1).isMinimumScore()).isFalse();
+        assertThat(PitchScore.valueOf(0).isMinimumScore()).isTrue();
+        assertThat(PitchScore.valueOf(1).isMinimumScore()).isFalse();
     }
 }

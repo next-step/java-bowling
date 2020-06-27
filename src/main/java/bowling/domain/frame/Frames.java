@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.FrameScores;
-import bowling.domain.score.Score;
+import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,8 +22,12 @@ public class Frames {
         return new Frames(frames);
     }
 
-    public void bowl(Score score) {
-        getCurrentFrame().bowl(score);
+    public void bowl(PitchScore pitchScore) {
+        getCurrentFrame().bowl(pitchScore);
+    }
+
+    private Frame getCurrentFrame() {
+        return frames.get(frames.size() - INDEX_CONSTANT);
     }
 
     public void moveToNextFrame() {
@@ -42,15 +46,11 @@ public class Frames {
         return frames.size();
     }
 
-    private Frame getCurrentFrame() {
-        return frames.get(frames.size() - INDEX_CONSTANT);
+    public FrameScores getFrameScores() {
+        return FrameScores.of(getFrames());
     }
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
-    }
-
-    public FrameScores getFrameScores() {
-        return FrameScores.of(getFrames());
     }
 }

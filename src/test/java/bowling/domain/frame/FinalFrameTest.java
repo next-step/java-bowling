@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.FrameScore;
-import bowling.domain.score.Score;
+import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ class FinalFrameTest {
     @Test
     public void isMovableToNextFrame_1번투구() {
         FinalFrame finalFrame = FinalFrame.ofFinal();
-        finalFrame.bowl(Score.valueOf(10));
+        finalFrame.bowl(PitchScore.valueOf(10));
 
         assertThat(finalFrame.isFinished()).isFalse();
     }
@@ -22,8 +22,8 @@ class FinalFrameTest {
     @Test
     public void isMovableToNextFrame_미스() {
         FinalFrame finalFrame = FinalFrame.ofFinal();
-        finalFrame.bowl(Score.valueOf(0));
-        finalFrame.bowl(Score.valueOf(3));
+        finalFrame.bowl(PitchScore.valueOf(0));
+        finalFrame.bowl(PitchScore.valueOf(3));
 
         assertThat(finalFrame.isFinished()).isTrue();
     }
@@ -32,8 +32,8 @@ class FinalFrameTest {
     @Test
     public void isMovableToNextFrame_원스트라이크() {
         FinalFrame finalFrame = FinalFrame.ofFinal();
-        finalFrame.bowl(Score.valueOf(10));
-        finalFrame.bowl(Score.valueOf(0));
+        finalFrame.bowl(PitchScore.valueOf(10));
+        finalFrame.bowl(PitchScore.valueOf(0));
 
         assertThat(finalFrame.isFinished()).isFalse();
     }
@@ -42,8 +42,8 @@ class FinalFrameTest {
     @Test
     public void isMovableToNextFrame_투스트라이크() {
         FinalFrame finalFrame = FinalFrame.ofFinal();
-        finalFrame.bowl(Score.valueOf(10));
-        finalFrame.bowl(Score.valueOf(10));
+        finalFrame.bowl(PitchScore.valueOf(10));
+        finalFrame.bowl(PitchScore.valueOf(10));
 
         assertThat(finalFrame.isFinished()).isFalse();
     }
@@ -52,8 +52,8 @@ class FinalFrameTest {
     @Test
     public void isMovableToNextFrame_스페어() {
         FinalFrame finalFrame = FinalFrame.ofFinal();
-        finalFrame.bowl(Score.valueOf(3));
-        finalFrame.bowl(Score.valueOf(7));
+        finalFrame.bowl(PitchScore.valueOf(3));
+        finalFrame.bowl(PitchScore.valueOf(7));
 
         assertThat(finalFrame.isFinished()).isFalse();
     }
@@ -62,9 +62,9 @@ class FinalFrameTest {
     @Test
     public void isMovableToNextFrame_3번투구() {
         FinalFrame finalFrame = FinalFrame.ofFinal();
-        finalFrame.bowl(Score.valueOf(10));
-        finalFrame.bowl(Score.valueOf(10));
-        finalFrame.bowl(Score.valueOf(0));
+        finalFrame.bowl(PitchScore.valueOf(10));
+        finalFrame.bowl(PitchScore.valueOf(10));
+        finalFrame.bowl(PitchScore.valueOf(0));
 
         assertThat(finalFrame.isFinished()).isTrue();
     }
@@ -73,9 +73,9 @@ class FinalFrameTest {
     @Test
     public void calculateFrameScore_마지막_프레임() {
         FinalFrame finalFrame = FinalFrame.ofFinal();
-        finalFrame.bowl(Score.valueOf(3));
-        finalFrame.bowl(Score.valueOf(7));
-        finalFrame.bowl(Score.valueOf(10));
+        finalFrame.bowl(PitchScore.valueOf(3));
+        finalFrame.bowl(PitchScore.valueOf(7));
+        finalFrame.bowl(PitchScore.valueOf(10));
 
         FrameScore frameScore = finalFrame.calculateFrameScore().get();
         assertThat(frameScore.getFrameScore()).isEqualTo(20);
@@ -87,9 +87,9 @@ class FinalFrameTest {
         Frame normalFrame = NormalFrame.initiate();
         Frame finalFrame = normalFrame.next(9);
 
-        normalFrame.bowl(Score.valueOf(10));
-        finalFrame.bowl(Score.valueOf(10));
-        finalFrame.bowl(Score.valueOf(5));
+        normalFrame.bowl(PitchScore.valueOf(10));
+        finalFrame.bowl(PitchScore.valueOf(10));
+        finalFrame.bowl(PitchScore.valueOf(5));
 
         FrameScore frameScore = normalFrame.calculateFrameScore().get();
         assertThat(frameScore.getFrameScore()).isEqualTo(25);

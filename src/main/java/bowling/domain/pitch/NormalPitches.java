@@ -1,7 +1,7 @@
 package bowling.domain.pitch;
 
 import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.score.Score;
+import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +13,9 @@ public class NormalPitches implements Pitches {
     private final List<Pitch> pitches = new ArrayList<>();
 
     @Override
-    public void throwBall(Score score) {
+    public void throwBall(PitchScore pitchScore) {
         validateNormalPitches();
-        Pitch pitch = createPitch(score);
+        Pitch pitch = createPitch(pitchScore);
         pitches.add(pitch);
     }
 
@@ -25,8 +25,8 @@ public class NormalPitches implements Pitches {
         }
     }
 
-    private Pitch createPitch(Score score) {
-        return pitches.isEmpty() ? Pitch.initiate(score) : pitches.get(FIRST_INDEX).next(score);
+    private Pitch createPitch(PitchScore pitchScore) {
+        return pitches.isEmpty() ? Pitch.initiate(pitchScore) : pitches.get(FIRST_INDEX).next(pitchScore);
     }
 
     @Override
@@ -56,13 +56,13 @@ public class NormalPitches implements Pitches {
     @Override
     public int getPitchScoreSum() {
         return pitches.stream()
-                .mapToInt(Pitch::getScore)
+                .mapToInt(Pitch::getPitchScore)
                 .sum();
     }
 
     @Override
     public int getPitchScoreByIndex(int index) {
-        return pitches.get(index).getScore();
+        return pitches.get(index).getPitchScore();
     }
 
     @Override

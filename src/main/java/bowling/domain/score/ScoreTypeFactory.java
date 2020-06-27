@@ -9,20 +9,20 @@ public class ScoreTypeFactory {
     private ScoreTypeFactory() {
     }
 
-    public static ScoreType initiate(Score score) {
-        if (score.isMaximumScore()) {
+    public static ScoreType initiate(PitchScore pitchScore) {
+        if (pitchScore.isMaximumScore()) {
             return ScoreType.STRIKE;
         }
-        return score.isMinimumScore() ? ScoreType.GUTTER : ScoreType.NORMAL;
+        return pitchScore.isMinimumScore() ? ScoreType.GUTTER : ScoreType.NORMAL;
     }
 
-    public static ScoreType next(Pitch lastPitch, Score score) {
-        int scoresSum = lastPitch.calculateScoresSum(score);
+    public static ScoreType next(Pitch lastPitch, PitchScore pitchScore) {
+        int scoresSum = lastPitch.calculateScoresSum(pitchScore);
         validateNextCondition(lastPitch, scoresSum);
         if (scoresSum == MAXIMUM_SCORE_TOTAL) {
             return ScoreType.SPARE;
         }
-        return score.isMinimumScore() ? ScoreType.GUTTER : ScoreType.MISS;
+        return pitchScore.isMinimumScore() ? ScoreType.GUTTER : ScoreType.MISS;
     }
 
     private static void validateNextCondition(Pitch lastPitch, int scoresSum) {

@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.FrameScore;
-import bowling.domain.score.Score;
+import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +13,8 @@ class NormalFrameTest {
     @Test
     public void isMovableToNextFrame_2번투구() {
         Frame normalFrame = NormalFrame.initiate();
-        normalFrame.bowl(Score.valueOf(5));
-        normalFrame.bowl(Score.valueOf(5));
+        normalFrame.bowl(PitchScore.valueOf(5));
+        normalFrame.bowl(PitchScore.valueOf(5));
 
         assertThat(normalFrame.isFinished()).isTrue();
     }
@@ -23,7 +23,7 @@ class NormalFrameTest {
     @Test
     public void isMovableToNextFrame_스트라이크() {
         Frame normalFrame = NormalFrame.initiate();
-        normalFrame.bowl(Score.valueOf(10));
+        normalFrame.bowl(PitchScore.valueOf(10));
 
         assertThat(normalFrame.isFinished()).isTrue();
     }
@@ -32,7 +32,7 @@ class NormalFrameTest {
     @Test
     public void isMovableToNextFrame_1번() {
         Frame normalFrame = NormalFrame.initiate();
-        normalFrame.bowl(Score.valueOf(3));
+        normalFrame.bowl(PitchScore.valueOf(3));
 
         assertThat(normalFrame.isFinished()).isFalse();
     }
@@ -58,8 +58,8 @@ class NormalFrameTest {
     @Test
     public void getFrameScore_Miss() {
         Frame frame = NormalFrame.initiate();
-        frame.bowl(Score.valueOf(3));
-        frame.bowl(Score.valueOf(6));
+        frame.bowl(PitchScore.valueOf(3));
+        frame.bowl(PitchScore.valueOf(6));
 
         FrameScore frameScore = frame.calculateFrameScore().get();
 
@@ -73,10 +73,10 @@ class NormalFrameTest {
         Frame frame = NormalFrame.initiate();
         Frame nextFrame = frame.next(2);
 
-        frame.bowl(Score.valueOf(3));
-        frame.bowl(Score.valueOf(7));
+        frame.bowl(PitchScore.valueOf(3));
+        frame.bowl(PitchScore.valueOf(7));
 
-        nextFrame.bowl(Score.valueOf(4));
+        nextFrame.bowl(PitchScore.valueOf(4));
 
         FrameScore frameScore = frame.calculateFrameScore().get();
 
@@ -90,8 +90,8 @@ class NormalFrameTest {
         Frame frame = NormalFrame.initiate();
         Frame nextFrame = frame.next(2);
 
-        frame.bowl(Score.valueOf(10));
-        nextFrame.bowl(Score.valueOf(4));
+        frame.bowl(PitchScore.valueOf(10));
+        nextFrame.bowl(PitchScore.valueOf(4));
 
         assertThat(frame.calculateFrameScore()).isEmpty();
     }
@@ -102,9 +102,9 @@ class NormalFrameTest {
         Frame frame = NormalFrame.initiate();
         Frame nextFrame = frame.next(2);
 
-        frame.bowl(Score.valueOf(10));
-        nextFrame.bowl(Score.valueOf(4));
-        nextFrame.bowl(Score.valueOf(3));
+        frame.bowl(PitchScore.valueOf(10));
+        nextFrame.bowl(PitchScore.valueOf(4));
+        nextFrame.bowl(PitchScore.valueOf(3));
 
         FrameScore frameScore = frame.calculateFrameScore().get();
 
@@ -118,9 +118,9 @@ class NormalFrameTest {
         Frame nextFrame = frame.next(2);
         Frame thirdFrame = nextFrame.next(3);
 
-        frame.bowl(Score.valueOf(10));
-        nextFrame.bowl(Score.valueOf(10));
-        thirdFrame.bowl(Score.valueOf(10));
+        frame.bowl(PitchScore.valueOf(10));
+        nextFrame.bowl(PitchScore.valueOf(10));
+        thirdFrame.bowl(PitchScore.valueOf(10));
 
         FrameScore frameScore = frame.calculateFrameScore().get();
 

@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
+import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,7 @@ class FramesTest {
         Frames frames = Frames.initiate();
         List<Frame> frameList = frames.getFrames();
 
-        frames.bowl(Score.valueOf(10));
+        frames.bowl(PitchScore.valueOf(10));
 
         assertThat(frameList.get(0).isFinished()).isTrue();
 
@@ -47,7 +47,7 @@ class FramesTest {
     public void hasNextTurn_False() {
         Frames frames = Frames.initiate();
         for (int i = 0; i < 12; i++) {
-            frames.bowl(Score.valueOf(10));
+            frames.bowl(PitchScore.valueOf(10));
             frames.moveToNextFrame();
         }
         assertThat(frames.hasNextTurn()).isFalse();

@@ -8,8 +8,8 @@ public enum ScoreType {
     STRIKE((pitch) -> "X"),
     SPARE((pitch) -> "/"),
     GUTTER((pitch) -> "-"),
-    MISS((pitch) -> String.valueOf(pitch.getScore())),
-    NORMAL((pitch) -> String.valueOf(pitch.getScore()));
+    MISS((pitch) -> String.valueOf(pitch.getPitchScore())),
+    NORMAL((pitch) -> String.valueOf(pitch.getPitchScore()));
 
     private final Function<Pitch, String> signatureFunction;
 

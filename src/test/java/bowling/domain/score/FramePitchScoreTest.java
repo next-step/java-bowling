@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FrameScoreTest {
+class FramePitchScoreTest {
 
     @DisplayName("Miss일 때의 FrameScore 계산이 가능함")
     @Test
