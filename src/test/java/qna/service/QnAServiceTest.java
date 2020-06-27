@@ -56,7 +56,6 @@ class QnAServiceTest {
 
         assertThatThrownBy(() -> qnAService.deleteQuestion(UserTest.SANJIGI, question.getId()))
                 .isInstanceOf(CannotDeleteException.class);
-        anotherAnswer.delete();
     }
 
     @DisplayName("게시글 정상삭제 테스트")

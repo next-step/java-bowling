@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import qna.domain.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +38,10 @@ public class DeleteHistoryServiceTest {
     @DisplayName("게시글과 댓글의 삭제내역을 기록한다")
     @Test
     public void delete() {
-        deleteHistoryService.save(question);
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
+        deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        deleteHistoryService.save(deleteHistories);
         verifyDeleteHistories();
     }
 

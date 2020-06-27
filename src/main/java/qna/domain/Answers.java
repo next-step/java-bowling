@@ -21,22 +21,15 @@ public class Answers {
         this.answers.add(answer);
     }
 
-    public void delete() {
+    public List<DeleteHistory> deleteBy(final User loginUser) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
         for (Answer answer : this.answers) {
-            answer.delete();
+            deleteHistories.add(answer.deleteBy(loginUser));
         }
+        return deleteHistories;
     }
 
     public List<Answer> getAnswers() {
         return answers;
-    }
-
-    public boolean isEnableDeletedBy(final User loginUser) {
-        for (Answer answer : this.answers) {
-            if (!answer.isOwner(loginUser)) {
-                return false;
-            }
-        }
-        return true;
     }
 }
