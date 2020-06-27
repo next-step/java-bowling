@@ -22,18 +22,18 @@ public enum PitchScoreType {
 
     public static PitchScoreType initiate(PitchScore pitchScore) {
         if (pitchScore.isMaximum()) {
-            return PitchScoreType.STRIKE;
+            return STRIKE;
         }
-        return pitchScore.isMinimum() ? PitchScoreType.GUTTER : PitchScoreType.NORMAL;
+        return pitchScore.isMinimum() ? GUTTER : NORMAL;
     }
 
     public static PitchScoreType next(Pitch lastPitch, PitchScore pitchScore) {
         int pitchScoreSum = lastPitch.calculatePitchScoreSum(pitchScore);
         validateNextCondition(lastPitch, pitchScoreSum);
         if (pitchScoreSum == MAXIMUM_SCORE_TOTAL) {
-            return PitchScoreType.SPARE;
+            return SPARE;
         }
-        return pitchScore.isMinimum() ? PitchScoreType.GUTTER : PitchScoreType.MISS;
+        return pitchScore.isMinimum() ? GUTTER : MISS;
     }
 
     private static void validateNextCondition(Pitch lastPitch, int scoresSum) {
