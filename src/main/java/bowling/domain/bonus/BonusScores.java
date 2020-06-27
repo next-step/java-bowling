@@ -1,5 +1,7 @@
 package bowling.domain.bonus;
 
+import org.springframework.util.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +37,24 @@ public class BonusScores {
         return bonusScores.stream()
                 .filter(BonusScore::isAvailableAddBonusPoint)
                 .findAny()
+                .isPresent();
+    }
+
+    public BonusScore findBonusScores(int frameIndex) {
+        return bonusScores.stream()
+                .filter(bonusScore -> bonusScore.equalsByFrameIndex(frameIndex))
+                .findFirst()
+                .orElse(BonusScore.noneBonusScores(frameIndex));
+    }
+
+    public boolean isEmpty() {
+        return CollectionUtils.isEmpty(bonusScores);
+    }
+
+    public boolean isEmptyByFrameIndex(int frameIndex) {
+        return bonusScores.stream()
+                .filter(bonusScore -> bonusScore.equalsByFrameIndex(frameIndex))
+                .findFirst()
                 .isPresent();
     }
 }

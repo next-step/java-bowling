@@ -6,6 +6,8 @@ public class BonusScore {
     private static final int STRIKE_COUNT = 2;
     private static final int SPARE_COUNT = 1;
     private static final int NON_COUNT = 0;
+    private static final int LAST_BONUS_COUNT = 1;
+    private static final int LAST_FRAME_INDEX = 9;
 
     private final Points bonusPoints;
     private final BonusScoreInfo bonusScoreInfo;
@@ -27,6 +29,10 @@ public class BonusScore {
         return new BonusScore(new Points(), new BonusScoreInfo(SPARE_COUNT, frameIndex));
     }
 
+    public static BonusScore lastBonusScore() {
+        return new BonusScore(new Points(), new BonusScoreInfo(LAST_BONUS_COUNT, LAST_FRAME_INDEX));
+    }
+
     public void addPoint(int point) {
         bonusPoints.addPoint(point);
     }
@@ -37,5 +43,9 @@ public class BonusScore {
 
     public int calculateBonusPoints() {
         return bonusPoints.sumPoints();
+    }
+
+    public boolean equalsByFrameIndex(int frameIndex) {
+        return bonusScoreInfo.getFrameIndex() == frameIndex;
     }
 }

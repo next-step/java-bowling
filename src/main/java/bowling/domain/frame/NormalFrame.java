@@ -51,6 +51,25 @@ public class NormalFrame extends Frame {
         if (scores.isStrikeOrSpare()) {
             return false;
         }
+
         return scores.firstScore();
     }
+
+    @Override
+    public boolean isAvailableCalculatePoint(int frameIndex) {
+        if (availablePlay()) {
+            return false;
+        }
+
+        if (scores.isStrikeOrSpare() && !bonusScores.isEmptyByFrameIndex(frameIndex)) {
+            return false;
+        }
+
+        if (bonusScores.findBonusScores(frameIndex).isAvailableAddBonusPoint()) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

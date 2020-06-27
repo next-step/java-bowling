@@ -1,12 +1,11 @@
 package bowling.domain.frame;
 
+import bowling.domain.bonus.BonusScore;
 import bowling.domain.bonus.BonusScores;
 import bowling.domain.dto.ScoreResultDto;
 import bowling.domain.score.Scores;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Frame {
     protected Scores scores;
@@ -23,19 +22,18 @@ public abstract class Frame {
         bonusScores.addBonusPoint(point);
     }
 
-    public int totalScore() {
-        return scores.totalScore();
+    public int totalScore(int frameIndex) {
+        BonusScore bonusScore = bonusScores.findBonusScores(frameIndex);
+        return scores.totalScore() + bonusScore.calculateBonusPoints();
     }
 
     public List<ScoreResultDto> getScoreResultDtos() {
-        List<ScoreResultDto> scoreResultDtos = scores.convertSoreResultDtos();
-        if (Objects.nonNull(bonusScores)) {
-            scoreResultDtos = new ArrayList<>(scoreResultDtos);
-        }
-        return new ArrayList<>(scoreResultDtos);
+        return scores.convertSoreResultDtos();
     }
 
     public abstract void validateScores(int point);
 
     public abstract boolean availablePlay();
+
+    public abstract boolean isAvailableCalculatePoint(int frameIndex);
 }
