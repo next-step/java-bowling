@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pitch.FinalPitches;
 import bowling.domain.pitch.Pitches;
+import bowling.domain.score.FrameScore;
 import bowling.domain.score.Score;
 
 import java.util.List;
@@ -9,39 +10,33 @@ import java.util.List;
 public class FinalFrame implements Frame {
     private static final int MAXIMUM_FINAL_FRAME_INDEX = 11;
 
-    private final FinalPitches finalPitches = new FinalPitches();
-    private final int index;
+    private final Pitches pitches;
 
-    private FinalFrame(int index) {
-        this.index = index;
+    private FinalFrame(Pitches pitches) {
+        this.pitches = pitches;
     }
 
-    public static FinalFrame last(int index) {
-        return new FinalFrame(index);
-    }
-
-    @Override
-    public Frame last() {
-        return null;
+    public static FinalFrame ofFinal() {
+        return new FinalFrame(new FinalPitches());
     }
 
     @Override
-    public Frame next2() {
+    public Frame next(int index) {
         return null;
     }
 
     @Override
     public void bowl(Score score) {
-        finalPitches.throwBall(score);
+        pitches.throwBall(score);
     }
 
     @Override
     public boolean isMovableToNextFrame() {
-        if (finalPitches.isHavingSameCounts(Pitches.MAXIMUM_NORMAL_PITCH_COUNTS)
-                && finalPitches.isNotContainingStrikeOrSpare()) {
+        if (pitches.isHavingSameCounts(Pitches.MAXIMUM_NORMAL_PITCH_COUNTS)
+                && pitches.isNotContainingStrikeOrSpare()) {
             return true;
         }
-        return finalPitches.isHavingSameCounts(Pitches.MAXIMUM_FINAL_PITCH_COUNTS);
+        return pitches.isHavingSameCounts(Pitches.MAXIMUM_FINAL_PITCH_COUNTS);
     }
 
     @Override
@@ -56,11 +51,21 @@ public class FinalFrame implements Frame {
 
     @Override
     public List<String> getScoreSignatures() {
-        return finalPitches.getScoreSignatures();
+        return pitches.getScoreSignatures();
     }
 
     @Override
     public int getPitchScoreSum() {
-        return finalPitches.getPitchScoreSum();
+        return pitches.getPitchScoreSum();
+    }
+
+    @Override
+    public FrameScore getFrameScore() {
+        return null;
+    }
+
+    @Override
+    public FrameScore delegate(FrameScore frameScore) {
+        return null;
     }
 }

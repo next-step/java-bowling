@@ -40,6 +40,11 @@ public class FinalPitches implements Pitches {
         return pitches.size() == pitchCounts;
     }
 
+    @Override
+    public boolean isStrike() {
+        return false;
+    }
+
     public boolean isNotContainingStrikeOrSpare() {
         return pitches.stream()
                 .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
@@ -65,7 +70,7 @@ public class FinalPitches implements Pitches {
     }
 
     @Override
-    public int getCurrentScore() {
+    public int getCurrentScoreByIndex(int index) {
         return 0;
     }
 }

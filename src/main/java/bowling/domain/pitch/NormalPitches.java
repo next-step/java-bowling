@@ -35,6 +35,7 @@ public class NormalPitches implements Pitches {
         return pitches.size() == pitchCounts;
     }
 
+    @Override
     public boolean isStrike() {
         return pitches.get(FIRST_INDEX).isStrike();
     }
@@ -59,7 +60,12 @@ public class NormalPitches implements Pitches {
     }
 
     @Override
-    public int getCurrentScore() {
-        return pitches.get(pitches.size() - 1).getScore();
+    public int getCurrentScoreByIndex(int index) {
+        return pitches.get(index).getScore();
+    }
+
+    @Override
+    public boolean isNotContainingStrikeOrSpare() {
+        return false;
     }
 }

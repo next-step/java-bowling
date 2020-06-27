@@ -27,13 +27,9 @@ public class Frames {
     public void moveToNextFrame() {
         Frame currentFrame = getCurrentFrame();
         if (currentFrame.isMovableToNextFrame()) {
-            Frame nextFrame = createNextFrame(currentFrame);
+            Frame nextFrame = currentFrame.next(getCurrentIndex());
             frames.add(nextFrame);//변경
         }
-    }
-
-    private Frame createNextFrame(Frame currentFrame) {
-        return getCurrentIndex() == 9 ? currentFrame.last() : currentFrame.next2();
     }
 
     public boolean hasNextTurn() {

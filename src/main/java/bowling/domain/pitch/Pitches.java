@@ -12,11 +12,15 @@ public interface Pitches {
 
     public boolean isHavingSameCounts(int pitchCounts);
 
+    boolean isStrike();
+
     public boolean isSpare();
 
     public List<String> getScoreSignatures();
 
     public int getPitchScoreSum();
 
-    public int getCurrentScore();
+    public int getCurrentScoreByIndex(int index);
+
+    boolean isNotContainingStrikeOrSpare();
 }
