@@ -4,6 +4,7 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -43,9 +44,14 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public DeleteHistory delete() {
+        this.deleted = true;
+        return new DeleteHistory.Builder()
+                .contentType(ContentType.ANSWER)
+                .contentId(this.getId())
+                .deletedBy(this.getWriter())
+                .createDate(LocalDateTime.now())
+                .build();
     }
 
     public boolean isDeleted() {

@@ -31,6 +31,37 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
+    public static class Builder {
+        private ContentType contentType;
+        private Long contentId;
+        private User deletedBy;
+        private LocalDateTime createDate;
+
+        public Builder contentType(ContentType contentType) {
+            this.contentType = contentType;
+            return this;
+        }
+
+        public Builder contentId(Long contentId) {
+            this.contentId = contentId;
+            return this;
+        }
+
+        public Builder deletedBy(User deletedBy) {
+            this.deletedBy = deletedBy;
+            return this;
+        }
+
+        public Builder createDate(LocalDateTime createDate) {
+            this.createDate = createDate;
+            return this;
+        }
+
+        public DeleteHistory build() {
+            return new DeleteHistory(contentType, contentId, deletedBy, createDate);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
