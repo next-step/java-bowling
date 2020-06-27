@@ -21,7 +21,7 @@ public class NormalPitches implements Pitches {
 
     private void validateNormalPitches() {
         if (pitches.size() == MAXIMUM_NORMAL_PITCH_COUNTS) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES_TRY);
+            throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCH_TRY);
         }
     }
 
@@ -47,9 +47,9 @@ public class NormalPitches implements Pitches {
     }
 
     @Override
-    public List<String> getScoreSignatures() {
+    public List<String> getPitchScoreSignatures() {
         return pitches.stream()
-                .map(Pitch::getScoreSignature)
+                .map(Pitch::getPitchScoreSignature)
                 .collect(Collectors.toList());
     }
 

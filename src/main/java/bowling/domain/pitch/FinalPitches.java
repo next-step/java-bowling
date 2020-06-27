@@ -27,17 +27,17 @@ public class FinalPitches implements Pitches {
         }
     }
 
+    private boolean hasNotStrikeOrSpare() {
+        return pitches.stream()
+                .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
+    }
+
     private Pitch createPitch(PitchScore pitchScore) {
         if (pitches.isEmpty()) {
             return Pitch.initiate(pitchScore);
         }
         Pitch lastPitch = pitches.get(pitches.size() - INDEX_CONSTANT);
         return lastPitch.isSpare() || lastPitch.isStrike() ? Pitch.initiate(pitchScore) : lastPitch.next(pitchScore);
-    }
-
-    private boolean hasNotStrikeOrSpare() {
-        return pitches.stream()
-                .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
     }
 
     @Override
@@ -58,9 +58,9 @@ public class FinalPitches implements Pitches {
     }
 
     @Override
-    public List<String> getScoreSignatures() {
+    public List<String> getPitchScoreSignatures() {
         return pitches.stream()
-                .map(Pitch::getScoreSignature)
+                .map(Pitch::getPitchScoreSignature)
                 .collect(Collectors.toList());
     }
 

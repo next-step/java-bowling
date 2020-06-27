@@ -79,6 +79,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public List<String> getScoreSignatures() {
-        return pitches.getScoreSignatures();
+        return pitches.getPitchScoreSignatures();
     }
 }

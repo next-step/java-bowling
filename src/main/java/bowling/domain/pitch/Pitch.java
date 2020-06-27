@@ -31,15 +31,15 @@ public class Pitch {
         return pitchScoreType == PitchScoreType.SPARE;
     }
 
-    public int calculateScoresSum(PitchScore nextPitchScore) {
-        return this.getPitchScore() + nextPitchScore.getPitchScore();
+    public int calculatePitchScoreSum(PitchScore nextPitchScore) {
+        return getPitchScore() + nextPitchScore.getPitchScore();
     }
 
     public int getPitchScore() {
         return pitchScore.getPitchScore();
     }
 
-    public String getScoreSignature() {
+    public String getPitchScoreSignature() {
         return pitchScoreType.getPitchScoreSignature(this);
     }
 }

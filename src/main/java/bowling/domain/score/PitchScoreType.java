@@ -28,9 +28,9 @@ public enum PitchScoreType {
     }
 
     public static PitchScoreType next(Pitch lastPitch, PitchScore pitchScore) {
-        int scoresSum = lastPitch.calculateScoresSum(pitchScore);
-        validateNextCondition(lastPitch, scoresSum);
-        if (scoresSum == MAXIMUM_SCORE_TOTAL) {
+        int pitchScoreSum = lastPitch.calculatePitchScoreSum(pitchScore);
+        validateNextCondition(lastPitch, pitchScoreSum);
+        if (pitchScoreSum == MAXIMUM_SCORE_TOTAL) {
             return PitchScoreType.SPARE;
         }
         return pitchScore.isMinimum() ? PitchScoreType.GUTTER : PitchScoreType.MISS;

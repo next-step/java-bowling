@@ -16,7 +16,7 @@ class PitchTest {
         Pitch pitch = Pitch.initiate(pitchScore);
 
         assertThat(pitch.getPitchScore()).isEqualTo(10);
-        assertThat(pitch.getScoreSignature()).isEqualTo("X");
+        assertThat(pitch.getPitchScoreSignature()).isEqualTo("X");
     }
 
     @DisplayName("기존 Pitch 객체로 스페어를 지닌 다음 객체를 생성")
@@ -27,6 +27,6 @@ class PitchTest {
 
         Pitch nextPitch = lastPitch.next(pitchScore);
 
-        assertThat(nextPitch.getScoreSignature()).isEqualTo("/");
+        assertThat(nextPitch.getPitchScoreSignature()).isEqualTo("/");
     }
 }

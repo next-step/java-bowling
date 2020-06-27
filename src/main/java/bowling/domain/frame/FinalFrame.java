@@ -64,6 +64,6 @@ public class FinalFrame implements Frame {
 
     @Override
     public List<String> getScoreSignatures() {
-        return pitches.getScoreSignatures();
+        return pitches.getPitchScoreSignatures();
     }
 }

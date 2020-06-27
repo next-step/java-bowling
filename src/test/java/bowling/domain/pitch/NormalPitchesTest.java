@@ -20,7 +20,7 @@ class NormalPitchesTest {
 
         normalPitches.throwBall(pitchScore);
 
-        assertThat(normalPitches.getScoreSignatures().get(0)).isEqualTo("5");
+        assertThat(normalPitches.getPitchScoreSignatures().get(0)).isEqualTo("5");
     }
 
     @DisplayName("두 번째 투구면 Pitch를 next를 통해 생성하여 내부 컬렉션에 추가하며, 스페어임")
@@ -32,7 +32,7 @@ class NormalPitchesTest {
         normalPitches.throwBall(pitchScore);
         normalPitches.throwBall(PitchScore.valueOf(5));
 
-        assertThat(normalPitches.getScoreSignatures().get(1)).isEqualTo("/");
+        assertThat(normalPitches.getPitchScoreSignatures().get(1)).isEqualTo("/");
     }
 
     @DisplayName("Normal Frame의 Normal Pitches는 2번 초과 투구시 예외 발생")
@@ -45,7 +45,7 @@ class NormalPitchesTest {
         assertThatThrownBy(() -> {
             normalPitches.throwBall(PitchScore.valueOf(3));
         }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES_TRY);
+                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCH_TRY);
     }
 
     @DisplayName("Score들의 List를 요청")
@@ -55,7 +55,7 @@ class NormalPitchesTest {
         normalPitches.throwBall(PitchScore.valueOf(0));
         normalPitches.throwBall(PitchScore.valueOf(3));
 
-        List<String> scores = normalPitches.getScoreSignatures();
+        List<String> scores = normalPitches.getPitchScoreSignatures();
 
         assertThat(scores).containsExactly("-", "3");
     }
