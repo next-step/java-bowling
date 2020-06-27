@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("Answers 로직 테스트")
 class AnswersTest {
 
-    @DisplayName("다른 사람이 쓴 답변이 없다면 삭제 가능")
+    @DisplayName("다른 사람이 쓴 답변이 없다면 삭제 성공")
     @ParameterizedTest
     @MethodSource("source_delete_allAnswers_shouldSuccess")
     public void delete_allAnswers_shouldSuccess(Answers answers, User owner) throws CannotDeleteException {
