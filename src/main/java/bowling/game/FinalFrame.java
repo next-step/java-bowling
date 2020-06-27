@@ -55,6 +55,10 @@ public class FinalFrame extends Frame {
             return true;
         }
 
+        if (pitches.size() == 2 && pitches.getFirst().getState() == State.STRIKE) {
+            return true;
+        }
+
         if (pitches.size() == 2 && pitches.getLast().getState() == State.SPARE) {
             return true;
         }
