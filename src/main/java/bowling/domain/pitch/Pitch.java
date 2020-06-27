@@ -1,46 +1,45 @@
 package bowling.domain.pitch;
 
-import bowling.domain.score.Score;
-import bowling.domain.score.ScoreType;
-import bowling.domain.score.ScoreTypeFactory;
+import bowling.domain.score.PitchScore;
+import bowling.domain.score.PitchScoreType;
 
 public class Pitch {
 
-    private final Score score;
-    private final ScoreType scoreType;
+    private final PitchScore pitchScore;
+    private final PitchScoreType pitchScoreType;
 
-    private Pitch(Score score, ScoreType scoreType) {
-        this.score = score;
-        this.scoreType = scoreType;
+    private Pitch(PitchScore pitchScore, PitchScoreType pitchScoreType) {
+        this.pitchScore = pitchScore;
+        this.pitchScoreType = pitchScoreType;
     }
 
-    public static Pitch initiate(Score score) {
-        ScoreType scoreType = ScoreTypeFactory.initiate(score);
-        return new Pitch(score, scoreType);
+    public static Pitch initiate(PitchScore pitchScore) {
+        PitchScoreType pitchScoreType = PitchScoreType.initiate(pitchScore);
+        return new Pitch(pitchScore, pitchScoreType);
     }
 
-    public Pitch next(Score score) {
-        ScoreType scoreType = ScoreTypeFactory.next(this, score);
-        return new Pitch(score, scoreType);
+    public Pitch next(PitchScore pitchScore) {
+        PitchScoreType pitchScoreType = PitchScoreType.next(this, pitchScore);
+        return new Pitch(pitchScore, pitchScoreType);
     }
 
     public boolean isStrike() {
-        return scoreType == ScoreType.STRIKE;
+        return pitchScoreType == PitchScoreType.STRIKE;
     }
 
     public boolean isSpare() {
-        return scoreType == ScoreType.SPARE;
+        return pitchScoreType == PitchScoreType.SPARE;
     }
 
-    public int calculateScoresSum(Score nextScore) {
-        return this.getScore() + nextScore.getScore();
+    public int calculatePitchScoreSum(PitchScore nextPitchScore) {
+        return getPitchScore() + nextPitchScore.getPitchScore();
     }
 
-    public int getScore() {
-        return score.getScore();
+    public int getPitchScore() {
+        return pitchScore.getPitchScore();
     }
 
-    public String getScoreSignature() {
-        return scoreType.getSignature(this);
+    public String getPitchScoreSignature() {
+        return pitchScoreType.getPitchScoreSignature(this);
     }
 }

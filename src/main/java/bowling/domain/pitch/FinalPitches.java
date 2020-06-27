@@ -1,8 +1,7 @@
 package bowling.domain.pitch;
 
 import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.frame.Frame;
-import bowling.domain.score.Score;
+import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,42 +13,71 @@ public class FinalPitches implements Pitches {
     private final List<Pitch> pitches = new ArrayList<>();
 
     @Override
-    public void throwBall(Score score) {
-        if (pitches.size() >= Frame.MAXIMUM_NORMAL_PITCH_COUNTS) {
+    public void throwBall(PitchScore pitchScore) {
+        if (pitches.size() >= MAXIMUM_NORMAL_PITCH_COUNTS) {
             validateFinalPitches();
         }
-        Pitch pitch = createPitch(score);
+        Pitch pitch = createPitch(pitchScore);
         pitches.add(pitch);
     }
 
     private void validateFinalPitches() {
-        if (isNotContainingStrikeOrSpare() || isFinished(Frame.MAXIMUM_FINAL_PITCH_COUNTS)) {
+        if (hasNotStrikeOrSpare() || pitches.size() == MAXIMUM_FINAL_PITCH_COUNTS) {
             throw new BowlingBuildingException(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
         }
     }
 
-    private Pitch createPitch(Score score) {
-        if (pitches.isEmpty()) {
-            return Pitch.initiate(score);
-        }
-        Pitch lastPitch = pitches.get(pitches.size() - INDEX_CONSTANT);
-        return lastPitch.isSpare() || lastPitch.isStrike() ? Pitch.initiate(score) : lastPitch.next(score);
-    }
-
-    public boolean isNotContainingStrikeOrSpare() {
+    private boolean hasNotStrikeOrSpare() {
         return pitches.stream()
                 .noneMatch(pitch -> pitch.isStrike() || pitch.isSpare());
     }
 
+    private Pitch createPitch(PitchScore pitchScore) {
+        if (pitches.isEmpty()) {
+            return Pitch.initiate(pitchScore);
+        }
+        Pitch lastPitch = pitches.get(pitches.size() - INDEX_CONSTANT);
+        return lastPitch.isSpare() || lastPitch.isStrike() ? Pitch.initiate(pitchScore) : lastPitch.next(pitchScore);
+    }
+
     @Override
-    public boolean isFinished(int pitchCounts) {
+    public boolean hasSamePitchCounts(int pitchCounts) {
         return pitches.size() == pitchCounts;
     }
 
     @Override
-    public List<String> getScoreSignatures() {
+    public boolean hasStrike() {
         return pitches.stream()
-                .map(Pitch::getScoreSignature)
+                .anyMatch(Pitch::isStrike);
+    }
+
+    @Override
+    public boolean hasSpare() {
+        return pitches.stream()
+                .anyMatch(Pitch::isSpare);
+    }
+
+    @Override
+    public List<String> getPitchScoreSignatures() {
+        return pitches.stream()
+                .map(Pitch::getPitchScoreSignature)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public int getPitchScoreSum() {
+        return pitches.stream()
+                .mapToInt(Pitch::getPitchScore)
+                .sum();
+    }
+
+    @Override
+    public int getPitchScoreByIndex(int index) {
+        return pitches.get(index).getPitchScore();
+    }
+
+    @Override
+    public int getPitchCounts() {
+        return pitches.size();
     }
 }

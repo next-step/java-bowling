@@ -1,8 +1,10 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
+import bowling.domain.score.FrameScores;
+import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Frames {
@@ -20,30 +22,35 @@ public class Frames {
         return new Frames(frames);
     }
 
-    public void bowl(Score score) {
-        getCurrentFrame().bowl(score);
-    }
-
-    public void moveToNextFrame() {
-        Frame currentFrame = getCurrentFrame();
-        if (currentFrame.isMovableToNextFrame()) {
-            frames.add(currentFrame.next());
-        }
-    }
-
-    public boolean hasNextTurn() {
-        return getCurrentFrame() != null;
-    }
-
-    public int getCurrentIndex() {
-        return getCurrentFrame().getIndex();
+    public void bowl(PitchScore pitchScore) {
+        getCurrentFrame().bowl(pitchScore);
     }
 
     private Frame getCurrentFrame() {
         return frames.get(frames.size() - INDEX_CONSTANT);
     }
 
+    public void moveToNextFrame() {
+        Frame currentFrame = getCurrentFrame();
+        if (currentFrame.isFinished()) {
+            Frame nextFrame = currentFrame.next(getCurrentIndex());
+            frames.add(nextFrame);
+        }
+    }
+
+    public boolean hasNextTurn() {
+        return !frames.contains(null);
+    }
+
+    public int getCurrentIndex() {
+        return frames.size();
+    }
+
+    public FrameScores getFrameScores() {
+        return FrameScores.of(getFrames());
+    }
+
     public List<Frame> getFrames() {
-        return frames;
+        return Collections.unmodifiableList(frames);
     }
 }

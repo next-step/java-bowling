@@ -1,7 +1,7 @@
 package bowling.domain.pitch;
 
 import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.score.Score;
+import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,10 +16,10 @@ class FinalPitchesTest {
     @Test
     public void throwBall_스트라이크_2번() {
         FinalPitches finalPitches = new FinalPitches();
-        finalPitches.throwBall(Score.valueOf(10));
+        finalPitches.throwBall(PitchScore.valueOf(10));
 
         assertThatCode(() -> {
-            finalPitches.throwBall(Score.valueOf(10));
+            finalPitches.throwBall(PitchScore.valueOf(10));
         }).doesNotThrowAnyException();
     }
 
@@ -27,11 +27,11 @@ class FinalPitchesTest {
     @Test
     public void throwBall_스트라이크_3번() {
         FinalPitches finalPitches = new FinalPitches();
-        finalPitches.throwBall(Score.valueOf(10));
-        finalPitches.throwBall(Score.valueOf(10));
+        finalPitches.throwBall(PitchScore.valueOf(10));
+        finalPitches.throwBall(PitchScore.valueOf(10));
 
         assertThatCode(() -> {
-            finalPitches.throwBall(Score.valueOf(10));
+            finalPitches.throwBall(PitchScore.valueOf(10));
         }).doesNotThrowAnyException();
     }
 
@@ -39,11 +39,11 @@ class FinalPitchesTest {
     @Test
     public void throwBall_스페어() {
         FinalPitches finalPitches = new FinalPitches();
-        finalPitches.throwBall(Score.valueOf(3));
-        finalPitches.throwBall(Score.valueOf(7));
+        finalPitches.throwBall(PitchScore.valueOf(3));
+        finalPitches.throwBall(PitchScore.valueOf(7));
 
         assertThatCode(() -> {
-            finalPitches.throwBall(Score.valueOf(5));
+            finalPitches.throwBall(PitchScore.valueOf(5));
         }).doesNotThrowAnyException();
     }
 
@@ -52,11 +52,11 @@ class FinalPitchesTest {
     @CsvSource({"0, 0", "3, 3", "4, 0", "0, 4", "1, 5"})
     public void throwBall_예외(int firstScore, int secondScore) {
         FinalPitches finalPitches = new FinalPitches();
-        finalPitches.throwBall(Score.valueOf(firstScore));
-        finalPitches.throwBall(Score.valueOf(secondScore));
+        finalPitches.throwBall(PitchScore.valueOf(firstScore));
+        finalPitches.throwBall(PitchScore.valueOf(secondScore));
 
         assertThatThrownBy(() -> {
-            finalPitches.throwBall(Score.valueOf(5));
+            finalPitches.throwBall(PitchScore.valueOf(5));
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
     }
@@ -66,10 +66,10 @@ class FinalPitchesTest {
     public void throwBall_예외_4번투구() {
         FinalPitches finalPitches = new FinalPitches();
         for (int i = 0; i < 3; i++) {
-            finalPitches.throwBall(Score.valueOf(10));
+            finalPitches.throwBall(PitchScore.valueOf(10));
         }
         assertThatThrownBy(() -> {
-            finalPitches.throwBall(Score.valueOf(10));
+            finalPitches.throwBall(PitchScore.valueOf(10));
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
     }

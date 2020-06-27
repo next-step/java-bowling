@@ -1,20 +1,24 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
+import bowling.domain.score.FrameScore;
+import bowling.domain.score.PitchScore;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Frame {
-    public static final int MAXIMUM_NORMAL_PITCH_COUNTS = 2;
-    public static final int MAXIMUM_FINAL_PITCH_COUNTS = 3;
+    public static final int ZERO_INDEX = 0;
+    public static final int MAXIMUM_NORMAL_FRAME_INDEX = 9;
 
-    public Frame next();
+    public Frame next(int index);
 
-    public void bowl(Score score);
+    public void bowl(PitchScore pitchScore);
 
-    public boolean isMovableToNextFrame();
+    public boolean isFinished();
 
-    public List<String> getScoreSignatures();
+    public Optional<FrameScore> calculateFrameScore();
 
-    public int getIndex();
+    public Optional<FrameScore> delegateCalculation(FrameScore frameScore);
+
+    public List<String> getPitchScoreSignatures();
 }

@@ -1,8 +1,7 @@
 package bowling.domain.pitch;
 
 import bowling.domain.exception.BowlingBuildingException;
-import bowling.domain.frame.Frame;
-import bowling.domain.score.Score;
+import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,35 +13,60 @@ public class NormalPitches implements Pitches {
     private final List<Pitch> pitches = new ArrayList<>();
 
     @Override
-    public void throwBall(Score score) {
+    public void throwBall(PitchScore pitchScore) {
         validateNormalPitches();
-        Pitch pitch = createPitch(score);
+        Pitch pitch = createPitch(pitchScore);
         pitches.add(pitch);
     }
 
     private void validateNormalPitches() {
-        if (isFinished(Frame.MAXIMUM_NORMAL_PITCH_COUNTS)) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES_TRY);
+        if (pitches.size() == MAXIMUM_NORMAL_PITCH_COUNTS) {
+            throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCH_TRY);
         }
     }
 
-    private Pitch createPitch(Score score) {
-        return pitches.isEmpty() ? Pitch.initiate(score) : pitches.get(FIRST_INDEX).next(score);
-    }
-
-    public boolean isStrike() {
-        return pitches.get(FIRST_INDEX).isStrike();
+    private Pitch createPitch(PitchScore pitchScore) {
+        return pitches.isEmpty() ? Pitch.initiate(pitchScore) : pitches.get(FIRST_INDEX).next(pitchScore);
     }
 
     @Override
-    public boolean isFinished(int pitchCounts) {
+    public boolean hasSamePitchCounts(int pitchCounts) {
         return pitches.size() == pitchCounts;
     }
 
     @Override
-    public List<String> getScoreSignatures() {
+    public boolean hasStrike() {
         return pitches.stream()
-                .map(Pitch::getScoreSignature)
+                .anyMatch(Pitch::isStrike);
+    }
+
+    @Override
+    public boolean hasSpare() {
+        return pitches.stream()
+                .anyMatch(Pitch::isSpare);
+    }
+
+    @Override
+    public List<String> getPitchScoreSignatures() {
+        return pitches.stream()
+                .map(Pitch::getPitchScoreSignature)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public int getPitchScoreSum() {
+        return pitches.stream()
+                .mapToInt(Pitch::getPitchScore)
+                .sum();
+    }
+
+    @Override
+    public int getPitchScoreByIndex(int index) {
+        return pitches.get(index).getPitchScore();
+    }
+
+    @Override
+    public int getPitchCounts() {
+        return pitches.size();
     }
 }

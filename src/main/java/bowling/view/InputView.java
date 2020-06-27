@@ -15,7 +15,7 @@ public class InputView {
         return SCANNER.nextLine().toUpperCase().trim();
     }
 
-    public static int inputPitch(Frames frames) {
+    public static int inputPitchScore(Frames frames) {
         System.out.printf(ViewMessage.INSTRUCTION_PITCH, frames.getCurrentIndex());
         return Integer.parseInt(SCANNER.nextLine());
     }
