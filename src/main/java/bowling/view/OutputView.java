@@ -40,7 +40,7 @@ public class OutputView {
     }
 
     private static void printVisibleFrameSignatures(Frame frame) {
-        List<String> scoreSignatures = frame.getScoreSignatures();
+        List<String> scoreSignatures = frame.getPitchScoreSignatures();
         StringBuilder stringBuilder = new StringBuilder();
         scoreSignatures.forEach(scoreSignature -> appendScoreSignature(scoreSignature, stringBuilder));
         String frameSignatures = String.format(ViewMessage.FRAME_SIGNATURE_ROW_FORMAT, stringBuilder.toString());

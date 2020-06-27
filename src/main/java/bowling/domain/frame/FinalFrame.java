@@ -16,7 +16,7 @@ public class FinalFrame implements Frame {
         this.pitches = pitches;
     }
 
-    public static FinalFrame ofFinal() {
+    public static Frame ofFinal() {
         return new FinalFrame(new FinalPitches());
     }
 
@@ -63,7 +63,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<String> getScoreSignatures() {
+    public List<String> getPitchScoreSignatures() {
         return pitches.getPitchScoreSignatures();
     }
 }

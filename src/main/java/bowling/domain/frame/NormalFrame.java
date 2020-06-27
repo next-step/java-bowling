@@ -24,7 +24,7 @@ public class NormalFrame implements Frame {
     @Override
     public Frame next(int index) {
         this.nextFrame = (index != MAXIMUM_NORMAL_FRAME_INDEX) ? NormalFrame.initiate() : FinalFrame.ofFinal();
-        return this.nextFrame;
+        return nextFrame;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public List<String> getScoreSignatures() {
+    public List<String> getPitchScoreSignatures() {
         return pitches.getPitchScoreSignatures();
     }
 }
