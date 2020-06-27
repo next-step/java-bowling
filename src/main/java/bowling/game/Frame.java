@@ -1,6 +1,8 @@
 package bowling.game;
 
 public abstract class Frame {
+    protected static final String STATE_DELIMITER = "|";
+
     abstract int bowl(final int pinCount);
 
     abstract boolean hasRemainChance();
@@ -10,4 +12,6 @@ public abstract class Frame {
     abstract FrameNumber getFrameNumber();
 
     abstract boolean isLastFrame();
+
+    abstract String getStates();
 }

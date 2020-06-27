@@ -11,4 +11,8 @@ public enum State {
     State(final String symbol) {
         this.symbol = symbol;
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
 }

@@ -1,6 +1,8 @@
 package bowling.game;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
     private final LinkedList<Frame> frames;
@@ -21,6 +23,10 @@ public class Frames {
     }
 
     public int bowlCurrentFrame(final int pinCount) {
+        if (!hasRemainChance()) {
+            createNextFrame();
+        }
+
         return getCurrentFrame().bowl(pinCount);
     }
 
@@ -32,5 +38,17 @@ public class Frames {
         Frame frame = getCurrentFrame();
 
         return frame.isLastFrame() && !frame.hasRemainChance();
+    }
+
+    public int getCurrentFrameNumber() {
+        Frame frame = getCurrentFrame();
+
+        return frame.getFrameNumber().getNumber();
+    }
+
+    public List<String> getFramesStates() {
+        return frames.stream()
+                .map(Frame::getStates)
+                .collect(Collectors.toList());
     }
 }

@@ -2,6 +2,8 @@ package bowling.game;
 
 import java.util.LinkedList;
 
+import static java.util.stream.Collectors.joining;
+
 public class NormalFrame extends Frame {
     private static final int PITCH_COUNT_MAX = 2;
 
@@ -33,6 +35,10 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean hasRemainChance() {
+        if (pitches.isEmpty()) {
+            return true;
+        }
+
         Pitch firstPitch = pitches.getFirst();
 
         if (firstPitch.getState().equals(State.STRIKE)) {
@@ -60,7 +66,14 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    boolean isLastFrame() {
+    public boolean isLastFrame() {
         return false;
+    }
+
+    @Override
+    public String getStates() {
+        return pitches.stream()
+                .map(Pitch::stateToString)
+                .collect(joining(STATE_DELIMITER));
     }
 }

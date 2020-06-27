@@ -2,6 +2,8 @@ package bowling.game;
 
 import java.util.LinkedList;
 
+import static java.util.stream.Collectors.joining;
+
 public class FinalFrame extends Frame {
     private static final int PITCH_COUNT_MAX = 2;
     private static final int BONUS_COUNT_MAX = 3;
@@ -65,7 +67,14 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    boolean isLastFrame() {
+    public boolean isLastFrame() {
         return true;
+    }
+
+    @Override
+    public String getStates() {
+        return pitches.stream()
+                .map(Pitch::stateToString)
+                .collect(joining(STATE_DELIMITER));
     }
 }

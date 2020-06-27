@@ -57,4 +57,12 @@ public class Pitch {
     public State getState() {
         return state;
     }
+
+    public String stateToString() {
+        if (this.state == State.MISS) {
+            return String.valueOf(pinCount);
+        }
+
+        return this.state.getSymbol();
+    }
 }
