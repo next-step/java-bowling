@@ -2,29 +2,43 @@ package bowling.domain.score;
 
 public class Scores {
 
-    private final Score first;
+    private Score first;
     private Score second;
 
-    private Scores(Score first) {
-        this.first = first;
+    public static Scores create() {
+        return new Scores();
+    }
 
-        if (first.equals(Score.MAX_SCORE)) {
-            inputSecondScore(Score.MIN_SCORE);
+    public void add(Score score) {
+        if (first == null) {
+            inputFirst(score);
+            return;
+        }
+
+        if (second == null) {
+            inputSecond(score);
+            return;
+        }
+
+        throw new IllegalStateException("더 이상 점수를 입력할 수 없습니다.");
+    }
+
+    private void inputFirst(Score score) {
+        this.first = score;
+
+        if (score.equals(Score.MAX_SCORE)) {
+            inputSecond(Score.MIN_SCORE);
         }
     }
 
-    public static Scores from(Score first) {
-        return new Scores(first);
-    }
-
-    public void inputSecondScore(Score secondScore) {
-        Score scoreTotal = first.add(secondScore);
+    private void inputSecond(Score score) {
+        Score scoreTotal = first.add(score);
 
         if (scoreTotal.isGreaterThan(Score.MAX_SCORE)) {
             throw new IllegalArgumentException("두 점수의 합이 최대값을 초과하였습니다 : " + scoreTotal);
         }
 
-        second = secondScore;
+        this.second = score;
     }
 
     public Result checkResult() {

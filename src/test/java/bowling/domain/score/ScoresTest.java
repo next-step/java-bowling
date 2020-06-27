@@ -20,9 +20,10 @@ public class ScoresTest {
     @DisplayName("첫번째와 두번째 투구의 점수의 합이 10을 넘으면 IllegalArgumentException")
     @Test
     void inputSecondScore_over10() {
-        Scores scores = Scores.from(FIVE);
+        Scores scores = Scores.create();
+        scores.add(FIVE);
 
-        assertThatThrownBy(() -> scores.inputSecondScore(TEN))
+        assertThatThrownBy(() -> scores.add(TEN))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("점수의 합");
     }
@@ -30,7 +31,8 @@ public class ScoresTest {
     @DisplayName("두번째 투구의 점수를 입력하지 않은채 결과를 확인하면 IllegalStateException")
     @Test
     void checkResult_withoutSecondScore() {
-        Scores scores = Scores.from(FIVE);
+        Scores scores = Scores.create();
+        scores.add(FIVE);
 
         assertThatThrownBy(scores::checkResult)
                 .isInstanceOf(IllegalStateException.class)
@@ -40,8 +42,9 @@ public class ScoresTest {
     @DisplayName("첫번째, 두번째 투구의 점수를 모두 입력하면 결과를 확인할 수 있다")
     @Test
     void checkResult_inputSecondScore() {
-        Scores scores = Scores.from(FIVE);
-        scores.inputSecondScore(ZERO);
+        Scores scores = Scores.create();
+        scores.add(FIVE);
+        scores.add(ZERO);
 
         Result result = scores.checkResult();
 
@@ -51,7 +54,8 @@ public class ScoresTest {
     @DisplayName("첫번째 투구의 점수가 10이면 두번째 투구의 점수를 입력하지 않아도 결과를 확인할 수 있다")
     @Test
     void first10_inputSecondScore() {
-        Scores scores = Scores.from(TEN);
+        Scores scores = Scores.create();
+        scores.add(TEN);
 
         Result result = scores.checkResult();
 
@@ -66,19 +70,23 @@ public class ScoresTest {
     }
 
     public static Stream<Arguments> checkResultArguments() {
-        Scores scores1 = Scores.from(TEN);
+        Scores scores1 = Scores.create();
+        scores1.add(TEN);
         Result result1 = scores1.checkResult();
 
-        Scores scores2 = Scores.from(FIVE);
-        scores2.inputSecondScore(FIVE);
+        Scores scores2 = Scores.create();
+        scores2.add(FIVE);
+        scores2.add(FIVE);
         Result result2 = scores2.checkResult();
 
-        Scores scores3 = Scores.from(FIVE);
-        scores3.inputSecondScore(ZERO);
+        Scores scores3 = Scores.create();
+        scores3.add(FIVE);
+        scores3.add(ZERO);
         Result result3 = scores3.checkResult();
 
-        Scores scores4 = Scores.from(ZERO);
-        scores4.inputSecondScore(ZERO);
+        Scores scores4 = Scores.create();
+        scores4.add(ZERO);
+        scores4.add(ZERO);
         Result result4 = scores4.checkResult();
 
         return Stream.of(
@@ -96,13 +104,15 @@ public class ScoresTest {
     }
 
     public static Stream<Arguments> canPitchMoreArguments() {
-        Scores scores1 = Scores.from(ZERO);
+        Scores scores1 = Scores.create();
+        scores1.add(ZERO);
         boolean canPitchMore1 = scores1.canPitchMore();
 
-        scores1.inputSecondScore(ZERO);
+        scores1.add(ZERO);
         boolean canPitchMore2 = scores1.canPitchMore();
 
-        Scores scores2 = Scores.from(TEN);
+        Scores scores2 = Scores.create();
+        scores2.add(TEN);
         boolean canPitchMore3 = scores2.canPitchMore();
 
         return Stream.of(
