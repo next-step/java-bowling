@@ -36,7 +36,6 @@ class AnswersTest {
     @ParameterizedTest
     @MethodSource("source_delete_anotherOwner_shouldFail")
     public void delete_anotherOwner_shouldFail(Answers answers, User owner) {
-        assertThat(answers.isAllOwner(owner)).isFalse();
         assertThatThrownBy(() -> {
             answers.delete(owner);
         }).isInstanceOf(CannotDeleteException.class);
