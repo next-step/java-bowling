@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PitchPitchScoreTypeTest {
+class PitchScoreTypeTest {
 
     @DisplayName("Strike는 X를 반환")
     @Test
