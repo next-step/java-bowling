@@ -40,6 +40,6 @@ public class Pitch {
     }
 
     public String getScoreSignature() {
-        return pitchScoreType.getSignature(this);
+        return pitchScoreType.getPitchScoreSignature(this);
     }
 }

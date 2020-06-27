@@ -45,7 +45,7 @@ public enum PitchScoreType {
         }
     }
 
-    public String getSignature(Pitch pitch) {
+    public String getPitchScoreSignature(Pitch pitch) {
         return signatureFunction.apply(pitch);
     }
 }

@@ -31,11 +31,11 @@ public class FrameScore {
         return new FrameScore(frameScore + hitCounts, leftPitchCounts - ONE);
     }
 
-    public int getFrameScore() {
-        return frameScore;
-    }
-
     public boolean isAbleToCalculate() {
         return leftPitchCounts == ZERO;
+    }
+
+    public int getFrameScore() {
+        return frameScore;
     }
 }

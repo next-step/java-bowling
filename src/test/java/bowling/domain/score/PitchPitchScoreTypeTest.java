@@ -13,7 +13,7 @@ class PitchPitchScoreTypeTest {
     public void strike_X() {
         Pitch pitch = Pitch.initiate(PitchScore.valueOf(10));
 
-        assertThat(PitchScoreType.STRIKE.getSignature(pitch)).isEqualTo("X");
+        assertThat(PitchScoreType.STRIKE.getPitchScoreSignature(pitch)).isEqualTo("X");
     }
 
     @DisplayName("Spare는 /를 반환")
@@ -21,7 +21,7 @@ class PitchPitchScoreTypeTest {
     public void spare_slash() {
         Pitch pitch = Pitch.initiate(PitchScore.valueOf(8));
 
-        assertThat(PitchScoreType.SPARE.getSignature(pitch)).isEqualTo("/");
+        assertThat(PitchScoreType.SPARE.getPitchScoreSignature(pitch)).isEqualTo("/");
     }
 
     @DisplayName("Gutter는 -를 반환")
@@ -29,7 +29,7 @@ class PitchPitchScoreTypeTest {
     public void gutter_dash() {
         Pitch pitch = Pitch.initiate(PitchScore.valueOf(0));
 
-        assertThat(PitchScoreType.GUTTER.getSignature(pitch)).isEqualTo("-");
+        assertThat(PitchScoreType.GUTTER.getPitchScoreSignature(pitch)).isEqualTo("-");
     }
 
     @DisplayName("Miss는 숫자를 반환")
@@ -37,7 +37,7 @@ class PitchPitchScoreTypeTest {
     public void miss_숫자() {
         Pitch pitch = Pitch.initiate(PitchScore.valueOf(3));
 
-        assertThat(PitchScoreType.MISS.getSignature(pitch)).isEqualTo("3");
+        assertThat(PitchScoreType.MISS.getPitchScoreSignature(pitch)).isEqualTo("3");
     }
 
     @DisplayName("Normal은 숫자를 반환")
@@ -45,6 +45,6 @@ class PitchPitchScoreTypeTest {
     public void normal_숫자() {
         Pitch pitch = Pitch.initiate(PitchScore.valueOf(3));
 
-        assertThat(PitchScoreType.NORMAL.getSignature(pitch)).isEqualTo("3");
+        assertThat(PitchScoreType.NORMAL.getPitchScoreSignature(pitch)).isEqualTo("3");
     }
 }
