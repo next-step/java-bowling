@@ -37,4 +37,10 @@ public class Answers {
         }
         return deleteHistories;
     }
+
+    public void deleteAnswers() {
+        for (Answer answer : this.answers) {
+            answer.deleteAnswer();
+        }
+    }
 }

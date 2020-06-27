@@ -73,6 +73,7 @@ public class Question extends AbstractEntity {
 
     public void deleteQuestion() {
         this.deleted = true;
+        this.answers.deleteAnswers();
     }
 
     public Answers getAnswers() {
