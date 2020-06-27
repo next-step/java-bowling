@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.FrameResults;
+import bowling.domain.FrameScore;
+import bowling.domain.FrameScoreStatus;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.frameStatus.FinalFrameStatus;
@@ -12,9 +14,9 @@ public class FinalFrame implements Frame {
 
     private final int index;
     private final FinalFrameStatus finalFrameStatus;
-    private final Frame prevFrame;
+    private final NormalFrame prevFrame;
 
-    FinalFrame(int index, FinalFrameStatus finalFrameStatus, Frame ninthFrame) {
+    FinalFrame(int index, FinalFrameStatus finalFrameStatus, NormalFrame ninthFrame) {
         this.index = index;
         this.finalFrameStatus = finalFrameStatus;
         this.prevFrame = ninthFrame;
@@ -24,7 +26,7 @@ public class FinalFrame implements Frame {
         this(TEN, finalFrameStatus, ninthFrame);
     }
 
-    public static FinalFrame bowlFirst(int numberOfHitPin, Frame ninthFrame) {
+    public static FinalFrame bowlFirst(int numberOfHitPin, NormalFrame ninthFrame) {
         return new FinalFrame(TEN, FinalFrameStatus.bowlFirst(numberOfHitPin), ninthFrame);
     }
 
@@ -32,6 +34,21 @@ public class FinalFrame implements Frame {
         if (isCompleted()) {
             throw new InvalidTryBowlException("종료된 프레임에는 투구할 수 없습니다.");
         }
+    }
+
+    @Override
+    public FrameScore calculateCurrentScore() {
+        Integer currentScore = this.calculateCurrentResults().calculateScore();
+        if (this.finalFrameStatus.isCompleted()) {
+            return new FrameScore(FrameScoreStatus.COMPLETE, currentScore);
+        }
+        return new FrameScore(FrameScoreStatus.NOT_READY, currentScore);
+    }
+
+    @Override
+    public FrameScore calculatePreviousScore() {
+        // TODO
+        return null;
     }
 
     @Override

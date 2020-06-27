@@ -2,6 +2,8 @@ package bowling.domain.frame;
 
 import bowling.domain.FrameResult;
 import bowling.domain.FrameResults;
+import bowling.domain.FrameScore;
+import bowling.domain.FrameScoreStatus;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.frameStatus.FinalFrameStatus;
 import org.junit.jupiter.api.DisplayName;
@@ -118,4 +120,63 @@ class FinalFrameTests {
                 )
         );
     }
+
+    @DisplayName("현재 상태의 점수를 계산할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("calculateCurrentScoreResource")
+    void calculateCurrentScoreTest(FinalFrame finalFrame, FrameScoreStatus frameScoreStatus, Integer scoreValue) {
+        assertThat(finalFrame.calculateCurrentScore())
+                .isEqualTo(new FrameScore(frameScoreStatus, scoreValue));
+    }
+    public static Stream<Arguments> calculateCurrentScoreResource() {
+        return Stream.of(
+                Arguments.of(
+                        FinalFrame.bowlFirst(10, null),
+                        FrameScoreStatus.NOT_READY,
+                        10
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, null),
+                        FrameScoreStatus.NOT_READY,
+                        5
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(10, NormalFrame.start(10)).bowl(5),
+                        FrameScoreStatus.NOT_READY,
+                        15
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, NormalFrame.start(10)).bowl(5),
+                        FrameScoreStatus.NOT_READY,
+                        10
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, NormalFrame.start(10)).bowl(2),
+                        FrameScoreStatus.COMPLETE,
+                        7
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(10, NormalFrame.start(10)).bowl(10),
+                        FrameScoreStatus.NOT_READY,
+                        20
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(5, NormalFrame.start(5)).bowl(5).bowl(10),
+                        FrameScoreStatus.COMPLETE,
+                        20
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(10, NormalFrame.start(5)).bowl(5).bowl(3),
+                        FrameScoreStatus.COMPLETE,
+                        18
+                ),
+                Arguments.of(
+                        FinalFrame.bowlFirst(10, NormalFrame.start(5)).bowl(5).bowl(5),
+                        FrameScoreStatus.COMPLETE,
+                        20
+                )
+        );
+    }
+
+//    @DisplayName("이전 프레임 점수를 계산할 수 있다.")
 }

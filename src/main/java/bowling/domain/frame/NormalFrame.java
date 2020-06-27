@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.BonusScore;
 import bowling.domain.FrameResults;
+import bowling.domain.FrameScore;
+import bowling.domain.FrameScoreStatus;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.frameStatus.NormalFrameStatus;
@@ -34,6 +37,46 @@ public class NormalFrame implements Frame {
         if (!isCompleted()) {
             throw new InvalidTryNextFrameException("현재 프레임이 완료되지 않은 상태에서 다음 프레임을 진행할 수 없습니다.");
         }
+    }
+
+    private boolean isSpare() {
+        return this.currentStatus.isSpare();
+    }
+
+    private boolean isStrike() {
+        return this.currentStatus.isStrike();
+    }
+
+    private BonusScore calculateBonusScore() {
+        return this.currentStatus.calculateBonusScore();
+    }
+
+    @Override
+    public FrameScore calculatePreviousScore() {
+        if (previousFrame == null) {
+            return new FrameScore(FrameScoreStatus.COMPLETE, 0);
+        }
+
+        FrameScore previousFrameScore = this.previousFrame.calculateCurrentScore();
+        if (this.previousFrame.isSpare()) {
+            return previousFrameScore.applySpareBonus(calculateBonusScore().getFirstThrowScore());
+        }
+        if (this.previousFrame.isStrike()) {
+            return previousFrameScore.applyStrikeBonus(calculateBonusScore());
+        }
+
+        return previousFrameScore;
+    }
+
+    @Override
+    public FrameScore calculateCurrentScore() {
+        Integer frameScoreValue = this.currentStatus.calculateCurrentResult().calculateScore();
+
+        if (currentStatus.isCompleted() && (!currentStatus.isStrike() && !currentStatus.isSpare())) {
+            return new FrameScore(FrameScoreStatus.COMPLETE, frameScoreValue);
+        }
+
+        return new FrameScore(FrameScoreStatus.NOT_READY, frameScoreValue);
     }
 
     @Override
