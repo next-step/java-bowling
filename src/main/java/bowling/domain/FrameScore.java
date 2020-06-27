@@ -31,11 +31,11 @@ public class FrameScore {
         return new FrameScore(FrameScoreStatus.COMPLETE, this.score + spareBonus);
     }
 
-    public FrameScore applyStrikeBonus(NormalBonusScore normalBonusScore) {
-        if (normalBonusScore.isStrikeBonus()) {
-            return new FrameScore(FrameScoreStatus.COMPLETE, this.score + normalBonusScore.getStrikeBonus());
+    public FrameScore applyStrikeBonus(BonusScore bonusScore) {
+        if (bonusScore.isStrikeBonus()) {
+            return new FrameScore(FrameScoreStatus.COMPLETE, this.score + bonusScore.getStrikeBonus());
         }
-        return new FrameScore(FrameScoreStatus.NOT_READY, this.score + normalBonusScore.getStrikeBonus());
+        return new FrameScore(FrameScoreStatus.NOT_READY, this.score + bonusScore.getStrikeBonus());
     }
 
     private void validateApplyBonus() {
