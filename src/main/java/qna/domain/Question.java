@@ -102,4 +102,8 @@ public class Question extends AbstractEntity {
             answer.validate(loginUser);
         }
     }
+
+    public void delete() {
+        this.deleted = true;
+    }
 }

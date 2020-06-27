@@ -3,6 +3,7 @@ package qna.domain;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
@@ -13,5 +14,11 @@ public class QuestionTest {
     void validate() {
         assertThatThrownBy(() -> Q1.validate(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class);
+    }
+
+    @Test
+    void isDelete() {
+        Q1.delete();
+        assertThat(Q1.isDeleted()).isTrue();
     }
 }
