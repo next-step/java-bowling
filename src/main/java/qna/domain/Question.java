@@ -94,6 +94,10 @@ public class Question extends AbstractEntity {
         return getDeleteHistory();
     }
 
+    public List<DeleteHistory> deleteAllAnswer(User loginUser) throws CannotDeleteException {
+        return getAnswers().delete(loginUser);
+    }
+
     public boolean isDeleted() {
         return deleted;
     }
