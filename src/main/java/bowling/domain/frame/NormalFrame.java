@@ -51,12 +51,14 @@ public class NormalFrame implements Frame {
         return this.currentStatus.calculateBonusScore();
     }
 
+    // TODO: 연속 스트라이크 계산 메서드 필요
+
     @Override
     public FrameScore calculatePreviousScore() {
         if (previousFrame == null) {
             return new FrameScore(FrameScoreStatus.COMPLETE, 0);
         }
-
+        // TODO: 여기에 더블 여부 물어봐야 함
         FrameScore previousFrameScore = this.previousFrame.calculateCurrentScore();
         if (this.previousFrame.isSpare()) {
             return previousFrameScore.applySpareBonus(calculateBonusScore().getFirstThrowScore());
@@ -72,6 +74,7 @@ public class NormalFrame implements Frame {
     public FrameScore calculateCurrentScore() {
         Integer frameScoreValue = this.currentStatus.calculateCurrentResult().calculateScore();
 
+        // TODO: 여기서 현재 프레임이 더블인지 확인해야 함
         if (currentStatus.isCompleted() && (!currentStatus.isStrike() && !currentStatus.isSpare())) {
             return new FrameScore(FrameScoreStatus.COMPLETE, frameScoreValue);
         }
