@@ -53,6 +53,6 @@ public class QuestionTest {
     @DisplayName("질문 삭제 시 DeleteHistory를 반환한다.")
     void delete_성공_DeleteHistory_반환() throws CannotDeleteException {
         assertThat(Q1.deleteBy(UserTest.JAVAJIGI))
-                .isEqualTo(Arrays.asList(DeleteHistory.deleteQuestion(Q1.getId(), UserTest.JAVAJIGI)));
+                .isEqualTo(Arrays.asList(DeleteHistory.createByDeleteQuestion(Q1.getId(), UserTest.JAVAJIGI)));
     }
 }

@@ -31,11 +31,11 @@ public class DeleteHistory {
         this.createDate = createDate;
     }
 
-    public static DeleteHistory deleteQuestion(Long contentId, User deletedBy) {
+    public static DeleteHistory createByDeleteQuestion(Long contentId, User deletedBy) {
         return new DeleteHistory(ContentType.QUESTION, contentId, deletedBy, LocalDateTime.now());
     }
 
-    public static DeleteHistory deleteAnswer(Long contentId, User deletedBy) {
+    public static DeleteHistory createByDeleteAnswer(Long contentId, User deletedBy) {
         return new DeleteHistory(ContentType.ANSWER, contentId, deletedBy, LocalDateTime.now());
     }
 

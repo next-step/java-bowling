@@ -124,6 +124,6 @@ public class Question extends AbstractEntity {
 
     private DeleteHistory delete() {
         this.deleted = true;
-        return DeleteHistory.deleteQuestion(super.getId(), writer);
+        return DeleteHistory.createByDeleteQuestion(super.getId(), writer);
     }
 }
