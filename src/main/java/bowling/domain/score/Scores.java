@@ -49,7 +49,7 @@ public class Scores {
         return Result.findByScores(first, second);
     }
 
-    public boolean canPitchMore() {
+    public boolean canAddMore() {
         return !first.equals(Score.MAX_SCORE) &&  second == null;
     }
 }

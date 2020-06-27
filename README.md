@@ -75,6 +75,7 @@
     - [x] 첫번째와 두번째 투구의 점수의 합이 10을 넘으면 IllegalArgumentException이 발생한다.
     - [x] 두번째 투구의 점수를 입력하지 않은채 결과를 확인하면 IllegalStateException이 발생한다.
     - [x] 첫번째 투구의 점수가 10이면 두번째 투구의 점수를 입력하지 않아도 결과를 확인할 수 있다.
+    - [x] 두 개의 점수가 모두 입력되었는지 확인한다.
     
 - Result : 한 프레임의 결과
     - [x] STRIKE, SPARE, MISS, GUTTER

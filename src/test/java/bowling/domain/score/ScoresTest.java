@@ -106,14 +106,14 @@ public class ScoresTest {
     public static Stream<Arguments> canPitchMoreArguments() {
         Scores scores1 = Scores.create();
         scores1.add(ZERO);
-        boolean canPitchMore1 = scores1.canPitchMore();
+        boolean canPitchMore1 = scores1.canAddMore();
 
         scores1.add(ZERO);
-        boolean canPitchMore2 = scores1.canPitchMore();
+        boolean canPitchMore2 = scores1.canAddMore();
 
         Scores scores2 = Scores.create();
         scores2.add(TEN);
-        boolean canPitchMore3 = scores2.canPitchMore();
+        boolean canPitchMore3 = scores2.canAddMore();
 
         return Stream.of(
                 Arguments.of(canPitchMore1, true),
