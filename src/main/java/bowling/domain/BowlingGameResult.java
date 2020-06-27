@@ -23,6 +23,10 @@ public class BowlingGameResult {
         return frameScore;
     }
 
+    public BowlingGameResult applyBonus(FrameScore frameScore) {
+        return new BowlingGameResult(this.frameResults, frameScore);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

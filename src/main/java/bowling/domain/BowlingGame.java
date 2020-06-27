@@ -40,20 +40,39 @@ public class BowlingGame {
 
     public List<BowlingGameResult> bowlCurrentFrame(int numberOfHitPin) {
         Frame frame = player.bowlCurrentFrameRefactor(numberOfHitPin);
-        BowlingGameResult bowlingGameResult = new BowlingGameResult(frame.calculateCurrentResults());
+
+        BowlingGameResult bowlingGameResult = new BowlingGameResult(
+                frame.calculateCurrentResults(),
+                frame.calculateCurrentScore()
+        );
 
         this.bowlingGameResults.set(lastIndexOfBowlingGameResults(), bowlingGameResult);
+        applyBonusToPreviousFrame(frame);
 
         return new ArrayList<>(this.bowlingGameResults);
     }
 
     public List<BowlingGameResult> toNextFrame(int numberOfHitPin) {
         Frame frame = player.toNextFrameRefactor(numberOfHitPin);
-        BowlingGameResult bowlingGameResult = new BowlingGameResult(frame.calculateCurrentResults());
+
+        BowlingGameResult bowlingGameResult = new BowlingGameResult(
+                frame.calculateCurrentResults(),
+                frame.calculateCurrentScore()
+        );
 
         this.bowlingGameResults.add(bowlingGameResult);
+        applyBonusToPreviousFrame(frame);
 
         return new ArrayList<>(this.bowlingGameResults);
+    }
+
+    private void applyBonusToPreviousFrame(Frame frame) {
+        if (lastIndexOfBowlingGameResults() != 0) {
+            BowlingGameResult previousBowlingGameResult =
+                    this.bowlingGameResults.get(lastIndexOfBowlingGameResults() - 1);
+            BowlingGameResult bonusApplied = previousBowlingGameResult.applyBonus(frame.calculatePreviousScore());
+            this.bowlingGameResults.set(lastIndexOfBowlingGameResults() - 1, bonusApplied);
+        }
     }
 
     public boolean isCurrentFrameCompleted() {
