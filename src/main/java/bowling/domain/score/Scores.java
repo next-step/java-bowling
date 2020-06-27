@@ -5,6 +5,8 @@ public class Scores {
     private Score first;
     private Score second;
 
+    private Scores() {}
+
     public static Scores create() {
         return new Scores();
     }
@@ -50,6 +52,6 @@ public class Scores {
     }
 
     public boolean canAddMore() {
-        return !first.equals(Score.MAX_SCORE) &&  second == null;
+        return first == null || second == null;
     }
 }

@@ -24,4 +24,14 @@ public class NormalFrameTest {
 
         assertThat(nextFrame).isInstanceOf(FinalFrame.class);
     }
+
+    @DisplayName("점수를 더 기록할 수 있는지 확인한다")
+    @Test
+    void canAddMoreScore() {
+        NormalFrame frame = NormalFrame.createFirst();
+
+        boolean canAddMoreScore = frame.canAddMoreScore();
+
+        assertThat(canAddMoreScore).isTrue();
+    }
 }
