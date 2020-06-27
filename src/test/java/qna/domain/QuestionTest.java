@@ -1,14 +1,15 @@
 package qna.domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import qna.CannotDeleteException;
 
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Question 로직 테스트")
@@ -18,24 +19,24 @@ public class QuestionTest {
 
     @DisplayName("Question 삭제 성공")
     @ParameterizedTest
-    @MethodSource("source_delete_question_shouldSucess")
-    public void delete_question_shouldSucess(Question q) {
-        q.deleteAndGetHistory();
+    @MethodSource("source_delete_question_shouldSuccess")
+    public void delete_question_shouldSuccess(Question q, User loginUser) throws CannotDeleteException {
+        q.delete(loginUser);
         assertThat(q.isDeleted()).isTrue();
     }
 
-    public static Stream<Arguments> source_delete_question_shouldSucess() {
+    public static Stream<Arguments> source_delete_question_shouldSuccess() {
         return Stream.of(
-                Arguments.of(Q1),
-                Arguments.of(Q2)
+                Arguments.of(Q1, UserTest.JAVAJIGI),
+                Arguments.of(Q2, UserTest.SANJIGI)
         );
     }
 
     @DisplayName("Question 삭제 시에 삭제 이력이 생성된다")
     @ParameterizedTest
-    @MethodSource("source_get_deleteHistory_shouldSucess")
-    public void get_deleteHistory_shouldSucess(Question q) {
-        DeleteHistory deleteHistory = q.deleteAndGetHistory();
+    @MethodSource("source_get_deleteHistory_shouldSuccess")
+    public void get_deleteHistory_shouldSuccess(Question q, User loginUser) throws CannotDeleteException {
+        DeleteHistory deleteHistory = q.delete(loginUser);
         assertAll(
                 () -> assertThat(deleteHistory.getContentType()).isEqualTo(ContentType.QUESTION),
                 () -> assertThat(deleteHistory.getContentId()).isEqualTo(q.getId()),
@@ -43,9 +44,26 @@ public class QuestionTest {
         );
     }
 
-    public static Stream<Arguments> source_get_deleteHistory_shouldSucess() {
+    public static Stream<Arguments> source_get_deleteHistory_shouldSuccess() {
         return Stream.of(
-                Arguments.of(Q1)
+                Arguments.of(Q1, UserTest.JAVAJIGI),
+                Arguments.of(Q2, UserTest.SANJIGI)
+        );
+    }
+
+    @DisplayName("다른 사람이 쓴 Question 삭제 시에는 예외 발생")
+    @ParameterizedTest
+    @MethodSource("source_delete_anotherWriter_shouldFail")
+    public void delete_anotherWriter_shouldFail(Question q, User loginUser) {
+        assertThatThrownBy(() -> {
+            q.delete(loginUser);
+        }).isInstanceOf(CannotDeleteException.class);
+    }
+
+    public static Stream<Arguments> source_delete_anotherWriter_shouldFail() {
+        return Stream.of(
+                Arguments.of(Q1, UserTest.SANJIGI),
+                Arguments.of(Q2, UserTest.JAVAJIGI)
         );
     }
 }
