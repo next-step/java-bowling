@@ -226,3 +226,10 @@
     - [X] 모든 기능 동작 확인되면 Player에서 PlayerFrames 일급 컬렉셔 제거 (currentFrame만 관리)
 - [X] BowlingGameResult
     - [X] FrameResults를 속성으로 갖는다.
+
+## Step3. 점수 계산 기능 구현
+- [X] FrameScore
+    - 각 프레임의 점수를 계산하는 객체
+    - 투구가 끝날 때마다 새로 계산된다.
+    - [X] 준비 상태, 점수값을 상태로 갖는다. (이게 다네?)
+    - [X] 준비 상태를 알려줄 수 있다. 
