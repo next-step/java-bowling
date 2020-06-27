@@ -1,46 +1,45 @@
 package bowling.domain.pitch;
 
 import bowling.domain.score.PitchScore;
-import bowling.domain.score.ScoreType;
-import bowling.domain.score.ScoreTypeFactory;
+import bowling.domain.score.PitchScoreType;
 
 public class Pitch {
 
     private final PitchScore pitchScore;
-    private final ScoreType scoreType;
+    private final PitchScoreType pitchScoreType;
 
-    private Pitch(PitchScore pitchScore, ScoreType scoreType) {
+    private Pitch(PitchScore pitchScore, PitchScoreType pitchScoreType) {
         this.pitchScore = pitchScore;
-        this.scoreType = scoreType;
+        this.pitchScoreType = pitchScoreType;
     }
 
     public static Pitch initiate(PitchScore pitchScore) {
-        ScoreType scoreType = ScoreTypeFactory.initiate(pitchScore);
-        return new Pitch(pitchScore, scoreType);
+        PitchScoreType pitchScoreType = PitchScoreType.initiate(pitchScore);
+        return new Pitch(pitchScore, pitchScoreType);
     }
 
     public Pitch next(PitchScore pitchScore) {
-        ScoreType scoreType = ScoreTypeFactory.next(this, pitchScore);
-        return new Pitch(pitchScore, scoreType);
+        PitchScoreType pitchScoreType = PitchScoreType.next(this, pitchScore);
+        return new Pitch(pitchScore, pitchScoreType);
     }
 
     public boolean isStrike() {
-        return scoreType == ScoreType.STRIKE;
+        return pitchScoreType == PitchScoreType.STRIKE;
     }
 
     public boolean isSpare() {
-        return scoreType == ScoreType.SPARE;
+        return pitchScoreType == PitchScoreType.SPARE;
     }
 
     public int calculateScoresSum(PitchScore nextPitchScore) {
-        return this.getPitchScore() + nextPitchScore.getScore();
+        return this.getPitchScore() + nextPitchScore.getPitchScore();
     }
 
     public int getPitchScore() {
-        return pitchScore.getScore();
+        return pitchScore.getPitchScore();
     }
 
     public String getScoreSignature() {
-        return scoreType.getSignature(this);
+        return pitchScoreType.getSignature(this);
     }
 }

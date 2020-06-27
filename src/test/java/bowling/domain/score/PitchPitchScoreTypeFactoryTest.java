@@ -8,16 +8,16 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PitchScoreTypeFactoryTest {
+class PitchPitchScoreTypeFactoryTest {
 
     @DisplayName("처음 ScoreType을 만들 때 hitCount가 10이면 Strike를 반환")
     @Test
     public void makeScoreType_스트라이크() {
         PitchScore pitchScore = PitchScore.valueOf(10);
 
-        ScoreType scoreType = ScoreTypeFactory.initiate(pitchScore);
+        PitchScoreType pitchScoreType = PitchScoreType.initiate(pitchScore);
 
-        assertThat(scoreType).isEqualTo(ScoreType.STRIKE);
+        assertThat(pitchScoreType).isEqualTo(PitchScoreType.STRIKE);
     }
 
     @DisplayName("처음 ScoreType을 만들 때 hitCount가 0이면 Gutter를 반환")
@@ -25,9 +25,9 @@ class PitchScoreTypeFactoryTest {
     public void makeScoreType_거터() {
         PitchScore pitchScore = PitchScore.valueOf(0);
 
-        ScoreType scoreType = ScoreTypeFactory.initiate(pitchScore);
+        PitchScoreType pitchScoreType = PitchScoreType.initiate(pitchScore);
 
-        assertThat(scoreType).isEqualTo(ScoreType.GUTTER);
+        assertThat(pitchScoreType).isEqualTo(PitchScoreType.GUTTER);
     }
 
     @DisplayName("처음 ScoreType을 만들 때 hitCount가 1~9이면 Normal을 반환")
@@ -35,9 +35,9 @@ class PitchScoreTypeFactoryTest {
     public void makeScoreType_노멀() {
         PitchScore pitchScore = PitchScore.valueOf(3);
 
-        ScoreType scoreType = ScoreTypeFactory.initiate(pitchScore);
+        PitchScoreType pitchScoreType = PitchScoreType.initiate(pitchScore);
 
-        assertThat(scoreType).isEqualTo(ScoreType.NORMAL);
+        assertThat(pitchScoreType).isEqualTo(PitchScoreType.NORMAL);
     }
 
     @DisplayName("next ScoreType을 만들 때 이전의 ScoreType이 Strike면 예외 발생")
@@ -47,7 +47,7 @@ class PitchScoreTypeFactoryTest {
         PitchScore pitchScore = PitchScore.valueOf(3);
 
         assertThatThrownBy(() -> {
-            ScoreTypeFactory.next(pitch, pitchScore);
+            PitchScoreType.next(pitch, pitchScore);
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES_SCORE);
     }
@@ -59,7 +59,7 @@ class PitchScoreTypeFactoryTest {
         Pitch nextPitch = pitch.next(PitchScore.valueOf(10));
 
         assertThatThrownBy(() -> {
-            ScoreTypeFactory.next(nextPitch, PitchScore.valueOf(5));
+            PitchScoreType.next(nextPitch, PitchScore.valueOf(5));
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCHES_SCORE);
     }
@@ -71,7 +71,7 @@ class PitchScoreTypeFactoryTest {
         PitchScore pitchScore = PitchScore.valueOf(9);
 
         assertThatThrownBy(() -> {
-            ScoreTypeFactory.next(pitch, pitchScore);
+            PitchScoreType.next(pitch, pitchScore);
         }).isInstanceOf(BowlingBuildingException.class)
                 .hasMessageContaining(BowlingBuildingException.OVER_SCORE);
     }
@@ -82,9 +82,9 @@ class PitchScoreTypeFactoryTest {
         Pitch pitch = Pitch.initiate(PitchScore.valueOf(3));
         PitchScore pitchScore = PitchScore.valueOf(7);
 
-        ScoreType nextScoreType = ScoreTypeFactory.next(pitch, pitchScore);
+        PitchScoreType nextPitchScoreType = PitchScoreType.next(pitch, pitchScore);
 
-        assertThat(nextScoreType).isEqualTo(ScoreType.SPARE);
+        assertThat(nextPitchScoreType).isEqualTo(PitchScoreType.SPARE);
     }
 
     @DisplayName("next ScoreType을 만들 때 총합이 10점이 되지 못하면 Miss반환")
@@ -93,8 +93,8 @@ class PitchScoreTypeFactoryTest {
         Pitch pitch = Pitch.initiate(PitchScore.valueOf(3));
         PitchScore pitchScore = PitchScore.valueOf(6);
 
-        ScoreType nextScoreType = ScoreTypeFactory.next(pitch, pitchScore);
+        PitchScoreType nextPitchScoreType = PitchScoreType.next(pitch, pitchScore);
 
-        assertThat(nextScoreType).isEqualTo(ScoreType.MISS);
+        assertThat(nextPitchScoreType).isEqualTo(PitchScoreType.MISS);
     }
 }

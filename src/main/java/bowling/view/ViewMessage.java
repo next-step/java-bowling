@@ -12,9 +12,9 @@ public class ViewMessage {
     public static final String PLAYER_NAME = "|  %s |";
     public static final String VERTICAL_LINE = "|";
     public static final String BLANK_FRAME = "      |";
-    public static final String FRAME_SCORE_ROW_PREFIX = "|      |";
-    public static final String FRAME_SCORE_ROW_FORMAT = "  %-4d|";
     public static final String FRAME_SIGNATURE_ROW_FORMAT = "  %-4s|";
+    public static final String FRAME_SCORE_ROW_FORMAT = "  %-4d|";
+    public static final String FRAME_SCORE_ROW_PREFIX = "|      |";
 
     private ViewMessage() {
     }

@@ -10,32 +10,32 @@ public class PitchScore {
     private static final int MINIMUM_SCORE = 0;
     private static final int MAXIMUM_SCORE = 10;
 
-    private final int score;
+    private final int pitchScore;
 
-    private PitchScore(int score) {
-        this.score = score;
+    private PitchScore(int pitchScore) {
+        this.pitchScore = pitchScore;
     }
 
-    public static PitchScore valueOf(int score) {
-        validateScore(score);
-        return CACHE.computeIfAbsent(score, PitchScore::new);
+    public static PitchScore valueOf(int pitchScore) {
+        validatePitchScore(pitchScore);
+        return CACHE.computeIfAbsent(pitchScore, PitchScore::new);
     }
 
-    private static void validateScore(int score) {
-        if (score < MINIMUM_SCORE || score > MAXIMUM_SCORE) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_SCORE_RANGE);
+    private static void validatePitchScore(int pitchScore) {
+        if (pitchScore < MINIMUM_SCORE || pitchScore > MAXIMUM_SCORE) {
+            throw new BowlingBuildingException(BowlingBuildingException.INVALID_PITCH_SCORE_RANGE);
         }
     }
 
-    public boolean isMaximumScore() {
-        return score == MAXIMUM_SCORE;
+    public boolean isMaximum() {
+        return pitchScore == MAXIMUM_SCORE;
     }
 
-    public boolean isMinimumScore() {
-        return score == MINIMUM_SCORE;
+    public boolean isMinimum() {
+        return pitchScore == MINIMUM_SCORE;
     }
 
-    public int getScore() {
-        return score;
+    public int getPitchScore() {
+        return pitchScore;
     }
 }

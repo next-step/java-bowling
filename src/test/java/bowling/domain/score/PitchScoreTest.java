@@ -17,7 +17,7 @@ class PitchScoreTest {
     public void makeScore_정상(int score) {
         PitchScore object = PitchScore.valueOf(score);
 
-        assertThat(object.getScore()).isEqualTo(score);
+        assertThat(object.getPitchScore()).isEqualTo(score);
     }
 
     @DisplayName("Score 객체 생성 실패(잘못된 범위의 정수)")
@@ -27,20 +27,20 @@ class PitchScoreTest {
         assertThatThrownBy(() -> {
             PitchScore.valueOf(score);
         }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_SCORE_RANGE);
+                .hasMessageContaining(BowlingBuildingException.INVALID_PITCH_SCORE_RANGE);
     }
 
     @DisplayName("Score가 10이면 isMaximumScore은 True")
     @Test
     public void isMaximumScore_True() {
-        assertThat(PitchScore.valueOf(10).isMaximumScore()).isTrue();
-        assertThat(PitchScore.valueOf(9).isMaximumScore()).isFalse();
+        assertThat(PitchScore.valueOf(10).isMaximum()).isTrue();
+        assertThat(PitchScore.valueOf(9).isMaximum()).isFalse();
     }
 
     @DisplayName("Score가 0이면 isMinimumScore은 True")
     @Test
     public void isMinimumScore_True() {
-        assertThat(PitchScore.valueOf(0).isMinimumScore()).isTrue();
-        assertThat(PitchScore.valueOf(1).isMinimumScore()).isFalse();
+        assertThat(PitchScore.valueOf(0).isMinimum()).isTrue();
+        assertThat(PitchScore.valueOf(1).isMinimum()).isFalse();
     }
 }

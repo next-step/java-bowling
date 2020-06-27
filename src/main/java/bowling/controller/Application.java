@@ -14,7 +14,7 @@ public class Application {
         OutputView.printDefaultScoreBoard(player);
 
         while (frames.hasNextTurn()) {
-            PitchScore pitchScore = PitchScore.valueOf(InputView.inputPitch(frames));
+            PitchScore pitchScore = PitchScore.valueOf(InputView.inputPitchScore(frames));
             frames.bowl(pitchScore);
             OutputView.printBowlingScoreBoard(player, frames);
             frames.moveToNextFrame();
