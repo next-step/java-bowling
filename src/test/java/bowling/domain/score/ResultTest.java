@@ -17,10 +17,8 @@ public class ResultTest {
     void findByScores(int firstScore, int secondScore, Result expected) {
         Score first = Score.of(firstScore);
         Score second = Score.of(secondScore);
-        Scores scores = Scores.from(first);
-        scores.inputSecondScore(second);
 
-        Result result = Result.findByScores(scores);
+        Result result = Result.findByScores(first, second);
 
         assertThat(result).isEqualTo(expected);
     }

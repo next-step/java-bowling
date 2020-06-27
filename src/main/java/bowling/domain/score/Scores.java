@@ -32,14 +32,10 @@ public class Scores {
             throw new IllegalStateException("두번째 투구의 점수가 입력되지 않았습니다");
         }
 
-        return Result.STRIKE;
+        return Result.findByScores(first, second);
     }
 
-    public Score getFirst() {
-        return Score.of(first.getContent());
-    }
-
-    public Score getSecond() {
-        return Score.of(second.getContent());
+    public boolean canPitchMore() {
+        return !first.equals(Score.MAX_SCORE) &&  second == null;
     }
 }
