@@ -56,12 +56,12 @@ public class Answer extends AbstractEntity {
         return this.writer.equals(writer);
     }
 
-    public User getWriter() {
-        return writer;
+    public boolean isNotOwner(User writer) {
+        return !isOwner(writer);
     }
 
-    public String getContents() {
-        return contents;
+    public User getWriter() {
+        return writer;
     }
 
     public void toQuestion(Question question) {

@@ -2,9 +2,16 @@ package qna.domain;
 
 import org.hibernate.annotations.Where;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import java.time.LocalDateTime;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -21,40 +28,21 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers;
 
-    private boolean deleted = false;
-
-    public Question() {
-    }
+    private boolean deleted;
 
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
+        this.answers = Answers.of();
     }
 
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
+        this.answers = Answers.of();
     }
 
     public User getWriter() {
@@ -68,24 +56,31 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        answers.addToAnswer(answer);
     }
 
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public boolean hasQuestionOtherOwnerAnswers(User user) {
+        return this.answers.hasOtherOwnerAnswers(user);
+    }
+
+    public void deleteQuestion() {
+        this.deleted = true;
+    }
+
+    public Answers getAnswers() {
+        return this.answers;
+    }
+
+    public DeleteHistory generateDeleteHistoryForQuestion() {
+        return DeleteHistory.of(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
     }
 
     @Override
