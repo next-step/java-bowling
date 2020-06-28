@@ -3,7 +3,6 @@ package bowling.view;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
-import bowling.domain.score.Scores;
 
 import java.util.List;
 
@@ -30,15 +29,10 @@ public class OutputView {
         System.out.printf("|   %s  |", player.getName());
 
         for (Frame frame : frameList) {
-            System.out.printf("  %s   |", getResult(frame));
+            System.out.printf("%s|", ViewResult.parseScores(frame.getScores()));
         }
 
         System.out.println();
         System.out.println();
-    }
-
-    private static String getResult(Frame frame) {
-        Scores scores = frame.getScores();
-        return scores.getFirst().getContent() + "/" + scores.getSecond().getContent();
     }
 }

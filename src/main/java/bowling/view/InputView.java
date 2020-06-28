@@ -15,7 +15,7 @@ public class InputView {
     }
 
     public static Score askScore(int frameIndex) {
-        System.out.println(frameIndex + "프레임 투구 : ");
+        System.out.println((frameIndex + 1) + "프레임 투구 : ");
         return Score.of(SCANNER.nextInt());
     }
 }
