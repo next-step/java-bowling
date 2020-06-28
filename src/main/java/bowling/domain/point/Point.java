@@ -24,4 +24,12 @@ public class Point {
     public int getPoint() {
         return point;
     }
+
+    public static Point MIN() {
+        return new Point(MIN_POINT);
+    }
+
+    public static Point MAX() {
+        return new Point(MAX_POINT);
+    }
 }

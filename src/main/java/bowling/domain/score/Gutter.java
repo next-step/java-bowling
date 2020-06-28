@@ -3,7 +3,7 @@ package bowling.domain.score;
 import bowling.domain.point.Point;
 
 public class Gutter implements Score {
-    private static final Point POINT = new Point(0);
+    private static final Point POINT = Point.MIN();
     private static final ScoreType SCORE_TYPE = ScoreType.GUTTER;
 
     @Override

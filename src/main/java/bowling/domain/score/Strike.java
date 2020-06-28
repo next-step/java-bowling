@@ -3,7 +3,7 @@ package bowling.domain.score;
 import bowling.domain.point.Point;
 
 public class Strike implements Score {
-    private static final Point SCORE = new Point(10);
+    private static final Point SCORE = Point.MAX();
     private static final ScoreType SCORE_TYPE = ScoreType.STRIKE;
 
     @Override
