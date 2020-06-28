@@ -19,6 +19,10 @@ public class FinalFrame implements Frame {
         this.pitchCount = pitchCount;
     }
 
+    public static Frame create() {
+        return new FinalFrame(null, 0);
+    }
+
     public static Frame create(List<Score> scores, int pitchCount) {
         return new FinalFrame(scores, pitchCount);
     }

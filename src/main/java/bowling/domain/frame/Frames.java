@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.point.Point;
+import bowling.domain.score.Normal;
 import bowling.domain.score.Score;
 
 import java.util.LinkedList;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class Frames {
 
-    private static final int MIN_FRAME_NUMBER = 1;
+    private static final int MIN_FRAME_NUMBER = 0;
     private static final int MAX_FRAME_NUMBER = 10;
 
     private final List<Frame> frames = new LinkedList<>();
@@ -17,6 +18,7 @@ public class Frames {
     private Frames(int frameIndex)  {
         validateFrameIndex(frameIndex);
         this.frameIndex = frameIndex;
+        frames.add(NormalFrame.create());
     }
 
     public static Frames create() {
@@ -34,17 +36,18 @@ public class Frames {
         frames.add(frame);
     }
 
-    public Frame createNextFrame(List<Score> scores, int pitchCount) {
-        if (isBeforeLastIndex()) {
-            return FinalFrame.create(scores, pitchCount);
+    public void next() {
+        if(frames.get(frameIndex).isLastPitch()) {
+            frames.add(createNextFrame());
+            frameIndex++;
         }
-        return NormalFrame.create(scores, pitchCount);
     }
 
-    public void next() {
-        if (frames.get(frameIndex).isLastPitch()) {
-
+    private Frame createNextFrame() {
+        if (isBeforeLastIndex()) {
+            return FinalFrame.create();
         }
+        return NormalFrame.create();
     }
 
     public List<Frame> getFrames() {
@@ -69,7 +72,7 @@ public class Frames {
 
     private void validateFrameIndex(int frameIndex) {
         if (frameIndex < MIN_FRAME_NUMBER) {
-            throw new IllegalArgumentException("프레임은 1보다 작을 수 없습니다.");
+            throw new IllegalArgumentException("프레임은 0보다 작을 수 없습니다.");
         }
 
         if (frameIndex > MAX_FRAME_NUMBER) {

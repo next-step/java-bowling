@@ -19,6 +19,10 @@ public class NormalFrame implements Frame {
         this.pitchCount = pitchCount;
     }
 
+    public static Frame create() {
+        return new NormalFrame(null, 0);
+    }
+
     public static Frame create(List<Score> scores, int pitchCount) {
         return new NormalFrame(scores, pitchCount);
     }
