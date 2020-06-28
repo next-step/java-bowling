@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.joining;
 
 public class NormalFrame implements Frame {
     private static final int PITCH_COUNT_MAX = 2;
+    private static final int FINAL_NORMAL_FRAME_NUMBER = 9;
 
     private final FrameNumber frameNumber;
     private final LinkedList<Pitch> pitches;
@@ -54,7 +55,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame createNextFrame() {
-        if (frameNumber.getNumber() == 9) {
+        if (frameNumber.getNumber() == FINAL_NORMAL_FRAME_NUMBER) {
             return new FinalFrame(frameNumber.getNumber() + 1);
         }
 
