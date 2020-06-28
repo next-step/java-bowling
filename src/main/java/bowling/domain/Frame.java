@@ -1,16 +1,18 @@
 package bowling.domain;
 
 import bowling.common.IntegerUtils;
-import org.hibernate.type.IntegerType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Frame {
     public static final int TOTAL_PIN_COUNT = 10;
     public static final int MAX_THROW_COUNT = 2;
-    private int throwCount;
+    private List<Integer> pins;
     private int remain;
 
     public Frame() {
-        throwCount = IntegerType.ZERO;
+        this.pins = new ArrayList<>();
         remain = TOTAL_PIN_COUNT;
     }
 
@@ -27,16 +29,16 @@ public class Frame {
             throw new IllegalArgumentException("Max pin count per frame is " + TOTAL_PIN_COUNT);
         }
 
-        if (throwCount + 1 > MAX_THROW_COUNT) {
+        if (pins.size() + 1 > MAX_THROW_COUNT) {
             throw new IllegalArgumentException("Frame is finished");
         }
 
-        throwCount++;
         remain -= score;
+        pins.add(score);
     }
 
     public int getThrowCount() {
-        return throwCount;
+        return pins.size();
     }
 
     public int getRemain() {
