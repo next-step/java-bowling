@@ -70,6 +70,14 @@ public class Answer extends AbstractEntity {
         return writer;
     }
 
+    public Question getQuestion() {
+        return question;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
