@@ -3,16 +3,13 @@ package qna.domain;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 @Entity
@@ -27,10 +24,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -100,7 +95,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
@@ -115,7 +110,7 @@ public class Question extends AbstractEntity {
         }
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, now));
+        deleteHistories.add(DeleteHistory.create(ContentType.QUESTION, getId(), writer, now));
         setDeleted(true);
         deleteHistories.addAll(deleteAnswers(loginUser));
         
@@ -123,6 +118,6 @@ public class Question extends AbstractEntity {
     }
 
     private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
-        return new Answers(answers).deleteAll(loginUser);
+        return answers.deleteAll(loginUser);
     }
 }
