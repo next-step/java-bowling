@@ -39,6 +39,12 @@ public class FrameScore {
         return new FrameScore(FrameScoreStatus.NOT_READY, this.score + bonusScore.getStrikeBonus());
     }
 
+    public FrameScore applySpecialStrikeBonus(int specialStrikeBonus) {
+        validateApplyBonus();
+
+        return new FrameScore(FrameScoreStatus.COMPLETE, this.score + 10 + specialStrikeBonus);
+    }
+
     public String getScore() {
         return this.score.toString();
     }

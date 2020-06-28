@@ -40,6 +40,12 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public FrameScore calculateSpecialStrikeScore() {
+        // TODO
+        return null;
+    }
+
+    @Override
     public FrameScore calculateCurrentScore() {
         Integer currentScore = this.calculateCurrentResults().calculateScore();
         if (this.finalFrameStatus.isCompleted()) {

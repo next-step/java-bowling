@@ -15,4 +15,6 @@ public interface Frame {
     FrameScore calculateCurrentScore();
 
     FrameScore calculatePreviousScore();
+
+    FrameScore calculateSpecialStrikeScore();
 }

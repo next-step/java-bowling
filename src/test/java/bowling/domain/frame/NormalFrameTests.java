@@ -157,7 +157,7 @@ class NormalFrameTests {
                 ),
                 Arguments.of(
                         NormalFrame.start(TEN).next(TEN),
-                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                        new FrameScore(FrameScoreStatus.NOT_READY, 10)
                 ),
 
                 // 이전 프레임이 아무것도 아닌 경우
@@ -208,6 +208,58 @@ class NormalFrameTests {
                 Arguments.of(NormalFrame.start(TEN).next(FIVE), false),
                 Arguments.of(NormalFrame.start(FIVE).bowl(FIVE).next(FIVE), false),
                 Arguments.of(NormalFrame.start(FIVE).bowl(FOUR).next(TEN), false)
+        );
+    }
+
+    @DisplayName("이전 프레임이 연속된 스트라이크인 경우 점수 계산을 할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("calculateSpecialStrikeScoreResource")
+    void calculateSpecialStrikeScoreTest(Frame frame, FrameScore expectedResult) {
+        NormalFrame parsed = (NormalFrame) frame;
+
+        FrameScore frameScore = parsed.calculateSpecialStrikeScore();
+
+        assertThat(frameScore).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> calculateSpecialStrikeScoreResource() {
+        return Stream.of(
+                // 아직 더블 여부를 알 수 없는 경우
+                Arguments.of(
+                        NormalFrame.start(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 0)
+                ),
+                Arguments.of(
+                        NormalFrame.start(TEN).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 0)
+                ),
+
+                // 더블인 경우
+                Arguments.of(
+                        NormalFrame.start(TEN).next(TEN).next(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 25)
+                ),
+                Arguments.of(
+                        NormalFrame.start(TEN).next(TEN).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 30)
+                ),
+                Arguments.of(
+                        NormalFrame.start(TEN).next(TEN).next(FIVE).bowl(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 25)
+                ),
+
+                // 더블이 아닌 경우
+                Arguments.of(
+                        NormalFrame.start(TEN).next(FIVE).bowl(FIVE).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FIVE).next(TEN).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FOUR).next(FIVE).bowl(FOUR).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 9)
+                )
         );
     }
 }
