@@ -1,13 +1,16 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
+import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
+
+    private static final String INVALID_AUTHORITY = "질문을 삭제할 권한이 없습니다.";
+    private static final String INVALID_ANSWER_AUTHORITY = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -18,10 +21,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -68,28 +69,50 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        answers.addAnswer(answer);
     }
 
-    public boolean isOwner(User loginUser) {
+    private boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
-    }
-
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public void validateDeleteAuthority(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(INVALID_AUTHORITY);
+        }
+    }
+
+    public void validateHasAnswerAuthority(User loginUser) throws CannotDeleteException {
+        if (answers.hasAnotherOwner(loginUser)) {
+            throw new CannotDeleteException(INVALID_ANSWER_AUTHORITY);
+        }
+    }
+
+    public void validate(User loginUser) throws CannotDeleteException {
+        validateDeleteAuthority(loginUser);
+        validateHasAnswerAuthority(loginUser);
+    }
+
+    public List<DeleteHistory> delete() {
+        this.deleted = true;
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(this));
+        deleteHistories.addAll(this.answers.delete());
+        return deleteHistories;
     }
 
     @Override
     public String toString() {
-        return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+        return "Question{" +
+            "title='" + title + '\'' +
+            ", contents='" + contents + '\'' +
+            ", writer=" + writer +
+            ", answers=" + answers +
+            ", deleted=" + deleted +
+            '}';
     }
 }
