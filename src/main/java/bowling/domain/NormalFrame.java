@@ -2,28 +2,26 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class NormalFrame implements Frame {
-    public static final int FRAME_MAX_LENGTH = 2;
+public class NormalFrame extends Frame {
+    public static final int NORMAL_FRAME_MAX_LENGTH = 2;
     private static final int LAST_FRAME = 9;
-
-    private Pin pin;
-    private final States states;
 
     public NormalFrame() {
         this.pin = new Pin(Pin.MIN_PIN);
         this.states = new States();
+        this.nextFrame = null;
     }
 
     @Override
     public void bowl(Pin fallenPin) {
         State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getSize());
-        setStates(state);
+        setStates(state, fallenPin);
         setPin(fallenPin);
     }
 
     @Override
     public boolean isEndFrame() {
-        return this.states.getSize() == FRAME_MAX_LENGTH || states.isLastStateStrike();
+        return this.states.getSize() == NORMAL_FRAME_MAX_LENGTH || states.isLastStateStrike();
     }
 
     @Override
@@ -34,17 +32,51 @@ public class NormalFrame implements Frame {
     @Override
     public Frame getNextFrame(int frameNumber) {
         if (frameNumber == LAST_FRAME) {
-            return new FinalFrame();
+            setNextFrame(new FinalFrame());
+            return this.nextFrame;
         }
-        return new NormalFrame();
+        setNextFrame(new NormalFrame());
+        return this.nextFrame;
     }
 
-    private void setStates(State state) {
-        this.states.add(state);
+    @Override
+    public int getScore() {
+        if (!isEndFrame()) {
+            return WAITING_CALCULATION;
+        }
+
+        State lastState = states.getLastState();
+        Score score = createScore(lastState);
+
+        if (score.canCalculateScore()) {
+            return score.getScore();
+        }
+
+        return nextFrame.calculateAdditionalScore(score);
+    }
+
+    private Score createScore(State lastState) {
+        if (lastState == State.STRIKE) {
+            return Score.ofStrike();
+        }
+
+        if (lastState == State.SPARE) {
+            return Score.ofSpare();
+        }
+
+        return Score.ofMiss(states.getBeforeState().getFallenPins() + pin.getFallenPin());
+    }
+
+    private void setStates(State state, Pin fallenPin) {
+        this.states.add(state, fallenPin);
     }
 
     private void setPin(Pin fallenPin) {
         this.pin = fallenPin;
+    }
+
+    public void setNextFrame(Frame nextFrame) {
+        this.nextFrame = nextFrame;
     }
 
     public Pin getPin() {
