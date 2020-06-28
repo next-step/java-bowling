@@ -1,17 +1,17 @@
 package bowling;
 
-public class NumberOfKnockedDown {
+public class KnockDownNumber {
 
   private Integer value;
 
-  public NumberOfKnockedDown() {
+  public KnockDownNumber() {
   }
 
-  public NumberOfKnockedDown(Integer value) {
+  public KnockDownNumber(Integer value) {
     this.value = value;
   }
 
-  public int getValue() {
+  public int getIntValue() {
     return value == null ? 0 : value;
   }
 

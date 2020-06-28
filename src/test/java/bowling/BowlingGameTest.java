@@ -9,6 +9,7 @@ class BowlingGameTest {
   @Test
   void roll() {
     BowlingGame game = new BowlingGame();
+    game.roll(10);
     while(!game.requiredBonusFrame()) {
       game.roll(1);
     }
