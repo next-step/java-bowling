@@ -8,7 +8,7 @@ public class Pitch {
         this.pitchCount = pitchCount;
     }
 
-    public static Pitch pitch() {
-
+    public static Pitch pitch(int pitchCount) {
+        return new Pitch(pitchCount);
     }
 }

@@ -15,8 +15,8 @@ public class InputView {
         return Player.create(name);
     }
 
-    public static int inputScore(int frameSize) {
-        System.out.println(String.format("%d프레임 투구 : ", frameSize));
+    public static int inputScore(int frameNumber) {
+        System.out.println(String.format("%d프레임 투구 : ", frameNumber));
         return scanner.nextInt();
     }
 }
