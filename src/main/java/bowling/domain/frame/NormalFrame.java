@@ -57,7 +57,7 @@ public class NormalFrame extends Frame {
             return false;
         }
 
-        if (bonusScores.findBonusScores(frameIndex).isAvailableAddBonusPoint()) {
+        if (bonusScores.isAvailableAddBonusScores(frameIndex)) {
             return false;
         }
 

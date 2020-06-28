@@ -47,14 +47,15 @@ public class BonusScores {
                 .orElse(BonusScore.noneBonusScores(frameIndex));
     }
 
-    public boolean isEmpty() {
-        return CollectionUtils.isEmpty(bonusScores);
-    }
-
     public boolean isEmptyByFrameIndex(int frameIndex) {
         return bonusScores.stream()
                 .filter(bonusScore -> bonusScore.equalsByFrameIndex(frameIndex))
                 .findFirst()
                 .isPresent();
+    }
+
+    public boolean isAvailableAddBonusScores(int frameIndex) {
+        return bonusScores.stream()
+                .anyMatch(bonusScore -> bonusScore.isAvailableAddBonusPoint() && bonusScore.equalsByFrameIndex(frameIndex));
     }
 }
