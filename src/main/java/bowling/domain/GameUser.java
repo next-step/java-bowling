@@ -1,4 +1,4 @@
-package bowling.vo;
+package bowling.domain;
 
 import java.util.regex.Pattern;
 
