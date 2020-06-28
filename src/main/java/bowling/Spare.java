@@ -11,7 +11,7 @@ public class Spare implements FrameStatus {
   public Spare(FrameStatus frameStatus) {
     int curIndex = frameStatus.getIndexOfScoredFrames().get(0);
 
-    this.indexOfScoredFrames = Arrays.asList(curIndex + 1);
+    this.indexOfScoredFrames = Arrays.asList(curIndex, curIndex + 1);
   }
 
   @Override

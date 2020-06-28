@@ -26,7 +26,7 @@ class SpareTest {
         arguments(
             0,
             Arrays.asList(
-                1
+                0, 1
             )
         )
     );
