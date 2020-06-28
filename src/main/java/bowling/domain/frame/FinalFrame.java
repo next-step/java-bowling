@@ -21,7 +21,7 @@ public class FinalFrame extends Frame {
     @Override
     public void addPoint(int point) {
         validateScores(point);
-        if (scores.isStrikeOrSpare() && Objects.isNull(additionalPoint)) {
+        if ((scores.isStrike() || scores.isSpare()) && Objects.isNull(additionalPoint)) {
             additionalPoint = new Point(point);
             bonusScores.addBonusScore(BonusScore.lastBonusScore());
         }
@@ -35,11 +35,11 @@ public class FinalFrame extends Frame {
 
     @Override
     public void validateScores(int point) {
-        if (scores.isStrikeOrSpare() && scores.totalScore() + point > BONUS_MAX_SCORE) {
+        if ((scores.isStrike() || scores.isSpare()) && scores.totalScore() + point > BONUS_MAX_SCORE) {
             throw new IllegalArgumentException("third frame score less than 20");
         }
 
-        if (!scores.isStrikeOrSpare() && scores.totalScore() + point > DEFAULT_MAX_SCORE) {
+        if (!(scores.isStrike() || scores.isSpare()) && scores.totalScore() + point > DEFAULT_MAX_SCORE) {
             throw new IllegalArgumentException("score less than 10");
         }
     }
@@ -52,7 +52,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isAvailablePlay() {
-        if (scores.isStrikeOrSpare()) {
+        if ((scores.isStrike() || scores.isSpare())) {
             return bonusScores.isAvailableAdd();
         }
 

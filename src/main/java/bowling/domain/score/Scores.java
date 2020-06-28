@@ -52,10 +52,6 @@ public class Scores {
         return scores.size() == THIRD_SCORE;
     }
 
-    public boolean isStrikeOrSpare() {
-        return isStrike() || isSpare();
-    }
-
     public boolean isStrike() {
         if (CollectionUtils.isEmpty(scores)) {
             return false;
