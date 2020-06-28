@@ -51,7 +51,7 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isBonusPitch() {
-        return pitches.getFirst().getState() == State.STRIKE || pitches.getLast().getState() == State.SPARE;
+        return pitches.getFirst().isStrikePitch() || pitches.getLast().isSparePitch();
     }
 
     public FrameNumber getFrameNumber() {

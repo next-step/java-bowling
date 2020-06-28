@@ -42,7 +42,7 @@ public class NormalFrame implements Frame {
 
         Pitch firstPitch = pitches.getFirst();
 
-        if (firstPitch.getState().equals(State.STRIKE)) {
+        if (firstPitch.isStrikePitch()) {
             return false;
         }
 

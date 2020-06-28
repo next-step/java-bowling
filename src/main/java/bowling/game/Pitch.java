@@ -58,8 +58,16 @@ public class Pitch {
         return state;
     }
 
+    public boolean isStrikePitch() {
+        return state.isStrike();
+    }
+
+    public boolean isSparePitch() {
+        return state.isSpare();
+    }
+
     public String stateToString() {
-        if (this.state == State.MISS) {
+        if (state.isMiss()) {
             return String.valueOf(pinCount);
         }
 
