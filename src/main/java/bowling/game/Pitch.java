@@ -14,19 +14,9 @@ public class Pitch {
     }
 
     public static Pitch firstPitch(final int pinCount) {
-        if (pinCount == PIN_COUNT_MAX) {
-            return new Pitch(pinCount, State.STRIKE);
-        }
+        State state = State.findState(pinCount, PIN_COUNT_MIN, false);
 
-        return new Pitch(pinCount, findState(pinCount));
-    }
-
-    private static State findState(final int pinCount) {
-        if (pinCount == PIN_COUNT_MIN) {
-            return State.GUTTER;
-        }
-
-        return State.MISS;
+        return new Pitch(pinCount, state);
     }
 
     private void validatePinCount(final int pinCount) {
@@ -37,11 +27,10 @@ public class Pitch {
 
     public Pitch nextPitch(final int pinCount) {
         validateNextPinCount(pinCount);
-        if (pinCount + this.pinCount == PIN_COUNT_MAX) {
-            return new Pitch(pinCount, State.SPARE);
-        }
 
-        return new Pitch(pinCount, findState(pinCount));
+        State state = State.findState(pinCount, this.pinCount, true);
+
+        return new Pitch(pinCount, state);
     }
 
     private void validateNextPinCount(final int pinCount) {
