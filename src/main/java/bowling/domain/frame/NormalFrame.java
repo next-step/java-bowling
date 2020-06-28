@@ -6,23 +6,24 @@ import bowling.domain.score.Scores;
 
 public class NormalFrame extends Frame {
     private final static int MAX_SCORE = 10;
+    private final static int FIRST_FRAME_INDEX = 0;
 
-    public NormalFrame(BonusScores bonusScores) {
-        super(new Scores(), bonusScores);
+    public NormalFrame(BonusScores bonusScores, int frameIndex) {
+        super(new Scores(), bonusScores, frameIndex);
     }
 
     public static Frame createFirstFrame() {
-        return new NormalFrame(new BonusScores());
+        return new NormalFrame(new BonusScores(), FIRST_FRAME_INDEX);
     }
 
     public Frame createNextFrame(int frameIndex) {
-        createBonusScores(frameIndex);
-        return new NormalFrame(bonusScores.findAvailableAddBonusScores());
+        createBonusScores(frameIndex - 1);
+        return new NormalFrame(bonusScores.findAvailableAddBonusScores(), frameIndex);
     }
 
     public Frame createLastFrame(int frameIndex) {
-        createBonusScores(frameIndex);
-        return new FinalFrame(bonusScores.findAvailableAddBonusScores());
+        createBonusScores(frameIndex - 1);
+        return new FinalFrame(bonusScores.findAvailableAddBonusScores(), frameIndex);
     }
 
     private void createBonusScores(int frameIndex) {
@@ -48,12 +49,8 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isAvailableCalculatePoint(int frameIndex) {
+    public boolean isAvailableCalculatePoint() {
         if (availablePlay()) {
-            return false;
-        }
-
-        if (scores.isStrikeOrSpare() && !bonusScores.isEmptyByFrameIndex(frameIndex)) {
             return false;
         }
 

@@ -31,13 +31,13 @@ public class Frames {
         }
 
         NormalFrame normalFrame = (NormalFrame) ElementFindUtils.findLastElement(frames);
-        int currentFameIndex = frames.size() - ONE;
+        int nextFrameIndex = frames.size();
         if (isLast()) {
-            frames.add(normalFrame.createLastFrame(currentFameIndex));
+            frames.add(normalFrame.createLastFrame(nextFrameIndex));
             return;
         }
 
-        frames.add(normalFrame.createNextFrame(currentFameIndex));
+        frames.add(normalFrame.createNextFrame(nextFrameIndex));
         return;
     }
 

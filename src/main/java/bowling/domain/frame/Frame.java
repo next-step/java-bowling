@@ -10,10 +10,12 @@ import java.util.List;
 public abstract class Frame {
     protected Scores scores;
     protected BonusScores bonusScores;
+    protected final int frameIndex;
 
-    protected Frame(Scores scores, BonusScores bonusScores) {
+    protected Frame(Scores scores, BonusScores bonusScores, int frameIndex) {
         this.scores = scores;
         this.bonusScores = bonusScores;
+        this.frameIndex = frameIndex;
     }
 
     public void addPoint(int point) {
@@ -22,7 +24,7 @@ public abstract class Frame {
         bonusScores.addBonusPoint(point);
     }
 
-    public int totalScore(int frameIndex) {
+    public int totalScore() {
         BonusScore bonusScore = bonusScores.findBonusScores(frameIndex);
         return scores.totalScore() + bonusScore.calculateBonusPoints();
     }
@@ -35,5 +37,6 @@ public abstract class Frame {
 
     public abstract boolean availablePlay();
 
-    public abstract boolean isAvailableCalculatePoint(int frameIndex);
+    public abstract boolean isAvailableCalculatePoint();
+
 }

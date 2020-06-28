@@ -14,8 +14,8 @@ public class FinalFrame extends Frame {
 
     private Point additionalPoint;
 
-    public FinalFrame(BonusScores bonusScores) {
-        super(new Scores(), bonusScores);
+    public FinalFrame(BonusScores bonusScores, int frameIndex) {
+        super(new Scores(), bonusScores, frameIndex);
     }
 
     @Override
@@ -45,9 +45,9 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public int totalScore(int frameIndex) {
+    public int totalScore() {
         return Optional.ofNullable(additionalPoint)
-                .orElse(new Point(0)).getPoint() + super.totalScore(frameIndex);
+                .orElse(Point.MIN()).getPoint() + super.totalScore();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isAvailableCalculatePoint(int frameIndex) {
+    public boolean isAvailableCalculatePoint() {
         return !availablePlay();
     }
 }

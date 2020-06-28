@@ -18,19 +18,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class FinalFrameTest {
 
     private Frame createFrame() {
-        return new FinalFrame(new BonusScores());
+        return new FinalFrame(new BonusScores(), 9);
     }
 
     private Frame createHasBonusScoreStrikeFrame() {
         BonusScores bonusScores = new BonusScores();
         bonusScores.addBonusScore(BonusScore.strikeBonusScore(9));
-        return new FinalFrame(bonusScores);
+        return new FinalFrame(bonusScores, 9);
     }
 
     private Frame createHasBonusScoreSpareFrame() {
         BonusScores bonusScores = new BonusScores();
         bonusScores.addBonusScore(BonusScore.spareBonusScore(9));
-        return new FinalFrame(bonusScores);
+        return new FinalFrame(bonusScores, 9);
     }
 
     @Test

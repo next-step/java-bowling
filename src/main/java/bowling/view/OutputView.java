@@ -81,18 +81,18 @@ public class OutputView {
         int i = 0;
         List<Frame> frame = frames.getFrames();
         for (; i < frames.getFrameSize(); i++) {
-            if (!frame.get(i).isAvailableCalculatePoint(i)) {
+            if (!frame.get(i).isAvailableCalculatePoint()) {
                 break;
             }
-            totalScore = appendTotalCount(stringBuilder, frame.get(i), totalScore, i);
+            totalScore = appendTotalCount(stringBuilder, frame.get(i), totalScore);
         }
 
         stringBuilder = appendBlank(stringBuilder, i);
         return stringBuilder;
     }
 
-    private static Integer appendTotalCount(StringBuilder stringBuilder, Frame frame, Integer totalScore, int frameIndex) {
-        stringBuilder.append(String.format(POINT_FORMAT, totalScore + frame.totalScore(frameIndex)));
-        return totalScore + frame.totalScore(frameIndex);
+    private static Integer appendTotalCount(StringBuilder stringBuilder, Frame frame, Integer totalScore) {
+        stringBuilder.append(String.format(POINT_FORMAT, totalScore + frame.totalScore()));
+        return totalScore + frame.totalScore();
     }
 }
