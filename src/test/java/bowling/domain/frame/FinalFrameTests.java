@@ -215,7 +215,7 @@ class FinalFrameTests {
                 ),
                 Arguments.of(
                         FinalFrame.bowlFirst(10, NormalFrame.start(10)),
-                        new FrameScore(FrameScoreStatus.NOT_READY, 20)
+                        new FrameScore(FrameScoreStatus.NOT_READY, 10)
                 ),
                 Arguments.of(
                         FinalFrame.bowlFirst(5, NormalFrame.start(10)).bowl(5),

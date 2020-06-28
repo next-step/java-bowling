@@ -57,6 +57,9 @@ public class FinalFrame implements Frame {
     @Override
     public FrameScore calculatePreviousScore() {
         FrameScore previousFrameScore = this.previousFrame.calculateCurrentScore();
+        if (this.previousFrame.isStrike() && this.finalFrameStatus.isFirstStrike()) {
+            return previousFrameScore;
+        }
         if (this.previousFrame.isSpare()) {
             return previousFrameScore.applySpareBonus(calculateBonusScore().getFirstThrowScore());
         }

@@ -28,6 +28,14 @@ public class FinalFrameStatus implements FrameStatus {
         return new FinalFrameStatus(new NumberOfHitPin(numberOfHitPin), null, null);
     }
 
+    public boolean isFirstStrike() {
+        return (this.firstNumberOfHitPin != null && this.firstNumberOfHitPin.equals(STRIKE));
+    }
+
+    public boolean isSecondStrike() {
+        return (this.secondNumberOfHitPin != null && this.secondNumberOfHitPin.equals(STRIKE));
+    }
+
     @Override
     public FinalBonusScore calculateBonusScore() {
         return FinalBonusScore.of(this.firstNumberOfHitPin, this.secondNumberOfHitPin);
