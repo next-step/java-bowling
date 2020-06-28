@@ -51,4 +51,19 @@ public class FinalFrameTest {
         assertThatExceptionOfType(UnsupportedOperationException.class)
                 .isThrownBy(() -> new FinalFrame().getNextFrame(1));
     }
+
+    @Test
+    void getScore() {
+        int firstPin = 10;
+        int secondPin = 10;
+        int thirdPin = 2;
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(new Pin(firstPin));
+        finalFrame.bowl(new Pin(secondPin));
+        finalFrame.bowl(new Pin(thirdPin));
+
+        int score = finalFrame.getScore();
+
+        assertThat(score).isEqualTo(firstPin + secondPin + thirdPin);
+    }
 }
