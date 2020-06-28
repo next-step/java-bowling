@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.exception.BowlingBuildingException;
 import bowling.domain.pitch.FinalPitches;
 import bowling.domain.pitch.Pitches;
 import bowling.domain.score.FrameScore;
@@ -22,7 +23,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame next(int index) {
-        return null;
+        throw new BowlingBuildingException(BowlingBuildingException.FINAL_FRAME_LIMIT);
     }
 
     @Override

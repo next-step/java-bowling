@@ -1,11 +1,13 @@
 package bowling.domain.frame;
 
+import bowling.domain.exception.BowlingBuildingException;
 import bowling.domain.score.FrameScore;
 import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FinalFrameTest {
 
@@ -26,6 +28,15 @@ class FinalFrameTest {
         finalFrame.bowl(PitchScore.valueOf(3));
 
         assertThat(finalFrame.isFinished()).isTrue();
+    }
+
+    @DisplayName("FinalFrame 객체로 next 객체 생성시 예외 발생")
+    @Test
+    public void next_예외() {
+        assertThatThrownBy(() -> {
+            FinalFrame.ofFinal().next(11);
+        }).isInstanceOf(BowlingBuildingException.class)
+                .hasMessageContaining(BowlingBuildingException.FINAL_FRAME_LIMIT);
     }
 
     @DisplayName("2번 투구했을 때 스트라이크가 1번 존재하면 추가 투구 가능")
