@@ -55,4 +55,8 @@ public class Frames {
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
     }
+
+    public boolean isCurrentFrameFinished() {
+        return getCurrentFrame().isFinished();
+    }
 }

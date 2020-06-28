@@ -94,6 +94,7 @@ PJS's turn :
 * SingleBowlingGame
     * 1명의 플레이어로 구성된 BowlingGame 객체이다.
     * 인스턴스 변수로 Frames와 Player를 가진다.
+    * 현재 플레이중인 프레임의 투구가 끝났는지 반환한다.
 
 * MultiBowlingGame
     * List<SingleBowlingGame> 의 일급 컬렉션이다.
