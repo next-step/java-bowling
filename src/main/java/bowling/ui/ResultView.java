@@ -2,7 +2,9 @@ package bowling.ui;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
+import bowling.domain.score.Score;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 public class ResultView {
@@ -31,7 +33,14 @@ public class ResultView {
     private static void printScoreLine(Player player, Frames frames) {
         System.out.print("|" + formatting(player.toString()));
         frames.getFrames().stream()
-                .map(frame -> formatting(""))
+                .map(frame -> {
+                    List<Score> scores = frame.getScores();
+                    String result = "";
+                    for (Score score : scores) {
+                        result += ScoreType.pointToScore(score.getScore());
+                    }
+                    return formatting(result);
+                })
                 .forEach(System.out::print);
     }
 

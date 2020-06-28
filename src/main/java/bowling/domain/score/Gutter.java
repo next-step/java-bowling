@@ -4,8 +4,6 @@ import bowling.domain.point.Point;
 
 public class Gutter implements Score {
 
-    private static final ScoreType SCORE_TYPE = ScoreType.GUTTER;
-
     private final Point point = Point.inputPoint(0);
 
     @Override
@@ -22,13 +20,8 @@ public class Gutter implements Score {
     }
 
     @Override
-    public ScoreType getScore() {
-        return SCORE_TYPE;
-    }
-
-    @Override
-    public Point getPoint() {
-        return point;
+    public String getScore() {
+        return "-";
     }
 
     @Override

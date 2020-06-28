@@ -4,8 +4,6 @@ import bowling.domain.point.Point;
 
 public class Normal implements Score {
 
-    private static final ScoreType SCORE_TYPE = ScoreType.NORMAL;
-
     private final Point point;
 
     public Normal(Point point) {
@@ -24,21 +22,12 @@ public class Normal implements Score {
             return new Gutter();
         }
 
-        if (point.getPoint() == GUTTER_POINT) {
-            return new Miss(point);
-        }
-
-        return new Normal(point);
+        return new Miss(point);
     }
 
     @Override
-    public ScoreType getScore() {
-        return SCORE_TYPE;
-    }
-
-    @Override
-    public Point getPoint() {
-        return point;
+    public String getScore() {
+        return point.toString();
     }
 
     @Override

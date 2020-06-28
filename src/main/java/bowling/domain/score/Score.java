@@ -9,9 +9,7 @@ public interface Score {
 
     Score nextScore(Point point);
 
-    ScoreType getScore();
-
-    Point getPoint();
+    String getScore();
 
     boolean isStrike();
 

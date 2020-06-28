@@ -20,7 +20,8 @@ public class FinalFrame implements Frame {
     }
 
     public static Frame create() {
-        return new FinalFrame(null, 0);
+        List<Score> Scores = new ArrayList<>();
+        return new FinalFrame(Scores, 0);
     }
 
     public static Frame create(List<Score> scores, int pitchCount) {

@@ -13,14 +13,14 @@ public class NormalFrame implements Frame {
     private int pitchCount = 0;
 
     private NormalFrame(List<Score> scores, int pitchCount) {
-        validateScores(scores);
         validatePitchCount(pitchCount);
         this.scores = scores;
         this.pitchCount = pitchCount;
     }
 
     public static Frame create() {
-        return new NormalFrame(null, 0);
+        List<Score> Scores = new ArrayList<>();
+        return new NormalFrame(Scores, 0);
     }
 
     public static Frame create(List<Score> scores, int pitchCount) {
@@ -71,12 +71,6 @@ public class NormalFrame implements Frame {
     private void validatePitchCount(int pitchCount) {
         if (pitchCount > NORMAL_MAX_BOWL_PITCH) {
             throw new IllegalArgumentException("보통 프레임은 투구수가 2를 넘을 수 없습니다.");
-        }
-    }
-
-    private void validateScores(List<Score> scores) {
-        if (scores == null) {
-            this.scores = new ArrayList<>();
         }
     }
 

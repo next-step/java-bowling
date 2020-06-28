@@ -4,8 +4,6 @@ import bowling.domain.point.Point;
 
 public class Spare implements Score {
 
-    private static final ScoreType SCORE_TYPE = ScoreType.SPARE;
-
     private final Point point;
 
     public Spare(Point point) {
@@ -18,13 +16,8 @@ public class Spare implements Score {
     }
 
     @Override
-    public ScoreType getScore() {
-        return SCORE_TYPE;
-    }
-
-    @Override
-    public Point getPoint() {
-        return point;
+    public String getScore() {
+        return "/";
     }
 
     @Override
