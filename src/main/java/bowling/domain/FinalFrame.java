@@ -2,35 +2,33 @@ package bowling.domain;
 
 import java.util.Objects;
 
-public class FinalFrame implements Frame {
-    private static final int FRAME_MAX_LENGTH = 3;
-
-    private Pin pin;
-    private final States states;
+public class FinalFrame extends Frame {
+    private static final int FINAL_FRAME_MAX_LENGTH = 3;
 
     public FinalFrame() {
         this.pin = new Pin(Pin.MIN_PIN);
         this.states = new States();
+        this.nextFrame = null;
     }
 
     @Override
     public void bowl(Pin fallenPin) {
         State state = State.finalBowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getLastState());
-        setStates(state);
+        setStates(state, fallenPin);
         setPin(fallenPin);
     }
 
     @Override
     public boolean isEndFrame() {
-        return this.states.getSize() > FRAME_MAX_LENGTH;
+        return this.states.getSize() > FINAL_FRAME_MAX_LENGTH;
     }
 
     @Override
     public boolean isEndGame() {
-        if (states.getSize() == NormalFrame.FRAME_MAX_LENGTH && states.getStatesPinSum() < Pin.MAX_PIN) {
+        if (states.getSize() == NormalFrame.NORMAL_FRAME_MAX_LENGTH && states.getStatesPinSum() < Pin.MAX_PIN) {
             return true;
         }
-        return this.states.getSize() == FRAME_MAX_LENGTH;
+        return this.states.getSize() == FINAL_FRAME_MAX_LENGTH;
     }
 
     @Override
@@ -38,8 +36,25 @@ public class FinalFrame implements Frame {
         throw new UnsupportedOperationException();
     }
 
-    private void setStates(State state) {
-        this.states.add(state);
+    @Override
+    public States getStates() {
+        return states;
+    }
+
+    @Override
+    public int getScore() {
+        if (!isEndGame()) {
+            return WAITING_CALCULATION;
+        }
+
+        return states.getPins()
+                .stream()
+                .mapToInt(Pin::getFallenPin)
+                .sum();
+    }
+
+    private void setStates(State state, Pin fallenPin) {
+        this.states.add(state, fallenPin);
     }
 
     private void setPin(Pin fallenPin) {
@@ -48,11 +63,6 @@ public class FinalFrame implements Frame {
 
     public Pin getPin() {
         return pin;
-    }
-
-    @Override
-    public States getStates() {
-        return states;
     }
 
     @Override
