@@ -1,28 +1,9 @@
 package bowling.domain.score;
 
-import bowling.exception.CannotCalculateException;
+import bowling.domain.point.Point;
 
-public class Score {
-    private int score; // 현재까지 점수
-    private int left; // 남은 시도 횟수
+public interface Score {
 
-    public Score(int score, int left) {
-        this.score = score;
-        this.left = left;
-    }
-
-    public Score bowl(int countOfPins) {
-        return new Score(score += countOfPins, left - 1);
-    }
-
-    public int getScore() {
-        if (!canCalucateScore()) {
-            throw new CannotCalculateException("게임이 끝나지 않았습니다.");
-        }
-        return this.score;
-    }
-
-    public boolean canCalucateScore() {
-        return left == 0;
-    }
+    Score nextScore(Point point);
+    
 }

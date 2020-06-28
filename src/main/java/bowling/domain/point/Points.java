@@ -14,8 +14,8 @@ public class Points {
         return new Points();
     }
 
-    public void add(int point) {
-        this.points.add(Point.inputPoint(point));
+    public void add(Point point) {
+        this.points.add(point);
     }
 
     public int sum() {
