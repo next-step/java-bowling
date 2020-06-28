@@ -3,8 +3,8 @@ package bowling.domain;
 import org.hibernate.type.IntegerType;
 
 public class Frame {
-    private static final int TOTAL_PIN_COUNT = 10;
-    private static final int MAX_THROW_COUNT = 2;
+    public static final int TOTAL_PIN_COUNT = 10;
+    public static final int MAX_THROW_COUNT = 2;
     private int throwCount;
     private int remain;
 
@@ -14,23 +14,15 @@ public class Frame {
     }
 
     public String getResult() {
-        if (throwCount == 1 && remain == 0) {
-            return "strike";
-        }
-        if (throwCount == 2 && remain == 0) {
-            return "spare";
-        }
-        if (throwCount == 2 && remain == TOTAL_PIN_COUNT) {
-            return "gutter";
-        }
-        if (throwCount == 2 && remain > 0) {
-            return "miss";
-        }
-        throw new NotFinishedFrameException("Frame is not finished");
+        return "";
+    }
+
+    public ResultType getResultType() {
+        return ResultType.of(this);
     }
 
     public void addScore(int score) {
-        if (remain - score < 0) {
+        if (remain - score < IntegerType.ZERO) {
             throw new IllegalArgumentException("Max pin count per frame is " + TOTAL_PIN_COUNT);
         }
 
@@ -40,5 +32,13 @@ public class Frame {
 
         throwCount++;
         remain-=score;
+    }
+
+    public int getThrowCount() {
+        return throwCount;
+    }
+
+    public int getRemain() {
+        return remain;
     }
 }

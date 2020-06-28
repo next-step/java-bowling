@@ -3,7 +3,6 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("Frame 로직 테스트")
@@ -13,7 +12,7 @@ class FrameTest {
     public void test_stlike() {
         Frame frame = new Frame();
         frame.addScore(10);
-        assertThat(frame.getResult()).isEqualTo("strike");
+        assertThat(frame.getResultType()).isEqualTo(ResultType.STRIKE);
     }
 
     @Test
@@ -21,7 +20,7 @@ class FrameTest {
         Frame frame = new Frame();
         frame.addScore(5);
         frame.addScore(5);
-        assertThat(frame.getResult()).isEqualTo("spare");
+        assertThat(frame.getResultType()).isEqualTo(ResultType.SPARE);
     }
 
     @Test
@@ -29,7 +28,7 @@ class FrameTest {
         Frame frame = new Frame();
         frame.addScore(5);
         frame.addScore(3);
-        assertThat(frame.getResult()).isEqualTo("miss");
+        assertThat(frame.getResultType()).isEqualTo(ResultType.MISS);
     }
 
     @Test
@@ -37,7 +36,7 @@ class FrameTest {
         Frame frame = new Frame();
         frame.addScore(0);
         frame.addScore(0);
-        assertThat(frame.getResult()).isEqualTo("gutter");
+        assertThat(frame.getResultType()).isEqualTo(ResultType.GUTTER);
     }
 
     @Test
@@ -52,7 +51,7 @@ class FrameTest {
     public void test_프레임이_종료되지않았음() {
         Frame frame = new Frame();
         frame.addScore(5);
-        assertThatThrownBy(frame::getResult
+        assertThatThrownBy(frame::getResultType
         ).isInstanceOf(NotFinishedFrameException.class);
     }
 }
