@@ -3,6 +3,8 @@ package bowling.player.domain;
 import java.util.Objects;
 
 public class Name {
+    private static final int NAME_LENGTH = 3;
+
     private final String name;
 
     private Name(String name) {
@@ -18,7 +20,7 @@ public class Name {
     }
 
     private void mustBeThreeCharacters(String name) {
-        if (name.length() != 3) {
+        if (name.length() != NAME_LENGTH) {
             throw new IllegalArgumentException("Name 객체를 생성할 수 없습니다.");
         }
     }
