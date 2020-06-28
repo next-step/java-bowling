@@ -25,7 +25,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean canAddMoreScore() {
-        return scores.canAddMore();
+        return !scores.getFirst().isPresent() || !scores.getSecond().isPresent();
     }
 
     @Override

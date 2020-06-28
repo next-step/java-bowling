@@ -1,9 +1,15 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Result;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class FinalFrame implements Frame {
+
+    private static final List<Result> BONUS_SCORE_RESULTS = Arrays.asList(Result.STRIKE, Result.SPARE);
 
     private final int index;
     private final Scores scores;
@@ -24,7 +30,15 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean canAddMoreScore() {
-        return scores.canAddMore();
+        if (!scores.getFirst().isPresent() || !scores.getSecond().isPresent()) {
+            return true;
+        }
+
+        if (!scores.getBonus().isPresent() && BONUS_SCORE_RESULTS.contains(scores.checkResult())) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override

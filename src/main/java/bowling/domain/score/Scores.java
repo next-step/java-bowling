@@ -6,6 +6,7 @@ public class Scores {
 
     private Score first;
     private Score second;
+    private Score bonus;
 
     private Scores() {}
 
@@ -21,6 +22,11 @@ public class Scores {
 
         if (second == null) {
             inputSecond(score);
+            return;
+        }
+
+        if (bonus == null) {
+            inputBonus(score);
             return;
         }
 
@@ -45,6 +51,10 @@ public class Scores {
         this.second = score;
     }
 
+    private void inputBonus(Score score) {
+        this.bonus = score;
+    }
+
     public Result checkResult() {
         if (second == null) {
             throw new IllegalStateException("두번째 투구의 점수가 입력되지 않았습니다");
@@ -53,15 +63,15 @@ public class Scores {
         return Result.findByScores(first, second);
     }
 
-    public boolean canAddMore() {
-        return first == null || second == null;
-    }
-
     public Optional<Score> getFirst() {
         return Optional.ofNullable(first);
     }
 
     public Optional<Score> getSecond() {
         return Optional.ofNullable(second);
+    }
+
+    public Optional<Score> getBonus() {
+        return Optional.ofNullable(bonus);
     }
 }

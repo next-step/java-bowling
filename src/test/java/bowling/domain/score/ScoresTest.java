@@ -95,29 +95,4 @@ public class ScoresTest {
                 Arguments.of(result3, Result.MISS),
                 Arguments.of(result4, Result.GUTTER));
     }
-
-    @DisplayName("또 투구를 할 수 있는지 확인한다")
-    @ParameterizedTest
-    @MethodSource("canPitchMoreArguments")
-    void canPitchMore(boolean canPitchMore, boolean expected) {
-        assertThat(canPitchMore).isEqualTo(expected);
-    }
-
-    public static Stream<Arguments> canPitchMoreArguments() {
-        Scores scores1 = Scores.create();
-        scores1.add(ZERO);
-        boolean canPitchMore1 = scores1.canAddMore();
-
-        scores1.add(ZERO);
-        boolean canPitchMore2 = scores1.canAddMore();
-
-        Scores scores2 = Scores.create();
-        scores2.add(TEN);
-        boolean canPitchMore3 = scores2.canAddMore();
-
-        return Stream.of(
-                Arguments.of(canPitchMore1, true),
-                Arguments.of(canPitchMore2, false),
-                Arguments.of(canPitchMore3, false));
-    }
 }

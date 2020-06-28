@@ -10,25 +10,25 @@ import java.util.Optional;
 public enum ViewResult {
     STRIKE (Result.STRIKE) {
         @Override
-        String parse(Score first, Score second) {
+        String parseScore(Score first, Score second) {
             return "   X    ";
         }
     },
     SPARE (Result.SPARE) {
         @Override
-        String parse(Score first, Score second) {
+        String parseScore(Score first, Score second) {
             return String.format("  %d|/   ", first.getContent());
         }
     },
     MISS (Result.MISS) {
         @Override
-        String parse(Score first, Score second) {
+        String parseScore(Score first, Score second) {
             return String.format("   %d|%d  ", first.getContent(), second.getContent());
         }
     },
     GUTTER (Result.GUTTER) {
         @Override
-        String parse(Score first, Score second) {
+        String parseScore(Score first, Score second) {
             return "   -    ";
         }
     };
@@ -54,13 +54,22 @@ public enum ViewResult {
             return "        ";
         }
 
-        if (!second.isPresent()) {
-            return String.format("   %s    ", first.get().getContent());
-        }
-
-        ViewResult viewResult = findByResult(scores.checkResult());
-        return viewResult.parse(first.get(), second.get());
+        return second
+                .map(secondScore -> parseFirstAndSecond(scores.checkResult(), first.get(), secondScore))
+                .map(string -> string + parseBonus(scores))
+                .orElseGet(() -> String.format("   %s    ", first.get().getContent()));
     }
 
-    abstract String parse(Score first, Score second);
+    private static String parseFirstAndSecond(Result result, Score first, Score second) {
+        ViewResult viewResult = findByResult(result);
+        return viewResult.parseScore(first, second);
+    }
+
+    private static String parseBonus(Scores scores) {
+        return scores.getBonus()
+                .map(bonus -> String.format(" + %d ", bonus.getContent()))
+                .orElse("");
+    }
+
+    abstract String parseScore(Score first, Score second);
 }
