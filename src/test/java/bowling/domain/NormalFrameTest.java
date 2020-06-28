@@ -41,4 +41,43 @@ public class NormalFrameTest {
         assertThat(actual1).isInstanceOf(NormalFrame.class);
         assertThat(actual2).isInstanceOf(FinalFrame.class);
     }
+
+    @Test
+    void getScore_miss() {
+        int firstPin = 2;
+        int secondPin = 7;
+        NormalFrame normalFrame = new NormalFrame();
+        normalFrame.bowl(new Pin(firstPin));
+        normalFrame.bowl(new Pin(secondPin));
+
+        int score = normalFrame.getScore();
+
+        assertThat(score).isEqualTo(firstPin + secondPin);
+    }
+
+    @Test
+    void getScore_spare() {
+        int firstPin = 2;
+        int secondPin = 8;
+        NormalFrame normalFrame = new NormalFrame();
+        normalFrame.bowl(new Pin(firstPin));
+        normalFrame.bowl(new Pin(secondPin));
+        normalFrame.getNextFrame(2);
+
+        int score = normalFrame.getScore();
+
+        assertThat(score).isEqualTo(Frame.WAITING_CALCULATION);
+    }
+
+    @Test
+    void getScore_strike() {
+        int firstPin = 10;
+        NormalFrame normalFrame = new NormalFrame();
+        normalFrame.bowl(new Pin(firstPin));
+        normalFrame.getNextFrame(2);
+
+        int score = normalFrame.getScore();
+
+        assertThat(score).isEqualTo(Frame.WAITING_CALCULATION);
+    }
 }

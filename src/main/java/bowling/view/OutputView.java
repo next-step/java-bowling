@@ -1,8 +1,6 @@
 package bowling.view;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.Frames;
-import bowling.domain.State;
+import bowling.domain.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +25,7 @@ public class OutputView {
 
     private static void printScoreboard(BowlingGame bowlingGame) {
         System.out.println("|  " + bowlingGame.getPlayer().getName() + " |" + printScore(bowlingGame.getFrames()));
+        System.out.println("|      |" + printCalculateScore(bowlingGame.getFrames()));
     }
 
     private static String printScore(Frames frames) {
@@ -35,7 +34,7 @@ public class OutputView {
 
         String scoreString = scores.stream()
                 .map(score -> {
-                    if(score.contains("|")) {
+                    if (score.contains("|")) {
                         return " " + score + "  |";
                     }
                     return "  " + score + "   |";
@@ -66,5 +65,20 @@ public class OutputView {
                         .collect(Collectors.joining("|"))
                 )
                 .collect(Collectors.toList());
+    }
+
+    private static String printCalculateScore(Frames frames) {
+        List<Integer> calculateScores = frames.getScores();
+        int resultSize = calculateScores.size();
+
+        String scoreString = calculateScores.stream()
+                .map(score -> {
+                    if (score == NormalFrame.WAITING_CALCULATION) {
+                        return "      |";
+                    }
+                    return "  " + score + "  |";
+                })
+                .collect(Collectors.joining());
+        return appendSpaces(scoreString, resultSize);
     }
 }

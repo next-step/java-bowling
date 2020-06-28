@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @DisplayName("FinalFrame 클래스 테스트")
 public class FinalFrameTest {
@@ -44,4 +45,25 @@ public class FinalFrameTest {
         assertThat(actual).isTrue();
     }
 
+    @DisplayName("다음 프레임 요청 시 예외를 반환한다.")
+    @Test
+    void getNextFrame() {
+        assertThatExceptionOfType(UnsupportedOperationException.class)
+                .isThrownBy(() -> new FinalFrame().getNextFrame(1));
+    }
+
+    @Test
+    void getScore() {
+        int firstPin = 10;
+        int secondPin = 10;
+        int thirdPin = 2;
+        FinalFrame finalFrame = new FinalFrame();
+        finalFrame.bowl(new Pin(firstPin));
+        finalFrame.bowl(new Pin(secondPin));
+        finalFrame.bowl(new Pin(thirdPin));
+
+        int score = finalFrame.getScore();
+
+        assertThat(score).isEqualTo(firstPin + secondPin + thirdPin);
+    }
 }

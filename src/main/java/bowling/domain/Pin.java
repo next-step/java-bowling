@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Pin {
     public static final int MIN_PIN = 0;
-    private static final int MAX_PIN = 10;
+    public static final int MAX_PIN = 10;
 
     private final int fallenPin;
 
