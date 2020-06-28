@@ -21,6 +21,10 @@ public class Score {
         return new Score(score);
     }
 
+    public static int sum(Score firstScore, Score secondScore) {
+        return firstScore.score + secondScore.score;
+    }
+
     @Override
     public String toString() {
         if (score == MIN_SCORE) {

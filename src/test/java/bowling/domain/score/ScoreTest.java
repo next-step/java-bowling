@@ -35,4 +35,18 @@ class ScoreTest {
                 arguments(1, "1"),
                 arguments(10, "X"));
     }
+
+    @ParameterizedTest
+    @MethodSource("scoreForSum")
+    @DisplayName("두 개의 Score 객체의 합을 구할 수 있다.")
+    void sum(Score firstScore, Score secondScore, int expectedSum) {
+        assertThat(Score.sum(firstScore, secondScore)).isEqualTo(expectedSum);
+    }
+
+    static Stream<Arguments> scoreForSum() {
+        return Stream.of(
+                arguments(Score.of(1), Score.of(2), 3),
+                arguments(Score.of(2), Score.of(3), 5),
+                arguments(Score.of(0), Score.of(0), 0));
+    }
 }
