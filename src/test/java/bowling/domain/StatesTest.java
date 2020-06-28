@@ -18,7 +18,7 @@ public class StatesTest {
     void add() {
         States states = new States();
 
-        states.add(State.ONE);
+        states.add(State.ONE, new Pin(1));
 
         assertThat(states.getStates().get(0)).isEqualTo(State.ONE);
     }
@@ -29,8 +29,8 @@ public class StatesTest {
 
         assertThat(states.getLastState()).isEqualTo(State.READY);
 
-        states.add(State.STRIKE);
-        states.add(State.SPARE);
+        states.add(State.STRIKE, new Pin(Pin.MAX_PIN));
+        states.add(State.SPARE, new Pin(Pin.MAX_PIN));
 
         assertThat(states.getLastState()).isEqualTo(State.SPARE);
     }
@@ -39,8 +39,8 @@ public class StatesTest {
     void isLastStateStrike() {
         States states = new States();
 
-        states.add(State.SPARE);
-        states.add(State.STRIKE);
+        states.add(State.SPARE, new Pin(Pin.MAX_PIN));
+        states.add(State.STRIKE, new Pin(Pin.MAX_PIN));
 
         assertThat(states.isLastStateStrike()).isTrue();
     }
@@ -49,9 +49,20 @@ public class StatesTest {
     void getStatesPinSum() {
         States states = new States();
 
-        states.add(State.ONE);
-        states.add(State.TWO);
+        states.add(State.ONE, new Pin(1));
+        states.add(State.TWO, new Pin(2));
 
         assertThat(states.getStatesPinSum()).isEqualTo(3);
+    }
+
+    @Test
+    void getBeforeState() {
+        States states = new States();
+        states.add(State.TWO, new Pin(2));
+        states.add(State.STRIKE, new Pin(Pin.MAX_PIN));
+
+        State actual = states.getBeforeState();
+
+        assertThat(actual).isEqualTo(State.TWO);
     }
 }
