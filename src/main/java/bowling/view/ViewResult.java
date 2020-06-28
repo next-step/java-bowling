@@ -5,32 +5,30 @@ import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public enum ViewResult {
     STRIKE (Result.STRIKE) {
         @Override
-        String parse(Scores scores) {
+        String parse(Score first, Score second) {
             return "   X    ";
         }
     },
     SPARE (Result.SPARE) {
         @Override
-        String parse(Scores scores) {
-            Score first = scores.getFirst();
+        String parse(Score first, Score second) {
             return String.format("  %d|/   ", first.getContent());
         }
     },
     MISS (Result.MISS) {
         @Override
-        String parse(Scores scores) {
-            Score first = scores.getFirst();
-            Score second = scores.getSecond();
+        String parse(Score first, Score second) {
             return String.format("   %d|%d  ", first.getContent(), second.getContent());
         }
     },
     GUTTER (Result.GUTTER) {
         @Override
-        String parse(Scores scores) {
+        String parse(Score first, Score second) {
             return "   -    ";
         }
     };
@@ -49,15 +47,20 @@ public enum ViewResult {
     }
 
     public static String parseScores(Scores scores) {
-        if (scores.canAddMore()) {
-            Score first = scores.getFirst();
-            return String.format("   %s    ", first.getContent());
+        Optional<Score> first = scores.getFirst();
+        Optional<Score> second = scores.getSecond();
+
+        if (!first.isPresent()) {
+            return "        ";
         }
 
-        Result result = scores.checkResult();
-        ViewResult viewResult = findByResult(result);
-        return viewResult.parse(scores);
+        if (!second.isPresent()) {
+            return String.format("   %s    ", first.get().getContent());
+        }
+
+        ViewResult viewResult = findByResult(scores.checkResult());
+        return viewResult.parse(first.get(), second.get());
     }
 
-    abstract String parse(Scores scores);
+    abstract String parse(Score first, Score second);
 }

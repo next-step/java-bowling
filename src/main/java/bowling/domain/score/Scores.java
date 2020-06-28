@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import java.util.Optional;
+
 public class Scores {
 
     private Score first;
@@ -55,19 +57,11 @@ public class Scores {
         return first == null || second == null;
     }
 
-    public Score getFirst() {
-        if (first == null) {
-            return Score.of(0);
-        }
-
-        return Score.of(first.getContent());
+    public Optional<Score> getFirst() {
+        return Optional.ofNullable(first);
     }
 
-    public Score getSecond() {
-        if (second == null) {
-            return Score.of(0);
-        }
-
-        return Score.of(second.getContent());
+    public Optional<Score> getSecond() {
+        return Optional.ofNullable(second);
     }
 }

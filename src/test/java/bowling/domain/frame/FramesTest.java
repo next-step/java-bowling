@@ -55,8 +55,8 @@ public class FramesTest {
         Scores scores = frame.getScores();
 
         assertAll(
-                () -> assertThat(scores.getFirst()).isEqualTo(score1),
-                () -> assertThat(scores.getSecond()).isEqualTo(score2));
+                () -> assertThat(scores.getFirst().get()).isEqualTo(score1),
+                () -> assertThat(scores.getSecond().get()).isEqualTo(score2));
     }
 
     @DisplayName("더 이상 점수를 기록할 수 없으면 IllegalStateException")
