@@ -1,4 +1,4 @@
-package bowling.player.domain;
+package bowling.domain.player;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

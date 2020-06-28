@@ -1,4 +1,4 @@
-package bowling.player.domain;
+package bowling.domain.player;
 
 import java.util.Objects;
 

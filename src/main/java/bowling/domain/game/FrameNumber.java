@@ -1,4 +1,4 @@
-package bowling.game.domain;
+package bowling.domain.game;
 
 public class FrameNumber {
     private static final int MIN_NUMBER = 1;
