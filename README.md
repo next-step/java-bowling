@@ -290,4 +290,5 @@
 - [ ] OutputView
     - [ ] 스코어 출력 기능 구현
 - [ ] BowlingGameApplication, BowlingGame
+    - [X] 연속 스트라이크 계산이 가능한 9프레임으로 리팩토링
     - [ ] 마지막 프레임 진행은 아예 분리해버릴 것

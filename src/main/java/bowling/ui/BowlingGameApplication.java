@@ -31,7 +31,7 @@ public class BowlingGameApplication {
     }
 
     private static void bowlRemainFrames(BowlingGame bowlingGame) {
-        for (int frameIndex = 1; frameIndex < 11; frameIndex++) {
+        for (int frameIndex = 1; frameIndex < 10; frameIndex++) {
             doNotCompletedFrame(bowlingGame, frameIndex);
             if (breakWhenFinalFrame(frameIndex)) break;
             doNextFrame(bowlingGame, frameIndex);
@@ -47,7 +47,7 @@ public class BowlingGameApplication {
     }
 
     private static boolean breakWhenFinalFrame(int frameIndex) {
-        return frameIndex == 10;
+        return frameIndex == 9;
     }
 
     private static void doNextFrame(BowlingGame bowlingGame, int frameIndex) {

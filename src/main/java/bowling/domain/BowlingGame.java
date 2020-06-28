@@ -62,8 +62,17 @@ public class BowlingGame {
 
         this.bowlingGameResults.add(bowlingGameResult);
         applyBonusToPreviousFrame(frame);
+        applySpecialStrikeBonus(frame);
 
         return new ArrayList<>(this.bowlingGameResults);
+    }
+
+    public boolean isCurrentFrameCompleted() {
+        return this.player.isCurrentFrameCompleted();
+    }
+
+    public String getPlayerName() {
+        return this.player.getName();
     }
 
     private void applyBonusToPreviousFrame(Frame frame) {
@@ -75,12 +84,14 @@ public class BowlingGame {
         }
     }
 
-    public boolean isCurrentFrameCompleted() {
-        return this.player.isCurrentFrameCompleted();
-    }
-
-    public String getPlayerName() {
-        return this.player.getName();
+    private void applySpecialStrikeBonus(Frame frame) {
+        if (lastIndexOfBowlingGameResults() > 1) {
+            BowlingGameResult twoFrameAgoBowlingGameResult =
+                    this.bowlingGameResults.get(lastIndexOfBowlingGameResults() - 2);
+            BowlingGameResult bonusApplied =
+                    twoFrameAgoBowlingGameResult.applyBonus(frame.calculateSpecialStrikeScore());
+            this.bowlingGameResults.set(lastIndexOfBowlingGameResults() - 2, bonusApplied);
+        }
     }
 
     private int lastIndexOfBowlingGameResults() {
