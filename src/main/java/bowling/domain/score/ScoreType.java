@@ -2,7 +2,7 @@ package bowling.domain.score;
 
 import java.util.function.Function;
 
-public enum  ScoreType {
+public enum ScoreType {
     STRIKE(point -> "X"),
     SPARE(point -> "/"),
     GUTTER(point -> "-"),

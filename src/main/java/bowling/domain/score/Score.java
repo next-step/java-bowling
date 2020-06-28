@@ -11,5 +11,6 @@ public interface Score {
 
     ScoreType getScore();
 
+
     Point getPoint();
 }

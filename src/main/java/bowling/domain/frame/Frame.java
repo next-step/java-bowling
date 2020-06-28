@@ -1,7 +1,10 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
+import bowling.domain.point.Point;
 
-public class Frame {
+public interface Frame {
 
+    Frame bowl(Point point);
+
+    boolean isLastFrame();
 }

@@ -30,5 +30,4 @@ public class ScoreCreator {
     private static boolean isGutter(Point point) {
         return point.getPoint() == GUTTER_POINT;
     }
-
 }

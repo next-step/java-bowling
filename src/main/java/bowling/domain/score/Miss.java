@@ -6,7 +6,11 @@ public class Miss implements Score {
 
     private static final ScoreType SCORE_TYPE = ScoreType.MISS;
 
-    private final Point point = Point.inputPoint(GUTTER_POINT);
+    private final Point point;
+
+    public Miss(Point point) {
+        this.point = point;
+    }
 
     @Override
     public Score nextScore(Point point) {

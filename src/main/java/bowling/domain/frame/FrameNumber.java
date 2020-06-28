@@ -5,14 +5,14 @@ public class FrameNumber {
     private static final int MIN_FRAME_NUMBER = 1;
     private static final int MAX_FRAME_NUMBER = 10;
 
-    private int frameNumber;
+    private final int frameNumber;
 
     private FrameNumber(int frameNumber) {
         validateNumber(frameNumber);
         this.frameNumber = frameNumber;
     }
 
-    public static FrameNumber create(int frameNumber) {
+    public static FrameNumber create(final int frameNumber) {
         return new FrameNumber(frameNumber);
     }
 

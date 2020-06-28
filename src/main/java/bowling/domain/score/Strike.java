@@ -2,7 +2,7 @@ package bowling.domain.score;
 
 import bowling.domain.point.Point;
 
-public class Strike implements Score{
+public class Strike implements Score {
 
     private static final ScoreType SCORE_TYPE = ScoreType.STRIKE;
 

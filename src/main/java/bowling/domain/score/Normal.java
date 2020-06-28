@@ -21,7 +21,11 @@ public class Normal implements Score {
         }
 
         if (totalPoint == GUTTER_POINT) {
-            return new Miss();
+            return new Gutter();
+        }
+
+        if (point.getPoint() == GUTTER_POINT) {
+            return new Miss(point);
         }
 
         return new Normal(point);
