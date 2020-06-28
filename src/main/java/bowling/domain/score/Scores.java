@@ -56,10 +56,18 @@ public class Scores {
     }
 
     public Score getFirst() {
+        if (first == null) {
+            return Score.of(0);
+        }
+
         return Score.of(first.getContent());
     }
 
     public Score getSecond() {
+        if (second == null) {
+            return Score.of(0);
+        }
+
         return Score.of(second.getContent());
     }
 }

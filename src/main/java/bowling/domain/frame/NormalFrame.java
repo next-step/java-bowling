@@ -37,4 +37,9 @@ public class NormalFrame implements Frame {
     public Scores getScores() {
         return scores;
     }
+
+    @Override
+    public int getIndex() {
+        return index;
+    }
 }

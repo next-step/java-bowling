@@ -28,6 +28,11 @@ public class Frames {
         return new Frames(frames);
     }
 
+    public boolean canAddMoreScore() {
+        return frames.stream()
+                .anyMatch(Frame::canAddMoreScore);
+    }
+
     public void addScore(Score score) {
         Frame frame = frames.stream()
                 .filter(Frame::canAddMoreScore)
@@ -37,12 +42,15 @@ public class Frames {
         frame.addScore(score);
     }
 
-    public List<Frame> getContent() {
-        return Collections.unmodifiableList(frames);
+    public int getCurrentFrameIndex() {
+        return frames.stream()
+                .filter(Frame::canAddMoreScore)
+                .findFirst()
+                .map(Frame::getIndex)
+                .orElseThrow(() -> new IllegalStateException("진행 중인 프레임이 없습니다"));
     }
 
-    public boolean canAddMoreScore() {
-        return frames.stream()
-                .anyMatch(Frame::canAddMoreScore);
+    public List<Frame> getContent() {
+        return Collections.unmodifiableList(frames);
     }
 }

@@ -11,4 +11,6 @@ public interface Frame {
     void addScore(Score score);
 
     Scores getScores();
+
+    int getIndex();
 }

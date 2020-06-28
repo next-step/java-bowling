@@ -25,4 +25,8 @@ public class Player {
             throw new IllegalArgumentException("플레이어의 이름은 3글자 알파벳이어야 합니다.");
         }
     }
+
+    public String getName() {
+        return name;
+    }
 }
