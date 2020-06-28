@@ -17,7 +17,7 @@ public class Score {
 
     public int getScore() {
         if (!canCalucateScore()) {
-            throw new CannotCalculateException("계산할 수 없습니다.");
+            throw new CannotCalculateException("게임이 끝나지 않았습니다.");
         }
         return this.score;
     }
