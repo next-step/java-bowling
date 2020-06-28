@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import java.util.Objects;
+
 public class Score {
     private static final int MIN_SCORE = 0;
     private static final int MAX_SCORE = 10;
@@ -36,5 +38,18 @@ public class Score {
         }
 
         return Integer.toString(score);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
     }
 }
