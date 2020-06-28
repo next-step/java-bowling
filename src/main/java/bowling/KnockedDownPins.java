@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.Objects;
+
 public class KnockedDownPins {
 
   public final static int MAX_NUMBER_OF_PINS = 10;
@@ -57,6 +59,24 @@ public class KnockedDownPins {
 
   public boolean isSecondKnockDownNumNull() {
     return secondKnockDownNum.isNull();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    KnockedDownPins that = (KnockedDownPins) o;
+    return Objects.equals(firstKnockDownNum, that.firstKnockDownNum) &&
+        Objects.equals(secondKnockDownNum, that.secondKnockDownNum);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(firstKnockDownNum, secondKnockDownNum);
   }
 
   @Override
