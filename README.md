@@ -28,8 +28,7 @@
 - [X] 이름은 빈 문자열이거나 null일 수 없다.
 
 ### Player
-- [ ] Player는 Name 객체를 가진다.
-- [ ] Name이 null인 경우 생성할 수 없다.
+- [X] `Player` 는 `Name` 객체를 가진다.
 
 ### NormalFrame : 1 ~ 9 프레임
 
