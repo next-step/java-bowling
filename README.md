@@ -10,7 +10,7 @@
 
 1. 볼링 점수를 생성한다 - RandomGenerator
 - 볼링점수 vo - o
-- RandomScoreGenerator -> ScoreGenerator
+- RandomScoreGenerator -> ScoreGenerator - o
 
 2. 점수를 입력받으면 현재프레임 또는 다음 프레임을 반환한다. 
 - abstract class Frame 
