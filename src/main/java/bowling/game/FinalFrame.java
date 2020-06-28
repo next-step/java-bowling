@@ -34,7 +34,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean hasRemainChance() {
-        if (!isBonusPitch() && pitches.size() == PITCH_COUNT_MAX) {
+        if (pitches.size() == PITCH_COUNT_MAX && !isBonusPitch()) {
             return false;
         }
 
@@ -51,19 +51,7 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isBonusPitch() {
-        if (pitches.size() == 1 && pitches.getFirst().getState() == State.STRIKE) {
-            return true;
-        }
-
-        if (pitches.size() == 2 && pitches.getFirst().getState() == State.STRIKE) {
-            return true;
-        }
-
-        if (pitches.size() == 2 && pitches.getLast().getState() == State.SPARE) {
-            return true;
-        }
-
-        return false;
+        return pitches.getFirst().getState() == State.STRIKE || pitches.getLast().getState() == State.SPARE;
     }
 
     public FrameNumber getFrameNumber() {
