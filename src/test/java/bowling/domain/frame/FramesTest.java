@@ -52,6 +52,4 @@ class FramesTest {
         }
         assertThat(frames.hasNextTurn()).isFalse();
     }
-
-
 }

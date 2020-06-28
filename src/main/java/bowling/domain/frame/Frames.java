@@ -32,14 +32,14 @@ public class Frames {
 
     public void moveToNextFrame() {
         Frame currentFrame = getCurrentFrame();
-        if (currentFrame.isFinished()) {
+        if (currentFrame.isFinished() && frames.size() != 10) {
             Frame nextFrame = currentFrame.next(getCurrentIndex());
             frames.add(nextFrame);
         }
     }
 
     public boolean hasNextTurn() {
-        return !frames.contains(null);
+        return !(frames.size() == 10 && frames.get(9).isFinished());
     }
 
     public int getCurrentIndex() {
