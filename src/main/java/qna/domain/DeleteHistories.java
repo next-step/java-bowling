@@ -1,7 +1,8 @@
 package qna.domain;
 
+import qna.util.CollectionUtils;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,28 +10,22 @@ public class DeleteHistories {
 
     private List<DeleteHistory> deleteHistories;
 
-    private DeleteHistories() {
-        this.deleteHistories = new ArrayList<>();
+    private DeleteHistories(List<DeleteHistory> deleteHistories) {
+        if (CollectionUtils.isEmpty(deleteHistories)) {
+            this.deleteHistories = new ArrayList<>();
+        }
+
+        this.deleteHistories = new ArrayList<>(deleteHistories);
     }
 
-    public static DeleteHistories of() {
-        return new DeleteHistories();
+    public static DeleteHistories of(List<DeleteHistory> deleteHistories) {
+        return new DeleteHistories(deleteHistories);
     }
 
-    public void addToDeleteHistories(Question question) {
-        DeleteHistory questionHistory = question.generateDeleteHistoryForQuestion();
-        this.deleteHistories.add(questionHistory);
-
-        addToDeleteHistoriesForAnswers(question.getAnswers());
-    }
-
-    public List<DeleteHistory> getDeleteHistories() {
-        return Collections.unmodifiableList(this.deleteHistories);
-    }
-
-    private void addToDeleteHistoriesForAnswers(Answers answers) {
-        List<DeleteHistory> deleteHistories = answers.generateDeleteHistories();
-        this.deleteHistories.addAll(deleteHistories);
+    public static DeleteHistories mergeHistories(DeleteHistory targetHistory, DeleteHistories targetHistories) {
+        List<DeleteHistory> mergedHistories = new ArrayList<>(targetHistories.deleteHistories);
+        mergedHistories.add(targetHistory);
+        return DeleteHistories.of(mergedHistories);
     }
 
     @Override
@@ -44,7 +39,7 @@ public class DeleteHistories {
         }
 
         DeleteHistories that = (DeleteHistories) o;
-        return Objects.equals(this.deleteHistories, that.deleteHistories);
+        return this.deleteHistories.containsAll(that.deleteHistories);
     }
 
     @Override

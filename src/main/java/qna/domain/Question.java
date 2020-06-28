@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,14 +36,14 @@ public class Question extends AbstractEntity {
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.answers = Answers.of();
+        this.answers = new Answers();
     }
 
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
-        this.answers = Answers.of();
+        this.answers = new Answers();
     }
 
     public User getWriter() {
@@ -67,21 +68,16 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public boolean hasQuestionOtherOwnerAnswers(User user) {
-        return this.answers.hasOtherOwnerAnswers(user);
-    }
+    public DeleteHistories deleteQuestion() throws CannotDeleteException {
+        if (this.answers.hasOtherOwnerAnswers(this.writer)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
 
-    public void deleteQuestion() {
+        DeleteHistory questionDeleteHistory = DeleteHistory.of(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
+        DeleteHistories answersDeleteHistories = this.answers.deleteAnswers();
         this.deleted = true;
-        this.answers.deleteAnswers();
-    }
 
-    public Answers getAnswers() {
-        return this.answers;
-    }
-
-    public DeleteHistory generateDeleteHistoryForQuestion() {
-        return DeleteHistory.of(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
+        return DeleteHistories.mergeHistories(questionDeleteHistory, answersDeleteHistories);
     }
 
     @Override
