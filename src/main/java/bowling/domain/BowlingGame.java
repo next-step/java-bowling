@@ -38,6 +38,35 @@ public class BowlingGame {
         return new ArrayList<>(this.bowlingGameResults);
     }
 
+    public List<BowlingGameResult> bowlCurrentFrame(int numberOfHitPin) {
+        Frame frame = player.bowlCurrentFrameRefactor(numberOfHitPin);
+
+        BowlingGameResult bowlingGameResult = new BowlingGameResult(
+                frame.calculateCurrentResults(),
+                frame.calculateCurrentScore()
+        );
+
+        this.bowlingGameResults.set(lastIndexOfBowlingGameResults(), bowlingGameResult);
+        applyBonusToPreviousFrame(frame);
+
+        return new ArrayList<>(this.bowlingGameResults);
+    }
+
+    public List<BowlingGameResult> toNextFrame(int numberOfHitPin) {
+        Frame frame = player.toNextFrameRefactor(numberOfHitPin);
+
+        BowlingGameResult bowlingGameResult = new BowlingGameResult(
+                frame.calculateCurrentResults(),
+                frame.calculateCurrentScore()
+        );
+
+        this.bowlingGameResults.add(bowlingGameResult);
+        applyBonusToPreviousFrame(frame);
+        applySpecialStrikeBonus(frame);
+
+        return new ArrayList<>(this.bowlingGameResults);
+    }
+
     public List<BowlingGameResult> finalFrameBowlFirst(int numberOfHitPin) {
         Frame frame = player.toNextFrameRefactor(numberOfHitPin);
 
@@ -74,35 +103,6 @@ public class BowlingGame {
                 frame.calculateCurrentResults(),
                 frame.calculateCurrentScore()
         ));
-
-        return new ArrayList<>(this.bowlingGameResults);
-    }
-
-    public List<BowlingGameResult> bowlCurrentFrame(int numberOfHitPin) {
-        Frame frame = player.bowlCurrentFrameRefactor(numberOfHitPin);
-
-        BowlingGameResult bowlingGameResult = new BowlingGameResult(
-                frame.calculateCurrentResults(),
-                frame.calculateCurrentScore()
-        );
-
-        this.bowlingGameResults.set(lastIndexOfBowlingGameResults(), bowlingGameResult);
-        applyBonusToPreviousFrame(frame);
-
-        return new ArrayList<>(this.bowlingGameResults);
-    }
-
-    public List<BowlingGameResult> toNextFrame(int numberOfHitPin) {
-        Frame frame = player.toNextFrameRefactor(numberOfHitPin);
-
-        BowlingGameResult bowlingGameResult = new BowlingGameResult(
-                frame.calculateCurrentResults(),
-                frame.calculateCurrentScore()
-        );
-
-        this.bowlingGameResults.add(bowlingGameResult);
-        applyBonusToPreviousFrame(frame);
-        applySpecialStrikeBonus(frame);
 
         return new ArrayList<>(this.bowlingGameResults);
     }
