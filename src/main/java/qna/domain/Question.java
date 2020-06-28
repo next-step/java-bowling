@@ -99,15 +99,16 @@ public class Question extends AbstractEntity {
         if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        for (Answer answer : answers) {
-            answer.validate(loginUser);
-        }
+        Answers answers = new Answers(this.answers);
+        answers.validate(loginUser);
     }
 
     public List<DeleteHistory> delete() {
         this.deleted = true;
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
+        Answers answers = new Answers(this.answers);
+        answers.delete(deleteHistories);
         return deleteHistories;
     }
 }
