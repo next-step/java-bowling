@@ -1,5 +1,5 @@
 package bowling.domain.frame;
 
-public interface FrameInterface {
+public interface FrameFactory {
     boolean validateLimitScore();
 }

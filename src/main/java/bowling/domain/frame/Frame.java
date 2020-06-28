@@ -9,6 +9,7 @@ public class Frame {
 
     private static final int FIRST_COUNT = 0;
     private static final int SECOND_COUNT = 1;
+    private static final int LIMIT_COUNT = 2;
 
     List<Score> scores = new ArrayList<>();
 
@@ -21,6 +22,9 @@ public class Frame {
     }
 
     public boolean isSpare() {
+        if(scores.size() < LIMIT_COUNT) {
+            return false;
+        }
         return scores.get(FIRST_COUNT).getScore()
                 + scores.get(SECOND_COUNT).getScore()
                 == Score.MAX_SCORE;

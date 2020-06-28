@@ -1,8 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.Score;
-
-public class FinalFrame extends Frame implements FrameInterface {
+public class FinalFrame extends Frame implements FrameFactory {
 
     private static final int LIMIT_COUNT = 3;
 
