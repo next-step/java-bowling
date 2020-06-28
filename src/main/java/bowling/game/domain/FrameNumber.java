@@ -24,4 +24,9 @@ public class FrameNumber {
     public int getNumber() {
         return number;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%02d", number);
+    }
 }
