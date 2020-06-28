@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -67,9 +68,9 @@ public class AnswerTest {
     @DisplayName("Answer deleteAnswer() 메소드 테스트")
     @ParameterizedTest
     @MethodSource("provideAnswerForDelete")
-    void deleteAnswerTest(final long id, final User user, final Question question, final String content, final DeleteHistory expected) {
+    void deleteAnswerTest(final long id, final User user, final Question question, final String content, final DeleteHistory expected) throws CannotDeleteException {
         Answer answer = new Answer(id, user, question, content);
-        DeleteHistory deleteHistory = answer.deleteAnswer();
+        DeleteHistory deleteHistory = answer.deleteAnswer(user);
 
         assertThat(answer.isDeleted()).isTrue();
         assertThat(deleteHistory).isEqualTo(expected);

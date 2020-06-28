@@ -22,7 +22,7 @@ public class QuestionTest {
     @MethodSource("provideQuestion")
     void deleteQuestionTest(final Answer answer, final DeleteHistories expected) throws Exception {
         Q1.addAnswer(answer);
-        DeleteHistories deleteHistories = Q1.deleteQuestion();
+        DeleteHistories deleteHistories = Q1.deleteQuestion(UserTest.JAVAJIGI);
         assertThat(deleteHistories).isEqualTo(expected);
     }
 
@@ -46,7 +46,7 @@ public class QuestionTest {
     void deleteQuestionCannotDeleteExceptionTest(final Answer answer) {
         Q1.addAnswer(answer);
         assertThatExceptionOfType(CannotDeleteException.class)
-                .isThrownBy(Q1::deleteQuestion);
+                .isThrownBy(() -> Q1.deleteQuestion(UserTest.SANJIGI));
     }
 
     private static Stream<Arguments> provideCannotDeleteExceptionQuestion() {
