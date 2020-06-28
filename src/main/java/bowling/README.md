@@ -90,7 +90,7 @@ PJS's turn :
 
 ### Domain
 
-#### BowlingGame 패키지
+#### Game 패키지
 * SingleBowlingGame
     * 1명의 플레이어로 구성된 BowlingGame 객체이다.
     * 인스턴스 변수로 Frames와 Player를 가진다.
