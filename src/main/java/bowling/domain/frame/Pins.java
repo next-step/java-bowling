@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.PinsState;
+import bowling.domain.ScoreType;
+import java.util.List;
+import java.util.Optional;
 
 public interface Pins {
 
@@ -8,5 +10,9 @@ public interface Pins {
 
     boolean hasTurn();
 
-    PinsState getPinsState();
+    Optional<ScoreType> getScoreType();
+
+    List<Integer> getDownPins();
+
+    int sum();
 }

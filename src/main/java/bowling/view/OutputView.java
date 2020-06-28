@@ -1,16 +1,19 @@
 package bowling.view;
 
-import bowling.domain.state.PinsState;
-import bowling.domain.state.ScoreType;
+import bowling.domain.ScoreType;
+import bowling.domain.frame.FrameResult;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
     private static final int FRAME_COUNT = 10;
+    private static final int STRIKE_PIN = 10;
+    private static final int GUTTER_PIN = 0;
 
     private static final Map<ScoreType, String> displayMap = new HashMap<>();
 
@@ -19,11 +22,11 @@ public class OutputView {
         displayMap.put(ScoreType.SPARE, "/");
     }
 
-    public void printResult(String name, List<PinsState> pinsStates) {
+    public void printResult(String name, List<FrameResult> frameResults) {
         printFramesRounds();
-        printFramesResult(name, pinsStates);
+        printBowlsResult(name, frameResults);
+        printScores(frameResults.stream().map(FrameResult::getScore).collect(Collectors.toList()));
         System.out.print(System.lineSeparator());
-
     }
 
     private void printFramesRounds() {
@@ -36,50 +39,62 @@ public class OutputView {
         System.out.println(framesBuilder.toString());
     }
 
-    private void printFramesResult(String name, List<PinsState> pinsStates) {
+    private void printBowlsResult(String name, List<FrameResult> frameResults) {
         StringBuilder downPinBuilder = new StringBuilder();
         downPinBuilder.append(String.format("|  %s |", name));
 
-        for (PinsState pinsState : pinsStates) {
-            String downPinDisplay = createDisplay(pinsState);
+        for (FrameResult frameResult : frameResults) {
+            String downPinDisplay = createBowlDisplay(frameResult);
             downPinBuilder.append(String.format("  %-4s|", downPinDisplay));
         }
 
         System.out.println(downPinBuilder.toString());
     }
 
-    private String createDisplay(PinsState pinsState) {
-
-        List<Integer> downPins = pinsState.getDownPins();
+    private String createBowlDisplay(FrameResult frameResult) {
+        List<Integer> downPins = frameResult.getDownPins();
+        if(downPins.isEmpty()){
+            return "";
+        }
 
         List<String> components = new ArrayList<>();
 
         int downPinIndex = 0;
-        for (ScoreType scoreType : pinsState.getScoreTypes()) {
-            if (scoreType == ScoreType.STRIKE) {
-                downPinIndex++;
-                components.add("X");
-                continue;
-            }
+        components.add(createPin(downPins.get(downPinIndex++)));
 
-            if (scoreType == ScoreType.SPARE) {
-                int downPin = pinsState.getDownPins().get(downPinIndex++);
-                components.add(createPin(downPin));
-
-                downPinIndex++;
-                components.add("/");
-            }
+        ScoreType scoreType = frameResult.getScoreType().orElse(ScoreType.MISS);
+        if (scoreType == ScoreType.SPARE) {
+            components.add("/");
+            downPinIndex++;
         }
 
         for (; downPinIndex < downPins.size(); downPinIndex++) {
-            components.add(createPin(pinsState.getDownPins().get(downPinIndex)));
+            components.add(createPin(downPins.get(downPinIndex)));
         }
-
         return components.stream().collect(Collectors.joining("|"));
     }
 
+    private void printScores(List<Optional<Integer>> scores) {
+        StringBuilder scoreDisplays = new StringBuilder();
+        scoreDisplays.append("|      |");
+        int sum = 0;
+        for (Optional<Integer> score : scores) {
+            sum += score.orElse(0);
+            scoreDisplays.append(String.format("  %-4s|", score.isPresent() ? sum : ""));
+        }
+        System.out.println(scoreDisplays.toString());
+    }
+
     private String createPin(int downPin) {
-        return downPin == 0 ? "-" : String.valueOf(downPin);
+        if (downPin == GUTTER_PIN) {
+            return "-";
+        }
+
+        if (downPin == STRIKE_PIN) {
+            return "X";
+        }
+
+        return String.valueOf(downPin);
     }
 
 }

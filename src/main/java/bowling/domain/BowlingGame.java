@@ -1,7 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.frame.BowlingFrames;
-import bowling.domain.state.PinsState;
+import bowling.domain.frame.FrameResult;
 import java.util.List;
 
 public class BowlingGame {
@@ -25,8 +25,8 @@ public class BowlingGame {
         return this.bowlingFrames.getCurrentPosition();
     }
 
-    public List<PinsState> getResult() {
-        return this.bowlingFrames.getPinsStates();
+    public List<FrameResult> getResult() {
+        return this.bowlingFrames.getFrameResults();
     }
 
     public boolean isFinished() {

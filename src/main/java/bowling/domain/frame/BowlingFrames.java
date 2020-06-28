@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.PinsState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +28,7 @@ public class BowlingFrames {
             frames.add(normalFrame);
         }
 
-        frames.add(Frame.last());
+        frames.add(frames.get(frames.size() - 1).last());
 
         return new BowlingFrames(frames);
     }
@@ -49,11 +48,12 @@ public class BowlingFrames {
         }
     }
 
-    public List<PinsState> getPinsStates() {
+    public List<FrameResult> getFrameResults() {
         return this.frames.stream()
-            .map(Frame::getPinsState)
+            .map(Frame::getFrameResult)
             .collect(Collectors.toList());
     }
+
 
     public int getCurrentPosition() {
         return this.currentPosition;
@@ -62,4 +62,5 @@ public class BowlingFrames {
     public boolean isFinished() {
         return !this.frames.get(this.frames.size() - 1).hasTurn();
     }
+
 }

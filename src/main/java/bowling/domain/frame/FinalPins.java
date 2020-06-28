@@ -1,10 +1,9 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.PinsState;
-import bowling.domain.state.ScoreType;
+import bowling.domain.ScoreType;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class FinalPins implements Pins {
 
@@ -48,21 +47,20 @@ public class FinalPins implements Pins {
     }
 
     @Override
-    public PinsState getPinsState() {
-        PinsState pinsState = this.pins.getPinsState();
+    public Optional<ScoreType> getScoreType() {
+        return this.pins.getScoreType();
+    }
 
-        List<ScoreType> strikes = this.downPins.stream()
-            .filter(integer -> integer.equals(MAX_PIN))
-            .map(integer -> ScoreType.STRIKE)
-            .collect(Collectors.toList());
-
-        List<Integer> downPins = new ArrayList<>(pinsState.getDownPins());
+    @Override
+    public List<Integer> getDownPins() {
+        List<Integer> downPins = new ArrayList<>(this.pins.getDownPins());
         downPins.addAll(this.downPins);
+        return downPins;
+    }
 
-        List<ScoreType> scoreTypes = new ArrayList<>(pinsState.getScoreTypes());
-        scoreTypes.addAll(strikes);
-
-        return new PinsState(downPins, scoreTypes);
+    @Override
+    public int sum() {
+        return this.pins.sum() + this.downPins.stream().reduce(0, Integer::sum);
     }
 
     private void validate(int downPin) {
@@ -76,13 +74,6 @@ public class FinalPins implements Pins {
     }
 
     private int getBonusCount() {
-        PinsState pinsState = this.pins.getPinsState();
-        if (pinsState.hasStrike()) {
-            return 2;
-        }
-        if (pinsState.hasSpare()) {
-            return 1;
-        }
-        return 0;
+        return getScoreType().map(ScoreType::getBonusBowlCount).orElse(0);
     }
 }
