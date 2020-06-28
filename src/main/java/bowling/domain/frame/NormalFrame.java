@@ -54,11 +54,11 @@ public class NormalFrame implements Frame {
     public String getScores() {
         String result = "";
         if (scores.size() == 2) {
-            return scores.get(0) + SEPARATOR + scores.get(1);
+            return scores.get(0).getScore() + SEPARATOR + scores.get(1).getScore();
         }
 
         if (scores.size() == 1) {
-            return scores.get(0).toString();
+            return scores.get(0).getScore();
         }
 
         return result;
