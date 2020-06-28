@@ -1,17 +1,17 @@
 package bowling.game;
 
-public abstract class Frame {
-    protected static final String STATE_DELIMITER = "|";
+public interface Frame {
+    String STATE_DELIMITER = "|";
 
-    abstract int bowl(final int pinCount);
+    int bowl(final int pinCount);
 
-    abstract boolean hasRemainChance();
+    boolean hasRemainChance();
 
-    abstract Frame createNextFrame();
+    Frame createNextFrame();
 
-    abstract FrameNumber getFrameNumber();
+    FrameNumber getFrameNumber();
 
-    abstract boolean isLastFrame();
+    boolean isLastFrame();
 
-    abstract String getStates();
+    String getStates();
 }

@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import static java.util.stream.Collectors.joining;
 
-public class NormalFrame extends Frame {
+public class NormalFrame implements Frame {
     private static final int PITCH_COUNT_MAX = 2;
 
     private final FrameNumber frameNumber;

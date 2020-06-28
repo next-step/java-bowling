@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import static java.util.stream.Collectors.joining;
 
-public class FinalFrame extends Frame {
+public class FinalFrame implements Frame {
     private static final int PITCH_COUNT_MAX = 2;
     private static final int BONUS_COUNT_MAX = 3;
 
@@ -46,7 +46,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    protected Frame createNextFrame() {
+    public Frame createNextFrame() {
         throw new IllegalStateException("마지막 프레임은 다음 프레임을 만들 수 없습니다.");
     }
 
