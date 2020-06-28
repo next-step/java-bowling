@@ -38,19 +38,19 @@ class FinalFrameTest {
     void availableStrikePlayTest() {
         Frame frame = createHasBonusScoreStrikeFrame();
         frame.addPoint(10);
-        assertThat(frame.availablePlay()).isTrue();
+        assertThat(frame.isAvailablePlay()).isTrue();
         frame.addPoint(5);
-        assertThat(frame.availablePlay()).isFalse();
+        assertThat(frame.isAvailablePlay()).isFalse();
     }
 
     @Test
     @DisplayName("spare Frame에 값을 넣을 수 있는지 확인")
     void availableSparePlayTest() {
         Frame frame = createHasBonusScoreSpareFrame();
-        assertThat(frame.availablePlay()).isTrue();
+        assertThat(frame.isAvailablePlay()).isTrue();
         frame.addPoint(5);
         frame.addPoint(5);
-        assertThat(frame.availablePlay()).isFalse();
+        assertThat(frame.isAvailablePlay()).isFalse();
     }
 
     @ParameterizedTest

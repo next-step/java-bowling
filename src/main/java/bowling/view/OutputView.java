@@ -25,10 +25,10 @@ public class OutputView {
         System.out.println(DEFAULT_TOTAL_SCORE);
     }
 
-    public static void outputFrames(Frames frames) {
+    public static void outputFrames(Frames frames, Player player) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder = outputRound(stringBuilder);
-        stringBuilder = outputNameAndScore(stringBuilder, frames);
+        stringBuilder = outputNameAndScore(stringBuilder, frames, player);
         stringBuilder = outputTotalScore(stringBuilder, frames);
         System.out.println(stringBuilder);
     }
@@ -39,9 +39,8 @@ public class OutputView {
         return stringBuilder;
     }
 
-    private static StringBuilder outputNameAndScore(StringBuilder stringBuilder, Frames frames) {
+    private static StringBuilder outputNameAndScore(StringBuilder stringBuilder, Frames frames, Player player) {
         stringBuilder.append(LINE);
-        Player player = frames.getPlayer();
         stringBuilder.append(String.format(NAME, player.getName()));
 
         for (Frame frame : frames.getFrames()) {

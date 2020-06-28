@@ -40,15 +40,15 @@ public class Scores {
                 .sum();
     }
 
-    public boolean firstScore() {
+    private boolean firstScore() {
         return scores.size() == FIRST_SCORE;
     }
 
-    public boolean secondScore() {
+    private boolean secondScore() {
         return scores.size() == SECOND_SCORE;
     }
 
-    public boolean thirdScore() {
+    private boolean thirdScore() {
         return scores.size() == THIRD_SCORE;
     }
 
@@ -57,7 +57,7 @@ public class Scores {
     }
 
     public boolean isStrike() {
-        if (isEmpty()) {
+        if (CollectionUtils.isEmpty(scores)) {
             return false;
         }
         return ElementFindUtils.findFirstElement(scores).isStrike();
@@ -74,10 +74,6 @@ public class Scores {
         return scores.stream()
                 .map(ScoreResultDto::new)
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));
-    }
-
-    public boolean isEmpty() {
-        return CollectionUtils.isEmpty(scores);
     }
 
     public boolean isAvailableAdd() {

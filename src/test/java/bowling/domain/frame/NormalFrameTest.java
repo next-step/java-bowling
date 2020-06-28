@@ -26,7 +26,7 @@ class NormalFrameTest {
         for (Integer point : points) {
             frame.addPoint(point);
         }
-        assertThat(frame.availablePlay()).isEqualTo(availablePlay);
+        assertThat(frame.isAvailablePlay()).isEqualTo(availablePlay);
     }
 
     private static Stream<Arguments> provideCountAndAvailablePlay() {

@@ -17,15 +17,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FramesTest {
 
-    private Frames createFrame(String playerName) {
-        return new Frames(new Player(playerName));
+    private Frames createFrame() {
+        return new Frames();
     }
 
     @ParameterizedTest
     @MethodSource("provideFrameSize")
     @DisplayName("frame 추가")
     void addFrame(int frameSize) {
-        Frames frames = createFrame("WIJ");
+        Frames frames = createFrame();
         IntStream.range(0, frameSize)
                 .forEach(index -> frames.createNextFrame());
 
@@ -38,16 +38,5 @@ class FramesTest {
                 Arguments.of(10),
                 Arguments.of(9)
         );
-    }
-
-    @Test
-    @DisplayName("마지막 frame에서 새로운 frame 추가 시 Exception")
-    void addLastFrameException() {
-        Frames frames = createFrame("WIJ");
-        IntStream.range(0, 10)
-                .forEach(index -> frames.createNextFrame());
-
-        assertThatThrownBy(() -> frames.createNextFrame())
-                .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -35,8 +35,7 @@ public abstract class Frame {
 
     public abstract void validateScores(int point);
 
-    public abstract boolean availablePlay();
+    public abstract boolean isAvailablePlay();
 
     public abstract boolean isAvailableCalculatePoint();
-
 }

@@ -44,13 +44,13 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean availablePlay() {
+    public boolean isAvailablePlay() {
         return scores.isAvailableAdd();
     }
 
     @Override
     public boolean isAvailableCalculatePoint() {
-        if (availablePlay()) {
+        if (isAvailablePlay()) {
             return false;
         }
 

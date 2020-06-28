@@ -43,11 +43,6 @@ public class BonusScores {
                 .orElse(BonusScore.noneBonusScores(frameIndex));
     }
 
-    public boolean isEmptyByFrameIndex(int frameIndex) {
-        return bonusScores.stream()
-                .anyMatch(bonusScore -> bonusScore.equalsByFrameIndex(frameIndex));
-    }
-
     public boolean isAvailableAddBonusScores(int frameIndex) {
         return bonusScores.stream()
                 .anyMatch(bonusScore -> bonusScore.isAvailableAddBonusPoint() && bonusScore.equalsByFrameIndex(frameIndex));

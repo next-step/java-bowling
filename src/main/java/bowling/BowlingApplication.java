@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.BowlingGame;
 import bowling.domain.frame.Frame;
+import bowling.domain.player.Player;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
@@ -15,18 +16,18 @@ public class BowlingApplication {
 
         while (!bowlingGame.isGameOver()) {
             bowlingGame.addNextFrame();
-            addPoint(bowlingGame);
+            play(bowlingGame);
         }
 
     }
 
-    private static void addPoint(BowlingGame bowlingGame) {
+    private static void play(BowlingGame bowlingGame) {
         int frameIndex = bowlingGame.currentPlayFrameIndex();
-        Frame frame = bowlingGame.findCurrentFrame();
-        while (frame.availablePlay()) {
+        Player player = bowlingGame.getPlayer();
+        while (bowlingGame.isCurrentFramePlayable()) {
             int point = InputView.inputScore(frameIndex);
-            frame.addPoint(point);
-            OutputView.outputFrames(bowlingGame.getFrames());
+            bowlingGame.writePoint(point);
+            OutputView.outputFrames(bowlingGame.getFrames(), player);
         }
     }
 }
