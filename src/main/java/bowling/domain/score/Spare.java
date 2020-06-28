@@ -21,4 +21,9 @@ public class Spare implements Score {
     public ScoreType getScore() {
         return SCORE_TYPE;
     }
+
+    @Override
+    public Point getPoint() {
+        return point;
+    }
 }
