@@ -21,7 +21,7 @@ public class AnswersTest {
         Answers answers = new Answers();
         answers.addToAnswer(answer);
 
-        DeleteHistories deleteHistories = answers.deleteAnswers();
+        DeleteHistories deleteHistories = answers.deleteAnswers(loginUser);
         assertThat(deleteHistories).isEqualTo(expected);
     }
 

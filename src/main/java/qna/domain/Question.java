@@ -68,13 +68,14 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public DeleteHistories deleteQuestion() throws CannotDeleteException {
-        if (this.answers.hasOtherOwnerAnswers(this.writer)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+    public DeleteHistories deleteQuestion(User loginUser) throws CannotDeleteException {
+
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
 
         DeleteHistory questionDeleteHistory = DeleteHistory.of(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
-        DeleteHistories answersDeleteHistories = this.answers.deleteAnswers();
+        DeleteHistories answersDeleteHistories = this.answers.deleteAnswers(loginUser);
         this.deleted = true;
 
         return DeleteHistories.mergeHistories(questionDeleteHistory, answersDeleteHistories);
