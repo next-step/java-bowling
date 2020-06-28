@@ -15,6 +15,8 @@ public class BowlingGameApplication {
         firstBowl(bowlingGame);
 
         bowlRemainFrames(bowlingGame);
+
+        bowlFinalFrame(bowlingGame);
     }
 
     private static Player initGame() {
@@ -54,5 +56,21 @@ public class BowlingGameApplication {
         List<BowlingGameResult> nextFrameResults =
                 bowlingGame.toNextFrame(InputView.getNumberOfHitPin(frameIndex + 1));
         OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), nextFrameResults);
+    }
+
+    private static void bowlFinalFrame(BowlingGame bowlingGame) {
+        List<BowlingGameResult> finalFirstThrown =
+                bowlingGame.finalFrameBowlFirst(InputView.getNumberOfHitPin(10));
+        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), finalFirstThrown);
+
+        List<BowlingGameResult> finalSecondThrown =
+                bowlingGame.finalFrameBowlSecond(InputView.getNumberOfHitPin(10));
+        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), finalSecondThrown);
+
+        if (!bowlingGame.isCurrentFrameCompleted()) {
+            List<BowlingGameResult> lastThrown
+                    = bowlingGame.finalFrameBowlLast(InputView.getNumberOfHitPin(10));
+            OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), lastThrown);
+        }
     }
 }

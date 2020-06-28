@@ -38,6 +38,46 @@ public class BowlingGame {
         return new ArrayList<>(this.bowlingGameResults);
     }
 
+    public List<BowlingGameResult> finalFrameBowlFirst(int numberOfHitPin) {
+        Frame frame = player.toNextFrameRefactor(numberOfHitPin);
+
+        this.bowlingGameResults.add(new BowlingGameResult(
+                frame.calculateCurrentResults(),
+                frame.calculateCurrentScore()));
+
+        applyBonusNinthFrame(frame);
+        applyBonusEighthFrame(frame);
+
+        return new ArrayList<>(this.bowlingGameResults);
+    }
+
+    public List<BowlingGameResult> finalFrameBowlSecond(int numberOfHitPin) {
+        Frame frame = player.bowlCurrentFrameRefactor(numberOfHitPin);
+
+        this.bowlingGameResults.set(lastIndexOfBowlingGameResults(), new BowlingGameResult(
+                frame.calculateCurrentResults(),
+                frame.calculateCurrentScore()
+        ));
+
+        BowlingGameResult previousBowlingGameResult =
+                this.bowlingGameResults.get(lastIndexOfBowlingGameResults() - 1);
+        BowlingGameResult bonusApplied = previousBowlingGameResult.applyBonus(frame.calculateSpecialStrikeScore());
+        this.bowlingGameResults.set(lastIndexOfBowlingGameResults() - 1, bonusApplied);
+
+        return new ArrayList<>(this.bowlingGameResults);
+    }
+
+    public List<BowlingGameResult> finalFrameBowlLast(int numberOfHitPin) {
+        Frame frame = player.bowlCurrentFrameRefactor(numberOfHitPin);
+
+        this.bowlingGameResults.set(lastIndexOfBowlingGameResults(), new BowlingGameResult(
+                frame.calculateCurrentResults(),
+                frame.calculateCurrentScore()
+        ));
+
+        return new ArrayList<>(this.bowlingGameResults);
+    }
+
     public List<BowlingGameResult> bowlCurrentFrame(int numberOfHitPin) {
         Frame frame = player.bowlCurrentFrameRefactor(numberOfHitPin);
 
@@ -73,6 +113,18 @@ public class BowlingGame {
 
     public String getPlayerName() {
         return this.player.getName();
+    }
+
+    private void applyBonusEighthFrame(Frame frame) {
+        BowlingGameResult eightBowlingGameResult = this.bowlingGameResults.get(lastIndexOfBowlingGameResults() - 2);
+        this.bowlingGameResults.set(lastIndexOfBowlingGameResults() - 2,
+                eightBowlingGameResult.applyBonus(frame.calculateSpecialStrikeScore()));
+    }
+
+    private void applyBonusNinthFrame(Frame frame) {
+        BowlingGameResult ninthBowlingGameResult = this.bowlingGameResults.get(lastIndexOfBowlingGameResults() - 1);
+        this.bowlingGameResults.set(lastIndexOfBowlingGameResults() - 1,
+                ninthBowlingGameResult.applyBonus(frame.calculatePreviousScore()));
     }
 
     private void applyBonusToPreviousFrame(Frame frame) {
