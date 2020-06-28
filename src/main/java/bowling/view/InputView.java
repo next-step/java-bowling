@@ -16,7 +16,7 @@ public class InputView {
     }
 
     public static int inputPitchScore(Frames frames) {
-        System.out.printf(ViewMessage.INSTRUCTION_PITCH, frames.getCurrentIndex());
+        System.out.printf(ViewMessage.INSTRUCTION_PITCH, frames.getCurrentFrameIndex());
         return Integer.parseInt(SCANNER.nextLine());
     }
 }

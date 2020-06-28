@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Frames {
     private static final int INDEX_CONSTANT = 1;
+    private static final int TOTAL_FRAME_COUNTS = 10;
 
     private final List<Frame> frames;
 
@@ -32,17 +33,18 @@ public class Frames {
 
     public void moveToNextFrame() {
         Frame currentFrame = getCurrentFrame();
-        if (currentFrame.isFinished() && frames.size() != 10) {
-            Frame nextFrame = currentFrame.next(getCurrentIndex());
+        int currentFrameIndex = frames.size();
+        if (currentFrameIndex != TOTAL_FRAME_COUNTS && currentFrame.isFinished()) {
+            Frame nextFrame = currentFrame.next(currentFrameIndex);
             frames.add(nextFrame);
         }
     }
 
     public boolean hasNextTurn() {
-        return !(frames.size() == 10 && frames.get(9).isFinished());
+        return !(frames.size() == TOTAL_FRAME_COUNTS && getCurrentFrame().isFinished());
     }
 
-    public int getCurrentIndex() {
+    public int getCurrentFrameIndex() {
         return frames.size();
     }
 
