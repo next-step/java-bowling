@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.common.IntegerUtils;
 import org.hibernate.type.IntegerType;
 
 public class Frame {
@@ -22,7 +23,7 @@ public class Frame {
     }
 
     public void addScore(int score) {
-        if (remain - score < IntegerType.ZERO) {
+        if (remain - score < IntegerUtils.ZERO) {
             throw new IllegalArgumentException("Max pin count per frame is " + TOTAL_PIN_COUNT);
         }
 
@@ -31,7 +32,7 @@ public class Frame {
         }
 
         throwCount++;
-        remain-=score;
+        remain -= score;
     }
 
     public int getThrowCount() {
