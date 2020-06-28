@@ -32,12 +32,15 @@
 
 ### Frame : 프레임 공통 객체
 - [ ] `FrameNumber` 와 `FrameScore` 를 인스턴스 변수로 가진다.
+- [ ] 파라미터 Null 유효성 검증
 
 ### NormalFrame : 1 ~ 9 프레임
 - [ ] `Frame` 객체를 가진다.
+- [ ] 파라미터 Null 유효성 검증
 
 ### FinalFrame : 10 프레임
 - [ ] `Frame` 과 `Score`(보너스 점수) 를 인스턴스 변수로 가진다.
+- [ ] 파라미터 Null 유효성 검증
 
 ### FrameNumber : 프레임 번호
 - [X] 프레임 번호는 1 ~ 10까지의 숫자만 가능하다.
