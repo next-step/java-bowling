@@ -30,4 +30,14 @@ public class Gutter implements Score {
     public Point getPoint() {
         return point;
     }
+
+    @Override
+    public boolean isStrike() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
 }

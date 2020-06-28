@@ -11,6 +11,9 @@ public interface Score {
 
     ScoreType getScore();
 
-
     Point getPoint();
+
+    boolean isStrike();
+
+    boolean isSpare();
 }

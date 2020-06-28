@@ -22,4 +22,14 @@ public class Strike implements Score {
     public Point getPoint() {
         return point;
     }
+
+    @Override
+    public boolean isStrike() {
+        return true;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
 }
