@@ -27,6 +27,10 @@ public class FinalBonusScore implements BonusScore {
         return this.firstThrowScore;
     }
 
+    public int getSecondThrowScore() {
+        return this.secondThrowScore;
+    }
+
     public int getStrikeBonus() {
         return this.firstThrowScore + this.secondThrowScore;
     }

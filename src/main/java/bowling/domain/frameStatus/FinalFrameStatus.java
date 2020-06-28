@@ -32,8 +32,10 @@ public class FinalFrameStatus implements FrameStatus {
         return (this.firstNumberOfHitPin != null && this.firstNumberOfHitPin.equals(STRIKE));
     }
 
-    public boolean isSecondStrike() {
-        return (this.secondNumberOfHitPin != null && this.secondNumberOfHitPin.equals(STRIKE));
+    public boolean isFirstThrow() {
+        return (this.firstNumberOfHitPin != null &&
+                this.secondNumberOfHitPin == null &&
+                this.thirdNumberOfHitPin == null);
     }
 
     @Override

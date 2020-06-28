@@ -6,6 +6,7 @@ import bowling.domain.FrameScore;
 import bowling.domain.FrameScoreStatus;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.frameStatus.FinalFrameStatus;
+import bowling.domain.frameStatus.NormalFrameStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,6 +26,10 @@ class FinalFrameTests {
     private static final int FOUR = 4;
     private static final int ZERO = 0;
     private static final NormalFrame NINTH_FRAME = NormalFrame.start(FIVE).bowl(FIVE);
+    private static final NormalFrame EIGHTH_STRIKE_FRAME
+            = new NormalFrame(8, NormalFrameStatus.bowlFirst(TEN), null);
+    private static final NormalFrame EIGHTH_SPARE_FRAME
+            = new NormalFrame(8, NormalFrameStatus.bowlFirst(FIVE).bowl(FIVE), null);
 
     @DisplayName("초구로 맞춘 핀의 수와 아홉번째 프레임을 입력 받아서 객체를 생성할 수 있다.")
     @Test
@@ -242,6 +247,92 @@ class FinalFrameTests {
                 Arguments.of(
                         FinalFrame.bowlFirst(5, NormalFrame.start(5).bowl(4)).bowl(5).bowl(10),
                         new FrameScore(FrameScoreStatus.COMPLETE, 9)
+                )
+        );
+    }
+
+    @DisplayName("마지막 프레임 초구에서 8프레임 보너스를 확정할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("calculateSpecialStrikeWhenFirstThrowResource")
+    void calculateSpecialStrikeWhenFirstThrowTest(Frame finalFrame, FrameScore expectedScore) {
+        FrameScore frameScore = finalFrame.calculateSpecialStrikeScore();
+
+        assertThat(frameScore).isEqualTo(expectedScore);
+    }
+    public static Stream<Arguments> calculateSpecialStrikeWhenFirstThrowResource() {
+        return Stream.of(
+                // 더블인 경우
+                Arguments.of(
+                        EIGHTH_STRIKE_FRAME.next(TEN).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 30)
+                ),
+                Arguments.of(
+                        EIGHTH_STRIKE_FRAME.next(TEN).next(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 25)
+                ),
+                Arguments.of(
+                        EIGHTH_STRIKE_FRAME.next(FIVE).bowl(FIVE).next(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        EIGHTH_STRIKE_FRAME.next(FIVE).bowl(FIVE).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+
+                // 더블이 아닌 경우
+                Arguments.of(
+                        EIGHTH_SPARE_FRAME.next(FIVE).bowl(FIVE).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 15)
+                )
+        );
+    }
+
+    @DisplayName("마지막 프레임 두번째 투구에서 9프레임 보너스를 확정지을 수 있다.")
+    @ParameterizedTest
+    @MethodSource("calculateSpecialStrikeWhenSecondThrowResource")
+    void calculateSpecialStrikeWhenSecondThrowTest(Frame finalFrame, FrameScore expectedScore) {
+        FrameScore frameScore = finalFrame.calculateSpecialStrikeScore();
+
+        assertThat(frameScore).isEqualTo(expectedScore);
+    }
+    public static Stream<Arguments> calculateSpecialStrikeWhenSecondThrowResource() {
+        return Stream.of(
+                // 9프레임이 더블일 경우
+                Arguments.of(
+                        EIGHTH_STRIKE_FRAME.next(TEN).next(TEN).bowl(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 25)
+                ),
+                Arguments.of(
+                        EIGHTH_STRIKE_FRAME.next(TEN).next(TEN).bowl(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 30)
+                ),
+                Arguments.of(
+                        EIGHTH_SPARE_FRAME.next(TEN).next(TEN).bowl(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 25)
+                ),
+                Arguments.of(
+                        EIGHTH_SPARE_FRAME.next(TEN).next(TEN).bowl(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 30)
+                ),
+
+                // 9프레임이 더블이 아닐 경우(9프레임이 스트라이크가 아닌 경우)
+                Arguments.of(
+                        EIGHTH_SPARE_FRAME.next(FIVE).bowl(FIVE).next(TEN).bowl(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        EIGHTH_SPARE_FRAME.next(FIVE).bowl(FIVE).next(TEN).bowl(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+
+                // 9프레임이 더블이 아닐 경우(10프레임 초구가 스트라이크가 아닌 경우)
+                Arguments.of(
+                        EIGHTH_SPARE_FRAME.next(TEN).next(FIVE).bowl(FOUR),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 19)
+                ),
+                Arguments.of(
+                        EIGHTH_SPARE_FRAME.next(TEN).next(FIVE).bowl(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
                 )
         );
     }

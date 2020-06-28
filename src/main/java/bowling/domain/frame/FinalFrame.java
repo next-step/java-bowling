@@ -39,10 +39,28 @@ public class FinalFrame implements Frame {
         return this.finalFrameStatus.calculateBonusScore();
     }
 
+    private FrameScore calculateFirstThrowSpecialBonus() {
+        FrameScore twoFrameAgoScore = this.previousFrame.calculatePreviousScore();
+
+        if (previousFrame.isDouble()) {
+            return twoFrameAgoScore.applySpecialStrikeBonus(calculateBonusScore().getFirstThrowScore());
+        }
+
+        return twoFrameAgoScore;
+    }
+
     @Override
     public FrameScore calculateSpecialStrikeScore() {
-        // TODO
-        return null;
+        if (this.finalFrameStatus.isFirstThrow()) {
+            return calculateFirstThrowSpecialBonus();
+        }
+
+        if (this.previousFrame.isStrike() && this.finalFrameStatus.isFirstStrike()) {
+            FrameScore ninthFrameScore = this.previousFrame.calculateCurrentScore();
+            return ninthFrameScore.applySpecialStrikeBonus(calculateBonusScore().getSecondThrowScore());
+        }
+
+        return this.calculatePreviousScore();
     }
 
     @Override
