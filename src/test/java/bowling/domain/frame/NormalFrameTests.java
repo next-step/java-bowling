@@ -193,4 +193,21 @@ class NormalFrameTests {
                 )
         );
     }
+
+    @DisplayName("더블 여부를 알려줄 수 있다.")
+    @ParameterizedTest
+    @MethodSource("isDoubleResource")
+    void isDoubleTest(Frame frame, boolean expectedResult) {
+        NormalFrame parsed = (NormalFrame) frame;
+
+        assertThat(parsed.isDouble()).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> isDoubleResource() {
+        return Stream.of(
+                Arguments.of(NormalFrame.start(TEN).next(TEN), true),
+                Arguments.of(NormalFrame.start(TEN).next(FIVE), false),
+                Arguments.of(NormalFrame.start(FIVE).bowl(FIVE).next(FIVE), false),
+                Arguments.of(NormalFrame.start(FIVE).bowl(FOUR).next(TEN), false)
+        );
+    }
 }

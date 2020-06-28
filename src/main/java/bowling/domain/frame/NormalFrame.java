@@ -35,6 +35,10 @@ public class NormalFrame implements Frame {
         return this.currentStatus.isStrike();
     }
 
+    public boolean isDouble() {
+        return (this.previousFrame.isStrike() && this.isStrike());
+    }
+
     private void validateBowl() {
         if (isCompleted()) {
             throw new InvalidTryBowlException("완료된 프레임에서 추가로 투구할 수 없습니다.");
