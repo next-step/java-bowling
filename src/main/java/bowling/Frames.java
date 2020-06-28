@@ -24,6 +24,11 @@ public class Frames {
     return frames.size();
   }
 
+  /**
+   * 투구(roll a ball), FrameOverException 발생 시 새로운 프레임에서 진행
+   *
+   * @param knockDownNum
+   */
   public void roll(int knockDownNum) {
     try {
       frames.peekLast().roll(knockDownNum);
@@ -42,5 +47,20 @@ public class Frames {
           + NEWLINE + " frames : " + frames.toString()
           + NEWLINE + " knockDownNum : " + knockDownNum);
     }
+  }
+
+  public boolean isOver() {
+    if (BowlingGame.MAX_NUMBER_OF_FRAMES <= frames.size() && frames.peekLast().isOver()) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @Override
+  public String toString() {
+    return "Frames{" +
+        "frames=" + frames +
+        '}';
   }
 }

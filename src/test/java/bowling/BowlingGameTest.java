@@ -1,7 +1,5 @@
 package bowling;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
 class BowlingGameTest {
@@ -10,7 +8,7 @@ class BowlingGameTest {
   void roll() {
     BowlingGame game = new BowlingGame();
     game.roll(10);
-    while(!game.requiredBonusFrame()) {
+    while (!game.requiredBonusFrame()) {
       game.roll(1);
     }
 
