@@ -40,4 +40,9 @@ public class Frames {
     public List<Frame> getContent() {
         return Collections.unmodifiableList(frames);
     }
+
+    public boolean canAddMoreScore() {
+        return frames.stream()
+                .anyMatch(Frame::canAddMoreScore);
+    }
 }

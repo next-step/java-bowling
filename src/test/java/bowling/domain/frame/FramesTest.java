@@ -4,9 +4,13 @@ import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -66,5 +70,25 @@ public class FramesTest {
         assertThatThrownBy(() -> frames.addScore(score))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("더 이상");
+    }
+
+    @DisplayName("점수를 더 기록할 수 있는지 확인한다")
+    @ParameterizedTest
+    @MethodSource("canAddMoreScoreArguments")
+    void canAddMoreScore(boolean canAddMoreScore, boolean expected) {
+        assertThat(canAddMoreScore).isEqualTo(expected);
+    }
+
+    public static Stream<Arguments> canAddMoreScoreArguments() {
+        Frames frames = new Frames(Collections.singletonList(NormalFrame.createFirst()));
+        boolean canAddMoreScore1 = frames.canAddMoreScore();
+
+        frames.addScore(Score.of(1));
+        frames.addScore(Score.of(1));
+        boolean canAddMoreScore2 = frames.canAddMoreScore();
+
+        return Stream.of(
+                Arguments.of(canAddMoreScore1, true),
+                Arguments.of(canAddMoreScore2, false));
     }
 }
