@@ -15,7 +15,7 @@ public class Frame {
    * <p>
    * - 세 번째 투구 혹은 스트라이크 후 두 번째 투구 시 FrameOverException
    *
-   * @param knockDownNum
+   * @param knockDownNum 넘어뜨린 개수
    * @throws FrameOverException next()로 새로운 인스턴스 생성하여 처리
    */
   public void roll(int knockDownNum) throws FrameOverException {

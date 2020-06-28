@@ -1,23 +1,23 @@
 package bowling;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Frames {
 
   private static final String NEWLINE = System.lineSeparator();
 
-  private Deque<Frame> frames = new ArrayDeque<>();
+  private final Deque<Frame> frames = new ArrayDeque<>();
 
   public Frames() {
     frames.add(new Frame());
   }
 
   public List<Frame> getFrames() {
-    return Collections.unmodifiableList(frames.stream().collect(Collectors.toList()));
+    return Collections.unmodifiableList(new ArrayList<>(frames));
   }
 
   public int getSize() {
@@ -27,11 +27,11 @@ public class Frames {
   /**
    * 투구(roll a ball), FrameOverException 발생 시 새로운 프레임에서 진행
    *
-   * @param knockDownNum
+   * @param knockDownNum 넘어뜨린 개수
    */
   public void roll(int knockDownNum) {
     try {
-      frames.peekLast().roll(knockDownNum);
+      frames.getLast().roll(knockDownNum);
     } catch (FrameOverException e) {
       addAndRoll(knockDownNum);
     }
@@ -41,7 +41,7 @@ public class Frames {
     frames.addLast(new Frame());
 
     try {
-      frames.peekLast().roll(knockDownNum);
+      frames.getLast().roll(knockDownNum);
     } catch (FrameOverException frameOverException) {
       throw new IllegalStateException("roll 실패 "
           + NEWLINE + " frames : " + frames.toString()
@@ -50,11 +50,7 @@ public class Frames {
   }
 
   public boolean isOver() {
-    if (BowlingGame.MAX_NUMBER_OF_FRAMES <= frames.size() && frames.peekLast().isOver()) {
-      return true;
-    }
-
-    return false;
+    return BowlingGame.MAX_NUMBER_OF_FRAMES <= frames.size() && frames.peekLast().isOver();
   }
 
   @Override
