@@ -22,7 +22,6 @@ class PointsTest {
         assertThat(points.size()).isEqualTo(1);
     }
 
-
     @Test
     void sumPointsTest() {
         Points points = Points.create();

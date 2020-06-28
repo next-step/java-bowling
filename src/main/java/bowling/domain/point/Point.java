@@ -5,7 +5,7 @@ public class Point {
     private static final int MIN_POINT = 0;
     private static final int MAX_POINT = 10;
 
-    private int point;
+    private final int point;
 
     private Point(int point) {
         validatePoint(point);
