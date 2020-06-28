@@ -54,4 +54,12 @@ public class Scores {
     public boolean canAddMore() {
         return first == null || second == null;
     }
+
+    public Score getFirst() {
+        return Score.of(first.getContent());
+    }
+
+    public Score getSecond() {
+        return Score.of(second.getContent());
+    }
 }

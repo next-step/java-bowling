@@ -1,11 +1,16 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 
 public class FramesTest {
@@ -26,5 +31,40 @@ public class FramesTest {
         List<Frame> frameList = frames.getContent();
 
         assertThat(frameList.get(frameList.size() - 1)).isInstanceOf(FinalFrame.class);
+    }
+
+    @DisplayName("새로운 점수를 기록한다")
+    @Test
+    void addScore() {
+        // given
+        Frames frames = new Frames(Collections.singletonList(NormalFrame.createFirst()));
+        Score score1 = Score.of(1);
+        Score score2 = Score.of(2);
+
+        // when
+        frames.addScore(score1);
+        frames.addScore(score2);
+
+        // then
+        List<Frame> frameList = frames.getContent();
+        Frame frame = frameList.get(0);
+        Scores scores = frame.getScores();
+
+        assertAll(
+                () -> assertThat(scores.getFirst()).isEqualTo(score1),
+                () -> assertThat(scores.getSecond()).isEqualTo(score2));
+    }
+
+    @DisplayName("더 이상 점수를 기록할 수 없으면 IllegalStateException")
+    @Test
+    void addScore_full() {
+        Frames frames = new Frames(Collections.singletonList(NormalFrame.createFirst()));
+        Score score = Score.of(1);
+        frames.addScore(score);
+        frames.addScore(score);
+
+        assertThatThrownBy(() -> frames.addScore(score))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("더 이상");
     }
 }

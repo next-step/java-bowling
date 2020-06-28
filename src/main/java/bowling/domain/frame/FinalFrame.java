@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
 public class FinalFrame implements Frame {
@@ -24,5 +25,15 @@ public class FinalFrame implements Frame {
     @Override
     public boolean canAddMoreScore() {
         return scores.canAddMore();
+    }
+
+    @Override
+    public void addScore(Score score) {
+        scores.add(score);
+    }
+
+    @Override
+    public Scores getScores() {
+        return scores;
     }
 }
