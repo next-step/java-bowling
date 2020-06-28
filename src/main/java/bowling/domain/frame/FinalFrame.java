@@ -5,24 +5,19 @@ import bowling.domain.Score;
 public class FinalFrame extends Frame implements FrameInterface {
 
     private static final int LIMIT_COUNT = 3;
-    private static final int FIRST_COUNT = 0;
-    private static final int SECOND_COUNT = 1;
 
     @Override
     public boolean validateLimitScore() {
-        return scores.size() == LIMIT_COUNT || hasSpare() ;
+        return scores.size() == LIMIT_COUNT || validateFinalFrame() ;
     }
 
-    private boolean hasSpare() {
-        if (hasStrike()) {
+    private boolean validateFinalFrame() {
+        if (isStrike()) {
             return false;
         }
-        if (scores.get(FIRST_COUNT).getScore()
-                + scores.get(SECOND_COUNT).getScore()
-                == Score.MAX_SCORE) {
+        if (isSpare()) {
             return false;
         }
-
         return true;
     }
 }

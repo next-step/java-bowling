@@ -8,7 +8,7 @@ public class Frames {
 
     public static final int BOWLING_GAME_FRAME = 9;
 
-    private List<FrameInterface> frames = new ArrayList<>();
+    private List<Frame> frames = new ArrayList<>();
 
     public Frames() {
         for(int i = 0; i <= BOWLING_GAME_FRAME; i++) {
@@ -16,18 +16,19 @@ public class Frames {
         }
     }
 
-    private FrameInterface makeFrame(int frameNumber) {
+    private Frame makeFrame(int frameNumber) {
         if(frameNumber == BOWLING_GAME_FRAME) {
             return new FinalFrame();
         }
-        return new Frame();
+        return new NormalFrame();
     }
 
-    public void addFrameScore(int frameCount, int score) {
+    public Frame addFrameScore(int frameCount, int score) {
         frames.get(frameCount).addScore(score);
+        return frames.get(frameCount);
     }
 
-    public List<FrameInterface> getFrames() {
+    public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
     }
 }

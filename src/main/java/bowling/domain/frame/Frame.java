@@ -5,25 +5,28 @@ import bowling.domain.Score;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Frame implements FrameInterface{
+public class Frame {
 
-    private static final int LIMIT_COUNT = 2;
     private static final int FIRST_COUNT = 0;
+    private static final int SECOND_COUNT = 1;
 
     List<Score> scores = new ArrayList<>();
 
-    @Override
     public void addScore(int score) {
         scores.add(new Score(score));
     }
 
-    @Override
-    public boolean validateLimitScore() {
-        return scores.size() == LIMIT_COUNT || hasStrike();
-    }
-
-    public boolean hasStrike() {
+    public boolean isStrike() {
         return scores.get(FIRST_COUNT).validateMaxScore();
     }
 
+    public boolean isSpare() {
+        return scores.get(FIRST_COUNT).getScore()
+                + scores.get(SECOND_COUNT).getScore()
+                == Score.MAX_SCORE;
+    }
+
+    public boolean validateLimitScore() {
+        return true;
+    }
 }
