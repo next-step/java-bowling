@@ -1,4 +1,4 @@
 package bowling.domain.pin;
 
-public class Pins {
+public class Pin {
 }

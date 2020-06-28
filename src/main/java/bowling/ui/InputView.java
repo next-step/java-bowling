@@ -1,11 +1,13 @@
 package bowling.ui;
 
-import bowling.domain.Player;
+import bowling.domain.player.Player;
 import java.util.Scanner;
 
 public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
+
+    private InputView() { }
 
     public static Player inputPlayer() {
         System.out.println("플레이어 이름은(3 english letters)?:");
