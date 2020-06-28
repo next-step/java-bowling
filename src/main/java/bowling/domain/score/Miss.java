@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-import bowling.domain.point.Point;
+import bowling.domain.frame.Point;
 
 public class Miss implements Score {
 
@@ -12,7 +12,7 @@ public class Miss implements Score {
 
     @Override
     public Score nextScore(Point point) {
-        throw new IllegalArgumentException("MISS 다음 점수를 생성할 수 없습니다.");
+        return new Normal(point);
     }
 
     @Override

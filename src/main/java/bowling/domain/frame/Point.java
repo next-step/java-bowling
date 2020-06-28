@@ -1,4 +1,4 @@
-package bowling.domain.point;
+package bowling.domain.frame;
 
 import java.util.Objects;
 
@@ -43,5 +43,10 @@ public class Point {
     @Override
     public int hashCode() {
         return Objects.hash(point);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(point);
     }
 }

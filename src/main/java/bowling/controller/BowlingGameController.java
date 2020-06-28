@@ -2,7 +2,7 @@ package bowling.controller;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
-import bowling.domain.point.Point;
+import bowling.domain.frame.Point;
 import bowling.ui.InputView;
 import bowling.ui.ResultView;
 

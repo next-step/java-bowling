@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.point.Point;
 import bowling.domain.score.Score;
 
 import java.util.List;
@@ -14,5 +13,5 @@ public interface Frame {
 
     boolean isLastPitch();
 
-    List<Score> getScores();
+    String getScores();
 }

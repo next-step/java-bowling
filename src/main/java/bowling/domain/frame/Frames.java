@@ -1,9 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.point.Point;
-import bowling.domain.score.Normal;
-import bowling.domain.score.Score;
-
 import java.util.LinkedList;
 import java.util.List;
 

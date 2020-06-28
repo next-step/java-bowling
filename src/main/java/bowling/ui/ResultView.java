@@ -33,14 +33,7 @@ public class ResultView {
     private static void printScoreLine(Player player, Frames frames) {
         System.out.print("|" + formatting(player.toString()));
         frames.getFrames().stream()
-                .map(frame -> {
-                    List<Score> scores = frame.getScores();
-                    String result = "";
-                    for (Score score : scores) {
-                        result += ScoreType.pointToScore(score.getScore());
-                    }
-                    return formatting(result);
-                })
+                .map(frame -> formatting(frame.getScores()))
                 .forEach(System.out::print);
     }
 

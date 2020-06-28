@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-import bowling.domain.point.Point;
+import bowling.domain.frame.Point;
 
 public interface Score {
 

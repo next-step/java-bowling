@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-import bowling.domain.point.Point;
+import bowling.domain.frame.Point;
 
 public class Normal implements Score {
 
@@ -14,11 +14,15 @@ public class Normal implements Score {
     public Score nextScore(Point point) {
         int totalPoint = this.point.getPoint() + point.getPoint();
 
-        if (totalPoint == STRIKE_POINT) {
+        if (totalPoint == STRIKE_POINT || totalPoint - 10 == STRIKE_POINT) {
             return new Spare(point);
         }
 
-        if (totalPoint == GUTTER_POINT) {
+        if (point.getPoint() == STRIKE_POINT) {
+            return new Strike();
+        }
+
+        if (point.getPoint() == GUTTER_POINT) {
             return new Gutter();
         }
 

@@ -1,7 +1,7 @@
 package bowling.ui;
 
 import bowling.domain.player.Player;
-import bowling.domain.point.Point;
+import bowling.domain.frame.Point;
 
 import java.util.Scanner;
 

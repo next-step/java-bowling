@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.point.Point;
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreCreator;
 
@@ -8,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FinalFrame implements Frame {
+
+    private static final String SEPARATOR = "|";
 
     private List<Score> scores;
     private int pitchCount = 0;
@@ -53,15 +54,28 @@ public class FinalFrame implements Frame {
         Score nextScore = score.nextScore(point);
         scores.add(nextScore);
 
-        if (score.isSpare()) {
+        if (nextScore.isSpare()) {
             return FinalFrame.create(scores, ++pitchCount);
         }
 
-        return NormalFrame.create(scores, NORMAL_MAX_BOWL_PITCH);
+        if (score.isStrike()) {
+            return FinalFrame.create(scores, ++pitchCount);
+        }
+
+        return FinalFrame.create(scores, FINAL_MAX_BOWL_PITCH);
     }
 
-    public List<Score> getScores() {
-        return scores;
+    public String getScores() {
+        String result = "";
+        if (scores.size() == 2) {
+            return scores.get(0) + SEPARATOR + scores.get(1);
+        }
+
+        if (scores.size() == 1) {
+            return scores.get(0).toString();
+        }
+
+        return result;
     }
 
     public boolean isLastPitch() {

@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-import bowling.domain.point.Point;
+import bowling.domain.frame.Point;
 
 public class Spare implements Score {
 
@@ -12,7 +12,15 @@ public class Spare implements Score {
 
     @Override
     public Score nextScore(Point point) {
-        throw new IllegalArgumentException("스페어 처리 이후 다음 점수를 입력할 수 없습니다.");
+        if (point.getPoint() == STRIKE_POINT) {
+            return new Strike();
+        }
+
+        if (point.getPoint() == GUTTER_POINT) {
+            return new Gutter();
+        }
+
+        return new Normal(point);
     }
 
     @Override

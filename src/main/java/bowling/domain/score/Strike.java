@@ -1,14 +1,28 @@
 package bowling.domain.score;
 
-import bowling.domain.point.Point;
+import bowling.domain.frame.Point;
 
 public class Strike implements Score {
 
-    private static final Point point = Point.inputPoint(STRIKE_POINT);
+    private static final Point POINT = Point.inputPoint(STRIKE_POINT);
 
     @Override
     public Score nextScore(Point point) {
-        throw new IllegalArgumentException("스트라이크 다음에는 점수를 입력할 수 없습니다.");
+        int totalPoint = this.POINT.getPoint() + point.getPoint();
+
+        if (point.getPoint() == STRIKE_POINT) {
+            return new Strike();
+        }
+
+        if (totalPoint - 10 == STRIKE_POINT) {
+            return new Spare(point);
+        }
+
+        if (point.getPoint() == GUTTER_POINT) {
+            return new Gutter();
+        }
+
+        return new Normal(point);
     }
 
     @Override

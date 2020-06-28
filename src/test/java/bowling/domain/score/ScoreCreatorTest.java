@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-import bowling.domain.point.Point;
+import bowling.domain.frame.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,20 +27,19 @@ class ScoreCreatorTest {
     @DisplayName("정상 점수 생성")
     void createScoreTest() {
         Score score = ScoreCreator.create(Point.inputPoint(5));
-        assertThat(score.getPoint()).isEqualTo(Point.inputPoint(5));
+        assertThat(score.getScore()).isEqualTo("5");
     }
 
     @Test
     void createScoreStrikeTest() {
         Score score = ScoreCreator.create(Point.inputPoint(10));
-        assertThat(score.getPoint()).isEqualTo(Point.inputPoint(10));
-        assertThat(score.getScore()).isEqualTo(ScoreType.STRIKE);
+        assertThat(score.getScore()).isEqualTo("X");
     }
 
     @Test
     void createScoreGutterTest() {
         Score score =ScoreCreator.create(Point.inputPoint(0));
-        assertThat(score.getScore()).isEqualTo(ScoreType.GUTTER);
+        assertThat(score.getScore()).isEqualTo("-");
     }
 
     @Test
@@ -48,8 +47,7 @@ class ScoreCreatorTest {
     void createScoreSpareTest() {
         Score firstScore = ScoreCreator.create(Point.inputPoint(8));
         Score secondScore = firstScore.nextScore(Point.inputPoint(2));
-        assertThat(secondScore.getPoint()).isEqualTo(Point.inputPoint(2));
-        assertThat(secondScore.getScore()).isEqualTo(ScoreType.SPARE);
+        assertThat(secondScore.getScore()).isEqualTo("/");
     }
 
     @Test
@@ -57,7 +55,7 @@ class ScoreCreatorTest {
     void createScoreMissTest() {
         Score firstScore = ScoreCreator.create(Point.inputPoint(5));
         Score secondScore = firstScore.nextScore(Point.inputPoint(0));
-        assertThat(secondScore.getScore()).isEqualTo(ScoreType.MISS);
+        assertThat(secondScore.getScore()).isEqualTo("-");
     }
 
 }
