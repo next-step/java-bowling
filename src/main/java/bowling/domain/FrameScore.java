@@ -45,8 +45,8 @@ public class FrameScore {
         return new FrameScore(FrameScoreStatus.COMPLETE, this.score + 10 + specialStrikeBonus);
     }
 
-    public String getScore() {
-        return this.score.toString();
+    public Integer getScore() {
+        return this.score;
     }
 
     private void validateApplyBonus() {

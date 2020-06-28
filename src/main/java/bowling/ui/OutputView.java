@@ -33,8 +33,7 @@ public class OutputView {
         );
 
         System.out.println("|      |" +
-                parsePlayerScore(frameScores) +
-                "|"
+                parsePlayerScore(frameScores)
         );
     }
 
@@ -46,11 +45,20 @@ public class OutputView {
     }
 
     private static String parsePlayerScore(List<FrameScore> frameScores) {
-        return frameScores.stream()
+        List<Integer> completedScore = frameScores.stream()
                 .filter(FrameScore::isComplete)
                 .map(FrameScore::getScore)
-                .map(OutputView::formatResult)
-                .collect(Collectors.joining("|"));
+                .collect(Collectors.toList());
+
+        StringBuilder result = new StringBuilder();
+        Integer totalScore = 0;
+        for (Integer score : completedScore) {
+            totalScore += score;
+            result.append(formatResult(totalScore.toString()));
+            result.append("|");
+        }
+
+        return result.toString();
     }
 
     private static String parseFrameResults(FrameResults frameResults) {
