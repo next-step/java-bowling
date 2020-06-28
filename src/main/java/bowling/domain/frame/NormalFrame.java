@@ -35,11 +35,6 @@ public class NormalFrame implements Frame {
         return pitchCount == NORMAL_MAX_BOWL_PITCH;
     }
 
-    @Override
-    public boolean isLastFrame() {
-        return false;
-    }
-
     private Frame firstBowl(Point point) {
         Score score = ScoreCreator.create(point);
         scores.add(score);
@@ -49,6 +44,10 @@ public class NormalFrame implements Frame {
         }
 
         return NormalFrame.create(scores, ++pitchCount);
+    }
+
+    public List<Score> getScores() {
+        return scores;
     }
 
     private Frame nextBowl(Point point) {

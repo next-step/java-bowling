@@ -55,13 +55,12 @@ public class FinalFrame implements Frame {
         return NormalFrame.create(scores, NORMAL_MAX_BOWL_PITCH);
     }
 
-    public boolean isLastPitch() {
-        return pitchCount == FINAL_MAX_BOWL_PITCH;
+    public List<Score> getScores() {
+        return scores;
     }
 
-    @Override
-    public boolean isLastFrame() {
-        return true;
+    public boolean isLastPitch() {
+        return pitchCount == FINAL_MAX_BOWL_PITCH;
     }
 
     private void validateNextBowl() {
