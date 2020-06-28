@@ -9,11 +9,13 @@ import java.util.List;
 public class Frames {
 
   private static final String NEWLINE = System.lineSeparator();
+  private static final int FIRST_INDEX = 0;
 
   private final Deque<Frame> frames = new ArrayDeque<>();
 
   public Frames() {
-    frames.add(new Frame());
+
+    frames.add(new Frame(FIRST_INDEX));
   }
 
   public List<Frame> getFrames() {
@@ -38,7 +40,7 @@ public class Frames {
   }
 
   private void addAndRoll(int knockDownNum) {
-    frames.addLast(new Frame());
+    frames.addLast(new Frame(frames.size()));
 
     try {
       frames.getLast().roll(knockDownNum);

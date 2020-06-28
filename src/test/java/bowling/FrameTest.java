@@ -14,7 +14,7 @@ class FrameTest {
   @MethodSource("provideScore")
   void roll(int firstNumberOfPinsKnockedDown, int secondNumberOfPinsKnockedDown,
       int thirdNumberOfPinsKnockedDown) throws Exception {
-    Frame frame = new Frame();
+    Frame frame = new Frame(0);
 
     frame.roll(firstNumberOfPinsKnockedDown);
 
@@ -49,7 +49,7 @@ class FrameTest {
   @MethodSource("provideStrikeScore")
   void roll_WhenStrike(int firstNumberOfPinsKnockedDown, int secondNumberOfPinsKnockedDown)
       throws Exception {
-    Frame frame = new Frame();
+    Frame frame = new Frame(0);
 
     frame.roll(firstNumberOfPinsKnockedDown);
 

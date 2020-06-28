@@ -35,26 +35,26 @@ class FramesTest {
   }
 
   private static void initFramesTest() throws FrameOverException {
-    frame0_null = new Frame();
+    frame0_null = new Frame(0);
     frame0_null.roll(0);
 
-    frame0_0 = new Frame();
+    frame0_0 = new Frame(0);
     frame0_0.roll(0);
     frame0_0.roll(0);
 
-    frame0_1 = new Frame();
+    frame0_1 = new Frame(1);
     frame0_1.roll(0);
     frame0_1.roll(1);
 
-    frame0_10 = new Frame();
+    frame0_10 = new Frame(2);
     frame0_10.roll(0);
     frame0_10.roll(10);
 
-    frame5_5 = new Frame();
+    frame5_5 = new Frame(3);
     frame5_5.roll(5);
     frame5_5.roll(5);
 
-    frameStrike = new Frame();
+    frameStrike = new Frame(4);
     frameStrike.roll(10);
   }
 
@@ -79,36 +79,19 @@ class FramesTest {
             )
         ),
         arguments(
-            Arrays.asList(0, 1),
+            Arrays.asList(0, 0),
             Arrays.asList(
-                frame0_1
+                frame0_0
             )
         ),
         arguments(
-            Arrays.asList(5, 5),
-            Arrays.asList(
-                frame5_5
-            )
-        ),
-        arguments(
-            Arrays.asList(0, 10),
-            Arrays.asList(
-                frame0_10
-            )
-        ),
-        arguments(
-            Arrays.asList(10, 0),
-            Arrays.asList(
-                frameStrike,
-                frame0_null
-            )
-        ),
-        arguments(
-            Arrays.asList(0, 0, 10, 0),
+            Arrays.asList(0, 0, 0, 1, 0, 10, 5, 5, 10),
             Arrays.asList(
                 frame0_0,
-                frameStrike,
-                frame0_null
+                frame0_1,
+                frame0_10,
+                frame5_5,
+                frameStrike
             )
         )
     );

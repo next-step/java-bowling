@@ -5,6 +5,11 @@ import java.util.Objects;
 public class Frame {
 
   private KnockedDownPins pins = new KnockedDownPins();
+  private FrameStatus frameStatus;
+
+  public Frame(int curIndex) {
+    this.frameStatus = new RequiredFirstRoll(curIndex);
+  }
 
   /**
    * 최대 두 번 투구 가능
@@ -16,7 +21,7 @@ public class Frame {
    * - 세 번째 투구 혹은 스트라이크 후 두 번째 투구 시 FrameOverException
    *
    * @param knockDownNum 넘어뜨린 개수
-   * @throws FrameOverException next()로 새로운 인스턴스 생성하여 처리
+   * @throws FrameOverException 새로운 인스턴스 생성하여 처리
    */
   public void roll(int knockDownNum) throws FrameOverException {
     if (isOver()) {
@@ -24,10 +29,12 @@ public class Frame {
     }
 
     pins = KnockedDownPinsFactory.createInstanceBy(pins, knockDownNum);
+
+    frameStatus = frameStatus.createNextStatusBy(pins);
   }
 
   public boolean isOver() {
-    return !pins.isSecondKnockDownNumNull();
+    return frameStatus.isOver();
   }
 
   public int getRemainingPinsNum() {
