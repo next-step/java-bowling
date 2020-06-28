@@ -36,4 +36,19 @@ class FrameScoreTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("스트라이크의 점수는 반드시 " + FrameScore.MAX_SCORE_PER_FRAME + " 점 입니다.");
     }
+
+    @ParameterizedTest
+    @MethodSource("parametersByNPE")
+    @DisplayName("FrameScore 은 파라미터가 하나라도 null 이면 생성할 수 없다.")
+    void validate_strike(Score firstScore, Score secondScore) {
+        assertThatThrownBy(() -> FrameScore.of(firstScore, secondScore))
+                .isInstanceOf(NullPointerException.class);
+    }
+
+    static Stream<Arguments> parametersByNPE() {
+        return Stream.of(
+                arguments(Score.of(1), null),
+                arguments(null, Score.of(1)));
+    }
+
 }

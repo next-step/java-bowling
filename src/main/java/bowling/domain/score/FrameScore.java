@@ -1,5 +1,7 @@
 package bowling.domain.score;
 
+import java.util.Objects;
+
 public class FrameScore {
     public static final int MAX_SCORE_PER_FRAME = 10;
 
@@ -18,6 +20,8 @@ public class FrameScore {
     }
 
     private FrameScore(Score firstScore, Score secondScore) {
+        Objects.requireNonNull(firstScore, "첫 번째 점수가 유효하지 않습니다.");
+        Objects.requireNonNull(secondScore, "두 번째 점수가 유효하지 않습니다.");
         validateSum(firstScore, secondScore);
         this.firstScore = firstScore;
         this.secondScore = secondScore;
