@@ -40,7 +40,7 @@
 ### Score : 점수
 
 ### FrameScore : 프레임 당 점수
-- [ ] 프레임 당 점수 객체는 `FrameNumber` 와 `Score` 객체를 가진다.
+- [X] 프레임 당 점수 객체는 `FrameNumber` 와 `Score` 객체를 가진다.
 
 ### InputView
 - [ ] 플레이어를 입력받아 그대로 리턴한다.
