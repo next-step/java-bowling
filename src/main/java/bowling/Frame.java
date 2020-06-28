@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.Objects;
+
 public class Frame {
 
   private KnockedDownPins pins = new KnockedDownPins();
@@ -30,6 +32,23 @@ public class Frame {
 
   public int getRemainingPinsNum() {
     return pins.getRemainingNum();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Frame frame = (Frame) o;
+    return pins.equals(frame.pins);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(pins);
   }
 
   @Override
