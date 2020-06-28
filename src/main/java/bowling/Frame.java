@@ -26,7 +26,7 @@ public class Frame {
     pins = KnockedDownPinsFactory.createInstanceBy(pins, knockDownNum);
   }
 
-  private boolean isOver() {
+  public boolean isOver() {
     return !pins.isSecondKnockDownNumNull();
   }
 

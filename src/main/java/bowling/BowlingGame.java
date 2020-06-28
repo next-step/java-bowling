@@ -28,7 +28,7 @@ public class BowlingGame {
   }
 
   public boolean requiredBonusFrame() {
-    if (MAX_NUMBER_OF_FRAMES < frames.size() + 1) {
+    if (MAX_NUMBER_OF_FRAMES < frames.size() + 1 && frames.get(frames.size() - 1).isOver()) {
       return true;
     }
 
