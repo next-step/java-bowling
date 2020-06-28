@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.BowlingGame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,7 +17,7 @@ class PlayerTest {
     @ParameterizedTest
     @MethodSource("source_create_player_shouldSuccess")
     public void create_player_shouldSuccess(String playerName) {
-        Player player = new Player(playerName);
+        Player player = new Player(playerName, BowlingGame.FINAL_ROUND);
         assertThat(player.getName()).isEqualTo(playerName);
     }
 
