@@ -1,8 +1,14 @@
 package bowling.view;
 
-public class InputView {
+import bowling.domain.GameUser;
 
-//    public static GameUser askUserName(){
-//
-//    }
+import java.util.Scanner;
+
+public class InputView {
+    private static final Scanner SCANNER = new Scanner(System.in);
+
+    public static GameUser askUserName() {
+        System.out.printf("플레이어 이름은(3 english letters)?:");
+        return new GameUser(SCANNER.nextLine());
+    }
 }
