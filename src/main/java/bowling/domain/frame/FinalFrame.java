@@ -52,15 +52,11 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean availablePlay() {
-        if (scores.isEmpty()) {
-            return true;
+        if (isBonusGame()) {
+            return bonusScores.isAvailableAdd();
         }
 
-        if (scores.isAvailableAdd()) {
-            return true;
-        }
-
-        return isBonusGame() && bonusScores.isAvailableAdd();
+        return scores.isAvailableAdd();
     }
 
     private boolean isBonusGame() {

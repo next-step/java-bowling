@@ -44,15 +44,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean availablePlay() {
-        if (scores.isEmpty()) {
-            return true;
-        }
-
-        if (scores.isStrikeOrSpare()) {
-            return false;
-        }
-
-        return scores.firstScore();
+        return scores.isAvailableAdd();
     }
 
     @Override

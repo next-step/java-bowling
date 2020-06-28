@@ -49,6 +49,7 @@ class FinalFrameTest {
         Frame frame = createHasBonusScoreSpareFrame();
         assertThat(frame.availablePlay()).isTrue();
         frame.addPoint(5);
+        frame.addPoint(5);
         assertThat(frame.availablePlay()).isFalse();
     }
 

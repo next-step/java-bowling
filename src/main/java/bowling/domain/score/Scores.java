@@ -89,22 +89,6 @@ public class Scores {
             return false;
         }
 
-        return secondScore();
-    }
-
-    public boolean isAvailableBonusScoreAdd() {
-        if (CollectionUtils.isEmpty(scores)) {
-            return true;
-        }
-
-        if (isStrike()) {
-            return secondScore();
-        }
-
-        if (isSpare()) {
-            return thirdScore();
-        }
-
-        return false;
+        return firstScore();
     }
 }
