@@ -25,4 +25,13 @@ public class FrameNumber {
             throw new IllegalArgumentException("프레임은 10보다 클 수 없습니다.");
         }
     }
+
+    public int getFrameNumber() {
+        return frameNumber;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(frameNumber);
+    }
 }

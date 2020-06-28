@@ -1,6 +1,8 @@
 package bowling.ui;
 
+import bowling.domain.frame.FrameNumber;
 import bowling.domain.player.Player;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -15,8 +17,9 @@ public class InputView {
         return Player.create(name);
     }
 
-    public static int inputScore(int frameNumber) {
-        System.out.println(String.format("%d프레임 투구 : ", frameNumber));
-        return scanner.nextInt();
+    public static FrameNumber inputScore(FrameNumber frameNumber) {
+        System.out.println(String.format("%d프레임 투구 : ", frameNumber.toString()));
+        int number = scanner.nextInt();
+        return FrameNumber.create(number);
     }
 }
