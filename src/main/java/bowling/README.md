@@ -60,6 +60,14 @@
 
 ### Domain
 
+#### BowlingGame 패키지
+* SingleBowlingGame
+    * 1명의 플레이어로 구성된 BowlingGame 객체이다.
+    * 인스턴스 변수로 Frames와 Player를 가진다.
+
+* MultiBowlingGame
+    * List<SingleBowlingGame> 의 일급 컬렉션이다.
+
 #### Player 패키지
 * Player
     * 게임 참가자 객체이다.
@@ -68,6 +76,7 @@
 #### Score 패키지
 * FrameScore
     * 1개 프레임의 점수를 지닌 객체이다.
+    * 점수(frameScore)와 보너스 투구회수(leftPitchCounts)가 정의되어있다.
     * 현재 프레임의 점수 결과(Spare Miss 등)에 따라서 점수 계산에 관여하는 추가 투구 회수를 다르다.
     * 추가 투구를 합산하여 점수가 합산되는 Frame의 경우, 기존 객체를 통해 새로운 객체의 점수를 누계하여 생성한다.
     * 점수 계산에 관여하는 투구 회수(leftPitchCounts)가 0일때 계산이 가능하다.
@@ -93,7 +102,7 @@
 #### Pitch 패키지
 * Pitch
     * 매 프레임에서 수행되는 1번의 투구를 정의한 객체이다.
-    * 인스턴스 변수로 Score와 그에 해당하는 ScoreType을 가진다.
+    * 인스턴스 변수로 PitchScore와 그에 해당하는 PitchScoreType을 가진다.
     * Pitch 객체는 이전 Pitch의 결과에 따라 ScoreType이 달라지기 때문에, ScoreType과 마찬가지로 생성자를 경우의 수로 나눈다.
         * 볼링핀 10개가 새로 주어졌을 때 첫 번째 투구인 경우(마지막 프레임 포함) : initiate
         * 두 번째 투구인 경우 : next
@@ -150,8 +159,9 @@
     
 ### View
 * InputView
-    * 플레이어 이름을 입력받는다.
-    * 각 프레임의 투구를 입력받는다.
+    * 참가자의 수를 입력받는다.
+    * 참가자의 수만큼 플레이어의 이름을 입력받는다.
+    * 선수별 프레임의 투구를 입력받는다.
     
 * OutputView
     * 볼링 점수판을 그린다.
