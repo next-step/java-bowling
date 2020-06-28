@@ -30,16 +30,19 @@
 ### Player
 - [X] `Player` 는 `Name` 객체를 가진다.
 
-### Frame : 프레임 공통 객체
-- [ ] `FrameNumber` 와 `FrameScore` 를 인스턴스 변수로 가진다.
-- [ ] 파라미터 Null 유효성 검증
+### Frame : 프레임 공통 객체 (추상 클래스)
+- [ ] `FrameNumber` 와 `FrameScore` 를 인스턴스 변수로 가지는 추상 클래스
+- [ ] 다음 Frame 을 반환하기 위한 메소드를 가진다.
 
 ### NormalFrame : 1 ~ 9 프레임
-- [ ] `Frame` 객체를 가진다.
 - [ ] 파라미터 Null 유효성 검증
-
+- [ ] 생성 후 다음 `Frame` 객체를 반환한다.
+    - 스트라이크인 경우 or 2번의 투구를 마친 경우, 다음 Frame 객체를 반환한다.
+    - 1번째의 투구를 마친 경우, 현재의 Frame 객체를 반환한다.
+    - 9번 째의 프레임이 종료된 경우, `FinalFrame`을 반환한다.
+    
 ### FinalFrame : 10 프레임
-- [ ] `Frame` 과 `Score`(보너스 점수) 를 인스턴스 변수로 가진다.
+- [ ] `Score`(보너스 점수) 를 인스턴스 변수로 가진다.
 - [ ] 파라미터 Null 유효성 검증
 
 ### FrameNumber : 프레임 번호
