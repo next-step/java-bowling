@@ -2,7 +2,7 @@ package bowling;
 
 public class Frame {
 
-  private RemainingPins pins = new RemainingPins();
+  private KnockedDownPins pins = new KnockedDownPins();
 
   /**
    * 투구 시 마다 남은 핀 개수 감소
@@ -13,14 +13,25 @@ public class Frame {
    * @throws FrameOverException next()로 새로운 인스턴스 생성하여 처리
    */
   public void roll(int numberOfPinsKnockedDown) throws FrameOverException {
-    if (pins.getRemainingPins() == 0) {
+    if (isOver()) {
       throw new FrameOverException();
     }
 
     pins.knockDown(numberOfPinsKnockedDown);
   }
 
-  public int getRemainingPins() {
-    return pins.getRemainingPins();
+  private boolean isOver() {
+    return !pins.isSecondKnockedDownNumNull();
+  }
+
+  public int getRemainingPinsNum() {
+    return pins.getRemainingNum();
+  }
+
+  @Override
+  public String toString() {
+    return System.lineSeparator() + "Frame{" +
+        "pins=" + pins +
+        '}';
   }
 }

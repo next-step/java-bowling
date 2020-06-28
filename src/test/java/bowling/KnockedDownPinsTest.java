@@ -8,24 +8,23 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class RemainingPinsTest {
+class KnockedDownPinsTest {
 
   @ParameterizedTest
   @MethodSource("provideScore")
-  void knockDownPins(int firstNumberOfPinsKnockedDown,
-      int secondNumberOfPinsKnockedDown) throws Exception {
-    RemainingPins pins = new RemainingPins();
+  void knockDownPins(int firstNumberOfPinsKnockedDown, int secondNumberOfPinsKnockedDown) {
+    KnockedDownPins pins = new KnockedDownPins();
 
     pins.knockDown(firstNumberOfPinsKnockedDown);
 
-    assertThat(pins.getRemainingPins()).isEqualTo(10 - firstNumberOfPinsKnockedDown);
-    assertThat(pins.getFirstNumberOfKnockedDown()).isEqualTo(firstNumberOfPinsKnockedDown);
+    assertThat(pins.getRemainingNum()).isEqualTo(10 - firstNumberOfPinsKnockedDown);
+    assertThat(pins.getFirstKnockedDownNum().getValue()).isEqualTo(firstNumberOfPinsKnockedDown);
 
     pins.knockDown(secondNumberOfPinsKnockedDown);
 
-    assertThat(pins.getRemainingPins())
+    assertThat(pins.getRemainingNum())
         .isEqualTo(10 - firstNumberOfPinsKnockedDown - secondNumberOfPinsKnockedDown);
-    assertThat(pins.getFirstNumberOfKnockedDown()).isEqualTo(firstNumberOfPinsKnockedDown);
+    assertThat(pins.getFirstKnockedDownNum().getValue()).isEqualTo(firstNumberOfPinsKnockedDown);
   }
 
   static Stream<Arguments> provideScore() {
@@ -43,13 +42,12 @@ class RemainingPinsTest {
 
   @ParameterizedTest
   @MethodSource("provideExceededScore")
-  void knockDownPins_Exceeded(int firstNumberOfPinsKnockedDown, int secondNumberOfPinsKnockedDown)
-      throws Exception {
-    RemainingPins pins = new RemainingPins();
+  void knockDownPins_Exceeded(int firstNumberOfPinsKnockedDown, int secondNumberOfPinsKnockedDown) {
+    KnockedDownPins pins = new KnockedDownPins();
 
     pins.knockDown(firstNumberOfPinsKnockedDown);
 
-    assertThat(pins.getRemainingPins()).isEqualTo(10 - firstNumberOfPinsKnockedDown);
+    assertThat(pins.getRemainingNum()).isEqualTo(10 - firstNumberOfPinsKnockedDown);
 
     assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy((() -> {
       pins.knockDown(secondNumberOfPinsKnockedDown);

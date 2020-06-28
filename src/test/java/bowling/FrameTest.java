@@ -12,18 +12,17 @@ class FrameTest {
 
   @ParameterizedTest
   @MethodSource("provideScore")
-  void roll(int firstNumberOfPinsKnockedDown,
-      int secondNumberOfPinsKnockedDown,
+  void roll(int firstNumberOfPinsKnockedDown, int secondNumberOfPinsKnockedDown,
       int thirdNumberOfPinsKnockedDown) throws Exception {
     Frame frame = new Frame();
 
     frame.roll(firstNumberOfPinsKnockedDown);
 
-    assertThat(frame.getRemainingPins()).isEqualTo(10 - firstNumberOfPinsKnockedDown);
+    assertThat(frame.getRemainingPinsNum()).isEqualTo(10 - firstNumberOfPinsKnockedDown);
 
     frame.roll(secondNumberOfPinsKnockedDown);
 
-    assertThat(frame.getRemainingPins())
+    assertThat(frame.getRemainingPinsNum())
         .isEqualTo(10 - firstNumberOfPinsKnockedDown - secondNumberOfPinsKnockedDown);
 
     assertThatExceptionOfType(FrameOverException.class).isThrownBy(() -> {
@@ -54,7 +53,7 @@ class FrameTest {
 
     frame.roll(firstNumberOfPinsKnockedDown);
 
-    assertThat(frame.getRemainingPins()).isEqualTo(0);
+    assertThat(frame.getRemainingPinsNum()).isEqualTo(0);
 
     assertThatExceptionOfType(FrameOverException.class).isThrownBy(() -> {
       frame.roll(secondNumberOfPinsKnockedDown);
