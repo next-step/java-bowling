@@ -31,10 +31,10 @@
 - [X] `Player` 는 `Name` 객체를 가진다.
 
 ### Frame : 프레임 공통 객체 (추상 클래스)
-- [ ] `FrameNumber` 와 `FramePins` 를 인스턴스 변수로 가지는 추상 클래스
-- [ ] 다음 Frame 을 반환하기 위한 메소드를 가진다.
-- [ ] 마지막 프레임 여부를 반환하는 메소드를 가진다.
-- [ ] 파라미터 Null 유효성 검증
+- [X] `FrameNumber` 와 `FramePins` 를 인스턴스 변수로 가지는 추상 클래스
+- [X] 다음 Frame 을 반환하기 위한 메소드를 가진다.
+- [X] 마지막 프레임 여부를 반환하는 메소드를 가진다.
+- [X] 파라미터 Null 유효성 검증
 
 ### NormalFrame : 1 ~ 9 프레임
 - [ ] `FrameNumber` 와 `FramePins` 를 인스턴스 변수로 가지는 추상 클래스
