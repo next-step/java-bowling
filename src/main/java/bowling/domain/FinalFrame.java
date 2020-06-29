@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FinalFrame implements Frame {
-    private List<Integer> pins;
+    private List<Integer> scores;
     private int remain;
 
     public FinalFrame() {
-        this.pins = new ArrayList<>();
+        this.scores = new ArrayList<>();
         this.remain = TOTAL_PIN_COUNT;
     }
 
@@ -18,9 +18,9 @@ public class FinalFrame implements Frame {
     public List<ResultType> getResult() {
         int remain = TOTAL_PIN_COUNT;
         List<ResultType> resultTypes = new ArrayList<>();
-        for (int i = IntegerUtils.ZERO; i < pins.size(); i++) {
-            resultTypes.add(ResultType.of(i == IntegerUtils.ZERO, pins.get(i), remain - pins.get(i)));
-            remain -= pins.get(i);
+        for (int i = IntegerUtils.ZERO; i < scores.size(); i++) {
+            resultTypes.add(ResultType.of(i == IntegerUtils.ZERO, scores.get(i), remain - scores.get(i)));
+            remain -= scores.get(i);
         }
         return resultTypes;
     }
@@ -28,19 +28,19 @@ public class FinalFrame implements Frame {
     @Override
     public boolean bowling(int score) {
         if (isBonusFrame()) {
-            pins.add(score);
+            scores.add(score);
             return true;
         }
         validateAddScore(score);
 
         remain -= score;
-        pins.add(score);
+        scores.add(score);
 
-        return pins.size() == MAX_THROW_COUNT && remain > IntegerUtils.ZERO;
+        return scores.size() == MAX_THROW_COUNT && remain > IntegerUtils.ZERO;
     }
 
     private boolean isBonusFrame() {
-        if (remain == IntegerUtils.ZERO && pins.size() <= MAX_THROW_COUNT) {
+        if (remain == IntegerUtils.ZERO && scores.size() <= MAX_THROW_COUNT) {
             return true;
         }
         return false;
@@ -51,7 +51,7 @@ public class FinalFrame implements Frame {
             throw new IllegalArgumentException("Max pin count per frame is " + TOTAL_PIN_COUNT);
         }
 
-        if (pins.size() + 1 > MAX_THROW_COUNT) {
+        if (scores.size() + 1 > MAX_THROW_COUNT) {
             throw new IllegalArgumentException("Frame is finished");
         }
     }
