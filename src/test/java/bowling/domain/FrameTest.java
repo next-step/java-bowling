@@ -3,6 +3,8 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("Frame 로직 테스트")
@@ -12,7 +14,7 @@ class FrameTest {
     public void test_stlike() {
         Frame frame = new Frame();
         frame.addScore(10);
-        assertThat(frame.getResultType()).isEqualTo(ResultType.STRIKE);
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.STRIKE));
     }
 
     @Test
@@ -20,7 +22,7 @@ class FrameTest {
         Frame frame = new Frame();
         frame.addScore(5);
         frame.addScore(5);
-        assertThat(frame.getResultType()).isEqualTo(ResultType.SPARE);
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.FIVE, ResultType.SPARE));
     }
 
     @Test
@@ -28,7 +30,7 @@ class FrameTest {
         Frame frame = new Frame();
         frame.addScore(5);
         frame.addScore(3);
-        assertThat(frame.getResultType()).isEqualTo(ResultType.MISS);
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.FIVE, ResultType.THREE));
     }
 
     @Test
@@ -36,7 +38,7 @@ class FrameTest {
         Frame frame = new Frame();
         frame.addScore(0);
         frame.addScore(0);
-        assertThat(frame.getResultType()).isEqualTo(ResultType.GUTTER);
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.GUTTER, ResultType.GUTTER));
     }
 
     @Test
@@ -45,13 +47,5 @@ class FrameTest {
         assertThatThrownBy(() ->
                 frame.addScore(11)
         ).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    public void test_프레임이_종료되지않았음() {
-        Frame frame = new Frame();
-        frame.addScore(5);
-        assertThatThrownBy(frame::getResultType
-        ).isInstanceOf(NotFinishedFrameException.class);
     }
 }

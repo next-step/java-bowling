@@ -13,7 +13,7 @@ public class Frames {
         this.frames = new LinkedList<>();
     }
 
-    public List<String> getGameResult() {
+    public List<List<ResultType>> getGameResult() {
         return frames.stream().map(Frame::getResult).collect(Collectors.toList());
     }
 

@@ -3,24 +3,63 @@ package bowling.domain;
 import bowling.common.IntegerUtils;
 
 public enum ResultType {
-    STRIKE,
-    SPARE,
-    MISS,
-    GUTTER;
+    GUTTER("-"),
+    ONE("1"),
+    TWO("2"),
+    THREE("3"),
+    FOUR("4"),
+    FIVE("5"),
+    SIX("6"),
+    SEVEN("7"),
+    EIGHT("8"),
+    NINE("9"),
+    SPARE("\\"),
+    STRIKE("X");
 
-    public static ResultType of(Frame frame) {
-        if (frame.getThrowCount() == 1 && frame.getRemain() == IntegerUtils.ZERO) {
-            return STRIKE;
+    private final String symbol;
+
+    ResultType(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public static ResultType of(boolean isFirst, int pin, int remain) {
+        if (remain == IntegerUtils.ZERO) {
+            return isFirst ? STRIKE : SPARE;
         }
-        if (frame.getThrowCount() == Frame.MAX_THROW_COUNT && frame.getRemain() == IntegerUtils.ZERO) {
-            return SPARE;
-        }
-        if (frame.getThrowCount() == Frame.MAX_THROW_COUNT && frame.getRemain() == Frame.TOTAL_PIN_COUNT) {
+        if (pin == 0) {
             return GUTTER;
         }
-        if (frame.getThrowCount() == Frame.MAX_THROW_COUNT && frame.getRemain() > IntegerUtils.ZERO) {
-            return MISS;
+        if (pin == 1) {
+            return ONE;
         }
-        throw new NotFinishedFrameException("Frame is not finished");
+        if (pin == 2) {
+            return TWO;
+        }
+        if (pin == 3) {
+            return THREE;
+        }
+        if (pin == 4) {
+            return FOUR;
+        }
+        if (pin == 5) {
+            return FIVE;
+        }
+        if (pin == 6) {
+            return SIX;
+        }
+        if (pin == 7) {
+            return SEVEN;
+        }
+        if (pin == 8) {
+            return EIGHT;
+        }
+        if (pin == 9) {
+            return NINE;
+        }
+        throw new IllegalArgumentException("Maybe Frame is invalid");
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 }

@@ -19,7 +19,7 @@ public class Player {
         return frames;
     }
 
-    public List<String> getGameResult() {
+    public List<List<ResultType>> getGameResult() {
         return frames.getGameResult();
     }
 

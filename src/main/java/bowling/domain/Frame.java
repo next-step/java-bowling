@@ -16,12 +16,14 @@ public class Frame {
         remain = TOTAL_PIN_COUNT;
     }
 
-    public String getResult() {
-        return "";
-    }
-
-    public ResultType getResultType() {
-        return ResultType.of(this);
+    public List<ResultType> getResult() {
+        int remain = TOTAL_PIN_COUNT;
+        List<ResultType> resultTypes = new ArrayList<>();
+        for (int i = IntegerUtils.ZERO; i < pins.size(); i++) {
+            resultTypes.add(ResultType.of(i == IntegerUtils.ZERO, pins.get(i), remain - pins.get(i)));
+            remain -= pins.get(i);
+        }
+        return resultTypes;
     }
 
     public void addScore(int score) {
@@ -35,13 +37,5 @@ public class Frame {
 
         remain -= score;
         pins.add(score);
-    }
-
-    public int getThrowCount() {
-        return pins.size();
-    }
-
-    public int getRemain() {
-        return remain;
     }
 }
