@@ -12,7 +12,7 @@ public class InputView {
     }
 
     public static int enterDownPin(int frameIndex) {
-        System.out.print((frameIndex + 1) + "프레임 투구 : ");
+        System.out.print(frameIndex + "프레임 투구 : ");
         int downPin = SCANNER.nextInt();
         return downPin;
     }
