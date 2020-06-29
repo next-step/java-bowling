@@ -38,7 +38,7 @@ class FinalFrameTest {
     }
 
     @Test
-    public void miss() {
+    public void 미스() {
         Frame frame = new FinalFrame();
         frame.bowling(5);
         frame.bowling(3);
@@ -46,7 +46,7 @@ class FinalFrameTest {
     }
 
     @Test
-    public void gutter() {
+    public void 거터() {
         Frame frame = new FinalFrame();
         frame.bowling(0);
         frame.bowling(0);
@@ -62,7 +62,7 @@ class FinalFrameTest {
     }
 
     @Test
-    public void 프레임진행중에_종료안됨() {
+    public void 프레임진행_중에는_종료안됨() {
         Frame frame = new FinalFrame();
         assertThat(frame.bowling(5)).isFalse();
     }
