@@ -1,10 +1,12 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 import qna.CannotDeleteException;
 
@@ -20,25 +22,27 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
 
-    public Question() {
+    protected Question() {
     }
 
-    public Question(String title, String contents) {
+    public Question(String title, String contents, User loginUser) {
         this.title = title;
         this.contents = contents;
+        this.answers = new Answers();
+        this.writeBy(loginUser);
     }
 
-    public Question(long id, String title, String contents) {
+    public Question(long id, String title, String contents, User loginUser) {
         super(id);
         this.title = title;
         this.contents = contents;
+        this.answers = new Answers();
+        this.writeBy(loginUser);
     }
 
     public String getTitle() {
@@ -68,9 +72,9 @@ public class Question extends AbstractEntity {
         return this;
     }
 
-    public void addAnswer(Answer answer) {
-        answer.toQuestion(this);
-        answers.add(answer);
+    public Answer addAnswer(Answer answer) {
+        answers.addAnswer(answer);
+        return answer;
     }
 
     public boolean isOwner(User loginUser) {
@@ -86,14 +90,18 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
-    public Question delete() throws CannotDeleteException {
+    public Question delete(User loginUser) throws CannotDeleteException {
         if (isDeleted()) {
             throw new CannotDeleteException("이미 삭제된 글입니다.");
         }
+        if (! isOwner(loginUser)) {
+            throw new CannotDeleteException("질문 작성자가 아니라서 삭제할 수 없습니다.");
+        }
+        answers.deleteAll(loginUser);
         return setDeleted(true);
     }
 
