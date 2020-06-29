@@ -27,6 +27,15 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean addScore(int score) {
+        validateAddScore(score);
+
+        remain -= score;
+        pins.add(score);
+
+        return remain == IntegerUtils.ZERO || pins.size() == MAX_THROW_COUNT;
+    }
+
+    private void validateAddScore(int score) {
         if (remain - score < IntegerUtils.ZERO) {
             throw new IllegalArgumentException("Max pin count per frame is " + TOTAL_PIN_COUNT);
         }
@@ -34,10 +43,5 @@ public class NormalFrame implements Frame {
         if (pins.size() + 1 > MAX_THROW_COUNT) {
             throw new IllegalArgumentException("Frame is finished");
         }
-
-        remain -= score;
-        pins.add(score);
-
-        return remain == IntegerUtils.ZERO || pins.size() == MAX_THROW_COUNT;
     }
 }

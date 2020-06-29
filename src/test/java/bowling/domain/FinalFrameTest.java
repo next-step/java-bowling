@@ -62,6 +62,12 @@ class FinalFrameTest {
     }
 
     @Test
+    public void 프레임진행중에_종료안됨() {
+        Frame frame = new FinalFrame();
+        assertThat(frame.addScore(5)).isFalse();
+    }
+
+    @Test
     public void 스트라이크라도_프레임종료안됨() {
         Frame frame = new FinalFrame();
         assertThat(frame.addScore(10)).isFalse();

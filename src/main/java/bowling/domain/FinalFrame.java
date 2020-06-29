@@ -31,14 +31,7 @@ public class FinalFrame implements Frame {
             pins.add(score);
             return true;
         }
-
-        if (remain - score < IntegerUtils.ZERO) {
-            throw new IllegalArgumentException("Max pin count per frame is " + TOTAL_PIN_COUNT);
-        }
-
-        if (pins.size() + 1 > MAX_THROW_COUNT) {
-            throw new IllegalArgumentException("Frame is finished");
-        }
+        validateAddScore(score);
 
         remain -= score;
         pins.add(score);
@@ -51,5 +44,15 @@ public class FinalFrame implements Frame {
             return true;
         }
         return false;
+    }
+
+    private void validateAddScore(int score) {
+        if (remain - score < IntegerUtils.ZERO) {
+            throw new IllegalArgumentException("Max pin count per frame is " + TOTAL_PIN_COUNT);
+        }
+
+        if (pins.size() + 1 > MAX_THROW_COUNT) {
+            throw new IllegalArgumentException("Frame is finished");
+        }
     }
 }
