@@ -79,11 +79,11 @@ public class NormalFrame extends Frame {
     }
 
     private Score createScore(State lastState) {
-        if (lastState == State.STRIKE) {
+        if (lastState.isStrike()) {
             return Score.ofStrike();
         }
 
-        if (lastState == State.SPARE) {
+        if (lastState.isSpare()) {
             return Score.ofSpare();
         }
 

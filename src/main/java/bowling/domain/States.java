@@ -25,7 +25,7 @@ public class States {
     }
 
     public boolean isLastStateStrike() {
-        return getLastState() == State.STRIKE;
+        return getLastState().isStrike();
     }
 
     public int getStatesPinSum() {
