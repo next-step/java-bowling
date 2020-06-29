@@ -90,16 +90,19 @@ public class Question extends AbstractEntity {
     }
 
     public DeleteHistories delete(User user) throws CannotDeleteException {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        deleteValidation(user);
+        validateOwner(user);
+
         this.deleted = true;
+
+        DeleteHistories deleteHistories = new DeleteHistories();
         deleteHistories.addDeleteHistory(new DeleteHistory(ContentType.QUESTION, getId(), getWriter()));
+
         Answers.of(getAnswers()).deleteALL(user, deleteHistories);
 
         return deleteHistories;
     }
 
-    private void deleteValidation(User user) throws CannotDeleteException {
+    private void validateOwner(User user) throws CannotDeleteException {
         if (!isOwner(user)) {
            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
