@@ -40,7 +40,7 @@ public class QuestionTest {
         return DeleteHistory.of(ContentType.ANSWER, null, UserTest.JAVAJIGI, LocalDateTime.now());
     }
 
-    @DisplayName("Question deleteQuestionTest() 메소드 예외 테스트 :: CannotDeleteException")
+    @DisplayName("Question deleteQuestionTest() 테스트 - answer 에 다른 사용자의 아이디가 있어서 삭제가 안됨 :: CannotDeleteException")
     @ParameterizedTest
     @MethodSource("provideCannotDeleteExceptionQuestion")
     void deleteQuestionCannotDeleteExceptionTest(final Answer answer) {
