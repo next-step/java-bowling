@@ -5,6 +5,7 @@ import java.util.Objects;
 public class KnockedDownPins {
 
   public final static int MAX_NUMBER_OF_PINS = 10;
+  public final static int MIN_NUMBER_OF_PINS = 0;
 
   private KnockDownNumber firstKnockDownNum = new KnockDownNumber();
   private KnockDownNumber secondKnockDownNum = new KnockDownNumber();

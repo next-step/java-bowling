@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BonusFrame implements Frame {
 
-  KnockDownNumber knockDownNumber = new KnockDownNumber();
+  private KnockDownNumber knockDownNumber = new KnockDownNumber();
 
   @Override
   public void roll(int knockDownNum) throws FrameOverException {
