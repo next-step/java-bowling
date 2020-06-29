@@ -38,6 +38,6 @@ public class Frame {
         remain -= score;
         pins.add(score);
 
-        return remain == IntegerUtils.ZERO;
+        return remain == IntegerUtils.ZERO || pins.size() == MAX_THROW_COUNT;
     }
 }

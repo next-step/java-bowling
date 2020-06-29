@@ -67,4 +67,11 @@ class FrameTest {
         Frame frame = new Frame();
         assertThat(frame.addScore(5)).isFalse();
     }
+
+    @Test
+    public void test_미스라면_프레임종료() {
+        Frame frame = new Frame();
+        frame.addScore(5);
+        assertThat(frame.addScore(3)).isTrue();
+    }
 }
