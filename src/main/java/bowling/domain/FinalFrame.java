@@ -8,10 +8,14 @@ import java.util.List;
 public class FinalFrame implements Frame {
     private List<Integer> scores;
     private int remain;
+    private boolean processBonusShot;
+    private int bonusScore;
 
     public FinalFrame() {
         this.scores = new ArrayList<>();
         this.remain = TOTAL_PIN_COUNT;
+        this.processBonusShot = false;
+        this.bonusScore = IntegerUtils.ZERO;
     }
 
     @Override
@@ -22,13 +26,17 @@ public class FinalFrame implements Frame {
             resultTypes.add(ResultType.of(i == IntegerUtils.ZERO, scores.get(i), remain - scores.get(i)));
             remain -= scores.get(i);
         }
+        if (processBonusShot) {
+            resultTypes.add(ResultType.of(true, bonusScore, TOTAL_PIN_COUNT - bonusScore));
+        }
         return resultTypes;
     }
 
     @Override
     public boolean bowling(int score) {
         if (isBonusFrame()) {
-            scores.add(score);
+            processBonusShot = true;
+            bonusScore = score;
             return true;
         }
         addScore(score);
