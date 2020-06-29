@@ -17,6 +17,10 @@ public class FrameDTO {
     return new FrameDTO(frame.getPins(), frame.getFrameStatus());
   }
 
+  public boolean isBonus() {
+    return frameStatus instanceof Bonus;
+  }
+
   @Override
   public String toString() {
     if (frameStatus instanceof Strike) {
@@ -27,7 +31,11 @@ public class FrameDTO {
       return pins.getFirstKnockDownNum() + BAR + "/";
     }
 
-    String left = String.valueOf(pins.getFirstKnockDownNum());
+    if (frameStatus instanceof Bonus && pins.getFirstKnockDownNum() == 10) {
+      return "X";
+    }
+
+    String left = pins.isFirstKnockDownNumNull() ? "" : String.valueOf(pins.getFirstKnockDownNum());
     String right = pins.isSecondKnockDownNumNull() ? "" : BAR + pins.getSecondKnockDownNum();
 
     return (left + right).replaceAll("0", GUTTER);

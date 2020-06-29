@@ -1,5 +1,7 @@
 package bowling.model;
 
+import java.util.List;
+
 public class BowlingGame {
 
   public final static int MAX_NUMBER_OF_FRAMES = 10;
@@ -18,6 +20,18 @@ public class BowlingGame {
 
   public String getPlayerName() {
     return playerName.getValue();
+  }
+
+  public List<FrameDTO> getFramesDTO() {
+    return new FramesDTO(frames.getFrames()).getFrames();
+  }
+
+  public int getCurrentFrameNum() {
+    if (frames.isCurrentFrameOver()) {
+      return frames.getSize() + 1;
+    }
+
+    return frames.getSize();
   }
 
   public void roll(int number) {

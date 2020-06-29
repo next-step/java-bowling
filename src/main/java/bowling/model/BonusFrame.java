@@ -33,7 +33,7 @@ public class BonusFrame implements Frame {
 
   @Override
   public KnockedDownPins getPins() {
-    return KnockedDownPins.getBuilder(knockDownNumber.getIntValue()).secondKnockDownNum(0).build();
+    return KnockedDownPins.getBuilder(knockDownNumber.getIntValue()).build();
   }
 
   @Override

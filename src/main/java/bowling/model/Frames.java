@@ -64,8 +64,12 @@ public class Frames {
     frames.addLast(bonusFrame);
   }
 
+  public boolean isCurrentFrameOver() {
+    return frames.getLast().isOver();
+  }
+
   public boolean isOver() {
-    return BowlingGame.MAX_NUMBER_OF_FRAMES <= frames.size() && frames.peekLast().isOver();
+    return BowlingGame.MAX_NUMBER_OF_FRAMES <= frames.size() && frames.getLast().isOver();
   }
 
   @Override
