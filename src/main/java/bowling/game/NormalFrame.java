@@ -5,6 +5,7 @@ public class NormalFrame implements Frame {
 
     private final FrameNumber frameNumber;
     private final Pitches pitches;
+    private Frame next;
 
     public NormalFrame(final int frameNumber) {
         this.frameNumber = new FrameNumber(frameNumber);
@@ -24,10 +25,14 @@ public class NormalFrame implements Frame {
     @Override
     public Frame createNextFrame() {
         if (frameNumber.getNumber() == FINAL_NORMAL_FRAME_NUMBER) {
-            return new FinalFrame(frameNumber.getNumber() + 1);
+            next = new FinalFrame(frameNumber.getNumber() + 1);
+
+            return next;
         }
 
-        return new NormalFrame(frameNumber.getNumber() + 1);
+        next = new NormalFrame(frameNumber.getNumber() + 1);
+
+        return next;
     }
 
     public FrameNumber getFrameNumber() {
