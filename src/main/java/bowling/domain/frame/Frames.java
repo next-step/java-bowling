@@ -57,7 +57,12 @@ public class Frames {
     public boolean isCurrentFrameFinished() {
         return getCurrentFrame().isFinished();
     }
-    
+
+    public List<Integer> getFrameScores2() {
+        FrameScores frameScores = FrameScores.of(getFrames());
+        return frameScores.getFrameScores();
+    }
+
     public List<ScoreSignaturesDto> getScoreSignatureDtos() {
         return frames.stream()
                 .map(Frame::getPitchScoreSignaturesDto)

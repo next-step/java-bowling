@@ -1,5 +1,6 @@
 package bowling.domain.game;
 
+import bowling.domain.dto.BowlingGameDto;
 import bowling.domain.frame.Frames;
 import bowling.domain.score.PitchScore;
 
@@ -48,6 +49,12 @@ public class MultiBowlingGame {
 
     public String getCurrentPlayerName() {
         return getCurrentGame().getPlayerName();
+    }
+
+    public List<BowlingGameDto> getFrameDtos() {
+        return singleBowlingGames.stream()
+                .map(SingleBowlingGame::getFrameDto)
+                .collect(Collectors.toList());
     }
 
     public int getPlayerCounts() {

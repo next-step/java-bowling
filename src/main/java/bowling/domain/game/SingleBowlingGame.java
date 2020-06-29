@@ -1,5 +1,6 @@
 package bowling.domain.game;
 
+import bowling.domain.dto.BowlingGameDto;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 import bowling.domain.score.PitchScore;
@@ -43,5 +44,9 @@ public class SingleBowlingGame {
 
     public List<Integer> getFrameScores() {
         return frames.getFrameScores().getFrameScores();
+    }
+
+    public BowlingGameDto getFrameDto() {
+        return new BowlingGameDto(player.getName(), frames.getScoreSignatureDtos(), frames.getFrameScores2());
     }
 }
