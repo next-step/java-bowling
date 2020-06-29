@@ -48,4 +48,23 @@ class FrameTest {
                 frame.addScore(11)
         ).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    public void test_스트라이크라면_프레임종료() {
+        Frame frame = new Frame();
+        assertThat(frame.addScore(10)).isTrue();
+    }
+
+    @Test
+    public void test_스페어라면_프레임종료() {
+        Frame frame = new Frame();
+        frame.addScore(5);
+        assertThat(frame.addScore(5)).isTrue();
+    }
+
+    @Test
+    public void test_스페어처리해야되면_프레임종료안됨() {
+        Frame frame = new Frame();
+        assertThat(frame.addScore(5)).isFalse();
+    }
 }

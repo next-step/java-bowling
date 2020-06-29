@@ -26,7 +26,7 @@ public class Frame {
         return resultTypes;
     }
 
-    public void addScore(int score) {
+    public boolean addScore(int score) {
         if (remain - score < IntegerUtils.ZERO) {
             throw new IllegalArgumentException("Max pin count per frame is " + TOTAL_PIN_COUNT);
         }
@@ -37,5 +37,7 @@ public class Frame {
 
         remain -= score;
         pins.add(score);
+
+        return remain == IntegerUtils.ZERO;
     }
 }
