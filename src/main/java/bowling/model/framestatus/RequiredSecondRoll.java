@@ -6,7 +6,8 @@ import java.util.List;
 
 public class RequiredSecondRoll implements FrameStatus {
 
-  private final static int ZERO = 0;
+  private final static String GUTTER = "-";
+  private final static Integer ZERO = 0;
 
   private final List<Integer> indexOfScoredFrames;
 
@@ -31,5 +32,17 @@ public class RequiredSecondRoll implements FrameStatus {
   @Override
   public boolean isOver() {
     return false;
+  }
+
+  @Override
+  public String toString(KnockedDownPins pins) {
+    return String.valueOf(pins.getFirstKnockDownNum()).replace(ZERO.toString(), GUTTER);
+  }
+
+  @Override
+  public String toString() {
+    return "RequiredSecondRoll{" +
+        "indexOfScoredFrames=" + indexOfScoredFrames +
+        '}';
   }
 }

@@ -3,7 +3,6 @@ package bowling.model;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-import bowling.model.knockdownstrategy.KnockDownNumber;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -10,4 +10,6 @@ public interface FrameStatus {
   FrameStatus createNextStatusBy(KnockedDownPins pins);
 
   boolean isOver();
+
+  String toString(KnockedDownPins pins);
 }

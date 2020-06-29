@@ -3,6 +3,7 @@ package bowling.model.framestatus;
 import static org.assertj.core.api.Assertions.*;
 
 import bowling.model.KnockedDownPins;
+import bowling.model.KnockedDownPinsTest;
 import org.junit.jupiter.api.Test;
 
 class RequiredSecondRollTest {
@@ -41,5 +42,12 @@ class RequiredSecondRollTest {
             .secondKnockDownNum(3)
             .build()
     )).isInstanceOf(Miss.class);
+  }
+
+  @Test
+  void testToString() {
+    FrameStatus frameStatus = new RequiredSecondRoll(new RequiredFirstRoll(0));
+
+    assertThat(frameStatus.toString(KnockedDownPinsTest.knockedDownPins5_5)).isEqualTo("5");
   }
 }

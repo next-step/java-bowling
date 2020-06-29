@@ -6,6 +6,7 @@ import java.util.List;
 
 public class RequiredFirstRoll implements FrameStatus {
 
+  private final static String BLANK = "";
   private final List<Integer> indexOfScoredFrames;
 
   public RequiredFirstRoll(int curIndex) {
@@ -29,5 +30,17 @@ public class RequiredFirstRoll implements FrameStatus {
   @Override
   public boolean isOver() {
     return false;
+  }
+
+  @Override
+  public String toString(KnockedDownPins pins) {
+    return BLANK;
+  }
+
+  @Override
+  public String toString() {
+    return "RequiredFirstRoll{" +
+        "indexOfScoredFrames=" + indexOfScoredFrames +
+        '}';
   }
 }

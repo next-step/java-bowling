@@ -7,6 +7,10 @@ import java.util.List;
 
 public class Spare implements FrameStatus {
 
+  private final static String BAR = "|";
+  private final static String SPARE = "/";
+  private final static String GUTTER = "-";
+
   private final List<Integer> indexOfScoredFrames;
 
   public Spare(FrameStatus frameStatus) {
@@ -28,5 +32,21 @@ public class Spare implements FrameStatus {
   @Override
   public boolean isOver() {
     return true;
+  }
+
+  @Override
+  public String toString(KnockedDownPins pins) {
+    if (pins.getRemainingNum() != 0) {
+      throw new IllegalArgumentException("스페어가 아닙니다.");
+    }
+
+    return (pins.getFirstKnockDownNum() + BAR + SPARE).replace("0", GUTTER);
+  }
+
+  @Override
+  public String toString() {
+    return "Spare{" +
+        "indexOfScoredFrames=" + indexOfScoredFrames +
+        '}';
   }
 }

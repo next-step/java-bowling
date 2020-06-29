@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Miss implements FrameStatus {
 
+  private final static String BAR = "|";
+  private final static String GUTTER = "-";
+
   private final List<Integer> indexOfScoredFrames;
 
   public Miss(FrameStatus frameStatus) {
@@ -25,5 +28,22 @@ public class Miss implements FrameStatus {
   @Override
   public boolean isOver() {
     return true;
+  }
+
+  @Override
+  public String toString(KnockedDownPins pins) {
+    if (pins.getRemainingNum() == 0) {
+      throw new IllegalArgumentException("미스가 아닙니다.");
+    }
+
+    return (pins.getFirstKnockDownNum() + BAR + pins.getSecondKnockDownNum())
+        .replaceAll("0", GUTTER);
+  }
+
+  @Override
+  public String toString() {
+    return "Miss{" +
+        "indexOfScoredFrames=" + indexOfScoredFrames +
+        '}';
   }
 }

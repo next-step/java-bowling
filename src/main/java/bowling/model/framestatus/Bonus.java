@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Bonus implements FrameStatus {
 
+  private final static String STRIKE = "X";
+  private final static String GUTTER = "-";
+
   @Override
   public List<Integer> getIndexOfScoredFrames() {
     return Collections.emptyList();
@@ -19,5 +22,14 @@ public class Bonus implements FrameStatus {
   @Override
   public boolean isOver() {
     return true;
+  }
+
+  @Override
+  public String toString(KnockedDownPins pins) {
+    if (pins.getFirstKnockDownNum() == 10) {
+      return STRIKE;
+    }
+
+    return String.valueOf(pins.getFirstKnockDownNum()).replaceAll("0", GUTTER);
   }
 }
