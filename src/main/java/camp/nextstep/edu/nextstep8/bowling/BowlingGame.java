@@ -1,61 +1,47 @@
 package camp.nextstep.edu.nextstep8.bowling;
 
-import static camp.nextstep.edu.nextstep8.bowling.constant.BowlingRule.MAX_FRAME;
-import static camp.nextstep.edu.nextstep8.bowling.constant.BowlingRule.MAX_SCORE;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BowlingGame {
-    private int score;
-    private int spare;
-    private int frame = 1;
-    private ScoreBoard scoreBoard = new ScoreBoard();
+    private static final int LAST_FRAME = 11;
 
-    public void play() {
-        String player = BowlingGameInput.getPlayer();
+    private int frameIndex = 1;
+    private final Map<Integer, Frame> frames = new HashMap<>();
 
-        while(true) {
-            BowlingGameView.showDashboard(player, scoreBoard);
-
-            score = BowlingGameInput.getHitCount(frame);
-            validateScore(score);
-
-            if(score < MAX_SCORE) {
-                spare = BowlingGameInput.getHitCount(frame);
-                validateSpare(score, spare);
-            }
-
-            scoreBoard.markScore(frame, score, spare);
-            spare = 0;
-
-            if(meetGameOverCondition(frame, score)) {
-                BowlingGameView.showDashboard(player, scoreBoard);
-                break;
-            }
-            frame++;
+    public void roll() {
+        markScore(BowlingGameInput.getHitCount(frameIndex));
+        if(hasSpareChance()) {
+            markSpare(BowlingGameInput.getHitCount(frameIndex));
         }
+        frameIndex++;
     }
 
-    private void validateScore(int score) {
-        if(MAX_SCORE < score) {
-            throw new IllegalArgumentException(MAX_SCORE + "점 을 넘을 수 없습니다");
-        }
+    private void markScore(int score) {
+        frames.put(frameIndex, new Frame(score));
     }
 
-    public void validateSpare(int score, int spare) {
-        if(MAX_SCORE < score + spare) {
-            throw new IllegalArgumentException("잔여 Spare 점수를 초과하였습니다");
-        }
+    private void markSpare(int spare) {
+        frames.get(frameIndex)
+                .updateSpare(spare);
     }
 
-    private boolean meetGameOverCondition(int frame, int score) {
-        if(meetOneMoreChance(frame, score)) {
-            return false;
-        }
-
-        return MAX_FRAME < frame;
+    private boolean hasSpareChance() {
+        return frames.get(frameIndex).hasSpareChance();
     }
 
-    private boolean meetOneMoreChance(int frame, int score) {
-        return MAX_FRAME == frame &&
-                (MAX_SCORE == score || MAX_SCORE == (frame + score));
+    public boolean hasNextFrame() {
+        return LAST_FRAME > this.frameIndex;
+    }
+
+    public boolean hasLastChance() {
+        int lastFrameIndex = frameIndex - 1;
+        return LAST_FRAME == this.frameIndex &&
+                frames.get(lastFrameIndex)
+                        .isStrikeOrSpare();
+    }
+
+    public ScoreBoard getScoreBoard() {
+        return new ScoreBoard(frames);
     }
 }

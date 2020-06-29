@@ -1,26 +1,22 @@
 package camp.nextstep.edu.nextstep8.bowling;
 
-import java.util.Optional;
-
-import static camp.nextstep.edu.nextstep8.bowling.constant.BowlingRule.MAX_FRAME;
-
 public class BowlingGameView {
-    private static final String EMPTY = "";
+    private static final String HEADER_NAME = "NAME";
     private static final String BASE_FORMAT = "|%5s\t";
     private static final String PIPE = "|";
-    private static final String HEADER_NAME = "NAME";
-
-    private static int getLoopTimes(int frameCount) {
-        return frameCount > MAX_FRAME ? frameCount : MAX_FRAME;
-    }
+    private static final int MAX_LOOP_COUNT = 10;
 
     public static void showDashboard(String player, ScoreBoard scoreBoard) {
         int loopTimes = getLoopTimes(scoreBoard.getFrameCount());
         makeResult(index -> String.format("%02d", index), HEADER_NAME, loopTimes);
-        makeResult(index ->
-                Optional.ofNullable(scoreBoard.getFrame(index))
-                .map(Frame::getFrameResultSymbol)
-                .orElse(EMPTY), player, loopTimes);
+        makeResult(index -> scoreBoard.getFrameResult(index), player, loopTimes);
+        System.out.println();
+    }
+
+    private static int getLoopTimes(int frameCount) {
+        return frameCount > MAX_LOOP_COUNT ?
+                frameCount :
+                MAX_LOOP_COUNT;
     }
 
     private static void makeResult(TextRenderer renderer, String title, int loopTimes) {

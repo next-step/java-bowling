@@ -1,37 +1,45 @@
 package camp.nextstep.edu.nextstep8.bowling;
 
-import static camp.nextstep.edu.nextstep8.bowling.constant.BowlingRule.MAX_SCORE;
-
 public class Frame {
-    private final int score;
-    private final int spare;
-    private static String STRIKE = "X";
+    private final Score score;
+    private int spare;
 
-    public Frame(int score, int spare) {
-        this.score = score;
+    public Frame(int score) {
+        this.score = new Score(score);
+    }
+
+    public Frame updateSpare(int spare) {
+        if(score.hasMoreScore(spare)) {
+            throw new IllegalArgumentException("잔여 Spare 점수를 초과하였습니다");
+        }
         this.spare = spare;
+        return this;
     }
 
-    public int getScore() {
-        return this.score;
+    public String getResultSymbol() {
+        if(score.meetMaxScore()) {
+            return "X";
+        }
+
+        if(score.meetMaxScore(spare)) {
+            return score.getScore() + "|/";
+        }
+
+        if(isCutter()) {
+            return "-";
+        }
+        return score.getScore() + "|" + spare;
     }
 
-    public String getFrameResultSymbol() {
-        return checkStatus().makeSymbol(score, spare);
+    public boolean isStrikeOrSpare() {
+        return score.meetMaxScore() || score.meetMaxScore(spare);
     }
 
-    private FrameStatus checkStatus() {
-        if(MAX_SCORE == score && 0 == spare) {
-            return FrameStatus.STRIKE;
-        }
+    public boolean hasSpareChance() {
+        return !(score.meetMaxScore());
+    }
 
-        if(MAX_SCORE == score + spare) {
-            return FrameStatus.SPARE;
-        }
-
-        if(0 == score + spare) {
-            return FrameStatus.GUTTER;
-        }
-        return FrameStatus.MISS;
+    private boolean isCutter() {
+        return 0 == (score.getScore() + spare);
     }
 }

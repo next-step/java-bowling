@@ -133,23 +133,23 @@ public class QnAService {
 * 다음 Frame을 현재 Frame 외부에서 생성하기 보다 현재 Frame에서 다음 Frame을 생성하는 방식으로 구현해 보고, 어느 구현이 더 좋은지 검토해 본다.
 
 ### Step2 리뷰 사항
-* [ ] [fix#01][BowlingGame.java] 게임과 관련된 너무 많은 로직을 수행하고 있음 Controller의 역할을 하기보다는 Model의 역할을 하고 있는 것으로 보임  
+* [x] [fix#01][BowlingGame.java] 게임과 관련된 너무 많은 로직을 수행하고 있음 Controller의 역할을 하기보다는 Model의 역할을 하고 있는 것으로 보임  
 View와 Model간의 중개 역할은 BowlingGameApplication에 맡기고 Model에만 집중하도록 수정
-* [ ] [fix#02][BowlingGame.java] ScoreBoard는 서로 다른 메소드들 간에 필드가 공유되고 있지 않아서 class 변수로 선언할 필요가 없음
-* [ ] [fix#03][BowlingGame.java] 핀이 몇 개가 쓰러졌는지는 사용자가 입력한 값으로 결정하는게 아닌, 매 프레임 마다 볼링 게임이 결정해야 할 일로 보임   
+* [x] [fix#02][BowlingGame.java] ScoreBoard는 서로 다른 메소드들 간에 필드가 공유되고 있지 않아서 class 변수로 선언할 필요가 없음
+* [x] [fix#03][BowlingGame.java] 핀이 몇 개가 쓰러졌는지는 사용자가 입력한 값으로 결정하는게 아닌, 매 프레임 마다 볼링 게임이 결정해야 할 일로 보임   
 BowlingGame 이 결정할 일이 아님
-* [ ] [fix#04][BowlingGame.java] score 역할을 하는 객체를 만들어 Score객체가 생성될 때 유효성 검사를 하도록 수정
-* [ ] [fix#05][BowlingGame.java] spare = 0은 필드 변수로 선언하지 않는다면 0으로 따로 초기화 할 필요가 없어 보임
-* [ ] [fix#06][BowlingGameView.java] View는 출력만 담당하고 게임과 관련된 계산은 게임과 관련된 정보를 가진 ScoreBoard 에게 요청하도록 수정
-* [ ] [fix#07][BowlingGameView.java] scoreBoard가 넘겨주는 값이 Optional 한 값이라면, 사용자가 null 여부를 판단하기 보다는 scoreBoard가 Optional을 반환하도록 변경할 것
-* [ ] [fix#08][BowlingGameView.java] View가 ScoreBoard의 내부 구조를 모두 알아야 만 결과를 출력할 수 있는 구조  
+* [x] [fix#04][BowlingGame.java] score 역할을 하는 객체를 만들어 Score객체가 생성될 때 유효성 검사를 하도록 수정
+* [x] [fix#05][BowlingGame.java] spare = 0은 필드 변수로 선언하지 않는다면 0으로 따로 초기화 할 필요가 없어 보임
+* [x] [fix#06][BowlingGameView.java] View는 출력만 담당하고 게임과 관련된 계산은 게임과 관련된 정보를 가진 ScoreBoard 에게 요청하도록 수정
+* [x] [fix#07][BowlingGameView.java] scoreBoard가 넘겨주는 값이 Optional 한 값이라면, 사용자가 null 여부를 판단하기 보다는 scoreBoard가 Optional을 반환하도록 변경할 것
+* [x] [fix#08][BowlingGameView.java] View가 ScoreBoard의 내부 구조를 모두 알아야 만 결과를 출력할 수 있는 구조  
 필요한 값이 Frame.getFrameResultSymbol()의 반환 값이라면 ScoreBoard가 Frame.getFrameResultSymbol()의 값을 반환 하도록 수정할 것
 * [ ] [fix#09][Frame.java] Class가 의도대로 동작하는지 Test 추가 
-* [ ] [fix#10][Frame.java] 자바에서는 관례적으로 static 변수, 인스턴스 순으로 변수를 선언하고 있음 자동차 경주 미션에 첨부되어 있던 https://myeonguni.tistory.com/1596 참고
-* [ ] [fix#11][Frame.java] FrameStatus를 직접 결정하고 있음, 이럴경우 FrameStatus의 값이 추가 되거나, 삭제 될 때마다 Frame 클래스도 함께 수정이 발생하게 됨   
+* [x] [fix#10][Frame.java] 자바에서는 관례적으로 static 변수, 인스턴스 순으로 변수를 선언하고 있음 자동차 경주 미션에 첨부되어 있던 https://myeonguni.tistory.com/1596 참고
+* [x] [fix#11][Frame.java] FrameStatus를 직접 결정하고 있음, 이럴경우 FrameStatus의 값이 추가 되거나, 삭제 될 때마다 Frame 클래스도 함께 수정이 발생하게 됨   
 Frame이 필요한 값은 FrameStatus의 enum 값 보다는 symbol이 필요해 보임, FrameStatus에게 score와 spare를 전달하면서 symbol을 달라고 요청하도록 수정할 것
 * [ ] [fix#12][ScoreBoard.java] Class가 의도대로 동작하는지 Test 추가
-* [ ] [fix#13][BowlingRule.java] 의미없이 반복되는 값이 아닌, 게임의 진행과 밀접하게 관련된 값이 모여 있음  
+* [x] [fix#13][BowlingRule.java] 의미없이 반복되는 값이 아닌, 게임의 진행과 밀접하게 관련된 값이 모여 있음  
 게임과 밀접한 관련이 있는 값을 단순히 상수로 선언해 두게 된다면, 게임과 관련 없는 곳에서 해당 상수를 의미와는 다르게 사용할 우려가 있음  
 만약 상수를 의도와는 다르게 다른 클래스에서 사용하게 된다면 상수를 수정할 때, 상수를 사용하고 있는 게임과 관련 없는 객체까지 함께 수정이 발생하게 되어 의도치 않은 오류를 발생할 수 있음  
 이 숫자들을 가장 잘 알고 있어야 하는 객체에 상수를 선언하도록 수정할 것

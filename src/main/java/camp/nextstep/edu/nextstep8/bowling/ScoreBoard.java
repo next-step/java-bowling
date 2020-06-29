@@ -3,14 +3,17 @@ package camp.nextstep.edu.nextstep8.bowling;
 import java.util.*;
 
 public class ScoreBoard {
-    private final Map<Integer, Frame> frames = new HashMap<>();
+    private static final String EMPTY = "";
+    private final Map<Integer, Frame> frames;
 
-    public void markScore(int frameNumber, int score, int spare) {
-        frames.put(frameNumber, new Frame(score, spare));
+    public ScoreBoard(Map<Integer, Frame> frames) {
+        this.frames = frames;
     }
 
-    public Frame getFrame(int frameNumber) {
-        return frames.get(frameNumber);
+    public String getFrameResult(int index) {
+        return Optional.ofNullable(frames.get(index))
+                .map(Frame::getResultSymbol)
+                .orElse(EMPTY);
     }
 
     public int getFrameCount() {
