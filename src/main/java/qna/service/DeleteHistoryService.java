@@ -14,29 +14,29 @@ import qna.domain.DeleteHistoryRepository;
 
 @Service("deleteHistoryService")
 public class DeleteHistoryService {
-    @Resource(name = "deleteHistoryRepository")
-    private DeleteHistoryRepository deleteHistoryRepository;
+	@Resource(name = "deleteHistoryRepository")
+	private DeleteHistoryRepository deleteHistoryRepository;
 
-    @Transactional
-    public void saveAll(List<DeleteHistory> deleteHistories) {
-        deleteHistoryRepository.saveAll(deleteHistories);
-    }
+	@Transactional
+	public void saveAll(List<DeleteHistory> deleteHistories) {
+		deleteHistoryRepository.saveAll(deleteHistories);
+	}
 
-    @Transactional
-    public void save(DeleteHistory deleteHistory) {
-        deleteHistoryRepository.save(deleteHistory);
-    }
+	@Transactional
+	public void save(DeleteHistory deleteHistory) {
+		deleteHistoryRepository.save(deleteHistory);
+	}
 
-    @Transactional
-    public List<DeleteHistory> getAll() {
-        List<DeleteHistory> histories = StreamSupport.stream
-            (deleteHistoryRepository.findAll().spliterator(), false)
-            .collect(Collectors.toList());
-        return histories;
-    }
+	@Transactional
+	public List<DeleteHistory> getAll() {
+		List<DeleteHistory> histories = StreamSupport.stream
+			(deleteHistoryRepository.findAll().spliterator(), false)
+			.collect(Collectors.toList());
+		return histories;
+	}
 
-    @Transactional
-    public void init() {
-        deleteHistoryRepository.deleteAll();
-    }
+	@Transactional
+	public void init() {
+		deleteHistoryRepository.deleteAll();
+	}
 }
