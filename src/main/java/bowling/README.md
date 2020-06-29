@@ -196,7 +196,7 @@ PJS's turn :
     * 1개 프레임의 볼링 시그니쳐 (-, /, X 등)List<String> 을 가진 Dto 객체이다.
 
 * BowlingGameDto
-    * 현재 플레이어의 이름과, 현재 보유하고 있는 프레임들의 List<ScoreSignaturesDto) 및 
+    * 현재 플레이어의 이름과, 현재 보유하고 있는 프레임들의 시그니쳐 리스트(List<ScoreSignaturesDto>) 및 
     계산 가능한 프레임의 점수 리스트(List<Integer>)를 가진 Dto 객체이다.
     
 ### View
