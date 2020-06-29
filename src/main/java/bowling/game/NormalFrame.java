@@ -1,56 +1,24 @@
 package bowling.game;
 
-import java.util.LinkedList;
-
-import static java.util.stream.Collectors.joining;
-
 public class NormalFrame implements Frame {
-    private static final int PITCH_COUNT_MAX = 2;
     private static final int FINAL_NORMAL_FRAME_NUMBER = 9;
 
     private final FrameNumber frameNumber;
-    private final LinkedList<Pitch> pitches;
+    private final Pitches pitches;
 
     public NormalFrame(final int frameNumber) {
         this.frameNumber = new FrameNumber(frameNumber);
-        this.pitches = new LinkedList<>();
+        this.pitches = new NormalPitches();
     }
 
     @Override
     public int bowl(final int pinCount) {
-        if (pitches.isEmpty()) {
-            pitches.add(Pitch.firstPitch(pinCount));
-
-            return FrameNumber.FRAME_NUMBER_MAX - pitches.stream()
-                    .mapToInt(Pitch::getPinCount)
-                    .sum();
-        }
-
-        Pitch lastPitch = pitches.getLast();
-        pitches.add(lastPitch.nextPitch(pinCount));
-
-        return FrameNumber.FRAME_NUMBER_MAX - pitches.stream()
-                .mapToInt(Pitch::getPinCount)
-                .sum();
+        return pitches.throwBall(pinCount);
     }
 
     @Override
     public boolean hasRemainChance() {
-        if (pitches.isEmpty()) {
-            return true;
-        }
-
-        Pitch firstPitch = pitches.getFirst();
-
-        if (firstPitch.isStrikePitch()) {
-            return false;
-        }
-
-        if (pitches.size() == PITCH_COUNT_MAX) {
-            return false;
-        }
-
-        return true;
+        return pitches.hasChance();
     }
 
     @Override
@@ -73,8 +41,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public String getStates() {
-        return pitches.stream()
-                .map(Pitch::stateToString)
-                .collect(joining(STATE_DELIMITER));
+        return pitches.getPitchesStates();
     }
 }
