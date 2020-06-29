@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.bowlinggame;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
@@ -43,10 +43,6 @@ public class BowlingGame {
 
     public Frames getFrames() {
         return frames;
-    }
-
-    public int currentPlayFrameIndex() {
-        return frames.getFrameSize();
     }
 
     public Frame findCurrentFrame() {

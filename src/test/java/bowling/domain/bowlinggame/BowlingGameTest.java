@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.bowlinggame;
 
+import bowling.domain.bowlinggame.BowlingGame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class BowlingGameTest {
 
