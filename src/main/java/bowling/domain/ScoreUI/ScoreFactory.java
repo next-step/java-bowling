@@ -7,7 +7,7 @@ public interface ScoreFactory {
         if (score == 0) {
             return new Miss();
         }
-        if (frame.isStrike()) {
+        if (score == 10) {
             return new Strike();
         }
         if (frame.isSpare()) {

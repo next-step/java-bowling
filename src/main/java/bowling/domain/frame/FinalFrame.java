@@ -3,6 +3,7 @@ package bowling.domain.frame;
 public class FinalFrame extends Frame implements FrameFactory {
 
     private static final int LIMIT_COUNT = 3;
+    private static final int FINAL_FRAME_MINIMUN_COUNT = 1;
 
     @Override
     public boolean validateLimitScore() {
@@ -16,6 +17,6 @@ public class FinalFrame extends Frame implements FrameFactory {
         if (isSpare()) {
             return false;
         }
-        return true;
+        return !(scores.size() == FINAL_FRAME_MINIMUN_COUNT);
     }
 }

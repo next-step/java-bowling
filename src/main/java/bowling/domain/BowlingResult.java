@@ -12,7 +12,6 @@ public class BowlingResult {
     private List<ScoreFactory> result = new ArrayList<>();
 
     public void addScoreUI(ScoreFactory scoreFactory) {
-        System.out.println(scoreFactory.getString());
         result.add(scoreFactory);
     }
 

@@ -8,16 +8,17 @@ public class Bowling {
 
     private Frames frames;
     private BowlingResults bowlingResults = new BowlingResults();
-    private int frameCount = 0;
 
     public Bowling() {
         frames = new Frames();
     }
 
-    public void addPlayerScore(int inputScore) {
+    public int addPlayerScore(int frameCount, int inputScore) {
+
         Frame frame = frames.addFrameScore(frameCount, inputScore);
         bowlingResults.addScoreUI(frameCount, ScoreFactory.of(inputScore, frame));
-        frameCount += (frame.validateLimitScore()) ? 1 : 0;
+
+        return (frame.validateLimitScore()) ? 1 : 0;
     }
 
     public BowlingResult getBowLingResult(int resultCount) {

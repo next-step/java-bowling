@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.domain.Score;
+import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,9 +37,16 @@ public class FrameTest {
     @DisplayName("마지막 프레임 체크")
     @Test
     void finalFrameTest() {
-        frames.addFrameScore(BOWLING_GAME_FRAME, 10);
-        frames.addFrameScore(BOWLING_GAME_FRAME, 10);
+        frames.addFrameScore(BOWLING_GAME_FRAME, 5);
+        frames.addFrameScore(BOWLING_GAME_FRAME, 5);
         frames.addFrameScore(BOWLING_GAME_FRAME, 3);
+        System.out.println(frames.getFrames().get(BOWLING_GAME_FRAME));
+        Frame frame = frames.getFrames().get(BOWLING_GAME_FRAME);
+        System.out.println(frame.isSpare());
+        System.out.println(frame.isStrike());
+//        for(Score score : frame.) {
+//
+//        }
         assertThat(frames.getFrames().get(BOWLING_GAME_FRAME).validateLimitScore()).isTrue();
     }
 
