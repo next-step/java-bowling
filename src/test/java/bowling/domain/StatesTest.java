@@ -65,4 +65,15 @@ public class StatesTest {
 
         assertThat(actual).isEqualTo(State.TWO);
     }
+
+    @Test
+    void calculateScore() {
+        States states = new States();
+        int inputScore = 7;
+        Score score = Score.ofMiss(inputScore);
+
+        Score actual = states.calculateScore(score);
+
+        assertThat(actual.getScore()).isEqualTo(inputScore);
+    }
 }
