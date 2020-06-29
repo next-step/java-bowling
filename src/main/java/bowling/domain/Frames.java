@@ -1,73 +1,54 @@
 package bowling.domain;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Frames {
-    private static final int LAST_FRAME = 10;
+    private static final int BEFORE_LAST_INDEX = 9;
 
-    private List<Frame> frames;
-    private int frameIndex;
+    private final List<Frame> frames;
 
-    private Frames(List<Frame> frames, int frameIndex) {
+    private Frames(List<Frame> frames) {
         this.frames = frames;
-        this.frameIndex = frameIndex;
     }
 
     public static Frames init() {
-        List<Frame> frames = new LinkedList<>();
-        frames.add(NormalFrame.newInstance());
-        return new Frames(frames, 0);
+        List<Frame> frames = new ArrayList<>();
+        frames.add(NormalFrame.init());
+        return new Frames(frames);
     }
 
-    public Frames bowling(int downPin) {
-        Frame frame = frames.get(frameIndex).bowl(downPin);
-        updateFrame(frame);
-        return this;
-    }
-
-    public void next() {
-        if (frames.get(frameIndex).isLastTrying()) {
-            frames.add(createNextFrame());
-            frameIndex++;
+    public void bowl(int downPin) {
+        if (currentFrame().isLastTryAtFrame()) {
+            frames.add(nextFrame());
         }
+        currentFrame().bowl(downPin);
     }
 
-    public boolean isLast() {
-        return frameIndex == LAST_FRAME;
-    }
-
-    public List<Frame> getFrames() {
-        return frames;
-    }
-
-    public int getFrameIndex() {
-        return frameIndex;
-    }
-
-    public String getResult(int index){
-        return frames.get(index).getResult();
+    public boolean isLastTryAtFrame() {
+        return currentFrame().isLastTryAtFrame();
     }
 
     public int size() {
         return frames.size();
     }
 
-    private void updateFrame(Frame frame) {
-        frames.remove(frameIndex);
-        frames.add(frame);
+    public List<Frame> getFrames() {
+        return Collections.unmodifiableList(frames);
     }
 
-    private Frame createNextFrame() {
-        if (isBeforeLastIndex()) {
-            return FinalFrame.newInstance();
-        }
-        return NormalFrame.newInstance();
+    private Frame currentFrame() {
+        return frames.get(frames.size() - 1);
     }
 
-    private boolean isBeforeLastIndex() {
-        return frameIndex == 8;
+    private Frame nextFrame() {
+        if (frames.size() == BEFORE_LAST_INDEX)
+            return FinalFrame.init();
+        return currentFrame().next();
     }
 
-
+    public Frame getFrame(int index) {
+        return frames.get(index);
+    }
 }
