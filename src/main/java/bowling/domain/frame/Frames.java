@@ -1,12 +1,15 @@
 package bowling.domain.frame;
 
 import bowling.domain.dto.ScoreSignaturesDto;
+import bowling.domain.score.FrameScore;
 import bowling.domain.score.FrameScores;
 import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Frames {
     private static final int INDEX_CONSTANT = 1;
@@ -50,8 +53,12 @@ public class Frames {
     }
 
     public List<Integer> getFrameScores() {
-        FrameScores frameScores = FrameScores.of(frames);
-        return frameScores.getFrameScores();
+        List<FrameScore> frameScores = frames.stream()
+                .map(Frame::calculateFrameScore)
+                .filter(Optional::isPresent)
+                .flatMap(frameScore -> Stream.of(frameScore.get()))
+                .collect(Collectors.toList());
+        return FrameScores.of(frameScores).getFrameScores();
     }
 
     public List<ScoreSignaturesDto> getScoreSignatureDtos() {

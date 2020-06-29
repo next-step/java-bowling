@@ -1,12 +1,7 @@
 package bowling.domain.score;
 
-import bowling.domain.frame.Frame;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class FrameScores {
     private static final int ZERO = 0;
@@ -17,12 +12,7 @@ public class FrameScores {
         this.frameScores = frameScores;
     }
 
-    public static FrameScores of(List<Frame> frames) {
-        List<FrameScore> frameScores = frames.stream()
-                .map(Frame::calculateFrameScore)
-                .filter(Optional::isPresent)
-                .flatMap(frameScore -> Stream.of(frameScore.get()))
-                .collect(Collectors.toList());
+    public static FrameScores of(List<FrameScore> frameScores) {
         return new FrameScores(frameScores);
     }
 

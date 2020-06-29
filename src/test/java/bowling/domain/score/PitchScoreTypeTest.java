@@ -106,7 +106,7 @@ class PitchScoreTypeTest {
 
     @DisplayName("next ScoreType을 만들 때 두 Pitch의 합이 10을 넘으면 예외 발생")
     @Test
-    public void nextStrike_10_초과_예외() {
+    public void next_점수합_10_초과_예외() {
         Pitch pitch = Pitch.initiate(PitchScore.valueOf(3));
         PitchScore pitchScore = PitchScore.valueOf(9);
 
@@ -116,9 +116,9 @@ class PitchScoreTypeTest {
                 .hasMessageContaining(BowlingBuildingException.OVER_SCORE);
     }
 
-    @DisplayName("next ScoreType을 만들 때 스페어면 / 반환")
+    @DisplayName("next ScoreType을 만들 때 점수의 합이 10이면 스페어 반환")
     @Test
-    public void nextStrike_스페어() {
+    public void next_점수합_10_스페어() {
         Pitch pitch = Pitch.initiate(PitchScore.valueOf(3));
         PitchScore pitchScore = PitchScore.valueOf(7);
 
@@ -129,7 +129,7 @@ class PitchScoreTypeTest {
 
     @DisplayName("next ScoreType을 만들 때 총합이 10점이 되지 못하면 Miss반환")
     @Test
-    public void nextStrike_미스() {
+    public void next_미스() {
         Pitch pitch = Pitch.initiate(PitchScore.valueOf(3));
         PitchScore pitchScore = PitchScore.valueOf(6);
 
