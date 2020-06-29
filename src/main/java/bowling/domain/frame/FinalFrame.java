@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.FrameResults;
+import bowling.domain.*;
+import bowling.domain.bonusScore.FinalBonusScore;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.frameStatus.FinalFrameStatus;
@@ -12,19 +13,19 @@ public class FinalFrame implements Frame {
 
     private final int index;
     private final FinalFrameStatus finalFrameStatus;
-    private final Frame prevFrame;
+    private final NormalFrame previousFrame;
 
-    FinalFrame(int index, FinalFrameStatus finalFrameStatus, Frame ninthFrame) {
+    FinalFrame(int index, FinalFrameStatus finalFrameStatus, NormalFrame ninthFrame) {
         this.index = index;
         this.finalFrameStatus = finalFrameStatus;
-        this.prevFrame = ninthFrame;
+        this.previousFrame = ninthFrame;
     }
 
     FinalFrame(NormalFrame ninthFrame, FinalFrameStatus finalFrameStatus) {
         this(TEN, finalFrameStatus, ninthFrame);
     }
 
-    public static FinalFrame bowlFirst(int numberOfHitPin, Frame ninthFrame) {
+    public static FinalFrame bowlFirst(int numberOfHitPin, NormalFrame ninthFrame) {
         return new FinalFrame(TEN, FinalFrameStatus.bowlFirst(numberOfHitPin), ninthFrame);
     }
 
@@ -32,6 +33,58 @@ public class FinalFrame implements Frame {
         if (isCompleted()) {
             throw new InvalidTryBowlException("종료된 프레임에는 투구할 수 없습니다.");
         }
+    }
+
+    private FinalBonusScore calculateBonusScore() {
+        return this.finalFrameStatus.calculateBonusScore();
+    }
+
+    private FrameScore calculateFirstThrowSpecialBonus() {
+        FrameScore twoFrameAgoScore = this.previousFrame.calculatePreviousScore();
+
+        if (previousFrame.isDouble()) {
+            return twoFrameAgoScore.applySpecialStrikeBonus(calculateBonusScore().getFirstThrowScore());
+        }
+
+        return twoFrameAgoScore;
+    }
+
+    @Override
+    public FrameScore calculateSpecialStrikeScore() {
+        if (this.finalFrameStatus.isFirstThrow()) {
+            return calculateFirstThrowSpecialBonus();
+        }
+
+        if (this.previousFrame.isStrike() && this.finalFrameStatus.isFirstStrike()) {
+            FrameScore ninthFrameScore = this.previousFrame.calculateCurrentScore();
+            return ninthFrameScore.applySpecialStrikeBonus(calculateBonusScore().getSecondThrowScore());
+        }
+
+        return this.calculatePreviousScore();
+    }
+
+    @Override
+    public FrameScore calculateCurrentScore() {
+        Integer currentScore = this.calculateCurrentResults().calculateScore();
+        if (this.finalFrameStatus.isCompleted()) {
+            return new FrameScore(FrameScoreStatus.COMPLETE, currentScore);
+        }
+        return new FrameScore(FrameScoreStatus.NOT_READY, currentScore);
+    }
+
+    @Override
+    public FrameScore calculatePreviousScore() {
+        FrameScore previousFrameScore = this.previousFrame.calculateCurrentScore();
+        if (this.previousFrame.isStrike() && this.finalFrameStatus.isFirstStrike()) {
+            return previousFrameScore;
+        }
+        if (this.previousFrame.isSpare()) {
+            return previousFrameScore.applySpareBonus(calculateBonusScore().getFirstThrowScore());
+        }
+        if (this.previousFrame.isStrike()) {
+            return previousFrameScore.applyStrikeBonus(calculateBonusScore());
+        }
+        return previousFrameScore;
     }
 
     @Override
@@ -42,7 +95,7 @@ public class FinalFrame implements Frame {
     @Override
     public FinalFrame bowl(int numberOfHitPin) {
         validateBowl();
-        return new FinalFrame(TEN, this.finalFrameStatus.bowl(numberOfHitPin), prevFrame);
+        return new FinalFrame(TEN, this.finalFrameStatus.bowl(numberOfHitPin), previousFrame);
     }
 
     @Override
@@ -62,11 +115,11 @@ public class FinalFrame implements Frame {
         FinalFrame that = (FinalFrame) o;
         return index == that.index &&
                 Objects.equals(finalFrameStatus, that.finalFrameStatus) &&
-                Objects.equals(prevFrame, that.prevFrame);
+                Objects.equals(previousFrame, that.previousFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(index, finalFrameStatus, prevFrame);
+        return Objects.hash(index, finalFrameStatus, previousFrame);
     }
 }

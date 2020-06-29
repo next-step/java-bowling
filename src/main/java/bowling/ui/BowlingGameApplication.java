@@ -15,6 +15,8 @@ public class BowlingGameApplication {
         firstBowl(bowlingGame);
 
         bowlRemainFrames(bowlingGame);
+
+        bowlFinalFrame(bowlingGame);
     }
 
     private static Player initGame() {
@@ -31,7 +33,7 @@ public class BowlingGameApplication {
     }
 
     private static void bowlRemainFrames(BowlingGame bowlingGame) {
-        for (int frameIndex = 1; frameIndex < 11; frameIndex++) {
+        for (int frameIndex = 1; frameIndex < 10; frameIndex++) {
             doNotCompletedFrame(bowlingGame, frameIndex);
             if (breakWhenFinalFrame(frameIndex)) break;
             doNextFrame(bowlingGame, frameIndex);
@@ -47,12 +49,28 @@ public class BowlingGameApplication {
     }
 
     private static boolean breakWhenFinalFrame(int frameIndex) {
-        return frameIndex == 10;
+        return frameIndex == 9;
     }
 
     private static void doNextFrame(BowlingGame bowlingGame, int frameIndex) {
         List<BowlingGameResult> nextFrameResults =
                 bowlingGame.toNextFrame(InputView.getNumberOfHitPin(frameIndex + 1));
         OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), nextFrameResults);
+    }
+
+    private static void bowlFinalFrame(BowlingGame bowlingGame) {
+        List<BowlingGameResult> finalFirstThrown =
+                bowlingGame.finalFrameBowlFirst(InputView.getNumberOfHitPin(10));
+        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), finalFirstThrown);
+
+        List<BowlingGameResult> finalSecondThrown =
+                bowlingGame.finalFrameBowlSecond(InputView.getNumberOfHitPin(10));
+        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), finalSecondThrown);
+
+        if (!bowlingGame.isCurrentFrameCompleted()) {
+            List<BowlingGameResult> lastThrown
+                    = bowlingGame.finalFrameBowlLast(InputView.getNumberOfHitPin(10));
+            OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), lastThrown);
+        }
     }
 }

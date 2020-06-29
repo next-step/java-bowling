@@ -2,6 +2,8 @@ package bowling.domain.frame;
 
 import bowling.domain.FrameResult;
 import bowling.domain.FrameResults;
+import bowling.domain.FrameScore;
+import bowling.domain.FrameScoreStatus;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.frameStatus.NormalFrameStatus;
@@ -19,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTests {
+    private static final int FOUR = 4;
     private static final int FIVE = 5;
     private static final int TEN = 10;
 
@@ -81,6 +84,181 @@ class NormalFrameTests {
                 Arguments.of(
                         NormalFrame.start(FIVE).bowl(FIVE),
                         new FrameResults(Arrays.asList(FrameResult.FIVE, FrameResult.SPARE))
+                )
+        );
+    }
+
+    @DisplayName("점수를 계산할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("calculateCurrentScoreResource")
+    void calculateCurrentScoreTest(NormalFrame normalFrame, FrameScoreStatus frameScoreStatus, Integer scoreValue) {
+        assertThat(normalFrame.calculateCurrentScore())
+                .isEqualTo(new FrameScore(frameScoreStatus, scoreValue));
+    }
+    public static Stream<Arguments> calculateCurrentScoreResource() {
+        return Stream.of(
+                Arguments.of(
+                        NormalFrame.start(5),
+                        FrameScoreStatus.NOT_READY,
+                        5
+                ),
+                Arguments.of(
+                        NormalFrame.start(5).bowl(5),
+                        FrameScoreStatus.NOT_READY,
+                        10
+                ),
+                Arguments.of(
+                        NormalFrame.start(10),
+                        FrameScoreStatus.NOT_READY,
+                        10
+                ),
+                Arguments.of(
+                        NormalFrame.start(5).bowl(2),
+                        FrameScoreStatus.COMPLETE,
+                        7
+                )
+        );
+    }
+
+    @DisplayName("이전 프레임의 점수를 계산할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("calculatePreviousFrameScoreResource")
+    void calculatePreviousFrameScoreTest(Frame currentFrame, FrameScore expectedResult) {
+        assertThat(currentFrame.calculatePreviousScore()).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> calculatePreviousFrameScoreResource() {
+        return Stream.of(
+                // 이전 프레임이 스페어인 경우
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FIVE).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FIVE).next(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 15)
+                ),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FIVE).next(FIVE).bowl(FOUR),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 15)
+                ),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FIVE).next(FIVE).bowl(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 15)
+                ),
+
+                // 이전 프레임이 스트라이크인 경우
+                Arguments.of(
+                        NormalFrame.start(TEN).next(FIVE),
+                        new FrameScore(FrameScoreStatus.NOT_READY, 15)
+                ),
+                Arguments.of(
+                        NormalFrame.start(TEN).next(FIVE).bowl(FOUR),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 19)
+                ),
+                Arguments.of(
+                        NormalFrame.start(TEN).next(TEN),
+                        new FrameScore(FrameScoreStatus.NOT_READY, 10)
+                ),
+
+                // 이전 프레임이 아무것도 아닌 경우
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FOUR).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 9)
+                ),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FOUR).next(FIVE).bowl(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 9)
+                ),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FOUR).next(FIVE).bowl(FOUR),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 9)
+                ),
+
+                // 이전 프레임이 없는 경우 (첫 프레임)
+                Arguments.of(
+                        NormalFrame.start(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 0)
+                ),
+                Arguments.of(
+                        NormalFrame.start(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 0)
+                ),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 0)
+                ),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FOUR),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 0)
+                )
+        );
+    }
+
+    @DisplayName("더블 여부를 알려줄 수 있다.")
+    @ParameterizedTest
+    @MethodSource("isDoubleResource")
+    void isDoubleTest(Frame frame, boolean expectedResult) {
+        NormalFrame parsed = (NormalFrame) frame;
+
+        assertThat(parsed.isDouble()).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> isDoubleResource() {
+        return Stream.of(
+                Arguments.of(NormalFrame.start(TEN).next(TEN), true),
+                Arguments.of(NormalFrame.start(TEN).next(FIVE), false),
+                Arguments.of(NormalFrame.start(FIVE).bowl(FIVE).next(FIVE), false),
+                Arguments.of(NormalFrame.start(FIVE).bowl(FOUR).next(TEN), false)
+        );
+    }
+
+    @DisplayName("이전 프레임이 연속된 스트라이크인 경우 점수 계산을 할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("calculateSpecialStrikeScoreResource")
+    void calculateSpecialStrikeScoreTest(Frame frame, FrameScore expectedResult) {
+        NormalFrame parsed = (NormalFrame) frame;
+
+        FrameScore frameScore = parsed.calculateSpecialStrikeScore();
+
+        assertThat(frameScore).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> calculateSpecialStrikeScoreResource() {
+        return Stream.of(
+                // 아직 더블 여부를 알 수 없는 경우
+                Arguments.of(
+                        NormalFrame.start(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 0)
+                ),
+                Arguments.of(
+                        NormalFrame.start(TEN).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 0)
+                ),
+
+                // 더블인 경우
+                Arguments.of(
+                        NormalFrame.start(TEN).next(TEN).next(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 25)
+                ),
+                Arguments.of(
+                        NormalFrame.start(TEN).next(TEN).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 30)
+                ),
+                Arguments.of(
+                        NormalFrame.start(TEN).next(TEN).next(FIVE).bowl(FIVE),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 25)
+                ),
+
+                // 더블이 아닌 경우
+                Arguments.of(
+                        NormalFrame.start(TEN).next(FIVE).bowl(FIVE).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FIVE).next(TEN).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 20)
+                ),
+                Arguments.of(
+                        NormalFrame.start(FIVE).bowl(FOUR).next(FIVE).bowl(FOUR).next(TEN),
+                        new FrameScore(FrameScoreStatus.COMPLETE, 9)
                 )
         );
     }

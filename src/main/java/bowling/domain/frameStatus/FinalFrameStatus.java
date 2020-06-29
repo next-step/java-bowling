@@ -1,8 +1,7 @@
 package bowling.domain.frameStatus;
 
-import bowling.domain.FrameResult;
-import bowling.domain.FrameResults;
-import bowling.domain.NumberOfHitPin;
+import bowling.domain.*;
+import bowling.domain.bonusScore.FinalBonusScore;
 import bowling.domain.exceptions.CannotCalculateFrameResultException;
 import bowling.domain.exceptions.InvalidTryBowlException;
 
@@ -27,6 +26,21 @@ public class FinalFrameStatus implements FrameStatus {
 
     public static FinalFrameStatus bowlFirst(int numberOfHitPin) {
         return new FinalFrameStatus(new NumberOfHitPin(numberOfHitPin), null, null);
+    }
+
+    public boolean isFirstStrike() {
+        return (this.firstNumberOfHitPin != null && this.firstNumberOfHitPin.equals(STRIKE));
+    }
+
+    public boolean isFirstThrow() {
+        return (this.firstNumberOfHitPin != null &&
+                this.secondNumberOfHitPin == null &&
+                this.thirdNumberOfHitPin == null);
+    }
+
+    @Override
+    public FinalBonusScore calculateBonusScore() {
+        return FinalBonusScore.of(this.firstNumberOfHitPin, this.secondNumberOfHitPin);
     }
 
     @Override

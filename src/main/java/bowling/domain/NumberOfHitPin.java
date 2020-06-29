@@ -20,6 +20,10 @@ public class NumberOfHitPin implements Comparable<NumberOfHitPin> {
         return new NumberOfHitPin(this.value + numberOfHitPin.value);
     }
 
+    public int parseToInt() {
+        return this.value;
+    }
+
     private void validate(int value) {
         if (value < MIN_VALUE || value > MAX_VALUE) {
             throw new ExceedLimitOfNumberOfHitPinException("생성 가능한 범위를 벗어났습니다.");

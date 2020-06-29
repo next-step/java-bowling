@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.bonusScore.NormalBonusScore;
 import bowling.domain.FrameResults;
+import bowling.domain.FrameScore;
+import bowling.domain.FrameScoreStatus;
 import bowling.domain.exceptions.InvalidTryBowlException;
 import bowling.domain.exceptions.InvalidTryNextFrameException;
 import bowling.domain.frameStatus.NormalFrameStatus;
@@ -24,6 +27,21 @@ public class NormalFrame implements Frame {
         return new NormalFrame(1, NormalFrameStatus.bowlFirst(numberOfHitPin), null);
     }
 
+    public boolean isSpare() {
+        return this.currentStatus.isSpare();
+    }
+
+    public boolean isStrike() {
+        return this.currentStatus.isStrike();
+    }
+
+    public boolean isDouble() {
+        if (this.previousFrame == null) {
+            return false;
+        }
+        return (this.previousFrame.isStrike() && this.isStrike());
+    }
+
     private void validateBowl() {
         if (isCompleted()) {
             throw new InvalidTryBowlException("완료된 프레임에서 추가로 투구할 수 없습니다.");
@@ -34,6 +52,53 @@ public class NormalFrame implements Frame {
         if (!isCompleted()) {
             throw new InvalidTryNextFrameException("현재 프레임이 완료되지 않은 상태에서 다음 프레임을 진행할 수 없습니다.");
         }
+    }
+
+    private NormalBonusScore calculateBonusScore() {
+        return this.currentStatus.calculateBonusScore();
+    }
+
+    @Override
+    public FrameScore calculateSpecialStrikeScore() {
+        if (this.previousFrame == null) {
+            return new FrameScore(FrameScoreStatus.COMPLETE, 0);
+        }
+        FrameScore twoFrameAgoScore = this.previousFrame.calculatePreviousScore();
+        if (this.previousFrame.isDouble()) {
+            return twoFrameAgoScore.applySpecialStrikeBonus(calculateBonusScore().getFirstThrowScore());
+        }
+        return twoFrameAgoScore;
+    }
+
+    @Override
+    public FrameScore calculatePreviousScore() {
+        if (this.previousFrame == null) {
+            return new FrameScore(FrameScoreStatus.COMPLETE, 0);
+        }
+
+        FrameScore previousFrameScore = this.previousFrame.calculateCurrentScore();
+        if (this.isDouble()) {
+            return previousFrameScore;
+        }
+        if (this.previousFrame.isSpare()) {
+            return previousFrameScore.applySpareBonus(calculateBonusScore().getFirstThrowScore());
+        }
+        if (this.previousFrame.isStrike()) {
+            return previousFrameScore.applyStrikeBonus(calculateBonusScore());
+        }
+
+        return previousFrameScore;
+    }
+
+    @Override
+    public FrameScore calculateCurrentScore() {
+        Integer frameScoreValue = this.currentStatus.calculateCurrentResult().calculateScore();
+
+        if (currentStatus.isCompleted() && (!currentStatus.isStrike() && !currentStatus.isSpare())) {
+            return new FrameScore(FrameScoreStatus.COMPLETE, frameScoreValue);
+        }
+
+        return new FrameScore(FrameScoreStatus.NOT_READY, frameScoreValue);
     }
 
     @Override
