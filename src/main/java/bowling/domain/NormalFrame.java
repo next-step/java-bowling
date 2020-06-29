@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import bowling.domain.vo.Round;
+import bowling.domain.vo.RoundUnit;
 
 public class NormalFrame {
     private final Round round;
