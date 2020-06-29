@@ -32,6 +32,10 @@ public class Score {
         return score > another.score;
     }
 
+    public boolean isBetween(Score first, Score last) {
+        return score > first.score && score < last.score;
+    }
+
     public int getContent() {
         return score;
     }
