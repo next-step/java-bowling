@@ -26,7 +26,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean addScore(int score) {
+    public boolean bowling(int score) {
         if (isBonusFrame()) {
             pins.add(score);
             return true;

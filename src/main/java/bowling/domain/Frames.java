@@ -23,7 +23,7 @@ public class Frames {
     }
 
     public boolean bowling(int pin) {
-        boolean isFrameFinish = frames.getLast().addScore(pin);
+        boolean isFrameFinish = frames.getLast().bowling(pin);
         if (isFrameFinish) {
             createNextFrame();
         }

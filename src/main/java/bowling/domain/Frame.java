@@ -8,5 +8,5 @@ public interface Frame {
 
     List<ResultType> getResult();
 
-    boolean addScore(int score);
+    boolean bowling(int score);
 }

@@ -26,7 +26,7 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public boolean addScore(int score) {
+    public boolean bowling(int score) {
         validateAddScore(score);
 
         remain -= score;
