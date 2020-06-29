@@ -31,10 +31,6 @@ public class Frames {
         getCurrentFrame().bowl(pitchScore);
     }
 
-    private Frame getCurrentFrame() {
-        return frames.get(frames.size() - INDEX_CONSTANT);
-    }
-
     public void moveToNextFrame() {
         Frame currentFrame = getCurrentFrame();
         int currentFrameIndex = frames.size();
@@ -45,11 +41,15 @@ public class Frames {
     }
 
     public boolean hasNextTurn() {
-        return !(frames.size() == TOTAL_FRAME_COUNTS && getCurrentFrame().isFinished());
+        return !(frames.size() == TOTAL_FRAME_COUNTS && isCurrentFrameFinished());
     }
 
     public boolean isCurrentFrameFinished() {
         return getCurrentFrame().isFinished();
+    }
+
+    private Frame getCurrentFrame() {
+        return frames.get(frames.size() - INDEX_CONSTANT);
     }
 
     public List<Integer> getFrameScores() {

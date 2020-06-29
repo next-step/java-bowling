@@ -4,23 +4,13 @@ import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FramesTest {
 
-    @DisplayName("bowl 요청을 보내고 다음 프레임으로 넘어가면 프레임 리스트의 사이즈가 증가")
-    @Test
-    public void bowl_스트라이크() {
-        Frames frames = Frames.initiate();
-
-        frames.bowl(PitchScore.valueOf(10));
-
-        assertThat(frames.isCurrentFrameFinished()).isTrue();
-
-        frames.moveToNextFrame();
-    }
-
-    @DisplayName("플레이 할 투구가 남아있다면, hasNextTurn은 true")
+    @DisplayName("전체 볼링 게임에서 아직 플레이할 수 있는 투구가 남아있다면, hasNextTurn은 true")
     @Test
     public void hasNextTurn_True() {
         Frames frames = Frames.initiate();
@@ -37,5 +27,62 @@ class FramesTest {
             frames.moveToNextFrame();
         }
         assertThat(frames.hasNextTurn()).isFalse();
+    }
+
+    @DisplayName("현재 플레이 중인 프레임에서 투구할 것이 없으면 True 반환")
+    @Test
+    public void isCurrentFrameFinished_True() {
+        Frames frames = Frames.initiate();
+        frames.bowl(PitchScore.valueOf(10));
+
+        assertThat(frames.isCurrentFrameFinished()).isTrue();
+    }
+
+    @DisplayName("현재 플레이 중인 프레임에서 투구할 것이 있으면 False 반환")
+    @Test
+    public void isCurrentFrameFinished_False() {
+        Frames frames = Frames.initiate();
+        frames.bowl(PitchScore.valueOf(3));
+
+        assertThat(frames.isCurrentFrameFinished()).isFalse();
+    }
+
+    @DisplayName("스트라이크를 연속으로 친 3개 프레임의 점수를 요청해도, 현재 계산이 가능한 1개 프레임만 점수를 반환한다")
+    @Test
+    public void getFrameScores_크기_1() {
+        Frames frames = Frames.initiate();
+        for (int i = 0; i < 3; i++) {
+            frames.bowl(PitchScore.valueOf(10));
+            frames.moveToNextFrame();
+        }
+
+        assertThat(frames.getFrameScores()).containsExactly(30);
+    }
+
+    @DisplayName("2개 프레임이 모두 미스이면 프레임 점수 리스트의 크기는 2")
+    @Test
+    public void getFrameScores_크기_2() {
+        Frames frames = Frames.initiate();
+        frames.bowl(PitchScore.valueOf(3));
+        frames.bowl(PitchScore.valueOf(4));
+        frames.moveToNextFrame();
+        frames.bowl(PitchScore.valueOf(5));
+        frames.bowl(PitchScore.valueOf(3));
+
+        assertThat(frames.getFrameScores()).containsExactly(7, 15);
+    }
+
+    @DisplayName("12번 스트라이크를 치면 300점이 최종 누계됨")
+    @Test
+    public void getFrameScores_300점() {
+        Frames frames = Frames.initiate();
+        for (int i = 0; i < 12; i++) {
+            frames.bowl(PitchScore.valueOf(10));
+            frames.moveToNextFrame();
+        }
+
+        List<Integer> frameScores = frames.getFrameScores();
+
+        assertThat(frameScores.get(frameScores.size() - 1)).isEqualTo(300);
     }
 }
