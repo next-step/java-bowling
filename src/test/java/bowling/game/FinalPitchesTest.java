@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,5 +60,19 @@ class FinalPitchesTest {
         finalPitches.throwBall(1);
 
         assertThat(finalPitches.hasChance()).isFalse();
+    }
+
+    @DisplayName("전체 투구 결과를 반환한다.")
+    @Test
+    void getPitchesPinCounts() {
+        Pitches finalPitches = new FinalPitches();
+
+        finalPitches.throwBall(10);
+        finalPitches.throwBall(1);
+        finalPitches.throwBall(9);
+
+        List<Integer> pinCounts = finalPitches.getPitchesPinCounts();
+
+        assertThat(pinCounts).containsExactly(10, 1, 9);
     }
 }

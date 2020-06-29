@@ -1,5 +1,7 @@
 package bowling.game;
 
+import java.util.List;
+
 public interface Pitches {
     int throwBall(final int pinCount);
 
@@ -12,4 +14,6 @@ public interface Pitches {
     boolean isSparePitches();
 
     int getBasicScore();
+
+    List<Integer> getPitchesPinCounts();
 }

@@ -6,6 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,5 +64,16 @@ class NormalPitchesTest {
         pitches.throwBall(nextPinCount);
 
         assertThat(pitches.hasChance()).isEqualTo(false);
+    }
+
+    @DisplayName("전체 투구 결과를 반환한다.")
+    @Test
+    void getPitchesPinCounts() {
+        Pitches pitches = new FinalPitches();
+
+        pitches.throwBall(10);
+        List<Integer> pinCounts = pitches.getPitchesPinCounts();
+
+        assertThat(pinCounts).containsExactly(10);
     }
 }

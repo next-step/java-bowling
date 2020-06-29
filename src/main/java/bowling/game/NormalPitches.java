@@ -1,6 +1,8 @@
 package bowling.game;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
@@ -76,5 +78,11 @@ public class NormalPitches implements Pitches {
         return pitches.stream()
                 .mapToInt(Pitch::getPinCount)
                 .sum();
+    }
+
+    public List<Integer> getPitchesPinCounts() {
+        return pitches.stream()
+                .map(Pitch::getPinCount)
+                .collect(Collectors.toList());
     }
 }
