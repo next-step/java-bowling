@@ -6,6 +6,8 @@ public class NormalFrame extends Frame {
     public static final int NORMAL_FRAME_MAX_LENGTH = 2;
     private static final int LAST_FRAME = 9;
 
+    private Frame nextFrame;
+
     public NormalFrame() {
         this.pin = new Pin(Pin.MIN_PIN);
         this.states = new States();
@@ -50,6 +52,27 @@ public class NormalFrame extends Frame {
 
         if (score.canCalculateScore()) {
             return score.getScore();
+        }
+
+        if (Objects.isNull(nextFrame)) {
+            return WAITING_CALCULATION;
+        }
+
+        return nextFrame.calculateAdditionalScore(score);
+    }
+
+    @Override
+    int calculateAdditionalScore(Score score) {
+        for (Pin pin : states.getPins()) {
+            score = score.bowl(pin.getFallenPin());
+
+            if (score.canCalculateScore()) {
+                return score.getScore();
+            }
+        }
+
+        if (Objects.isNull(nextFrame)) {
+            return WAITING_CALCULATION;
         }
 
         return nextFrame.calculateAdditionalScore(score);

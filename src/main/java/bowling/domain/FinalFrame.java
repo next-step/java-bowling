@@ -8,7 +8,6 @@ public class FinalFrame extends Frame {
     public FinalFrame() {
         this.pin = new Pin(Pin.MIN_PIN);
         this.states = new States();
-        this.nextFrame = null;
     }
 
     @Override
@@ -39,6 +38,19 @@ public class FinalFrame extends Frame {
     @Override
     public States getStates() {
         return states;
+    }
+
+    @Override
+    int calculateAdditionalScore(Score score) {
+        for (Pin pin : states.getPins()) {
+            score = score.bowl(pin.getFallenPin());
+
+            if (score.canCalculateScore()) {
+                return score.getScore();
+            }
+        }
+
+        return WAITING_CALCULATION;
     }
 
     @Override
