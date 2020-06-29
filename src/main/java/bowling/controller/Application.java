@@ -1,11 +1,21 @@
 package bowling.controller;
 
+import bowling.domain.game.MultiBowlingGame;
+import bowling.domain.score.PitchScore;
 import bowling.view.InputView;
+import bowling.view.OutputView;
 
 public class Application {
 
     public static void main(String[] args) {
-        InputView.inputPlayerNames();
+        MultiBowlingGame multiBowlingGame = MultiBowlingGame.of(InputView.inputPlayerNames());
+
+        while (multiBowlingGame.hasNextTurn()) {
+            PitchScore pitchScore = PitchScore.valueOf(InputView.inputPitchScore(multiBowlingGame));
+            multiBowlingGame.bowl(pitchScore);
+            OutputView.printTest(multiBowlingGame);
+            multiBowlingGame.moveToNextFrame();
+        }
 
 
 

@@ -1,9 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.ScoreSignaturesDto;
 import bowling.domain.score.FrameScore;
 import bowling.domain.score.PitchScore;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface Frame {
@@ -20,5 +20,5 @@ public interface Frame {
 
     public Optional<FrameScore> delegateCalculation(FrameScore frameScore);
 
-    public List<String> getPitchScoreSignatures();
+    public ScoreSignaturesDto getPitchScoreSignaturesDto();
 }

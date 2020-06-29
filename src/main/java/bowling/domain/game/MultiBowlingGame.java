@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MultiBowlingGame {
+    private static final int ZERO_INDEX = 0;
 
     private final List<SingleBowlingGame> singleBowlingGames;
 
@@ -21,15 +22,11 @@ public class MultiBowlingGame {
         return new MultiBowlingGame(singleBowlingGames);
     }
 
-    public int getPlayerCounts() {
-        return singleBowlingGames.size();
-    }
-
-    public SingleBowlingGame getCurrentGame() {
+    private SingleBowlingGame getCurrentGame() {
         return singleBowlingGames.stream()
-                .filter(t -> !t.isCurrentFrameFinished())
+                .filter(singleBowlingGame -> !singleBowlingGame.isCurrentFrameFinished())
                 .findFirst()
-                .orElseGet(() -> singleBowlingGames.get(0));
+                .orElseGet(() -> singleBowlingGames.get(ZERO_INDEX));
     }
 
     public void bowl(PitchScore pitchScore) {
@@ -37,9 +34,9 @@ public class MultiBowlingGame {
     }
 
     public void moveToNextFrame() {
-        boolean isAllPlayerDone = singleBowlingGames.stream()
+        boolean isCurrentFrameFinished = singleBowlingGames.stream()
                 .allMatch(SingleBowlingGame::isCurrentFrameFinished);
-        if (isAllPlayerDone) {
+        if (isCurrentFrameFinished) {
             singleBowlingGames.forEach(SingleBowlingGame::moveToNextFrame);
         }
     }
@@ -48,4 +45,12 @@ public class MultiBowlingGame {
         return singleBowlingGames.stream()
                 .anyMatch(SingleBowlingGame::hasNextTurn);
     }
+
+    public String getCurrentPlayerName() {
+        return getCurrentGame().getPlayerName();
+    }
+
+    public int getPlayerCounts() {
+        return singleBowlingGames.size();
+    } //삭제 예정
 }

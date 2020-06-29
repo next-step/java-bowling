@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.ScoreSignaturesDto;
 import bowling.domain.exception.BowlingBuildingException;
 import bowling.domain.pitch.FinalPitches;
 import bowling.domain.pitch.Pitches;
@@ -64,7 +65,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<String> getPitchScoreSignatures() {
-        return pitches.getPitchScoreSignatures();
+    public ScoreSignaturesDto getPitchScoreSignaturesDto() {
+        List<String> scoreSignatures = pitches.getPitchScoreSignatures();
+        return new ScoreSignaturesDto(scoreSignatures);
     }
 }

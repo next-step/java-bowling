@@ -1,11 +1,13 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.ScoreSignaturesDto;
 import bowling.domain.score.FrameScores;
 import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
     private static final int INDEX_CONSTANT = 1;
@@ -44,10 +46,6 @@ public class Frames {
         return !(frames.size() == TOTAL_FRAME_COUNTS && getCurrentFrame().isFinished());
     }
 
-    public int getCurrentFrameIndex() {
-        return frames.size();
-    }
-
     public FrameScores getFrameScores() {
         return FrameScores.of(getFrames());
     }
@@ -58,5 +56,11 @@ public class Frames {
 
     public boolean isCurrentFrameFinished() {
         return getCurrentFrame().isFinished();
+    }
+    
+    public List<ScoreSignaturesDto> getScoreSignatureDtos() {
+        return frames.stream()
+                .map(Frame::getPitchScoreSignaturesDto)
+                .collect(Collectors.toList());
     }
 }

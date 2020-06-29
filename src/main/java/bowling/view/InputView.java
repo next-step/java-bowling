@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.frame.Frames;
+import bowling.domain.game.MultiBowlingGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +28,8 @@ public class InputView {
         playerNames.add(SCANNER.nextLine().toUpperCase().trim());
     }
 
-    public static int inputPitchScore(Frames frames) {
-        System.out.printf(ViewMessage.INSTRUCTION_PITCH, frames.getCurrentFrameIndex());
+    public static int inputPitchScore(MultiBowlingGame multiBowlingGame) {
+        System.out.printf(ViewMessage.INSTRUCTION_PITCH, multiBowlingGame.getCurrentPlayerName());
         return Integer.parseInt(SCANNER.nextLine());
     }
 }

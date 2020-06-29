@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.ScoreSignaturesDto;
 import bowling.domain.pitch.NormalPitches;
 import bowling.domain.pitch.Pitches;
 import bowling.domain.score.FrameScore;
@@ -78,7 +79,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public List<String> getPitchScoreSignatures() {
-        return pitches.getPitchScoreSignatures();
+    public ScoreSignaturesDto getPitchScoreSignaturesDto() {
+        List<String> scoreSignatures = pitches.getPitchScoreSignatures();
+        return new ScoreSignaturesDto(scoreSignatures);
     }
 }
