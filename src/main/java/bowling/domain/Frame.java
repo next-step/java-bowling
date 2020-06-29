@@ -1,7 +1,7 @@
 package bowling.domain;
 
 public interface Frame {
-    Frame bowl(int downPin);
+    void bowl(int downPin);
+    Frame next();
     boolean isLastTrying();
-    String getResult();
 }

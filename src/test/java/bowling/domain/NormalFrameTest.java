@@ -11,23 +11,26 @@ class NormalFrameTest {
     @Test
     @DisplayName(" 생성 테스트")
     void init() {
-        assertThatCode(() -> NormalFrame.newInstance()).doesNotThrowAnyException();
+        assertThatCode(() -> NormalFrame.init()).doesNotThrowAnyException();
     }
 
     @Test
-    @DisplayName("투구 테스트")
+    @DisplayName("투구 테스트 - 투구는 2회 까지 가능하다")
     void bowl() {
-        assertThatCode(() -> NormalFrame.newInstance().bowl(3))
-                .doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("마지막 투구인지 알려준다")
-    void isLast() {
-        Frame frame = NormalFrame.newInstance().bowl(3);
+        Frame frame = NormalFrame.init();
+        frame.bowl(3);
         assertThat(frame.isLastTrying()).isFalse();
 
-        frame = frame.bowl(2);
+        frame.bowl(7);
         assertThat(frame.isLastTrying()).isTrue();
     }
+
+    @Test
+    @DisplayName("현재 프레임에서 다음 프레임을 생성한다")
+    void next() {
+        Frame beforeFrame = NormalFrame.init();
+        assertThatCode(() -> beforeFrame.next()).doesNotThrowAnyException();
+        assertThat(!beforeFrame.equals(beforeFrame.next())).isTrue();
+    }
+
 }
