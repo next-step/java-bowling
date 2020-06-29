@@ -19,10 +19,10 @@ class NormalFrameTest {
     void bowl() {
         Frame frame = NormalFrame.init();
         frame.bowl(3);
-        assertThat(frame.isLastTrying()).isFalse();
+        assertThat(frame.isLastTryAtFrame()).isFalse();
 
         frame.bowl(7);
-        assertThat(frame.isLastTrying()).isTrue();
+        assertThat(frame.isLastTryAtFrame()).isTrue();
     }
 
     @Test

@@ -20,7 +20,7 @@ public class NormalFrame implements Frame {
         trying++;
     }
 
-    public boolean isLastTrying() {
+    public boolean isLastTryAtFrame() {
         return trying == MAX_TRY_COUNT;
     }
 
