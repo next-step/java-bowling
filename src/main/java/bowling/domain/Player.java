@@ -12,7 +12,7 @@ public class Player {
     }
 
     private void validateName(String playerName) {
-        if (playerName.length() == 0 || playerName.length() > MAX_LENGTH_OF_NAME) {
+        if (playerName.length() != MAX_LENGTH_OF_NAME) {
             throw new IllegalArgumentException();
         }
     }

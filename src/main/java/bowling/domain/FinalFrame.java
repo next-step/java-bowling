@@ -2,8 +2,9 @@ package bowling.domain;
 
 public class FinalFrame extends Frame {
 
-    Pin thirdPin;
-    State thirdState = State.MISS;
+    private Pin thirdPin;
+    private State thirdState = State.MISS;
+    private boolean hasThirdDraw;
 
     public FinalFrame(Pin thirdPin, Frame frame) {
         this.firstPin = frame.firstPin;
@@ -19,9 +20,6 @@ public class FinalFrame extends Frame {
         }
     }
 
-    public boolean hasThirdPin() {
-        return hasThirdDraw;
-    }
 
     @Override
     public String showResult() {
@@ -31,9 +29,7 @@ public class FinalFrame extends Frame {
         firstPinResult(stringBuilder);
         stringBuilder.append(":");
         secondPinResult(stringBuilder);
-        if (hasThirdPin()) {
-            thirdPinResult(stringBuilder);
-        }
+        thirdPinResult(stringBuilder);
         return stringBuilder.toString();
     }
 

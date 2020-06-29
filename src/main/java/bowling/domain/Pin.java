@@ -6,6 +6,7 @@ public class Pin {
     private static final int MAX_PINS = 10;
 
     private int maxPins;
+
     private int falledPins;
 
     public Pin() {
@@ -27,6 +28,10 @@ public class Pin {
 
     public int leftPins() {
         return maxPins - falledPins;
+    }
+
+    public int falledPins() {
+        return falledPins;
     }
 
     public boolean isGutter() {

@@ -11,7 +11,6 @@ class FinalFrameTest {
     void hasThirdPin() {
         Frame frame = Frame.of(new Pin(10, 10),
                 Frame.of(new Pin(10, 10), new Pin(0, 0)));
-        assertThat(frame.hasThirdDraw).isTrue();
         assertThat(frame instanceof FinalFrame).isTrue();
     }
 
