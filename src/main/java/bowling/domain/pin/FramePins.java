@@ -10,18 +10,10 @@ public class FramePins {
 
     private FramePins(Pins firstPins) {
         this(firstPins, Pins.of(0));
-        validateStrike(firstPins);
     }
 
-    private void validateStrike(Pins firstPins) {
-        if (!firstPins.equals(Pins.of(MAX_PINS_PER_FRAME))) {
-            throw new IllegalArgumentException("스트라이크의 투구는 반드시 " + MAX_PINS_PER_FRAME + " 개 입니다.");
-        }
-    }
-
-    private FramePins(Pins firstPins, Pins secondPins) {
+    public FramePins(Pins firstPins, Pins secondPins) {
         Objects.requireNonNull(firstPins, "첫 번째 투구가 유효하지 않습니다.");
-        Objects.requireNonNull(secondPins, "두 번째 투구가 유효하지 않습니다.");
         validateSum(firstPins, secondPins);
         this.firstPins = firstPins;
         this.secondPins = secondPins;

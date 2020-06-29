@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -26,15 +25,6 @@ class FramePinsTest {
                 arguments(Pins.of(10), Pins.of(10)),
                 arguments(Pins.of(1), Pins.of(10)),
                 arguments(Pins.of(5), Pins.of(6)));
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 9})
-    @DisplayName("FramePins 는 스트라이크인 경우 투구는 반드시 10개이어야 한다.")
-    void validate_strike(int countOfPins) {
-        assertThatThrownBy(() -> FramePins.strike(Pins.of(countOfPins)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("스트라이크의 투구는 반드시 " + FramePins.MAX_PINS_PER_FRAME + " 개 입니다.");
     }
 
     @ParameterizedTest
