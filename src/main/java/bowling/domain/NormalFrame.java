@@ -48,7 +48,7 @@ public class NormalFrame extends Frame {
         }
 
         State lastState = states.getLastState();
-        Score score = createScore(lastState);
+        Score score = Score.createScore(lastState, states.getBeforeState().getFallenPins() + pin.getFallenPin());
 
         if (score.canCalculateScore()) {
             return score.getScore();
@@ -76,18 +76,6 @@ public class NormalFrame extends Frame {
         }
 
         return nextFrame.calculateAdditionalScore(score);
-    }
-
-    private Score createScore(State lastState) {
-        if (lastState == State.STRIKE) {
-            return Score.ofStrike();
-        }
-
-        if (lastState == State.SPARE) {
-            return Score.ofSpare();
-        }
-
-        return Score.ofMiss(states.getBeforeState().getFallenPins() + pin.getFallenPin());
     }
 
     private void setStates(State state, Pin fallenPin) {
