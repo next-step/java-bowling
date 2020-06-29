@@ -85,6 +85,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public String getPoint() {
+        if ()
         return null;
     }
 
