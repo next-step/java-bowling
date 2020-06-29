@@ -27,12 +27,15 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean bowling(int score) {
+        addScore(score);
+        return remain == IntegerUtils.ZERO || scores.size() == MAX_THROW_COUNT;
+    }
+
+    private void addScore(int score) {
         validateAddScore(score);
 
         remain -= score;
         scores.add(score);
-
-        return remain == IntegerUtils.ZERO || scores.size() == MAX_THROW_COUNT;
     }
 
     private void validateAddScore(int score) {

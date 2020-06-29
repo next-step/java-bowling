@@ -31,11 +31,7 @@ public class FinalFrame implements Frame {
             scores.add(score);
             return true;
         }
-        validateAddScore(score);
-
-        remain -= score;
-        scores.add(score);
-
+        addScore(score);
         return scores.size() == MAX_THROW_COUNT && remain > IntegerUtils.ZERO;
     }
 
@@ -44,6 +40,13 @@ public class FinalFrame implements Frame {
             return true;
         }
         return false;
+    }
+
+    private void addScore(int score) {
+        validateAddScore(score);
+
+        remain -= score;
+        scores.add(score);
     }
 
     private void validateAddScore(int score) {
