@@ -105,6 +105,7 @@ public class Question extends AbstractEntity {
         if (! isOwner(loginUser)) {
             throw new CannotDeleteException("질문 작성자가 아니라서 삭제할 수 없습니다.");
         }
+        setDeleted(true);
         List<DeleteHistory> deleteHistories = new ArrayList<>(answers.deleteAll(loginUser));
         deleteHistories.add(setDeleted(true).createDeleteHistory(loginUser));
         return deleteHistories;
