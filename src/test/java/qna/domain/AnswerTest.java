@@ -13,12 +13,12 @@ import qna.CannotDeleteException;
 
 public class AnswerTest {
 
-	public Question question = new Question("How to learn java?", "I want to be a java master", UserTest.JAVAJIGI);
-	public Answer A1 = new Answer(UserTest.JAVAJIGI, question, "Answers Contents1");
-	public Answer A2 = new Answer(UserTest.JAVAJIGI, question, "Answers Contents2");
+	private Question question = new Question("How to learn java?", "I want to be a java master", UserTest.JAVAJIGI);
+	private Answer A1 = new Answer(UserTest.JAVAJIGI, question, "Answers Contents1");
+	private Answer A2 = new Answer(UserTest.JAVAJIGI, question, "Answers Contents2");
 	private Answers answers;
 	private User loginUser;
-	public User guestUser;
+	private User guestUser;
 
 	@BeforeEach
 	void setUp() {
