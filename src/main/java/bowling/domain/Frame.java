@@ -5,9 +5,9 @@ import java.util.Objects;
 public abstract class Frame {
     public static final int WAITING_CALCULATION = -1;
 
-    Pin pin;
-    States states;
-    Frame nextFrame;
+    protected Pin pin;
+    protected States states;
+    protected Frame nextFrame;
 
     abstract void bowl(Pin pin);
     abstract boolean isEndFrame();
