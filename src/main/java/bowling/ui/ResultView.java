@@ -12,7 +12,7 @@ public class ResultView {
     private static final String ROUND_FORMAT = "  %02d  |";
     private static final String RESULT_FORMAT = "  %-3s |";
 
-    public static void printBoardBeforeStart(Player player) {
+    public static void printBoard(Player player) {
         System.out.println(getHeaderRow());
         System.out.println(getPlayerRow(player));
     }
