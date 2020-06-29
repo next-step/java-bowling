@@ -17,8 +17,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int bowl(final int pinCount) {
-        return pitches.throwBall(pinCount);
+    public void bowl(final int pinCount) {
+        pitches.throwBall(pinCount);
     }
 
     @Override
@@ -30,12 +30,10 @@ public class NormalFrame implements Frame {
     public Frame createNextFrame() {
         if (frameNumber.getNumber() == FINAL_NORMAL_FRAME_NUMBER) {
             next = new FinalFrame(frameNumber.getNumber() + 1);
-
             return next;
         }
 
         next = new NormalFrame(frameNumber.getNumber() + 1);
-
         return next;
     }
 
@@ -68,14 +66,6 @@ public class NormalFrame implements Frame {
         return Objects.nonNull(next) ? next.calculateBonusScore(score) : Optional.empty();
     }
 
-    private Score createScore() {
-        if (pitches.isStrikePitches()) {
-            return Score.ofStrike();
-        }
-
-        return pitches.isSparePitches() ? Score.ofSpare() : Score.ofMiss(pitches.getBasicScore());
-    }
-
     @Override
     public Optional<Score> calculateBonusScore(Score beforeScore) {
         List<Integer> pinCounts = pitches.getPitchesPinCounts();
@@ -90,6 +80,14 @@ public class NormalFrame implements Frame {
 
         return Objects.nonNull(next) && !hasRemainChance() ? next.calculateBonusScore(beforeScore)
                 : Optional.empty();
+    }
+
+    private Score createScore() {
+        if (pitches.isStrikePitches()) {
+            return Score.ofStrike();
+        }
+
+        return pitches.isSparePitches() ? Score.ofSpare() : Score.ofMiss(pitches.getBasicScore());
     }
 
     private Score addBonusScore(Score beforeScore, final int pinCount) {

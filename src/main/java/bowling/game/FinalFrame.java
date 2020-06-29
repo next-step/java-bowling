@@ -1,7 +1,6 @@
 package bowling.game;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class FinalFrame implements Frame {
@@ -15,8 +14,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int bowl(final int pinCount) {
-        return pitches.throwBall(pinCount);
+    public void bowl(final int pinCount) {
+        pitches.throwBall(pinCount);
     }
 
     @Override

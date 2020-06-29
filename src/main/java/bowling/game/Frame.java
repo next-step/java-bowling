@@ -3,7 +3,7 @@ package bowling.game;
 import java.util.Optional;
 
 public interface Frame {
-    int bowl(final int pinCount);
+    void bowl(final int pinCount);
 
     boolean hasRemainChance();
 

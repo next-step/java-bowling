@@ -13,26 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NormalPitchesTest {
 
-    @DisplayName("투구를 하고 남은 의핀 개수를 반환한다.")
-    @ParameterizedTest
-    @CsvSource({"3, 7, 7, 0", "10, 0, 0, 0", "2, 8, 3, 5"})
-    void throwBall(int firstPin, int afterFirst, int nextPin, int afterNext) {
-        Pitches pitches = new NormalPitches();
-
-        assertAll(
-                () -> {
-                    int actualAfterFirst = pitches.throwBall(firstPin);
-                    assertThat(actualAfterFirst).isEqualTo(afterFirst);
-                },
-
-                () -> {
-                    int actualAfterNext = pitches.throwBall(nextPin);
-                    assertThat(actualAfterNext).isEqualTo(afterNext);
-                }
-        );
-
-    }
-
     @DisplayName("첫 투구가 Strike가 아니면 그 프레임은 투구 기회가 있다.")
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 8, 9})

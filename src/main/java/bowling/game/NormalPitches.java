@@ -16,21 +16,14 @@ public class NormalPitches implements Pitches {
     }
 
     @Override
-    public int throwBall(final int pinCount) {
+    public void throwBall(final int pinCount) {
         if (pitches.isEmpty()) {
             pitches.add(Pitch.firstPitch(pinCount));
-
-            return 10 - pitches.stream()
-                    .mapToInt(Pitch::getPinCount)
-                    .sum();
+            return;
         }
 
         Pitch lastPitch = pitches.getLast();
         pitches.add(lastPitch.nextPitch(pinCount));
-
-        return 10 - pitches.stream()
-                .mapToInt(Pitch::getPinCount)
-                .sum();
     }
 
     @Override

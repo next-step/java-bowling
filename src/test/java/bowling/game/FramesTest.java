@@ -31,15 +31,6 @@ class FramesTest {
         assertThat(nextFrame.getFrameNumber().getNumber()).isEqualTo(2);
     }
 
-    @DisplayName("현재 진행 프레임에서 투구하고 남은핀을 반환한다.")
-    @ParameterizedTest
-    @CsvSource({"10, 0", "8, 2", "0, 10"})
-    void bowlCurrentFrame(int pinCount, int leftPinCount) {
-        Frames frames = new Frames();
-
-        assertThat(frames.bowlCurrentFrame(pinCount)).isEqualTo(leftPinCount);
-    }
-
     @DisplayName("현재 프레임에 투구 기회가 있는지 반환한다.")
     @Test
     void hasRemainChance() {

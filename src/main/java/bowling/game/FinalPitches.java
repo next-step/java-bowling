@@ -17,19 +17,14 @@ public class FinalPitches implements Pitches {
     }
 
     @Override
-    public int throwBall(final int pinCount) {
+    public void throwBall(final int pinCount) {
         if (pitches.isEmpty() || isBonusPitch()) {
             pitches.add(Pitch.firstPitch(pinCount));
-
-            return 10 - pinCount;
+            return;
         }
 
         Pitch lastPitch = pitches.getLast();
         pitches.add(lastPitch.nextPitch(pinCount));
-
-        return 10 - pitches.stream()
-                .mapToInt(Pitch::getPinCount)
-                .sum();
     }
 
     @Override
