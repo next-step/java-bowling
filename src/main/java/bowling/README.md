@@ -197,7 +197,7 @@ PJS's turn :
 
 * BowlingGameDto
     * 현재 플레이어의 이름과, 현재 보유하고 있는 프레임들의 시그니쳐 리스트(List<ScoreSignaturesDto>) 및 
-    계산 가능한 프레임의 점수 리스트(List<Integer>)를 가진 Dto 객체이다.
+    프레임의 계산 가능한 점수 리스트(List<Integer>)를 가진 Dto 객체이다.
     
 ### View
 * InputView
