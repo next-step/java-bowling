@@ -24,9 +24,13 @@ public class Frames {
 
     public boolean bowling(int pin) {
         boolean isFrameFinish = frames.getLast().addScore(pin);
-        if (isFrameFinish) {
+        if (isFrameFinish && isNotFinalFrame()) {
             frames.add(new Frame());
         }
         return isFrameFinish;
+    }
+
+    private boolean isNotFinalFrame() {
+        return frames.size() != finalRound;
     }
 }
