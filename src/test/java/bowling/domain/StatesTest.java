@@ -76,4 +76,26 @@ public class StatesTest {
 
         assertThat(actual.getScore()).isEqualTo(inputScore);
     }
+
+    @Test
+    void getLastPin() {
+        States states = new States();
+        states.add(State.STRIKE, new Pin(Pin.MAX_PIN));
+        states.add(State.SEVEN, new Pin(7));
+
+        Pin actual = states.getLastPin();
+
+        assertThat(actual).isEqualTo(new Pin(7));
+    }
+
+    @Test
+    void getBeforePin() {
+        States states = new States();
+        states.add(State.TWO, new Pin(2));
+        states.add(State.SPARE, new Pin(Pin.MAX_PIN));
+
+        Pin actual = states.getBeforePin();
+
+        assertThat(actual).isEqualTo(new Pin(2));
+    }
 }
