@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import qna.CannotDeleteException;
+
 @Entity
 public class Question extends AbstractEntity {
     @Column(length = 100, nullable = false)
@@ -86,6 +88,13 @@ public class Question extends AbstractEntity {
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public Question delete() throws CannotDeleteException {
+        if (isDeleted()) {
+            throw new CannotDeleteException("이미 삭제된 글입니다.");
+        }
+        return setDeleted(true);
     }
 
     @Override
