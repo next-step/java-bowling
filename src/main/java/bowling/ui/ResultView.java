@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 public class ResultView {
     private static final String BOARD_HEADER_FIRST_COLUMN = "| %4s |";
     private static final String NAME = "NAME";
-    private static final String ROUND_FORMAT = "  %02d  |";
-    private static final String RESULT_FORMAT = "  %-3s |";
+    private static final String ROUND_FORMAT = "  %02d    |";
+    private static final String RESULT_FORMAT = "  %-5s |";
 
     public static void printBoard(Player player) {
         System.out.println(getHeaderRow());
