@@ -12,10 +12,13 @@ import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
 public class AnswerTest {
-	public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-	public static final Answer A2 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents2");
+
+	public Question question = new Question("How to learn java?", "I want to be a java master", UserTest.JAVAJIGI);
+	public Answer A1 = new Answer(UserTest.JAVAJIGI, question, "Answers Contents1");
+	public Answer A2 = new Answer(UserTest.JAVAJIGI, question, "Answers Contents2");
 	private Answers answers;
 	private User loginUser;
+	public User guestUser;
 
 	@BeforeEach
 	void setUp() {
@@ -23,6 +26,7 @@ public class AnswerTest {
 		answers.addAnswer(A1);
 		answers.addAnswer(A2);
 		loginUser = UserTest.JAVAJIGI;
+		guestUser = User.GUEST_USER;
 	}
 
 	@DisplayName("답변을 삭제하고 해당 답변을 반환한다.")
@@ -45,5 +49,13 @@ public class AnswerTest {
 			() -> assertThat(deleteHistories).isInstanceOf(List.class),
 			() -> assertThat(deleteHistories.get(0)).isInstanceOf(DeleteHistory.class)
 		);
+	}
+
+	@DisplayName("질문을 삭제할 때 답변자가 자기 자신이 아닌 경우 삭제할 수 없다.")
+	@Test
+	void 질문_삭제시_답변자가_자신이_아니면_삭제할_수_없다() {
+		assertThatThrownBy(
+			() -> answers.deleteAll(guestUser)
+		).isInstanceOf(CannotDeleteException.class);
 	}
 }
