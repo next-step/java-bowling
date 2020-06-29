@@ -42,12 +42,10 @@ public class FinalFrame extends Frame {
 
     @Override
     int calculateAdditionalScore(Score score) {
-        for (Pin pin : states.getPins()) {
-            score = score.bowl(pin.getFallenPin());
+        score = states.calculateScore(score);
 
-            if (score.canCalculateScore()) {
-                return score.getScore();
-            }
+        if (score.canCalculateScore()) {
+            return score.getScore();
         }
 
         return WAITING_CALCULATION;

@@ -26,6 +26,10 @@ public class Score {
     }
 
     public Score bowl(int countOfPins) {
+        if (canCalculateScore()) {
+            return this;
+        }
+
         int scoreSum = score + countOfPins;
         return new Score(scoreSum, leftBonusCount - 1);
     }

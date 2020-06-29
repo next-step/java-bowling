@@ -43,6 +43,13 @@ public class States {
         return getLastPreviousState();
     }
 
+    public Score calculateScore(Score score) {
+        for (Pin pin : getPins()) {
+            score = score.bowl(pin.getFallenPin());
+        }
+        return score;
+    }
+
     private State getLastPreviousState() {
         return this.states.get(this.states.size() - 2);
     }
