@@ -1,5 +1,9 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -94,15 +98,20 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    public Question delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         if (isDeleted()) {
             throw new CannotDeleteException("이미 삭제된 글입니다.");
         }
         if (! isOwner(loginUser)) {
             throw new CannotDeleteException("질문 작성자가 아니라서 삭제할 수 없습니다.");
         }
-        answers.deleteAll(loginUser);
-        return setDeleted(true);
+        List<DeleteHistory> deleteHistories = new ArrayList<>(answers.deleteAll(loginUser));
+        deleteHistories.add(setDeleted(true).createDeleteHistory(loginUser));
+        return deleteHistories;
+    }
+
+    private DeleteHistory createDeleteHistory(User loginUser) {
+        return new DeleteHistory(ContentType.QUESTION, getId(), loginUser, LocalDateTime.now());
     }
 
     @Override
