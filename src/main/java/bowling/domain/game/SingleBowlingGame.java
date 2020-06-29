@@ -24,10 +24,6 @@ public class SingleBowlingGame {
         frames.bowl(pitchScore);
     }
 
-    public boolean isCurrentFrameFinished() {
-        return frames.isCurrentFrameFinished();
-    }
-
     public void moveToNextFrame() {
         frames.moveToNextFrame();
     }
@@ -36,11 +32,15 @@ public class SingleBowlingGame {
         return frames.hasNextTurn();
     }
 
+    public boolean isCurrentFrameFinished() {
+        return frames.isCurrentFrameFinished();
+    }
+
     public String getPlayerName() {
         return player.getName();
     }
 
-    public BowlingGameDto getFrameDto() {
+    public BowlingGameDto getBowlingGameDto() {
         return new BowlingGameDto(player.getName(), frames.getScoreSignatureDtos(), frames.getFrameScores());
     }
 }

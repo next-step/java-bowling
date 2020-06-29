@@ -1,6 +1,7 @@
 package bowling.domain.game;
 
 import bowling.domain.dto.BowlingGameDto;
+import bowling.domain.exception.BowlingBuildingException;
 import bowling.domain.frame.Frames;
 import bowling.domain.score.PitchScore;
 
@@ -17,10 +18,17 @@ public class MultiBowlingGame {
     }
 
     public static MultiBowlingGame of(List<String> playerNames) {
+        validatePlayerCounts(playerNames);
         List<SingleBowlingGame> singleBowlingGames = playerNames.stream()
                 .map(playerName -> SingleBowlingGame.of(playerName, Frames.initiate()))
                 .collect(Collectors.toList());
         return new MultiBowlingGame(singleBowlingGames);
+    }
+
+    private static void validatePlayerCounts(List<String> playerNames) {
+        if (playerNames.isEmpty()) {
+            throw new BowlingBuildingException(BowlingBuildingException.INVALID_PLAYER_COUNTS);
+        }
     }
 
     private SingleBowlingGame getCurrentGame() {
@@ -47,17 +55,13 @@ public class MultiBowlingGame {
                 .anyMatch(SingleBowlingGame::hasNextTurn);
     }
 
-    public String getCurrentPlayerName() {
-        return getCurrentGame().getPlayerName();
-    }
-
-    public List<BowlingGameDto> getFrameDtos() {
+    public List<BowlingGameDto> getBowlingGameDtos() {
         return singleBowlingGames.stream()
-                .map(SingleBowlingGame::getFrameDto)
+                .map(SingleBowlingGame::getBowlingGameDto)
                 .collect(Collectors.toList());
     }
 
-    public int getPlayerCounts() {
-        return singleBowlingGames.size();
-    } //삭제 예정
+    public String getCurrentPlayerName() {
+        return getCurrentGame().getPlayerName();
+    }
 }

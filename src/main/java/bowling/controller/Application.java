@@ -12,7 +12,7 @@ public class Application {
 
     public static void main(String[] args) {
         MultiBowlingGame multiBowlingGame = MultiBowlingGame.of(InputView.inputPlayerNames());
-        List<BowlingGameDto> bowlingGameDtos = multiBowlingGame.getFrameDtos();
+        List<BowlingGameDto> bowlingGameDtos = multiBowlingGame.getBowlingGameDtos();
         OutputView.printDefaultScoreBoard(bowlingGameDtos);
 
         while (multiBowlingGame.hasNextTurn()) {
@@ -20,7 +20,7 @@ public class Application {
             PitchScore pitchScore = PitchScore.valueOf(InputView.inputPitchScore(currentPlayerName));
             multiBowlingGame.bowl(pitchScore);
 
-            bowlingGameDtos = multiBowlingGame.getFrameDtos();
+            bowlingGameDtos = multiBowlingGame.getBowlingGameDtos();
             OutputView.printBowlingScoreBoard(bowlingGameDtos);
 
             multiBowlingGame.moveToNextFrame();
