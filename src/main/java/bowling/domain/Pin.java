@@ -33,6 +33,10 @@ public class Pin {
         return maxPins - falledPins == maxPins;
     }
 
+    public boolean isMiss() {
+        return maxPins - falledPins != 0;
+    }
+
     private void validPins(int pins) {
         if (pins < MIN_PINS || pins > MAX_PINS) {
             throw new IllegalArgumentException();

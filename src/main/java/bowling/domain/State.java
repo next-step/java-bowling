@@ -14,5 +14,9 @@ public enum State {
     State(String state) {
         this.state = state;
     }
-    
+
+    @Override
+    public String toString() {
+        return this.state;
+    }
 }

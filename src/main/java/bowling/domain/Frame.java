@@ -6,13 +6,14 @@ public abstract class Frame {
     protected Pin firstPin;
     protected Pin secondPin;
     protected State state = State.MISS;
+    boolean hasThirdDraw = false;
 
     public static Frame of(Pin firstPin, Pin secondPin) {
         return new NormalFrame(firstPin, secondPin);
     }
 
-    public static Frame of(Pin firstPin) {
-        return new FinalFrame(firstPin);
+    public static Frame of(Pin thirdPin, Frame frame) {
+        return new FinalFrame(thirdPin, frame);
     }
 
     public String showResult() {
@@ -21,16 +22,18 @@ public abstract class Frame {
             return state.state;
         }
         if (state == State.SPARE) {
-            return state.state;
+            stringBuilder.append(firstPin);
+            stringBuilder.append(":");
+            stringBuilder.append(state.state);
+            return stringBuilder.toString();
         }
         return normalResult(stringBuilder);
     }
 
     private String normalResult(StringBuilder stringBuilder) {
-        stringBuilder.append(String.format("%2s", firstPin.isGutter() ? "-" : firstPin.toString()));
-        stringBuilder.append("/");
-        stringBuilder.append(String.format("%2s", secondPin.isGutter() ? "-" : secondPin.toString()));
+        stringBuilder.append(String.format("%2s", firstPin.isGutter() ? State.GURTER : firstPin.toString()));
+        stringBuilder.append(":");
+        stringBuilder.append(String.format("%2s", secondPin.isGutter() ? State.GURTER : secondPin.toString()));
         return stringBuilder.toString();
     }
-
 }

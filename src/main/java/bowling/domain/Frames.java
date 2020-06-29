@@ -15,6 +15,10 @@ public class Frames {
         return frames.add(frame);
     }
 
+    public void replaceFinalFrame(Frame frame) {
+        frames.set(frames.size() - INDEX_ONE, frame);
+    }
+
     public List<String> showGameResult() {
         return frames.stream()
                 .map(Frame::showResult)

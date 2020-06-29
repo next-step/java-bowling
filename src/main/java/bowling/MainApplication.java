@@ -4,7 +4,6 @@ import bowling.domain.GamePlay;
 import bowling.domain.Player;
 import bowling.strategy.BowlingStrategy;
 import bowling.strategy.NormalInputBowlingStrategy;
-import bowling.strategy.RandomBowlingStrategy;
 import bowling.view.InputView;
 
 public class MainApplication {
@@ -15,8 +14,7 @@ public class MainApplication {
     }
 
     public static void main(String[] args) {
-        //new MainApplication().run(new NormalInputBowlingStrategy());
-        new MainApplication().run(new RandomBowlingStrategy());
+        new MainApplication().run(new NormalInputBowlingStrategy());
     }
 
 }

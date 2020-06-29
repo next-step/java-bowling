@@ -18,9 +18,9 @@ public class OutputView {
         stringBuilderResult.append(SEPERATOR + String.format("%5s", player));
         for (int i = 0; i < result.size(); i++) {
             stringBuilderHead.append(SEPERATOR);
-            stringBuilderHead.append(String.format("%5s", i+1));
+            stringBuilderHead.append(String.format("%7s", i+1));
             stringBuilderResult.append(SEPERATOR);
-            stringBuilderResult.append(String.format("%5s", result.get(i)));
+            stringBuilderResult.append(String.format("%7s", result.get(i)));
         }
         stringBuilderHead.append(SEPERATOR);
         stringBuilderResult.append(SEPERATOR);
