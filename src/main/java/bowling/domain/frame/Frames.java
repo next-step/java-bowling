@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,16 +10,15 @@ public class Frames {
     private static final int MAX_FRAME_NUMBER = 10;
 
     private final List<Frame> frames = new LinkedList<>();
-    private int frameIndex;
+    private int frameIndex = 0;
 
-    private Frames(int frameIndex)  {
+    private Frames()  {
         validateFrameIndex(frameIndex);
-        this.frameIndex = frameIndex;
         frames.add(NormalFrame.create());
     }
 
     public static Frames create() {
-        return new Frames(0);
+        return new Frames();
     }
 
     public Frames pitch(Point point) {
@@ -27,7 +27,7 @@ public class Frames {
         return this;
     }
 
-    public void updateFrame(Frame frame) {
+    private void updateFrame(Frame frame) {
         frames.remove(frameIndex);
         frames.add(frame);
     }
@@ -47,10 +47,10 @@ public class Frames {
     }
 
     public List<Frame> getFrames() {
-        return frames;
+        return Collections.unmodifiableList(frames);
     }
 
-    public boolean isLast() {
+    public boolean isLastFrame() {
         return frameIndex == MAX_FRAME_NUMBER;
     }
 

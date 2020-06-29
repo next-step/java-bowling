@@ -67,15 +67,15 @@ public class FinalFrame implements Frame {
 
     public String getScores() {
         String result = "";
-        if (scores.size() == 3) {
+        if (scores.size() == FRAME_THIRD_PITCH_END) {
             return scores.get(0).getScore() + SEPARATOR + scores.get(1).getScore() + SEPARATOR + scores.get(2).getScore();
         }
 
-        if (scores.size() == 2) {
+        if (scores.size() == FRAME_SECOND_PITCH_END) {
             return scores.get(0).getScore() + SEPARATOR + scores.get(1).getScore();
         }
 
-        if (scores.size() == 1) {
+        if (scores.size() == FRAME_FIRST_PITCH_END) {
             return scores.get(0).getScore();
         }
 

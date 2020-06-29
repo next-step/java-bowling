@@ -13,7 +13,7 @@ public class BowlingGameController {
         ResultView.printDefaultScoreBoard(player);
         Frames frames = Frames.create();
 
-        while (!frames.isLast()) {
+        while (!frames.isLastFrame()) {
             Point point = InputView.inputPoint(frames.getFrameIndex());
             frames = frames.pitch(point);
 

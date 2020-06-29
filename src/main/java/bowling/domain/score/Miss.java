@@ -7,6 +7,7 @@ public class Miss implements Score {
     private final Point point;
 
     public Miss(Point point) {
+        validatePoint(point);
         this.point = point;
     }
 
@@ -28,5 +29,15 @@ public class Miss implements Score {
     @Override
     public boolean isSpare() {
         return false;
+    }
+
+    private void validatePoint(Point point) {
+        if (point.getPoint() == 10) {
+            throw new IllegalArgumentException("MISS 포인트는 10이 될 수 없습니다.");
+        }
+
+        if (point.getPoint() == 0) {
+            throw new IllegalArgumentException("MISS 포인트는 0이 될 수 없습니다.");
+        }
     }
 }

@@ -18,10 +18,6 @@ public class Normal implements Score {
             return new Spare(point);
         }
 
-        if (point.getPoint() == STRIKE_POINT) {
-            return new Strike();
-        }
-
         if (point.getPoint() == GUTTER_POINT) {
             return new Gutter();
         }
