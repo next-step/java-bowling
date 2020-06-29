@@ -292,3 +292,18 @@
 - [X] BowlingGameApplication, BowlingGame
     - [X] 연속 스트라이크 계산이 가능한 9프레임으로 리팩토링
     - [X] 마지막 프레임 진행은 아예 분리해버릴 것
+
+## Step4. 볼링 점수판(n명)
+- [ ] 기능 요구사항 구현
+    - [ ] BowlingGameApplication 에서 BowlingGame 컬렉션을 관리하도록 기능 개선
+    - [ ] 여러명을 입력받을 수 있도록 input 기능 개선
+- [ ] 객체지향 생활체조 원칙 점검
+    - [ ] BowlingGame의 BowlingGameResult 컬렉션을 일급 컬렉션으로 리팩토링
+    - [ ] BowlingGameApplication에서 BowlingGame 컬렉션을 일급 컬렉션으로 리팩토링
+    - [ ] 인스턴스 변수 3개 이상인 클래스 있는지 확인하기
+    - [ ] 디미터 법칙 어긴 부분 없는지 확인하기
+    - [ ] 정말 최대한 게터를 다 걷어냈는지 확인하기
+- [ ] 3단계 리뷰 반영
+    - [ ] BowlinGame에서 유사한 기능을 유사한 메서드명으로 사용해서 혼란을 주는 부분 개선 방안 생각하기
+    - [ ] BowlingGameApplication 개선안 생각해보기
+    - [ ] BowlingGame에서 쓸모 없는 변수 선언이 있는지 확인해보기
