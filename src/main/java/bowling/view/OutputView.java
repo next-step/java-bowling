@@ -18,8 +18,7 @@ public class OutputView {
         System.out.print("|  NAME  |");
 
         for (int i = 0; i < frameSize; i++) {
-            int number = i + 1;
-            System.out.printf("   %s   |", number < 10 ? "0" + number : number);
+            System.out.printf("   %02d   |", i + 1);
         }
 
         System.out.println();
