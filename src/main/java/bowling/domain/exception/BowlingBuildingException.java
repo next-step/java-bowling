@@ -9,6 +9,7 @@ public class BowlingBuildingException extends RuntimeException {
     public static final String INVALID_NORMAL_PITCH_TRY = "1~9번 프레임은 2번을 초과하여 투구할 수 없습니다.";
     public static final String INVALID_FINAL_PITCH_TRY = "주어진 마지막 프레임 투구 회수를 초과하여 투구할 수 없습니다.";
     public static final String FINAL_FRAME_LIMIT = "플레이할 수 있는 프레임은 10 프레임이 마지막입니다.";
+    public static final String CANNOT_FIND_GAME_TURN = "플레이할 수 있는 다음 턴 플레이어를 찾을 수 없습니다.";
 
     public BowlingBuildingException() {
         super();

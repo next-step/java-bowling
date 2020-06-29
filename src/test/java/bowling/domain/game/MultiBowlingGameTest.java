@@ -93,4 +93,18 @@ class MultiBowlingGameTest {
 
         assertThat(multiBowlingGame.hasNextTurn()).isFalse();
     }
+
+    @DisplayName("현재 플레이할 수 있는 Game Turn을 찾지 못하면 예외 발생")
+    @Test
+    public void cannotFindGameTurn() {
+        MultiBowlingGame multiBowlingGame = MultiBowlingGame.of(playerNames);
+        multiBowlingGame.bowl(PitchScore.valueOf(10));
+        multiBowlingGame.bowl(PitchScore.valueOf(10));
+        multiBowlingGame.bowl(PitchScore.valueOf(10));
+
+        assertThatThrownBy(() -> {
+            multiBowlingGame.bowl(PitchScore.valueOf(10));
+        }).isInstanceOf(BowlingBuildingException.class)
+                .hasMessageContaining(BowlingBuildingException.CANNOT_FIND_GAME_TURN);
+    }
 }

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MultiBowlingGame {
-    private static final int ZERO_INDEX = 0;
 
     private final List<SingleBowlingGame> singleBowlingGames;
 
@@ -35,7 +34,7 @@ public class MultiBowlingGame {
         return singleBowlingGames.stream()
                 .filter(singleBowlingGame -> !singleBowlingGame.isCurrentFrameFinished())
                 .findFirst()
-                .orElseGet(() -> singleBowlingGames.get(ZERO_INDEX));
+                .orElseThrow(() -> new BowlingBuildingException(BowlingBuildingException.CANNOT_FIND_GAME_TURN));
     }
 
     public void bowl(PitchScore pitchScore) {
