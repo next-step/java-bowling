@@ -1,46 +1,32 @@
 package bowling.game;
 
-public class Pitch {
-    private static final int PIN_COUNT_MIN = 0;
-    private static final int PIN_COUNT_MAX = 10;
+import bowling.game.vo.Pin;
 
-    private final int pinCount;
+public class Pitch {
+    private final Pin pinCount;
     private final State state;
 
-    private Pitch(final int pinCount, final State state) {
-        validatePinCount(pinCount);
+    private Pitch(final Pin pinCount, final State state) {
         this.pinCount = pinCount;
         this.state = state;
     }
 
     public static Pitch firstPitch(final int pinCount) {
-        State state = State.findState(pinCount, PIN_COUNT_MIN, false);
+        Pin pin = new Pin(pinCount);
+        State state = State.findState(pin, new Pin(Pin.PIN_COUNT_MIN), false);
 
-        return new Pitch(pinCount, state);
-    }
-
-    private void validatePinCount(final int pinCount) {
-        if (pinCount < PIN_COUNT_MIN || pinCount > PIN_COUNT_MAX) {
-            throw new IllegalArgumentException("쓰러진 핀의 갯수는 0 ~ 10 사이어야 합니다. - " + pinCount);
-        }
+        return new Pitch(pin, state);
     }
 
     public Pitch nextPitch(final int pinCount) {
-        validateNextPinCount(pinCount);
+        Pin pin = new Pin(pinCount);
+        State state = State.findState(pin, this.pinCount, true);
 
-        State state = State.findState(pinCount, this.pinCount, true);
-
-        return new Pitch(pinCount, state);
-    }
-
-    private void validateNextPinCount(final int pinCount) {
-        if (this.pinCount + pinCount > PIN_COUNT_MAX) {
-            throw new IllegalArgumentException(String.format("쓰러트릴 핀의 갯수보다 남은 핀의 갯수가 적습니다. 남은 핀 - %d", this.pinCount));
-        }
+        return new Pitch(pin, state);
     }
 
     public int getPinCount() {
-        return pinCount;
+        return pinCount.getPinCount();
     }
 
     public State getState() {

@@ -1,12 +1,14 @@
 package bowling.game;
 
+import bowling.game.vo.Pin;
+
 import java.util.stream.Stream;
 
 public enum State {
-    STRIKE("X", (pinCount, beforeCount) -> pinCount == 10),
-    SPARE("/", (pinCount, beforeCount) -> pinCount + beforeCount == 10),
-    GUTTER("-", (pinCount, beforeCount) -> pinCount == 0),
-    MISS("MISS", (pinCount, beforeCount) -> pinCount != 0 && pinCount != 10);
+    STRIKE("X", (pin, beforePin) -> pin.isMaxCount()),
+    SPARE("/", (pin, beforePin) -> Pin.add(pin, beforePin).isMaxCount()),
+    GUTTER("-", (pin, beforePin) -> pin.isMinCount()),
+    MISS("MISS", (pin, beforePin) -> !pin.isMinCount() && !pin.isMaxCount());
 
     private final String symbol;
     private final StateStrategy stateStrategy;
@@ -16,9 +18,9 @@ public enum State {
         this.stateStrategy = stateStrategy;
     }
 
-    public static State findState(int pinCount, int beforeCount, boolean isNotFirstPitch) {
+    public static State findState(Pin pin, Pin beforePin, boolean isNotFirstPitch) {
         State findState = Stream.of(values())
-                .filter(state -> state.stateStrategy.isCorrectState(pinCount, beforeCount))
+                .filter(state -> state.stateStrategy.isCorrectState(pin, beforePin))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
 
@@ -46,6 +48,6 @@ public enum State {
     }
 
     private interface StateStrategy {
-        boolean isCorrectState(int pinCount, int beforeCount);
+        boolean isCorrectState(Pin pin, Pin beforePin);
     }
 }
