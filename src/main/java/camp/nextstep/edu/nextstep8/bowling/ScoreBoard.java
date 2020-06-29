@@ -4,6 +4,7 @@ import java.util.*;
 
 public class ScoreBoard {
     private static final String EMPTY = "";
+
     private final Map<Integer, Frame> frames;
 
     public ScoreBoard(Map<Integer, Frame> frames) {

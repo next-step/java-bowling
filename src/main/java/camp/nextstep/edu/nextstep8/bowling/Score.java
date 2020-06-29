@@ -2,6 +2,7 @@ package camp.nextstep.edu.nextstep8.bowling;
 
 public class Score {
     private static final int MAX_SCORE = 10;
+
     private final int score;
 
     public Score(int score) {

@@ -2,6 +2,7 @@ package camp.nextstep.edu.nextstep8.bowling;
 
 public class Frame {
     private final Score score;
+
     private int spare;
 
     public Frame(int score) {
