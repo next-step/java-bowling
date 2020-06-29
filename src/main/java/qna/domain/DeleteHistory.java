@@ -24,11 +24,11 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
-    public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
-        this.contentType = contentType;
-        this.contentId = contentId;
-        this.deletedBy = deletedBy;
-        this.createDate = createDate;
+    public DeleteHistory(Builder builder) {
+        this.contentType = builder.contentType;
+        this.contentId = builder.contentId;
+        this.deletedBy = builder.deletedBy;
+        this.createDate = builder.createDate;
     }
 
     @Override
@@ -51,5 +51,38 @@ public class DeleteHistory {
     public String toString() {
         return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
                 + deletedBy + ", createDate=" + createDate + "]";
+    }
+
+    public static class Builder {
+        private ContentType contentType;
+        private Long contentId;
+        private User deletedBy;
+        private LocalDateTime createDate;
+
+        public Builder() {}
+
+        public Builder contentType(ContentType contentType){
+            this.contentType = contentType;
+            return this;
+        }
+
+        public Builder contentId(Long contentId){
+            this.contentId = contentId;
+            return this;
+        }
+
+        public Builder deletedBy(User deletedBy){
+            this.deletedBy = deletedBy;
+            return this;
+        }
+
+        public Builder createDate(LocalDateTime createDate){
+            this.createDate = createDate;
+            return this;
+        }
+
+        public DeleteHistory build(){
+            return new DeleteHistory(this);
+        }
     }
 }
