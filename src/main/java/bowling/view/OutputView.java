@@ -15,29 +15,30 @@ public class OutputView {
 
     public static void printDefaultScoreBoard(List<BowlingGameDto> bowlingGameDtos) {
         System.out.println(ViewMessage.SCORE_BOARD_HEADER);
-        for (BowlingGameDto bowlingGameDto : bowlingGameDtos) {
-            System.out.printf(ViewMessage.DEFAULT_FRAME_SIGNATURE_ROW, bowlingGameDto.getPlayerName());
-            System.out.println(ViewMessage.DEFAULT_FRAME_SCORE_ROW);
-        }
+        bowlingGameDtos.forEach(OutputView::printDefaultInformation);
         System.out.println();
+    }
+
+    private static void printDefaultInformation(BowlingGameDto bowlingGameDto) {
+        System.out.printf(ViewMessage.DEFAULT_FRAME_SIGNATURE_ROW, bowlingGameDto.getPlayerName());
+        System.out.println(ViewMessage.DEFAULT_FRAME_SCORE_ROW);
     }
 
     public static void printBowlingScoreBoard(List<BowlingGameDto> bowlingGameDtos) {
         System.out.println(ViewMessage.SCORE_BOARD_HEADER);
-
-        for (BowlingGameDto bowlingGameDto : bowlingGameDtos) {
-            System.out.printf(ViewMessage.PLAYER_NAME, bowlingGameDto.getPlayerName());
-            List<ScoreSignaturesDto> scoreSignaturesDtos = bowlingGameDto.getScoreSignatures();
-            scoreSignaturesDtos.forEach(OutputView::printVisibleFrameSignature);
-            printBlankFrames(scoreSignaturesDtos.size());
-
-            List<Integer> scores = bowlingGameDto.getScores();
-
-            printVisibleFrameScores(scores);
-            printBlankFrames(scores.size());
-        }
+        bowlingGameDtos.forEach(OutputView::printBowlingScore);
         System.out.println();
 
+    }
+
+    private static void printBowlingScore(BowlingGameDto bowlingGameDto) {
+        List<ScoreSignaturesDto> scoreSignaturesDtos = bowlingGameDto.getScoreSignatures();
+        List<Integer> scores = bowlingGameDto.getScores();
+        System.out.printf(ViewMessage.PLAYER_NAME, bowlingGameDto.getPlayerName());
+        scoreSignaturesDtos.forEach(OutputView::printVisibleFrameSignature);
+        printBlankFrames(scoreSignaturesDtos.size());
+        printVisibleFrameScores(scores);
+        printBlankFrames(scores.size());
     }
 
     private static void printVisibleFrameSignature(ScoreSignaturesDto scoreSignaturesDto) {
