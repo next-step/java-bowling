@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
 
+    private InputView() {}
+
     public static String enterName() {
         System.out.print("플레이어 이름은(3 english letters)?: ");
         String name = SCANNER.nextLine();
@@ -12,7 +14,7 @@ public class InputView {
     }
 
     public static int enterDownPin(int frameIndex) {
-        System.out.print(frameIndex + "프레임 투구 : ");
+        System.out.print(frameIndex + " 프레임 투구 : ");
         int downPin = SCANNER.nextInt();
         return downPin;
     }

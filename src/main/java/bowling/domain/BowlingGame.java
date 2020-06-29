@@ -38,6 +38,10 @@ public class BowlingGame {
         return currentIndex;
     }
 
+    public int getFrameSize() {
+        return frames.size();
+    }
+
     public String whoseTurn() {
         return player.getName();
     }
