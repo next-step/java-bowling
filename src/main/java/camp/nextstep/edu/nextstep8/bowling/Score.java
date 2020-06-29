@@ -10,10 +10,6 @@ public class Score {
         this.score = score;
     }
 
-    public boolean hasMoreScore(int spare) {
-        return MAX_SCORE < (score + spare);
-    }
-
     public int getScore() {
         return this.score;
     }
@@ -23,7 +19,7 @@ public class Score {
     }
 
     public boolean meetMaxScore(int spare) {
-        return MAX_SCORE == (this.score + spare);
+        return MAX_SCORE <= (this.score + spare);
     }
 
     private void validateRange(int score) {
