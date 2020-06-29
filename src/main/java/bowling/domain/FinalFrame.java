@@ -5,13 +5,13 @@ import bowling.common.IntegerUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalFrame implements Frame {
+public class FinalFrame implements Frame {
     private List<Integer> pins;
     private int remain;
 
-    public NormalFrame() {
+    public FinalFrame() {
         this.pins = new ArrayList<>();
-        remain = TOTAL_PIN_COUNT;
+        this.remain = TOTAL_PIN_COUNT;
     }
 
     @Override
@@ -27,6 +27,11 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean addScore(int score) {
+        if (isBonusFrame()) {
+            pins.add(score);
+            return true;
+        }
+
         if (remain - score < IntegerUtils.ZERO) {
             throw new IllegalArgumentException("Max pin count per frame is " + TOTAL_PIN_COUNT);
         }
@@ -38,6 +43,13 @@ public class NormalFrame implements Frame {
         remain -= score;
         pins.add(score);
 
-        return remain == IntegerUtils.ZERO || pins.size() == MAX_THROW_COUNT;
+        return pins.size() == MAX_THROW_COUNT && remain > IntegerUtils.ZERO;
+    }
+
+    private boolean isBonusFrame() {
+        if (remain == IntegerUtils.ZERO && pins.size() <= MAX_THROW_COUNT) {
+            return true;
+        }
+        return false;
     }
 }

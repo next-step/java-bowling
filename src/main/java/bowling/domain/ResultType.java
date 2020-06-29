@@ -23,6 +23,9 @@ public enum ResultType {
     }
 
     public static ResultType of(boolean isFirst, int pin, int remain) {
+        if (pin == 10) {
+            return STRIKE;
+        }
         if (remain == IntegerUtils.ZERO) {
             return isFirst ? STRIKE : SPARE;
         }
