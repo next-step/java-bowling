@@ -1,5 +1,5 @@
 package bowling.domain.vo;
 
 public enum Type {
-    STRIKE, SPARE, NONE
+    STRIKE, SPARE, MISS, GUTTER
 }
