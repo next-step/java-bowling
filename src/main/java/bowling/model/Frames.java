@@ -56,7 +56,9 @@ public class Frames {
     try {
       bonusFrame.roll(knockDownNum);
     } catch (FrameOverException e) {
-      new IllegalStateException();
+      throw new IllegalStateException("roll 실패 "
+          + NEWLINE + " frames : " + frames.toString()
+          + NEWLINE + " knockDownNum : " + knockDownNum);
     }
 
     frames.addLast(bonusFrame);

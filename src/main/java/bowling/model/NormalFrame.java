@@ -24,6 +24,7 @@ public class NormalFrame implements Frame {
    * @param knockDownNum 넘어뜨린 개수
    * @throws FrameOverException 새로운 인스턴스 생성하여 처리
    */
+  @Override
   public void roll(int knockDownNum) throws FrameOverException {
     if (isOver()) {
       throw new FrameOverException();
@@ -34,14 +35,17 @@ public class NormalFrame implements Frame {
     frameStatus = frameStatus.createNextStatusBy(pins);
   }
 
+  @Override
   public boolean isOver() {
     return frameStatus.isOver();
   }
 
+  @Override
   public int getRemainingPinsNum() {
     return pins.getRemainingNum();
   }
 
+  @Override
   public List<Integer> getIndexOfScoredFrames() {
     return frameStatus.getIndexOfScoredFrames();
   }
