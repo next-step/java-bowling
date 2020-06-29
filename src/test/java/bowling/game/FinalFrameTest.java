@@ -60,4 +60,34 @@ class FinalFrameTest {
 
         assertThat(finalFrame.hasRemainChance()).isFalse();
     }
+
+    @DisplayName("마지막 프레임은 보너스 점수 계산없이 더하기만 한다.")
+    @Test
+    void calculateFinalFrameScore() {
+        Frame finalFrame = new FinalFrame(10);
+
+        finalFrame.bowl(10);
+        finalFrame.bowl(10);
+        finalFrame.bowl(10);
+
+        Score score = finalFrame.calculateScore().get();
+
+        assertThat(score.getScore()).isEqualTo(30);
+    }
+
+    @DisplayName("9번 프레임이 보너스 점수가 필요하면 마지막 프레임도 보너스 계산 로직을 수행한다.")
+    @Test
+    void calculateBonusScore() {
+        Frame nineFrame = new NormalFrame(9);
+        Frame finalFrame = nineFrame.createNextFrame();
+
+        nineFrame.bowl(10);
+
+        assertThat(nineFrame.calculateScore()).isEmpty();
+
+        finalFrame.bowl(1);
+        finalFrame.bowl(9);
+        assertThat(nineFrame.calculateScore()).isNotEmpty();
+        assertThat(nineFrame.calculateScore().get().getScore()).isEqualTo(20);
+    }
 }

@@ -1,8 +1,8 @@
 package bowling.game;
 
-public interface Frame {
-    String STATE_DELIMITER = "|";
+import java.util.Optional;
 
+public interface Frame {
     int bowl(final int pinCount);
 
     boolean hasRemainChance();
@@ -14,4 +14,8 @@ public interface Frame {
     boolean isLastFrame();
 
     String getStates();
+
+    Optional<Score> calculateScore();
+
+    Optional<Score> calculateBonusScore(Score beforeScore);
 }

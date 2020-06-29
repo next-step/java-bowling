@@ -1,5 +1,9 @@
 package bowling.game;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
 public class FinalFrame implements Frame {
 
     private final FrameNumber frameNumber;
@@ -37,5 +41,33 @@ public class FinalFrame implements Frame {
     @Override
     public String getStates() {
         return pitches.getPitchesStates();
+    }
+
+    @Override
+    public Optional<Score> calculateScore() {
+        if (!hasRemainChance()) {
+            return Optional.of(new Score(pitches.getBasicScore(), 0));
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Score> calculateBonusScore(Score beforeScore) {
+        List<Integer> pinCounts = pitches.getPitchesPinCounts();
+
+        for (int pinCount : pinCounts) {
+            beforeScore = addBonusScore(beforeScore, pinCount);
+        }
+
+        return beforeScore.canCalculateScore() ? Optional.of(beforeScore) : Optional.empty();
+    }
+
+    private Score addBonusScore(Score beforeScore, final int pinCount) {
+        if (beforeScore.canCalculateScore()) {
+            return beforeScore;
+        }
+
+        return beforeScore.addBonusScore(pinCount);
     }
 }
