@@ -2,7 +2,7 @@ package bowling.domain.pin;
 
 import java.util.Objects;
 
-public class FramePins {
+public abstract class FramePins {
     public static final int MAX_PINS_PER_FRAME = 10;
 
     private final Pins firstPins;
@@ -19,9 +19,5 @@ public class FramePins {
         if (Pins.sum(firstPins, secondPins) > MAX_PINS_PER_FRAME) {
             throw new IllegalArgumentException("한 프레임 당 투구의 합은 " + MAX_PINS_PER_FRAME + "개를 초과할 수 없습니다.");
         }
-    }
-
-    public static FramePins of(Pins firstPins, Pins secondPins) {
-        return new FramePins(firstPins, secondPins);
     }
 }

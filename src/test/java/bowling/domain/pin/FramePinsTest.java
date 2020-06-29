@@ -11,11 +11,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class FramePinsTest {
+    private static class FramePinsChild extends FramePins {
+        public FramePinsChild(Pins firstPins, Pins secondPins) {
+            super(firstPins, secondPins);
+        }
+    }
+
     @ParameterizedTest
     @MethodSource("parametersByCreateFramePins")
     @DisplayName("FramePins 투구의 총 합은 10 개을 초과할 수 없다.")
     void validate_FramePins(Pins firstPins, Pins secondPins) {
-        assertThatThrownBy(() -> FramePins.of(firstPins, secondPins))
+        assertThatThrownBy(() -> new FramePinsChild(firstPins, secondPins))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("한 프레임 당 투구의 합은 " + FramePins.MAX_PINS_PER_FRAME + "개를 초과할 수 없습니다.");
     }
@@ -31,7 +37,7 @@ class FramePinsTest {
     @MethodSource("parametersByNPE")
     @DisplayName("FramePins 은 파라미터가 하나라도 null 이면 생성할 수 없다.")
     void validate_null(Pins firstPins, Pins secondPins) {
-        assertThatThrownBy(() -> FramePins.of(firstPins, secondPins))
+        assertThatThrownBy(() -> new FramePinsChild(firstPins, secondPins))
                 .isInstanceOf(NullPointerException.class);
     }
 
