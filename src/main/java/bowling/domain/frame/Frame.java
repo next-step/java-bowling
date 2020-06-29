@@ -20,5 +20,5 @@ public interface Frame {
 
     public Optional<FrameScore> delegateCalculation(FrameScore frameScore);
 
-    public ScoreSignaturesDto getPitchScoreSignaturesDto();
+    public ScoreSignaturesDto getScoreSignaturesDto();
 }

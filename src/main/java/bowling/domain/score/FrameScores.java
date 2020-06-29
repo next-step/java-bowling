@@ -35,8 +35,4 @@ public class FrameScores {
         }
         return cumulativeFrameScores;
     }
-
-    public int getFrameScoreCounts() {
-        return frameScores.size();
-    }
 }

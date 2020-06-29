@@ -5,8 +5,6 @@ import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 import bowling.domain.score.PitchScore;
 
-import java.util.List;
-
 public class SingleBowlingGame {
 
     private final Player player;
@@ -42,11 +40,7 @@ public class SingleBowlingGame {
         return player.getName();
     }
 
-    public List<Integer> getFrameScores() {
-        return frames.getFrameScores().getFrameScores();
-    }
-
     public BowlingGameDto getFrameDto() {
-        return new BowlingGameDto(player.getName(), frames.getScoreSignatureDtos(), frames.getFrameScores2());
+        return new BowlingGameDto(player.getName(), frames.getScoreSignatureDtos(), frames.getFrameScores());
     }
 }

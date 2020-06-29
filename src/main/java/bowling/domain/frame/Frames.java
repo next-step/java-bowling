@@ -5,7 +5,6 @@ import bowling.domain.score.FrameScores;
 import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,26 +45,18 @@ public class Frames {
         return !(frames.size() == TOTAL_FRAME_COUNTS && getCurrentFrame().isFinished());
     }
 
-    public FrameScores getFrameScores() {
-        return FrameScores.of(getFrames());
-    }
-
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
-    }
-
     public boolean isCurrentFrameFinished() {
         return getCurrentFrame().isFinished();
     }
 
-    public List<Integer> getFrameScores2() {
-        FrameScores frameScores = FrameScores.of(getFrames());
+    public List<Integer> getFrameScores() {
+        FrameScores frameScores = FrameScores.of(frames);
         return frameScores.getFrameScores();
     }
 
     public List<ScoreSignaturesDto> getScoreSignatureDtos() {
         return frames.stream()
-                .map(Frame::getPitchScoreSignaturesDto)
+                .map(Frame::getScoreSignaturesDto)
                 .collect(Collectors.toList());
     }
 }

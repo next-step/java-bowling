@@ -65,7 +65,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public ScoreSignaturesDto getPitchScoreSignaturesDto() {
+    public ScoreSignaturesDto getScoreSignaturesDto() {
         List<String> scoreSignatures = pitches.getPitchScoreSignatures();
         return new ScoreSignaturesDto(scoreSignatures);
     }
