@@ -72,12 +72,7 @@ public class OutputView {
         int resultSize = calculateScores.size();
 
         String scoreString = calculateScores.stream()
-                .map(score -> {
-                    if (score == NormalFrame.WAITING_CALCULATION) {
-                        return "      |";
-                    }
-                    return "  " + score + "  |";
-                })
+                .map(score -> "  " + score + "  |")
                 .collect(Collectors.joining());
         return appendSpaces(scoreString, resultSize);
     }
