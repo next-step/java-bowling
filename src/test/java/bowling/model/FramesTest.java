@@ -20,6 +20,8 @@ class FramesTest {
   public static NormalFrame normalFrame0_10;
   public static NormalFrame normalFrame5_5;
   public static NormalFrame normalFrameStrike;
+  public static NormalFrame normalFrame5_0;
+  public static NormalFrame normalFrame5_1;
 
   static {
     try {
@@ -56,6 +58,14 @@ class FramesTest {
 
     normalFrameStrike = new NormalFrame(4);
     normalFrameStrike.roll(10);
+
+    normalFrame5_0 = new NormalFrame(5);
+    normalFrame5_0.roll(5);
+    normalFrame5_0.roll(0);
+
+    normalFrame5_1 = new NormalFrame(5);
+    normalFrame5_1.roll(5);
+    normalFrame5_1.roll(1);
   }
 
   @ParameterizedTest

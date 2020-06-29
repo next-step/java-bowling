@@ -12,4 +12,7 @@ public interface Frame {
 
   List<Integer> getIndexOfScoredFrames();
 
+  KnockedDownPins getPins();
+
+  FrameStatus getFrameStatus();
 }

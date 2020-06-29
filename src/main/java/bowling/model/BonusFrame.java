@@ -18,7 +18,7 @@ public class BonusFrame implements Frame {
 
   @Override
   public boolean isOver() {
-    return false;
+    return true;
   }
 
   @Override
@@ -29,6 +29,16 @@ public class BonusFrame implements Frame {
   @Override
   public List<Integer> getIndexOfScoredFrames() {
     return Collections.emptyList();
+  }
+
+  @Override
+  public KnockedDownPins getPins() {
+    return KnockedDownPins.getBuilder(knockDownNumber.getIntValue()).secondKnockDownNum(0).build();
+  }
+
+  @Override
+  public FrameStatus getFrameStatus() {
+    return new Bonus();
   }
 
   @Override

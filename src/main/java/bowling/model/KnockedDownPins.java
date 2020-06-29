@@ -50,6 +50,10 @@ public class KnockedDownPins {
     return firstKnockDownNum.getIntValue();
   }
 
+  public int getSecondKnockDownNum() {
+    return secondKnockDownNum.getIntValue();
+  }
+
   public int getRemainingNum() {
     return MAX_NUMBER_OF_PINS - firstKnockDownNum.getIntValue() - secondKnockDownNum.getIntValue();
   }

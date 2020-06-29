@@ -51,6 +51,16 @@ public class NormalFrame implements Frame {
   }
 
   @Override
+  public KnockedDownPins getPins() {
+    return pins;
+  }
+
+  @Override
+  public FrameStatus getFrameStatus() {
+    return frameStatus;
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;

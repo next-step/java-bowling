@@ -51,7 +51,7 @@ class BonusFrameTest {
 
   @Test
   void isOver() {
-    assertThat(new BonusFrame().isOver()).isFalse();
+    assertThat(new BonusFrame().isOver()).isTrue();
   }
 
   @Test
