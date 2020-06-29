@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.domain.status.Status;
 import bowling.domain.status.Strike;
