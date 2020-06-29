@@ -66,8 +66,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String getPoint() {
-        return null;
+    public int getPoint() {
+        if (pitchCount == FRAME_SECOND_PITCH_END) {
+            return scores.stream().map(Score::getPoint).reduce(Integer::sum).orElse(0);
+        }
+        return 0;
     }
 
     private Frame nextBowl(Point point) {

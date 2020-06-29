@@ -84,9 +84,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String getPoint() {
-        if ()
-        return null;
+    public int getPoint() {
+        if (pitchCount == FINAL_MAX_BOWL_PITCH) {
+            return scores.stream().map(Score::getPoint).reduce(Integer::sum).orElse(0);
+        }
+        return 0;
     }
 
     public boolean isLastPitch() {

@@ -9,25 +9,31 @@ import java.util.stream.Stream;
 
 public class ResultView {
     private static final String ROUND_SCORE_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String DEFAULT_SCORE_BOARD = "|  %s |      |      |      |      |      |      |      |      |      |      |";
+    private static final String DEFAULT_SCORE_BOARD = "| %-4s |      |      |      |      |      |      |      |      |      |      |";
     public static final int MAX_FRAME_SIZE = 10;
 
     public static void printDefaultScoreBoard(Player player) {
         System.out.println(ROUND_SCORE_BOARD);
         System.out.println(String.format(DEFAULT_SCORE_BOARD, player.toString()));
+        System.out.println(String.format(DEFAULT_SCORE_BOARD, "    "));
+        System.out.println();
     }
 
     public static void printResult(Player player, Frames frames) {
         System.out.println(ROUND_SCORE_BOARD);
         printScoreLine(player, frames);
         printEmptyLine(frames);
+        System.out.println();
         printPointLine(frames);
         printEmptyLine(frames);
         System.out.println("\n");
     }
 
     private static void printPointLine(Frames frames) {
-
+        System.out.print("|" + formatting(""));
+        frames.getPoints().stream()
+                .map(point -> formatting(String.valueOf(point)))
+                .forEach(System.out::print);
     }
 
     private static void printEmptyLine(Frames frames) {
