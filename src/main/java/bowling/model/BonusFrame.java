@@ -1,5 +1,8 @@
 package bowling.model;
 
+import bowling.model.framestatus.Bonus;
+import bowling.model.framestatus.FrameStatus;
+import bowling.model.knockdownstrategy.KnockDownNumber;
 import java.util.Collections;
 import java.util.List;
 

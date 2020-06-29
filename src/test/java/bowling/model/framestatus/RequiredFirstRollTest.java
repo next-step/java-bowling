@@ -1,7 +1,8 @@
-package bowling.model;
+package bowling.model.framestatus;
 
 import static org.assertj.core.api.Assertions.*;
 
+import bowling.model.KnockedDownPins;
 import org.junit.jupiter.api.Test;
 
 class RequiredFirstRollTest {

@@ -1,17 +1,18 @@
-package bowling.model;
+package bowling.model.framestatus;
 
+import bowling.model.KnockedDownPins;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Spare implements FrameStatus {
+public class Strike implements FrameStatus {
 
   private final List<Integer> indexOfScoredFrames;
 
-  public Spare(FrameStatus frameStatus) {
+  public Strike(FrameStatus frameStatus) {
     int curIndex = frameStatus.getIndexOfScoredFrames().get(0);
 
-    this.indexOfScoredFrames = Arrays.asList(curIndex, curIndex + 1);
+    this.indexOfScoredFrames = Arrays.asList(curIndex, curIndex + 1, curIndex + 2);
   }
 
   @Override

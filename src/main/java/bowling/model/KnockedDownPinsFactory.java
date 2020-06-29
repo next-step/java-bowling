@@ -1,5 +1,9 @@
 package bowling.model;
 
+import bowling.model.knockdownstrategy.FirstKnockDownStrategy;
+import bowling.model.knockdownstrategy.SecondKnockDownStrategy;
+import bowling.model.knockdownstrategy.StrikeKnockDownStrategy;
+
 public class KnockedDownPinsFactory {
 
   private KnockedDownPinsFactory() {

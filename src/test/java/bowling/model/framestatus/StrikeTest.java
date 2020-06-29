@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.framestatus;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -10,12 +10,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class SpareTest {
+class StrikeTest {
 
   @ParameterizedTest
   @MethodSource("provideCurIndexWithExpectedList")
   void getIndexOfNextFrames(int curIndex, List<Integer> expected) {
-    FrameStatus frameStatus = new Spare(new RequiredFirstRoll(curIndex));
+    FrameStatus frameStatus = new Strike(new RequiredFirstRoll(curIndex));
 
     assertThat(frameStatus.getIndexOfScoredFrames()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isTrue();
@@ -26,7 +26,7 @@ class SpareTest {
         arguments(
             0,
             Arrays.asList(
-                0, 1
+                0, 1, 2
             )
         )
     );

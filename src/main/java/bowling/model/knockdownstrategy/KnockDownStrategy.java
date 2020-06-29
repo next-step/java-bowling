@@ -1,4 +1,6 @@
-package bowling.model;
+package bowling.model.knockdownstrategy;
+
+import bowling.model.KnockedDownPins;
 
 public interface KnockDownStrategy {
 

@@ -1,8 +1,9 @@
-package bowling.model;
+package bowling.model.knockdownstrategy;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import bowling.model.KnockedDownPins;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;

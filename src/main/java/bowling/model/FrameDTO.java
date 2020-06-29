@@ -1,5 +1,10 @@
 package bowling.model;
 
+import bowling.model.framestatus.Bonus;
+import bowling.model.framestatus.FrameStatus;
+import bowling.model.framestatus.Spare;
+import bowling.model.framestatus.Strike;
+
 public class FrameDTO {
 
   private final static String BAR = "|";

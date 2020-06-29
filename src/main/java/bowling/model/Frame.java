@@ -1,5 +1,6 @@
 package bowling.model;
 
+import bowling.model.framestatus.FrameStatus;
 import java.util.List;
 
 public interface Frame {

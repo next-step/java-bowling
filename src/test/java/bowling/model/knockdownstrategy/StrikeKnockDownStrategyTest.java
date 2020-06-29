@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.knockdownstrategy;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;

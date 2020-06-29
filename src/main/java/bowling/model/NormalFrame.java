@@ -1,5 +1,7 @@
 package bowling.model;
 
+import bowling.model.framestatus.FrameStatus;
+import bowling.model.framestatus.RequiredFirstRoll;
 import java.util.List;
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package bowling.model;
+package bowling.model.framestatus;
 
 import static org.assertj.core.api.Assertions.*;
 

@@ -1,16 +1,15 @@
-package bowling.model;
+package bowling.model.framestatus;
 
+import bowling.model.KnockedDownPins;
 import java.util.Collections;
 import java.util.List;
 
-public class RequiredSecondRoll implements FrameStatus {
-
-  private final static int ZERO = 0;
+public class RequiredFirstRoll implements FrameStatus {
 
   private final List<Integer> indexOfScoredFrames;
 
-  public RequiredSecondRoll(FrameStatus frameStatus) {
-    indexOfScoredFrames = frameStatus.getIndexOfScoredFrames();
+  public RequiredFirstRoll(int curIndex) {
+    indexOfScoredFrames = Collections.singletonList(curIndex);
   }
 
   @Override
@@ -20,11 +19,11 @@ public class RequiredSecondRoll implements FrameStatus {
 
   @Override
   public FrameStatus createNextStatusBy(KnockedDownPins pins) {
-    if (pins.getRemainingNum() == ZERO) {
-      return new Spare(this);
+    if (pins.getFirstKnockDownNum() == KnockedDownPins.MAX_NUMBER_OF_PINS) {
+      return new Strike(this);
     }
 
-    return new Miss(this);
+    return new RequiredSecondRoll(this);
   }
 
   @Override

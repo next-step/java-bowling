@@ -1,5 +1,6 @@
-package bowling.model;
+package bowling.model.framestatus;
 
+import bowling.model.KnockedDownPins;
 import java.util.Collections;
 import java.util.List;
 

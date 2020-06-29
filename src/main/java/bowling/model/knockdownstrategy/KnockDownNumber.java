@@ -1,5 +1,6 @@
-package bowling.model;
+package bowling.model.knockdownstrategy;
 
+import bowling.model.KnockedDownPins;
 import java.util.Objects;
 
 public class KnockDownNumber {
