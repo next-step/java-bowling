@@ -11,7 +11,7 @@ public class Frames {
     public Frames(int finalFrame) {
         this.finalFrame = finalFrame;
         this.frames = new LinkedList<>();
-        this.frames.add(new Frame());
+        this.frames.add(new NormalFrame());
     }
 
     public List<List<ResultType>> getGameResult() {
@@ -25,7 +25,7 @@ public class Frames {
     public boolean bowling(int pin) {
         boolean isFrameFinish = frames.getLast().addScore(pin);
         if (isFrameFinish && isNotFinalFrame()) {
-            frames.add(new Frame());
+            frames.add(new NormalFrame());
         }
         return isFrameFinish;
     }
