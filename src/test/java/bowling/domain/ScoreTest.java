@@ -32,6 +32,14 @@ class ScoreTest {
     }
 
     @Test
+    void ofGutter() {
+        int score = 0;
+        Score actual = Score.ofMiss(score);
+
+        assertThat(actual).isEqualTo(new Score(score, 0));
+    }
+
+    @Test
     void bowl() {
         int currentScore = 4;
         Score score = Score.ofSpare();
