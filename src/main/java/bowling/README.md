@@ -95,9 +95,12 @@ PJS's turn :
     * 1명의 플레이어로 구성된 BowlingGame 객체이다.
     * 인스턴스 변수로 Frames와 Player를 가진다.
     * 현재 플레이중인 프레임의 투구가 끝났는지 반환한다.
+    * 플레이어와 프레임의 점수를 포괄하는 Dto 객체를 생성한다.
 
 * MultiBowlingGame
     * List<SingleBowlingGame> 의 일급 컬렉션이다.
+    * 현재 플레이중인 게임을 확인하여 볼링을 진행하고, 현재 프레임이 종료되면 다음 프레임으로 이동한다.
+    * List<Dto>를 제공한다.
 
 #### Player 패키지
 * Player
@@ -187,6 +190,14 @@ PJS's turn :
 #### Exception 패키지
 * BowlingBuildingException
     * Runtime Exception을 상속받는 커스텀 예외이다.
+    
+#### DTO 패키지
+* ScoreSignaturesDto
+    * 1개 프레임의 볼링 시그니쳐 (-, /, X 등)List<String> 을 가진 Dto 객체이다.
+
+* BowlingGameDto
+    * 현재 플레이어의 이름과, 현재 보유하고 있는 프레임들의 List<ScoreSignaturesDto) 및 
+    계산 가능한 프레임의 점수 리스트(List<Integer>)를 가진 Dto 객체이다.
     
 ### View
 * InputView
