@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.dto.BowlingGameDto;
 import bowling.domain.dto.ScoreSignaturesDto;
-import bowling.domain.game.MultiBowlingGame;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -14,13 +13,16 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printDefaultScoreBoard(MultiBowlingGame multiBowlingGame) {
+    public static void printDefaultScoreBoard(List<BowlingGameDto> bowlingGameDtos) {
         System.out.println(ViewMessage.SCORE_BOARD_HEADER);
-        System.out.printf(ViewMessage.DEFAULT_FRAME_SIGNATURE_ROW, player.getName());
-        System.out.println(ViewMessage.DEFAULT_FRAME_SCORE_ROW);
+        for (BowlingGameDto bowlingGameDto : bowlingGameDtos) {
+            System.out.printf(ViewMessage.DEFAULT_FRAME_SIGNATURE_ROW, bowlingGameDto.getPlayerName());
+            System.out.println(ViewMessage.DEFAULT_FRAME_SCORE_ROW);
+        }
+        System.out.println();
     }
 
-    public static void printTest(List<BowlingGameDto> bowlingGameDtos) {
+    public static void printBowlingScoreBoard(List<BowlingGameDto> bowlingGameDtos) {
         System.out.println(ViewMessage.SCORE_BOARD_HEADER);
 
         for (BowlingGameDto bowlingGameDto : bowlingGameDtos) {

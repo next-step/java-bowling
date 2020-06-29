@@ -9,7 +9,7 @@ public class ViewMessage {
     public static final String DEFAULT_FRAME_SIGNATURE_ROW =
             "|  %s |      |      |      |      |      |      |      |      |      |      |\n";
     public static final String DEFAULT_FRAME_SCORE_ROW =
-            "|      |      |      |      |      |      |      |      |      |      |      |\n";
+            "|      |      |      |      |      |      |      |      |      |      |      |";
     public static final String PLAYER_NAME = "|  %s |";
     public static final String VERTICAL_LINE = "|";
     public static final String BLANK_FRAME = "      |";

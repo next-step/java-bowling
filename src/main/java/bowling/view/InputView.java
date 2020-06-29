@@ -1,7 +1,5 @@
 package bowling.view;
 
-import bowling.domain.game.MultiBowlingGame;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -28,8 +26,8 @@ public class InputView {
         playerNames.add(SCANNER.nextLine().toUpperCase().trim());
     }
 
-    public static int inputPitchScore(MultiBowlingGame multiBowlingGame) {
-        System.out.printf(ViewMessage.INSTRUCTION_PITCH, multiBowlingGame.getCurrentPlayerName());
+    public static int inputPitchScore(String currentPlayerName) {
+        System.out.printf(ViewMessage.INSTRUCTION_PITCH, currentPlayerName);
         return Integer.parseInt(SCANNER.nextLine());
     }
 }
