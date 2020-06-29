@@ -91,8 +91,8 @@ public class Question extends AbstractEntity {
     public Question delete(List<DeleteHistory> deleteHistories, User loginUser) throws CannotDeleteException {
         checkOwner(loginUser);
         this.setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
-        answers.delete(deleteHistories);
+        deleteHistories.add(DeleteHistory.question(this.getId(), this.getWriter()));
+        deleteHistories.addAll(answers.delete(loginUser));
         return this;
     }
 
