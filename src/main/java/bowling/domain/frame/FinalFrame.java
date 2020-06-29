@@ -47,7 +47,7 @@ public class FinalFrame extends Frame {
     @Override
     public int totalScore() {
         return Optional.ofNullable(additionalPoint)
-                .orElse(Point.MIN()).getPoint() + super.totalScore();
+                .orElse(Point.MIN).getPoint() + super.totalScore();
     }
 
     @Override
