@@ -40,6 +40,10 @@ public class States {
             return State.READY;
         }
 
+        return getLastPreviousState();
+    }
+
+    private State getLastPreviousState() {
         return this.states.get(this.states.size() - 2);
     }
 
