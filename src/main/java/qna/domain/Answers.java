@@ -3,7 +3,6 @@ package qna.domain;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -31,16 +30,21 @@ public class Answers {
 
 	public List<DeleteHistory> deleteAll(User loginUser) throws CannotDeleteException {
 		validateAnswersOwner(loginUser);
-		return answers.stream()
-			.peek(answer -> {
-				try {
-					answer.delete();
-				} catch (CannotDeleteException ignored) {
-				}
-			})
-			.map(answer ->
-				new DeleteHistory(ContentType.ANSWER, answer.getId(), loginUser, LocalDateTime.now()))
-			.collect(Collectors.toList());
+
+		List<DeleteHistory> deleteHistories = new ArrayList<>();
+
+		for (Answer answer : answers) {
+			answer.delete();
+			DeleteHistory deleteHistory = new DeleteHistory(
+				ContentType.ANSWER,
+				answer.getId(),
+				loginUser,
+				LocalDateTime.now()
+			);
+			deleteHistories.add(deleteHistory);
+		}
+
+		return deleteHistories;
 	}
 
 	private void validateAnswersOwner(User loginUser) throws CannotDeleteException {
