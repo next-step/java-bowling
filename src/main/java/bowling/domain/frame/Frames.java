@@ -1,67 +1,40 @@
 package bowling.domain.frame;
 
-import bowling.domain.player.Player;
 import bowling.utils.ElementFindUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Frames {
     private static final int MAX_FRAME = 10;
     private static final int ONE = 1;
 
     private final List<Frame> frames;
-    private final Player player;
 
-    public Frames(Player player) {
+    public Frames() {
         this.frames = new ArrayList<>();
-        this.player = player;
     }
 
-    public void addPoint(int point) {
-        Frame currentFrame = findFrame();
-        currentFrame.addPoint(point);
-        if (frames.size() > MAX_FRAME) {
-            throw new IllegalArgumentException(String.format("limit frame is %d", MAX_FRAME));
-        }
-    }
-
-    private Frame findFrame() {
+    public void createNextFrame() {
         if (CollectionUtils.isEmpty(frames)) {
-            return generateNextFrame();
+            frames.add(NormalFrame.createFirstFrame());
+            return;
         }
 
-        Frame currentFrame = ElementFindUtils.findLastElement(frames);
-        return Optional.of(currentFrame)
-                .filter(Frame::availablePlay)
-                .orElseGet(this::generateNextFrame);
-    }
-
-    private Frame generateNextFrame() {
-        Frame frame = null;
+        NormalFrame normalFrame = (NormalFrame) ElementFindUtils.findLastElement(frames);
+        int nextFrameIndex = frames.size();
         if (isLast()) {
-            frame = new FinalFrame();
-            frames.add(frame);
-            return frame;
+            frames.add(normalFrame.createLastFrame(nextFrameIndex));
+            return;
         }
 
-        frame = new NormalFrame();
-        frames.add(frame);
-        return frame;
+        frames.add(normalFrame.createNextFrame(nextFrameIndex));
+        return;
     }
 
     private boolean isLast() {
         return MAX_FRAME - ONE == frames.size();
-    }
-
-    public boolean isGameOver() {
-        if (frames.size() == MAX_FRAME) {
-            Frame lastFrame = frames.get(MAX_FRAME - ONE);
-            return !lastFrame.availablePlay();
-        }
-        return false;
     }
 
     public int getFrameSize() {
@@ -72,8 +45,7 @@ public class Frames {
         return frames;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Frame findCurrentFrame() {
+        return ElementFindUtils.findLastElement(frames);
     }
-
 }

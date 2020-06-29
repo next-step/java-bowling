@@ -40,24 +40,20 @@ public class Scores {
                 .sum();
     }
 
-    public boolean firstScore() {
+    private boolean firstScore() {
         return scores.size() == FIRST_SCORE;
     }
 
-    public boolean secondScore() {
+    private boolean secondScore() {
         return scores.size() == SECOND_SCORE;
     }
 
-    public boolean thirdScore() {
+    private boolean thirdScore() {
         return scores.size() == THIRD_SCORE;
     }
 
-    public boolean isStrikeOrSpare() {
-        return isStrike() || isSpare();
-    }
-
     public boolean isStrike() {
-        if (isEmpty()) {
+        if (CollectionUtils.isEmpty(scores)) {
             return false;
         }
         return ElementFindUtils.findFirstElement(scores).isStrike();
@@ -76,8 +72,15 @@ public class Scores {
                 .collect(collectingAndThen(toList(), Collections::unmodifiableList));
     }
 
-    private boolean isEmpty() {
-        return CollectionUtils.isEmpty(scores);
-    }
+    public boolean isAvailableAdd() {
+        if (CollectionUtils.isEmpty(scores)) {
+            return true;
+        }
 
+        if (isStrike() || isSpare()) {
+            return false;
+        }
+
+        return firstScore();
+    }
 }

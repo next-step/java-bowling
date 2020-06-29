@@ -11,7 +11,7 @@ public class InputView {
     }
 
     public static int inputScore(int frameSize) {
-        System.out.println(String.format("%d프레임 투구 : ", frameSize + 1));
+        System.out.println(String.format("%d프레임 투구 : ", frameSize));
         return SCANNER.nextInt();
     }
 }

@@ -1,11 +1,13 @@
 package bowling.domain.score;
 
+import bowling.domain.point.Point;
+
 public class Miss implements Score {
-    private final int point;
+    private final Point point;
     private static final ScoreType SCORE_TYPE = ScoreType.MISS;
 
     public Miss(int point) {
-        this.point = point;
+        this.point = new Point(point);
     }
 
     @Override
@@ -15,7 +17,7 @@ public class Miss implements Score {
 
     @Override
     public int getPoint() {
-        return point;
+        return point.getPoint();
     }
 
     @Override

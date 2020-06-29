@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class NormalFrameTest {
 
     private Frame createFrame() {
-        return new NormalFrame();
+        return NormalFrame.createFirstFrame();
     }
 
     @ParameterizedTest
@@ -26,7 +26,7 @@ class NormalFrameTest {
         for (Integer point : points) {
             frame.addPoint(point);
         }
-        assertThat(frame.availablePlay()).isEqualTo(availablePlay);
+        assertThat(frame.isAvailablePlay()).isEqualTo(availablePlay);
     }
 
     private static Stream<Arguments> provideCountAndAvailablePlay() {

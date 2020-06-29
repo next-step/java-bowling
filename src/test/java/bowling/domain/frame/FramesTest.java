@@ -2,12 +2,14 @@ package bowling.domain.frame;
 
 import bowling.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,46 +17,26 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FramesTest {
 
-    private Frames createFrame(String playerName) {
-        return new Frames(new Player(playerName));
+    private Frames createFrame() {
+        return new Frames();
     }
 
     @ParameterizedTest
-    @MethodSource("providePoint")
+    @MethodSource("provideFrameSize")
     @DisplayName("frame 추가")
-    void addFrame(List<Integer> points, int frameSize) {
-        Frames frames = createFrame("WIJ");
-        for (Integer point : points) {
-            frames.addPoint(point);
-        }
+    void addFrame(int frameSize) {
+        Frames frames = createFrame();
+        IntStream.range(0, frameSize)
+                .forEach(index -> frames.createNextFrame());
 
         assertThat(frames.getFrameSize()).isEqualTo(frameSize);
     }
 
-    private static Stream<Arguments> providePoint() {
+    private static Stream<Arguments> provideFrameSize() {
         return Stream.of(
-                Arguments.of(Arrays.asList(10,10,10,10,10), 5),
-                Arguments.of(Arrays.asList(10,10,10,10,10,10,10,10,10,10), 10),
-                Arguments.of(Arrays.asList(1, 8, 2, 6, 3, 7, 4, 5, 5, 5, 1, 3, 4, 6, 7, 3, 1, 2), 9)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideNotValidFullPoint")
-    @DisplayName("마지막 frame에서 새로운 frame 추가 시 Exception")
-    void addLastFrameException(List<Integer> points) {
-        Frames frames = createFrame("WIJ");
-        for (Integer point : points) {
-            frames.addPoint(point);
-        }
-
-        assertThatThrownBy(() -> frames.addPoint(1))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    private static Stream<Arguments> provideNotValidFullPoint() {
-        return Stream.of(
-                Arguments.of(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 5, 4))
+                Arguments.of(5),
+                Arguments.of(10),
+                Arguments.of(9)
         );
     }
 }

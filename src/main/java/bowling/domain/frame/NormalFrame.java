@@ -1,26 +1,64 @@
 package bowling.domain.frame;
 
+import bowling.domain.bonus.BonusScore;
+import bowling.domain.bonus.BonusScores;
 import bowling.domain.score.Scores;
 
 public class NormalFrame extends Frame {
     private final static int MAX_SCORE = 10;
+    private final static int FIRST_FRAME_INDEX = 0;
 
-    public NormalFrame() {
-        super(new Scores());
+    public NormalFrame(BonusScores bonusScores, int frameIndex) {
+        super(new Scores(), bonusScores, frameIndex);
+    }
+
+    public static Frame createFirstFrame() {
+        return new NormalFrame(new BonusScores(), FIRST_FRAME_INDEX);
+    }
+
+    public Frame createNextFrame(int frameIndex) {
+        createBonusScores(frameIndex - 1);
+        return new NormalFrame(bonusScores.findAvailableAddBonusScores(), frameIndex);
+    }
+
+    public Frame createLastFrame(int frameIndex) {
+        createBonusScores(frameIndex - 1);
+        return new FinalFrame(bonusScores.findAvailableAddBonusScores(), frameIndex);
+    }
+
+    private void createBonusScores(int frameIndex) {
+        if (scores.isStrike()) {
+            bonusScores.addBonusScore(BonusScore.strikeBonusScore(frameIndex));
+        }
+
+        if (scores.isSpare()) {
+            bonusScores.addBonusScore(BonusScore.spareBonusScore(frameIndex));
+        }
     }
 
     @Override
-    public void validateScores() {
-        if (scores.totalScore() > MAX_SCORE) {
+    public void validateScores(int point) {
+        if (scores.totalScore() + point > MAX_SCORE) {
             throw new IllegalArgumentException("score less than 10");
         }
     }
 
     @Override
-    public boolean availablePlay() {
-        if (scores.isStrikeOrSpare()) {
+    public boolean isAvailablePlay() {
+        return scores.isAvailableAdd();
+    }
+
+    @Override
+    public boolean isAvailableCalculatePoint() {
+        if (isAvailablePlay()) {
             return false;
         }
-        return scores.firstScore();
+
+        if (bonusScores.isAvailableAddBonusScores(frameIndex)) {
+            return false;
+        }
+
+        return true;
     }
+
 }
