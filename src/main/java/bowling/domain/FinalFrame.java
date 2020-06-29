@@ -32,7 +32,7 @@ public class FinalFrame implements Frame {
             return true;
         }
         addScore(score);
-        return scores.size() == MAX_THROW_COUNT && remain > IntegerUtils.ZERO;
+        return isFrameFinish();
     }
 
     private boolean isBonusFrame() {
@@ -57,5 +57,9 @@ public class FinalFrame implements Frame {
         if (scores.size() + 1 > MAX_THROW_COUNT) {
             throw new IllegalArgumentException("Frame is finished");
         }
+    }
+
+    private boolean isFrameFinish() {
+        return scores.size() == MAX_THROW_COUNT && remain > IntegerUtils.ZERO;
     }
 }

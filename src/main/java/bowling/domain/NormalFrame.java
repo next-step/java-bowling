@@ -28,7 +28,7 @@ public class NormalFrame implements Frame {
     @Override
     public boolean bowling(int score) {
         addScore(score);
-        return remain == IntegerUtils.ZERO || scores.size() == MAX_THROW_COUNT;
+        return isFrameFinish();
     }
 
     private void addScore(int score) {
@@ -46,5 +46,9 @@ public class NormalFrame implements Frame {
         if (scores.size() + 1 > MAX_THROW_COUNT) {
             throw new IllegalArgumentException("Frame is finished");
         }
+    }
+
+    private boolean isFrameFinish() {
+        return remain == IntegerUtils.ZERO || scores.size() == MAX_THROW_COUNT;
     }
 }
