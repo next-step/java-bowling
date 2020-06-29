@@ -42,11 +42,6 @@ public class FrameTest {
         frames.addFrameScore(BOWLING_GAME_FRAME, 3);
         System.out.println(frames.getFrames().get(BOWLING_GAME_FRAME));
         Frame frame = frames.getFrames().get(BOWLING_GAME_FRAME);
-        System.out.println(frame.isSpare());
-        System.out.println(frame.isStrike());
-//        for(Score score : frame.) {
-//
-//        }
         assertThat(frames.getFrames().get(BOWLING_GAME_FRAME).validateLimitScore()).isTrue();
     }
 
