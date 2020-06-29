@@ -51,6 +51,7 @@ public class NormalFrame implements Frame {
         return NormalFrame.create(scores, ++pitchCount);
     }
 
+    @Override
     public String getScores() {
         String result = "";
         if (scores.size() == FRAME_SECOND_PITCH_END) {
@@ -62,6 +63,11 @@ public class NormalFrame implements Frame {
         }
 
         return result;
+    }
+
+    @Override
+    public String getPoint() {
+        return null;
     }
 
     private Frame nextBowl(Point point) {

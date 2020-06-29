@@ -65,6 +65,7 @@ public class FinalFrame implements Frame {
         return FinalFrame.create(scores, FINAL_MAX_BOWL_PITCH);
     }
 
+    @Override
     public String getScores() {
         String result = "";
         if (scores.size() == FRAME_THIRD_PITCH_END) {
@@ -80,6 +81,11 @@ public class FinalFrame implements Frame {
         }
 
         return result;
+    }
+
+    @Override
+    public String getPoint() {
+        return null;
     }
 
     public boolean isLastPitch() {

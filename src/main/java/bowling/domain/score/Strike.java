@@ -4,11 +4,11 @@ import bowling.domain.frame.Point;
 
 public class Strike implements Score {
 
-    private static final Point POINT = Point.inputPoint(STRIKE_POINT);
+    private static final Point point = Point.inputPoint(STRIKE_POINT);
 
     @Override
     public Score nextScore(Point point) {
-        int totalPoint = this.POINT.getPoint() + point.getPoint();
+        int totalPoint = this.point.getPoint() + point.getPoint();
 
         if (point.getPoint() == STRIKE_POINT) {
             return new Strike();
@@ -23,6 +23,11 @@ public class Strike implements Score {
         }
 
         return new Normal(point);
+    }
+
+    @Override
+    public int getPoint() {
+        return point.getPoint();
     }
 
     @Override

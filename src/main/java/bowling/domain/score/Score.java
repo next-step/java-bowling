@@ -11,6 +11,8 @@ public interface Score {
 
     String getScore();
 
+    int getPoint();
+
     boolean isStrike();
 
     boolean isSpare();

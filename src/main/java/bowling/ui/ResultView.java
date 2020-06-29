@@ -21,7 +21,13 @@ public class ResultView {
         System.out.println(ROUND_SCORE_BOARD);
         printScoreLine(player, frames);
         printEmptyLine(frames);
+        printPointLine(frames);
+        printEmptyLine(frames);
         System.out.println("\n");
+    }
+
+    private static void printPointLine(Frames frames) {
+
     }
 
     private static void printEmptyLine(Frames frames) {

@@ -24,6 +24,11 @@ public class Spare implements Score {
     }
 
     @Override
+    public int getPoint() {
+        return point.getPoint();
+    }
+
+    @Override
     public String getScore() {
         return "/";
     }

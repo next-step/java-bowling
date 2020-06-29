@@ -26,6 +26,11 @@ public class Normal implements Score {
     }
 
     @Override
+    public int getPoint() {
+        return point.getPoint();
+    }
+
+    @Override
     public String getScore() {
         return point.toString();
     }
