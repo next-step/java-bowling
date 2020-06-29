@@ -1,33 +1,43 @@
 package bowling;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.frame.Frame;
-import bowling.domain.player.Player;
+import bowling.domain.bowlinggame.BowlingGame;
+import bowling.domain.bowlinggame.BowlingGames;
 import bowling.view.InputView;
 import bowling.view.OutputView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BowlingApplication {
 
     public static void main(String[] args) {
-        String playerName = InputView.inputPlayerName();
-        OutputView.outputDefaultFrame(playerName);
+        int playerCount = InputView.inputPlayerCount();
+        List<String> playerNames = new ArrayList<>();
+        for (int i = 0; i < playerCount; i++) {
+            playerNames.add(InputView.inputPlayerName(i));
+        }
+        OutputView.outputDefaultFrame(playerNames);
 
-        BowlingGame bowlingGame = new BowlingGame(playerName);
-
-        while (!bowlingGame.isGameOver()) {
-            bowlingGame.addNextFrame();
-            play(bowlingGame);
+        BowlingGames bowlingGames = new BowlingGames(playerNames);
+        while (!bowlingGames.isAllGameOver()) {
+            bowlingGames.addNextFrames();
+            playBowlingGames(bowlingGames);
         }
 
     }
 
-    private static void play(BowlingGame bowlingGame) {
-        int frameIndex = bowlingGame.currentPlayFrameIndex();
-        Player player = bowlingGame.getPlayer();
-        while (bowlingGame.isCurrentFramePlayable()) {
-            int point = InputView.inputScore(frameIndex);
+    private static void playBowlingGames(BowlingGames bowlingGames) {
+        for (int i = 0; i < bowlingGames.size(); i++) {
+            writeBowlingGamePoint(bowlingGames, i);
+        }
+    }
+
+    private static void writeBowlingGamePoint(BowlingGames bowlingGames, int index) {
+        while (bowlingGames.isPlayable(index)) {
+            BowlingGame bowlingGame = bowlingGames.findBowlingGame(index);
+            int point = InputView.inputScore(bowlingGame.getPlayer());
             bowlingGame.writePoint(point);
-            OutputView.outputFrames(bowlingGame.getFrames(), player);
+            OutputView.outputBowlingGames(bowlingGames);
         }
     }
 }
