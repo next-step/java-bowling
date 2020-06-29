@@ -29,14 +29,12 @@ public class AnswersTest {
     }
 
     private static Stream<Arguments> provideTheOthersAnswers(){
+        Answers answersObj1 = new Answers(Lists.list(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1_1"),
+                new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents1_2"),
+                new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1_3")));
 
-        Answers answersObj1 = Answers.of(
-                Lists.list(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1_1"),
-                        new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents1_2"),
-                        new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1_3"))
-        );
 
-        Answers answersObj2 = Answers.of(
+        Answers answersObj2 = new Answers(
                 Lists.list(new Answer(UserTest.JAVAJIGI, QuestionTest.Q2, "Answers Contents1_1"),
                         new Answer(UserTest.SANJIGI, QuestionTest.Q2, "Answers Contents1_2"))
         );
@@ -59,13 +57,13 @@ public class AnswersTest {
 
     private static Stream<Arguments> provideAnswers(){
 
-        Answers answersObj1 = Answers.of(
+        Answers answersObj1 = new Answers(
                 Lists.list(new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1_1"),
                         new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1_2"),
                         new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1_3"))
         );
 
-        Answers answersObj2 = Answers.of(
+        Answers answersObj2 = new Answers(
                 Lists.list(new Answer(UserTest.SANJIGI, QuestionTest.Q2, "Answers Contents1_1"),
                         new Answer(UserTest.SANJIGI, QuestionTest.Q2, "Answers Contents1_2"))
         );

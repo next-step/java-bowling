@@ -1,6 +1,5 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 import qna.NotHaveDeleteOwnerShipException;
 
@@ -21,10 +20,8 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -82,8 +79,8 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public int getAnswersSize() {
+        return answers.countAnswers();
     }
 
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
@@ -97,8 +94,7 @@ public class Question extends AbstractEntity {
                                              .deletedBy(writer)
                                              .createDate(LocalDateTime.now())
                                              .build());
-        Answers.of(answers)
-               .delete(loginUser, deleteHistories);
+        answers.delete(loginUser, deleteHistories);
         return deleteHistories;
     }
 
