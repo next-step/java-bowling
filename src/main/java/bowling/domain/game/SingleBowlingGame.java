@@ -26,4 +26,12 @@ public class SingleBowlingGame {
     public boolean isCurrentFrameFinished() {
         return frames.isCurrentFrameFinished();
     }
+
+    public String getPlayerName() {
+        return player.getName();
+    }
+
+    public void moveToNextFrame() {
+        frames.moveToNextFrame();
+    }
 }

@@ -1,6 +1,7 @@
 package bowling.domain.game;
 
 import bowling.domain.frame.Frames;
+import bowling.domain.score.PitchScore;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,5 +23,20 @@ public class MultiBowlingGame {
 
     public int getPlayerCounts() {
         return singleBowlingGames.size();
+    }
+
+    public SingleBowlingGame getCurrentGame() {
+        return singleBowlingGames.stream()
+                .filter(t -> !t.isCurrentFrameFinished())
+                .findFirst()
+                .orElseGet(() -> singleBowlingGames.get(0));
+    }
+
+    public void bowl(PitchScore pitchScore) {
+        getCurrentGame().bowl(pitchScore);
+    }
+
+    public void moveToNextFrame() {
+        singleBowlingGames.forEach(SingleBowlingGame::moveToNextFrame);
     }
 }
