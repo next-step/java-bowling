@@ -24,7 +24,7 @@ public class Player {
     }
 
     public int getCurrentRound() {
-        return frames.getCurrentRound();
+        return frames.getCurrentFrame();
     }
 
     public boolean bowling(int pin) {

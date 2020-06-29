@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Frames {
-    private final int finalRound;
+    private final int finalFrame;
     private final LinkedList<Frame> frames;
 
-    public Frames(int finalRound) {
-        this.finalRound = finalRound;
+    public Frames(int finalFrame) {
+        this.finalFrame = finalFrame;
         this.frames = new LinkedList<>();
         this.frames.add(new Frame());
     }
@@ -18,7 +18,7 @@ public class Frames {
         return frames.stream().map(Frame::getResult).collect(Collectors.toList());
     }
 
-    public int getCurrentRound() {
+    public int getCurrentFrame() {
         return frames.size();
     }
 
@@ -31,6 +31,6 @@ public class Frames {
     }
 
     private boolean isNotFinalFrame() {
-        return frames.size() != finalRound;
+        return frames.size() != finalFrame;
     }
 }

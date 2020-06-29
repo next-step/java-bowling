@@ -19,7 +19,7 @@ public class ResultView {
 
     private static String getHeaderRow() {
         StringBuilder sb = new StringBuilder(String.format(BOARD_HEADER_FIRST_COLUMN, NAME));
-        for (int round = BowlingGame.FIRST_ROUND; round <= BowlingGame.FINAL_ROUND; round++) {
+        for (int round = BowlingGame.FIRST_FRAME; round <= BowlingGame.FINAL_FRAME; round++) {
             sb.append(String.format(ROUND_FORMAT, round));
         }
         return sb.toString();
@@ -32,7 +32,7 @@ public class ResultView {
                         sb.append(String.format(RESULT_FORMAT,
                                 r.stream().map(ResultType::getSymbol).collect(Collectors.joining("|"))))
                 );
-        for (int round = player.getCurrentRound(); round < BowlingGame.FINAL_ROUND; round++) {
+        for (int round = player.getCurrentRound(); round < BowlingGame.FINAL_FRAME; round++) {
             sb.append(String.format(RESULT_FORMAT, ""));
         }
         return sb.toString();

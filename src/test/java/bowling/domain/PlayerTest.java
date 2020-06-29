@@ -17,7 +17,7 @@ class PlayerTest {
     @ParameterizedTest
     @MethodSource("source_create_player_shouldSuccess")
     public void create_player_shouldSuccess(String playerName) {
-        Player player = new Player(playerName, BowlingGame.FINAL_ROUND);
+        Player player = new Player(playerName, BowlingGame.FINAL_FRAME);
         assertThat(player.getName()).isEqualTo(playerName);
     }
 
