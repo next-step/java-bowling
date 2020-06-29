@@ -86,13 +86,13 @@ public class QuestionTest {
     @DisplayName("질문 삭제 기능 테스트 - 답변 있는 경우[본인이 작성한 답변만 있을 때]")
     void deleteTest2() throws CannotDeleteException {
         provideQuestionExistAnswers();
-        int answersSize1 = question1.getAnswers().size();
+        int answersSize1 = question1.getAnswersSize();
         List<DeleteHistory> deleteHistories1 = question1.delete(UserTest.JAVAJIGI);
         assertThat(question1.isDeleted()).isTrue();
         assertThat(deleteHistories1).hasSize(answersSize1 + 1); //질문수 + 답변수
         assertThat(deleteHistories1).extracting("contentType", ContentType.class).contains(ContentType.QUESTION);
 
-        int answersSize2 = question2.getAnswers().size();
+        int answersSize2 = question2.getAnswersSize();
         List<DeleteHistory> deleteHistories2 = question2.delete(UserTest.SANJIGI);
         assertThat(question1.isDeleted()).isTrue();
         assertThat(deleteHistories2).hasSize(answersSize2 + 1); //질문수 + 변수
