@@ -28,7 +28,6 @@ public class OutputView {
         System.out.println(ViewMessage.SCORE_BOARD_HEADER);
         bowlingGameDtos.forEach(OutputView::printBowlingScore);
         System.out.println();
-
     }
 
     private static void printBowlingScore(BowlingGameDto bowlingGameDto) {
