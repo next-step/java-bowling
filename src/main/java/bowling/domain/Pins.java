@@ -12,10 +12,14 @@ public class Pins {
     }
 
     public Pins bowl(int downPin) {
-        this.downPin += downPin;
-        validateRange(this.downPin);
-        return this;
+        validateRange(this.downPin + downPin);
 
+        this.downPin += downPin;
+        return this;
+    }
+
+    public int getDownPin() {
+        return downPin;
     }
 
     private void validateRange(int downPin) {
@@ -25,8 +29,5 @@ public class Pins {
 
     }
 
-    public int getDownPin() {
-        return downPin;
-    }
 
 }
