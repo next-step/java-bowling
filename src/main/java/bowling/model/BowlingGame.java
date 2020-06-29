@@ -1,0 +1,37 @@
+package bowling.model;
+
+public class BowlingGame {
+
+  public final static int MAX_NUMBER_OF_FRAMES = 10;
+
+  private Frames frames = new Frames();
+  private int bonusCnt;
+
+  public void roll(int number) {
+    frames.roll(number);
+  }
+
+  public void initBonusCnt() {
+    bonusCnt = frames.getFrames().get(MAX_NUMBER_OF_FRAMES - 1).getIndexOfScoredFrames().size() - 1;
+  }
+
+  public void bonusRoll(int number) {
+    frames.bonusRoll(number);
+    bonusCnt--;
+  }
+
+  public boolean hasBonus() {
+    return 0 < bonusCnt;
+  }
+
+  public boolean requiredBonusFrame() {
+    return frames.isOver();
+  }
+
+  @Override
+  public String toString() {
+    return "BowlingGame{" +
+        "frames2=" + frames +
+        '}';
+  }
+}
