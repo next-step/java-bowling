@@ -156,5 +156,5 @@ Frame이 필요한 값은 FrameStatus의 enum 값 보다는 symbol이 필요해 
 * [x] [fix#14][Answer.java] Class가 의도대로 동작하는지 Test 추가 
 * [x] [fix#15][Answer.java] delete() 메소드가 deleted의 상태값을 true로 변경하는 역할을 하고 있어 setDeleted()를 public 으로 선언할 필요 없음
 * [ ] [fix#16][Question.java] DeleteHistories delete(User user) 테스트 추가
-* [ ] [fix#17][Question.java] delete() 메소드가 deleted의 상태 값을 변경하는 역할을 하고 있어 setDeleted()를 public 으로 선언할 필요 없음
+* [x] [fix#17][Question.java] delete() 메소드가 deleted의 상태 값을 변경하는 역할을 하고 있어 setDeleted()를 public 으로 선언할 필요 없음
 * [ ] [fix#18][Question.java] Answer들을 꺼내서 확인하기 보다는 Answer에게 User를 넘겨주고 Answer로 하여금 작성자가 일치하는지 판단하도록 수정

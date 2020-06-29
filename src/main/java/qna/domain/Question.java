@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -77,7 +78,7 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
+    private Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
     }
@@ -106,10 +107,15 @@ public class Question extends AbstractEntity {
     }
 
     private List<DeleteHistory> deleteAnswers(User user) {
-        if(getAnswers().containOthers(user)) {
+
+        if (answers.stream()
+                .anyMatch(answer -> !answer.isOwner(user))) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
-        return getAnswers().delete();
+
+        return answers.stream()
+                .map(Answer::delete)
+                .collect(Collectors.toList());
     }
 
     @Override
