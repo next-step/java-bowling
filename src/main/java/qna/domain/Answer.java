@@ -1,10 +1,14 @@
 package qna.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+
 import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
-
-import javax.persistence.*;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -31,7 +35,7 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if(writer == null) {
+        if (writer == null) {
             throw new UnAuthorizedException();
         }
 
@@ -73,7 +77,8 @@ public class Answer extends AbstractEntity {
         if (isDeleted()) {
             throw new CannotDeleteException("이미 삭제된 글입니다.");
         }
-        return setDeleted(true);
+        this.deleted = true;
+        return this;
     }
 
     @Override
