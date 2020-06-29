@@ -8,10 +8,6 @@ public class FramePins {
     private final Pins firstPins;
     private final Pins secondPins;
 
-    private FramePins(Pins firstPins) {
-        this(firstPins, Pins.of(0));
-    }
-
     public FramePins(Pins firstPins, Pins secondPins) {
         Objects.requireNonNull(firstPins, "첫 번째 투구가 유효하지 않습니다.");
         validateSum(firstPins, secondPins);
@@ -27,9 +23,5 @@ public class FramePins {
 
     public static FramePins of(Pins firstPins, Pins secondPins) {
         return new FramePins(firstPins, secondPins);
-    }
-
-    public static FramePins strike(Pins firstPins) {
-        return new FramePins(firstPins);
     }
 }
