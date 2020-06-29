@@ -35,8 +35,7 @@ public class FinalFrame implements Frame {
     @Override
     public boolean bowling(int score) {
         if (isBonusFrame()) {
-            processBonusShot = true;
-            bonusScore = score;
+            addBonusScore(score);
             return true;
         }
         addScore(score);
@@ -48,6 +47,11 @@ public class FinalFrame implements Frame {
             return true;
         }
         return false;
+    }
+
+    private void addBonusScore(int score) {
+        processBonusShot = true;
+        bonusScore = score;
     }
 
     private void addScore(int score) {
