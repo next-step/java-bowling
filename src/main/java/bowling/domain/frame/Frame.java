@@ -28,7 +28,7 @@ public class Frame {
                 == Score.MAX_SCORE;
     }
 
-    public boolean validateLimitScore() {
-        return true;
+    public int moveNextFrame() {
+        return 1;
     }
 }

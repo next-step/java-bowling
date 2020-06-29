@@ -6,8 +6,11 @@ public class FinalFrame extends Frame implements FrameFactory {
     private static final int FINAL_FRAME_MINIMUN_COUNT = 1;
 
     @Override
-    public boolean validateLimitScore() {
-        return scores.size() == LIMIT_COUNT || validateFinalFrame() ;
+    public int moveNextFrame() {
+        if (scores.size() == LIMIT_COUNT || validateFinalFrame()) {
+            return 1;
+        }
+        return 0;
     }
 
     private boolean validateFinalFrame() {

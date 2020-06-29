@@ -18,7 +18,7 @@ public class Bowling {
         Frame frame = frames.addFrameScore(frameCount, inputScore);
         bowlingResults.addScoreUI(frameCount, ScoreFactory.of(inputScore, frame));
 
-        return (frame.validateLimitScore()) ? 1 : 0;
+        return frame.moveNextFrame();
     }
 
     public BowlingResult getBowLingResult(int resultCount) {
