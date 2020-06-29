@@ -2,7 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Result;
 import bowling.domain.score.Score;
-import bowling.domain.score.Scores;
+import bowling.domain.score.FrameScore;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,11 +12,11 @@ public class FinalFrame implements Frame {
     private static final List<Result> BONUS_SCORE_RESULTS = Arrays.asList(Result.STRIKE, Result.SPARE);
 
     private final int index;
-    private final Scores scores;
+    private final FrameScore frameScore;
 
     private FinalFrame(int index) {
         this.index = index;
-        this.scores = Scores.create();
+        this.frameScore = FrameScore.create();
     }
 
     public static Frame create(int index) {
@@ -30,11 +30,11 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean canAddMoreScore() {
-        if (!scores.getFirst().isPresent() || !scores.getSecond().isPresent()) {
+        if (!frameScore.getFirst().isPresent() || !frameScore.getSecond().isPresent()) {
             return true;
         }
 
-        if (!scores.getBonus().isPresent() && BONUS_SCORE_RESULTS.contains(scores.checkResult())) {
+        if (!frameScore.getBonus().isPresent() && BONUS_SCORE_RESULTS.contains(frameScore.checkResult())) {
             return true;
         }
 
@@ -43,12 +43,12 @@ public class FinalFrame implements Frame {
 
     @Override
     public void addScore(Score score) {
-        scores.add(score);
+        frameScore.add(score);
     }
 
     @Override
-    public Scores getScores() {
-        return scores;
+    public FrameScore getFrameScore() {
+        return frameScore;
     }
 
     @Override

@@ -13,17 +13,17 @@ public class ResultTest {
 
     @DisplayName("투구 점수를 받아 결과를 확인한다")
     @ParameterizedTest
-    @MethodSource("findByScoresArguments")
-    void findByScores(int firstScore, int secondScore, Result expected) {
+    @MethodSource("findByScoreFrameArguments")
+    void findByScoreFrame(int firstScore, int secondScore, Result expected) {
         Score first = Score.of(firstScore);
         Score second = Score.of(secondScore);
 
-        Result result = Result.findByScores(first, second);
+        Result result = Result.findByFrameScore(first, second);
 
         assertThat(result).isEqualTo(expected);
     }
 
-    public static Stream<Arguments> findByScoresArguments() {
+    public static Stream<Arguments> findByScoreFrameArguments() {
         return Stream.of(
                 Arguments.of(10, 0, Result.STRIKE),
                 Arguments.of(0, 10, Result.SPARE),

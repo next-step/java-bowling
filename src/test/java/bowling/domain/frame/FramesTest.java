@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Score;
-import bowling.domain.score.Scores;
+import bowling.domain.score.FrameScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -52,11 +52,11 @@ public class FramesTest {
         // then
         List<Frame> frameList = frames.getContent();
         Frame frame = frameList.get(0);
-        Scores scores = frame.getScores();
+        FrameScore frameScore = frame.getFrameScore();
 
         assertAll(
-                () -> assertThat(scores.getFirst().get()).isEqualTo(score1),
-                () -> assertThat(scores.getSecond().get()).isEqualTo(score2));
+                () -> assertThat(frameScore.getFirst().get()).isEqualTo(score1),
+                () -> assertThat(frameScore.getSecond().get()).isEqualTo(score2));
     }
 
     @DisplayName("더 이상 점수를 기록할 수 없으면 IllegalStateException")

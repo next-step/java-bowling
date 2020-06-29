@@ -1,16 +1,16 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Score;
-import bowling.domain.score.Scores;
+import bowling.domain.score.FrameScore;
 
 public class NormalFrame implements Frame {
 
     private final int index;
-    private final Scores scores;
+    private final FrameScore frameScore;
 
     private NormalFrame(int index) {
         this.index = index;
-        this.scores = Scores.create();
+        this.frameScore = FrameScore.create();
     }
 
     public static NormalFrame createFirst() {
@@ -25,17 +25,17 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean canAddMoreScore() {
-        return !scores.getFirst().isPresent() || !scores.getSecond().isPresent();
+        return !frameScore.getFirst().isPresent() || !frameScore.getSecond().isPresent();
     }
 
     @Override
     public void addScore(Score score) {
-        scores.add(score);
+        frameScore.add(score);
     }
 
     @Override
-    public Scores getScores() {
-        return scores;
+    public FrameScore getFrameScore() {
+        return frameScore;
     }
 
     @Override

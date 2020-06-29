@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ScoresTest {
+public class FrameScoreTest {
 
     private static final Score ZERO = Score.of(0);
     private static final Score FIVE = Score.of(5);
@@ -20,10 +20,10 @@ public class ScoresTest {
     @DisplayName("첫번째와 두번째 투구의 점수의 합이 10을 넘으면 IllegalArgumentException")
     @Test
     void inputSecondScore_over10() {
-        Scores scores = Scores.create();
-        scores.add(FIVE);
+        FrameScore frameScore = FrameScore.create();
+        frameScore.add(FIVE);
 
-        assertThatThrownBy(() -> scores.add(TEN))
+        assertThatThrownBy(() -> frameScore.add(TEN))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("점수의 합");
     }
@@ -31,10 +31,10 @@ public class ScoresTest {
     @DisplayName("두번째 투구의 점수를 입력하지 않은채 결과를 확인하면 IllegalStateException")
     @Test
     void checkResult_withoutSecondScore() {
-        Scores scores = Scores.create();
-        scores.add(FIVE);
+        FrameScore frameScore = FrameScore.create();
+        frameScore.add(FIVE);
 
-        assertThatThrownBy(scores::checkResult)
+        assertThatThrownBy(frameScore::checkResult)
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("두번째 투구의 점수");
     }
@@ -42,11 +42,11 @@ public class ScoresTest {
     @DisplayName("첫번째, 두번째 투구의 점수를 모두 입력하면 결과를 확인할 수 있다")
     @Test
     void checkResult_inputSecondScore() {
-        Scores scores = Scores.create();
-        scores.add(FIVE);
-        scores.add(ZERO);
+        FrameScore frameScore = FrameScore.create();
+        frameScore.add(FIVE);
+        frameScore.add(ZERO);
 
-        Result result = scores.checkResult();
+        Result result = frameScore.checkResult();
 
         assertThat(result).isNotNull();
     }
@@ -54,10 +54,10 @@ public class ScoresTest {
     @DisplayName("첫번째 투구의 점수가 10이면 두번째 투구의 점수를 입력하지 않아도 결과를 확인할 수 있다")
     @Test
     void first10_inputSecondScore() {
-        Scores scores = Scores.create();
-        scores.add(TEN);
+        FrameScore frameScore = FrameScore.create();
+        frameScore.add(TEN);
 
-        Result result = scores.checkResult();
+        Result result = frameScore.checkResult();
 
         assertThat(result).isNotNull();
     }
@@ -70,24 +70,24 @@ public class ScoresTest {
     }
 
     public static Stream<Arguments> checkResultArguments() {
-        Scores scores1 = Scores.create();
-        scores1.add(TEN);
-        Result result1 = scores1.checkResult();
+        FrameScore frameScore1 = FrameScore.create();
+        frameScore1.add(TEN);
+        Result result1 = frameScore1.checkResult();
 
-        Scores scores2 = Scores.create();
-        scores2.add(FIVE);
-        scores2.add(FIVE);
-        Result result2 = scores2.checkResult();
+        FrameScore frameScore2 = FrameScore.create();
+        frameScore2.add(FIVE);
+        frameScore2.add(FIVE);
+        Result result2 = frameScore2.checkResult();
 
-        Scores scores3 = Scores.create();
-        scores3.add(FIVE);
-        scores3.add(ZERO);
-        Result result3 = scores3.checkResult();
+        FrameScore frameScore3 = FrameScore.create();
+        frameScore3.add(FIVE);
+        frameScore3.add(ZERO);
+        Result result3 = frameScore3.checkResult();
 
-        Scores scores4 = Scores.create();
-        scores4.add(ZERO);
-        scores4.add(ZERO);
-        Result result4 = scores4.checkResult();
+        FrameScore frameScore4 = FrameScore.create();
+        frameScore4.add(ZERO);
+        frameScore4.add(ZERO);
+        Result result4 = frameScore4.checkResult();
 
         return Stream.of(
                 Arguments.of(result1, Result.STRIKE),

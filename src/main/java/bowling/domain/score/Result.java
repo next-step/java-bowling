@@ -33,7 +33,7 @@ public enum Result {
         }
     };
 
-    public static Result findByScores(Score first, Score second) {
+    public static Result findByFrameScore(Score first, Score second) {
         return Arrays.stream(values())
                 .filter(result -> result.isMatch(first, second))
                 .findFirst()
