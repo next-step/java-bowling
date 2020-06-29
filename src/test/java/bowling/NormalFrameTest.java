@@ -8,25 +8,25 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class FrameTest {
+class NormalFrameTest {
 
   @ParameterizedTest
   @MethodSource("provideScore")
   void roll(int firstNumberOfPinsKnockedDown, int secondNumberOfPinsKnockedDown,
       int thirdNumberOfPinsKnockedDown) throws Exception {
-    Frame frame = new Frame(0);
+    NormalFrame normalFrame = new NormalFrame(0);
 
-    frame.roll(firstNumberOfPinsKnockedDown);
+    normalFrame.roll(firstNumberOfPinsKnockedDown);
 
-    assertThat(frame.getRemainingPinsNum()).isEqualTo(10 - firstNumberOfPinsKnockedDown);
+    assertThat(normalFrame.getRemainingPinsNum()).isEqualTo(10 - firstNumberOfPinsKnockedDown);
 
-    frame.roll(secondNumberOfPinsKnockedDown);
+    normalFrame.roll(secondNumberOfPinsKnockedDown);
 
-    assertThat(frame.getRemainingPinsNum())
+    assertThat(normalFrame.getRemainingPinsNum())
         .isEqualTo(10 - firstNumberOfPinsKnockedDown - secondNumberOfPinsKnockedDown);
 
     assertThatExceptionOfType(FrameOverException.class).isThrownBy(() -> {
-      frame.roll(thirdNumberOfPinsKnockedDown);
+      normalFrame.roll(thirdNumberOfPinsKnockedDown);
     });
   }
 
@@ -49,14 +49,14 @@ class FrameTest {
   @MethodSource("provideStrikeScore")
   void roll_WhenStrike(int firstNumberOfPinsKnockedDown, int secondNumberOfPinsKnockedDown)
       throws Exception {
-    Frame frame = new Frame(0);
+    NormalFrame normalFrame = new NormalFrame(0);
 
-    frame.roll(firstNumberOfPinsKnockedDown);
+    normalFrame.roll(firstNumberOfPinsKnockedDown);
 
-    assertThat(frame.getRemainingPinsNum()).isEqualTo(0);
+    assertThat(normalFrame.getRemainingPinsNum()).isEqualTo(0);
 
     assertThatExceptionOfType(FrameOverException.class).isThrownBy(() -> {
-      frame.roll(secondNumberOfPinsKnockedDown);
+      normalFrame.roll(secondNumberOfPinsKnockedDown);
     });
   }
 

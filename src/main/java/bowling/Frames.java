@@ -14,8 +14,7 @@ public class Frames {
   private final Deque<Frame> frames = new ArrayDeque<>();
 
   public Frames() {
-
-    frames.add(new Frame(FIRST_INDEX));
+    frames.add(new NormalFrame(FIRST_INDEX));
   }
 
   public List<Frame> getFrames() {
@@ -40,7 +39,7 @@ public class Frames {
   }
 
   private void addAndRoll(int knockDownNum) {
-    frames.addLast(new Frame(frames.size()));
+    frames.addLast(new NormalFrame(frames.size()));
 
     try {
       frames.getLast().roll(knockDownNum);
@@ -60,5 +59,17 @@ public class Frames {
     return "Frames{" +
         "frames=" + frames +
         '}';
+  }
+
+  public void bonusRoll(int knockDownNum) {
+    Frame bonusFrame = new BonusFrame();
+
+    try {
+      bonusFrame.roll(knockDownNum);
+    } catch (FrameOverException e) {
+      new IllegalStateException();
+    }
+
+    frames.addLast(bonusFrame);
   }
 }

@@ -14,12 +14,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class FramesTest {
 
-  public static Frame frame0_null;
-  public static Frame frame0_0;
-  public static Frame frame0_1;
-  public static Frame frame0_10;
-  public static Frame frame5_5;
-  public static Frame frameStrike;
+  public static NormalFrame normalFrame0_null;
+  public static NormalFrame normalFrame0_0;
+  public static NormalFrame normalFrame0_1;
+  public static NormalFrame normalFrame0_10;
+  public static NormalFrame normalFrame5_5;
+  public static NormalFrame normalFrameStrike;
 
   static {
     try {
@@ -35,32 +35,32 @@ class FramesTest {
   }
 
   private static void initFramesTest() throws FrameOverException {
-    frame0_null = new Frame(0);
-    frame0_null.roll(0);
+    normalFrame0_null = new NormalFrame(0);
+    normalFrame0_null.roll(0);
 
-    frame0_0 = new Frame(0);
-    frame0_0.roll(0);
-    frame0_0.roll(0);
+    normalFrame0_0 = new NormalFrame(0);
+    normalFrame0_0.roll(0);
+    normalFrame0_0.roll(0);
 
-    frame0_1 = new Frame(1);
-    frame0_1.roll(0);
-    frame0_1.roll(1);
+    normalFrame0_1 = new NormalFrame(1);
+    normalFrame0_1.roll(0);
+    normalFrame0_1.roll(1);
 
-    frame0_10 = new Frame(2);
-    frame0_10.roll(0);
-    frame0_10.roll(10);
+    normalFrame0_10 = new NormalFrame(2);
+    normalFrame0_10.roll(0);
+    normalFrame0_10.roll(10);
 
-    frame5_5 = new Frame(3);
-    frame5_5.roll(5);
-    frame5_5.roll(5);
+    normalFrame5_5 = new NormalFrame(3);
+    normalFrame5_5.roll(5);
+    normalFrame5_5.roll(5);
 
-    frameStrike = new Frame(4);
-    frameStrike.roll(10);
+    normalFrameStrike = new NormalFrame(4);
+    normalFrameStrike.roll(10);
   }
 
   @ParameterizedTest
   @MethodSource("provideKonckDownNumWithExpected")
-  void roll(List<Integer> knockDownNums, List<Frame> expected) {
+  void roll(List<Integer> knockDownNums, List<NormalFrame> expected) {
     Frames frames = new Frames();
 
     knockDownNums.forEach(knockDownNum -> {
@@ -75,23 +75,23 @@ class FramesTest {
         arguments(
             Arrays.asList(0),
             Arrays.asList(
-                frame0_null
+                normalFrame0_null
             )
         ),
         arguments(
             Arrays.asList(0, 0),
             Arrays.asList(
-                frame0_0
+                normalFrame0_0
             )
         ),
         arguments(
             Arrays.asList(0, 0, 0, 1, 0, 10, 5, 5, 10),
             Arrays.asList(
-                frame0_0,
-                frame0_1,
-                frame0_10,
-                frame5_5,
-                frameStrike
+                normalFrame0_0,
+                normalFrame0_1,
+                normalFrame0_10,
+                normalFrame5_5,
+                normalFrameStrike
             )
         )
     );
