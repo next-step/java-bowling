@@ -102,7 +102,7 @@ public class Question extends AbstractEntity {
         if (isDeleted()) {
             throw new CannotDeleteException("이미 삭제된 글입니다.");
         }
-        if (! isOwner(loginUser)) {
+        if (!isOwner(loginUser)) {
             throw new CannotDeleteException("질문 작성자가 아니라서 삭제할 수 없습니다.");
         }
         setDeleted(true);
