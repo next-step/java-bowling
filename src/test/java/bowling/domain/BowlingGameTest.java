@@ -3,9 +3,6 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -22,10 +19,16 @@ class BowlingGameTest {
     }
 
     @Test
-    @DisplayName("게임 실행")
+    @DisplayName("게임 실행 - 최종적으로 10개 프레임을 갖는다")
     void run() {
         BowlingGame bowlingGame = BowlingGame.start(Player.of("PEJ"));
         assertThatCode(() -> bowlingGame.run(10)).doesNotThrowAnyException();
+
+        while (!bowlingGame.isLastFrame()) {
+            bowlingGame.run(0);
+        }
+        assertThat(bowlingGame.getFrames().size()).isEqualTo(10);
+
     }
 
 }
