@@ -1,5 +1,6 @@
 package bowling.model;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.Arrays;
@@ -14,7 +15,7 @@ class BowlingGameTest {
 
   @Test
   void roll() {
-    BowlingGame game = new BowlingGame();
+    BowlingGame game = BowlingGame.createWith("abc");
     game.roll(10);
     while (!game.requiredBonusFrame()) {
       game.roll(1);
@@ -30,7 +31,7 @@ class BowlingGameTest {
   @ParameterizedTest
   @MethodSource("provideKnockNumber_SpareAtLastFrame")
   void roll_SpareAtLastFrame(List<Integer> kockNumbers, List<Integer> bonusNumbers) {
-    BowlingGame game = new BowlingGame();
+    BowlingGame game = BowlingGame.createWith("abc");
 
     for (int i = 0; !game.requiredBonusFrame(); i++) {
       game.roll(kockNumbers.get(i));
@@ -49,7 +50,7 @@ class BowlingGameTest {
     return Stream.of(
         arguments(
             Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 9, 1),
-            Arrays.asList(10,10)
+            Arrays.asList(10, 10)
         )
     );
   }
@@ -57,7 +58,7 @@ class BowlingGameTest {
   @ParameterizedTest
   @MethodSource("provideKnockNumber_StrikeAtLastFrame")
   void roll_StikeAtLastFrame(List<Integer> kockNumbers, List<Integer> bonusNumbers) {
-    BowlingGame game = new BowlingGame();
+    BowlingGame game = BowlingGame.createWith("abc");
 
     for (int i = 0; !game.requiredBonusFrame(); i++) {
       game.roll(kockNumbers.get(i));
@@ -76,8 +77,13 @@ class BowlingGameTest {
     return Stream.of(
         arguments(
             Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10),
-            Arrays.asList(10,10,10)
+            Arrays.asList(10, 10, 10)
         )
     );
+  }
+
+  @Test
+  void getPlayerName() {
+    assertThat(BowlingGame.createWith("abc").getPlayerName()).isEqualTo("abc");
   }
 }

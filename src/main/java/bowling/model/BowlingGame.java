@@ -6,6 +6,19 @@ public class BowlingGame {
 
   private Frames frames = new Frames();
   private int bonusCnt;
+  private PlayerName playerName;
+
+  private BowlingGame(PlayerName playerName) {
+    this.playerName = playerName;
+  }
+
+  public static BowlingGame createWith(String playerName) {
+    return new BowlingGame(new PlayerName(playerName));
+  }
+
+  public String getPlayerName() {
+    return playerName.getValue();
+  }
 
   public void roll(int number) {
     frames.roll(number);
