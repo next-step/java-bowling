@@ -9,16 +9,14 @@ public class NormalFrame extends Frame {
     private Frame nextFrame;
 
     public NormalFrame() {
-        this.pin = new Pin(Pin.MIN_PIN);
         this.states = new States();
         this.nextFrame = null;
     }
 
     @Override
     public void bowl(Pin fallenPin) {
-        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getSize());
+        State state = State.bowl(this.states.getBeforePin().getFallenPin(), fallenPin.getFallenPin(), this.states.getSize());
         setStates(state, fallenPin);
-        setPin(fallenPin);
     }
 
     @Override
@@ -85,23 +83,15 @@ public class NormalFrame extends Frame {
             return Score.ofSpare();
         }
 
-        return Score.ofMiss(states.getBeforeState().getFallenPins() + pin.getFallenPin());
+        return Score.ofMiss(states.getBeforeState().getFallenPins() + states.getLastPin().getFallenPin());
     }
 
     private void setStates(State state, Pin fallenPin) {
         this.states.add(state, fallenPin);
     }
 
-    private void setPin(Pin fallenPin) {
-        this.pin = fallenPin;
-    }
-
     public void setNextFrame(Frame nextFrame) {
         this.nextFrame = nextFrame;
-    }
-
-    public Pin getPin() {
-        return pin;
     }
 
     @Override
@@ -114,12 +104,11 @@ public class NormalFrame extends Frame {
         if (this == o) return true;
         if (!(o instanceof NormalFrame)) return false;
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(pin, that.pin) &&
-                Objects.equals(states, that.states);
+        return Objects.equals(nextFrame, that.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pin, states);
+        return Objects.hash(nextFrame);
     }
 }

@@ -27,7 +27,7 @@ class FramesTest {
     void getCurrentFrameNumber() {
         frames.add(new NormalFrame());
 
-        assertThat(frames.getCurrentFrameNumber()).isEqualTo(2);
+        assertThat(frames.getCurrentFrameNumber()).isEqualTo(1);
     }
 
     @Test

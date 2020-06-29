@@ -35,6 +35,27 @@ public class States {
                 .sum();
     }
 
+    public Pin getLastPin() {
+        int size = this.pins.getPins().size();
+        if (size == 0) {
+            return new Pin(Pin.MIN_PIN);
+        }
+        return this.pins.getPins().get(size - 1);
+    }
+
+    public Pin getBeforePin() {
+        int size = this.pins.getPins().size();
+        if (size == 0) {
+            return new Pin(Pin.MIN_PIN);
+        }
+
+        return getLastPreviousPin(size);
+    }
+
+    private Pin getLastPreviousPin(int size) {
+        return this.pins.getPins().get(size - 1);
+    }
+
     public State getBeforeState() {
         if (this.states.size() == 0 || this.states.size() == 1) {
             return State.READY;
@@ -43,15 +64,15 @@ public class States {
         return getLastPreviousState();
     }
 
+    private State getLastPreviousState() {
+        return this.states.get(this.states.size() - 2);
+    }
+
     public Score calculateScore(Score score) {
         for (Pin pin : getPins()) {
             score = score.bowl(pin.getFallenPin());
         }
         return score;
-    }
-
-    private State getLastPreviousState() {
-        return this.states.get(this.states.size() - 2);
     }
 
     public int getSize() {

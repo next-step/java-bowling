@@ -15,7 +15,7 @@ public class NormalFrameTest {
         normalFrame.bowl(new Pin(10));
 
         assertThat(normalFrame.getStates().getStates().get(0)).isEqualTo(State.STRIKE);
-        assertThat(normalFrame.getPin()).isEqualTo(new Pin(10));
+        assertThat(normalFrame.getStates().getLastPin()).isEqualTo(new Pin(10));
     }
 
 

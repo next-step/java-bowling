@@ -3,7 +3,6 @@ package bowling.domain;
 public abstract class Frame {
     public static final int WAITING_CALCULATION = -1;
 
-    protected Pin pin;
     protected States states;
 
     abstract void bowl(Pin pin);
