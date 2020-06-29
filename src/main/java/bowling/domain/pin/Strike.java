@@ -15,4 +15,9 @@ public class Strike extends FramePins {
             throw new IllegalArgumentException("스트라이크의 투구는 반드시 " + MAX_PINS_PER_FRAME + " 개 입니다.");
         }
     }
+
+    @Override
+    public String toString() {
+        return super.firstPins.toString();
+    }
 }

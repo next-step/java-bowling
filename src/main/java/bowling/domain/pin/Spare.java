@@ -15,4 +15,9 @@ public class Spare extends FramePins {
             throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public String toString() {
+        return super.firstPins.toString() + "|/";
+    }
 }
