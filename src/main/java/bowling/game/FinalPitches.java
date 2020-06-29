@@ -53,4 +53,21 @@ public class FinalPitches implements Pitches {
     private boolean isBonusPitch() {
         return pitches.getFirst().isStrikePitch() || pitches.getLast().isSparePitch();
     }
+
+    @Override
+    public boolean isStrikePitches() {
+        return pitches.getFirst().isStrikePitch();
+    }
+
+    @Override
+    public boolean isSparePitches() {
+        return pitches.getLast().isSparePitch();
+    }
+
+    @Override
+    public int getBasicScore() {
+        return pitches.stream()
+                .mapToInt(Pitch::getPinCount)
+                .sum();
+    }
 }

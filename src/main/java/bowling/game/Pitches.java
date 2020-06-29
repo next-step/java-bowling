@@ -6,4 +6,10 @@ public interface Pitches {
     boolean hasChance();
 
     String getPitchesStates();
+
+    boolean isStrikePitches();
+
+    boolean isSparePitches();
+
+    int getBasicScore();
 }

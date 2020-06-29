@@ -6,7 +6,6 @@ import static java.util.stream.Collectors.joining;
 
 public class NormalPitches implements Pitches {
     private static final int PITCH_COUNT_MAX = 2;
-    private static final int BONUS_COUNT_MAX = 3;
 
     private final LinkedList<Pitch> pitches;
 
@@ -56,5 +55,26 @@ public class NormalPitches implements Pitches {
         return pitches.stream()
                 .map(Pitch::stateToString)
                 .collect(joining("|"));
+    }
+
+    @Override
+    public boolean isStrikePitches() {
+        return pitches.getFirst().isStrikePitch();
+    }
+
+    @Override
+    public boolean isSparePitches() {
+        return pitches.getLast().isSparePitch();
+    }
+
+    @Override
+    public int getBasicScore() {
+        if (this.isStrikePitches() || this.isSparePitches()) {
+            return 10;
+        }
+
+        return pitches.stream()
+                .mapToInt(Pitch::getPinCount)
+                .sum();
     }
 }
