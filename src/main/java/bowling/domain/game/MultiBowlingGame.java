@@ -37,6 +37,15 @@ public class MultiBowlingGame {
     }
 
     public void moveToNextFrame() {
-        singleBowlingGames.forEach(SingleBowlingGame::moveToNextFrame);
+        boolean isAllPlayerDone = singleBowlingGames.stream()
+                .allMatch(SingleBowlingGame::isCurrentFrameFinished);
+        if (isAllPlayerDone) {
+            singleBowlingGames.forEach(SingleBowlingGame::moveToNextFrame);
+        }
+    }
+
+    public boolean hasNextTurn() {
+        return singleBowlingGames.stream()
+                .anyMatch(SingleBowlingGame::hasNextTurn);
     }
 }

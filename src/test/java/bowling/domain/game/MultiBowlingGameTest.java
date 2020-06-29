@@ -57,4 +57,46 @@ class MultiBowlingGameTest {
         assertThat(singleBowlingGame.getPlayerName()).isEqualTo("1번!");
     }
 
+
+    @DisplayName("1번, 3번 플레이어가 스트라이크를 치고 2번은 프레임을 마무리 못한 경우 현재 플레이어는 2번")
+    @Test
+    public void currentPlayer_2번_미완성() {
+        MultiBowlingGame multiBowlingGame = MultiBowlingGame.of(playerNames);
+        multiBowlingGame.bowl(PitchScore.valueOf(10));
+        multiBowlingGame.bowl(PitchScore.valueOf(3));
+
+        SingleBowlingGame singleBowlingGame = multiBowlingGame.getCurrentGame();
+
+        assertThat(singleBowlingGame.getPlayerName()).isEqualTo("2번!");
+    }
+
+    @DisplayName("모든 플레이어가 n번 프레임의 투구를 완료하지 못하면 n+1 프레임으로 넘어가지 못하기 때문에 1번 플레이어의 기회로 넘어가지 못함")
+    @Test
+    public void moveToNextFrame_불가능() {
+        MultiBowlingGame multiBowlingGame = MultiBowlingGame.of(playerNames);
+        multiBowlingGame.bowl(PitchScore.valueOf(10));
+        multiBowlingGame.bowl(PitchScore.valueOf(10));
+        multiBowlingGame.bowl(PitchScore.valueOf(3));
+
+        multiBowlingGame.moveToNextFrame();
+
+        SingleBowlingGame singleBowlingGame = multiBowlingGame.getCurrentGame();
+
+        assertThat(singleBowlingGame.getPlayerName()).isEqualTo("3번!");
+    }
+
+    @DisplayName("모든 플레이어가 10프레임까지 완료하면 nextTurn이 존재하지 앟는다")
+    @Test
+    public void hasNextTurn_False() {
+        MultiBowlingGame multiBowlingGame = MultiBowlingGame.of(playerNames);
+        for (int i = 0; i < 12; i++) {
+            multiBowlingGame.bowl(PitchScore.valueOf(10));
+            multiBowlingGame.bowl(PitchScore.valueOf(10));
+            multiBowlingGame.bowl(PitchScore.valueOf(10));
+            multiBowlingGame.moveToNextFrame();
+        }
+
+        assertThat(multiBowlingGame.hasNextTurn()).isFalse();
+    }
+
 }

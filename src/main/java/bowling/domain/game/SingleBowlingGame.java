@@ -34,4 +34,8 @@ public class SingleBowlingGame {
     public void moveToNextFrame() {
         frames.moveToNextFrame();
     }
+
+    public boolean hasNextTurn() {
+        return frames.hasNextTurn();
+    }
 }
