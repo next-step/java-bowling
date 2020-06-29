@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.ScoreSignaturesDto;
 import bowling.domain.exception.BowlingBuildingException;
 import bowling.domain.score.FrameScore;
 import bowling.domain.score.PitchScore;
@@ -13,7 +14,7 @@ class FinalFrameTest {
 
     @DisplayName("1번 투구했을 때 추가 투구 가능")
     @Test
-    public void isMovableToNextFrame_1번투구() {
+    public void isFinished_1번투구_False() {
         Frame finalFrame = FinalFrame.ofFinal();
         finalFrame.bowl(PitchScore.valueOf(10));
 
@@ -22,7 +23,7 @@ class FinalFrameTest {
 
     @DisplayName("2번 투구했을 때 스트라이크나 스페어가 없으면 경기 종료")
     @Test
-    public void isMovableToNextFrame_미스() {
+    public void isFinished_미스_True() {
         Frame finalFrame = FinalFrame.ofFinal();
         finalFrame.bowl(PitchScore.valueOf(0));
         finalFrame.bowl(PitchScore.valueOf(3));
@@ -41,7 +42,7 @@ class FinalFrameTest {
 
     @DisplayName("2번 투구했을 때 스트라이크가 1번 존재하면 추가 투구 가능")
     @Test
-    public void isMovableToNextFrame_원스트라이크() {
+    public void isFinished_원스트라이크_False() {
         Frame finalFrame = FinalFrame.ofFinal();
         finalFrame.bowl(PitchScore.valueOf(10));
         finalFrame.bowl(PitchScore.valueOf(0));
@@ -51,7 +52,7 @@ class FinalFrameTest {
 
     @DisplayName("2연속 스트라이크일 때 추가 투구 가능")
     @Test
-    public void isMovableToNextFrame_투스트라이크() {
+    public void isFinished_투스트라이크_False() {
         Frame finalFrame = FinalFrame.ofFinal();
         finalFrame.bowl(PitchScore.valueOf(10));
         finalFrame.bowl(PitchScore.valueOf(10));
@@ -61,7 +62,7 @@ class FinalFrameTest {
 
     @DisplayName("2번 투구 시 스페어이면 추가 투구 가능")
     @Test
-    public void isMovableToNextFrame_스페어() {
+    public void isFinished_스페어_False() {
         Frame finalFrame = FinalFrame.ofFinal();
         finalFrame.bowl(PitchScore.valueOf(3));
         finalFrame.bowl(PitchScore.valueOf(7));
@@ -71,7 +72,7 @@ class FinalFrameTest {
 
     @DisplayName("3번 투구하면 경기 종료")
     @Test
-    public void isMovableToNextFrame_3번투구() {
+    public void isFinished_3번투구_True() {
         Frame finalFrame = FinalFrame.ofFinal();
         finalFrame.bowl(PitchScore.valueOf(10));
         finalFrame.bowl(PitchScore.valueOf(10));
@@ -89,10 +90,13 @@ class FinalFrameTest {
         finalFrame.bowl(PitchScore.valueOf(10));
 
         FrameScore frameScore = finalFrame.calculateFrameScore().get();
+        ScoreSignaturesDto scoreSignaturesDto = finalFrame.getScoreSignaturesDto();
+
         assertThat(frameScore.getFrameScore()).isEqualTo(20);
+        assertThat(scoreSignaturesDto.getScoreSignatures()).containsExactly("3", "/", "X");
     }
 
-    @DisplayName("FinalFrame도 동일하게 계산을 delegate 작업을 수행")
+    @DisplayName("FinalFrame도 동일하게 delegate 작업을 수행함")
     @Test
     public void delegate_마지막_프레임() {
         Frame normalFrame = NormalFrame.initiate();
