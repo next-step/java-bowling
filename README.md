@@ -153,8 +153,8 @@ Frame이 필요한 값은 FrameStatus의 enum 값 보다는 symbol이 필요해 
 게임과 밀접한 관련이 있는 값을 단순히 상수로 선언해 두게 된다면, 게임과 관련 없는 곳에서 해당 상수를 의미와는 다르게 사용할 우려가 있음  
 만약 상수를 의도와는 다르게 다른 클래스에서 사용하게 된다면 상수를 수정할 때, 상수를 사용하고 있는 게임과 관련 없는 객체까지 함께 수정이 발생하게 되어 의도치 않은 오류를 발생할 수 있음  
 이 숫자들을 가장 잘 알고 있어야 하는 객체에 상수를 선언하도록 수정할 것
-* [ ] [fix#14][Answer.java] Class가 의도대로 동작하는지 Test 추가 
-* [ ] [fix#15][Answer.java] delete() 메소드가 deleted의 상태값을 true로 변경하는 역할을 하고 있어 setDeleted()를 public 으로 선언할 필요 없음
+* [x] [fix#14][Answer.java] Class가 의도대로 동작하는지 Test 추가 
+* [x] [fix#15][Answer.java] delete() 메소드가 deleted의 상태값을 true로 변경하는 역할을 하고 있어 setDeleted()를 public 으로 선언할 필요 없음
 * [ ] [fix#16][Question.java] DeleteHistories delete(User user) 테스트 추가
 * [ ] [fix#17][Question.java] delete() 메소드가 deleted의 상태 값을 변경하는 역할을 하고 있어 setDeleted()를 public 으로 선언할 필요 없음
 * [ ] [fix#18][Question.java] Answer들을 꺼내서 확인하기 보다는 Answer에게 User를 넘겨주고 Answer로 하여금 작성자가 일치하는지 판단하도록 수정
