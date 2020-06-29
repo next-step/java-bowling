@@ -15,8 +15,8 @@ public class MainApplication {
     }
 
     public static void main(String[] args) {
-        new MainApplication().run(new NormalInputBowlingStrategy());
-        //new MainApplication().run(new RandomBowlingStrategy());
+        //new MainApplication().run(new NormalInputBowlingStrategy());
+        new MainApplication().run(new RandomBowlingStrategy());
     }
 
 }

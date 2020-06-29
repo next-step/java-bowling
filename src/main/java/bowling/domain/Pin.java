@@ -21,7 +21,8 @@ public class Pin {
 
 
     public boolean isAllClear() {
-        return maxPins - falledPins == 0 ? true : false;
+        return maxPins - falledPins == 0;
+
     }
 
     public int leftPins() {
@@ -31,6 +32,7 @@ public class Pin {
     public boolean isGutter() {
         return maxPins - falledPins == maxPins;
     }
+
     private void validPins(int pins) {
         if (pins < MIN_PINS || pins > MAX_PINS) {
             throw new IllegalArgumentException();

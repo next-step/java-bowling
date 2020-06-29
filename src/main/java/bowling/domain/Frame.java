@@ -2,12 +2,10 @@ package bowling.domain;
 
 public abstract class Frame {
 
-    protected int frameIndex;
+    protected static final int BOWLING_MAX_PINS = 10;
     protected Pin firstPin;
     protected Pin secondPin;
     protected State state = State.MISS;
-    protected String result;
-    protected Score score;
 
     public static Frame of(Pin firstPin, Pin secondPin) {
         return new NormalFrame(firstPin, secondPin);
@@ -19,8 +17,12 @@ public abstract class Frame {
 
     public String showResult() {
         StringBuilder stringBuilder = new StringBuilder();
-        if (isStrike(stringBuilder)) return stringBuilder.toString();
-        if (isSpare(stringBuilder)) return stringBuilder.toString();
+        if (state == State.STRIKE) {
+            return state.state;
+        }
+        if (state == State.SPARE) {
+            return state.state;
+        }
         return normalResult(stringBuilder);
     }
 
@@ -29,24 +31,6 @@ public abstract class Frame {
         stringBuilder.append("/");
         stringBuilder.append(String.format("%2s", secondPin.isGutter() ? "-" : secondPin.toString()));
         return stringBuilder.toString();
-    }
-
-    private boolean isSpare(StringBuilder stringBuilder) {
-        if ((state == State.SPARE)) {
-            stringBuilder.append(String.format("%2s", firstPin.toString()));
-            stringBuilder.append(":");
-            stringBuilder.append(String.format("%2s", "/"));
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isStrike(StringBuilder stringBuilder) {
-        if ((state == State.STRIKE)) {
-            stringBuilder.append(String.format("%5s", "X"));
-            return true;
-        }
-        return false;
     }
 
 }

@@ -17,8 +17,8 @@ public class GamePlay {
             drawAndShowResult(player, bowlingStrategy, i);
         }
         // last draw check
-        State state = this.frames.checkLastFrameState();
-        if (state != State.MISS && state != State.GURTER) {
+        Frame frame = this.frames.checkLastFrameState();
+        if (frame.state != State.MISS && frame.state != State.GURTER) {
             drawAndShowResult(player, bowlingStrategy, MAX_FRAME_COUNT);
         }
     }
@@ -27,7 +27,6 @@ public class GamePlay {
         Frame frame = drawBowl(bowlingStrategy, i);
         this.frames.add(frame);
         OutputView.output(player, this);
-        System.out.println("");
     }
 
     public static GamePlay play(Player player, BowlingStrategy bowlingStrategy) {

@@ -9,7 +9,7 @@ public class NormalFrame extends Frame {
         if (firstPin.isGutter() && secondPin.isGutter()) {
             this.state = State.GURTER;
         }
-        if (secondPin.leftPins() < 10) {
+        if (secondPin.leftPins() < BOWLING_MAX_PINS) {
             this.state = State.MISS;
         }
         if (secondPin.isAllClear()) {

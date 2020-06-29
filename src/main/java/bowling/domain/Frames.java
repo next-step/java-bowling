@@ -2,8 +2,12 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
+
+    private static final int INDEX_ZERO = 0;
+    private static final int INDEX_ONE = 1;
 
     List<Frame> frames = new ArrayList<>();
 
@@ -12,14 +16,14 @@ public class Frames {
     }
 
     public List<String> showGameResult() {
-        List<String> result = new ArrayList<>();
-        frames.forEach(frame -> {
-            result.add(frame.showResult());
-        });
-        return result;
+        return frames.stream()
+                .map(Frame::showResult)
+                .collect(Collectors.toList());
     }
 
-    public State checkLastFrameState() {
-        return frames.get(frames.size()-1).state;
+    public Frame checkLastFrameState() {
+        return frames.stream()
+                .reduce((a, b) -> b)
+                .orElseThrow(() -> new IllegalStateException());
     }
 }

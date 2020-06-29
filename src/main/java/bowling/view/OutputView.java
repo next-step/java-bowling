@@ -26,6 +26,7 @@ public class OutputView {
         stringBuilderResult.append(SEPERATOR);
         System.out.println(stringBuilderHead);
         System.out.println(stringBuilderResult);
+        System.out.println("");
     }
 
 }
