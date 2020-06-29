@@ -45,7 +45,7 @@ public class States {
 
     public Pin getBeforePin() {
         int size = this.pins.getPins().size();
-        if (size == 0) {
+        if (size == 0 || size == 1) {
             return new Pin(Pin.MIN_PIN);
         }
 
@@ -53,7 +53,7 @@ public class States {
     }
 
     private Pin getLastPreviousPin(int size) {
-        return this.pins.getPins().get(size - 1);
+        return this.pins.getPins().get(size - 2);
     }
 
     public State getBeforeState() {

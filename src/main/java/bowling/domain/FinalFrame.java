@@ -9,7 +9,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public void bowl(Pin fallenPin) {
-        State state = State.finalBowl(this.states.getBeforePin().getFallenPin(), fallenPin.getFallenPin(), this.states.getLastState());
+        State state = State.finalBowl(this.states.getLastPin().getFallenPin(), fallenPin.getFallenPin(), this.states.getLastState());
         setStates(state, fallenPin);
     }
 
