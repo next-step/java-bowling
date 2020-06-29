@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Score {
     private static final int MAX_SCORE = 10;
 
-    private int score;
+    private final int score;
     private final int leftBonusCount;
 
     public Score(int score, int leftBonusCount) {
@@ -26,7 +26,8 @@ public class Score {
     }
 
     public Score bowl(int countOfPins) {
-        return new Score(score += countOfPins, leftBonusCount - 1);
+        int scoreSum = score + countOfPins;
+        return new Score(scoreSum, leftBonusCount - 1);
     }
 
     public int getScore() {
