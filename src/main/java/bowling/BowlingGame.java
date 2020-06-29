@@ -12,5 +12,17 @@ public class BowlingGame {
         Player player = new Player(InputView.getPlayerName(), FINAL_ROUND);
 
         ResultView.printBoardBeforeStart(player);
+        for (int round = FIRST_ROUND; round <= FINAL_ROUND; round++) {
+            playRound(round, player);
+        }
+    }
+
+    private static void playRound(int round, Player player) {
+        boolean isFrameFinish = player.bowling(InputView.getPin(round));
+        ResultView.printBoardBeforeStart(player);
+        if (isFrameFinish) {
+            return;
+        }
+        playRound(round, player);
     }
 }
