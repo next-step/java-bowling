@@ -17,6 +17,7 @@ import qna.domain.User;
 import qna.domain.UserRepository;
 
 @Service
+@Transactional
 public class QnAService {
 	private static final Logger log = LoggerFactory.getLogger(QnAService.class);
 
@@ -39,26 +40,22 @@ public class QnAService {
 			.orElseThrow(NotFoundException::new);
 	}
 
-	@Transactional
 	public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
 		Question question = findQuestionById(questionId);
 		List<DeleteHistory> deleteHistories = question.delete(loginUser);
 		deleteHistoryService.saveAll(deleteHistories);
 	}
 
-	@Transactional
 	public Question saveQuestion(Question question) {
 		questionRepository.save(question);
 		return question;
 	}
 
-	@Transactional
 	public User addUser(User loginUser) {
 		userRepository.save(loginUser);
 		return loginUser;
 	}
 
-	@Transactional
 	public User getUserByUserId(String userId) {
 		return userRepository.findByUserId(userId)
 			.orElseThrow(() -> new IllegalArgumentException("no such user found"));

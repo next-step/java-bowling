@@ -20,6 +20,7 @@ import qna.domain.UserRepository;
 import qna.domain.UserTest;
 
 @SpringBootTest
+@Transactional
 public class QnaServiceTest {
 	@Autowired
 	private QuestionRepository questionRepository;
@@ -52,7 +53,6 @@ public class QnaServiceTest {
 		assertThat(questionRepository.findAll()).isNotEmpty();
 	}
 
-	@Transactional
 	@Test
 	public void delete_성공() throws Exception {
 		assertThat(question.isDeleted()).isFalse();
@@ -65,7 +65,6 @@ public class QnaServiceTest {
 		);
 	}
 
-	@Transactional
 	@Test
 	public void delete_다른_사람이_쓴_글() throws Exception {
 		assertThatThrownBy(() -> {
@@ -73,7 +72,6 @@ public class QnaServiceTest {
 		}).isInstanceOf(CannotDeleteException.class);
 	}
 
-	@Transactional
 	@Test
 	public void delete_성공_질문자_답변자_같음() throws Exception {
 		qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
@@ -85,7 +83,6 @@ public class QnaServiceTest {
 		);
 	}
 
-	@Transactional
 	@Test
 	public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
 		assertThatThrownBy(() -> {
