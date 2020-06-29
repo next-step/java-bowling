@@ -37,8 +37,8 @@ public class BowlingGame {
     return 0 < bonusCnt;
   }
 
-  public boolean requiredBonusFrame() {
-    return frames.isOver();
+  public boolean requiredNormalFrame() {
+    return !frames.isOver();
   }
 
   @Override

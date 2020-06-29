@@ -17,7 +17,7 @@ class BowlingGameTest {
   void roll() {
     BowlingGame game = BowlingGame.createWith("abc");
     game.roll(10);
-    while (!game.requiredBonusFrame()) {
+    while (game.requiredNormalFrame()) {
       game.roll(1);
     }
 
@@ -33,7 +33,7 @@ class BowlingGameTest {
   void roll_SpareAtLastFrame(List<Integer> kockNumbers, List<Integer> bonusNumbers) {
     BowlingGame game = BowlingGame.createWith("abc");
 
-    for (int i = 0; !game.requiredBonusFrame(); i++) {
+    for (int i = 0; game.requiredNormalFrame(); i++) {
       game.roll(kockNumbers.get(i));
     }
 
@@ -60,7 +60,7 @@ class BowlingGameTest {
   void roll_StikeAtLastFrame(List<Integer> kockNumbers, List<Integer> bonusNumbers) {
     BowlingGame game = BowlingGame.createWith("abc");
 
-    for (int i = 0; !game.requiredBonusFrame(); i++) {
+    for (int i = 0; game.requiredNormalFrame(); i++) {
       game.roll(kockNumbers.get(i));
     }
 
