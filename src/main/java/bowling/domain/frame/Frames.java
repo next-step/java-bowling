@@ -22,10 +22,14 @@ public class Frames {
 
         for (int i = 1; i < FRAME_SIZE; i++) {
             Frame frame = frames.get(i - 1);
-            frames.add(frame.createNext(i == FRAME_SIZE - 1));
+            frames.add(frame.createNext(isNextLast(i)));
         }
 
         return new Frames(frames);
+    }
+
+    private static boolean isNextLast(int index) {
+        return index == FRAME_SIZE - 1;
     }
 
     public boolean canAddMoreScore() {
