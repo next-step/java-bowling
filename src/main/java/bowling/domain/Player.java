@@ -6,7 +6,7 @@ public class Player {
     private final int position;
 
     public Player(String name, int position) {
-        if(name.length() != 3){
+        if (name.length() != 3) {
             throw new IllegalArgumentException("user name length must 3");
         }
         this.name = name;

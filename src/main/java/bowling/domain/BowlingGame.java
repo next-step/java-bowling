@@ -41,13 +41,13 @@ public class BowlingGame {
 
     public List<Integer> getCurrentPlayers(int framePosition) {
         List<Integer> players = new ArrayList<>();
-        for(int playerIndex = 0 ; playerIndex< bowlingFramesList.size() ; playerIndex++){
+        for (int playerIndex = 0; playerIndex < bowlingFramesList.size(); playerIndex++) {
             BowlingFrames frames = bowlingFramesList.get(playerIndex);
-            if(frames.getCurrentPosition() != framePosition){
+            if (frames.getCurrentPosition() != framePosition) {
                 continue;
             }
 
-            if(frames.isFinished()){
+            if (frames.isFinished()) {
                 continue;
             }
 
