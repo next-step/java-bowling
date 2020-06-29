@@ -24,13 +24,27 @@ public class Frames {
 
     public boolean bowling(int pin) {
         boolean isFrameFinish = frames.getLast().addScore(pin);
-        if (isFrameFinish && isNotFinalFrame()) {
-            frames.add(new NormalFrame());
+        if (isFrameFinish) {
+            createNextFrame();
         }
         return isFrameFinish;
     }
 
-    private boolean isNotFinalFrame() {
+    private boolean isNextFrameIsFinal() {
+        return frames.size() == finalFrame - 1;
+    }
+
+    private boolean isGameNotFinish() {
         return frames.size() != finalFrame;
+    }
+
+    private void createNextFrame() {
+        if (isNextFrameIsFinal()) {
+            frames.add(new FinalFrame());
+            return;
+        }
+        if (isGameNotFinish()) {
+            frames.add(new NormalFrame());
+        }
     }
 }
