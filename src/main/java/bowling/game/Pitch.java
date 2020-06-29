@@ -43,7 +43,7 @@ public class Pitch {
 
     public String stateToString() {
         if (state.isMiss()) {
-            return String.valueOf(pinCount);
+            return String.valueOf(pinCount.getPinCount());
         }
 
         return this.state.getSymbol();
