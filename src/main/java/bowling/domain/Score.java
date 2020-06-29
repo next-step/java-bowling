@@ -41,18 +41,6 @@ public class Score {
         return leftBonusCount == 0;
     }
 
-    public static Score createScore(State lastState, int scoreSum) {
-        if (lastState == State.STRIKE) {
-            return Score.ofStrike();
-        }
-
-        if (lastState == State.SPARE) {
-            return Score.ofSpare();
-        }
-
-        return Score.ofMiss(scoreSum);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

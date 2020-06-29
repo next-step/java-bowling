@@ -67,10 +67,4 @@ class ScoreTest {
 
         assertThat(actual).isFalse();
     }
-
-    @Test
-    void createScore() {
-        Score actual = Score.createScore(State.STRIKE, 10);
-        assertThat(actual).isEqualTo(Score.ofStrike());
-    }
 }
