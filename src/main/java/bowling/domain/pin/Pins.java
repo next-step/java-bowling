@@ -27,13 +27,17 @@ public class Pins {
         return firstPins.countOfPins + secondPins.countOfPins;
     }
 
+    public boolean isStrike() {
+        return countOfPins == MAX_PINS;
+    }
+
     @Override
     public String toString() {
         if (countOfPins == MIN_PINS) {
             return "-";
         }
 
-        if (countOfPins == MAX_PINS) {
+        if (isStrike()) {
             return "X";
         }
 

@@ -25,4 +25,18 @@ public abstract class FramePins {
     public String toString() {
         return firstPins.toString() + "|" + secondPins.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FramePins framePins = (FramePins) o;
+        return Objects.equals(firstPins, framePins.firstPins) &&
+                Objects.equals(secondPins, framePins.secondPins);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstPins, secondPins);
+    }
 }

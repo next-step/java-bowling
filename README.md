@@ -87,6 +87,11 @@
 ### BonusPins : 보너스 핀의 갯수
 - [ ] Pins 객체를 인스턴스 변수로 가진다.
 
+### FramePinsCreator : FramePins 생성 객체
+- [X] 첫 번째 핀을 전달 받아, 객체 반환
+    - 10개 인 경우, Strike 반환
+    - 10개 미만인 경우, FirstFramePins 반환
+
 ### InputView
 - [X] 플레이어를 입력받아 그대로 리턴한다.
 - [X] 각 프레임의 점수를 입력 받아 리턴한다.
