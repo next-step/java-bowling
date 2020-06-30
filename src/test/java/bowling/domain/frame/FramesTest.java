@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.score.FrameScore;
 import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,26 +9,27 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FramesTest {
 
-    @DisplayName("전체 볼링 게임에서 아직 플레이할 수 있는 투구가 남아있다면, hasNextTurn은 true")
+    @DisplayName("전체 볼링 게임에서 아직 플레이할 수 있는 투구가 남아있다면, isEnd은 False")
     @Test
-    public void hasNextTurn_True() {
+    public void isEnd_False() {
         Frames frames = Frames.initiate();
 
-        assertThat(frames.hasNextTurn()).isTrue();
+        assertThat(frames.isEnd()).isFalse();
     }
 
-    @DisplayName("12번의 스트라이크를 치면 더 이상 투구 기회가 없어 hasNextTurn은 false")
+    @DisplayName("12번의 스트라이크를 치면 더 이상 투구 기회가 없어 isEnd은 false")
     @Test
-    public void hasNextTurn_False() {
+    public void isEnd_True() {
         Frames frames = Frames.initiate();
         for (int i = 0; i < 12; i++) {
             frames.bowl(PitchScore.valueOf(10));
             frames.moveToNextFrame();
         }
-        assertThat(frames.hasNextTurn()).isFalse();
+        assertThat(frames.isEnd()).isTrue();
     }
 
     @DisplayName("현재 플레이 중인 프레임에서 투구할 것이 없으면 True 반환")

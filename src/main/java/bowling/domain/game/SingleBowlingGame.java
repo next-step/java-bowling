@@ -29,7 +29,7 @@ public class SingleBowlingGame {
     }
 
     public boolean isEnd() {
-        return !frames.hasNextTurn();
+        return frames.isEnd();
     }
 
     public boolean isCurrentFrameFinished() {
