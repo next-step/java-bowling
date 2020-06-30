@@ -3,6 +3,9 @@ package bowling.domain.frame;
 import bowling.domain.status.Status;
 
 public class Pins {
+    private static final int MIN_COUNT = 0;
+    private static final int MAX_COUNT = 10;
+
     private int downPin;
 
     private Pins(int downPin) {
@@ -33,7 +36,7 @@ public class Pins {
     }
 
     private void validateRange(int downPin) {
-        if (downPin < 0 || downPin > 10) {
+        if (downPin < MIN_COUNT || downPin > MAX_COUNT) {
             throw new IllegalArgumentException("투구 값이 유효 범위가 아닙니다.");
         }
 
