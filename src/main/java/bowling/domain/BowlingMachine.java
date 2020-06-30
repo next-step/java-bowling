@@ -5,5 +5,12 @@ public class BowlingMachine {
     private Player player;
     private FrameResults frameResults;
 
+    private BowlingMachine(Player player) {
+        this.player = player;
+    }
 
+    public void startGame() {
+        FallenPinNumber fallenPinNumber = player.pitchBowlingBall();
+        Frame frame =
+    }
 }

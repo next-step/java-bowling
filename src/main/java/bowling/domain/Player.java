@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.view.BowlingView;
+
 import java.util.Objects;
 
 public class Player {
@@ -12,6 +14,11 @@ public class Player {
 
     public static Player of(PlayerName playerName) {
         return new Player(playerName);
+    }
+
+    public FallenPinNumber pitchBowlingBall() {
+        int fallenPinNumber = BowlingView.inputFallenPinNumber();
+        return FallenPinNumber.of(fallenPinNumber);
     }
 
     @Override
