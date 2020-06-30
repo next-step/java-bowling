@@ -1,53 +1,101 @@
 package bowling.ui;
 
-import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
-
-import java.util.stream.Stream;
+import bowling.domain.score.ScoreType;
+import bowling.domain.frame.FrameResult;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ResultView {
-    private static final String ROUND_SCORE_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-    private static final String DEFAULT_SCORE_BOARD = "| %-4s |      |      |      |      |      |      |      |      |      |      |";
-    public static final int MAX_FRAME_SIZE = 10;
 
-    public static void printDefaultScoreBoard(Player player) {
-        System.out.println(ROUND_SCORE_BOARD);
-        System.out.println(String.format(DEFAULT_SCORE_BOARD, player.toString()));
-        System.out.println(String.format(DEFAULT_SCORE_BOARD, "    "));
-        System.out.println();
+    private static final int FRAME_COUNT = 10;
+    private static final int STRIKE_PIN = 10;
+    private static final int GUTTER_PIN = 0;
+
+    private static final Map<ScoreType, String> displayMap = new HashMap<>();
+
+    static {
+        displayMap.put(ScoreType.STRIKE, "X");
+        displayMap.put(ScoreType.SPARE, "/");
     }
 
-    public static void printResult(Player player, Frames frames) {
-        System.out.println(ROUND_SCORE_BOARD);
-        printScoreLine(player, frames);
-        printEmptyLine(frames);
-        System.out.println();
-        printPointLine(frames);
-        printEmptyLine(frames);
-        System.out.println("\n");
+    public void printResult(Player player, List<FrameResult> frameResults) {
+        printFramesRounds();
+        printBowlsResult(player.toString(), frameResults);
+        printScores(frameResults.stream().map(FrameResult::getScore).collect(Collectors.toList()));
+        System.out.print(System.lineSeparator());
     }
 
-    private static void printPointLine(Frames frames) {
-        System.out.print("|" + formatting(""));
-        frames.getPoints().stream()
-                .map(point -> formatting(String.valueOf(point)))
-                .forEach(System.out::print);
+    private void printFramesRounds() {
+        StringBuilder framesBuilder = new StringBuilder();
+        framesBuilder.append("| NAME |");
+
+        for (int i = 0; i < FRAME_COUNT; i++) {
+            framesBuilder.append(String.format("  %02d  |", i + 1));
+        }
+        System.out.println(framesBuilder.toString());
     }
 
-    private static void printEmptyLine(Frames frames) {
-        Stream.generate(() -> formatting(""))
-                .limit(MAX_FRAME_SIZE - frames.size())
-                .forEach(System.out::print);
+    private void printBowlsResult(String name, List<FrameResult> frameResults) {
+        StringBuilder downPinBuilder = new StringBuilder();
+        downPinBuilder.append(String.format("|  %s |", name));
+
+        for (FrameResult frameResult : frameResults) {
+            String downPinDisplay = createBowlDisplay(frameResult);
+            downPinBuilder.append(String.format("  %-4s|", downPinDisplay));
+        }
+
+        System.out.println(downPinBuilder.toString());
     }
 
-    private static void printScoreLine(Player player, Frames frames) {
-        System.out.print("|" + formatting(player.toString()));
-        frames.getFrames().stream()
-                .map(frame -> formatting(frame.getScores()))
-                .forEach(System.out::print);
+    private String createBowlDisplay(FrameResult frameResult) {
+        List<Integer> downPins = frameResult.getDownPins();
+        if(downPins.isEmpty()){
+            return "";
+        }
+
+        List<String> components = new ArrayList<>();
+
+        int downPinIndex = 0;
+        components.add(createPin(downPins.get(downPinIndex++)));
+
+        ScoreType scoreType = frameResult.getScoreType().orElse(ScoreType.MISS);
+        if (scoreType == ScoreType.SPARE) {
+            components.add("/");
+            downPinIndex++;
+        }
+
+        for (; downPinIndex < downPins.size(); downPinIndex++) {
+            components.add(createPin(downPins.get(downPinIndex)));
+        }
+        return components.stream().collect(Collectors.joining("|"));
     }
 
-    private static String formatting(String input) {
-        return String.format("  %-4s|", input);
+    private void printScores(List<Optional<Integer>> scores) {
+        StringBuilder scoreDisplays = new StringBuilder();
+        scoreDisplays.append("|      |");
+        int sum = 0;
+        for (Optional<Integer> score : scores) {
+            sum += score.orElse(0);
+            scoreDisplays.append(String.format("  %-4s|", score.isPresent() ? sum : ""));
+        }
+        System.out.println(scoreDisplays.toString());
     }
+
+    private String createPin(int downPin) {
+        if (downPin == GUTTER_PIN) {
+            return "-";
+        }
+
+        if (downPin == STRIKE_PIN) {
+            return "X";
+        }
+
+        return String.valueOf(downPin);
+    }
+
 }

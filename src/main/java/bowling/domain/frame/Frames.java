@@ -1,133 +1,66 @@
 package bowling.domain.frame;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
 
-    private static final int MIN_FRAME_NUMBER = 0;
-    private static final int MAX_FRAME_NUMBER = 10;
+    private static final int FRAME_COUNT = 10;
 
-    private final List<Frame> frames = new LinkedList<>();
-    private final List<Integer> points = new ArrayList<>();
-    private int frameIndex = 0;
+    private final List<Frame> frames;
+    private int currentFrameNumber;
 
-    private Frames()  {
-        validateFrameIndex(frameIndex);
-        frames.add(NormalFrame.create());
+    public Frames(List<Frame> frames) {
+        validate(frames);
+
+        this.frames = new ArrayList<>(frames);
     }
 
     public static Frames create() {
-        return new Frames();
-    }
+        List<Frame> frames = new ArrayList<>();
 
-    public Frames roll(Point point) {
-        Frame frame = frames.get(frameIndex).bowl(point);
-        updateFrame(frame);
-        updatePoint(frame);
-        return this;
-    }
+        Frame normalFrame = Frame.first();
+        frames.add(normalFrame);
 
-    private void updatePoint(Frame nowFrame) {
-        int framePoint = nowFrame.getFramePoint();
-
-        if (frameIndex > 0) { // 스페어나 스트라이크 있을 경우
-            Frame previousFrame = frames.get(frameIndex - 1);
-
-            if (previousFrame.getScores().contains("X")) { // 이전이 스트라이크일 경우
-                if (frameIndex > 1) {
-                    Frame earlierFrame = frames.get(frameIndex - 2);
-                    if (earlierFrame.getScores().contains("X")) { // 그 이전도 스트라이크 일 경우
-                        int sumStrikePoint = earlierFrame.getFramePoint() + previousFrame.getFramePoint() + framePoint;
-                        points.remove(frameIndex);
-                        points.remove(frameIndex - 1);
-                        points.remove(frameIndex - 2);
-                        points.add(sumStrikePoint);
-                        int strikePoint = previousFrame.getFramePoint() + nowFrame.getFramePoint();
-                        points.add(strikePoint);
-                        points.add(framePoint);
-                        return;
-                    }
-                }
-
-                int strikePoint = previousFrame.getFramePoint() + nowFrame.getFramePoint();
-                points.remove(frameIndex);
-                points.remove(frameIndex - 1);
-                points.add(strikePoint);
-                points.add(framePoint);
-                return;
-            }
-
-            if (previousFrame.getScores().contains("/")) {
-                int sparePoint = previousFrame.getFramePoint() + framePoint;
-                points.remove(frameIndex);
-                points.remove(frameIndex - 1);
-                points.add(sparePoint);
-                points.add(framePoint);
-                return;
-            }
+        for (int i = 1; i < FRAME_COUNT - 1; i++) {
+            normalFrame = normalFrame.next();
+            frames.add(normalFrame);
         }
-        points.add(framePoint);
+
+        frames.add(frames.get(frames.size() - 1).last());
+
+        return new Frames(frames);
     }
 
-    private void updateFrame(Frame frame) {
-        frames.remove(frameIndex);
-        frames.add(frame);
-    }
-
-    public void next() {
-        if(frames.get(frameIndex).isLastPitch()) {
-            frames.add(createNextFrame());
-            points.add(0);
-            frameIndex++;
+    private void validate(List<Frame> frames) {
+        if (frames.size() != FRAME_COUNT) {
+            throw new IllegalArgumentException("10개 프레임이 아닙니다.");
         }
     }
 
-    private Frame createNextFrame() {
-        if (isBeforeLastIndex()) {
-            return FinalFrame.create();
-        }
-        return NormalFrame.create();
-    }
+    public void roll(int downPin) {
+        Frame frame = this.frames.get(this.currentFrameNumber);
+        frame.roll(downPin);
 
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
-    }
-
-    public List<Integer> getPoints() {
-        return Collections.unmodifiableList(points);
-    }
-
-    public boolean isLastFrame() {
-        return frameIndex == MAX_FRAME_NUMBER;
-    }
-
-    public int getFrameIndex() {
-        return frameIndex;
-    }
-
-    public int size() {
-        return frames.size();
-    }
-
-    private boolean isBeforeLastIndex() {
-        return frameIndex == 8;
-    }
-
-    private void validateFrameIndex(int frameIndex) {
-        if (frameIndex < MIN_FRAME_NUMBER) {
-            throw new IllegalArgumentException("프레임은 0보다 작을 수 없습니다.");
-        }
-
-        if (frameIndex > MAX_FRAME_NUMBER) {
-            throw new IllegalArgumentException("프레임은 10보다 클 수 없습니다.");
-        }
-
-        if (frameIndex > frames.size()) {
-            throw new IllegalArgumentException("index는 frames의 크기보다 클 수 없습니다.");
+        if (!frame.hasTurn()) {
+            this.currentFrameNumber++;
         }
     }
+
+    public List<FrameResult> getFrameResults() {
+        return this.frames.stream()
+            .map(Frame::getFrameResult)
+            .collect(Collectors.toList());
+    }
+
+
+    public int getCurrentFrameNumber() {
+        return this.currentFrameNumber;
+    }
+
+    public boolean isFinished() {
+        return !this.frames.get(this.frames.size() - 1).hasTurn();
+    }
+
 }
-

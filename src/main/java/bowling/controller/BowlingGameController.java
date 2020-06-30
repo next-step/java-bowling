@@ -1,8 +1,7 @@
 package bowling.controller;
 
-import bowling.domain.frame.Frames;
+import bowling.domain.BowlingGame;
 import bowling.domain.player.Player;
-import bowling.domain.frame.Point;
 import bowling.ui.InputView;
 import bowling.ui.ResultView;
 
@@ -10,15 +9,17 @@ public class BowlingGameController {
 
     public static void main(String[] args) {
         Player player = InputView.inputPlayer();
-        ResultView.printDefaultScoreBoard(player);
-        Frames frames = Frames.create();
 
-        while (!frames.isLastFrame()) {
-            Point point = InputView.inputPoint(frames.getFrameIndex());
-            frames = frames.roll(point);
+        BowlingGame bowlingGame = BowlingGame.start();
+        ResultView outputView = new ResultView();
 
-            ResultView.printResult(player, frames);
-            frames.next();
+        while (!bowlingGame.isFinished()) {
+            int frameNumber = bowlingGame.getFrameNumber();
+            int downPin = InputView.inputFramePoint(frameNumber);
+
+            bowlingGame.roll(downPin);
+            outputView.printResult(player, bowlingGame.getResult());
         }
     }
+
 }
