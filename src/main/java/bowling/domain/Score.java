@@ -21,6 +21,10 @@ public class Score {
         return score == MAX_SCORE;
     }
 
+    public boolean validateMinScore() {
+        return score == MIN_SCORE;
+    }
+
     public int getScore() {
         return this.score;
     }
