@@ -42,6 +42,11 @@ public class Strike implements FrameStatus {
   }
 
   @Override
+  public boolean isBonus() {
+    return false;
+  }
+
+  @Override
   public String toString() {
     return "Strike{" +
         "indexOfScoredFrames=" + indexOfScoredFrames +

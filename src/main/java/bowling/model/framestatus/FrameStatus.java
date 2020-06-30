@@ -11,5 +11,7 @@ public interface FrameStatus {
 
   boolean isOver();
 
+  boolean isBonus();
+
   String toString(KnockedDownPins pins);
 }

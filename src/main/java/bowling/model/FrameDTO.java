@@ -1,6 +1,5 @@
 package bowling.model;
 
-import bowling.model.framestatus.Bonus;
 import bowling.model.framestatus.FrameStatus;
 
 public class FrameDTO {
@@ -17,8 +16,8 @@ public class FrameDTO {
     return new FrameDTO(frame.getPins(), frame.getFrameStatus());
   }
 
-  public boolean isBonus() {
-    return frameStatus instanceof Bonus;
+  public boolean isBonusFrame() {
+    return frameStatus.isBonus();
   }
 
   @Override

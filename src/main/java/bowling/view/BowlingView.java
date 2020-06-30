@@ -59,7 +59,7 @@ public class BowlingView {
         frameDTOs.get(BowlingGame.MAX_NUMBER_OF_FRAMES - 1).toString());
 
     frameDTOs.stream()
-        .filter(FrameDTO::isBonus)
+        .filter(FrameDTO::isBonusFrame)
         .forEach(frameDTO -> {
           sb.append(BAR)
               .append(frameDTO.toString());

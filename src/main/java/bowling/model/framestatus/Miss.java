@@ -40,6 +40,11 @@ public class Miss implements FrameStatus {
   }
 
   @Override
+  public boolean isBonus() {
+    return false;
+  }
+
+  @Override
   public String toString() {
     return "Miss{" +
         "indexOfScoredFrames=" + indexOfScoredFrames +

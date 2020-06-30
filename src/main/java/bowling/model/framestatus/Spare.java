@@ -42,6 +42,11 @@ public class Spare implements FrameStatus {
   }
 
   @Override
+  public boolean isBonus() {
+    return false;
+  }
+
+  @Override
   public String toString() {
     return "Spare{" +
         "indexOfScoredFrames=" + indexOfScoredFrames +
