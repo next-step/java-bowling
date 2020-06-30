@@ -48,4 +48,16 @@ public class ScoreTest {
 		boolean result = first.isGreaterThan(second);
 		assertThat(result).isEqualTo(expected);
 	}
+
+	@DisplayName("첫 번째 투구의 점수가 10이면 두 번째 투구의 점수를 입력하지 않아도 점수를 확인할 수 있다.")
+	@ValueSource(ints = 10)
+	@ParameterizedTest
+	void 첫_번째_투구의_점수가_10이면_점수를_확인할_수_있다(int score) {
+		Score first = Score.ofScore(score);
+		Scores scores = Scores.from(first);
+		Result result = scores.checkResult();
+		assertThatCode(
+			() -> scores.checkResult()
+		).doesNotThrowAnyException();
+	}
 }

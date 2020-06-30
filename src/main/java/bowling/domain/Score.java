@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.util.ScoreBound;
+
 public class Score {
 
 	private final int score;
@@ -14,10 +16,7 @@ public class Score {
 	}
 
 	private static void validateScore(int score) {
-		final int MINIMUM_SCORE_BOUND = 0;
-		final int MAXIMUM_SCORE_BOUND = 10;
-
-		if (score < MINIMUM_SCORE_BOUND || score > MAXIMUM_SCORE_BOUND) {
+		if (score < ScoreBound.MINIMUM_SCORE_BOUND.getBound() || score > ScoreBound.MAXIMUM_SCORE_BOUND.getBound()) {
 			throw new IllegalArgumentException("first and second frames score have more than 10 scores. wrong score.");
 		}
 	}
@@ -32,5 +31,9 @@ public class Score {
 
 	public boolean isGreaterThan(Score second) {
 		return this.score > second.getScore();
+	}
+
+	public boolean isScoreTen() {
+		return score == ScoreBound.MAXIMUM_SCORE_BOUND.getBound();
 	}
 }

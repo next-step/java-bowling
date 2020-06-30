@@ -2,6 +2,8 @@ package bowling.domain;
 
 import java.util.Objects;
 
+import bowling.util.ScoreBound;
+
 public class Scores {
 
 	private final Score first;
@@ -29,6 +31,9 @@ public class Scores {
 	}
 
 	public Result checkResult() {
+		if (first.isScoreTen()) {
+			addSecondScore(Score.ofScore(ScoreBound.MINIMUM_SCORE_BOUND.getBound()));
+		}
 		if (Objects.isNull(second)) {
 			throw new IllegalStateException("scores does not have second score result!");
 		}
