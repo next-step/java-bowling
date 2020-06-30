@@ -81,7 +81,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public Score addBonusScore(final Score beforeScore) {
-        if (beforeScore.isZeroOfExtraBonusCount()) {
+        if (beforeScore.isCalculable()) {
             return beforeScore;
         }
 

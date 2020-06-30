@@ -31,7 +31,7 @@ public abstract class State {
     public abstract Score getScore();
 
     public Score calculateBonusScore(Score beforeScore) {
-        if (beforeScore.isZeroOfExtraBonusCount()) {
+        if (beforeScore.isCalculable()) {
             return beforeScore;
         }
 

@@ -47,10 +47,6 @@ public class Score {
         return this.extraBonusCount == ZERO && isAddableScore();
     }
 
-    public boolean isZeroOfExtraBonusCount() {
-        return this.extraBonusCount == ZERO;
-    }
-
     private boolean isAddableScore() {
         return !this.equals(UN_SCORE);
     }
