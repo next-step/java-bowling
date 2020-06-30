@@ -11,15 +11,17 @@ public class Frames {
     private List<Frame> frames = new ArrayList<>();
 
     public Frames() {
-        for(int i = 0; i <= BOWLING_GAME_FRAME; i++) {
-            frames.add(makeFrame(i));
+        for(int i = 0; i < BOWLING_GAME_FRAME; i++) {
+            frames.add(makeFrame());
         }
+        frames.add(makeFinalFrame());
     }
 
-    private Frame makeFrame(int frameNumber) {
-        if(frameNumber == BOWLING_GAME_FRAME) {
-            return new FinalFrame();
-        }
+    private Frame makeFinalFrame() {
+        return new NormalFrame();
+    }
+
+    private Frame makeFrame() {
         return new NormalFrame();
     }
 

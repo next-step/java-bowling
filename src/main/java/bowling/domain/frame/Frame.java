@@ -19,6 +19,10 @@ public class Frame {
         return scores.get((scores.size() - 1)).validateMaxScore();
     }
 
+    public boolean isMiss() {
+        return scores.get((scores.size() - 1)).validateMinScore();
+    }
+
     public boolean isSpare() {
         if(scores.size() < LIMIT_COUNT) {
             return false;
@@ -26,6 +30,10 @@ public class Frame {
         return scores.get((scores.size() - 2)).getScore()
                 + scores.get((scores.size() - 1)).getScore()
                 == Score.MAX_SCORE;
+    }
+
+    public int getFrameLastScore() {
+        return scores.get((scores.size() - 1)).getScore();
     }
 
     public int moveNextFrame() {

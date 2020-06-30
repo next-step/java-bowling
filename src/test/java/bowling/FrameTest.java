@@ -1,8 +1,8 @@
 package bowling;
 
-import bowling.domain.Score;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,16 +22,13 @@ public class FrameTest {
     @DisplayName("일반 프레임 점수 체크 프레임 기회 2번 스트라이크 시 다음 프레임")
     @Test
     public void normalFrameTest() {
-        frames.addFrameScore(0, 10);
 
+        frames.addFrameScore(0, 10);
         frames.addFrameScore(1, 9);
 
-        frames.addFrameScore(2, 7);
-        frames.addFrameScore(2, 3);
+        assertThat(frames.getFrames().get(0).moveNextFrame()).isEqualTo(1);
+        assertThat(frames.getFrames().get(1).moveNextFrame()).isEqualTo(0);
 
-        assertThat(frames.getFrames().get(0).validateLimitScore()).isTrue();
-        assertThat(frames.getFrames().get(1).validateLimitScore()).isFalse();
-        assertThat(frames.getFrames().get(2).validateLimitScore()).isTrue();
     }
 
     @DisplayName("마지막 프레임 체크")
@@ -42,7 +39,7 @@ public class FrameTest {
         frames.addFrameScore(BOWLING_GAME_FRAME, 3);
         System.out.println(frames.getFrames().get(BOWLING_GAME_FRAME));
         Frame frame = frames.getFrames().get(BOWLING_GAME_FRAME);
-        assertThat(frames.getFrames().get(BOWLING_GAME_FRAME).validateLimitScore()).isTrue();
+        assertThat(frames.getFrames().get(BOWLING_GAME_FRAME).moveNextFrame()).isEqualTo(1);
     }
 
     @DisplayName("마지막 프레임 체크")
@@ -50,6 +47,6 @@ public class FrameTest {
     void continueFinalFrameTest() {
         frames.addFrameScore(BOWLING_GAME_FRAME, 7);
         frames.addFrameScore(BOWLING_GAME_FRAME, 3);
-        assertThat(frames.getFrames().get(BOWLING_GAME_FRAME).validateLimitScore()).isFalse();
+        assertThat(frames.getFrames().get(BOWLING_GAME_FRAME).moveNextFrame()).isEqualTo(0);
     }
 }
