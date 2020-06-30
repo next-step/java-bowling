@@ -25,7 +25,7 @@ public class Score {
         scores.add(pin);
         remain -= pin.getCount();
 
-        return scores.size() == MAX_THROW_COUNT;
+        return scores.size() == MAX_THROW_COUNT || remain == IntegerUtils.ZERO;
     }
 
     private void validateThrow(Pin pin) {
