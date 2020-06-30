@@ -20,8 +20,9 @@ public interface Status {
     String printAllResult();
 
     default String isGutter(int downPin) {
-        if (downPin == 0)
+        if (downPin == 0) {
             return "-";
+        }
         return String.valueOf(downPin);
     }
 }

@@ -16,7 +16,7 @@ public class Spare implements Status {
 
     @Override
     public String printAllResult() {
-        return beforePin + "|/";
+        return isGutter(beforePin) + "|/";
     }
 
 }
