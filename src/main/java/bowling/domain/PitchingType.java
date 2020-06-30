@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public enum PitchingResultType {
+public enum PitchingType {
 
     STRIKE,
     SPARE,

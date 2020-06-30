@@ -1,18 +1,21 @@
 package bowling.domain;
 
-public class FinalFrame {
+public class FinalFrame extends Frame {
 
-    private final Score firstPitchingScore;
-    private final Score secondPitchingScore;
-    private final Score finalPitchingScore;
+    private FrameNumber frameNumber;
 
-    private FinalFrame(Score firstPitchingScore, Score secondPitchingScore, Score finalPitchingScore) {
-        this.firstPitchingScore = firstPitchingScore;
-        this.secondPitchingScore = secondPitchingScore;
-        this.finalPitchingScore = finalPitchingScore;
+    private FinalFrame(FrameNumber frameNumber) {
+        this.frameNumber = frameNumber;
     }
 
-    public static FinalFrame of(Score firstPitchingScore, Score secondPitchingScore, Score finalPitchingScore) {
-        return new FinalFrame(firstPitchingScore, secondPitchingScore, finalPitchingScore);
+    public static FinalFrame of(FrameNumber frameNumber) {
+        checkFrameNumber(frameNumber);
+        return new FinalFrame(frameNumber);
+    }
+
+    private static void checkFrameNumber(FrameNumber frameNumber) {
+        if (!frameNumber.isFinalFrameNumber()) {
+            throw new IllegalArgumentException("마지막 프레임 번호는 10이어야 합니다.");
+        }
     }
 }

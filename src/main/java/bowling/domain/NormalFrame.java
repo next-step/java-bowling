@@ -1,16 +1,23 @@
 package bowling.domain;
 
-public class NormalFrame {
+public class NormalFrame extends Frame {
 
-    private final FrameNumber frameNumber;
-    private final Score firstPitchingScore;
-    private final Score secondPitchingScore;
+    private FrameNumber frameNumber;
 
-    private NormalFrame(FrameNumber frameNumber, Score firstPitchingScore, Score secondPitchingScore) {
+    private NormalFrame(FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
-        this.firstPitchingScore = firstPitchingScore;
-        this.secondPitchingScore = secondPitchingScore;
     }
 
-    public static Norm
+    public static NormalFrame of(FrameNumber frameNumber) {
+        return new NormalFrame(frameNumber);
+    }
+
+    public Frame getNextFrame() {
+        FrameNumber nextFrameNumber = frameNumber.getNextFrameNumber();
+
+        if (frameNumber.canGenerateNextFrame()) {
+            return NormalFrame.of(nextFrameNumber);
+        }
+        return FinalFrame.of(nextFrameNumber);
+    }
 }
