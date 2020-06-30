@@ -287,8 +287,8 @@
                 - 초구만 스트라이크면 9프레임 더블
     - [X] 더블 점수 계산 추가..
     - [X] 터키 점수 계산 추가..
-- [ ] OutputView
-    - [ ] 스코어 출력 기능 구현
+- [X] OutputView
+    - [X] 스코어 출력 기능 구현
 - [X] BowlingGameApplication, BowlingGame
     - [X] 연속 스트라이크 계산이 가능한 9프레임으로 리팩토링
     - [X] 마지막 프레임 진행은 아예 분리해버릴 것
@@ -303,10 +303,8 @@
 - [ ] 객체지향 생활체조 원칙 점검
     - [ ] BowlingGame의 BowlingGameResult 컬렉션을 일급 컬렉션으로 리팩토링
     - [ ] BowlingGameApplication에서 BowlingGame 컬렉션을 일급 컬렉션으로 리팩토링
-    - [ ] BowlingGames
-        - [X] BowlingGame 리스트를 주입받아서 객체 생성 가능
-        - [ ] 현재 프레임의 모든 플레이어들이 해당 프레임을 끝냈는지 알려줄 수 있음
-        - [ ] 현재 프레임의 모든 선수들이 해당 프레임을 끝낼 때까지 게임을 진행 할 수 있음
+        - [X] 기존 BowlingGame을 BowlingGamePlayer로 이름 변경
+        - [ ] 현재 BowlingGameApplication에서 컬렉션 뭉치로 실행하는 로직을 BowlingGame 클래스로 이동
     - [ ] 인스턴스 변수 3개 이상인 클래스 있는지 확인하기
     - [ ] 디미터 법칙 어긴 부분 없는지 확인하기
     - [ ] 정말 최대한 게터를 다 걷어냈는지 확인하기

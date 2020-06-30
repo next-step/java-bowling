@@ -5,21 +5,21 @@ import bowling.domain.frame.Frame;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BowlingGame {
+public class BowlingGamePlayer {
     private final Player player;
     private List<BowlingGameResult> bowlingGameResults;
 
-    public BowlingGame(Player player, List<BowlingGameResult> bowlingGameResults) {
+    public BowlingGamePlayer(Player player, List<BowlingGameResult> bowlingGameResults) {
         this.player = player;
         this.bowlingGameResults = new ArrayList<>(bowlingGameResults);
     }
 
-    public static BowlingGame play(Player player) {
-        return new BowlingGame(player, new ArrayList<>());
+    public static BowlingGamePlayer play(Player player) {
+        return new BowlingGamePlayer(player, new ArrayList<>());
     }
 
-    public static BowlingGame start(String playerName) {
-        return new BowlingGame(Player.createByName(playerName), new ArrayList<>());
+    public static BowlingGamePlayer start(String playerName) {
+        return new BowlingGamePlayer(Player.createByName(playerName), new ArrayList<>());
     }
 
     public int checkWhereFrame() {

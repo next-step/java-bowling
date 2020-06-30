@@ -23,10 +23,10 @@ public class OutputView {
         System.out.println("|      |      |      |      |      |      |      |      |      |      |      |");
     }
 
-    public static void printBowlingGames(List<BowlingGame> bowlingGames) {
+    public static void printBowlingGames(List<BowlingGamePlayer> bowlingGamePlayers) {
         printBowlingGameHeader();
-        for (BowlingGame bowlingGame : bowlingGames) {
-            printBowlingGameResult(bowlingGame.getPlayerName(), bowlingGame.getBowlingGameResults());
+        for (BowlingGamePlayer bowlingGamePlayer : bowlingGamePlayers) {
+            printBowlingGameResult(bowlingGamePlayer.getPlayerName(), bowlingGamePlayer.getBowlingGameResults());
         }
     }
 

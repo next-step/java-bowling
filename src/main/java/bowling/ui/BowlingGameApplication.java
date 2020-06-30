@@ -1,6 +1,6 @@
 package bowling.ui;
 
-import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGamePlayer;
 import bowling.domain.Player;
 
 import java.util.ArrayList;
@@ -15,22 +15,22 @@ public class BowlingGameApplication {
         OutputView.printBowlingGameHeader();
         OutputView.printEmptyResults(players);
 
-        List<BowlingGame> bowlingGames = initGames(players);
+        List<BowlingGamePlayer> bowlingGamePlayers = initGames(players);
 
         for (int i = 1; i < 11; i++) {
-            playBowlingGame(i, bowlingGames);
+            playBowlingGame(i, bowlingGamePlayers);
         }
     }
 
-    private static void playBowlingGame(int i, List<BowlingGame> bowlingGames) {
+    private static void playBowlingGame(int i, List<BowlingGamePlayer> bowlingGamePlayers) {
         if (i == 1) {
-            doFirstThrow(bowlingGames);
+            doFirstThrow(bowlingGamePlayers);
         }
         if (i == 10) {
-            doFinalFrame(bowlingGames);
+            doFinalFrame(bowlingGamePlayers);
         }
         if (i != 1 && i !=10) {
-            doMiddleFrame(i, bowlingGames);
+            doMiddleFrame(i, bowlingGamePlayers);
         }
     }
 
@@ -48,45 +48,45 @@ public class BowlingGameApplication {
         return Player.createByName(userName);
     }
 
-    private static List<BowlingGame> initGames(List<Player> players) {
+    private static List<BowlingGamePlayer> initGames(List<Player> players) {
         return players.stream()
-                .map(BowlingGame::play)
+                .map(BowlingGamePlayer::play)
                 .collect(Collectors.toList());
     }
 
-    private static void doFirstThrow(List<BowlingGame> bowlingGames) {
-        for (BowlingGame bowlingGame : bowlingGames) {
-            bowlingGame.bowlFirst(InputView.getNumberOfHitPin(1, bowlingGame.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGames);
-            doNotCompletedFrame(1, bowlingGames, bowlingGame);
+    private static void doFirstThrow(List<BowlingGamePlayer> bowlingGamePlayers) {
+        for (BowlingGamePlayer bowlingGamePlayer : bowlingGamePlayers) {
+            bowlingGamePlayer.bowlFirst(InputView.getNumberOfHitPin(1, bowlingGamePlayer.getPlayerName()));
+            OutputView.printBowlingGames(bowlingGamePlayers);
+            doNotCompletedFrame(1, bowlingGamePlayers, bowlingGamePlayer);
         }
     }
 
-    private static void doMiddleFrame(int frameCount, List<BowlingGame> bowlingGames) {
-        for (BowlingGame bowlingGame : bowlingGames) {
-            bowlingGame.toNextFrame(InputView.getNumberOfHitPin(frameCount, bowlingGame.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGames);
-            doNotCompletedFrame(frameCount, bowlingGames, bowlingGame);
+    private static void doMiddleFrame(int frameCount, List<BowlingGamePlayer> bowlingGamePlayers) {
+        for (BowlingGamePlayer bowlingGamePlayer : bowlingGamePlayers) {
+            bowlingGamePlayer.toNextFrame(InputView.getNumberOfHitPin(frameCount, bowlingGamePlayer.getPlayerName()));
+            OutputView.printBowlingGames(bowlingGamePlayers);
+            doNotCompletedFrame(frameCount, bowlingGamePlayers, bowlingGamePlayer);
         }
     }
 
-    private static void doNotCompletedFrame(int frameCount, List<BowlingGame> bowlingGames, BowlingGame bowlingGame) {
-        if (!bowlingGame.isCurrentFrameCompleted()) {
-            bowlingGame.bowlCurrentFrame(InputView.getNumberOfHitPin(frameCount, bowlingGame.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGames);
+    private static void doNotCompletedFrame(int frameCount, List<BowlingGamePlayer> bowlingGamePlayers, BowlingGamePlayer bowlingGamePlayer) {
+        if (!bowlingGamePlayer.isCurrentFrameCompleted()) {
+            bowlingGamePlayer.bowlCurrentFrame(InputView.getNumberOfHitPin(frameCount, bowlingGamePlayer.getPlayerName()));
+            OutputView.printBowlingGames(bowlingGamePlayers);
         }
     }
 
-    private static void doFinalFrame(List<BowlingGame> bowlingGames) {
-        for (BowlingGame bowlingGame : bowlingGames) {
-            bowlingGame.finalFrameBowlFirst(InputView.getNumberOfHitPin(10, bowlingGame.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGames);
+    private static void doFinalFrame(List<BowlingGamePlayer> bowlingGamePlayers) {
+        for (BowlingGamePlayer bowlingGamePlayer : bowlingGamePlayers) {
+            bowlingGamePlayer.finalFrameBowlFirst(InputView.getNumberOfHitPin(10, bowlingGamePlayer.getPlayerName()));
+            OutputView.printBowlingGames(bowlingGamePlayers);
 
-            bowlingGame.finalFrameBowlSecond(InputView.getNumberOfHitPin(10, bowlingGame.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGames);
+            bowlingGamePlayer.finalFrameBowlSecond(InputView.getNumberOfHitPin(10, bowlingGamePlayer.getPlayerName()));
+            OutputView.printBowlingGames(bowlingGamePlayers);
 
-            bowlingGame.finalFrameBowlLast(InputView.getNumberOfHitPin(10, bowlingGame.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGames);
+            bowlingGamePlayer.finalFrameBowlLast(InputView.getNumberOfHitPin(10, bowlingGamePlayer.getPlayerName()));
+            OutputView.printBowlingGames(bowlingGamePlayers);
         }
     }
 }
