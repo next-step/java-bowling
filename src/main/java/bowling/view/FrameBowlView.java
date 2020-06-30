@@ -26,7 +26,7 @@ public class FrameBowlView {
 
     private String createBowlDisplay(FrameResult frameResult) {
         List<Integer> downPins = frameResult.getDownPins();
-        if(downPins.isEmpty()){
+        if (downPins.isEmpty()) {
             return "";
         }
 

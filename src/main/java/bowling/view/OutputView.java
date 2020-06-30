@@ -16,9 +16,12 @@ public class OutputView {
     public void printResult(List<Player> players, BowlingGameResult bowlingGameResult) {
         printFramesRounds();
 
-        for (int playerPosition = 0 ; playerPosition < players.size() ; playerPosition++){
-            frameBowlView.printBowlsResult(players.get(playerPosition), bowlingGameResult.get(playerPosition));
-            frameScoreView.printScores(bowlingGameResult.get(playerPosition).stream().map(FrameResult::getScore).collect(Collectors.toList()));
+        for (int playerPosition = 0; playerPosition < players.size(); playerPosition++) {
+            frameBowlView.printBowlsResult(players.get(playerPosition),
+                bowlingGameResult.get(playerPosition));
+            frameScoreView.printScores(
+                bowlingGameResult.get(playerPosition).stream().map(FrameResult::getScore)
+                    .collect(Collectors.toList()));
 
         }
         System.out.print(System.lineSeparator());

@@ -1,15 +1,11 @@
 package bowling.view;
 
-import bowling.domain.ScoreType;
-import bowling.domain.frame.FrameResult;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class FrameScoreView {
 
-     void printScores(List<Optional<Integer>> scores) {
+    void printScores(List<Optional<Integer>> scores) {
         StringBuilder scoreDisplays = new StringBuilder();
         scoreDisplays.append("|      |");
         int sum = 0;

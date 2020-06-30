@@ -13,6 +13,17 @@ public class BowlingGameLauncher {
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
 
+    public static void main(String[] args) {
+        BowlingGameLauncher gameLauncher = new BowlingGameLauncher();
+
+        List<Player> players = gameLauncher.requestPlayers();
+
+        BowlingGame bowlingGame = gameLauncher.createGame(players.size());
+
+        for (int framePosition = 0; framePosition < 10; framePosition++) {
+            gameLauncher.playFrame(players, bowlingGame, framePosition);
+        }
+    }
 
     private List<Player> requestPlayers() {
 
@@ -20,7 +31,7 @@ public class BowlingGameLauncher {
         return IntStream.range(0, playerCount)
             .mapToObj(position -> {
                 String name = inputView.requestPlayer(position);
-                return new Player(name,position);
+                return new Player(name, position);
             }).collect(Collectors.toList());
     }
 
@@ -45,18 +56,5 @@ public class BowlingGameLauncher {
     private void playBowl(Player player, BowlingGame bowlingGame) {
         int downPin = inputView.requestDownPin(player);
         bowlingGame.play(player.getPosition(), downPin);
-    }
-
-    public static void main(String[] args) {
-        BowlingGameLauncher gameLauncher = new BowlingGameLauncher();
-
-        List<Player> players = gameLauncher.requestPlayers();
-
-        BowlingGame bowlingGame = gameLauncher.createGame(players.size());
-
-
-        for (int framePosition = 0; framePosition < 10; framePosition++) {
-            gameLauncher.playFrame(players, bowlingGame, framePosition);
-        }
     }
 }
