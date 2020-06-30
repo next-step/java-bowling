@@ -20,6 +20,10 @@ public class Frames {
         return this.frames.get(frames.size() - FRAME_SIZE_CALCULATION);
     }
 
+    public Frame getFrame(int frameNumber) {
+        return this.frames.get(frameNumber - FRAME_SIZE_CALCULATION);
+    }
+
     public int getCurrentFrameNumber() {
         return this.frames.indexOf(getCurrentFrame()) + FRAME_SIZE_CALCULATION;
     }
