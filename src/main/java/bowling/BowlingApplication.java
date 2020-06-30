@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.game.Frames;
 import bowling.game.ScoreBoard;
+import bowling.game.Scores;
 import bowling.player.domain.Player;
 import bowling.view.InputView;
 import bowling.view.OutputView;
@@ -15,14 +16,16 @@ public class BowlingApplication {
 
         ScoreBoard scoreBoard = new ScoreBoard(Arrays.asList(player));
         Frames frames = scoreBoard.findByPlayer(player);
+        Scores scores = new Scores(frames.getScores());
 
-        OutputView.printScoreBoard(player, frames);
+        OutputView.printScoreBoard(player, frames, scores);
 
         while (!frames.isEndAllFrames()) {
             int frameNumber = frames.getCurrentFrameNumber();
             frames.bowlCurrentFrame(InputView.inputPinCount(frameNumber));
+            scores = new Scores(frames.getScores());
 
-            OutputView.printScoreBoard(player, frames);
+            OutputView.printScoreBoard(player, frames, scores);
         }
     }
 }
