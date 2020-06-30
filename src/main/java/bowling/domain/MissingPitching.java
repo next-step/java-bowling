@@ -14,12 +14,9 @@ public class MissingPitching implements Pitching {
         return new MissingPitching(firstFallenPinNumber, secondFallenPinNumber);
     }
 
-    public Pitching toSparePitching(FallenPinNumber secondFallenPinNumber) {
-        return SparePitching.of(firstFallenPinNumber, secondFallenPinNumber);
-    }
 
     @Override
-    public boolean isOccupation() {
+    public boolean isFinished() {
         return true;
     }
 }

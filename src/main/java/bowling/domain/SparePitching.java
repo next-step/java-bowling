@@ -14,4 +14,8 @@ public class SparePitching implements Pitching {
         return new SparePitching(firstFallenPinNumber, secondFallenPinNumber);
     }
 
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

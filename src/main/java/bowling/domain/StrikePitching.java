@@ -11,4 +11,9 @@ public class StrikePitching implements Pitching {
     public static StrikePitching of(FallenPinNumber firstFallenPinNumber) {
         return new StrikePitching(firstFallenPinNumber);
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

@@ -3,9 +3,7 @@ package bowling.domain;
 public class FinalFrame implements Frame {
 
     private FrameNumber frameNumber;
-    private FallenPinNumber firstFallenPinNumber;
-    private FallenPinNumber secondFallenPinNumber;
-    private FallenPinNumber finalFallenPinNumber;
+    private Pitching pitching;
 
     private FinalFrame(FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
