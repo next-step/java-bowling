@@ -17,13 +17,15 @@ public class Score {
         this.remain = Pin.MAX_COUNT;
     }
 
-    public void add(Pin pin) {
+    public boolean add(Pin pin) {
         validateThrow(pin);
 
         insertShotHistory(pin);
 
         scores.add(pin);
         remain -= pin.getCount();
+
+        return scores.size() == MAX_THROW_COUNT;
     }
 
     private void validateThrow(Pin pin) {

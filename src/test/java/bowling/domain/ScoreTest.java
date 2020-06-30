@@ -85,4 +85,12 @@ class ScoreTest {
         score.add(new Pin(4));
         assertThat(score.getShotHistory()).contains(Shot.FIVE, Shot.FOUR);
     }
+
+    @DisplayName("스코어 추가 시 마다 모든 공을 처리한건지 여부를 반환")
+    @Test
+    public void add_ReturnIsScoreEnd() {
+        Score score = new Score();
+        assertThat(score.add(new Pin(5))).isFalse();
+        assertThat(score.add(new Pin(5))).isTrue();
+    }
 }
