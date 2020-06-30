@@ -15,7 +15,10 @@ public class KnockedDownPins {
 
   private KnockedDownPins(KnockDownNumber firstKnockDownNumber,
       KnockDownNumber secondKnockDownNumber) {
-    if (MAX_NUMBER_OF_PINS < firstKnockDownNumber.getIntValue() + secondKnockDownNumber.getIntValue()) {
+    int totalKnockDownNumber =
+        firstKnockDownNumber.getIntValue() + secondKnockDownNumber.getIntValue();
+
+    if (MAX_NUMBER_OF_PINS < totalKnockDownNumber) {
       throw new IllegalArgumentException("쓰러트린 핀이 " + MAX_NUMBER_OF_PINS + "개 이상이 될 수 없습니다.");
     }
 
@@ -55,7 +58,9 @@ public class KnockedDownPins {
   }
 
   public int getRemainingNumber() {
-    return MAX_NUMBER_OF_PINS - firstKnockDownNumber.getIntValue() - secondKnockDownNumber.getIntValue();
+    int totalKnockDownNumber =
+        firstKnockDownNumber.getIntValue() + secondKnockDownNumber.getIntValue();
+    return MAX_NUMBER_OF_PINS - totalKnockDownNumber;
   }
 
   public boolean isFirstKnockDownNumberNull() {
