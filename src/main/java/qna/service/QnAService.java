@@ -9,6 +9,7 @@ import qna.NotFoundException;
 import qna.domain.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 
 @Service("qnaService")
 public class QnAService {
@@ -32,24 +33,7 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
-        if (!question.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-
-        if(question.getAnswers().containOthers(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
-
-        question.delete();
-        question.getAnswers().deleteAll();
-
-        storeHistory(question);
-    }
-
-    private void storeHistory(Question question) {
-        DeleteHistories histories = new DeleteHistories();
-        histories.makeQuestionHistory(question);
-        histories.makeAnswersHistory(question.getAnswers());
+        DeleteHistories histories = question.delete(loginUser);
         deleteHistoryService.saveAll(histories.getHistories());
     }
 }

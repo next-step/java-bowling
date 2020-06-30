@@ -52,4 +52,12 @@ public class DeleteHistory {
         return "DeleteHistory [id=" + id + ", contentType=" + contentType + ", contentId=" + contentId + ", deletedBy="
                 + deletedBy + ", createDate=" + createDate + "]";
     }
+
+    public boolean isContentType(ContentType contentType) {
+        return this.contentType == contentType;
+    }
+
+    public boolean isOwner(User user) {
+        return this.deletedBy.equals(user);
+    }
 }
