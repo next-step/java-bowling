@@ -102,7 +102,7 @@ public class FinalFrame extends Frame {
     }
 
     private Score getFirstScore() {
-        return states.peek().getScore();
+        return states.get(0).getScore();
     }
 
     @Override
