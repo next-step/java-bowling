@@ -5,7 +5,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Player {
+
     private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z]{3}$");
+    private static final String PLAYER_EXCEPTION = "플레이어 이름은 영어로 3글자만 가능합니다.";
 
     private final String name;
 
@@ -17,12 +19,16 @@ public class Player {
     private void validateName(String name) {
         Matcher matcher = PATTERN.matcher(name);
         if (!matcher.find()){
-            throw new IllegalArgumentException("플레이어 이름은 영어로 3글자만 가능합니다.");
+            throw new IllegalArgumentException(PLAYER_EXCEPTION);
         }
     }
 
     public static Player of(String name){
         return new Player(name);
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -36,9 +42,5 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public String getName() {
-        return name;
     }
 }

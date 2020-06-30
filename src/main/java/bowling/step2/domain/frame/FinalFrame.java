@@ -4,14 +4,17 @@ import java.util.Objects;
 
 public class FinalFrame extends Frame{
 
+    private static final String FINAL_FRAME_EXCEPTION = "마지막 프레임 번호는 10만 가능합니다.";
+    private static final int FINAL_FRAME_NUMBER = 10;
+
     public FinalFrame(int frameNo) {
         super(frameNo);
     }
 
     @Override
     void validateFrameNo(int frameNo) {
-        if (frameNo != 10){
-            throw new IllegalArgumentException("마지막 프레임 번호는 10만 가능합니다.");
+        if (frameNo != FINAL_FRAME_NUMBER){
+            throw new IllegalArgumentException(FINAL_FRAME_EXCEPTION);
         }
     }
 

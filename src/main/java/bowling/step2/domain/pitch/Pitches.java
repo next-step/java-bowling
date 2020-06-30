@@ -9,8 +9,13 @@ import java.util.stream.Collectors;
 
 public class Pitches {
     private static final int FIRST_TRY = 0;
-    private static final int SECOND_TRY = 1;
+    private static final int NORMAL_PITCHES_END = 2;
+    private static final int BONUS_PITCHES_END = 3;
+    private static final int PINS_COUNT = 10;
     private static final int STRIKE = 10;
+    private static final int ONE = 1;
+    private static final String PITCHES_EXCEPTION = "일반 투구 2번의 합계는 10을 넘을 수 없습니다.";
+    private static final String PITCH_DELIMITER = "|";
 
     private final List<Pitch> pitches;
 
@@ -31,7 +36,7 @@ public class Pitches {
     }
 
     private Pitch getLastPitch() {
-        return pitches.get(pitches.size() - 1);
+        return pitches.get(pitches.size() - ONE);
     }
 
     public Pitches addFinalPitch(int pitch) {
@@ -55,17 +60,17 @@ public class Pitches {
 
     public void validateNormalPitches() {
         if (isFramePitchLimit()){
-            throw new IllegalArgumentException("일반 투구 2번의 합계는 10을 넘을 수 없습니다.");
+            throw new IllegalArgumentException(PITCHES_EXCEPTION);
         }
     }
 
     private boolean isFramePitchLimit() {
-        return pitches.size() == 2 && pitchSum() > 10;
+        return pitches.size() == NORMAL_PITCHES_END && pitchSum() > PINS_COUNT;
     }
 
     public void validateFinalPitches() {
         if (!isFirstPitchStrike() && isFramePitchLimit()){
-            throw new IllegalArgumentException("일반 투구 2번의 합계는 10을 넘을 수 없습니다.");
+            throw new IllegalArgumentException(PITCHES_EXCEPTION);
         }
     }
 
@@ -84,14 +89,14 @@ public class Pitches {
     }
 
     public boolean normalEnd() {
-        return pitchSum() == 10 || pitches.size() == 2;
+        return pitchSum() == PINS_COUNT || pitches.size() == NORMAL_PITCHES_END;
     }
 
     public boolean finalEnd() {
-        if (pitches.size() == 2 && pitchSum() < 10){
+        if (pitches.size() == NORMAL_PITCHES_END && pitchSum() < PINS_COUNT){
             return true;
         }
-        if (pitches.size() == 3){
+        if (pitches.size() == BONUS_PITCHES_END){
             return true;
         }
         return false;
@@ -118,6 +123,6 @@ public class Pitches {
     public String toString() {
         return pitches.stream()
                       .map(pitch -> pitch.pitchType.convertToDisplay(pitch.pitch))
-                      .collect(Collectors.joining("|"));
+                      .collect(Collectors.joining(PITCH_DELIMITER));
     }
 }

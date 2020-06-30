@@ -6,11 +6,16 @@ import java.util.stream.Collectors;
 
 public class Frames {
 
+    private static final int INIT_NUMBER = 1;
+    private static final int ONE = 1;
+    private static final String FRAME_FORMAT = "%-4s";
+    private static final String FRAME_DELIMITER = "|  ";
+
     List<Frame> frames;
 
     public Frames() {
         this.frames = new ArrayList<>();
-        frames.add(new NormalFrame(1));
+        frames.add(new NormalFrame(INIT_NUMBER));
     }
 
     public Frames(List<Frame> frames){
@@ -18,8 +23,6 @@ public class Frames {
     }
 
     public void progress(int pitch) {
-        //TODO 프레임들 다 채우기 (여기서 호출 -> 다음 프레임 진행(투구-> 점수 -> 프레임 저장)해서 여기다 더해라 라는 것)
-        // 바깥에서 while문 돌고 있으므로 frame 하나씩만 추가
         Frame frame = frames.get(frameIndex()).pitch(pitch);
 
         if(frame.pitchesOver()){
@@ -33,7 +36,7 @@ public class Frames {
     }
 
     private int frameIndex() {
-        return currentFrameNo() - 1;
+        return currentFrameNo() - ONE;
     }
 
     public int currentFrameNo(){
@@ -53,7 +56,7 @@ public class Frames {
     public String toString() {
         return frames.stream()
                      .filter(frame -> frame != null)
-                     .map(frame -> String.format("%-4s",frame.toString()))
-                     .collect(Collectors.joining("|  "));
+                     .map(frame -> String.format(FRAME_FORMAT, frame.toString()))
+                     .collect(Collectors.joining(FRAME_DELIMITER));
     }
 }

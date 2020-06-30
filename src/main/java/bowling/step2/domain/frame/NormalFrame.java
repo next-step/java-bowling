@@ -4,14 +4,20 @@ import java.util.Objects;
 
 public class NormalFrame extends Frame{
 
+    private static final int NORMAL_FRAME_MIN = 1;
+    private static final int NORMAL_FRAME_MAX = 9;
+    private static final int FINAL_FRAME_NUMBER = 10;
+    private static final int NEXT = 1;
+    private static final String NORMAL_FRAME_EXCEPTION = "일반 프레임의 범위를 벗어났습니다.";
+
     public NormalFrame(int frameNo) {
         super(frameNo);
     }
 
     @Override
     void validateFrameNo(int frameNo) {
-        if (frameNo < 1 || frameNo > 9){
-            throw new IllegalArgumentException("일반 프레임의 범위를 벗어났습니다.");
+        if (frameNo < NORMAL_FRAME_MIN || frameNo > NORMAL_FRAME_MAX){
+            throw new IllegalArgumentException(NORMAL_FRAME_EXCEPTION);
         }
     }
 
@@ -29,15 +35,15 @@ public class NormalFrame extends Frame{
 
     @Override
     public Frame nextFrame() {
-        if (nextFrameNo() == 10){
-            return new FinalFrame(10);
+        if (nextFrameNo() == FINAL_FRAME_NUMBER){
+            return new FinalFrame(FINAL_FRAME_NUMBER);
         }
         frameNo = nextFrameNo();
         return new NormalFrame(frameNo);
     }
 
     private int nextFrameNo() {
-        return frameNo + 1;
+        return frameNo + NEXT;
     }
 
     @Override
