@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -8,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Score: 각 프레임 별 점수")
 class ScoreTest {
@@ -27,5 +29,26 @@ class ScoreTest {
                 Arguments.of(new Pin(5), 5),
                 Arguments.of(new Pin(9), 1),
                 Arguments.of(new Pin(10), 0));
+    }
+
+    @DisplayName("최대 횟수 이상 투구하면 예외 발생")
+    @Test
+    public void add_WithPinOverMaxThowCount_ExceptionThrown() {
+        Score score = new Score();
+        score.add(new Pin(5));
+        score.add(new Pin(5));
+        assertThatThrownBy(() -> {
+            score.add(new Pin(5));
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("남은 핀 수보다 많이 넘기면 예외 발생")
+    @Test
+    public void add_WithPinOverRemain_ExceptionThrown() {
+        Score score = new Score();
+        score.add(new Pin(5));
+        assertThatThrownBy(() -> {
+            score.add(new Pin(10));
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 }

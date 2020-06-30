@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Score {
+    public static final int MAX_THROW_COUNT = 2;
     private final List<Pin> scores;
     private int remain;
 
@@ -13,11 +14,20 @@ public class Score {
     }
 
     public void add(Pin pin) {
+        validateThrow(pin);
+
+        scores.add(pin);
+        remain -= pin.getCount();
+    }
+
+    private void validateThrow(Pin pin) {
         if (remain - pin.getCount() < 0) {
             throw new IllegalArgumentException("remain can not less than 0");
         }
-        scores.add(pin);
-        remain -= pin.getCount();
+
+        if (scores.size() + 1 > MAX_THROW_COUNT) {
+            throw new IllegalArgumentException("Frame is finished");
+        }
     }
 
     public int getRemain() {
