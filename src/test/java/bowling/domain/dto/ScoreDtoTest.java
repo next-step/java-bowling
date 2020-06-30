@@ -48,7 +48,6 @@ public class ScoreDtoTest {
         return Stream.of(
                 Arguments.of(Score.ofStrike()),
                 Arguments.of(Score.ofSpare()),
-                Arguments.of(Score.INIT_SCORE),
                 Arguments.of(Score.UN_SCORE)
         );
     }

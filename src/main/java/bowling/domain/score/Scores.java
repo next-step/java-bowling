@@ -20,7 +20,7 @@ public class Scores {
     public void sumScore(final Frame frame) {
         Score score = frame.getScore();
 
-        if (!score.canCalculateScore() || score.isInitScore()) {
+        if (!score.canCalculateScore()) {
             return;
         }
 

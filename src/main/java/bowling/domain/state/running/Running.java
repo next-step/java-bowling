@@ -40,6 +40,6 @@ public abstract class Running implements State {
 
     @Override
     public Score getScore() {
-        return Score.INIT_SCORE;
+        return Score.UN_SCORE;
     }
 }

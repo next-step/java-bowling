@@ -78,7 +78,7 @@ public class ReadyTest {
     @Test
     public void getScore() {
         assertThat(Ready.getInstance().getScore())
-                .isEqualTo(Score.INIT_SCORE);
+                .isEqualTo(Score.UN_SCORE);
     }
 
     @DisplayName("점수를 계산할 수 있는 상태인지 확인")

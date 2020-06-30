@@ -112,18 +112,11 @@ public class ScoreTest {
         return Stream.of(
                 Arguments.of(Score.ofMiss(8), true),
                 Arguments.of(Score.valueOf(4, 0), true),
-                Arguments.of(Score.INIT_SCORE, false),
+                Arguments.of(Score.UN_SCORE, false),
                 Arguments.of(Score.ofStrike(), false),
                 Arguments.of(Score.ofSpare(), false),
                 Arguments.of(Score.UN_SCORE, false)
         );
-    }
-
-    @DisplayName("해당 점수가 초기 점수 설정(INIT_SCORE)값인지 확인")
-    @Test
-    public void isInitScore() {
-        assertThat(Score.INIT_SCORE.isInitScore())
-                .isTrue();
     }
 
     @DisplayName("자신의 점수를 반환")
@@ -143,7 +136,6 @@ public class ScoreTest {
 
     private static Stream<Arguments> getScoreException() {
         return Stream.of(
-                Arguments.of(Score.INIT_SCORE),
                 Arguments.of(Score.ofStrike()),
                 Arguments.of(Score.ofSpare()),
                 Arguments.of(Score.UN_SCORE)

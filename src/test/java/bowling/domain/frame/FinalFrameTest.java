@@ -90,9 +90,9 @@ public class FinalFrameTest {
     private static Stream<Arguments> getScore() {
         return Stream.of(
                 Arguments.of(FramesFixture.getSpareMissFrames(), Score.valueOf(14, 0), Score.ofMiss(8)),
-                Arguments.of(FramesFixture.getSpareFrames(), Score.ofSpare(), Score.INIT_SCORE),
+                Arguments.of(FramesFixture.getSpareFrames(), Score.ofSpare(), Score.UN_SCORE),
                 Arguments.of(FramesFixture.getTwoStrikeFrames(), Score.valueOf(20, 1), Score.ofStrike()),
-                Arguments.of(FramesFixture.getStrikeHitFrames(), Score.valueOf(19, 1), Score.INIT_SCORE),
+                Arguments.of(FramesFixture.getStrikeHitFrames(), Score.valueOf(19, 1), Score.UN_SCORE),
                 Arguments.of(FramesFixture.getTwoMissFrames(), Score.ofMiss(5), Score.ofMiss(8))
         );
     }

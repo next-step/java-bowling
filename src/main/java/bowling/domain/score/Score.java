@@ -9,8 +9,7 @@ public class Score {
 
     public static final int NOT_ALLOCATED = -1;
     public static final int ZERO = 0;
-    public static final Score UN_SCORE = new Score(NOT_ALLOCATED, NOT_ALLOCATED);
-    public static final Score INIT_SCORE = new Score(ZERO, NOT_ALLOCATED);
+    public static final Score UN_SCORE = new Score(ZERO, NOT_ALLOCATED);
 
     private final int score;
     private final int extraBonusCount;
@@ -54,10 +53,6 @@ public class Score {
 
     private boolean isAddableScore() {
         return !this.equals(UN_SCORE);
-    }
-
-    public boolean isInitScore() {
-        return this.equals(INIT_SCORE);
     }
 
     public int getScore() {
