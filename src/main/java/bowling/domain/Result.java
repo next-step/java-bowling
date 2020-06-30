@@ -28,10 +28,7 @@ public enum Result {
 		}
 	};
 
-	public static Result findByScores(Scores scores) {
-		Score first = scores.getFirst();
-		Score second = scores.getSecond();
-
+	public static Result findByScores(Score first, Score second) {
 		return Arrays.stream(values())
 			.filter(result -> result.isMatch(first, second))
 			.findAny()
