@@ -9,6 +9,7 @@ public class Scores {
 
 	private Score first;
 	private Score second;
+	private Score bonus;
 
 	private Scores(Score first) {
 		this.first = first;
@@ -37,12 +38,21 @@ public class Scores {
 		this.second = second;
 	}
 
+	public void addBonusScore(Score bonus) {
+		first.add(bonus);
+		this.bonus = bonus;
+	}
+
 	public Score getFirst() {
 		return first;
 	}
 
 	public Score getSecond() {
 		return second;
+	}
+
+	public Score getBonus() {
+		return bonus;
 	}
 
 	public Result checkResult() {

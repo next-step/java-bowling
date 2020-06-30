@@ -2,11 +2,17 @@ package bowling.domain.frame;
 
 import static bowling.util.FrameSize.*;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+import bowling.domain.result.Result;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
 
 public class FinalFrame implements Frame {
 
+	private static final List<Result> BONUS_SCORE_RESULT = Arrays.asList(Result.STRIKE, Result.SPARE);
 	private final int index;
 	private final Scores scores;
 
@@ -19,12 +25,19 @@ public class FinalFrame implements Frame {
 		return new FinalFrame(Scores.of());
 	}
 
+	@Override
 	public void addFirstScore(Score firstScore) {
 		scores.addFirstScore(firstScore);
 	}
 
+	@Override
 	public void addSecondScore(Score second) {
 		scores.addSecondScore(second);
+	}
+
+	@Override
+	public void addBonusScore(Score bonus) {
+		scores.addBonusScore(bonus);
 	}
 
 	@Override
@@ -34,7 +47,13 @@ public class FinalFrame implements Frame {
 
 	@Override
 	public boolean canPlayMore() {
-		return scores.canPlayMore();
+		if (Objects.isNull(scores.getFirst()) || Objects.isNull(scores.getSecond())) {
+			return true;
+		}
+		if (Objects.isNull(scores.getBonus()) && BONUS_SCORE_RESULT.contains(scores.checkResult())) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
