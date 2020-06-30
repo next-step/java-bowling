@@ -18,7 +18,9 @@ public class BowlingGameApplication {
 
         List<BowlingGame> bowlingGames = initGames(players);
 
-        bowlFirstFrames(bowlingGames);
+        doFirstThrow(bowlingGames);
+
+        doMiddleThrows(bowlingGames);
 
 //        bowlRemainFrames(bowlingGame);
 //
@@ -45,20 +47,27 @@ public class BowlingGameApplication {
                 .collect(Collectors.toList());
     }
 
-    private static void bowlFirstFrames(List<BowlingGame> bowlingGames) {
+    private static void doFirstThrow(List<BowlingGame> bowlingGames) {
         for (BowlingGame bowlingGame : bowlingGames) {
-            bowlFirstFrame(bowlingGame);
+            bowlingGame.bowlFirst(InputView.getNumberOfHitPin(1, bowlingGame.getPlayerName()));
             OutputView.printBowlingGames(bowlingGames);
         }
     }
 
-    private static void bowlFirstFrame(BowlingGame bowlingGame) {
-        List<BowlingGameResult> firstResults =
-                bowlingGame.bowlFirst(InputView.getNumberOfHitPin(1, bowlingGame.getPlayerName()));
-        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), firstResults);
+    private static void doMiddleThrows(List<BowlingGame> bowlingGames) {
+        for (int frameIndex = 1; frameIndex < 10; frameIndex++) {
+            for (BowlingGame bowlingGame : bowlingGames) {
+                doNotCompletedFrame(bowlingGame, frameIndex);
+                OutputView.printBowlingGames(bowlingGames);
+            }
+            for (BowlingGame bowlingGame : bowlingGames) {
+                doNextFrame(bowlingGame, frameIndex);
+                OutputView.printBowlingGames(bowlingGames);
+            }
+        }
     }
 
-    private static void bowlRemainFrames(BowlingGame bowlingGame) {
+    private static void bowlMiddleFrames(BowlingGame bowlingGame) {
         for (int frameIndex = 1; frameIndex < 10; frameIndex++) {
             doNotCompletedFrame(bowlingGame, frameIndex);
             if (breakWhenFinalFrame(frameIndex)) break;
@@ -68,9 +77,7 @@ public class BowlingGameApplication {
 
     private static void doNotCompletedFrame(BowlingGame bowlingGame, int frameIndex) {
         while (!bowlingGame.isCurrentFrameCompleted()) {
-            List<BowlingGameResult> currentFrameResults =
-                    bowlingGame.bowlCurrentFrame(InputView.getNumberOfHitPin(frameIndex, bowlingGame.getPlayerName()));
-            OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), currentFrameResults);
+            bowlingGame.bowlCurrentFrame(InputView.getNumberOfHitPin(frameIndex, bowlingGame.getPlayerName()));
         }
     }
 
@@ -79,10 +86,7 @@ public class BowlingGameApplication {
     }
 
     private static void doNextFrame(BowlingGame bowlingGame, int frameIndex) {
-        List<BowlingGameResult> nextFrameResults =
-                bowlingGame.toNextFrame(
-                        InputView.getNumberOfHitPin(frameIndex + 1, bowlingGame.getPlayerName()));
-        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), nextFrameResults);
+        bowlingGame.toNextFrame(InputView.getNumberOfHitPin(frameIndex + 1, bowlingGame.getPlayerName()));
     }
 
     private static void bowlFinalFrame(BowlingGame bowlingGame) {
