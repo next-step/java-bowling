@@ -8,18 +8,18 @@ import bowling.domain.player.Player;
 
 import java.util.List;
 
-public class BowlingGame {
+public class GameSet {
 
     private final Player player;
     private final Frames frames;
 
-    private BowlingGame(final Player player) {
+    private GameSet(final Player player) {
         this.player = player;
         frames = Frames.newInstance();
     }
 
-    public static BowlingGame of(final Player player) {
-        return new BowlingGame(player);
+    public static GameSet of(final Player player) {
+        return new GameSet(player);
     }
 
     public void play(final int hitCount) {

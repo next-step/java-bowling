@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.BowlingGame;
+import bowling.domain.GameSet;
 import bowling.domain.dto.ScoreDto;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.frame.FrameNumber;
@@ -24,18 +24,18 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printHeader(final BowlingGame bowlingGame) {
-        printShape(bowlingGame);
+    public static void printHeader(final GameSet gameSet) {
+        printShape(gameSet);
     }
 
-    public static void printShape(final BowlingGame bowlingGame) {
+    public static void printShape(final GameSet gameSet) {
         printFramesHeader();
 
-        printNameInfo(bowlingGame.getPlayerName());
-        printResult(bowlingGame.getFrameResults());
+        printNameInfo(gameSet.getPlayerName());
+        printResult(gameSet.getFrameResults());
 
         printNameInfo(StringUtil.EMPTY);
-        printScore(bowlingGame.getScoreResults());
+        printScore(gameSet.getScoreResults());
     }
 
     private static void printFramesHeader() {
