@@ -5,6 +5,11 @@ public class Gutter extends FramePins {
         super(firstPins, secondPins);
     }
 
+    @Override
+    public boolean hasNext() {
+        return false;
+    }
+
     public static Gutter of() {
         return new Gutter(Pins.of(0), Pins.of(0));
     }

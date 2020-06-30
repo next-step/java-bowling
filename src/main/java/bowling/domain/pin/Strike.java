@@ -17,6 +17,11 @@ public class Strike extends FramePins {
     }
 
     @Override
+    public boolean hasNext() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return super.firstPins.toString();
     }

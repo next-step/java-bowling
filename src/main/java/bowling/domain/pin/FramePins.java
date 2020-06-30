@@ -21,6 +21,8 @@ public abstract class FramePins {
         }
     }
 
+    public abstract boolean hasNext();
+
     @Override
     public String toString() {
         return firstPins.toString() + "|" + secondPins.toString();

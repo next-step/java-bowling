@@ -10,6 +10,11 @@ public class FirstFramePins extends FramePins {
     }
 
     @Override
+    public boolean hasNext() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return super.firstPins.toString();
     }

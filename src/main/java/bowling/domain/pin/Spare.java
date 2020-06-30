@@ -5,6 +5,11 @@ public class Spare extends FramePins {
         super(firstPins, secondPins);
     }
 
+    @Override
+    public boolean hasNext() {
+        return false;
+    }
+
     public static Spare of(Pins firstPins, Pins secondPins) {
         validate(firstPins, secondPins);
         return new Spare(firstPins, secondPins);
