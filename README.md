@@ -8,26 +8,6 @@
 10 프레임은 스트라이크이거나 스페어이면 한 번을 더 투구할 수 있다.
 
 
-1. 볼링 점수를 생성한다 - RandomGenerator
-- 볼링점수 vo - o
-- RandomScoreGenerator -> ScoreGenerator - o
-
-2. 점수를 입력받으면 현재프레임 또는 다음 프레임을 반환한다. 
-- abstract class Frame 
-- NormalFrame : return this Or nextFrame - Score 누적
-- FinalFrame : return totalScore
-  
-- Frame
-    - Score: (총 합)
-    - Type: STRIKE, SPARE, NONE     
-
-- 결과) BowlingResults 
--> Map<Round, Frame> 
-
-3. 입출력
-- InputView: 사용자의 이름을 입력받는다 (영어 세글자) - GameUser (o)
-- OutputView: 볼링 결과판을 출력한다(X, /) 
-
 
 # 볼링 게임 점수판
 ## 진행 방법
