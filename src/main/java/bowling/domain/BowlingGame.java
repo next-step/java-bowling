@@ -115,6 +115,10 @@ public class BowlingGame {
         return this.player.getName();
     }
 
+    public List<BowlingGameResult> getBowlingGameResults() {
+        return new ArrayList<>(this.bowlingGameResults);
+    }
+
     private void applyBonusEighthFrame(Frame frame) {
         BowlingGameResult eightBowlingGameResult = this.bowlingGameResults.get(lastIndexOfBowlingGameResults() - 2);
         this.bowlingGameResults.set(lastIndexOfBowlingGameResults() - 2,

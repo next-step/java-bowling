@@ -15,14 +15,14 @@ public class InputView {
     }
 
     public static String getPlayerName() {
-        System.out.println("플레이어 이름은(3 english letters)?: ");
+        System.out.print("플레이어 이름은(3 english letters)?: ");
         String userName = USER_INPUT.nextLine();
         validateUserName(userName);
         return userName;
     }
 
-    public static int getNumberOfHitPin(int frameIndex) {
-        System.out.println(frameIndex + "프레임 투구 : ");
+    public static int getNumberOfHitPin(int frameIndex, String playerName) {
+        System.out.print(playerName + "'s " + frameIndex + "프레임 투구 : ");
         int numberOfHitPin = USER_INPUT.nextInt();
         USER_INPUT.nextLine();  // 스캐너 초기화용
 

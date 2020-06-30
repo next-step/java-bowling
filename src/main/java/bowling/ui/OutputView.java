@@ -23,6 +23,13 @@ public class OutputView {
         System.out.println("|      |      |      |      |      |      |      |      |      |      |      |");
     }
 
+    public static void printBowlingGames(List<BowlingGame> bowlingGames) {
+        printBowlingGameHeader();
+        for (BowlingGame bowlingGame : bowlingGames) {
+            printBowlingGameResult(bowlingGame.getPlayerName(), bowlingGame.getBowlingGameResults());
+        }
+    }
+
     public static void printBowlingGameResult(String playerName, List<BowlingGameResult> bowlingGameResults) {
         List<FrameResults> frameResults = bowlingGameResults.stream()
                 .map(BowlingGameResult::getFrameResults)
@@ -32,7 +39,6 @@ public class OutputView {
                 .map(BowlingGameResult::getFrameScore)
                 .collect(Collectors.toList());
 
-        System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
         System.out.println("|  " +
                 playerName + " |" +
                 parsePlayerResult(frameResults) +
