@@ -16,21 +16,10 @@ public class BowlingGameApplication {
         OutputView.printEmptyResults(players);
 
         List<BowlingGamePlayer> bowlingGamePlayers = initGames(players);
+        BowlingGame bowlingGame = BowlingGame.of(bowlingGamePlayers);
 
         for (int i = 1; i < 11; i++) {
-            playBowlingGame(i, bowlingGamePlayers);
-        }
-    }
-
-    private static void playBowlingGame(int i, List<BowlingGamePlayer> bowlingGamePlayers) {
-        if (i == 1) {
-            doFirstThrow(bowlingGamePlayers);
-        }
-        if (i == 10) {
-            doFinalFrame(bowlingGamePlayers);
-        }
-        if (i != 1 && i !=10) {
-            doMiddleFrame(i, bowlingGamePlayers);
+            bowlingGame.playBowlingGame(i);
         }
     }
 
@@ -52,41 +41,5 @@ public class BowlingGameApplication {
         return players.stream()
                 .map(BowlingGamePlayer::play)
                 .collect(Collectors.toList());
-    }
-
-    private static void doFirstThrow(List<BowlingGamePlayer> bowlingGamePlayers) {
-        for (BowlingGamePlayer bowlingGamePlayer : bowlingGamePlayers) {
-            bowlingGamePlayer.bowlFirst(InputView.getNumberOfHitPin(1, bowlingGamePlayer.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGamePlayers);
-            doNotCompletedFrame(1, bowlingGamePlayers, bowlingGamePlayer);
-        }
-    }
-
-    private static void doMiddleFrame(int frameCount, List<BowlingGamePlayer> bowlingGamePlayers) {
-        for (BowlingGamePlayer bowlingGamePlayer : bowlingGamePlayers) {
-            bowlingGamePlayer.toNextFrame(InputView.getNumberOfHitPin(frameCount, bowlingGamePlayer.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGamePlayers);
-            doNotCompletedFrame(frameCount, bowlingGamePlayers, bowlingGamePlayer);
-        }
-    }
-
-    private static void doNotCompletedFrame(int frameCount, List<BowlingGamePlayer> bowlingGamePlayers, BowlingGamePlayer bowlingGamePlayer) {
-        if (!bowlingGamePlayer.isCurrentFrameCompleted()) {
-            bowlingGamePlayer.bowlCurrentFrame(InputView.getNumberOfHitPin(frameCount, bowlingGamePlayer.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGamePlayers);
-        }
-    }
-
-    private static void doFinalFrame(List<BowlingGamePlayer> bowlingGamePlayers) {
-        for (BowlingGamePlayer bowlingGamePlayer : bowlingGamePlayers) {
-            bowlingGamePlayer.finalFrameBowlFirst(InputView.getNumberOfHitPin(10, bowlingGamePlayer.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGamePlayers);
-
-            bowlingGamePlayer.finalFrameBowlSecond(InputView.getNumberOfHitPin(10, bowlingGamePlayer.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGamePlayers);
-
-            bowlingGamePlayer.finalFrameBowlLast(InputView.getNumberOfHitPin(10, bowlingGamePlayer.getPlayerName()));
-            OutputView.printBowlingGames(bowlingGamePlayers);
-        }
     }
 }

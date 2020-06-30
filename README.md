@@ -302,9 +302,9 @@
 - [X] 한 플레이어가 해당 프레임을 모두 완료한 후에 다음 프레임으로 넘어가도록 구현
 - [ ] 객체지향 생활체조 원칙 점검
     - [ ] BowlingGame의 BowlingGameResult 컬렉션을 일급 컬렉션으로 리팩토링
-    - [ ] BowlingGameApplication에서 BowlingGame 컬렉션을 일급 컬렉션으로 리팩토링
+    - [X] BowlingGameApplication에서 BowlingGame 컬렉션을 일급 컬렉션으로 리팩토링
         - [X] 기존 BowlingGame을 BowlingGamePlayer로 이름 변경
-        - [ ] 현재 BowlingGameApplication에서 컬렉션 뭉치로 실행하는 로직을 BowlingGame 클래스로 이동
+        - [X] 현재 BowlingGameApplication에서 컬렉션 뭉치로 실행하는 로직을 BowlingGame 클래스로 이동
     - [ ] 인스턴스 변수 3개 이상인 클래스 있는지 확인하기
     - [ ] 디미터 법칙 어긴 부분 없는지 확인하기
     - [ ] 정말 최대한 게터를 다 걷어냈는지 확인하기
