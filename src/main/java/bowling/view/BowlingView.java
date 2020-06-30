@@ -47,7 +47,7 @@ public class BowlingView {
     frameDTOs.stream()
         .limit(endpoint)
         .forEach(frameDTO -> {
-          sb.append(wrappingWithSpaces(frameDTO.toString()))
+          sb.append(wrappingWithSpaces(frameDTO.getFrameResult()))
               .append(BAR);
         });
 
@@ -56,13 +56,13 @@ public class BowlingView {
 
   private static String getLastFrameMsg(List<FrameDTO> frameDTOs) {
     StringBuilder sb = new StringBuilder(
-        frameDTOs.get(BowlingGame.MAX_NUMBER_OF_FRAMES - 1).toString());
+        frameDTOs.get(BowlingGame.MAX_NUMBER_OF_FRAMES - 1).getFrameResult());
 
     frameDTOs.stream()
         .filter(FrameDTO::isBonusFrame)
         .forEach(frameDTO -> {
           sb.append(BAR)
-              .append(frameDTO.toString());
+              .append(frameDTO.getFrameResult());
         });
 
     return wrappingWithSpaces(sb.toString());

@@ -38,7 +38,7 @@ class StrikeTest {
   void testToString() {
     FrameStatus frameStatus = new Strike(new RequiredFirstRoll(0));
 
-    assertThat(frameStatus.toString(KnockedDownPinsTest.knockedDownPins_Strike)).isEqualTo("X");
+    assertThat(frameStatus.getResultBy(KnockedDownPinsTest.knockedDownPins_Strike)).isEqualTo("X");
   }
 
 }

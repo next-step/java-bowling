@@ -33,7 +33,7 @@ public class Spare implements FrameStatus {
   }
 
   @Override
-  public String toString(KnockedDownPins pins) {
+  public String getResultBy(KnockedDownPins pins) {
     if (pins.getRemainingNumber() != 0) {
       throw new IllegalArgumentException("스페어가 아닙니다.");
     }

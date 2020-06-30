@@ -20,8 +20,15 @@ public class FrameDTO {
     return frameStatus.isBonus();
   }
 
+  public String getFrameResult() {
+    return frameStatus.getResultBy(pins);
+  }
+
   @Override
   public String toString() {
-    return frameStatus.toString(pins);
+    return "FrameDTO{" +
+        "pins=" + pins +
+        ", frameStatus=" + frameStatus +
+        '}';
   }
 }

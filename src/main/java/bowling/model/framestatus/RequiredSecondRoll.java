@@ -41,7 +41,7 @@ public class RequiredSecondRoll implements FrameStatus {
   }
 
   @Override
-  public String toString(KnockedDownPins pins) {
+  public String getResultBy(KnockedDownPins pins) {
     return String.valueOf(pins.getFirstKnockDownNumber())
         .replace(ZERO.toString(), GUTTER.toString());
   }

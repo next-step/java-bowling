@@ -38,6 +38,6 @@ class SpareTest {
   void testToString() {
     FrameStatus frameStatus = new Spare(new RequiredFirstRoll(0));
 
-    assertThat(frameStatus.toString(KnockedDownPinsTest.knockedDownPins5_5)).isEqualTo("5|/");
+    assertThat(frameStatus.getResultBy(KnockedDownPinsTest.knockedDownPins5_5)).isEqualTo("5|/");
   }
 }

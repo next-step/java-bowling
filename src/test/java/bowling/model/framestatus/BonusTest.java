@@ -21,13 +21,13 @@ class BonusTest {
   void testToString_STRKE() {
     FrameStatus frameStatus = new Bonus();
 
-    assertThat(frameStatus.toString(KnockedDownPinsTest.knockedDownPins_Strike)).isEqualTo("X");
+    assertThat(frameStatus.getResultBy(KnockedDownPinsTest.knockedDownPins_Strike)).isEqualTo("X");
   }
 
   @Test
   void testToString() {
     FrameStatus frameStatus = new Bonus();
 
-    assertThat(frameStatus.toString(KnockedDownPinsTest.knockedDownPins5_5)).isEqualTo("5");
+    assertThat(frameStatus.getResultBy(KnockedDownPinsTest.knockedDownPins5_5)).isEqualTo("5");
   }
 }

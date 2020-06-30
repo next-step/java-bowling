@@ -40,7 +40,7 @@ class RequiredFirstRollTest {
 
   @Test
   void testToString() {
-    assertThat(new RequiredFirstRoll(0).toString(KnockedDownPinsTest.knockedDownPins0_0))
+    assertThat(new RequiredFirstRoll(0).getResultBy(KnockedDownPinsTest.knockedDownPins0_0))
         .isEqualTo("");
   }
 }

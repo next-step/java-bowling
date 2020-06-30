@@ -13,5 +13,5 @@ public interface FrameStatus {
 
   boolean isBonus();
 
-  String toString(KnockedDownPins pins);
+  String getResultBy(KnockedDownPins pins);
 }

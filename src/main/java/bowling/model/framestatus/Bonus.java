@@ -29,7 +29,7 @@ public class Bonus implements FrameStatus {
   }
 
   @Override
-  public String toString(KnockedDownPins pins) {
+  public String getResultBy(KnockedDownPins pins) {
     if (pins.getFirstKnockDownNumber() == 10) {
       return STRIKE.toString();
     }

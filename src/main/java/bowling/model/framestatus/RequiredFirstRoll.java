@@ -39,7 +39,7 @@ public class RequiredFirstRoll implements FrameStatus {
   }
 
   @Override
-  public String toString(KnockedDownPins pins) {
+  public String getResultBy(KnockedDownPins pins) {
     return BLANK.toString();
   }
 

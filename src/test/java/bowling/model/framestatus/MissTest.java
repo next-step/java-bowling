@@ -20,7 +20,7 @@ class MissTest {
   void testToString() {
     FrameStatus frameStatus = new Miss(new RequiredFirstRoll(0));
 
-    assertThat(frameStatus.toString(KnockedDownPinsTest.knockedDownPins0_1)).isEqualTo("-|1");
-    assertThat(frameStatus.toString(KnockedDownPinsTest.knockedDownPins2_5)).isEqualTo("2|5");
+    assertThat(frameStatus.getResultBy(KnockedDownPinsTest.knockedDownPins0_1)).isEqualTo("-|1");
+    assertThat(frameStatus.getResultBy(KnockedDownPinsTest.knockedDownPins2_5)).isEqualTo("2|5");
   }
 }
