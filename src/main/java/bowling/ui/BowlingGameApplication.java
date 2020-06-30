@@ -1,7 +1,6 @@
 package bowling.ui;
 
 import bowling.domain.BowlingGame;
-import bowling.domain.BowlingGameResult;
 import bowling.domain.Player;
 
 import java.util.ArrayList;
@@ -22,9 +21,7 @@ public class BowlingGameApplication {
 
         doMiddleThrows(bowlingGames);
 
-//        bowlRemainFrames(bowlingGame);
-//
-//        bowlFinalFrame(bowlingGame);
+        doFinalThrows(bowlingGames);
     }
 
     private static List<Player> readyPlayers(int numberOfPlayer) {
@@ -68,14 +65,6 @@ public class BowlingGameApplication {
         }
     }
 
-    private static void bowlMiddleFrames(BowlingGame bowlingGame) {
-        for (int frameIndex = 1; frameIndex < 10; frameIndex++) {
-            doNotCompletedFrame(bowlingGame, frameIndex);
-            if (breakWhenFinalFrame(frameIndex)) break;
-            doNextFrame(bowlingGame, frameIndex);
-        }
-    }
-
     private static void doNotCompletedFrame(BowlingGame bowlingGame, int frameIndex) {
         while (!bowlingGame.isCurrentFrameCompleted()) {
             bowlingGame.bowlCurrentFrame(InputView.getNumberOfHitPin(frameIndex, bowlingGame.getPlayerName()));
@@ -90,22 +79,16 @@ public class BowlingGameApplication {
         bowlingGame.toNextFrame(InputView.getNumberOfHitPin(frameIndex + 1, bowlingGame.getPlayerName()));
     }
 
-    private static void bowlFinalFrame(BowlingGame bowlingGame) {
-        List<BowlingGameResult> finalFirstThrown =
-                bowlingGame.finalFrameBowlFirst(
-                        InputView.getNumberOfHitPin(10, bowlingGame.getPlayerName()));
-        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), finalFirstThrown);
+    private static void doFinalThrows(List<BowlingGame> bowlingGames) {
+        for (BowlingGame bowlingGame : bowlingGames) {
+            bowlingGame.finalFrameBowlFirst(InputView.getNumberOfHitPin(10, bowlingGame.getPlayerName()));
+            OutputView.printBowlingGames(bowlingGames);
 
-        List<BowlingGameResult> finalSecondThrown =
-                bowlingGame.finalFrameBowlSecond(
-                        InputView.getNumberOfHitPin(10, bowlingGame.getPlayerName()));
-        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), finalSecondThrown);
+            bowlingGame.finalFrameBowlSecond(InputView.getNumberOfHitPin(10, bowlingGame.getPlayerName()));
+            OutputView.printBowlingGames(bowlingGames);
 
-        if (!bowlingGame.isCurrentFrameCompleted()) {
-            List<BowlingGameResult> lastThrown
-                    = bowlingGame.finalFrameBowlLast(
-                            InputView.getNumberOfHitPin(10, bowlingGame.getPlayerName()));
-            OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), lastThrown);
+            bowlingGame.finalFrameBowlLast(InputView.getNumberOfHitPin(10, bowlingGame.getPlayerName()));
+            OutputView.printBowlingGames(bowlingGames);
         }
     }
 }

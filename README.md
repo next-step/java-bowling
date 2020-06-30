@@ -294,9 +294,9 @@
     - [X] 마지막 프레임 진행은 아예 분리해버릴 것
 
 ## Step4. 볼링 점수판(n명)
-- [ ] 기능 요구사항 구현
-    - [ ] BowlingGameApplication 에서 BowlingGame 컬렉션을 관리하도록 기능 개선
-    - [ ] 여러명을 입력받을 수 있도록 input 기능 개선
+- [X] 기능 요구사항 구현
+    - [X] BowlingGameApplication 에서 BowlingGame 컬렉션을 관리하도록 기능 개선
+    - [X] 여러명을 입력받을 수 있도록 input 기능 개선
 - [ ] 객체지향 생활체조 원칙 점검
     - [ ] BowlingGame의 BowlingGameResult 컬렉션을 일급 컬렉션으로 리팩토링
     - [ ] BowlingGameApplication에서 BowlingGame 컬렉션을 일급 컬렉션으로 리팩토링
