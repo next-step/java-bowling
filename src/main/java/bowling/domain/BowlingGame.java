@@ -6,7 +6,7 @@ import bowling.domain.frame.Frames;
 import java.util.List;
 
 public class BowlingGame {
-    private static final int LAST_GAME_INDEX = 10;
+    private static final int MAX_INDEX = 11;
 
     private final Player player;
     private final Frames frames;
@@ -30,7 +30,7 @@ public class BowlingGame {
     }
 
     public boolean isLastFrame() {
-        return currentIndex - 1 == LAST_GAME_INDEX;
+        return currentIndex == MAX_INDEX;
     }
 
     public List<Frame> getFrames() {
