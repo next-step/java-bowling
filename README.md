@@ -300,14 +300,14 @@
 - [x] 9프레임 출력 디버깅 필요
     - [X] 가장 마지막 플레이어가 9프레임 마지막 투구 시 이상한 결과가 추가로 나옴
 - [X] 한 플레이어가 해당 프레임을 모두 완료한 후에 다음 프레임으로 넘어가도록 구현
-- [ ] 객체지향 생활체조 원칙 점검
-    - [ ] BowlingGamePlayer의 BowlingGameResult 컬렉션을 일급 컬렉션으로 리팩토링
-        - [ ] BowlingGameResults
-            - [ ] BowlingGameResult 컬렉션을 주입받아서 객체를 생성할 수 있다.
-            - [ ] 크기를 확인할 수 있다.
-            - [ ] 새로운 결과를 추가할 수 있다.
-            - [ ] 일반 보너스(스트라이크, 스페어)를 적용할 수 있다.
-            - [ ] 더블 보너스(연속 스트라이크)를 적용할 수 있다.
+- [X] 객체지향 생활체조 원칙 점검
+    - [X] BowlingGamePlayer의 BowlingGameResult 컬렉션을 일급 컬렉션으로 리팩토링
+        - [X] BowlingGameResults
+            - [X] BowlingGameResult 컬렉션을 주입받아서 객체를 생성할 수 있다.
+            - [X] 크기를 확인할 수 있다.
+            - [X] 새로운 결과를 추가할 수 있다.
+            - [X] 일반 보너스(스트라이크, 스페어)를 적용할 수 있다.
+            - [X] 더블 보너스(연속 스트라이크)를 적용할 수 있다.
     - [X] BowlingGameApplication에서 BowlingGame 컬렉션을 일급 컬렉션으로 리팩토링
         - [X] 기존 BowlingGame을 BowlingGamePlayer로 이름 변경
         - [X] 현재 BowlingGameApplication에서 컬렉션 뭉치로 실행하는 로직을 BowlingGame 클래스로 이동

@@ -8,7 +8,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Stream;
 
 import static bowling.domain.FakeDataForTest.*;
@@ -30,10 +31,12 @@ class BowlingGamePlayerTests {
     void bowlFirstTest(int numberOfHitPin, FrameResults frameResults, FrameScore frameScore) {
         BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
 
-        List<BowlingGameResult> bowlingGameResults = bowlingGamePlayer.bowlFirst(numberOfHitPin);
+        BowlingGameResults bowlingGameResults = bowlingGamePlayer.bowlFirst(numberOfHitPin);
 
         assertThat(bowlingGameResults.size()).isEqualTo(1);
-        assertThat(bowlingGameResults.get(0)).isEqualTo(new BowlingGameResult(frameResults, frameScore));
+        assertThat(bowlingGameResults)
+                .isEqualTo(new BowlingGameResults(
+                        Collections.singletonList(new BowlingGameResult(frameResults, frameScore))));
     }
     public static Stream<Arguments> bowlFirstResource() {
         return Stream.of(
@@ -55,13 +58,15 @@ class BowlingGamePlayerTests {
     void bowlCurrentFrameTest() {
         BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
         bowlingGamePlayer.bowlFirst(FIVE);
+        BowlingGameResults expected = new BowlingGameResults(Collections.singletonList(new BowlingGameResult(
+                NORMAL_FIVE_SPARE_FRAME_RESULT,
+                new FrameScore(FrameScoreStatus.NOT_READY, 10)))
+        );
 
-        List<BowlingGameResult> bowlingGameResults = bowlingGamePlayer.bowlCurrentFrame(FIVE);
+        BowlingGameResults bowlingGameResults = bowlingGamePlayer.bowlCurrentFrame(FIVE);
 
         assertThat(bowlingGameResults.size()).isEqualTo(1);
-        assertThat(bowlingGameResults.get(0))
-                .isEqualTo(new BowlingGameResult(NORMAL_FIVE_SPARE_FRAME_RESULT,
-                        new FrameScore(FrameScoreStatus.NOT_READY, 10)));
+        assertThat(bowlingGameResults).isEqualTo(expected);
     }
 
     @DisplayName("스페어 프레임 후 프레임을 진행하고 결과를 확인 할 수 있다.")
@@ -70,16 +75,15 @@ class BowlingGamePlayerTests {
         BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
         bowlingGamePlayer.bowlFirst(FIVE);
         bowlingGamePlayer.bowlCurrentFrame(FIVE);
+        BowlingGameResults expected = new BowlingGameResults(Arrays.asList(
+                new BowlingGameResult(NORMAL_FIVE_SPARE_FRAME_RESULT, new FrameScore(FrameScoreStatus.COMPLETE, 15)),
+                new BowlingGameResult(NORMAL_FIVE_IN_PROGRESS_FRAME_RESULT, new FrameScore(FrameScoreStatus.NOT_READY, 5))
+        ));
 
-        List<BowlingGameResult> bowlingGameResults = bowlingGamePlayer.toNextFrame(FIVE);
+        BowlingGameResults bowlingGameResults = bowlingGamePlayer.toNextFrame(FIVE);
 
         assertThat(bowlingGameResults.size()).isEqualTo(2);
-        assertThat(bowlingGameResults.get(0))
-                .isEqualTo(new BowlingGameResult(NORMAL_FIVE_SPARE_FRAME_RESULT,
-                        new FrameScore(FrameScoreStatus.COMPLETE, 15)));
-        assertThat(bowlingGameResults.get(1))
-                .isEqualTo(new BowlingGameResult(NORMAL_FIVE_IN_PROGRESS_FRAME_RESULT,
-                        new FrameScore(FrameScoreStatus.NOT_READY, 5)));
+        assertThat(bowlingGameResults).isEqualTo(expected);
     }
 
     @DisplayName("스트라이크 프레임 후 프레임을 진행하고 결과를 확인 할 수 있다.")
@@ -88,16 +92,15 @@ class BowlingGamePlayerTests {
         BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
         bowlingGamePlayer.bowlFirst(TEN);
         bowlingGamePlayer.toNextFrame(FIVE);
+        BowlingGameResults expected = new BowlingGameResults(Arrays.asList(
+                new BowlingGameResult(NORMAL_STRIKE_FRAME_RESULT, new FrameScore(FrameScoreStatus.COMPLETE, 20)),
+                new BowlingGameResult(NORMAL_FIVE_SPARE_FRAME_RESULT, new FrameScore(FrameScoreStatus.NOT_READY, 10))
+        ));
 
-        List<BowlingGameResult> bowlingGameResults = bowlingGamePlayer.bowlCurrentFrame(FIVE);
+        BowlingGameResults bowlingGameResults = bowlingGamePlayer.bowlCurrentFrame(FIVE);
 
         assertThat(bowlingGameResults.size()).isEqualTo(2);
-        assertThat(bowlingGameResults.get(0))
-                .isEqualTo(new BowlingGameResult(NORMAL_STRIKE_FRAME_RESULT,
-                        new FrameScore(FrameScoreStatus.COMPLETE, 20)));
-        assertThat(bowlingGameResults.get(1))
-                .isEqualTo(new BowlingGameResult(NORMAL_FIVE_SPARE_FRAME_RESULT,
-                        new FrameScore(FrameScoreStatus.NOT_READY, 10)));
+        assertThat(bowlingGameResults).isEqualTo(expected);
     }
 
     @DisplayName("이미 완료된 현재 프레임을 진행할 수 없다.")
@@ -116,12 +119,15 @@ class BowlingGamePlayerTests {
         BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
         bowlingGamePlayer.bowlFirst(TEN);
 
-        List<BowlingGameResult> bowlingGameResults = bowlingGamePlayer.toNextFrame(FIVE);
+        BowlingGameResults expected = new BowlingGameResults(Arrays.asList(
+                new BowlingGameResult(NORMAL_STRIKE_FRAME_RESULT, new FrameScore(FrameScoreStatus.NOT_READY, 15)),
+                new BowlingGameResult(NORMAL_FIVE_IN_PROGRESS_FRAME_RESULT, new FrameScore(FrameScoreStatus.NOT_READY, 5)))
+        );
+
+        BowlingGameResults bowlingGameResults = bowlingGamePlayer.toNextFrame(FIVE);
 
         assertThat(bowlingGameResults.size()).isEqualTo(2);
-        assertThat(bowlingGameResults.get(0))
-                .isEqualTo(new BowlingGameResult(NORMAL_STRIKE_FRAME_RESULT,
-                        new FrameScore(FrameScoreStatus.NOT_READY, 15)));
+        assertThat(bowlingGameResults).isEqualTo(expected);
     }
 
     @DisplayName("현재 프레임이 완료되지 않은 상태에서 다음 프레임을 진행할 수 없다.")
