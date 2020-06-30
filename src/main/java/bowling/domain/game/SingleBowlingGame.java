@@ -28,8 +28,8 @@ public class SingleBowlingGame {
         frames.moveToNextFrame();
     }
 
-    public boolean hasNextTurn() {
-        return frames.hasNextTurn();
+    public boolean isEnd() {
+        return !frames.hasNextTurn();
     }
 
     public boolean isCurrentFrameFinished() {

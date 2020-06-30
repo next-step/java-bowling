@@ -51,7 +51,7 @@ public class MultiBowlingGame {
 
     public boolean isEnd() {
         return singleBowlingGames.stream()
-                .noneMatch(SingleBowlingGame::hasNextTurn);
+                .allMatch(SingleBowlingGame::isEnd);
     }
 
     public List<BowlingGameDto> getBowlingGameDtos() {
