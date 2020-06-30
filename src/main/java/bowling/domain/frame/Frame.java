@@ -22,5 +22,5 @@ public abstract class Frame {
 
     public abstract Score getScore();
 
-    abstract Score calculateAdditionalScore(Score beforeScore);
+    abstract Score addBonusScore(Score beforeScore);
 }

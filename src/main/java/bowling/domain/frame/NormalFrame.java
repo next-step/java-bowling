@@ -84,17 +84,17 @@ public class NormalFrame extends Frame {
             return score;
         }
 
-        return nextFrame.calculateAdditionalScore(score);
+        return nextFrame.addBonusScore(score);
     }
 
     @Override
-    public Score calculateAdditionalScore(final Score beforeScore) {
+    public Score addBonusScore(final Score beforeScore) {
         final Score score = state.calculateScoreForExtraBonusCount(beforeScore);
         if (this.validateIsNotAddableScore()) {
             return Score.UN_SCORE;
         }
 
-        return nextFrame.calculateAdditionalScore(score);
+        return nextFrame.addBonusScore(score);
     }
 
     private boolean validateIsNotAddableScore() {

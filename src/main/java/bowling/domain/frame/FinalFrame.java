@@ -106,7 +106,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public Score calculateAdditionalScore(final Score beforeScore) {
+    public Score addBonusScore(final Score beforeScore) {
         Score score = beforeScore;
         for (State state : states) {
             score = state.calculateScoreForExtraBonusCount(score);

@@ -102,7 +102,7 @@ public class FinalFrameTest {
     @MethodSource
     public void calculateAdditionalScore(final Frame frame, final Score beforeScore, final Score expected) {
 
-        assertThat(frame.calculateAdditionalScore(beforeScore))
+        assertThat(frame.addBonusScore(beforeScore))
                 .isEqualTo(expected);
     }
 
