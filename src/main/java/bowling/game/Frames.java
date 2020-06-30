@@ -2,6 +2,7 @@ package bowling.game;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Frames {
@@ -50,6 +51,14 @@ public class Frames {
     public List<String> getFramesStates() {
         return frames.stream()
                 .map(Frame::getStates)
+                .collect(Collectors.toList());
+    }
+
+    public List<Score> getScores() {
+        return frames.stream()
+                .map(Frame::calculateScore)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toList());
     }
 }

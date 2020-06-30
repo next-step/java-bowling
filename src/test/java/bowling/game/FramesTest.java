@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,5 +62,23 @@ class FramesTest {
                     assertThat(frames.isEndAllFrames()).isTrue();
                 }
         );
+    }
+
+    @DisplayName("현재까지의 점수를 계산해서 반환한다.")
+    @Test
+    void getScores() {
+        Frames frames = new Frames();
+
+        frames.bowlCurrentFrame(1);
+        frames.bowlCurrentFrame(9);
+        frames.bowlCurrentFrame(7);
+        frames.bowlCurrentFrame(2);
+        frames.bowlCurrentFrame(3);
+
+        List<Score> scores = frames.getScores();
+
+        assertThat(scores.size()).isEqualTo(2);
+        assertThat(scores.get(0).getScore()).isEqualTo(17);
+        assertThat(scores.get(1).getScore()).isEqualTo(9);
     }
 }
