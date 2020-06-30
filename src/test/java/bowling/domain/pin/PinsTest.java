@@ -1,5 +1,6 @@
 package bowling.domain.pin;
 
+import bowling.domain.score.Score;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -74,6 +75,21 @@ public class PinsTest {
         return Stream.of(
                 Arguments.of(Pins.of(0), Pins.of(10), PinCount.of(PinCount.MAX_COUNT)),
                 Arguments.of(Pins.of(8), Pins.of(1), PinCount.of(9))
+        );
+    }
+
+    @DisplayName("인자로 넘어온 점수에 해당 볼링 핀의 개수를 더한 점수를 반환")
+    @ParameterizedTest
+    @MethodSource
+    public void sumScore(final Pins pins, final Score score, final Score expected) {
+        assertThat(pins.sumScore(score))
+                .isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> sumScore() {
+        return Stream.of(
+                Arguments.of(Pins.of(0), Score.valueOf(4, 0), Score.valueOf(4, -1)),
+                Arguments.of(Pins.of(4), Score.valueOf(6, 0), Score.valueOf(10, -1))
         );
     }
 }
