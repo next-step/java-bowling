@@ -7,6 +7,13 @@ import java.util.Scanner;
 public class InputView {
     private static final Scanner USER_INPUT = new Scanner(System.in);
 
+    public static int getNumberOfPlayer() {
+        System.out.print("How many people? ");
+        int playerCount = USER_INPUT.nextInt();
+        USER_INPUT.nextLine();
+        return playerCount;
+    }
+
     public static String getPlayerName() {
         System.out.println("플레이어 이름은(3 english letters)?: ");
         String userName = USER_INPUT.nextLine();

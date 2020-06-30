@@ -4,25 +4,36 @@ import bowling.domain.BowlingGame;
 import bowling.domain.BowlingGameResult;
 import bowling.domain.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BowlingGameApplication {
     public static void main(String[] args) {
-        Player initPlayer = initGame();
+        int numberOfPlayer = InputView.getNumberOfPlayer();
 
-        BowlingGame bowlingGame = BowlingGame.play(initPlayer);
+        List<Player> players = readyPlayers(numberOfPlayer);
+        OutputView.printBowlingGameHeader();
+        OutputView.printEmptyResults(players);
 
-        firstBowl(bowlingGame);
-
-        bowlRemainFrames(bowlingGame);
-
-        bowlFinalFrame(bowlingGame);
+//        BowlingGame bowlingGame = BowlingGame.play(initPlayer);
+//
+//        firstBowl(bowlingGame);
+//
+//        bowlRemainFrames(bowlingGame);
+//
+//        bowlFinalFrame(bowlingGame);
     }
 
-    private static Player initGame() {
-        String userName = InputView.getPlayerName();
+    private static List<Player> readyPlayers(int numberOfPlayer) {
+        List<Player> players = new ArrayList<>();
+        for (int count = 0; count < numberOfPlayer; count ++) {
+           players.add(readyPlayer());
+        }
+        return players;
+    }
 
-        OutputView.printEmptyResult(userName);
+    private static Player readyPlayer() {
+        String userName = InputView.getPlayerName();
 
         return Player.createByName(userName);
     }
