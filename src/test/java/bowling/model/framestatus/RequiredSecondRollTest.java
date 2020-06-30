@@ -13,14 +13,16 @@ class RequiredSecondRollTest {
     FrameStatus frameStatus = new RequiredFirstRoll(0);
 
     frameStatus = frameStatus.createNextStatusBy(
-        KnockedDownPins.getBuilder(5)
+        KnockedDownPins.getBuilder()
+            .firstKnockDownNumber(5)
             .build()
     );
 
     assertThat(frameStatus.isOver()).isFalse();
 
     assertThat(frameStatus.createNextStatusBy(
-        KnockedDownPins.getBuilder(5)
+        KnockedDownPins.getBuilder()
+            .firstKnockDownNumber(5)
             .secondKnockDownNumber(5)
             .build()
     )).isInstanceOf(Spare.class);
@@ -31,14 +33,16 @@ class RequiredSecondRollTest {
     FrameStatus frameStatus = new RequiredFirstRoll(0);
 
     frameStatus = frameStatus.createNextStatusBy(
-        KnockedDownPins.getBuilder(5)
+        KnockedDownPins.getBuilder()
+            .firstKnockDownNumber(5)
             .build()
     );
 
     assertThat(frameStatus.isOver()).isFalse();
 
     assertThat(frameStatus.createNextStatusBy(
-        KnockedDownPins.getBuilder(5)
+        KnockedDownPins.getBuilder()
+            .firstKnockDownNumber(5)
             .secondKnockDownNumber(3)
             .build()
     )).isInstanceOf(Miss.class);

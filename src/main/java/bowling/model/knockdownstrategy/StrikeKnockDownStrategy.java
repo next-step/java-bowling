@@ -11,7 +11,8 @@ public class StrikeKnockDownStrategy implements KnockDownStrategy {
           "스트라이크가 아닙니다. numberOfKnockedDown : " + numberOfKnockedDown);
     }
 
-    return KnockedDownPins.getBuilder(numberOfKnockedDown)
+    return KnockedDownPins.getBuilder()
+        .firstKnockDownNumber(numberOfKnockedDown)
         .secondKnockDownNumber(0)
         .build();
   }

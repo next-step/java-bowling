@@ -15,6 +15,10 @@ public class KnockedDownPins {
 
   private KnockedDownPins(KnockDownNumber firstKnockDownNumber,
       KnockDownNumber secondKnockDownNumber) {
+    if(firstKnockDownNumber == null) {
+      throw new IllegalStateException("firstKnockDownNumber가 입력되지 않았습니다.");
+    }
+
     int totalKnockDownNumber =
         firstKnockDownNumber.getIntValue() + secondKnockDownNumber.getIntValue();
 
@@ -28,25 +32,29 @@ public class KnockedDownPins {
 
   public static class KnockedDownPinsBuilder {
 
-    private KnockDownNumber firstKnockDownNum;
-    private KnockDownNumber secondKnockDownNum = new KnockDownNumber();
+    private KnockDownNumber firstKnockDownNumber;
+    private KnockDownNumber secondKnockDownNumber = new KnockDownNumber();
 
-    public KnockedDownPinsBuilder(int firstKnockDownNum) {
-      this.firstKnockDownNum = new KnockDownNumber(firstKnockDownNum);
+    public KnockedDownPinsBuilder() {
+    }
+
+    public KnockedDownPinsBuilder firstKnockDownNumber(int firstKnockDownNumber) {
+      this.firstKnockDownNumber = new KnockDownNumber(firstKnockDownNumber);
+      return this;
     }
 
     public KnockedDownPinsBuilder secondKnockDownNumber(int number) {
-      secondKnockDownNum = new KnockDownNumber(number);
+      secondKnockDownNumber = new KnockDownNumber(number);
       return this;
     }
 
     public KnockedDownPins build() {
-      return new KnockedDownPins(firstKnockDownNum, secondKnockDownNum);
+      return new KnockedDownPins(firstKnockDownNumber, secondKnockDownNumber);
     }
   }
 
-  public static KnockedDownPinsBuilder getBuilder(int firstKnockDownNum) {
-    return new KnockedDownPinsBuilder(firstKnockDownNum);
+  public static KnockedDownPinsBuilder getBuilder() {
+    return new KnockedDownPinsBuilder();
   }
 
   public int getFirstKnockDownNumber() {

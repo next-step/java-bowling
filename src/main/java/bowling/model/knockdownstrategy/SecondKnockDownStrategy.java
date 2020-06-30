@@ -12,7 +12,8 @@ public class SecondKnockDownStrategy implements KnockDownStrategy {
 
   @Override
   public KnockedDownPins knockDown(int numberOfKnockedDown) {
-    return KnockedDownPins.getBuilder(knockedDownPins.getFirstKnockDownNumber())
+    return KnockedDownPins.getBuilder()
+        .firstKnockDownNumber(knockedDownPins.getFirstKnockDownNumber())
         .secondKnockDownNumber(numberOfKnockedDown)
         .build();
   }

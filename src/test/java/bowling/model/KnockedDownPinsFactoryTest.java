@@ -26,14 +26,18 @@ class KnockedDownPinsFactoryTest {
             KnockedDownPinsTest.knockedDownPins_Strike
         ),
         arguments(
-            KnockedDownPins.getBuilder(5).build(),
+            KnockedDownPins.getBuilder()
+                .firstKnockDownNumber(5)
+                .build(),
             5,
             KnockedDownPinsTest.knockedDownPins5_5
         ),
         arguments(
             new KnockedDownPins(),
             5,
-            KnockedDownPins.getBuilder(5).build()
+            KnockedDownPins.getBuilder()
+                .firstKnockDownNumber(5)
+                .build()
         )
     );
   }

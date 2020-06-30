@@ -15,7 +15,8 @@ class RequiredFirstRollTest {
     assertThat(frameStatus.isOver()).isFalse();
 
     frameStatus = frameStatus.createNextStatusBy(
-        KnockedDownPins.getBuilder(10)
+        KnockedDownPins.getBuilder()
+            .firstKnockDownNumber(10)
             .build()
     );
 
@@ -27,7 +28,8 @@ class RequiredFirstRollTest {
     FrameStatus frameStatus = new RequiredFirstRoll(0);
 
     frameStatus = frameStatus.createNextStatusBy(
-        KnockedDownPins.getBuilder(5)
+        KnockedDownPins.getBuilder()
+            .firstKnockDownNumber(5)
             .build()
     );
 
