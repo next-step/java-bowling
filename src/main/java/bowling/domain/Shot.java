@@ -2,7 +2,7 @@ package bowling.domain;
 
 import bowling.common.IntegerUtils;
 
-public enum ResultType {
+public enum Shot {
     GUTTER("-"),
     ONE("1"),
     TWO("2"),
@@ -18,11 +18,11 @@ public enum ResultType {
 
     private final String symbol;
 
-    ResultType(String symbol) {
+    Shot(String symbol) {
         this.symbol = symbol;
     }
 
-    public static ResultType of(boolean isFirst, int pin, int remain) {
+    public static Shot of(boolean isFirst, int pin, int remain) {
         if (remain == IntegerUtils.ZERO) {
             return isFirst ? STRIKE : SPARE;
         }

@@ -15,14 +15,14 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public List<ResultType> getResult() {
+    public List<Shot> getResult() {
         int remain = TOTAL_PIN_COUNT;
-        List<ResultType> resultTypes = new ArrayList<>();
+        List<Shot> shots = new ArrayList<>();
         for (int i = IntegerUtils.ZERO; i < scores.size(); i++) {
-            resultTypes.add(ResultType.of(i == IntegerUtils.ZERO, scores.get(i), remain - scores.get(i)));
+            shots.add(Shot.of(i == IntegerUtils.ZERO, scores.get(i), remain - scores.get(i)));
             remain -= scores.get(i);
         }
-        return resultTypes;
+        return shots;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class Player {
         return frames;
     }
 
-    public List<List<ResultType>> getGameResult() {
+    public List<List<Shot>> getGameResult() {
         return frames.getGameResult();
     }
 

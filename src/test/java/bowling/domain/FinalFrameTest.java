@@ -16,7 +16,7 @@ class FinalFrameTest {
         Frame frame = new FinalFrame();
         frame.bowling(10);
         frame.bowling(10);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.STRIKE, ResultType.STRIKE));
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.STRIKE, Shot.STRIKE));
     }
 
     @Test
@@ -25,7 +25,7 @@ class FinalFrameTest {
         frame.bowling(5);
         frame.bowling(5);
         frame.bowling(10);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.FIVE, ResultType.SPARE, ResultType.STRIKE));
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.FIVE, Shot.SPARE, Shot.STRIKE));
     }
     
     @Test
@@ -34,7 +34,7 @@ class FinalFrameTest {
         frame.bowling(5);
         frame.bowling(5);
         frame.bowling(5);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.FIVE, ResultType.SPARE, ResultType.FIVE));
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.FIVE, Shot.SPARE, Shot.FIVE));
     }
 
     @Test
@@ -42,7 +42,7 @@ class FinalFrameTest {
         Frame frame = new FinalFrame();
         frame.bowling(5);
         frame.bowling(3);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.FIVE, ResultType.THREE));
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.FIVE, Shot.THREE));
     }
 
     @Test
@@ -50,7 +50,7 @@ class FinalFrameTest {
         Frame frame = new FinalFrame();
         frame.bowling(0);
         frame.bowling(0);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.GUTTER, ResultType.GUTTER));
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.GUTTER, Shot.GUTTER));
     }
 
     @Test

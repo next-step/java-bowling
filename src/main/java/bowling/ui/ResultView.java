@@ -2,7 +2,7 @@ package bowling.ui;
 
 import bowling.BowlingGame;
 import bowling.domain.Player;
-import bowling.domain.ResultType;
+import bowling.domain.Shot;
 
 import java.util.stream.Collectors;
 
@@ -30,7 +30,7 @@ public class ResultView {
         player.getGameResult()
                 .forEach(r ->
                         sb.append(String.format(RESULT_FORMAT,
-                                r.stream().map(ResultType::getSymbol).collect(Collectors.joining("|"))))
+                                r.stream().map(Shot::getSymbol).collect(Collectors.joining("|"))))
                 );
         for (int round = player.getCurrentRound(); round < BowlingGame.FINAL_FRAME; round++) {
             sb.append(String.format(RESULT_FORMAT, ""));

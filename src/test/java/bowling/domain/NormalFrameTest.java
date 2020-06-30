@@ -14,7 +14,7 @@ class NormalFrameTest {
     public void 스트라이크() {
         Frame frame = new NormalFrame();
         frame.bowling(10);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.STRIKE));
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.STRIKE));
     }
 
     @Test
@@ -22,7 +22,7 @@ class NormalFrameTest {
         Frame frame = new NormalFrame();
         frame.bowling(5);
         frame.bowling(5);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.FIVE, ResultType.SPARE));
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.FIVE, Shot.SPARE));
     }
 
     @Test
@@ -30,7 +30,7 @@ class NormalFrameTest {
         Frame frame = new NormalFrame();
         frame.bowling(5);
         frame.bowling(3);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.FIVE, ResultType.THREE));
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.FIVE, Shot.THREE));
     }
 
     @Test
@@ -38,7 +38,7 @@ class NormalFrameTest {
         Frame frame = new NormalFrame();
         frame.bowling(0);
         frame.bowling(0);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(ResultType.GUTTER, ResultType.GUTTER));
+        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.GUTTER, Shot.GUTTER));
     }
 
     @Test

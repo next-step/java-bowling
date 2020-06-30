@@ -14,7 +14,7 @@ public class Frames {
         this.frames.add(new NormalFrame());
     }
 
-    public List<List<ResultType>> getGameResult() {
+    public List<List<Shot>> getGameResult() {
         return frames.stream().map(Frame::getResult).collect(Collectors.toList());
     }
 
