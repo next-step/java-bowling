@@ -26,13 +26,13 @@ public class BowlingGameApplication {
     private static List<Player> readyPlayers(int numberOfPlayer) {
         List<Player> players = new ArrayList<>();
         for (int count = 0; count < numberOfPlayer; count ++) {
-           players.add(readyPlayer());
+           players.add(readyPlayer(count));
         }
         return players;
     }
 
-    private static Player readyPlayer() {
-        String userName = InputView.getPlayerName();
+    private static Player readyPlayer(int count) {
+        String userName = InputView.getPlayerName(count + 1);
 
         return Player.createByName(userName);
     }

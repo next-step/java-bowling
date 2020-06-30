@@ -14,8 +14,8 @@ public class InputView {
         return playerCount;
     }
 
-    public static String getPlayerName() {
-        System.out.print("플레이어 이름은(3 english letters)?: ");
+    public static String getPlayerName(int index) {
+        System.out.print("플레이어" + index + " 이름은(3 english letters)?: ");
         String userName = USER_INPUT.nextLine();
         validateUserName(userName);
         return userName;
