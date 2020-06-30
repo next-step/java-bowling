@@ -31,4 +31,14 @@ public class FramesFixture {
 
         return frames;
     }
+
+    public static Frames getTwoMissFrames() {
+        Frames frames = Frames.newInstance();
+        frames.bowl(PinCount.of(2));
+        frames.bowl(PinCount.of(3));
+        frames.bowl(PinCount.of(4));
+        frames.bowl(PinCount.of(4));
+
+        return frames;
+    }
 }

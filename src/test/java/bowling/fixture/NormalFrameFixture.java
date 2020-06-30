@@ -8,6 +8,10 @@ public class NormalFrameFixture {
     public NormalFrameFixture() {
     }
 
+    public static NormalFrame getReadyFrame() {
+        return NormalFrame.ofFirst();
+    }
+
     public static NormalFrame getStrikeFrame() {
         NormalFrame strikeFrame = NormalFrame.ofFirst();
         strikeFrame.bowl(PinCount.of(PinCount.MAX_COUNT));

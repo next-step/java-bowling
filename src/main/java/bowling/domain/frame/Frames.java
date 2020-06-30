@@ -48,4 +48,8 @@ public class Frames {
                 .map(Frame::getFrameResult)
                 .collect(Collectors.toList());
     }
+
+    public List<Frame> getFrames() {
+        return frames;
+    }
 }
