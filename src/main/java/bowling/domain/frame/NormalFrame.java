@@ -16,13 +16,13 @@ public class NormalFrame extends Frame {
         return new NormalFrame(new BonusScores(), FIRST_FRAME_INDEX);
     }
 
-    public Frame createNextFrame(int frameIndex) {
-        createBonusScores(frameIndex - 1);
+    public Frame createNextFrame() {
+        createBonusScores(frameIndex);
         return new NormalFrame(bonusScores.findAvailableAddBonusScores(), frameIndex);
     }
 
-    public Frame createLastFrame(int frameIndex) {
-        createBonusScores(frameIndex - 1);
+    public Frame createLastFrame() {
+        createBonusScores(frameIndex);
         return new FinalFrame(bonusScores.findAvailableAddBonusScores(), frameIndex);
     }
 
