@@ -28,7 +28,7 @@ public class Pins {
         return totalPins(secondPins).isLessThanMaxCount();
     }
 
-    private PinCount totalPins(final Pins secondPins) {
+    public PinCount totalPins(final Pins secondPins) {
         return this.hitCount.sum(secondPins.hitCount);
     }
 
