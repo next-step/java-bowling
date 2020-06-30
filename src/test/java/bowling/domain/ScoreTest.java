@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class ScoreTest {
@@ -25,5 +26,26 @@ public class ScoreTest {
 			() -> Score.ofScore(score))
 			.as("wrong score")
 			.isInstanceOf(IllegalArgumentException.class);
+	}
+
+	@DisplayName("다른 점수와의 합을 계산할 수 있다.")
+	@CsvSource({"1, 9", "2, 8"})
+	@ParameterizedTest
+	void 점수_간의_합을_계산한다(int score1, int score2) {
+		Score first = Score.ofScore(score1);
+		Score second = Score.ofScore(score2);
+		Score result = first.add(second);
+		assertThat(result.getScore()).isEqualTo(Score.ofScore(score1 + score2).getScore());
+	}
+
+	@DisplayName("다른 점수보다 큰 지 확인한다.")
+	@CsvSource({"2, 1, true", "1, 2, false"})
+	@ParameterizedTest
+	void 점수_간의_대소를_비교한다(int score1, int score2, boolean expected) {
+		Score first = Score.ofScore(score1);
+		Score second = Score.ofScore(score2);
+
+		boolean result = first.isGreaterThan(second);
+		assertThat(result).isEqualTo(expected);
 	}
 }
