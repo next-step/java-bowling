@@ -4,7 +4,7 @@ import bowling.domain.status.Status;
 import bowling.domain.status.Strike;
 
 public class NormalFrame implements Frame {
-    private static final int FIRST_TRY = 1;
+    private static final int FIRST_TRY = 0;
     private static final int MAX_TRY_COUNT = 2;
 
     private Pins pins;
@@ -20,9 +20,9 @@ public class NormalFrame implements Frame {
         return new NormalFrame(Pins.init(), 0);
     }
 
+
     public void bowl(int downPin) {
-        status = makeStatus(pins, downPin);
-        pins = this.pins.bowl(downPin);
+        status = bowling(downPin);
         trying = addTrying();
     }
 
@@ -37,17 +37,17 @@ public class NormalFrame implements Frame {
     }
 
     public String printFrameResult() {
-        if (trying == FIRST_TRY) {
+        if (trying == 1) {
             return status.printResult();
         }
         return status.printAllResult();
     }
 
-    private Status makeStatus(Pins pins, int downPin) {
-        if (trying == FIRST_TRY - 1) {
-            return Status.makeStatus(downPin);
+    private Status bowling(int downPin) {
+        if (trying == FIRST_TRY) {
+            return pins.firstBowl(downPin);
         }
-        return Status.makeStatus(pins.getDownPin(), downPin);
+        return pins.bowl(downPin);
     }
 
     private int addTrying() {

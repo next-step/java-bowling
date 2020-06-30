@@ -1,7 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 class NormalFrameTest {
-    //bowlingGame.getFrames().forEach(System.out::println);
     @Test
     @DisplayName(" 생성 테스트")
     void init() {
