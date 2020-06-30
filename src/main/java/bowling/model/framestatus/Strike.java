@@ -1,13 +1,13 @@
 package bowling.model.framestatus;
 
+import static bowling.model.Symbols.*;
+
 import bowling.model.KnockedDownPins;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Strike implements FrameStatus {
-
-  private final static String STRIKE = "X";
 
   private final List<Integer> indexOfScoredFrames;
 
@@ -38,7 +38,7 @@ public class Strike implements FrameStatus {
       throw new IllegalArgumentException("스트라이크가 아닙니다.");
     }
 
-    return STRIKE;
+    return STRIKE.toString();
   }
 
   @Override

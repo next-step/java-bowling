@@ -1,15 +1,13 @@
 package bowling.model.framestatus;
 
+import static bowling.model.Symbols.*;
+
 import bowling.model.KnockedDownPins;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Spare implements FrameStatus {
-
-  private final static String BAR = "|";
-  private final static String SPARE = "/";
-  private final static String GUTTER = "-";
 
   private final List<Integer> indexOfScoredFrames;
 
@@ -40,7 +38,7 @@ public class Spare implements FrameStatus {
       throw new IllegalArgumentException("스페어가 아닙니다.");
     }
 
-    return (pins.getFirstKnockDownNumber() + BAR + SPARE).replace("0", GUTTER);
+    return (String.valueOf(pins.getFirstKnockDownNumber()) + BAR + SPARE).replace("0", GUTTER.toString());
   }
 
   @Override

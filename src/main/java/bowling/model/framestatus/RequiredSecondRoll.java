@@ -1,12 +1,13 @@
 package bowling.model.framestatus;
 
+import static bowling.model.Symbols.*;
+
 import bowling.model.KnockedDownPins;
 import java.util.Collections;
 import java.util.List;
 
 public class RequiredSecondRoll implements FrameStatus {
 
-  private final static String GUTTER = "-";
   private final static Integer ZERO = 0;
 
   private final List<Integer> indexOfScoredFrames;
@@ -36,7 +37,7 @@ public class RequiredSecondRoll implements FrameStatus {
 
   @Override
   public String toString(KnockedDownPins pins) {
-    return String.valueOf(pins.getFirstKnockDownNumber()).replace(ZERO.toString(), GUTTER);
+    return String.valueOf(pins.getFirstKnockDownNumber()).replace(ZERO.toString(), GUTTER.toString());
   }
 
   @Override

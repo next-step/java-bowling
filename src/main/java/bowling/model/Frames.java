@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Frames {
 
-  private static final String NEWLINE = System.lineSeparator();
   private static final int FIRST_INDEX = 0;
 
   private final Deque<Frame> frames = new ArrayDeque<>();
@@ -45,8 +44,8 @@ public class Frames {
       frames.getLast().roll(knockDownNumber);
     } catch (FrameOverException frameOverException) {
       throw new IllegalStateException("roll 실패 "
-          + NEWLINE + " frames : " + frames.toString()
-          + NEWLINE + " knockDownNum : " + knockDownNumber);
+          + System.lineSeparator() + " frames : " + frames.toString()
+          + System.lineSeparator() + " knockDownNum : " + knockDownNumber);
     }
   }
 
@@ -57,8 +56,8 @@ public class Frames {
       bonusFrame.roll(knockDownNumber);
     } catch (FrameOverException e) {
       throw new IllegalStateException("roll 실패 "
-          + NEWLINE + " frames : " + frames.toString()
-          + NEWLINE + " knockDownNum : " + knockDownNumber);
+          + System.lineSeparator() + " frames : " + frames.toString()
+          + System.lineSeparator() + " knockDownNum : " + knockDownNumber);
     }
 
     frames.addLast(bonusFrame);

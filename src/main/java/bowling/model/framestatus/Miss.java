@@ -1,13 +1,12 @@
 package bowling.model.framestatus;
 
+import static bowling.model.Symbols.*;
+
 import bowling.model.KnockedDownPins;
 import java.util.Collections;
 import java.util.List;
 
 public class Miss implements FrameStatus {
-
-  private final static String BAR = "|";
-  private final static String GUTTER = "-";
 
   private final List<Integer> indexOfScoredFrames;
 
@@ -36,8 +35,8 @@ public class Miss implements FrameStatus {
       throw new IllegalArgumentException("미스가 아닙니다.");
     }
 
-    return (pins.getFirstKnockDownNumber() + BAR + pins.getSecondKnockDownNumber())
-        .replaceAll("0", GUTTER);
+    return (pins.getFirstKnockDownNumber() + BAR.toString() + pins.getSecondKnockDownNumber())
+        .replaceAll("0", GUTTER.toString());
   }
 
   @Override

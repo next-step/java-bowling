@@ -1,5 +1,7 @@
 package bowling.view;
 
+import static bowling.model.Symbols.*;
+
 import bowling.model.BowlingGame;
 import bowling.model.FrameDTO;
 import java.util.List;
@@ -7,10 +9,7 @@ import java.util.List;
 public class BowlingView {
 
   private final static String SCORE_BOARD_UPPER = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-  private final static String BAR = "|";
-  private final static String NEWLINE = System.lineSeparator();
-  private final static int MAXLENGTH = 6;
-  private final static String SPACE = " ";
+  private final static int MAXLENGTH_PER_FRAME = 6;
 
   public static void printPlayerNameInputMsg() {
     System.out.print("플레이어 이름은(3 english letters)?: ");
@@ -39,7 +38,7 @@ public class BowlingView {
   }
 
   private static String getFrameMsgBy(String playerName, List<FrameDTO> frameDTOs, int endpoint) {
-    StringBuilder sb = new StringBuilder(SCORE_BOARD_UPPER).append(NEWLINE);
+    StringBuilder sb = new StringBuilder(SCORE_BOARD_UPPER).append(System.lineSeparator());
 
     sb.append(BAR)
         .append(wrappingWithSpaces(playerName))
@@ -72,7 +71,7 @@ public class BowlingView {
   private static String wrappingWithSpaces(String str) {
     StringBuilder sb = new StringBuilder();
 
-    int space = MAXLENGTH - str.length();
+    int space = MAXLENGTH_PER_FRAME - str.length();
     int leftSpace = space / 2;
     int rightSpace = space - leftSpace;
 
