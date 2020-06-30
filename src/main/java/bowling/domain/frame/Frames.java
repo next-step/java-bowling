@@ -43,8 +43,9 @@ public class Frames {
     }
 
     private Frame nextFrame() {
-        if (frames.size() == BEFORE_LAST_INDEX)
+        if (frames.size() == BEFORE_LAST_INDEX) {
             return FinalFrame.init();
+        }
         return currentFrame().next();
     }
 
