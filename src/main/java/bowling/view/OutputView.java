@@ -8,24 +8,32 @@ import java.util.stream.Collectors;
 public class OutputView {
     private static final String DEFAULT_SCORE_BOARD = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String DEFAULT = "|  %s |      |      |      |      |      |      |      |      |      |      |";
+    private static final String DEFAULT_LINE = "|      |      |      |      |      |      |      |      |      |      |      |";
 
-    public static void printDefault(String playerName) {
+    public static void printDefault(Players players) {
         printDefaultScoreboard();
-        System.out.println(String.format(DEFAULT, playerName));
+        players.getPlayers()
+                .forEach(player -> {
+                    System.out.println(String.format(DEFAULT, player.getName()));
+                    System.out.println(DEFAULT_LINE);
+                });
     }
 
     private static void printDefaultScoreboard() {
         System.out.println(DEFAULT_SCORE_BOARD);
     }
 
-    public static void printResult(BowlingGame bowlingGame) {
+    public static void printResult(BowlingGames bowlingGames) {
         printDefaultScoreboard();
-        printScoreboard(bowlingGame);
+        printScoreboard(bowlingGames);
     }
 
-    private static void printScoreboard(BowlingGame bowlingGame) {
-        System.out.println("|  " + bowlingGame.getPlayer().getName() + " |" + printScore(bowlingGame.getFrames()));
-        System.out.println("|      |" + printCalculateScore(bowlingGame.getFrames()));
+    private static void printScoreboard(BowlingGames bowlingGames) {
+        bowlingGames.getBowlingGames()
+                .forEach(bowlingGame -> {
+                    System.out.println("|  " + bowlingGame.getPlayer().getName() + " |" + printScore(bowlingGame.getFrames()));
+                    System.out.println("|      |" + printCalculateScore(bowlingGame.getFrames()));
+                });
     }
 
     private static String printScore(Frames frames) {
