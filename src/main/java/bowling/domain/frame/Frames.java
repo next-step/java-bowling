@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import static bowling.util.FrameSize.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -28,7 +29,14 @@ public class Frames {
 		return frameList;
 	}
 
+	public Frame findPlayingFrame() {
+		return frameList.stream()
+			.filter(Frame::canPlayMore)
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("there is no running frame."));
+	}
+
 	public List<Frame> getFrameList() {
-		return frameList;
+		return Collections.unmodifiableList(frameList);
 	}
 }

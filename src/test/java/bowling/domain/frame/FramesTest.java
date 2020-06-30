@@ -24,4 +24,12 @@ public class FramesTest {
 		List<Frame> frameList = frames.getFrameList();
 		assertThat(frameList.get(frameList.size() - 1)).isInstanceOf(FinalFrame.class);
 	}
+
+	@DisplayName("현재 게임이 진행 중인 프레임을 찾는다.")
+	@Test
+	void 게임_진행중인_프레임을_찾는다() {
+		Frames frames = Frames.of();
+		Frame playingFrame = frames.findPlayingFrame();
+		assertThat(playingFrame).isNotNull();
+	}
 }

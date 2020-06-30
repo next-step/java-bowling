@@ -4,4 +4,6 @@ public interface Frame {
 	Frame addNextFrame();
 
 	boolean canPlayMore();
+
+	int getIndex();
 }

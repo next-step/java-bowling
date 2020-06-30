@@ -37,6 +37,7 @@ public class FinalFrame implements Frame {
 		return scores.canPlayMore();
 	}
 
+	@Override
 	public int getIndex() {
 		return index;
 	}

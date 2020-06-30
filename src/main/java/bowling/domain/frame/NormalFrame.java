@@ -45,6 +45,7 @@ public class NormalFrame implements Frame {
 		return scores.canPlayMore();
 	}
 
+	@Override
 	public int getIndex() {
 		return index;
 	}
