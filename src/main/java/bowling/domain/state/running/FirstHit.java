@@ -45,10 +45,7 @@ public class FirstHit extends Running {
         }
 
         beforeScore = this.firstPins.sumScore(beforeScore);
-        if (beforeScore.isZeroOfExtraBonusCount()) {
-            return beforeScore;
-        }
 
-        return Score.INIT_SCORE;
+        return beforeScore;
     }
 }
