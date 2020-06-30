@@ -17,13 +17,13 @@ public class Frames {
     private static final int MAX_FRAME_NUMBER = 10;
 
     private final List<Frame> frames = new LinkedList<>();
-    private final List<String> points = new LinkedList<>();
+    private final List<Integer> points = new LinkedList<>();
     private int frameIndex = 0;
 
     private Frames()  {
         validateFrameIndex(frameIndex);
         frames.add(NormalFrame.create());
-        points.add(calculatePoints());
+        points.add(0);
     }
 
     public static Frames create() {
@@ -33,46 +33,26 @@ public class Frames {
     public Frames pitch(Point point) {
         Frame frame = frames.get(frameIndex).bowl(point);
         updateFrame(frame);
+        updatePoint(frame.getPoint());
         return this;
+    }
+
+    private void updatePoint(int framePoint) {
+        points.remove(frameIndex);
+        points.add(framePoint);
     }
 
     private void updateFrame(Frame frame) {
         frames.remove(frameIndex);
         frames.add(frame);
-
-        String framePoint = calculatePoints();
-        points.remove(frameIndex);
-        points.add(framePoint);
     }
 
     public void next() {
         if(frames.get(frameIndex).isLastPitch()) {
             frames.add(createNextFrame());
-            points.add(EMPTY_STRING);
+            points.add(0);
             frameIndex++;
         }
-    }
-
-    private String calculatePoints() {
-        Frame nowFrame = frames.get(frameIndex);
-
-        if (nowFrame.getScores().equals(STRIKE_EXPRESSION) && nowFrame.isLastPitch()) {
-            return EMPTY_STRING;
-        }
-
-        if (nowFrame.getScores().contains(SPARE_EXPRESSION) && nowFrame.isLastPitch()) {
-            return EMPTY_STRING;
-        }
-
-        if (nowFrame.getPoint() == ZERO_POINT && nowFrame.isLastPitch()) {
-            return String.valueOf(nowFrame.getPoint());
-        }
-
-        if (nowFrame.isLastPitch()) {
-            return String.valueOf(nowFrame.getPoint());
-        }
-
-        return EMPTY_STRING;
     }
 
     private Frame createNextFrame() {
@@ -82,7 +62,7 @@ public class Frames {
         return NormalFrame.create();
     }
 
-    public List<String> getPoints() {
+    public List<Integer> getPoints() {
         return points;
     }
 

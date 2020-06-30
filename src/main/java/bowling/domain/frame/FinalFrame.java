@@ -12,21 +12,23 @@ public class FinalFrame implements Frame {
 
     private List<Score> scores;
     private int pitchCount = 0;
+    private int framePoint = 0;
 
-    private FinalFrame(List<Score> scores, int pitchCount) {
+    private FinalFrame(List<Score> scores, int framePoint, int pitchCount) {
         validateScores(scores);
         validatePitchCount(pitchCount);
         this.scores = scores;
         this.pitchCount = pitchCount;
+        this.framePoint = framePoint;
     }
 
     public static Frame create() {
         List<Score> Scores = new ArrayList<>();
-        return new FinalFrame(Scores, 0);
+        return new FinalFrame(Scores, 0, 0);
     }
 
-    public static Frame create(List<Score> scores, int pitchCount) {
-        return new FinalFrame(scores, pitchCount);
+    public static Frame create(List<Score> scores, int framePoint, int pitchCount) {
+        return new FinalFrame(scores, framePoint, pitchCount);
     }
 
     @Override
@@ -42,10 +44,11 @@ public class FinalFrame implements Frame {
         scores.add(score);
 
         if (score.isStrike()) {
-            return FinalFrame.create(scores, ++pitchCount);
+            int strikePoint = point.getPoint();
+            return FinalFrame.create(scores, strikePoint, ++pitchCount);
         }
 
-        return FinalFrame.create(scores, ++pitchCount);
+        return FinalFrame.create(scores, this.framePoint + point.getPoint(), ++pitchCount);
     }
 
     private Frame nextBowl(Point point) {
@@ -55,14 +58,16 @@ public class FinalFrame implements Frame {
         scores.add(nextScore);
 
         if (nextScore.isSpare()) {
-            return FinalFrame.create(scores, ++pitchCount);
+            int sparePoint = framePoint + point.getPoint();
+            return FinalFrame.create(scores, sparePoint, ++pitchCount);
         }
 
         if (score.isStrike()) {
-            return FinalFrame.create(scores, ++pitchCount);
+            int strikePoint = framePoint + point.getPoint();
+            return FinalFrame.create(scores, strikePoint, ++pitchCount);
         }
 
-        return FinalFrame.create(scores, FINAL_MAX_BOWL_PITCH);
+        return FinalFrame.create(scores, framePoint + point.getPoint(), FINAL_MAX_BOWL_PITCH);
     }
 
     @Override
@@ -84,9 +89,9 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int getPoint() {
+    public int getFramePoint() {
         if (pitchCount == FINAL_MAX_BOWL_PITCH) {
-            return scores.stream().map(Score::getPoint).reduce(Integer::sum).orElse(0);
+            return this.framePoint;
         }
         return 0;
     }

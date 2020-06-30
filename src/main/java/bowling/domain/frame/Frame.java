@@ -16,5 +16,5 @@ public interface Frame {
 
     String getScores();
 
-    int getPoint();
+    int getFramePoint();
 }

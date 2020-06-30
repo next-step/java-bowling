@@ -12,20 +12,22 @@ public class NormalFrame implements Frame {
 
     private List<Score> scores;
     private int pitchCount = 0;
+    private int point = 0;
 
-    private NormalFrame(List<Score> scores, int pitchCount) {
+    private NormalFrame(List<Score> scores, int framePoint, int pitchCount) {
         validatePitchCount(pitchCount);
         this.scores = scores;
         this.pitchCount = pitchCount;
+        this.point = framePoint;
     }
 
     public static Frame create() {
         List<Score> Scores = new ArrayList<>();
-        return new NormalFrame(Scores, 0);
+        return new NormalFrame(Scores, 0, 0);
     }
 
-    public static Frame create(List<Score> scores, int pitchCount) {
-        return new NormalFrame(scores, pitchCount);
+    public static Frame create(List<Score> scores, int framePoint, int pitchCount) {
+        return new NormalFrame(scores, framePoint, pitchCount);
     }
 
     @Override
@@ -45,10 +47,25 @@ public class NormalFrame implements Frame {
         scores.add(score);
 
         if (score.isStrike()) {
-            return NormalFrame.create(scores, NORMAL_MAX_BOWL_PITCH);
+            int strikePoint = score.getPoint();
+            return NormalFrame.create(scores, strikePoint, NORMAL_MAX_BOWL_PITCH);
         }
 
-        return NormalFrame.create(scores, ++pitchCount);
+        return NormalFrame.create(scores, score.getPoint(), ++pitchCount);
+    }
+
+    private Frame nextBowl(Point point) {
+        validateNextBowl();
+        Score score = scores.get(pitchCount - 1);
+        Score nextScore = score.nextScore(point);
+        scores.add(nextScore);
+
+        if (score.isSpare()) {
+            int sparePoint = score.getPoint();
+            NormalFrame.create(scores, sparePoint, NORMAL_MAX_BOWL_PITCH);
+        }
+
+        return NormalFrame.create(scores, score.getPoint(), NORMAL_MAX_BOWL_PITCH);
     }
 
     @Override
@@ -66,19 +83,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public int getPoint() {
+    public int getFramePoint() {
         if (pitchCount == FRAME_SECOND_PITCH_END) {
-            return scores.stream().map(Score::getPoint).reduce(Integer::sum).orElse(0);
+            return this.point;
         }
         return 0;
-    }
-
-    private Frame nextBowl(Point point) {
-        validateNextBowl();
-        Score score = scores.get(pitchCount - 1);
-        Score nextScore = score.nextScore(point);
-        scores.add(nextScore);
-        return NormalFrame.create(scores, NORMAL_MAX_BOWL_PITCH);
     }
 
     private void validateNextBowl() {
