@@ -38,13 +38,12 @@ public class Frames {
     }
 
     public void moveToNextFrame() {
-        if (!isMovableToNextFrame()) {
-            return;
+        if (isMovableToNextFrame()) {
+            Frame currentFrame = getCurrentFrame();
+            int currentFrameIndex = frames.size();
+            Frame nextFrame = currentFrame.next(currentFrameIndex);
+            frames.add(nextFrame);
         }
-        Frame currentFrame = getCurrentFrame();
-        int currentFrameIndex = frames.size();
-        Frame nextFrame = currentFrame.next(currentFrameIndex);
-        frames.add(nextFrame);
     }
 
     private boolean isMovableToNextFrame() {
