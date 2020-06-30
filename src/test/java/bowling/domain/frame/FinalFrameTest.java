@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.dto.ScoreSignaturesDto;
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.FramesMaximumException;
 import bowling.domain.score.FrameScore;
 import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
@@ -36,8 +36,7 @@ class FinalFrameTest {
     public void next_예외() {
         assertThatThrownBy(() -> {
             FinalFrame.ofFinal().next(11);
-        }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.FINAL_FRAME_LIMIT);
+        }).isInstanceOf(FramesMaximumException.class);
     }
 
     @DisplayName("2번 투구했을 때 스트라이크가 1번 존재하면 추가 투구 가능")

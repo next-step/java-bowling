@@ -1,6 +1,6 @@
 package bowling.domain.pitch;
 
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.NormalPitchTryException;
 import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,8 +43,7 @@ class NormalPitchesTest {
 
         assertThatThrownBy(() -> {
             normalPitches.throwBall(PitchScore.valueOf(3));
-        }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCH_TRY);
+        }).isInstanceOf(NormalPitchTryException.class);
     }
 
     @DisplayName("Score들의 시그니쳐 List를 요청")

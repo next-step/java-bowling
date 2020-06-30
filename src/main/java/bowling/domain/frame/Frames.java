@@ -1,7 +1,6 @@
 package bowling.domain.frame;
 
 import bowling.domain.dto.ScoreSignaturesDto;
-import bowling.domain.exception.BowlingBuildingException;
 import bowling.domain.score.FrameScore;
 import bowling.domain.score.FrameScores;
 import bowling.domain.score.PitchScore;
@@ -9,7 +8,6 @@ import bowling.domain.score.PitchScore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.prefs.BackingStoreException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

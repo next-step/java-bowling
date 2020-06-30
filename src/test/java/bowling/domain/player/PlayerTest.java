@@ -1,6 +1,6 @@
 package bowling.domain.player;
 
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.PlayerNameInvalidException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +27,6 @@ class PlayerTest {
     public void makePlayer_실패(String name) {
         assertThatThrownBy(() -> {
             new Player(name);
-        }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_PLAYER_NAME);
+        }).isInstanceOf(PlayerNameInvalidException.class);
     }
 }

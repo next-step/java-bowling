@@ -1,7 +1,8 @@
 package bowling.domain.game;
 
 import bowling.domain.dto.BowlingGameDto;
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.NextTurnSearchingException;
+import bowling.domain.exception.PlayerCountsMinimumException;
 import bowling.domain.frame.Frames;
 import bowling.domain.score.PitchScore;
 
@@ -26,7 +27,7 @@ public class MultiBowlingGame {
 
     private static void validatePlayerCounts(List<String> playerNames) {
         if (playerNames.isEmpty()) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_PLAYER_COUNTS);
+            throw new PlayerCountsMinimumException();
         }
     }
 
@@ -34,7 +35,7 @@ public class MultiBowlingGame {
         return singleBowlingGames.stream()
                 .filter(singleBowlingGame -> !singleBowlingGame.isCurrentFrameFinished())
                 .findFirst()
-                .orElseThrow(() -> new BowlingBuildingException(BowlingBuildingException.CANNOT_FIND_GAME_TURN));
+                .orElseThrow(NextTurnSearchingException::new);
     }
 
     public void bowl(PitchScore pitchScore) {

@@ -1,7 +1,8 @@
 package bowling.domain.game;
 
 import bowling.domain.dto.BowlingGameDto;
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.NextTurnSearchingException;
+import bowling.domain.exception.PlayerCountsMinimumException;
 import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,13 +25,13 @@ class MultiBowlingGameTest {
     public void setMultiBowlingGame() {
         multiBowlingGame = MultiBowlingGame.of(playerNames);
     }
+
     @DisplayName("player가 0명이라면 예외 발생")
     @Test
     public void makeMultiBowlingGame_예외() {
         assertThatThrownBy(() -> {
             MultiBowlingGame.of(new ArrayList<>());
-        }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_PLAYER_COUNTS);
+        }).isInstanceOf(PlayerCountsMinimumException.class);
     }
 
     @DisplayName("List<String> 플레이어 이름 명단을 받으면 그 크기 만큼의 List<SingleBowlingGame> 컬렉션을 생성함")
@@ -101,7 +102,6 @@ class MultiBowlingGameTest {
 
         assertThatThrownBy(() -> {
             multiBowlingGame.bowl(PitchScore.valueOf(10));
-        }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.CANNOT_FIND_GAME_TURN);
+        }).isInstanceOf(NextTurnSearchingException.class);
     }
 }

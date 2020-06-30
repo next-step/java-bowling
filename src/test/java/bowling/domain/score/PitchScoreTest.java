@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.PitchScoreRangeException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,8 +26,7 @@ class PitchScoreTest {
     public void makeScore_예외(int score) {
         assertThatThrownBy(() -> {
             PitchScore.valueOf(score);
-        }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_PITCH_SCORE_RANGE);
+        }).isInstanceOf(PitchScoreRangeException.class);
     }
 
     @DisplayName("Score가 10이면 isMaximumScore은 True")

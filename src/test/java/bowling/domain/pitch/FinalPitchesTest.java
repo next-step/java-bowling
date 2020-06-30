@@ -1,6 +1,6 @@
 package bowling.domain.pitch;
 
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.FinalPitchTryException;
 import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,8 +57,7 @@ class FinalPitchesTest {
 
         assertThatThrownBy(() -> {
             finalPitches.throwBall(PitchScore.valueOf(5));
-        }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
+        }).isInstanceOf(FinalPitchTryException.class);
     }
 
     @DisplayName("추가 투구 시도시 예외 발생 : 3번을 초과하여 투구 시도하는 경우")
@@ -70,7 +69,6 @@ class FinalPitchesTest {
         }
         assertThatThrownBy(() -> {
             finalPitches.throwBall(PitchScore.valueOf(10));
-        }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
+        }).isInstanceOf(FinalPitchTryException.class);
     }
 }
