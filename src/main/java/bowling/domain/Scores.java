@@ -8,10 +8,4 @@ public class Scores {
     private Frames frames;
     private List<Score> scores = new LinkedList<>();
 
-
-
-
-
-
-
 }

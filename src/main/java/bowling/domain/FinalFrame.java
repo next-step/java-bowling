@@ -4,6 +4,7 @@ public class FinalFrame extends Frame {
 
     private Pin thirdPin;
     private State thirdState = State.MISS;
+
     private boolean hasThirdDraw;
 
     public FinalFrame(Pin thirdPin, Frame frame) {
@@ -20,7 +21,6 @@ public class FinalFrame extends Frame {
         }
     }
 
-
     @Override
     public String showResult() {
 
@@ -33,6 +33,17 @@ public class FinalFrame extends Frame {
         return stringBuilder.toString();
     }
 
+    public boolean isHasThirdDraw() {
+        return hasThirdDraw;
+    }
+
+    public State getThirdState() {
+        return thirdState;
+    }
+
+    public Pin getThirdPin() {
+        return thirdPin;
+    }
 
     private void firstPinResult(StringBuilder stringBuilder) {
         if (firstPin.isAllClear()) {
@@ -72,10 +83,8 @@ public class FinalFrame extends Frame {
 
     @Override
     public Frame calculateAdditionalScore(Score nextScore) {
-        this.currentScore.addBonusNumber(state, nextScore);
-
+        this.currentScore.addBonusNumberLastFrame(this);
         return this;
     }
-
 
 }

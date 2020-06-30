@@ -50,6 +50,21 @@ public class Score {
         nextScore.sumScore = this.sumScore;
     }
 
+    public void addBonusNumberLastFrame(Frame finalFrame) {
+        FinalFrame frame = (FinalFrame) finalFrame;
+
+        // spare // strike
+        if (frame.state == State.SPARE || frame.state == State.STRIKE) {
+            this.bonusScore = frame.getThirdPin().falledPins();
+            this.sumScore += this.score + bonusScore;
+        }
+        // etc
+        if (frame.state != State.SPARE && frame.state != State.STRIKE) {
+            this.bonusScore = 0;
+            this.score += this.bonusScore;
+            this.sumScore += this.score;
+        }
+    }
 
     @Override
     public String toString() {

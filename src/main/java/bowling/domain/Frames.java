@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 public class Frames {
 
-    private static final int INDEX_ZERO = 0;
     private static final int INDEX_ONE = 1;
 
     List<Frame> frames = new ArrayList<>();

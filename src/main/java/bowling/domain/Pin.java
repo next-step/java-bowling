@@ -20,7 +20,6 @@ public class Pin {
         this.falledPins = falledPins;
     }
 
-
     public boolean isAllClear() {
         return maxPins - falledPins == 0;
 
