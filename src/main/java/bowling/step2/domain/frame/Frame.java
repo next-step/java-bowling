@@ -25,5 +25,4 @@ public abstract class Frame {
     public abstract boolean pitchesOver();
 
     public abstract Frame nextFrame();
-
 }

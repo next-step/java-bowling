@@ -1,6 +1,5 @@
 package bowling.step2.domain.process;
 
-
 import bowling.step2.domain.frame.Frames;
 import bowling.step2.domain.player.Player;
 
