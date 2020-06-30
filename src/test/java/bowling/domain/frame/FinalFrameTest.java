@@ -119,7 +119,7 @@ public class FinalFrameTest {
                 // X -> 2|/|5
                 Arguments.of(FinalFrameFixture.getHitSpareHitFrame(), Score.ofStrike(), Score.valueOf(20, 0)),
                 // 2|/ -> X|2|2
-                Arguments.of(FinalFrameFixture.getStrikeHitMissFrame(), Score.ofSpare(), Score.valueOf(24, -2)),
+                Arguments.of(FinalFrameFixture.getStrikeHitMissFrame(), Score.ofSpare(), Score.valueOf(20, 0)),
                 // X -> X|1|/ (10 + 11, 10 + 1 + 9)
                 Arguments.of(FinalFrameFixture.getStrikeHitSpareFrame(), Score.ofMiss(5), Score.ofMiss(5))
         );

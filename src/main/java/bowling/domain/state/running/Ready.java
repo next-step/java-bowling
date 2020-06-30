@@ -28,7 +28,7 @@ public class Ready extends Running {
     }
 
     @Override
-    public Score calculateScoreForExtraBonusCount(Score beforeScore) {
+    public Score calculateScoreForExtraBonusCount(final Score beforeScore) {
         return beforeScore;
     }
 }

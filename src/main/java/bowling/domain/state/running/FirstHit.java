@@ -39,11 +39,7 @@ public class FirstHit extends Running {
     }
 
     @Override
-    public Score calculateScoreForExtraBonusCount(Score beforeScore) {
-        if (beforeScore.isZeroOfExtraBonusCount()) {
-            return beforeScore;
-        }
-
+    protected Score calculateScoreForExtraBonusCount(Score beforeScore) {
         beforeScore = this.firstPins.sumScore(beforeScore);
 
         return beforeScore;

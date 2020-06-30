@@ -86,7 +86,7 @@ public class MissTest {
         final Pins secondPins = Pins.of(PinCount.of(1));
         final Miss miss = Miss.of(firstPins, secondPins);
 
-        assertThat(miss.calculateScoreForExtraBonusCount(beforeScore))
+        assertThat(miss.calculateBonusScore(beforeScore))
                 .isEqualTo(expected);
     }
 

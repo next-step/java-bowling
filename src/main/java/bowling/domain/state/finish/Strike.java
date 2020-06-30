@@ -26,11 +26,7 @@ public class Strike extends Finished {
     }
 
     @Override
-    public Score calculateScoreForExtraBonusCount(final Score beforeScore) {
-        if (beforeScore.isZeroOfExtraBonusCount()) {
-            return beforeScore;
-        }
-
+    protected Score calculateScoreForExtraBonusCount(final Score beforeScore) {
         return beforeScore.sum(PinCount.of(PinCount.MAX_COUNT));
     }
 }

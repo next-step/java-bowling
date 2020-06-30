@@ -71,7 +71,7 @@ public class StrikeTest {
     @MethodSource
     public void calculateScoreForExtraBonusCount(final Score beforeScore, final Score expected) {
         assertThat(Strike.getInstance()
-                .calculateScoreForExtraBonusCount(beforeScore)
+                .calculateBonusScore(beforeScore)
         ).isEqualTo(expected);
     }
 

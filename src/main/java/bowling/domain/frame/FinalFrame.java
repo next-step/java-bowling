@@ -91,7 +91,7 @@ public class FinalFrame extends Frame {
         Score score = getFirstScore();
         for (int i = 1; i < states.size(); i++) {
             State state = states.get(i);
-            score = state.calculateScoreForExtraBonusCount(score);
+            score = state.calculateBonusScore(score);
         }
 
         return score;
@@ -105,7 +105,7 @@ public class FinalFrame extends Frame {
     public Score addBonusScore(final Score beforeScore) {
         Score score = beforeScore;
         for (State state : states) {
-            score = state.calculateScoreForExtraBonusCount(score);
+            score = state.calculateBonusScore(score);
         }
 
         return score;

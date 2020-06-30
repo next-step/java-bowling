@@ -114,7 +114,7 @@ public class FirstHitTest {
     public void calculateScoreForExtraBonusCount(final Score beforeScore, final Score expected) {
         FirstHit firstHit = FirstHit.of(Pins.of(9));
 
-        assertThat(firstHit.calculateScoreForExtraBonusCount(beforeScore))
+        assertThat(firstHit.calculateBonusScore(beforeScore))
                 .isEqualTo(expected);
     }
 

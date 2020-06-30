@@ -86,7 +86,7 @@ public class SpareTest {
         final Pins secondPins = Pins.of(PinCount.of(8));
         final Spare spare = Spare.of(firstPins, secondPins);
 
-        assertThat(spare.calculateScoreForExtraBonusCount(beforeScore))
+        assertThat(spare.calculateBonusScore(beforeScore))
                 .isEqualTo(expected);
     }
 

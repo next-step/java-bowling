@@ -85,7 +85,7 @@ public class ReadyTest {
     @ParameterizedTest
     @MethodSource
     public void calculateScoreForExtraBonusCount(final Score beforeScore, final Score expected) {
-        assertThat(Ready.getInstance().calculateScoreForExtraBonusCount(beforeScore))
+        assertThat(Ready.getInstance().calculateBonusScore(beforeScore))
                 .isEqualTo(expected);
     }
 

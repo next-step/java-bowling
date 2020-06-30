@@ -85,7 +85,7 @@ public class NormalFrame extends Frame {
             return beforeScore;
         }
 
-        final Score score = state.calculateScoreForExtraBonusCount(beforeScore);
+        final Score score = state.calculateBonusScore(beforeScore);
 
         return nextFrame.addBonusScore(score);
     }
