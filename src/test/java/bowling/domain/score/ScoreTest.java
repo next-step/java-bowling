@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.score;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import bowling.domain.result.Result;
 
 public class ScoreTest {
 

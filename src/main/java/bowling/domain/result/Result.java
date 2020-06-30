@@ -1,6 +1,8 @@
-package bowling.domain;
+package bowling.domain.result;
 
 import java.util.Arrays;
+
+import bowling.domain.score.Score;
 
 public enum Result {
 	STRIKE {

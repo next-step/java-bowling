@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.player;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

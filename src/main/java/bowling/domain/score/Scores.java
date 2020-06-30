@@ -1,7 +1,8 @@
-package bowling.domain;
+package bowling.domain.score;
 
 import java.util.Objects;
 
+import bowling.domain.result.Result;
 import bowling.util.ScoreBound;
 
 public class Scores {
