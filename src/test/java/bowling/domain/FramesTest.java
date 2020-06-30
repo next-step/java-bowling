@@ -50,4 +50,12 @@ class FramesTest {
 
         assertThat(scores.get(0)).isEqualTo(firstPin + secondPin);
     }
+
+    @Test
+    void getFrame() {
+        int frameNumber = 1;
+        Frame frame = frames.getFrame(frameNumber);
+
+        assertThat(frame).isInstanceOf(NormalFrame.class);
+    }
 }
