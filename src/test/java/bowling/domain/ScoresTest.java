@@ -89,4 +89,31 @@ public class ScoresTest {
 	void 게임_결과를_반환한다(Result result, Result expected) {
 		assertThat(result).isEqualTo(expected);
 	}
+
+	public static Stream<Arguments> 투구를_지속하는_테스트_모음() {
+		Score TEN = Score.ofScore(ScoreBound.MAXIMUM_SCORE_BOUND.getBound());
+		Score FIVE = Score.ofScore(5);
+		Score ZERO = Score.ofScore(ScoreBound.MINIMUM_SCORE_BOUND.getBound());
+
+		Scores canPitchMoreCase1 = Scores.from(ZERO);
+		Scores canPitchMoreCase2 = Scores.from(FIVE);
+		Scores cannotPitchMoreCase = Scores.from(TEN);
+
+		boolean canPitchMoreCase1Result = canPitchMoreCase1.canPlayMore();
+		boolean canPitchMoreCase2Result = canPitchMoreCase2.canPlayMore();
+		boolean cannotPitchMoreCaseResult = cannotPitchMoreCase.canPlayMore();
+
+		return Stream.of(
+			Arguments.of(canPitchMoreCase1Result, true),
+			Arguments.of(canPitchMoreCase2Result, true),
+			Arguments.of(cannotPitchMoreCaseResult, false)
+		);
+	}
+
+	@DisplayName("두 번째 투구를 시행할 수 있는 지 확인한다.")
+	@MethodSource("투구를_지속하는_테스트_모음")
+	@ParameterizedTest
+	void 두_번째_투구를_할_수_있다(boolean result, boolean expected) {
+		assertThat(result).isEqualTo(expected);
+	}
 }
