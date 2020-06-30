@@ -39,4 +39,8 @@ public class Scores {
 		}
 		return Result.findByScores(first, second);
 	}
+
+	public boolean canPlayMore() {
+		return ! first.isScoreTen() && Objects.isNull(second);
+	}
 }
