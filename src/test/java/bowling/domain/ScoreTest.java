@@ -51,4 +51,38 @@ class ScoreTest {
             score.add(new Pin(10));
         }).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("1번 던져서 넘긴 핀이 10개면 Strike 이력 추가")
+    @Test
+    public void getShotHistory_OneTime_ReturnStrike() {
+        Score score = new Score();
+        score.add(new Pin(10));
+        assertThat(score.getShotHistory()).contains(Shot.STRIKE);
+    }
+
+    @DisplayName("1번 던져서 넘긴 핀이 10개 미만 Miss 이력 추가가")
+    @Test
+    public void getShotHistory_OneTime_ReturnMiss() {
+        Score score = new Score();
+        score.add(new Pin(5));
+        assertThat(score.getShotHistory()).contains(Shot.FIVE);
+    }
+
+    @DisplayName("2번 던져서 넘긴 핀이 10개면 Miss,Spare 이력 추가")
+    @Test
+    public void getShotHistory_TwoTime_ReturnMissAndSpare() {
+        Score score = new Score();
+        score.add(new Pin(5));
+        score.add(new Pin(5));
+        assertThat(score.getShotHistory()).contains(Shot.FIVE, Shot.SPARE);
+    }
+
+    @DisplayName("2번 던져서 넘긴 핀이 10개 미만 Miss,Miss 이력 추가")
+    @Test
+    public void getShotHistory_TwoTime_ReturnMissAndMis() {
+        Score score = new Score();
+        score.add(new Pin(5));
+        score.add(new Pin(4));
+        assertThat(score.getShotHistory()).contains(Shot.FIVE, Shot.FOUR);
+    }
 }
