@@ -188,8 +188,7 @@ PJS's turn :
     * 현재 확인 가능한 프레임의 숫자 점수 리스트(FramesScores)와, 점수 시그니쳐 리스트(List<String>)을 반환한다.
     
 #### Exception 패키지
-* BowlingBuildingException
-    * Runtime Exception을 상속받는 커스텀 예외이다.
+* 커스텀 예외 패키지.
     
 #### DTO 패키지
 * ScoreSignaturesDto
