@@ -15,11 +15,15 @@ public class Score {
     }
 
     public boolean meetMaxScore() {
-        return meetMaxScore(0);
+        return MAX_SCORE == score;
     }
 
     public boolean meetMaxScore(int spare) {
-        return MAX_SCORE <= (this.score + spare);
+        return MAX_SCORE == (score + spare);
+    }
+
+    public boolean exceedMaxScore(int spare) {
+        return MAX_SCORE < (this.score + spare);
     }
 
     private void validateRange(int score) {

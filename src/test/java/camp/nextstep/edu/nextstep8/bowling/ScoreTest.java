@@ -18,13 +18,31 @@ class ScoreTest {
         });
     }
 
-    @DisplayName("점수가 10점 이하일 경우, spare 와의 합산 점수가 유효 한지 확인")
+    @DisplayName("Spare 점수를 포함하여 10점을 넘을 제대로 동작하는지 확인")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "5:5:false",
+            "1:9:false",
+            "5:6:true"
+    }, delimiter = ':')
+    public void exceedMaxScoreTest(int score, int spare, boolean expected) {
+        // given
+        Score givenScore = new Score(score);
+
+        // when
+        boolean result = givenScore.exceedMaxScore(spare);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @DisplayName("점수가 10점 이하일 경우, spare 와의 합산 점수가 최대 점수를 넘지 않는지 확인")
     @ParameterizedTest
     @CsvSource(value = {
             "1:false",
             "3:false",
             "5:true",
-            "6:true"
+            "6:false"
     }, delimiter = ':')
     public void meetMaxScoreTest(int spare, boolean expected) {
         // given

@@ -144,11 +144,11 @@ BowlingGame 이 결정할 일이 아님
 * [x] [fix#07][BowlingGameView.java] scoreBoard가 넘겨주는 값이 Optional 한 값이라면, 사용자가 null 여부를 판단하기 보다는 scoreBoard가 Optional을 반환하도록 변경할 것
 * [x] [fix#08][BowlingGameView.java] View가 ScoreBoard의 내부 구조를 모두 알아야 만 결과를 출력할 수 있는 구조  
 필요한 값이 Frame.getFrameResultSymbol()의 반환 값이라면 ScoreBoard가 Frame.getFrameResultSymbol()의 값을 반환 하도록 수정할 것
-* [ ] [fix#09][Frame.java] Class가 의도대로 동작하는지 Test 추가 
+* [x] [fix#09][Frame.java] Class가 의도대로 동작하는지 Test 추가 
 * [x] [fix#10][Frame.java] 자바에서는 관례적으로 static 변수, 인스턴스 순으로 변수를 선언하고 있음 자동차 경주 미션에 첨부되어 있던 https://myeonguni.tistory.com/1596 참고
 * [x] [fix#11][Frame.java] FrameStatus를 직접 결정하고 있음, 이럴경우 FrameStatus의 값이 추가 되거나, 삭제 될 때마다 Frame 클래스도 함께 수정이 발생하게 됨   
 Frame이 필요한 값은 FrameStatus의 enum 값 보다는 symbol이 필요해 보임, FrameStatus에게 score와 spare를 전달하면서 symbol을 달라고 요청하도록 수정할 것
-* [ ] [fix#12][ScoreBoard.java] Class가 의도대로 동작하는지 Test 추가
+* [x] [fix#12][ScoreBoard.java] Class가 의도대로 동작하는지 Test 추가
 * [x] [fix#13][BowlingRule.java] 의미없이 반복되는 값이 아닌, 게임의 진행과 밀접하게 관련된 값이 모여 있음  
 게임과 밀접한 관련이 있는 값을 단순히 상수로 선언해 두게 된다면, 게임과 관련 없는 곳에서 해당 상수를 의미와는 다르게 사용할 우려가 있음  
 만약 상수를 의도와는 다르게 다른 클래스에서 사용하게 된다면 상수를 수정할 때, 상수를 사용하고 있는 게임과 관련 없는 객체까지 함께 수정이 발생하게 되어 의도치 않은 오류를 발생할 수 있음  

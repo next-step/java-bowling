@@ -10,7 +10,7 @@ public class Frame {
     }
 
     public Frame updateSpare(int spare) {
-        if(score.meetMaxScore(spare)) {
+        if(score.exceedMaxScore(spare)) {
             throw new IllegalArgumentException("잔여 Spare 점수를 초과하였습니다");
         }
         this.spare = spare;
