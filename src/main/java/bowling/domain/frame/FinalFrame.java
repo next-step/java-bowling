@@ -88,10 +88,6 @@ public class FinalFrame extends Frame {
 
     @Override
     public Score getScore() {
-        if (!isGameOver()) {
-            return Score.UN_SCORE;
-        }
-
         Score score = getFirstScore();
         for (int i = 1; i < states.size(); i++) {
             State state = states.get(i);
