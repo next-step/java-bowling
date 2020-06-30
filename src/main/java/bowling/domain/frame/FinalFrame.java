@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.Score;
+
 public class FinalFrame extends Frame implements FrameFactory {
 
     private static final int LIMIT_COUNT = 3;
@@ -21,5 +23,35 @@ public class FinalFrame extends Frame implements FrameFactory {
             return false;
         }
         return !(scores.size() == FINAL_FRAME_MINIMUN_COUNT);
+    }
+
+    public boolean isFirst() {
+        return scores.size() == 0;
+    }
+
+    public boolean isStrike() {
+        return scores.get(scores.size() - 1).validateMaxScore();
+    }
+
+    public boolean isMiss() {
+        return scores.get((scores.size() - 1)).validateMinScore();
+    }
+
+    public boolean isSpare() {
+        if(scores.size() < Frame.LIMIT_COUNT) {
+            return false;
+        }
+
+        if(super.isSpare() && scores.size() == LIMIT_COUNT) {
+            return false;
+        }
+
+        return scores.get(scores.size() - 2).getScore()
+                + scores.get(scores.size() - 1).getScore()
+                == Score.MAX_SCORE;
+    }
+
+    public int getFrameLastScore() {
+        return scores.get((scores.size() - 1)).getScore();
     }
 }
