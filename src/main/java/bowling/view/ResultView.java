@@ -1,6 +1,7 @@
 package bowling.view;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.dto.ScoreDto;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.frame.FrameNumber;
 import bowling.util.StringUtil;
@@ -32,7 +33,9 @@ public class ResultView {
 
         printNameInfo(bowlingGame.getPlayerName());
         printResult(bowlingGame.getFrameResults());
-        System.out.println();
+
+        printNameInfo(StringUtil.EMPTY);
+        printScore(bowlingGame.getScoreResults());
     }
 
     private static void printFramesHeader() {
@@ -59,8 +62,23 @@ public class ResultView {
 
         printLine(results.stream()
                 .map(StateDtos::getSymbol)
-                .collect(Collectors.toList())
-        );
+                .collect(Collectors.toList()));
+
+        System.out.println();
+    }
+
+    private static void printScore(List<ScoreDto> results) {
+        if (Objects.isNull(results)) {
+            printLine(Collections.emptyList());
+            return;
+        }
+
+        printLine(results.stream()
+                .map(ScoreDto::getScore)
+                .map(String::valueOf)
+                .collect(Collectors.toList()));
+
+        System.out.println();
     }
 
     private static void printLine(final List<String> strings) {

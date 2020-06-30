@@ -1,7 +1,10 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.ScoreDto;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.pin.PinCount;
+import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,17 @@ public class Frames {
     public List<StateDtos> getFrameResult() {
         return frames.stream()
                 .map(Frame::getFrameResult)
+                .collect(Collectors.toList());
+    }
+
+    public List<ScoreDto> getScoreResult() {
+        Scores scores = Scores.newInstance();
+        frames.forEach(scores::sumScore);
+
+        return scores.getScores()
+                .stream()
+                .filter(Score::canCalculateScore)
+                .map(ScoreDto::of)
                 .collect(Collectors.toList());
     }
 

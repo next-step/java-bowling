@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.dto.ScoreDto;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.frame.Frames;
 import bowling.domain.pin.PinCount;
@@ -39,5 +40,9 @@ public class BowlingGame {
 
     public List<StateDtos> getFrameResults() {
         return frames.getFrameResult();
+    }
+
+    public List<ScoreDto> getScoreResults() {
+        return frames.getScoreResult();
     }
 }
