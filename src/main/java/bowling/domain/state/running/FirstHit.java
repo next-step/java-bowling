@@ -42,4 +42,14 @@ public class FirstHit extends Running {
     public Score getScore() {
         return Score.valueOf(this.firstPins.getHitCount(), Score.ZERO);
     }
+
+    @Override
+    public Score calculateScoreForExtraBonusCount(Score beforeScore) {
+        beforeScore = this.firstPins.sumScore(beforeScore);
+        if (beforeScore.isZeroOfExtraBonusCount()) {
+            return beforeScore;
+        }
+
+        return Score.INIT_SCORE;
+    }
 }

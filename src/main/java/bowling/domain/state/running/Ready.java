@@ -31,4 +31,9 @@ public class Ready extends Running {
     public Score getScore() {
         return Score.INIT_SCORE;
     }
+
+    @Override
+    public Score calculateScoreForExtraBonusCount(Score beforeScore) {
+        return Score.INIT_SCORE;
+    }
 }

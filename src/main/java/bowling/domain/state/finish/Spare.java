@@ -33,4 +33,14 @@ public class Spare extends Finished {
     public Score getScore() {
         return Score.ofSpare();
     }
+
+    @Override
+    public Score calculateScoreForExtraBonusCount(Score beforeScore) {
+        beforeScore = this.firstPins.sumScore(beforeScore);
+        if (beforeScore.isZeroOfExtraBonusCount()) {
+            return beforeScore;
+        }
+
+        return this.getSecondPins().sumScore(beforeScore);
+    }
 }

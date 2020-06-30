@@ -5,8 +5,12 @@ import bowling.domain.pin.Pins;
 import bowling.domain.score.Score;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Collections;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -72,5 +76,24 @@ public class SpareTest {
     public void getScore() {
         assertThat(spare.getScore())
                 .isEqualTo(Score.ofSpare());
+    }
+
+    @DisplayName("점수를 계산할 수 있는 상태인지 확인")
+    @ParameterizedTest
+    @MethodSource
+    public void calculateScoreForExtraBonusCount(final Score beforeScore, final Score expected) {
+        final Pins firstPins = Pins.of(PinCount.of(2));
+        final Pins secondPins = Pins.of(PinCount.of(8));
+        final Spare spare = Spare.of(firstPins, secondPins);
+
+        assertThat(spare.calculateScoreForExtraBonusCount(beforeScore))
+                .isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> calculateScoreForExtraBonusCount() {
+        return Stream.of(
+                Arguments.of(Score.ofStrike(), Score.valueOf(20, 0)),
+                Arguments.of(Score.ofSpare(), Score.valueOf(12, 0))
+        );
     }
 }

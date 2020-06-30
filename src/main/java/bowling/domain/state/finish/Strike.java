@@ -24,4 +24,13 @@ public class Strike extends Finished {
     public Score getScore() {
         return Score.ofStrike();
     }
+
+    @Override
+    public Score calculateScoreForExtraBonusCount(final Score beforeScore) {
+        if (beforeScore.isZeroOfExtraBonusCount()) {
+            return beforeScore;
+        }
+
+        return beforeScore.sum(PinCount.of(PinCount.MAX_COUNT));
+    }
 }

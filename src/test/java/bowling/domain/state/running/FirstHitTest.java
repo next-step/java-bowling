@@ -107,4 +107,21 @@ public class FirstHitTest {
         assertThat(firstHit.getScore())
                 .isEqualTo(Score.valueOf(Pins.of(9).getHitCount(), Score.ZERO));
     }
+
+    @DisplayName("점수를 계산할 수 있는 상태인지 확인")
+    @ParameterizedTest
+    @MethodSource
+    public void calculateScoreForExtraBonusCount(final Score beforeScore, final Score expected) {
+        FirstHit firstHit = FirstHit.of(Pins.of(9));
+
+        assertThat(firstHit.calculateScoreForExtraBonusCount(beforeScore))
+                .isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> calculateScoreForExtraBonusCount() {
+        return Stream.of(
+                Arguments.of(Score.ofStrike(), Score.INIT_SCORE),
+                Arguments.of(Score.ofSpare(), Score.valueOf(19, 0))
+        );
+    }
 }

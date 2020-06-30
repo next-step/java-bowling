@@ -6,9 +6,12 @@ import bowling.domain.state.finish.Strike;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Collections;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -76,5 +79,20 @@ public class ReadyTest {
     public void getScore() {
         assertThat(Ready.getInstance().getScore())
                 .isEqualTo(Score.INIT_SCORE);
+    }
+
+    @DisplayName("점수를 계산할 수 있는 상태인지 확인")
+    @ParameterizedTest
+    @MethodSource
+    public void calculateScoreForExtraBonusCount(final Score beforeScore, final Score expected) {
+        assertThat(Ready.getInstance().calculateScoreForExtraBonusCount(beforeScore))
+                .isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> calculateScoreForExtraBonusCount() {
+        return Stream.of(
+                Arguments.of(Score.ofStrike(), Score.INIT_SCORE),
+                Arguments.of(Score.ofSpare(), Score.INIT_SCORE)
+        );
     }
 }

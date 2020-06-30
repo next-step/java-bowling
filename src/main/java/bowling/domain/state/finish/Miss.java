@@ -40,4 +40,15 @@ public class Miss extends Finished {
     public Score getScore() {
         return Score.ofMiss(firstPins.totalPins(secondPins).getCount());
     }
+
+    @Override
+    public Score calculateScoreForExtraBonusCount(Score beforeScore) {
+        beforeScore = this.firstPins.sumScore(beforeScore);
+        if (beforeScore.isZeroOfExtraBonusCount()) {
+            return beforeScore;
+        }
+        beforeScore = this.secondPins.sumScore(beforeScore);
+
+        return beforeScore;
+    }
 }

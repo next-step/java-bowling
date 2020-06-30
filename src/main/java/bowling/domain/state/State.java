@@ -23,4 +23,6 @@ public interface State {
     List<State> getState();
 
     Score getScore();
+
+    Score calculateScoreForExtraBonusCount(Score beforeScore);
 }
