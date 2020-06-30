@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.List;
+
 public class Score {
 
     private int score;
@@ -7,12 +9,33 @@ public class Score {
     public static final int MIN_SCORE = 0;
 
     public Score(int score) {
-        validateInputScore(score);
+        validateInputMinScore(score);
+        validateInputMaxScore(score);
         this.score = score;
     }
 
-    private void validateInputScore(int score) {
-        if (MIN_SCORE > score || MAX_SCORE < score) {
+    public Score(int score, List<Score> scores) {
+        validateInputMinScore(score);
+        validateInputMaxScore(score);
+        validateInputSecondScore(score, scores);
+        this.score = score;
+    }
+
+    private void validateInputSecondScore(int score, List<Score> scores) {
+        if (scores.size() > 0) {
+            validateInputMaxScore(scores.get(scores.size() - 1).getScore() + score);
+        }
+
+    }
+
+    private void validateInputMinScore(int score) {
+        if (MIN_SCORE > score) {
+            throw new IllegalArgumentException("0 ~ 10 점수 입력");
+        }
+    }
+
+    private void validateInputMaxScore(int score) {
+        if (MAX_SCORE < score) {
             throw new IllegalArgumentException("0 ~ 10 점수 입력");
         }
     }

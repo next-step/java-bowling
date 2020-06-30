@@ -1,9 +1,11 @@
 package bowling;
 
+import bowling.domain.Bowling;
+import bowling.domain.Player;
 import bowling.domain.Score;
+import bowling.domain.frame.Frames;
+import bowling.view.ResultView;
 import org.junit.jupiter.api.Test;
-import qna.CannotDeleteException;
-import qna.domain.UserTest;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -21,5 +23,19 @@ public class ScoreTest {
         assertThatThrownBy(() -> {
             Score score = new Score(11);
         }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void name() {
+        Bowling bowling = new Bowling();
+
+        Player player = new Player("tt");
+        ResultView resultView = new ResultView(player, bowling);
+
+        for (int frameCount = 0; frameCount <= Frames.BOWLING_GAME_FRAME;) {
+            int nextCount = bowling.addPlayerScore(frameCount, 4);
+            resultView.displayResult(frameCount);
+            frameCount += nextCount;
+        }
     }
 }
