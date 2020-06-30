@@ -18,11 +18,11 @@ class NormalFrameTest {
 
     normalFrame.roll(firstNumberOfPinsKnockedDown);
 
-    assertThat(normalFrame.getRemainingPinsNum()).isEqualTo(10 - firstNumberOfPinsKnockedDown);
+    assertThat(normalFrame.getRemainingPinsNumber()).isEqualTo(10 - firstNumberOfPinsKnockedDown);
 
     normalFrame.roll(secondNumberOfPinsKnockedDown);
 
-    assertThat(normalFrame.getRemainingPinsNum())
+    assertThat(normalFrame.getRemainingPinsNumber())
         .isEqualTo(10 - firstNumberOfPinsKnockedDown - secondNumberOfPinsKnockedDown);
 
     assertThatExceptionOfType(FrameOverException.class).isThrownBy(() -> {
@@ -53,7 +53,7 @@ class NormalFrameTest {
 
     normalFrame.roll(firstNumberOfPinsKnockedDown);
 
-    assertThat(normalFrame.getRemainingPinsNum()).isEqualTo(0);
+    assertThat(normalFrame.getRemainingPinsNumber()).isEqualTo(0);
 
     assertThatExceptionOfType(FrameOverException.class).isThrownBy(() -> {
       normalFrame.roll(secondNumberOfPinsKnockedDown);

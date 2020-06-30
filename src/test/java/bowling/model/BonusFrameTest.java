@@ -13,16 +13,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 class BonusFrameTest {
 
   @ParameterizedTest
-  @MethodSource("provideKockDownNumWtihRemaningNum")
-  void roll(int kockDownNum, int remainingNum) throws FrameOverException {
+  @MethodSource("provideKockDownNumWtihRemaningNumber")
+  void roll(int knockDownNumber, int remainingNumber) throws FrameOverException {
     BonusFrame bonusFrame = new BonusFrame();
 
-    bonusFrame.roll(kockDownNum);
+    bonusFrame.roll(knockDownNumber);
 
-    assertThat(bonusFrame.getRemainingPinsNum()).isEqualTo(remainingNum);
+    assertThat(bonusFrame.getRemainingPinsNumber()).isEqualTo(remainingNumber);
   }
 
-  static Stream<Arguments> provideKockDownNumWtihRemaningNum() {
+  static Stream<Arguments> provideKockDownNumWtihRemaningNumber() {
     return Stream.of(
         arguments(
             0, 10
@@ -41,11 +41,11 @@ class BonusFrameTest {
       "-1",
       "11"
   })
-  void roll_핀범위초과(int knockDownNum) {
+  void roll_핀범위초과(int knockDownNumber) {
     BonusFrame bonusFrame = new BonusFrame();
 
     assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
-      bonusFrame.roll(knockDownNum);
+      bonusFrame.roll(knockDownNumber);
     });
   }
 

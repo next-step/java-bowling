@@ -12,18 +12,18 @@ import org.junit.jupiter.params.provider.MethodSource;
 class FramesDTOTest {
 
   @ParameterizedTest
-  @MethodSource("provideKonckDownNumWithExpected")
-  void roll(List<Integer> knockDownNums) {
+  @MethodSource("provideKnockDownNumWithExpected")
+  void roll(List<Integer> knockDownNumbers) {
     Frames frames = new Frames();
 
-    knockDownNums.forEach(knockDownNum -> {
-      frames.roll(knockDownNum);
+    knockDownNumbers.forEach(knockDownNumber -> {
+      frames.roll(knockDownNumber);
     });
 
     System.out.println(new FramesDTO(frames.getFrames()).toString());
   }
 
-  static Stream<Arguments> provideKonckDownNumWithExpected() {
+  static Stream<Arguments> provideKnockDownNumWithExpected() {
     return Stream.of(
         arguments(
             Arrays.asList(0, 0, 0, 1, 0, 10, 5, 5, 10)

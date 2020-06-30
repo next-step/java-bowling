@@ -10,8 +10,8 @@ public class NormalFrame implements Frame {
   private KnockedDownPins pins = new KnockedDownPins();
   private FrameStatus frameStatus;
 
-  public NormalFrame(int curIndex) {
-    this.frameStatus = new RequiredFirstRoll(curIndex);
+  public NormalFrame(int currentIndex) {
+    this.frameStatus = new RequiredFirstRoll(currentIndex);
   }
 
   /**
@@ -23,16 +23,16 @@ public class NormalFrame implements Frame {
    * <p>
    * - 세 번째 투구 혹은 스트라이크 후 두 번째 투구 시 FrameOverException
    *
-   * @param knockDownNum 넘어뜨린 개수
+   * @param KnockDownNumber 넘어뜨린 개수
    * @throws FrameOverException 새로운 인스턴스 생성하여 처리
    */
   @Override
-  public void roll(int knockDownNum) throws FrameOverException {
+  public void roll(int KnockDownNumber) throws FrameOverException {
     if (isOver()) {
       throw new FrameOverException();
     }
 
-    pins = KnockedDownPinsFactory.createInstanceBy(pins, knockDownNum);
+    pins = KnockedDownPinsFactory.createInstanceBy(pins, KnockDownNumber);
 
     frameStatus = frameStatus.createNextStatusBy(pins);
   }
@@ -43,8 +43,8 @@ public class NormalFrame implements Frame {
   }
 
   @Override
-  public int getRemainingPinsNum() {
-    return pins.getRemainingNum();
+  public int getRemainingPinsNumber() {
+    return pins.getRemainingNumber();
   }
 
   @Override

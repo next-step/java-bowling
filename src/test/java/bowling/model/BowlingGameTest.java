@@ -37,7 +37,7 @@ class BowlingGameTest {
       game.roll(kockNumbers.get(i));
     }
 
-    game.initBonusCnt();
+    game.initBonusCount();
 
     bonusNumbers.stream()
         .filter(n -> game.hasBonus())
@@ -64,7 +64,7 @@ class BowlingGameTest {
       game.roll(kockNumbers.get(i));
     }
 
-    game.initBonusCnt();
+    game.initBonusCount();
 
     bonusNumbers.stream()
         .filter(n -> game.hasBonus())

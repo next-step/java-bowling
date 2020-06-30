@@ -29,37 +29,37 @@ public class KnockedDownPinsTest {
 
   private static void initKnockedDownPinsTest() {
     knockedDownPins0_0 = KnockedDownPins.getBuilder(0)
-        .secondKnockDownNum(0)
+        .secondKnockDownNumber(0)
         .build();
 
     knockedDownPins2_5 = KnockedDownPins.getBuilder(2)
-        .secondKnockDownNum(5)
+        .secondKnockDownNumber(5)
         .build();
 
     knockedDownPins5_5 = KnockedDownPins.getBuilder(5)
-        .secondKnockDownNum(5)
+        .secondKnockDownNumber(5)
         .build();
 
     knockedDownPins0_10 = KnockedDownPins.getBuilder(0)
-        .secondKnockDownNum(10)
+        .secondKnockDownNumber(10)
         .build();
 
     knockedDownPins0_1 = KnockedDownPins.getBuilder(0)
-        .secondKnockDownNum(1)
+        .secondKnockDownNumber(1)
         .build();
 
     knockedDownPins_Strike = KnockedDownPins.getBuilder(10)
-        .secondKnockDownNum(0)
+        .secondKnockDownNumber(0)
         .build();
   }
 
   @ParameterizedTest
-  @MethodSource("provideForRemainingNum")
+  @MethodSource("provideForRemainingNumber")
   void getRemainingNum(KnockedDownPins knockedDownPins, int expected) {
-    assertThat(knockedDownPins.getRemainingNum()).isEqualTo(expected);
+    assertThat(knockedDownPins.getRemainingNumber()).isEqualTo(expected);
   }
 
-  static Stream<Arguments> provideForRemainingNum() {
+  static Stream<Arguments> provideForRemainingNumber() {
     return Stream.of(
         arguments(
             knockedDownPins0_0,

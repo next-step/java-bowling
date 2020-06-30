@@ -22,7 +22,7 @@ public class RequiredSecondRoll implements FrameStatus {
 
   @Override
   public FrameStatus createNextStatusBy(KnockedDownPins pins) {
-    if (pins.getRemainingNum() == ZERO) {
+    if (pins.getRemainingNumber() == ZERO) {
       return new Spare(this);
     }
 
@@ -36,7 +36,7 @@ public class RequiredSecondRoll implements FrameStatus {
 
   @Override
   public String toString(KnockedDownPins pins) {
-    return String.valueOf(pins.getFirstKnockDownNum()).replace(ZERO.toString(), GUTTER);
+    return String.valueOf(pins.getFirstKnockDownNumber()).replace(ZERO.toString(), GUTTER);
   }
 
   @Override

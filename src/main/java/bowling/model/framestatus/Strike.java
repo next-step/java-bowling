@@ -12,9 +12,9 @@ public class Strike implements FrameStatus {
   private final List<Integer> indexOfScoredFrames;
 
   public Strike(FrameStatus frameStatus) {
-    int curIndex = frameStatus.getIndexOfScoredFrames().get(0);
+    int currentIndex = frameStatus.getIndexOfScoredFrames().get(0);
 
-    this.indexOfScoredFrames = Arrays.asList(curIndex, curIndex + 1, curIndex + 2);
+    this.indexOfScoredFrames = Arrays.asList(currentIndex, currentIndex + 1, currentIndex + 2);
   }
 
   @Override
@@ -34,7 +34,7 @@ public class Strike implements FrameStatus {
 
   @Override
   public String toString(KnockedDownPins pins) {
-    if (pins.getFirstKnockDownNum() != 10) {
+    if (pins.getFirstKnockDownNumber() != 10) {
       throw new IllegalArgumentException("스트라이크가 아닙니다.");
     }
 

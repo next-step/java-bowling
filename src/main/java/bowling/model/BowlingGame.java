@@ -7,7 +7,7 @@ public class BowlingGame {
   public final static int MAX_NUMBER_OF_FRAMES = 10;
 
   private Frames frames = new Frames();
-  private int bonusCnt;
+  private int bonusCount;
   private PlayerName playerName;
 
   private BowlingGame(PlayerName playerName) {
@@ -26,7 +26,7 @@ public class BowlingGame {
     return new FramesDTO(frames.getFrames()).getFrames();
   }
 
-  public int getCurrentFrameNum() {
+  public int getCurrentFrameNumber() {
     if (frames.isCurrentFrameOver()) {
       return frames.getSize() + 1;
     }
@@ -38,17 +38,17 @@ public class BowlingGame {
     frames.roll(number);
   }
 
-  public void initBonusCnt() {
-    bonusCnt = frames.getFrames().get(MAX_NUMBER_OF_FRAMES - 1).getIndexOfScoredFrames().size() - 1;
+  public void initBonusCount() {
+    bonusCount = frames.getFrames().get(MAX_NUMBER_OF_FRAMES - 1).getIndexOfScoredFrames().size() - 1;
   }
 
   public void bonusRoll(int number) {
     frames.bonusRoll(number);
-    bonusCnt--;
+    bonusCount--;
   }
 
   public boolean hasBonus() {
-    return 0 < bonusCnt;
+    return 0 < bonusCount;
   }
 
   public boolean requiredNormalFrame() {

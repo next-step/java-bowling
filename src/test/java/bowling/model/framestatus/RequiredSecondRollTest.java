@@ -21,7 +21,7 @@ class RequiredSecondRollTest {
 
     assertThat(frameStatus.createNextStatusBy(
         KnockedDownPins.getBuilder(5)
-            .secondKnockDownNum(5)
+            .secondKnockDownNumber(5)
             .build()
     )).isInstanceOf(Spare.class);
   }
@@ -39,7 +39,7 @@ class RequiredSecondRollTest {
 
     assertThat(frameStatus.createNextStatusBy(
         KnockedDownPins.getBuilder(5)
-            .secondKnockDownNum(3)
+            .secondKnockDownNumber(3)
             .build()
     )).isInstanceOf(Miss.class);
   }

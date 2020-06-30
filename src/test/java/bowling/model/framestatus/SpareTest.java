@@ -15,15 +15,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 class SpareTest {
 
   @ParameterizedTest
-  @MethodSource("provideCurIndexWithExpectedList")
-  void getIndexOfNextFrames(int curIndex, List<Integer> expected) {
-    FrameStatus frameStatus = new Spare(new RequiredFirstRoll(curIndex));
+  @MethodSource("provideCurrentIndexWithExpectedList")
+  void getIndexOfNextFrames(int currentIndex, List<Integer> expected) {
+    FrameStatus frameStatus = new Spare(new RequiredFirstRoll(currentIndex));
 
     assertThat(frameStatus.getIndexOfScoredFrames()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isTrue();
   }
 
-  static Stream<Arguments> provideCurIndexWithExpectedList() {
+  static Stream<Arguments> provideCurrentIndexWithExpectedList() {
     return Stream.of(
         arguments(
             0,

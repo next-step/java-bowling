@@ -16,8 +16,8 @@ public class BowlingView {
     System.out.print("플레이어 이름은(3 english letters)?: ");
   }
 
-  public static void printKnockDownNumInputMsg(int currentFrameNum) {
-    System.out.print(currentFrameNum + "프레임 투구 : ");
+  public static void printKnockDownNumInputMsg(int currentFrameNumber) {
+    System.out.print(currentFrameNumber + "프레임 투구 : ");
   }
 
   public static void printBonusFrameInputMsg() {

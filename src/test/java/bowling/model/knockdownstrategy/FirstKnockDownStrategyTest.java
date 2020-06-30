@@ -19,7 +19,7 @@ class FirstKnockDownStrategyTest {
 
     KnockedDownPins knockedDownPins = knockDownStrategy.knockDown(number);
 
-    assertThat(knockedDownPins.getFirstKnockDownNum())
+    assertThat(knockedDownPins.getFirstKnockDownNumber())
         .isEqualTo(number);
 
     assertThat(knockedDownPins.isSecondKnockDownNumNull()).isTrue();

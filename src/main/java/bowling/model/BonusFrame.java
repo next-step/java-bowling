@@ -10,12 +10,12 @@ public class BonusFrame implements Frame {
   private KnockDownNumber knockDownNumber = new KnockDownNumber();
 
   @Override
-  public void roll(int knockDownNum) throws FrameOverException {
+  public void roll(int KnockDownNumber) throws FrameOverException {
     if (!knockDownNumber.isNull()) {
       throw new FrameOverException();
     }
 
-    knockDownNumber = new KnockDownNumber(knockDownNum);
+    knockDownNumber = new KnockDownNumber(KnockDownNumber);
   }
 
   @Override
@@ -24,7 +24,7 @@ public class BonusFrame implements Frame {
   }
 
   @Override
-  public int getRemainingPinsNum() {
+  public int getRemainingPinsNumber() {
     return KnockedDownPins.MAX_NUMBER_OF_PINS - knockDownNumber.getIntValue();
   }
 

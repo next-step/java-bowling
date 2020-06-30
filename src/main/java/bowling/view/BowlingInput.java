@@ -12,8 +12,8 @@ public class BowlingInput {
     return scanner.nextLine();
   }
 
-  public static int getKnockDownNumInput(int currentFrameNum) {
-    BowlingView.printKnockDownNumInputMsg(currentFrameNum);
+  public static int getKnockDownNumberInput(int currentFrameNumber) {
+    BowlingView.printKnockDownNumInputMsg(currentFrameNumber);
 
     int result = scanner.nextInt();
     scanner.nextLine();

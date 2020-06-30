@@ -32,11 +32,11 @@ public class Miss implements FrameStatus {
 
   @Override
   public String toString(KnockedDownPins pins) {
-    if (pins.getRemainingNum() == 0) {
+    if (pins.getRemainingNumber() == 0) {
       throw new IllegalArgumentException("미스가 아닙니다.");
     }
 
-    return (pins.getFirstKnockDownNum() + BAR + pins.getSecondKnockDownNum())
+    return (pins.getFirstKnockDownNumber() + BAR + pins.getSecondKnockDownNumber())
         .replaceAll("0", GUTTER);
   }
 

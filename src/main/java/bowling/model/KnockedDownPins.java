@@ -7,20 +7,20 @@ public class KnockedDownPins {
   public final static int MAX_NUMBER_OF_PINS = 10;
   public final static int MIN_NUMBER_OF_PINS = 0;
 
-  private KnockDownNumber firstKnockDownNum = new KnockDownNumber();
-  private KnockDownNumber secondKnockDownNum = new KnockDownNumber();
+  private KnockDownNumber firstKnockDownNumber = new KnockDownNumber();
+  private KnockDownNumber secondKnockDownNumber = new KnockDownNumber();
 
   public KnockedDownPins() {
   }
 
-  private KnockedDownPins(KnockDownNumber firstKnockDownNum,
-      KnockDownNumber secondKnockDownNum) {
-    if (MAX_NUMBER_OF_PINS < firstKnockDownNum.getIntValue() + secondKnockDownNum.getIntValue()) {
+  private KnockedDownPins(KnockDownNumber firstKnockDownNumber,
+      KnockDownNumber secondKnockDownNumber) {
+    if (MAX_NUMBER_OF_PINS < firstKnockDownNumber.getIntValue() + secondKnockDownNumber.getIntValue()) {
       throw new IllegalArgumentException("쓰러트린 핀이 " + MAX_NUMBER_OF_PINS + "개 이상이 될 수 없습니다.");
     }
 
-    this.firstKnockDownNum = firstKnockDownNum;
-    this.secondKnockDownNum = secondKnockDownNum;
+    this.firstKnockDownNumber = firstKnockDownNumber;
+    this.secondKnockDownNumber = secondKnockDownNumber;
   }
 
   public static class KnockedDownPinsBuilder {
@@ -32,7 +32,7 @@ public class KnockedDownPins {
       this.firstKnockDownNum = new KnockDownNumber(firstKnockDownNum);
     }
 
-    public KnockedDownPinsBuilder secondKnockDownNum(int number) {
+    public KnockedDownPinsBuilder secondKnockDownNumber(int number) {
       secondKnockDownNum = new KnockDownNumber(number);
       return this;
     }
@@ -46,24 +46,24 @@ public class KnockedDownPins {
     return new KnockedDownPinsBuilder(firstKnockDownNum);
   }
 
-  public int getFirstKnockDownNum() {
-    return firstKnockDownNum.getIntValue();
+  public int getFirstKnockDownNumber() {
+    return firstKnockDownNumber.getIntValue();
   }
 
-  public int getSecondKnockDownNum() {
-    return secondKnockDownNum.getIntValue();
+  public int getSecondKnockDownNumber() {
+    return secondKnockDownNumber.getIntValue();
   }
 
-  public int getRemainingNum() {
-    return MAX_NUMBER_OF_PINS - firstKnockDownNum.getIntValue() - secondKnockDownNum.getIntValue();
+  public int getRemainingNumber() {
+    return MAX_NUMBER_OF_PINS - firstKnockDownNumber.getIntValue() - secondKnockDownNumber.getIntValue();
   }
 
-  public boolean isFirstKnockDownNumNull() {
-    return firstKnockDownNum.isNull();
+  public boolean isFirstKnockDownNumberNull() {
+    return firstKnockDownNumber.isNull();
   }
 
   public boolean isSecondKnockDownNumNull() {
-    return secondKnockDownNum.isNull();
+    return secondKnockDownNumber.isNull();
   }
 
   @Override
@@ -75,20 +75,20 @@ public class KnockedDownPins {
       return false;
     }
     KnockedDownPins that = (KnockedDownPins) o;
-    return Objects.equals(firstKnockDownNum, that.firstKnockDownNum) &&
-        Objects.equals(secondKnockDownNum, that.secondKnockDownNum);
+    return Objects.equals(firstKnockDownNumber, that.firstKnockDownNumber) &&
+        Objects.equals(secondKnockDownNumber, that.secondKnockDownNumber);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(firstKnockDownNum, secondKnockDownNum);
+    return Objects.hash(firstKnockDownNumber, secondKnockDownNumber);
   }
 
   @Override
   public String toString() {
     return "RemainingPins{" +
-        "firstNumberOfKnockedDown=" + firstKnockDownNum +
-        ", secondNumberOfKnockedDown=" + secondKnockDownNum +
+        "firstNumberOfKnockedDown=" + firstKnockDownNumber +
+        ", secondNumberOfKnockedDown=" + secondKnockDownNumber +
         '}';
   }
 }

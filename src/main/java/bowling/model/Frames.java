@@ -28,37 +28,37 @@ public class Frames {
   /**
    * 투구(roll a ball), FrameOverException 발생 시 새로운 프레임에서 진행
    *
-   * @param knockDownNum 넘어뜨린 개수
+   * @param knockDownNumber 넘어뜨린 개수
    */
-  public void roll(int knockDownNum) {
+  public void roll(int knockDownNumber) {
     try {
-      frames.getLast().roll(knockDownNum);
+      frames.getLast().roll(knockDownNumber);
     } catch (FrameOverException e) {
-      addAndRoll(knockDownNum);
+      addAndRoll(knockDownNumber);
     }
   }
 
-  private void addAndRoll(int knockDownNum) {
+  private void addAndRoll(int knockDownNumber) {
     frames.addLast(new NormalFrame(frames.size()));
 
     try {
-      frames.getLast().roll(knockDownNum);
+      frames.getLast().roll(knockDownNumber);
     } catch (FrameOverException frameOverException) {
       throw new IllegalStateException("roll 실패 "
           + NEWLINE + " frames : " + frames.toString()
-          + NEWLINE + " knockDownNum : " + knockDownNum);
+          + NEWLINE + " knockDownNum : " + knockDownNumber);
     }
   }
 
-  public void bonusRoll(int knockDownNum) {
+  public void bonusRoll(int knockDownNumber) {
     Frame bonusFrame = new BonusFrame();
 
     try {
-      bonusFrame.roll(knockDownNum);
+      bonusFrame.roll(knockDownNumber);
     } catch (FrameOverException e) {
       throw new IllegalStateException("roll 실패 "
           + NEWLINE + " frames : " + frames.toString()
-          + NEWLINE + " knockDownNum : " + knockDownNum);
+          + NEWLINE + " knockDownNum : " + knockDownNumber);
     }
 
     frames.addLast(bonusFrame);

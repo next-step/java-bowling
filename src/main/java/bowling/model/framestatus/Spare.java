@@ -14,9 +14,9 @@ public class Spare implements FrameStatus {
   private final List<Integer> indexOfScoredFrames;
 
   public Spare(FrameStatus frameStatus) {
-    int curIndex = frameStatus.getIndexOfScoredFrames().get(0);
+    int currentIndex = frameStatus.getIndexOfScoredFrames().get(0);
 
-    this.indexOfScoredFrames = Arrays.asList(curIndex, curIndex + 1);
+    this.indexOfScoredFrames = Arrays.asList(currentIndex, currentIndex + 1);
   }
 
   @Override
@@ -36,11 +36,11 @@ public class Spare implements FrameStatus {
 
   @Override
   public String toString(KnockedDownPins pins) {
-    if (pins.getRemainingNum() != 0) {
+    if (pins.getRemainingNumber() != 0) {
       throw new IllegalArgumentException("스페어가 아닙니다.");
     }
 
-    return (pins.getFirstKnockDownNum() + BAR + SPARE).replace("0", GUTTER);
+    return (pins.getFirstKnockDownNumber() + BAR + SPARE).replace("0", GUTTER);
   }
 
   @Override

@@ -9,8 +9,8 @@ public class RequiredFirstRoll implements FrameStatus {
   private final static String BLANK = "";
   private final List<Integer> indexOfScoredFrames;
 
-  public RequiredFirstRoll(int curIndex) {
-    indexOfScoredFrames = Collections.singletonList(curIndex);
+  public RequiredFirstRoll(int currentIndex) {
+    indexOfScoredFrames = Collections.singletonList(currentIndex);
   }
 
   @Override
@@ -20,7 +20,7 @@ public class RequiredFirstRoll implements FrameStatus {
 
   @Override
   public FrameStatus createNextStatusBy(KnockedDownPins pins) {
-    if (pins.getFirstKnockDownNum() == KnockedDownPins.MAX_NUMBER_OF_PINS) {
+    if (pins.getFirstKnockDownNumber() == KnockedDownPins.MAX_NUMBER_OF_PINS) {
       return new Strike(this);
     }
 

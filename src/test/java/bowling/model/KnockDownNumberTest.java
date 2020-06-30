@@ -17,16 +17,16 @@ class KnockDownNumberTest {
       "-1",
       "11"
   })
-  void init_핀범위초과(int knockDownNum) {
+  void init_핀범위초과(int knockDownNumber) {
     assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
-      new KnockDownNumber(knockDownNum);
+      new KnockDownNumber(knockDownNumber);
     });
   }
 
   @ParameterizedTest
   @MethodSource("provideKockDownNumWtihExpected")
-  void getIntValue(int kockDownNum, int expected) {
-    KnockDownNumber knockDownNumber = new KnockDownNumber(kockDownNum);
+  void getIntValue(int number, int expected) {
+    KnockDownNumber knockDownNumber = new KnockDownNumber(number);
 
     assertThat(knockDownNumber.getIntValue()).isEqualTo(expected);
   }

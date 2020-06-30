@@ -70,11 +70,11 @@ class FramesTest {
 
   @ParameterizedTest
   @MethodSource("provideKonckDownNumWithExpected")
-  void roll(List<Integer> knockDownNums, List<NormalFrame> expected) {
+  void roll(List<Integer> knockDownNumbers, List<NormalFrame> expected) {
     Frames frames = new Frames();
 
-    knockDownNums.forEach(knockDownNum -> {
-      frames.roll(knockDownNum);
+    knockDownNumbers.forEach(knockDownNumber -> {
+      frames.roll(knockDownNumber);
     });
 
     assertThat(frames.getFrames()).isEqualTo(expected);

@@ -5,11 +5,11 @@ import java.util.List;
 
 public interface Frame {
 
-  void roll(int KnockDownNum) throws FrameOverException;
+  void roll(int KnockDownNumber) throws FrameOverException;
 
   boolean isOver();
 
-  int getRemainingPinsNum();
+  int getRemainingPinsNumber();
 
   List<Integer> getIndexOfScoredFrames();
 

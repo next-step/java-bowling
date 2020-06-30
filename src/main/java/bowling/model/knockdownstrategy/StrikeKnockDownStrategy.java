@@ -12,7 +12,7 @@ public class StrikeKnockDownStrategy implements KnockDownStrategy {
     }
 
     return KnockedDownPins.getBuilder(numberOfKnockedDown)
-        .secondKnockDownNum(0)
+        .secondKnockDownNumber(0)
         .build();
   }
 }

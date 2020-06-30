@@ -15,7 +15,7 @@ class StrikeKnockDownStrategyTest {
   void knockDown() {
     KnockDownStrategy knockDownStrategy = new StrikeKnockDownStrategy();
 
-    assertThat(knockDownStrategy.knockDown(10).getFirstKnockDownNum()).isEqualTo(10);
+    assertThat(knockDownStrategy.knockDown(10).getFirstKnockDownNumber()).isEqualTo(10);
   }
 
   @ParameterizedTest

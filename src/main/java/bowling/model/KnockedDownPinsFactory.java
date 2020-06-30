@@ -10,11 +10,11 @@ public class KnockedDownPinsFactory {
   }
 
   public static KnockedDownPins createInstanceBy(KnockedDownPins pins, int knockDownNum) {
-    if (pins.isFirstKnockDownNumNull() && knockDownNum == KnockedDownPins.MAX_NUMBER_OF_PINS) {
+    if (pins.isFirstKnockDownNumberNull() && knockDownNum == KnockedDownPins.MAX_NUMBER_OF_PINS) {
       return new StrikeKnockDownStrategy().knockDown(knockDownNum);
     }
 
-    if (pins.isFirstKnockDownNumNull()) {
+    if (pins.isFirstKnockDownNumberNull()) {
       return new FirstKnockDownStrategy().knockDown(knockDownNum);
     }
 

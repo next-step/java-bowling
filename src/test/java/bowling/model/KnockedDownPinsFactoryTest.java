@@ -11,14 +11,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 class KnockedDownPinsFactoryTest {
 
   @ParameterizedTest
-  @MethodSource("providePinsWithKnockDownNum")
-  void createInstanceBy(KnockedDownPins knockedDownPins, int knockDownNum,
+  @MethodSource("providePinsWithKnockDownNumber")
+  void createInstanceBy(KnockedDownPins knockedDownPins, int knockDownNumber,
       KnockedDownPins expected) {
-    assertThat(KnockedDownPinsFactory.createInstanceBy(knockedDownPins, knockDownNum))
+    assertThat(KnockedDownPinsFactory.createInstanceBy(knockedDownPins, knockDownNumber))
         .isEqualTo(expected);
   }
 
-  static Stream<Arguments> providePinsWithKnockDownNum() {
+  static Stream<Arguments> providePinsWithKnockDownNumber() {
     return Stream.of(
         arguments(
             new KnockedDownPins(),

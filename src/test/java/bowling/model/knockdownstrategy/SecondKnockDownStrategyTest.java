@@ -18,9 +18,9 @@ class SecondKnockDownStrategyTest {
 
     knockedDownPins = new SecondKnockDownStrategy(knockedDownPins).knockDown(second);
 
-    assertThat(knockedDownPins.getFirstKnockDownNum()).isEqualTo(first);
+    assertThat(knockedDownPins.getFirstKnockDownNumber()).isEqualTo(first);
     assertThat(knockedDownPins.isSecondKnockDownNumNull()).isFalse();
-    assertThat(knockedDownPins.getRemainingNum()).isEqualTo(10 - first - second);
+    assertThat(knockedDownPins.getRemainingNumber()).isEqualTo(10 - first - second);
 
   }
 
