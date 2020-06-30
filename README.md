@@ -30,11 +30,8 @@
 ### Player
 - [X] `Player` 는 `Name` 객체를 가진다.
 
-### Frame : 프레임 공통 객체 (추상 클래스)
-- [X] `FrameNumber` 와 `FramePins` 를 인스턴스 변수로 가지는 추상 클래스
+### Frame : 프레임 공통 인터페이스
 - [X] 다음 Frame 을 반환하기 위한 메소드를 가진다.
-- [X] 마지막 프레임 여부를 반환하는 메소드를 가진다.
-- [X] 파라미터 Null 유효성 검증
 
 ### NormalFrame : 1 ~ 9 프레임
 - [ ] `FrameNumber` 와 `FramePins` 를 인스턴스 변수로 가지는 추상 클래스
@@ -91,6 +88,9 @@
 - [X] 첫 번째 핀을 전달 받아, 객체 반환
     - 10개 인 경우, Strike 반환
     - 10개 미만인 경우, FirstFramePins 반환
+    
+### Bowling : 볼링
+- [ ] 핀을 굴리면 
 
 ### InputView
 - [X] 플레이어를 입력받아 그대로 리턴한다.
