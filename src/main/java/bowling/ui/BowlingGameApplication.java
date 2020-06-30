@@ -60,6 +60,7 @@ public class BowlingGameApplication {
                 doNotCompletedFrame(bowlingGame, frameIndex);
                 OutputView.printBowlingGames(bowlingGames);
             }
+            if (breakWhenFinalFrame(frameIndex)) break;
             for (BowlingGame bowlingGame : bowlingGames) {
                 doNextFrame(bowlingGame, frameIndex);
                 OutputView.printBowlingGames(bowlingGames);
