@@ -1,6 +1,7 @@
 package bowling.domain.state.running;
 
 import bowling.domain.pin.PinCount;
+import bowling.domain.score.Score;
 import bowling.domain.state.finish.Strike;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -68,5 +69,12 @@ public class ReadyTest {
     public void getState() {
         assertThat(Ready.getInstance().getState())
                 .isEqualTo(Collections.singletonList(Ready.getInstance()));
+    }
+
+    @DisplayName("해당 상태의 점수를 반환")
+    @Test
+    public void getScore() {
+        assertThat(Ready.getInstance().getScore())
+                .isEqualTo(Score.INIT_SCORE);
     }
 }

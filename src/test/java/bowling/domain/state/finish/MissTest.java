@@ -2,6 +2,7 @@ package bowling.domain.state.finish;
 
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
@@ -64,5 +65,12 @@ public class MissTest {
     public void getState() {
         assertThat(miss.getState())
                 .isEqualTo(Collections.singletonList(miss));
+    }
+
+    @DisplayName("해당 상태의 점수를 반환")
+    @Test
+    public void getScore() {
+        assertThat(miss.getScore())
+                .isEqualTo(Score.ofMiss(firstPins.totalPins(secondPins).getCount()));
     }
 }

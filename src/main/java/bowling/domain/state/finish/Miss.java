@@ -1,6 +1,7 @@
 package bowling.domain.state.finish;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.exception.CannotMatchStateException;
 
 public class Miss extends Finished {
@@ -33,5 +34,10 @@ public class Miss extends Finished {
     @Override
     public Pins getSecondPins() {
         return this.secondPins;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofMiss(firstPins.totalPins(secondPins).getCount());
     }
 }

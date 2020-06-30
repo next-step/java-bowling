@@ -2,6 +2,7 @@ package bowling.domain.state.finish;
 
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
@@ -64,5 +65,12 @@ public class SpareTest {
     public void getState() {
         assertThat(spare.getState())
                 .isEqualTo(Collections.singletonList(spare));
+    }
+
+    @DisplayName("해당 상태의 점수를 반환")
+    @Test
+    public void getScore() {
+        assertThat(spare.getScore())
+                .isEqualTo(Score.ofSpare());
     }
 }

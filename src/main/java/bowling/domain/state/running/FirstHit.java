@@ -2,6 +2,7 @@ package bowling.domain.state.running;
 
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
@@ -35,5 +36,10 @@ public class FirstHit extends Running {
     @Override
     public Pins getFirstPins() {
         return this.firstPins;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.valueOf(this.firstPins.getHitCount(), Score.ZERO);
     }
 }

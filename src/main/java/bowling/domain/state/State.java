@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface State {
     Pins getSecondPins();
 
     List<State> getState();
+
+    Score getScore();
 }
