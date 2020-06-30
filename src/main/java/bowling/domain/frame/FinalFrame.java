@@ -5,6 +5,7 @@ import bowling.domain.state.StateCreator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
@@ -72,20 +73,9 @@ public class FinalFrame implements Frame {
 
     @Override
     public String getStates() {
-        String result = "";
-        if (states.size() == FRAME_THIRD_PITCH_END) {
-            return states.get(0).getScore() + SEPARATOR + states.get(1).getScore() + SEPARATOR + states.get(2).getScore();
-        }
-
-        if (states.size() == FRAME_SECOND_PITCH_END) {
-            return states.get(0).getScore() + SEPARATOR + states.get(1).getScore();
-        }
-
-        if (states.size() == FRAME_FIRST_PITCH_END) {
-            return states.get(0).getScore();
-        }
-
-        return result;
+        return states.stream()
+                .map(State::getScore)
+                .collect(Collectors.joining(SEPARATOR));
     }
 
     @Override

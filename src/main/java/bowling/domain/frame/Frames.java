@@ -6,16 +6,10 @@ import java.util.List;
 
 public class Frames {
 
-    private static final String STRIKE_EXPRESSION = "X";
-    private static final String SPARE_EXPRESSION = "/";
-    private static final String EMPTY_STRING = "";
-    private static final int ZERO_POINT = 0;
-
     private static final int MIN_FRAME_NUMBER = 0;
     private static final int MAX_FRAME_NUMBER = 10;
 
     private final List<Frame> frames = new LinkedList<>();
-    private final List<Integer> points = new LinkedList<>();
     private int frameIndex = 0;
 
     private Frames()  {
@@ -30,13 +24,7 @@ public class Frames {
     public Frames pitch(Point point) {
         Frame frame = frames.get(frameIndex).bowl(point);
         updateFrame(frame);
-        updatePoint(frame.getFramePoint());
         return this;
-    }
-
-    private void updatePoint(int framePoint) {
-        points.remove(frameIndex);
-        points.add(framePoint);
     }
 
     private void updateFrame(Frame frame) {
@@ -47,7 +35,6 @@ public class Frames {
     public void next() {
         if(frames.get(frameIndex).isLastPitch()) {
             frames.add(createNextFrame());
-            points.add(0);
             frameIndex++;
         }
     }
@@ -57,10 +44,6 @@ public class Frames {
             return FinalFrame.create();
         }
         return NormalFrame.create();
-    }
-
-    public List<Integer> getPoints() {
-        return points;
     }
 
     public List<Frame> getFrames() {
