@@ -36,4 +36,8 @@ public class Score {
 	public boolean isScoreTen() {
 		return score == ScoreBound.MAXIMUM_SCORE_BOUND.getBound();
 	}
+
+	public boolean isScoreZero() {
+		return score == ScoreBound.MINIMUM_SCORE_BOUND.getBound();
+	}
 }
