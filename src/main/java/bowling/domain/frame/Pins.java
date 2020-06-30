@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import bowling.domain.status.Status;
+
 public class Pins {
     private int downPin;
 
@@ -11,11 +13,19 @@ public class Pins {
         return new Pins(0);
     }
 
-    public Pins bowl(int downPin) {
+    public Status bowl(int downPin) {
         validateRange(this.downPin + downPin);
+        Status status = Status.makeStatus(this.downPin, downPin);
 
         this.downPin += downPin;
-        return this;
+        return status;
+    }
+
+    public Status firstBowl(int downPin) {
+        validateRange(downPin);
+
+        this.downPin = downPin;
+        return Status.makeStatus(this.downPin);
     }
 
     public int getDownPin() {
@@ -28,6 +38,7 @@ public class Pins {
         }
 
     }
+
 
 
 }
