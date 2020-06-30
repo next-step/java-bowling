@@ -1,8 +1,10 @@
 package bowling.domain;
 
-public class NormalFrame extends Frame {
+public class NormalFrame implements Frame {
 
     private FrameNumber frameNumber;
+    private FallenPinNumber firstFallenPinNumber;
+    private FallenPinNumber secondFallenPinNumber;
 
     private NormalFrame(FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
@@ -12,12 +14,4 @@ public class NormalFrame extends Frame {
         return new NormalFrame(frameNumber);
     }
 
-    public Frame getNextFrame() {
-        FrameNumber nextFrameNumber = frameNumber.getNextFrameNumber();
-
-        if (frameNumber.canGenerateNextFrame()) {
-            return NormalFrame.of(nextFrameNumber);
-        }
-        return FinalFrame.of(nextFrameNumber);
-    }
 }

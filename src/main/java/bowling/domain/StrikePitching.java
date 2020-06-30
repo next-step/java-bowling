@@ -1,4 +1,4 @@
 package bowling.domain;
 
-public class StrikePitching {
+public class StrikePitching implements Pitching {
 }

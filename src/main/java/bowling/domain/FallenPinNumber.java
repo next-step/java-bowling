@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 public class FallenPinNumber {
 
-    private static final int MIN_FALLEN_PIN = 1;
+    private static final int MIN_FALLEN_PIN = 0;
     private static final int MAX_FALLEN_PIN = 10;
 
     private static final Map<Integer, FallenPinNumber> pins = new HashMap<>();
@@ -37,8 +37,8 @@ public class FallenPinNumber {
             return false;
         }
 
-        FallenPinNumber fallenPinNumber1 = (FallenPinNumber) o;
-        return fallenPinNumber == fallenPinNumber1.fallenPinNumber;
+        FallenPinNumber that = (FallenPinNumber) o;
+        return fallenPinNumber == that.fallenPinNumber;
     }
 
     @Override
