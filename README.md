@@ -301,7 +301,7 @@
     - [X] 가장 마지막 플레이어가 9프레임 마지막 투구 시 이상한 결과가 추가로 나옴
 - [X] 한 플레이어가 해당 프레임을 모두 완료한 후에 다음 프레임으로 넘어가도록 구현
 - [ ] 객체지향 생활체조 원칙 점검
-    - [ ] BowlingGame의 BowlingGameResult 컬렉션을 일급 컬렉션으로 리팩토링
+    - [ ] BowlingGamePlayer의 BowlingGameResult 컬렉션을 일급 컬렉션으로 리팩토링
     - [X] BowlingGameApplication에서 BowlingGame 컬렉션을 일급 컬렉션으로 리팩토링
         - [X] 기존 BowlingGame을 BowlingGamePlayer로 이름 변경
         - [X] 현재 BowlingGameApplication에서 컬렉션 뭉치로 실행하는 로직을 BowlingGame 클래스로 이동
@@ -311,6 +311,6 @@
 - [ ] 입력값 검증
     - [ ] 사용자 이름 입력 시 출력 문구 수정(몇번 플레이어인지 보이도록)
 - [ ] 3단계 리뷰 반영
-    - [ ] BowlinGame에서 유사한 기능을 유사한 메서드명으로 사용해서 혼란을 주는 부분 개선 방안 생각하기
-    - [ ] BowlingGameApplication 개선안 생각해보기
-    - [ ] BowlingGame에서 쓸모 없는 변수 선언이 있는지 확인해보기
+    - [ ] BowlinGamePlayer에서 유사한 기능을 유사한 메서드명으로 사용해서 혼란을 주는 부분 개선 방안 생각하기
+    - [X] BowlingGameApplication 개선안 생각해보기 => 반복문을 통해 처리
+    - [X] BowlingGamePlayer에서 쓸모 없는 변수 선언이 있는지 확인해보기

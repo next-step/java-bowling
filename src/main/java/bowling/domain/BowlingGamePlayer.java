@@ -29,11 +29,8 @@ public class BowlingGamePlayer {
     public List<BowlingGameResult> bowlFirst(int numberOfHitPin) {
         Frame frame = player.bowlFirstRefactor(numberOfHitPin);
 
-        BowlingGameResult bowlingGameResult = new BowlingGameResult(
-                frame.calculateCurrentResults(),
-                frame.calculateCurrentScore()
-        );
-        this.bowlingGameResults.add(bowlingGameResult);
+        this.bowlingGameResults.add(new BowlingGameResult(
+                frame.calculateCurrentResults(), frame.calculateCurrentScore()));
 
         return new ArrayList<>(this.bowlingGameResults);
     }
@@ -41,12 +38,11 @@ public class BowlingGamePlayer {
     public List<BowlingGameResult> bowlCurrentFrame(int numberOfHitPin) {
         Frame frame = player.bowlCurrentFrameRefactor(numberOfHitPin);
 
-        BowlingGameResult bowlingGameResult = new BowlingGameResult(
-                frame.calculateCurrentResults(),
-                frame.calculateCurrentScore()
+        this.bowlingGameResults.set(
+                lastIndexOfBowlingGameResults(),
+                new BowlingGameResult(frame.calculateCurrentResults(), frame.calculateCurrentScore())
         );
 
-        this.bowlingGameResults.set(lastIndexOfBowlingGameResults(), bowlingGameResult);
         applyBonusToPreviousFrame(frame);
 
         return new ArrayList<>(this.bowlingGameResults);
