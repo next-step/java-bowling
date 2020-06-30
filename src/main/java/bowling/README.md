@@ -32,6 +32,9 @@
 - Player: 플레이어
     - [X] Player 이름은 영어로 3자만 생성할 수 있다.
     
+- Players: Player 리스트
+    - [X] 여러 Player를 가질 수 있다. 
+    
 - Pin: 플레이어가 넘어뜨린 볼링 핀 갯수
     - [X] Pin은 0보다 작거나 10보다 크면 예외를 반환한다.
 
@@ -69,6 +72,11 @@
     - [X] Player로 부터 Pin를 입력받아 BowlingGame을 실행할 수 있다.
     - [X] 현재 프레임 번호를 반환할 수 있다.
     - [X] 게임 종료 여부를 확인할 수 있다.
+
+- BowlingGames: BowlingGame 리스트
+    - [X] 여러 BowlingGame을 가질 수 있다.
+    - [X] 여러 BowlingGame의 게임 종료 여부를 확인할 수 있다.
+    - [X] 현재 진행 중인 BowlingGame을 반환할 수 있다.
     
 - InputView
     - [X] Player 이름을 입력 받을 수 있다.
