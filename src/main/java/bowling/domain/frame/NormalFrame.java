@@ -3,13 +3,17 @@ package bowling.domain.frame;
 
 import bowling.domain.dto.StateDtos;
 import bowling.domain.pin.PinCount;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
+
+import java.util.Objects;
 
 public class NormalFrame extends Frame {
 
     private State state;
     private final FrameNumber frameNumber;
+    private Frame nextFrame;
 
     private NormalFrame(final FrameNumber frameNumber) {
         this.state = Ready.getInstance();
@@ -45,9 +49,11 @@ public class NormalFrame extends Frame {
         FrameNumber nextNumber = this.frameNumber.increase();
 
         if (nextNumber.isFinal()) {
-            return FinalFrame.newInstance();
+            this.nextFrame = FinalFrame.newInstance();
+            return this.nextFrame;
         }
-        return NormalFrame.newInstance(nextNumber);
+        this.nextFrame = NormalFrame.newInstance(nextNumber);
+        return this.nextFrame;
     }
 
     @Override
@@ -65,5 +71,37 @@ public class NormalFrame extends Frame {
     @Override
     public StateDtos getFrameResult() {
         return StateDtos.of(state.getState());
+    }
+
+    @Override
+    public Score getScore() {
+        if (this.validateIsNotAddableScore()) {
+            return Score.UN_SCORE;
+        }
+
+        final Score score = state.getScore();
+        if (score.isZeroOfExtraBonusCount()) {
+            return score;
+        }
+
+        return nextFrame.calculateAdditionalScore(score);
+    }
+
+    @Override
+    public Score calculateAdditionalScore(final Score beforeScore) {
+        final Score score = state.calculateScoreForExtraBonusCount(beforeScore);
+        if (score.isZeroOfExtraBonusCount()) {
+            return score;
+        }
+
+        if (this.validateIsNotAddableScore()) {
+            return Score.UN_SCORE;
+        }
+
+        return nextFrame.calculateAdditionalScore(score);
+    }
+
+    private boolean validateIsNotAddableScore() {
+        return !isFinish() || Objects.isNull(nextFrame);
     }
 }

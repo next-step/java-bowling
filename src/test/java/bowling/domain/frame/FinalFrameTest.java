@@ -1,8 +1,10 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.PinCount;
+import bowling.domain.score.Score;
 import bowling.domain.state.StateExpression;
 import bowling.fixture.FinalFrameFixture;
+import bowling.fixture.FramesFixture;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -52,7 +54,7 @@ public class FinalFrameTest {
         return Stream.of(
                 Arguments.of(FinalFrameFixture.getOneStrikeFrame(), "X"),
                 Arguments.of(FinalFrameFixture.getStrikeGutterFrame(), "X|-"),
-                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame(), "9|/|X")
+                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame(), "2|/|X")
         );
     }
 
@@ -71,6 +73,55 @@ public class FinalFrameTest {
                 Arguments.of(FinalFrameFixture.getHitSpareHitFrame()),
                 Arguments.of(FinalFrameFixture.getHitMissFrame()),
                 Arguments.of(FinalFrameFixture.getStrikeHitMissFrame())
+        );
+    }
+
+    @DisplayName("해당 프레임의 점수를 반환")
+    @ParameterizedTest
+    @MethodSource
+    public void getScore(final Frames frames, final Score expected1, final Score expected2) {
+
+        assertThat(frames.getFrames().get(0).getScore())
+                .isEqualTo(expected1);
+        assertThat(frames.getFrames().get(1).getScore())
+                .isEqualTo(expected2);
+    }
+
+    private static Stream<Arguments> getScore() {
+        return Stream.of(
+                Arguments.of(FramesFixture.getSpareMissFrames(), Score.ofMiss(14), Score.ofMiss(8)),
+                Arguments.of(FramesFixture.getSpareFrames(), Score.UN_SCORE, Score.UN_SCORE),
+                Arguments.of(FramesFixture.getTwoStrikeFrames(), Score.UN_SCORE, Score.UN_SCORE),
+                Arguments.of(FramesFixture.getStrikeHitFrames(), Score.UN_SCORE, Score.UN_SCORE),
+                Arguments.of(FramesFixture.getTwoMissFrames(), Score.ofMiss(5), Score.ofMiss(8))
+        );
+    }
+
+    @DisplayName("여분의 보너스 점수를 해결하기 위한 추가적인 점수를 계산하여 반환")
+    @ParameterizedTest
+    @MethodSource
+    public void calculateAdditionalScore(final Frame frame, final Score beforeScore, final Score expected) {
+
+        assertThat(frame.calculateAdditionalScore(beforeScore))
+                .isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> calculateAdditionalScore() {
+        return Stream.of(
+                // X -> 5|1
+                Arguments.of(FinalFrameFixture.getHitMissFrame(), Score.ofStrike(), Score.ofMiss(16)),
+                // 2|3 -> 2|/|X
+                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame(), Score.ofMiss(5), Score.valueOf(25, -3)),
+                // X -> X|X|X
+                Arguments.of(FinalFrameFixture.getThreeStrikeFrame(), Score.ofStrike(), Score.valueOf(30, 0)),
+                // 2|/ -> X|X|2
+                Arguments.of(FinalFrameFixture.getTwoStrikeOneHitFrame(), Score.ofMiss(5), Score.INIT_SCORE),
+                // X -> 2|/|5
+                Arguments.of(FinalFrameFixture.getHitSpareHitFrame(), Score.ofStrike(), Score.INIT_SCORE),
+                // 2|/ -> X|2|2
+                Arguments.of(FinalFrameFixture.getStrikeHitMissFrame(), Score.ofSpare(), Score.valueOf(24, -2)),
+                // X -> X|1|/ (10 + 11, 10 + 1 + 9)
+                Arguments.of(FinalFrameFixture.getStrikeHitSpareFrame(), Score.ofMiss(5), Score.valueOf(15, -2))
         );
     }
 }

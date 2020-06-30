@@ -41,4 +41,23 @@ public class FramesFixture {
 
         return frames;
     }
+
+    public static Frames getSpareMissFrames() {
+        Frames frames = Frames.newInstance();
+        frames.bowl(PinCount.of(9));
+        frames.bowl(PinCount.of(1));
+        frames.bowl(PinCount.of(4));
+        frames.bowl(PinCount.of(4));
+
+        return frames;
+    }
+
+    public static Frames getStrikeMissFrames() {
+        Frames frames = Frames.newInstance();
+        frames.bowl(PinCount.of(10));
+        frames.bowl(PinCount.of(4));
+        frames.bowl(PinCount.of(4));
+
+        return frames;
+    }
 }
