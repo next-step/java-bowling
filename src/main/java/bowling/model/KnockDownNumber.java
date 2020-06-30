@@ -1,6 +1,7 @@
 package bowling.model;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class KnockDownNumber {
 
@@ -23,8 +24,8 @@ public class KnockDownNumber {
     this.value = value;
   }
 
-    public int getIntValue() {
-    return value == null ? 0 : value;
+  public int getIntValue() {
+    return Optional.ofNullable(value).orElse(0);
   }
 
   public boolean isNull() {
