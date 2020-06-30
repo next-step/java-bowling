@@ -37,6 +37,6 @@ public class Scores {
 		if (Objects.isNull(second)) {
 			throw new IllegalStateException("scores does not have second score result!");
 		}
-		return Result.STRIKE;
+		return Result.findByScores(first, second);
 	}
 }

@@ -2,10 +2,16 @@ package bowling.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import bowling.util.ScoreBound;
 
 public class ScoresTest {
 
@@ -48,5 +54,39 @@ public class ScoresTest {
 		assertThatCode(
 			() -> scores.checkResult()
 		).doesNotThrowAnyException();
+	}
+
+	public static Stream<Arguments> 게임_결과들의_모음() {
+		Score TEN = Score.ofScore(ScoreBound.MAXIMUM_SCORE_BOUND.getBound());
+		Score FIVE = Score.ofScore(5);
+		Score ZERO = Score.ofScore(ScoreBound.MINIMUM_SCORE_BOUND.getBound());
+
+		Scores scores1 = Scores.from(TEN);
+		Result result1 = scores1.checkResult();
+
+		Scores scores2 = Scores.from(FIVE);
+		scores2.addSecondScore(FIVE);
+		Result result2 = scores2.checkResult();
+
+		Scores scores3 = Scores.from(FIVE);
+		scores3.addSecondScore(ZERO);
+		Result result3 = scores3.checkResult();
+
+		Scores scores4 = Scores.from(ZERO);
+		scores4.addSecondScore(ZERO);
+		Result result4 = scores4.checkResult();
+
+		return Stream.of(
+			Arguments.of(result1, Result.STRIKE),
+			Arguments.of(result2, Result.SPARE),
+			Arguments.of(result3, Result.MISS),
+			Arguments.of(result4, Result.GUTTER));
+	}
+
+	@DisplayName("Scores에서 게임 결과를 확인하여 반환한다.")
+	@MethodSource("게임_결과들의_모음")
+	@ParameterizedTest
+	void 게임_결과를_반환한다(Result result, Result expected) {
+		assertThat(result).isEqualTo(expected);
 	}
 }
