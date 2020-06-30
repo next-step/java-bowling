@@ -79,9 +79,9 @@ class MultiBowlingGameTest {
         assertThat(multiBowlingGame.getCurrentPlayerName()).isEqualTo("1번!");
     }
 
-    @DisplayName("모든 플레이어가 10프레임까지 완료하면 nextTurn이 존재하지 앟는다")
+    @DisplayName("모든 플레이어가 10프레임까지 완료하면 isEnd는 True가 된다")
     @Test
-    public void hasNextTurn_False() {
+    public void isEnd_True() {
         for (int i = 0; i < 12; i++) {
             multiBowlingGame.bowl(PitchScore.valueOf(10));
             multiBowlingGame.bowl(PitchScore.valueOf(10));
@@ -89,7 +89,7 @@ class MultiBowlingGameTest {
             multiBowlingGame.moveToNextFrame();
         }
 
-        assertThat(multiBowlingGame.hasNextTurn()).isFalse();
+        assertThat(multiBowlingGame.isEnd()).isTrue();
     }
 
     @DisplayName("현재 플레이할 수 있는 Game Turn을 찾지 못하면 예외 발생")

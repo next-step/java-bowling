@@ -15,7 +15,7 @@ public class Application {
         List<BowlingGameDto> bowlingGameDtos = multiBowlingGame.getBowlingGameDtos();
         OutputView.printDefaultScoreBoard(bowlingGameDtos);
 
-        while (multiBowlingGame.hasNextTurn()) {
+        while (!multiBowlingGame.isEnd()) {
             String currentPlayerName = multiBowlingGame.getCurrentPlayerName();
             PitchScore pitchScore = PitchScore.valueOf(InputView.inputPitchScore(currentPlayerName));
             multiBowlingGame.bowl(pitchScore);
