@@ -23,13 +23,11 @@
     - 2번의 MAX_TRY_COUNT를 가진다.
     - 두번째 투구일 경우 새 핀 생성
     
-3.2 FinalFrame  (수정 예정)
+3.2 FinalFrame
     - 10 프레임
-    - 최대 3번의 MAX_TRY_COUNT를 가진다.
-    - Pins 는 투구 합이 10 이상 검증 하는데 보너스 프레임 등은 어떡할지?
-    - 스트라이크나 스페어 발생시 pins 새로 생성
-    - List<Status> 를 가진다 . Strike, Spare, Strike, etc,, Miss  결과에 따라 사이즈가 다름
-    - getResult를 제공한다 List<Status> 를 순회하며 result제
+    - 보너스 투구 발생 시 최대 3번의 MAX_TRY_COUNT를 가진다.
+    - 보너스 투구 발생 시 pins 값을 초기화한다
+    - List<Status> 를 가진다 
     
 4. Frames
     - List<Frame> Frames 를 가지는 1급 컬렉션
@@ -43,9 +41,3 @@
 6. Player
     - String name을 가진다
     - 이름이 3글자인지 검증
-
-
-* 생성 시점 체크 
-핀이 새로 생성되는 시점 : 한 프레임이 끝날 때 ( 투구 기회가 끝났을 때 )
-프레임이 새로 생성되는 시점 : 한 프레임이 끝 날 때  (투구 기회가 끝났을 때)
-==> 생성 되는 사이클이 같다.
