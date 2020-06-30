@@ -15,9 +15,10 @@ public class BowlingApplication {
         Player player = inputView.displayPlayerNameInputMessage();
         ResultView resultView = new ResultView(player, bowling);
 
-        for (int i = 0; i <= Frames.BOWLING_GAME_FRAME;) {
-            i += bowling.addPlayerScore(i, inputView.displayScoreInputMessage(i));
-            resultView.displayResult();
+        for (int frameCount = 0; frameCount <= Frames.BOWLING_GAME_FRAME;) {
+            int nextCount = bowling.addPlayerScore(frameCount, inputView.displayScoreInputMessage(frameCount));
+            resultView.displayResult(frameCount);
+            frameCount += nextCount;
         }
 
     }

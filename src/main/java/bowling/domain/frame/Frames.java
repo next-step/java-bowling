@@ -18,7 +18,7 @@ public class Frames {
     }
 
     private Frame makeFinalFrame() {
-        return new NormalFrame();
+        return new FinalFrame();
     }
 
     private Frame makeFrame() {
