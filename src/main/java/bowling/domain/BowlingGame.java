@@ -1,18 +1,17 @@
 package bowling.domain;
 
-import bowling.domain.frame.BowlingFrames;
+import bowling.domain.frame.PlayerFrames;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class BowlingGame {
 
-    private final List<BowlingFrames> bowlingFramesList;
+    private final List<PlayerFrames> playerGames;
 
-    private BowlingGame(List<BowlingFrames> bowlingFramesList) {
-        this.bowlingFramesList = bowlingFramesList;
+    private BowlingGame(List<PlayerFrames> playerGames) {
+        this.playerGames = playerGames;
     }
 
     public static BowlingGame newInstance(int playerCount) {
@@ -20,29 +19,31 @@ public class BowlingGame {
             throw new IllegalArgumentException("invalid playerCount");
         }
 
-        List<BowlingFrames> bowlingFramesList = Stream.generate(BowlingFrames::newInstance)
+        List<PlayerFrames> playerFramesList = Stream.generate(PlayerFrames::newInstance)
             .limit(playerCount)
             .collect(Collectors.toList());
 
-        return new BowlingGame(bowlingFramesList);
+        return new BowlingGame(playerFramesList);
     }
 
     public void play(int playerPosition, int numberOfDownPin) {
-        this.bowlingFramesList.get(playerPosition).play(numberOfDownPin);
+        this.playerGames.get(playerPosition).play(numberOfDownPin);
     }
 
     public BowlingGameResult getResult() {
         BowlingGameResult bowlingGameResult = new BowlingGameResult();
-        IntStream.range(0, this.bowlingFramesList.size())
-            .forEach(position -> bowlingGameResult
-                .put(position, bowlingFramesList.get(position).getFrameResults()));
+        for (int position = 0; position < this.playerGames.size(); position++) {
+            bowlingGameResult
+                .put(position, playerGames.get(position).getFrameResults());
+        }
+
         return bowlingGameResult;
     }
 
     public List<Integer> getCurrentPlayers(int framePosition) {
         List<Integer> players = new ArrayList<>();
-        for (int playerIndex = 0; playerIndex < bowlingFramesList.size(); playerIndex++) {
-            BowlingFrames frames = bowlingFramesList.get(playerIndex);
+        for (int playerIndex = 0; playerIndex < playerGames.size(); playerIndex++) {
+            PlayerFrames frames = playerGames.get(playerIndex);
             if (frames.getCurrentPosition() != framePosition) {
                 continue;
             }

@@ -3,11 +3,8 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import bowling.domain.frame.BowlingFrames;
-import bowling.domain.frame.FrameResult;
+import bowling.domain.frame.PlayerFrames;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 class BowlingGameTest {
@@ -23,8 +20,8 @@ class BowlingGameTest {
         BowlingGame bowlingGame = BowlingGame.newInstance(2);
         BowlingGameResult bowlingGameResult = bowlingGame.getResult();
 
-        bowlingGameResult.put(0,  BowlingFrames.newInstance().getFrameResults());
-        bowlingGameResult.put(1,  BowlingFrames.newInstance().getFrameResults());
+        bowlingGameResult.put(0,  PlayerFrames.newInstance().getFrameResults());
+        bowlingGameResult.put(1,  PlayerFrames.newInstance().getFrameResults());
     }
 
     @Test
