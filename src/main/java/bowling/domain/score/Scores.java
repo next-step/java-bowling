@@ -12,9 +12,11 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 public class Scores {
-    private final static int FIRST_SCORE = 1;
-    private final static int SECOND_SCORE = 2;
-    private final static int THIRD_SCORE = 3;
+    private final static int FIRST_SCORE_INDEX = 0;
+    private final static int SECOND_SCORE_INDEX = 1;
+    private final static int THIRD_SCORE_INDEX = 2;
+    private final static int BONUS_MAX_SCORE = 20;
+    private final static int DEFAULT_MAX_SCORE = 10;
 
     private final List<Score> scores;
 
@@ -23,7 +25,18 @@ public class Scores {
     }
 
     public void addScore(int point) {
+        validateScores(point);
         scores.add(createScore(point));
+    }
+
+    private void validateScores(int point) {
+        if (firstScore() && totalScore() + point > DEFAULT_MAX_SCORE) {
+            throw new IllegalArgumentException("first Score is max 10");
+        }
+
+        if (thirdScore() && totalScore() + point > BONUS_MAX_SCORE) {
+            throw new IllegalArgumentException("second Score is max 20");
+        }
     }
 
     private Score createScore(int point) {
@@ -41,15 +54,15 @@ public class Scores {
     }
 
     private boolean firstScore() {
-        return scores.size() == FIRST_SCORE;
+        return scores.size() == FIRST_SCORE_INDEX;
     }
 
     private boolean secondScore() {
-        return scores.size() == SECOND_SCORE;
+        return scores.size() == SECOND_SCORE_INDEX;
     }
 
     private boolean thirdScore() {
-        return scores.size() == THIRD_SCORE;
+        return scores.size() == THIRD_SCORE_INDEX;
     }
 
     public boolean isStrike() {
@@ -66,6 +79,10 @@ public class Scores {
         return false;
     }
 
+    public boolean isStrikeOrSpare() {
+        return isStrike() || isSpare();
+    }
+
     public List<ScoreResultDto> convertSoreResultDtos() {
         return scores.stream()
                 .map(ScoreResultDto::new)
@@ -77,10 +94,25 @@ public class Scores {
             return true;
         }
 
-        if (isStrike() || isSpare()) {
+        if (isStrikeOrSpare()) {
             return false;
         }
 
-        return firstScore();
+        return secondScore();
+    }
+
+    public boolean isLastFrameAvailableAdd() {
+        if (CollectionUtils.isEmpty(scores)) {
+            return true;
+        }
+
+        if (isStrike()) {
+            return secondScore();
+        }
+
+        if (isSpare()) {
+            return thirdScore();
+        }
+        return false;
     }
 }

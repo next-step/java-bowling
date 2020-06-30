@@ -9,7 +9,6 @@ import bowling.domain.player.Player;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class OutputView {

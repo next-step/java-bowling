@@ -8,7 +8,7 @@ public class Strike implements Score {
 
     @Override
     public Score nextScore(int point) {
-        throw new IllegalArgumentException("Strike can not create nextScore");
+        return ScoreFactory.generateScore(point);
     }
 
     @Override

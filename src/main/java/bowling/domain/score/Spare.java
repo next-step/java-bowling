@@ -13,7 +13,7 @@ public class Spare implements Score {
 
     @Override
     public Score nextScore(int point) {
-        throw new IllegalArgumentException("Spare can not create nextScore");
+        return ScoreFactory.generateScore(point);
     }
 
     @Override

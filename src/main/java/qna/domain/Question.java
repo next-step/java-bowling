@@ -6,11 +6,7 @@ import qna.CannotDeleteException;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.*;
 
 @Entity
 public class Question extends AbstractEntity {
