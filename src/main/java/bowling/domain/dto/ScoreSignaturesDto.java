@@ -13,8 +13,4 @@ public class ScoreSignaturesDto {
     public List<String> getScoreSignatures() {
         return scoreSignatures;
     }
-
-    public void setScoreSignatures(List<String> scoreSignatures) {
-        this.scoreSignatures = scoreSignatures;
-    }
 }

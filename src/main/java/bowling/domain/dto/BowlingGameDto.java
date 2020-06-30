@@ -18,23 +18,11 @@ public class BowlingGameDto {
         return playerName;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
     public List<ScoreSignaturesDto> getScoreSignatures() {
         return scoreSignatures;
     }
 
-    public void setScoreSignatures(List<ScoreSignaturesDto> scoreSignatures) {
-        this.scoreSignatures = scoreSignatures;
-    }
-
     public List<Integer> getScores() {
         return scores;
-    }
-
-    public void setScores(List<Integer> scores) {
-        this.scores = scores;
     }
 }
