@@ -18,15 +18,19 @@ public class BowlingGameApplication {
         List<BowlingGame> bowlingGames = initGames(players);
 
         for (int i = 1; i < 11; i++) {
-            if (i == 1) {
-                doFirstThrow(bowlingGames);
-            }
-            if (i == 10) {
-                doFinalFrame(bowlingGames);
-            }
-            if (i != 1 && i !=10) {
-                doMiddleFrame(i, bowlingGames);
-            }
+            playBowlingGame(i, bowlingGames);
+        }
+    }
+
+    private static void playBowlingGame(int i, List<BowlingGame> bowlingGames) {
+        if (i == 1) {
+            doFirstThrow(bowlingGames);
+        }
+        if (i == 10) {
+            doFinalFrame(bowlingGames);
+        }
+        if (i != 1 && i !=10) {
+            doMiddleFrame(i, bowlingGames);
         }
     }
 
@@ -54,10 +58,7 @@ public class BowlingGameApplication {
         for (BowlingGame bowlingGame : bowlingGames) {
             bowlingGame.bowlFirst(InputView.getNumberOfHitPin(1, bowlingGame.getPlayerName()));
             OutputView.printBowlingGames(bowlingGames);
-            if (!bowlingGame.isCurrentFrameCompleted()) {
-                bowlingGame.bowlCurrentFrame(InputView.getNumberOfHitPin(1, bowlingGame.getPlayerName()));
-                OutputView.printBowlingGames(bowlingGames);
-            }
+            doNotCompletedFrame(1, bowlingGames, bowlingGame);
         }
     }
 
@@ -65,10 +66,14 @@ public class BowlingGameApplication {
         for (BowlingGame bowlingGame : bowlingGames) {
             bowlingGame.toNextFrame(InputView.getNumberOfHitPin(frameCount, bowlingGame.getPlayerName()));
             OutputView.printBowlingGames(bowlingGames);
-            if (!bowlingGame.isCurrentFrameCompleted()) {
-                bowlingGame.bowlCurrentFrame(InputView.getNumberOfHitPin(frameCount, bowlingGame.getPlayerName()));
-                OutputView.printBowlingGames(bowlingGames);
-            }
+            doNotCompletedFrame(frameCount, bowlingGames, bowlingGame);
+        }
+    }
+
+    private static void doNotCompletedFrame(int frameCount, List<BowlingGame> bowlingGames, BowlingGame bowlingGame) {
+        if (!bowlingGame.isCurrentFrameCompleted()) {
+            bowlingGame.bowlCurrentFrame(InputView.getNumberOfHitPin(frameCount, bowlingGame.getPlayerName()));
+            OutputView.printBowlingGames(bowlingGames);
         }
     }
 
