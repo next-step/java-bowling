@@ -32,14 +32,21 @@ public class Frames {
     }
 
     public List<String> showGameSumScore() {
+        for (int i = 0; i < frames.size() - 1; i++) {
+            frames.get(i).calculateAdditionalScore(frames.get(i + 1).currentScore);
+        }
+        // last one
+        frames.get(frames.size() - 1).calculateAdditionalScore(frames.get(frames.size() - 1).currentScore);
 
-            for (int i =  0 ; i < frames.size() -1 ; i++) {
-                frames.get(i).calculateAdditionalScore(frames.get(i+1).currentScore);
-            }
-
-        return frames.stream()
+        List<String> result = frames.stream()
                 .map(Frame::getCurrentSumScore)
                 .collect(Collectors.toList());
+        resetSumScores();
+        return result;
+    }
+
+    private void resetSumScores() {
+        frames.stream().forEach(Frame::reset);
     }
 
     public Frame checkLastFrame() {

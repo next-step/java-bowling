@@ -9,13 +9,11 @@ public class Score {
     private int score;
     private int bonusScore;
     private int sumScore;
-    private int left;
 
-    public Score(int firstScore, int secondScore, int left) {
+    public Score(int firstScore, int secondScore) {
         this.firstScore = firstScore;
         this.secondScore = secondScore;
         this.score = firstScore + secondScore;
-        this.left = left;
     }
 
     public int getScore() {
@@ -30,29 +28,36 @@ public class Score {
         return sumScore;
     }
 
-    public boolean canCalculateScore() {
-        return left == 0;
-    }
+    public void addBonusNumber(State state, Score nextScore) {
 
-    public void addBonusNumber(Score nextScore) {
-        // miss or gutter
-        if (left == 0) {
-            this.sumScore += score;
-        }
         // spare
-        if(left == 1) {
-            this.sumScore += score + nextScore.firstScore;
+        if (state == State.SPARE) {
+            this.bonusScore = nextScore.firstScore;
+            this.sumScore += score + bonusScore;
         }
         // strike
-        if(left == 2) {
-            this.sumScore += score + nextScore.score;
+        if (state == State.STRIKE) {
+            this.bonusScore = nextScore.score;
+            //this.score = this.bonusScore;
+            this.sumScore += this.score + this.bonusScore;
+        }
+        // etc
+        if (state != State.SPARE && state != State.STRIKE) {
+            this.bonusScore = 0;
+            this.score = this.bonusScore;
+            this.sumScore += this.score;
         }
         nextScore.sumScore = this.sumScore;
     }
 
+
     @Override
     public String toString() {
         return Integer.toString(sumScore);
+    }
+
+    public void resetSumScore() {
+        sumScore = 0;
     }
 
 }

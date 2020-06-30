@@ -27,18 +27,18 @@ public class GamePlay {
 
     private void drawAndShowResult(Player player, BowlingStrategy bowlingStrategy, int index) {
         Frame frame = drawBowl(bowlingStrategy, index);
+        frame.createScore();
         if (index != FIRST_FRAME_INDEX_ZERO) {
             frames.setNextScore(frame);
         }
         this.frames.add(frame);
-        frame.createScore();
         OutputView.output(player, this);
     }
 
     private void drawAndShowResult(Player player, BowlingStrategy bowlingStrategy, Frame lastFrame) {
         lastFrame = drawBowl(bowlingStrategy, lastFrame);
-        frames.replaceFinalFrame(lastFrame);
         lastFrame.createScore();
+        frames.replaceFinalFrame(lastFrame);
         OutputView.output(player, this);
     }
 

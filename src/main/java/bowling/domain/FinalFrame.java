@@ -33,6 +33,7 @@ public class FinalFrame extends Frame {
         return stringBuilder.toString();
     }
 
+
     private void firstPinResult(StringBuilder stringBuilder) {
         if (firstPin.isAllClear()) {
             stringBuilder.append(State.STRIKE);
@@ -68,5 +69,13 @@ public class FinalFrame extends Frame {
         }
         stringBuilder.append(thirdPin.toString());
     }
+
+    @Override
+    public Frame calculateAdditionalScore(Score nextScore) {
+        this.currentScore.addBonusNumber(state, nextScore);
+
+        return this;
+    }
+
 
 }

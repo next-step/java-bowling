@@ -41,12 +41,12 @@ public abstract class Frame {
 
     public void createScore() {
         if (state == State.SPARE) {
-            this.currentScore = new Score(firstPin.falledPins(), secondPin.falledPins(), 1);
+            this.currentScore = new Score(firstPin.falledPins(), secondPin.falledPins());
         }
         if (state == State.STRIKE) {
-            this.currentScore = new Score(firstPin.falledPins(), secondPin.falledPins(), 2);
+            this.currentScore = new Score(firstPin.falledPins(), secondPin.falledPins());
         }
-        this.currentScore = new Score(firstPin.falledPins(), secondPin.falledPins(), 0);
+        this.currentScore = new Score(firstPin.falledPins(), secondPin.falledPins());
     }
 
     public void setNextScore(Frame nextFrame) {
@@ -61,8 +61,9 @@ public abstract class Frame {
         return Integer.toString(this.currentScore.getSumScore());
     }
 
-    public Frame calculateAdditionalScore(Score nextScore) {
-        this.currentScore.addBonusNumber(nextScore);
-        return this;
+    public abstract Frame calculateAdditionalScore(Score nextScore);
+
+    public void reset() {
+        currentScore.resetSumScore();
     }
 }
