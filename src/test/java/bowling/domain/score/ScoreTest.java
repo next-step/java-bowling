@@ -104,7 +104,7 @@ public class ScoreTest {
     @ParameterizedTest
     @MethodSource
     public void canCalculateScore(final Score score, final boolean expected) {
-        assertThat(score.canCalculateScore())
+        assertThat(score.isCalculable())
                 .isEqualTo(expected);
     }
 

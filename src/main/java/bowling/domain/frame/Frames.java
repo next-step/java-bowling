@@ -58,7 +58,7 @@ public class Frames {
 
         return scores.getScores()
                 .stream()
-                .filter(Score::canCalculateScore)
+                .filter(Score::isCalculable)
                 .map(ScoreDto::of)
                 .collect(Collectors.toList());
     }

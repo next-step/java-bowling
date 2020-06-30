@@ -43,8 +43,8 @@ public class Score {
         return new Score(this.score + pinCount.getCount(), extraBonusCount - 1);
     }
 
-    public boolean canCalculateScore() {
-        return isZeroOfExtraBonusCount() && isAddableScore();
+    public boolean isCalculable() {
+        return this.extraBonusCount == ZERO && isAddableScore();
     }
 
     public boolean isZeroOfExtraBonusCount() {
@@ -61,7 +61,7 @@ public class Score {
     }
 
     private void validate() {
-        if (!isZeroOfExtraBonusCount()) {
+        if (!isCalculable()) {
             throw new CannotCalculateException();
         }
     }
