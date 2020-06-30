@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.State;
-import bowling.domain.state.StateCreator;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,24 +11,24 @@ public class NormalFrame implements Frame {
 
     private static final String SEPARATOR = "|";
 
-    private List<State> states;
+    private List<Score> scores;
     private int pitchCount;
     private int framePoint;
 
-    private NormalFrame(List<State> states, int framePoint, int pitchCount) {
+    private NormalFrame(List<Score> scores, int framePoint, int pitchCount) {
         validatePitchCount(pitchCount);
-        this.states = states;
+        this.scores = scores;
         this.pitchCount = pitchCount;
         this.framePoint = framePoint;
     }
 
     public static Frame create() {
-        List<State> states = new ArrayList<>();
-        return new NormalFrame(states, 0, 0);
+        List<Score> scores = new ArrayList<>();
+        return new NormalFrame(scores, 0, 0);
     }
 
-    public static Frame create(List<State> states, int framePoint, int pitchCount) {
-        return new NormalFrame(states, framePoint, pitchCount);
+    public static Frame create(List<Score> scores, int framePoint, int pitchCount) {
+        return new NormalFrame(scores, framePoint, pitchCount);
     }
 
     @Override
@@ -44,35 +44,35 @@ public class NormalFrame implements Frame {
     }
 
     private Frame firstBowl(Point point) {
-        State state = StateCreator.create(point);
-        states.add(state);
+        Score score = ScoreCreator.create(point);
+        scores.add(score);
 
-        if (state.isStrike()) {
-            int strikePoint = state.getPoint();
-            return NormalFrame.create(states, strikePoint, NORMAL_MAX_BOWL_PITCH);
+        if (score.isStrike()) {
+            int strikePoint = score.getPoint();
+            return NormalFrame.create(scores, strikePoint, NORMAL_MAX_BOWL_PITCH);
         }
 
-        return NormalFrame.create(states, state.getPoint(), ++pitchCount);
+        return NormalFrame.create(scores, score.getPoint(), ++pitchCount);
     }
 
     private Frame nextBowl(Point point) {
         validateNextBowl();
-        State state = states.get(pitchCount - 1);
-        State nextState = state.nextScore(point);
-        states.add(nextState);
+        Score score = scores.get(pitchCount - 1);
+        Score nextScore = score.nextScore(point);
+        scores.add(nextScore);
 
-        if (state.isSpare()) {
-            int sparePoint = state.getPoint();
-            NormalFrame.create(states, this.framePoint + sparePoint, NORMAL_MAX_BOWL_PITCH);
+        if (score.isSpare()) {
+            int sparePoint = score.getPoint();
+            NormalFrame.create(scores, this.framePoint + sparePoint, NORMAL_MAX_BOWL_PITCH);
         }
 
-        return NormalFrame.create(states, this.framePoint + state.getPoint(), NORMAL_MAX_BOWL_PITCH);
+        return NormalFrame.create(scores, this.framePoint + score.getPoint(), NORMAL_MAX_BOWL_PITCH);
     }
 
     @Override
-    public String getStates() {
-        return states.stream()
-                .map(State::getScore)
+    public String getScores() {
+        return scores.stream()
+                .map(Score::getScore)
                 .collect(Collectors.joining(SEPARATOR));
     }
 
@@ -85,7 +85,7 @@ public class NormalFrame implements Frame {
     }
 
     private void validateNextBowl() {
-        if (states.size() == 0) {
+        if (scores.size() == 0) {
             throw new IllegalArgumentException("첫 투구를 하지 않았습니다.");
         }
     }

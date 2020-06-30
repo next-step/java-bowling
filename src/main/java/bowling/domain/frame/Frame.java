@@ -9,5 +9,7 @@ public interface Frame {
 
     boolean isLastPitch();
 
-    String getStates();
+    String getScores();
+
+    int getFramePoint();
 }

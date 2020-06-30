@@ -1,4 +1,4 @@
-package bowling.domain.state;
+package bowling.domain.score;
 
 import bowling.domain.frame.Point;
 import org.junit.jupiter.api.Test;
@@ -12,8 +12,8 @@ class StrikeTest {
         Strike strike = new Strike();
         assertThat(strike.getScore()).isEqualTo("X");
 
-        State stateTen = strike.nextScore(Point.inputPoint(10));
-        assertThat(stateTen.getScore()).isEqualTo("X");
+        Score scoreTen = strike.nextScore(Point.inputPoint(10));
+        assertThat(scoreTen.getScore()).isEqualTo("X");
     }
 
     @Test

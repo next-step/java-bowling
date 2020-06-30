@@ -21,12 +21,17 @@ public class ResultView {
         System.out.println(ROUND_SCORE_BOARD);
         printScoreLine(player, frames);
         printEmptyLine(frames);
-
+        System.out.println();
+        printPointLine(frames);
+        printEmptyLine(frames);
         System.out.println("\n");
     }
 
     private static void printPointLine(Frames frames) {
         System.out.print("|" + formatting(""));
+        frames.getPoints().stream()
+                .map(point -> formatting(String.valueOf(point)))
+                .forEach(System.out::print);
     }
 
     private static void printEmptyLine(Frames frames) {
@@ -38,7 +43,7 @@ public class ResultView {
     private static void printScoreLine(Player player, Frames frames) {
         System.out.print("|" + formatting(player.toString()));
         frames.getFrames().stream()
-                .map(frame -> formatting(frame.getStates()))
+                .map(frame -> formatting(frame.getScores()))
                 .forEach(System.out::print);
     }
 

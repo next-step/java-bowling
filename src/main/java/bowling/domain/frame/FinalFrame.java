@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.state.State;
-import bowling.domain.state.StateCreator;
+import bowling.domain.score.Score;
+import bowling.domain.score.ScoreCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,25 +11,25 @@ public class FinalFrame implements Frame {
 
     private static final String SEPARATOR = "|";
 
-    private List<State> states;
+    private List<Score> scores;
     private int pitchCount;
     private int framePoint;
 
-    private FinalFrame(List<State> states, int framePoint, int pitchCount) {
-        validateScores(states);
+    private FinalFrame(List<Score> scores, int framePoint, int pitchCount) {
+        validateScores(scores);
         validatePitchCount(pitchCount);
-        this.states = states;
+        this.scores = scores;
         this.pitchCount = pitchCount;
         this.framePoint = framePoint;
     }
 
     public static Frame create() {
-        List<State> states = new ArrayList<>();
-        return new FinalFrame(states, 0, 0);
+        List<Score> scores = new ArrayList<>();
+        return new FinalFrame(scores, 0, 0);
     }
 
-    public static Frame create(List<State> states, int framePoint, int pitchCount) {
-        return new FinalFrame(states, framePoint, pitchCount);
+    public static Frame create(List<Score> scores, int framePoint, int pitchCount) {
+        return new FinalFrame(scores, framePoint, pitchCount);
     }
 
     @Override
@@ -41,40 +41,40 @@ public class FinalFrame implements Frame {
     }
 
     private Frame firstBowl(Point point) {
-        State state = StateCreator.create(point);
-        states.add(state);
+        Score score = ScoreCreator.create(point);
+        scores.add(score);
 
-        if (state.isStrike()) {
+        if (score.isStrike()) {
             int strikePoint = point.getPoint();
-            return FinalFrame.create(states, strikePoint, ++pitchCount);
+            return FinalFrame.create(scores, strikePoint, ++pitchCount);
         }
 
-        return FinalFrame.create(states, this.framePoint + point.getPoint(), ++pitchCount);
+        return FinalFrame.create(scores, this.framePoint + point.getPoint(), ++pitchCount);
     }
 
     private Frame nextBowl(Point point) {
         validateNextBowl();
-        State state = states.get(pitchCount - 1);
-        State nextState = state.nextScore(point);
-        states.add(nextState);
+        Score score = scores.get(pitchCount - 1);
+        Score nextScore = score.nextScore(point);
+        scores.add(nextScore);
 
-        if (nextState.isSpare()) {
+        if (nextScore.isSpare()) {
             int sparePoint = framePoint + point.getPoint();
-            return FinalFrame.create(states, sparePoint, ++pitchCount);
+            return FinalFrame.create(scores, sparePoint, ++pitchCount);
         }
 
-        if (state.isStrike()) {
+        if (score.isStrike()) {
             int strikePoint = framePoint + point.getPoint();
-            return FinalFrame.create(states, strikePoint, ++pitchCount);
+            return FinalFrame.create(scores, strikePoint, ++pitchCount);
         }
 
-        return FinalFrame.create(states, framePoint + point.getPoint(), FINAL_MAX_BOWL_PITCH);
+        return FinalFrame.create(scores, framePoint + point.getPoint(), FINAL_MAX_BOWL_PITCH);
     }
 
     @Override
-    public String getStates() {
-        return states.stream()
-                .map(State::getScore)
+    public String getScores() {
+        return scores.stream()
+                .map(Score::getScore)
                 .collect(Collectors.joining(SEPARATOR));
     }
 
@@ -91,7 +91,7 @@ public class FinalFrame implements Frame {
     }
 
     private void validateNextBowl() {
-        if (states.size() == 0) {
+        if (scores.size() == 0) {
             throw new IllegalArgumentException("첫 투구를 하지 않았습니다.");
         }
     }
@@ -102,9 +102,9 @@ public class FinalFrame implements Frame {
         }
     }
 
-    private void validateScores(List<State> states) {
-        if (states == null) {
-            this.states = new ArrayList<>();
+    private void validateScores(List<Score> scores) {
+        if (scores == null) {
+            this.scores = new ArrayList<>();
         }
     }
 }

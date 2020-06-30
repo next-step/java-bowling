@@ -1,13 +1,13 @@
-package bowling.domain.state;
+package bowling.domain.score;
 
 import bowling.domain.frame.Point;
 
-public class Gutter implements State {
+public class Gutter implements Score {
 
     private final Point point = Point.inputPoint(0);
 
     @Override
-    public State nextScore(Point point) {
+    public Score nextScore(Point point) {
         if (point.getPoint() == STRIKE_POINT) {
             return new Spare(point);
         }

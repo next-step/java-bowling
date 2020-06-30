@@ -1,4 +1,4 @@
-package bowling.domain.state;
+package bowling.domain.score;
 
 import bowling.domain.frame.Point;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ class NormalTest {
     @Test
     void nextScore_스페어처리() {
         Normal normal = new Normal(Point.inputPoint(1));
-        State spare = normal.nextScore(Point.inputPoint(9));
+        Score spare = normal.nextScore(Point.inputPoint(9));
         assertThat(spare.getScore()).isEqualTo("/");
     }
 
@@ -18,7 +18,7 @@ class NormalTest {
     @Test
     void nextScore_거터() {
         Normal normal = new Normal(Point.inputPoint(1));
-        State spare = normal.nextScore(Point.inputPoint(0));
+        Score spare = normal.nextScore(Point.inputPoint(0));
         assertThat(spare.getScore()).isEqualTo("-");
     }
 }
