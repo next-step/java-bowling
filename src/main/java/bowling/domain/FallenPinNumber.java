@@ -28,6 +28,10 @@ public class FallenPinNumber {
                 .orElseThrow(() -> new IllegalArgumentException("볼링 핀의 개수를 벗어났습니다."));
     }
 
+    public boolean isMaxFallenPin() {
+        return fallenPinNumber == MAX_FALLEN_PIN;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

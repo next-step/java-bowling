@@ -14,8 +14,21 @@ public class NormalFrame implements Frame {
         return new NormalFrame(frameNumber);
     }
 
-    public Frame figureOutFallenPin(FallenPinNumber fallenPinNumber) {
+    public Frame figureOutFrameFromFirstPitching(FirstPitching firstPitching) {
+        if (firstPitching.isStrike()) {
+            nextFrame = generateFrame();
+            return nextFrame;
+        }
 
+        return this;
+    }
+
+    private Frame generateFrame() {
+        if (frameNumber.isNextFinalFrameNumber()) {
+            return FinalFrame.of(frameNumber.nextFrameNumber());
+        }
+
+        return NormalFrame.of(frameNumber.nextFrameNumber());
     }
 
 }

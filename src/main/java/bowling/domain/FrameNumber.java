@@ -28,16 +28,12 @@ public class FrameNumber {
                 .orElseThrow(() -> new IllegalArgumentException("프레임 번호의 범위를 넘었습니다."));
     }
 
-    public boolean canGenerateNextFrame() {
-        return frameNumber < MAX_FRAME_NUMBER;
+    public boolean isNextFinalFrameNumber() {
+        return frameNumber + 1 == MAX_FRAME_NUMBER;
     }
 
-    public FrameNumber getNextFrameNumber() {
-        return frameNumbers.get(frameNumber + 1);
-    }
-
-    public boolean isFinalFrameNumber() {
-        return frameNumber == MAX_FRAME_NUMBER;
+    public FrameNumber nextFrameNumber() {
+        return FrameNumber.of(frameNumber + 1);
     }
 
     @Override
