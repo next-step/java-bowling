@@ -1,6 +1,7 @@
 package bowling.domain.state.running;
 
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.exception.message.ErrorMessage;
 
@@ -35,5 +36,10 @@ public abstract class Running implements State {
     @Override
     public List<State> getState() {
         return Collections.singletonList(this);
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.INIT_SCORE;
     }
 }

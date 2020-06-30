@@ -28,11 +28,6 @@ public class Ready extends Running {
     }
 
     @Override
-    public Score getScore() {
-        return Score.INIT_SCORE;
-    }
-
-    @Override
     public Score calculateScoreForExtraBonusCount(Score beforeScore) {
         return beforeScore;
     }
