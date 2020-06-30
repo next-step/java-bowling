@@ -89,7 +89,7 @@ public class FinalFrameTest {
 
     private static Stream<Arguments> getScore() {
         return Stream.of(
-                Arguments.of(FramesFixture.getSpareMissFrames(), Score.ofMiss(14), Score.ofMiss(8)),
+                Arguments.of(FramesFixture.getSpareMissFrames(), Score.UN_SCORE, Score.ofMiss(8)),
                 Arguments.of(FramesFixture.getSpareFrames(), Score.UN_SCORE, Score.UN_SCORE),
                 Arguments.of(FramesFixture.getTwoStrikeFrames(), Score.UN_SCORE, Score.UN_SCORE),
                 Arguments.of(FramesFixture.getStrikeHitFrames(), Score.UN_SCORE, Score.UN_SCORE),
@@ -111,17 +111,17 @@ public class FinalFrameTest {
                 // X -> 5|1
                 Arguments.of(FinalFrameFixture.getHitMissFrame(), Score.ofStrike(), Score.ofMiss(16)),
                 // 2|3 -> 2|/|X
-                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame(), Score.ofMiss(5), Score.valueOf(25, -3)),
+                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame(), Score.ofMiss(5), Score.ofMiss(5)),
                 // X -> X|X|X
                 Arguments.of(FinalFrameFixture.getThreeStrikeFrame(), Score.ofStrike(), Score.valueOf(30, 0)),
                 // 2|/ -> X|X|2
-                Arguments.of(FinalFrameFixture.getTwoStrikeOneHitFrame(), Score.ofMiss(5), Score.INIT_SCORE),
+                Arguments.of(FinalFrameFixture.getTwoStrikeOneHitFrame(), Score.ofMiss(5), Score.ofMiss(5)),
                 // X -> 2|/|5
-                Arguments.of(FinalFrameFixture.getHitSpareHitFrame(), Score.ofStrike(), Score.INIT_SCORE),
+                Arguments.of(FinalFrameFixture.getHitSpareHitFrame(), Score.ofStrike(), Score.valueOf(20, 0)),
                 // 2|/ -> X|2|2
                 Arguments.of(FinalFrameFixture.getStrikeHitMissFrame(), Score.ofSpare(), Score.valueOf(24, -2)),
                 // X -> X|1|/ (10 + 11, 10 + 1 + 9)
-                Arguments.of(FinalFrameFixture.getStrikeHitSpareFrame(), Score.ofMiss(5), Score.valueOf(15, -2))
+                Arguments.of(FinalFrameFixture.getStrikeHitSpareFrame(), Score.ofMiss(5), Score.ofMiss(5))
         );
     }
 }

@@ -91,8 +91,8 @@ public class ReadyTest {
 
     private static Stream<Arguments> calculateScoreForExtraBonusCount() {
         return Stream.of(
-                Arguments.of(Score.ofStrike(), Score.INIT_SCORE),
-                Arguments.of(Score.ofSpare(), Score.INIT_SCORE)
+                Arguments.of(Score.ofStrike(), Score.ofStrike()),
+                Arguments.of(Score.ofSpare(), Score.ofSpare())
         );
     }
 }

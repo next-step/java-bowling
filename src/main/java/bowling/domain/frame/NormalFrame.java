@@ -90,10 +90,6 @@ public class NormalFrame extends Frame {
     @Override
     public Score calculateAdditionalScore(final Score beforeScore) {
         final Score score = state.calculateScoreForExtraBonusCount(beforeScore);
-        if (score.isZeroOfExtraBonusCount()) {
-            return score;
-        }
-
         if (this.validateIsNotAddableScore()) {
             return Score.UN_SCORE;
         }

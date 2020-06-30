@@ -34,6 +34,6 @@ public class Ready extends Running {
 
     @Override
     public Score calculateScoreForExtraBonusCount(Score beforeScore) {
-        return Score.INIT_SCORE;
+        return beforeScore;
     }
 }

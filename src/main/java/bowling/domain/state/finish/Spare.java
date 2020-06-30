@@ -36,6 +36,9 @@ public class Spare extends Finished {
 
     @Override
     public Score calculateScoreForExtraBonusCount(Score beforeScore) {
+        if (beforeScore.isZeroOfExtraBonusCount()) {
+            return beforeScore;
+        }
         beforeScore = this.firstPins.sumScore(beforeScore);
         if (beforeScore.isZeroOfExtraBonusCount()) {
             return beforeScore;

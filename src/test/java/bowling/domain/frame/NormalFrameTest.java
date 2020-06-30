@@ -122,7 +122,7 @@ public class NormalFrameTest {
 
     private static Stream<Arguments> getScore() {
         return Stream.of(
-                Arguments.of(FramesFixture.getSpareMissFrames(), Score.ofMiss(14), Score.ofMiss(8)),
+                Arguments.of(FramesFixture.getSpareMissFrames(), Score.UN_SCORE, Score.ofMiss(8)),
                 Arguments.of(FramesFixture.getSpareFrames(), Score.UN_SCORE, Score.UN_SCORE),
                 Arguments.of(FramesFixture.getTwoStrikeFrames(), Score.UN_SCORE, Score.UN_SCORE),
                 Arguments.of(FramesFixture.getStrikeHitFrames(), Score.UN_SCORE, Score.UN_SCORE),
@@ -146,8 +146,8 @@ public class NormalFrameTest {
                 Arguments.of(FramesFixture.getSpareFrames(), Score.UN_SCORE, Score.UN_SCORE),
                 Arguments.of(FramesFixture.getTwoStrikeFrames(), Score.UN_SCORE, Score.UN_SCORE),
                 Arguments.of(FramesFixture.getStrikeHitFrames(), Score.UN_SCORE, Score.UN_SCORE),
-                Arguments.of(FramesFixture.getStrikeMissFrames(), Score.valueOf(18, 0), Score.ofMiss(8)),
-                Arguments.of(FramesFixture.getSpareMissFrames(), Score.valueOf(14, 0), Score.ofMiss(8)),
+                Arguments.of(FramesFixture.getStrikeMissFrames(), Score.UN_SCORE, Score.ofMiss(8)),
+                Arguments.of(FramesFixture.getSpareMissFrames(), Score.UN_SCORE, Score.ofMiss(8)),
                 Arguments.of(FramesFixture.getTwoMissFrames(), Score.ofMiss(5), Score.ofMiss(8))
         );
     }
