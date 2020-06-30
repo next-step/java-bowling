@@ -5,13 +5,13 @@ import bowling.common.IntegerUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Score {
+public class Pitch {
     public static final int MAX_THROW_COUNT = 2;
     private final List<Pin> pins;
     private final List<Shot> shotHistory;
     private int remain;
 
-    public Score() {
+    public Pitch() {
         this.pins = new ArrayList<>();
         this.shotHistory = new ArrayList<>();
         this.remain = Pin.MAX_COUNT;
