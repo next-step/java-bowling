@@ -12,11 +12,11 @@ public class NormalFrame extends Frame {
         if (secondPin.leftPins() < BOWLING_MAX_PINS) {
             this.state = State.MISS;
         }
-        if (secondPin.isAllClear()) {
-            this.state = State.SPARE;
-        }
         if (firstPin.isAllClear()) {
             this.state = State.STRIKE;
+        }
+        if (secondPin.isAllClear()) {
+            this.state = State.SPARE;
         }
     }
 

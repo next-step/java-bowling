@@ -25,9 +25,32 @@ public class Frames {
                 .collect(Collectors.toList());
     }
 
-    public Frame checkLastFrameState() {
+    public List<String> showGameScore() {
+        return frames.stream()
+                .map(Frame::getCurrentScore)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> showGameSumScore() {
+
+            for (int i =  0 ; i < frames.size() -1 ; i++) {
+                frames.get(i).calculateAdditionalScore(frames.get(i+1).currentScore);
+            }
+
+        return frames.stream()
+                .map(Frame::getCurrentSumScore)
+                .collect(Collectors.toList());
+    }
+
+    public Frame checkLastFrame() {
         return frames.stream()
                 .reduce((a, b) -> b)
                 .orElseThrow(() -> new IllegalStateException());
     }
+
+    public void setNextScore(Frame nextFrame) {
+        Frame lastFrame = checkLastFrame();
+        lastFrame.setNextScore(nextFrame);
+    }
+
 }

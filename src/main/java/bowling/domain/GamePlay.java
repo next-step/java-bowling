@@ -8,31 +8,37 @@ import java.util.List;
 public class GamePlay {
 
     private static final int MAX_FRAME_COUNT = 10;
+    private static final int FIRST_FRAME_INDEX_ZERO = 0;
     private static final int MAX_FRAME_INDEX = MAX_FRAME_COUNT - 1;
     private Player player;
     private Frames frames = new Frames();
 
     private GamePlay(Player player, BowlingStrategy bowlingStrategy) {
         this.player = player;
-        for (int i = 0; i < MAX_FRAME_COUNT; i++) {
-            drawAndShowResult(player, bowlingStrategy, i);
+        for (int index = 0; index < MAX_FRAME_COUNT; index++) {
+            drawAndShowResult(player, bowlingStrategy, index);
         }
         // last draw check
-        Frame frame = this.frames.checkLastFrameState();
+        Frame frame = this.frames.checkLastFrame();
         if (frame.state != State.MISS && frame.state != State.GURTER) {
             drawAndShowResult(player, bowlingStrategy, frame);
         }
     }
 
-    private void drawAndShowResult(Player player, BowlingStrategy bowlingStrategy, int i) {
-        Frame frame = drawBowl(bowlingStrategy, i);
+    private void drawAndShowResult(Player player, BowlingStrategy bowlingStrategy, int index) {
+        Frame frame = drawBowl(bowlingStrategy, index);
+        if (index != FIRST_FRAME_INDEX_ZERO) {
+            frames.setNextScore(frame);
+        }
         this.frames.add(frame);
+        frame.createScore();
         OutputView.output(player, this);
     }
 
     private void drawAndShowResult(Player player, BowlingStrategy bowlingStrategy, Frame lastFrame) {
         lastFrame = drawBowl(bowlingStrategy, lastFrame);
         frames.replaceFinalFrame(lastFrame);
+        lastFrame.createScore();
         OutputView.output(player, this);
     }
 
@@ -56,6 +62,14 @@ public class GamePlay {
 
     public List<String> showFrameResult() {
         return frames.showGameResult();
+    }
+
+    public List<String> showFrameScore() {
+        return frames.showGameScore();
+    }
+
+    public List<String> showFrameSumScore() {
+        return frames.showGameSumScore();
     }
 
 }
