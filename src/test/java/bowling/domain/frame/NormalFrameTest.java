@@ -34,11 +34,11 @@ public class NormalFrameTest {
 	void 한_타구가_진행된_프레임은_게임_플레이가_가능하다() {
 		Score firstScore = Score.ofScore(5);
 
-		frame.addFirstScore(firstScore);
+		frame.addScore(firstScore);
 		boolean canPlayMoreCertain = frame.canPlayMore();
 		assertThat(canPlayMoreCertain).isEqualTo(true);
 
-		finalFrame.addFirstScore(firstScore);
+		finalFrame.addScore(firstScore);
 		boolean canPlayMoreCertainForFinalFrame = finalFrame.canPlayMore();
 		assertThat(canPlayMoreCertainForFinalFrame).isEqualTo(true);
 	}
@@ -49,13 +49,13 @@ public class NormalFrameTest {
 		Score firstScore = Score.ofScore(5);
 		Score secondScore = Score.ofScore(4);
 
-		frame.addFirstScore(firstScore);
-		frame.addSecondScore(secondScore);
+		frame.addScore(firstScore);
+		frame.addScore(secondScore);
 		boolean canPlayMoreCertain = frame.canPlayMore();
 		assertThat(canPlayMoreCertain).isEqualTo(false);
 
-		finalFrame.addFirstScore(firstScore);
-		finalFrame.addSecondScore(secondScore);
+		finalFrame.addScore(firstScore);
+		finalFrame.addScore(secondScore);
 		boolean canPlayMoreCertainForFinalFrame = finalFrame.canPlayMore();
 		assertThat(canPlayMoreCertainForFinalFrame).isEqualTo(false);
 	}

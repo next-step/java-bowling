@@ -26,6 +26,21 @@ public class FinalFrame implements Frame {
 	}
 
 	@Override
+	public void addScore(Score score) {
+		if (scores.isFirstScoreNull()) {
+			addFirstScore(score);
+			return;
+		}
+		if (scores.isSecondScoreNull()) {
+			addSecondScore(score);
+			return;
+		}
+		if (scores.isBonusScoreNull()) {
+			addBonusScore(score);
+		}
+	}
+
+	@Override
 	public void addFirstScore(Score firstScore) {
 		scores.addFirstScore(firstScore);
 	}

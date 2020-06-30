@@ -26,6 +26,18 @@ public class Scores {
 		return new Scores();
 	}
 
+	public boolean isFirstScoreNull() {
+		return Objects.isNull(first);
+	}
+
+	public boolean isSecondScoreNull() {
+		return Objects.isNull(second);
+	}
+
+	public boolean isBonusScoreNull() {
+		return Objects.isNull(bonus);
+	}
+
 	public void addFirstScore(Score firstScore) {
 		if (Objects.nonNull(first)) {
 			throw new IllegalArgumentException("이미 첫 번째 타구의 점수가 있습니다.");

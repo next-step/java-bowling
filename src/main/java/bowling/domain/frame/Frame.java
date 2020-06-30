@@ -9,6 +9,8 @@ public interface Frame {
 
 	int getIndex();
 
+	void addScore(Score score);
+
 	void addFirstScore(Score firstScore);
 
 	void addSecondScore(Score secondScore);

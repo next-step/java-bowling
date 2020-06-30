@@ -15,12 +15,12 @@ public class FinalFrameTest {
 
 	public static Stream<Arguments> 마지막_프레임에서_스트라이크인_경우() {
 		Frame frameStrike = FinalFrame.of();
-		frameStrike.addFirstScore(Score.ofScore(10));
+		frameStrike.addScore(Score.ofScore(10));
 		boolean canAddMoreScoreForFrameStrike = frameStrike.canPlayMore();
 
 		Frame frameNotStrike = FinalFrame.of();
-		frameNotStrike.addFirstScore(Score.ofScore(7));
-		frameNotStrike.addSecondScore(Score.ofScore(1));
+		frameNotStrike.addScore(Score.ofScore(7));
+		frameNotStrike.addScore(Score.ofScore(1));
 		boolean canAddMoreScoreForFrameNotStrike = frameNotStrike.canPlayMore();
 
 		return Stream.of(
@@ -31,13 +31,13 @@ public class FinalFrameTest {
 
 	public static Stream<Arguments> 마지막_프레임에서_스페어인_경우() {
 		Frame frame = FinalFrame.of();
-		frame.addFirstScore(Score.ofScore(1));
+		frame.addScore(Score.ofScore(1));
 		boolean canAddMoreScore1 = frame.canPlayMore();
 
-		frame.addSecondScore(Score.ofScore(9));
+		frame.addScore(Score.ofScore(9));
 		boolean canAddMoreScore2 = frame.canPlayMore();
 
-		frame.addBonusScore(Score.ofScore(1));
+		frame.addScore(Score.ofScore(1));
 		boolean canAddMoreScore3 = frame.canPlayMore();
 
 		return Stream.of(
