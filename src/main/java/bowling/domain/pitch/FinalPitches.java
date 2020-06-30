@@ -1,6 +1,6 @@
 package bowling.domain.pitch;
 
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.FinalPitchTryException;
 import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class FinalPitches implements Pitches {
 
     private void validateFinalPitches() {
         if (hasNotStrikeOrSpare() || pitches.size() == MAXIMUM_FINAL_PITCH_COUNTS) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_FINAL_PITCH_TRY);
+            throw new FinalPitchTryException();
         }
     }
 

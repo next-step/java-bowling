@@ -1,6 +1,6 @@
 package bowling.domain.pitch;
 
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.NormalPitchTryException;
 import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class NormalPitches implements Pitches {
 
     private void validateNormalPitches() {
         if (pitches.size() == MAXIMUM_NORMAL_PITCH_COUNTS) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCH_TRY);
+            throw new NormalPitchTryException();
         }
     }
 

@@ -1,9 +1,7 @@
 package bowling.view;
 
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.Frames;
-import bowling.domain.player.Player;
-import bowling.domain.score.FrameScores;
+import bowling.domain.dto.BowlingGameDto;
+import bowling.domain.dto.ScoreSignaturesDto;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -15,32 +13,35 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printDefaultScoreBoard(Player player) {
+    public static void printDefaultScoreBoard(List<BowlingGameDto> bowlingGameDtos) {
         System.out.println(ViewMessage.SCORE_BOARD_HEADER);
-        System.out.printf(ViewMessage.DEFAULT_FRAME_SIGNATURE_ROW, player.getName());
-        System.out.println(ViewMessage.DEFAULT_FRAME_SCORE_ROW);
-    }
-
-    public static void printBowlingScoreBoard(Player player, Frames frames) {
-        List<Frame> frameList = frames.getFrames();
-        FrameScores frameScores = frames.getFrameScores();
-
-        printDefaultLayout(player);
-        frameList.forEach(OutputView::printVisibleFrameSignature);
-        printBlankFrames(frameList.size());
-
-        printVisibleFrameScores(frameScores);
-        printBlankFrames(frameScores.getFrameScoreCounts());
+        bowlingGameDtos.forEach(OutputView::printDefaultInformation);
         System.out.println();
     }
 
-    private static void printDefaultLayout(Player player) {
-        System.out.println(ViewMessage.SCORE_BOARD_HEADER);
-        System.out.printf(ViewMessage.PLAYER_NAME, player.getName());
+    private static void printDefaultInformation(BowlingGameDto bowlingGameDto) {
+        System.out.printf(ViewMessage.DEFAULT_FRAME_SIGNATURE_ROW, bowlingGameDto.getPlayerName());
+        System.out.println(ViewMessage.DEFAULT_FRAME_SCORE_ROW);
     }
 
-    private static void printVisibleFrameSignature(Frame frame) {
-        List<String> scoreSignatures = frame.getPitchScoreSignatures();
+    public static void printBowlingScoreBoard(List<BowlingGameDto> bowlingGameDtos) {
+        System.out.println(ViewMessage.SCORE_BOARD_HEADER);
+        bowlingGameDtos.forEach(OutputView::printBowlingScore);
+        System.out.println();
+    }
+
+    private static void printBowlingScore(BowlingGameDto bowlingGameDto) {
+        List<ScoreSignaturesDto> scoreSignaturesDtos = bowlingGameDto.getScoreSignatures();
+        List<Integer> scores = bowlingGameDto.getScores();
+        System.out.printf(ViewMessage.PLAYER_NAME, bowlingGameDto.getPlayerName());
+        scoreSignaturesDtos.forEach(OutputView::printVisibleFrameSignature);
+        printBlankFrames(scoreSignaturesDtos.size());
+        printVisibleFrameScores(scores);
+        printBlankFrames(scores.size());
+    }
+
+    private static void printVisibleFrameSignature(ScoreSignaturesDto scoreSignaturesDto) {
+        List<String> scoreSignatures = scoreSignaturesDto.getScoreSignatures();
         StringBuilder stringBuilder = new StringBuilder();
         scoreSignatures.forEach(scoreSignature -> appendScoreSignature(scoreSignature, stringBuilder));
         String frameSignature = String.format(ViewMessage.FRAME_SIGNATURE_ROW_FORMAT, stringBuilder.toString());
@@ -54,8 +55,7 @@ public class OutputView {
         stringBuilder.append(scoreSignature);
     }
 
-    private static void printVisibleFrameScores(FrameScores frameScores) {
-        List<Integer> scores = frameScores.getFrameScores();
+    private static void printVisibleFrameScores(List<Integer> scores) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(ViewMessage.FRAME_SCORE_ROW_PREFIX);
         scores.forEach(score -> appendScore(score, stringBuilder));

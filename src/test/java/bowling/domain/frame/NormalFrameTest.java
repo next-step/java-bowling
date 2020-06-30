@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.ScoreSignaturesDto;
 import bowling.domain.score.FrameScore;
 import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +12,7 @@ class NormalFrameTest {
 
     @DisplayName("2번 투구한 경우 다음 Frame으로 넘어감")
     @Test
-    public void isMovableToNextFrame_2번투구() {
+    public void isFinished_2번투구_True() {
         Frame normalFrame = NormalFrame.initiate();
         normalFrame.bowl(PitchScore.valueOf(5));
         normalFrame.bowl(PitchScore.valueOf(5));
@@ -19,9 +20,9 @@ class NormalFrameTest {
         assertThat(normalFrame.isFinished()).isTrue();
     }
 
-    @DisplayName("Strike를 한 경우 Frame으로 넘어감")
+    @DisplayName("Strike를 한 경우 다음 Frame으로 넘어감")
     @Test
-    public void isMovableToNextFrame_스트라이크() {
+    public void isFinished_스트라이크_True() {
         Frame normalFrame = NormalFrame.initiate();
         normalFrame.bowl(PitchScore.valueOf(10));
 
@@ -30,7 +31,7 @@ class NormalFrameTest {
 
     @DisplayName("1번 투구한 경우 넘어갈수 없음")
     @Test
-    public void isMovableToNextFrame_1번() {
+    public void isFinished_1번_False() {
         Frame normalFrame = NormalFrame.initiate();
         normalFrame.bowl(PitchScore.valueOf(3));
 
@@ -54,9 +55,11 @@ class NormalFrameTest {
         frame.bowl(PitchScore.valueOf(6));
 
         FrameScore frameScore = frame.calculateFrameScore().get();
+        ScoreSignaturesDto scoreSignaturesDto = frame.getScoreSignaturesDto();
 
         assertThat(frameScore.getFrameScore()).isEqualTo(9);
         assertThat(frameScore.isAbleToCalculate()).isTrue();
+        assertThat(scoreSignaturesDto.getScoreSignatures()).containsExactly("3", "6");
     }
 
     @DisplayName("Spare인 경우 다음 프레임으로 점수 계산을 위임함")
@@ -70,9 +73,11 @@ class NormalFrameTest {
         nextFrame.bowl(PitchScore.valueOf(4));
 
         FrameScore frameScore = frame.calculateFrameScore().get();
+        ScoreSignaturesDto scoreSignaturesDto = frame.getScoreSignaturesDto();
 
         assertThat(frameScore.getFrameScore()).isEqualTo(14);
         assertThat(frameScore.isAbleToCalculate()).isTrue();
+        assertThat(scoreSignaturesDto.getScoreSignatures()).containsExactly("3", "/");
     }
 
     @DisplayName("결과가 Strike이고 그 다음 1번밖에 안 친 경우 empty Optional 객체를 리턴함")
@@ -83,8 +88,10 @@ class NormalFrameTest {
 
         frame.bowl(PitchScore.valueOf(10));
         nextFrame.bowl(PitchScore.valueOf(4));
+        ScoreSignaturesDto scoreSignaturesDto = frame.getScoreSignaturesDto();
 
         assertThat(frame.calculateFrameScore()).isEmpty();
+        assertThat(scoreSignaturesDto.getScoreSignatures()).containsExactly("X");
     }
 
     @DisplayName("결과가 Strike이고 그 다음 2번 투구한 경우 점수 계산이 가능함")

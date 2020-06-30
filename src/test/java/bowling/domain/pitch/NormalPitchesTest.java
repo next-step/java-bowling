@@ -1,6 +1,6 @@
 package bowling.domain.pitch;
 
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.NormalPitchTryException;
 import bowling.domain.score.PitchScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,11 +25,10 @@ class NormalPitchesTest {
 
     @DisplayName("두 번째 투구면 Pitch를 next를 통해 생성하여 내부 컬렉션에 추가하며, 스페어임")
     @Test
-    public void throwBall_두번째_투구() {
-        PitchScore pitchScore = PitchScore.valueOf(5);
+    public void throwBall_두번째_투구_스페어() {
         NormalPitches normalPitches = new NormalPitches();
 
-        normalPitches.throwBall(pitchScore);
+        normalPitches.throwBall(PitchScore.valueOf(5));
         normalPitches.throwBall(PitchScore.valueOf(5));
 
         assertThat(normalPitches.getPitchScoreSignatures().get(1)).isEqualTo("/");
@@ -44,11 +43,10 @@ class NormalPitchesTest {
 
         assertThatThrownBy(() -> {
             normalPitches.throwBall(PitchScore.valueOf(3));
-        }).isInstanceOf(BowlingBuildingException.class)
-                .hasMessageContaining(BowlingBuildingException.INVALID_NORMAL_PITCH_TRY);
+        }).isInstanceOf(NormalPitchTryException.class);
     }
 
-    @DisplayName("Score들의 List를 요청")
+    @DisplayName("Score들의 시그니쳐 List를 요청")
     @Test
     public void getScores() {
         NormalPitches normalPitches = new NormalPitches();

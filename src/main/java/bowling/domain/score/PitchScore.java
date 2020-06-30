@@ -1,6 +1,6 @@
 package bowling.domain.score;
 
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.PitchScoreRangeException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class PitchScore {
 
     private static void validatePitchScore(int pitchScore) {
         if (pitchScore < MINIMUM_SCORE || pitchScore > MAXIMUM_SCORE) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_PITCH_SCORE_RANGE);
+            throw new PitchScoreRangeException();
         }
     }
 

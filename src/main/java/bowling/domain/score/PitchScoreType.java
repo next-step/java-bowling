@@ -1,6 +1,7 @@
 package bowling.domain.score;
 
-import bowling.domain.exception.BowlingBuildingException;
+import bowling.domain.exception.NextPitchScoreTypeException;
+import bowling.domain.exception.PitchScoreSumMaximumException;
 import bowling.domain.pitch.Pitch;
 
 import java.util.function.Function;
@@ -38,10 +39,10 @@ public enum PitchScoreType {
 
     private static void validateNextCondition(Pitch lastPitch, int scoresSum) {
         if (lastPitch.isStrike() || lastPitch.isSpare()) {
-            throw new BowlingBuildingException(BowlingBuildingException.INVALID_NORMAL_PITCHES_SCORE);
+            throw new NextPitchScoreTypeException();
         }
         if (scoresSum > MAXIMUM_SCORE_TOTAL) {
-            throw new BowlingBuildingException((BowlingBuildingException.OVER_SCORE));
+            throw new PitchScoreSumMaximumException();
         }
     }
 

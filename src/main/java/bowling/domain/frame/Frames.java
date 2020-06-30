@@ -1,14 +1,19 @@
 package bowling.domain.frame;
 
+import bowling.domain.dto.ScoreSignaturesDto;
+import bowling.domain.score.FrameScore;
 import bowling.domain.score.FrameScores;
 import bowling.domain.score.PitchScore;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Frames {
     private static final int INDEX_CONSTANT = 1;
+    private static final int TOTAL_FRAME_COUNTS = 10;
 
     private final List<Frame> frames;
 
@@ -31,26 +36,42 @@ public class Frames {
     }
 
     public void moveToNextFrame() {
-        Frame currentFrame = getCurrentFrame();
-        if (currentFrame.isFinished()) {
-            Frame nextFrame = currentFrame.next(getCurrentIndex());
+        if (isMovableToNextFrame()) {
+            Frame currentFrame = getCurrentFrame();
+            int currentFrameIndex = frames.size();
+            Frame nextFrame = currentFrame.next(currentFrameIndex);
             frames.add(nextFrame);
         }
     }
 
-    public boolean hasNextTurn() {
-        return !frames.contains(null);
+    private boolean isMovableToNextFrame() {
+        return !isPlayingFinalFrame() && isCurrentFrameFinished();
     }
 
-    public int getCurrentIndex() {
-        return frames.size();
+    public boolean isEnd() {
+        return isPlayingFinalFrame() && isCurrentFrameFinished();
     }
 
-    public FrameScores getFrameScores() {
-        return FrameScores.of(getFrames());
+    private boolean isPlayingFinalFrame() {
+        return frames.size() == TOTAL_FRAME_COUNTS;
     }
 
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
+    public boolean isCurrentFrameFinished() {
+        return getCurrentFrame().isFinished();
+    }
+
+    public List<Integer> getFrameScores() {
+        List<FrameScore> frameScores = frames.stream()
+                .map(Frame::calculateFrameScore)
+                .filter(Optional::isPresent)
+                .flatMap(frameScore -> Stream.of(frameScore.get()))
+                .collect(Collectors.toList());
+        return FrameScores.of(frameScores).getFrameScores();
+    }
+
+    public List<ScoreSignaturesDto> getScoreSignatureDtos() {
+        return frames.stream()
+                .map(Frame::getScoreSignaturesDto)
+                .collect(Collectors.toList());
     }
 }
