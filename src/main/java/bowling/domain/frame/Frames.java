@@ -1,7 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
-
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,7 +21,6 @@ public class Frames {
     private Frames()  {
         validateFrameIndex(frameIndex);
         frames.add(NormalFrame.create());
-        points.add(0);
     }
 
     public static Frames create() {
@@ -33,7 +30,7 @@ public class Frames {
     public Frames pitch(Point point) {
         Frame frame = frames.get(frameIndex).bowl(point);
         updateFrame(frame);
-        updatePoint(frame.getPoint());
+        updatePoint(frame.getFramePoint());
         return this;
     }
 

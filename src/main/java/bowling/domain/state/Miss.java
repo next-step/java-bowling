@@ -1,8 +1,8 @@
-package bowling.domain.score;
+package bowling.domain.state;
 
 import bowling.domain.frame.Point;
 
-public class Miss implements Score {
+public class Miss implements State {
 
     private final Point point;
 
@@ -12,7 +12,7 @@ public class Miss implements Score {
     }
 
     @Override
-    public Score nextScore(Point point) {
+    public State nextScore(Point point) {
         return new Normal(point);
     }
 

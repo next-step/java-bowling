@@ -1,28 +1,26 @@
-package bowling.domain.score;
+package bowling.domain.state;
 
 import bowling.domain.frame.Point;
 
-public class Normal implements Score {
+public class Spare implements State {
 
     private final Point point;
 
-    public Normal(Point point) {
+    public Spare(Point point) {
         this.point = point;
     }
 
     @Override
-    public Score nextScore(Point point) {
-        int totalPoint = this.point.getPoint() + point.getPoint();
-
-        if (totalPoint == STRIKE_POINT || totalPoint - 10 == STRIKE_POINT) {
-            return new Spare(point);
+    public State nextScore(Point point) {
+        if (point.getPoint() == STRIKE_POINT) {
+            return new Strike();
         }
 
         if (point.getPoint() == GUTTER_POINT) {
             return new Gutter();
         }
 
-        return new Miss(point);
+        return new Normal(point);
     }
 
     @Override
@@ -32,7 +30,7 @@ public class Normal implements Score {
 
     @Override
     public String getScore() {
-        return point.toString();
+        return "/";
     }
 
     @Override
@@ -42,6 +40,6 @@ public class Normal implements Score {
 
     @Override
     public boolean isSpare() {
-        return false;
+        return true;
     }
 }

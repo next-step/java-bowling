@@ -1,17 +1,17 @@
-package bowling.domain.score;
+package bowling.domain.state;
 
 import bowling.domain.frame.Point;
 
-public class ScoreCreator {
+public class StateCreator {
 
     private static final int STRIKE_POINT = 10;
     private static final int GUTTER_POINT = 0;
 
-    public static Score create(Point point) {
+    public static State create(Point point) {
         return getScore(point);
     }
 
-    private static Score getScore(Point point) {
+    private static State getScore(Point point) {
         if (isStrike(point)) {
             return new Strike();
         }

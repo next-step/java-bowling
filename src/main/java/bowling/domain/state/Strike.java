@@ -1,13 +1,13 @@
-package bowling.domain.score;
+package bowling.domain.state;
 
 import bowling.domain.frame.Point;
 
-public class Strike implements Score {
+public class Strike implements State {
 
     private static final Point point = Point.inputPoint(STRIKE_POINT);
 
     @Override
-    public Score nextScore(Point point) {
+    public State nextScore(Point point) {
         int totalPoint = this.point.getPoint() + point.getPoint();
 
         if (point.getPoint() == STRIKE_POINT) {

@@ -14,7 +14,7 @@ public interface Frame {
 
     boolean isLastPitch();
 
-    String getScores();
+    String getStates();
 
     int getFramePoint();
 }

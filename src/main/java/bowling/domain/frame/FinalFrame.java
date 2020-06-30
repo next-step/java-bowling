@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
-import bowling.domain.score.ScoreCreator;
+import bowling.domain.state.State;
+import bowling.domain.state.StateCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,25 +10,25 @@ public class FinalFrame implements Frame {
 
     private static final String SEPARATOR = "|";
 
-    private List<Score> scores;
-    private int pitchCount = 0;
-    private int framePoint = 0;
+    private List<State> states;
+    private int pitchCount;
+    private int framePoint;
 
-    private FinalFrame(List<Score> scores, int framePoint, int pitchCount) {
-        validateScores(scores);
+    private FinalFrame(List<State> states, int framePoint, int pitchCount) {
+        validateScores(states);
         validatePitchCount(pitchCount);
-        this.scores = scores;
+        this.states = states;
         this.pitchCount = pitchCount;
         this.framePoint = framePoint;
     }
 
     public static Frame create() {
-        List<Score> Scores = new ArrayList<>();
-        return new FinalFrame(Scores, 0, 0);
+        List<State> states = new ArrayList<>();
+        return new FinalFrame(states, 0, 0);
     }
 
-    public static Frame create(List<Score> scores, int framePoint, int pitchCount) {
-        return new FinalFrame(scores, framePoint, pitchCount);
+    public static Frame create(List<State> states, int framePoint, int pitchCount) {
+        return new FinalFrame(states, framePoint, pitchCount);
     }
 
     @Override
@@ -40,49 +40,49 @@ public class FinalFrame implements Frame {
     }
 
     private Frame firstBowl(Point point) {
-        Score score = ScoreCreator.create(point);
-        scores.add(score);
+        State state = StateCreator.create(point);
+        states.add(state);
 
-        if (score.isStrike()) {
+        if (state.isStrike()) {
             int strikePoint = point.getPoint();
-            return FinalFrame.create(scores, strikePoint, ++pitchCount);
+            return FinalFrame.create(states, strikePoint, ++pitchCount);
         }
 
-        return FinalFrame.create(scores, this.framePoint + point.getPoint(), ++pitchCount);
+        return FinalFrame.create(states, this.framePoint + point.getPoint(), ++pitchCount);
     }
 
     private Frame nextBowl(Point point) {
         validateNextBowl();
-        Score score = scores.get(pitchCount - 1);
-        Score nextScore = score.nextScore(point);
-        scores.add(nextScore);
+        State state = states.get(pitchCount - 1);
+        State nextState = state.nextScore(point);
+        states.add(nextState);
 
-        if (nextScore.isSpare()) {
+        if (nextState.isSpare()) {
             int sparePoint = framePoint + point.getPoint();
-            return FinalFrame.create(scores, sparePoint, ++pitchCount);
+            return FinalFrame.create(states, sparePoint, ++pitchCount);
         }
 
-        if (score.isStrike()) {
+        if (state.isStrike()) {
             int strikePoint = framePoint + point.getPoint();
-            return FinalFrame.create(scores, strikePoint, ++pitchCount);
+            return FinalFrame.create(states, strikePoint, ++pitchCount);
         }
 
-        return FinalFrame.create(scores, framePoint + point.getPoint(), FINAL_MAX_BOWL_PITCH);
+        return FinalFrame.create(states, framePoint + point.getPoint(), FINAL_MAX_BOWL_PITCH);
     }
 
     @Override
-    public String getScores() {
+    public String getStates() {
         String result = "";
-        if (scores.size() == FRAME_THIRD_PITCH_END) {
-            return scores.get(0).getScore() + SEPARATOR + scores.get(1).getScore() + SEPARATOR + scores.get(2).getScore();
+        if (states.size() == FRAME_THIRD_PITCH_END) {
+            return states.get(0).getScore() + SEPARATOR + states.get(1).getScore() + SEPARATOR + states.get(2).getScore();
         }
 
-        if (scores.size() == FRAME_SECOND_PITCH_END) {
-            return scores.get(0).getScore() + SEPARATOR + scores.get(1).getScore();
+        if (states.size() == FRAME_SECOND_PITCH_END) {
+            return states.get(0).getScore() + SEPARATOR + states.get(1).getScore();
         }
 
-        if (scores.size() == FRAME_FIRST_PITCH_END) {
-            return scores.get(0).getScore();
+        if (states.size() == FRAME_FIRST_PITCH_END) {
+            return states.get(0).getScore();
         }
 
         return result;
@@ -101,7 +101,7 @@ public class FinalFrame implements Frame {
     }
 
     private void validateNextBowl() {
-        if (scores.size() == 0) {
+        if (states.size() == 0) {
             throw new IllegalArgumentException("첫 투구를 하지 않았습니다.");
         }
     }
@@ -112,9 +112,9 @@ public class FinalFrame implements Frame {
         }
     }
 
-    private void validateScores(List<Score> scores) {
-        if (scores == null) {
-            this.scores = new ArrayList<>();
+    private void validateScores(List<State> states) {
+        if (states == null) {
+            this.states = new ArrayList<>();
         }
     }
 }

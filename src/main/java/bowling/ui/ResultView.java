@@ -2,9 +2,7 @@ package bowling.ui;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
-import bowling.domain.score.Score;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 public class ResultView {
@@ -45,7 +43,7 @@ public class ResultView {
     private static void printScoreLine(Player player, Frames frames) {
         System.out.print("|" + formatting(player.toString()));
         frames.getFrames().stream()
-                .map(frame -> formatting(frame.getScores()))
+                .map(frame -> formatting(frame.getStates()))
                 .forEach(System.out::print);
     }
 

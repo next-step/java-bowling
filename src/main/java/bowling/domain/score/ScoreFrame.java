@@ -1,4 +1,4 @@
 package bowling.domain.score;
 
-public class Score {
+public class ScoreFrame {
 }

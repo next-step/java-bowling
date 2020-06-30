@@ -1,10 +1,9 @@
-package bowling.domain.score;
+package bowling.domain.state;
 
 import bowling.domain.frame.Point;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StrikeTest {
 
@@ -13,8 +12,8 @@ class StrikeTest {
         Strike strike = new Strike();
         assertThat(strike.getScore()).isEqualTo("X");
 
-        Score scoreTen = strike.nextScore(Point.inputPoint(10));
-        assertThat(scoreTen.getScore()).isEqualTo("X");
+        State stateTen = strike.nextScore(Point.inputPoint(10));
+        assertThat(stateTen.getScore()).isEqualTo("X");
     }
 
     @Test
