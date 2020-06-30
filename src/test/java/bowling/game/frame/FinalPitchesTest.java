@@ -1,12 +1,13 @@
-package bowling.game;
+package bowling.game.frame;
 
+import bowling.game.frame.FinalPitches;
+import bowling.game.frame.Pitches;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class FinalPitchesTest {
 

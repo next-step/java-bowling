@@ -1,7 +1,6 @@
 package bowling.game;
 
-import bowling.game.Frames;
-import bowling.game.ScoreBoard;
+import bowling.game.frame.Frames;
 import bowling.player.domain.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,5 +1,8 @@
-package bowling.game;
+package bowling.game.frame;
 
+import bowling.game.Score;
+import bowling.game.frame.Frame;
+import bowling.game.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,7 +12,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class NormalFrameTest {
     @DisplayName("첫 투구가 Strike가 아니면 그 프레임은 투구 기회가 있다.")

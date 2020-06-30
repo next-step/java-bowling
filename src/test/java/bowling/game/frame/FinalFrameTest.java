@@ -1,10 +1,13 @@
-package bowling.game;
+package bowling.game.frame;
 
+import bowling.game.Score;
+import bowling.game.frame.FinalFrame;
+import bowling.game.frame.Frame;
+import bowling.game.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class FinalFrameTest {
     @DisplayName("마지막 프레임은 첫번째 투구가 Strike 면 투구 기회가 있다.")

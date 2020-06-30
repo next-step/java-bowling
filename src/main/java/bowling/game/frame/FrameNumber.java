@@ -1,4 +1,4 @@
-package bowling.game;
+package bowling.game.frame;
 
 public class FrameNumber implements Comparable<FrameNumber> {
     public static final int FRAME_NUMBER_MIN = 1;

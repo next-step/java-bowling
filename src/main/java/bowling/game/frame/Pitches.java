@@ -1,4 +1,4 @@
-package bowling.game;
+package bowling.game.frame;
 
 import java.util.List;
 

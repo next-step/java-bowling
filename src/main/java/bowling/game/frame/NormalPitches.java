@@ -1,4 +1,4 @@
-package bowling.game;
+package bowling.game.frame;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,19 +6,18 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
-public class FinalPitches implements Pitches {
+public class NormalPitches implements Pitches {
     private static final int PITCH_COUNT_MAX = 2;
-    private static final int BONUS_COUNT_MAX = 3;
 
     private final LinkedList<Pitch> pitches;
 
-    public FinalPitches() {
+    public NormalPitches() {
         this.pitches = new LinkedList<>();
     }
 
     @Override
     public void throwBall(final int pinCount) {
-        if (pitches.isEmpty() || isBonusPitch()) {
+        if (pitches.isEmpty()) {
             pitches.add(Pitch.firstPitch(pinCount));
             return;
         }
@@ -29,11 +28,17 @@ public class FinalPitches implements Pitches {
 
     @Override
     public boolean hasChance() {
-        if (pitches.size() == PITCH_COUNT_MAX && !isBonusPitch()) {
+        if (pitches.isEmpty()) {
+            return true;
+        }
+
+        Pitch firstPitch = pitches.getFirst();
+
+        if (firstPitch.isStrikePitch()) {
             return false;
         }
 
-        if (pitches.size() == BONUS_COUNT_MAX) {
+        if (pitches.size() == PITCH_COUNT_MAX) {
             return false;
         }
 
@@ -45,10 +50,6 @@ public class FinalPitches implements Pitches {
         return pitches.stream()
                 .map(Pitch::stateToString)
                 .collect(joining("|"));
-    }
-
-    private boolean isBonusPitch() {
-        return pitches.getFirst().isStrikePitch() || pitches.getLast().isSparePitch();
     }
 
     @Override
@@ -63,12 +64,15 @@ public class FinalPitches implements Pitches {
 
     @Override
     public int getBasicScore() {
+        if (this.isStrikePitches() || this.isSparePitches()) {
+            return 10;
+        }
+
         return pitches.stream()
                 .mapToInt(Pitch::getPinCount)
                 .sum();
     }
 
-    @Override
     public List<Integer> getPitchesPinCounts() {
         return pitches.stream()
                 .map(Pitch::getPinCount)

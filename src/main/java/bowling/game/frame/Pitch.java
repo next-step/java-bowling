@@ -1,5 +1,6 @@
-package bowling.game;
+package bowling.game.frame;
 
+import bowling.game.State;
 import bowling.game.vo.Pin;
 
 public class Pitch {

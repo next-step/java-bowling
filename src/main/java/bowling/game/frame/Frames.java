@@ -1,4 +1,6 @@
-package bowling.game;
+package bowling.game.frame;
+
+import bowling.game.Score;
 
 import java.util.LinkedList;
 import java.util.List;
