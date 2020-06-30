@@ -7,15 +7,29 @@ import bowling.util.ScoreBound;
 
 public class Scores {
 
-	private final Score first;
+	private Score first;
 	private Score second;
 
 	private Scores(Score first) {
 		this.first = first;
 	}
 
+	private Scores() {
+	}
+
 	public static Scores from(Score first) {
 		return new Scores(first);
+	}
+
+	public static Scores of() {
+		return new Scores();
+	}
+
+	public void addFirstScore(Score firstScore) {
+		if (Objects.nonNull(first)) {
+			throw new IllegalArgumentException("이미 첫 번째 타구의 점수가 있습니다.");
+		}
+		this.first = firstScore;
 	}
 
 	public void addSecondScore(Score second) {
@@ -42,6 +56,6 @@ public class Scores {
 	}
 
 	public boolean canPlayMore() {
-		return ! first.isScoreTen() && Objects.isNull(second);
+		return Objects.isNull(first) || (! first.isScoreTen() && Objects.isNull(second));
 	}
 }
