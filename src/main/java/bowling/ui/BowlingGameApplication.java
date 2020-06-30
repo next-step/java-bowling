@@ -53,15 +53,23 @@ public class BowlingGameApplication {
 
     private static void doMiddleThrows(List<BowlingGame> bowlingGames) {
         for (int frameIndex = 1; frameIndex < 10; frameIndex++) {
-            for (BowlingGame bowlingGame : bowlingGames) {
-                doNotCompletedFrame(bowlingGame, frameIndex);
-                OutputView.printBowlingGames(bowlingGames);
-            }
+            doNotCompletedMiddleFrames(bowlingGames, frameIndex);
             if (breakWhenFinalFrame(frameIndex)) break;
-            for (BowlingGame bowlingGame : bowlingGames) {
-                doNextFrame(bowlingGame, frameIndex);
-                OutputView.printBowlingGames(bowlingGames);
-            }
+            doNextFrames(bowlingGames, frameIndex);
+        }
+    }
+
+    private static void doNextFrames(List<BowlingGame> bowlingGames, int frameIndex) {
+        for (BowlingGame bowlingGame : bowlingGames) {
+            doNextFrame(bowlingGame, frameIndex);
+            OutputView.printBowlingGames(bowlingGames);
+        }
+    }
+
+    private static void doNotCompletedMiddleFrames(List<BowlingGame> bowlingGames, int frameIndex) {
+        for (BowlingGame bowlingGame : bowlingGames) {
+            doNotCompletedFrame(bowlingGame, frameIndex);
+            OutputView.printBowlingGames(bowlingGames);
         }
     }
 
