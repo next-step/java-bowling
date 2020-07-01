@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NormalFrame implements Frame {
-    private Map<Round, BowlingPins> record = new HashMap<>();
+    private final Map<Round, BowlingPins> record = new HashMap<>();
     private final int frameNumber;
 
     public NormalFrame(final int frameNumber) {
@@ -15,15 +15,9 @@ public class NormalFrame implements Frame {
     public Frame execute(final BowlingPins bowlingPins) {
         if (record.isEmpty()) {
             record.put(Round.FIRST_ROUND, bowlingPins);
-            if (bowlingPins.isMax()) {
-                if (this.frameNumber == 9) {
-                    return new FinalFrame();
-                }
-                return this.next();
-            }
-            return this;
+            return checkAndReturn(bowlingPins);
         }
-        if (this.record.get(Round.FIRST_ROUND).isNotAddable(bowlingPins)) {
+        if (this.record.get(Round.FIRST_ROUND).cannotAdd(bowlingPins)) {
             throw new IllegalArgumentException("쓰러트리는 볼링핀의 수의 합은 10이하여야합니다");
         }
         record.put(Round.SECOND_ROUND, bowlingPins);
@@ -35,6 +29,25 @@ public class NormalFrame implements Frame {
         return this.frameNumber;
     }
 
+    @Override
+    public boolean isFinalFrame() {
+        return false;
+    }
+
+    private Frame checkAndReturn(final BowlingPins bowlingPins) {
+        if (bowlingPins.isMax()) {
+            return checkFinalFrameAndReturn();
+        }
+        return this;
+    }
+
+    private Frame checkFinalFrameAndReturn() {
+        if (this.frameNumber == 9) {
+            return new FinalFrame();
+        }
+        return this.next();
+    }
+
     private NormalFrame next() {
         return new NormalFrame(this.frameNumber + 1);
     }
@@ -44,10 +57,6 @@ public class NormalFrame implements Frame {
         return record.get(Round.SECOND_ROUND) != null || record.get(Round.FIRST_ROUND).isMax();
     }
 
-    @Override
-    public boolean isFinalFrame() {
-        return false;
-    }
 
     public boolean isStrike() {
         return record.get(Round.FIRST_ROUND).isMax();

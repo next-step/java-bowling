@@ -19,7 +19,7 @@ public class BowlingPins {
         return this.number == MAX_PINS;
     }
 
-    public boolean isNotAddable(final BowlingPins bowlingPins) {
+    public boolean cannotAdd(final BowlingPins bowlingPins) {
         return this.number + bowlingPins.number > MAX_PINS;
     }
 
@@ -32,12 +32,16 @@ public class BowlingPins {
         return number + "";
     }
 
+    public boolean isGutter() {
+        return this.number == 0;
+    }
+
     private static class BowlingPinsCache {
         private static final BowlingPins[] cache;
 
         static {
             cache = new BowlingPins[MAX_PINS + 1];
-            for (int i = 1; i <= MAX_PINS; i++) {
+            for (int i = 0; i <= MAX_PINS; i++) {
                 cache[i] = new BowlingPins(i);
             }
         }

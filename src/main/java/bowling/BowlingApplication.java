@@ -16,9 +16,9 @@ public class BowlingApplication {
         OutputView.printSnapshot(resultFrame);
         Frame frame = new NormalFrame(1);
         while (!frame.isFinalFrame()) {
-            BowlingPins bowlingPins = InputView.askPins(frame.getFrameNumber()); // 9 프레임
-            resultFrame.record(frame.getFrameNumber(), frame); // 기록
-            frame = frame.execute(bowlingPins); // FinalFrame
+            BowlingPins bowlingPins = InputView.askPins(frame.getFrameNumber());
+            resultFrame.record(frame.getFrameNumber(), frame);
+            frame = frame.execute(bowlingPins);
             OutputView.printSnapshot(resultFrame);
         }
     }
