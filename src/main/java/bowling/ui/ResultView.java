@@ -26,14 +26,22 @@ public class ResultView {
 
     private static String getFramesRow(Frames frames) {
         StringBuilder sb = new StringBuilder(String.format(BOARD_HEADER_FIRST_COLUMN, frames.getPlayerName()));
+        fillShotHistory(frames, sb);
+        fillEmpty(frames, sb);
+        return sb.toString();
+    }
+
+    private static void fillShotHistory(Frames frames, StringBuilder sb) {
         frames.stream()
                 .forEach(f ->
                         sb.append(String.format(RESULT_FORMAT,
                                 f.getShotHistory().stream().map(Shot::getSymbol).collect(Collectors.joining("|"))
                         )));
+    }
+
+    private static void fillEmpty(Frames frames, StringBuilder sb) {
         for (int round = frames.getCurrentFrameNo(); round < Frames.FINAL_FRAME; round++) {
             sb.append(String.format(RESULT_FORMAT, ""));
         }
-        return sb.toString();
     }
 }
