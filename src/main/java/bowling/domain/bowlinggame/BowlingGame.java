@@ -57,4 +57,8 @@ public class BowlingGame {
         Frame frame = findCurrentFrame();
         return frame.isAvailablePlay();
     }
+
+    public boolean isEmptyFrames() {
+        return frames.getFrameSize() == ZERO;
+    }
 }

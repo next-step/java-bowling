@@ -1,7 +1,7 @@
 package bowling;
 
-import bowling.domain.bowlinggame.BowlingGame;
 import bowling.domain.bowlinggame.BowlingGames;
+import bowling.domain.player.Player;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
@@ -20,23 +20,9 @@ public class BowlingApplication {
 
         BowlingGames bowlingGames = new BowlingGames(playerNames);
         while (!bowlingGames.isAllGameOver()) {
-            bowlingGames.addNextFrames();
-            playBowlingGames(bowlingGames);
-        }
-
-    }
-
-    private static void playBowlingGames(BowlingGames bowlingGames) {
-        for (int i = 0; i < bowlingGames.size(); i++) {
-            writeBowlingGamePoint(bowlingGames, i);
-        }
-    }
-
-    private static void writeBowlingGamePoint(BowlingGames bowlingGames, int index) {
-        while (bowlingGames.isPlayable(index)) {
-            BowlingGame bowlingGame = bowlingGames.findBowlingGame(index);
-            int point = InputView.inputScore(bowlingGame.getPlayer());
-            bowlingGame.writePoint(point);
+            Player player = bowlingGames.currentPlayer();
+            int point = InputView.inputScore(player);
+            bowlingGames.writePoint(point);
             OutputView.outputBowlingGames(bowlingGames);
         }
     }

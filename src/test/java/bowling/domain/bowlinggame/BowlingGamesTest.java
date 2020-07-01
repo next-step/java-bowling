@@ -37,9 +37,9 @@ class BowlingGamesTest {
     @DisplayName("모든 볼링 게임에 frame 추가")
     void addNextFramesTest() {
         BowlingGames bowlingGames = createBowlingGames(Arrays.asList("PSJ", "KSY"));
-        assertThatCode(() -> bowlingGames.addNextFrames());
 
         for (int i = 0; i < bowlingGames.size(); i++) {
+            bowlingGames.writePoint(10);
             BowlingGame bowlingGame = bowlingGames.findBowlingGame(i);
             assertThat(bowlingGame.findCurrentFrame()).isNotNull();
         }
@@ -91,12 +91,12 @@ class BowlingGamesTest {
     void isPlayableBowlingGameTest() {
         List<String> playerNames = Arrays.asList("PSJ", "KSY");
         BowlingGames bowlingGames = createBowlingGames(playerNames);
-        bowlingGames.addNextFrames();
 
         BowlingGame firstBowlingGame = bowlingGames.findBowlingGame(0);
-        firstBowlingGame.writePoint(10);
-
-        assertThat(bowlingGames.isPlayable(0)).isFalse();
-        assertThat(bowlingGames.isPlayable(1)).isTrue();
+        BowlingGame secondBowlingGame = bowlingGames.findBowlingGame(1);
+        bowlingGames.writePoint(10);
+        
+        assertThat(firstBowlingGame.isCurrentFramePlayable()).isFalse();
+        assertThat(secondBowlingGame.isCurrentFramePlayable()).isTrue();
     }
 }

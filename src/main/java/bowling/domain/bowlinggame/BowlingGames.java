@@ -1,5 +1,7 @@
 package bowling.domain.bowlinggame;
 
+import bowling.domain.player.Player;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -23,10 +25,6 @@ public class BowlingGames {
         }
     }
 
-    public void addNextFrames() {
-        bowlingGames.forEach(BowlingGame::addNextFrame);
-    }
-
     public boolean isAllGameOver() {
         return bowlingGames.stream()
                 .allMatch(BowlingGame::isGameOver);
@@ -36,11 +34,43 @@ public class BowlingGames {
         return bowlingGames.size();
     }
 
-    public boolean isPlayable(int index) {
-        return bowlingGames.get(index).isCurrentFramePlayable();
-    }
-
     public BowlingGame findBowlingGame(int index) {
         return bowlingGames.get(index);
+    }
+
+    public void writePoint(int point) {
+        addFrames();
+        BowlingGame bowlingGame = findCurrentBowlingGame();
+        bowlingGame.writePoint(point);
+    }
+
+    private void addFrames() {
+        if (isEmptyFirstFrame() || !isAvailablePlayBowlingGame()) {
+            bowlingGames.forEach(BowlingGame::addNextFrame);
+        }
+    }
+
+    public Player currentPlayer() {
+        if (isEmptyFirstFrame() || !isAvailablePlayBowlingGame()) {
+            return bowlingGames.get(0).getPlayer();
+        }
+        return findCurrentBowlingGame().getPlayer();
+    }
+
+    private BowlingGame findCurrentBowlingGame() {
+        return bowlingGames.stream()
+                .filter(bowlingGame -> bowlingGame.isCurrentFramePlayable())
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("not found bowlingGame"));
+    }
+
+    private boolean isEmptyFirstFrame() {
+        return bowlingGames.stream()
+                .allMatch(BowlingGame::isEmptyFrames);
+    }
+
+    private boolean isAvailablePlayBowlingGame() {
+        return bowlingGames.stream()
+                .anyMatch(BowlingGame::isCurrentFramePlayable);
     }
 }

@@ -47,4 +47,8 @@ public class Frames {
     public Frame findCurrentFrame() {
         return ElementFindUtils.findLastElement(frames);
     }
+
+    public boolean isEmpty() {
+        return frames.isEmpty();
+    }
 }
