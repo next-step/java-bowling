@@ -4,6 +4,7 @@ import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
 import bowling.domain.score.Score;
 import bowling.view.InputView;
+import bowling.view.OutputView;
 
 public class BowlingGameController {
 
@@ -20,7 +21,7 @@ public class BowlingGameController {
 		do {
 			Score score = InputView.askScore(frames.findPlayingFrame().getIndex() + 1);
 			frames = bowlingGame.addScore(frames, score);
-			// OutputView.printFrames(player, frames);
+			OutputView.printFrames(player, frames);
 		} while (frames.canPlayMore());
 	}
 }

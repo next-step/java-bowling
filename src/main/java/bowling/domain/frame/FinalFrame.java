@@ -76,6 +76,7 @@ public class FinalFrame implements Frame {
 		return index;
 	}
 
+	@Override
 	public Scores getScores() {
 		return scores;
 	}

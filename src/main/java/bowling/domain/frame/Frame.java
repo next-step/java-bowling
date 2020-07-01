@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 
 public interface Frame {
 	Frame addNextFrame();
@@ -16,4 +17,6 @@ public interface Frame {
 	void addSecondScore(Score secondScore);
 
 	void addBonusScore(Score bonusScore);
+
+	Scores getScores();
 }
