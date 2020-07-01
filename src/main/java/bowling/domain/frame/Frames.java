@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import bowling.domain.score.Score;
+
 public class Frames {
 
 	private List<Frame> frameList;
@@ -34,6 +36,19 @@ public class Frames {
 			.filter(Frame::canPlayMore)
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("there is no running frame."));
+	}
+
+	public boolean canPlayMore() {
+		return frameList.stream()
+			.anyMatch(Frame::canPlayMore);
+	}
+
+	public void addScore(Score score) {
+		Frame frame = frameList.stream()
+			.filter(Frame::canPlayMore)
+			.findFirst()
+			.orElseThrow(() -> new IllegalStateException("no more score can be added in the frame"));
+		frame.addScore(score);
 	}
 
 	public List<Frame> getFrameList() {
