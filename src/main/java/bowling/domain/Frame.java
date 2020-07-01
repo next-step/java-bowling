@@ -1,8 +1,12 @@
 package bowling.domain;
 
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class Frame {
     public static final int FIRST_FRAME = 1;
     public static final int FINAL_FRAME = 10;
+    protected static final List<Shot> BONUS_SHOT = Arrays.asList(Shot.STRIKE, Shot.SPARE);
     protected int frameNo;
     protected Pitch pitch;
     protected Frame nextFrame;
