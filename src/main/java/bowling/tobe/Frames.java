@@ -21,10 +21,10 @@ public class Frames {
 
     public boolean bowling(Pin pin) {
         State state = frames.getLast().bowling(pin);
-        if (state.isFinish()) {
+        if (state.isFinish() && !frames.getLast().isGameEnd()) {
             frames.add(frames.getLast().next());
         }
-        return getCurrentFrameNo() == FINAL_FRAME && state.isFinish();
+        return frames.getLast().isGameEnd();
     }
 
     public Stream<Frame> stream() {
