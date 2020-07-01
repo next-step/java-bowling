@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("ResultType 로직 테스트")
+@DisplayName("Shot: 투구 결과 타입 테스트")
 class ShotTest {
 
     @Test

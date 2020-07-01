@@ -1,62 +1,38 @@
 package bowling.domain;
 
-import bowling.common.IntegerUtils;
+import java.util.Arrays;
 
 public enum Shot {
-    GUTTER("-"),
-    ONE("1"),
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8"),
-    NINE("9"),
-    SPARE("\\"),
-    STRIKE("X");
+    GUTTER("-", 0),
+    ONE("1", 1),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
+    NINE("9", 9),
+    SPARE("\\", -1),
+    STRIKE("X", 10);
 
     private final String symbol;
+    private final int pinCount;
 
-    Shot(String symbol) {
+    Shot(String symbol, int pinCount) {
         this.symbol = symbol;
+        this.pinCount = pinCount;
     }
 
     public static Shot of(boolean isFirst, int pin, int remain) {
-        if (remain == IntegerUtils.ZERO) {
+        if (remain == 0) {
             return isFirst ? STRIKE : SPARE;
         }
-        if (pin == 0) {
-            return GUTTER;
-        }
-        if (pin == 1) {
-            return ONE;
-        }
-        if (pin == 2) {
-            return TWO;
-        }
-        if (pin == 3) {
-            return THREE;
-        }
-        if (pin == 4) {
-            return FOUR;
-        }
-        if (pin == 5) {
-            return FIVE;
-        }
-        if (pin == 6) {
-            return SIX;
-        }
-        if (pin == 7) {
-            return SEVEN;
-        }
-        if (pin == 8) {
-            return EIGHT;
-        }
-        if (pin == 9) {
-            return NINE;
-        }
-        throw new IllegalArgumentException("Maybe Frame is invalid");
+
+        return Arrays.stream(values())
+                .filter(s -> s.pinCount == pin)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Maybe Frame is invalid"));
     }
 
     public String getSymbol() {
