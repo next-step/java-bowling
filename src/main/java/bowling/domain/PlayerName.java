@@ -20,7 +20,7 @@ public class PlayerName {
     }
 
     private static void checkPlayerName(String name) {
-        if (StringUtils.length(name) == NAME_LETTERS_SIZE) {
+        if (StringUtils.length(name) != NAME_LETTERS_SIZE) {
             throw new IllegalArgumentException("이름은 3글자로 입력해주세요.");
         }
     }

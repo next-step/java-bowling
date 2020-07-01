@@ -22,14 +22,22 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame figureOutFrame(FallenPinNumber fallenPinNumber) {
-        Pitching action = pitching.pitch(fallenPinNumber);
-
-        if (action.isFinished()) {
+        pitching = pitching.pitch(fallenPinNumber);
+        if (pitching.isFinished(this)) {
             nextFrame = generateNextFrame();
             return nextFrame;
         }
-
         return this;
+    }
+
+    @Override
+    public boolean isFinalFrame() {
+        return false;
+    }
+
+    @Override
+    public Pitching getPitching() {
+        return pitching;
     }
 
     private Frame generateNextFrame() {
@@ -40,7 +48,8 @@ public class NormalFrame implements Frame {
         return NormalFrame.of(frameNumber.nextFrameNumber());
     }
 
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -52,7 +61,8 @@ public class NormalFrame implements Frame {
         return Objects.equals(frameNumber, that.frameNumber);
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return Objects.hash(frameNumber);
     }
 }

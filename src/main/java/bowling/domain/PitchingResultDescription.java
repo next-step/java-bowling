@@ -11,5 +11,4 @@ public class PitchingResultDescription {
     public static PitchingResultDescription of(String pitchingResultDescription) {
         return new PitchingResultDescription(pitchingResultDescription);
     }
-
 }

@@ -1,8 +1,10 @@
 package bowling.domain;
 
-public class BowlingMachine {
+import bowling.view.BowlingView;
 
-    private static final int GAME_FRAME_NUMBER = 10;
+import java.util.Objects;
+
+public class BowlingMachine {
 
     private Player player;
     private Frame frame;
@@ -10,21 +12,37 @@ public class BowlingMachine {
 
     private BowlingMachine(Player player) {
         this.player = player;
+    }
 
+    public static BowlingMachine of(Player player) {
+        return new BowlingMachine(player);
     }
 
     public Frame startGame() {
-        Frame firstFrame = NormalFrame.of(FrameNumber.of(1));
-        Frame tempFrame = firstFrame;
-        for (int i = 2; i <= GAME_FRAME_NUMBER; i++) {
+        frame = NormalFrame.of(FrameNumber.of(1));
+        Frame tempFrame = frame;
+        for (int i = 1; i <= 11; i++) {
+
+            if (tempFrame == null) {
+                break;
+            }
+
+            BowlingView.outputFrameNumberPitching(manipulateViewNumber(i));
             FallenPinNumber firstFallenPinNumber = player.pitchBowlingBall();
             Frame currentFrame = tempFrame.figureOutFrame(firstFallenPinNumber);
-            if (currentFrame.equals(tempFrame)) {
+            if (Objects.equals(currentFrame, tempFrame)) {
+                BowlingView.outputFrameNumberPitching(manipulateViewNumber(i));
                 FallenPinNumber secondFallenPinNumber = player.pitchBowlingBall();
                 tempFrame = currentFrame.figureOutFrame(secondFallenPinNumber);
+                continue;
             }
+            tempFrame = currentFrame;
         }
-        frame = firstFrame;
+
         return frame;
+    }
+
+    private int manipulateViewNumber(int i) {
+        return i >= 10 ? 10 : i;
     }
 }

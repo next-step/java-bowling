@@ -3,6 +3,8 @@ package bowling.domain.pitching;
 import bowling.domain.FallenPinNumber;
 import bowling.domain.Frame;
 
+import java.util.Objects;
+
 public class SparePitching implements Pitching {
 
     private FallenPinNumber firstFallenPinNumber;
@@ -19,16 +21,35 @@ public class SparePitching implements Pitching {
 
     @Override
     public boolean isFinished(Frame frame) {
-        return true;
+        return frame.isFinalFrame() ? false : true;
     }
 
     @Override
     public Pitching pitch(FallenPinNumber fallenPinNumber) {
-        throw new RuntimeException("이미 끝난 프레임입니다.");
+        return BonusPitching.of(firstFallenPinNumber, secondFallenPinNumber, fallenPinNumber);
     }
 
     @Override
-    public boolean bonusPitching() {
-        return true;
+    public String getPitchingIdentical() {
+        return "SparePitching";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        SparePitching that = (SparePitching) o;
+        return Objects.equals(firstFallenPinNumber, that.firstFallenPinNumber) &&
+                Objects.equals(secondFallenPinNumber, that.secondFallenPinNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstFallenPinNumber, secondFallenPinNumber);
     }
 }

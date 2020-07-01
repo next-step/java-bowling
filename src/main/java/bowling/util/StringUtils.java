@@ -6,7 +6,7 @@ public class StringUtils {
         return cs == null ? 0 : cs.length();
     }
 
-    public static boolean isEmpty(CharSequence cs) {
-        return cs == null || cs.length() == 0;
+    public static boolean equals(CharSequence cs1, CharSequence cs2) {
+        return cs1 == null ? cs2 == null : cs1.equals(cs2);
     }
 }

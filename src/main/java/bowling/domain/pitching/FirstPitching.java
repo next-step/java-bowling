@@ -3,6 +3,8 @@ package bowling.domain.pitching;
 import bowling.domain.FallenPinNumber;
 import bowling.domain.Frame;
 
+import java.util.Objects;
+
 public class FirstPitching implements Pitching {
 
     private FallenPinNumber firstFallenPinNumber;
@@ -13,14 +15,6 @@ public class FirstPitching implements Pitching {
 
     public static FirstPitching of(FallenPinNumber firstFallenPinNumber) {
         return new FirstPitching(firstFallenPinNumber);
-    }
-
-    public Pitching toMissingPitching(FallenPinNumber secondFallenPinNumber) {
-        return MissingPitching.of(firstFallenPinNumber, secondFallenPinNumber);
-    }
-
-    public Pitching toSparePitching(FallenPinNumber secondFallenPinNumber) {
-        return SparePitching.of(firstFallenPinNumber, secondFallenPinNumber);
     }
 
     @Override
@@ -38,7 +32,20 @@ public class FirstPitching implements Pitching {
     }
 
     @Override
-    public boolean bonusPitching() {
-        return false;
+    public String getPitchingIdentical() {
+        return "FirstPitching";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FirstPitching that = (FirstPitching) o;
+        return Objects.equals(firstFallenPinNumber, that.firstFallenPinNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstFallenPinNumber);
     }
 }

@@ -14,4 +14,8 @@ public class BowlingView {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
     }
+
+    public static void outputFrameNumberPitching(int frameNumber) {
+        System.out.print(frameNumber + "프레임 투구 : ");
+    }
 }

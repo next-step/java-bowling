@@ -20,7 +20,7 @@ public class StandbyPitching implements Pitching {
     }
 
     @Override
-    public boolean bonusPitching() {
-        return false;
+    public String getPitchingIdentical() {
+        return "StandbyPitching";
     }
 }

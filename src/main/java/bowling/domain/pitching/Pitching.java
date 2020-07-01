@@ -9,5 +9,5 @@ public interface Pitching {
 
     Pitching pitch(FallenPinNumber fallenPinNumber);
 
-    boolean bonusPitching();
+    String getPitchingIdentical();
 }

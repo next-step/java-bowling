@@ -19,11 +19,22 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame figureOutFrame(FallenPinNumber fallenPinNumber) {
-        Pitching action = pitching.pitch(fallenPinNumber);
+        pitching = pitching.pitch(fallenPinNumber);
         if (pitching.isFinished(this)) {
-            return this;
+
+            return null;
         }
 
-        return null;
+        return this;
+    }
+
+    @Override
+    public boolean isFinalFrame() {
+        return true;
+    }
+
+    @Override
+    public Pitching getPitching() {
+        return pitching;
     }
 }
