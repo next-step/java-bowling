@@ -2,6 +2,8 @@ package bowling.domain.frame;
 
 import bowling.domain.Score;
 
+import java.util.stream.Collectors;
+
 public class FinalFrame extends Frame implements FrameFactory {
 
     private static final int LIMIT_COUNT = 3;
@@ -54,4 +56,5 @@ public class FinalFrame extends Frame implements FrameFactory {
     public int getFrameLastScore() {
         return scores.get((scores.size() - 1)).getScore();
     }
+
 }

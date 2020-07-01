@@ -11,4 +11,8 @@ public class NormalFrame extends Frame implements FrameFactory {
         }
         return 0;
     }
+
+    public int getScore() {
+        return 0;
+    }
 }

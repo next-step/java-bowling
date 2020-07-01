@@ -18,6 +18,7 @@ public class ResultView {
     private Bowling bowling;
     private StringBuilder sbFrame = new StringBuilder();
     private List<String> resultString = new ArrayList<>();
+    private List<String> amoutScore = new ArrayList<>();
 
     public ResultView(Player player, Bowling bowling) {
         this.player = player;
@@ -31,6 +32,7 @@ public class ResultView {
         for(int i = 0; i <= Frames.BOWLING_GAME_FRAME; i++) {
             sbFrame.append("  " + String.format("%02d", (i + 1)) + "  " + FRAME_DELIMITER);
             resultString.add(FRAME_SCORE_DEFAULT_PANEL);
+            amoutScore.add(FRAME_SCORE_DEFAULT_PANEL);
         }
     }
 
@@ -48,6 +50,18 @@ public class ResultView {
         System.out.println(resultString.stream()
                                     .collect(Collectors
                                     .joining(FRAME_DELIMITER)) + FRAME_DELIMITER);
+    }
+
+    public void displayAmountScore(int frameCount) {
+        for(int i = 0; i <= frameCount; i++) {
+            amoutScore.set(i, String.format("%-6s", " " + bowling.getFrameScore(i)));
+        }
+        System.out.println(FRAME_DELIMITER + FRAME_SCORE_DEFAULT_PANEL + FRAME_DELIMITER +
+                                    amoutScore.stream()
+                                    .collect(Collectors
+                                    .joining(FRAME_DELIMITER)) +
+                                    FRAME_DELIMITER);
+
     }
 
     private String getScorePanel(int frameCount) {

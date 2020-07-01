@@ -5,6 +5,7 @@ import bowling.domain.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frame {
 
@@ -41,12 +42,12 @@ public class Frame {
         return scores.get((scores.size() - 1)).getScore();
     }
 
-    public List<Score> getFrameScore() {
-        return Collections.unmodifiableList(scores);
+    public int getFrameTotalScore() {
+        return scores.stream().collect(Collectors.summingInt(Score::getScore));
     }
 
     public int getScore() {
-        return 0;
+        return getFrameTotalScore();
     }
 
     public int moveNextFrame() {
