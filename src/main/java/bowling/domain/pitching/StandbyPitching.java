@@ -1,4 +1,7 @@
-package bowling.domain;
+package bowling.domain.pitching;
+
+import bowling.domain.FallenPinNumber;
+import bowling.domain.Frame;
 
 public class StandbyPitching implements Pitching {
 
@@ -14,5 +17,10 @@ public class StandbyPitching implements Pitching {
         }
 
         return FirstPitching.of(fallenPinNumber);
+    }
+
+    @Override
+    public boolean bonusPitching() {
+        return false;
     }
 }

@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.pitching.Pitching;
+import bowling.domain.pitching.StandbyPitching;
+
 public class FinalFrame implements Frame {
 
     private FrameNumber frameNumber;

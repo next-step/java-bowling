@@ -1,4 +1,7 @@
-package bowling.domain;
+package bowling.domain.pitching;
+
+import bowling.domain.FallenPinNumber;
+import bowling.domain.Frame;
 
 public class FirstPitching implements Pitching {
 
@@ -22,7 +25,6 @@ public class FirstPitching implements Pitching {
 
     @Override
     public Pitching pitch(FallenPinNumber fallenPinNumber) {
-
         if (fallenPinNumber.isSpare(firstFallenPinNumber)) {
             return SparePitching.of(firstFallenPinNumber, fallenPinNumber);
         }
@@ -32,6 +34,11 @@ public class FirstPitching implements Pitching {
 
     @Override
     public boolean isFinished(Frame frame) {
+        return false;
+    }
+
+    @Override
+    public boolean bonusPitching() {
         return false;
     }
 }

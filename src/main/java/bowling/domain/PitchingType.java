@@ -1,5 +1,9 @@
 package bowling.domain;
 
+import bowling.domain.pitching.FirstPitching;
+import bowling.domain.pitching.Pitching;
+import bowling.domain.pitching.StrikePitching;
+
 public enum PitchingType {
     STRIKE {
         @Override

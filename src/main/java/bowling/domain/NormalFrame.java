@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.pitching.Pitching;
+import bowling.domain.pitching.StandbyPitching;
+
 import java.util.Objects;
 
 public class NormalFrame implements Frame {

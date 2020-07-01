@@ -1,4 +1,7 @@
-package bowling.domain;
+package bowling.domain.pitching;
+
+import bowling.domain.FallenPinNumber;
+import bowling.domain.Frame;
 
 public class MissingPitching implements Pitching {
 
@@ -22,5 +25,10 @@ public class MissingPitching implements Pitching {
     @Override
     public Pitching pitch(FallenPinNumber fallenPinNumber) {
         throw new RuntimeException("이미 끝난 프레임입니다.");
+    }
+
+    @Override
+    public boolean bonusPitching() {
+        return false;
     }
 }
