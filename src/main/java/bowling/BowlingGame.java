@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.Player;
+import bowling.tobe.Frames;
 import bowling.ui.InputView;
 import bowling.ui.ResultView;
 
@@ -10,19 +11,17 @@ public class BowlingGame {
 
     public static void main(String[] args) {
         Player player = new Player(InputView.getPlayerName(), FINAL_FRAME);
+        Frames frames = new Frames(player);
 
-        ResultView.printBoard(player);
-        for (int frame = FIRST_FRAME; frame <= FINAL_FRAME; frame++) {
-            playFrame(frame, player);
-        }
-    }
+        ResultView.printBoard(frames);
 
-    private static void playFrame(int frame, Player player) {
-        boolean isFrameFinish = player.bowling(InputView.getPin(frame));
-        ResultView.printBoard(player);
-        if (isFrameFinish) {
-            return;
+        while (true) {
+            boolean isFinish = frames.bowling(InputView.getPin(frames.getCurrentFrameNo()));
+            ResultView.printBoard(frames);
+
+            if (isFinish) {
+                break;
+            }
         }
-        playFrame(frame, player);
     }
 }

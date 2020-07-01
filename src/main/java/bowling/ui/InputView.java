@@ -1,5 +1,7 @@
 package bowling.ui;
 
+import bowling.domain.Pin;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -12,8 +14,8 @@ public class InputView {
         return input.nextLine();
     }
 
-    public static int getPin(int round) {
+    public static Pin getPin(int round) {
         System.out.println(String.format(INPUT_PIN_COMMENT_FORMAT, round));
-        return Integer.parseInt(input.nextLine());
+        return new Pin(Integer.parseInt(input.nextLine()));
     }
 }
