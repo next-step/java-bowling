@@ -56,7 +56,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    void addFrame(final Frames frames) {
+    public void addFrame(final Frames frames) {
         if (isFinish()) {
             frames.add(initNextFrame());
         }

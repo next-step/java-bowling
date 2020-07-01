@@ -8,21 +8,21 @@ public abstract class Frame {
 
     public abstract void bowl(PinCount countOfPin);
 
-    abstract Frame initNextFrame();
+    public abstract Frame initNextFrame();
 
-    abstract void addFrame(Frames frames);
+    public abstract void addFrame(Frames frames);
 
-    boolean isGameOver() {
+    public boolean isGameOver() {
         return false;
     }
 
     public abstract boolean isTurnOver();
 
-    abstract int getFrameNo();
+    public abstract int getFrameNo();
 
-    abstract StateDtos getFrameResult();
+    public abstract StateDtos getFrameResult();
 
     public abstract Score getScore();
 
-    abstract Score addBonusScore(Score beforeScore);
+    public abstract Score addBonusScore(Score beforeScore);
 }

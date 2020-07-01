@@ -19,12 +19,12 @@ public class ReadyFrame extends Frame {
     }
 
     @Override
-    Frame initNextFrame() {
+    public Frame initNextFrame() {
         return newInstance();
     }
 
     @Override
-    void addFrame(Frames frames) {
+    public void addFrame(Frames frames) {
         // do nothing
     }
 
@@ -34,12 +34,12 @@ public class ReadyFrame extends Frame {
     }
 
     @Override
-    int getFrameNo() {
+    public int getFrameNo() {
         return 0;
     }
 
     @Override
-    StateDtos getFrameResult() {
+    public StateDtos getFrameResult() {
         return null;
     }
 
@@ -49,7 +49,7 @@ public class ReadyFrame extends Frame {
     }
 
     @Override
-    Score addBonusScore(Score beforeScore) {
+    public Score addBonusScore(Score beforeScore) {
         return beforeScore;
     }
 }
