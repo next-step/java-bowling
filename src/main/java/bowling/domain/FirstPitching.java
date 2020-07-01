@@ -12,10 +12,6 @@ public class FirstPitching implements Pitching {
         return new FirstPitching(firstFallenPinNumber);
     }
 
-    public static FirstPitching init() {
-        return of(FallenPinNumber.of(0));
-    }
-
     public Pitching toMissingPitching(FallenPinNumber secondFallenPinNumber) {
         return MissingPitching.of(firstFallenPinNumber, secondFallenPinNumber);
     }

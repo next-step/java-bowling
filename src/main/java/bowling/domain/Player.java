@@ -17,8 +17,8 @@ public class Player {
     }
 
     public FallenPinNumber pitchBowlingBall() {
-        int fallenPinNumber = BowlingView.inputFallenPinNumber();
-        return FallenPinNumber.of(fallenPinNumber);
+        int fallenPins = BowlingView.inputFallenPinNumber();
+        return FallenPinNumber.of(fallenPins);
     }
 
     @Override

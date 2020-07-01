@@ -15,6 +15,7 @@ public class NormalFrame implements Frame {
         return new NormalFrame(frameNumber);
     }
 
+    @Override
     public Frame figureOutFrame(FallenPinNumber fallenPinNumber) {
         Pitching action = pitching.pitch(fallenPinNumber);
 
