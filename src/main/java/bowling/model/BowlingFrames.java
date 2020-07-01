@@ -1,16 +1,16 @@
 package bowling.model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class BowlingFrames {
 
     public static final int MAX_BOWLING_FRAME_SIZE = 10;
 
-    private final List<BowlingFrame> frames;
+    private final LinkedList<BowlingFrame> frames;
 
     public BowlingFrames() {
-        this.frames = new ArrayList<>();
+        this.frames = new LinkedList<>();
         frames.add(CommonBowlingFrame.newInstance());
     }
 
@@ -47,7 +47,7 @@ public class BowlingFrames {
     }
 
     private BowlingFrame getLastBowledFrame() {
-        return frames.get(frames.size() - 1);
+        return frames.getLast();
     }
 
     public int size() {
