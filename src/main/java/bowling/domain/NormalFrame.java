@@ -43,21 +43,15 @@ public class NormalFrame extends Frame {
             return Score.ofNull();
         }
 
-        if (shot == Shot.SPARE) {
-            return Score.of(pitch.calculatePinCount(1));
+        if (shot.getBonusCount() <= pitch.getThrowCount()) {
+            return Score.of(pitch.calculatePinCount(shot.getBonusCount()));
         }
 
-        if (shot == Shot.STRIKE) {
-            if (!pitch.isPitchEnd()) {
-                return Score.ofNull();
-            }
-            if (pitch.getThrowCount() == 2) {
-                return Score.of(pitch.calculatePinCount(2));
-            }
+        if (shot == Shot.STRIKE && pitch.isPitchEnd()) {
             return Score.ofPitch(pitch).add(nextFrame.calculateBonusScore(Shot.SPARE));
         }
 
-        throw new IllegalArgumentException("Bonus Shot Type is only Strike, Spare");
+        return Score.ofNull();
     }
 
     @Override

@@ -67,18 +67,15 @@ public class FinalFrame extends Frame {
             return Score.ofNull();
         }
 
-        if (shot == Shot.SPARE) {
-            return Score.of(pitch.calculatePinCount(1));
+        if (shot.getBonusCount() <= pitch.getThrowCount()) {
+            return Score.of(pitch.calculatePinCount(shot.getBonusCount()));
         }
 
-        if (shot == Shot.STRIKE) {
-            if (!pitch.isPitchEnd()) {
-                return Score.ofNull();
-            }
+        if (shot == Shot.STRIKE && pitch.isPitchEnd()) {
             return Score.of(pitch.calculatePinCount(pitch.getThrowCount()));
         }
 
-        throw new IllegalArgumentException("Bonus Shot Type is only Strike, Spare");
+        return Score.ofNull();
     }
 
     @Override
