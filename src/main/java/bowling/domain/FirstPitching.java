@@ -25,6 +25,16 @@ public class FirstPitching implements Pitching {
     }
 
     @Override
+    public Pitching pitch(FallenPinNumber fallenPinNumber) {
+
+        if (fallenPinNumber.isSpare(firstFallenPinNumber)) {
+            return SparePitching.of(firstFallenPinNumber, fallenPinNumber);
+        }
+
+        return MissingPitching.of(firstFallenPinNumber, fallenPinNumber);
+    }
+
+    @Override
     public boolean isFinished() {
         return false;
     }

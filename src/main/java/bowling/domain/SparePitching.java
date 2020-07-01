@@ -18,4 +18,9 @@ public class SparePitching implements Pitching {
     public boolean isFinished() {
         return true;
     }
+
+    @Override
+    public Pitching pitch(FallenPinNumber fallenPinNumber) {
+        throw new RuntimeException("이미 끝난 프레임입니다.");
+    }
 }

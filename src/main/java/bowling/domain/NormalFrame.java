@@ -8,7 +8,7 @@ public class NormalFrame implements Frame {
 
     private NormalFrame(FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
-        this.pitching = FirstPitching.init();
+        this.pitching = new StandbyPitching();
     }
 
     public static NormalFrame of(FrameNumber frameNumber) {
@@ -16,8 +16,9 @@ public class NormalFrame implements Frame {
     }
 
     public Frame figureOutFrame(FallenPinNumber fallenPinNumber) {
-        if (fallenPinNumber.isStrike()) {
-            pitching = StrikePitching.of(fallenPinNumber);
+        Pitching action = pitching.pitch(fallenPinNumber);
+
+        if (action.isFinished()) {
             nextFrame = generateNextFrame();
             return nextFrame;
         }
@@ -32,5 +33,4 @@ public class NormalFrame implements Frame {
 
         return NormalFrame.of(frameNumber.nextFrameNumber());
     }
-
 }

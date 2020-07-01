@@ -32,6 +32,10 @@ public class FallenPinNumber {
         return fallenPinNumber == MAX_FALLEN_PIN;
     }
 
+    public boolean isSpare(FallenPinNumber next) {
+        return fallenPinNumber + next.fallenPinNumber == MAX_FALLEN_PIN;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

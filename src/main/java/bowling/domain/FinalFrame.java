@@ -12,6 +12,4 @@ public class FinalFrame implements Frame {
     public static FinalFrame of(FrameNumber frameNumber) {
         return new FinalFrame(frameNumber);
     }
-
-
 }
