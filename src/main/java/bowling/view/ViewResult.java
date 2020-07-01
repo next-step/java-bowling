@@ -46,7 +46,7 @@ public enum ViewResult {
 		if (! first.isPresent()) {
 			return "      ";
 		}
-		if (scores.checkResult() != Result.STRIKE && ! second.isPresent()) {
+		if (! (first.map(Score::getScore).get() == 10) && ! second.isPresent()) {
 			return String.format("   %s    ", first.get().getScore());
 		}
 		ViewResult viewResult = ViewResult.findByResult(scores.checkResult());
