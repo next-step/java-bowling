@@ -10,10 +10,12 @@ public class BowlingController {
     BowlingGame bowlingGame = BowlingGame.createWith(BowlingInput.getPlayerNameInput());
 
     BowlingView.printScoreBoard(bowlingGame.getPlayerName(), bowlingGame.getFramesDTO());
+    BowlingView.printScores(bowlingGame.getScores());
 
     while (bowlingGame.requiredNormalFrame()) {
       bowlingGame.roll(BowlingInput.getKnockDownNumberInput(bowlingGame.getCurrentFrameNumber()));
       BowlingView.printScoreBoard(bowlingGame.getPlayerName(), bowlingGame.getFramesDTO());
+      BowlingView.printScores(bowlingGame.getScores());
     }
 
     bowlingGame.initBonusCount();
@@ -21,6 +23,7 @@ public class BowlingController {
     while (bowlingGame.hasBonus()) {
       bowlingGame.bonusRoll(BowlingInput.getBonusFrameInput());
       BowlingView.printScoreBoardWithBonus(bowlingGame.getPlayerName(), bowlingGame.getFramesDTO());
+      BowlingView.printScores(bowlingGame.getScores());
     }
 
   }
