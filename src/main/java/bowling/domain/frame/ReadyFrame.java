@@ -20,12 +20,17 @@ public class ReadyFrame extends Frame {
 
     @Override
     Frame initNextFrame() {
-        return null;
+        return newInstance();
     }
 
     @Override
     void addFrame(Frames frames) {
         // do nothing
+    }
+
+    @Override
+    public boolean isTurnOver() {
+        return false;
     }
 
     @Override

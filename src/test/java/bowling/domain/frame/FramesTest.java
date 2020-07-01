@@ -65,6 +65,35 @@ public class FramesTest {
         assertThat(frames.isGameOver()).isTrue();
     }
 
+    @DisplayName("게임 플레이어 turn 변경 여부 반환")
+    @ParameterizedTest
+    @MethodSource
+    public void isTurnOver(final Frames frames, final boolean expected) {
+        assertThat(frames.isTurnOver())
+                .isEqualTo(expected);
+    }
+
+    public static Stream<Arguments> isTurnOver() {
+        final Frames runningFinalFrame = Frames.newInstance();
+        IntStream.range(0, 11)
+                .forEach(index -> runningFinalFrame.bowl(PinCount.of(PinCount.MAX_COUNT)));
+
+        final Frames endedFinalFrame = Frames.newInstance();
+        IntStream.range(0, 12)
+                .forEach(index -> endedFinalFrame.bowl(PinCount.of(PinCount.MAX_COUNT)));
+
+        return Stream.of(
+                Arguments.of(FramesFixture.getSpareFrames(), true),
+                Arguments.of(FramesFixture.getTwoStrikeFrames(), true),
+                Arguments.of(FramesFixture.getStrikeHitFrames(), false),
+                Arguments.of(FramesFixture.getTwoMissFrames(), true),
+                Arguments.of(FramesFixture.getSpareMissFrames(), true),
+                Arguments.of(FramesFixture.getStrikeMissFrames(), true),
+                Arguments.of(runningFinalFrame, false),
+                Arguments.of(endedFinalFrame, true)
+        );
+    }
+
     @DisplayName("모든 프레임의 상태값을 반환")
     @ParameterizedTest
     @MethodSource

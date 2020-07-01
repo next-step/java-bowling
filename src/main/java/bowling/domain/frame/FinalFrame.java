@@ -73,6 +73,11 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    public boolean isTurnOver() {
+        return false;
+    }
+
+    @Override
     public int getFrameNo() {
         return FrameNumber.MAX_NUMBER;
     }

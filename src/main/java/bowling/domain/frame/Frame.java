@@ -16,6 +16,8 @@ public abstract class Frame {
         return false;
     }
 
+    public abstract boolean isTurnOver();
+
     abstract int getFrameNo();
 
     abstract StateDtos getFrameResult();

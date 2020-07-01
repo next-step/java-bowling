@@ -63,6 +63,11 @@ public class NormalFrame extends Frame {
     }
 
     @Override
+    public boolean isTurnOver() {
+        return this.state == Ready.getInstance();
+    }
+
+    @Override
     public int getFrameNo() {
         return this.frameNumber.getNo();
     }
