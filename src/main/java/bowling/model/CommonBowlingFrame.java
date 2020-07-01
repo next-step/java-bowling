@@ -15,7 +15,7 @@ public class CommonBowlingFrame implements BowlingFrame {
     }
 
     public static CommonBowlingFrame newInstance() {
-        return new CommonBowlingFrame(new FrameScore(), new Pins());
+        return new CommonBowlingFrame(FrameScore.of(), Pins.of());
     }
 
     @Override

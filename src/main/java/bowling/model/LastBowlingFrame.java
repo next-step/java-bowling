@@ -15,7 +15,7 @@ public class LastBowlingFrame implements BowlingFrame {
     }
 
     public static LastBowlingFrame newInstance() {
-        return new LastBowlingFrame(new FrameScore(), new Pins());
+        return new LastBowlingFrame(FrameScore.of(), Pins.of());
     }
 
     @Override

@@ -5,10 +5,13 @@ public class Pins {
     public static final int MAX_PIN_COUNT = 10;
     public static final int MIN_PIN_COUNT = 0;
 
-    private int pinCount;
+    private int pinCount = MAX_PIN_COUNT;
 
-    public Pins() {
-        this.pinCount = MAX_PIN_COUNT;
+    private Pins() {
+    }
+
+    public static Pins of() {
+        return new Pins();
     }
 
     public boolean isRemain(final int count) {

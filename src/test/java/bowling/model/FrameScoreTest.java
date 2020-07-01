@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 @DisplayName("FrameScoreTest")
 public class FrameScoreTest {
 
-    private FrameScore frameScore = new FrameScore();
+    private FrameScore frameScore = FrameScore.of();
 
     @BeforeEach
     public void setUp() {
-        frameScore = new FrameScore();
+        frameScore = FrameScore.of();
         frameScore.add(5);
         frameScore.add(4);
     }
@@ -23,13 +23,13 @@ public class FrameScoreTest {
     @DisplayName("FrameScore 생성 테스트")
     @Test
     public void generateFrameScoreTest() {
-        assertThatCode(FrameScore::new);
+        assertThatCode(FrameScore::of);
     }
 
     @DisplayName("FrameScore add 테스트")
     @Test
     public void addFrameScoreTest() {
-        FrameScore frameScore = new FrameScore();
+        FrameScore frameScore = FrameScore.of();
         assertThatCode(() -> frameScore.add(5));
         assertThatCode(() -> frameScore.add(4));
     }

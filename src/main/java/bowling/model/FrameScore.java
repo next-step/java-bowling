@@ -5,10 +5,13 @@ import java.util.List;
 
 public class FrameScore {
 
-    private final List<Score> scores;
+    private final List<Score> scores = new ArrayList<>();
 
-    public FrameScore() {
-        this.scores = new ArrayList<>();
+    private FrameScore() {
+    }
+
+    public static FrameScore of() {
+        return new FrameScore();
     }
 
     public void add(final int scoreCount) {

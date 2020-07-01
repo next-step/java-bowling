@@ -12,13 +12,13 @@ public class PinsTest {
     @DisplayName("생성 테스트")
     @Test
     public void generatePinsTest() {
-        assertThatCode(Pins::new);
+        assertThatCode(Pins::of);
     }
 
     @DisplayName("초기값 테스트")
     @Test
     public void initPinsTest() {
-        Pins pins = new Pins();
+        Pins pins = Pins.of();
 
         assertTrue(pins.isRemain(10));
     }
@@ -26,7 +26,7 @@ public class PinsTest {
     @DisplayName("핀 쓰러트리기 테스트")
     @Test
     public void dropPinsTest() {
-        Pins pins = new Pins();
+        Pins pins = Pins.of();
 
         assertThat(pins.drop(5)).isEqualTo(5);
     }
@@ -34,7 +34,7 @@ public class PinsTest {
     @DisplayName("핀 쓰러트리기 에러 테스트 ")
     @Test
     public void dropsPinsAbnormalTest() {
-        Pins pins = new Pins();
+        Pins pins = Pins.of();
         pins.drop(10);
 
         assertThatIllegalStateException()
@@ -45,7 +45,7 @@ public class PinsTest {
     @DisplayName("핀 리셋 테스트 ")
     @Test
     public void resetPinsTest() {
-        Pins pins = new Pins();
+        Pins pins = Pins.of();
         pins.drop(10);
         pins.reset();
 
