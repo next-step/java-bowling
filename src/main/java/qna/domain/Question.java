@@ -76,7 +76,7 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    private DeleteHistory getDeleteHistory() {
+    private DeleteHistory generateDeleteHistory() {
         delete();
         return DeleteHistory.fromQuestion(this);
     }
@@ -91,7 +91,7 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
         delete();
-        return getDeleteHistory();
+        return generateDeleteHistory();
     }
 
     public List<DeleteHistory> deleteAllAnswer(User loginUser) throws CannotDeleteException {
