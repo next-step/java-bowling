@@ -2,6 +2,7 @@ package bowling.domain.state.finish;
 
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.exception.CannotMatchStateException;
 
 public class Spare extends Finished {
@@ -26,5 +27,20 @@ public class Spare extends Finished {
 
     public Pins getSecondPins() {
         return Pins.of(PinCount.MAX_COUNT - this.firstPins.getHitCount());
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofSpare();
+    }
+
+    @Override
+    protected Score calculateScoreForExtraBonusCount(Score beforeScore) {
+        beforeScore = this.firstPins.sumScore(beforeScore);
+        if (beforeScore.isCalculable()) {
+            return beforeScore;
+        }
+
+        return this.getSecondPins().sumScore(beforeScore);
     }
 }

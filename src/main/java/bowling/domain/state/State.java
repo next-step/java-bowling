@@ -2,22 +2,41 @@ package bowling.domain.state;
 
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
 import java.util.List;
 
-public interface State {
+public abstract class State {
 
-    State bowl(PinCount hitCount);
+    public abstract State bowl(PinCount hitCount);
 
-    boolean isFinish();
+    public boolean isFinish() {
+        return false;
+    }
 
-    boolean isMiss();
+    public boolean isMiss() {
+        return false;
+    }
 
-    boolean isCleanState();
+    public boolean isCleanState() {
+        return false;
+    }
 
-    Pins getFirstPins();
+    public abstract Pins getFirstPins();
 
-    Pins getSecondPins();
+    public abstract Pins getSecondPins();
 
-    List<State> getState();
+    public abstract List<State> getState();
+
+    public abstract Score getScore();
+
+    public Score calculateBonusScore(Score beforeScore) {
+        if (beforeScore.isCalculable()) {
+            return beforeScore;
+        }
+
+        return calculateScoreForExtraBonusCount(beforeScore);
+    }
+
+    protected abstract Score calculateScoreForExtraBonusCount(Score beforeScore);
 }

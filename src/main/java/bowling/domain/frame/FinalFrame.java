@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.dto.StateDtos;
 import bowling.domain.pin.PinCount;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 
@@ -47,7 +48,7 @@ public class FinalFrame extends Frame {
     }
 
     private void giveBonusBowl() {
-        if (getLastState().isCleanState()) {
+        if (getLastState().isCleanState() && !isEndedBonusBowl()) {
             states.push(Ready.getInstance());
         }
     }
@@ -83,6 +84,31 @@ public class FinalFrame extends Frame {
 
     private List<State> getStates() {
         return new ArrayList<>(this.states);
+    }
+
+    @Override
+    public Score getScore() {
+        Score score = getFirstScore();
+        for (int i = 1; i < states.size(); i++) {
+            State state = states.get(i);
+            score = state.calculateBonusScore(score);
+        }
+
+        return score;
+    }
+
+    private Score getFirstScore() {
+        return states.get(0).getScore();
+    }
+
+    @Override
+    public Score addBonusScore(final Score beforeScore) {
+        Score score = beforeScore;
+        for (State state : states) {
+            score = state.calculateBonusScore(score);
+        }
+
+        return score;
     }
 }
 

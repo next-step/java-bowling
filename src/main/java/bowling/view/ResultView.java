@@ -1,6 +1,7 @@
 package bowling.view;
 
-import bowling.domain.BowlingGame;
+import bowling.domain.GameSet;
+import bowling.domain.dto.ScoreDto;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.frame.FrameNumber;
 import bowling.util.StringUtil;
@@ -23,16 +24,18 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printHeader(final BowlingGame bowlingGame) {
-        printShape(bowlingGame);
+    public static void printHeader(final GameSet gameSet) {
+        printShape(gameSet);
     }
 
-    public static void printShape(final BowlingGame bowlingGame) {
+    public static void printShape(final GameSet gameSet) {
         printFramesHeader();
 
-        printNameInfo(bowlingGame.getPlayerName());
-        printResult(bowlingGame.getFrameResults());
-        System.out.println();
+        printNameInfo(gameSet.getPlayerName());
+        printResult(gameSet.getFrameResults());
+
+        printNameInfo(StringUtil.EMPTY);
+        printScore(gameSet.getScoreResults());
     }
 
     private static void printFramesHeader() {
@@ -59,8 +62,23 @@ public class ResultView {
 
         printLine(results.stream()
                 .map(StateDtos::getSymbol)
-                .collect(Collectors.toList())
-        );
+                .collect(Collectors.toList()));
+
+        System.out.println();
+    }
+
+    private static void printScore(List<ScoreDto> results) {
+        if (Objects.isNull(results)) {
+            printLine(Collections.emptyList());
+            return;
+        }
+
+        printLine(results.stream()
+                .map(ScoreDto::getScore)
+                .map(String::valueOf)
+                .collect(Collectors.toList()));
+
+        System.out.println();
     }
 
     private static void printLine(final List<String> strings) {

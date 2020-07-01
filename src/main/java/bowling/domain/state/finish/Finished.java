@@ -8,9 +8,8 @@ import bowling.exception.message.ErrorMessage;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class Finished implements State {
+public abstract class Finished extends State {
 
-    @Override
     public State bowl(PinCount hitCount) {
         throw new UnsupportedOperationException();
     }
@@ -21,15 +20,11 @@ public abstract class Finished implements State {
     }
 
     @Override
-    public boolean isMiss() {
-        return false;
-    }
-
-    @Override
     public boolean isCleanState() {
         return this.isFinish() && !this.isMiss();
     }
 
+    @Override
     public Pins getSecondPins() {
         throw new IllegalArgumentException(ErrorMessage.NOT_ALLOW_SECOND_BOWL);
     }

@@ -2,7 +2,6 @@ package bowling.domain.dto;
 
 import bowling.domain.pin.Pins;
 import bowling.domain.state.StateExpression;
-import bowling.domain.state.finish.Finished;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import bowling.domain.state.running.FirstHit;
@@ -32,19 +31,9 @@ public class StateConverterTest {
     @DisplayName("convert 실패: 존재하지 않는 상태값")
     @Test
     void failureConvertToSymbolByNotExistState() {
-        StateDto stateDto = StateDto.of(new TestState());
+        StateDto stateDto = StateDto.of(new StateDtoFixture.TestState());
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> StateConverter.convertToSymbol(stateDto));
-    }
-
-    private static class TestState extends Finished {
-        TestState() {
-        }
-
-        @Override
-        public Pins getFirstPins() {
-            return null;
-        }
     }
 
     @DisplayName("특정 상태값을 알맞는 출력값으로 변환")

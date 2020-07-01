@@ -2,6 +2,7 @@ package bowling.domain.state.running;
 
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.state.finish.Miss;
 import bowling.domain.state.finish.Spare;
 import org.junit.Test;
@@ -96,5 +97,31 @@ public class FirstHitTest {
 
         assertThat(firstHit.getState())
                 .isEqualTo(Collections.singletonList(firstHit));
+    }
+
+    @DisplayName("해당 상태의 점수를 반환")
+    @Test
+    public void getScore() {
+        FirstHit firstHit = FirstHit.of(Pins.of(9));
+
+        assertThat(firstHit.getScore())
+                .isEqualTo(Score.UN_SCORE);
+    }
+
+    @DisplayName("점수를 계산할 수 있는 상태인지 확인")
+    @ParameterizedTest
+    @MethodSource
+    public void calculateScoreForExtraBonusCount(final Score beforeScore, final Score expected) {
+        FirstHit firstHit = FirstHit.of(Pins.of(9));
+
+        assertThat(firstHit.calculateBonusScore(beforeScore))
+                .isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> calculateScoreForExtraBonusCount() {
+        return Stream.of(
+                Arguments.of(Score.ofStrike(), Score.valueOf(19, 1)),
+                Arguments.of(Score.ofSpare(), Score.valueOf(19, 0))
+        );
     }
 }

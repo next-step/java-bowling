@@ -1,5 +1,7 @@
 package bowling.domain.pin;
 
+import bowling.domain.score.Score;
+
 public class Pins {
 
     private final PinCount hitCount;
@@ -28,8 +30,12 @@ public class Pins {
         return totalPins(secondPins).isLessThanMaxCount();
     }
 
-    private PinCount totalPins(final Pins secondPins) {
+    public PinCount totalPins(final Pins secondPins) {
         return this.hitCount.sum(secondPins.hitCount);
+    }
+
+    public Score sumScore(final Score score) {
+        return score.sum(this.hitCount);
     }
 
     public int getHitCount() {

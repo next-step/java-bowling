@@ -3,6 +3,7 @@ package bowling.domain.frame;
 
 import bowling.domain.dto.StateDtos;
 import bowling.domain.pin.PinCount;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 import bowling.domain.state.running.Ready;
 
@@ -10,10 +11,12 @@ public class NormalFrame extends Frame {
 
     private State state;
     private final FrameNumber frameNumber;
+    private Frame nextFrame;
 
     private NormalFrame(final FrameNumber frameNumber) {
         this.state = Ready.getInstance();
         this.frameNumber = frameNumber;
+        this.nextFrame = ReadyFrame.newInstance();
     }
 
     public static NormalFrame ofFirst() {
@@ -45,9 +48,11 @@ public class NormalFrame extends Frame {
         FrameNumber nextNumber = this.frameNumber.increase();
 
         if (nextNumber.isFinal()) {
-            return FinalFrame.newInstance();
+            this.nextFrame = FinalFrame.newInstance();
+            return this.nextFrame;
         }
-        return NormalFrame.newInstance(nextNumber);
+        this.nextFrame = NormalFrame.newInstance(nextNumber);
+        return this.nextFrame;
     }
 
     @Override
@@ -65,5 +70,23 @@ public class NormalFrame extends Frame {
     @Override
     public StateDtos getFrameResult() {
         return StateDtos.of(state.getState());
+    }
+
+    @Override
+    public Score getScore() {
+        final Score score = state.getScore();
+
+        return nextFrame.addBonusScore(score);
+    }
+
+    @Override
+    public Score addBonusScore(final Score beforeScore) {
+        if (beforeScore.isCalculable()) {
+            return beforeScore;
+        }
+
+        final Score score = state.calculateBonusScore(beforeScore);
+
+        return nextFrame.addBonusScore(score);
     }
 }

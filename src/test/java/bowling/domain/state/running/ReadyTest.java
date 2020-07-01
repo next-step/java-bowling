@@ -1,13 +1,17 @@
 package bowling.domain.state.running;
 
 import bowling.domain.pin.PinCount;
+import bowling.domain.score.Score;
 import bowling.domain.state.finish.Strike;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Collections;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -68,5 +72,27 @@ public class ReadyTest {
     public void getState() {
         assertThat(Ready.getInstance().getState())
                 .isEqualTo(Collections.singletonList(Ready.getInstance()));
+    }
+
+    @DisplayName("해당 상태의 점수를 반환")
+    @Test
+    public void getScore() {
+        assertThat(Ready.getInstance().getScore())
+                .isEqualTo(Score.UN_SCORE);
+    }
+
+    @DisplayName("점수를 계산할 수 있는 상태인지 확인")
+    @ParameterizedTest
+    @MethodSource
+    public void calculateScoreForExtraBonusCount(final Score beforeScore, final Score expected) {
+        assertThat(Ready.getInstance().calculateBonusScore(beforeScore))
+                .isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> calculateScoreForExtraBonusCount() {
+        return Stream.of(
+                Arguments.of(Score.ofStrike(), Score.ofStrike()),
+                Arguments.of(Score.ofSpare(), Score.ofSpare())
+        );
     }
 }

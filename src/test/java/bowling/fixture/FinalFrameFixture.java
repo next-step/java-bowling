@@ -40,10 +40,28 @@ public class FinalFrameFixture {
         return threeStrikeFrame;
     }
 
+    public static FinalFrame getTwoStrikeOneHitFrame() {
+        FinalFrame threeStrikeFrame = FinalFrame.newInstance();
+        threeStrikeFrame.bowl(PinCount.of(PinCount.MAX_COUNT));
+        threeStrikeFrame.bowl(PinCount.of(PinCount.MAX_COUNT));
+        threeStrikeFrame.bowl(PinCount.of(2));
+
+        return threeStrikeFrame;
+    }
+
+    public static FinalFrame getStrikeHitSpareFrame() {
+        FinalFrame threeStrikeFrame = FinalFrame.newInstance();
+        threeStrikeFrame.bowl(PinCount.of(PinCount.MAX_COUNT));
+        threeStrikeFrame.bowl(PinCount.of(1));
+        threeStrikeFrame.bowl(PinCount.of(9));
+
+        return threeStrikeFrame;
+    }
+
     public static FinalFrame getHitSpareStrikeFrame() {
         FinalFrame hitSpareStrikeFrame = FinalFrame.newInstance();
-        hitSpareStrikeFrame.bowl(PinCount.of(9));
-        hitSpareStrikeFrame.bowl(PinCount.of(1));
+        hitSpareStrikeFrame.bowl(PinCount.of(2));
+        hitSpareStrikeFrame.bowl(PinCount.of(8));
         hitSpareStrikeFrame.bowl(PinCount.of(PinCount.MAX_COUNT));
 
         return hitSpareStrikeFrame;
@@ -51,9 +69,9 @@ public class FinalFrameFixture {
 
     public static FinalFrame getHitSpareHitFrame() {
         FinalFrame hitSpareHitFrame = FinalFrame.newInstance();
-        hitSpareHitFrame.bowl(PinCount.of(9));
-        hitSpareHitFrame.bowl(PinCount.of(1));
         hitSpareHitFrame.bowl(PinCount.of(2));
+        hitSpareHitFrame.bowl(PinCount.of(8));
+        hitSpareHitFrame.bowl(PinCount.of(5));
 
         return hitSpareHitFrame;
     }
@@ -61,8 +79,8 @@ public class FinalFrameFixture {
     public static FinalFrame getStrikeHitMissFrame() {
         FinalFrame strikeHitMissFrame = FinalFrame.newInstance();
         strikeHitMissFrame.bowl(PinCount.of(PinCount.MAX_COUNT));
-        strikeHitMissFrame.bowl(PinCount.of(5));
-        strikeHitMissFrame.bowl(PinCount.of(1));
+        strikeHitMissFrame.bowl(PinCount.of(2));
+        strikeHitMissFrame.bowl(PinCount.of(2));
 
         return strikeHitMissFrame;
     }

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.domain.dto.ScoreDto;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.frame.Frames;
 import bowling.domain.pin.PinCount;
@@ -7,18 +8,18 @@ import bowling.domain.player.Player;
 
 import java.util.List;
 
-public class BowlingGame {
+public class GameSet {
 
     private final Player player;
     private final Frames frames;
 
-    private BowlingGame(final Player player) {
+    private GameSet(final Player player) {
         this.player = player;
         frames = Frames.newInstance();
     }
 
-    public static BowlingGame of(final Player player) {
-        return new BowlingGame(player);
+    public static GameSet of(final Player player) {
+        return new GameSet(player);
     }
 
     public void play(final int hitCount) {
@@ -39,5 +40,9 @@ public class BowlingGame {
 
     public List<StateDtos> getFrameResults() {
         return frames.getFrameResult();
+    }
+
+    public List<ScoreDto> getScoreResults() {
+        return frames.getScoreResult();
     }
 }

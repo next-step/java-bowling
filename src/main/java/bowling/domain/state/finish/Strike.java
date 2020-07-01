@@ -2,6 +2,7 @@ package bowling.domain.state.finish;
 
 import bowling.domain.pin.PinCount;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 
 public class Strike extends Finished {
 
@@ -17,5 +18,15 @@ public class Strike extends Finished {
     @Override
     public Pins getFirstPins() {
         return Pins.of(PinCount.MAX_COUNT);
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofStrike();
+    }
+
+    @Override
+    protected Score calculateScoreForExtraBonusCount(final Score beforeScore) {
+        return beforeScore.sum(PinCount.of(PinCount.MAX_COUNT));
     }
 }

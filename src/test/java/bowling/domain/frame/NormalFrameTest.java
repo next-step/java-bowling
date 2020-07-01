@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.state.StateExpression;
+import bowling.fixture.FramesFixture;
 import bowling.fixture.NormalFrameFixture;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -104,6 +106,49 @@ public class NormalFrameTest {
         return Stream.of(
                 Arguments.of(gutterStateFrame, StateExpression.GUTTER),
                 Arguments.of(strikeFrame, StateExpression.STRIKE)
+        );
+    }
+
+    @DisplayName("해당 프레임의 점수를 반환")
+    @ParameterizedTest
+    @MethodSource
+    public void getScore(final Frames frames, final Score expected1, final Score expected2) {
+
+        assertThat(frames.getFrames().get(0).getScore())
+                .isEqualTo(expected1);
+        assertThat(frames.getFrames().get(1).getScore())
+                .isEqualTo(expected2);
+    }
+
+    private static Stream<Arguments> getScore() {
+        return Stream.of(
+                Arguments.of(FramesFixture.getSpareMissFrames(), Score.valueOf(14, 0), Score.ofMiss(8)),
+                Arguments.of(FramesFixture.getSpareFrames(), Score.ofSpare(), Score.UN_SCORE),
+                Arguments.of(FramesFixture.getTwoStrikeFrames(), Score.valueOf(20, 1), Score.ofStrike()),
+                Arguments.of(FramesFixture.getStrikeHitFrames(), Score.valueOf(19, 1), Score.UN_SCORE),
+                Arguments.of(FramesFixture.getTwoMissFrames(), Score.ofMiss(5), Score.ofMiss(8))
+        );
+    }
+
+    @DisplayName("여분의 보너스 점수를 해결하기 위한 추가적인 점수를 계산하여 반환")
+    @ParameterizedTest
+    @MethodSource
+    public void calculateAdditionalScore(final Frames frames, final Score expected1, final Score expected2) {
+
+        assertThat(frames.getFrames().get(0).getScore())
+                .isEqualTo(expected1);
+        assertThat(frames.getFrames().get(1).getScore())
+                .isEqualTo(expected2);
+    }
+
+    private static Stream<Arguments> calculateAdditionalScore() {
+        return Stream.of(
+                Arguments.of(FramesFixture.getSpareFrames(), Score.ofSpare(), Score.UN_SCORE),
+                Arguments.of(FramesFixture.getTwoStrikeFrames(), Score.valueOf(20, 1), Score.ofStrike()),
+                Arguments.of(FramesFixture.getStrikeHitFrames(), Score.valueOf(19, 1), Score.UN_SCORE),
+                Arguments.of(FramesFixture.getStrikeMissFrames(), Score.valueOf(18, 0), Score.ofMiss(8)),
+                Arguments.of(FramesFixture.getSpareMissFrames(), Score.valueOf(14, 0), Score.ofMiss(8)),
+                Arguments.of(FramesFixture.getTwoMissFrames(), Score.ofMiss(5), Score.ofMiss(8))
         );
     }
 }
