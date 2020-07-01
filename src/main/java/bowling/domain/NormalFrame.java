@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NormalFrame implements Frame {
+    private static final int FINAL_NORMAL_FRAME = 9;
     private final Map<Round, BowlingPins> record = new HashMap<>();
     private final int frameNumber;
 
@@ -42,7 +43,7 @@ public class NormalFrame implements Frame {
     }
 
     private Frame checkFinalFrameAndReturn() {
-        if (this.frameNumber == 9) {
+        if (this.frameNumber == FINAL_NORMAL_FRAME) {
             return new FinalFrame();
         }
         return this.next();
