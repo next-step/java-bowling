@@ -15,6 +15,14 @@ public class BowlingPins {
         return BowlingPinsCache.cache[number];
     }
 
+    public boolean isMax() {
+        return this.number == MAX_PINS;
+    }
+
+    public boolean isNotAddable(final BowlingPins bowlingPins) {
+        return this.number + bowlingPins.number > MAX_PINS;
+    }
+
     private static class BowlingPinsCache {
         private static final BowlingPins[] cache;
 
