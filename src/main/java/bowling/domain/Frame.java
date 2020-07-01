@@ -20,7 +20,7 @@ public abstract class Frame {
             throw new IllegalArgumentException("10 Frame is last frame");
         }
         if (frameNo + 1 == FINAL_FRAME) {
-            nextFrame = new FinalFrame();
+            nextFrame = FinalFrame.last();
             return nextFrame;
         }
         nextFrame = new NormalFrame(frameNo + 1);

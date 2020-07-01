@@ -6,11 +6,15 @@ public class FinalFrame extends Frame {
     private boolean isBonusPitch;
     private Pitch bonusPitch;
 
-    public FinalFrame() {
+    private FinalFrame() {
         this.frameNo = FINAL_FRAME;
         this.pitch = new Pitch();
         this.isBonusPitch = false;
         this.bonusPitch = new Pitch();
+    }
+
+    public static FinalFrame last() {
+        return new FinalFrame();
     }
 
     @Override
@@ -54,9 +58,10 @@ public class FinalFrame extends Frame {
         if (!isGameEnd()) {
             return Score.ofNull();
         }
+
         Score score = Score.ofPitch(pitch);
         if (isBonusPitch) {
-            return score.add(Score.of(bonusPitch.getFallenPin()));
+            score = score.add(Score.of(bonusPitch.getFallenPin()));
         }
         return score;
     }
