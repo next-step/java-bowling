@@ -24,8 +24,7 @@ public class BowlingGames {
     }
 
     public void addNextFrames() {
-        bowlingGames.stream()
-                .forEach(BowlingGame::addNextFrame);
+        bowlingGames.forEach(BowlingGame::addNextFrame);
     }
 
     public boolean isAllGameOver() {
