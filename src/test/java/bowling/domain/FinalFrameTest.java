@@ -3,95 +3,55 @@ package bowling.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("FinalFrame 로직 테스트")
-class FinalFrameTest {
+@DisplayName("FinalFrame: 10 프레임 테스트")
+public class FinalFrameTest {
 
+    @DisplayName("1번 던져서 넘긴 핀이 10개면 Bonus 반환")
     @Test
-    public void 스트라이크_후_스트라이크() {
+    public void bowling_OneTimeStrike_ReturnNotFinish() {
         Frame frame = new FinalFrame();
-        frame.bowling(10);
-        frame.bowling(10);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.STRIKE, Shot.STRIKE));
+        assertThat(frame.bowling(new Pin(10))).isEqualTo(State.Bonus);
     }
 
+    @DisplayName("1번 던져서 넘긴 핀이 10개 미만 NotFinish 반환")
     @Test
-    public void 스페어_후_스트라이크() {
+    public void bowling_OneTimeMiss_ReturnNotFinish() {
         Frame frame = new FinalFrame();
-        frame.bowling(5);
-        frame.bowling(5);
-        frame.bowling(10);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.FIVE, Shot.SPARE, Shot.STRIKE));
-    }
-    
-    @Test
-    public void 스페어_후_미스() {
-        Frame frame = new FinalFrame();
-        frame.bowling(5);
-        frame.bowling(5);
-        frame.bowling(5);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.FIVE, Shot.SPARE, Shot.FIVE));
+        assertThat(frame.bowling(new Pin(5))).isEqualTo(State.NotFinish);
     }
 
+    @DisplayName("2번 던져서 넘긴 핀이 10개면 Bonus 반환")
     @Test
-    public void 미스() {
+    public void bowling_TwoTimeSpare_ReturnBonus() {
         Frame frame = new FinalFrame();
-        frame.bowling(5);
-        frame.bowling(3);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.FIVE, Shot.THREE));
+        frame.bowling(new Pin(5));
+        assertThat(frame.bowling(new Pin(5))).isEqualTo(State.Bonus);
     }
 
+    @DisplayName("2번 던져서 넘긴 핀이 10개 미만 Finish 반환")
     @Test
-    public void 거터() {
+    public void bowling_TwoTimeMiss_ReturnFinish() {
         Frame frame = new FinalFrame();
-        frame.bowling(0);
-        frame.bowling(0);
-        assertThat(frame.getResult()).isEqualTo(Arrays.asList(Shot.GUTTER, Shot.GUTTER));
+        frame.bowling(new Pin(5));
+        assertThat(frame.bowling(new Pin(3))).isEqualTo(State.Finish);
     }
 
+    @DisplayName("1번 던져서 넘긴 핀이 10개이면, 보너스 투구 후에 Finish 반환")
     @Test
-    public void 핀카운트가_10개를_넘음() {
+    public void bowling_AfterStrike_ReturnFinish() {
         Frame frame = new FinalFrame();
-        assertThatThrownBy(() ->
-                frame.bowling(11)
-        ).isInstanceOf(IllegalArgumentException.class);
+        frame.bowling(new Pin(10));
+        assertThat(frame.bowling(new Pin(5))).isEqualTo(State.Finish);
     }
 
+    @DisplayName("2번 던져서 넘긴 핀이 10개이면, 보너스 투구 후에 Finish 반환")
     @Test
-    public void 프레임진행_중에는_종료안됨() {
+    public void bowling_AfterSpare_ReturnFinish() {
         Frame frame = new FinalFrame();
-        assertThat(frame.bowling(5)).isFalse();
-    }
-
-    @Test
-    public void 스트라이크라도_프레임종료안됨() {
-        Frame frame = new FinalFrame();
-        assertThat(frame.bowling(10)).isFalse();
-    }
-
-    @Test
-    public void 스페어라도_프레임종료안됨() {
-        Frame frame = new FinalFrame();
-        frame.bowling(5);
-        assertThat(frame.bowling(5)).isFalse();
-    }
-
-    @Test
-    public void 스트라이크라면_한번_더_투구하고_프레임종료() {
-        Frame frame = new FinalFrame();
-        frame.bowling(10);
-        assertThat(frame.bowling(10)).isTrue();
-    }
-
-    @Test
-    public void 스페어라면_한번_더_투구하고_프레임종료() {
-        Frame frame = new FinalFrame();
-        frame.bowling(5);
-        frame.bowling(5);
-        assertThat(frame.bowling(5)).isTrue();
+        frame.bowling(new Pin(5));
+        frame.bowling(new Pin(5));
+        assertThat(frame.bowling(new Pin(5))).isEqualTo(State.Finish);
     }
 }

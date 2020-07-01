@@ -1,7 +1,7 @@
 package bowling.ui;
 
 import bowling.domain.Shot;
-import bowling.tobe.Frames;
+import bowling.domain.Frames;
 
 import java.util.stream.Collectors;
 

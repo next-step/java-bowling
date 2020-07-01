@@ -2,11 +2,28 @@ package bowling.domain;
 
 import java.util.List;
 
-public interface Frame {
-    public static final int TOTAL_PIN_COUNT = 10;
-    public static final int MAX_THROW_COUNT = 2;
+public abstract class Frame {
+    protected static final int FIRST_FRAME = 1;
+    protected static final int FINAL_FRAME = 10;
+    protected int frameNo;
+    protected Pitch pitch;
+    protected Frame nextFrame;
 
-    List<Shot> getResult();
+    public Frame next() {
+        if (frameNo == FINAL_FRAME) {
+            throw new IllegalArgumentException("10 Frame is last frame");
+        }
+        if (frameNo + 1 == FINAL_FRAME) {
+            nextFrame = new FinalFrame();
+            return nextFrame;
+        }
+        nextFrame = new NormalFrame(frameNo + 1);
+        return nextFrame;
+    }
 
-    boolean bowling(int score);
+    public abstract State bowling(Pin pin);
+
+    public abstract List<Shot> getShotHistory();
+
+    public abstract boolean isGameEnd();
 }

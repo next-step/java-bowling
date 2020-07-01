@@ -2,76 +2,59 @@ package bowling.domain;
 
 import bowling.common.IntegerUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class FinalFrame implements Frame {
-    private List<Integer> scores;
-    private int remain;
-    private boolean processBonusShot;
-    private int bonusScore;
+public class FinalFrame extends Frame {
+    private boolean isBonusPitch;
+    private Pitch bonusPitch;
 
     public FinalFrame() {
-        this.scores = new ArrayList<>();
-        this.remain = TOTAL_PIN_COUNT;
-        this.processBonusShot = false;
-        this.bonusScore = IntegerUtils.ZERO;
+        this.frameNo = FINAL_FRAME;
+        this.pitch = new Pitch();
+        this.isBonusPitch = false;
+        this.bonusPitch = new Pitch();
     }
 
     @Override
-    public List<Shot> getResult() {
-        int remain = TOTAL_PIN_COUNT;
-        List<Shot> shots = new ArrayList<>();
-        for (int i = IntegerUtils.ZERO; i < scores.size(); i++) {
-            shots.add(Shot.of(i == IntegerUtils.ZERO, scores.get(i), remain - scores.get(i)));
-            remain -= scores.get(i);
+    public State bowling(Pin pin) {
+        if (isBonusPitch) {
+            return bowlingBonus(pin);
         }
-        if (processBonusShot) {
-            shots.add(Shot.of(true, bonusScore, TOTAL_PIN_COUNT - bonusScore));
+
+        if (pitch.add(pin)) {
+            return isNextBonusPitch();
         }
-        return shots;
+        return State.NotFinish;
+    }
+
+    private State bowlingBonus(Pin pin) {
+        bonusPitch = new Pitch();
+        bonusPitch.add(pin);
+        return State.Finish;
+    }
+
+    private State isNextBonusPitch() {
+        if (pitch.getRemain() == IntegerUtils.ZERO) {
+            isBonusPitch = true;
+            return State.Bonus;
+        }
+        return State.Finish;
     }
 
     @Override
-    public boolean bowling(int score) {
-        if (isBonusFrame()) {
-            addBonusScore(score);
-            return true;
+    public List<Shot> getShotHistory() {
+        List<Shot> shotHistory = pitch.getShotHistory();
+        if (isBonusPitch) {
+            shotHistory.addAll(bonusPitch.getShotHistory());
         }
-        addScore(score);
-        return isFrameFinish();
+        return shotHistory;
     }
 
-    private boolean isBonusFrame() {
-        if (remain == IntegerUtils.ZERO && scores.size() <= MAX_THROW_COUNT) {
-            return true;
+    @Override
+    public boolean isGameEnd() {
+        if (isBonusPitch) {
+            return bonusPitch.getThrowCount() > IntegerUtils.ZERO;
         }
-        return false;
-    }
-
-    private void addBonusScore(int score) {
-        processBonusShot = true;
-        bonusScore = score;
-    }
-
-    private void addScore(int score) {
-        validateAddScore(score);
-
-        remain -= score;
-        scores.add(score);
-    }
-
-    private void validateAddScore(int score) {
-        if (remain - score < IntegerUtils.ZERO) {
-            throw new IllegalArgumentException("Max pin count per frame is " + TOTAL_PIN_COUNT);
-        }
-
-        if (scores.size() + 1 > MAX_THROW_COUNT) {
-            throw new IllegalArgumentException("Frame is finished");
-        }
-    }
-
-    private boolean isFrameFinish() {
-        return scores.size() == MAX_THROW_COUNT && remain > IntegerUtils.ZERO;
+        return pitch.isPitchEnd();
     }
 }

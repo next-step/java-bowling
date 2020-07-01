@@ -1,50 +1,37 @@
 package bowling.domain;
 
 import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Frames {
-    private final int finalFrame;
-    private final LinkedList<Frame> frames;
+    public static final int FIRST_FRAME = 1;
+    public static final int FINAL_FRAME = 10;
+    private Player player;
+    private LinkedList<Frame> frames;
 
-    public Frames(int finalFrame) {
-        this.finalFrame = finalFrame;
+    public Frames(Player player) {
+        this.player = player;
         this.frames = new LinkedList<>();
-        this.frames.add(new NormalFrame());
+        frames.add(NormalFrame.first());
     }
 
-    public List<List<Shot>> getGameResult() {
-        return frames.stream().map(Frame::getResult).collect(Collectors.toList());
+    public boolean bowling(Pin pin) {
+        State state = frames.getLast().bowling(pin);
+        if (state.isFinish() && !frames.getLast().isGameEnd()) {
+            frames.add(frames.getLast().next());
+        }
+        return frames.getLast().isGameEnd();
     }
 
-    public int getCurrentFrame() {
+    public Stream<Frame> stream() {
+        return frames.stream();
+    }
+
+    public String getPlayerName() {
+        return player.getName();
+    }
+
+    public int getCurrentFrameNo() {
         return frames.size();
-    }
-
-    public boolean bowling(int pin) {
-        boolean isFrameFinish = frames.getLast().bowling(pin);
-        if (isFrameFinish) {
-            createNextFrame();
-        }
-        return isFrameFinish;
-    }
-
-    private boolean isNextFrameIsFinal() {
-        return frames.size() == finalFrame - 1;
-    }
-
-    private boolean isGameNotFinish() {
-        return frames.size() != finalFrame;
-    }
-
-    private void createNextFrame() {
-        if (isNextFrameIsFinal()) {
-            frames.add(new FinalFrame());
-            return;
-        }
-        if (isGameNotFinish()) {
-            frames.add(new NormalFrame());
-        }
     }
 }

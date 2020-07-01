@@ -1,7 +1,7 @@
 package bowling;
 
 import bowling.domain.Player;
-import bowling.tobe.Frames;
+import bowling.domain.Frames;
 import bowling.ui.InputView;
 import bowling.ui.ResultView;
 
