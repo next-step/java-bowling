@@ -6,24 +6,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class NormalFrame implements Frame {
-    private static final int FINAL_FRAME_NUMBER = 10;
+import static bowling.game.frame.FinalFrame.FINAL_FRAME_NUMBER;
 
-    private final Pitches pitches;
+public class NormalFrame extends Frame {
     private Frame next;
 
     public NormalFrame() {
         this.pitches = new NormalPitches();
-    }
-
-    @Override
-    public void bowl(final int pinCount) {
-        pitches.throwBall(pinCount);
-    }
-
-    @Override
-    public boolean hasRemainChance() {
-        return pitches.hasChance();
     }
 
     @Override
@@ -40,11 +29,6 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isLastFrame() {
         return false;
-    }
-
-    @Override
-    public String getStates() {
-        return pitches.getPitchesStates();
     }
 
     @Override
@@ -84,13 +68,5 @@ public class NormalFrame implements Frame {
         }
 
         return pitches.isSparePitches() ? Score.ofSpare() : Score.ofMiss(pitches.getBasicScore());
-    }
-
-    private Score addBonusScore(Score beforeScore, final int pinCount) {
-        if (beforeScore.canCalculateScore()) {
-            return beforeScore;
-        }
-
-        return beforeScore.addBonusScore(pinCount);
     }
 }

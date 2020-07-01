@@ -5,9 +5,8 @@ import bowling.game.Score;
 import java.util.List;
 import java.util.Optional;
 
-public class FinalFrame implements Frame {
-
-    private final Pitches pitches;
+public class FinalFrame extends Frame {
+    public static final int FINAL_FRAME_NUMBER = 10;
 
     public FinalFrame() {
         this.pitches = new FinalPitches();
@@ -19,11 +18,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean hasRemainChance() {
-        return pitches.hasChance();
-    }
-
-    @Override
     public Frame createNextFrame(int frameNumber) {
         throw new IllegalStateException("마지막 프레임은 다음 프레임을 만들 수 없습니다.");
     }
@@ -31,11 +25,6 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isLastFrame() {
         return true;
-    }
-
-    @Override
-    public String getStates() {
-        return pitches.getPitchesStates();
     }
 
     @Override
@@ -56,13 +45,5 @@ public class FinalFrame implements Frame {
         }
 
         return beforeScore.canCalculateScore() ? Optional.of(beforeScore) : Optional.empty();
-    }
-
-    private Score addBonusScore(Score beforeScore, final int pinCount) {
-        if (beforeScore.canCalculateScore()) {
-            return beforeScore;
-        }
-
-        return beforeScore.addBonusScore(pinCount);
     }
 }

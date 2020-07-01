@@ -4,18 +4,34 @@ import bowling.game.Score;
 
 import java.util.Optional;
 
-public interface Frame {
-    void bowl(final int pinCount);
+public abstract class Frame {
+    protected Pitches pitches;
 
-    boolean hasRemainChance();
+    abstract Frame createNextFrame(int frameNumber);
 
-    Frame createNextFrame(int frameNumber);
+    abstract boolean isLastFrame();
 
-    boolean isLastFrame();
+    abstract Optional<Score> calculateScore();
 
-    String getStates();
+    abstract Optional<Score> calculateBonusScore(Score beforeScore);
 
-    Optional<Score> calculateScore();
+    protected void bowl(final int pinCount) {
+        pitches.throwBall(pinCount);
+    }
 
-    Optional<Score> calculateBonusScore(Score beforeScore);
+    protected boolean hasRemainChance() {
+        return pitches.hasChance();
+    }
+
+    protected String getStates() {
+        return pitches.getPitchesStates();
+    }
+
+    protected Score addBonusScore(Score beforeScore, final int pinCount) {
+        if (beforeScore.canCalculateScore()) {
+            return beforeScore;
+        }
+
+        return beforeScore.addBonusScore(pinCount);
+    }
 }
