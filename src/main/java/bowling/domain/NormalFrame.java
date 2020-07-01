@@ -33,16 +33,10 @@ public class NormalFrame extends Frame {
         ShotHistory shotHistory = pitch.getShotHistory();
         if (shotHistory.contains(Shot.SPARE)) {
             Score bonus = nextFrame.calculateBonusScore(Shot.SPARE);
-            if (bonus.equals(Score.ofNull())) {
-                return Score.ofNull();
-            }
             score = score.add(bonus);
         }
         if (shotHistory.contains(Shot.STRIKE)) {
             Score bonus = nextFrame.calculateBonusScore(Shot.STRIKE);
-            if (bonus.equals(Score.ofNull())) {
-                return Score.ofNull();
-            }
             score = score.add(bonus);
         }
         return score;
