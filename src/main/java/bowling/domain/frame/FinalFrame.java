@@ -51,12 +51,7 @@ public class FinalFrame implements Frame {
     @Override
     public String printFrameResult() {
         return statuses.stream()
-                .map(status -> {
-                    if (isSinglePrintCondition(status)) {
-                        return status.printResult();
-                    }
-                    return status.printAllResult();
-                })
+                .map(status -> status.printResult())
                 .collect(Collectors.joining("|"));
     }
 
@@ -88,15 +83,6 @@ public class FinalFrame implements Frame {
         return status instanceof Strike || status instanceof Spare;
     }
 
-    private boolean haveStrike() {
-        return statuses.stream().anyMatch(status -> status instanceof Strike);
-    }
-
-    private boolean isSinglePrintCondition(Status status) {
-        return trying == 1
-                || (trying != 3 && haveStrike())
-                || (trying == 3 && (status instanceof Miss));
-    }
 
     @Override
     public String toString() {

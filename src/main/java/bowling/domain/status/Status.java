@@ -5,7 +5,7 @@ public interface Status {
         if (downPin == 10) {
             return new Strike();
         }
-        return new Miss(downPin);
+        return new Pending(downPin);
     }
 
     static Status makeStatus(int beforePin, int downPin) {
@@ -17,7 +17,7 @@ public interface Status {
 
     String printResult();
 
-    String printAllResult();
+    boolean canPlayMore();
 
     default String isGutter(int downPin) {
         if (downPin == 0) {

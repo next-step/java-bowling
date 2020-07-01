@@ -19,7 +19,7 @@ class PinsTest {
     void bowl() {
         Pins pins = Pins.init();
         assertThat(pins.firstBowl(3).printResult()).isEqualTo("3");
-        assertThat(pins.bowl(7).printAllResult()).isEqualTo("3|/");
+        assertThat(pins.bowl(7).printResult()).isEqualTo("3|/");
     }
 
     @ParameterizedTest

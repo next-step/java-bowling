@@ -1,22 +1,16 @@
 package bowling.domain.status;
 
-public class Spare implements Status {
-    int beforePin;
-    int downPin;
+public class Spare extends Finished {
+    int firstPin;
+    int secondPin;
 
-    public Spare(int beforePin, int downPin) {
-        this.beforePin = beforePin;
-        this.downPin = downPin;
+    public Spare(int firstPin, int secondPin) {
+        this.firstPin = firstPin;
+        this.secondPin = secondPin;
     }
 
     @Override
     public String printResult() {
-        return String.valueOf(isGutter(beforePin));
+        return isGutter(firstPin) + "|/";
     }
-
-    @Override
-    public String printAllResult() {
-        return isGutter(beforePin) + "|/";
-    }
-
 }

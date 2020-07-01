@@ -1,25 +1,20 @@
 package bowling.domain.status;
 
-public class Miss implements Status {
-    int beforePin;
+public class Miss extends Finished {
+    int firstPin;
     int downPin;
 
-    public Miss(int beforePin) {
-        this.beforePin = beforePin;
+    public Miss(int firstPin) {
+        this.firstPin = firstPin;
     }
 
-    public Miss(int beforePin, int downPin) {
-        this.beforePin = beforePin;
+    public Miss(int firstPin, int downPin) {
+        this.firstPin = firstPin;
         this.downPin = downPin;
     }
 
     @Override
     public String printResult() {
-        return isGutter(beforePin);
-    }
-
-    @Override
-    public String printAllResult() {
-        return isGutter(beforePin) + "|" + isGutter(downPin);
+        return isGutter(firstPin) + "|" + isGutter(downPin);
     }
 }

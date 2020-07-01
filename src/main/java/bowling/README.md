@@ -8,9 +8,13 @@
         + 총 투구의 downPin 합은 10 이내이다 (마지막 투구 제외) 
     - 출력용 점수를 제공한다.
 
-2. Status
+2. Status - Strike, Spare, Miss, Pending
     - 프레임 별 투구 상태 
-    - Strike, Spare, Miss 어떻게 활용하지?
+    - 투구 결과를 출력한다
+    
+2.1 Running, Finished
+    - 프레임 종료 여부 표시를 위한 진행 상황 추상 클래스
+    - 추가 투구 가능 여부를 알려 준다.
     
 3. Frame
     - NormalFrame, FinalFrame 구현을 위한 Frame 인터페이스
