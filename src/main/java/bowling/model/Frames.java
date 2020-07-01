@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Frames {
 
@@ -69,6 +70,42 @@ public class Frames {
 
   public boolean isOver() {
     return BowlingGame.MAX_NUMBER_OF_FRAMES <= frames.size() && frames.getLast().isOver();
+  }
+
+  public List<Integer> getScores() {
+    List<Integer> scores = new ArrayList<>();
+
+    frames.stream()
+        .limit(BowlingGame.MAX_NUMBER_OF_FRAMES)
+        .forEach(frame -> {
+          scores.add(getScoreBy(frame.getIndexOfScoredFrames()));
+        });
+    return scores;
+  }
+
+  public int getScoreBy(List<Integer> indexOfScoredFrames) {
+    List<Frame> frames = getFrames();
+    int startIndex = getStartIndexOf(indexOfScoredFrames);
+    int lastIndex = getLastIndexOf(indexOfScoredFrames);
+
+    return IntStream.range(startIndex, lastIndex)
+        .map(index -> frames.get(index).getPins().getFirstKnockDownNumber())
+        .sum() + frames.get(startIndex).getPins().getSecondKnockDownNumber();
+
+  }
+
+  private int getStartIndexOf(List<Integer> indexOfScoredFrames) {
+    return indexOfScoredFrames.get(0);
+  }
+
+  private int getLastIndexOf(List<Integer> indexOfScoredFrames) {
+    int lastIndex = indexOfScoredFrames.get(indexOfScoredFrames.size() - 1) + 1;
+
+    if (frames.size() < lastIndex) {
+      return frames.size();
+    }
+
+    return lastIndex;
   }
 
   @Override

@@ -117,4 +117,104 @@ class FramesTest {
 
     assertThat(frames.getSize()).isEqualTo(10);
   }
+
+  @Test
+  void getScoreBy_spare() {
+    Frames frames = new Frames();
+    int result_frame1 = 0;
+
+    // 준비단계
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(0);
+
+    // 1-1프레임
+    frames.roll(5);
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(5);
+
+    // 1-2프레임(스페어)
+    frames.roll(5);
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(10);
+
+    // 2-1프레임
+    frames.roll(5);
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(15);
+
+    // 2-2프레임(스페어)
+    frames.roll(5);
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(15);
+
+    // 3-1 프레임
+    frames.roll(5);
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(15);
+  }
+
+  @Test
+  void getScoreBy_strike() {
+    Frames frames = new Frames();
+    int result_frame1 = 0;
+
+    // 준비단계
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(0);
+
+    // 1프레임(스트라이크)
+    frames.roll(10);
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(10);
+
+    // 2-1프레임
+    frames.roll(5);
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(15);
+
+    // 2-2프레임(스페어)
+    frames.roll(5);
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(15);
+
+    // 3-1 프레임
+    frames.roll(5);
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(20);
+
+    // 3-2 프레임
+    frames.roll(5);
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(20);
+
+    // 4-1 프레임
+    frames.roll(10);
+    result_frame1 = frames.getScoreBy(frames.getFrames().get(0).getIndexOfScoredFrames());
+    assertThat(result_frame1).isEqualTo(20);
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideFrames")
+  void getScores(Frames frames, List<Integer> expected) {
+    assertThat(frames.getScores()).isEqualTo(expected);
+  }
+
+  static Stream<Arguments> provideFrames() {
+    return Stream.of(
+        arguments(
+            new Frames() {{
+              roll(10); // 1
+              roll(1); // 2
+              roll(9); // 2
+              roll(1); // 3
+              roll(1); // 3
+              roll(1); // 4
+              roll(1); // 4
+            }},
+            Arrays.asList(
+                12, 11, 2, 2
+            )
+        )
+    );
+  }
 }
