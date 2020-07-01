@@ -29,4 +29,13 @@ public class BowlingGameTest {
 
         assertThat(actual).isEqualTo(2);
     }
+
+    @Test
+    void isEndFrame() {
+        bowlingGame.play(new Pin(10));
+
+        boolean isEndFrame = bowlingGame.isEndFrame(1);
+
+        assertThat(isEndFrame).isTrue();
+    }
 }

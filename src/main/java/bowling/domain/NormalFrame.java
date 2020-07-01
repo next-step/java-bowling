@@ -6,17 +6,17 @@ public class NormalFrame extends Frame {
     public static final int NORMAL_FRAME_MAX_LENGTH = 2;
     private static final int LAST_FRAME = 9;
 
+    private Frame nextFrame;
+
     public NormalFrame() {
-        this.pin = new Pin(Pin.MIN_PIN);
         this.states = new States();
         this.nextFrame = null;
     }
 
     @Override
-    public void bowl(Pin fallenPin) {
-        State state = State.bowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getSize());
-        setStates(state, fallenPin);
-        setPin(fallenPin);
+    public void bowl(Pin pin) {
+        State state = State.bowl(this.states.getLastPin().getFallenPin(), pin.getFallenPin(), this.states.getSize());
+        setStates(state);
     }
 
     @Override
@@ -52,35 +52,46 @@ public class NormalFrame extends Frame {
             return score.getScore();
         }
 
+        if (Objects.isNull(nextFrame)) {
+            return WAITING_CALCULATION;
+        }
+
+        return nextFrame.calculateAdditionalScore(score);
+    }
+
+    @Override
+    int calculateAdditionalScore(Score score) {
+        score = states.calculateScore(score);
+
+        if (score.canCalculateScore()) {
+            return score.getScore();
+        }
+
+        if (Objects.isNull(nextFrame)) {
+            return WAITING_CALCULATION;
+        }
+
         return nextFrame.calculateAdditionalScore(score);
     }
 
     private Score createScore(State lastState) {
-        if (lastState == State.STRIKE) {
+        if (lastState.isStrike()) {
             return Score.ofStrike();
         }
 
-        if (lastState == State.SPARE) {
+        if (lastState.isSpare()) {
             return Score.ofSpare();
         }
 
-        return Score.ofMiss(states.getBeforeState().getFallenPins() + pin.getFallenPin());
+        return Score.ofMiss(states.getBeforeState().getFallenPins() + states.getLastPin().getFallenPin());
     }
 
-    private void setStates(State state, Pin fallenPin) {
-        this.states.add(state, fallenPin);
-    }
-
-    private void setPin(Pin fallenPin) {
-        this.pin = fallenPin;
+    private void setStates(State state) {
+        this.states.add(state);
     }
 
     public void setNextFrame(Frame nextFrame) {
         this.nextFrame = nextFrame;
-    }
-
-    public Pin getPin() {
-        return pin;
     }
 
     @Override
@@ -93,12 +104,11 @@ public class NormalFrame extends Frame {
         if (this == o) return true;
         if (!(o instanceof NormalFrame)) return false;
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(pin, that.pin) &&
-                Objects.equals(states, that.states);
+        return Objects.equals(nextFrame, that.nextFrame);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pin, states);
+        return Objects.hash(nextFrame);
     }
 }

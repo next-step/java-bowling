@@ -15,7 +15,7 @@ public class NormalFrameTest {
         normalFrame.bowl(new Pin(10));
 
         assertThat(normalFrame.getStates().getStates().get(0)).isEqualTo(State.STRIKE);
-        assertThat(normalFrame.getPin()).isEqualTo(new Pin(10));
+        assertThat(normalFrame.getStates().getLastPin()).isEqualTo(new Pin(10));
     }
 
 
@@ -47,6 +47,7 @@ public class NormalFrameTest {
         int firstPin = 2;
         int secondPin = 7;
         NormalFrame normalFrame = new NormalFrame();
+
         normalFrame.bowl(new Pin(firstPin));
         normalFrame.bowl(new Pin(secondPin));
 
@@ -73,7 +74,9 @@ public class NormalFrameTest {
     void getScore_strike() {
         int firstPin = 10;
         NormalFrame normalFrame = new NormalFrame();
+
         normalFrame.bowl(new Pin(firstPin));
+
         normalFrame.getNextFrame(2);
 
         int score = normalFrame.getScore();

@@ -1,21 +1,16 @@
 package bowling.domain;
 
-import java.util.Objects;
-
 public class FinalFrame extends Frame {
     private static final int FINAL_FRAME_MAX_LENGTH = 3;
 
     public FinalFrame() {
-        this.pin = new Pin(Pin.MIN_PIN);
         this.states = new States();
-        this.nextFrame = null;
     }
 
     @Override
-    public void bowl(Pin fallenPin) {
-        State state = State.finalBowl(this.pin.getFallenPin(), fallenPin.getFallenPin(), this.states.getLastState());
-        setStates(state, fallenPin);
-        setPin(fallenPin);
+    public void bowl(Pin pin) {
+        State state = State.finalBowl(this.states.getLastPin().getFallenPin(), pin.getFallenPin(), this.states.getLastState());
+        setStates(state);
     }
 
     @Override
@@ -42,6 +37,17 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    int calculateAdditionalScore(Score score) {
+        score = states.calculateScore(score);
+
+        if (score.canCalculateScore()) {
+            return score.getScore();
+        }
+
+        return WAITING_CALCULATION;
+    }
+
+    @Override
     public int getScore() {
         if (!isEndGame()) {
             return WAITING_CALCULATION;
@@ -53,29 +59,7 @@ public class FinalFrame extends Frame {
                 .sum();
     }
 
-    private void setStates(State state, Pin fallenPin) {
-        this.states.add(state, fallenPin);
-    }
-
-    private void setPin(Pin fallenPin) {
-        this.pin = fallenPin;
-    }
-
-    public Pin getPin() {
-        return pin;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof FinalFrame)) return false;
-        FinalFrame that = (FinalFrame) o;
-        return Objects.equals(pin, that.pin) &&
-                Objects.equals(states, that.states);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(pin, states);
+    private void setStates(State state) {
+        this.states.add(state);
     }
 }

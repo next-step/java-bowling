@@ -102,6 +102,14 @@ public enum State {
         }
     }
 
+    public boolean isStrike() {
+        return this.value.equals(STRIKE.value);
+    }
+
+    public boolean isSpare() {
+        return this.value.equals(SPARE.value);
+    }
+
     public String getValue() {
         return value;
     }

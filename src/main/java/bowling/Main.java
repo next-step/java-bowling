@@ -1,23 +1,33 @@
 package bowling;
 
 import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.Pin;
-import bowling.domain.Player;
+import bowling.domain.Players;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public class Main {
     public static void main(String[] args) {
-        String playerName = InputView.inputPlayerName();
-        Player player = new Player(playerName);
+        int numberOfPeople = InputView.inputNumberOfPeople();
 
-        OutputView.printDefault(player.getName());
+        List<String> playersName = IntStream.range(0, numberOfPeople)
+                .mapToObj(InputView::inputPlayerName)
+                .collect(Collectors.toList());
 
-        BowlingGame bowlingGame = new BowlingGame(player);
+        Players players = new Players(playersName);
+        OutputView.printDefault(players);
 
-        while (!bowlingGame.isEndGame()) {
-            bowlingGame.play(new Pin(InputView.inputFramePitches(bowlingGame.getCurrentFrameNumber())));
-            OutputView.printResult(bowlingGame);
+        BowlingGames bowlingGames = new BowlingGames(players);
+
+        while (!bowlingGames.isEndGame()) {
+            BowlingGame currentGame = bowlingGames.getCurrentGame();
+            currentGame.play(new Pin(InputView.inputFramePitches(currentGame.getPlayerName())));
+            OutputView.printResult(bowlingGames);
         }
     }
 }

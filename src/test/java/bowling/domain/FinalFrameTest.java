@@ -16,7 +16,7 @@ public class FinalFrameTest {
         finalFrame.bowl(new Pin(10));
 
         assertThat(finalFrame.getStates().getStates().get(0)).isEqualTo(State.STRIKE);
-        assertThat(finalFrame.getPin()).isEqualTo(new Pin(10));
+        assertThat(finalFrame.getStates().getLastPin()).isEqualTo(new Pin(10));
     }
 
     @DisplayName("현재 프레임 종료 여부를 반환할 수 있다.")

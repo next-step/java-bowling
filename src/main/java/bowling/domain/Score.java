@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Score {
     private static final int MAX_SCORE = 10;
 
-    private int score;
-    private final int left;
+    private final int score;
+    private final int leftBonusCount;
 
-    public Score(int score, int left) {
+    public Score(int score, int leftBonusCount) {
         this.score = score;
-        this.left = left;
+        this.leftBonusCount = leftBonusCount;
     }
 
     public static Score ofMiss(int score) {
@@ -26,7 +26,12 @@ public class Score {
     }
 
     public Score bowl(int countOfPins) {
-        return new Score(score += countOfPins, left - 1);
+        if (canCalculateScore()) {
+            return this;
+        }
+
+        int scoreSum = score + countOfPins;
+        return new Score(scoreSum, leftBonusCount - 1);
     }
 
     public int getScore() {
@@ -37,7 +42,7 @@ public class Score {
     }
 
     public boolean canCalculateScore() {
-        return left == 0;
+        return leftBonusCount == 0;
     }
 
     @Override
@@ -46,11 +51,11 @@ public class Score {
         if (!(o instanceof Score)) return false;
         Score score1 = (Score) o;
         return score == score1.score &&
-                left == score1.left;
+                leftBonusCount == score1.leftBonusCount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, left);
+        return Objects.hash(score, leftBonusCount);
     }
 }

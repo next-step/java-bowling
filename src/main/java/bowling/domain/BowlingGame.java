@@ -1,6 +1,8 @@
 package bowling.domain;
 
 public class BowlingGame {
+    private static final int FINAL_FRAME_NUMBER = 10;
+
     private final Player player;
     private final Frames frames;
 
@@ -18,12 +20,23 @@ public class BowlingGame {
         }
     }
 
+    public boolean isEndFrame(int frameNumber) {
+        if (frameNumber == FINAL_FRAME_NUMBER) {
+            return frames.isEndGame();
+        }
+        return frames.getFrame(frameNumber).isEndFrame();
+    }
+
     public boolean isEndGame() {
         return this.frames.isEndGame();
     }
 
     public int getCurrentFrameNumber() {
         return this.frames.getCurrentFrameNumber();
+    }
+
+    public String getPlayerName() {
+        return player.getName();
     }
 
     public Player getPlayer() {
