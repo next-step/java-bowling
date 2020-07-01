@@ -57,7 +57,7 @@ class PitchTest {
     public void getShotHistory_OneTime_ReturnStrike() {
         Pitch pitch = new Pitch();
         pitch.add(new Pin(10));
-        assertThat(pitch.getShotHistory()).contains(Shot.STRIKE);
+        assertThat(pitch.getShotHistory().contains(Shot.STRIKE)).isTrue();
     }
 
     @DisplayName("1번 던져서 넘긴 핀이 10개 미만 Miss 이력 추가가")
@@ -65,7 +65,7 @@ class PitchTest {
     public void getShotHistory_OneTime_ReturnMiss() {
         Pitch pitch = new Pitch();
         pitch.add(new Pin(5));
-        assertThat(pitch.getShotHistory()).contains(Shot.FIVE);
+        assertThat(pitch.getShotHistory().contains(Shot.FIVE)).isTrue();
     }
 
     @DisplayName("2번 던져서 넘긴 핀이 10개면 Miss,Spare 이력 추가")
@@ -74,7 +74,8 @@ class PitchTest {
         Pitch pitch = new Pitch();
         pitch.add(new Pin(5));
         pitch.add(new Pin(5));
-        assertThat(pitch.getShotHistory()).contains(Shot.FIVE, Shot.SPARE);
+        assertThat(pitch.getShotHistory().contains(Shot.FIVE)).isTrue();
+        assertThat(pitch.getShotHistory().contains(Shot.SPARE)).isTrue();
     }
 
     @DisplayName("2번 던져서 넘긴 핀이 10개 미만 Miss,Miss 이력 추가")
@@ -83,7 +84,8 @@ class PitchTest {
         Pitch pitch = new Pitch();
         pitch.add(new Pin(5));
         pitch.add(new Pin(4));
-        assertThat(pitch.getShotHistory()).contains(Shot.FIVE, Shot.FOUR);
+        assertThat(pitch.getShotHistory().contains(Shot.FIVE)).isTrue();
+        assertThat(pitch.getShotHistory().contains(Shot.FOUR)).isTrue();
     }
 
     @DisplayName("스코어 추가 시 마다 모든 공을 처리한건지 여부를 반환")
