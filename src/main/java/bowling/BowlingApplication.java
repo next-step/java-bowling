@@ -1,22 +1,30 @@
 package bowling;
 
-import bowling.domain.GameSet;
-import bowling.domain.player.Player;
+import bowling.domain.BowlingGame;
 import bowling.view.InputView;
 import bowling.view.ResultView;
+
+import java.util.List;
 
 public class BowlingApplication {
 
     public static void main(String[] args) {
-        Player player = Player.of(InputView.inputPlayer());
-        GameSet gameSet = GameSet.of(player);
+        List<String> playerNames = InputView.inputPlayers();
 
-        ResultView.printHeader(gameSet);
+        BowlingGame bowlingGame = BowlingGame.of(playerNames);
+        ResultView.printHeader(bowlingGame.getGameSets());
 
-        while (!gameSet.isGameOver()) {
-            int hitCount = InputView.inputHitCount(gameSet.getFrameNumber());
-            gameSet.play(hitCount);
-            ResultView.printShape(gameSet);
+        while (!bowlingGame.isGameOver()) {
+            play(bowlingGame);
+            ResultView.printShape(bowlingGame.getGameSets());
+
+            bowlingGame.turnOverGameSet();
         }
+    }
+
+    private static void play(final BowlingGame bowlingGame) {
+        int hitCount = InputView.inputHitCount(bowlingGame.getPlayerName());
+
+        bowlingGame.playOfCurrentGameSet(hitCount);
     }
 }
