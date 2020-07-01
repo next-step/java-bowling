@@ -1,29 +1,17 @@
 package bowling.domain;
 
-import java.util.HashMap;
-import java.util.Map;
+public interface Frame {
+    Frame execute(final BowlingPins bowlingPins);
 
-public abstract class Frame {
-    protected final Map<Round, BowlingPins> record = new HashMap<>();
-    protected boolean isFinished = false;
+    int getFrameNumber();
 
-    abstract Frame execute(final BowlingPins bowlingPins);
+    boolean isStrike();
 
-    public abstract int getFrameNumber();
+    boolean isSpare();
 
-    public boolean isStrike() {
-        return record.get(Round.FIRST_ROUND).isMax();
-    }
+    boolean isFinished();
 
-    public boolean isFinished() {
-        return isFinished;
-    }
+    boolean isFinalFrame();
 
-    public boolean isSpare() {
-        return record.get(Round.FIRST_ROUND).add(record.get(Round.SECOND_ROUND)).isMax();
-    }
-
-    public BowlingPins getPinsOf(final Round firstRound) {
-        return record.get(firstRound);
-    }
+    BowlingPins getPinsOf(Round firstRound);
 }
