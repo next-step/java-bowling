@@ -1,6 +1,5 @@
 package bowling.ui;
 
-import bowling.BowlingGame;
 import bowling.domain.Shot;
 import bowling.tobe.Frames;
 
@@ -32,7 +31,7 @@ public class ResultView {
                         sb.append(String.format(RESULT_FORMAT,
                                 f.getShotHistory().stream().map(Shot::getSymbol).collect(Collectors.joining("|"))
                         )));
-        for (int round = frames.getCurrentFrameNo(); round < BowlingGame.FINAL_FRAME; round++) {
+        for (int round = frames.getCurrentFrameNo(); round < Frames.FINAL_FRAME; round++) {
             sb.append(String.format(RESULT_FORMAT, ""));
         }
         return sb.toString();
