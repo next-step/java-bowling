@@ -16,7 +16,7 @@ public class NormalFrame extends Frame {
     @Override
     public void bowl(int previousFallenPin, int currentFallenPin) {
         State state = State.bowl(previousFallenPin, currentFallenPin, this.states.getSize());
-        setStates(state, new Pin(currentFallenPin));
+        setStates(state);
     }
 
     @Override
@@ -86,8 +86,8 @@ public class NormalFrame extends Frame {
         return Score.ofMiss(states.getBeforeState().getFallenPins() + states.getLastPin().getFallenPin());
     }
 
-    private void setStates(State state, Pin fallenPin) {
-        this.states.add(state, fallenPin);
+    private void setStates(State state) {
+        this.states.add(state);
     }
 
     public void setNextFrame(Frame nextFrame) {

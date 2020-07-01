@@ -2,19 +2,17 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class States {
     private final List<State> states;
-    private final Pins pins;
 
     public States() {
         this.states = new ArrayList<>();
-        this.pins = new Pins();
     }
 
-    public void add(State state, Pin pin) {
+    public void add(State state) {
         this.states.add(state);
-        this.pins.add(pin);
     }
 
     public State getLastState() {
@@ -36,11 +34,29 @@ public class States {
     }
 
     public Pin getLastPin() {
-        return this.pins.getLastPin();
+        List<Pin> pins = getPins();
+        int size = pins.size();
+
+        if (size == 0) {
+            return new Pin(Pin.MIN_PIN);
+        }
+
+        return pins.get(size - 1);
     }
 
     public Pin getBeforePin() {
-        return this.pins.getBeforePin();
+        List<Pin> pins = getPins();
+        int size = pins.size();
+
+        if (size == 0 || size == 1) {
+            return new Pin(Pin.MIN_PIN);
+        }
+
+        return getLastPreviousPin(pins, size);
+    }
+
+    private Pin getLastPreviousPin(List<Pin> pins, int size) {
+        return pins.get(size - 2);
     }
 
     public State getBeforeState() {
@@ -71,6 +87,9 @@ public class States {
     }
 
     public List<Pin> getPins() {
-        return pins.getPins();
+        return this.states
+                .stream()
+                .map(state -> new Pin(state.getFallenPins()))
+                .collect(Collectors.toList());
     }
 }
