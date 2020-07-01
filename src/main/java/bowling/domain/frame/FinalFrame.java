@@ -2,7 +2,9 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
 
-public class FinalFrame {
+
+
+public class FinalFrame implements Frame {
     private static final int PINS_LIMIT = 10;
     private static final int FIRST_ROLL = 1;
     private static final int SECOND_ROLL = 2;
@@ -14,9 +16,10 @@ public class FinalFrame {
 
     public FinalFrame() {
         this.pins = new Pins();
-        this.index = 10;
+        this.index = 9;
     }
 
+    @Override
     public void roll(int pin) {
 
         if (isRolledTwice() && (!isAlreadySpare() || !isAlreadyStrike()) ) {
@@ -29,6 +32,7 @@ public class FinalFrame {
         pins.addPins(pin);
     }
 
+    @Override
     public int getPins() {
         return this.pins.getTotalPins();
     }

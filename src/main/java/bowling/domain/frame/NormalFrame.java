@@ -4,7 +4,7 @@ import bowling.domain.pin.Pins;
 
 import java.util.Objects;
 
-public class NormalFrame {
+public class NormalFrame implements Frame{
     private static final int FIRST_FRAME = 1;
     private static final int PINS_LIMIT = 10;
     private static final String PIN_MAX_ERROR = "핀의 합계가 10개보다 클 수 없습니다.";
@@ -15,7 +15,7 @@ public class NormalFrame {
     private Pins pins;
     private int index;
 
-    private NormalFrame(final int index) {
+    public NormalFrame(final int index) {
         this.pins = new Pins();
         this.index = index;
     }
@@ -28,6 +28,7 @@ public class NormalFrame {
         return new NormalFrame(index + 1);
     }
 
+    @Override
     public void roll(int pin) {
         if (isRolledTwice()) {
             throw new IllegalArgumentException(ROLL_COUNT_ERRORS);
@@ -56,6 +57,7 @@ public class NormalFrame {
         return this.getPins() + pin > PINS_LIMIT;
     }
 
+    @Override
     public int getPins() {
         return this.pins.getTotalPins();
     }
