@@ -1,5 +1,7 @@
 package bowling.domain.game;
 
+import java.util.Objects;
+
 public class FrameNumber {
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 10;
@@ -25,8 +27,29 @@ public class FrameNumber {
         return number;
     }
 
+    public FrameNumber next() {
+        return new FrameNumber(this.number + 1);
+    }
+
+    public boolean isEndNumber() {
+        return this.number == MAX_NUMBER;
+    }
+
     @Override
     public String toString() {
         return String.format("%02d", number);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FrameNumber that = (FrameNumber) o;
+        return number == that.number;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number);
     }
 }

@@ -15,6 +15,11 @@ class FramePinsTest {
         public FramePinsChild(Pins firstPins, Pins secondPins) {
             super(firstPins, secondPins);
         }
+
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
     }
 
     @ParameterizedTest
