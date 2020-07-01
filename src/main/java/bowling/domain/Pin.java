@@ -4,9 +4,7 @@ public class Pin {
 
     private static final int MIN_PINS = 0;
     private static final int MAX_PINS = 10;
-
     private int maxPins;
-
     private int falledPins;
 
     public Pin() {
@@ -22,7 +20,6 @@ public class Pin {
 
     public boolean isAllClear() {
         return maxPins - falledPins == 0;
-
     }
 
     public int leftPins() {

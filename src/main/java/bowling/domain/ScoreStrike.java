@@ -2,15 +2,15 @@ package bowling.domain;
 
 public class ScoreStrike extends Score {
 
-    public ScoreStrike(Pins pins) {
-        super(pins);
+    public ScoreStrike(Frame frame) {
+        super(frame);
     }
 
     @Override
     public void addBonusNumber(Score nextScore) {
-        this.bonusScore = nextScore.score;
-        this.sumScore += score + nextScore.score + nextScore.bonusScore;
-        nextScore.sumScore = this.sumScore;
+        this.bonusScore = nextScore.getScore();
+        this.sumScore += this.getScore() + nextScore.getScore() + nextScore.getBonusScore();
+        nextScore.setSumScore(this.sumScore);
     }
 
     @Override

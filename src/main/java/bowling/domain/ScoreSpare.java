@@ -1,15 +1,15 @@
 package bowling.domain;
 
 public class ScoreSpare extends Score {
-    public ScoreSpare(Pins pins) {
-        super(pins);
+    public ScoreSpare(Frame frame) {
+        super(frame);
     }
 
     @Override
     public void addBonusNumber(Score nextScore) {
-        this.bonusScore = nextScore.firstScore;
-        this.sumScore += score + bonusScore;
-        nextScore.sumScore = this.sumScore;
+        this.bonusScore = nextScore.getFirstScore();
+        this.sumScore += getScore() + bonusScore;
+        nextScore.setSumScore(this.sumScore);
     }
 
     @Override

@@ -2,7 +2,6 @@ package bowling.view;
 
 import bowling.domain.GamePlay;
 import bowling.domain.Player;
-import bowling.domain.Score;
 
 import java.util.List;
 
