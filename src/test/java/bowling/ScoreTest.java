@@ -32,8 +32,9 @@ public class ScoreTest {
         Player player = new Player("tt");
         ResultView resultView = new ResultView(player, bowling);
 
-        for (int frameCount = 0; frameCount <= Frames.BOWLING_GAME_FRAME;) {
-            int nextCount = bowling.addPlayerScore(frameCount, 5);
+        //for (int frameCount = 0; frameCount <= Frames.BOWLING_GAME_FRAME;) {
+        for (int frameCount = 0; frameCount <= 8;) {
+            int nextCount = bowling.addPlayerScore(frameCount, 10);
             resultView.displayResult(frameCount);
             resultView.displayAmountScore(frameCount);
             frameCount += nextCount;

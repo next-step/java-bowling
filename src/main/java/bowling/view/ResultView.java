@@ -53,8 +53,10 @@ public class ResultView {
     }
 
     public void displayAmountScore(int frameCount) {
+        int total = 0;
         for(int i = 0; i <= frameCount; i++) {
-            amoutScore.set(i, String.format("%-6s", " " + bowling.getFrameScore(i)));
+            total += bowling.getFrameScore(i);
+            amoutScore.set(i, String.format("%-6s", " " + total));
         }
         System.out.println(FRAME_DELIMITER + FRAME_SCORE_DEFAULT_PANEL + FRAME_DELIMITER +
                                     amoutScore.stream()
@@ -76,7 +78,8 @@ public class ResultView {
     }
 
     private boolean isSetScorePanel(int frameCount) {
-        return resultString.get(frameCount).equals(FRAME_SCORE_DEFAULT_PANEL);
+        return resultString.get(frameCount)
+                .equals(FRAME_SCORE_DEFAULT_PANEL);
     }
 
 }

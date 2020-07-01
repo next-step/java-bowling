@@ -3,9 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.Score;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Frame {
 
@@ -13,8 +11,16 @@ public class Frame {
 
     List<Score> scores = new ArrayList<>();
 
-    public void addScore(int score) {
+    public int addScore(int score, Frames frames) {
         scores.add(new Score(score, scores));
+        return moveNextFrame(frames);
+    }
+
+    public Frame makeFrame(int frameSize) {
+        if(frameSize == Frames.BOWLING_GAME_FRAME){
+            return new FinalFrame();
+        }
+        return new NormalFrame();
     }
 
     public boolean isFirst() {
@@ -43,14 +49,38 @@ public class Frame {
     }
 
     public int getFrameTotalScore() {
-        return scores.stream().collect(Collectors.summingInt(Score::getScore));
+        return scores.stream()
+                .mapToInt(Score::getScore)
+                .sum();
     }
 
-    public int getScore() {
-        return getFrameTotalScore();
+    public int getScore(Frames frames) {
+        int totalScore = getFrameTotalScore();
+        if (isSpare() || isStrike()) {
+            totalScore += getNextScore(frames, this);
+        }
+
+        return totalScore;
     }
 
-    public int moveNextFrame() {
+    private int getNextScore(Frames frames, Frame frame) {
+        int score = 0;
+        int nextFrameIndex = frames.getFrames().indexOf(frame) + 1;
+        Frame nextFrame = frames.getFrames().get(nextFrameIndex);
+
+        if(nextFrame.isFirst()) {
+            return score;
+        }
+
+        if(nextFrame.isStrike()) {
+            //score += getNextScore(frames, nextFrame);
+        }
+
+        score += nextFrame.scores.get(0).getScore();
+        return score;
+    }
+
+    public int moveNextFrame(Frames frames) {
         return 1;
     }
 }

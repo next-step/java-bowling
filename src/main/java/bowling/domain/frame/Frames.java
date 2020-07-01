@@ -11,23 +11,23 @@ public class Frames {
     private List<Frame> frames = new ArrayList<>();
 
     public Frames() {
-        for(int i = 0; i < BOWLING_GAME_FRAME; i++) {
-            frames.add(makeFrame());
-        }
-        frames.add(makeFinalFrame());
+        frames.add(new NormalFrame());
     }
 
-    private Frame makeFinalFrame() {
-        return new FinalFrame();
+    public void addFrame(Frame frame) {
+        frames.add(frame);
     }
 
-    private Frame makeFrame() {
-        return new NormalFrame();
+    public int addFrameScore(int frameCount, int score) {
+        return frames.get(frameCount).addScore(score, this);
     }
 
-    public Frame addFrameScore(int frameCount, int score) {
-        frames.get(frameCount).addScore(score);
-        return frames.get(frameCount);
+    public int getFrameScore(int frameCount) {
+        return frames.get(frameCount).getScore(this);
+    }
+
+    public int getFrameSize() {
+        return frames.size();
     }
 
     public List<Frame> getFrames() {

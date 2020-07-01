@@ -5,14 +5,12 @@ public class NormalFrame extends Frame implements FrameFactory {
     private static final int LIMIT_COUNT = 2;
 
     @Override
-    public int moveNextFrame() {
+    public int moveNextFrame(Frames frames) {
         if(scores.size() == LIMIT_COUNT || isStrike()) {
+            frames.addFrame(makeFrame(frames.getFrames().size()));
             return 1;
         }
         return 0;
     }
 
-    public int getScore() {
-        return 0;
-    }
 }

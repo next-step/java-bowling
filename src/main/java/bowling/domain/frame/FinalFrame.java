@@ -2,7 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.Score;
 
-import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame implements FrameFactory {
 
@@ -10,8 +9,9 @@ public class FinalFrame extends Frame implements FrameFactory {
     private static final int FINAL_FRAME_MINIMUN_COUNT = 1;
 
     @Override
-    public int moveNextFrame() {
+    public int moveNextFrame(Frames frames) {
         if (scores.size() == LIMIT_COUNT || validateFinalFrame()) {
+            frames.addFrame(new FinalFrame());
             return 1;
         }
         return 0;

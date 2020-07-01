@@ -12,9 +12,7 @@ public class Bowling {
     }
 
     public int addPlayerScore(int frameCount, int inputScore) {
-        Frame frame = frames.addFrameScore(frameCount, inputScore);
-        System.out.println(frame.getFrameLastScore());
-        return frame.moveNextFrame();
+        return frames.addFrameScore(frameCount, inputScore);
     }
 
     public Frame getFrameResult(int frameCount) {
@@ -22,7 +20,7 @@ public class Bowling {
     }
 
     public int getFrameScore(int frameCount) {
-        return frames.getFrames().get(frameCount).getScore();
+        return frames.getFrameScore(frameCount);
     }
 
 }

@@ -20,7 +20,7 @@ public class BowlingTest {
         bowling.addPlayerScore(1, 9);
         bowling.addPlayerScore(1, 1);
 
-        bowling.addPlayerScore(3, 0);
+        bowling.addPlayerScore(2, 0);
     }
 
     @DisplayName("각 프레임이 스트라이크이면 X")
@@ -47,7 +47,7 @@ public class BowlingTest {
     @DisplayName("핀을 하나도 쓰러트리지 못한 상태. -")
     @Test
     void gutterTest() {
-        assertThat(ScoreUI.frameOf(bowling.getFrameResult(3))).isEqualTo("-");
+        assertThat(ScoreUI.frameOf(bowling.getFrameResult(2))).isEqualTo("-");
     }
 
 
