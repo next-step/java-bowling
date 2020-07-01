@@ -2,8 +2,6 @@ package bowling.domain;
 
 import bowling.common.IntegerUtils;
 
-import java.util.List;
-
 public class FinalFrame extends Frame {
     private boolean isBonusPitch;
     private Pitch bonusPitch;
@@ -42,10 +40,10 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public List<Shot> getShotHistory() {
-        List<Shot> shotHistory = pitch.getShotHistory();
+    public ShotHistory getShotHistory() {
+        ShotHistory shotHistory = pitch.getShotHistory();
         if (isBonusPitch) {
-            shotHistory.addAll(bonusPitch.getShotHistory());
+            shotHistory.add(bonusPitch.getShotHistory());
         }
         return shotHistory;
     }

@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 public abstract class Frame {
     protected static final int FIRST_FRAME = 1;
     protected static final int FINAL_FRAME = 10;
@@ -23,7 +21,7 @@ public abstract class Frame {
 
     public abstract State bowling(Pin pin);
 
-    public abstract List<Shot> getShotHistory();
+    public abstract ShotHistory getShotHistory();
 
     public abstract boolean isGameEnd();
 }

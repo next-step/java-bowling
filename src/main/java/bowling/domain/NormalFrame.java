@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 public class NormalFrame extends Frame {
 
     public static NormalFrame first() {
@@ -22,7 +20,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public List<Shot> getShotHistory() {
+    public ShotHistory getShotHistory() {
         return pitch.getShotHistory();
     }
 
