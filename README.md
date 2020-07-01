@@ -89,6 +89,7 @@
     - 10개 미만인 경우, FirstFramePins 반환
     
 ### Bowling : 볼링
+- [X] Frame 을 생성하여 회원 별 경기 상태를 저장한다.
 
 ### InputView
 - [X] 플레이어를 입력받아 그대로 리턴한다.

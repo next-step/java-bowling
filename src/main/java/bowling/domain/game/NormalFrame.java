@@ -3,7 +3,6 @@ package bowling.domain.game;
 import bowling.domain.pin.FramePins;
 import bowling.domain.pin.FramePinsCreator;
 import bowling.domain.pin.Pins;
-import bowling.exception.game.CanNotAccessMethod;
 
 import java.util.Objects;
 
@@ -48,7 +47,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean hasNext() {
-        return true;
+        return framePins.hasNext();
     }
 
     @Override
