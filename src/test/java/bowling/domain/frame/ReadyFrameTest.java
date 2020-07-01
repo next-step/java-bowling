@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.Score;
+import bowling.exception.CannotCreateNextFrameException;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,8 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.*;
 
 public class ReadyFrameTest {
 
@@ -28,19 +28,18 @@ public class ReadyFrameTest {
                 .isFalse();
     }
 
-    @DisplayName("다음 프레임 반환 : 항상 ReadyFrame")
+    @DisplayName("다음 프레임 반환 : 예외 반환")
     @Test
     public void initNextFrame() {
-        assertThat(ReadyFrame.newInstance()
-                .initNextFrame()
-        ).isInstanceOf(ReadyFrame.class);
+        assertThatExceptionOfType(CannotCreateNextFrameException.class)
+                .isThrownBy(() -> ReadyFrame.newInstance().initNextFrame());
     }
 
-    @DisplayName("현재 프레임 번호 : 항상 0")
+    @DisplayName("현재 프레임 번호 : 항상 -1")
     @Test
     public void getFrameNo() {
         assertThat(ReadyFrame.newInstance().getFrameNo())
-                .isEqualTo(0);
+                .isEqualTo(-1);
     }
 
     @DisplayName("쓰러진 공에 따라 상태값이 변경 및 자신의 상태값을 반환 : 항상 null 반환")

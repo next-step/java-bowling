@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.dto.StateDtos;
 import bowling.domain.pin.PinCount;
 import bowling.domain.score.Score;
+import bowling.exception.CannotCreateNextFrameException;
 
 public class ReadyFrame extends Frame {
 
@@ -20,7 +21,7 @@ public class ReadyFrame extends Frame {
 
     @Override
     public Frame initNextFrame() {
-        return newInstance();
+        throw new CannotCreateNextFrameException();
     }
 
     @Override
@@ -35,7 +36,7 @@ public class ReadyFrame extends Frame {
 
     @Override
     public int getFrameNo() {
-        return 0;
+        return -1;
     }
 
     @Override
