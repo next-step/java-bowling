@@ -24,4 +24,12 @@ public class Pending extends Running {
         return false;
     }
 
+    @Override
+    public Status next(int downPin) {
+        if (firstPin + downPin == 10) {
+            return new Spare(firstPin, downPin);
+        }
+        return new Miss(firstPin, downPin);
+    }
+
 }

@@ -11,32 +11,16 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 class StatusTest {
 
     @Test
-    @DisplayName("점수 상태를 반환")
-    void makeStatus() {
-        assertAll(() -> {
-            assertThat(Status.makeStatus(10) instanceof Strike).isTrue();
-            assertThat(Status.makeStatus(2, 8) instanceof Spare).isTrue();
-            assertThat(Status.makeStatus(3, 6) instanceof Miss).isTrue();
-            assertThat(Status.makeStatus(1) instanceof Pending).isTrue();
-        });
-
-    }
-
-    @Test
-    @DisplayName("상태 별 투구 결과를 출력한다")
+    @DisplayName("상태 별 투구 결과를 출력")
     void printResult() {
-        Status strike = Status.makeStatus(10);
-        Status spare = Status.makeStatus(2, 8);
-        Status miss = Status.makeStatus(3, 6);
-        Status pending = Status.makeStatus(7);
         assertAll(() -> {
-            assertThat(strike.printResult()).isEqualTo("X");
-            assertThat(spare.printResult()).isEqualTo("2|/");
-            assertThat(miss.printResult()).isEqualTo("3|6");
-            assertThat(pending.printResult()).isEqualTo("7");
+            assertThat(new Strike().printResult()).isEqualTo("X");
+            assertThat(new Pending(5).printResult()).isEqualTo("5");
+            assertThat(new Spare(2, 8).printResult()).isEqualTo("2|/");
+            assertThat(new Miss(2, 4).printResult()).isEqualTo("2|4");
         });
-
     }
+
 
     @ParameterizedTest
     @DisplayName("쓰러진 핀 개 수가 0인 경우 - 을 반환, 아닐 경우 입력 값을 문자로 반환한다")

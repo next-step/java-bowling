@@ -51,7 +51,7 @@ public class NormalFrame implements Frame {
         if (trying == FIRST_TRY) {
             return pins.firstBowl(downPin);
         }
-        return pins.bowl(downPin);
+        return pins.bowl(downPin, this.status);
     }
 
     private int addTrying() {

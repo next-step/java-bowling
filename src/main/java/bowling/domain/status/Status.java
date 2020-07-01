@@ -1,19 +1,7 @@
 package bowling.domain.status;
 
 public interface Status {
-    static Status makeStatus(int downPin) {
-        if (downPin == 10) {
-            return new Strike();
-        }
-        return new Pending(downPin);
-    }
-
-    static Status makeStatus(int beforePin, int downPin) {
-        if (beforePin + downPin == 10) {
-            return new Spare(beforePin, downPin);
-        }
-        return new Miss(beforePin, downPin);
-    }
+    Status next(int downPin);
 
     String printResult();
 
@@ -29,4 +17,6 @@ public interface Status {
         }
         return String.valueOf(downPin);
     }
+
+
 }

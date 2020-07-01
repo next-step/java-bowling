@@ -56,7 +56,7 @@ public class FinalFrame implements Frame {
         if (trying == FIRST_TRY || haveBonus()) {
             return pins.firstBowl(downPin);
         }
-        return pins.bowl(downPin);
+        return pins.bowl(downPin, statuses.get(FIRST_TRY));
     }
 
     private void bonusPinSetting(Status status) {
