@@ -74,7 +74,11 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isTurnOver() {
-        return false;
+        return this.isInitializedFinalFrame() || this.getLastState().isFinish();
+    }
+
+    private boolean isInitializedFinalFrame() {
+        return states.size() == 1 && this.getLastState() == Ready.getInstance();
     }
 
     @Override
