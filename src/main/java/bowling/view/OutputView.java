@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class OutputView {
+public final class OutputView {
 
     private static final String FRAME_DELIMITER = " | ";
     private static final String GAME_ROW_PREFIX = "| ";
@@ -18,6 +18,8 @@ public class OutputView {
     private static final String GAME_FRAME_SCORE_EMPTY_FORMAT = "    ";
     private static final String GAME_FIRST_ROW;
     private static final int MAX_BOWLING_FRAME_SIZE = 10;
+
+    private OutputView() {}
 
     static {
         List<String> frames = IntStream.range(0, MAX_BOWLING_FRAME_SIZE)

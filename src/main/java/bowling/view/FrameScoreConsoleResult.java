@@ -6,7 +6,7 @@ import bowling.model.Score;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FrameScoreConsoleResult {
+public final class FrameScoreConsoleResult {
 
     private static final String SCORE_DELIMITER = "|";
 
