@@ -13,10 +13,7 @@ public class BowlingGame {
 
     public void play(Pin pin) {
         Frame frame = this.frames.getCurrentFrame();
-        int previousFallenPin = frame.getStates().getLastPin().getFallenPin();
-        int currentFallenPin = pin.getFallenPin();
-
-        frame.bowl(previousFallenPin, currentFallenPin);
+        frame.bowl(pin);
 
         if (frame.isEndFrame()) {
             this.frames.add(frame.getNextFrame(getCurrentFrameNumber()));
