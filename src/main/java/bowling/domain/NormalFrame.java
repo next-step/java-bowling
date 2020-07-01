@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class NormalFrame implements Frame {
 
     private FrameNumber frameNumber;
@@ -33,5 +35,21 @@ public class NormalFrame implements Frame {
         }
 
         return NormalFrame.of(frameNumber.nextFrameNumber());
+    }
+
+    @Override public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        NormalFrame that = (NormalFrame) o;
+        return Objects.equals(frameNumber, that.frameNumber);
+    }
+
+    @Override public int hashCode() {
+        return Objects.hash(frameNumber);
     }
 }

@@ -13,7 +13,7 @@ public class StrikePitching implements Pitching {
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isFinished(Frame frame) {
         return true;
     }
 

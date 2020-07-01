@@ -14,9 +14,13 @@ public class MissingPitching implements Pitching {
         return new MissingPitching(firstFallenPinNumber, secondFallenPinNumber);
     }
 
+    @Override
+    public boolean isFinished(Frame frame) {
+        return true;
+    }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public Pitching pitch(FallenPinNumber fallenPinNumber) {
+        throw new RuntimeException("이미 끝난 프레임입니다.");
     }
 }

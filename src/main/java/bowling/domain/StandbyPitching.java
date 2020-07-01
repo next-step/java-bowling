@@ -3,7 +3,7 @@ package bowling.domain;
 public class StandbyPitching implements Pitching {
 
     @Override
-    public boolean isFinished() {
+    public boolean isFinished(Frame frame) {
         return false;
     }
 

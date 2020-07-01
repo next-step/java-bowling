@@ -2,7 +2,7 @@ package bowling.domain;
 
 public interface Pitching {
 
-    boolean isFinished();
+    boolean isFinished(Frame frame);
 
     Pitching pitch(FallenPinNumber fallenPinNumber);
 }
