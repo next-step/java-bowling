@@ -17,4 +17,25 @@ public class Pins {
     public List<Pin> getPins() {
         return pins;
     }
+
+    public Pin getLastPin() {
+        int size = this.pins.size();
+        if (size == 0) {
+            return new Pin(Pin.MIN_PIN);
+        }
+        return this.pins.get(size - 1);
+    }
+
+    public Pin getBeforePin() {
+        int size = this.pins.size();
+        if (size == 0 || size == 1) {
+            return new Pin(Pin.MIN_PIN);
+        }
+
+        return getLastPreviousPin(size);
+    }
+
+    private Pin getLastPreviousPin(int size) {
+        return this.pins.get(size - 2);
+    }
 }

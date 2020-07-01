@@ -14,9 +14,9 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public void bowl(Pin fallenPin) {
-        State state = State.bowl(this.states.getLastPin().getFallenPin(), fallenPin.getFallenPin(), this.states.getSize());
-        setStates(state, fallenPin);
+    public void bowl(int previousFallenPin, int currentFallenPin) {
+        State state = State.bowl(previousFallenPin, currentFallenPin, this.states.getSize());
+        setStates(state, new Pin(currentFallenPin));
     }
 
     @Override

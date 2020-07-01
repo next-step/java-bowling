@@ -13,7 +13,8 @@ public class FinalFrameTest {
     @Test
     void bowl() {
         FinalFrame finalFrame = new FinalFrame();
-        finalFrame.bowl(new Pin(10));
+        int previousFallenPin = finalFrame.getStates().getLastPin().getFallenPin();
+        finalFrame.bowl(previousFallenPin, 10);
 
         assertThat(finalFrame.getStates().getStates().get(0)).isEqualTo(State.STRIKE);
         assertThat(finalFrame.getStates().getLastPin()).isEqualTo(new Pin(10));
@@ -23,9 +24,12 @@ public class FinalFrameTest {
     @Test
     void isEndFrame() {
         FinalFrame finalFrame = new FinalFrame();
-        finalFrame.bowl(new Pin(10));
-        finalFrame.bowl(new Pin(10));
-        finalFrame.bowl(new Pin(10));
+        int previousFallenPin = finalFrame.getStates().getLastPin().getFallenPin();
+        finalFrame.bowl(previousFallenPin, 10);
+        previousFallenPin = finalFrame.getStates().getLastPin().getFallenPin();
+        finalFrame.bowl(previousFallenPin, 10);
+        previousFallenPin = finalFrame.getStates().getLastPin().getFallenPin();
+        finalFrame.bowl(previousFallenPin, 10);
 
         boolean actual = finalFrame.isEndFrame();
 
@@ -36,9 +40,12 @@ public class FinalFrameTest {
     @Test
     void isEndGame() {
         FinalFrame finalFrame = new FinalFrame();
-        finalFrame.bowl(new Pin(10));
-        finalFrame.bowl(new Pin(10));
-        finalFrame.bowl(new Pin(10));
+        int previousFallenPin = finalFrame.getStates().getLastPin().getFallenPin();
+        finalFrame.bowl(previousFallenPin, 10);
+        previousFallenPin = finalFrame.getStates().getLastPin().getFallenPin();
+        finalFrame.bowl(previousFallenPin, 10);
+        previousFallenPin = finalFrame.getStates().getLastPin().getFallenPin();
+        finalFrame.bowl(previousFallenPin, 10);
 
         boolean actual = finalFrame.isEndGame();
 
@@ -58,9 +65,12 @@ public class FinalFrameTest {
         int secondPin = 10;
         int thirdPin = 2;
         FinalFrame finalFrame = new FinalFrame();
-        finalFrame.bowl(new Pin(firstPin));
-        finalFrame.bowl(new Pin(secondPin));
-        finalFrame.bowl(new Pin(thirdPin));
+        int previousFallenPin = finalFrame.getStates().getLastPin().getFallenPin();
+        finalFrame.bowl(previousFallenPin, firstPin);
+        previousFallenPin = finalFrame.getStates().getLastPin().getFallenPin();
+        finalFrame.bowl(previousFallenPin, secondPin);
+        previousFallenPin = finalFrame.getStates().getLastPin().getFallenPin();
+        finalFrame.bowl(previousFallenPin, thirdPin);
 
         int score = finalFrame.getScore();
 

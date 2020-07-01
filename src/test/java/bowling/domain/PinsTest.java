@@ -18,4 +18,30 @@ class PinsTest {
         assertThat(pins.getPins()).hasSize(2);
         assertThat(pins.getPins().get(0)).isEqualTo(new Pin(Pin.MAX_PIN));
     }
+
+    @Test
+    void getLastPin() {
+        int firstPin = 8;
+        int secondPin = 7;
+        Pins pins = new Pins();
+        pins.add(new Pin(firstPin));
+        pins.add(new Pin(secondPin));
+
+        Pin actual = pins.getLastPin();
+
+        assertThat(actual).isEqualTo(new Pin(secondPin));
+    }
+
+    @Test
+    void getBeforePin() {
+        int firstPin = 8;
+        int secondPin = 7;
+        Pins pins = new Pins();
+        pins.add(new Pin(firstPin));
+        pins.add(new Pin(secondPin));
+
+        Pin actual = pins.getBeforePin();
+
+        assertThat(actual).isEqualTo(new Pin(firstPin));
+    }
 }

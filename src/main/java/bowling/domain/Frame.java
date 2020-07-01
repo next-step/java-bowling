@@ -5,7 +5,7 @@ public abstract class Frame {
 
     protected States states;
 
-    abstract void bowl(Pin pin);
+    abstract void bowl(int previousFallenPin, int currentFallenPin);
     abstract boolean isEndFrame();
     abstract boolean isEndGame();
     abstract Frame getNextFrame(int frameNumber);

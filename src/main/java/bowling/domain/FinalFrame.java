@@ -8,9 +8,9 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public void bowl(Pin fallenPin) {
-        State state = State.finalBowl(this.states.getLastPin().getFallenPin(), fallenPin.getFallenPin(), this.states.getLastState());
-        setStates(state, fallenPin);
+    public void bowl(int previousFallenPin, int currentFallenPin) {
+        State state = State.finalBowl(previousFallenPin, currentFallenPin, this.states.getLastState());
+        setStates(state, new Pin(currentFallenPin));
     }
 
     @Override
