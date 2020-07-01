@@ -79,6 +79,18 @@
     - [X] 2번 던져서 넘긴 핀이 10개 미만 Finish 반환
     - [X] 1번 던져서 넘긴 핀이 10개이면, 보너스 투구 후에 Finish 반환
     - [X] 2번 던져서 넘긴 핀이 10개이면, 보너스 투구 후에 Finish 반환
+- Frames
+  - [X] Spare 처리 전에는 Null Score
+  - [X] Miss는 해당 투구만 점수로 계산
+  - [X] Strike는 이후 0번 투구하면 Null Score
+  - [X] Strike는 이후 1번 투구하면 Null Score
+  - [X] Strike는 이후 2번 투구하면 Score
+  - [X] Spare 이후 0번 투구하면 Null Score
+  - [X] Spare는 이후 1번 투구하면 Score
+  - [X] Strike 2번 후 2번 투구하면 Score
+  - [X] Strike 3번 후 Miss 1번
+  - [X] 10 프레임이 종료되지 않으면 Null Score
+  - [X] 10 프레임이 종료되면 Score
 - Player
     - [X] 이름의 길이를 입력 받아 생성
     - [X] 이름의 길이가 3자가 아니면 예외 발생

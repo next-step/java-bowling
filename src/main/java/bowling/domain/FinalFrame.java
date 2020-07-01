@@ -50,6 +50,38 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    public Score calculateScore() {
+        if (!isGameEnd()) {
+            return Score.ofNull();
+        }
+        Score score = Score.ofPitch(pitch);
+        if (isBonusPitch) {
+            return score.add(Score.of(bonusPitch.getFallenPin()));
+        }
+        return score;
+    }
+
+    @Override
+    public Score calculateBonusScore(Shot shot) {
+        if (pitch.getThrowCount() == IntegerUtils.ZERO ) {
+            return Score.ofNull();
+        }
+
+        if (shot == Shot.SPARE) {
+            return Score.of(pitch.calculatePinCount(1));
+        }
+
+        if (shot == Shot.STRIKE) {
+            if (!pitch.isPitchEnd()) {
+                return Score.ofNull();
+            }
+            return Score.of(pitch.calculatePinCount(pitch.getThrowCount()));
+        }
+
+        throw new IllegalArgumentException("Bonus Shot Type is only Strike, Spare");
+    }
+
+    @Override
     public boolean isGameEnd() {
         if (isBonusPitch) {
             return bonusPitch.getThrowCount() > IntegerUtils.ZERO;

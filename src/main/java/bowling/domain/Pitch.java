@@ -54,8 +54,25 @@ public class Pitch {
         return pins.size() == MAX_THROW_COUNT || remainPin.isZeroPin();
     }
 
+    public int calculatePinCount(int count) {
+        if (pins.size() < count) {
+            throw new IllegalArgumentException("size of pin is less than count");
+        }
+
+        return pins
+                .subList(IntegerUtils.ZERO, count)
+                .stream()
+                .map(Pin::getCount)
+                .reduce(Integer::sum)
+                .orElse(0);
+    }
+
     public ShotHistory getShotHistory() {
         return shotHistory;
+    }
+
+    public int getFallenPin() {
+        return pins.stream().map(Pin::getCount).reduce(Integer::sum).orElse(0);
     }
 
     public int getRemain() {

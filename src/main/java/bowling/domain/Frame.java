@@ -27,6 +27,10 @@ public abstract class Frame {
 
     public abstract ShotHistory getShotHistory();
 
+    public abstract Score calculateScore();
+
+    public abstract Score calculateBonusScore(Shot shot);
+
     public abstract boolean isGameEnd();
 
     public Pitch getPitch() {
