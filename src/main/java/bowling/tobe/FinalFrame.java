@@ -16,6 +16,7 @@ public class FinalFrame extends Frame {
         this.frameNo = FINAL_FRAME;
         this.pitch = new Pitch();
         this.isBonusPitch = false;
+        this.bonusPitch = new Pitch();
     }
 
     @Override
@@ -46,7 +47,18 @@ public class FinalFrame extends Frame {
 
     @Override
     public List<Shot> getShotHistory() {
-        // TODO
-        return null;
+        List<Shot> shotHistory = pitch.getShotHistory();
+        if (isBonusPitch) {
+            shotHistory.addAll(bonusPitch.getShotHistory());
+        }
+        return shotHistory;
+    }
+
+    @Override
+    public boolean isGameEnd() {
+        if (isBonusPitch) {
+            return bonusPitch.getThrowCount() > IntegerUtils.ZERO;
+        }
+        return pitch.isPitchEnd();
     }
 }

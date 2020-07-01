@@ -30,4 +30,9 @@ public class NormalFrame extends Frame {
     public List<Shot> getShotHistory() {
         return pitch.getShotHistory();
     }
+
+    @Override
+    public boolean isGameEnd() {
+        return false;
+    }
 }

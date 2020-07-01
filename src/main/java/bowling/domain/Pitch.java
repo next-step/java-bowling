@@ -42,6 +42,17 @@ public class Pitch {
         shotHistory.add(Shot.of(pins.size() == IntegerUtils.ZERO, pin.getCount(), remain - pin.getCount()));
     }
 
+    public int getThrowCount() {
+        return pins.size();
+    }
+
+    public boolean isPitchEnd() {
+        if (getThrowCount() >= MAX_THROW_COUNT) {
+            return true;
+        }
+        return getShotHistory().contains(Shot.STRIKE);
+    }
+
     public List<Shot> getShotHistory() {
         return shotHistory;
     }

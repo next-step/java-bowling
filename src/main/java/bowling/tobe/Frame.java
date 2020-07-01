@@ -30,4 +30,5 @@ public abstract class Frame {
 
     public abstract List<Shot> getShotHistory();
 
+    public abstract boolean isGameEnd();
 }
