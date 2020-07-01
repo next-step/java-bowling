@@ -1,12 +1,7 @@
 package bowling.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class FinalFrame extends Frame {
     private static final int FINAL_FRAME = 10;
-    private final Map<Round, BowlingPins> record = new HashMap<>();
-    private boolean isFinished = false;
 
     public FinalFrame() {
     }
@@ -27,10 +22,6 @@ public class FinalFrame extends Frame {
         record.put(Round.SECOND_ROUND, bowlingPins);
         isFinished = true;
         return this;
-    }
-
-    public boolean isFinished() {
-        return isFinished;
     }
 
     @Override

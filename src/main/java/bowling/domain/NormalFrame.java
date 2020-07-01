@@ -1,15 +1,10 @@
 package bowling.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class NormalFrame extends Frame {
     private final int frameNumber;
-    private final Map<Round, BowlingPins> record;
 
     public NormalFrame(final int frameNumber) {
         this.frameNumber = frameNumber;
-        this.record = new HashMap<>();
     }
 
     @Override
@@ -17,6 +12,7 @@ public class NormalFrame extends Frame {
         if (record.isEmpty()) {
             record.put(Round.FIRST_ROUND, bowlingPins);
             if (bowlingPins.isMax()) {
+                isFinished = true;
                 if (this.frameNumber == 9) {
                     return new FinalFrame();
                 }
@@ -27,6 +23,7 @@ public class NormalFrame extends Frame {
         if (this.record.get(Round.FIRST_ROUND).isNotAddable(bowlingPins)) {
             throw new IllegalArgumentException("쓰러트리는 볼링핀의 수의 합은 10이하여야합니다");
         }
+        isFinished = true;
         record.put(Round.SECOND_ROUND, bowlingPins);
         return this.next();
     }
@@ -39,4 +36,5 @@ public class NormalFrame extends Frame {
     private NormalFrame next() {
         return new NormalFrame(this.frameNumber + 1);
     }
+
 }

@@ -23,6 +23,15 @@ public class BowlingPins {
         return this.number + bowlingPins.number > MAX_PINS;
     }
 
+    public BowlingPins add(final BowlingPins bowlingPins) {
+        return BowlingPins.of(this.number + bowlingPins.number);
+    }
+
+    @Override
+    public String toString() {
+        return number + "";
+    }
+
     private static class BowlingPinsCache {
         private static final BowlingPins[] cache;
 
