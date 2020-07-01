@@ -7,14 +7,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class NormalFrame implements Frame {
-    private static final int FINAL_NORMAL_FRAME_NUMBER = 9;
+    private static final int FINAL_FRAME_NUMBER = 10;
 
-    private final FrameNumber frameNumber;
     private final Pitches pitches;
     private Frame next;
 
-    public NormalFrame(final int frameNumber) {
-        this.frameNumber = new FrameNumber(frameNumber);
+    public NormalFrame() {
         this.pitches = new NormalPitches();
     }
 
@@ -29,18 +27,14 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame createNextFrame() {
-        if (frameNumber.getNumber() == FINAL_NORMAL_FRAME_NUMBER) {
-            next = new FinalFrame(frameNumber.getNumber() + 1);
+    public Frame createNextFrame(int frameNumber) {
+        if (frameNumber == FINAL_FRAME_NUMBER) {
+            next = new FinalFrame();
             return next;
         }
 
-        next = new NormalFrame(frameNumber.getNumber() + 1);
+        next = new NormalFrame();
         return next;
-    }
-
-    public FrameNumber getFrameNumber() {
-        return frameNumber;
     }
 
     @Override

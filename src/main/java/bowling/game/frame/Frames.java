@@ -12,7 +12,7 @@ public class Frames {
 
     public Frames() {
         this.frames = new LinkedList<>();
-        this.frames.add(new NormalFrame(1));
+        this.frames.add(new NormalFrame());
     }
 
     public Frame getCurrentFrame() {
@@ -20,7 +20,9 @@ public class Frames {
     }
 
     public void createNextFrame() {
-        Frame nextFrame = getCurrentFrame().createNextFrame();
+        int currentFrameNumber = frames.size();
+
+        Frame nextFrame = getCurrentFrame().createNextFrame(currentFrameNumber + 1);
 
         frames.add(nextFrame);
     }
@@ -45,9 +47,7 @@ public class Frames {
     }
 
     public int getCurrentFrameNumber() {
-        Frame frame = getCurrentFrame();
-
-        return frame.getFrameNumber().getNumber();
+        return frames.size();
     }
 
     public List<String> getFramesStates() {

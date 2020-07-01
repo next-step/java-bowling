@@ -7,11 +7,9 @@ import java.util.Optional;
 
 public class FinalFrame implements Frame {
 
-    private final FrameNumber frameNumber;
     private final Pitches pitches;
 
-    public FinalFrame(final int frameNumber) {
-        this.frameNumber = new FrameNumber(frameNumber);
+    public FinalFrame() {
         this.pitches = new FinalPitches();
     }
 
@@ -26,12 +24,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame createNextFrame() {
+    public Frame createNextFrame(int frameNumber) {
         throw new IllegalStateException("마지막 프레임은 다음 프레임을 만들 수 없습니다.");
-    }
-
-    public FrameNumber getFrameNumber() {
-        return frameNumber;
     }
 
     @Override

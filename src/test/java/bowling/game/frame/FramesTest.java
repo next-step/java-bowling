@@ -18,9 +18,7 @@ class FramesTest {
     void createFrames() {
         Frames frames = new Frames();
 
-        Frame firstFrame = frames.getCurrentFrame();
-
-        assertThat(firstFrame.getFrameNumber().getNumber()).isEqualTo(1);
+        assertThat(frames.getCurrentFrameNumber()).isEqualTo(1);
     }
 
     @DisplayName("다음 프레임을 생성해서 추가한다.")
@@ -29,9 +27,8 @@ class FramesTest {
         Frames frames = new Frames();
 
         frames.createNextFrame();
-        Frame nextFrame = frames.getCurrentFrame();
 
-        assertThat(nextFrame.getFrameNumber().getNumber()).isEqualTo(2);
+        assertThat(frames.getCurrentFrameNumber()).isEqualTo(2);
     }
 
     @DisplayName("현재 프레임에 투구 기회가 있는지 반환한다.")

@@ -9,9 +9,7 @@ public interface Frame {
 
     boolean hasRemainChance();
 
-    Frame createNextFrame();
-
-    FrameNumber getFrameNumber();
+    Frame createNextFrame(int frameNumber);
 
     boolean isLastFrame();
 
