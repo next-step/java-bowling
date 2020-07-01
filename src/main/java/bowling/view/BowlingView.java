@@ -5,6 +5,7 @@ import static bowling.model.Symbols.*;
 import bowling.model.BowlingGame;
 import bowling.model.FrameDTO;
 import java.util.List;
+import java.util.Optional;
 
 public class BowlingView {
 
@@ -68,8 +69,33 @@ public class BowlingView {
     return wrappingWithSpaces(sb.toString());
   }
 
+  public static void printScores(List<Integer> scores) {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append(BAR)
+        .append(wrappingWithSpaces(BLANK.toString()))
+        .append(BAR);
+
+    int[] scoreHolder = new int[]{0};
+
+    scores.forEach(score -> {
+      scoreHolder[0] += score;
+
+      sb.append(wrappingWithSpaces(String.valueOf(scoreHolder[0])))
+          .append(BAR);
+    });
+
+    sb.append(System.lineSeparator());
+
+    System.out.println(sb);
+  }
+
   private static String wrappingWithSpaces(String str) {
     StringBuilder sb = new StringBuilder();
+
+    if (str.equals("0")) {
+      str = BLANK.toString();
+    }
 
     int space = MAXLENGTH_PER_FRAME - str.length();
     int leftSpace = space / 2;
