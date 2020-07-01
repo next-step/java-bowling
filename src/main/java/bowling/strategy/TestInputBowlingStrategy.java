@@ -9,7 +9,7 @@ public class TestInputBowlingStrategy implements BowlingStrategy {
         if(pin.isAllClear()) {
             return new Pin(0,0);
         }
-        return new Pin(pin.leftPins(), 5);
+        return new Pin(pin.leftPins(), 10);
     }
 
 }

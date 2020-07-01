@@ -12,6 +12,7 @@ public class GamePlay {
     private static final int MAX_FRAME_INDEX = MAX_FRAME_COUNT - 1;
     private Player player;
     private Frames frames = new Frames();
+    private Scores scores = new Scores();
 
     private GamePlay(Player player, BowlingStrategy bowlingStrategy) {
         this.player = player;
@@ -25,39 +26,37 @@ public class GamePlay {
         }
     }
 
+    public static GamePlay play(Player player, BowlingStrategy bowlingStrategy) {
+        return new GamePlay(player, bowlingStrategy);
+    }
+
     private void drawAndShowResult(Player player, BowlingStrategy bowlingStrategy, int index) {
         Frame frame = drawBowl(bowlingStrategy, index);
-        frame.createScore();
-        if (index != FIRST_FRAME_INDEX_ZERO) {
-            frames.setNextScore(frame);
-        }
+        this.scores.add(Scores.createScore(frame.state, frame.pins));
         this.frames.add(frame);
         OutputView.output(player, this);
     }
 
     private void drawAndShowResult(Player player, BowlingStrategy bowlingStrategy, Frame lastFrame) {
         lastFrame = drawBowl(bowlingStrategy, lastFrame);
-        lastFrame.createScore();
         frames.replaceFinalFrame(lastFrame);
+        this.scores.add(Scores.createScore(lastFrame.state, lastFrame.pins));
         OutputView.output(player, this);
     }
 
-    public static GamePlay play(Player player, BowlingStrategy bowlingStrategy) {
-        return new GamePlay(player, bowlingStrategy);
-    }
 
     public Frame drawBowl(BowlingStrategy bowlingStrategy, int index) {
         Pin firstPin = bowlingStrategy.drawBowl(new Pin(), index);
         Pin secondPin = bowlingStrategy.drawBowl(firstPin, index);
-        return Frame.of(firstPin, secondPin);
+        return Frame.of(new Pins(firstPin, secondPin));
     }
 
     public Frame drawBowl(BowlingStrategy bowlingStrategy, Frame lastFrame) {
         if (lastFrame.state == State.STRIKE) {
-            lastFrame.secondPin = bowlingStrategy.drawBowl(new Pin(), MAX_FRAME_INDEX);
+            lastFrame.pins.setSecondPin(bowlingStrategy.drawBowl(new Pin(), MAX_FRAME_INDEX));
         }
-        Pin thirdPin = bowlingStrategy.drawBowl(new Pin(), MAX_FRAME_INDEX);
-        return Frame.of(thirdPin, lastFrame);
+        lastFrame.pins.setThirdPin(bowlingStrategy.drawBowl(new Pin(), MAX_FRAME_INDEX));
+        return Frame.of(lastFrame);
     }
 
     public List<String> showFrameResult() {
@@ -65,11 +64,11 @@ public class GamePlay {
     }
 
     public List<String> showFrameScore() {
-        return frames.showGameScore();
+        return scores.showGameScore();
     }
 
     public List<String> showFrameSumScore() {
-        return frames.showGameSumScore();
+        return scores.showGameSumScore();
     }
 
 }

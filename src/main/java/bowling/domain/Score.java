@@ -1,78 +1,53 @@
 package bowling.domain;
 
-public class Score {
+public abstract class Score {
 
     private static final int GAME_STEP = 1;
 
-    private int firstScore;
-    private int secondScore;
-    private int score;
-    private int bonusScore;
-    private int sumScore;
+    protected Pins pins;
+    protected int firstScore;
+    protected int secondScore;
+    protected int score;
+    protected int bonusScore;
+    protected int sumScore;
 
-    public Score(int firstScore, int secondScore) {
-        this.firstScore = firstScore;
-        this.secondScore = secondScore;
+    public Score(Pins pins) {
+        this.pins = pins;
+        this.firstScore = pins.getFirstPin().falledPins();
+        this.secondScore = pins.getSecondPin().falledPins();
         this.score = firstScore + secondScore;
+        this.bonusScore += 0;
+        this.sumScore = score;
     }
 
-    public int getScore() {
-        return score;
+    public String getCurrentScore() {
+        return Integer.toString(score);
     }
 
-    public int getFirstScore() {
-        return firstScore;
+    public String getCurrentSumScore() {
+        return Integer.toString(getSumScore());
     }
 
     public int getSumScore() {
         return sumScore;
     }
 
-    public void addBonusNumber(State state, Score nextScore) {
+    public void calculateAdditionalScore(Score nextScore) {
+/*        if (this.pins.isFinal()) {
+            nextScore = new ScoreNormal(new Pins(pins.getThirdPin(), new Pin()));
+        }*/
 
-        // spare
-        if (state == State.SPARE) {
-            this.bonusScore = nextScore.firstScore;
-            this.sumScore += score + bonusScore;
-        }
-        // strike
-        if (state == State.STRIKE) {
-            this.bonusScore = nextScore.score;
-            //this.score = this.bonusScore;
-            this.sumScore += this.score + this.bonusScore;
-        }
-        // etc
-        if (state != State.SPARE && state != State.STRIKE) {
-            this.bonusScore = 0;
-            this.score = this.bonusScore;
-            this.sumScore += this.score;
-        }
-        nextScore.sumScore = this.sumScore;
+        addBonusNumber(nextScore);
+
     }
 
-    public void addBonusNumberLastFrame(Frame finalFrame) {
-        FinalFrame frame = (FinalFrame) finalFrame;
-
-        // spare // strike
-        if (frame.state == State.SPARE || frame.state == State.STRIKE) {
-            this.bonusScore = frame.getThirdPin().falledPins();
-            this.sumScore += this.score + bonusScore;
-        }
-        // etc
-        if (frame.state != State.SPARE && frame.state != State.STRIKE) {
-            this.bonusScore = 0;
-            this.score += this.bonusScore;
-            this.sumScore += this.score;
-        }
-    }
+    public abstract void addBonusNumber(Score nextScore);
 
     @Override
     public String toString() {
         return Integer.toString(sumScore);
     }
 
-    public void resetSumScore() {
-        sumScore = 0;
-    }
+    public abstract void reset();
 
 }

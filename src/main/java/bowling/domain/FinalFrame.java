@@ -2,21 +2,18 @@ package bowling.domain;
 
 public class FinalFrame extends Frame {
 
-    private Pin thirdPin;
     private State thirdState = State.MISS;
 
     private boolean hasThirdDraw;
 
-    public FinalFrame(Pin thirdPin, Frame frame) {
-        this.firstPin = frame.firstPin;
-        this.secondPin = frame.secondPin;
-        this.thirdPin = thirdPin;
+    public FinalFrame(Frame frame) {
+        this.pins = frame.pins;
         this.hasThirdDraw = true;
         //state
-        if (thirdPin.isAllClear()) {
+        if (pins.getThirdPin().isAllClear()) {
             this.thirdState = State.STRIKE;
         }
-        if (thirdPin.isGutter()) {
+        if (pins.getThirdPin().isGutter()) {
             this.thirdState = State.GURTER;
         }
     }
@@ -42,34 +39,34 @@ public class FinalFrame extends Frame {
     }
 
     public Pin getThirdPin() {
-        return thirdPin;
+        return pins.getThirdPin();
     }
 
     private void firstPinResult(StringBuilder stringBuilder) {
-        if (firstPin.isAllClear()) {
+        if (pins.getFirstPin().isAllClear()) {
             stringBuilder.append(State.STRIKE);
             return;
         }
-        if (firstPin.isGutter()) {
+        if (pins.getFirstPin().isGutter()) {
             stringBuilder.append(State.GURTER);
             return;
         }
-        stringBuilder.append(firstPin);
+        stringBuilder.append(pins.getFirstPin());
     }
 
     private void secondPinResult(StringBuilder stringBuilder) {
-        if (!firstPin.isAllClear() && secondPin.isAllClear()) {
+        if (!pins.getFirstPin().isAllClear() && pins.getSecondPin().isAllClear()) {
             stringBuilder.append(State.SPARE);
             return;
         }
-        if (firstPin.isAllClear() && secondPin.isAllClear()) {
+        if (pins.getFirstPin().isAllClear() && pins.getSecondPin().isAllClear()) {
             stringBuilder.append(State.STRIKE);
             return;
         }
-        if (secondPin.isGutter()) {
+        if (pins.getSecondPin().isGutter()) {
             stringBuilder.append(State.GURTER);
         }
-        stringBuilder.append(secondPin);
+        stringBuilder.append(pins.getSecondPin());
     }
 
     private void thirdPinResult(StringBuilder stringBuilder) {
@@ -78,13 +75,7 @@ public class FinalFrame extends Frame {
             stringBuilder.append(thirdState);
             return;
         }
-        stringBuilder.append(thirdPin.toString());
-    }
-
-    @Override
-    public Frame calculateAdditionalScore(Score nextScore) {
-        this.currentScore.addBonusNumberLastFrame(this);
-        return this;
+        stringBuilder.append(pins.getThirdPin());
     }
 
 }

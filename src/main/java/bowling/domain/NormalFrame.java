@@ -2,27 +2,22 @@ package bowling.domain;
 
 public class NormalFrame extends Frame {
 
-    public NormalFrame(Pin firstPin, Pin secondPin) {
-        this.firstPin = firstPin;
-        this.secondPin = secondPin;
+    public NormalFrame(Pins pins) {
+        this.pins = pins;
         //state
-        if (firstPin.isGutter() && secondPin.isGutter()) {
+        if (pins.getFirstPin().isGutter() && pins.getSecondPin().isGutter()) {
             this.state = State.GURTER;
         }
-        if (secondPin.leftPins() < BOWLING_MAX_PINS) {
+        if (pins.getSecondPin().leftPins() < BOWLING_MAX_PINS) {
             this.state = State.MISS;
         }
-        if (secondPin.isAllClear()) {
+        if (pins.getSecondPin().isAllClear()) {
             this.state = State.SPARE;
         }
-        if (firstPin.isAllClear()) {
+        if (pins.getFirstPin().isAllClear()) {
             this.state = State.STRIKE;
         }
     }
 
-    public Frame calculateAdditionalScore(Score nextScore) {
-        this.currentScore.addBonusNumber(state, nextScore);
-        return this;
-    }
 
 }
