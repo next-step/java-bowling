@@ -5,4 +5,14 @@ public class Strike extends Finished {
     public String printResult() {
         return "X";
     }
+
+    @Override
+    public boolean isClearAllPins() {
+        return true;
+    }
+
+    @Override
+    public boolean canRemovePendingStatue() {
+        return false;
+    }
 }

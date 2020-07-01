@@ -13,4 +13,15 @@ public class Pending extends Running {
     public String printResult() {
         return isGutter(firstPin);
     }
+
+    @Override
+    public boolean isClearAllPins() {
+        return false;
+    }
+
+    @Override
+    public boolean canRemovePendingStatue() {
+        return false;
+    }
+
 }

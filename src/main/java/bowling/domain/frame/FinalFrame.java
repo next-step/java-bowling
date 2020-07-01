@@ -1,9 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.status.Miss;
-import bowling.domain.status.Spare;
 import bowling.domain.status.Status;
-import bowling.domain.status.Strike;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +21,7 @@ public class FinalFrame implements Frame {
     }
 
     public static Frame init() {
-        return new FinalFrame(Pins.init(), 0);
+        return new FinalFrame(Pins.init(), FIRST_TRY);
     }
 
     public void bowl(int downPin) {
@@ -63,26 +60,18 @@ public class FinalFrame implements Frame {
     }
 
     private void bonusPinSetting(Status status) {
-        if (isBonusCondition(status)) {
+        if (status.isClearAllPins()) {
             pins = Pins.init();
         }
-        if (isStatusRemoveCondition(status)) {
-            statuses.remove(0);
+        if (isLastTryAtFrame() && status.canRemovePendingStatue()) {
+            statuses.remove(FIRST_TRY);
         }
-    }
 
-    private boolean isStatusRemoveCondition(Status status) {
-        return status instanceof Spare || !haveBonus() && isLastTryAtFrame();
     }
 
     private boolean haveBonus() {
-        return statuses.stream().anyMatch(status -> isBonusCondition(status));
+        return statuses.stream().anyMatch(status -> status.isClearAllPins());
     }
-
-    private boolean isBonusCondition(Status status) {
-        return status instanceof Strike || status instanceof Spare;
-    }
-
 
     @Override
     public String toString() {

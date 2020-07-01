@@ -17,4 +17,14 @@ public class Miss extends Finished {
     public String printResult() {
         return isGutter(firstPin) + "|" + isGutter(downPin);
     }
+
+    @Override
+    public boolean isClearAllPins() {
+        return false;
+    }
+
+    @Override
+    public boolean canRemovePendingStatue() {
+        return true;
+    }
 }

@@ -13,4 +13,15 @@ public class Spare extends Finished {
     public String printResult() {
         return isGutter(firstPin) + "|/";
     }
+
+    @Override
+    public boolean isClearAllPins() {
+        return true;
+    }
+
+    @Override
+    public boolean canRemovePendingStatue() {
+        return true;
+    }
+
 }

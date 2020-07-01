@@ -19,6 +19,10 @@ public interface Status {
 
     boolean canPlayMore();
 
+    boolean isClearAllPins();
+
+    boolean canRemovePendingStatue();
+
     default String isGutter(int downPin) {
         if (downPin == 0) {
             return "-";
