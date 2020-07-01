@@ -12,8 +12,7 @@ public class NormalFrameTest {
     @Test
     void bowl() {
         NormalFrame normalFrame = new NormalFrame();
-        int previousFallenPin = normalFrame.getStates().getLastPin().getFallenPin();
-        normalFrame.bowl(previousFallenPin, 10);
+        normalFrame.bowl(new Pin(10));
 
         assertThat(normalFrame.getStates().getStates().get(0)).isEqualTo(State.STRIKE);
         assertThat(normalFrame.getStates().getLastPin()).isEqualTo(new Pin(10));
@@ -24,8 +23,7 @@ public class NormalFrameTest {
     @Test
     void isEndFrame() {
         NormalFrame normalFrame = new NormalFrame();
-        int previousFallenPin = normalFrame.getStates().getLastPin().getFallenPin();
-        normalFrame.bowl(previousFallenPin, 10);
+        normalFrame.bowl(new Pin(10));
 
         boolean actual = normalFrame.isEndFrame();
 
@@ -50,11 +48,8 @@ public class NormalFrameTest {
         int secondPin = 7;
         NormalFrame normalFrame = new NormalFrame();
 
-        int previousFallenPin = normalFrame.getStates().getLastPin().getFallenPin();
-        normalFrame.bowl(previousFallenPin, firstPin);
-
-        previousFallenPin = normalFrame.getStates().getLastPin().getFallenPin();
-        normalFrame.bowl(previousFallenPin, secondPin);
+        normalFrame.bowl(new Pin(firstPin));
+        normalFrame.bowl(new Pin(secondPin));
 
         int score = normalFrame.getScore();
 
@@ -66,11 +61,8 @@ public class NormalFrameTest {
         int firstPin = 2;
         int secondPin = 8;
         NormalFrame normalFrame = new NormalFrame();
-        int previousFallenPin = normalFrame.getStates().getLastPin().getFallenPin();
-        normalFrame.bowl(previousFallenPin, firstPin);
-
-        previousFallenPin = normalFrame.getStates().getLastPin().getFallenPin();
-        normalFrame.bowl(previousFallenPin, secondPin);
+        normalFrame.bowl(new Pin(firstPin));
+        normalFrame.bowl(new Pin(secondPin));
         normalFrame.getNextFrame(2);
 
         int score = normalFrame.getScore();
@@ -83,8 +75,7 @@ public class NormalFrameTest {
         int firstPin = 10;
         NormalFrame normalFrame = new NormalFrame();
 
-        int previousFallenPin = normalFrame.getStates().getLastPin().getFallenPin();
-        normalFrame.bowl(previousFallenPin, firstPin);
+        normalFrame.bowl(new Pin(firstPin));
 
         normalFrame.getNextFrame(2);
 
