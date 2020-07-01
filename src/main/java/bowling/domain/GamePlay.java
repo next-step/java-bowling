@@ -8,7 +8,6 @@ import java.util.List;
 public class GamePlay {
 
     private static final int MAX_FRAME_COUNT = 10;
-    private static final int FIRST_FRAME_INDEX_ZERO = 0;
     private static final int MAX_FRAME_INDEX = MAX_FRAME_COUNT - 1;
     private Player player;
     private Frames frames = new Frames();

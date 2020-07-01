@@ -15,7 +15,7 @@ public class Pins {
         this.secondPin = secondPin;
     }
 
-    public Pins(Pin firstPin, Pin secondPin, Pin thirdPin, boolean hasThirdPin) {
+    public Pins(Pin firstPin, Pin secondPin, Pin thirdPin) {
         this.firstPin = firstPin;
         this.secondPin = secondPin;
         this.thirdPin = thirdPin;

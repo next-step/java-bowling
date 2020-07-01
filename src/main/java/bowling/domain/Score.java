@@ -33,12 +33,7 @@ public abstract class Score {
     }
 
     public void calculateAdditionalScore(Score nextScore) {
-/*        if (this.pins.isFinal()) {
-            nextScore = new ScoreNormal(new Pins(pins.getThirdPin(), new Pin()));
-        }*/
-
         addBonusNumber(nextScore);
-
     }
 
     public abstract void addBonusNumber(Score nextScore);

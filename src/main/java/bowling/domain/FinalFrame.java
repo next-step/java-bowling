@@ -4,11 +4,8 @@ public class FinalFrame extends Frame {
 
     private State thirdState = State.MISS;
 
-    private boolean hasThirdDraw;
-
     public FinalFrame(Frame frame) {
         this.pins = frame.pins;
-        this.hasThirdDraw = true;
         //state
         if (pins.getThirdPin().isAllClear()) {
             this.thirdState = State.STRIKE;
@@ -28,18 +25,6 @@ public class FinalFrame extends Frame {
         secondPinResult(stringBuilder);
         thirdPinResult(stringBuilder);
         return stringBuilder.toString();
-    }
-
-    public boolean isHasThirdDraw() {
-        return hasThirdDraw;
-    }
-
-    public State getThirdState() {
-        return thirdState;
-    }
-
-    public Pin getThirdPin() {
-        return pins.getThirdPin();
     }
 
     private void firstPinResult(StringBuilder stringBuilder) {

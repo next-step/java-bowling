@@ -29,11 +29,10 @@ class TestlInputBowlingStrategyTest {
     @DisplayName("쓰러진 핀 1 ~ 9 ")
     @Test
     void miss() {
-        Pin pin = new Pin(10, 0);
-        Pin result = new TestInputBowlingStrategy().drawBowl(pin, 4);
+        Pin pin = new Pin(9, 3);
+        Pin result = new TestInputBowlingStrategy().drawBowl(pin, 0);
         assertThat(result.leftPins() > 0).isTrue();
         assertThat(result.leftPins() < 10).isTrue();
     }
-
 
 }
