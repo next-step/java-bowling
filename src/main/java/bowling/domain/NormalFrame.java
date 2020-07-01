@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.common.IntegerUtils;
-
 public class NormalFrame extends Frame {
 
     public NormalFrame(int frameNo) {
@@ -39,15 +37,11 @@ public class NormalFrame extends Frame {
 
     @Override
     public Score calculateBonusScore(Shot shot) {
-        if (pitch.getThrowCount() == IntegerUtils.ZERO ) {
-            return Score.ofNull();
-        }
-
         if (shot.getBonusCount() <= pitch.getThrowCount()) {
             return Score.of(pitch.calculatePinCount(shot.getBonusCount()));
         }
 
-        if (shot == Shot.STRIKE && pitch.isPitchEnd()) {
+        if (pitch.isPitchEnd()) {
             return Score.ofPitch(pitch).add(nextFrame.calculateBonusScore(Shot.SPARE));
         }
 

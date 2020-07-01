@@ -63,15 +63,11 @@ public class FinalFrame extends Frame {
 
     @Override
     public Score calculateBonusScore(Shot shot) {
-        if (pitch.getThrowCount() == IntegerUtils.ZERO ) {
-            return Score.ofNull();
-        }
-
         if (shot.getBonusCount() <= pitch.getThrowCount()) {
             return Score.of(pitch.calculatePinCount(shot.getBonusCount()));
         }
 
-        if (shot == Shot.STRIKE && pitch.isPitchEnd()) {
+        if (pitch.isPitchEnd()) {
             return Score.of(pitch.calculatePinCount(pitch.getThrowCount()));
         }
 
