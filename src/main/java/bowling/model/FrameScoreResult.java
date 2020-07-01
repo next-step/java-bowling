@@ -58,7 +58,7 @@ public enum FrameScoreResult {
 
     private static boolean isSpare(final Score preScore, final Score nowScore) {
         return (!Objects.isNull(preScore)
-            && !preScore.isEqualsTo(MIN_PIN_COUNT)
+            && !preScore.isEqualsTo(MAX_PIN_COUNT)
             && Score.sum(Arrays.asList(preScore, nowScore)) == MAX_PIN_COUNT);
     }
 
