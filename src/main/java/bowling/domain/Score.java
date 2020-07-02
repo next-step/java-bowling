@@ -10,8 +10,8 @@ public abstract class Score {
     protected int sumScore;
 
     public Score(Frame frame) {
-        this.firstScore = frame.firstPin.falledPins();
-        this.secondScore = frame.secondPin.falledPins();
+        //this.firstScore = frame.firstPin.fallenPins();
+        //this.secondScore = frame.secondPin.fallenPins();
         this.bonusScore += 0;
         this.sumScore = firstScore + secondScore;
     }

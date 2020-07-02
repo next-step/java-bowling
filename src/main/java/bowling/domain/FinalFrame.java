@@ -1,63 +1,103 @@
 package bowling.domain;
 
+import bowling.strategy.BowlingStrategy;
+
 public class FinalFrame extends Frame {
 
-    public FinalFrame(Frame frame) {
-        this.firstPin = frame.getFirstPin();
-        this.secondPin = frame.getSecondPin();
-        this.thirdPin = frame.getThirdPin();
-        if (thirdPin.isAllClear()) {
-            thirdState = State.STRIKE;
+    @Override
+    protected void setSecondPin(BowlingStrategy bowlingStrategy, int index) {
+        // first pin strike
+        if (pins.isFirstClean()) {
+            pins.setSecondPin(bowlingStrategy.drawBowl(new Pin(BOWLING_MAX_PINS, NUMBER_ZERO), index));
+            return;
         }
-        if (thirdPin.isGutter()) {
-            thirdState = State.GURTER;
+        pins.setSecondPin(bowlingStrategy.drawBowl(new Pin(pins.getFirstLeftPins(), NUMBER_ZERO), index));
+    }
+
+    @Override
+    protected void setThirdPin(BowlingStrategy bowlingStrategy, int index) {
+        // double
+        if (pins.isFirstClean() && pins.isSecondClean()) {
+            pins.setThirdPin(bowlingStrategy.drawBowl(new Pin(BOWLING_MAX_PINS, NUMBER_ZERO), index));
+            return;
         }
+        // spare
+        if (pins.isSecondClean()) {
+            pins.setThirdPin(bowlingStrategy.drawBowl(new Pin(BOWLING_MAX_PINS, NUMBER_ZERO), index));
+            return;
+        }
+        // first strike
+        if (pins.isFirstClean() && !pins.isSecondClean()) {
+            pins.setThirdPin(bowlingStrategy.drawBowl(new Pin(pins.secondLeftPins(), NUMBER_ZERO), index));
+        }
+    }
+
+
+    @Override
+    protected State checkState() {
+        return calcState();
     }
 
     @Override
     public String showResult() {
         StringBuilder stringBuilder = new StringBuilder();
-        firstPinResult(stringBuilder);
-        stringBuilder.append(":");
-        secondPinResult(stringBuilder);
-        thirdPinResult(stringBuilder);
+        if (pins.isFirstClean() && pins.isSecondClean() && pins.isThirdClean()) {
+            stringBuilder.append(State.FINAL_TURKEY);
+            return stringBuilder.toString();
+        }
+        if(state == State.FINAL_DOUBLE) {
+            stringBuilder.append(state);
+            stringBuilder.append(":");
+            stringBuilder.append(zeroToGutter(pins.getThirdFallenPins()));
+            return stringBuilder.toString();
+        }
+        if(state == State.SPARE) {
+            stringBuilder.append(zeroToGutter(pins.getFirstFallenPins()));
+            stringBuilder.append(":");
+            stringBuilder.append(state);
+            stringBuilder.append(":");
+            stringBuilder.append(zeroToGutter(pins.getThirdFallenPins()));
+            return stringBuilder.toString();
+        }
+        normalResult(stringBuilder);
         return stringBuilder.toString();
     }
 
-    private void firstPinResult(StringBuilder stringBuilder) {
-        if (firstPin.isAllClear()) {
-            stringBuilder.append(State.STRIKE);
-            return;
-        }
-        if (firstPin.isGutter()) {
-            stringBuilder.append(State.GURTER);
-            return;
-        }
-        stringBuilder.append(firstPin);
-    }
-
-    private void secondPinResult(StringBuilder stringBuilder) {
-        if (!firstPin.isAllClear() && secondPin.isAllClear()) {
-            stringBuilder.append(State.SPARE);
-            return;
-        }
-        if (firstPin.isAllClear() && secondPin.isAllClear()) {
-            stringBuilder.append(State.STRIKE);
-            return;
-        }
-        if (secondPin.isGutter()) {
-            stringBuilder.append(State.GURTER);
-        }
-        stringBuilder.append(secondPin);
-    }
-
-    private void thirdPinResult(StringBuilder stringBuilder) {
+    private String normalResult(StringBuilder stringBuilder) {
+        stringBuilder.append(String.format("%2s", zeroToGutter(pins.getFirstFallenPins())));
         stringBuilder.append(":");
-        if (thirdState != State.MISS) {
-            stringBuilder.append(thirdState);
-            return;
-        }
-        stringBuilder.append(thirdPin);
+        stringBuilder.append(String.format("%2s", zeroToGutter(pins.getSecondFallenPins())));
+        return stringBuilder.toString();
     }
 
+    private String zeroToGutter(int fallenPins) {
+        return String.valueOf(fallenPins == 0 ? State.GUTTER : fallenPins);
+    }
+
+
+    public State calcState() {
+
+        if (pins.isTurkey()) {
+            return State.FINAL_TURKEY;
+        }
+
+        if (pins.isDouble()) {
+            return State.FINAL_DOUBLE;
+        }
+
+        if (pins.isGutter()) {
+            return State.GUTTER;
+        }
+        if (pins.isSpare()) {
+            return State.SPARE;
+        }
+        if (pins.isMiss()) {
+            return State.MISS;
+        }
+        if (pins.isStrike()) {
+            return State.STRIKE;
+        }
+        throw new IllegalStateException();
+
+    }
 }

@@ -8,11 +8,11 @@ public class Scores {
 
     private List<Score> scores = new LinkedList<>();
 
-    public static Score createScore(State state, Frame frame) {
-        if (state == State.SPARE) {
+    public static Score createScore(Frame frame) {
+        if (frame.isState(State.SPARE)) {
             return new ScoreSpare(frame);
         }
-        if (state == State.STRIKE) {
+        if (frame.isState(State.STRIKE)) {
             return new ScoreStrike(frame);
         }
         return new ScoreNormal(frame);

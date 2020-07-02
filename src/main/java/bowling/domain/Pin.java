@@ -5,37 +5,37 @@ public class Pin {
     private static final int MIN_PINS = 0;
     private static final int MAX_PINS = 10;
     private int maxPins;
-    private int falledPins;
+    private int fallenPins;
 
     public Pin() {
-        this.falledPins = MIN_PINS;
+        this.fallenPins = MIN_PINS;
         this.maxPins = MAX_PINS;
     }
 
-    public Pin(int maxPins, int falledPins) {
-        validPins(maxPins, falledPins);
+    public Pin(int maxPins, int fallenPins) {
+        validPins(maxPins, fallenPins);
         this.maxPins = maxPins;
-        this.falledPins = falledPins;
+        this.fallenPins = fallenPins;
     }
 
     public boolean isAllClear() {
-        return maxPins - falledPins == 0;
+        return maxPins - fallenPins == 0;
     }
 
     public int leftPins() {
-        return maxPins - falledPins;
+        return maxPins - fallenPins;
     }
 
-    public int falledPins() {
-        return falledPins;
+    public int fallenPins() {
+        return fallenPins;
     }
 
     public boolean isGutter() {
-        return maxPins - falledPins == maxPins;
+        return maxPins - fallenPins == maxPins;
     }
 
     public boolean isMiss() {
-        return maxPins - falledPins != 0;
+        return maxPins - fallenPins != 0;
     }
 
     private void validPins(int pins) {
@@ -44,15 +44,15 @@ public class Pin {
         }
     }
 
-    private void validPins(int maxPins, int falledPins) {
-        if (falledPins < MIN_PINS || falledPins > maxPins) {
+    private void validPins(int maxPins, int fallenPins) {
+        if (fallenPins < MIN_PINS || fallenPins > maxPins) {
             throw new IllegalArgumentException();
         }
     }
 
     @Override
     public String toString() {
-        return String.valueOf(falledPins);
+        return String.valueOf(fallenPins);
     }
 
 }

@@ -26,7 +26,7 @@ public class OutputView {
 
         for (int i = 0; i < result.size(); i++) {
             stringBuilderHead.append(SEPERATOR);
-            stringBuilderHead.append(String.format("%7s", i+1));
+            stringBuilderHead.append(String.format("%7s", i + 1));
             stringBuilderResult.append(SEPERATOR);
             stringBuilderResult.append(String.format("%7s", result.get(i)));
             stringBuilderScore.append(SEPERATOR);
