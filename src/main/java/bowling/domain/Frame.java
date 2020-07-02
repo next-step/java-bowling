@@ -7,6 +7,10 @@ public abstract class Frame {
     protected Pitch pitch;
     protected Frame nextFrame;
 
+    public static NormalFrame first() {
+        return new NormalFrame(FIRST_FRAME);
+    }
+
     public Frame next() {
         if (frameNo == FINAL_FRAME) {
             throw new IllegalArgumentException("10 Frame is last frame");

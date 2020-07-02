@@ -12,7 +12,7 @@ public class Frames {
     public Frames(Player player) {
         this.player = player;
         this.frames = new LinkedList<>();
-        frames.add(NormalFrame.first());
+        frames.add(Frame.first());
     }
 
     public boolean bowling(Pin pin) {
