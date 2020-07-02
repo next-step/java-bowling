@@ -13,7 +13,7 @@ public abstract class Frame {
 
     public Frame(int frameNo) {
         this.frameNo = frameNo;
-        this.pitch = new Pitch();
+        this.pitch = Pitch.of();
     }
 
     public static NormalFrame first() {

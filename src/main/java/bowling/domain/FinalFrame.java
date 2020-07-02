@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.common.IntegerUtils;
-
 public class FinalFrame extends Frame {
     private boolean isBonusPitch;
     private Pitch bonusPitch;
@@ -9,7 +7,7 @@ public class FinalFrame extends Frame {
     private FinalFrame() {
         super(FINAL_FRAME);
         this.isBonusPitch = false;
-        this.bonusPitch = new Pitch();
+        this.bonusPitch = Pitch.ofBounus();
     }
 
     public static FinalFrame last() {
@@ -30,7 +28,7 @@ public class FinalFrame extends Frame {
     }
 
     private FrameState bowlingBonus(Pin pin) {
-        bonusPitch = new Pitch();
+        bonusPitch = Pitch.ofBounus();
         bonusPitch.add(pin);
         return FrameState.ofFinish();
     }
@@ -81,7 +79,7 @@ public class FinalFrame extends Frame {
     @Override
     public boolean isGameEnd() {
         if (isBonusPitch) {
-            return bonusPitch.getThrowCount() > IntegerUtils.ZERO;
+            return bonusPitch.isFinish();
         }
         return pitch.isFinish();
     }
