@@ -24,13 +24,13 @@ public enum Shot {
         this.pinCount = pinCount;
     }
 
-    public static Shot of(boolean isFirst, int pin, int remain) {
-        if (remain == 0) {
+    public static Shot of(boolean isFirst, Pin fallenPin, Pin remainPin) {
+        if (remainPin.isZeroPin()) {
             return isFirst ? STRIKE : SPARE;
         }
 
         return Arrays.stream(values())
-                .filter(s -> s.pinCount == pin)
+                .filter(s -> s.pinCount == fallenPin.getCount())
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Maybe Frame is invalid"));
     }

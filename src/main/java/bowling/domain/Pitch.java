@@ -20,10 +20,10 @@ public class Pitch {
     public void add(Pin pin) {
         validateThrow(pin);
 
-        insertShotHistory(pin);
-
         pins.add(pin);
         remainPin.subtract(pin);
+
+        insertShotHistory(pin);
     }
 
     private void validateThrow(Pin pin) {
@@ -41,7 +41,11 @@ public class Pitch {
     }
 
     private void insertShotHistory(Pin pin) {
-        shotHistory.add(Shot.of(pins.size() == IntegerUtils.ZERO, pin.getCount(), remainPin.getCount() - pin.getCount()));
+        shotHistory.add(Shot.of(isFirstShot(), pin, remainPin));
+    }
+
+    private boolean isFirstShot() {
+        return pins.size() == 1;
     }
 
     public int getThrowCount() {

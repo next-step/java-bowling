@@ -15,20 +15,20 @@ class ShotTest {
 
     @Test
     public void 첫번째_투구로_10점_획득은_스트라이크() {
-        Shot shot = Shot.of(true, 10, 0);
+        Shot shot = Shot.of(true, new Pin(10), new Pin(0));
         assertThat(shot).isEqualTo(Shot.STRIKE);
     }
 
     @Test
     public void 두번째_투구로_10점_획득은_스페어() {
-        Shot shot = Shot.of(false, 5, 0);
+        Shot shot = Shot.of(false, new Pin(5), new Pin(0));
         assertThat(shot).isEqualTo(Shot.SPARE);
     }
 
     @ParameterizedTest
     @MethodSource("source_miss")
-    public void 두번째_투구로_10점미만_획득은_미스(int remain, Shot expected) {
-        Shot shot = Shot.of(false, remain, 1);
+    public void 두번째_투구로_10점미만_획득은_미스(int fallen, Shot expected) {
+        Shot shot = Shot.of(false, new Pin(fallen), new Pin(1));
         assertThat(shot).isEqualTo(expected);
     }
 
