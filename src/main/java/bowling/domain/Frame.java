@@ -50,13 +50,13 @@ public abstract class Frame {
     public String showResult() {
         StringBuilder stringBuilder = new StringBuilder();
         if (state == State.STRIKE) {
-            stringBuilder.append(state.state);
+            stringBuilder.append(state.toString());
             return stringBuilder.toString();
         }
         if (state == State.SPARE) {
             stringBuilder.append(pins.getFirstFallenPins());
             stringBuilder.append(":");
-            stringBuilder.append(state.state);
+            stringBuilder.append(state.toString());
             return stringBuilder.toString();
         }
         return normalResult(stringBuilder);
@@ -69,7 +69,7 @@ public abstract class Frame {
         return stringBuilder.toString();
     }
 
-    private String zeroToGutter(int fallenPins) {
+    protected String zeroToGutter(int fallenPins) {
         return String.valueOf(fallenPins == 0 ? State.GUTTER : fallenPins);
     }
 

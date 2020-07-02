@@ -45,22 +45,29 @@ public class FinalFrame extends Frame {
             stringBuilder.append(State.FINAL_TURKEY);
             return stringBuilder.toString();
         }
-        if(state == State.FINAL_DOUBLE) {
+        if (state == State.FINAL_DOUBLE) {
             stringBuilder.append(state);
             stringBuilder.append(":");
             stringBuilder.append(zeroToGutter(pins.getThirdFallenPins()));
             return stringBuilder.toString();
         }
-        if(state == State.SPARE) {
+        if (state == State.SPARE) {
             stringBuilder.append(zeroToGutter(pins.getFirstFallenPins()));
             stringBuilder.append(":");
             stringBuilder.append(state);
             stringBuilder.append(":");
-            stringBuilder.append(zeroToGutter(pins.getThirdFallenPins()));
+            stringBuilder.append(finalDrawDisplay(pins.getThirdFallenPins()));
             return stringBuilder.toString();
         }
         normalResult(stringBuilder);
         return stringBuilder.toString();
+    }
+
+    private String finalDrawDisplay(int thirdFallenPins) {
+        if (thirdFallenPins == BOWLING_MAX_PINS) {
+            return State.STRIKE.toString();
+        }
+        return zeroToGutter(thirdFallenPins);
     }
 
     private String normalResult(StringBuilder stringBuilder) {
@@ -70,21 +77,14 @@ public class FinalFrame extends Frame {
         return stringBuilder.toString();
     }
 
-    private String zeroToGutter(int fallenPins) {
-        return String.valueOf(fallenPins == 0 ? State.GUTTER : fallenPins);
-    }
-
 
     public State calcState() {
-
         if (pins.isTurkey()) {
             return State.FINAL_TURKEY;
         }
-
         if (pins.isDouble()) {
             return State.FINAL_DOUBLE;
         }
-
         if (pins.isGutter()) {
             return State.GUTTER;
         }
@@ -98,6 +98,6 @@ public class FinalFrame extends Frame {
             return State.STRIKE;
         }
         throw new IllegalStateException();
-
     }
+
 }
