@@ -5,6 +5,7 @@ import static bowling.util.FrameSize.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import bowling.domain.result.Result;
 import bowling.domain.score.Score;
@@ -79,7 +80,10 @@ public class FinalFrame implements Frame {
 	}
 
 	@Override
-	public Score calculateFrameTotalScore() {
-		return scores.calculateFrameTotalScore();
+	public Optional<Score> calculateFrameTotalScore() {
+		if (! scores.hasCheckResult()) {
+			return Optional.empty();
+		}
+		return Optional.ofNullable(scores.calculateFrameTotalScore());
 	}
 }

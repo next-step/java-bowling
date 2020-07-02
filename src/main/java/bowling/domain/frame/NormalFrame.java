@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import java.util.Optional;
+
 import bowling.domain.result.Result;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
@@ -78,8 +80,13 @@ public class NormalFrame implements Frame {
 	}
 
 	@Override
-	public Score calculateFrameTotalScore() {
+	public Optional<Score> calculateFrameTotalScore() {
+		if (! scores.hasCheckResult()) {
+			return Optional.empty();
+		}
 		Result result = scores.checkResult();
-		return result.calculateFrameTotalScore(this.scores.calculateFrameTotalScore(), next.getScores());
+		Scores nextFrameScore = next.getScores();
+		Score totalScore = result.calculateFrameTotalScore(this.scores.calculateFrameTotalScore(), nextFrameScore);
+		return Optional.ofNullable(totalScore);
 	}
 }

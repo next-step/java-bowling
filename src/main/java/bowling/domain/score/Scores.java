@@ -84,7 +84,7 @@ public class Scores {
 
 	public Score calculateFrameTotalScore() {
 		if (Objects.isNull(first)) {
-			throw new IllegalStateException("not fully played to check the score yet.");
+			return Score.ofScore(0);
 		}
 		if (Objects.isNull(second)) {
 			return first;
@@ -93,5 +93,9 @@ public class Scores {
 			return first.add(second);
 		}
 		return first.add(second).add(bonus);
+	}
+
+	public boolean hasCheckResult() {
+		return Objects.nonNull(second);
 	}
 }
