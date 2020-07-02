@@ -29,6 +29,14 @@ public class Bowling {
         return frames.size() + 1 == MAX_FRAME && !this.currentFrame.canBowling();
     }
 
+    public FrameNumber getFrameNumber() {
+        if (isEnd()) {
+            return FrameNumber.of(MAX_FRAME);
+        }
+
+        return FrameNumber.of(frames.size() + 1 + (currentFrame.canBowling() ? 0 : 1));
+    }
+
     @Override
     public String toString() {
         return "| " + player.toString() + " |" + getFrameString();
@@ -54,13 +62,5 @@ public class Bowling {
         }
 
         return "      ";
-    }
-
-    public FrameNumber getFrameNumber() {
-        if (isEnd()) {
-            return FrameNumber.of(MAX_FRAME);
-        }
-
-        return FrameNumber.of(frames.size() + 1 + (currentFrame.canBowling() ? 0 : 1));
     }
 }

@@ -5,12 +5,12 @@ public class Miss extends FramePins {
         super(firstPins, secondPins);
     }
 
+    public static Miss of(Pins firstPins, Pins secondPins) {
+        return new Miss(firstPins, secondPins);
+    }
+
     @Override
     public boolean isEnd() {
         return true;
-    }
-
-    public static Miss of(Pins firstPins, Pins secondPins) {
-        return new Miss(firstPins, secondPins);
     }
 }

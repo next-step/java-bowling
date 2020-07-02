@@ -48,17 +48,7 @@ public abstract class FramePins {
         return Pins.sum(firstPins, secondPins) == MIN_PINS_PER_FRAME;
     }
 
-    public int score() {
-        return Pins.sum(firstPins, secondPins);
-    }
-
     public abstract boolean isEnd();
-
-    @Override
-    public String toString() {
-        return firstPins.toString() +
-                (secondPins != null ? "|" + secondPins.toString() : "");
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -72,5 +62,11 @@ public abstract class FramePins {
     @Override
     public int hashCode() {
         return Objects.hash(firstPins, secondPins);
+    }
+
+    @Override
+    public String toString() {
+        return firstPins.toString() +
+                (secondPins != null ? "|" + secondPins.toString() : "");
     }
 }

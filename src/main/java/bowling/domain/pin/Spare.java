@@ -5,11 +5,6 @@ public class Spare extends FramePins {
         super(firstPins, secondPins);
     }
 
-    @Override
-    public boolean isEnd() {
-        return true;
-    }
-
     public static Spare of(Pins firstPins, Pins secondPins) {
         validate(firstPins, secondPins);
         return new Spare(firstPins, secondPins);
@@ -19,6 +14,11 @@ public class Spare extends FramePins {
         if (Pins.sum(firstPins, secondPins) != MAX_PINS_PER_FRAME) {
             throw new IllegalArgumentException();
         }
+    }
+
+    @Override
+    public boolean isEnd() {
+        return true;
     }
 
     @Override

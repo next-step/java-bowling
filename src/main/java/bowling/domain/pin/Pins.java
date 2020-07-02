@@ -32,19 +32,6 @@ public class Pins {
     }
 
     @Override
-    public String toString() {
-        if (countOfPins == MIN_PINS) {
-            return "-";
-        }
-
-        if (isStrike()) {
-            return "X";
-        }
-
-        return Integer.toString(countOfPins);
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -55,5 +42,18 @@ public class Pins {
     @Override
     public int hashCode() {
         return Objects.hash(countOfPins);
+    }
+
+    @Override
+    public String toString() {
+        if (countOfPins == MIN_PINS) {
+            return "-";
+        }
+
+        if (isStrike()) {
+            return "X";
+        }
+
+        return Integer.toString(countOfPins);
     }
 }

@@ -1,7 +1,7 @@
 package bowling.domain.game;
 
 import bowling.domain.pin.FramePins;
-import bowling.domain.pin.FramePinsCreator;
+import bowling.domain.pin.creator.FramePinsCreator;
 import bowling.domain.pin.Pins;
 
 import java.util.Objects;

@@ -1,4 +1,9 @@
-package bowling.domain.pin;
+package bowling.domain.pin.creator;
+
+import bowling.domain.pin.FirstFramePins;
+import bowling.domain.pin.FramePins;
+import bowling.domain.pin.Pins;
+import bowling.domain.pin.Strike;
 
 public class FramePinsCreator {
     public static FramePins next(FramePins framePins, Pins pins) {
