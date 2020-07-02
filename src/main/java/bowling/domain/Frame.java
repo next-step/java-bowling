@@ -11,6 +11,11 @@ public abstract class Frame {
     protected Pitch pitch;
     protected Frame nextFrame;
 
+    public Frame(int frameNo) {
+        this.frameNo = frameNo;
+        this.pitch = new Pitch();
+    }
+
     public static NormalFrame first() {
         return new NormalFrame(FIRST_FRAME);
     }

@@ -7,8 +7,7 @@ public class FinalFrame extends Frame {
     private Pitch bonusPitch;
 
     private FinalFrame() {
-        this.frameNo = FINAL_FRAME;
-        this.pitch = new Pitch();
+        super(FINAL_FRAME);
         this.isBonusPitch = false;
         this.bonusPitch = new Pitch();
     }
