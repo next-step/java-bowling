@@ -10,7 +10,7 @@ public interface Pins {
 
     boolean hasTurn();
 
-    Optional<ScoreType> getScoreType();
+    ScoreType getScoreType();
 
     List<Integer> getDownPins();
 

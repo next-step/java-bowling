@@ -36,19 +36,20 @@ public class NormalPins implements Pins {
     }
 
     @Override
-    public Optional<ScoreType> getScoreType() {
+    public ScoreType getScoreType() {
         if (isStrike()) {
-            return Optional.ofNullable(ScoreType.STRIKE);
+            return ScoreType.STRIKE;
         }
 
         if (isSpare()) {
-            return Optional.ofNullable(ScoreType.SPARE);
+            return ScoreType.SPARE;
         }
 
         if (!hasTurn()) {
-            return Optional.ofNullable(ScoreType.MISS);
+            return ScoreType.MISS;
         }
-        return Optional.empty();
+
+        return ScoreType.READY;
     }
 
     @Override

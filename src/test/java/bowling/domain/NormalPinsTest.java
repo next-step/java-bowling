@@ -54,7 +54,7 @@ class NormalPinsTest {
         pins.down(1);
 
         assertThat(pins.getScoreType())
-            .isEqualTo(Optional.of(ScoreType.MISS));
+            .isEqualTo(ScoreType.MISS);
     }
 
     @Test

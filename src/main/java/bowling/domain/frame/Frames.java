@@ -11,10 +11,10 @@ public class Frames {
     private final List<Frame> frames;
     private int currentFrameNumber;
 
-    public Frames(List<Frame> frames) {
+    private Frames(List<Frame> frames) {
         validate(frames);
 
-        this.frames = new ArrayList<>(frames);
+        this.frames = frames;
     }
 
     public static Frames create() {

@@ -1,6 +1,7 @@
 package bowling.ui;
 
 import bowling.domain.player.Player;
+import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
 import bowling.domain.frame.FrameResult;
 import java.util.ArrayList;
@@ -15,13 +16,6 @@ public class ResultView {
     private static final int FRAME_COUNT = 10;
     private static final int STRIKE_PIN = 10;
     private static final int GUTTER_PIN = 0;
-
-    private static final Map<ScoreType, String> displayMap = new HashMap<>();
-
-    static {
-        displayMap.put(ScoreType.STRIKE, "X");
-        displayMap.put(ScoreType.SPARE, "/");
-    }
 
     public void printResult(Player player, List<FrameResult> frameResults) {
         printFramesRounds();
@@ -63,7 +57,7 @@ public class ResultView {
         int downPinIndex = 0;
         components.add(createPin(downPins.get(downPinIndex++)));
 
-        ScoreType scoreType = frameResult.getScoreType().orElse(ScoreType.MISS);
+        ScoreType scoreType = frameResult.getScoreType();
         if (scoreType == ScoreType.SPARE) {
             components.add("/");
             downPinIndex++;
@@ -75,16 +69,17 @@ public class ResultView {
         return components.stream().collect(Collectors.joining("|"));
     }
 
-    private void printScores(List<Optional<Integer>> scores) {
+    private void printScores(List<Score> scores) {
         StringBuilder scoreDisplays = new StringBuilder();
         scoreDisplays.append("|      |");
         int sum = 0;
-        for (Optional<Integer> score : scores) {
-            sum += score.orElse(0);
-            scoreDisplays.append(String.format("  %-4s|", score.isPresent() ? sum : ""));
+        for (Score score : scores) {
+            sum += score.getValue();
+            scoreDisplays.append(String.format("  %-4s|", score.getScoreType() != ScoreType.READY ? sum : ""));
         }
         System.out.println(scoreDisplays.toString());
     }
+
 
     private String createPin(int downPin) {
         if (downPin == GUTTER_PIN) {

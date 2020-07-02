@@ -1,22 +1,18 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class FramesTest {
 
     @Test
-    void frame_size_test() {
-        List<Frame> frames = Arrays.asList(Frame.first());
+    void frame_create_test() {
+        Frames frames = Frames.create();
 
-        assertThatThrownBy(() -> new Frames(frames))
-            .isInstanceOf(IllegalArgumentException.class);
+        assertThat(frames.isFinished()).isFalse();
+        assertThat(frames.getCurrentFrameNumber()).isEqualTo(0);
     }
 
 }

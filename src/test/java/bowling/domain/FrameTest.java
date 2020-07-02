@@ -63,7 +63,7 @@ class FrameTest {
         normalFrame2.roll(3);
         normalFrame2.roll(3);
 
-        assertThat(normalFrame.getScore().isPresent()).isEqualTo(true);
+        assertThat(normalFrame.getScore()).isEqualTo(true);
     }
 
     @Test
@@ -105,7 +105,7 @@ class FrameTest {
     @Test
     void empty_score(){
         Frame finalFrame = Frame.first().last();
-        assertThat(finalFrame.getScore().isPresent()).isEqualTo(false);
+        assertThat(finalFrame.getScore()).isEqualTo(false);
     }
 
     @Test
@@ -113,7 +113,7 @@ class FrameTest {
         Frame finalFrame = Frame.first().last();
         finalFrame.roll(1);
 
-        assertThat(finalFrame.getScore().isPresent()).isEqualTo(false);
+        assertThat(finalFrame.getScore()).isEqualTo(false);
     }
 
     @Test
@@ -121,7 +121,7 @@ class FrameTest {
         Frame finalFrame = Frame.first().last();
         finalFrame.roll(10);
 
-        assertThat(finalFrame.getScore().isPresent()).isEqualTo(false);
+        assertThat(finalFrame.getScore()).isEqualTo(false);
     }
 
     @Test
@@ -130,7 +130,7 @@ class FrameTest {
         finalFrame.roll(1);
         finalFrame.roll(9);
 
-        assertThat(finalFrame.getScore().isPresent()).isEqualTo(false);
+        assertThat(finalFrame.getScore()).isEqualTo(false);
     }
 
     @Test

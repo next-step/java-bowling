@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +24,7 @@ public class Frame {
     }
 
     public Frame last() {
-        this.nextFrame = new Frame(FrameNumber.create(9), FinalPins.create());
+        this.nextFrame = new Frame(FrameNumber.create(9), FinalFramePins.create());
         return this.nextFrame;
     }
 
@@ -40,23 +41,23 @@ public class Frame {
         return this.pins.hasTurn();
     }
 
-    public Optional<Integer> getScore() {
+    public Score getScore() {
         if (!isFinished()) {
-            return Optional.empty();
+            return Score.create(0, ScoreType.READY);
         }
 
         if (isLast() && isFinished()) {
-            return Optional.ofNullable(this.pins.sum());
+            return Score.create(this.pins.sum(), ScoreType.NORMAL);
         }
 
-        int nextBowlCount = this.pins.getScoreType().map(ScoreType::getBonusBowlCount).orElse(0);
+        int nextBowlCount = this.pins.getScoreType().getBonusBowlCount();
         List<Integer> downPins = getNextDownPins(nextBowlCount);
         if (downPins.size() < nextBowlCount) {
-            return Optional.empty();
+            return Score.create(0, ScoreType.READY);
         }
 
         int score = this.pins.sum() + downPins.stream().reduce(0, Integer::sum);
-        return Optional.of(score);
+        return Score.create(score, ScoreType.NORMAL);
     }
 
     public FrameResult getFrameResult() {

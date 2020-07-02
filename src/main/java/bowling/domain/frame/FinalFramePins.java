@@ -5,21 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class FinalPins implements Pins {
+public class FinalFramePins implements Pins {
 
     private static final int MIN_PIN = 0;
     private static final int MAX_PIN = 10;
     private final List<Integer> downPins;
     private final Pins pins;
 
-    private FinalPins(Pins pins) {
+    private FinalFramePins(Pins pins) {
         this.pins = pins;
         this.downPins = new ArrayList<>();
     }
 
     public static Pins create() {
-        Pins bonusPins = new FinalPins(new NormalPins());
-        return bonusPins;
+        return new FinalFramePins(new NormalPins());
     }
 
     @Override
@@ -40,15 +39,11 @@ public class FinalPins implements Pins {
             return true;
         }
 
-        if (this.downPins.size() < getBonusCount()) {
-            return true;
-        }
-
-        return false;
+        return this.downPins.size() < getBonusCount();
     }
 
     @Override
-    public Optional<ScoreType> getScoreType() {
+    public ScoreType getScoreType() {
         return this.pins.getScoreType();
     }
 
@@ -75,7 +70,6 @@ public class FinalPins implements Pins {
     }
 
     private int getBonusCount() {
-        return getScoreType().map(ScoreType::getBonusBowlCount)
-                .orElse(0);
+        return getScoreType().getBonusBowlCount();
     }
 }
