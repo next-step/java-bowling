@@ -40,7 +40,7 @@ class FrameTest {
         Frame normalFrame = Frame.first();
         normalFrame.roll(8);
 
-        assertThat(normalFrame.getScore()).isEqualTo(Optional.empty());
+        assertThat(normalFrame.getScore().getScoreType()).isEqualTo(ScoreType.READY);
     }
 
     @Test
@@ -50,7 +50,7 @@ class FrameTest {
         normalFrame.roll(10);
         normalFrame.next();
 
-        assertThat(normalFrame.getScore()).isEqualTo(Optional.empty());
+        assertThat(normalFrame.getScore().getScoreType()).isEqualTo(ScoreType.READY);
     }
 
     @Test
@@ -63,7 +63,7 @@ class FrameTest {
         normalFrame2.roll(3);
         normalFrame2.roll(3);
 
-        assertThat(normalFrame.getScore()).isEqualTo(true);
+        assertThat(normalFrame.getScore().getScoreType()).isEqualTo(ScoreType.NORMAL);
     }
 
     @Test
@@ -74,7 +74,7 @@ class FrameTest {
         finalFrame.roll(2);
 
         assertThat(finalFrame.hasTurn()).isEqualTo(false);
-        assertThat(finalFrame.getScore()).isEqualTo(Optional.of(3));
+        assertThat(finalFrame.getScore().getValue()).isEqualTo(3);
     }
 
     @Test
@@ -86,7 +86,7 @@ class FrameTest {
         finalFrame.roll(9);
 
         assertThat(finalFrame.hasTurn()).isEqualTo(false);
-        assertThat(finalFrame.getScore()).isEqualTo(Optional.of(19));
+        assertThat(finalFrame.getScore().getValue()).isEqualTo(19);
     }
 
     @Test
@@ -99,13 +99,13 @@ class FrameTest {
         finalFrame.roll(9);
 
         assertThat(finalFrame.hasTurn()).isEqualTo(false);
-        assertThat(finalFrame.getScore()).isEqualTo(Optional.of(28));
+        assertThat(finalFrame.getScore().getValue()).isEqualTo(28);
     }
 
     @Test
     void empty_score(){
         Frame finalFrame = Frame.first().last();
-        assertThat(finalFrame.getScore()).isEqualTo(false);
+        assertThat(finalFrame.getScore().getScoreType()).isEqualTo(ScoreType.READY);
     }
 
     @Test
@@ -113,7 +113,7 @@ class FrameTest {
         Frame finalFrame = Frame.first().last();
         finalFrame.roll(1);
 
-        assertThat(finalFrame.getScore()).isEqualTo(false);
+        assertThat(finalFrame.getScore().getScoreType()).isEqualTo(ScoreType.READY);
     }
 
     @Test
@@ -121,7 +121,7 @@ class FrameTest {
         Frame finalFrame = Frame.first().last();
         finalFrame.roll(10);
 
-        assertThat(finalFrame.getScore()).isEqualTo(false);
+        assertThat(finalFrame.getScore().getScoreType()).isEqualTo(ScoreType.READY);
     }
 
     @Test
@@ -130,7 +130,7 @@ class FrameTest {
         finalFrame.roll(1);
         finalFrame.roll(9);
 
-        assertThat(finalFrame.getScore()).isEqualTo(false);
+        assertThat(finalFrame.getScore().getScoreType()).isEqualTo(ScoreType.READY);
     }
 
     @Test
@@ -139,7 +139,7 @@ class FrameTest {
         finalFrame.roll(1);
         finalFrame.roll(2);
 
-        assertThat(finalFrame.getScore()).isEqualTo(Optional.of(3));
+        assertThat(finalFrame.getScore().getValue()).isEqualTo(3);
     }
 
     @Test
@@ -149,7 +149,7 @@ class FrameTest {
         finalFrame.roll(10);
         finalFrame.roll(10);
 
-        assertThat(finalFrame.getScore()).isEqualTo(Optional.of(30));
+        assertThat(finalFrame.getScore().getValue()).isEqualTo(30);
     }
 
     @Test
@@ -159,6 +159,6 @@ class FrameTest {
         finalFrame.roll(6);
         finalFrame.roll(10);
 
-        assertThat(finalFrame.getScore()).isEqualTo(Optional.of(20));
+        assertThat(finalFrame.getScore().getValue()).isEqualTo(20);
     }
 }
