@@ -80,4 +80,8 @@ public class Pitch {
     public int getRemain() {
         return remainPin.getCount();
     }
+
+    public boolean isStrikeOrSpare() {
+        return remainPin.getCount() == IntegerUtils.ZERO;
+    }
 }

@@ -36,7 +36,7 @@ public class FinalFrame extends Frame {
     }
 
     private FrameState isNextBonusPitch() {
-        if (pitch.getRemain() == IntegerUtils.ZERO) {
+        if (pitch.isStrikeOrSpare()) {
             isBonusPitch = true;
             return FrameState.ofNotFinish(Pin.MAX_COUNT);
         }
