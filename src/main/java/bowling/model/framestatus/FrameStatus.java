@@ -7,6 +7,7 @@ public interface FrameStatus {
 
   List<Integer> getScoringFramesIndexes();
 
+  int getSizeOfScoringFramesIndexes();
 
   FrameStatus createNextStatusBy(KnockedDownPins pins);
 

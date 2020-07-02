@@ -14,6 +14,11 @@ public class Bonus implements FrameStatus {
   }
 
   @Override
+  public int getSizeOfScoringFramesIndexes() {
+    return 0;
+  }
+
+  @Override
   public FrameStatus createNextStatusBy(KnockedDownPins pins) {
     return this;
   }

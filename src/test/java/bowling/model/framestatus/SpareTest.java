@@ -34,6 +34,23 @@ class SpareTest {
     );
   }
 
+  @ParameterizedTest
+  @MethodSource("provideCurrentIndexWithExpectedSize")
+  void getSizeOfScoringFramesIndexes(int currentIndex, int expected) {
+    FrameStatus frameStatus = new Spare(new RequiredFirstRoll(currentIndex));
+
+    assertThat(frameStatus.getSizeOfScoringFramesIndexes()).isEqualTo(expected);
+  }
+
+  static Stream<Arguments> provideCurrentIndexWithExpectedSize() {
+    return Stream.of(
+        arguments(
+            0,
+            2
+        )
+    );
+  }
+
   @Test
   void testToString() {
     FrameStatus frameStatus = new Spare(new RequiredFirstRoll(0));

@@ -10,7 +10,7 @@ public class Frames {
 
   private static final int FIRST_INDEX = 0;
 
-  private final Deque<Frame> frames = new ArrayDeque<>();
+  private final ArrayDeque<Frame> frames = new ArrayDeque<>();
 
   public Frames() {
     frames.add(new NormalFrame(FIRST_INDEX));
@@ -61,6 +61,14 @@ public class Frames {
     }
 
     frames.addLast(bonusFrame);
+  }
+
+  public int getSizeOfBonusFrames() {
+    if(!isOver()) {
+      throw new IllegalStateException("마지막 프레임이 아닙니다.");
+    }
+
+    return getFrames().get(BowlingGame.MAX_NUMBER_OF_FRAMES - 1).getSizeOfScoringFramesIndexes() - 1;
   }
 
   public boolean isCurrentFrameOver() {

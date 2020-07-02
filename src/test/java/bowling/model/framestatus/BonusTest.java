@@ -8,8 +8,13 @@ import org.junit.jupiter.api.Test;
 class BonusTest {
 
   @Test
-  void getIndexOfScoredFrames() {
+  void getScoringFramesIndexes() {
     assertThat(new Bonus().getScoringFramesIndexes().isEmpty()).isTrue();
+  }
+
+  @Test
+  void getSizeOfScoringFramesIndexes() {
+    assertThat(new Bonus().getSizeOfScoringFramesIndexes()).isEqualTo(0);
   }
 
   @Test

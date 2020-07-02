@@ -34,6 +34,23 @@ class StrikeTest {
     );
   }
 
+  @ParameterizedTest
+  @MethodSource("provideCurrentIndexWithExpectedSize")
+  void getSizeOfScoringFramesIndexes(int currentIndex, int expected) {
+    FrameStatus frameStatus = new Strike(new RequiredFirstRoll(currentIndex));
+
+    assertThat(frameStatus.getSizeOfScoringFramesIndexes()).isEqualTo(expected);
+  }
+
+  static Stream<Arguments> provideCurrentIndexWithExpectedSize() {
+    return Stream.of(
+        arguments(
+            0,
+            3
+        )
+    );
+  }
+
   @Test
   void testToString() {
     FrameStatus frameStatus = new Strike(new RequiredFirstRoll(0));

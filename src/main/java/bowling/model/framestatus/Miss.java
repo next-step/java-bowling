@@ -18,6 +18,10 @@ public class Miss implements FrameStatus {
   public List<Integer> getScoringFramesIndexes() {
     return Collections.unmodifiableList(scoringFramesIndexes);
   }
+
+  @Override
+  public int getSizeOfScoringFramesIndexes() {
+    return scoringFramesIndexes.size();
   }
 
   @Override

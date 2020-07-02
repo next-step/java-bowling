@@ -43,7 +43,7 @@ public class BowlingGame {
   }
 
   public void initBonusCount() {
-    bonusCount = frames.getFrames().get(MAX_NUMBER_OF_FRAMES - 1).getIndexOfScoredFrames().size() - 1;
+    bonusCount = frames.getSizeOfBonusFrames();
   }
 
   public void bonusRoll(int number) {

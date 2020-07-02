@@ -2,7 +2,6 @@ package bowling.model;
 
 import bowling.model.framestatus.Bonus;
 import bowling.model.framestatus.FrameStatus;
-import java.util.Collections;
 import java.util.List;
 
 public class BonusFrame implements Frame {
@@ -29,8 +28,8 @@ public class BonusFrame implements Frame {
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return Collections.emptyList();
+  public int getSizeOfScoringFramesIndexes() {
+    return 0;
   }
 
   @Override

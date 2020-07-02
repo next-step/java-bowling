@@ -11,7 +11,7 @@ public interface Frame {
 
   int getRemainingPinsNumber();
 
-  List<Integer> getIndexOfScoredFrames();
+  int getSizeOfScoringFramesIndexes();
 
   KnockedDownPins getPins();
 

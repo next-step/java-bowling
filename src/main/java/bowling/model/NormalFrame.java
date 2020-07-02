@@ -49,10 +49,8 @@ public class NormalFrame implements Frame {
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return frameStatus.getScoringFramesIndexes();
-  }
-
+  public int getSizeOfScoringFramesIndexes() {
+    return frameStatus.getSizeOfScoringFramesIndexes();
   }
 
   @Override
@@ -79,13 +77,13 @@ public class NormalFrame implements Frame {
         .sum() + frames.get(startIndex).getPins().getSecondKnockDownNumber();
   }
 
+  // TODO : 첫 위치와 마지막 위치만 저장 하면 좀 더 심플하게 갈 수 있을 듯..
   private int getFirstIndexOfScoredFrames() {
     return frameStatus.getScoringFramesIndexes().get(0);
   }
 
   private int getLastIndexOfScoredFrames() {
-    return frameStatus.getScoringFramesIndexes().get(0) + frameStatus.getScoringFramesIndexes()
-        .size();
+    return frameStatus.getScoringFramesIndexes().get(0) + frameStatus.getSizeOfScoringFramesIndexes();
   }
 
   @Override

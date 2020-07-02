@@ -21,6 +21,9 @@ public class RequiredSecondRoll implements FrameStatus {
     return Collections.unmodifiableList(scoringFramesIndexes);
   }
 
+  @Override
+  public int getSizeOfScoringFramesIndexes() {
+    return scoringFramesIndexes.size();
   }
 
   @Override
