@@ -6,8 +6,6 @@ import bowling.domain.pin.Pins;
 
 public class FinalFrame implements Frame {
     private static final int PINS_LIMIT = 10;
-    private static final int FIRST_ROLL = 1;
-    private static final int SECOND_ROLL = 2;
     private static final int CAN_ROLL_LIMIT = 2;
     private static final String ROLL_COUNT_ERRORS = "일반 게임에서는 두번만 던질 수 있습니다.";
 
@@ -22,14 +20,27 @@ public class FinalFrame implements Frame {
     @Override
     public void roll(int pin) {
 
-        if (isRolledTwice() && (!isAlreadySpare() || !isAlreadyStrike()) ) {
+        if (isPinOverflowRolledOnce(pin)) {
             throw new IllegalArgumentException(ROLL_COUNT_ERRORS);
         }
 
-        if (pins.rollCount() == 1 && (!isAlreadySpare() || !isAlreadyStrike()) && pins.getTotalPins() + pin > 10) {
-            throw new IllegalArgumentException(ROLL_COUNT_ERRORS);
+        if (canRoll()) {
+            pins.addPins(pin);
         }
-        pins.addPins(pin);
+    }
+
+    private boolean isPinOverflowRolledOnce(int pin) {
+        return isRolledOnce() && (isPinUnderTen()) && pins.getTotalPins() + pin > 10;
+    }
+
+    @Override
+    public boolean canRoll () {
+
+        if (isRolledTwice() && pins.getTotalPins() < PINS_LIMIT) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -37,15 +48,20 @@ public class FinalFrame implements Frame {
         return this.pins.getTotalPins();
     }
 
-    private boolean isAlreadyStrike() {
-        return pins.rollCount() < 2 && pins.getTotalPins() == PINS_LIMIT;
+    @Override
+    public int getIndex() {
+        return index;
     }
 
-    private boolean isAlreadySpare() {
-        return pins.rollCount() < 2 && pins.getTotalPins() == PINS_LIMIT;
+    private boolean isPinUnderTen() {
+        return pins.getTotalPins() < PINS_LIMIT;
     }
 
     private boolean isRolledTwice() {
         return pins.rollCount() == CAN_ROLL_LIMIT;
+    }
+
+    private boolean isRolledOnce() {
+        return pins.rollCount() < CAN_ROLL_LIMIT;
     }
 }

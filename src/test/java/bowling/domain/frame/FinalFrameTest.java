@@ -43,17 +43,19 @@ class FinalFrameTest {
     void testRollThree() {
         FinalFrame finalFrame = new FinalFrame();
 
-        assertThatThrownBy(() -> {
-            finalFrame.roll(3);
-            finalFrame.roll(2);
-            finalFrame.roll(2);
+        finalFrame.roll(3);
+        finalFrame.roll(2);
 
-        }).isInstanceOf(IllegalArgumentException.class);
+        assertThat(finalFrame.canRoll()).isFalse();
+
+        finalFrame.roll(2);
+        assertThat(finalFrame.getPins()).isEqualTo(5);
+
     }
 
     @DisplayName("스페어 스트라이크 없는 상태에서 핀의 갯수체크")
     @Test
-    void testValidPinsWithoutStrikeOrSpare() {
+    void testdPinsWithoutStrikeOrSpare() {
         FinalFrame finalFrame = new FinalFrame();
 
         assertThatThrownBy(() -> {

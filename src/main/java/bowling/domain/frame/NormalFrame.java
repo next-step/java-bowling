@@ -24,29 +24,33 @@ public class NormalFrame implements Frame{
         return new NormalFrame(FIRST_FRAME);
     }
 
-    public NormalFrame nextFrame() {
-        return new NormalFrame(index + 1);
-    }
-
     @Override
     public void roll(int pin) {
-        if (isRolledTwice()) {
-            throw new IllegalArgumentException(ROLL_COUNT_ERRORS);
-        }
-
-        if (isAlreadyStrike()) {
-            throw new IllegalArgumentException(PIN_MAX_ERROR);
-        }
 
         if (isPinTotalOverTen(pin)) {
             throw new IllegalArgumentException(PIN_MAX_ERROR);
         }
 
-        pins.addPins(pin);
+        if (canRoll()) {
+            pins.addPins(pin);
+        }
+    }
+
+    @Override
+    public boolean canRoll () {
+        if (isAlreadyStrike() || isRolledTwice()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public int getRollCount() {
+        return pins.rollCount();
     }
 
     private boolean isRolledTwice() {
-        return pins.rollCount() == CAN_ROLL_LIMIT;
+        return pins.rollCount() >= CAN_ROLL_LIMIT;
     }
 
     private boolean isAlreadyStrike() {
@@ -62,10 +66,10 @@ public class NormalFrame implements Frame{
         return this.pins.getTotalPins();
     }
 
+    @Override
     public int getIndex() {
         return index;
     }
-
 
     @Override
     public boolean equals(Object o) {

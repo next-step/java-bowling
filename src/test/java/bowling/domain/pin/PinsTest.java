@@ -26,17 +26,5 @@ class PinsTest {
         assertThat(pins.getTotalPins()).isEqualTo(pin);
     }
 
-    @DisplayName("쓰러뜨린 핀의 합계가 유효한 범위인지 테스트")
-    @Test
-    void rollOverTen() {
-        Pins pins = new Pins();
-
-        assertThatThrownBy(() -> {
-            pins.addPins(5);
-            pins.addPins(6);
-
-        }).isInstanceOf(IllegalArgumentException.class);
-    }
-
 }
 

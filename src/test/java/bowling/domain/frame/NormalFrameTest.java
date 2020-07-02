@@ -17,16 +17,10 @@ class NormalFrameTest {
         assertThat(normalFrame.getIndex()).isEqualTo(1);
     }
 
-    @DisplayName("새로운 프레임생성 테스트")
-    @Test
-    void testNextFrame() {
-        NormalFrame firstFrame = NormalFrame.firstFrame();
-        assertThat(firstFrame.nextFrame().getIndex()).isEqualTo(2);
-    }
 
     @DisplayName("쓰러뜨린 핀 갯수 테스트")
     @ParameterizedTest
-    @ValueSource(ints = {0,1,2,3,4,5})
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     void rollTest(int pin) {
         // given
         NormalFrame normalFrame = NormalFrame.firstFrame();
@@ -56,13 +50,14 @@ class NormalFrameTest {
     @Test
     void testRollThree() {
         NormalFrame normalFrame = NormalFrame.firstFrame();
+        normalFrame.roll(3);
+        normalFrame.roll(2);
 
-        assertThatThrownBy(() -> {
-            normalFrame.roll(3);
-            normalFrame.roll(2);
-            normalFrame.roll(2);
+        assertThat(normalFrame.canRoll()).isFalse();
 
-        }).isInstanceOf(IllegalArgumentException.class);
+        normalFrame.roll(2);
+        assertThat(normalFrame.getPins()).isEqualTo(5);
+
     }
 
 }
