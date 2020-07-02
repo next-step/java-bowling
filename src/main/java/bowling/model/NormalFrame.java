@@ -50,7 +50,9 @@ public class NormalFrame implements Frame {
 
   @Override
   public List<Integer> getIndexOfScoredFrames() {
-    return frameStatus.getIndexOfScoredFrames();
+    return frameStatus.getScoringFramesIndexes();
+  }
+
   }
 
   @Override

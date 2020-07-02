@@ -5,7 +5,8 @@ import java.util.List;
 
 public interface FrameStatus {
 
-  List<Integer> getIndexOfScoredFrames();
+  List<Integer> getScoringFramesIndexes();
+
 
   FrameStatus createNextStatusBy(KnockedDownPins pins);
 

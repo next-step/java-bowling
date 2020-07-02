@@ -8,15 +8,16 @@ import java.util.List;
 
 public class Miss implements FrameStatus {
 
-  private final List<Integer> indexOfScoredFrames;
+  private final List<Integer> scoringFramesIndexes;
 
   public Miss(FrameStatus frameStatus) {
-    indexOfScoredFrames = frameStatus.getIndexOfScoredFrames();
+    scoringFramesIndexes = frameStatus.getScoringFramesIndexes();
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return Collections.unmodifiableList(indexOfScoredFrames);
+  public List<Integer> getScoringFramesIndexes() {
+    return Collections.unmodifiableList(scoringFramesIndexes);
+  }
   }
 
   @Override
@@ -47,7 +48,7 @@ public class Miss implements FrameStatus {
   @Override
   public String toString() {
     return "Miss{" +
-        "indexOfScoredFrames=" + indexOfScoredFrames +
+        "indexOfScoredFrames=" + scoringFramesIndexes +
         '}';
   }
 }

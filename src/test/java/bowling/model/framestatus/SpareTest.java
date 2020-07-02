@@ -19,7 +19,7 @@ class SpareTest {
   void getIndexOfNextFrames(int currentIndex, List<Integer> expected) {
     FrameStatus frameStatus = new Spare(new RequiredFirstRoll(currentIndex));
 
-    assertThat(frameStatus.getIndexOfScoredFrames()).isEqualTo(expected);
+    assertThat(frameStatus.getScoringFramesIndexes()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isTrue();
   }
 

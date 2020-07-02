@@ -8,15 +8,17 @@ import java.util.List;
 
 public class RequiredFirstRoll implements FrameStatus {
 
-  private final List<Integer> indexOfScoredFrames;
+  private final List<Integer> scoringFramesIndexes;
 
   public RequiredFirstRoll(int currentIndex) {
-    indexOfScoredFrames = Collections.singletonList(currentIndex);
+    scoringFramesIndexes = Collections.singletonList(currentIndex);
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return Collections.unmodifiableList(indexOfScoredFrames);
+  public List<Integer> getScoringFramesIndexes() {
+    return Collections.unmodifiableList(scoringFramesIndexes);
+  }
+
   }
 
   @Override
@@ -47,7 +49,7 @@ public class RequiredFirstRoll implements FrameStatus {
   @Override
   public String toString() {
     return "RequiredFirstRoll{" +
-        "indexOfScoredFrames=" + indexOfScoredFrames +
+        "indexOfScoredFrames=" + scoringFramesIndexes +
         '}';
   }
 }

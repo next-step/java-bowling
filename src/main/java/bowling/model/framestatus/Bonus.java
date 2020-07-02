@@ -9,7 +9,7 @@ import java.util.List;
 public class Bonus implements FrameStatus {
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
+  public List<Integer> getScoringFramesIndexes() {
     return Collections.emptyList();
   }
 

@@ -9,17 +9,19 @@ import java.util.List;
 
 public class Spare implements FrameStatus {
 
-  private final List<Integer> indexOfScoredFrames;
+  private final List<Integer> scoringFramesIndexes;
 
   public Spare(FrameStatus frameStatus) {
-    int currentIndex = frameStatus.getIndexOfScoredFrames().get(0);
+    int currentIndex = frameStatus.getScoringFramesIndexes().get(0);
 
-    this.indexOfScoredFrames = Arrays.asList(currentIndex, currentIndex + 1);
+    this.scoringFramesIndexes = Arrays.asList(currentIndex, currentIndex + 1);
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return Collections.unmodifiableList(indexOfScoredFrames);
+  public List<Integer> getScoringFramesIndexes() {
+    return Collections.unmodifiableList(scoringFramesIndexes);
+  }
+
   }
 
   @Override
@@ -49,7 +51,7 @@ public class Spare implements FrameStatus {
   @Override
   public String toString() {
     return "Spare{" +
-        "indexOfScoredFrames=" + indexOfScoredFrames +
+        "indexOfScoredFrames=" + scoringFramesIndexes +
         '}';
   }
 }

@@ -10,15 +10,17 @@ public class RequiredSecondRoll implements FrameStatus {
 
   private final static Integer ZERO = 0;
 
-  private final List<Integer> indexOfScoredFrames;
+  private final List<Integer> scoringFramesIndexes;
 
   public RequiredSecondRoll(FrameStatus frameStatus) {
-    indexOfScoredFrames = frameStatus.getIndexOfScoredFrames();
+    scoringFramesIndexes = frameStatus.getScoringFramesIndexes();
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return Collections.unmodifiableList(indexOfScoredFrames);
+  public List<Integer> getScoringFramesIndexes() {
+    return Collections.unmodifiableList(scoringFramesIndexes);
+  }
+
   }
 
   @Override
@@ -50,7 +52,7 @@ public class RequiredSecondRoll implements FrameStatus {
   @Override
   public String toString() {
     return "RequiredSecondRoll{" +
-        "indexOfScoredFrames=" + indexOfScoredFrames +
+        "indexOfScoredFrames=" + scoringFramesIndexes +
         '}';
   }
 }

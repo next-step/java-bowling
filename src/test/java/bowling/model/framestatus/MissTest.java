@@ -12,7 +12,7 @@ class MissTest {
   void getIndexOfNextFrames() {
     FrameStatus frameStatus = new Miss(new RequiredFirstRoll(0));
 
-    assertThat(frameStatus.getIndexOfScoredFrames()).isEqualTo(Arrays.asList(0));
+    assertThat(frameStatus.getScoringFramesIndexes()).isEqualTo(Arrays.asList(0));
     assertThat(frameStatus.isOver()).isTrue();
   }
 

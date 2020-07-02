@@ -9,7 +9,7 @@ class BonusTest {
 
   @Test
   void getIndexOfScoredFrames() {
-    assertThat(new Bonus().getIndexOfScoredFrames().isEmpty()).isTrue();
+    assertThat(new Bonus().getScoringFramesIndexes().isEmpty()).isTrue();
   }
 
   @Test
