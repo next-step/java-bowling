@@ -22,3 +22,4 @@
 11. 쓰러진 핀의 VO Pin
 12. 한 프레임의 점수를 담당하는 Score
 13. Score의 일급 컬렉션 Scores
+14. 게임을 진행하고 전체 게임이 끝났는지 확인할 수 있는 BowlingGame
