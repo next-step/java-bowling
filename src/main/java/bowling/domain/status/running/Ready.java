@@ -9,8 +9,7 @@ public class Ready extends Running {
 
     public static final int STRIKE_SCORE = 10;
 
-    public Ready() {
-    }
+    public Ready() {}
 
     @Override
     public Status bowl(int downPin) {
@@ -31,8 +30,4 @@ public class Ready extends Running {
         return false;
     }
 
-    @Override
-    public boolean canRemovePendingStatue() {
-        return false;
-    }
 }

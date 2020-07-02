@@ -34,8 +34,6 @@ public class BowlingGame {
         return frames.isLastFrame();
     }
 
-
-
     public List<Frame> getFrames() {
         return frames.getFrames();
     }

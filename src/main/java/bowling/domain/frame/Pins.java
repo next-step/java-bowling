@@ -23,21 +23,6 @@ public class Pins {
         return new Pins(downPin);
     }
 
-    public Status bowl(int downPin, Status prevStatus) {
-        this.downPin += downPin;
-        validate(this.downPin);
-        return prevStatus.bowl(downPin);
-    }
-
-    public Status firstBowl(int downPin) {
-        validate(downPin);
-        this.downPin = downPin;
-        if (downPin == MAX_PIN_COUNT) {
-            return new Strike();
-        }
-        return new Pending(downPin);
-    }
-
     public int getDownPin() {
         return downPin;
     }

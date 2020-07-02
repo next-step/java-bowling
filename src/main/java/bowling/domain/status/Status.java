@@ -9,8 +9,6 @@ public interface Status {
 
     boolean isClearAllPins();
 
-    boolean canRemovePendingStatue();
-
     default String isGutter(int downPin) {
         if (downPin == 0) {
             return "-";

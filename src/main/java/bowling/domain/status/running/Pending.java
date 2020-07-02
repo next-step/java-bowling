@@ -11,8 +11,7 @@ public class Pending extends Running {
 
     int firstPin;
 
-    public Pending() {
-    }
+    public Pending() {}
 
     public Pending(int firstPin) {
         this.firstPin = firstPin;
@@ -37,8 +36,4 @@ public class Pending extends Running {
         return false;
     }
 
-    @Override
-    public boolean canRemovePendingStatue() {
-        return false;
-    }
 }

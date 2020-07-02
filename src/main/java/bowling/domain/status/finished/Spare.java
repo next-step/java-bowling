@@ -21,9 +21,4 @@ public class Spare extends Finished {
         return true;
     }
 
-    @Override
-    public boolean canRemovePendingStatue() {
-        return true;
-    }
-
 }

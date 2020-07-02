@@ -37,12 +37,6 @@ public class Frames {
         }
     }
 
-    private void addNextFrame(Frame currentFrame) {
-        if (index < MAX_FRAME_INDEX) {
-            frames.add(currentFrame.nextFrame(index));
-        }
-    }
-
     public int getIndex() {
         return index;
     }
@@ -53,5 +47,11 @@ public class Frames {
 
     public boolean isLastFrame() {
         return index == MAX_FRAME_INDEX;
+    }
+
+    private void addNextFrame(Frame currentFrame) {
+        if (index < MAX_FRAME_INDEX) {
+            frames.add(currentFrame.nextFrame(index));
+        }
     }
 }

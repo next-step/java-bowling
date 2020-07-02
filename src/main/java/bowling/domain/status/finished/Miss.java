@@ -25,8 +25,4 @@ public class Miss extends Finished {
         return false;
     }
 
-    @Override
-    public boolean canRemovePendingStatue() {
-        return true;
-    }
 }

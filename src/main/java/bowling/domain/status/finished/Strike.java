@@ -12,9 +12,4 @@ public class Strike extends Finished {
     public boolean isClearAllPins() {
         return true;
     }
-
-    @Override
-    public boolean canRemovePendingStatue() {
-        return false;
-    }
 }
