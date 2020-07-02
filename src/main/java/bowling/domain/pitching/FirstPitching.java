@@ -32,11 +32,6 @@ public class FirstPitching implements Pitching {
     }
 
     @Override
-    public String getPitchingIdentical() {
-        return "FirstPitching";
-    }
-
-    @Override
     public String getPitchingDescription() {
         return firstFallenPinNumber.getDescription();
     }

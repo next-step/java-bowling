@@ -7,7 +7,6 @@ import java.util.Objects;
 public class BowlingMachine {
 
     private Player player;
-    private Frame frame;
 
     private BowlingMachine(Player player) {
         this.player = player;
@@ -18,7 +17,7 @@ public class BowlingMachine {
     }
 
     public void startGame() {
-        frame = NormalFrame.of(FrameNumber.of(1));
+        Frame frame = NormalFrame.of(FrameNumber.of(1));
         Frame tempFrame = frame;
         for (int i = 1; i <= 11; i++) {
 

@@ -36,11 +36,6 @@ public class StrikePitching implements Pitching {
     }
 
     @Override
-    public String getPitchingIdentical() {
-        return "StrikePitching";
-    }
-
-    @Override
     public String getPitchingDescription() {
         return "X";
     }

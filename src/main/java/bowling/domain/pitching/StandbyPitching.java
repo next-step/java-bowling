@@ -20,11 +20,6 @@ public class StandbyPitching implements Pitching {
     }
 
     @Override
-    public String getPitchingIdentical() {
-        return "StandbyPitching";
-    }
-
-    @Override
     public String getPitchingDescription() {
         return " ";
     }

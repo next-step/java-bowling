@@ -3,6 +3,8 @@ package bowling.domain;
 import bowling.domain.pitching.Pitching;
 import bowling.domain.pitching.StandbyPitching;
 
+import java.util.Objects;
+
 public class FinalFrame implements Frame {
 
     private FrameNumber frameNumber;
@@ -41,5 +43,24 @@ public class FinalFrame implements Frame {
     @Override
     public Frame getNextFrame() {
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        FinalFrame that = (FinalFrame) o;
+        return Objects.equals(frameNumber, that.frameNumber) &&
+                Objects.equals(pitching, that.pitching);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber, pitching);
     }
 }

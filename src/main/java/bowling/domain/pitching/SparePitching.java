@@ -16,22 +16,24 @@ public class SparePitching implements Pitching {
     }
 
     public static SparePitching of(FallenPinNumber firstFallenPinNumber, FallenPinNumber secondFallenPinNumber) {
+        validateMissingPitching(firstFallenPinNumber, secondFallenPinNumber);
         return new SparePitching(firstFallenPinNumber, secondFallenPinNumber);
+    }
+
+    private static void validateMissingPitching(FallenPinNumber firstFallenPinNumber, FallenPinNumber secondFallenPinNumber) {
+        if (!firstFallenPinNumber.isValidPitching(secondFallenPinNumber)) {
+            throw new RuntimeException("두번째 볼링이 잘못된 값입니다.");
+        }
     }
 
     @Override
     public boolean isFinished(Frame frame) {
-        return frame.isFinalFrame() ? false : true;
+        return !frame.isFinalFrame();
     }
 
     @Override
     public Pitching pitch(FallenPinNumber fallenPinNumber) {
         return BonusPitching.of(firstFallenPinNumber, secondFallenPinNumber, fallenPinNumber);
-    }
-
-    @Override
-    public String getPitchingIdentical() {
-        return "SparePitching";
     }
 
     @Override

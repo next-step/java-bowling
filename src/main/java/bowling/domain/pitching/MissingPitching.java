@@ -16,7 +16,14 @@ public class MissingPitching implements Pitching {
     }
 
     public static MissingPitching of(FallenPinNumber firstFallenPinNumber, FallenPinNumber secondFallenPinNumber) {
+        validateMissingPitching(firstFallenPinNumber, secondFallenPinNumber);
         return new MissingPitching(firstFallenPinNumber, secondFallenPinNumber);
+    }
+
+    private static void validateMissingPitching(FallenPinNumber firstFallenPinNumber, FallenPinNumber secondFallenPinNumber) {
+        if (!firstFallenPinNumber.isValidPitching(secondFallenPinNumber)) {
+            throw new RuntimeException("두번째 볼링이 잘못된 값입니다.");
+        }
     }
 
     @Override
@@ -27,11 +34,6 @@ public class MissingPitching implements Pitching {
     @Override
     public Pitching pitch(FallenPinNumber fallenPinNumber) {
         throw new RuntimeException("이미 끝난 프레임입니다.");
-    }
-
-    @Override
-    public String getPitchingIdentical() {
-        return "MissingPitching";
     }
 
     @Override

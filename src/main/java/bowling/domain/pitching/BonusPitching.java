@@ -32,11 +32,6 @@ public class BonusPitching implements Pitching {
     }
 
     @Override
-    public String getPitchingIdentical() {
-        return "BonusPitching";
-    }
-
-    @Override
     public String getPitchingDescription() {
         String secondShape = firstFallenPinNumber.isSpare(secondFallenPinNumber) ? "/" : secondFallenPinNumber.getDescription();
         if (finalFallenPinNumber == null) {

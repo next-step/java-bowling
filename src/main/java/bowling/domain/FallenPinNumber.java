@@ -36,6 +36,10 @@ public class FallenPinNumber {
         return fallenPinNumber + next.fallenPinNumber == MAX_FALLEN_PIN;
     }
 
+    public boolean isValidPitching(FallenPinNumber next) {
+        return fallenPinNumber + next.fallenPinNumber <= 10;
+    }
+
     public String getDescription() {
         if (fallenPinNumber == 0) {
             return "-";
