@@ -16,7 +16,7 @@ public abstract class Frame {
         this.pitch = Pitch.of();
     }
 
-    public static NormalFrame first() {
+    public static Frame first() {
         return new NormalFrame(FIRST_FRAME);
     }
 
