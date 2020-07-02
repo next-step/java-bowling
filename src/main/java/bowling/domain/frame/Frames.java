@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Frames {
+    public static final int MAX_FRAME_INDEX = 10;
     private final List<Frame> frames;
     private int index;
 
@@ -30,6 +31,12 @@ public class Frames {
         Frame currentFrame = frames.get(index);
         if (!currentFrame.canPlayMore()) {
             index++;
+            addNextFrame(currentFrame);
+        }
+    }
+
+    private void addNextFrame(Frame currentFrame) {
+        if (index < MAX_FRAME_INDEX) {
             frames.add(currentFrame.nextFrame(index));
         }
     }
