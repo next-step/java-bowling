@@ -33,7 +33,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Frame next() {
+    public Frame next(int index) {
         throw new IllegalStateException("볼링이 종료 되었습니다.");
     }
 

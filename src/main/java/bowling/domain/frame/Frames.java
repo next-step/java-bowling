@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Frames {
-    private static final int BEFORE_LAST_INDEX = 9;
-
     private final List<Frame> frames;
 
     private Frames(List<Frame> frames) {
@@ -43,10 +41,7 @@ public class Frames {
     }
 
     private Frame nextFrame() {
-        if (frames.size() == BEFORE_LAST_INDEX) {
-            return FinalFrame.init();
-        }
-        return currentFrame().next();
+        return currentFrame().next(frames.size());
     }
 
     public Frame getFrame(int index) {

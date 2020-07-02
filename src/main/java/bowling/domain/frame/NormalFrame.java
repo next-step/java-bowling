@@ -7,7 +7,7 @@ public class NormalFrame implements Frame {
     public static final int PLUS = 1;
     private static final int FIRST_TRY = 0;
     private static final int MAX_TRY_COUNT = 2;
-
+    Frame next;
     private Pins pins;
     private Status status;
     private int trying;
@@ -34,8 +34,13 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame next() {
-        return new NormalFrame(Pins.init(), new Pending(), 0);
+    public Frame next(int index) {
+        if (index == 9) {
+            next = FinalFrame.init();
+            return next;
+        }
+        next = new NormalFrame(Pins.init(), new Pending(), 0);
+        return next;
     }
 
     @Override
@@ -64,8 +69,9 @@ public class NormalFrame implements Frame {
     @Override
     public String toString() {
         return "NormalFrame{" +
-                "pins=" + pins.getDownPin() +
-                ", status=" + printFrameResult() +
+                "next=" + next +
+                ", pins=" + pins.getDownPin() +
+                ", status=" + status.printResult() +
                 ", trying=" + trying +
                 '}';
     }
