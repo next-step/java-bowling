@@ -19,13 +19,12 @@ class NormalFrameTest {
 
     normalFrame.roll(firstNumberOfPinsKnockedDown);
 
-    assertThat(normalFrame.getPins().getFirstKnockDownNumber() + normalFrame.getPins()
-        .getSecondKnockDownNumber()).isEqualTo(firstNumberOfPinsKnockedDown);
+    assertThat(normalFrame.getFirstKnockDownNumber()).isEqualTo(firstNumberOfPinsKnockedDown);
 
     normalFrame.roll(secondNumberOfPinsKnockedDown);
 
-    assertThat(normalFrame.getPins().getFirstKnockDownNumber() + normalFrame.getPins()
-        .getSecondKnockDownNumber())
+    assertThat(
+        normalFrame.getFirstKnockDownNumber() + normalFrame.getPins().getSecondKnockDownNumber())
         .isEqualTo(firstNumberOfPinsKnockedDown + secondNumberOfPinsKnockedDown);
 
     assertThatExceptionOfType(FrameOverException.class).isThrownBy(() -> {
@@ -56,8 +55,7 @@ class NormalFrameTest {
 
     normalFrame.roll(firstNumberOfPinsKnockedDown);
 
-    assertThat(normalFrame.getPins().getFirstKnockDownNumber() + normalFrame.getPins()
-        .getSecondKnockDownNumber()).isEqualTo(10);
+    assertThat(normalFrame.getFirstKnockDownNumber()).isEqualTo(10);
 
     assertThatExceptionOfType(FrameOverException.class).isThrownBy(() -> {
       normalFrame.roll(secondNumberOfPinsKnockedDown);
@@ -78,39 +76,63 @@ class NormalFrameTest {
   }
 
   @Test
-  void getScoreBy_spare() {
+  void getScore_spare() {
     Frames frames = new Frames();
-    Score result_frame1 = new Score(0);
+
+    Score result_frame1;
 
     // 준비단계
 
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(0));
 
 //    // 1-1프레임
     frames.roll(5);
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(5));
 
 //    // 1-2프레임(스페어)
     frames.roll(5);
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(10));
 
     // 2-1프레임
     frames.roll(5);
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(15));
 
     // 2-2프레임(스페어)
     frames.roll(5);
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(15));
 
     // 3-1 프레임
     frames.roll(5);
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(15));
+    frames.roll(5);
+
+    frames.roll(10);//4
+    frames.roll(10);//5
+    frames.roll(10);//6
+    frames.roll(10);//7
+    frames.roll(10);//8
+    frames.roll(10);//9
+
+    // 10-1 프레임
+    frames.roll(9);
+    result_frame1 = frames.getFrames().get(9).getScore();
+    assertThat(result_frame1).isEqualTo(new Score(9));
+
+    // 10-2 프레임
+    frames.roll(1);
+    result_frame1 = frames.getFrames().get(9).getScore();
+    assertThat(result_frame1).isEqualTo(new Score(10));
+
+    // 보너스 프레임
+    frames.roll(10);
+    result_frame1 = frames.getFrames().get(9).getScore();
+    assertThat(result_frame1).isEqualTo(new Score(20));
   }
 
   @Test
@@ -119,37 +141,66 @@ class NormalFrameTest {
     Score result_frame1 = new Score(0);
 
     // 준비단계
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(0));
 
     // 1프레임(스트라이크)
     frames.roll(10);
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(10));
 
     // 2-1프레임
     frames.roll(5);
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(15));
 
     // 2-2프레임(스페어)
     frames.roll(5);
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(15));
 
     // 3-1 프레임
     frames.roll(5);
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(20));
 
     // 3-2 프레임
     frames.roll(5);
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(20));
 
-    // 4-1 프레임
+    // 4 프레임
     frames.roll(10);
-    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    result_frame1 = frames.getFrames().get(0).getScore();
     assertThat(result_frame1).isEqualTo(new Score(20));
+
+    frames.roll(1);//5
+    frames.roll(1);//5
+    frames.roll(1);//6
+    frames.roll(1);//6
+    frames.roll(1);//7
+    frames.roll(1);//7
+    frames.roll(1);//8
+    frames.roll(1);//8
+    frames.roll(1);//9
+    frames.roll(1);//9
+
+    // 10 프레임
+    frames.roll(10);
+    result_frame1 = frames.getFrames().get(9).getScore();
+    assertThat(result_frame1).isEqualTo(new Score(10));
+
+    // 보너스1
+    frames.roll(10);
+    result_frame1 = frames.getFrames().get(9).getScore();
+    assertThat(result_frame1).isEqualTo(new Score(20));
+
+    // 보너스2
+    frames.roll(10);
+    result_frame1 = frames.getFrames().get(9).getScore();
+    assertThat(result_frame1).isEqualTo(new Score(30));
+
+    // 보너스3
+    assertThat(frames.getFrames().get(frames.getFrames().size()-1).isFinished()).isTrue();
   }
 }

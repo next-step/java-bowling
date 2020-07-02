@@ -15,7 +15,7 @@ class BonusFrameTest {
   @ParameterizedTest
   @MethodSource("provideKockDownNumWtihRemaningNumber")
   void roll(int knockDownNumber, int remainingNumber) throws FrameOverException {
-    BonusFrame bonusFrame = new BonusFrame();
+    BonusFrame bonusFrame = new BonusFrame(false);
 
     bonusFrame.roll(knockDownNumber);
 
@@ -42,7 +42,7 @@ class BonusFrameTest {
       "11"
   })
   void roll_핀범위초과(int knockDownNumber) {
-    BonusFrame bonusFrame = new BonusFrame();
+    BonusFrame bonusFrame = new BonusFrame(false);
 
     assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
       bonusFrame.roll(knockDownNumber);
@@ -51,11 +51,11 @@ class BonusFrameTest {
 
   @Test
   void isOver() {
-    assertThat(new BonusFrame().isOver()).isTrue();
+    assertThat(new BonusFrame(false).isOver()).isTrue();
   }
 
   @Test
   void getSizeOfScoringFramesIndexes() {
-    assertThat(new BonusFrame().getSizeOfScoringFramesIndexes()).isEqualTo(0);
+    assertThat(new BonusFrame(false).getSizeOfScoringFramesIndexes()).isEqualTo(0);
   }
 }

@@ -2,7 +2,10 @@ package bowling.model.framestatus;
 
 import static bowling.model.Symbols.*;
 
+import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
+import bowling.model.Score;
+import bowling.model.EmptyFrame;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,8 +20,18 @@ public class RequiredSecondRoll implements FrameStatus {
   }
 
   @Override
+  public Frame getNextFrame() {
+    return new EmptyFrame();
+  }
+
+  @Override
   public List<Integer> getScoringFramesIndexes() {
     return Collections.unmodifiableList(scoringFramesIndexes);
+  }
+
+  @Override
+  public Score getAdditionalScore() {
+    return new Score(0);
   }
 
   @Override
@@ -49,6 +62,11 @@ public class RequiredSecondRoll implements FrameStatus {
   public String getResultBy(KnockedDownPins pins) {
     return String.valueOf(pins.getFirstKnockDownNumber())
         .replace(ZERO.toString(), GUTTER.toString());
+  }
+
+  @Override
+  public boolean isFinished() {
+    return false;
   }
 
 

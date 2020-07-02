@@ -3,11 +3,14 @@ package bowling.model;
 import java.util.Objects;
 
 public class Score {
-
   int value;
 
   public Score(int value) {
     this.value = value;
+  }
+
+  public Score(Score score) {
+    this.value = score.value;
   }
 
   public void add(int value) {
@@ -18,7 +21,7 @@ public class Score {
     this.value += score.value;
   }
 
-  public int getValue() {
+  public int getIntValue() {
     return value;
   }
 

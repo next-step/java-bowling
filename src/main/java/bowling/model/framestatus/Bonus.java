@@ -2,15 +2,28 @@ package bowling.model.framestatus;
 
 import static bowling.model.Symbols.*;
 
+import bowling.model.BonusFrame;
+import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
+import bowling.model.Score;
 import java.util.Collections;
 import java.util.List;
 
 public class Bonus implements FrameStatus {
 
   @Override
+  public Frame getNextFrame() {
+    return null;
+  }
+
+  @Override
   public List<Integer> getScoringFramesIndexes() {
     return Collections.emptyList();
+  }
+
+  @Override
+  public Score getAdditionalScore() {
+    return new Score(0);
   }
 
   @Override
@@ -40,5 +53,10 @@ public class Bonus implements FrameStatus {
     }
 
     return String.valueOf(pins.getFirstKnockDownNumber()).replaceAll("0", GUTTER.toString());
+  }
+
+  @Override
+  public boolean isFinished() {
+    return false;
   }
 }

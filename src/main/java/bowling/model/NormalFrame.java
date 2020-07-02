@@ -39,8 +39,32 @@ public class NormalFrame implements Frame {
   }
 
   @Override
+  public Frame next() {
+    return frameStatus.getNextFrame();
+  }
+
+  @Override
+  public Score getScore() {
+    Score score = new Score(getFirstKnockDownNumber() + pins.getSecondKnockDownNumber());
+
+    score.add(frameStatus.getAdditionalScore());
+
+    return score;
+  }
+
+  @Override
+  public int getFirstKnockDownNumber() {
+    return pins.getFirstKnockDownNumber();
+  }
+
+  @Override
   public boolean isOver() {
     return frameStatus.isOver();
+  }
+
+  @Override
+  public boolean isFinished() {
+    return frameStatus.isFinished();
   }
 
   @Override
@@ -58,8 +82,7 @@ public class NormalFrame implements Frame {
     return frameStatus;
   }
 
-  @Override
-  public Score getScoreBy(List<Frame> frames) {
+  private Score getScoreBy(List<Frame> frames) {
     int startIndex = getFirstIndexOfScoredFrames();
     int lastIndex = getLastIndexOfScoredFrames();
 
@@ -77,7 +100,8 @@ public class NormalFrame implements Frame {
   }
 
   private int getLastIndexOfScoredFrames() {
-    return frameStatus.getScoringFramesIndexes().get(0) + frameStatus.getSizeOfScoringFramesIndexes();
+    return frameStatus.getScoringFramesIndexes().get(0) + frameStatus
+        .getSizeOfScoringFramesIndexes();
   }
 
   @Override

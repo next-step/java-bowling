@@ -10,7 +10,7 @@ public class Frames {
 
   private static final int FIRST_INDEX = 0;
 
-  private final ArrayDeque<Frame> frames = new ArrayDeque<>();
+  private final Deque<Frame> frames = new ArrayDeque<>();
 
   public Frames() {
     frames.add(new NormalFrame(FIRST_INDEX));
@@ -18,10 +18,6 @@ public class Frames {
 
   public List<Frame> getFrames() {
     return Collections.unmodifiableList(new ArrayList<>(frames));
-  }
-
-  private Frame getFrameAt(int index) {
-    return getFrames().get(index);
   }
 
   public int getSize() {
@@ -42,7 +38,7 @@ public class Frames {
   }
 
   private void addAndRoll(int knockDownNumber) {
-    frames.addLast(new NormalFrame(frames.size()));
+    frames.add(frames.getLast().next());
 
     try {
       frames.getLast().roll(knockDownNumber);
@@ -54,7 +50,7 @@ public class Frames {
   }
 
   public void bonusRoll(int knockDownNumber) {
-    Frame bonusFrame = new BonusFrame();
+    Frame bonusFrame = new BonusFrame(false);
 
     try {
       bonusFrame.roll(knockDownNumber);
@@ -64,7 +60,7 @@ public class Frames {
           + System.lineSeparator() + " knockDownNum : " + knockDownNumber);
     }
 
-    frames.addLast(bonusFrame);
+    frames.add(bonusFrame);
   }
 
   public int getSizeOfBonusFrames() {
@@ -81,7 +77,7 @@ public class Frames {
   }
 
   public boolean isOver() {
-    return BowlingGame.MAX_NUMBER_OF_FRAMES <= frames.size() && frames.getLast().isOver();
+    return frames.getLast().isFinished();
   }
 
   public List<Score> getScores() {
@@ -91,7 +87,7 @@ public class Frames {
     frames.stream()
         .limit(BowlingGame.MAX_NUMBER_OF_FRAMES)
         .forEach(frame -> {
-          scores.add(frame.getScoreBy(frames));
+          scores.add(frame.getScore());
         });
     return scores;
   }

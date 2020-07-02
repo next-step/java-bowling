@@ -115,7 +115,7 @@ class FramesTest {
       frames.roll(10);
     }
 
-    assertThat(frames.getSize()).isEqualTo(10);
+    assertThat(frames.getSize()).isEqualTo(12);
   }
 
   @ParameterizedTest
