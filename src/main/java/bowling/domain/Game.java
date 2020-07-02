@@ -19,7 +19,7 @@ public class Game {
 
     public List<Frame> startGame() {
         List<Frame> frames = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 1; i < 10; i++) {
             frames.add(new NormalFrame(i));
         }
         frames.add(new FinalFrame());

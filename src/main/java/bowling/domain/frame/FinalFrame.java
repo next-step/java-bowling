@@ -14,7 +14,7 @@ public class FinalFrame implements Frame {
 
     public FinalFrame() {
         this.pins = new Pins();
-        this.index = 9;
+        this.index = 10;
     }
 
     @Override
@@ -40,7 +40,10 @@ public class FinalFrame implements Frame {
             return false;
         }
 
-        return true;
+        if (pins.rollCount() <= 3) {
+            return true;
+        }
+        return false;
     }
 
     @Override

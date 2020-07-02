@@ -44,9 +44,6 @@ public class NormalFrame implements Frame{
         return true;
     }
 
-    public int getRollCount() {
-        return pins.rollCount();
-    }
 
     private boolean isRolledTwice() {
         return pins.rollCount() >= CAN_ROLL_LIMIT;
