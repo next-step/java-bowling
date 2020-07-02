@@ -72,7 +72,7 @@ public class FinalFrame extends Frame {
             return Score.of(pitch.calculatePinCount(shot.getBonusCount()));
         }
 
-        if (pitch.isPitchEnd()) {
+        if (pitch.isFinish()) {
             return Score.of(pitch.calculatePinCount(pitch.getThrowCount()));
         }
 

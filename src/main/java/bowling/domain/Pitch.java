@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.common.IntegerUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 

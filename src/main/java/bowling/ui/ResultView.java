@@ -17,7 +17,7 @@ public class ResultView {
     public static void printBoard(ResultFrameDto resultFrameDto) {
         System.out.println(getHeaderRow());
         System.out.println(getFramesRow(resultFrameDto));
-        System.out.println(generateScoreRow(frames));
+        System.out.println(generateScoreRow(resultFrameDto));
     }
 
     private static String getHeaderRow() {
@@ -47,11 +47,12 @@ public class ResultView {
         }
     }
 
-    private static String generateScoreRow(Frames frames) {
+    private static String generateScoreRow(ResultFrameDto resultFrameDto) {
         StringBuilder sb = new StringBuilder(String.format(BOARD_HEADER_FIRST_COLUMN, ""));
-        frames.calculateTotalScore()
-                .forEach(score -> sb.append(String.format(RESULT_FORMAT, score.toString())));
-        fillEmpty(frames, sb);
+        resultFrameDto
+                .generateScoreStrings()
+                .forEach(score -> sb.append(String.format(RESULT_FORMAT, score)));
+        fillEmpty(resultFrameDto, sb);
         return sb.toString();
     }
 }

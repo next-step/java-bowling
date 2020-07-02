@@ -17,7 +17,7 @@ public class Score {
     }
 
     public static Score ofPitch(Pitch pitch) {
-        if (!pitch.isPitchEnd()) {
+        if (!pitch.isFinish()) {
             return Score.ofNull();
         }
         return Score.of(pitch.getFallenPin());

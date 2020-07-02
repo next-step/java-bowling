@@ -65,7 +65,7 @@ class FramesTest {
         Frames frames = new Frames(new Player("jae"));
         frames.bowling(new Pin(5));
         frames.bowling(new Pin(5));
-        List<Score> scores = frames.stream().map(Frame::calculateScore).collect(Collectors.toList());
+        List<Score> scores = frames.calculateTotalScore();
         assertThat(scores.get(0)).isEqualTo(Score.ofNull());
     }
 
@@ -76,7 +76,7 @@ class FramesTest {
         frames.bowling(new Pin(5));
         frames.bowling(new Pin(5));
         frames.bowling(new Pin(5));
-        List<Score> scores = frames.stream().map(Frame::calculateScore).collect(Collectors.toList());
+        List<Score> scores = frames.calculateTotalScore();
         assertThat(scores.get(0)).isEqualTo(Score.of(15));
     }
 
