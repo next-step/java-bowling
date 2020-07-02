@@ -15,5 +15,5 @@ public interface Frame {
 
   FrameStatus getFrameStatus();
 
-  int getScoreBy(List<Frame> frames);
+  Score getScoreBy(List<Frame> frames);
 }

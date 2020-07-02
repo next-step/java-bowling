@@ -4,6 +4,7 @@ import static bowling.model.Symbols.*;
 
 import bowling.model.BowlingGame;
 import bowling.model.FrameDTO;
+import bowling.model.Score;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,19 +70,19 @@ public class BowlingView {
     return wrappingWithSpaces(sb.toString());
   }
 
-  public static void printScores(List<Integer> scores) {
+  public static void printScores(List<Score> scores) {
     StringBuilder sb = new StringBuilder();
 
     sb.append(BAR)
         .append(wrappingWithSpaces(BLANK.toString()))
         .append(BAR);
 
-    int[] scoreHolder = new int[]{0};
+    Score scoreHolder = new Score(0);
 
     scores.forEach(score -> {
-      scoreHolder[0] += score;
+      scoreHolder.add(score);
 
-      sb.append(wrappingWithSpaces(String.valueOf(scoreHolder[0])))
+      sb.append(wrappingWithSpaces(scoreHolder.toString()))
           .append(BAR);
     });
 

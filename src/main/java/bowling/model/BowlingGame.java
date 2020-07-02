@@ -34,7 +34,7 @@ public class BowlingGame {
     return frames.getSize();
   }
 
-  public List<Integer> getScores() {
+  public List<Score> getScores() {
     return frames.getScores();
   }
 

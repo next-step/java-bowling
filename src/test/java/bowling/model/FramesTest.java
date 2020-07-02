@@ -137,7 +137,7 @@ class FramesTest {
               roll(1); // 4
             }},
             Arrays.asList(
-                12, 11, 2, 2
+                new Score(12), new Score(11), new Score(2), new Score(2)
             )
         )
     );

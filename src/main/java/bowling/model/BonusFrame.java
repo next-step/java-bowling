@@ -40,8 +40,8 @@ public class BonusFrame implements Frame {
   }
 
   @Override
-  public int getScoreBy(List<Frame> frames) {
-    return 0;
+  public Score getScoreBy(List<Frame> frames) {
+    return new Score(0);
   }
 
   @Override

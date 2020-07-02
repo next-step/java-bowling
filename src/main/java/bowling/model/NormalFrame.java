@@ -59,7 +59,7 @@ public class NormalFrame implements Frame {
   }
 
   @Override
-  public int getScoreBy(List<Frame> frames) {
+  public Score getScoreBy(List<Frame> frames) {
     int startIndex = getFirstIndexOfScoredFrames();
     int lastIndex = getLastIndexOfScoredFrames();
 
@@ -67,12 +67,11 @@ public class NormalFrame implements Frame {
       lastIndex = frames.size();
     }
 
-    return IntStream.range(startIndex, lastIndex)
+    return new Score(IntStream.range(startIndex, lastIndex)
         .map(index -> frames.get(index).getPins().getFirstKnockDownNumber())
-        .sum() + frames.get(startIndex).getPins().getSecondKnockDownNumber();
+        .sum() + frames.get(startIndex).getPins().getSecondKnockDownNumber());
   }
 
-  // TODO : 첫 위치와 마지막 위치만 저장 하면 좀 더 심플하게 갈 수 있을 듯..
   private int getFirstIndexOfScoredFrames() {
     return frameStatus.getScoringFramesIndexes().get(0);
   }

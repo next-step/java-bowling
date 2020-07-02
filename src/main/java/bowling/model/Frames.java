@@ -20,6 +20,10 @@ public class Frames {
     return Collections.unmodifiableList(new ArrayList<>(frames));
   }
 
+  private Frame getFrameAt(int index) {
+    return getFrames().get(index);
+  }
+
   public int getSize() {
     return frames.size();
   }
@@ -64,11 +68,12 @@ public class Frames {
   }
 
   public int getSizeOfBonusFrames() {
-    if(!isOver()) {
+    if (!isOver()) {
       throw new IllegalStateException("마지막 프레임이 아닙니다.");
     }
 
-    return getFrames().get(BowlingGame.MAX_NUMBER_OF_FRAMES - 1).getSizeOfScoringFramesIndexes() - 1;
+    return getFrames().get(BowlingGame.MAX_NUMBER_OF_FRAMES - 1).getSizeOfScoringFramesIndexes()
+        - 1;
   }
 
   public boolean isCurrentFrameOver() {
@@ -79,8 +84,8 @@ public class Frames {
     return BowlingGame.MAX_NUMBER_OF_FRAMES <= frames.size() && frames.getLast().isOver();
   }
 
-  public List<Integer> getScores() {
-    List<Integer> scores = new ArrayList<>();
+  public List<Score> getScores() {
+    List<Score> scores = new ArrayList<>();
     List<Frame> frames = getFrames();
 
     frames.stream()
