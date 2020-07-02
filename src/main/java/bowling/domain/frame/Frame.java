@@ -19,7 +19,6 @@ public abstract class Frame {
     }
 
     public void addPoint(int point) {
-        validateScores(point);
         scores.addScore(point);
         bonusScores.addBonusPoint(point);
     }
@@ -32,8 +31,6 @@ public abstract class Frame {
     public List<ScoreResultDto> getScoreResultDtos() {
         return scores.convertSoreResultDtos();
     }
-
-    public abstract void validateScores(int point);
 
     public abstract boolean isAvailablePlay();
 

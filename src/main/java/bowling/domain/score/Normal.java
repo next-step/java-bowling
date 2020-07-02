@@ -27,11 +27,11 @@ public class Normal implements Score {
             throw new IllegalArgumentException("total Score less than 10");
         }
 
-        if (totalPoint == 10) {
+        if (totalPoint == STRIKE_SCORE) {
             return new Spare(point);
         }
 
-        if (totalPoint == 0) {
+        if (totalPoint == GUTTER_SCORE) {
             return new Gutter();
         }
 

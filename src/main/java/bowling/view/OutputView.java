@@ -1,9 +1,12 @@
 package bowling.view;
 
+import bowling.domain.bowlinggame.BowlingGame;
+import bowling.domain.bowlinggame.BowlingGames;
 import bowling.domain.dto.ScoreResultDto;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,18 +22,34 @@ public class OutputView {
     private static final String SINGLE_SCORE_FORMAT = "  %s   |";
     private static final String POINT_FORMAT = " %4s |";
 
-    public static void outputDefaultFrame(String playerName) {
+    public static void outputDefaultFrame(List<String> playerNames) {
         System.out.println(ROUND_FRAME);
+        for (String playerName : playerNames) {
+            outputPlayerNames(playerName);
+        }
+    }
+
+    private static void outputPlayerNames(String playerName) {
         System.out.println(String.format(DEFAULT_SCORE, playerName));
         System.out.println(DEFAULT_TOTAL_SCORE);
     }
 
-    public static void outputFrames(Frames frames, Player player) {
+    public static void outputBowlingGames(BowlingGames bowlingGames) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder = outputRound(stringBuilder);
+        for (int i = 0; i < bowlingGames.size(); i++) {
+            stringBuilder = outputFrames(stringBuilder, bowlingGames.findBowlingGame(i));
+            stringBuilder.append(System.lineSeparator());
+        }
+        System.out.println(stringBuilder);
+    }
+
+    private static StringBuilder outputFrames(StringBuilder stringBuilder, BowlingGame bowlingGame) {
+        Frames frames = bowlingGame.getFrames();
+        Player player = bowlingGame.getPlayer();
         stringBuilder = outputNameAndScore(stringBuilder, frames, player);
         stringBuilder = outputTotalScore(stringBuilder, frames);
-        System.out.println(stringBuilder);
+        return stringBuilder;
     }
 
     private static StringBuilder outputRound(StringBuilder stringBuilder) {
@@ -60,6 +79,10 @@ public class OutputView {
 
         if (scoresString.size() > 1) {
             return String.format(MULTI_SCORE_FORMAT, String.join(LINE, scoresString));
+        }
+
+        if (CollectionUtils.isEmpty(scoresString)) {
+            return BLANK;
         }
         return String.format(SINGLE_SCORE_FORMAT, scoresString.get(0));
     }

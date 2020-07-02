@@ -3,6 +3,8 @@ package bowling.domain.point;
 public class Point {
     private static final int MIN_POINT = 0;
     private static final int MAX_POINT = 10;
+    public static final Point MIN = new Point(MIN_POINT);
+    public static final Point MAX = new Point(MAX_POINT);
 
     private final int point;
 
@@ -23,13 +25,5 @@ public class Point {
 
     public int getPoint() {
         return point;
-    }
-
-    public static Point MIN() {
-        return new Point(MIN_POINT);
-    }
-
-    public static Point MAX() {
-        return new Point(MAX_POINT);
     }
 }

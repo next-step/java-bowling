@@ -1,5 +1,7 @@
 package bowling.domain.bonus;
 
+import bowling.domain.score.Scores;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,8 +17,14 @@ public class BonusScores {
         this.bonusScores = bonusScores;
     }
 
-    public void addBonusScore(BonusScore bonusScore) {
-        bonusScores.add(bonusScore);
+    public void addBonusScore(Scores scores, int frameIndex) {
+        if (scores.isStrike()) {
+            bonusScores.add(BonusScore.strikeBonusScore(frameIndex));
+        }
+
+        if (scores.isSpare()) {
+            bonusScores.add(BonusScore.spareBonusScore(frameIndex));
+        }
     }
 
     public void addBonusPoint(int point) {
@@ -29,11 +37,6 @@ public class BonusScores {
         return bonusScores.stream()
                 .filter(BonusScore::isAvailableAddBonusPoint)
                 .collect(Collectors.collectingAndThen(Collectors.toList(), BonusScores::new));
-    }
-
-    public boolean isAvailableAdd() {
-        return bonusScores.stream()
-                .anyMatch(BonusScore::isAvailableAddBonusPoint);
     }
 
     public BonusScore findBonusScores(int frameIndex) {

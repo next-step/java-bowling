@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.bonus.BonusScore;
 import bowling.domain.bonus.BonusScores;
 import bowling.domain.score.Scores;
 
@@ -16,31 +15,14 @@ public class NormalFrame extends Frame {
         return new NormalFrame(new BonusScores(), FIRST_FRAME_INDEX);
     }
 
-    public Frame createNextFrame(int frameIndex) {
-        createBonusScores(frameIndex - 1);
-        return new NormalFrame(bonusScores.findAvailableAddBonusScores(), frameIndex);
+    public Frame createNextFrame() {
+        bonusScores.addBonusScore(scores, frameIndex);
+        return new NormalFrame(bonusScores.findAvailableAddBonusScores(), frameIndex + 1);
     }
 
-    public Frame createLastFrame(int frameIndex) {
-        createBonusScores(frameIndex - 1);
-        return new FinalFrame(bonusScores.findAvailableAddBonusScores(), frameIndex);
-    }
-
-    private void createBonusScores(int frameIndex) {
-        if (scores.isStrike()) {
-            bonusScores.addBonusScore(BonusScore.strikeBonusScore(frameIndex));
-        }
-
-        if (scores.isSpare()) {
-            bonusScores.addBonusScore(BonusScore.spareBonusScore(frameIndex));
-        }
-    }
-
-    @Override
-    public void validateScores(int point) {
-        if (scores.totalScore() + point > MAX_SCORE) {
-            throw new IllegalArgumentException("score less than 10");
-        }
+    public Frame createLastFrame() {
+        bonusScores.addBonusScore(scores, frameIndex);
+        return new FinalFrame(bonusScores.findAvailableAddBonusScores(), frameIndex + 1);
     }
 
     @Override

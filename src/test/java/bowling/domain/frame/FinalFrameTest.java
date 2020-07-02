@@ -1,15 +1,13 @@
 package bowling.domain.frame;
 
-import bowling.domain.bonus.BonusScore;
 import bowling.domain.bonus.BonusScores;
+import bowling.domain.score.Scores;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,14 +21,27 @@ class FinalFrameTest {
 
     private Frame createHasBonusScoreStrikeFrame() {
         BonusScores bonusScores = new BonusScores();
-        bonusScores.addBonusScore(BonusScore.strikeBonusScore(9));
+        bonusScores.addBonusScore(createStrikeScores(), 9);
         return new FinalFrame(bonusScores, 9);
     }
 
     private Frame createHasBonusScoreSpareFrame() {
         BonusScores bonusScores = new BonusScores();
-        bonusScores.addBonusScore(BonusScore.spareBonusScore(9));
+        bonusScores.addBonusScore(createSpareScores(), 9);
         return new FinalFrame(bonusScores, 9);
+    }
+
+    private Scores createStrikeScores() {
+        Scores scores = new Scores();
+        scores.addScore(10);
+        return scores;
+    }
+
+    private Scores createSpareScores() {
+        Scores scores = new Scores();
+        scores.addScore(5);
+        scores.addScore(5);
+        return scores;
     }
 
     @Test
@@ -50,7 +61,7 @@ class FinalFrameTest {
         assertThat(frame.isAvailablePlay()).isTrue();
         frame.addPoint(5);
         frame.addPoint(5);
-        assertThat(frame.isAvailablePlay()).isFalse();
+        assertThat(frame.isAvailablePlay()).isTrue();
     }
 
     @ParameterizedTest

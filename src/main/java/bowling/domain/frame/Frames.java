@@ -23,13 +23,12 @@ public class Frames {
         }
 
         NormalFrame normalFrame = (NormalFrame) ElementFindUtils.findLastElement(frames);
-        int nextFrameIndex = frames.size();
         if (isLast()) {
-            frames.add(normalFrame.createLastFrame(nextFrameIndex));
+            frames.add(normalFrame.createLastFrame());
             return;
         }
 
-        frames.add(normalFrame.createNextFrame(nextFrameIndex));
+        frames.add(normalFrame.createNextFrame());
         return;
     }
 
@@ -47,5 +46,9 @@ public class Frames {
 
     public Frame findCurrentFrame() {
         return ElementFindUtils.findLastElement(frames);
+    }
+
+    public boolean isEmpty() {
+        return frames.isEmpty();
     }
 }
