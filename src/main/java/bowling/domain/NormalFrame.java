@@ -9,7 +9,8 @@ public class NormalFrame extends Frame {
 
     @Override
     public State bowling(Pin pin) {
-        if (pitch.add(pin)) {
+        pitch.add(pin);
+        if (pitch.isFinish()) {
             return State.Finish;
         }
         return State.NotFinish;

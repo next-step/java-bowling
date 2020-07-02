@@ -17,15 +17,13 @@ public class Pitch {
         this.remainPin = new Pin(Pin.MAX_COUNT);
     }
 
-    public boolean add(Pin pin) {
+    public void add(Pin pin) {
         validateThrow(pin);
 
         insertShotHistory(pin);
 
         pins.add(pin);
         remainPin.subtract(pin);
-
-        return pins.size() == MAX_THROW_COUNT || remainPin.isZeroPin();
     }
 
     private void validateThrow(Pin pin) {
@@ -50,11 +48,8 @@ public class Pitch {
         return pins.size();
     }
 
-    public boolean isPitchEnd() {
-        if (getThrowCount() >= MAX_THROW_COUNT) {
-            return true;
-        }
-        return getShotHistory().contains(Shot.STRIKE);
+    public boolean isFinish() {
+        return pins.size() == MAX_THROW_COUNT || remainPin.isZeroPin();
     }
 
     public ShotHistory getShotHistory() {

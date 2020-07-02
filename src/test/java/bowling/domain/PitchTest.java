@@ -92,7 +92,11 @@ class PitchTest {
     @Test
     public void add_ReturnIsPitchEnd() {
         Pitch pitch = new Pitch();
-        assertThat(pitch.add(new Pin(5))).isFalse();
-        assertThat(pitch.add(new Pin(5))).isTrue();
+
+        pitch.add(new Pin(5));
+        assertThat(pitch.isFinish()).isFalse();
+
+        pitch.add(new Pin(5));
+        assertThat(pitch.isFinish()).isTrue();
     }
 }

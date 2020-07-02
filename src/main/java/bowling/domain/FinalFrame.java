@@ -19,7 +19,8 @@ public class FinalFrame extends Frame {
             return bowlingBonus(pin);
         }
 
-        if (pitch.add(pin)) {
+        pitch.add(pin);
+        if (pitch.isFinish()) {
             return isNextBonusPitch();
         }
         return State.NotFinish;
@@ -53,6 +54,6 @@ public class FinalFrame extends Frame {
         if (isBonusPitch) {
             return bonusPitch.getThrowCount() > IntegerUtils.ZERO;
         }
-        return pitch.isPitchEnd();
+        return pitch.isFinish();
     }
 }
