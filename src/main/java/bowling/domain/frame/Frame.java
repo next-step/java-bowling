@@ -19,4 +19,6 @@ public interface Frame {
 	void addBonusScore(Score bonusScore);
 
 	Scores getScores();
+
+	Score calculateFrameTotalScore();
 }

@@ -117,4 +117,17 @@ public class ScoresTest {
 	void 두_번째_투구를_할_수_있다(boolean result, boolean expected) {
 		assertThat(result).isEqualTo(expected);
 	}
+
+	@DisplayName("총 점수를 합할 수 있다.")
+	@CsvSource({"5, 5, 5"})
+	@ParameterizedTest
+	void 총_점수의_합을_구한다(int firstScore, int secondScore, int bonusScore) {
+		Scores scores = Scores.of();
+		scores.addFirstScore(Score.ofScore(firstScore));
+		scores.addSecondScore(Score.ofScore(secondScore));
+		scores.addBonusScore(Score.ofScore(bonusScore));
+
+		Score totalScore = scores.calculateFrameTotalScore();
+		assertThat(totalScore.getScore()).isEqualTo(firstScore + secondScore + bonusScore);
+	}
 }

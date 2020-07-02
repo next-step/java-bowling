@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import bowling.domain.score.Score;
 
@@ -58,5 +60,18 @@ public class NormalFrameTest {
 		finalFrame.addScore(secondScore);
 		boolean canPlayMoreCertainForFinalFrame = finalFrame.canPlayMore();
 		assertThat(canPlayMoreCertainForFinalFrame).isEqualTo(false);
+	}
+
+	@DisplayName("해당 프레임의 총 점수를 구한다.")
+	@CsvSource({"5, 5, 7"})
+	@ParameterizedTest
+	void 프레임_하나의_최종점수를_구한다(int firstScore, int secondScore, int thirdScore) {
+		NormalFrame frame = NormalFrame.createFirstFrame();
+		frame.addScore(Score.ofScore(5));
+		frame.addScore(Score.ofScore(5));
+		frame.addNextFrame().addScore(Score.ofScore(7));
+
+		Score score = frame.calculateFrameTotalScore();
+		assertThat(score.getScore()).isEqualTo(firstScore + secondScore + thirdScore);
 	}
 }

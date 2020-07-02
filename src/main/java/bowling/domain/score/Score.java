@@ -22,7 +22,7 @@ public class Score {
 	}
 
 	public Score add(Score score) {
-		return Score.ofScore(this.score + score.getScore());
+		return new Score(this.score + score.getScore());
 	}
 
 	public int getScore() {

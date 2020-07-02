@@ -33,7 +33,7 @@ public class ResultTest {
 		Score second = Score.ofScore(score2);
 		Scores scores = Scores.from(first);
 		scores.addSecondScore(second);
-		Result result = Result.findByScores(scores.getFirst(), scores.getSecond());
+		Result result = Result.findByScores(scores.getFirst().get(), scores.getSecond().get());
 		assertThat(result).isEqualTo(expected);
 	}
 }

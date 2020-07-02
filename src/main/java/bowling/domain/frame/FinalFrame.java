@@ -65,10 +65,7 @@ public class FinalFrame implements Frame {
 		if (Objects.isNull(scores.getFirst()) || Objects.isNull(scores.getSecond())) {
 			return true;
 		}
-		if (Objects.isNull(scores.getBonus()) && BONUS_SCORE_RESULT.contains(scores.checkResult())) {
-			return true;
-		}
-		return false;
+		return Objects.isNull(scores.getBonus()) && BONUS_SCORE_RESULT.contains(scores.checkResult());
 	}
 
 	@Override
@@ -79,5 +76,10 @@ public class FinalFrame implements Frame {
 	@Override
 	public Scores getScores() {
 		return scores;
+	}
+
+	@Override
+	public Score calculateFrameTotalScore() {
+		return scores.calculateFrameTotalScore();
 	}
 }

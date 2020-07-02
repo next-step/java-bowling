@@ -3,6 +3,7 @@ package bowling.domain.result;
 import java.util.Arrays;
 
 import bowling.domain.score.Score;
+import bowling.domain.score.Scores;
 
 public enum Result {
 	STRIKE {
@@ -10,11 +11,23 @@ public enum Result {
 		boolean isMatch(Score first, Score second) {
 			return first.isScoreTen() && second.isScoreZero();
 		}
+
+		@Override
+		public Score calculateFrameTotalScore(Score currentFrameScore, Scores nextFrameScores) {
+			return currentFrameScore.add(nextFrameScores.calculateFrameTotalScore());
+		}
 	},
 	SPARE {
 		@Override
 		boolean isMatch(Score first, Score second) {
 			return ! first.isScoreTen() && first.add(second).isScoreTen();
+		}
+
+		@Override
+		public Score calculateFrameTotalScore(Score currentFrameScore, Scores nextFrameScores) {
+			return nextFrameScores.getFirst()
+				.map(score -> score.add(currentFrameScore))
+				.orElse(currentFrameScore);
 		}
 	},
 	MISS {
@@ -22,11 +35,21 @@ public enum Result {
 		boolean isMatch(Score first, Score second) {
 			return ! first.isScoreTen() && ! first.add(second).isScoreTen() && ! first.add(second).isScoreZero();
 		}
+
+		@Override
+		public Score calculateFrameTotalScore(Score currentFrameScore, Scores nextFrameScores) {
+			return currentFrameScore;
+		}
 	},
 	GUTTER {
 		@Override
 		boolean isMatch(Score first, Score second) {
 			return first.isScoreZero() && first.add(second).isScoreZero();
+		}
+
+		@Override
+		public Score calculateFrameTotalScore(Score currentFrameScore, Scores nextFrameScores) {
+			return currentFrameScore;
 		}
 	};
 
@@ -38,4 +61,6 @@ public enum Result {
 	}
 
 	abstract boolean isMatch(Score first, Score second);
+
+	public abstract Score calculateFrameTotalScore(Score currentFrameScore, Scores nextFrameScores);
 }

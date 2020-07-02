@@ -1,6 +1,7 @@
 package bowling.domain.score;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import bowling.domain.result.Result;
 import bowling.util.ScoreBound;
@@ -55,16 +56,16 @@ public class Scores {
 		this.bonus = bonus;
 	}
 
-	public Score getFirst() {
-		return first;
+	public Optional<Score> getFirst() {
+		return Optional.ofNullable(first);
 	}
 
-	public Score getSecond() {
-		return second;
+	public Optional<Score> getSecond() {
+		return Optional.ofNullable(second);
 	}
 
-	public Score getBonus() {
-		return bonus;
+	public Optional<Score> getBonus() {
+		return Optional.ofNullable(bonus);
 	}
 
 	public Result checkResult() {
@@ -79,5 +80,18 @@ public class Scores {
 
 	public boolean canPlayMore() {
 		return Objects.isNull(first) || (! first.isScoreTen() && Objects.isNull(second));
+	}
+
+	public Score calculateFrameTotalScore() {
+		if (Objects.isNull(first)) {
+			throw new IllegalStateException("not fully played to check the score yet.");
+		}
+		if (Objects.isNull(second)) {
+			return first;
+		}
+		if (Objects.isNull(bonus)) {
+			return first.add(second);
+		}
+		return first.add(second).add(bonus);
 	}
 }

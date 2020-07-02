@@ -17,13 +17,16 @@ public enum ViewResult {
 	SPARE(Result.SPARE) {
 		@Override
 		String renderString(Scores scores) {
-			return String.format("  %d|/   ", scores.getFirst().getScore());
+			return String.format("  %d|/   ",
+				scores.getFirst().orElseThrow(() -> new IllegalArgumentException("not found")).getScore());
 		}
 	},
 	MISS(Result.MISS) {
 		@Override
 		String renderString(Scores scores) {
-			return String.format("   %d|%d   ", scores.getFirst().getScore(), scores.getSecond().getScore());
+			return String.format("   %d|%d   ",
+				scores.getFirst().orElseThrow(() -> new IllegalArgumentException("not found")).getScore(),
+				scores.getSecond().orElseThrow(() -> new IllegalArgumentException("not found")).getScore());
 		}
 	},
 	GUTTER(Result.GUTTER) {
@@ -40,8 +43,10 @@ public enum ViewResult {
 	}
 
 	public static String printScores(Scores scores) {
-		Optional<Score> first = Optional.ofNullable(scores.getFirst());
-		Optional<Score> second = Optional.ofNullable(scores.getSecond());
+		Optional<Score> first = Optional.ofNullable(scores.getFirst()).orElseThrow(() ->
+			new IllegalArgumentException("not found"));
+		Optional<Score> second = Optional.ofNullable(scores.getSecond()).orElseThrow(() ->
+			new IllegalArgumentException("not found"));
 
 		if (! first.isPresent()) {
 			return "      ";
