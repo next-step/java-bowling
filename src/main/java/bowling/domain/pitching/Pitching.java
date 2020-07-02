@@ -1,7 +1,7 @@
 package bowling.domain.pitching;
 
 import bowling.domain.FallenPinNumber;
-import bowling.domain.Frame;
+import bowling.domain.frame.Frame;
 
 public interface Pitching {
 

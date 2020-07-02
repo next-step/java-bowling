@@ -1,8 +1,8 @@
 package bowling.controller;
 
 import bowling.domain.BowlingMachine;
-import bowling.domain.Player;
-import bowling.domain.PlayerName;
+import bowling.domain.player.Player;
+import bowling.domain.player.PlayerName;
 import bowling.view.BowlingView;
 
 public class BowlingGame {

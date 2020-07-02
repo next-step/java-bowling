@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.domain.Frame;
-import bowling.domain.Player;
+import bowling.domain.frame.Frame;
+import bowling.domain.player.Player;
 import bowling.domain.pitching.Pitching;
 import bowling.util.StringUtil;
 

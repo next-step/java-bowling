@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.player;
 
+import bowling.domain.FallenPinNumber;
 import bowling.view.BowlingView;
 
 import java.util.Objects;

@@ -1,23 +1,23 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.FallenPinNumber;
 import bowling.domain.pitching.Pitching;
 import bowling.domain.pitching.StandbyPitching;
 
 import java.util.Objects;
 
-public class NormalFrame implements Frame {
+public class FinalFrame implements Frame {
 
     private FrameNumber frameNumber;
     private Pitching pitching;
-    private Frame nextFrame;
 
-    private NormalFrame(FrameNumber frameNumber) {
+    private FinalFrame(FrameNumber frameNumber) {
         this.frameNumber = frameNumber;
         this.pitching = new StandbyPitching();
     }
 
-    public static NormalFrame of(FrameNumber frameNumber) {
-        return new NormalFrame(frameNumber);
+    public static FinalFrame of(FrameNumber frameNumber) {
+        return new FinalFrame(frameNumber);
     }
 
     @Override
@@ -25,8 +25,7 @@ public class NormalFrame implements Frame {
         Pitching action = pitching.pitch(fallenPinNumber);
         if (action.isFinished(this)) {
             pitching = action;
-            nextFrame = generateNextFrame();
-            return nextFrame;
+            return null;
         }
         pitching = action;
         return this;
@@ -34,7 +33,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinalFrame() {
-        return false;
+        return true;
     }
 
     @Override
@@ -42,18 +41,9 @@ public class NormalFrame implements Frame {
         return pitching;
     }
 
-    private Frame generateNextFrame() {
-        if (frameNumber.isNextFinalFrameNumber()) {
-            return FinalFrame.of(frameNumber.nextFrameNumber());
-        }
-
-        return NormalFrame.of(frameNumber.nextFrameNumber());
-    }
-
-
     @Override
     public Frame getNextFrame() {
-        return nextFrame;
+        return null;
     }
 
     @Override
@@ -65,12 +55,13 @@ public class NormalFrame implements Frame {
             return false;
         }
 
-        NormalFrame that = (NormalFrame) o;
-        return Objects.equals(frameNumber, that.frameNumber);
+        FinalFrame that = (FinalFrame) o;
+        return Objects.equals(frameNumber, that.frameNumber) &&
+                Objects.equals(pitching, that.pitching);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(frameNumber);
+        return Objects.hash(frameNumber, pitching);
     }
 }
