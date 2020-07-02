@@ -29,4 +29,5 @@ public class DeleteHistoryTest {
                 Arguments.of(ContentType.ANSWER, 2L, UserTest.SANJIGI, DeleteHistory.of(ContentType.ANSWER, 2L, UserTest.SANJIGI, LocalDateTime.now()))
         );
     }
+
 }

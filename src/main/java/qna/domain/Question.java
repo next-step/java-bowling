@@ -76,6 +76,7 @@ public class Question extends AbstractEntity {
 
         DeleteHistory questionDeleteHistory = DeleteHistory.of(ContentType.QUESTION, this.getId(), this.writer, LocalDateTime.now());
         DeleteHistories answersDeleteHistories = this.answers.deleteAnswers(loginUser);
+
         this.deleted = true;
 
         return DeleteHistories.mergeHistories(questionDeleteHistory, answersDeleteHistories);

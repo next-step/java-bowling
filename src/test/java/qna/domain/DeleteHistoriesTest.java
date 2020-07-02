@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+
 public class DeleteHistoriesTest {
 
     public static final DeleteHistories HISTORIES = DeleteHistories.of(Arrays.asList(DeleteHistoryTest.D1_Q, DeleteHistoryTest.D2_A));

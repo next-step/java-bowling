@@ -71,7 +71,6 @@ public class AnswerTest {
     void deleteAnswerTest(final long id, final User user, final Question question, final String content, final DeleteHistory expected) throws CannotDeleteException {
         Answer answer = new Answer(id, user, question, content);
         DeleteHistory deleteHistory = answer.deleteAnswer(user);
-
         assertThat(answer.isDeleted()).isTrue();
         assertThat(deleteHistory).isEqualTo(expected);
     }

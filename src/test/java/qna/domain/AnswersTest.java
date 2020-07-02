@@ -4,7 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import qna.CannotDeleteException;
+
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -19,10 +21,11 @@ public class AnswersTest {
     @MethodSource("provideAnswersForDelete")
     void deleteAnswersTest(final Answer answer, final DeleteHistories expected) throws CannotDeleteException {
 
+
         Answers answers = new Answers();
         answers.addToAnswer(answer);
-
         DeleteHistories deleteHistories = answers.deleteAnswers(UserTest.JAVAJIGI);
+
         assertThat(deleteHistories).isEqualTo(expected);
     }
 
