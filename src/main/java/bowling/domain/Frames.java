@@ -14,12 +14,12 @@ public class Frames {
         frames.add(Frame.first());
     }
 
-    public boolean bowling(Pin pin) {
-        State state = getLastFrame().bowling(pin);
-        if (state.isFinish() && !getLastFrame().isGameEnd()) {
+    public FrameState bowling(Pin pin) {
+        FrameState frameState = getLastFrame().bowling(pin);
+        if (frameState.isNew()) {
             frames.add(getLastFrame().next());
         }
-        return getLastFrame().isGameEnd();
+        return frameState;
     }
 
     private Frame getLastFrame() {

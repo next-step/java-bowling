@@ -23,9 +23,13 @@ public abstract class Frame {
         return nextFrame;
     }
 
-    public abstract State bowling(Pin pin);
+    public abstract FrameState bowling(Pin pin);
 
     public abstract ShotHistory getShotHistory();
 
     public abstract boolean isGameEnd();
+
+    public Pitch getPitch() {
+        return pitch;
+    }
 }

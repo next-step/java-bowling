@@ -14,7 +14,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public State bowling(Pin pin) {
+    public FrameState bowling(Pin pin) {
         if (isBonusPitch) {
             return bowlingBonus(pin);
         }
@@ -23,21 +23,21 @@ public class FinalFrame extends Frame {
         if (pitch.isFinish()) {
             return isNextBonusPitch();
         }
-        return State.NotFinish;
+        return FrameState.ofNotFinish(pitch.getRemain());
     }
 
-    private State bowlingBonus(Pin pin) {
+    private FrameState bowlingBonus(Pin pin) {
         bonusPitch = new Pitch();
         bonusPitch.add(pin);
-        return State.Finish;
+        return FrameState.ofFinish();
     }
 
-    private State isNextBonusPitch() {
+    private FrameState isNextBonusPitch() {
         if (pitch.getRemain() == IntegerUtils.ZERO) {
             isBonusPitch = true;
-            return State.Bonus;
+            return FrameState.ofNotFinish(Pin.MAX_COUNT);
         }
-        return State.Finish;
+        return FrameState.ofFinish();
     }
 
     @Override

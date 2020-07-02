@@ -8,12 +8,12 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public State bowling(Pin pin) {
+    public FrameState bowling(Pin pin) {
         pitch.add(pin);
         if (pitch.isFinish()) {
-            return State.Finish;
+            return FrameState.ofNew();
         }
-        return State.NotFinish;
+        return FrameState.ofNotFinish(pitch.getRemain());
     }
 
     @Override
