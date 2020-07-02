@@ -1,10 +1,12 @@
 package bowling.view;
 
+import bowling.game.frame.Frame;
 import bowling.game.frame.Frames;
 import bowling.game.Scores;
 import bowling.player.domain.Player;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class OutputView {
@@ -13,10 +15,14 @@ public class OutputView {
     private static final int FRAME_COUNT_MAX = 10;
 
     public static void printScoreBoard(Player player, Frames frames, Scores scores) {
-        System.out.println(SCORE_BOARD_TITLE);
         printName(player);
         printFrames(frames);
         printScores(scores);
+    }
+
+    public static void printScoreBoard(Map<Player, Frames> playerFrames) {
+        System.out.println(SCORE_BOARD_TITLE);
+        playerFrames.forEach((player, frames) -> printScoreBoard(player, frames, new Scores(frames.getScores())));
     }
 
     private static void printName(Player player) {
