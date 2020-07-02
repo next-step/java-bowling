@@ -36,11 +36,15 @@ public abstract class FramePins {
         return Miss.of(firstPins, secondPins);
     }
 
-    private boolean isSpare() {
+    public boolean isStrike() {
+        return firstPins.isStrike();
+    }
+
+    public boolean isSpare() {
         return Pins.sum(firstPins, secondPins) == MAX_PINS_PER_FRAME;
     }
 
-    private boolean isGutter() {
+    public boolean isGutter() {
         return Pins.sum(firstPins, secondPins) == MIN_PINS_PER_FRAME;
     }
 
@@ -48,7 +52,7 @@ public abstract class FramePins {
         return Pins.sum(firstPins, secondPins);
     }
 
-    public abstract boolean hasNext();
+    public abstract boolean isEnd();
 
     @Override
     public String toString() {

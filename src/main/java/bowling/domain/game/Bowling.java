@@ -20,7 +20,7 @@ public class Bowling {
     public void bowl(int countOfPins) {
         currentFrame = currentFrame.next(countOfPins);
 
-        if (!currentFrame.hasNext()) {
+        if (!currentFrame.canBowling()) {
             this.frames.add(currentFrame);
         }
     }

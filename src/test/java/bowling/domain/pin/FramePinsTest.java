@@ -17,7 +17,7 @@ class FramePinsTest {
         }
 
         @Override
-        public boolean hasNext() {
+        public boolean isEnd() {
             return false;
         }
     }

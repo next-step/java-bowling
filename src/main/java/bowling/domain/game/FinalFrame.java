@@ -5,16 +5,18 @@ import bowling.domain.pin.FramePinsCreator;
 import bowling.domain.pin.Pins;
 import bowling.exception.game.CanNotAccessMethod;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-
-import static bowling.domain.pin.FramePins.MAX_PINS_PER_FRAME;
 
 public class FinalFrame implements Frame {
     public static final int FINAL_FRAME_NUMBER = 10;
+    public static final int MAX_BONUS_BOWLING_BY_STRIKE = 2;
+    public static final int MAX_BONUS_BOWLING_BY_SPARE = 1;
 
     private final FrameNumber frameNumber;
     private FramePins framePins;
-    private Pins bonusPins;
+    private List<Pins> bonusPins = new ArrayList<>();
 
     private FinalFrame() {
         this.frameNumber = FrameNumber.of(FINAL_FRAME_NUMBER);
@@ -26,12 +28,12 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame next(int countOfPins) {
-        if (!hasNext()) {
+        if (!canBowling()) {
             throw new CanNotAccessMethod();
         }
 
-        if (isBonusFrame()) {
-            this.bonusPins = Pins.of(countOfPins);
+        if (canBonusBowling()) {
+            this.bonusPins.add(Pins.of(countOfPins));
             return this;
         }
 
@@ -39,13 +41,15 @@ public class FinalFrame implements Frame {
         return this;
     }
 
-    private boolean isBonusFrame() {
-        return bonusPins == null && framePins != null && framePins.score() == MAX_PINS_PER_FRAME;
+    private boolean canBonusBowling() {
+        return framePins != null
+                && ((framePins.isStrike() && bonusPins.size() < MAX_BONUS_BOWLING_BY_STRIKE)
+                || (framePins.isSpare() && bonusPins.size() < MAX_BONUS_BOWLING_BY_SPARE));
     }
 
     @Override
-    public boolean hasNext() {
-        return (framePins == null || framePins.score() == MAX_PINS_PER_FRAME) && bonusPins == null;
+    public boolean canBowling() {
+        return framePins == null || !framePins.isEnd() || canBonusBowling();
     }
 
     @Override

@@ -17,8 +17,8 @@ public class Strike extends FramePins {
     }
 
     @Override
-    public boolean hasNext() {
-        return false;
+    public boolean isEnd() {
+        return true;
     }
 
     @Override

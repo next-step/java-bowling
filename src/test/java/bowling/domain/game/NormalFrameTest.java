@@ -53,7 +53,7 @@ class NormalFrameTest {
     @DisplayName("STRIKE 인 경우 다음 투구 시 bonus 볼에 저장된 후 next 메소드 호출 시 예외를 반환한다.")
     void strike_and_bonus_exception(int firstPins, int bonusPins, int errorPins) {
         FinalFrame finalFrame = FinalFrame.init();
-        assertThatThrownBy(() -> finalFrame.next(firstPins).next(bonusPins).next(errorPins))
+        assertThatThrownBy(() -> finalFrame.next(firstPins).next(bonusPins).next(bonusPins).next(errorPins))
                 .isInstanceOf(CanNotAccessMethod.class);
     }
 }

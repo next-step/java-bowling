@@ -6,8 +6,8 @@ public class Miss extends FramePins {
     }
 
     @Override
-    public boolean hasNext() {
-        return false;
+    public boolean isEnd() {
+        return true;
     }
 
     public static Miss of(Pins firstPins, Pins secondPins) {

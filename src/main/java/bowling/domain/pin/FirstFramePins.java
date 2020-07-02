@@ -10,8 +10,8 @@ public class FirstFramePins extends FramePins {
     }
 
     @Override
-    public boolean hasNext() {
-        return true;
+    public boolean isEnd() {
+        return false;
     }
 
     @Override

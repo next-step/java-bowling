@@ -6,8 +6,8 @@ public class Gutter extends FramePins {
     }
 
     @Override
-    public boolean hasNext() {
-        return false;
+    public boolean isEnd() {
+        return true;
     }
 
     public static Gutter of() {
