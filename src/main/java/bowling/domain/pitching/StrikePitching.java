@@ -3,6 +3,8 @@ package bowling.domain.pitching;
 import bowling.domain.FallenPinNumber;
 import bowling.domain.Frame;
 
+import java.util.Objects;
+
 public class StrikePitching implements Pitching {
 
     private FallenPinNumber firstFallenPinNumber;
@@ -38,5 +40,24 @@ public class StrikePitching implements Pitching {
     @Override
     public String getPitchingDescription() {
         return "X";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        StrikePitching that = (StrikePitching) o;
+        return Objects.equals(firstFallenPinNumber, that.firstFallenPinNumber) &&
+                Objects.equals(secondFallenPinNumber, that.secondFallenPinNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstFallenPinNumber, secondFallenPinNumber);
     }
 }
