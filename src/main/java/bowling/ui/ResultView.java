@@ -8,7 +8,8 @@ public class ResultView {
     private static final int MAX_FRAME_SIZE = 10;
     private static final String BOARD_TITLE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
 
-    private ResultView() {}
+    private ResultView() {
+    }
 
     public static void printResult(BowlingGame bowlingGame) {
         System.out.println(BOARD_TITLE);
@@ -26,7 +27,7 @@ public class ResultView {
 
     private static void printEmptyLine(BowlingGame bowlingGame) {
         Stream.generate(() -> formatting(""))
-                .limit(MAX_FRAME_SIZE - bowlingGame.getFrameSize())
+                .limit(MAX_FRAME_SIZE - bowlingGame.getCurrentIndex() - 1)
                 .forEach(System.out::print);
     }
 

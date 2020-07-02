@@ -1,8 +1,13 @@
 package bowling.domain.frame;
 
+import bowling.domain.status.Status;
+
 public interface Frame {
-    void bowl(int downPin);
-    Frame next(int index);
-    boolean isLastTryAtFrame();
+    Status bowl(int downPin);
+
+    Frame nextFrame(int index);
+
     String printFrameResult();
+
+    boolean canPlayMore();
 }

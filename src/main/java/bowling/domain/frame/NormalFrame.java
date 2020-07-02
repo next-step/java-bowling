@@ -1,78 +1,54 @@
 package bowling.domain.frame;
 
-import bowling.domain.status.Pending;
 import bowling.domain.status.Status;
+import bowling.domain.status.running.Ready;
 
 public class NormalFrame implements Frame {
-    public static final int PLUS = 1;
-    private static final int FIRST_TRY = 0;
-    private static final int MAX_TRY_COUNT = 2;
-    Frame next;
-    private Pins pins;
+    public static final int LAST_NORMAL_FRAME = 9;
+
     private Status status;
-    private int trying;
+    private Frame next;
 
-    public NormalFrame(Pins pins, Status status, int trying) {
-        this.pins = pins;
-        this.status = status;
-        this.trying = trying;
-    }
-
-    public NormalFrame(Pins pins, int trying) {
-        this.pins = pins;
-        this.trying = trying;
+    private NormalFrame() {
+        this.status = new Ready();
     }
 
     public static Frame init() {
-        return new NormalFrame(Pins.init(), 0);
+        return new NormalFrame();
     }
 
-
-    public void bowl(int downPin) {
-        status = bowling(downPin);
-        trying = addTrying();
+    public Status bowl(int downPin) {
+        this.status = status.bowl(downPin);
+        return status;
     }
 
     @Override
-    public Frame next(int index) {
-        if (index == 9) {
-            next = FinalFrame.init();
-            return next;
-        }
-        next = new NormalFrame(Pins.init(), new Pending(), 0);
+    public Frame nextFrame(int index) {
+        this.next = getNextFrame(index);
         return next;
-    }
-
-    @Override
-    public boolean isLastTryAtFrame() {
-        return trying == MAX_TRY_COUNT;
     }
 
     public String printFrameResult() {
         return status.printResult();
     }
 
-    private Status bowling(int downPin) {
-        if (trying == FIRST_TRY) {
-            return pins.firstBowl(downPin);
-        }
-        return pins.bowl(downPin, this.status);
+    @Override
+    public boolean canPlayMore() {
+        return this.status.canPlayMore();
     }
 
-    private int addTrying() {
-        if (!status.canPlayMore()) {
-            return MAX_TRY_COUNT;
+    private Frame getNextFrame(int index) {
+        if (index == LAST_NORMAL_FRAME) {
+            return FinalFrame.init();
         }
-        return trying + PLUS;
+        return new NormalFrame();
     }
 
     @Override
     public String toString() {
         return "NormalFrame{" +
                 "next=" + next +
-                ", pins=" + pins.getDownPin() +
                 ", status=" + status.printResult() +
-                ", trying=" + trying +
                 '}';
     }
 }

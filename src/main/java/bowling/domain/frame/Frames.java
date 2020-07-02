@@ -1,50 +1,48 @@
 package bowling.domain.frame;
 
+import bowling.domain.status.Status;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Frames {
     private final List<Frame> frames;
+    private int index;
 
-    private Frames(List<Frame> frames) {
+    public Frames(List<Frame> frames, int index) {
         this.frames = frames;
+        this.index = index;
     }
 
     public static Frames init() {
         List<Frame> frames = new ArrayList<>();
         frames.add(NormalFrame.init());
-        return new Frames(frames);
+
+        return new Frames(frames, 0);
     }
 
-    public void bowl(int downPin) {
-        if (currentFrame().isLastTryAtFrame()) {
-            frames.add(nextFrame());
+    public Status bowl(int downPin) {
+        return frames.get(index).bowl(downPin);
+    }
+
+    public void next() {
+        Frame currentFrame = frames.get(index);
+        if (!currentFrame.canPlayMore()) {
+            index++;
+            frames.add(currentFrame.nextFrame(index));
         }
-        currentFrame().bowl(downPin);
     }
 
-    public boolean isLastTryAtFrame() {
-        return currentFrame().isLastTryAtFrame();
-    }
-
-    public int size() {
-        return frames.size();
+    public int getIndex() {
+        return index;
     }
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
     }
 
-    private Frame currentFrame() {
-        return frames.get(frames.size() - 1);
-    }
-
-    private Frame nextFrame() {
-        return currentFrame().next(frames.size());
-    }
-
-    public Frame getFrame(int index) {
-        return frames.get(index);
+    public int size() {
+        return frames.size();
     }
 }

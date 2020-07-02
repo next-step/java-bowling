@@ -6,43 +6,38 @@ import bowling.domain.frame.Frames;
 import java.util.List;
 
 public class BowlingGame {
-    private static final int LAST_FRAME_INDEX = 11;
+    public static final int LAST_FRAME_INDEX = 10;
 
     private final Player player;
     private final Frames frames;
-    private int currentIndex;
 
-    private BowlingGame(Player player, Frames frames, int currentIndex) {
+    private BowlingGame(Player player, Frames frames) {
         this.player = player;
         this.frames = frames;
-        this.currentIndex = currentIndex;
     }
 
     public static BowlingGame start(Player player) {
-        return new BowlingGame(player, Frames.init(), 1);
+        return new BowlingGame(player, Frames.init());
     }
 
     public void run(int downPin) {
         frames.bowl(downPin);
-        if (frames.isLastTryAtFrame()) {
-            currentIndex++;
-        }
+    }
+
+    public void next() {
+        frames.next();
     }
 
     public boolean isLastFrame() {
-        return currentIndex == LAST_FRAME_INDEX;
+        return frames.getIndex() == LAST_FRAME_INDEX;
+    }
+
+    public int getCurrentIndex() {
+        return frames.getIndex();
     }
 
     public List<Frame> getFrames() {
         return frames.getFrames();
-    }
-
-    public int getCurrentIndex() {
-        return currentIndex;
-    }
-
-    public int getFrameSize() {
-        return frames.size();
     }
 
     public String whoseTurn() {
