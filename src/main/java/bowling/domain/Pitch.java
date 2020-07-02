@@ -9,12 +9,12 @@ public class Pitch {
     public static final int MAX_THROW_COUNT = 2;
     private final List<Pin> pins;
     private final ShotHistory shotHistory;
-    private int remain;
+    private final Pin remainPin;
 
     public Pitch() {
         this.pins = new ArrayList<>();
         this.shotHistory = new ShotHistory(new ArrayList<>());
-        this.remain = Pin.MAX_COUNT;
+        this.remainPin = new Pin(Pin.MAX_COUNT);
     }
 
     public boolean add(Pin pin) {
@@ -23,27 +23,27 @@ public class Pitch {
         insertShotHistory(pin);
 
         pins.add(pin);
-        remain -= pin.getCount();
+        remainPin.subtract(pin);
 
-        return pins.size() == MAX_THROW_COUNT || remain == IntegerUtils.ZERO;
+        return pins.size() == MAX_THROW_COUNT || remainPin.isZeroPin();
     }
 
     private void validateThrow(Pin pin) {
-        if (remain - pin.getCount() < 0) {
+        if (!remainPin.canSubtract(pin)) {
             throw new IllegalArgumentException("remain can not less than 0");
         }
 
-        if (canThrowOneMore()) {
+        if (!canThrowOneMore()) {
             throw new IllegalArgumentException("Frame is finished");
         }
     }
 
     private boolean canThrowOneMore() {
-        return pins.size() + 1 > MAX_THROW_COUNT;
+        return pins.size() + 1 <= MAX_THROW_COUNT;
     }
 
     private void insertShotHistory(Pin pin) {
-        shotHistory.add(Shot.of(pins.size() == IntegerUtils.ZERO, pin.getCount(), remain - pin.getCount()));
+        shotHistory.add(Shot.of(pins.size() == IntegerUtils.ZERO, pin.getCount(), remainPin.getCount() - pin.getCount()));
     }
 
     public int getThrowCount() {
@@ -62,6 +62,6 @@ public class Pitch {
     }
 
     public int getRemain() {
-        return remain;
+        return remainPin.getCount();
     }
 }

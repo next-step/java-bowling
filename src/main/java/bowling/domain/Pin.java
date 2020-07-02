@@ -1,8 +1,10 @@
 package bowling.domain;
 
+import bowling.common.IntegerUtils;
+
 public class Pin {
     public static final int MAX_COUNT = 10;
-    private final int count;
+    private int count;
 
     public Pin(int count) {
         validateCount(count);
@@ -17,5 +19,17 @@ public class Pin {
 
     public int getCount() {
         return count;
+    }
+
+    public void subtract(Pin pin) {
+        count -= pin.getCount();
+    }
+
+    public boolean canSubtract(Pin pin) {
+        return count >= pin.getCount();
+    }
+
+    public boolean isZeroPin() {
+        return count == IntegerUtils.ZERO;
     }
 }
