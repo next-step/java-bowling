@@ -12,5 +12,7 @@ public interface Frame {
 
     FrameScore getFrameScore();
 
+    Score calculateTotalScore();
+
     int getIndex();
 }

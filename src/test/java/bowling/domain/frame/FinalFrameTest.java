@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -54,5 +55,17 @@ public class FinalFrameTest {
         return Stream.of(
                 Arguments.of(canAddMoreScore1, true),
                 Arguments.of(canAddMoreScore2, false));
+    }
+
+    @DisplayName("총 점수를 구한다")
+    @Test
+    void calculateTotalScore() {
+        Frame frame = FinalFrame.create(1);
+        frame.addScore(Score.of(10));
+        frame.addScore(Score.of(3));
+
+        Score totalScore = frame.calculateTotalScore();
+
+        assertThat(totalScore).isEqualTo(Score.ofTotal(13));
     }
 }

@@ -1,12 +1,14 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
 import bowling.domain.score.FrameScore;
+import bowling.domain.score.Result;
+import bowling.domain.score.Score;
 
 public class NormalFrame implements Frame {
 
     private final int index;
     private final FrameScore frameScore;
+    private Frame nextFrame;
 
     private NormalFrame(int index) {
         this.index = index;
@@ -20,7 +22,8 @@ public class NormalFrame implements Frame {
     @Override
     public Frame createNext(boolean isNextFinal) {
         int nextIndex = index + 1;
-        return isNextFinal ? FinalFrame.create(nextIndex) : new NormalFrame(nextIndex);
+        this.nextFrame = isNextFinal ? FinalFrame.create(nextIndex) : new NormalFrame(nextIndex);
+        return this.nextFrame;
     }
 
     @Override
@@ -36,6 +39,12 @@ public class NormalFrame implements Frame {
     @Override
     public FrameScore getFrameScore() {
         return frameScore;
+    }
+
+    @Override
+    public Score calculateTotalScore() {
+        Result result = frameScore.checkResult();
+        return result.calculateTotalScore(frameScore.calculateTotalScore(), nextFrame.getFrameScore());
     }
 
     @Override

@@ -95,4 +95,17 @@ public class FrameScoreTest {
                 Arguments.of(result3, Result.MISS),
                 Arguments.of(result4, Result.GUTTER));
     }
+
+    @DisplayName("총 점수 합을 구한다")
+    @Test
+    void calculateTotalScore() {
+        FrameScore frameScore = FrameScore.create();
+        frameScore.add(FIVE);
+        frameScore.add(FIVE);
+        frameScore.add(FIVE);
+
+        Score totalScore = frameScore.calculateTotalScore();
+
+        assertThat(totalScore).isEqualTo(Score.ofTotal(15));
+    }
 }

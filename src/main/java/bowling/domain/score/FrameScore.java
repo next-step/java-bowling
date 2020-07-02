@@ -74,4 +74,10 @@ public class FrameScore {
     public Optional<Score> getBonus() {
         return Optional.ofNullable(bonus);
     }
+
+    public Score calculateTotalScore() {
+        return second == null ? first
+                : bonus == null ? first.add(second)
+                : first.add(second).add(bonus);
+    }
 }

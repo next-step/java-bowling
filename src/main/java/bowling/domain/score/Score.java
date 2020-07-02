@@ -18,6 +18,10 @@ public class Score {
         return new Score(score);
     }
 
+    public static Score ofTotal(int score) {
+        return new Score(score);
+    }
+
     private static void validate(int score) {
         if (score < MIN_SCORE.score || score > MAX_SCORE.score) {
             throw new IllegalArgumentException("점수가 유효범위 내에 있지 않습니다 : " + score);

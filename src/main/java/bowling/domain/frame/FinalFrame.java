@@ -52,6 +52,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public Score calculateTotalScore() {
+        return frameScore.calculateTotalScore();
+    }
+
+    @Override
     public int getIndex() {
         return index;
     }
