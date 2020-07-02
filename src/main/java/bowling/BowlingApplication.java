@@ -18,11 +18,7 @@ public class BowlingApplication {
         int numberOfPlayer = InputView.inputNumberOfPlayer();
         List<String> names = InputView.inputNames(numberOfPlayer);
 
-        List<Player> players = names.stream()
-                .map(Player::new)
-                .collect(Collectors.toList());
-
-        BowlingGame bowlingGame = new BowlingGame(players);
+        BowlingGame bowlingGame = new BowlingGame(names);
 
         OutputView.printScoreBoard(bowlingGame.getPlayersFrames());
 

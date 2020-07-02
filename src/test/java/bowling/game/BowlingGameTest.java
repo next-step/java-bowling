@@ -16,8 +16,7 @@ class BowlingGameTest {
     @DisplayName("현재 투구할 사람의 이름을 반환한다.")
     @Test
     void getCurrentPlayerName() {
-        BowlingGame bowlingGame = new BowlingGame(Arrays.asList(new Player("LMH"),
-                new Player("HGD")));
+        BowlingGame bowlingGame = new BowlingGame(Arrays.asList("LMH", "HGD"));
 
         assertThat(bowlingGame.getCurrentPlayerName().toString()).isEqualTo("LMH");
 
@@ -30,8 +29,7 @@ class BowlingGameTest {
     @ParameterizedTest
     @CsvSource({"3, false", "24, true"})
     void isEndGame(int bowlCount, boolean result) {
-        BowlingGame bowlingGame = new BowlingGame(Arrays.asList(new Player("LMH"),
-                new Player("HGD")));
+        BowlingGame bowlingGame = new BowlingGame(Arrays.asList("LMH", "HGD"));
 
         for (int i = 0; i < bowlCount; i++) {
             bowlingGame.bowlCurrentPlayer(10);
