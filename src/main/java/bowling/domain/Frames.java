@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.LinkedList;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class Frames {
@@ -25,8 +26,8 @@ public class Frames {
         return frames.getLast();
     }
 
-    public Stream<Frame> stream() {
-        return frames.stream();
+    public void forEachFrame(Consumer<? super Frame> consumer) {
+        frames.forEach(consumer);
     }
 
     public String getPlayerName() {

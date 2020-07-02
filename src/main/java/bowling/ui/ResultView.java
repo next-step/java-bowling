@@ -33,11 +33,16 @@ public class ResultView {
     }
 
     private static void fillShotHistory(Frames frames, StringBuilder sb) {
-        frames.stream()
-                .forEach(f ->
-                        sb.append(String.format(RESULT_FORMAT,
-                                f.getShotHistory().stream().map(Shot::getSymbol).collect(Collectors.joining("|"))
-                        )));
+        frames.forEachFrame(f ->
+                sb.append(String.format(RESULT_FORMAT, generateSymbolsString(f)))
+        );
+    }
+
+    private static String generateSymbolsString(Frame f) {
+        return f.getShotHistory()
+                .stream()
+                .map(Shot::getSymbol)
+                .collect(Collectors.joining("|"));
     }
 
     private static void fillEmpty(Frames frames, StringBuilder sb) {
