@@ -1,8 +1,8 @@
 package bowling.domain;
 
 import java.util.LinkedList;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frames {
     private Player player;
@@ -26,8 +26,10 @@ public class Frames {
         return frames.getLast();
     }
 
-    public void forEachFrame(Consumer<? super Frame> consumer) {
-        frames.forEach(consumer);
+    public List<ShotHistory> generateShotHistories() {
+        return frames.stream()
+                .map(Frame::getShotHistory)
+                .collect(Collectors.toList());
     }
 
     public String getPlayerName() {

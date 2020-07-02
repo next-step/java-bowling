@@ -1,10 +1,6 @@
 package bowling.ui;
 
 import bowling.domain.Frame;
-import bowling.domain.Frames;
-import bowling.domain.Shot;
-
-import java.util.stream.Collectors;
 
 public class ResultView {
     private static final String BOARD_HEADER_FIRST_COLUMN = "| %4s |";
@@ -12,9 +8,9 @@ public class ResultView {
     private static final String ROUND_FORMAT = "  %02d    |";
     private static final String RESULT_FORMAT = "  %-5s |";
 
-    public static void printBoard(Frames frames) {
+    public static void printBoard(ResultFrameDto resultFrameDto) {
         System.out.println(getHeaderRow());
-        System.out.println(getFramesRow(frames));
+        System.out.println(getFramesRow(resultFrameDto));
     }
 
     private static String getHeaderRow() {
@@ -25,28 +21,21 @@ public class ResultView {
         return sb.toString();
     }
 
-    private static String getFramesRow(Frames frames) {
-        StringBuilder sb = new StringBuilder(String.format(BOARD_HEADER_FIRST_COLUMN, frames.getPlayerName()));
-        fillShotHistory(frames, sb);
-        fillEmpty(frames, sb);
+    private static String getFramesRow(ResultFrameDto resultFrameDto) {
+        StringBuilder sb = new StringBuilder(String.format(BOARD_HEADER_FIRST_COLUMN, resultFrameDto.getPlayerName()));
+        fillShotHistory(resultFrameDto, sb);
+        fillEmpty(resultFrameDto, sb);
         return sb.toString();
     }
 
-    private static void fillShotHistory(Frames frames, StringBuilder sb) {
-        frames.forEachFrame(f ->
-                sb.append(String.format(RESULT_FORMAT, generateSymbolsString(f)))
-        );
+    private static void fillShotHistory(ResultFrameDto resultFrameDto, StringBuilder sb) {
+        resultFrameDto
+                .generateSymbolStrings("|")
+                .forEach(s -> sb.append(String.format(RESULT_FORMAT, s)));
     }
 
-    private static String generateSymbolsString(Frame f) {
-        return f.getShotHistory()
-                .stream()
-                .map(Shot::getSymbol)
-                .collect(Collectors.joining("|"));
-    }
-
-    private static void fillEmpty(Frames frames, StringBuilder sb) {
-        for (int round = frames.getCurrentFrameNo(); round < Frame.FINAL_FRAME; round++) {
+    private static void fillEmpty(ResultFrameDto resultFrameDto, StringBuilder sb) {
+        for (int round = resultFrameDto.getLastFrame(); round < Frame.FINAL_FRAME; round++) {
             sb.append(String.format(RESULT_FORMAT, ""));
         }
     }

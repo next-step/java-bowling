@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ShotHistory {
@@ -25,6 +26,13 @@ public class ShotHistory {
 
     public Stream<Shot> stream() {
         return shots.stream();
+    }
+
+    public String generateSymbolString(String delimiter) {
+        return shots
+                .stream()
+                .map(Shot::getSymbol)
+                .collect(Collectors.joining(delimiter));
     }
 
     public List<Shot> getShots() {
