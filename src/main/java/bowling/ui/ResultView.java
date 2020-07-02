@@ -1,7 +1,8 @@
 package bowling.ui;
 
-import bowling.domain.Shot;
+import bowling.domain.Frame;
 import bowling.domain.Frames;
+import bowling.domain.Shot;
 
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class ResultView {
 
     private static String getHeaderRow() {
         StringBuilder sb = new StringBuilder(String.format(BOARD_HEADER_FIRST_COLUMN, NAME));
-        for (int round = Frames.FIRST_FRAME; round <= Frames.FINAL_FRAME; round++) {
+        for (int round = Frame.FIRST_FRAME; round <= Frame.FINAL_FRAME; round++) {
             sb.append(String.format(ROUND_FORMAT, round));
         }
         return sb.toString();
@@ -40,7 +41,7 @@ public class ResultView {
     }
 
     private static void fillEmpty(Frames frames, StringBuilder sb) {
-        for (int round = frames.getCurrentFrameNo(); round < Frames.FINAL_FRAME; round++) {
+        for (int round = frames.getCurrentFrameNo(); round < Frame.FINAL_FRAME; round++) {
             sb.append(String.format(RESULT_FORMAT, ""));
         }
     }

@@ -4,8 +4,6 @@ import java.util.LinkedList;
 import java.util.stream.Stream;
 
 public class Frames {
-    public static final int FIRST_FRAME = 1;
-    public static final int FINAL_FRAME = 10;
     private Player player;
     private LinkedList<Frame> frames;
 

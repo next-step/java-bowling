@@ -1,8 +1,8 @@
 package bowling.domain;
 
 public abstract class Frame {
-    protected static final int FIRST_FRAME = 1;
-    protected static final int FINAL_FRAME = 10;
+    public static final int FIRST_FRAME = 1;
+    public static final int FINAL_FRAME = 10;
     protected int frameNo;
     protected Pitch pitch;
     protected Frame nextFrame;
