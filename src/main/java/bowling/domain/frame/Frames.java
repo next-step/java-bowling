@@ -4,20 +4,22 @@ import bowling.domain.status.Status;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Frames {
     public static final int MAX_FRAME_INDEX = 10;
-    private final List<Frame> frames;
+
+    private final LinkedList<Frame> frames;
     private int index;
 
-    public Frames(List<Frame> frames, int index) {
+    public Frames(LinkedList<Frame> frames, int index) {
         this.frames = frames;
         this.index = index;
     }
 
     public static Frames init() {
-        List<Frame> frames = new ArrayList<>();
+        LinkedList<Frame> frames = new LinkedList<>();
         frames.add(NormalFrame.init());
 
         return new Frames(frames, 0);
@@ -28,7 +30,7 @@ public class Frames {
     }
 
     public void next() {
-        Frame currentFrame = frames.get(index);
+        Frame currentFrame = frames.getLast();
         if (!currentFrame.canPlayMore()) {
             index++;
             addNextFrame(currentFrame);
@@ -49,7 +51,7 @@ public class Frames {
         return Collections.unmodifiableList(frames);
     }
 
-    public int size() {
-        return frames.size();
+    public boolean isLastFrame() {
+        return index == MAX_FRAME_INDEX;
     }
 }
