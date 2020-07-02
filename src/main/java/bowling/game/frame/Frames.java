@@ -22,18 +22,15 @@ public class Frames {
     public void createNextFrame() {
         int currentFrameNumber = frames.size();
 
-        Frame nextFrame = getCurrentFrame().createNextFrame(currentFrameNumber + 1);
-
-        frames.add(nextFrame);
+        if (getCurrentFrame() instanceof NormalFrame) {
+            Frame nextFrame = getCurrentFrame().createNextFrame(currentFrameNumber + 1);
+            frames.add(nextFrame);
+        }
     }
 
     public void bowlCurrentFrame(final int pinCount) {
         Frame current = getCurrentFrame();
         current.bowl(pinCount);
-
-        if (!hasRemainChance() && current instanceof NormalFrame) {
-            createNextFrame();
-        }
     }
 
     public boolean hasRemainChance() {

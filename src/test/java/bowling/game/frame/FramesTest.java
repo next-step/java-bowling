@@ -69,8 +69,10 @@ class FramesTest {
 
         frames.bowlCurrentFrame(1);
         frames.bowlCurrentFrame(9);
+        frames.createNextFrame();
         frames.bowlCurrentFrame(7);
         frames.bowlCurrentFrame(2);
+        frames.createNextFrame();
         frames.bowlCurrentFrame(3);
 
         List<Score> scores = frames.getScores();
