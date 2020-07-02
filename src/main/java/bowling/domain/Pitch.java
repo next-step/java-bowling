@@ -33,9 +33,13 @@ public class Pitch {
             throw new IllegalArgumentException("remain can not less than 0");
         }
 
-        if (pins.size() + 1 > MAX_THROW_COUNT) {
+        if (canThrowOneMore()) {
             throw new IllegalArgumentException("Frame is finished");
         }
+    }
+
+    private boolean canThrowOneMore() {
+        return pins.size() + 1 > MAX_THROW_COUNT;
     }
 
     private void insertShotHistory(Pin pin) {
