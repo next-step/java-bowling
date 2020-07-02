@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BowlingFrames {
+public class PlayerFrames {
 
     private static final int FRAME_COUNT = 10;
 
     private final List<Frame> frames;
     private int currentPosition;
 
-    BowlingFrames(List<Frame> frames) {
+    PlayerFrames(List<Frame> frames) {
         validate(frames);
 
         this.frames = new ArrayList<>(frames);
     }
 
-    public static BowlingFrames newInstance() {
+    public static PlayerFrames newInstance() {
         List<Frame> frames = new ArrayList<>();
 
         Frame normalFrame = Frame.first();
@@ -30,7 +30,7 @@ public class BowlingFrames {
 
         frames.add(frames.get(frames.size() - 1).last());
 
-        return new BowlingFrames(frames);
+        return new PlayerFrames(frames);
     }
 
     private void validate(List<Frame> frames) {
