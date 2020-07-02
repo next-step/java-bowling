@@ -19,16 +19,16 @@ class BonusFrameTest {
 
     bonusFrame.roll(knockDownNumber);
 
-    assertThat(bonusFrame.getRemainingPinsNumber()).isEqualTo(remainingNumber);
+    assertThat(bonusFrame.getPins().getFirstKnockDownNumber()+bonusFrame.getPins().getSecondKnockDownNumber()).isEqualTo(remainingNumber);
   }
 
   static Stream<Arguments> provideKockDownNumWtihRemaningNumber() {
     return Stream.of(
         arguments(
-            0, 10
+            0, 0
         ),
         arguments(
-            10, 0
+            10, 10
         ),
         arguments(
             5, 5

@@ -23,11 +23,6 @@ public class BonusFrame implements Frame {
   }
 
   @Override
-  public int getRemainingPinsNumber() {
-    return KnockedDownPins.MAX_NUMBER_OF_PINS - knockDownNumber.getIntValue();
-  }
-
-  @Override
   public int getSizeOfScoringFramesIndexes() {
     return 0;
   }

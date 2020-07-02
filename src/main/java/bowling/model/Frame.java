@@ -9,8 +9,6 @@ public interface Frame {
 
   boolean isOver();
 
-  int getRemainingPinsNumber();
-
   int getSizeOfScoringFramesIndexes();
 
   KnockedDownPins getPins();

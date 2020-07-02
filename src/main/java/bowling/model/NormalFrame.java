@@ -44,11 +44,6 @@ public class NormalFrame implements Frame {
   }
 
   @Override
-  public int getRemainingPinsNumber() {
-    return pins.getRemainingNumber();
-  }
-
-  @Override
   public int getSizeOfScoringFramesIndexes() {
     return frameStatus.getSizeOfScoringFramesIndexes();
   }
