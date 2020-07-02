@@ -5,6 +5,10 @@
 - 스트라이크는 다음 2번의 투구까지 점수를 합산해야한다
 - 스페어는 다음 1번의 투구까지 합산해야한다
 
+(수정 - 힌트 적용)
+- 상태 추상화 추가 및 적용 -> Ready 추가 및 bowl 역할을 Ready, Pending에 위임
+- 프레임에 LinkedList 구조 적용 (프레임이 다음 프레임 값을 가지도록)
+
 #### 힌트
 - 점수를 구하는 역할을 각 Frame이 담당할 수 있도록 구현한다.
 - Frame이 자신의 점수를 구하려면 다음 Frame에 접근 할 수 있어야한다
@@ -20,7 +24,7 @@
         + 총 투구의 downPin 합은 10 이내이다 (마지막 투구 제외) 
     - 출력용 점수를 제공한다.
 
-2. Status - Strike, Spare, Miss, Pending
+2. Status - Strike, Spare, Miss, Ready, Pending 
     - 프레임 별 투구 상태 
     - 투구 결과를 출력한다
     

@@ -10,6 +10,14 @@ public class Pending extends Running {
     }
 
     @Override
+    public Status bowl(int downPin) {
+        if (firstPin + downPin == 10) {
+            return new Spare(firstPin, downPin);
+        }
+        return new Miss(firstPin, downPin);
+    }
+
+    @Override
     public String printResult() {
         return isGutter(firstPin);
     }
@@ -23,13 +31,4 @@ public class Pending extends Running {
     public boolean canRemovePendingStatue() {
         return false;
     }
-
-    @Override
-    public Status next(int downPin) {
-        if (firstPin + downPin == 10) {
-            return new Spare(firstPin, downPin);
-        }
-        return new Miss(firstPin, downPin);
-    }
-
 }

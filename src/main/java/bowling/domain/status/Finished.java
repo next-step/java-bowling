@@ -7,7 +7,7 @@ public abstract class Finished implements Status {
     }
 
     @Override
-    public Status next(int downPin) {
-        throw new IllegalStateException("해당 프레임은 종료 되었습니다");
+    public Status bowl(int downPin) {
+        throw new IllegalStateException("투구 가능한 상태가 아닙니다");
     }
 }
