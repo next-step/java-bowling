@@ -14,11 +14,15 @@ public class Frames {
     }
 
     public boolean bowling(Pin pin) {
-        State state = frames.getLast().bowling(pin);
-        if (state.isFinish() && !frames.getLast().isGameEnd()) {
-            frames.add(frames.getLast().next());
+        State state = getLastFrame().bowling(pin);
+        if (state.isFinish() && !getLastFrame().isGameEnd()) {
+            frames.add(getLastFrame().next());
         }
-        return frames.getLast().isGameEnd();
+        return getLastFrame().isGameEnd();
+    }
+
+    private Frame getLastFrame() {
+        return frames.getLast();
     }
 
     public Stream<Frame> stream() {
