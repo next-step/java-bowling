@@ -19,3 +19,6 @@
 8. Frame의 일급 컬렉션 Frames
 9. Player와 해당하는 Frame을 Map으로 관리하는 ScoreBoard
 10. Players로 게임을 진행하는 BowlingGame
+11. 쓰러진 핀의 VO Pin
+12. 한 프레임의 점수를 담당하는 Score
+13. Score의 일급 컬렉션 Scores

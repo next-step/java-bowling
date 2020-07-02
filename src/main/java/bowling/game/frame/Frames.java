@@ -1,7 +1,10 @@
-package bowling.game;
+package bowling.game.frame;
+
+import bowling.game.Score;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Frames {
@@ -9,7 +12,7 @@ public class Frames {
 
     public Frames() {
         this.frames = new LinkedList<>();
-        this.frames.add(new NormalFrame(1));
+        this.frames.add(new NormalFrame());
     }
 
     public Frame getCurrentFrame() {
@@ -17,20 +20,20 @@ public class Frames {
     }
 
     public void createNextFrame() {
-        Frame nextFrame = getCurrentFrame().createNextFrame();
+        int currentFrameNumber = frames.size();
+
+        Frame nextFrame = getCurrentFrame().createNextFrame(currentFrameNumber + 1);
 
         frames.add(nextFrame);
     }
 
-    public int bowlCurrentFrame(final int pinCount) {
+    public void bowlCurrentFrame(final int pinCount) {
         Frame current = getCurrentFrame();
-        int leftPin = current.bowl(pinCount);
+        current.bowl(pinCount);
 
         if (!hasRemainChance() && current instanceof NormalFrame) {
             createNextFrame();
         }
-
-        return leftPin;
     }
 
     public boolean hasRemainChance() {
@@ -44,14 +47,20 @@ public class Frames {
     }
 
     public int getCurrentFrameNumber() {
-        Frame frame = getCurrentFrame();
-
-        return frame.getFrameNumber().getNumber();
+        return frames.size();
     }
 
     public List<String> getFramesStates() {
         return frames.stream()
                 .map(Frame::getStates)
+                .collect(Collectors.toList());
+    }
+
+    public List<Score> getScores() {
+        return frames.stream()
+                .map(Frame::calculateScore)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toList());
     }
 }

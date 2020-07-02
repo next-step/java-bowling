@@ -1,9 +1,12 @@
-package bowling.game;
+package bowling.game.frame;
 
+import bowling.game.Score;
+import bowling.game.frame.Frame;
+import bowling.game.frame.Frames;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,9 +18,7 @@ class FramesTest {
     void createFrames() {
         Frames frames = new Frames();
 
-        Frame firstFrame = frames.getCurrentFrame();
-
-        assertThat(firstFrame.getFrameNumber().getNumber()).isEqualTo(1);
+        assertThat(frames.getCurrentFrameNumber()).isEqualTo(1);
     }
 
     @DisplayName("다음 프레임을 생성해서 추가한다.")
@@ -26,18 +27,8 @@ class FramesTest {
         Frames frames = new Frames();
 
         frames.createNextFrame();
-        Frame nextFrame = frames.getCurrentFrame();
 
-        assertThat(nextFrame.getFrameNumber().getNumber()).isEqualTo(2);
-    }
-
-    @DisplayName("현재 진행 프레임에서 투구하고 남은핀을 반환한다.")
-    @ParameterizedTest
-    @CsvSource({"10, 0", "8, 2", "0, 10"})
-    void bowlCurrentFrame(int pinCount, int leftPinCount) {
-        Frames frames = new Frames();
-
-        assertThat(frames.bowlCurrentFrame(pinCount)).isEqualTo(leftPinCount);
+        assertThat(frames.getCurrentFrameNumber()).isEqualTo(2);
     }
 
     @DisplayName("현재 프레임에 투구 기회가 있는지 반환한다.")
@@ -69,5 +60,23 @@ class FramesTest {
                     assertThat(frames.isEndAllFrames()).isTrue();
                 }
         );
+    }
+
+    @DisplayName("현재까지의 점수를 계산해서 반환한다.")
+    @Test
+    void getScores() {
+        Frames frames = new Frames();
+
+        frames.bowlCurrentFrame(1);
+        frames.bowlCurrentFrame(9);
+        frames.bowlCurrentFrame(7);
+        frames.bowlCurrentFrame(2);
+        frames.bowlCurrentFrame(3);
+
+        List<Score> scores = frames.getScores();
+
+        assertThat(scores.size()).isEqualTo(2);
+        assertThat(scores.get(0).getScore()).isEqualTo(17);
+        assertThat(scores.get(1).getScore()).isEqualTo(9);
     }
 }

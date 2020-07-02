@@ -1,7 +1,8 @@
-package bowling.game;
+package bowling.game.frame;
 
+import bowling.game.State;
+import bowling.game.frame.Pitch;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -18,16 +19,6 @@ class PitchTest {
         assertThatThrownBy(() -> Pitch.firstPitch(pinCount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("쓰러진 핀의 갯수는 0 ~ 10 사이어야 합니다. - " + pinCount);
-    }
-
-    @DisplayName("남은핀 보다 쓰러트릴 핀이 크면 IllegalArgumentsException throw")
-    @ParameterizedTest
-    @CsvSource({"7, 4", "3, 9"})
-    void validateLeftPinCount(int firstPinCount, int nextPinCount) {
-        Pitch pitch = Pitch.firstPitch(firstPinCount);
-        assertThatThrownBy(() -> pitch.nextPitch(nextPinCount))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("쓰러트릴 핀의 갯수보다 남은 핀의 갯수가 적습니다. 남은 핀 - %d", firstPinCount);
     }
 
     @DisplayName("현재 투구에 맞는 상태를 가져온다.")

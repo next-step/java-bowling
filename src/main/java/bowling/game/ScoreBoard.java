@@ -1,6 +1,6 @@
 package bowling.game;
 
-import bowling.game.Frames;
+import bowling.game.frame.Frames;
 import bowling.player.domain.Player;
 
 import java.util.List;
