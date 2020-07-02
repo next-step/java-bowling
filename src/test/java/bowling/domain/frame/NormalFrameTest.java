@@ -61,8 +61,8 @@ public class NormalFrameTest {
         frame4.addScore(Score.of(1));
 
         return Stream.of(
-                Arguments.of(frame1.calculateTotalScore(), 20),
-                Arguments.of(frame2.calculateTotalScore(), 20),
-                Arguments.of(frame3.calculateTotalScore(), 11));
+                Arguments.of(frame1.calculateTotalScore().get(), 20),
+                Arguments.of(frame2.calculateTotalScore().get(), 20),
+                Arguments.of(frame3.calculateTotalScore().get(), 11));
     }
 }

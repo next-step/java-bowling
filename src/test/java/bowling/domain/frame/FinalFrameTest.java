@@ -64,7 +64,7 @@ public class FinalFrameTest {
         frame.addScore(Score.of(10));
         frame.addScore(Score.of(3));
 
-        Score totalScore = frame.calculateTotalScore();
+        Score totalScore = frame.calculateTotalScore().get();
 
         assertThat(totalScore).isEqualTo(Score.ofTotal(13));
     }

@@ -4,6 +4,8 @@ import bowling.domain.score.FrameScore;
 import bowling.domain.score.Result;
 import bowling.domain.score.Score;
 
+import java.util.Optional;
+
 public class NormalFrame implements Frame {
 
     private final int index;
@@ -42,9 +44,16 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Score calculateTotalScore() {
+    public Optional<Score> calculateTotalScore() {
+        if (!frameScore.canCheckResult()) {
+            return Optional.empty();
+        }
+
         Result result = frameScore.checkResult();
-        return result.calculateTotalScore(frameScore.calculateTotalScore(), nextFrame.getFrameScore());
+        FrameScore nextFrameScore = nextFrame.getFrameScore();
+
+        Score totalScore = result.calculateTotalScore(frameScore.calculateTotalScore(), nextFrameScore);
+        return Optional.of(totalScore);
     }
 
     @Override

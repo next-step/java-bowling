@@ -6,6 +6,7 @@ import bowling.domain.score.FrameScore;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class FinalFrame implements Frame {
 
@@ -52,8 +53,12 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Score calculateTotalScore() {
-        return frameScore.calculateTotalScore();
+    public Optional<Score> calculateTotalScore() {
+        if (!frameScore.canCheckResult()) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(frameScore.calculateTotalScore());
     }
 
     @Override

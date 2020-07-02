@@ -55,6 +55,10 @@ public class FrameScore {
         this.bonus = score;
     }
 
+    public boolean canCheckResult() {
+        return second != null;
+    }
+
     public Result checkResult() {
         if (second == null) {
             throw new IllegalStateException("두번째 투구의 점수가 입력되지 않았습니다");
@@ -76,7 +80,8 @@ public class FrameScore {
     }
 
     public Score calculateTotalScore() {
-        return second == null ? first
+        return first == null ? Score.of(0)
+                : second == null ? first
                 : bonus == null ? first.add(second)
                 : first.add(second).add(bonus);
     }
