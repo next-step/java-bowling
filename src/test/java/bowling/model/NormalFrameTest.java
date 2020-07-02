@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -71,5 +72,81 @@ class NormalFrameTest {
             0
         )
     );
+  }
+
+  @Test
+  void getScoreBy_spare() {
+    Frames frames = new Frames();
+    int result_frame1 = 0;
+
+    // 준비단계
+
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(0);
+
+//    // 1-1프레임
+    frames.roll(5);
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(5);
+
+//    // 1-2프레임(스페어)
+    frames.roll(5);
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(10);
+
+    // 2-1프레임
+    frames.roll(5);
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(15);
+
+    // 2-2프레임(스페어)
+    frames.roll(5);
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(15);
+
+    // 3-1 프레임
+    frames.roll(5);
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(15);
+  }
+
+  @Test
+  void getScoreBy_strike() {
+    Frames frames = new Frames();
+    int result_frame1 = 0;
+
+    // 준비단계
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(0);
+
+    // 1프레임(스트라이크)
+    frames.roll(10);
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(10);
+
+    // 2-1프레임
+    frames.roll(5);
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(15);
+
+    // 2-2프레임(스페어)
+    frames.roll(5);
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(15);
+
+    // 3-1 프레임
+    frames.roll(5);
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(20);
+
+    // 3-2 프레임
+    frames.roll(5);
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(20);
+
+    // 4-1 프레임
+    frames.roll(10);
+    result_frame1 = frames.getFrames().get(0).getScoreBy(frames.getFrames());
+    assertThat(result_frame1).isEqualTo(20);
   }
 }

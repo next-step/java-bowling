@@ -16,4 +16,6 @@ public interface Frame {
   KnockedDownPins getPins();
 
   FrameStatus getFrameStatus();
+
+  int getScoreBy(List<Frame> frames);
 }

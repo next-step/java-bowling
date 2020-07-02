@@ -46,6 +46,11 @@ public class BonusFrame implements Frame {
   }
 
   @Override
+  public int getScoreBy(List<Frame> frames) {
+    return 0;
+  }
+
+  @Override
   public String toString() {
     return "BonusFrame{" +
         "knockDownNumber=" + knockDownNumber +
