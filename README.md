@@ -287,8 +287,35 @@
                 - 초구만 스트라이크면 9프레임 더블
     - [X] 더블 점수 계산 추가..
     - [X] 터키 점수 계산 추가..
-- [ ] OutputView
-    - [ ] 스코어 출력 기능 구현
+- [X] OutputView
+    - [X] 스코어 출력 기능 구현
 - [X] BowlingGameApplication, BowlingGame
     - [X] 연속 스트라이크 계산이 가능한 9프레임으로 리팩토링
     - [X] 마지막 프레임 진행은 아예 분리해버릴 것
+
+## Step4. 볼링 점수판(n명)
+- [X] 기능 요구사항 구현
+    - [X] BowlingGameApplication 에서 BowlingGame 컬렉션을 관리하도록 기능 개선
+    - [X] 여러명을 입력받을 수 있도록 input 기능 개선
+- [x] 9프레임 출력 디버깅 필요
+    - [X] 가장 마지막 플레이어가 9프레임 마지막 투구 시 이상한 결과가 추가로 나옴
+- [X] 한 플레이어가 해당 프레임을 모두 완료한 후에 다음 프레임으로 넘어가도록 구현
+- [X] 객체지향 생활체조 원칙 점검
+    - [X] BowlingGamePlayer의 BowlingGameResult 컬렉션을 일급 컬렉션으로 리팩토링
+        - [X] BowlingGameResults
+            - [X] BowlingGameResult 컬렉션을 주입받아서 객체를 생성할 수 있다.
+            - [X] 크기를 확인할 수 있다.
+            - [X] 새로운 결과를 추가할 수 있다.
+            - [X] 일반 보너스(스트라이크, 스페어)를 적용할 수 있다.
+            - [X] 더블 보너스(연속 스트라이크)를 적용할 수 있다.
+    - [X] BowlingGameApplication에서 BowlingGame 컬렉션을 일급 컬렉션으로 리팩토링
+        - [X] 기존 BowlingGame을 BowlingGamePlayer로 이름 변경
+        - [X] 현재 BowlingGameApplication에서 컬렉션 뭉치로 실행하는 로직을 BowlingGame 클래스로 이동
+    - [X] 인스턴스 변수 3개 이상인 클래스 있는지 확인하기
+    - [X] 디미터 법칙 어긴 부분 없는지 확인하기
+    - [ ] 정말 최대한 게터를 다 걷어냈는지 확인하기(과연..?)
+- [X] 사용자 이름 입력 시 출력 문구 수정(몇번 플레이어인지 보이도록)
+- [ ] 3단계 리뷰 반영
+    - [ ] BowlinGamePlayer에서 유사한 기능을 유사한 메서드명으로 사용해서 혼란을 주는 부분 개선 방안 생각하기
+    - [X] BowlingGameApplication 개선안 생각해보기 => 반복문을 통해 처리
+    - [X] BowlingGamePlayer에서 쓸모 없는 변수 선언이 있는지 확인해보기

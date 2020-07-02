@@ -1,76 +1,45 @@
 package bowling.ui;
 
-import bowling.domain.BowlingGame;
-import bowling.domain.BowlingGameResult;
+import bowling.domain.BowlingGamePlayer;
 import bowling.domain.Player;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BowlingGameApplication {
     public static void main(String[] args) {
-        Player initPlayer = initGame();
+        int numberOfPlayer = InputView.getNumberOfPlayer();
 
-        BowlingGame bowlingGame = BowlingGame.play(initPlayer);
+        List<Player> players = readyPlayers(numberOfPlayer);
+        OutputView.printBowlingGameHeader();
+        OutputView.printEmptyResults(players);
 
-        firstBowl(bowlingGame);
+        List<BowlingGamePlayer> bowlingGamePlayers = initGames(players);
+        BowlingGame bowlingGame = BowlingGame.of(bowlingGamePlayers);
 
-        bowlRemainFrames(bowlingGame);
-
-        bowlFinalFrame(bowlingGame);
+        for (int i = 1; i < 11; i++) {
+            bowlingGame.playBowlingGame(i);
+        }
     }
 
-    private static Player initGame() {
-        String userName = InputView.getPlayerName();
+    private static List<Player> readyPlayers(int numberOfPlayer) {
+        List<Player> players = new ArrayList<>();
+        for (int count = 0; count < numberOfPlayer; count ++) {
+           players.add(readyPlayer(count));
+        }
+        return players;
+    }
 
-        OutputView.printEmptyResult(userName);
+    private static Player readyPlayer(int count) {
+        String userName = InputView.getPlayerName(count + 1);
 
         return Player.createByName(userName);
     }
 
-    private static void firstBowl(BowlingGame bowlingGame) {
-        List<BowlingGameResult> firstResults = bowlingGame.bowlFirst(InputView.getNumberOfHitPin(1));
-        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), firstResults);
-    }
-
-    private static void bowlRemainFrames(BowlingGame bowlingGame) {
-        for (int frameIndex = 1; frameIndex < 10; frameIndex++) {
-            doNotCompletedFrame(bowlingGame, frameIndex);
-            if (breakWhenFinalFrame(frameIndex)) break;
-            doNextFrame(bowlingGame, frameIndex);
-        }
-    }
-
-    private static void doNotCompletedFrame(BowlingGame bowlingGame, int frameIndex) {
-        while (!bowlingGame.isCurrentFrameCompleted()) {
-            List<BowlingGameResult> currentFrameResults =
-                    bowlingGame.bowlCurrentFrame(InputView.getNumberOfHitPin(frameIndex));
-            OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), currentFrameResults);
-        }
-    }
-
-    private static boolean breakWhenFinalFrame(int frameIndex) {
-        return frameIndex == 9;
-    }
-
-    private static void doNextFrame(BowlingGame bowlingGame, int frameIndex) {
-        List<BowlingGameResult> nextFrameResults =
-                bowlingGame.toNextFrame(InputView.getNumberOfHitPin(frameIndex + 1));
-        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), nextFrameResults);
-    }
-
-    private static void bowlFinalFrame(BowlingGame bowlingGame) {
-        List<BowlingGameResult> finalFirstThrown =
-                bowlingGame.finalFrameBowlFirst(InputView.getNumberOfHitPin(10));
-        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), finalFirstThrown);
-
-        List<BowlingGameResult> finalSecondThrown =
-                bowlingGame.finalFrameBowlSecond(InputView.getNumberOfHitPin(10));
-        OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), finalSecondThrown);
-
-        if (!bowlingGame.isCurrentFrameCompleted()) {
-            List<BowlingGameResult> lastThrown
-                    = bowlingGame.finalFrameBowlLast(InputView.getNumberOfHitPin(10));
-            OutputView.printBowlingGameResult(bowlingGame.getPlayerName(), lastThrown);
-        }
+    private static List<BowlingGamePlayer> initGames(List<Player> players) {
+        return players.stream()
+                .map(BowlingGamePlayer::play)
+                .collect(Collectors.toList());
     }
 }

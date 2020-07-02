@@ -7,15 +7,22 @@ import java.util.Scanner;
 public class InputView {
     private static final Scanner USER_INPUT = new Scanner(System.in);
 
-    public static String getPlayerName() {
-        System.out.println("플레이어 이름은(3 english letters)?: ");
+    public static int getNumberOfPlayer() {
+        System.out.print("How many people? ");
+        int playerCount = USER_INPUT.nextInt();
+        USER_INPUT.nextLine();
+        return playerCount;
+    }
+
+    public static String getPlayerName(int index) {
+        System.out.print("플레이어" + index + " 이름은(3 english letters)?: ");
         String userName = USER_INPUT.nextLine();
         validateUserName(userName);
         return userName;
     }
 
-    public static int getNumberOfHitPin(int frameIndex) {
-        System.out.println(frameIndex + "프레임 투구 : ");
+    public static int getNumberOfHitPin(int frameIndex, String playerName) {
+        System.out.print(playerName + "'s " + frameIndex + "프레임 투구 : ");
         int numberOfHitPin = USER_INPUT.nextInt();
         USER_INPUT.nextLine();  // 스캐너 초기화용
 

@@ -1,0 +1,157 @@
+package bowling.domain;
+
+import bowling.domain.exceptions.InvalidTryBowlException;
+import bowling.domain.exceptions.InvalidTryNextFrameException;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.stream.Stream;
+
+import static bowling.domain.FakeDataForTest.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class BowlingGamePlayerTests {
+    @DisplayName("볼링게임 참여자 이름을 입력받아서 객체를 생성 할 수 있다.")
+    @Test
+    void createTest() {
+        BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
+
+        assertThat(bowlingGamePlayer.checkWhereFrame()).isEqualTo(0);
+    }
+
+    @DisplayName("초구를 굴려서 게임을 진행하고 결과를 확인 할 수 있다.")
+    @ParameterizedTest
+    @MethodSource("bowlFirstResource")
+    void bowlFirstTest(int numberOfHitPin, FrameResults frameResults, FrameScore frameScore) {
+        BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
+
+        BowlingGameResults bowlingGameResults = bowlingGamePlayer.bowlFirst(numberOfHitPin);
+
+        assertThat(bowlingGameResults.size()).isEqualTo(1);
+        assertThat(bowlingGameResults)
+                .isEqualTo(new BowlingGameResults(
+                        Collections.singletonList(new BowlingGameResult(frameResults, frameScore))));
+    }
+    public static Stream<Arguments> bowlFirstResource() {
+        return Stream.of(
+                Arguments.of(
+                        TEN,
+                        NORMAL_STRIKE_FRAME_RESULT,
+                        new FrameScore(FrameScoreStatus.NOT_READY, 10)
+                ),
+                Arguments.of(
+                        FIVE,
+                        NORMAL_FIVE_IN_PROGRESS_FRAME_RESULT,
+                        new FrameScore(FrameScoreStatus.NOT_READY, 5)
+                )
+        );
+    }
+
+    @DisplayName("현재 프레임을 진행하고 전체 결과를 확인할 수 있다.")
+    @Test
+    void bowlCurrentFrameTest() {
+        BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
+        bowlingGamePlayer.bowlFirst(FIVE);
+        BowlingGameResults expected = new BowlingGameResults(Collections.singletonList(new BowlingGameResult(
+                NORMAL_FIVE_SPARE_FRAME_RESULT,
+                new FrameScore(FrameScoreStatus.NOT_READY, 10)))
+        );
+
+        BowlingGameResults bowlingGameResults = bowlingGamePlayer.bowlCurrentFrame(FIVE);
+
+        assertThat(bowlingGameResults.size()).isEqualTo(1);
+        assertThat(bowlingGameResults).isEqualTo(expected);
+    }
+
+    @DisplayName("스페어 프레임 후 프레임을 진행하고 결과를 확인 할 수 있다.")
+    @Test
+    void bowlCurrentFrameAfterSpareTest() {
+        BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
+        bowlingGamePlayer.bowlFirst(FIVE);
+        bowlingGamePlayer.bowlCurrentFrame(FIVE);
+        BowlingGameResults expected = new BowlingGameResults(Arrays.asList(
+                new BowlingGameResult(NORMAL_FIVE_SPARE_FRAME_RESULT, new FrameScore(FrameScoreStatus.COMPLETE, 15)),
+                new BowlingGameResult(NORMAL_FIVE_IN_PROGRESS_FRAME_RESULT, new FrameScore(FrameScoreStatus.NOT_READY, 5))
+        ));
+
+        BowlingGameResults bowlingGameResults = bowlingGamePlayer.toNextFrame(FIVE);
+
+        assertThat(bowlingGameResults.size()).isEqualTo(2);
+        assertThat(bowlingGameResults).isEqualTo(expected);
+    }
+
+    @DisplayName("스트라이크 프레임 후 프레임을 진행하고 결과를 확인 할 수 있다.")
+    @Test
+    void bowlCurrentFrameAfterStrikeTest() {
+        BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
+        bowlingGamePlayer.bowlFirst(TEN);
+        bowlingGamePlayer.toNextFrame(FIVE);
+        BowlingGameResults expected = new BowlingGameResults(Arrays.asList(
+                new BowlingGameResult(NORMAL_STRIKE_FRAME_RESULT, new FrameScore(FrameScoreStatus.COMPLETE, 20)),
+                new BowlingGameResult(NORMAL_FIVE_SPARE_FRAME_RESULT, new FrameScore(FrameScoreStatus.NOT_READY, 10))
+        ));
+
+        BowlingGameResults bowlingGameResults = bowlingGamePlayer.bowlCurrentFrame(FIVE);
+
+        assertThat(bowlingGameResults.size()).isEqualTo(2);
+        assertThat(bowlingGameResults).isEqualTo(expected);
+    }
+
+    @DisplayName("이미 완료된 현재 프레임을 진행할 수 없다.")
+    @Test
+    void bowlCurrentFrameValidationTest() {
+        BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
+        bowlingGamePlayer.bowlFirst(TEN);
+
+        assertThatThrownBy(() -> bowlingGamePlayer.bowlCurrentFrame(FIVE))
+                .isInstanceOf(InvalidTryBowlException.class);
+    }
+
+    @DisplayName("현재 프레임이 완료됐다면 다음 프레임으로 진행할 수 있다.")
+    @Test
+    void bowlToNextFrameTest() {
+        BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
+        bowlingGamePlayer.bowlFirst(TEN);
+
+        BowlingGameResults expected = new BowlingGameResults(Arrays.asList(
+                new BowlingGameResult(NORMAL_STRIKE_FRAME_RESULT, new FrameScore(FrameScoreStatus.NOT_READY, 15)),
+                new BowlingGameResult(NORMAL_FIVE_IN_PROGRESS_FRAME_RESULT, new FrameScore(FrameScoreStatus.NOT_READY, 5)))
+        );
+
+        BowlingGameResults bowlingGameResults = bowlingGamePlayer.toNextFrame(FIVE);
+
+        assertThat(bowlingGameResults.size()).isEqualTo(2);
+        assertThat(bowlingGameResults).isEqualTo(expected);
+    }
+
+    @DisplayName("현재 프레임이 완료되지 않은 상태에서 다음 프레임을 진행할 수 없다.")
+    @Test
+    void bowlToNextFrameValidationTest() {
+        BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
+        bowlingGamePlayer.bowlFirst(FIVE);
+
+        assertThatThrownBy(() -> bowlingGamePlayer.toNextFrame(FIVE)).isInstanceOf(InvalidTryNextFrameException.class);
+    }
+
+    @DisplayName("현재 프레임의 완료 여부를 알려줄 수 있다.")
+    @ParameterizedTest
+    @MethodSource("isCompletedResource")
+    void isCompleteTest(int numberOfHitPin, boolean expectedResult) {
+        BowlingGamePlayer bowlingGamePlayer = BowlingGamePlayer.start(PLAYER_NAME);
+        bowlingGamePlayer.bowlFirst(numberOfHitPin);
+
+        assertThat(bowlingGamePlayer.isCurrentFrameCompleted()).isEqualTo(expectedResult);
+    }
+    public static Stream<Arguments> isCompletedResource() {
+        return Stream.of(
+                Arguments.of(FIVE, false),
+                Arguments.of(TEN, true)
+        );
+    }
+}
