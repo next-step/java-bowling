@@ -1,6 +1,10 @@
 package bowling.domain.frame;
 
-import bowling.domain.status.*;
+import bowling.domain.status.Status;
+import bowling.domain.status.finished.Miss;
+import bowling.domain.status.finished.Spare;
+import bowling.domain.status.finished.Strike;
+import bowling.domain.status.running.Pending;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,6 +18,9 @@ class PinsTest {
     @DisplayName("생성 테스트")
     void init() {
         assertThatCode(() -> Pins.init()).doesNotThrowAnyException();
+        assertThatCode(() -> Pins.down(10)).doesNotThrowAnyException();
+        assertThatThrownBy(() -> Pins.down(20))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

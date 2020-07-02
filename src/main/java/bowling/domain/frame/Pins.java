@@ -1,8 +1,8 @@
 package bowling.domain.frame;
 
-import bowling.domain.status.Pending;
 import bowling.domain.status.Status;
-import bowling.domain.status.Strike;
+import bowling.domain.status.finished.Strike;
+import bowling.domain.status.running.Pending;
 
 public class Pins {
     private static final int MIN_COUNT = 0;
@@ -11,6 +11,7 @@ public class Pins {
     private int downPin;
 
     private Pins(int downPin) {
+        validate(downPin);
         this.downPin = downPin;
     }
 
@@ -18,14 +19,18 @@ public class Pins {
         return new Pins(MIN_COUNT);
     }
 
+    public static Pins down(int downPin) {
+        return new Pins(downPin);
+    }
+
     public Status bowl(int downPin, Status prevStatus) {
         this.downPin += downPin;
-        validateRange(this.downPin);
-        return prevStatus.next(downPin);
+        validate(this.downPin);
+        return prevStatus.bowl(downPin);
     }
 
     public Status firstBowl(int downPin) {
-        validateRange(downPin);
+        validate(downPin);
         this.downPin = downPin;
         if (downPin == MAX_PIN_COUNT) {
             return new Strike();
@@ -37,7 +42,7 @@ public class Pins {
         return downPin;
     }
 
-    private void validateRange(int downPin) {
+    private void validate(int downPin) {
         if (downPin < MIN_COUNT || downPin > MAX_PIN_COUNT) {
             throw new IllegalArgumentException("투구 값이 유효 범위가 아닙니다.");
         }

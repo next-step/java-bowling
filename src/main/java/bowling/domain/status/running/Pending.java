@@ -1,5 +1,6 @@
 package bowling.domain.status.running;
 
+import bowling.domain.frame.Pins;
 import bowling.domain.status.Running;
 import bowling.domain.status.Status;
 import bowling.domain.status.finished.Miss;
@@ -10,7 +11,8 @@ public class Pending extends Running {
 
     int firstPin;
 
-    public Pending() {}
+    public Pending() {
+    }
 
     public Pending(int firstPin) {
         this.firstPin = firstPin;
@@ -18,7 +20,8 @@ public class Pending extends Running {
 
     @Override
     public Status bowl(int downPin) {
-        if (firstPin + downPin == SPARE_SCORE) {
+        Pins pins = Pins.down(firstPin + downPin);
+        if (pins.getDownPin() == SPARE_SCORE) {
             return new Spare(firstPin, downPin);
         }
         return new Miss(firstPin, downPin);
