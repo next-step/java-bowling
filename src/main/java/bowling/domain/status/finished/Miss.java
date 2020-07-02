@@ -1,4 +1,6 @@
-package bowling.domain.status;
+package bowling.domain.status.finished;
+
+import bowling.domain.status.Finished;
 
 public class Miss extends Finished {
     int firstPin;

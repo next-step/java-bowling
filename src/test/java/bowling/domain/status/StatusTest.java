@@ -1,5 +1,10 @@
 package bowling.domain.status;
 
+import bowling.domain.status.finished.Miss;
+import bowling.domain.status.finished.Spare;
+import bowling.domain.status.finished.Strike;
+import bowling.domain.status.running.Pending;
+import bowling.domain.status.running.Ready;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,9 +20,10 @@ class StatusTest {
     void printResult() {
         assertAll(() -> {
             assertThat(new Strike().printResult()).isEqualTo("X");
-            assertThat(new Pending(5).printResult()).isEqualTo("5");
             assertThat(new Spare(2, 8).printResult()).isEqualTo("2|/");
             assertThat(new Miss(2, 4).printResult()).isEqualTo("2|4");
+            assertThat(new Pending(5).printResult()).isEqualTo("5");
+            assertThat(new Ready().printResult()).isEqualTo("");
         });
     }
 

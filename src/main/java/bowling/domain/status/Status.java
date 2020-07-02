@@ -1,7 +1,7 @@
 package bowling.domain.status;
 
 public interface Status {
-    Status next(int downPin);
+    Status bowl(int downPin);
 
     String printResult();
 

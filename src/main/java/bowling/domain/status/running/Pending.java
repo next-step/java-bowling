@@ -1,6 +1,13 @@
-package bowling.domain.status;
+package bowling.domain.status.running;
+
+import bowling.domain.status.Running;
+import bowling.domain.status.Status;
+import bowling.domain.status.finished.Miss;
+import bowling.domain.status.finished.Spare;
 
 public class Pending extends Running {
+    private static final int SPARE_SCORE = 10;
+
     int firstPin;
 
     public Pending() {}
@@ -11,7 +18,7 @@ public class Pending extends Running {
 
     @Override
     public Status bowl(int downPin) {
-        if (firstPin + downPin == 10) {
+        if (firstPin + downPin == SPARE_SCORE) {
             return new Spare(firstPin, downPin);
         }
         return new Miss(firstPin, downPin);
