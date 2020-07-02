@@ -23,17 +23,27 @@ public class BonusPitching implements Pitching {
 
     @Override
     public boolean isFinished(Frame frame) {
-        return true;
+        return finalFallenPinNumber != null;
     }
 
     @Override
     public Pitching pitch(FallenPinNumber fallenPinNumber) {
-        throw new RuntimeException("이미 끝난 프레임입니다.");
+        return of(firstFallenPinNumber, secondFallenPinNumber, fallenPinNumber);
     }
 
     @Override
     public String getPitchingIdentical() {
         return "BonusPitching";
+    }
+
+    @Override
+    public String getPitchingDescription() {
+        String secondShape = firstFallenPinNumber.isSpare(secondFallenPinNumber) ? "/" : secondFallenPinNumber.getDescription();
+        if (finalFallenPinNumber == null) {
+            return firstFallenPinNumber.getDescription() + "|" + secondShape;
+        }
+
+        return firstFallenPinNumber.getDescription() + "|" + secondShape + "|" + finalFallenPinNumber.getDescription();
     }
 
     @Override

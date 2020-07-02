@@ -35,6 +35,11 @@ public class MissingPitching implements Pitching {
     }
 
     @Override
+    public String getPitchingDescription() {
+        return firstFallenPinNumber.getDescription() + "|" + secondFallenPinNumber.getDescription();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

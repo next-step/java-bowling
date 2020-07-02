@@ -23,4 +23,9 @@ public class StandbyPitching implements Pitching {
     public String getPitchingIdentical() {
         return "StandbyPitching";
     }
+
+    @Override
+    public String getPitchingDescription() {
+        return " ";
+    }
 }

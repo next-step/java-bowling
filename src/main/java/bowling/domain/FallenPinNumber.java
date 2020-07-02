@@ -36,6 +36,18 @@ public class FallenPinNumber {
         return fallenPinNumber + next.fallenPinNumber == MAX_FALLEN_PIN;
     }
 
+    public String getDescription() {
+        if (fallenPinNumber == 0) {
+            return "-";
+        }
+
+        if (fallenPinNumber == 10) {
+            return "X";
+        }
+
+        return this.toString();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -52,5 +64,10 @@ public class FallenPinNumber {
     @Override
     public int hashCode() {
         return Objects.hash(fallenPinNumber);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(fallenPinNumber);
     }
 }

@@ -8,7 +8,6 @@ public class BowlingMachine {
 
     private Player player;
     private Frame frame;
-    private FrameResults frameResults;
 
     private BowlingMachine(Player player) {
         this.player = player;
@@ -18,7 +17,7 @@ public class BowlingMachine {
         return new BowlingMachine(player);
     }
 
-    public Frame startGame() {
+    public void startGame() {
         frame = NormalFrame.of(FrameNumber.of(1));
         Frame tempFrame = frame;
         for (int i = 1; i <= 11; i++) {
@@ -30,16 +29,16 @@ public class BowlingMachine {
             BowlingView.outputFrameNumberPitching(manipulateViewNumber(i));
             FallenPinNumber firstFallenPinNumber = player.pitchBowlingBall();
             Frame currentFrame = tempFrame.figureOutFrame(firstFallenPinNumber);
+            BowlingView.displayPitchingView(player, frame);
             if (Objects.equals(currentFrame, tempFrame)) {
                 BowlingView.outputFrameNumberPitching(manipulateViewNumber(i));
                 FallenPinNumber secondFallenPinNumber = player.pitchBowlingBall();
                 tempFrame = currentFrame.figureOutFrame(secondFallenPinNumber);
+                BowlingView.displayPitchingView(player, frame);
                 continue;
             }
             tempFrame = currentFrame;
         }
-
-        return frame;
     }
 
     private int manipulateViewNumber(int i) {

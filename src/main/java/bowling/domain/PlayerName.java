@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.util.StringUtils;
+import bowling.util.StringUtil;
 
 import java.util.Objects;
 
@@ -20,7 +20,7 @@ public class PlayerName {
     }
 
     private static void checkPlayerName(String name) {
-        if (StringUtils.length(name) != NAME_LETTERS_SIZE) {
+        if (StringUtil.length(name) != NAME_LETTERS_SIZE) {
             throw new IllegalArgumentException("이름은 3글자로 입력해주세요.");
         }
     }
@@ -41,5 +41,10 @@ public class PlayerName {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

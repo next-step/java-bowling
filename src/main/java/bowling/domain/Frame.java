@@ -9,4 +9,6 @@ public interface Frame {
     boolean isFinalFrame();
 
     Pitching getPitching();
+
+    Frame getNextFrame();
 }

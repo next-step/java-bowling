@@ -35,6 +35,11 @@ public class SparePitching implements Pitching {
     }
 
     @Override
+    public String getPitchingDescription() {
+        return firstFallenPinNumber.getDescription() + "|/";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

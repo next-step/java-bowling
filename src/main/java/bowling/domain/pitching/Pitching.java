@@ -10,4 +10,6 @@ public interface Pitching {
     Pitching pitch(FallenPinNumber fallenPinNumber);
 
     String getPitchingIdentical();
+
+    String getPitchingDescription();
 }
