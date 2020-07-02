@@ -38,5 +38,5 @@ public abstract class State {
         return calculateScoreForExtraBonusCount(beforeScore);
     }
 
-    protected abstract Score calculateScoreForExtraBonusCount(Score beforeScore);
+    public abstract Score calculateScoreForExtraBonusCount(Score beforeScore);
 }

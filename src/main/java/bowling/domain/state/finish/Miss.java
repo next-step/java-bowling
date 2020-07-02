@@ -42,7 +42,7 @@ public class Miss extends Finished {
     }
 
     @Override
-    protected Score calculateScoreForExtraBonusCount(Score beforeScore) {
+    public Score calculateScoreForExtraBonusCount(Score beforeScore) {
         beforeScore = this.firstPins.sumScore(beforeScore);
         if (beforeScore.isCalculable()) {
             return beforeScore;

@@ -67,7 +67,7 @@ public class StateDtoFixture {
         }
 
         @Override
-        protected Score calculateScoreForExtraBonusCount(Score beforeScore) {
+        public Score calculateScoreForExtraBonusCount(Score beforeScore) {
             return null;
         }
     }

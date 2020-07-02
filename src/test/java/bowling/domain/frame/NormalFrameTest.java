@@ -62,6 +62,25 @@ public class NormalFrameTest {
         );
     }
 
+    @DisplayName("게임 플레이어 turn 변경 여부 반환")
+    @ParameterizedTest
+    @MethodSource
+    public void isTurnOver(final Frame frame, final boolean expected) {
+        assertThat(frame.isTurnOver())
+                .isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> isTurnOver() {
+        return Stream.of(
+                Arguments.of(NormalFrameFixture.getReadyFrame(), true),
+                Arguments.of(NormalFrameFixture.getStrikeFrame(), false),
+                Arguments.of(NormalFrameFixture.getSpareFrame(), false),
+                Arguments.of(NormalFrameFixture.getMissFrame(), false),
+                Arguments.of(NormalFrameFixture.getOneHitFrame(), false),
+                Arguments.of(NormalFrameFixture.getGutterFrame(), false)
+        );
+    }
+
     @DisplayName("addFrame: 종료 상태 - 다음 프레임을 추가")
     @ParameterizedTest
     @MethodSource("finishedStateCase")

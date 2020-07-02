@@ -1,6 +1,5 @@
 package bowling.domain.player;
 
-import bowling.domain.name.Name;
 import bowling.exception.message.ErrorMessage;
 
 import java.util.Objects;

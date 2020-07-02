@@ -30,12 +30,12 @@ public class GameSet {
         return this.frames.isGameOver();
     }
 
-    public String getPlayerName() {
-        return this.player.getName();
+    public boolean isTurnOver() {
+        return this.frames.isTurnOver();
     }
 
-    public int getFrameNumber() {
-        return this.frames.getFrameNumber();
+    public String getPlayerName() {
+        return this.player.getName();
     }
 
     public List<StateDtos> getFrameResults() {

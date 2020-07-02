@@ -38,6 +38,10 @@ public class Frames {
         return getCurrentFrame().isGameOver();
     }
 
+    public boolean isTurnOver() {
+        return getCurrentFrame().isTurnOver();
+    }
+
     public int getFrameNumber() {
         return getCurrentFrame().getFrameNo();
     }

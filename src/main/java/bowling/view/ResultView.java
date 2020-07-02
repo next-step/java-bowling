@@ -24,18 +24,20 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printHeader(final GameSet gameSet) {
-        printShape(gameSet);
+    public static void printHeader(final List<GameSet> gameSets) {
+        printShape(gameSets);
     }
 
-    public static void printShape(final GameSet gameSet) {
+    public static void printShape(final List<GameSet> gameSets) {
         printFramesHeader();
 
-        printNameInfo(gameSet.getPlayerName());
-        printResult(gameSet.getFrameResults());
+        gameSets.forEach(gameSet -> {
+            printNameInfo(gameSet.getPlayerName());
+            printResult(gameSet.getFrameResults());
 
-        printNameInfo(StringUtil.EMPTY);
-        printScore(gameSet.getScoreResults());
+            printNameInfo(StringUtil.EMPTY);
+            printScore(gameSet.getScoreResults());
+        });
     }
 
     private static void printFramesHeader() {

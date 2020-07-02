@@ -1,4 +1,4 @@
-package bowling.domain.name;
+package bowling.domain.player;
 
 import bowling.exception.NameLengthOutOfRangeException;
 import bowling.exception.message.ErrorMessage;

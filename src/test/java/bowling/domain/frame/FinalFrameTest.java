@@ -42,6 +42,28 @@ public class FinalFrameTest {
                 .isEqualTo(StateExpression.STRIKE);
     }
 
+    @DisplayName("게임 플레이어 turn 변경 여부 반환")
+    @ParameterizedTest
+    @MethodSource
+    public void isTurnOver(final Frame frame, final boolean expected) {
+        assertThat(frame.isTurnOver())
+                .isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> isTurnOver() {
+        return Stream.of(
+                Arguments.of(FinalFrameFixture.getOneStrikeFrame(), false),
+                Arguments.of(FinalFrameFixture.getStrikeGutterFrame(), false),
+                Arguments.of(FinalFrameFixture.getHitMissFrame(), true),
+                Arguments.of(FinalFrameFixture.getThreeStrikeFrame(), true),
+                Arguments.of(FinalFrameFixture.getTwoStrikeOneHitFrame(), false),
+                Arguments.of(FinalFrameFixture.getStrikeHitSpareFrame(), true),
+                Arguments.of(FinalFrameFixture.getHitSpareStrikeFrame(), true),
+                Arguments.of(FinalFrameFixture.getHitSpareHitFrame(), false),
+                Arguments.of(FinalFrameFixture.getStrikeHitMissFrame(), true)
+        );
+    }
+
     @DisplayName("현재 상태가 진행 상태의 경우, 현재 상태를 제거하고 새로 던진 볼링공의 상태를 추가 및 상태값 반환")
     @ParameterizedTest
     @MethodSource
