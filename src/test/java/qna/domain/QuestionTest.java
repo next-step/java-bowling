@@ -40,6 +40,7 @@ public class QuestionTest {
         return DeleteHistory.of(ContentType.ANSWER, null, UserTest.JAVAJIGI, LocalDateTime.now());
     }
 
+
     @DisplayName("Question deleteQuestionTest() 테스트 - answer 에 다른 사용자의 아이디가 있어서 삭제가 안됨 :: CannotDeleteException")
     @ParameterizedTest
     @MethodSource("provideCannotDeleteExceptionQuestion")
@@ -47,6 +48,7 @@ public class QuestionTest {
         Q1.addAnswer(answer);
         assertThatExceptionOfType(CannotDeleteException.class)
                 .isThrownBy(() -> Q1.deleteQuestion(UserTest.SANJIGI));
+
     }
 
     private static Stream<Arguments> provideCannotDeleteExceptionQuestion() {
