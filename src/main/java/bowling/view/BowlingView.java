@@ -6,7 +6,6 @@ import bowling.model.BowlingGame;
 import bowling.model.FrameDTO;
 import bowling.model.Score;
 import java.util.List;
-import java.util.Optional;
 
 public class BowlingView {
 

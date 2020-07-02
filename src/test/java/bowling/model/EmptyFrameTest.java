@@ -31,10 +31,6 @@ class EmptyFrameTest {
   }
 
   @Test
-  void getSizeOfScoringFramesIndexes() {
-  }
-
-  @Test
   void getPins() {
     assertThatExceptionOfType(UnsupportedOperationException.class).isThrownBy(() -> {
       new EmptyFrame().getPins();

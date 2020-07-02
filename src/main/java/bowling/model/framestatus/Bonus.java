@@ -2,12 +2,9 @@ package bowling.model.framestatus;
 
 import static bowling.model.Symbols.*;
 
-import bowling.model.BonusFrame;
 import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
 import bowling.model.Score;
-import java.util.Collections;
-import java.util.List;
 
 public class Bonus implements FrameStatus {
 
@@ -17,18 +14,13 @@ public class Bonus implements FrameStatus {
   }
 
   @Override
-  public List<Integer> getScoringFramesIndexes() {
-    return Collections.emptyList();
+  public int getCurrentIndex() {
+    return -1;
   }
 
   @Override
   public Score getAdditionalScore() {
     return new Score(0);
-  }
-
-  @Override
-  public int getSizeOfScoringFramesIndexes() {
-    return 0;
   }
 
   @Override

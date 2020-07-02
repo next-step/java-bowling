@@ -49,29 +49,6 @@ public class Frames {
     }
   }
 
-  public void bonusRoll(int knockDownNumber) {
-    Frame bonusFrame = new BonusFrame(false);
-
-    try {
-      bonusFrame.roll(knockDownNumber);
-    } catch (FrameOverException e) {
-      throw new IllegalStateException("roll 실패 "
-          + System.lineSeparator() + " frames : " + frames.toString()
-          + System.lineSeparator() + " knockDownNum : " + knockDownNumber);
-    }
-
-    frames.add(bonusFrame);
-  }
-
-  public int getSizeOfBonusFrames() {
-    if (!isOver()) {
-      throw new IllegalStateException("마지막 프레임이 아닙니다.");
-    }
-
-    return getFrames().get(BowlingGame.MAX_NUMBER_OF_FRAMES - 1).getSizeOfScoringFramesIndexes()
-        - 1;
-  }
-
   public boolean isCurrentFrameOver() {
     return frames.getLast().isOver();
   }

@@ -7,20 +7,15 @@ import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
 import bowling.model.NormalFrame;
 import bowling.model.Score;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class Spare implements FrameStatus {
 
-  private final List<Integer> scoringFramesIndexes;
+  private final int currentIndex;
 
-  private Frame nextFrame;
+  private final Frame nextFrame;
 
   public Spare(FrameStatus frameStatus) {
-    int currentIndex = frameStatus.getScoringFramesIndexes().get(0);
-
-    this.scoringFramesIndexes = Arrays.asList(currentIndex, currentIndex + 1);
+    currentIndex = frameStatus.getCurrentIndex();
 
     nextFrame = createFrameBy(currentIndex);
   }
@@ -39,18 +34,13 @@ public class Spare implements FrameStatus {
   }
 
   @Override
-  public List<Integer> getScoringFramesIndexes() {
-    return Collections.unmodifiableList(scoringFramesIndexes);
+  public int getCurrentIndex() {
+    return currentIndex;
   }
 
   @Override
   public Score getAdditionalScore() {
     return new Score(nextFrame.getFirstKnockDownNumber());
-  }
-
-  @Override
-  public int getSizeOfScoringFramesIndexes() {
-    return scoringFramesIndexes.size();
   }
 
   @Override
@@ -86,7 +76,8 @@ public class Spare implements FrameStatus {
   @Override
   public String toString() {
     return "Spare{" +
-        "indexOfScoredFrames=" + scoringFramesIndexes +
+        "currentIndex=" + currentIndex +
+        ", nextFrame=" + nextFrame +
         '}';
   }
 }

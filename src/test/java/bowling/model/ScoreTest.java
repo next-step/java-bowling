@@ -15,13 +15,4 @@ class ScoreTest {
     assertThat(score.getIntValue()).isEqualTo(11);
   }
 
-  void add_byScore() {
-    Score score = new Score(1);
-
-    Score forAdd = new Score(10);
-
-    score.add(forAdd);
-
-    assertThat(score.getIntValue()).isEqualTo(11);
-  }
 }

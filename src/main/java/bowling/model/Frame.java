@@ -1,7 +1,6 @@
 package bowling.model;
 
 import bowling.model.framestatus.FrameStatus;
-import java.util.List;
 
 public interface Frame {
 
@@ -16,8 +15,6 @@ public interface Frame {
   boolean isOver();
 
   boolean isFinished();
-
-  int getSizeOfScoringFramesIndexes();
 
   KnockedDownPins getPins();
 

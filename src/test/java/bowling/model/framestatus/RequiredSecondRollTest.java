@@ -5,8 +5,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import bowling.model.KnockedDownPins;
 import bowling.model.KnockedDownPinsTest;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,10 +35,10 @@ class RequiredSecondRollTest {
 
   @ParameterizedTest
   @MethodSource("provideCurrentIndexWithExpectedList")
-  void getIndexOfNextFrames(int currentIndex, List<Integer> expected) {
+  void getIndexOfNextFrames(int currentIndex, int expected) {
     FrameStatus frameStatus = new RequiredSecondRoll(new RequiredFirstRoll(currentIndex));
 
-    assertThat(frameStatus.getScoringFramesIndexes()).isEqualTo(expected);
+    assertThat(frameStatus.getCurrentIndex()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isFalse();
   }
 
@@ -48,26 +46,7 @@ class RequiredSecondRollTest {
     return Stream.of(
         arguments(
             0,
-            Arrays.asList(
-                0
-            )
-        )
-    );
-  }
-
-  @ParameterizedTest
-  @MethodSource("provideCurrentIndexWithExpectedSize")
-  void getSizeOfScoringFramesIndexes(int currentIndex, int expected) {
-    FrameStatus frameStatus = new RequiredSecondRoll(new RequiredFirstRoll(currentIndex));
-
-    assertThat(frameStatus.getSizeOfScoringFramesIndexes()).isEqualTo(expected);
-  }
-
-  static Stream<Arguments> provideCurrentIndexWithExpectedSize() {
-    return Stream.of(
-        arguments(
-            0,
-            1
+            0
         )
     );
   }

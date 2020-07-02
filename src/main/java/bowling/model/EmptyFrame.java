@@ -36,11 +36,6 @@ public class EmptyFrame implements Frame {
   }
 
   @Override
-  public int getSizeOfScoringFramesIndexes() {
-    return 0;
-  }
-
-  @Override
   public KnockedDownPins getPins() {
     throw new UnsupportedOperationException();
   }
@@ -50,7 +45,7 @@ public class EmptyFrame implements Frame {
     throw new UnsupportedOperationException();
   }
 
-  public Score getScoreBy(List<Frame> frames) {
+  public void getScoreBy(List<Frame> frames) {
     throw new UnsupportedOperationException();
   }
 

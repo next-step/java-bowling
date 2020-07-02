@@ -6,9 +6,8 @@ public class BowlingGame {
 
   public final static int MAX_NUMBER_OF_FRAMES = 10;
 
-  private Frames frames = new Frames();
-  private int bonusCount;
-  private PlayerName playerName;
+  private final Frames frames = new Frames();
+  private final PlayerName playerName;
 
   private BowlingGame(PlayerName playerName) {
     this.playerName = playerName;
@@ -40,19 +39,6 @@ public class BowlingGame {
 
   public void roll(int number) {
     frames.roll(number);
-  }
-
-  public void initBonusCount() {
-    bonusCount = frames.getSizeOfBonusFrames();
-  }
-
-  public void bonusRoll(int number) {
-    frames.bonusRoll(number);
-    bonusCount--;
-  }
-
-  public boolean hasBonus() {
-    return 0 < bonusCount;
   }
 
   public boolean requiredNormalFrame() {

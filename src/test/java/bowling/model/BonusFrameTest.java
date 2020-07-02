@@ -53,9 +53,4 @@ class BonusFrameTest {
   void isOver() {
     assertThat(new BonusFrame(false).isOver()).isTrue();
   }
-
-  @Test
-  void getSizeOfScoringFramesIndexes() {
-    assertThat(new BonusFrame(false).getSizeOfScoringFramesIndexes()).isEqualTo(0);
-  }
 }

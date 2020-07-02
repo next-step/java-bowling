@@ -3,17 +3,14 @@ package bowling.model.framestatus;
 import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
 import bowling.model.Score;
-import java.util.List;
 
 public interface FrameStatus {
 
   Frame getNextFrame();
 
-  List<Integer> getScoringFramesIndexes();
+  int getCurrentIndex();
 
   Score getAdditionalScore();
-
-  int getSizeOfScoringFramesIndexes();
 
   FrameStatus createNextStatusBy(KnockedDownPins pins);
 

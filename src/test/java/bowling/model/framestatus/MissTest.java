@@ -6,7 +6,6 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import bowling.model.Frame;
 import bowling.model.KnockedDownPinsTest;
 import bowling.model.NormalFrame;
-import java.util.Arrays;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +18,7 @@ class MissTest {
   void getIndexOfNextFrames() {
     FrameStatus frameStatus = new Miss(new RequiredFirstRoll(0));
 
-    assertThat(frameStatus.getScoringFramesIndexes()).isEqualTo(Arrays.asList(0));
+    assertThat(frameStatus.getCurrentIndex()).isEqualTo(0);
     assertThat(frameStatus.isOver()).isTrue();
   }
 

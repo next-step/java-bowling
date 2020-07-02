@@ -9,8 +9,6 @@ import bowling.model.FrameOverException;
 import bowling.model.KnockedDownPinsTest;
 import bowling.model.NormalFrame;
 import bowling.model.Score;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,10 +19,10 @@ class SpareTest {
 
   @ParameterizedTest
   @MethodSource("provideCurrentIndexWithExpectedList")
-  void getIndexOfNextFrames(int currentIndex, List<Integer> expected) {
+  void getIndexOfNextFrames(int currentIndex, int expected) {
     FrameStatus frameStatus = new Spare(new RequiredFirstRoll(currentIndex));
 
-    assertThat(frameStatus.getScoringFramesIndexes()).isEqualTo(expected);
+    assertThat(frameStatus.getCurrentIndex()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isTrue();
   }
 
@@ -32,26 +30,7 @@ class SpareTest {
     return Stream.of(
         arguments(
             0,
-            Arrays.asList(
-                0, 1
-            )
-        )
-    );
-  }
-
-  @ParameterizedTest
-  @MethodSource("provideCurrentIndexWithExpectedSize")
-  void getSizeOfScoringFramesIndexes(int currentIndex, int expected) {
-    FrameStatus frameStatus = new Spare(new RequiredFirstRoll(currentIndex));
-
-    assertThat(frameStatus.getSizeOfScoringFramesIndexes()).isEqualTo(expected);
-  }
-
-  static Stream<Arguments> provideCurrentIndexWithExpectedSize() {
-    return Stream.of(
-        arguments(
-            0,
-            2
+            0
         )
     );
   }

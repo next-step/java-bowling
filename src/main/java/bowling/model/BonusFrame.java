@@ -2,14 +2,13 @@ package bowling.model;
 
 import bowling.model.framestatus.Bonus;
 import bowling.model.framestatus.FrameStatus;
-import java.util.List;
 import java.util.Objects;
 
 public class BonusFrame implements Frame {
 
   private KnockDownNumber knockDownNumber = new KnockDownNumber();
   private Frame nextFrame = new EmptyFrame();
-  private boolean hasNext;
+  private final boolean hasNext;
 
   public BonusFrame(boolean hasNext) {
     this.hasNext = hasNext;
@@ -53,11 +52,6 @@ public class BonusFrame implements Frame {
   }
 
   @Override
-  public int getSizeOfScoringFramesIndexes() {
-    return 0;
-  }
-
-  @Override
   public KnockedDownPins getPins() {
     return KnockedDownPins.getBuilder()
         .firstKnockDownNumber(knockDownNumber.getIntValue())
@@ -67,10 +61,6 @@ public class BonusFrame implements Frame {
   @Override
   public FrameStatus getFrameStatus() {
     return new Bonus();
-  }
-
-  private Score getScoreBy(List<Frame> frames) {
-    return new Score(0);
   }
 
   @Override

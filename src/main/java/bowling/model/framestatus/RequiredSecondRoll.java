@@ -6,17 +6,15 @@ import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
 import bowling.model.Score;
 import bowling.model.EmptyFrame;
-import java.util.Collections;
-import java.util.List;
 
 public class RequiredSecondRoll implements FrameStatus {
 
   private final static Integer ZERO = 0;
 
-  private final List<Integer> scoringFramesIndexes;
+  private final int currentIndex;
 
   public RequiredSecondRoll(FrameStatus frameStatus) {
-    scoringFramesIndexes = frameStatus.getScoringFramesIndexes();
+    currentIndex = frameStatus.getCurrentIndex();
   }
 
   @Override
@@ -25,18 +23,13 @@ public class RequiredSecondRoll implements FrameStatus {
   }
 
   @Override
-  public List<Integer> getScoringFramesIndexes() {
-    return Collections.unmodifiableList(scoringFramesIndexes);
+  public int getCurrentIndex() {
+    return currentIndex;
   }
 
   @Override
   public Score getAdditionalScore() {
     return new Score(0);
-  }
-
-  @Override
-  public int getSizeOfScoringFramesIndexes() {
-    return scoringFramesIndexes.size();
   }
 
   @Override
@@ -69,11 +62,10 @@ public class RequiredSecondRoll implements FrameStatus {
     return false;
   }
 
-
   @Override
   public String toString() {
     return "RequiredSecondRoll{" +
-        "indexOfScoredFrames=" + scoringFramesIndexes +
+        "currentIndex=" + currentIndex +
         '}';
   }
 }

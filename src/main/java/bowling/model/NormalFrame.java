@@ -2,9 +2,7 @@ package bowling.model;
 
 import bowling.model.framestatus.FrameStatus;
 import bowling.model.framestatus.RequiredFirstRoll;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class NormalFrame implements Frame {
 
@@ -68,11 +66,6 @@ public class NormalFrame implements Frame {
   }
 
   @Override
-  public int getSizeOfScoringFramesIndexes() {
-    return frameStatus.getSizeOfScoringFramesIndexes();
-  }
-
-  @Override
   public KnockedDownPins getPins() {
     return pins;
   }
@@ -80,28 +73,6 @@ public class NormalFrame implements Frame {
   @Override
   public FrameStatus getFrameStatus() {
     return frameStatus;
-  }
-
-  private Score getScoreBy(List<Frame> frames) {
-    int startIndex = getFirstIndexOfScoredFrames();
-    int lastIndex = getLastIndexOfScoredFrames();
-
-    if (frames.size() < lastIndex) {
-      lastIndex = frames.size();
-    }
-
-    return new Score(IntStream.range(startIndex, lastIndex)
-        .map(index -> frames.get(index).getPins().getFirstKnockDownNumber())
-        .sum() + frames.get(startIndex).getPins().getSecondKnockDownNumber());
-  }
-
-  private int getFirstIndexOfScoredFrames() {
-    return frameStatus.getScoringFramesIndexes().get(0);
-  }
-
-  private int getLastIndexOfScoredFrames() {
-    return frameStatus.getScoringFramesIndexes().get(0) + frameStatus
-        .getSizeOfScoringFramesIndexes();
   }
 
   @Override
