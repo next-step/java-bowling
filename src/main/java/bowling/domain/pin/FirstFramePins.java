@@ -16,6 +16,6 @@ public class FirstFramePins extends FramePins {
 
     @Override
     public String toString() {
-        return super.firstPins.toString();
+        return super.firstPins.toString() + "|";
     }
 }

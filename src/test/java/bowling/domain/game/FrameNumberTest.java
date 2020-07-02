@@ -25,13 +25,6 @@ class FrameNumberTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9})
-    @DisplayName("프레임 번호 출력 시 1의 단위인 경우 앞에 '0'을 붙여서 출력한다.")
-    void toString(int number) {
-        assertThat(FrameNumber.of(number).toString()).isEqualTo("0" + number);
-    }
-
-    @ParameterizedTest
     @ValueSource(ints = 10)
     @DisplayName("프레임 번호 출력 시 10의 단위인 경우 그대로 출력한다.")
     void toString_ten(int number) {

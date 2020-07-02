@@ -8,6 +8,7 @@ import bowling.exception.game.CanNotAccessMethod;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
     public static final int FINAL_FRAME_NUMBER = 10;
@@ -18,12 +19,13 @@ public class FinalFrame implements Frame {
     private FramePins framePins;
     private List<Pins> bonusPins = new ArrayList<>();
 
-    private FinalFrame() {
+    private FinalFrame(FramePins framePins) {
         this.frameNumber = FrameNumber.of(FINAL_FRAME_NUMBER);
+        this.framePins = framePins;
     }
 
-    public static FinalFrame init() {
-        return new FinalFrame();
+    public static FinalFrame init(FramePins framePins) {
+        return new FinalFrame(framePins);
     }
 
     @Override
@@ -65,5 +67,14 @@ public class FinalFrame implements Frame {
     @Override
     public int hashCode() {
         return Objects.hash(frameNumber, framePins, bonusPins);
+    }
+
+    @Override
+    public String toString() {
+        return ((framePins != null) ? framePins.toString() : "  ")
+                + ((bonusPins.size() > 0) ? "|" : "")
+                + bonusPins.stream()
+                .map(Pins::toString)
+                .collect(Collectors.joining("|"));
     }
 }

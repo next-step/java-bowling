@@ -56,7 +56,8 @@ public abstract class FramePins {
 
     @Override
     public String toString() {
-        return firstPins.toString() + "|" + secondPins.toString();
+        return firstPins.toString() +
+                (secondPins != null ? "|" + secondPins.toString() : "");
     }
 
     @Override

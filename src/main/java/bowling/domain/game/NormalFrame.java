@@ -12,9 +12,15 @@ public class NormalFrame implements Frame {
     private final FrameNumber frameNumber;
     private FramePins framePins;
 
-    private NormalFrame(final FrameNumber frameNumber) {
+    public NormalFrame(final FrameNumber frameNumber) {
         Objects.requireNonNull(frameNumber);
         this.frameNumber = frameNumber;
+    }
+
+    public NormalFrame(final FrameNumber frameNumber, FramePins framePins) {
+        Objects.requireNonNull(frameNumber);
+        this.frameNumber = frameNumber;
+        this.framePins = framePins;
     }
 
     public static NormalFrame init() {
@@ -27,27 +33,32 @@ public class NormalFrame implements Frame {
 
     @Override
     public Frame next(int countOfPins) {
-        this.framePins = FramePinsCreator.next(framePins, Pins.of(countOfPins));
+        FramePins framePins = FramePinsCreator.next(this.framePins, Pins.of(countOfPins));
 
-        if (framePins.isEnd()) {
-            return newFrame();
+        if (this.framePins != null && this.framePins.isEnd()) {
+            return newFrame(framePins);
         }
 
+        this.framePins = framePins;
         return this;
     }
 
-    private Frame newFrame() {
+    private Frame newFrame(FramePins framePins) {
         FrameNumber frameNumber = this.frameNumber.next();
         if (frameNumber.isEndNumber()) {
-            return FinalFrame.init();
+            return FinalFrame.init(framePins);
         }
 
-        return new NormalFrame(frameNumber);
+        return new NormalFrame(frameNumber, framePins);
     }
 
     @Override
     public boolean canBowling() {
-        return framePins.isEnd();
+        if (framePins == null) {
+            return true;
+        }
+
+        return !framePins.isEnd();
     }
 
     @Override
@@ -62,5 +73,10 @@ public class NormalFrame implements Frame {
     @Override
     public int hashCode() {
         return Objects.hash(frameNumber, framePins);
+    }
+
+    @Override
+    public String toString() {
+        return (framePins != null) ? framePins.toString() : "   ";
     }
 }

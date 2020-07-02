@@ -37,7 +37,7 @@ public class FrameNumber {
 
     @Override
     public String toString() {
-        return String.format("%02d", number);
+        return Integer.toString(number);
     }
 
     @Override

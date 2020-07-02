@@ -18,35 +18,49 @@ public class Bowling {
     }
 
     public void bowl(int countOfPins) {
-        currentFrame = currentFrame.next(countOfPins);
-
         if (!currentFrame.canBowling()) {
             this.frames.add(currentFrame);
         }
+
+        this.currentFrame = this.currentFrame.next(countOfPins);
     }
 
     public boolean isEnd() {
-        return frames.size() == MAX_FRAME;
+        return frames.size() + 1 == MAX_FRAME && !this.currentFrame.canBowling();
     }
 
     @Override
     public String toString() {
-        return " | " + player.toString() + " | " + getFrameString();
+        return "| " + player.toString() + " |" + getFrameString();
     }
 
     private String getFrameString() {
-        String frame = "";
+        StringBuilder frame = new StringBuilder();
+
         for (int i = 0; i < MAX_FRAME; i++) {
-            frame += getFrameString(frame, i) + "|";
+            frame.append(getFrameString(i)).append("|");
         }
-        return frame;
+
+        return frame.toString();
     }
 
-    private String getFrameString(String frame, int index) {
+    private String getFrameString(int index) {
         if (frames.size() > index) {
-            return frames.get(index).toString();
+            return "  " + frames.get(index).toString() + "  ";
         }
 
-        return "    ";
+        if (frames.size() == index) {
+            return "  " + currentFrame.toString() + "  ";
+        }
+
+        return "      ";
+    }
+
+    public FrameNumber getFrameNumber() {
+        if (isEnd()) {
+            return FrameNumber.of(MAX_FRAME);
+        }
+
+        return FrameNumber.of(frames.size() + 1 + (currentFrame.canBowling() ? 0 : 1));
     }
 }
