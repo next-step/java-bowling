@@ -16,14 +16,10 @@ class FinalFrameTest {
     @DisplayName("투구 테스트")
     void bowl() {
         Frame frame = FinalFrame.init();
-
         frame.bowl(3);
         frame.bowl(7);
-        assertThat(frame.isLastTryAtFrame()).isFalse();
-        assertThat(frame.printFrameResult()).isEqualTo("3|/");
-
         frame.bowl(7);
-        assertThat(frame.isLastTryAtFrame()).isTrue();
+
         assertThat(frame.printFrameResult()).isEqualTo("3|/|7");
 
     }
@@ -33,7 +29,7 @@ class FinalFrameTest {
     void next() {
         Frame finalFrame = FinalFrame.init();
         assertThatIllegalStateException()
-                .isThrownBy(() -> finalFrame.next());
+                .isThrownBy(() -> finalFrame.nextFrame(1));
     }
 
 }

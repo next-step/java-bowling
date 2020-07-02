@@ -1,84 +1,65 @@
 package bowling.domain.frame;
 
 import bowling.domain.status.Status;
+import bowling.domain.status.running.Ready;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
-    private static final int FIRST_TRY = 0;
-    private static final int MAX_TRY_COUNT = 2;
     private static final int BONUS_TRY_COUNT = 3;
 
-    private Pins pins;
     private int trying;
-    private List<Status> statuses = new LinkedList<>();
+    private LinkedList<Status> status = new LinkedList<>();
 
-    public FinalFrame(Pins pins, int trying) {
-        this.pins = pins;
-        this.trying = trying;
+    public FinalFrame() {
+        this.trying = 0;
+        status.add(new Ready());
     }
 
     public static Frame init() {
-        return new FinalFrame(Pins.init(), FIRST_TRY);
+        return new FinalFrame();
     }
 
-    public void bowl(int downPin) {
-        Status status = bowling(downPin);
+    public Status bowl(int downPin) {
+        Status currentStatus = this.status.getLast();
+        Status status = currentStatus.bowl(downPin);
+        updateStatus(status);
         trying++;
 
-        bonusPinSetting(status);
-        statuses.add(status);
+        if (status.isClearAllPins()) {
+            settingBonus();
+        }
+
+        return status;
     }
 
     @Override
-    public Frame next(int index) {
+    public Frame nextFrame(int index) {
         throw new IllegalStateException("볼링이 종료 되었습니다.");
     }
 
     @Override
-    public boolean isLastTryAtFrame() {
-        if (haveBonus()) {
-            return trying == BONUS_TRY_COUNT;
-        }
-        return trying == MAX_TRY_COUNT;
-    }
-
-    @Override
     public String printFrameResult() {
-        return statuses.stream()
+        return status.stream()
                 .map(status -> status.printResult())
                 .collect(Collectors.joining("|"));
     }
 
-    private Status bowling(int downPin) {
-        if (trying == FIRST_TRY || haveBonus()) {
-            return pins.firstBowl(downPin);
-        }
-        return pins.bowl(downPin, statuses.get(FIRST_TRY));
-    }
-
-    private void bonusPinSetting(Status status) {
-        if (status.isClearAllPins()) {
-            pins = Pins.init();
-        }
-        if (isLastTryAtFrame() && status.canRemovePendingStatue()) {
-            statuses.remove(FIRST_TRY);
-        }
-
-    }
-
-    private boolean haveBonus() {
-        return statuses.stream().anyMatch(status -> status.isClearAllPins());
-    }
-
     @Override
-    public String toString() {
-        return "FinalFrame{" +
-                "pins=" + pins.getDownPin() +
-                ", status=" + printFrameResult() +
-                ", trying=" + trying +
-                '}';
+    public boolean canPlayMore() {
+        return status.getLast().canPlayMore() && trying < BONUS_TRY_COUNT;
     }
+
+    private void updateStatus(Status status) {
+        this.status.removeLast();
+        this.status.add(status);
+    }
+
+    private void settingBonus() {
+        if (trying < BONUS_TRY_COUNT) {
+            this.status.add(new Ready());
+        }
+    }
+
 }
