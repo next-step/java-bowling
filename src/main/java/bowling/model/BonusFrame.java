@@ -46,7 +46,6 @@ public class BonusFrame implements Frame {
     return frameStatus.isFinished();
   }
 
-  @Override
   public KnockedDownPins getPins() {
     return KnockedDownPins.getBuilder()
         .firstKnockDownNumber(knockDownNumber.getIntValue())
@@ -54,8 +53,12 @@ public class BonusFrame implements Frame {
   }
 
   @Override
-  public FrameStatus getFrameStatus() {
-    return frameStatus;
+  public FrameDTO createDTO() {
+    KnockedDownPins pins = KnockedDownPins.getBuilder()
+        .firstKnockDownNumber(knockDownNumber.getIntValue())
+        .build();
+
+    return new FrameDTO(pins, frameStatus);
   }
 
   @Override

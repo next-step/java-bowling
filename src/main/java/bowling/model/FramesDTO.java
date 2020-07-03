@@ -10,7 +10,7 @@ public class FramesDTO {
 
   public FramesDTO(List<Frame> frames) {
     this.frames = frames.stream()
-        .map(FrameDTO::createBy)
+        .map(Frame::createDTO)
         .collect(Collectors.toList());
   }
 

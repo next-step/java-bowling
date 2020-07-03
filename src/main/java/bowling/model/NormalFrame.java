@@ -43,7 +43,7 @@ public class NormalFrame implements Frame {
 
   @Override
   public Score getScore() {
-    Score score = new Score(getFirstKnockDownNumber() + pins.getSecondKnockDownNumber());
+    Score score = new Score(pins.getFirstKnockDownNumber() + pins.getSecondKnockDownNumber());
 
     score.add(frameStatus.getAdditionalScore());
 
@@ -66,13 +66,8 @@ public class NormalFrame implements Frame {
   }
 
   @Override
-  public KnockedDownPins getPins() {
-    return pins;
-  }
-
-  @Override
-  public FrameStatus getFrameStatus() {
-    return frameStatus;
+  public FrameDTO createDTO() {
+    return new FrameDTO(pins, frameStatus);
   }
 
   @Override

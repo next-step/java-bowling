@@ -1,7 +1,5 @@
 package bowling.model;
 
-import bowling.model.framestatus.FrameStatus;
-
 public interface Frame {
 
   void roll(int KnockDownNumber) throws FrameOverException;
@@ -16,8 +14,6 @@ public interface Frame {
 
   boolean isFinished();
 
-  KnockedDownPins getPins();
-
-  FrameStatus getFrameStatus();
+  FrameDTO createDTO();
 
 }

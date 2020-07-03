@@ -34,13 +34,16 @@ public class EmptyFrame implements Frame {
     return false;
   }
 
-  @Override
   public KnockedDownPins getPins() {
     throw new UnsupportedOperationException();
   }
 
-  @Override
   public FrameStatus getFrameStatus() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public FrameDTO createDTO() {
     throw new UnsupportedOperationException();
   }
 

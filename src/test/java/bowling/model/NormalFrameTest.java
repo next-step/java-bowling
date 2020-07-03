@@ -24,7 +24,8 @@ class NormalFrameTest {
     normalFrame.roll(secondNumberOfPinsKnockedDown);
 
     assertThat(
-        normalFrame.getFirstKnockDownNumber() + normalFrame.getPins().getSecondKnockDownNumber())
+        normalFrame.getFirstKnockDownNumber() +
+            normalFrame.createDTO().getPins().getSecondKnockDownNumber())
         .isEqualTo(firstNumberOfPinsKnockedDown + secondNumberOfPinsKnockedDown);
 
     assertThatExceptionOfType(FrameOverException.class).isThrownBy(() -> {
@@ -201,6 +202,6 @@ class NormalFrameTest {
     assertThat(result_frame1).isEqualTo(new Score(30));
 
     // 보너스3
-    assertThat(frames.getFrames().get(frames.getFrames().size()-1).isFinished()).isTrue();
+    assertThat(frames.getFrames().get(frames.getFrames().size() - 1).isFinished()).isTrue();
   }
 }
