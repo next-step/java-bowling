@@ -15,17 +15,14 @@ public class ViewResult {
 	}
 
 	public static String printScores(Scores scores) {
-		Optional<Score> first = Optional.ofNullable(scores.getFirst()).orElseThrow(() ->
-			new IllegalArgumentException("not found"));
-		Optional<Score> second = Optional.ofNullable(scores.getSecond()).orElseThrow(() ->
+	public static String printScores(Scores scores) {
+		Score first = scores.getFirst().orElseThrow(() ->
 			new IllegalArgumentException("not found"));
 
-		if (! first.isPresent()) {
-			return "      ";
+		if (first.getScore() == 10 && scores.isSecondScoreNull()) {
+			return String.format("   %s    ", first.getScore());
 		}
-		if (! (first.map(Score::getScore).get() == 10) && ! second.isPresent()) {
-			return String.format("   %s    ", first.get().getScore());
-		}
+
 		Result result = scores.checkResult();
 		return result.renderString(scores);
 	}
