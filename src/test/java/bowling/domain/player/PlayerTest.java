@@ -1,7 +1,6 @@
 package bowling.domain.player;
 
 import org.junit.jupiter.api.Test;
-import qna.CannotDeleteException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -9,16 +8,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PlayerTest {
 
     @Test
-    void createPlayerTest() {
-        String pgj = "PGJ";
-        Player player = Player.create(pgj);
-        assertThat(player.toString()).isEqualTo("PGJ");
+    void create() {
+        Player player = Player.create("JJJ");
+        assertThat(player.getName()).isEqualTo("JJJ");
     }
 
     @Test
-    void createPlayerFailTest() {
-        assertThatThrownBy(() -> {
-            Player.create("PGJJJ");
-        }).isInstanceOf(IllegalArgumentException.class);
+    void create_over_length() {
+        assertThatThrownBy(() ->  Player.create("JJJJ"))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

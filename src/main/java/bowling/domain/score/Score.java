@@ -1,17 +1,24 @@
 package bowling.domain.score;
 
-import bowling.domain.frame.Point;
+public class Score {
 
-public interface Score {
+    private int value;
+    private ScoreType scoreType;
 
-    int STRIKE_POINT = 10;
-    int GUTTER_POINT = 0;
+    private Score(int value, ScoreType scoreType) {
+        this.value = value;
+        this.scoreType = scoreType;
+    }
 
-    Score nextScore(Point point);
+    public static Score create(int value, ScoreType scoreType) {
+        return new Score(value, scoreType);
+    }
 
-    String getScore();
+    public int getValue() {
+        return value;
+    }
 
-    boolean isStrike();
-
-    boolean isSpare();
+    public ScoreType getScoreType() {
+        return scoreType;
+    }
 }
