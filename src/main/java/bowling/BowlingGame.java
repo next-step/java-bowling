@@ -28,7 +28,7 @@ public class BowlingGame {
             state = multiUserFrames.bowling(nextPin);
             ResultView.printBoard(new ResultFrameDtos(multiUserFrames));
 
-            if (state.isFinish()) {
+            if (multiUserFrames.isGameEnd()) {
                 break;
             }
         }
