@@ -6,28 +6,16 @@ import java.util.stream.Collectors;
 
 public class Frames {
 
-    private static final int INDEX_ONE = 1;
-
     List<Frame> frames = new ArrayList<>();
 
     public boolean add(Frame frame) {
         return frames.add(frame);
     }
 
-    public int getSize() {
-        return frames.size();
-    }
-
     public List<String> showGameResult() {
         return frames.stream()
                 .map(Frame::showResult)
                 .collect(Collectors.toList());
-    }
-
-    public Frame checkLastFrame() {
-        return frames.stream()
-                .reduce((a, b) -> b)
-                .orElseThrow(() -> new IllegalStateException());
     }
 
 }

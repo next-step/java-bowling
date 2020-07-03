@@ -11,8 +11,6 @@ public abstract class Frame {
     protected Pins pins = new Pins();
     protected State state = State.MISS;
 
-
-
     public static Frame of() {
         return new NormalFrame();
     }
@@ -22,7 +20,7 @@ public abstract class Frame {
     }
 
     public void drawBowl(BowlingStrategy bowlingStrategy, int index) {
-        int frameIndex = index + NUMBER_ONE;
+        int frameIndex = index;
         setFirstPin(bowlingStrategy, frameIndex);
         state = checkState();
         setSecondPin(bowlingStrategy, frameIndex);
@@ -41,11 +39,13 @@ public abstract class Frame {
         return this.state == state;
     }
 
+    public Pins getPins() {
+        return pins;
+    }
 
     protected abstract void setSecondPin(BowlingStrategy bowlingStrategy, int index);
 
     protected abstract void setThirdPin(BowlingStrategy bowlingStrategy, int index);
-
 
     public String showResult() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -72,9 +72,5 @@ public abstract class Frame {
     protected String zeroToGutter(int fallenPins) {
         return String.valueOf(fallenPins == 0 ? State.GUTTER : fallenPins);
     }
-
-
-
-
 
 }

@@ -32,7 +32,6 @@ public class FinalFrame extends Frame {
         }
     }
 
-
     @Override
     protected State checkState() {
         return calcState();

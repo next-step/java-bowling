@@ -8,8 +8,7 @@ public class ScoreNormal extends Score {
 
     @Override
     public void addBonusNumber(Score nextScore) {
-        this.bonusScore = 0;
-        this.sumScore += getScore()+ bonusScore;
+        this.sumScore += this.getScore();
         nextScore.setSumScore(this.sumScore);
     }
 

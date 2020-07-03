@@ -9,10 +9,6 @@ public class Pins {
     private Pin secondPin = new Pin();
     private Pin thirdPin = new Pin();
 
-    public Pin getFirstPin() {
-        return firstPin;
-    }
-
     public int getFirstFallenPins() {
         return firstPin.fallenPins();
     }
@@ -25,10 +21,6 @@ public class Pins {
         return secondPin.fallenPins();
     }
 
-    public int getSecondLeftPins() {
-        return secondPin.leftPins();
-    }
-
     public int getThirdFallenPins() {
         return thirdPin.fallenPins();
     }
@@ -39,14 +31,6 @@ public class Pins {
 
     public void setSecondPin(Pin secondPin) {
         this.secondPin = secondPin;
-    }
-
-    public Pin getSecondPin() {
-        return secondPin;
-    }
-
-    public Pin getThirdPin() {
-        return thirdPin;
     }
 
     public boolean isFirstClean() {

@@ -7,12 +7,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class FinalFrameTest {
 
-    @DisplayName("볼링 2회 = 노말 투구 프레임")
+    @DisplayName("초기 상태 final frame 인스턴스 확인")
     @Test
-    void hasNotThirdPin() {
-        //Frame frame = Frame.of(new Pins(new Pin(10, 0), new Pin(10, 0)));
-        //assertThat(frame instanceof FinalFrame).isFalse();
-        //assertThat(frame instanceof NormalFrame).isTrue();
+    void finalFrameInit() {
+        Frame frame = Frame.ofFinal();
+        assertThat(frame instanceof FinalFrame).isTrue();
     }
 
 }

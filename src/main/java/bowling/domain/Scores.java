@@ -9,6 +9,9 @@ public class Scores {
     private List<Score> scores = new LinkedList<>();
 
     public static Score createScore(Frame frame) {
+        if (frame instanceof FinalFrame) {
+            return new ScoreFinal(frame);
+        }
         if (frame.isState(State.SPARE)) {
             return new ScoreSpare(frame);
         }
@@ -25,7 +28,7 @@ public class Scores {
 
     public List<String> showGameScore() {
         return scores.stream()
-                .map(Score::getCurrentScore)
+                .map(Score::getCurrentScoreString)
                 .collect(Collectors.toList());
     }
 

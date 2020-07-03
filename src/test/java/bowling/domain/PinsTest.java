@@ -7,20 +7,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PinsTest {
 
-    @DisplayName("마지막 프레임 1 게임 없는 경우 파이널 false")
+    @DisplayName("상태 체크")
     @Test
-    void isNotFinal() {
-        //Pins pins = new Pins(new Pin(10, 1), new Pin(9, 9));
-        //assertThat(pins.isFinal()).isFalse();
+    void stateCheck() {
+        Pins pins = new Pins();
+        assertThat(pins.isGutter()).isTrue();
+        pins.setFirstPin(new Pin(10, 0));
+        assertThat(pins.isGutter()).isTrue();
+        pins.setFirstPin(new Pin(10, 1));
+        assertThat(pins.isMiss()).isTrue();
+        pins.setFirstPin(new Pin(10, 10));
+        assertThat(pins.isStrike()).isTrue();
+        pins.setFirstPin(new Pin(10, 4));
+        pins.setSecondPin(new Pin(6, 6));
+        assertThat(pins.isSpare()).isTrue();
     }
 
-    @DisplayName("마지막 프레임에서 1 게임 추가시 파이널 true 변화 체크")
-    @Test
-    void isFinal() {
-        //Pins pins = new Pins(new Pin(10, 1), new Pin(9, 9));
-        //assertThat(pins.isFinal()).isFalse();
-        //pins.setThirdPin(new Pin(10,0));
-        //assertThat(pins.isFinal()).isTrue();
-    }
 
 }

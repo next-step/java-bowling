@@ -2,38 +2,52 @@ package bowling.domain;
 
 public abstract class Score {
 
-    private static final int GAME_STEP = 1;
+    private static final int MAX_LIMIT_BONUS = 10;
 
-    protected int firstScore;
-    protected int secondScore;
+    protected Pins pins;
+    protected State state;
     protected int bonusScore;
     protected int sumScore;
 
     public Score(Frame frame) {
-        //this.firstScore = frame.firstPin.fallenPins();
-        //this.secondScore = frame.secondPin.fallenPins();
-        this.bonusScore += 0;
-        this.sumScore = firstScore + secondScore;
+        this.state = frame.checkState();
+        this.pins = frame.getPins();
+        this.bonusScore = 0;
+        this.sumScore = 0;
     }
 
-    public String getCurrentScore() {
-        return Integer.toString(firstScore + secondScore);
+    protected int getScore() {
+        return pins.getFirstFallenPins() + pins.getSecondFallenPins();
+    }
+
+    protected int getNextScore() {
+        return getScore();
+    }
+
+    public String getCurrentScoreString() {
+        return Integer.toString(
+                getScore()
+        );
     }
 
     public String getCurrentSumScore() {
         return Integer.toString(getSumScore());
     }
 
-    public int getScore() {
-        return firstScore + secondScore;
+    protected int getFirstScore() {
+        return pins.getFirstFallenPins();
     }
 
-    public int getFirstScore() {
-        return firstScore;
+    protected boolean isFirstStrike() {
+        return pins.getFirstFallenPins() == MAX_LIMIT_BONUS;
     }
 
-    public int getBonusScore() {
-        return bonusScore;
+    protected int getSecondScore() {
+        return pins.getSecondFallenPins();
+    }
+
+    protected int getThirdScore() {
+        return pins.getThirdFallenPins();
     }
 
     public int getSumScore() {

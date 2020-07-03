@@ -4,10 +4,6 @@ import bowling.strategy.BowlingStrategy;
 
 public class NormalFrame extends Frame {
 
-    public NormalFrame() {
-
-    }
-
     @Override
     protected void setSecondPin(BowlingStrategy bowlingStrategy, int index) {
         // first pin strike
@@ -26,19 +22,19 @@ public class NormalFrame extends Frame {
     @Override
     protected State checkState() {
 
-            if (pins.isGutter()) {
-                return State.GUTTER;
-            }
-            if (pins.isSpare()) {
-                return State.SPARE;
-            }
-            if (pins.isMiss()) {
-                return State.MISS;
-            }
-            if (pins.isStrike()) {
-                return State.STRIKE;
-            }
-            throw new IllegalStateException();
+        if (pins.isGutter()) {
+            return State.GUTTER;
+        }
+        if (pins.isSpare()) {
+            return State.SPARE;
+        }
+        if (pins.isMiss()) {
+            return State.MISS;
+        }
+        if (pins.isStrike()) {
+            return State.STRIKE;
+        }
+        throw new IllegalStateException();
 
     }
 
