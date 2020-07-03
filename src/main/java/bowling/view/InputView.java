@@ -2,25 +2,19 @@ package bowling.view;
 
 import java.util.Scanner;
 
-public final class InputView {
+public class InputView {
+    private InputView() {
+    }
 
-    private static final String INPUT_PLAYER_NAME_MESSAGE = "플레이어 이름은(3 english letters)?: ";
-    private static final String INPUT_BOWLING_COUNT_FRAME_MESSAGE = "프레임 투구 : ";
+    private static final String NAME_OF_PLAYER = "플레이어 이름은(3 english letters)?:";
+    private static final Scanner scanner = new Scanner(System.in);
 
-    private static Scanner scanner = new Scanner(System.in);
-
-    private InputView() {}
-
-    public static String inputPlayerName() {
-        System.out.println(INPUT_PLAYER_NAME_MESSAGE);
+    public static String getUserName() {
+        System.out.print(NAME_OF_PLAYER);
         return scanner.nextLine();
     }
 
-    public static int inputDropPinCount(final int frameCount) {
-        System.out.println(frameCount + INPUT_BOWLING_COUNT_FRAME_MESSAGE);
-        final int pinCount = scanner.nextInt();
-
-        scanner.nextLine();
-        return pinCount;
+    public static int getFelled() {
+        return scanner.nextInt();
     }
 }
