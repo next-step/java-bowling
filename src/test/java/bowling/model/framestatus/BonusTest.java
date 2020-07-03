@@ -8,11 +8,6 @@ import org.junit.jupiter.api.Test;
 class BonusTest {
 
   @Test
-  void getSizeOfScoringFramesIndexes() {
-    assertThat(new Bonus().getSizeOfScoringFramesIndexes()).isEqualTo(0);
-  }
-
-  @Test
   void isOver() {
     assertThat(new Bonus().isOver()).isTrue();
   }

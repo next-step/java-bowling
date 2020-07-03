@@ -17,14 +17,5 @@ public class BowlingController {
       BowlingView.printScoreBoard(bowlingGame.getPlayerName(), bowlingGame.getFramesDTO());
       BowlingView.printScores(bowlingGame.getScores());
     }
-
-    bowlingGame.initBonusCount();
-
-    while (bowlingGame.hasBonus()) {
-      bowlingGame.bonusRoll(BowlingInput.getBonusFrameInput());
-      BowlingView.printScoreBoardWithBonus(bowlingGame.getPlayerName(), bowlingGame.getFramesDTO());
-      BowlingView.printScores(bowlingGame.getScores());
-    }
-
   }
 }
