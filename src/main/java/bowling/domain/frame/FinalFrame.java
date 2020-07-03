@@ -4,9 +4,9 @@ import static bowling.util.FrameSize.*;
 
 import java.util.Optional;
 
-import bowling.domain.result.Result;
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
+import bowling.util.ResultUtil;
 
 public class FinalFrame implements Frame {
 
@@ -37,7 +37,7 @@ public class FinalFrame implements Frame {
 		if (! scores.getFirst().isPresent() || ! scores.getSecond().isPresent()) {
 			return true;
 		}
-		return ! scores.getBonus().isPresent() && Result.BONUS_SCORE_RESULT.contains(scores.checkResult());
+		return ! scores.getBonus().isPresent() && ResultUtil.BONUS_SCORE_RESULT.contains(scores.checkResult());
 	}
 
 	@Override

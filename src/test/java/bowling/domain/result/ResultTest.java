@@ -11,17 +11,18 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
+import bowling.util.ResultUtil;
 
 public class ResultTest {
 
 	public static Stream<Arguments> 투구_점수의_반환_예시() {
 		return Stream.of(
-			Arguments.of(10, 0, Result.STRIKE),
-			Arguments.of(0, 10, Result.SPARE),
-			Arguments.of(5, 5, Result.SPARE),
-			Arguments.of(1, 1, Result.MISS),
-			Arguments.of(0, 1, Result.MISS),
-			Arguments.of(0, 0, Result.GUTTER)
+			Arguments.of(10, 0, new Strike()),
+			Arguments.of(0, 10, new Spare()),
+			Arguments.of(5, 5, new Spare()),
+			Arguments.of(1, 1, new Miss()),
+			Arguments.of(0, 1, new Miss()),
+			Arguments.of(0, 0, new Gutter())
 		);
 	}
 
@@ -33,7 +34,7 @@ public class ResultTest {
 		Score second = Score.ofScore(score2);
 		Scores scores = Scores.from(first);
 		scores.playSecondHalf(second);
-		Result result = Result.findByScores(scores.getFirst().get(), scores.getSecond().get());
-		assertThat(result).isEqualTo(expected);
+		Result result = ResultUtil.findByScores(scores.getFirst().get(), scores.getSecond().get());
+		assertThat(result).isInstanceOf(expected.getClass());
 	}
 }

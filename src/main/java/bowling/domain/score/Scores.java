@@ -6,6 +6,7 @@ import java.util.Optional;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.result.Result;
+import bowling.util.ResultUtil;
 import bowling.util.ScoreBound;
 
 public class Scores {
@@ -75,7 +76,7 @@ public class Scores {
 	}
 
 	private void hasCheckResultAndVerifyScoreSumCanExceedTen() {
-		if (hasCheckResult() && ! Result.BONUS_SCORE_RESULT.contains(checkResult())) {
+		if (hasCheckResult() && ! ResultUtil.BONUS_SCORE_RESULT.contains(checkResult())) {
 			throw new IllegalArgumentException("first and second frames score have more than 10 scores. wrong score.");
 		}
 	}
@@ -99,7 +100,7 @@ public class Scores {
 		if (Objects.isNull(second)) {
 			throw new IllegalStateException("scores does not have second score result!");
 		}
-		return Result.findByScores(first, second);
+		return ResultUtil.findByScores(first, second);
 	}
 
 	public boolean canPlayMore() {

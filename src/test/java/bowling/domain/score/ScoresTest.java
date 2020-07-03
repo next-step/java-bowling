@@ -12,7 +12,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import bowling.domain.result.Gutter;
+import bowling.domain.result.Miss;
 import bowling.domain.result.Result;
+import bowling.domain.result.Spare;
+import bowling.domain.result.Strike;
 import bowling.util.ScoreBound;
 
 public class ScoresTest {
@@ -38,10 +42,10 @@ public class ScoresTest {
 		Result result4 = scores4.checkResult();
 
 		return Stream.of(
-			Arguments.of(result1, Result.STRIKE),
-			Arguments.of(result2, Result.SPARE),
-			Arguments.of(result3, Result.MISS),
-			Arguments.of(result4, Result.GUTTER));
+			Arguments.of(result1, new Strike()),
+			Arguments.of(result2, new Spare()),
+			Arguments.of(result3, new Miss()),
+			Arguments.of(result4, new Gutter()));
 	}
 
 	@DisplayName("두 번째 투구의 점수를 입력하지 않으면 오류를 반환한다.")
@@ -88,7 +92,7 @@ public class ScoresTest {
 	@MethodSource("게임_결과들의_모음")
 	@ParameterizedTest
 	void 게임_결과를_반환한다(Result result, Result expected) {
-		assertThat(result).isEqualTo(expected);
+		assertThat(result).isInstanceOf(expected.getClass());
 	}
 
 	public static Stream<Arguments> 투구를_지속하는_테스트_모음() {
