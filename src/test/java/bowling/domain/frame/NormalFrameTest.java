@@ -36,11 +36,11 @@ public class NormalFrameTest {
 	void 한_타구가_진행된_프레임은_게임_플레이가_가능하다() {
 		Score firstScore = Score.ofScore(5);
 
-		frame.addScore(firstScore);
+		frame.playFrame(firstScore);
 		boolean canPlayMoreCertain = frame.canPlayMore();
 		assertThat(canPlayMoreCertain).isEqualTo(true);
 
-		finalFrame.addScore(firstScore);
+		finalFrame.playFrame(firstScore);
 		boolean canPlayMoreCertainForFinalFrame = finalFrame.canPlayMore();
 		assertThat(canPlayMoreCertainForFinalFrame).isEqualTo(true);
 	}
@@ -51,13 +51,13 @@ public class NormalFrameTest {
 		Score firstScore = Score.ofScore(5);
 		Score secondScore = Score.ofScore(4);
 
-		frame.addScore(firstScore);
-		frame.addScore(secondScore);
+		frame.playFrame(firstScore);
+		frame.playFrame(secondScore);
 		boolean canPlayMoreCertain = frame.canPlayMore();
 		assertThat(canPlayMoreCertain).isEqualTo(false);
 
-		finalFrame.addScore(firstScore);
-		finalFrame.addScore(secondScore);
+		finalFrame.playFrame(firstScore);
+		finalFrame.playFrame(secondScore);
 		boolean canPlayMoreCertainForFinalFrame = finalFrame.canPlayMore();
 		assertThat(canPlayMoreCertainForFinalFrame).isEqualTo(false);
 	}
@@ -67,9 +67,9 @@ public class NormalFrameTest {
 	@ParameterizedTest
 	void 프레임_하나의_최종점수를_구한다(int firstScore, int secondScore, int thirdScore) {
 		NormalFrame frame = NormalFrame.createFirstFrame();
-		frame.addScore(Score.ofScore(5));
-		frame.addScore(Score.ofScore(5));
-		frame.addNextFrame().addScore(Score.ofScore(7));
+		frame.playFrame(Score.ofScore(5));
+		frame.playFrame(Score.ofScore(5));
+		frame.addNextFrame().playFrame(Score.ofScore(7));
 
 		Score score = frame.calculateFrameTotalScore().get();
 		assertThat(score.getScore()).isEqualTo(firstScore + secondScore + thirdScore);

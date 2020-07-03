@@ -43,12 +43,12 @@ public class Frames {
 			.anyMatch(Frame::canPlayMore);
 	}
 
-	public void addScore(Score score) {
+	public void playFrame(Score score) {
 		Frame frame = frameList.stream()
 			.filter(Frame::canPlayMore)
 			.findFirst()
 			.orElseThrow(() -> new IllegalStateException("no more score can be added in the frame"));
-		frame.addScore(score);
+		frame.playFrame(score);
 	}
 
 	public List<Frame> getFrameList() {

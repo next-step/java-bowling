@@ -10,7 +10,7 @@ public class BowlingGame {
 	}
 
 	public Frames addScore(Frames frames, Score score) {
-		frames.addScore(score);
+		frames.playFrame(score);
 		return frames;
 	}
 }

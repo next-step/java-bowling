@@ -12,7 +12,7 @@ public interface Frame {
 
 	int getIndex();
 
-	void addScore(Score score);
+	void playFrame(Score score);
 
 	Scores getScores();
 

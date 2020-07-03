@@ -41,35 +41,35 @@ public class Scores {
 		return Objects.isNull(bonus);
 	}
 
-	public void addScore(Score score, Frame frame) {
+	public void playFrame(Score score, Frame frame) {
 		if (isFirstScoreNull()) {
-			addFirstScore(score);
+			playFirstHalf(score);
 			return;
 		}
 		if (isSecondScoreNull()) {
-			addSecondScore(score);
+			playSecondHalf(score);
 			return;
 		}
 		if (isBonusScoreNull() && frame instanceof FinalFrame) {
-			addBonusScore(score);
+			playBonusHalf(score);
 		}
 	}
 
-	public void addFirstScore(Score firstScore) {
+	public void playFirstHalf(Score firstScore) {
 		if (Objects.nonNull(first)) {
 			throw new IllegalArgumentException("이미 첫 번째 타구의 점수가 있습니다.");
 		}
 		this.first = firstScore;
 	}
 
-	public void addSecondScore(Score second) {
+	public void playSecondHalf(Score second) {
 		this.second = second;
 		if (first.getScore() + second.getScore() > ScoreBound.MAXIMUM_SCORE_BOUND.getBound()) {
 			hasCheckResultAndVerifyScoreSumCanExceedTen();
 		}
 	}
 
-	public void addBonusScore(Score bonus) {
+	public void playBonusHalf(Score bonus) {
 		first.add(bonus);
 		this.bonus = bonus;
 	}
@@ -94,7 +94,7 @@ public class Scores {
 
 	public Result checkResult() {
 		if (first.isScoreTen()) {
-			addSecondScore(Score.ofScore(ScoreBound.MINIMUM_SCORE_BOUND.getBound()));
+			playSecondHalf(Score.ofScore(ScoreBound.MINIMUM_SCORE_BOUND.getBound()));
 		}
 		if (Objects.isNull(second)) {
 			throw new IllegalStateException("scores does not have second score result!");

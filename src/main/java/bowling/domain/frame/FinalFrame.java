@@ -23,8 +23,8 @@ public class FinalFrame implements Frame {
 	}
 
 	@Override
-	public void addScore(Score score) {
-		scores.addScore(score, this);
+	public void playFrame(Score score) {
+		scores.playFrame(score, this);
 	}
 
 	@Override
