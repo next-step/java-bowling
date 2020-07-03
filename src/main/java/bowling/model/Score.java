@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Score {
 
-  int value;
+  private int value;
 
   public Score(int value) {
     this.value = value;

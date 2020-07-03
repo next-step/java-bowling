@@ -9,8 +9,6 @@ import bowling.model.EmptyFrame;
 
 public class RequiredSecondRoll implements FrameStatus {
 
-  private final static Integer ZERO = 0;
-
   private final int currentIndex;
 
   public RequiredSecondRoll(FrameStatus frameStatus) {
@@ -34,7 +32,7 @@ public class RequiredSecondRoll implements FrameStatus {
 
   @Override
   public FrameStatus createNextStatusBy(KnockedDownPins pins) {
-    if (pins.getRemainingNumber() == ZERO) {
+    if (pins.getRemainingNumber() == 0) {
       return new Spare(this);
     }
 
@@ -54,7 +52,7 @@ public class RequiredSecondRoll implements FrameStatus {
   @Override
   public String getResultBy(KnockedDownPins pins) {
     return String.valueOf(pins.getFirstKnockDownNumber())
-        .replace(ZERO.toString(), GUTTER.toString());
+        .replace("0", GUTTER.toString());
   }
 
   @Override
