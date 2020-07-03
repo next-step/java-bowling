@@ -95,7 +95,7 @@ public class Scores {
 
 	public Result checkResult() {
 		if (first.isScoreTen()) {
-			playSecondHalf(Score.ofScore(ScoreBound.MINIMUM_SCORE_BOUND.getBound()));
+			playSecondHalf(Score.of(ScoreBound.MINIMUM_SCORE_BOUND.getBound()));
 		}
 		if (Objects.isNull(second)) {
 			throw new IllegalStateException("scores does not have second score result!");
@@ -109,7 +109,7 @@ public class Scores {
 
 	public Score calculateFrameTotalScore() {
 		if (Objects.isNull(first)) {
-			return Score.ofScore(0);
+			return Score.of(0);
 		}
 		if (Objects.isNull(second)) {
 			return first;

@@ -34,7 +34,7 @@ public class NormalFrameTest {
 	@DisplayName("한 타구가 진행된 프레임의 경우 게임을 추가로 플레이할 수 있다.")
 	@Test
 	void 한_타구가_진행된_프레임은_게임_플레이가_가능하다() {
-		Score firstScore = Score.ofScore(5);
+		Score firstScore = Score.of(5);
 
 		frame.playFrame(firstScore);
 		boolean canPlayMoreCertain = frame.canPlayMore();
@@ -48,8 +48,8 @@ public class NormalFrameTest {
 	@DisplayName("두 번째 타구가 진행된 프레임의 경우 게임을 추가로 플레이할 수 없다.")
 	@Test
 	void 두번째_타구가_진행된_프레임은_게임_플레이가_불가능하다() {
-		Score firstScore = Score.ofScore(5);
-		Score secondScore = Score.ofScore(4);
+		Score firstScore = Score.of(5);
+		Score secondScore = Score.of(4);
 
 		frame.playFrame(firstScore);
 		frame.playFrame(secondScore);
@@ -67,9 +67,9 @@ public class NormalFrameTest {
 	@ParameterizedTest
 	void 프레임_하나의_최종점수를_구한다(int firstScore, int secondScore, int thirdScore) {
 		NormalFrame frame = NormalFrame.createFirstFrame();
-		frame.playFrame(Score.ofScore(5));
-		frame.playFrame(Score.ofScore(5));
-		frame.addNextFrame().playFrame(Score.ofScore(7));
+		frame.playFrame(Score.of(5));
+		frame.playFrame(Score.of(5));
+		frame.addNextFrame().playFrame(Score.of(7));
 
 		Score score = frame.calculateFrameTotalScore().get();
 		assertThat(score.getScore()).isEqualTo(firstScore + secondScore + thirdScore);

@@ -30,8 +30,8 @@ public class ResultTest {
 	@ParameterizedTest
 	@MethodSource("투구_점수의_반환_예시")
 	void 투구_점수를_받아_결과를_반환한다(int score1, int score2, Result expected) {
-		Score first = Score.ofScore(score1);
-		Score second = Score.ofScore(score2);
+		Score first = Score.of(score1);
+		Score second = Score.of(score2);
 		Scores scores = Scores.from(first);
 		scores.playSecondHalf(second);
 		Result result = ResultUtil.findByScores(scores.getFirst().get(), scores.getSecond().get());

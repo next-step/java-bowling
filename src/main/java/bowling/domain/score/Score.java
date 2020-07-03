@@ -10,7 +10,7 @@ public class Score {
 		this.score = score;
 	}
 
-	public static Score ofScore(int score) {
+	public static Score of(int score) {
 		validateScore(score);
 		return new Score(score);
 	}
