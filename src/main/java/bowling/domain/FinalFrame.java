@@ -30,6 +30,9 @@ public class FinalFrame extends Frame {
     }
 
     private State bowlingBonus(Pin pin) {
+        if (bonusPitch.isFinish()) {
+            throw new IllegalArgumentException("bonus pitch is already finish");
+        }
         bonusPitch = Pitch.ofBounus();
         bonusPitch.add(pin);
         return State.ofFinish();
@@ -47,7 +50,7 @@ public class FinalFrame extends Frame {
     public ShotHistory getShotHistory() {
         ShotHistory shotHistory = pitch.getShotHistory();
         if (isBonusPitch) {
-            shotHistory.add(bonusPitch.getShotHistory());
+            return shotHistory.add(bonusPitch.getShotHistory());
         }
         return shotHistory;
     }

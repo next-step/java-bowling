@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,8 +17,11 @@ public class ShotHistory {
         return shots.add(shot);
     }
 
-    public boolean add(ShotHistory shotHistory) {
-        return shots.addAll(shotHistory.getShots());
+    public ShotHistory add(ShotHistory shotHistory) {
+        List<Shot> shots = new ArrayList<>();
+        shots.addAll(this.shots);
+        shots.addAll(shotHistory.getShots());
+        return new ShotHistory(shots);
     }
 
     public boolean contains(Shot shot) {
