@@ -1,11 +1,15 @@
 package bowling.domain.frame;
 
 import bowling.domain.score.FrameScore;
+import bowling.domain.score.Result;
 import bowling.domain.score.Score;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class FinalFrame implements Frame {
+    private static final List<Result> BONUS_SCORE_RESULTS = Arrays.asList(Result.STRIKE, Result.SPARE);
 
     private final int index;
     private final FrameScore frameScore;
@@ -27,7 +31,12 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean canAddMoreScore() {
-        return frameScore.canAddMoreScore() || bonusScore == null;
+        return frameScore.canAddMoreScore() || canAddBonusScore();
+    }
+
+    private boolean canAddBonusScore() {
+        Result result = frameScore.checkResult();
+        return BONUS_SCORE_RESULTS.contains(result) && bonusScore == null;
     }
 
     @Override
