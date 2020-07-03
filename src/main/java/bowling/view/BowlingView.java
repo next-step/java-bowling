@@ -17,7 +17,15 @@ public class BowlingView {
   }
 
   public static void printKnockDownNumInputMsg(int currentFrameNumber) {
-    System.out.print(currentFrameNumber + "프레임 투구 : ");
+    System.out.print(getKnockDownNumInputMsg(currentFrameNumber) + "프레임 투구 : ");
+  }
+
+  private static String getKnockDownNumInputMsg(int currentFrameNumber) {
+    if (10 < currentFrameNumber) {
+      return "보너스 ";
+    }
+
+    return String.valueOf(currentFrameNumber);
   }
 
   public static void printBonusFrameInputMsg() {
@@ -28,16 +36,6 @@ public class BowlingView {
     System.out.println(getFrameMsgBy(playerName, framesDTO, framesDTO.size()));
   }
 
-  public static void printScoreBoardWithBonus(String playerName, List<FrameDTO> frameDTOs) {
-    StringBuilder sb = new StringBuilder();
-
-    sb.append(getFrameMsgBy(playerName, frameDTOs, BowlingGame.MAX_NUMBER_OF_FRAMES - 1))
-        .append(getLastFrameMsg(frameDTOs))
-        .append(BAR);
-
-    System.out.println(sb.toString());
-  }
-
   private static String getFrameMsgBy(String playerName, List<FrameDTO> frameDTOs, int endpoint) {
     StringBuilder sb = new StringBuilder(SCORE_BOARD_UPPER).append(System.lineSeparator());
 
@@ -46,11 +44,16 @@ public class BowlingView {
         .append(BAR);
 
     frameDTOs.stream()
-        .limit(endpoint)
+        .limit(BowlingGame.MAX_NUMBER_OF_FRAMES - 1)
         .forEach(frameDTO -> {
           sb.append(wrappingWithSpaces(frameDTO.getFrameResult()))
               .append(BAR);
         });
+
+    if (10 <= endpoint) {
+      sb.append(getLastFrameMsg(frameDTOs))
+          .append(BAR);
+    }
 
     return sb.toString();
   }
