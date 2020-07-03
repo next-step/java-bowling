@@ -3,6 +3,9 @@ package bowling.game;
 import bowling.game.frame.Frames;
 import bowling.player.domain.Player;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +20,7 @@ public class ScoreBoard {
 
     private Map<Player, Frames> createPlayersFrames(List<Player> players) {
         return players.stream()
-                .collect(toMap(player -> player, player -> new Frames()));
+                .collect(toMap(player -> player, player -> new Frames(), (u, v) -> v, LinkedHashMap::new));
     }
 
     public Frames findByPlayer(Player player) {
@@ -31,6 +34,10 @@ public class ScoreBoard {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지않는 플레이어 입니다."))
                 .getValue();
+    }
+
+    public Map<Player, Frames> getPlayersFrames() {
+        return Collections.unmodifiableMap(this.playersFrames);
     }
 
     private void validatePlayer(Player player) {

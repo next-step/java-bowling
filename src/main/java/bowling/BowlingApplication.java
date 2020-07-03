@@ -1,31 +1,36 @@
 package bowling;
 
-import bowling.game.frame.Frames;
+import bowling.game.BowlingGame;
 import bowling.game.ScoreBoard;
-import bowling.game.Scores;
+import bowling.game.frame.Frame;
+import bowling.game.frame.Frames;
 import bowling.player.domain.Player;
+import bowling.player.vo.Name;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BowlingApplication {
     public static void main(String[] args) {
-        String name = InputView.inputName();
-        Player player = new Player(name);
+        int numberOfPlayer = InputView.inputNumberOfPlayer();
+        List<String> names = InputView.inputNames(numberOfPlayer);
 
-        ScoreBoard scoreBoard = new ScoreBoard(Arrays.asList(player));
-        Frames frames = scoreBoard.findByPlayer(player);
-        Scores scores = new Scores(frames.getScores());
+        BowlingGame bowlingGame = new BowlingGame(names);
 
-        OutputView.printScoreBoard(player, frames, scores);
+        OutputView.printScoreBoard(bowlingGame.getPlayersFrames());
 
-        while (!frames.isEndAllFrames()) {
-            int frameNumber = frames.getCurrentFrameNumber();
-            frames.bowlCurrentFrame(InputView.inputPinCount(frameNumber));
-            scores = new Scores(frames.getScores());
+        while (!bowlingGame.isEndGame()) {
+            Name name = bowlingGame.getCurrentPlayerName();
+            int pinCount = InputView.inputPinCount(name);
 
-            OutputView.printScoreBoard(player, frames, scores);
+            bowlingGame.bowlCurrentPlayer(pinCount);
+
+            Map<Player, Frames> playerFrames = bowlingGame.getPlayersFrames();
+
+            OutputView.printScoreBoard(playerFrames);
         }
     }
 }
