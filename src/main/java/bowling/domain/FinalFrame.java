@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
 public class FinalFrame extends Frame {
     private boolean isBonusPitch;
     private Pitch bonusPitch;
@@ -15,7 +17,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public FrameState bowling(Pin pin) {
+    public State bowling(Pin pin) {
         if (isBonusPitch) {
             return bowlingBonus(pin);
         }
@@ -24,21 +26,21 @@ public class FinalFrame extends Frame {
         if (pitch.isFinish()) {
             return isNextBonusPitch();
         }
-        return FrameState.ofNotFinish(pitch.getRemain());
+        return State.ofSpare(pitch.getRemain());
     }
 
-    private FrameState bowlingBonus(Pin pin) {
+    private State bowlingBonus(Pin pin) {
         bonusPitch = Pitch.ofBounus();
         bonusPitch.add(pin);
-        return FrameState.ofFinish();
+        return State.ofFinish();
     }
 
-    private FrameState isNextBonusPitch() {
+    private State isNextBonusPitch() {
         if (pitch.isStrikeOrSpare()) {
             isBonusPitch = true;
-            return FrameState.ofNotFinish(Pin.MAX_COUNT);
+            return State.ofSpare(Pin.MAX_COUNT);
         }
-        return FrameState.ofFinish();
+        return State.ofFinish();
     }
 
     @Override

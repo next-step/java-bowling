@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,7 +34,7 @@ public abstract class Frame {
         return nextFrame;
     }
 
-    public abstract FrameState bowling(Pin pin);
+    public abstract State bowling(Pin pin);
 
     public abstract ShotHistory getShotHistory();
 

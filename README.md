@@ -55,8 +55,9 @@
     - [X] 2번 던져서 넘긴 핀이 10개면 Miss,Spare 이력 추가
     - [X] 2번 던져서 넘긴 핀이 10개 미만 Miss,Miss 이력 추가
   - [X] 스코어 추가 시 마다 모든 공을 처리한건지 여부를 반환
-- FrameState
-  - New, NotFinish, Finish
+- State
+  - New, Spare, Finish
+  - [X] 각 상태별로 새로 시작인지 유무를 반환한다
   - [X] 각 상태별로 더 던질 수 있는지 유무를 반환한다
 - Shot
   - Strike, Spare, Miss, Gutter
