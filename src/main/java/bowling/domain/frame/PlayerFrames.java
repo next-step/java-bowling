@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Frames {
+public class PlayerFrames {
 
     private static final int FRAME_COUNT = 10;
 
     private final List<Frame> frames;
-    private int currentFrameNumber;
+    private int currentPosition;
 
-    private Frames(List<Frame> frames) {
+    private PlayerFrames(List<Frame> frames) {
         validate(frames);
 
         this.frames = frames;
     }
 
-    public static Frames create() {
+    public static PlayerFrames create() {
         List<Frame> frames = new ArrayList<>();
 
         Frame normalFrame = Frame.first();
@@ -30,33 +30,33 @@ public class Frames {
 
         frames.add(frames.get(frames.size() - 1).last());
 
-        return new Frames(frames);
+        return new PlayerFrames(frames);
     }
 
     private void validate(List<Frame> frames) {
         if (frames.size() != FRAME_COUNT) {
-            throw new IllegalArgumentException("10개 프레임이 아닙니다.");
+            throw new IllegalArgumentException("유효하지 않은 프레임 입니다.");
         }
     }
 
     public void roll(int downPin) {
-        Frame frame = this.frames.get(this.currentFrameNumber);
+        Frame frame = this.frames.get(this.currentPosition);
         frame.roll(downPin);
 
         if (!frame.hasTurn()) {
-            this.currentFrameNumber++;
+            this.currentPosition++;
         }
     }
 
     public List<FrameResult> getFrameResults() {
         return this.frames.stream()
-            .map(Frame::getFrameResult)
-            .collect(Collectors.toList());
+                .map(Frame::getFrameResult)
+                .collect(Collectors.toList());
     }
 
 
-    public int getCurrentFrameNumber() {
-        return this.currentFrameNumber;
+    public int getCurrentPosition() {
+        return this.currentPosition;
     }
 
     public boolean isFinished() {
