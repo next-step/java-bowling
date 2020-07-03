@@ -29,28 +29,7 @@ public class NormalFrame implements Frame {
 
 	@Override
 	public void addScore(Score score) {
-		if (scores.isFirstScoreNull()) {
-			addFirstScore(score);
-			return;
-		}
-		if (scores.isSecondScoreNull()) {
-			addSecondScore(score);
-		}
-	}
-
-	@Override
-	public void addFirstScore(Score firstScore) {
-		scores.addFirstScore(firstScore);
-	}
-
-	@Override
-	public void addSecondScore(Score second) {
-		scores.addSecondScore(second);
-	}
-
-	@Override
-	public void addBonusScore(Score bonus) {
-		throw new IllegalArgumentException("일반 프레임에서 보너스 개념이 없습니다.");
+		scores.addScore(score, this);
 	}
 
 	@Override

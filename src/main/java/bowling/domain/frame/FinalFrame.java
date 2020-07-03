@@ -2,9 +2,6 @@ package bowling.domain.frame;
 
 import static bowling.util.FrameSize.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import bowling.domain.result.Result;
@@ -13,7 +10,6 @@ import bowling.domain.score.Scores;
 
 public class FinalFrame implements Frame {
 
-	private static final List<Result> BONUS_SCORE_RESULT = Arrays.asList(Result.STRIKE, Result.SPARE);
 	private final int index;
 	private final Scores scores;
 
@@ -28,32 +24,7 @@ public class FinalFrame implements Frame {
 
 	@Override
 	public void addScore(Score score) {
-		if (scores.isFirstScoreNull()) {
-			addFirstScore(score);
-			return;
-		}
-		if (scores.isSecondScoreNull()) {
-			addSecondScore(score);
-			return;
-		}
-		if (scores.isBonusScoreNull()) {
-			addBonusScore(score);
-		}
-	}
-
-	@Override
-	public void addFirstScore(Score firstScore) {
-		scores.addFirstScore(firstScore);
-	}
-
-	@Override
-	public void addSecondScore(Score second) {
-		scores.addSecondScore(second);
-	}
-
-	@Override
-	public void addBonusScore(Score bonus) {
-		scores.addBonusScore(bonus);
+		scores.addScore(score, this);
 	}
 
 	@Override
@@ -63,10 +34,10 @@ public class FinalFrame implements Frame {
 
 	@Override
 	public boolean canPlayMore() {
-		if (Objects.isNull(scores.getFirst()) || Objects.isNull(scores.getSecond())) {
+		if (! scores.getFirst().isPresent() || ! scores.getSecond().isPresent()) {
 			return true;
 		}
-		return Objects.isNull(scores.getBonus()) && BONUS_SCORE_RESULT.contains(scores.checkResult());
+		return ! scores.getBonus().isPresent() && Result.BONUS_SCORE_RESULT.contains(scores.checkResult());
 	}
 
 	@Override

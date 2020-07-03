@@ -71,7 +71,7 @@ public class NormalFrameTest {
 		frame.addScore(Score.ofScore(5));
 		frame.addNextFrame().addScore(Score.ofScore(7));
 
-		Score score = frame.calculateFrameTotalScore();
+		Score score = frame.calculateFrameTotalScore().get();
 		assertThat(score.getScore()).isEqualTo(firstScore + secondScore + thirdScore);
 	}
 }

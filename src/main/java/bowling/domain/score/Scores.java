@@ -3,6 +3,8 @@ package bowling.domain.score;
 import java.util.Objects;
 import java.util.Optional;
 
+import bowling.domain.frame.FinalFrame;
+import bowling.domain.frame.Frame;
 import bowling.domain.result.Result;
 import bowling.util.ScoreBound;
 
@@ -39,6 +41,20 @@ public class Scores {
 		return Objects.isNull(bonus);
 	}
 
+	public void addScore(Score score, Frame frame) {
+		if (isFirstScoreNull()) {
+			addFirstScore(score);
+			return;
+		}
+		if (isSecondScoreNull()) {
+			addSecondScore(score);
+			return;
+		}
+		if (isBonusScoreNull() && frame instanceof FinalFrame) {
+			addBonusScore(score);
+		}
+	}
+
 	public void addFirstScore(Score firstScore) {
 		if (Objects.nonNull(first)) {
 			throw new IllegalArgumentException("이미 첫 번째 타구의 점수가 있습니다.");
@@ -47,13 +63,21 @@ public class Scores {
 	}
 
 	public void addSecondScore(Score second) {
-		first.add(second);
 		this.second = second;
+		if (first.getScore() + second.getScore() > ScoreBound.MAXIMUM_SCORE_BOUND.getBound()) {
+			hasCheckResultAndVerifyScoreSumCanExceedTen();
+		}
 	}
 
 	public void addBonusScore(Score bonus) {
 		first.add(bonus);
 		this.bonus = bonus;
+	}
+
+	private void hasCheckResultAndVerifyScoreSumCanExceedTen() {
+		if (hasCheckResult() && ! Result.BONUS_SCORE_RESULT.contains(checkResult())) {
+			throw new IllegalArgumentException("first and second frames score have more than 10 scores. wrong score.");
+		}
 	}
 
 	public Optional<Score> getFirst() {

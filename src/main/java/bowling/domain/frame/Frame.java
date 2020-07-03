@@ -14,12 +14,6 @@ public interface Frame {
 
 	void addScore(Score score);
 
-	void addFirstScore(Score firstScore);
-
-	void addSecondScore(Score secondScore);
-
-	void addBonusScore(Score bonusScore);
-
 	Scores getScores();
 
 	Optional<Score> calculateFrameTotalScore();
