@@ -9,13 +9,13 @@ class PlayerTest {
 
     @Test
     void create() {
-        Player player = Player.create("JJJ");
+        Player player = Player.create("JJJ", 0);
         assertThat(player.getName()).isEqualTo("JJJ");
     }
 
     @Test
     void create_over_length() {
-        assertThatThrownBy(() ->  Player.create("JJJJ"))
+        assertThatThrownBy(() ->  Player.create("JJJJ", 0))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
