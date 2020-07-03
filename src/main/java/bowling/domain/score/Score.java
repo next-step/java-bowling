@@ -1,7 +1,6 @@
 package bowling.domain.score;
 
 import java.util.Objects;
-import java.util.function.BinaryOperator;
 
 public class Score {
 

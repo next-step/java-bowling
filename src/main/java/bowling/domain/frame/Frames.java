@@ -5,6 +5,7 @@ import bowling.domain.score.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class Frames {
 
@@ -46,12 +47,16 @@ public class Frames {
         frame.addScore(score);
     }
 
-    public int getCurrentFrameIndex() {
+    public Optional<Integer> getCurrentFrameIndex() {
         return frames.stream()
                 .filter(Frame::canAddMoreScore)
                 .findFirst()
-                .map(Frame::getIndex)
-                .orElseThrow(() -> new IllegalStateException("진행 중인 프레임이 없습니다"));
+                .map(Frame::getIndex);
+    }
+
+    public boolean isAllFrameFinished() {
+        return frames.stream()
+                .noneMatch(Frame::canAddMoreScore);
     }
 
     public List<Frame> getContent() {

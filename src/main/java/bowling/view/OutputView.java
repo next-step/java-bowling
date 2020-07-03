@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.domain.Board;
+import bowling.domain.Boards;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
@@ -10,10 +12,17 @@ import java.util.Optional;
 
 public class OutputView {
 
-    public static void printFrames(Player player, Frames frames) {
+    public static void printBoards(Boards boards) {
+        for (Board board : boards.getContent()) {
+            printBoard(board);
+        }
+    }
+
+    private static void printBoard(Board board) {
+        Frames frames = board.getFrames();
         List<Frame> frameList = frames.getContent();
         printHeader(frameList.size());
-        printScore(player, frameList);
+        printScore(board.getPlayer(), frameList);
         printTotalScores(frameList);
     }
 
