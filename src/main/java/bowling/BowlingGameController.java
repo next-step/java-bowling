@@ -18,10 +18,10 @@ public class BowlingGameController {
 		Player player = InputView.askPlayer();
 		Frames frames = bowlingGame.startGame();
 
-		do {
+		while (frames.canPlayMore()) {
 			Score score = InputView.askScore(frames.findPlayingFrame().getIndex() + 1);
 			frames = bowlingGame.addScore(frames, score);
 			OutputView.printFrames(player, frames);
-		} while (frames.canPlayMore());
+		}
 	}
 }
