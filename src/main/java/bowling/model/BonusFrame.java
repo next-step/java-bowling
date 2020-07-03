@@ -6,7 +6,7 @@ import java.util.Objects;
 public class BonusFrame implements Frame {
 
   private KnockDownNumber knockDownNumber = new KnockDownNumber();
-  private  FrameStatus frameStatus;
+  private final FrameStatus frameStatus;
 
   public BonusFrame(FrameStatus frameStatus) {
     this.frameStatus = frameStatus;

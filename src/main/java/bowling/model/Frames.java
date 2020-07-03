@@ -62,9 +62,7 @@ public class Frames {
 
     frames.stream()
         .limit(BowlingGame.MAX_NUMBER_OF_FRAMES)
-        .forEach(frame -> {
-          scores.add(frame.getScore());
-        });
+        .forEach(frame -> scores.add(frame.getScore()));
     return scores;
   }
 

@@ -43,11 +43,4 @@ class EmptyFrameTest {
       new EmptyFrame().getFrameStatus();
     });
   }
-
-  @Test
-  void getScoreBy() {
-    assertThatExceptionOfType(UnsupportedOperationException.class).isThrownBy(() -> {
-      new EmptyFrame().getScoreBy(null);
-    });
-  }
 }

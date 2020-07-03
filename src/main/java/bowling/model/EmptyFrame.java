@@ -1,12 +1,11 @@
 package bowling.model;
 
 import bowling.model.framestatus.FrameStatus;
-import java.util.List;
 
 public class EmptyFrame implements Frame {
 
   @Override
-  public void roll(int KnockDownNumber) throws FrameOverException {
+  public void roll(int KnockDownNumber) {
     throw new UnsupportedOperationException();
   }
 
@@ -42,10 +41,6 @@ public class EmptyFrame implements Frame {
 
   @Override
   public FrameStatus getFrameStatus() {
-    throw new UnsupportedOperationException();
-  }
-
-  public void getScoreBy(List<Frame> frames) {
     throw new UnsupportedOperationException();
   }
 
