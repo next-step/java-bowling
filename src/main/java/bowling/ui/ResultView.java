@@ -13,21 +13,32 @@ public class ResultView {
 
     public static void printResult(BowlingGame bowlingGame) {
         System.out.println(BOARD_TITLE);
+        printFrameLine(bowlingGame);
         printScoreLine(bowlingGame);
-        printEmptyLine(bowlingGame);
         System.out.println("\n");
     }
 
-    private static void printScoreLine(BowlingGame bowlingGame) {
+    private static void printFrameLine(BowlingGame bowlingGame) {
         System.out.print("|" + formatting(bowlingGame.whoseTurn()));
         bowlingGame.getFrames().stream()
                 .map(frame -> formatting(frame.printFrameResult()))
                 .forEach(System.out::print);
+        printEmptyLine(bowlingGame.getFrames().size());
+        System.out.println();
     }
 
-    private static void printEmptyLine(BowlingGame bowlingGame) {
+    private static void printScoreLine(BowlingGame bowlingGame) {
+        System.out.print("|" + formatting(""));
+        bowlingGame.getScores().stream()
+                .map(score -> formatting(String.valueOf(score)))
+                .forEach(System.out::print);
+        printEmptyLine(bowlingGame.getScores().size());
+        System.out.println();
+    }
+
+    private static void printEmptyLine(int currentSize) {
         Stream.generate(() -> formatting(""))
-                .limit(MAX_FRAME_SIZE - bowlingGame.getCurrentIndex() - 1)
+                .limit(MAX_FRAME_SIZE - currentSize)
                 .forEach(System.out::print);
     }
 

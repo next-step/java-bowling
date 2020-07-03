@@ -2,16 +2,19 @@ package bowling.domain;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
+import bowling.domain.result.Scores;
 
 import java.util.List;
 
 public class BowlingGame {
     private final Player player;
     private final Frames frames;
+    private Scores scores;
 
     private BowlingGame(Player player, Frames frames) {
         this.player = player;
         this.frames = frames;
+        this.scores = new Scores();
     }
 
     public static BowlingGame start(Player player) {
@@ -40,5 +43,9 @@ public class BowlingGame {
 
     public String whoseTurn() {
         return player.getName();
+    }
+
+    public List<Integer> getScores() {
+        return scores.getScores();
     }
 }

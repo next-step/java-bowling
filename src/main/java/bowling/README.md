@@ -9,6 +9,19 @@
 - 상태 추상화 추가 및 적용 -> Ready 추가 및 bowl 역할을 Ready, Pending에 위임
 - 프레임에 LinkedList 구조 적용 (프레임이 다음 프레임 값을 가지도록)
 
+Score
+int score, int left를 가진다.
+- left 가 0 이면 계산 가능 
+
+점수 출력 시나리오
+출력 관점
+1. Scores(List<Score>) 에 있는 스코어 리스트들을 가져온다.
+2. Scores 크기만큼 점수 출력, 나머지는 빈 라인을 채운다
+
+점수 추가 관점 
+
+
+
 #### 힌트
 - 점수를 구하는 역할을 각 Frame이 담당할 수 있도록 구현한다.
 - Frame이 자신의 점수를 구하려면 다음 Frame에 접근 할 수 있어야한다
