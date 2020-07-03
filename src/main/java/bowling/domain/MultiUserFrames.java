@@ -32,8 +32,8 @@ public class MultiUserFrames {
         return state;
     }
 
-    public int getCurrentFrameNo() {
-        return multiframes.peek().getCurrentFrameNo();
+    public String getCurrentPlayerName() {
+        return multiframes.peek().getPlayerName();
     }
 
     public Stream<Frames> forEachFrames() {

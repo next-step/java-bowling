@@ -23,7 +23,7 @@ public class BowlingGame {
         State state = State.ofNew();
         while (true) {
             Pin nextPin = bowlingStrategy.nextPin(state.getRemainPin());
-            ResultView.printNextPin(multiUserFrames.getCurrentFrameNo(), nextPin);
+            ResultView.printNextPin(multiUserFrames.getCurrentPlayerName(), nextPin);
 
             state = multiUserFrames.bowling(nextPin);
             ResultView.printBoard(new ResultFrameDtos(multiUserFrames));

@@ -22,6 +22,6 @@ class MultiUserFramesTest {
         multiUserFrames.bowling(new Pin(3));
         multiUserFrames.bowling(new Pin(3));
         multiUserFrames.bowling(new Pin(3));
-        assertThat(multiUserFrames.getCurrentFrameNo()).isEqualTo(3);
+        assertThat(multiUserFrames.getCurrentPlayerName()).isEqualTo("PJS");
     }
 }
