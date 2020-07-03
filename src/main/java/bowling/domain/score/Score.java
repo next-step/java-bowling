@@ -40,4 +40,8 @@ public class Score {
 	public boolean isScoreZero() {
 		return score == ScoreBound.MINIMUM_SCORE_BOUND.getBound();
 	}
+
+	public boolean isBetweenInRange() {
+		return score > ScoreBound.MINIMUM_SCORE_BOUND.getBound() && score < ScoreBound.MAXIMUM_SCORE_BOUND.getBound();
+	}
 }

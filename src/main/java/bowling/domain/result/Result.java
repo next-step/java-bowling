@@ -34,7 +34,7 @@ public enum Result {
 	MISS {
 		@Override
 		boolean isMatch(Score first, Score second) {
-			return ! first.isScoreTen() && ! first.add(second).isScoreTen() && ! first.add(second).isScoreZero();
+			return ! first.isScoreTen() && first.add(second).isBetweenInRange();
 		}
 
 		@Override
