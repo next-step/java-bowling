@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.domain.*;
+import bowling.domain.state.State;
 import bowling.ui.InputView;
 import bowling.ui.ResultFrameDto;
 import bowling.ui.ResultView;
@@ -14,15 +15,15 @@ public class BowlingGame {
 
         ResultView.printBoard(new ResultFrameDto(frames));
 
-        FrameState frameState = FrameState.ofNew();
+        State state = State.ofNew();
         while (true) {
-            Pin nextPin = bowlingStrategy.nextPin(frameState.getRemainPinCount());
+            Pin nextPin = bowlingStrategy.nextPin(state.getRemainPin());
             ResultView.printNextPin(frames.getCurrentFrameNo(), nextPin);
 
-            frameState = frames.bowling(nextPin);
+            state = frames.bowling(nextPin);
             ResultView.printBoard(new ResultFrameDto(frames));
 
-            if (frameState.isFinish()) {
+            if (state.isFinish()) {
                 break;
             }
         }

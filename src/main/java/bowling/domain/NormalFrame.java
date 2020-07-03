@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
 public class NormalFrame extends Frame {
 
     public NormalFrame(int frameNo) {
@@ -7,12 +9,12 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public FrameState bowling(Pin pin) {
+    public State bowling(Pin pin) {
         pitch.add(pin);
         if (pitch.isFinish()) {
-            return FrameState.ofNew();
+            return State.ofNew();
         }
-        return FrameState.ofNotFinish(pitch.getRemain());
+        return State.ofSpare(pitch.getRemain());
     }
 
     @Override

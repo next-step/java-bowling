@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,12 +17,12 @@ public class Frames {
         frames.add(Frame.first());
     }
 
-    public FrameState bowling(Pin pin) {
-        FrameState frameState = getLastFrame().bowling(pin);
-        if (frameState.isNew()) {
+    public State bowling(Pin pin) {
+        State state = getLastFrame().bowling(pin);
+        if (state.isNew()) {
             frames.add(getLastFrame().next());
         }
-        return frameState;
+        return state;
     }
 
     private Frame getLastFrame() {
@@ -49,5 +51,9 @@ public class Frames {
 
     public int getCurrentFrameNo() {
         return frames.size();
+    }
+
+    public boolean isGameEnd() {
+        return getLastFrame().isGameEnd();
     }
 }
