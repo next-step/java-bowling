@@ -1,6 +1,6 @@
 package bowling.strategy;
 
-import bowling.domain.Pin;
+import bowling.pin.domain.Pin;
 
 public interface BowlingStrategy {
 
