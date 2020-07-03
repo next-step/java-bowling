@@ -31,6 +31,6 @@ public class AnswerTest {
     @DisplayName("답변 삭제 시 DeleteHistory를 반환한다.")
     void delete_DeleteHistory_반환() throws CannotDeleteException {
         assertThat(A1.deleteBy(UserTest.JAVAJIGI))
-                .isEqualTo(DeleteHistory.deleteAnswer(null, UserTest.JAVAJIGI));
+                .isEqualTo(DeleteHistory.createByDeleteAnswer(null, UserTest.JAVAJIGI));
     }
 }

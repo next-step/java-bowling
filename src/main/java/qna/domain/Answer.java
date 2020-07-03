@@ -78,7 +78,7 @@ public class Answer extends AbstractEntity {
         validateUser(loginUser);
         this.deleted = true;
 
-        return DeleteHistory.deleteAnswer(this.getId(), this.getWriter());
+        return DeleteHistory.createByDeleteAnswer(this.getId(), this.getWriter());
     }
 
     private void validateUser(User loginUser) throws CannotDeleteException {
