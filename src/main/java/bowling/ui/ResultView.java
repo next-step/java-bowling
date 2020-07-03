@@ -4,14 +4,14 @@ import bowling.domain.Frame;
 import bowling.domain.Pin;
 
 public class ResultView {
-    private static final String SHOT_FORMAT = "%s프레임 투구  : %s";
+    private static final String SHOT_FORMAT = "%s's turn : %s";
     private static final String BOARD_HEADER_FIRST_COLUMN = "| %4s |";
     private static final String NAME = "NAME";
     private static final String ROUND_FORMAT = "  %02d    |";
     private static final String RESULT_FORMAT = "  %-5s |";
 
-    public static void printNextPin(int frameNo, Pin nextPin) {
-        System.out.println(String.format(SHOT_FORMAT, frameNo, nextPin.getCount()));
+    public static void printNextPin(String playerName, Pin nextPin) {
+        System.out.println(String.format(SHOT_FORMAT, playerName, nextPin.getCount()));
     }
 
     public static void printBoard(ResultFrameDtos resultFrameDtos) {

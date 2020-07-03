@@ -100,6 +100,6 @@
   - [X] 아직 Pitch가 끝나지 않았다면 Null Score로 생성된다
 - MultiUserFrames
   - 여러 명의 Player, Frames를 가질 수 있다
-  - [X] 진행 횟수에 따라서 올바른 프레임 넘버를 반환한다
+  - [X] 진행 횟수에 따라서 올바른 플레이어 이름을 반환한다
   - [ ] 전체 Frames 진행 중이라면 종료 여부에서 false 반환한다
   - [ ] 전체 Frames 종료되면 종료 여부에서 true 반환한다
