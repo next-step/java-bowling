@@ -59,7 +59,6 @@ public class Frames {
 
   public List<Score> getScores() {
     List<Score> scores = new ArrayList<>();
-    List<Frame> frames = getFrames();
 
     frames.stream()
         .limit(BowlingGame.MAX_NUMBER_OF_FRAMES)
