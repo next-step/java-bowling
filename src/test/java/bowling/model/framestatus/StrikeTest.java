@@ -22,7 +22,6 @@ class StrikeTest {
   void getIndexOfNextFrames(int currentIndex, int expected) {
     FrameStatus frameStatus = new Strike(currentIndex);
 
-    assertThat(frameStatus.getCurrentIndex()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isTrue();
   }
 

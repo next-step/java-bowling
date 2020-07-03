@@ -18,7 +18,6 @@ class RequiredFirstRollTest {
   void getIndexOfNextFrames(int currentIndex, int expected) {
     FrameStatus frameStatus = new RequiredFirstRoll(currentIndex);
 
-    assertThat(frameStatus.getCurrentIndex()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isFalse();
   }
 

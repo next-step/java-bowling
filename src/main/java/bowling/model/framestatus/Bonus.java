@@ -3,7 +3,6 @@ package bowling.model.framestatus;
 import static bowling.model.Symbols.*;
 
 import bowling.model.BonusFrame;
-import bowling.model.BowlingGame;
 import bowling.model.EmptyFrame;
 import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
@@ -35,11 +34,6 @@ public class Bonus implements FrameStatus {
   @Override
   public Frame getNextFrame() {
     return nextFrame;
-  }
-
-  @Override
-  public int getCurrentIndex() {
-    return -1;
   }
 
   @Override

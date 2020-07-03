@@ -18,7 +18,6 @@ class MissTest {
   void getIndexOfNextFrames() {
     FrameStatus frameStatus = new Miss(0);
 
-    assertThat(frameStatus.getCurrentIndex()).isEqualTo(0);
     assertThat(frameStatus.isOver()).isTrue();
   }
 

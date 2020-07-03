@@ -8,8 +8,6 @@ public interface FrameStatus {
 
   Frame getNextFrame();
 
-  int getCurrentIndex();
-
   Score getAdditionalScore();
 
   FrameStatus createNextStatusBy(KnockedDownPins pins);

@@ -22,7 +22,6 @@ class SpareTest {
   void getIndexOfNextFrames(int currentIndex, int expected) {
     FrameStatus frameStatus = new Spare(currentIndex);
 
-    assertThat(frameStatus.getCurrentIndex()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isTrue();
   }
 

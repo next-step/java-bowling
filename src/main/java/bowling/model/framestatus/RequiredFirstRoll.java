@@ -6,8 +6,6 @@ import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
 import bowling.model.Score;
 import bowling.model.EmptyFrame;
-import java.util.Collections;
-import java.util.List;
 
 public class RequiredFirstRoll implements FrameStatus {
 
@@ -20,11 +18,6 @@ public class RequiredFirstRoll implements FrameStatus {
   @Override
   public Frame getNextFrame() {
     return new EmptyFrame();
-  }
-
-  @Override
-  public int getCurrentIndex() {
-    return currentIndex;
   }
 
   @Override

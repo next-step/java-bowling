@@ -34,11 +34,6 @@ public class Spare implements FrameStatus {
   }
 
   @Override
-  public int getCurrentIndex() {
-    return currentIndex;
-  }
-
-  @Override
   public Score getAdditionalScore() {
     return new Score(nextFrame.getFirstKnockDownNumber());
   }

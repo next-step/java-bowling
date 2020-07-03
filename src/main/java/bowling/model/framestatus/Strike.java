@@ -34,11 +34,6 @@ public class Strike implements FrameStatus {
   }
 
   @Override
-  public int getCurrentIndex() {
-    return currentIndex;
-  }
-
-  @Override
   public Score getAdditionalScore() {
     Score result = new Score(nextFrame.getFirstKnockDownNumber());
     result.add(nextFrame.next().getFirstKnockDownNumber());

@@ -38,7 +38,6 @@ class RequiredSecondRollTest {
   void getIndexOfNextFrames(int currentIndex, int expected) {
     FrameStatus frameStatus = new RequiredSecondRoll(currentIndex);
 
-    assertThat(frameStatus.getCurrentIndex()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isFalse();
   }
 

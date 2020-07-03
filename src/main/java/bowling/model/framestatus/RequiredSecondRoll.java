@@ -21,11 +21,6 @@ public class RequiredSecondRoll implements FrameStatus {
   }
 
   @Override
-  public int getCurrentIndex() {
-    return currentIndex;
-  }
-
-  @Override
   public Score getAdditionalScore() {
     return new Score(0);
   }
