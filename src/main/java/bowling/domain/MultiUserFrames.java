@@ -25,7 +25,7 @@ public class MultiUserFrames {
     public State bowling(Pin nextPin) {
         Frames currentFrames = multiframes.peek();
         State state = currentFrames.bowling(nextPin);
-        if (state.isNew()) {
+        if (state.isNew() || state.isFinish()) {
             multiframes.poll();
             multiframes.add(currentFrames);
         }
