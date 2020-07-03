@@ -14,6 +14,8 @@ public interface Frame {
 
     FrameScore getFrameScore();
 
+    Optional<Score> getBonusScore();
+
     Optional<Score> calculateTotalScore();
 
     int getIndex();

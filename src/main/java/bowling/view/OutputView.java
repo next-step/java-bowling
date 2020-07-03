@@ -31,7 +31,7 @@ public class OutputView {
         System.out.printf("|   %s  |", player.getName());
 
         for (Frame frame : frames) {
-            System.out.printf("%s|", ViewResult.parseFrameScore(frame.getFrameScore()));
+            System.out.printf("%s|", ViewResult.parseFrameScore(frame));
         }
 
         System.out.println();

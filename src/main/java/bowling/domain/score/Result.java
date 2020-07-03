@@ -9,10 +9,10 @@ import static bowling.domain.score.Score.MIN_SCORE;
 public enum Result {
 
     STRIKE  ((first, second)        -> first.equals(MAX_SCORE) && second.equals(MIN_SCORE),
-            (score, nextFrameScore) -> score.add(nextFrameScore.calculateTotalScore())),
+            (score, nextFrameScore) -> score.add(nextFrameScore.sum())),
 
     SPARE   ((first, second)        -> !first.equals(MAX_SCORE) && first.add(second).equals(MAX_SCORE),
-            (score, nextFrameScore) -> nextFrameScore.getFirst().map(s -> s.add(score)).orElse(score)),
+            (score, nextFrameScore) -> nextFrameScore.getFirst().add(score)),
 
     MISS    ((first, second)        -> first.add(second).isBetween(MIN_SCORE, MAX_SCORE),
             (score, nextFrameScore) -> score),
