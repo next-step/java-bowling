@@ -1,6 +1,7 @@
 package bowling.domain.result;
 
 import java.util.Arrays;
+import java.util.List;
 
 import bowling.domain.score.Score;
 import bowling.domain.score.Scores;
@@ -63,4 +64,6 @@ public enum Result {
 	abstract boolean isMatch(Score first, Score second);
 
 	public abstract Score calculateFrameTotalScore(Score currentFrameScore, Scores nextFrameScores);
+
+	public static final List<Result> BONUS_SCORE_RESULT = Arrays.asList(Result.STRIKE, Result.SPARE);
 }
