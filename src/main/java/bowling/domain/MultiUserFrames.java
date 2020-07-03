@@ -39,4 +39,10 @@ public class MultiUserFrames {
     public Stream<Frames> forEachFrames() {
         return multiframes.stream();
     }
+
+    public boolean isGameEnd() {
+        return multiframes
+                .stream()
+                .allMatch(Frames::isGameEnd);
+    }
 }
