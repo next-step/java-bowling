@@ -3,6 +3,7 @@ package bowling.frame.domain;
 import bowling.pin.domain.Pin;
 
 public interface Frame {
+
     static Frame init() {
         return NormalFrame.of(Index.first());
     }
@@ -24,5 +25,6 @@ public interface Frame {
     Score getScore();
 
     Score calculateScore(Score base);
+
 
 }

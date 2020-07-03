@@ -3,7 +3,7 @@ package bowling.frame.domain;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class Index {
+public class Index implements Comparable<Index> {
 
     public static final int MAX = 10;
 
@@ -62,4 +62,8 @@ public class Index {
         return Objects.hash(idx);
     }
 
+    @Override
+    public int compareTo(Index index) {
+        return idx - index.idx;
+    }
 }

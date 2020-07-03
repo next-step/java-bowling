@@ -10,4 +10,5 @@ public class ScoreAssembler {
     public static ScoreDTO assemble(Score score) {
         return new ScoreDTO(score.getScore(), score.isPending());
     }
+
 }

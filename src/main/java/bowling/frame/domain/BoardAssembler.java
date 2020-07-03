@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardAssembler {
+
     private BoardAssembler() {
     }
 
@@ -20,4 +21,5 @@ public class BoardAssembler {
         }
         return new BoardDTO(UserAssembler.assemble(board.getUser()), frames);
     }
+
 }
