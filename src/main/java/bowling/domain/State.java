@@ -3,11 +3,11 @@ package bowling.domain;
 public enum State {
 
     MISS("."),
-    GURTER("-"),
+    GUTTER("-"),
     SPARE("/"),
     STRIKE("X"),
-    DOUBLE("XX"),
-    TURKEY("XXX");
+    FINAL_DOUBLE("X:X"),
+    FINAL_TURKEY("X:X:X");
 
     public String state;
 
@@ -19,4 +19,5 @@ public enum State {
     public String toString() {
         return this.state;
     }
+
 }

@@ -1,23 +1,42 @@
 package bowling.domain;
 
+import bowling.strategy.BowlingStrategy;
+
 public class NormalFrame extends Frame {
 
-    public NormalFrame(Pin firstPin, Pin secondPin) {
-        this.firstPin = firstPin;
-        this.secondPin = secondPin;
-        //state
-        if (firstPin.isGutter() && secondPin.isGutter()) {
-            this.state = State.GURTER;
+    @Override
+    protected void setSecondPin(BowlingStrategy bowlingStrategy, int index) {
+        // first pin strike
+        if (pins.isFirstClean()) {
+            pins.setSecondPin(bowlingStrategy.drawBowl(new Pin(NUMBER_ZERO, NUMBER_ZERO), index));
+            return;
         }
-        if (secondPin.leftPins() < BOWLING_MAX_PINS) {
-            this.state = State.MISS;
-        }
-        if (secondPin.isAllClear()) {
-            this.state = State.SPARE;
-        }
-        if (firstPin.isAllClear()) {
-            this.state = State.STRIKE;
-        }
+        pins.setSecondPin(bowlingStrategy.drawBowl(new Pin(pins.getFirstLeftPins(), NUMBER_ZERO), index));
     }
+
+    @Override
+    protected void setThirdPin(BowlingStrategy bowlingStrategy, int index) {
+        pins.setThirdPin(new Pin());
+    }
+
+    @Override
+    protected State checkState() {
+
+        if (pins.isGutter()) {
+            return State.GUTTER;
+        }
+        if (pins.isSpare()) {
+            return State.SPARE;
+        }
+        if (pins.isMiss()) {
+            return State.MISS;
+        }
+        if (pins.isStrike()) {
+            return State.STRIKE;
+        }
+        throw new IllegalStateException();
+
+    }
+
 
 }
