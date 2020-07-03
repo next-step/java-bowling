@@ -25,11 +25,11 @@ public class BowlingGameController {
 
     private void playFrame(List<Player> players, BowlingGame bowlingGame, int framePosition) {
         while (true) {
-            List<Integer> playerPositions = bowlingGame.getCurrentPlayers(framePosition);
-            if (playerPositions.isEmpty()) {
+            if (bowlingGame.isMatchFinished()) {
                 break;
             }
 
+            List<Integer> playerPositions = bowlingGame.getCurrentPlayers(framePosition);
             playerPositions.forEach(playerPosition -> {
                 playBowl(players.get(playerPosition), bowlingGame);
                 ResultView.printResult(players, bowlingGame.getResult());

@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.frame.Frames;
-import bowling.domain.frame.FrameResult;
 import bowling.domain.frame.PlayerFrames;
 
 import java.util.ArrayList;
@@ -57,6 +55,10 @@ public class BowlingGame {
         }
 
         return players;
+    }
+
+    public boolean isMatchFinished() {
+        return this.playerGames.stream().allMatch(PlayerFrames::isFinished);
     }
 
     private static void validatePlayer(int playerCount) {

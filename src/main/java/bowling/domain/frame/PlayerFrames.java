@@ -14,7 +14,7 @@ public class PlayerFrames {
     private PlayerFrames(List<Frame> frames) {
         validate(frames);
 
-        this.frames = new ArrayList<>(frames);
+        this.frames = frames;
     }
 
     public static PlayerFrames create() {
