@@ -2,7 +2,7 @@ package bowling.view;
 
 import bowling.domain.score.Result;
 import bowling.domain.score.Score;
-import bowling.domain.score.Scores;
+import bowling.domain.score.FrameScore;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -46,17 +46,17 @@ public enum ViewResult {
                 .orElseThrow(() -> new IllegalArgumentException("프레임 결과에 해당하는 ViewResult가 없습니다"));
     }
 
-    public static String parseScores(Scores scores) {
-        Optional<Score> first = scores.getFirst();
-        Optional<Score> second = scores.getSecond();
+    public static String parseFrameScore(FrameScore frameScore) {
+        Optional<Score> first = frameScore.getFirst();
+        Optional<Score> second = frameScore.getSecond();
 
         if (!first.isPresent()) {
             return "        ";
         }
 
         return second
-                .map(secondScore -> parseFirstAndSecond(scores.checkResult(), first.get(), secondScore))
-                .map(string -> string + parseBonus(scores))
+                .map(secondScore -> parseFirstAndSecond(frameScore.checkResult(), first.get(), secondScore))
+                .map(string -> string + parseBonus(frameScore))
                 .orElseGet(() -> String.format("   %s    ", first.get().getContent()));
     }
 
@@ -65,8 +65,8 @@ public enum ViewResult {
         return viewResult.parseScore(first, second);
     }
 
-    private static String parseBonus(Scores scores) {
-        return scores.getBonus()
+    private static String parseBonus(FrameScore frameScore) {
+        return frameScore.getBonus()
                 .map(bonus -> String.format(" + %d ", bonus.getContent()))
                 .orElse("");
     }

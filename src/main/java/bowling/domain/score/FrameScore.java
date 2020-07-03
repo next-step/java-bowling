@@ -2,16 +2,16 @@ package bowling.domain.score;
 
 import java.util.Optional;
 
-public class Scores {
+public class FrameScore {
 
     private Score first;
     private Score second;
     private Score bonus;
 
-    private Scores() {}
+    private FrameScore() {}
 
-    public static Scores create() {
-        return new Scores();
+    public static FrameScore create() {
+        return new FrameScore();
     }
 
     public void add(Score score) {
@@ -55,12 +55,16 @@ public class Scores {
         this.bonus = score;
     }
 
+    public boolean canCheckResult() {
+        return second != null;
+    }
+
     public Result checkResult() {
         if (second == null) {
             throw new IllegalStateException("두번째 투구의 점수가 입력되지 않았습니다");
         }
 
-        return Result.findByScores(first, second);
+        return Result.findByFrameScore(first, second);
     }
 
     public Optional<Score> getFirst() {
@@ -73,5 +77,12 @@ public class Scores {
 
     public Optional<Score> getBonus() {
         return Optional.ofNullable(bonus);
+    }
+
+    public Score calculateTotalScore() {
+        return first == null ? Score.of(0)
+                : second == null ? first
+                : bonus == null ? first.add(second)
+                : first.add(second).add(bonus);
     }
 }

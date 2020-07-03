@@ -9,31 +9,55 @@ public enum Result {
 
     STRIKE {
         @Override
-        boolean isMatch(Score first, Score second) {
+        public boolean isMatch(Score first, Score second) {
             return first.equals(MAX_SCORE) && second.equals(MIN_SCORE);
         }
+
+        @Override
+        public Score calculateTotalScore(Score score, FrameScore nextFrameScore) {
+            return score.add(nextFrameScore.calculateTotalScore());
+        }
     },
+
     SPARE {
         @Override
         boolean isMatch(Score first, Score second) {
             return !first.equals(MAX_SCORE) && first.add(second).equals(MAX_SCORE);
         }
+
+        @Override
+        public Score calculateTotalScore(Score score, FrameScore nextFrameScore) {
+            return nextFrameScore.getFirst()
+                    .map(s -> s.add(score))
+                    .orElse(score);
+        }
     },
+
     MISS {
         @Override
         boolean isMatch(Score first, Score second) {
-            Score total = first.add(second);
-            return total.isGreaterThan(MIN_SCORE) && MAX_SCORE.isGreaterThan(total);
+            return first.add(second).isBetween(MIN_SCORE, MAX_SCORE);
+        }
+
+        @Override
+        public Score calculateTotalScore(Score score, FrameScore nextFrameScore) {
+            return score;
         }
     },
+
     GUTTER {
         @Override
         boolean isMatch(Score first, Score second) {
             return first.equals(MIN_SCORE) && second.equals(MIN_SCORE);
         }
+
+        @Override
+        public Score calculateTotalScore(Score score, FrameScore nextFrameScore) {
+            return score;
+        }
     };
 
-    public static Result findByScores(Score first, Score second) {
+    public static Result findByFrameScore(Score first, Score second) {
         return Arrays.stream(values())
                 .filter(result -> result.isMatch(first, second))
                 .findFirst()
@@ -43,4 +67,5 @@ public enum Result {
     }
 
     abstract boolean isMatch(Score first, Score second);
+    abstract public Score calculateTotalScore(Score score, FrameScore nextFrameScore);
 }
