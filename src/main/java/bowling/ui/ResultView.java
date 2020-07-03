@@ -1,5 +1,6 @@
 package bowling.ui;
 
+import bowling.domain.BowlingGameResult;
 import bowling.domain.player.Player;
 import bowling.domain.score.Score;
 import bowling.domain.score.ScoreType;
@@ -17,14 +18,21 @@ public class ResultView {
     private static final int STRIKE_PIN = 10;
     private static final int GUTTER_PIN = 0;
 
-    public void printResult(Player player, List<FrameResult> frameResults) {
+    public static void printResult(List<Player> players, BowlingGameResult bowlingGameResult) {
         printFramesRounds();
-        printBowlsResult(player.toString(), frameResults);
-        printScores(frameResults.stream().map(FrameResult::getScore).collect(Collectors.toList()));
+
+        for (int playerPosition = 0; playerPosition < players.size(); playerPosition++) {
+            printBowlsResult(players.get(playerPosition),
+                    bowlingGameResult.get(playerPosition));
+            printScores(
+                    bowlingGameResult.get(playerPosition).stream().map(FrameResult::getScore)
+                            .collect(Collectors.toList()));
+
+        }
         System.out.print(System.lineSeparator());
     }
 
-    private void printFramesRounds() {
+    private static void printFramesRounds() {
         StringBuilder framesBuilder = new StringBuilder();
         framesBuilder.append("| NAME |");
 
@@ -34,9 +42,9 @@ public class ResultView {
         System.out.println(framesBuilder.toString());
     }
 
-    private void printBowlsResult(String name, List<FrameResult> frameResults) {
+    private static void printBowlsResult(Player player, List<FrameResult> frameResults) {
         StringBuilder downPinBuilder = new StringBuilder();
-        downPinBuilder.append(String.format("|  %s |", name));
+        downPinBuilder.append(String.format("|  %s |", player.getName()));
 
         for (FrameResult frameResult : frameResults) {
             String downPinDisplay = createBowlDisplay(frameResult);
@@ -46,7 +54,7 @@ public class ResultView {
         System.out.println(downPinBuilder.toString());
     }
 
-    private String createBowlDisplay(FrameResult frameResult) {
+    private static String createBowlDisplay(FrameResult frameResult) {
         List<Integer> downPins = frameResult.getDownPins();
         if(downPins.isEmpty()){
             return "";
@@ -69,7 +77,7 @@ public class ResultView {
         return components.stream().collect(Collectors.joining("|"));
     }
 
-    private void printScores(List<Score> scores) {
+    private static void printScores(List<Score> scores) {
         StringBuilder scoreDisplays = new StringBuilder();
         scoreDisplays.append("|      |");
         int sum = 0;
@@ -81,7 +89,7 @@ public class ResultView {
     }
 
 
-    private String createPin(int downPin) {
+    private static String createPin(int downPin) {
         if (downPin == GUTTER_PIN) {
             return "-";
         }
