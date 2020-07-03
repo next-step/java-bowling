@@ -18,7 +18,6 @@ public class OutputView {
     public static void viewFrameBoard(BowlingGames bowlingGames) {
         System.out.println(printTopBoard());
         printScoreBoards(bowlingGames);
-        //System.out.println(printScoreBoard(bowlingGame));
     }
 
     private static String printTopBoard() {
