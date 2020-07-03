@@ -16,7 +16,7 @@ class MissTest {
 
   @Test
   void getIndexOfNextFrames() {
-    FrameStatus frameStatus = new Miss(new RequiredFirstRoll(0));
+    FrameStatus frameStatus = new Miss(0);
 
     assertThat(frameStatus.getCurrentIndex()).isEqualTo(0);
     assertThat(frameStatus.isOver()).isTrue();
@@ -24,7 +24,7 @@ class MissTest {
 
   @Test
   void testToString() {
-    FrameStatus frameStatus = new Miss(new RequiredFirstRoll(0));
+    FrameStatus frameStatus = new Miss(0);
 
     assertThat(frameStatus.getResultBy(KnockedDownPinsTest.knockedDownPins0_1)).isEqualTo("-|1");
     assertThat(frameStatus.getResultBy(KnockedDownPinsTest.knockedDownPins2_5)).isEqualTo("2|5");
@@ -33,7 +33,7 @@ class MissTest {
   @ParameterizedTest
   @MethodSource("getNextFrame")
   void getNextFrame(int currentIndex, Frame frame) {
-    FrameStatus frameStatus = new Miss(new RequiredFirstRoll(currentIndex));
+    FrameStatus frameStatus = new Miss(currentIndex);
 
     assertThat(frameStatus.getNextFrame()).isEqualTo(frame);
   }

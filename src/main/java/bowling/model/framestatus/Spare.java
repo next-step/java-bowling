@@ -14,8 +14,8 @@ public class Spare implements FrameStatus {
 
   private final Frame nextFrame;
 
-  public Spare(FrameStatus frameStatus) {
-    currentIndex = frameStatus.getCurrentIndex();
+  public Spare(int currentIndex) {
+    this.currentIndex = currentIndex;
 
     nextFrame = createFrameBy(currentIndex);
   }

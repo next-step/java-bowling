@@ -11,8 +11,8 @@ public class RequiredSecondRoll implements FrameStatus {
 
   private final int currentIndex;
 
-  public RequiredSecondRoll(FrameStatus frameStatus) {
-    currentIndex = frameStatus.getCurrentIndex();
+  public RequiredSecondRoll(int currentIndex) {
+    this.currentIndex = currentIndex;
   }
 
   @Override
@@ -33,10 +33,10 @@ public class RequiredSecondRoll implements FrameStatus {
   @Override
   public FrameStatus createNextStatusBy(KnockedDownPins pins) {
     if (pins.getRemainingNumber() == 0) {
-      return new Spare(this);
+      return new Spare(currentIndex);
     }
 
-    return new Miss(this);
+    return new Miss(currentIndex);
   }
 
   @Override

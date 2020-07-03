@@ -36,7 +36,7 @@ class RequiredSecondRollTest {
   @ParameterizedTest
   @MethodSource("provideCurrentIndexWithExpectedList")
   void getIndexOfNextFrames(int currentIndex, int expected) {
-    FrameStatus frameStatus = new RequiredSecondRoll(new RequiredFirstRoll(currentIndex));
+    FrameStatus frameStatus = new RequiredSecondRoll(currentIndex);
 
     assertThat(frameStatus.getCurrentIndex()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isFalse();
@@ -73,7 +73,7 @@ class RequiredSecondRollTest {
 
   @Test
   void testToString() {
-    FrameStatus frameStatus = new RequiredSecondRoll(new RequiredFirstRoll(0));
+    FrameStatus frameStatus = new RequiredSecondRoll(0);
 
     assertThat(frameStatus.getResultBy(KnockedDownPinsTest.knockedDownPins5_5)).isEqualTo("5");
   }

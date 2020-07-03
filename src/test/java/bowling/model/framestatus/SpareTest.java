@@ -20,7 +20,7 @@ class SpareTest {
   @ParameterizedTest
   @MethodSource("provideCurrentIndexWithExpectedList")
   void getIndexOfNextFrames(int currentIndex, int expected) {
-    FrameStatus frameStatus = new Spare(new RequiredFirstRoll(currentIndex));
+    FrameStatus frameStatus = new Spare(currentIndex);
 
     assertThat(frameStatus.getCurrentIndex()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isTrue();
@@ -37,7 +37,7 @@ class SpareTest {
 
   @Test
   void testToString() {
-    FrameStatus frameStatus = new Spare(new RequiredFirstRoll(0));
+    FrameStatus frameStatus = new Spare(0);
 
     assertThat(frameStatus.getResultBy(KnockedDownPinsTest.knockedDownPins5_5)).isEqualTo("5|/");
   }
@@ -45,7 +45,7 @@ class SpareTest {
   @ParameterizedTest
   @MethodSource("getNextFrame")
   void getNextFrame(int currentIndex, Frame frame) {
-    FrameStatus frameStatus = new Spare(new RequiredFirstRoll(currentIndex));
+    FrameStatus frameStatus = new Spare(currentIndex);
 
     assertThat(frameStatus.getNextFrame()).isEqualTo(frame);
   }
@@ -68,7 +68,7 @@ class SpareTest {
   void getAdditionalScore(
       int currentIndex, int first, int second, Score expectedFirst, Score expectedSecond
   ) throws FrameOverException {
-    FrameStatus frameStatus = new Spare(new RequiredFirstRoll(currentIndex));
+    FrameStatus frameStatus = new Spare(currentIndex);
 
     try {
       frameStatus.getNextFrame().roll(first);

@@ -14,8 +14,8 @@ public class Miss implements FrameStatus {
 
   private final Frame nextFrame;
 
-  public Miss(FrameStatus frameStatus) {
-    currentIndex = frameStatus.getCurrentIndex();
+  public Miss(int currentIndex) {
+    this.currentIndex = currentIndex;
 
     nextFrame = new NormalFrame(currentIndex + 1);
   }

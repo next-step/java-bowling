@@ -14,8 +14,8 @@ public class Strike implements FrameStatus {
 
   private final Frame nextFrame;
 
-  public Strike(FrameStatus frameStatus) {
-    currentIndex = frameStatus.getCurrentIndex();
+  public Strike(int currentIndex) {
+    this.currentIndex = currentIndex;
 
     nextFrame = createFrameBy(currentIndex);
   }

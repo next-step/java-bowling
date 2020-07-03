@@ -35,10 +35,10 @@ public class RequiredFirstRoll implements FrameStatus {
   @Override
   public FrameStatus createNextStatusBy(KnockedDownPins pins) {
     if (pins.getFirstKnockDownNumber() == KnockedDownPins.MAX_NUMBER_OF_PINS) {
-      return new Strike(this);
+      return new Strike(currentIndex);
     }
 
-    return new RequiredSecondRoll(this);
+    return new RequiredSecondRoll(currentIndex);
   }
 
   @Override

@@ -20,7 +20,7 @@ class StrikeTest {
   @ParameterizedTest
   @MethodSource("provideCurrentIndexWithExpectedList")
   void getIndexOfNextFrames(int currentIndex, int expected) {
-    FrameStatus frameStatus = new Strike(new RequiredFirstRoll(currentIndex));
+    FrameStatus frameStatus = new Strike(currentIndex);
 
     assertThat(frameStatus.getCurrentIndex()).isEqualTo(expected);
     assertThat(frameStatus.isOver()).isTrue();
@@ -37,7 +37,7 @@ class StrikeTest {
 
   @Test
   void testToString() {
-    FrameStatus frameStatus = new Strike(new RequiredFirstRoll(0));
+    FrameStatus frameStatus = new Strike(0);
 
     assertThat(frameStatus.getResultBy(KnockedDownPinsTest.knockedDownPins_Strike)).isEqualTo("X");
   }
@@ -45,7 +45,7 @@ class StrikeTest {
   @ParameterizedTest
   @MethodSource("getNextFrame")
   void getNextFrame(int currentIndex, Frame frame) {
-    FrameStatus frameStatus = new Strike(new RequiredFirstRoll(currentIndex));
+    FrameStatus frameStatus = new Strike(currentIndex);
 
     assertThat(frameStatus.getNextFrame()).isEqualTo(frame);
   }
@@ -68,7 +68,7 @@ class StrikeTest {
   void getAdditionalScore(
       int currentIndex, int first, int second, Score expectedFirst, Score expectedSecond
   ) throws FrameOverException {
-    FrameStatus frameStatus = new Strike(new RequiredFirstRoll(currentIndex));
+    FrameStatus frameStatus = new Strike(currentIndex);
 
     try {
       frameStatus.getNextFrame().roll(first);
