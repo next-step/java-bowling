@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.result.Score;
 import bowling.domain.status.Status;
 import bowling.domain.status.running.Ready;
 
@@ -42,6 +43,15 @@ public class NormalFrame implements Frame {
             return FinalFrame.init();
         }
         return new NormalFrame();
+    }
+
+    public int getScore() {
+        Score score = status.getScore();
+        if (score.canCalculateScore()) {
+            return score.getScore();
+        }
+        return 0;
+        //return next.cacluateAdditionalScore(score);
     }
 
     @Override

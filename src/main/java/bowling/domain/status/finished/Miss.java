@@ -1,5 +1,6 @@
 package bowling.domain.status.finished;
 
+import bowling.domain.result.Score;
 import bowling.domain.status.Finished;
 
 public class Miss extends Finished {
@@ -23,6 +24,11 @@ public class Miss extends Finished {
     @Override
     public boolean isClearAllPins() {
         return false;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(firstPin + downPin, 0);
     }
 
 }

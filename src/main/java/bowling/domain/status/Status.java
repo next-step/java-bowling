@@ -1,5 +1,7 @@
 package bowling.domain.status;
 
+import bowling.domain.result.Score;
+
 public interface Status {
     Status bowl(int downPin);
 
@@ -16,5 +18,5 @@ public interface Status {
         return String.valueOf(downPin);
     }
 
-
+    Score getScore();
 }

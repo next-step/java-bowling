@@ -1,8 +1,15 @@
 package bowling.domain.status;
 
-public abstract class Running implements Status{
+import bowling.domain.result.Score;
+
+public abstract class Running implements Status {
     @Override
-    public boolean canPlayMore(){
+    public boolean canPlayMore() {
         return true;
+    }
+
+    @Override
+    public Score getScore() {
+        throw new CannotCalculateException();
     }
 }

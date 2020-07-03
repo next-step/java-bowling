@@ -1,5 +1,6 @@
 package bowling.domain.status.finished;
 
+import bowling.domain.result.Score;
 import bowling.domain.status.Finished;
 
 public class Spare extends Finished {
@@ -19,6 +20,11 @@ public class Spare extends Finished {
     @Override
     public boolean isClearAllPins() {
         return true;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(10, 1);
     }
 
 }

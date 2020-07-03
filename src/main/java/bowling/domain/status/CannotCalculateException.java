@@ -1,4 +1,4 @@
 package bowling.domain.status;
 
-public class CannotCalculateException extends Throwable {
+public class CannotCalculateException extends RuntimeException {
 }
