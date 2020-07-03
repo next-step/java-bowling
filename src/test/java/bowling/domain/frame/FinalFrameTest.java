@@ -46,6 +46,20 @@ public class FinalFrameTest {
 			Arguments.of(canAddMoreScore3, false));
 	}
 
+	public static Stream<Arguments> 마지막_프레임에서_미스인_경우() {
+		Frame frame = FinalFrame.of();
+		frame.playFrame(Score.ofScore(1));
+		boolean canPlayFrameMoreBeforeAddingSecondHalf = frame.canPlayMore();
+
+		frame.playFrame(Score.ofScore(1));
+		boolean canPlayFrameMoreAfterAddingSecondHalf = frame.canPlayMore();
+
+		return Stream.of(
+			Arguments.of(canPlayFrameMoreBeforeAddingSecondHalf, true),
+			Arguments.of(canPlayFrameMoreAfterAddingSecondHalf, false)
+		);
+	}
+
 	@DisplayName("마지막 프레임의 첫 번째 투구에서 스트라이크를 기록하면 더 플레이할 수 있다.")
 	@MethodSource("마지막_프레임에서_스트라이크인_경우")
 	@ParameterizedTest
@@ -57,6 +71,13 @@ public class FinalFrameTest {
 	@MethodSource("마지막_프레임에서_스페어인_경우")
 	@ParameterizedTest
 	void 마지막_프레임이_스페어라_플레이를_추가한다(boolean result, boolean expected) {
+		assertThat(result).isEqualTo(expected);
+	}
+
+	@DisplayName("마지막 프레임에서 미스가 나면 점수를 더 기록할 수 없다.")
+	@MethodSource("마지막_프레임에서_미스인_경우")
+	@ParameterizedTest
+	void 마지막_프레임이_미스면_플레이를_추가하지_못한다(boolean result, boolean expected) {
 		assertThat(result).isEqualTo(expected);
 	}
 }
