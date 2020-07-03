@@ -14,10 +14,14 @@ public class ResultView {
         System.out.println(String.format(SHOT_FORMAT, frameNo, nextPin.getCount()));
     }
 
-    public static void printBoard(ResultFrameDto resultFrameDto) {
+    public static void printBoard(ResultFrameDtos resultFrameDtos) {
         System.out.println(getHeaderRow());
-        System.out.println(getFramesRow(resultFrameDto));
-        System.out.println(generateScoreRow(resultFrameDto));
+        resultFrameDtos
+                .getResultFrameDto()
+                .forEach(dto -> {
+                    System.out.println(getFramesRow(dto));
+                    System.out.println(generateScoreRow(dto));
+                });
     }
 
     private static String getHeaderRow() {
