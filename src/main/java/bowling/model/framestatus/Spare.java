@@ -22,7 +22,7 @@ public class Spare implements FrameStatus {
 
   private Frame createFrameBy(int currentIndex) {
     if (currentIndex == 9) {
-      return new BonusFrame(false);
+      return new BonusFrame(Bonus.createHasFinished());
     }
 
     return new NormalFrame(currentIndex + 1);

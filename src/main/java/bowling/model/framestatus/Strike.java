@@ -22,7 +22,7 @@ public class Strike implements FrameStatus {
 
   private Frame createFrameBy(int currentIndex) {
     if (currentIndex == 9) {
-      return new BonusFrame(true);
+      return new BonusFrame(Bonus.createHasNext());
     }
 
     return new NormalFrame(currentIndex + 1);

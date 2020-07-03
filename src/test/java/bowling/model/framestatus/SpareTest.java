@@ -58,7 +58,7 @@ class SpareTest {
         ),
         arguments(
             9,
-            new BonusFrame(false)
+            new BonusFrame(Bonus.createHasFinished())
         )
     );
   }

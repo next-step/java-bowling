@@ -6,6 +6,8 @@ import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
 import bowling.model.Score;
 import bowling.model.EmptyFrame;
+import java.util.Collections;
+import java.util.List;
 
 public class RequiredFirstRoll implements FrameStatus {
 

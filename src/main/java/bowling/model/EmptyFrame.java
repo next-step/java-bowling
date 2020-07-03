@@ -45,6 +45,10 @@ public class EmptyFrame implements Frame {
     throw new UnsupportedOperationException();
   }
 
+  public void getScoreBy(List<Frame> frames) {
+    throw new UnsupportedOperationException();
+  }
+
   @Override
   public String toString() {
     return "EmptyFrame{}";

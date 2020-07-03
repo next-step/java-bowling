@@ -1,20 +1,15 @@
 package bowling.model;
 
-import bowling.model.framestatus.Bonus;
 import bowling.model.framestatus.FrameStatus;
 import java.util.Objects;
 
 public class BonusFrame implements Frame {
 
   private KnockDownNumber knockDownNumber = new KnockDownNumber();
-  private Frame nextFrame = new EmptyFrame();
-  private final boolean hasNext;
+  private  FrameStatus frameStatus;
 
-  public BonusFrame(boolean hasNext) {
-    this.hasNext = hasNext;
-    if (hasNext) {
-      nextFrame = new BonusFrame(false);
-    }
+  public BonusFrame(FrameStatus frameStatus) {
+    this.frameStatus = frameStatus;
   }
 
   @Override
@@ -28,7 +23,7 @@ public class BonusFrame implements Frame {
 
   @Override
   public Frame next() {
-    return nextFrame;
+    return frameStatus.getNextFrame();
   }
 
   @Override
@@ -43,12 +38,12 @@ public class BonusFrame implements Frame {
 
   @Override
   public boolean isOver() {
-    return nextFrame.isOver();
+    return frameStatus.isOver();
   }
 
   @Override
   public boolean isFinished() {
-    return !hasNext;
+    return frameStatus.isFinished();
   }
 
   @Override
@@ -60,7 +55,7 @@ public class BonusFrame implements Frame {
 
   @Override
   public FrameStatus getFrameStatus() {
-    return new Bonus();
+    return frameStatus;
   }
 
   @Override
@@ -72,20 +67,20 @@ public class BonusFrame implements Frame {
       return false;
     }
     BonusFrame that = (BonusFrame) o;
-    return Objects.equals(knockDownNumber, that.knockDownNumber) &&
-        Objects.equals(nextFrame, that.nextFrame);
+    return knockDownNumber.equals(that.knockDownNumber) &&
+        frameStatus.equals(that.frameStatus);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(knockDownNumber, nextFrame);
+    return Objects.hash(knockDownNumber, frameStatus);
   }
 
   @Override
   public String toString() {
     return "BonusFrame{" +
         "knockDownNumber=" + knockDownNumber +
-        ", nextFrame=" + nextFrame +
+        ", frameStatus=" + frameStatus +
         '}';
   }
 }

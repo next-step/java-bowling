@@ -58,7 +58,7 @@ class StrikeTest {
         ),
         arguments(
             9,
-            new BonusFrame(true)
+            new BonusFrame(Bonus.createHasNext())
         )
     );
   }
