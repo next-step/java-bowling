@@ -44,7 +44,7 @@ public class Pitch {
         }
 
         if (!canThrowOneMore()) {
-            throw new IllegalArgumentException("Frame is finished");
+            throw new IllegalArgumentException("Pitch is finished");
         }
     }
 
