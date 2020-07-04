@@ -39,6 +39,10 @@ public class Boards {
 		if (beforeIndex == afterIndex) {
 			return;
 		}
+		if (currentIndex >= boards.size() - 1) {
+			currentIndex = 0;
+			return;
+		}
 		currentIndex++;
 	}
 
