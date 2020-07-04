@@ -2,8 +2,7 @@ package bowling;
 
 public class NextStepBowlingApplication {
 	public static void main(String[] args) {
-		BowlingGame bowlingGame = new BowlingGame();
-		BowlingGameController gameController = new BowlingGameController(bowlingGame);
+		BowlingGameController gameController = new BowlingGameController();
 		gameController.playGame();
 	}
 }
