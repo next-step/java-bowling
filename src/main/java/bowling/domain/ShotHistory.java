@@ -24,6 +24,10 @@ public class ShotHistory {
         return shots.contains(shot);
     }
 
+    public Shot getLast() {
+        return shots.get(shots.size() - 1);
+    }
+
     public Stream<Shot> stream() {
         return shots.stream();
     }

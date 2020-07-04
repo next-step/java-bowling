@@ -60,12 +60,10 @@
   - [X] 각 상태별로 더 던질 수 있는지 유무를 반환한다
 - Shot
   - Strike, Spare, Miss, Gutter
-  - [ ] 입력받은 Score 객체에 따라 Shot 타입이 결정된다
 - ShotHistory
   - List<Shot> 일급컬렉션
 - Frame
   - 다음 Frame의 pointer를 가지고 있다
-  - [ ] 지금까지 진행된 프레임까지 Shot 이력을 반환
 - NormalFrame
   - 1~9 프레임
   - [X] 넘긴 핀 수에 따라 적절한 State 가 반환된다
@@ -81,6 +79,21 @@
     - [X] 2번 던져서 넘긴 핀이 10개 미만 Finish 반환
     - [X] 1번 던져서 넘긴 핀이 10개이면, 보너스 투구 후에 Finish 반환
     - [X] 2번 던져서 넘긴 핀이 10개이면, 보너스 투구 후에 Finish 반환
+- Frames
+  - [X] Spare 처리 전에는 Null Score
+  - [X] Miss는 해당 투구만 점수로 계산
+  - [X] Strike는 이후 0번 투구하면 Null Score
+  - [X] Strike는 이후 1번 투구하면 Null Score
+  - [X] Strike는 이후 2번 투구하면 Score
+  - [X] Spare 이후 0번 투구하면 Null Score
+  - [X] Spare는 이후 1번 투구하면 Score
+  - [X] Strike 2번 후 2번 투구하면 Score
+  - [X] Strike 3번 후 Miss 1번
+  - [X] 10 프레임이 종료되지 않으면 Null Score
+  - [X] 10 프레임이 종료되면 Score
 - Player
     - [X] 이름의 길이를 입력 받아 생성
     - [X] 이름의 길이가 3자가 아니면 예외 발생
+- Score
+  - [X] 넘긴 총 핀수에 따라서 Score 점수가 생성된다
+  - [X] 아직 Pitch가 끝나지 않았다면 Null Score로 생성된다

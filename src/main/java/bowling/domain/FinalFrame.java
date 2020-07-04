@@ -1,16 +1,17 @@
 package bowling.domain;
 
-import bowling.common.IntegerUtils;
-
 public class FinalFrame extends Frame {
     private boolean isBonusPitch;
     private Pitch bonusPitch;
 
-    public FinalFrame() {
-        this.frameNo = FINAL_FRAME;
-        this.pitch = new Pitch();
+    private FinalFrame() {
+        super(FINAL_FRAME);
         this.isBonusPitch = false;
-        this.bonusPitch = new Pitch();
+        this.bonusPitch = Pitch.ofBounus();
+    }
+
+    public static FinalFrame last() {
+        return new FinalFrame();
     }
 
     @Override
@@ -27,13 +28,13 @@ public class FinalFrame extends Frame {
     }
 
     private FrameState bowlingBonus(Pin pin) {
-        bonusPitch = new Pitch();
+        bonusPitch = Pitch.ofBounus();
         bonusPitch.add(pin);
         return FrameState.ofFinish();
     }
 
     private FrameState isNextBonusPitch() {
-        if (pitch.getRemain() == IntegerUtils.ZERO) {
+        if (pitch.isStrikeOrSpare()) {
             isBonusPitch = true;
             return FrameState.ofNotFinish(Pin.MAX_COUNT);
         }
@@ -50,9 +51,35 @@ public class FinalFrame extends Frame {
     }
 
     @Override
+    public Score calculateScore() {
+        if (!isGameEnd()) {
+            return Score.ofNull();
+        }
+
+        Score score = Score.ofPitch(pitch);
+        if (isBonusPitch) {
+            score = score.add(Score.of(bonusPitch.getFallenPin()));
+        }
+        return score;
+    }
+
+    @Override
+    public Score calculateBonusScore(Shot shot) {
+        if (shot.getBonusCount() <= pitch.getThrowCount()) {
+            return Score.of(pitch.calculatePinCount(shot.getBonusCount()));
+        }
+
+        if (pitch.isFinish()) {
+            return Score.of(pitch.calculatePinCount(pitch.getThrowCount()));
+        }
+
+        return Score.ofNull();
+    }
+
+    @Override
     public boolean isGameEnd() {
         if (isBonusPitch) {
-            return bonusPitch.getThrowCount() > IntegerUtils.ZERO;
+            return bonusPitch.isFinish();
         }
         return pitch.isFinish();
     }

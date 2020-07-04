@@ -18,7 +18,7 @@ class PitchTest {
     @ParameterizedTest
     @MethodSource("source_add_DecreaseRemain")
     public void add_DecreaseRemain(Pin pin, int expected) {
-        Pitch pitch = new Pitch();
+        Pitch pitch = Pitch.of();
         pitch.add(pin);
         assertThat(pitch.getRemain()).isEqualTo(expected);
     }
@@ -34,7 +34,7 @@ class PitchTest {
     @DisplayName("최대 횟수 이상 투구하면 예외 발생")
     @Test
     public void add_WithPinOverMaxThowCount_ExceptionThrown() {
-        Pitch pitch = new Pitch();
+        Pitch pitch = Pitch.of();
         pitch.add(new Pin(5));
         pitch.add(new Pin(5));
         assertThatThrownBy(() -> {
@@ -45,7 +45,7 @@ class PitchTest {
     @DisplayName("남은 핀 수보다 많이 넘기면 예외 발생")
     @Test
     public void add_WithPinOverRemain_ExceptionThrown() {
-        Pitch pitch = new Pitch();
+        Pitch pitch = Pitch.of();
         pitch.add(new Pin(5));
         assertThatThrownBy(() -> {
             pitch.add(new Pin(10));
@@ -55,7 +55,7 @@ class PitchTest {
     @DisplayName("1번 던져서 넘긴 핀이 10개면 Strike 이력 추가")
     @Test
     public void getShotHistory_OneTime_ReturnStrike() {
-        Pitch pitch = new Pitch();
+        Pitch pitch = Pitch.of();
         pitch.add(new Pin(10));
         assertThat(pitch.getShotHistory().contains(Shot.STRIKE)).isTrue();
     }
@@ -63,7 +63,7 @@ class PitchTest {
     @DisplayName("1번 던져서 넘긴 핀이 10개 미만 Miss 이력 추가가")
     @Test
     public void getShotHistory_OneTime_ReturnMiss() {
-        Pitch pitch = new Pitch();
+        Pitch pitch = Pitch.of();
         pitch.add(new Pin(5));
         assertThat(pitch.getShotHistory().contains(Shot.FIVE)).isTrue();
     }
@@ -71,7 +71,7 @@ class PitchTest {
     @DisplayName("2번 던져서 넘긴 핀이 10개면 Miss,Spare 이력 추가")
     @Test
     public void getShotHistory_TwoTime_ReturnMissAndSpare() {
-        Pitch pitch = new Pitch();
+        Pitch pitch = Pitch.of();
         pitch.add(new Pin(5));
         pitch.add(new Pin(5));
         assertThat(pitch.getShotHistory().contains(Shot.FIVE)).isTrue();
@@ -81,7 +81,7 @@ class PitchTest {
     @DisplayName("2번 던져서 넘긴 핀이 10개 미만 Miss,Miss 이력 추가")
     @Test
     public void getShotHistory_TwoTime_ReturnMissAndMis() {
-        Pitch pitch = new Pitch();
+        Pitch pitch = Pitch.of();
         pitch.add(new Pin(5));
         pitch.add(new Pin(4));
         assertThat(pitch.getShotHistory().contains(Shot.FIVE)).isTrue();
@@ -91,7 +91,7 @@ class PitchTest {
     @DisplayName("스코어 추가 시 마다 모든 공을 처리한건지 여부를 반환")
     @Test
     public void add_ReturnIsPitchEnd() {
-        Pitch pitch = new Pitch();
+        Pitch pitch = Pitch.of();
 
         pitch.add(new Pin(5));
         assertThat(pitch.isFinish()).isFalse();

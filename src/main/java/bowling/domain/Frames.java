@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +31,16 @@ public class Frames {
         return frames.stream()
                 .map(Frame::getShotHistory)
                 .collect(Collectors.toList());
+    }
+
+    public List<Score> calculateTotalScore() {
+        Score[] scores = frames.stream()
+                .map(Frame::calculateScore)
+                .toArray(Score[]::new);
+
+        Arrays.parallelPrefix(scores, Score::add);
+
+        return Arrays.asList(scores);
     }
 
     public String getPlayerName() {

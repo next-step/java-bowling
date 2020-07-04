@@ -17,6 +17,7 @@ public class ResultView {
     public static void printBoard(ResultFrameDto resultFrameDto) {
         System.out.println(getHeaderRow());
         System.out.println(getFramesRow(resultFrameDto));
+        System.out.println(generateScoreRow(resultFrameDto));
     }
 
     private static String getHeaderRow() {
@@ -44,5 +45,14 @@ public class ResultView {
         for (int round = resultFrameDto.getLastFrame(); round < Frame.FINAL_FRAME; round++) {
             sb.append(String.format(RESULT_FORMAT, ""));
         }
+    }
+
+    private static String generateScoreRow(ResultFrameDto resultFrameDto) {
+        StringBuilder sb = new StringBuilder(String.format(BOARD_HEADER_FIRST_COLUMN, ""));
+        resultFrameDto
+                .generateScoreStrings()
+                .forEach(score -> sb.append(String.format(RESULT_FORMAT, score)));
+        fillEmpty(resultFrameDto, sb);
+        return sb.toString();
     }
 }
