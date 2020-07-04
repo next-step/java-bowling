@@ -14,4 +14,5 @@ public abstract class Finished implements State {
     public boolean isEnd() {
         return true;
     }
+
 }

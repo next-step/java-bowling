@@ -11,7 +11,6 @@ public class InputView {
 
     private static final String INPUT_PLAYER_COUNT = "Input player count : ";
     private static final String INPUT_PLAYER_NAME = "Input player {0} name (* 3 English letters): ";
-    private static final String INPUT_DRAW_PINS = "Input draw result  : ";
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -28,10 +27,6 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static int inputDrawPins(int index) {
-        System.out.println(index + 1 + ":" + INPUT_DRAW_PINS);
-        return scanner.nextInt();
-    }
     public static int getFelled() {
         return scanner.nextInt();
     }

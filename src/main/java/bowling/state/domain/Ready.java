@@ -26,4 +26,5 @@ public class Ready extends Running {
     public String view() {
         return "";
     }
+
 }

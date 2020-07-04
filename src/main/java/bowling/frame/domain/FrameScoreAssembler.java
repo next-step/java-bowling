@@ -1,6 +1,5 @@
 package bowling.frame.domain;
 
-
 import bowling.frame.dto.FrameScoreDTO;
 
 public class FrameScoreAssembler {

@@ -40,4 +40,5 @@ public class Score {
     public int hashCode() {
         return Objects.hash(score);
     }
+
 }

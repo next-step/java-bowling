@@ -27,4 +27,5 @@ public class Miss extends Finished {
     public String view() {
         return first + "|" + second;
     }
+
 }

@@ -3,7 +3,9 @@ package bowling.frame.domain;
 import bowling.frame.dto.FrameDTO;
 
 public class FrameAssembler {
+
     private FrameAssembler() {
+        // block
     }
 
     public static FrameDTO assemble(Frame frame) {

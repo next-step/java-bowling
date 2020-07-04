@@ -11,4 +11,5 @@ public class PlayerAssembler {
     public static PlayerDTO assemble(Player player) {
         return new PlayerDTO(player.getPlayerName());
     }
+
 }

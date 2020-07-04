@@ -25,5 +25,4 @@ public class ScorePublisher {
         return observers.size();
     }
 
-
 }

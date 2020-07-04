@@ -78,6 +78,7 @@ public class OutputView {
     }
 
     public static void printCurrentUser(PlayerDTO playerDTO) {
-        System.out.print(MessageFormat.format(CURRENT_USER_TXT, playerDTO.getPlayerName()));
+        System.out.println(MessageFormat.format(CURRENT_USER_TXT, playerDTO.getPlayerName()));
     }
+
 }

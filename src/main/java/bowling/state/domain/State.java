@@ -13,4 +13,5 @@ public interface State {
     String view();
 
     Score getScore();
+
 }

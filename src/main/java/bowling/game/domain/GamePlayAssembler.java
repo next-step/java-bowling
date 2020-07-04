@@ -14,6 +14,5 @@ public class GamePlayAssembler {
                 .map(BoardAssembler::assemble)
                 .collect(collectingAndThen(toList(), BowlingGameDTO::new));
 
-
     }
 }

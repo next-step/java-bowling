@@ -2,7 +2,6 @@ package bowling.frame.dto;
 
 import bowling.player.dto.PlayerDTO;
 
-
 import java.util.List;
 
 public class BoardDTO {
@@ -22,4 +21,5 @@ public class BoardDTO {
     public PlayerDTO getPlayerDTO() {
         return playerDTO;
     }
+
 }

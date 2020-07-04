@@ -4,8 +4,6 @@ import bowling.game.domain.GamePlay;
 import bowling.game.domain.GamePlayAssembler;
 import bowling.pin.domain.Pin;
 import bowling.player.domain.PlayerAssembler;
-import bowling.strategy.BowlingStrategy;
-import bowling.strategy.RandomBowlingStrategy;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
@@ -22,18 +20,10 @@ public class MainApplication {
             gamePlay.roll(Pin.of(InputView.getFelled()));
             OutputView.print(GamePlayAssembler.assemble(gamePlay));
         }
-
-
     }
 
     public static void main(String[] args) {
-
         new MainApplication().run();
-
-
-        //new MainApplication().run(new TestInputBowlingStrategy());
-        //new MainApplication().run(new RandomBowlingStrategy());
-        //new MainApplication().run(new NormalInputBowlingStrategy());
     }
 
 }

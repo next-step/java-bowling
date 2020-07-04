@@ -45,4 +45,5 @@ public class FinalFrameCount {
     public int hashCode() {
         return Objects.hash(count);
     }
+
 }

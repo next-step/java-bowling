@@ -6,4 +6,5 @@ public abstract class Running implements State {
     public boolean isEnd() {
         return false;
     }
+    
 }
