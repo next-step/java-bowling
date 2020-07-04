@@ -1,25 +1,29 @@
 package bowling;
 
-import bowling.domain.GamePlay;
-import bowling.domain.Player;
-import bowling.strategy.BowlingStrategy;
-import bowling.strategy.NormalInputBowlingStrategy;
-import bowling.strategy.RandomBowlingStrategy;
-import bowling.strategy.TestInputBowlingStrategy;
+import bowling.game.domain.GamePlay;
+import bowling.game.domain.GamePlayAssembler;
+import bowling.pin.domain.Pin;
+import bowling.player.domain.PlayerAssembler;
 import bowling.view.InputView;
+import bowling.view.OutputView;
+
+import java.util.List;
 
 public class MainApplication {
 
-    public void run(BowlingStrategy bowlingStrategy) {
-        Player player = new Player(InputView.InputPlayerName());
-        GamePlay gamePlay = GamePlay.play(player, bowlingStrategy);
+    public void run() {
+        List<String> playersName = InputView.InputPlayerNames();
+        GamePlay gamePlay = GamePlay.play(playersName);
+        OutputView.print(GamePlayAssembler.assemble(gamePlay));
+        while (!gamePlay.isGameOver()) {
+            OutputView.printCurrentUser(PlayerAssembler.assemble(gamePlay.getCurrentPlayer()));
+            gamePlay.roll(Pin.of(InputView.getFelled()));
+            OutputView.print(GamePlayAssembler.assemble(gamePlay));
+        }
     }
 
     public static void main(String[] args) {
-
-        //new MainApplication().run(new TestInputBowlingStrategy());
-        //new MainApplication().run(new RandomBowlingStrategy());
-        new MainApplication().run(new NormalInputBowlingStrategy());
+        new MainApplication().run();
     }
 
 }
