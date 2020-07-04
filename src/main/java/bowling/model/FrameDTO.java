@@ -12,12 +12,12 @@ public class FrameDTO {
     this.frameStatus = frameStatus;
   }
 
-  public static FrameDTO createBy(Frame frame) {
-    return new FrameDTO(frame.getPins(), frame.getFrameStatus());
-  }
-
   public boolean isBonusFrame() {
     return frameStatus.isBonus();
+  }
+
+  public KnockedDownPins getPins() {
+    return pins;
   }
 
   public String getFrameResult() {

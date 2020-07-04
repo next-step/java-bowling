@@ -2,24 +2,43 @@ package bowling.model.framestatus;
 
 import static bowling.model.Symbols.*;
 
+import bowling.model.BonusFrame;
+import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import bowling.model.NormalFrame;
+import bowling.model.Score;
 
 public class Strike implements FrameStatus {
 
-  private final List<Integer> indexOfScoredFrames;
+  private final int currentIndex;
 
-  public Strike(FrameStatus frameStatus) {
-    int currentIndex = frameStatus.getIndexOfScoredFrames().get(0);
+  private final Frame nextFrame;
 
-    this.indexOfScoredFrames = Arrays.asList(currentIndex, currentIndex + 1, currentIndex + 2);
+  public Strike(int currentIndex) {
+    this.currentIndex = currentIndex;
+
+    nextFrame = createFrameBy(currentIndex);
+  }
+
+  private Frame createFrameBy(int currentIndex) {
+    if (currentIndex == 9) {
+      return new BonusFrame(Bonus.createHasNext());
+    }
+
+    return new NormalFrame(currentIndex + 1);
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return Collections.unmodifiableList(indexOfScoredFrames);
+  public Frame getNextFrame() {
+    return nextFrame;
+  }
+
+  @Override
+  public Score getAdditionalScore() {
+    Score result = new Score(nextFrame.getFirstKnockDownNumber());
+    result.add(nextFrame.next().getFirstKnockDownNumber());
+
+    return result;
   }
 
   @Override
@@ -42,6 +61,11 @@ public class Strike implements FrameStatus {
   }
 
   @Override
+  public boolean isFinished() {
+    return false;
+  }
+
+  @Override
   public boolean isBonus() {
     return false;
   }
@@ -49,7 +73,8 @@ public class Strike implements FrameStatus {
   @Override
   public String toString() {
     return "Strike{" +
-        "indexOfScoredFrames=" + indexOfScoredFrames +
+        "currentIndex=" + currentIndex +
+        ", nextFrame=" + nextFrame +
         '}';
   }
 }

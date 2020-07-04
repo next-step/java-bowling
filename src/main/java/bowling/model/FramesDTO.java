@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 
 public class FramesDTO {
 
-  private List<FrameDTO> frames;
+  private final List<FrameDTO> frames;
 
   public FramesDTO(List<Frame> frames) {
     this.frames = frames.stream()
-        .map(FrameDTO::createBy)
+        .map(Frame::createDTO)
         .collect(Collectors.toList());
   }
 

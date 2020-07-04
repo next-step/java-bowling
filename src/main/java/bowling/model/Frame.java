@@ -1,19 +1,19 @@
 package bowling.model;
 
-import bowling.model.framestatus.FrameStatus;
-import java.util.List;
-
 public interface Frame {
 
   void roll(int KnockDownNumber) throws FrameOverException;
 
+  Frame next();
+
+  Score getScore();
+
+  int getFirstKnockDownNumber();
+
   boolean isOver();
 
-  int getRemainingPinsNumber();
+  boolean isFinished();
 
-  List<Integer> getIndexOfScoredFrames();
+  FrameDTO createDTO();
 
-  KnockedDownPins getPins();
-
-  FrameStatus getFrameStatus();
 }

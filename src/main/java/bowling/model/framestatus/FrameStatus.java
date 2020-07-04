@@ -1,11 +1,14 @@
 package bowling.model.framestatus;
 
+import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
-import java.util.List;
+import bowling.model.Score;
 
 public interface FrameStatus {
 
-  List<Integer> getIndexOfScoredFrames();
+  Frame getNextFrame();
+
+  Score getAdditionalScore();
 
   FrameStatus createNextStatusBy(KnockedDownPins pins);
 
@@ -14,4 +17,6 @@ public interface FrameStatus {
   boolean isBonus();
 
   String getResultBy(KnockedDownPins pins);
+
+  boolean isFinished();
 }

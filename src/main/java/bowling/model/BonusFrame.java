@@ -1,13 +1,16 @@
 package bowling.model;
 
-import bowling.model.framestatus.Bonus;
 import bowling.model.framestatus.FrameStatus;
-import java.util.Collections;
-import java.util.List;
+import java.util.Objects;
 
 public class BonusFrame implements Frame {
 
   private KnockDownNumber knockDownNumber = new KnockDownNumber();
+  private final FrameStatus frameStatus;
+
+  public BonusFrame(FrameStatus frameStatus) {
+    this.frameStatus = frameStatus;
+  }
 
   @Override
   public void roll(int KnockDownNumber) throws FrameOverException {
@@ -19,21 +22,30 @@ public class BonusFrame implements Frame {
   }
 
   @Override
+  public Frame next() {
+    return frameStatus.getNextFrame();
+  }
+
+  @Override
+  public Score getScore() {
+    return new Score(0);
+  }
+
+  @Override
+  public int getFirstKnockDownNumber() {
+    return knockDownNumber.getIntValue();
+  }
+
+  @Override
   public boolean isOver() {
-    return true;
+    return frameStatus.isOver();
   }
 
   @Override
-  public int getRemainingPinsNumber() {
-    return KnockedDownPins.MAX_NUMBER_OF_PINS - knockDownNumber.getIntValue();
+  public boolean isFinished() {
+    return frameStatus.isFinished();
   }
 
-  @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return Collections.emptyList();
-  }
-
-  @Override
   public KnockedDownPins getPins() {
     return KnockedDownPins.getBuilder()
         .firstKnockDownNumber(knockDownNumber.getIntValue())
@@ -41,14 +53,37 @@ public class BonusFrame implements Frame {
   }
 
   @Override
-  public FrameStatus getFrameStatus() {
-    return new Bonus();
+  public FrameDTO createDTO() {
+    KnockedDownPins pins = KnockedDownPins.getBuilder()
+        .firstKnockDownNumber(knockDownNumber.getIntValue())
+        .build();
+
+    return new FrameDTO(pins, frameStatus);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    BonusFrame that = (BonusFrame) o;
+    return knockDownNumber.equals(that.knockDownNumber) &&
+        frameStatus.equals(that.frameStatus);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(knockDownNumber, frameStatus);
   }
 
   @Override
   public String toString() {
     return "BonusFrame{" +
         "knockDownNumber=" + knockDownNumber +
+        ", frameStatus=" + frameStatus +
         '}';
   }
 }

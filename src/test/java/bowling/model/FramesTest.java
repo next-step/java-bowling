@@ -115,6 +115,31 @@ class FramesTest {
       frames.roll(10);
     }
 
-    assertThat(frames.getSize()).isEqualTo(10);
+    assertThat(frames.getSize()).isEqualTo(12);
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideFrames")
+  void getScores(Frames frames, List<Integer> expected) {
+    assertThat(frames.getScores()).isEqualTo(expected);
+  }
+
+  static Stream<Arguments> provideFrames() {
+    return Stream.of(
+        arguments(
+            new Frames() {{
+              roll(10); // 1
+              roll(1); // 2
+              roll(9); // 2
+              roll(1); // 3
+              roll(1); // 3
+              roll(1); // 4
+              roll(1); // 4
+            }},
+            Arrays.asList(
+                new Score(12), new Score(11), new Score(2), new Score(2)
+            )
+        )
+    );
   }
 }

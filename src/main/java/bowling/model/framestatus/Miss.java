@@ -2,21 +2,32 @@ package bowling.model.framestatus;
 
 import static bowling.model.Symbols.*;
 
+import bowling.model.BowlingGame;
+import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
-import java.util.Collections;
-import java.util.List;
+import bowling.model.NormalFrame;
+import bowling.model.Score;
 
 public class Miss implements FrameStatus {
 
-  private final List<Integer> indexOfScoredFrames;
+  private final int currentIndex;
 
-  public Miss(FrameStatus frameStatus) {
-    indexOfScoredFrames = frameStatus.getIndexOfScoredFrames();
+  private final Frame nextFrame;
+
+  public Miss(int currentIndex) {
+    this.currentIndex = currentIndex;
+
+    nextFrame = new NormalFrame(currentIndex + 1);
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return Collections.unmodifiableList(indexOfScoredFrames);
+  public Frame getNextFrame() {
+    return nextFrame;
+  }
+
+  @Override
+  public Score getAdditionalScore() {
+    return new Score(0);
   }
 
   @Override
@@ -40,6 +51,11 @@ public class Miss implements FrameStatus {
   }
 
   @Override
+  public boolean isFinished() {
+    return currentIndex == BowlingGame.MAX_NUMBER_OF_FRAMES - 1;
+  }
+
+  @Override
   public boolean isBonus() {
     return false;
   }
@@ -47,7 +63,8 @@ public class Miss implements FrameStatus {
   @Override
   public String toString() {
     return "Miss{" +
-        "indexOfScoredFrames=" + indexOfScoredFrames +
+        "currentIndex=" + currentIndex +
+        ", nextFrame=" + nextFrame +
         '}';
   }
 }

@@ -38,7 +38,7 @@ public class Frames {
   }
 
   private void addAndRoll(int knockDownNumber) {
-    frames.addLast(new NormalFrame(frames.size()));
+    frames.add(frames.getLast().next());
 
     try {
       frames.getLast().roll(knockDownNumber);
@@ -49,26 +49,21 @@ public class Frames {
     }
   }
 
-  public void bonusRoll(int knockDownNumber) {
-    Frame bonusFrame = new BonusFrame();
-
-    try {
-      bonusFrame.roll(knockDownNumber);
-    } catch (FrameOverException e) {
-      throw new IllegalStateException("roll 실패 "
-          + System.lineSeparator() + " frames : " + frames.toString()
-          + System.lineSeparator() + " knockDownNum : " + knockDownNumber);
-    }
-
-    frames.addLast(bonusFrame);
-  }
-
   public boolean isCurrentFrameOver() {
     return frames.getLast().isOver();
   }
 
   public boolean isOver() {
-    return BowlingGame.MAX_NUMBER_OF_FRAMES <= frames.size() && frames.getLast().isOver();
+    return frames.getLast().isFinished();
+  }
+
+  public List<Score> getScores() {
+    List<Score> scores = new ArrayList<>();
+
+    frames.stream()
+        .limit(BowlingGame.MAX_NUMBER_OF_FRAMES)
+        .forEach(frame -> scores.add(frame.getScore()));
+    return scores;
   }
 
   @Override

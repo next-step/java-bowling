@@ -12,7 +12,7 @@ class FrameDTOTest {
   @ParameterizedTest
   @MethodSource("provideFrame")
   void createBy(Frame frame) {
-    FrameDTO frameDTO = FrameDTO.createBy(frame);
+    FrameDTO frameDTO = frame.createDTO();
 
     System.out.println(frameDTO);
 

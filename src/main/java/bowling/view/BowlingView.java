@@ -4,6 +4,7 @@ import static bowling.model.Symbols.*;
 
 import bowling.model.BowlingGame;
 import bowling.model.FrameDTO;
+import bowling.model.Score;
 import java.util.List;
 
 public class BowlingView {
@@ -16,7 +17,15 @@ public class BowlingView {
   }
 
   public static void printKnockDownNumInputMsg(int currentFrameNumber) {
-    System.out.print(currentFrameNumber + "프레임 투구 : ");
+    System.out.print(getKnockDownNumInputMsg(currentFrameNumber) + "프레임 투구 : ");
+  }
+
+  private static String getKnockDownNumInputMsg(int currentFrameNumber) {
+    if (10 < currentFrameNumber) {
+      return "보너스 ";
+    }
+
+    return String.valueOf(currentFrameNumber);
   }
 
   public static void printBonusFrameInputMsg() {
@@ -27,16 +36,6 @@ public class BowlingView {
     System.out.println(getFrameMsgBy(playerName, framesDTO, framesDTO.size()));
   }
 
-  public static void printScoreBoardWithBonus(String playerName, List<FrameDTO> frameDTOs) {
-    StringBuilder sb = new StringBuilder();
-
-    sb.append(getFrameMsgBy(playerName, frameDTOs, BowlingGame.MAX_NUMBER_OF_FRAMES - 1))
-        .append(getLastFrameMsg(frameDTOs))
-        .append(BAR);
-
-    System.out.println(sb.toString());
-  }
-
   private static String getFrameMsgBy(String playerName, List<FrameDTO> frameDTOs, int endpoint) {
     StringBuilder sb = new StringBuilder(SCORE_BOARD_UPPER).append(System.lineSeparator());
 
@@ -45,11 +44,16 @@ public class BowlingView {
         .append(BAR);
 
     frameDTOs.stream()
-        .limit(endpoint)
+        .limit(BowlingGame.MAX_NUMBER_OF_FRAMES - 1)
         .forEach(frameDTO -> {
           sb.append(wrappingWithSpaces(frameDTO.getFrameResult()))
               .append(BAR);
         });
+
+    if (10 <= endpoint) {
+      sb.append(getLastFrameMsg(frameDTOs))
+          .append(BAR);
+    }
 
     return sb.toString();
   }
@@ -68,8 +72,33 @@ public class BowlingView {
     return wrappingWithSpaces(sb.toString());
   }
 
+  public static void printScores(List<Score> scores) {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append(BAR)
+        .append(wrappingWithSpaces(BLANK.toString()))
+        .append(BAR);
+
+    Score scoreHolder = new Score(0);
+
+    scores.forEach(score -> {
+      scoreHolder.add(score);
+
+      sb.append(wrappingWithSpaces(scoreHolder.toString()))
+          .append(BAR);
+    });
+
+    sb.append(System.lineSeparator());
+
+    System.out.println(sb);
+  }
+
   private static String wrappingWithSpaces(String str) {
     StringBuilder sb = new StringBuilder();
+
+    if (str.equals("0")) {
+      str = BLANK.toString();
+    }
 
     int space = MAXLENGTH_PER_FRAME - str.length();
     int leftSpace = space / 2;

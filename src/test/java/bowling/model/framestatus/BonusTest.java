@@ -2,19 +2,30 @@ package bowling.model.framestatus;
 
 import static org.assertj.core.api.Assertions.*;
 
+import bowling.model.BonusFrame;
+import bowling.model.EmptyFrame;
 import bowling.model.KnockedDownPinsTest;
 import org.junit.jupiter.api.Test;
 
 class BonusTest {
 
   @Test
-  void getIndexOfScoredFrames() {
-    assertThat(new Bonus().getIndexOfScoredFrames().isEmpty()).isTrue();
+  void isOver() {
+    assertThat(new Bonus().isOver()).isTrue();
   }
 
   @Test
-  void isOver() {
-    assertThat(new Bonus().isOver()).isTrue();
+  void createHasNext() {
+    FrameStatus bonus = Bonus.createHasNext();
+    assertThat(bonus.getNextFrame()).isEqualTo(new BonusFrame(Bonus.createHasFinished()));
+    assertThat(bonus.isFinished()).isEqualTo(false);
+  }
+
+  @Test
+  void createHasFinished() {
+    FrameStatus bonus = Bonus.createHasFinished();
+    assertThat(bonus.getNextFrame()).isEqualTo(new EmptyFrame());
+    assertThat(bonus.isFinished()).isEqualTo(true);
   }
 
   @Test

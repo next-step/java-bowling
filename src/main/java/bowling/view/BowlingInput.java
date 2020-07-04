@@ -20,13 +20,4 @@ public class BowlingInput {
 
     return result;
   }
-
-  public static int getBonusFrameInput() {
-    BowlingView.printBonusFrameInputMsg();
-
-    int result = scanner.nextInt();
-    scanner.nextLine();
-
-    return result;
-  }
 }

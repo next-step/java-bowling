@@ -2,30 +2,36 @@ package bowling.model.framestatus;
 
 import static bowling.model.Symbols.*;
 
+import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
-import java.util.Collections;
-import java.util.List;
+import bowling.model.Score;
+import bowling.model.EmptyFrame;
 
 public class RequiredFirstRoll implements FrameStatus {
 
-  private final List<Integer> indexOfScoredFrames;
+  private final int currentIndex;
 
   public RequiredFirstRoll(int currentIndex) {
-    indexOfScoredFrames = Collections.singletonList(currentIndex);
+    this.currentIndex = currentIndex;
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return Collections.unmodifiableList(indexOfScoredFrames);
+  public Frame getNextFrame() {
+    return new EmptyFrame();
+  }
+
+  @Override
+  public Score getAdditionalScore() {
+    return new Score(0);
   }
 
   @Override
   public FrameStatus createNextStatusBy(KnockedDownPins pins) {
     if (pins.getFirstKnockDownNumber() == KnockedDownPins.MAX_NUMBER_OF_PINS) {
-      return new Strike(this);
+      return new Strike(currentIndex);
     }
 
-    return new RequiredSecondRoll(this);
+    return new RequiredSecondRoll(currentIndex);
   }
 
   @Override
@@ -43,11 +49,15 @@ public class RequiredFirstRoll implements FrameStatus {
     return BLANK.toString();
   }
 
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
 
   @Override
   public String toString() {
     return "RequiredFirstRoll{" +
-        "indexOfScoredFrames=" + indexOfScoredFrames +
+        "currentIndex=" + currentIndex +
         '}';
   }
 }

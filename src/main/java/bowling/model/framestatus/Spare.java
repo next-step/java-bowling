@@ -2,24 +2,40 @@ package bowling.model.framestatus;
 
 import static bowling.model.Symbols.*;
 
+import bowling.model.BonusFrame;
+import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import bowling.model.NormalFrame;
+import bowling.model.Score;
 
 public class Spare implements FrameStatus {
 
-  private final List<Integer> indexOfScoredFrames;
+  private final int currentIndex;
 
-  public Spare(FrameStatus frameStatus) {
-    int currentIndex = frameStatus.getIndexOfScoredFrames().get(0);
+  private final Frame nextFrame;
 
-    this.indexOfScoredFrames = Arrays.asList(currentIndex, currentIndex + 1);
+  public Spare(int currentIndex) {
+    this.currentIndex = currentIndex;
+
+    nextFrame = createFrameBy(currentIndex);
+  }
+
+  private Frame createFrameBy(int currentIndex) {
+    if (currentIndex == 9) {
+      return new BonusFrame(Bonus.createHasFinished());
+    }
+
+    return new NormalFrame(currentIndex + 1);
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return Collections.unmodifiableList(indexOfScoredFrames);
+  public Frame getNextFrame() {
+    return nextFrame;
+  }
+
+  @Override
+  public Score getAdditionalScore() {
+    return new Score(nextFrame.getFirstKnockDownNumber());
   }
 
   @Override
@@ -38,7 +54,13 @@ public class Spare implements FrameStatus {
       throw new IllegalArgumentException("스페어가 아닙니다.");
     }
 
-    return (String.valueOf(pins.getFirstKnockDownNumber()) + BAR + SPARE).replace("0", GUTTER.toString());
+    return (String.valueOf(pins.getFirstKnockDownNumber()) + BAR + SPARE)
+        .replace("0", GUTTER.toString());
+  }
+
+  @Override
+  public boolean isFinished() {
+    return false;
   }
 
   @Override
@@ -49,7 +71,8 @@ public class Spare implements FrameStatus {
   @Override
   public String toString() {
     return "Spare{" +
-        "indexOfScoredFrames=" + indexOfScoredFrames +
+        "currentIndex=" + currentIndex +
+        ", nextFrame=" + nextFrame +
         '}';
   }
 }

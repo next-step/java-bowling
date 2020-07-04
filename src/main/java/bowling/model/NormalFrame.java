@@ -2,7 +2,6 @@ package bowling.model;
 
 import bowling.model.framestatus.FrameStatus;
 import bowling.model.framestatus.RequiredFirstRoll;
-import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
@@ -38,28 +37,37 @@ public class NormalFrame implements Frame {
   }
 
   @Override
+  public Frame next() {
+    return frameStatus.getNextFrame();
+  }
+
+  @Override
+  public Score getScore() {
+    Score score = new Score(pins.getFirstKnockDownNumber() + pins.getSecondKnockDownNumber());
+
+    score.add(frameStatus.getAdditionalScore());
+
+    return score;
+  }
+
+  @Override
+  public int getFirstKnockDownNumber() {
+    return pins.getFirstKnockDownNumber();
+  }
+
+  @Override
   public boolean isOver() {
     return frameStatus.isOver();
   }
 
   @Override
-  public int getRemainingPinsNumber() {
-    return pins.getRemainingNumber();
+  public boolean isFinished() {
+    return frameStatus.isFinished();
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return frameStatus.getIndexOfScoredFrames();
-  }
-
-  @Override
-  public KnockedDownPins getPins() {
-    return pins;
-  }
-
-  @Override
-  public FrameStatus getFrameStatus() {
-    return frameStatus;
+  public FrameDTO createDTO() {
+    return new FrameDTO(pins, frameStatus);
   }
 
   @Override

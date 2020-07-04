@@ -2,32 +2,36 @@ package bowling.model.framestatus;
 
 import static bowling.model.Symbols.*;
 
+import bowling.model.Frame;
 import bowling.model.KnockedDownPins;
-import java.util.Collections;
-import java.util.List;
+import bowling.model.Score;
+import bowling.model.EmptyFrame;
 
 public class RequiredSecondRoll implements FrameStatus {
 
-  private final static Integer ZERO = 0;
+  private final int currentIndex;
 
-  private final List<Integer> indexOfScoredFrames;
-
-  public RequiredSecondRoll(FrameStatus frameStatus) {
-    indexOfScoredFrames = frameStatus.getIndexOfScoredFrames();
+  public RequiredSecondRoll(int currentIndex) {
+    this.currentIndex = currentIndex;
   }
 
   @Override
-  public List<Integer> getIndexOfScoredFrames() {
-    return Collections.unmodifiableList(indexOfScoredFrames);
+  public Frame getNextFrame() {
+    return new EmptyFrame();
+  }
+
+  @Override
+  public Score getAdditionalScore() {
+    return new Score(0);
   }
 
   @Override
   public FrameStatus createNextStatusBy(KnockedDownPins pins) {
-    if (pins.getRemainingNumber() == ZERO) {
-      return new Spare(this);
+    if (pins.getRemainingNumber() == 0) {
+      return new Spare(currentIndex);
     }
 
-    return new Miss(this);
+    return new Miss(currentIndex);
   }
 
   @Override
@@ -43,14 +47,18 @@ public class RequiredSecondRoll implements FrameStatus {
   @Override
   public String getResultBy(KnockedDownPins pins) {
     return String.valueOf(pins.getFirstKnockDownNumber())
-        .replace(ZERO.toString(), GUTTER.toString());
+        .replace("0", GUTTER.toString());
   }
 
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
 
   @Override
   public String toString() {
     return "RequiredSecondRoll{" +
-        "indexOfScoredFrames=" + indexOfScoredFrames +
+        "currentIndex=" + currentIndex +
         '}';
   }
 }
