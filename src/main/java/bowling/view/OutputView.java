@@ -1,8 +1,11 @@
 package bowling.view;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import bowling.domain.board.Board;
+import bowling.domain.board.Boards;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.player.Player;
@@ -10,9 +13,17 @@ import bowling.domain.score.Score;
 
 public class OutputView {
 
-	public static void printFrames(Player player, Frames frames) {
-		printHeader(frames.getFrameList().size());
-		printStatus(player, frames);
+	public static void printBoards(Boards boards) {
+		for (Board board : boards.getBoards()) {
+			printBoard(board);
+		}
+	}
+
+	public static void printBoard(Board board) {
+		Frames frames = board.getFrames();
+		List<Frame> frameList = frames.getFrameList();
+		printHeader(frameList.size());
+		printStatus(board.getPlayer(), board.getFrames());
 		printScores(frames);
 	}
 

@@ -5,6 +5,7 @@ import static bowling.util.FrameSize.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import bowling.domain.score.Score;
@@ -22,7 +23,7 @@ public class Frames {
 		return new Frames(frameList);
 	}
 
-	public static List<Frame> createFrameList() {
+	private static List<Frame> createFrameList() {
 		List<Frame> frameList = new ArrayList<>();
 		frameList.add(NormalFrame.createFirstFrame());
 		IntStream.range(STARTING_INDEX, NORMAL_FRAME_SIZE)
@@ -38,11 +39,6 @@ public class Frames {
 			.orElseThrow(() -> new IllegalArgumentException("there is no running frame."));
 	}
 
-	public boolean canPlayMore() {
-		return frameList.stream()
-			.anyMatch(Frame::canPlayMore);
-	}
-
 	public void playFrame(Score score) {
 		Frame frame = frameList.stream()
 			.filter(Frame::canPlayMore)
@@ -53,5 +49,14 @@ public class Frames {
 
 	public List<Frame> getFrameList() {
 		return Collections.unmodifiableList(frameList);
+	}
+
+	public boolean isAllPlayed() {
+		return frameList.stream()
+			.noneMatch(Frame::canPlayMore);
+	}
+
+	public int getPlayingFrameIndex() {
+		return Optional.of(findPlayingFrame().getIndex()).orElse(0);
 	}
 }
