@@ -11,7 +11,7 @@ public class ViewResult {
 	public static String printScores(Scores scores) {
 		Optional<Score> first = scores.getFirst();
 		Optional<Score> second = scores.getSecond();
-		if (! first.isPresent() || ! second.isPresent()) {
+		if (!first.isPresent() || !second.isPresent()) {
 			return "        ";
 		}
 		if (first.get().getScore() == 10 && scores.isSecondScoreNull()) {

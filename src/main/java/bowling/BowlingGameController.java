@@ -20,7 +20,7 @@ public class BowlingGameController {
 		Players players = InputView.askPlayer(playCount);
 		Boards boards = bowlingGame.startGame(players);
 
-		while (! boards.isAllPlayed()) {
+		while (!boards.isAllPlayed()) {
 			Board playingBoard = boards.getPlayingBoard();
 			Score score = InputView.askScore(playingBoard.getPlayer());
 			bowlingGame.playFrame(boards, score);

@@ -21,7 +21,7 @@ public class ScoreTest {
 	}
 
 	@DisplayName("점수가 0 미만이고 10 초과이면 오류를 발생시킨다.")
-	@ValueSource(ints = {- 1, 11, 19})
+	@ValueSource(ints = {-1, 11, 19})
 	@ParameterizedTest
 	void 점수_생성시_오류가_반환된다(int score) {
 		assertThatCode(

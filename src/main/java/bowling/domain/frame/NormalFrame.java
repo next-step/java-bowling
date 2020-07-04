@@ -60,7 +60,7 @@ public class NormalFrame implements Frame {
 
 	@Override
 	public Optional<Score> calculateFrameTotalScore() {
-		if (! scores.hasCheckResult()) {
+		if (!scores.hasCheckResult()) {
 			return Optional.empty();
 		}
 		Result result = scores.checkResult();

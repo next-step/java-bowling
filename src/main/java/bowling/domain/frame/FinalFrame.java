@@ -34,10 +34,10 @@ public class FinalFrame implements Frame {
 
 	@Override
 	public boolean canPlayMore() {
-		if (! scores.getFirst().isPresent() || ! scores.getSecond().isPresent()) {
+		if (!scores.getFirst().isPresent() || !scores.getSecond().isPresent()) {
 			return true;
 		}
-		return ! scores.getBonus().isPresent() && ResultUtil.BONUS_SCORE_RESULT.contains(scores.checkResult());
+		return !scores.getBonus().isPresent() && ResultUtil.BONUS_SCORE_RESULT.contains(scores.checkResult());
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class FinalFrame implements Frame {
 
 	@Override
 	public Optional<Score> calculateFrameTotalScore() {
-		if (! scores.hasCheckResult()) {
+		if (!scores.hasCheckResult()) {
 			return Optional.empty();
 		}
 		return Optional.ofNullable(scores.calculateFrameTotalScore());

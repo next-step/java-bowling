@@ -7,7 +7,7 @@ public class Miss implements Result {
 
 	@Override
 	public boolean isMatch(Score first, Score second) {
-		return ! first.isScoreTen() && first.add(second).isBetweenInRange();
+		return !first.isScoreTen() && first.add(second).isBetweenInRange();
 	}
 
 	@Override

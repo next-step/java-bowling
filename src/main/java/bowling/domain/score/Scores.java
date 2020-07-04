@@ -76,7 +76,7 @@ public class Scores {
 	}
 
 	private void hasCheckResultAndVerifyScoreSumCanExceedTen() {
-		if (hasCheckResult() && ! ResultUtil.BONUS_SCORE_RESULT.contains(checkResult())) {
+		if (hasCheckResult() && !ResultUtil.BONUS_SCORE_RESULT.contains(checkResult())) {
 			throw new IllegalArgumentException("first and second frames score have more than 10 scores. wrong score.");
 		}
 	}
@@ -104,7 +104,7 @@ public class Scores {
 	}
 
 	public boolean canPlayMore() {
-		return Objects.isNull(first) || (! first.isScoreTen() && Objects.isNull(second));
+		return Objects.isNull(first) || (!first.isScoreTen() && Objects.isNull(second));
 	}
 
 	public Score calculateFrameTotalScore() {

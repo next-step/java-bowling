@@ -19,7 +19,7 @@ public class Player {
 
 	private static void validateName(String name) {
 		Matcher matcher = NAME_PATTERN.matcher(name);
-		if (! matcher.matches()) {
+		if (!matcher.matches()) {
 			throw new IllegalArgumentException("wrong name");
 		}
 	}

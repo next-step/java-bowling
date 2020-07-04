@@ -55,7 +55,7 @@ public class OutputView {
 
 	private static int printScore(int sum, Frame frame) {
 		Optional<Score> totalScore = frame.calculateFrameTotalScore();
-		if (! totalScore.isPresent()) {
+		if (!totalScore.isPresent()) {
 			System.out.print("        |");
 			return sum;
 		}

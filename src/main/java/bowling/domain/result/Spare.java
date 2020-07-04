@@ -7,7 +7,7 @@ public class Spare implements Result {
 
 	@Override
 	public boolean isMatch(Score first, Score second) {
-		return ! first.isScoreTen() && first.add(second).isScoreTen();
+		return !first.isScoreTen() && first.add(second).isScoreTen();
 	}
 
 	@Override
