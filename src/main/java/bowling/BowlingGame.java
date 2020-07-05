@@ -18,7 +18,7 @@ public class BowlingGame {
             multiUserFrames.addPlayer(player);
         }
 
-        ResultView.printBoard(new ResultFrameDtos(multiUserFrames));
+        ResultView.printBoard(new ResultFrameDtos(Frame.FIRST_FRAME, Frame.FINAL_FRAME, multiUserFrames));
 
         State state = State.ofNew();
         while (true) {
@@ -26,7 +26,7 @@ public class BowlingGame {
             ResultView.printNextPin(multiUserFrames.getCurrentPlayerName(), nextPin);
 
             state = multiUserFrames.bowling(nextPin);
-            ResultView.printBoard(new ResultFrameDtos(multiUserFrames));
+            ResultView.printBoard(new ResultFrameDtos(Frame.FIRST_FRAME, Frame.FINAL_FRAME, multiUserFrames));
 
             if (multiUserFrames.isGameEnd()) {
                 break;

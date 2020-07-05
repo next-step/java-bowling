@@ -15,7 +15,7 @@ public class ResultView {
     }
 
     public static void printBoard(ResultFrameDtos resultFrameDtos) {
-        System.out.println(getHeaderRow());
+        System.out.println(getHeaderRow(resultFrameDtos));
         resultFrameDtos
                 .getResultFrameDto()
                 .forEach(dto -> {
@@ -24,9 +24,9 @@ public class ResultView {
                 });
     }
 
-    private static String getHeaderRow() {
+    private static String getHeaderRow(ResultFrameDtos resultFrameDtos) {
         StringBuilder sb = new StringBuilder(String.format(BOARD_HEADER_FIRST_COLUMN, NAME));
-        for (int round = Frame.FIRST_FRAME; round <= Frame.FINAL_FRAME; round++) {
+        for (int round = resultFrameDtos.getFirstFrameNo(); round <= resultFrameDtos.getFinalFrameNo(); round++) {
             sb.append(String.format(ROUND_FORMAT, round));
         }
         return sb.toString();
