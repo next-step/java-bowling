@@ -42,17 +42,15 @@ public abstract class Frame {
         return nextFrame;
     }
 
-    public abstract State bowling(Pin pin);
+    public ShotHistory getShotHistory() {
+        return pitch.getShotHistory();
+    }
 
-    public abstract ShotHistory getShotHistory();
+    public abstract State bowling(Pin pin);
 
     public abstract Score calculateScore();
 
     public abstract Score calculateBonusScore(Shot shot);
 
     public abstract boolean isGameEnd();
-
-    public Pitch getPitch() {
-        return pitch;
-    }
 }
