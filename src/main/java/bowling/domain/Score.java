@@ -2,6 +2,7 @@ package bowling.domain;
 
 public class Score {
     private static final int NULL = -1;
+    private static final Score nullScore = Score.of(NULL);
     private final int score;
 
     private Score(int score) {
@@ -13,7 +14,7 @@ public class Score {
     }
 
     public static Score ofNull() {
-        return new Score(NULL);
+        return nullScore;
     }
 
     public static Score ofPitch(Pitch pitch) {
