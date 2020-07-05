@@ -18,11 +18,6 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public ShotHistory getShotHistory() {
-        return pitch.getShotHistory();
-    }
-
-    @Override
     public Score calculateScore() {
         Score score = Score.ofPitch(pitch);
         if (score.isNull()) {

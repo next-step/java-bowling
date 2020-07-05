@@ -41,7 +41,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public ShotHistory getShotHistory() {
-        ShotHistory shotHistory = pitch.getShotHistory();
+        ShotHistory shotHistory = super.getShotHistory();
         if (pitch.isStrikeOrSpare()) {
             return shotHistory.add(bonusPitch.getShotHistory());
         }
