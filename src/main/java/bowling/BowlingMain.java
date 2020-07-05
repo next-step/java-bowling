@@ -1,23 +1,25 @@
 package bowling;
 
-import bowling.frame.domain.Board;
-import bowling.frame.domain.BoardAssembler;
-import bowling.frame.domain.IndexAssembler;
+import bowling.game.domain.BowlingGame;
+import bowling.game.domain.BowlingGameAssembler;
 import bowling.pin.domain.Pin;
-import bowling.user.domain.User;
+import bowling.user.domain.UserAssembler;
 import bowling.view.InputView;
 import bowling.view.OutputView;
+import java.util.List;
 
 public class BowlingMain {
 
     public static void main(String[] args) {
-        User user = User.of(InputView.getUserName());
-        Board board = Board.init(user);
-        OutputView.print(BoardAssembler.assemble(board));
-        while (!board.isGameOver()) {
-            OutputView.printCurrentFrame(IndexAssembler.assemble(board.getLastIndex()));
-            board.roll(Pin.of(InputView.getFelled()));
-            OutputView.print(BoardAssembler.assemble(board));
+
+        List<String> users = InputView.getUserNames();
+        BowlingGame game = BowlingGame.of(users);
+        OutputView.print(BowlingGameAssembler.assemble(game));
+        while (!game.isGameOver()) {
+            OutputView.printCurrentUser(UserAssembler.assemble(game.getCurrentUser()));
+            game.roll(Pin.of(InputView.getFelled()));
+            OutputView.print(BowlingGameAssembler.assemble(game));
         }
     }
+
 }

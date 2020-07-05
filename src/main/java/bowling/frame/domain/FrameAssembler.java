@@ -1,5 +1,6 @@
 package bowling.frame.domain;
 
+
 import bowling.frame.dto.FrameDTO;
 
 public class FrameAssembler {
@@ -15,4 +16,5 @@ public class FrameAssembler {
         EndFrame endFrame = (EndFrame) frame;
         return new FrameDTO(endFrame.getStates().view(), ScoreAssembler.assemble(frame.getScore()));
     }
+
 }

@@ -6,8 +6,9 @@ import static java.util.stream.Collectors.toList;
 import bowling.frame.domain.Index;
 import bowling.frame.dto.BoardDTO;
 import bowling.frame.dto.FrameDTO;
-import bowling.frame.dto.IndexDTO;
 import bowling.frame.dto.ScoreDTO;
+import bowling.game.dto.BowlingGameDTO;
+import bowling.user.dto.UserDTO;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class OutputView {
 
-    private static final String CURRENT_FRAME_TXT = "{0} 프레임 투구 : ";
+    private static final String CURRENT_USER_TXT = "{0}\''s turn: ";
     private static final String HEADER = "| NAME  |   01   |   02   |   03   |   04   |   05   |   06  |   07   |   08   |   09   |  10   |";
     private static final String SCORE = "|{0}  |{1}   |{2}   |{3}   |{4}   |{5}   |{6}  |{7}   |{8}   |{9}   | {10} |";
     private static final String TOTAL = "|       |{0}   |{1}   |{2}   |{3}   |{4}   |{5}  |{6}   |{7}   |{8}   | {9} |";
@@ -25,8 +26,12 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void print(BoardDTO boardDTO) {
+    public static void print(BowlingGameDTO bowlingGameDTO) {
         System.out.println(HEADER);
+        bowlingGameDTO.getBoardDTOs().forEach(OutputView::printBoard);
+    }
+
+    private static void printBoard(BoardDTO boardDTO) {
         System.out.println(MessageFormat.format(SCORE, toScoreArray(boardDTO)));
         System.out.println(MessageFormat.format(TOTAL, toTotalScoreArray(boardDTO)));
     }
@@ -70,8 +75,7 @@ public class OutputView {
         }
     }
 
-    public static void printCurrentFrame(IndexDTO indexDTO) {
-        System.out.println();
-        System.out.print(MessageFormat.format(CURRENT_FRAME_TXT, indexDTO.getIdx()));
+    public static void printCurrentUser(UserDTO userDTO) {
+        System.out.print(MessageFormat.format(CURRENT_USER_TXT, userDTO.getName()));
     }
 }

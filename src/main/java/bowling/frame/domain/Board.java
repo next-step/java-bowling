@@ -2,7 +2,7 @@ package bowling.frame.domain;
 
 import bowling.pin.domain.Pin;
 import bowling.user.domain.User;
-
+import java.util.Comparator;
 
 public class Board {
 

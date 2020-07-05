@@ -4,6 +4,7 @@ import bowling.frame.domain.Score;
 import bowling.pin.domain.Pin;
 
 public class Ready extends Running {
+
     public static Ready of() {
         return new Ready();
     }

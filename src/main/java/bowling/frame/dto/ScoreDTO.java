@@ -1,6 +1,7 @@
 package bowling.frame.dto;
 
 public class ScoreDTO {
+
     private final int score;
     private final boolean pending;
 
