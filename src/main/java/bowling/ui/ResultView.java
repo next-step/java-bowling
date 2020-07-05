@@ -41,7 +41,7 @@ public class ResultView {
 
     private static void fillShotHistory(ResultFrameDto resultFrameDto, StringBuilder sb) {
         resultFrameDto
-                .generateSymbolStrings("|")
+                .getSymbolStrings()
                 .forEach(s -> sb.append(String.format(RESULT_FORMAT, s)));
     }
 
@@ -54,7 +54,7 @@ public class ResultView {
     private static String generateScoreRow(ResultFrameDto resultFrameDto) {
         StringBuilder sb = new StringBuilder(String.format(BOARD_HEADER_FIRST_COLUMN, ""));
         resultFrameDto
-                .generateScoreStrings()
+                .getScoreStrings()
                 .forEach(score -> sb.append(String.format(RESULT_FORMAT, score)));
         fillEmpty(resultFrameDto, sb);
         return sb.toString();
