@@ -4,7 +4,7 @@ import bowling.domain.state.State;
 
 public class NormalFrame extends Frame {
 
-    public NormalFrame(int frameNo) {
+    protected NormalFrame(int frameNo) {
         super(frameNo);
     }
 

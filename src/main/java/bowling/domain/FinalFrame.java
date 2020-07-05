@@ -6,14 +6,10 @@ public class FinalFrame extends Frame {
     private boolean isBonusPitch;
     private Pitch bonusPitch;
 
-    private FinalFrame() {
+    protected FinalFrame() {
         super(FINAL_FRAME);
         this.isBonusPitch = false;
         this.bonusPitch = Pitch.ofBounus();
-    }
-
-    public static FinalFrame last() {
-        return new FinalFrame();
     }
 
     @Override
