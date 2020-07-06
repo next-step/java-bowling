@@ -34,14 +34,14 @@ public class NormalFrameTest {
     @DisplayName("라운드는 1부터 시작")
     @Test
     public void 라운드는_1부터_시작() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         assertThat(frames.getCurrentFrameNo()).isEqualTo(1);
     }
 
     @DisplayName("프레임이 종료되면 프레임이 증가한다")
     @Test
     public void 프레임이_종료되면_프레임이_증가한다() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(10));
         assertThat(frames.getCurrentFrameNo()).isEqualTo(2);
     }
@@ -49,7 +49,7 @@ public class NormalFrameTest {
     @DisplayName("프레임이 종료되지않으면 프레임이 유지된다")
     @Test
     public void 프레임이_종료되지않으면_프레임이_유지된다() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(5));
         assertThat(frames.getCurrentFrameNo()).isEqualTo(1);
     }

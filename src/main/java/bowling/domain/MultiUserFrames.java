@@ -2,10 +2,7 @@ package bowling.domain;
 
 import bowling.domain.state.State;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class MultiUserFrames {
@@ -37,7 +34,9 @@ public class MultiUserFrames {
     }
 
     public Stream<Frames> forEachFrames() {
-        return multiframes.stream();
+        return multiframes
+                .stream()
+                .sorted(Comparator.comparingInt(Frames::getPlayerId));
     }
 
     public boolean isGameEnd() {

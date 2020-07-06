@@ -12,8 +12,8 @@ class MultiUserFramesTest {
     @Test
     public void getCurrentFrameNo_ReturnFrameNo() {
         MultiUserFrames multiUserFrames = new MultiUserFrames();
-        multiUserFrames.addPlayer(new Player("PJS"));
-        multiUserFrames.addPlayer(new Player("KYJ"));
+        multiUserFrames.addPlayer(new Player(1, "PJS"));
+        multiUserFrames.addPlayer(new Player(1, "KYJ"));
 
         multiUserFrames.bowling(new Pin(10));
         multiUserFrames.bowling(new Pin(10));
