@@ -14,7 +14,7 @@ public class BowlingGame {
 
         int playerCount = InputView.getPlayerCount();
         for (int i = 0; i < playerCount; i++) {
-            Player player = new Player(InputView.getPlayerName());
+            Player player = new Player(i, InputView.getPlayerName());
             multiUserFrames.addPlayer(player);
         }
 

@@ -45,6 +45,10 @@ public class Frames {
         return Arrays.asList(scores);
     }
 
+    public int getPlayerId() {
+        return player.getId();
+    }
+
     public String getPlayerName() {
         return player.getName();
     }
