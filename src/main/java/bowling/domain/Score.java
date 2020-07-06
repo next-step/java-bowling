@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Arrays;
+
 public class Score {
     private static final int NULL = -1;
     private static final Score nullScore = Score.of(NULL);
@@ -22,6 +24,12 @@ public class Score {
             return Score.ofNull();
         }
         return Score.of(pitch.getFallenPin());
+    }
+
+    public static Score ofScore(Score... scores) {
+        return Arrays.stream(scores)
+                .reduce(Score::add)
+                .orElse(Score.ofNull());
     }
 
     public Score add(Score other) {

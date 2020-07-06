@@ -38,7 +38,7 @@ public class NormalFrame extends Frame {
         }
 
         if (pitch.isFinish()) {
-            return Score.ofPitch(pitch).add(nextFrame.calculateBonusScore(Shot.SPARE));
+            return Score.ofScore(Score.ofPitch(pitch), nextFrame.calculateBonusScore(Shot.SPARE));
         }
 
         return Score.ofNull();
