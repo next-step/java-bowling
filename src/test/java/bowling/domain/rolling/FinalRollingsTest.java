@@ -12,7 +12,7 @@ public class FinalRollingsTest {
         FinalRollings rollings = FinalRollings.init();
         rollings.roll(10);
 
-        assertThat(rollings.islastState(State.STRIKE)).isTrue();
+        assertThat(rollings.isState(State.STRIKE)).isTrue();
     }
 
     @Test
@@ -20,7 +20,7 @@ public class FinalRollingsTest {
         FinalRollings rollings = FinalRollings.init();
         rollings.roll(0);
 
-        assertThat(rollings.islastState(State.GUTTER)).isTrue();
+        assertThat(rollings.isState(State.GUTTER)).isTrue();
     }
 
     @Test
@@ -29,7 +29,7 @@ public class FinalRollingsTest {
         rollings.roll(3);
         rollings.roll(7);
 
-        assertThat(rollings.islastState(State.SPARE)).isTrue();
+        assertThat(rollings.isState(State.SPARE)).isTrue();
     }
 
     @ParameterizedTest
@@ -38,7 +38,7 @@ public class FinalRollingsTest {
         FinalRollings rollings = FinalRollings.init();
         rollings.roll(knockedPinCount);
 
-        assertThat(rollings.islastState(State.MISS)).isTrue();
+        assertThat(rollings.isState(State.MISS)).isTrue();
     }
 
     @ParameterizedTest
@@ -48,7 +48,7 @@ public class FinalRollingsTest {
         rollings.roll(3);
         rollings.roll(knockedPinCount);
 
-        assertThat(rollings.islastState(State.MISS)).isTrue();
+        assertThat(rollings.isState(State.MISS)).isTrue();
     }
 
     @Test
@@ -57,7 +57,7 @@ public class FinalRollingsTest {
         rollings.roll(10);
         rollings.roll(3);
 
-        assertThat(rollings.islastState(State.MISS)).isTrue();
+        assertThat(rollings.isState(State.MISS)).isTrue();
     }
 
     @Test
@@ -66,7 +66,7 @@ public class FinalRollingsTest {
         rollings.roll(10);
         rollings.roll(0);
 
-        assertThat(rollings.islastState(State.GUTTER)).isTrue();
+        assertThat(rollings.isState(State.GUTTER)).isTrue();
     }
 
     @Test
@@ -75,6 +75,6 @@ public class FinalRollingsTest {
         rollings.roll(10);
         rollings.roll(10);
 
-        assertThat(rollings.islastState(State.STRIKE)).isTrue();
+        assertThat(rollings.isState(State.STRIKE)).isTrue();
     }
 }

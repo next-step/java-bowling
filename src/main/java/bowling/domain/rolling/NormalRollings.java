@@ -1,6 +1,7 @@
 package bowling.domain.rolling;
 
 import bowling.common.exception.InvalidThrowBallException;
+import bowling.domain.frame.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +82,7 @@ public class NormalRollings implements Rollings {
         return lastRollingState == State.STRIKE || lastRollingState == State.SPARE;
     }
 
+    @Override
     public boolean isState(State state) {
         if (rollingList.size() == ROLLING_COUNT_INITIAL_VALUE) {
             return false;
@@ -99,5 +101,30 @@ public class NormalRollings implements Rollings {
         return rollingList.stream()
                 .map(Rolling::getStateFormat)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public int getLastScore() {
+        return rollingList.get(rollingList.size() - 1)
+                .getKnockedDownPinCount();
+    }
+
+    @Override
+    public int calculateScore() {
+        return rollingList.stream()
+                .mapToInt(Rolling::getKnockedDownPinCount)
+                .sum();
+    }
+
+    @Override
+    public void calculateAdditionalScore(Score score) {
+        for (int i = 0; i < rollingList.size() && !score.isCalculateDone(); i++) {
+            score.calculateAdditional(rollingList.get(i).getKnockedDownPinCount());
+        }
+    }
+
+    @Override
+    public void additionalScoreOfStrike(Score score) {
+        rollingList.forEach(rolling -> score.calculateAdditional(rolling.getKnockedDownPinCount()));
     }
 }

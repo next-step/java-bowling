@@ -1,6 +1,9 @@
 package bowling.domain.rolling;
 
+import bowling.domain.frame.Score;
+
 import java.util.List;
+import java.util.Objects;
 
 public class FinalRollings implements Rollings {
 
@@ -32,7 +35,8 @@ public class FinalRollings implements Rollings {
         bonusRolling = new Rolling(state, pinCount);
     }
 
-    public boolean islastState(State state) {
+    @Override
+    public boolean isState(State state) {
         if (bonusRolling != null) {
             return bonusRolling.getState() == state;
         }
@@ -58,5 +62,30 @@ public class FinalRollings implements Rollings {
         }
 
         return states;
+    }
+
+    @Override
+    public int getLastScore() {
+        if (!Objects.isNull(bonusRolling)) {
+            return bonusRolling.getKnockedDownPinCount();
+        }
+
+        return normalRollings.getLastScore();
+    }
+
+
+    @Override
+    public int calculateScore() {
+        return normalRollings.calculateScore() + bonusRolling.getKnockedDownPinCount();
+    }
+
+    @Override
+    public void calculateAdditionalScore(Score score) {
+
+    }
+
+    @Override
+    public void additionalScoreOfStrike(Score score) {
+
     }
 }

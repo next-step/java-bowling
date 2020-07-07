@@ -6,24 +6,28 @@ public class Rolling {
     private final State state;
     private final int knockedDownPinCount;
 
-    public Rolling(State state, int knockedDownPinCount) {
+    Rolling(State state, int knockedDownPinCount) {
         this.state = state;
         this.knockedDownPinCount = knockedDownPinCount;
     }
 
-    public State getState() {
+    State getState() {
         return state;
     }
 
-    public boolean isState(State state) {
+    boolean isState(State state) {
         return this.state == state;
     }
 
-    public int getRemainPinCount() {
+    int getRemainPinCount() {
         return PIN_COUNT_MAX - knockedDownPinCount;
     }
 
-    public String getStateFormat() {
+    int getKnockedDownPinCount() {
+        return knockedDownPinCount;
+    }
+
+    String getStateFormat() {
         return state.getState(knockedDownPinCount);
     }
 }
