@@ -1,51 +1,49 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
 public class FinalFrame extends Frame {
-    private boolean isBonusPitch;
     private Pitch bonusPitch;
 
-    private FinalFrame() {
+    protected FinalFrame() {
         super(FINAL_FRAME);
-        this.isBonusPitch = false;
         this.bonusPitch = Pitch.ofBounus();
     }
 
-    public static FinalFrame last() {
-        return new FinalFrame();
-    }
-
     @Override
-    public FrameState bowling(Pin pin) {
-        if (isBonusPitch) {
+    public State bowling(Pin pin) {
+        if (pitch.isStrikeOrSpare()) {
             return bowlingBonus(pin);
         }
 
         pitch.add(pin);
-        if (pitch.isFinish()) {
-            return isNextBonusPitch();
-        }
-        return FrameState.ofNotFinish(pitch.getRemain());
+        return getCurrentState();
     }
 
-    private FrameState bowlingBonus(Pin pin) {
+    private State bowlingBonus(Pin pin) {
+        if (bonusPitch.isFinish()) {
+            throw new IllegalArgumentException("bonus pitch is already finish");
+        }
         bonusPitch = Pitch.ofBounus();
         bonusPitch.add(pin);
-        return FrameState.ofFinish();
+        return State.ofFinish();
     }
 
-    private FrameState isNextBonusPitch() {
+    private State getCurrentState() {
         if (pitch.isStrikeOrSpare()) {
-            isBonusPitch = true;
-            return FrameState.ofNotFinish(Pin.MAX_COUNT);
+            return State.ofSpare(Pin.MAX_COUNT);
         }
-        return FrameState.ofFinish();
+        if (pitch.isFinish()) {
+            return State.ofFinish();
+        }
+        return State.ofSpare(pitch.getRemain());
     }
 
     @Override
     public ShotHistory getShotHistory() {
-        ShotHistory shotHistory = pitch.getShotHistory();
-        if (isBonusPitch) {
-            shotHistory.add(bonusPitch.getShotHistory());
+        ShotHistory shotHistory = super.getShotHistory();
+        if (pitch.isStrikeOrSpare()) {
+            return shotHistory.add(bonusPitch.getShotHistory());
         }
         return shotHistory;
     }
@@ -57,7 +55,7 @@ public class FinalFrame extends Frame {
         }
 
         Score score = Score.ofPitch(pitch);
-        if (isBonusPitch) {
+        if (pitch.isStrikeOrSpare()) {
             score = score.add(Score.of(bonusPitch.getFallenPin()));
         }
         return score;
@@ -78,7 +76,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isGameEnd() {
-        if (isBonusPitch) {
+        if (pitch.isStrikeOrSpare()) {
             return bonusPitch.isFinish();
         }
         return pitch.isFinish();

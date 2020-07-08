@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,7 +12,7 @@ class FramesTest {
     @DisplayName("Spare 처리 전에는 Null Score")
     @Test
     public void calculateTotalScore_BeforeSpare_ReturnNullScore() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(5));
         List<Score> scores = frames.calculateTotalScore();
         assertThat(scores.get(0)).isEqualTo(Score.ofNull());
@@ -22,7 +21,7 @@ class FramesTest {
     @DisplayName("Miss는 해당 투구만 점수로 계산")
     @Test
     public void calculateTotalScore_WithMiss_ReturnScore() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(5));
         frames.bowling(new Pin(3));
         List<Score> scores = frames.calculateTotalScore();
@@ -32,7 +31,7 @@ class FramesTest {
     @DisplayName("Strike는 이후 0번 투구하면 Null Score")
     @Test
     public void calculateTotalScore_WithStrike_ReturnNullScore() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(10));
         List<Score> scores = frames.calculateTotalScore();
         assertThat(scores.get(0)).isEqualTo(Score.ofNull());
@@ -41,7 +40,7 @@ class FramesTest {
     @DisplayName("Strike는 이후 1번 투구하면 Null Score")
     @Test
     public void calculateTotalScore_WithStrikeAndOneBowling_ReturnNullScore() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(10));
         frames.bowling(new Pin(10));
         List<Score> scores = frames.calculateTotalScore();
@@ -51,7 +50,7 @@ class FramesTest {
     @DisplayName("Strike는 이후 2번 투구하면 Score")
     @Test
     public void calculateTotalScore_WithStrikeAndTwoBowling_ReturnScore() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(10));
         frames.bowling(new Pin(5));
         frames.bowling(new Pin(5));
@@ -62,7 +61,7 @@ class FramesTest {
     @DisplayName("Spare 이후 0번 투구하면 Null Score")
     @Test
     public void calculateTotalScore_WithSpare_ReturnNullScore() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(5));
         frames.bowling(new Pin(5));
         List<Score> scores = frames.calculateTotalScore();
@@ -72,7 +71,7 @@ class FramesTest {
     @DisplayName("Spare는 이후 1번 투구하면 Score")
     @Test
     public void calculateTotalScore_WithSpareAndOneBowling_ReturnScore() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(5));
         frames.bowling(new Pin(5));
         frames.bowling(new Pin(5));
@@ -83,7 +82,7 @@ class FramesTest {
     @DisplayName("Strike 2번 후 2번 투구하면 Score")
     @Test
     public void calculateTotalScore_WithTwoStrikeAndTwoBowling_ReturnScore() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(10));
         frames.bowling(new Pin(10));
         frames.bowling(new Pin(10));
@@ -98,7 +97,7 @@ class FramesTest {
     @DisplayName("Strike 3번 후 Miss 1번")
     @Test
     public void Strike3_Miss1() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(10));
         frames.bowling(new Pin(10));
         frames.bowling(new Pin(10));
@@ -113,7 +112,7 @@ class FramesTest {
     @DisplayName("10 프레임이 종료되지 않으면 Null Score")
     @Test
     public void calculateTotalScore_NotFinishGame_ReturnNullScore() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(10));
         frames.bowling(new Pin(10));
         frames.bowling(new Pin(10));
@@ -147,7 +146,7 @@ class FramesTest {
     @DisplayName("10 프레임이 종료되면 Score")
     @Test
     public void calculateTotalScore_FinishGame_ReturnScore() {
-        Frames frames = new Frames(new Player("jae"));
+        Frames frames = new Frames(new Player(1, "jae"));
         frames.bowling(new Pin(10));
         frames.bowling(new Pin(10));
         frames.bowling(new Pin(10));

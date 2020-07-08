@@ -55,8 +55,9 @@
     - [X] 2번 던져서 넘긴 핀이 10개면 Miss,Spare 이력 추가
     - [X] 2번 던져서 넘긴 핀이 10개 미만 Miss,Miss 이력 추가
   - [X] 스코어 추가 시 마다 모든 공을 처리한건지 여부를 반환
-- FrameState
-  - New, NotFinish, Finish
+- State
+  - New, Spare, Finish
+  - [X] 각 상태별로 새로 시작인지 유무를 반환한다
   - [X] 각 상태별로 더 던질 수 있는지 유무를 반환한다
 - Shot
   - Strike, Spare, Miss, Gutter
@@ -97,3 +98,8 @@
 - Score
   - [X] 넘긴 총 핀수에 따라서 Score 점수가 생성된다
   - [X] 아직 Pitch가 끝나지 않았다면 Null Score로 생성된다
+- MultiUserFrames
+  - 여러 명의 Player, Frames를 가질 수 있다
+  - [X] 진행 횟수에 따라서 올바른 플레이어 이름을 반환한다
+  - [ ] 전체 Frames 진행 중이라면 종료 여부에서 false 반환한다
+  - [ ] 전체 Frames 종료되면 종료 여부에서 true 반환한다

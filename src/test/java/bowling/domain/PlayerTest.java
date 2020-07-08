@@ -18,7 +18,7 @@ class PlayerTest {
     @ParameterizedTest
     @MethodSource("source_getName_ReturnName")
     public void getName_ReturnName(String name) {
-        Player player = new Player(name);
+        Player player = new Player(1, name);
         assertThat(player.getName()).isEqualTo(name);
     }
 
@@ -33,7 +33,7 @@ class PlayerTest {
     @CsvSource(value = {"po", "honu", "crong", "jk"}, delimiter = ',')
     public void create_WithNameLengthNot3_ExceptionThrown(String name) {
         assertThatThrownBy(() -> {
-            new Player(name);
+            new Player(1, name);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }

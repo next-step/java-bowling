@@ -4,25 +4,29 @@ import bowling.domain.Frame;
 import bowling.domain.Pin;
 
 public class ResultView {
-    private static final String SHOT_FORMAT = "%s프레임 투구  : %s";
+    private static final String SHOT_FORMAT = "%s's turn : %s";
     private static final String BOARD_HEADER_FIRST_COLUMN = "| %4s |";
     private static final String NAME = "NAME";
     private static final String ROUND_FORMAT = "  %02d    |";
     private static final String RESULT_FORMAT = "  %-5s |";
 
-    public static void printNextPin(int frameNo, Pin nextPin) {
-        System.out.println(String.format(SHOT_FORMAT, frameNo, nextPin.getCount()));
+    public static void printNextPin(String playerName, Pin nextPin) {
+        System.out.println(String.format(SHOT_FORMAT, playerName, nextPin.getCount()));
     }
 
-    public static void printBoard(ResultFrameDto resultFrameDto) {
-        System.out.println(getHeaderRow());
-        System.out.println(getFramesRow(resultFrameDto));
-        System.out.println(generateScoreRow(resultFrameDto));
+    public static void printBoard(ResultFrameDtos resultFrameDtos) {
+        System.out.println(getHeaderRow(resultFrameDtos));
+        resultFrameDtos
+                .getResultFrameDto()
+                .forEach(dto -> {
+                    System.out.println(getFramesRow(dto));
+                    System.out.println(generateScoreRow(dto));
+                });
     }
 
-    private static String getHeaderRow() {
+    private static String getHeaderRow(ResultFrameDtos resultFrameDtos) {
         StringBuilder sb = new StringBuilder(String.format(BOARD_HEADER_FIRST_COLUMN, NAME));
-        for (int round = Frame.FIRST_FRAME; round <= Frame.FINAL_FRAME; round++) {
+        for (int round = resultFrameDtos.getFirstFrameNo(); round <= resultFrameDtos.getFinalFrameNo(); round++) {
             sb.append(String.format(ROUND_FORMAT, round));
         }
         return sb.toString();
@@ -37,7 +41,7 @@ public class ResultView {
 
     private static void fillShotHistory(ResultFrameDto resultFrameDto, StringBuilder sb) {
         resultFrameDto
-                .generateSymbolStrings("|")
+                .getSymbolStrings()
                 .forEach(s -> sb.append(String.format(RESULT_FORMAT, s)));
     }
 
@@ -50,7 +54,7 @@ public class ResultView {
     private static String generateScoreRow(ResultFrameDto resultFrameDto) {
         StringBuilder sb = new StringBuilder(String.format(BOARD_HEADER_FIRST_COLUMN, ""));
         resultFrameDto
-                .generateScoreStrings()
+                .getScoreStrings()
                 .forEach(score -> sb.append(String.format(RESULT_FORMAT, score)));
         fillEmpty(resultFrameDto, sb);
         return sb.toString();

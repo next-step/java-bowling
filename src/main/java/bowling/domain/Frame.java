@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,29 +22,35 @@ public abstract class Frame {
         return new NormalFrame(FIRST_FRAME);
     }
 
+    public static Frame middle(int frameNo) {
+        return new NormalFrame(frameNo);
+    }
+
+    public static Frame last() {
+        return new FinalFrame();
+    }
+
     public Frame next() {
         if (frameNo == FINAL_FRAME) {
             throw new IllegalArgumentException("10 Frame is last frame");
         }
         if (frameNo + 1 == FINAL_FRAME) {
-            nextFrame = FinalFrame.last();
+            nextFrame = Frame.last();
             return nextFrame;
         }
-        nextFrame = new NormalFrame(frameNo + 1);
+        nextFrame = Frame.middle(frameNo + 1);
         return nextFrame;
     }
 
-    public abstract FrameState bowling(Pin pin);
+    public ShotHistory getShotHistory() {
+        return pitch.getShotHistory();
+    }
 
-    public abstract ShotHistory getShotHistory();
+    public abstract State bowling(Pin pin);
 
     public abstract Score calculateScore();
 
     public abstract Score calculateBonusScore(Shot shot);
 
     public abstract boolean isGameEnd();
-
-    public Pitch getPitch() {
-        return pitch;
-    }
 }

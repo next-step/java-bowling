@@ -1,23 +1,20 @@
 package bowling.domain;
 
+import bowling.domain.state.State;
+
 public class NormalFrame extends Frame {
 
-    public NormalFrame(int frameNo) {
+    protected NormalFrame(int frameNo) {
         super(frameNo);
     }
 
     @Override
-    public FrameState bowling(Pin pin) {
+    public State bowling(Pin pin) {
         pitch.add(pin);
         if (pitch.isFinish()) {
-            return FrameState.ofNew();
+            return State.ofNew();
         }
-        return FrameState.ofNotFinish(pitch.getRemain());
-    }
-
-    @Override
-    public ShotHistory getShotHistory() {
-        return pitch.getShotHistory();
+        return State.ofSpare(pitch.getRemain());
     }
 
     @Override
@@ -41,7 +38,7 @@ public class NormalFrame extends Frame {
         }
 
         if (pitch.isFinish()) {
-            return Score.ofPitch(pitch).add(nextFrame.calculateBonusScore(Shot.SPARE));
+            return Score.ofScore(Score.ofPitch(pitch), nextFrame.calculateBonusScore(Shot.SPARE));
         }
 
         return Score.ofNull();

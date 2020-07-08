@@ -1,28 +1,34 @@
 package bowling;
 
 import bowling.domain.*;
+import bowling.domain.state.State;
 import bowling.ui.InputView;
-import bowling.ui.ResultFrameDto;
+import bowling.ui.ResultFrameDtos;
 import bowling.ui.ResultView;
 
 public class BowlingGame {
 
     public static void main(String[] args) {
         BowlingStrategy bowlingStrategy = new RandomBowlingStrategy();
-        Player player = new Player(InputView.getPlayerName());
-        Frames frames = new Frames(player);
+        MultiUserFrames multiUserFrames = new MultiUserFrames();
 
-        ResultView.printBoard(new ResultFrameDto(frames));
+        int playerCount = InputView.getPlayerCount();
+        for (int i = 0; i < playerCount; i++) {
+            Player player = new Player(i, InputView.getPlayerName());
+            multiUserFrames.addPlayer(player);
+        }
 
-        FrameState frameState = FrameState.ofNew();
+        ResultView.printBoard(new ResultFrameDtos(Frame.FIRST_FRAME, Frame.FINAL_FRAME, multiUserFrames));
+
+        State state = State.ofNew();
         while (true) {
-            Pin nextPin = bowlingStrategy.nextPin(frameState.getRemainPinCount());
-            ResultView.printNextPin(frames.getCurrentFrameNo(), nextPin);
+            Pin nextPin = bowlingStrategy.nextPin(state.getRemainPin());
+            ResultView.printNextPin(multiUserFrames.getCurrentPlayerName(), nextPin);
 
-            frameState = frames.bowling(nextPin);
-            ResultView.printBoard(new ResultFrameDto(frames));
+            state = multiUserFrames.bowling(nextPin);
+            ResultView.printBoard(new ResultFrameDtos(Frame.FIRST_FRAME, Frame.FINAL_FRAME, multiUserFrames));
 
-            if (frameState.isFinish()) {
+            if (multiUserFrames.isGameEnd()) {
                 break;
             }
         }
