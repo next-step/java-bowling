@@ -36,7 +36,7 @@ public class FrameScoreTest {
 
         assertThatThrownBy(frameScore::checkResult)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("두번째 투구의 점수");
+                .hasMessageContaining("결과를 확인");
     }
 
     @DisplayName("첫번째, 두번째 투구의 점수를 모두 입력하면 결과를 확인할 수 있다")
@@ -102,10 +102,9 @@ public class FrameScoreTest {
         FrameScore frameScore = FrameScore.create();
         frameScore.add(FIVE);
         frameScore.add(FIVE);
-        frameScore.add(FIVE);
 
-        Score totalScore = frameScore.calculateTotalScore();
+        Score totalScore = frameScore.sum();
 
-        assertThat(totalScore).isEqualTo(Score.ofTotal(15));
+        assertThat(totalScore).isEqualTo(Score.ofTotal(10));
     }
 }

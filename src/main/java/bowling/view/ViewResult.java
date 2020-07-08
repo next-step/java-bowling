@@ -1,8 +1,9 @@
 package bowling.view;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.score.FrameScore;
 import bowling.domain.score.Result;
 import bowling.domain.score.Score;
-import bowling.domain.score.FrameScore;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -46,29 +47,27 @@ public enum ViewResult {
                 .orElseThrow(() -> new IllegalArgumentException("프레임 결과에 해당하는 ViewResult가 없습니다"));
     }
 
-    public static String parseFrameScore(FrameScore frameScore) {
-        Optional<Score> first = frameScore.getFirst();
-        Optional<Score> second = frameScore.getSecond();
+    public static String parseFrameScore(Frame frame) {
+        FrameScore frameScore = frame.getFrameScore();
+        Optional<Score> bonusScore = frame.getBonusScore();
 
-        if (!first.isPresent()) {
+        if (frameScore.size() == 0) {
             return "        ";
         }
 
-        return second
-                .map(secondScore -> parseFirstAndSecond(frameScore.checkResult(), first.get(), secondScore))
-                .map(string -> string + parseBonus(frameScore))
-                .orElseGet(() -> String.format("   %s    ", first.get().getContent()));
+        if (frameScore.size() < FrameScore.SCORE_COUNT) {
+            return String.format("   %s    ", frameScore.getFirst().getContent());
+        }
+
+        String result = parseFirstAndSecond(frameScore.checkResult(), frameScore.getFirst(), frameScore.getSecond());
+
+        return bonusScore.map(b -> result + String.format(" + %d ", b.getContent()))
+                .orElse(result);
     }
 
     private static String parseFirstAndSecond(Result result, Score first, Score second) {
         ViewResult viewResult = findByResult(result);
         return viewResult.parseScore(first, second);
-    }
-
-    private static String parseBonus(FrameScore frameScore) {
-        return frameScore.getBonus()
-                .map(bonus -> String.format(" + %d ", bonus.getContent()))
-                .orElse("");
     }
 
     abstract String parseScore(Score first, Score second);

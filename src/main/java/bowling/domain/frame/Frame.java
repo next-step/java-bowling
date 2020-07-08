@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
-import bowling.domain.score.Score;
 import bowling.domain.score.FrameScore;
+import bowling.domain.score.Score;
 
 import java.util.Optional;
 
@@ -13,6 +13,8 @@ public interface Frame {
     void addScore(Score score);
 
     FrameScore getFrameScore();
+
+    Optional<Score> getBonusScore();
 
     Optional<Score> calculateTotalScore();
 

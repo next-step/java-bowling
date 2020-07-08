@@ -1,8 +1,9 @@
 package bowling.view;
 
 import bowling.application.BowlingGame;
-import bowling.domain.frame.Frames;
-import bowling.domain.player.Player;
+import bowling.domain.Board;
+import bowling.domain.Boards;
+import bowling.domain.player.Players;
 import bowling.domain.score.Score;
 
 public class BowlingGameController {
@@ -14,13 +15,16 @@ public class BowlingGameController {
     }
 
     public void playGame() {
-        Player player = InputView.askPlayer();
-        Frames frames = bowlingGame.startGame();
+        int playerCount = InputView.askPlayerCount();
+        Players players = InputView.askPlayers(playerCount);
 
-        while (frames.canAddMoreScore()) {
-            Score score = InputView.askScore(frames.getCurrentFrameIndex());
-            frames = bowlingGame.addScore(frames, score);
-            OutputView.printFrames(player, frames);
+        Boards boards = bowlingGame.startGame(players);
+
+        while (!boards.isAllBoardFinished()) {
+            Board currentBoard = boards.getCurrentBoard();
+            Score score = InputView.askScore(currentBoard.getPlayer());
+            bowlingGame.addScore(boards, score);
+            OutputView.printBoards(boards);
         }
     }
 }

@@ -57,6 +57,26 @@ public class FinalFrameTest {
                 Arguments.of(canAddMoreScore2, false));
     }
 
+    @DisplayName("미스면 점수를 더 기록할 수 없다")
+    @ParameterizedTest
+    @MethodSource("canAddMoreScore_missArguments")
+    void canAddMoreScore_miss(boolean canAddMoreScore, boolean expected) {
+        assertThat(canAddMoreScore).isEqualTo(expected);
+    }
+
+    public static Stream<Arguments> canAddMoreScore_missArguments() {
+        Frame frame = FinalFrame.create(1);
+        frame.addScore(Score.of(1));
+        boolean canAddMoreScore1 = frame.canAddMoreScore();
+
+        frame.addScore(Score.of(1));
+        boolean canAddMoreScore2 = frame.canAddMoreScore();
+
+        return Stream.of(
+                Arguments.of(canAddMoreScore1, true),
+                Arguments.of(canAddMoreScore2, false));
+    }
+
     @DisplayName("총 점수를 구한다")
     @Test
     void calculateTotalScore() {

@@ -30,7 +30,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean canAddMoreScore() {
-        return !frameScore.getFirst().isPresent() || !frameScore.getSecond().isPresent();
+        return frameScore.canAddMoreScore();
     }
 
     @Override
@@ -44,6 +44,11 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public Optional<Score> getBonusScore() {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<Score> calculateTotalScore() {
         if (!frameScore.canCheckResult()) {
             return Optional.empty();
@@ -52,7 +57,7 @@ public class NormalFrame implements Frame {
         Result result = frameScore.checkResult();
         FrameScore nextFrameScore = nextFrame.getFrameScore();
 
-        Score totalScore = result.calculateTotalScore(frameScore.calculateTotalScore(), nextFrameScore);
+        Score totalScore = result.calculateTotalScore(frameScore.sum(), nextFrameScore);
         return Optional.of(totalScore);
     }
 

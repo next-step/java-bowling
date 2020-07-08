@@ -1,19 +1,19 @@
 package bowling.domain.frame;
 
+import bowling.domain.score.FrameScore;
 import bowling.domain.score.Result;
 import bowling.domain.score.Score;
-import bowling.domain.score.FrameScore;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 public class FinalFrame implements Frame {
-
     private static final List<Result> BONUS_SCORE_RESULTS = Arrays.asList(Result.STRIKE, Result.SPARE);
 
     private final int index;
     private final FrameScore frameScore;
+    private Score bonusScore;
 
     private FinalFrame(int index) {
         this.index = index;
@@ -31,20 +31,24 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean canAddMoreScore() {
-        if (!frameScore.getFirst().isPresent() || !frameScore.getSecond().isPresent()) {
-            return true;
-        }
+        return frameScore.canAddMoreScore() || canAddBonusScore();
+    }
 
-        if (!frameScore.getBonus().isPresent() && BONUS_SCORE_RESULTS.contains(frameScore.checkResult())) {
-            return true;
-        }
-
-        return false;
+    private boolean canAddBonusScore() {
+        Result result = frameScore.checkResult();
+        return BONUS_SCORE_RESULTS.contains(result) && bonusScore == null;
     }
 
     @Override
     public void addScore(Score score) {
-        frameScore.add(score);
+        if (frameScore.canAddMoreScore()) {
+            frameScore.add(score);
+            return;
+        }
+
+        if (bonusScore == null) {
+            bonusScore = score;
+        }
     }
 
     @Override
@@ -53,12 +57,21 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public Optional<Score> getBonusScore() {
+        return Optional.ofNullable(bonusScore);
+    }
+
+    @Override
     public Optional<Score> calculateTotalScore() {
         if (!frameScore.canCheckResult()) {
             return Optional.empty();
         }
 
-        return Optional.ofNullable(frameScore.calculateTotalScore());
+        if (bonusScore == null) {
+            return Optional.of(frameScore.sum());
+        }
+
+        return Optional.of(frameScore.sum().add(bonusScore));
     }
 
     @Override

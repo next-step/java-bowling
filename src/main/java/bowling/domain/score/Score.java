@@ -6,6 +6,7 @@ public class Score {
 
     public static final Score MAX_SCORE = new Score(10);
     public static final Score MIN_SCORE = new Score(0);
+    public static final Score ZERO = new Score(0);
 
     private final int score;
 
