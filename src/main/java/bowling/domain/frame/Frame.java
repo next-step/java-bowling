@@ -4,6 +4,7 @@ import bowling.domain.rolling.Rollings;
 import bowling.domain.rolling.State;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Frame {
     Rollings rollingResults;
@@ -19,8 +20,8 @@ public abstract class Frame {
         return rollingResults.getStates();
     }
 
-    public int getScore() {
-        return score.getScore();
+    public Score getScore() {
+        return score;
     }
 
     public boolean isScoreCalculateDone() {
