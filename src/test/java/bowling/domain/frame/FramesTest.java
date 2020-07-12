@@ -44,7 +44,7 @@ public class FramesTest {
 
     @Test
     @DisplayName("Strike-Miss 시 첫번째 프레임 계산 미완료 상태")
-    public void calculateSuccess_whenStrikeMiss() {
+    public void calculateWhenStrikeMiss() {
         Frames frames = Frames.init();
         frames.play(10);
         frames.play(7);
@@ -55,7 +55,7 @@ public class FramesTest {
 
     @Test
     @DisplayName("Strike-Miss-Miss 시 두 프레임 계산 완료 상태")
-    public void calculateSuccess_whenStrikeMissMiss() {
+    public void calculateWhenStrikeMissMiss() {
         Frames frames = Frames.init();
         frames.play(10);
         frames.play(7);
@@ -70,7 +70,7 @@ public class FramesTest {
 
     @Test
     @DisplayName("Strike-Miss-Spare 시 첫번째 프레임 점수 계산 완료, 두번째 프레임 계산 미완료 상태")
-    public void calculateSuccess_whenStrikeMissSpare() {
+    public void calculateWhenStrikeMissSpare() {
         Frames frames = Frames.init();
         frames.play(10);
         frames.play(7);
@@ -85,7 +85,7 @@ public class FramesTest {
 
     @Test
     @DisplayName("Strike-Strike-Miss 시 첫번째 프레임 점수 계산 완료, 두번째 프레임 계산 미완료 상태")
-    public void calculateSuccess_whenStrikeStrikeMiss() {
+    public void calculateWhenStrikeStrikeMiss() {
         Frames frames = Frames.init();
         frames.play(10);
         frames.play(10);
@@ -100,7 +100,7 @@ public class FramesTest {
 
     @Test
     @DisplayName("Miss-Spare 시 계산 미완료 상태")
-    public void calculateSuccess_whenMissSpare() {
+    public void calculateWhenMissSpare() {
         Frames frames = Frames.init();
 
         frames.play(3);
@@ -112,7 +112,7 @@ public class FramesTest {
 
     @Test
     @DisplayName("Miss-Spare-Miss 시 두 프레임이 모두 점수 계산 및 계산 완료 상태")
-    public void calculateSuccess_whenMissSpareMiss() {
+    public void calculateWhenMissSpareMiss() {
         Frames frames = Frames.init();
 
         frames.play(3);
@@ -128,7 +128,7 @@ public class FramesTest {
 
     @Test
     @DisplayName("Miss-Miss 시 계산 완료 상태 확인")
-    public void calculateSuccess_whenMissMiss() {
+    public void calculateWhenMissMiss() {
         Frames frames = Frames.init();
         frames.play(3);
         frames.play(5);
@@ -139,7 +139,7 @@ public class FramesTest {
 
     @Test
     @DisplayName("Gutter-Gutter 시 계산 완료 상태 확인")
-    public void calculateSuccess_whenGutter() {
+    public void calculateWhenGutter() {
         Frames frames = Frames.init();
         frames.play(0);
         frames.play(0);
