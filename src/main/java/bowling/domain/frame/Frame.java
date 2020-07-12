@@ -36,10 +36,12 @@ public abstract class Frame {
     private void calculateByState(int score) {
         if (rollingResults.isState(State.STRIKE)) {
             this.score = Score.calculateStrike(score);
+            return;
         }
 
         if (rollingResults.isState(State.SPARE)) {
             this.score = Score.calculateSpare(score);
+            return;
         }
 
         this.score = Score.calculateNormal(score);

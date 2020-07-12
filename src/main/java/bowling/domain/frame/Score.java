@@ -24,11 +24,11 @@ public class Score {
     }
 
     static Score calculateStrike(int score) {
-        return new Score(score, SCORE_ADDABLE_COUNT_SPARE);
+        return new Score(score, SCORE_ADDABLE_COUNT_STRIKE);
     }
 
     static Score calculateSpare(int score) {
-        return new Score(score, SCORE_ADDABLE_COUNT_STRIKE);
+        return new Score(score, SCORE_ADDABLE_COUNT_SPARE);
     }
 
     static Score calculateNormal(int score) {
@@ -60,7 +60,7 @@ public class Score {
 
     public Score calculate(int knockedDownPinCount) {
         return new Score(this.score + knockedDownPinCount,
-                this.scoreAddableCount = SCORE_ADDABLE_COUNT_DIFFERENCE);
+                this.scoreAddableCount - SCORE_ADDABLE_COUNT_DIFFERENCE);
     }
 
     public void calculateAdditional(int knockedDownPinCount) {

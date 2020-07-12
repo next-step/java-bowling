@@ -87,7 +87,7 @@ public class Frames {
         }
 
         // 첫번쨰 프레임인 경우
-        if (lastCalculatedFrameIndex == LAST_CALCULATED_FRAME_INDEX_INITIAL) {
+        if (frameIndex == LAST_CALCULATED_FRAME_INDEX_INITIAL) {
             lastCalculatedFrame.calculateInitialScore();
 
             if (lastCalculatedFrame.isScoreCalculateDone()) {
@@ -124,6 +124,7 @@ public class Frames {
             lastCalculatedFrame.calculateScore(frames.get(index - 1));
             if (lastCalculatedFrame.isScoreCalculateDone()) {
                 ++lastCalculatedFrameIndex;
+                continue;
             }
 
             for (int j = index + 1; j <= frameIndex; j++) {
