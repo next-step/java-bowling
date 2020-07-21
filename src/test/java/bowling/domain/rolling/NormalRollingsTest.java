@@ -78,7 +78,7 @@ public class NormalRollingsTest {
     }
 
     @Test
-    @DisplayName("투구 2 추가 계산")
+    @DisplayName("투구 2회 추가 계산")
     public void calculateTwoAdditionalScoreOfAllRollings() {
         NormalRollings rollings = NormalRollings.init();
         rollings.roll(3);

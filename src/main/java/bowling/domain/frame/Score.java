@@ -30,6 +30,10 @@ public class Score {
         return new Score(score, SCORE_ADDABLE_COUNT_DEFAULT);
     }
 
+    public static Score newScore(int score, int scoreAddableCount) {
+        return new Score(score, scoreAddableCount);
+    }
+
     public static Score calculateScore(Score lastScore, State state, int knockedDownPinCount) {
         int addableCount = getAddableCount(state);
         int score = knockedDownPinCount;
@@ -67,7 +71,7 @@ public class Score {
         return scoreAddableCount == SCORE_ADDABLE_COUNT_DEFAULT;
     }
 
-    int getScore() {
+    public int getScore() {
         return score;
     }
 }
