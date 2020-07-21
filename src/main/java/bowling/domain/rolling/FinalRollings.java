@@ -83,9 +83,4 @@ public class FinalRollings implements Rollings {
     public void calculateAdditionalScore(Score score) {
 
     }
-
-    @Override
-    public void additionalScoreOfStrike(Score score) {
-
-    }
 }

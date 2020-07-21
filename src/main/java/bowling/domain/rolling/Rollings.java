@@ -12,5 +12,4 @@ public interface Rollings {
     int getLastScore();
     int calculateScore();
     void calculateAdditionalScore(Score score);
-    void additionalScoreOfStrike(Score score);
 }

@@ -123,9 +123,4 @@ public class NormalRollings implements Rollings {
             score.calculateAdditional(rollingList.get(i).getKnockedDownPinCount());
         }
     }
-
-    @Override
-    public void additionalScoreOfStrike(Score score) {
-        rollingList.forEach(rolling -> score.calculateAdditional(rolling.getKnockedDownPinCount()));
-    }
 }

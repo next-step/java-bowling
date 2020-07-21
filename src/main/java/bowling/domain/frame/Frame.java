@@ -4,7 +4,6 @@ import bowling.domain.rolling.Rollings;
 import bowling.domain.rolling.State;
 
 import java.util.List;
-import java.util.Objects;
 
 public abstract class Frame {
     Rollings rollingResults;

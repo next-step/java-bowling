@@ -64,21 +64,6 @@ public class Frames {
         return frameIndex + FRAME_DIFFERENCE_INDEX_COUNT;
     }
 
-    /*
-    이전 프레임의 점수 계산이 안끝난 경우 (lastCalculatedFrameIndex < frameIndex)
-        * 현재 프레임의 rolling 값을 더해줌
-        * scoreAddableCount 는 무조건 빼주기
-
-    현재 프레임의 점수를 계산해야 할 때 (lastCalculatedFrameIndex == frameIndex)
-        * 현재 프레임의 점수 계산
-            * spare/strike
-                * scoreAddableCount 세팅
-                * lastCalculatedFrameIndex 그대로
-            * 이외
-                * scoreAddableCount 세팅 X
-                * lastCalculatedFrameIndex 그대
-
-   * */
     private void calculateScore(int knockedDownPinCount) {
         Frame lastCalculatedFrame = frames.get(lastCalculatedFrameIndex);
 

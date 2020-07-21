@@ -5,7 +5,6 @@ import bowling.domain.rolling.State;
 import java.util.Objects;
 
 public class Score {
-    private static final int SCORE_ADDABLE_COUNT_INITIAL = 1;
     private static final int SCORE_ADDABLE_COUNT_DEFAULT = 0;
     private static final int SCORE_ADDABLE_COUNT_STRIKE = 2;
     private static final int SCORE_ADDABLE_COUNT_SPARE = 1;
@@ -17,10 +16,6 @@ public class Score {
     private Score(int score, int scoreAddableCount) {
         this.score = score;
         this.scoreAddableCount = scoreAddableCount;
-    }
-
-    public static Score newInstance(Score score) {
-        return new Score(score.score, SCORE_ADDABLE_COUNT_DEFAULT);
     }
 
     static Score calculateStrike(int score) {
@@ -36,7 +31,7 @@ public class Score {
     }
 
     public static Score calculateScore(Score lastScore, State state, int knockedDownPinCount) {
-        int addableCount = getAddableCount(lastScore, state);
+        int addableCount = getAddableCount(state);
         int score = knockedDownPinCount;
 
         if (!Objects.isNull(lastScore)) {
@@ -46,7 +41,7 @@ public class Score {
         return new Score(score, addableCount);
     }
 
-    private static int getAddableCount(Score score, State state) {
+    private static int getAddableCount(State state) {
         if (State.STRIKE.equals(state)) {
             return SCORE_ADDABLE_COUNT_STRIKE;
         }
@@ -74,10 +69,6 @@ public class Score {
 
     int getScore() {
         return score;
-    }
-
-    public int getScoreAddableCount() {
-        return scoreAddableCount;
     }
 }
 
