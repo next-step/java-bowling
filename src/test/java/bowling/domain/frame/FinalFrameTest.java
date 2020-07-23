@@ -21,7 +21,7 @@ public class FinalFrameTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 9})
-    @DisplayName("스트라이크 외엔 2번째 투구를 한다.")
+    @DisplayName("스트라이크 외엔 2번째 투구 진행")
     public void getNotStrikeFrame(int pinCount) {
         FinalFrame finalFrame = new FinalFrame();
 
