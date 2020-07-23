@@ -28,10 +28,10 @@ public class ScoreTest {
     @DisplayName("Strke 이후 두번 더 투구한 상황에서 점수 계산 종료 확인")
     public void needNextRollingResult_whenStatusStrikeAndRollingTwoTimes() {
         Score score1 = Score.calculateScore(null, State.STRIKE, 10);
-        score1.calculate(4);
-        score1.calculate(6);
+        Score score2 = score1.calculate(4);
+        Score result = score2.calculate(6);
 
-        assertThat(score1.isCalculateDone()).isTrue();
+        assertThat(result.isCalculateDone()).isTrue();
     }
 
     @Test
@@ -45,10 +45,10 @@ public class ScoreTest {
     @Test
     @DisplayName("Spare 이후 한번 더 투구한 상황에서 점수 계산 종료 확인")
     public void needNextRollingResult_whenStatusSpareAndRollingOneTime() {
-        Score score1 = Score.calculateScore(null, State.SPARE, 4);
-        score1.calculate(4);
+        Score score = Score.calculateScore(null, State.SPARE, 4);
+        Score result = score.calculate(4);
 
-        assertThat(score1.isCalculateDone()).isTrue();
+        assertThat(result.isCalculateDone()).isTrue();
     }
 
     @Test

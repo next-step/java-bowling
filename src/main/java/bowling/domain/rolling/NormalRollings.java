@@ -84,7 +84,6 @@ public class NormalRollings implements Rollings {
 
     @Override
     public boolean isState(State state) {
-        // TODO: 2020-07-12 여기 로직 확인
         if (rollingList.size() == ROLLING_COUNT_INITIAL_VALUE) {
             return false;
         }
