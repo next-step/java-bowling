@@ -15,11 +15,9 @@ public class Frames {
 
     private Frames() {
         frames = new ArrayList<>();
-
         for (int i = 1; i < COUNT_OF_FRAMES; i++) {
             frames.add(new NormalFrame());
         }
-
         frames.add(new FinalFrame());
 
         this.frameIndex = FRAME_INDEX_INITIAL;
@@ -66,60 +64,74 @@ public class Frames {
 
     private void calculateScore(int knockedDownPinCount) {
         Frame lastCalculatedFrame = frames.get(lastCalculatedFrameIndex);
-
         if (lastCalculatedFrame.isRollable()) {
             return;
         }
 
-        // 첫번쨰 프레임인 경우
-        if (frameIndex == LAST_CALCULATED_FRAME_INDEX_INITIAL) {
-            lastCalculatedFrame.calculateInitialScore();
+        calculateScore(knockedDownPinCount, lastCalculatedFrame);
+    }
 
-            if (lastCalculatedFrame.isScoreCalculateDone()) {
-                lastCalculatedFrameIndex++;
-            }
-
+    private void calculateScore(int knockedDownPinCount, Frame lastCalculatedFrame) {
+        if (!isAnyFrameNeedCalculateScore()) {
+            calculateScoreOfFrame(lastCalculatedFrame);
             return;
         }
 
-        // 현재 게임중인 프레임의 점수 계산
-        if (lastCalculatedFrameIndex == frameIndex) {
-            lastCalculatedFrame.calculateScore(frames.get(lastCalculatedFrameIndex - 1));
+        calculateRemainFrames(knockedDownPinCount, lastCalculatedFrame);
+    }
 
-            if (lastCalculatedFrame.isScoreCalculateDone()) {
-                lastCalculatedFrameIndex++;
-            }
+    private boolean isAnyFrameNeedCalculateScore() {
+        return frameIndex != LAST_CALCULATED_FRAME_INDEX_INITIAL
+                && lastCalculatedFrameIndex != frameIndex;
+    }
 
+    private void calculateScoreOfFrame(Frame frame) {
+        frame.calculateScore(getLastCalculatedFrame());
+        checkLastCalculateFrameIndex(frame);
+    }
+
+    private Frame getLastCalculatedFrame() {
+        if (lastCalculatedFrameIndex == LAST_CALCULATED_FRAME_INDEX_INITIAL) {
+            return null;
+        }
+
+        return frames.get(lastCalculatedFrameIndex - FRAME_DIFFERENCE_INDEX_COUNT);
+    }
+
+    private void checkLastCalculateFrameIndex(Frame frame) {
+        if (frame.isScoreCalculateDone()) {
+            ++lastCalculatedFrameIndex;
+        }
+    }
+
+    private void calculateRemainFrames(int knockedDownPinCount, Frame lastCalculatedFrame) {
+        calculateAdditionalScore(knockedDownPinCount, lastCalculatedFrame);
+
+        while (lastCalculatedFrameIndex <= frameIndex && lastCalculatedFrame.isScoreCalculateDone()) {
+            lastCalculatedFrame = frames.get(lastCalculatedFrameIndex);
+            calculateFrameBeforeCurrent(lastCalculatedFrameIndex, lastCalculatedFrame);
+        }
+    }
+
+    private void calculateFrameBeforeCurrent(int index, Frame lastCalculatedFrame) {
+        if (lastCalculatedFrame.isRollable()) {
             return;
         }
 
-        // 계산안된 프레임이 존재하는 경우
-        lastCalculatedFrame.addScore(knockedDownPinCount);
-        if (!lastCalculatedFrame.isScoreCalculateDone()) {
-            return;
-        }
+        calculateScoreOfFrame(lastCalculatedFrame);
+        calculateAdditionalScoreByNextFrame(index + FRAME_DIFFERENCE_INDEX_COUNT, lastCalculatedFrame);
+    }
 
-        ++lastCalculatedFrameIndex;
-        for (int index = lastCalculatedFrameIndex; index <= frameIndex; index++) {
-            lastCalculatedFrame = frames.get(index);
-            if (lastCalculatedFrame.isRollable()) {
-                break;
-            }
+    private void calculateAdditionalScore(int knockedDownPinCount, Frame frame) {
+        frame.addScore(knockedDownPinCount);
+        checkLastCalculateFrameIndex(frame);
+    }
 
-            lastCalculatedFrame.calculateScore(frames.get(index - 1));
-            if (lastCalculatedFrame.isScoreCalculateDone()) {
-                ++lastCalculatedFrameIndex;
-                continue;
-            }
+    private void calculateAdditionalScoreByNextFrame(int nextFrameIndex, Frame lastFrame) {
+        for (int j = nextFrameIndex; j <= frameIndex && !lastFrame.isScoreCalculateDone(); j++) {
+            Frame nextFrame = frames.get(j);
 
-            for (int j = index + 1; j <= frameIndex; j++) {
-                Frame nextFrame = frames.get(j);
-
-                nextFrame.addAdditionalScoreOfLastFrame(lastCalculatedFrame);
-                if (lastCalculatedFrame.isScoreCalculateDone()) {
-                    break;
-                }
-            }
+            nextFrame.addAdditionalScoreOfLastFrame(lastFrame);
         }
     }
 }
