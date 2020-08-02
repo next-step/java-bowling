@@ -1,5 +1,6 @@
 package bowling.domain.rolling;
 
+import bowling.domain.frame.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -88,5 +89,83 @@ public class FinalRollingsTest {
 
         assertThat(rollings.isState(State.STRIKE)).isTrue();
         assertThat(rollings.isRollingPossible()).isFalse();
+    }
+
+    @Test
+    @DisplayName("프레임의 일반 투구가 Gutter 일 떄 점수 계산")
+    public void checkCalculateScoreWhenGutter() {
+        int gutterPinCount = 0;
+        FinalRollings rollings = FinalRollings.init();
+        rollings.roll(gutterPinCount);
+
+        assertThat(rollings.calculateScore()).isEqualTo(gutterPinCount);
+    }
+
+    @Test
+    @DisplayName("프레임의 일반 투구가 Miss 일 떄 점수 계산")
+    public void checkCalculateScoreWhenMiss() {
+        int missPinCount = 6;
+        FinalRollings rollings = FinalRollings.init();
+        rollings.roll(missPinCount);
+
+        assertThat(rollings.calculateScore()).isEqualTo(missPinCount);
+    }
+
+    @Test
+    @DisplayName("프레임의 일반 투구가 Strike 일 떄 점수 계산")
+    public void checkCalculateScoreWhenStrike() {
+        FinalRollings rollings = FinalRollings.init();
+        rollings.roll(10);
+
+        assertThat(rollings.calculateScore()).isEqualTo(10);
+    }
+
+    @Test
+    @DisplayName("프레임의 일반 투구가 Spare 일 떄 점수 계산")
+    public void checkCalculateScoreWhenSpare() {
+        FinalRollings rollings = FinalRollings.init();
+        rollings.roll(2);
+        rollings.roll(8);
+
+        assertThat(rollings.calculateScore()).isEqualTo(10);
+    }
+
+    @ParameterizedTest
+    @DisplayName("프레임의 보너스 투구까지 완료 후 점수 계산 확인")
+    @ValueSource(ints = {0, 5, 10})
+    public void calculateScoreOfAllRollings(int knockedDownPinCount) {
+        int initialScore = 10;
+        FinalRollings rollings = FinalRollings.init();
+        rollings.roll(initialScore);
+        rollings.roll(knockedDownPinCount);
+
+        assertThat(rollings.calculateScore()).isEqualTo(initialScore + knockedDownPinCount);
+    }
+
+    @Test
+    @DisplayName("투구 1회 추가 계산")
+    public void calculateOneAdditionalScoreOfAllRollings() {
+        FinalRollings rollings = FinalRollings.init();
+        rollings.roll(3);
+
+        Score score = Score.newScore(2, 1);
+        rollings.calculateAdditionalScore(score);
+
+        assertThat(score.isCalculateDone()).isTrue();
+        assertThat(score.getScore()).isEqualTo(5);
+    }
+
+    @Test
+    @DisplayName("투구 2회 추가 계산")
+    public void calculateTwoAdditionalScoreOfAllRollings() {
+        FinalRollings rollings = FinalRollings.init();
+        rollings.roll(3);
+        rollings.roll(7);
+
+        Score score = Score.newScore(2, 2);
+        rollings.calculateAdditionalScore(score);
+
+        assertThat(score.isCalculateDone()).isTrue();
+        assertThat(score.getScore()).isEqualTo(12);
     }
 }
