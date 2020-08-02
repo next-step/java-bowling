@@ -8,25 +8,30 @@ import java.util.List;
 
 public class ResultView {
     private static final String FRAME_INFO_FORMAT = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    private static final String FRAME_EMPTY_INITIAL_FORMAT = "|      |";
+    private static final String FRAME_EMPTY_FIELD_FORMAT = "      |";
     private static final String FRAME_NAME_FORMAT = "|  %s |";
     private static final String FRAME_NAME_FORMAT_FULL_SIZE = "%6s|";
     private static final String FRAME_NAME_FORMAT_FILL_SIZE = "  %-4s|";
-    private static final String FRAME_NAME_FORMAT_EMPTY = "      |";
+    private static final String FRAME_SCORE_FORMAT = "  %-4d|";
     private static final String ROLLING_SPLITTER_FORMAT = "|";
     private static final int FRAME_STRING_SIZE = 5;
 
     public static void printFrame(Player player, Frames frames) {
         System.out.println(FRAME_INFO_FORMAT);
 
-        StringBuffer stringBuffer = new StringBuffer(String.format(FRAME_NAME_FORMAT, player.getName()));
+        StringBuffer userFrameStringBuffer = new StringBuffer(String.format(FRAME_NAME_FORMAT, player.getName()));
+        StringBuffer scoreStringBuffer = new StringBuffer(FRAME_EMPTY_INITIAL_FORMAT);
         List<Frame> frameList = frames.getFrames();
 
         for (Frame frame : frameList) {
-            addFrameState(stringBuffer, frame);
+            addFrameState(userFrameStringBuffer, frame);
+            addScoreState(scoreStringBuffer, frame);
         }
 
-        stringBuffer.append("\n");
-        System.out.println(stringBuffer.toString());
+        scoreStringBuffer.append("\n");
+        System.out.println(userFrameStringBuffer.toString());
+        System.out.println(scoreStringBuffer.toString());
     }
 
     private static void addFrameState(StringBuffer stringBuffer, Frame frame) {
@@ -38,10 +43,18 @@ public class ResultView {
         }
 
         if (statesFormat.isEmpty()) {
-            stringBuffer.append(FRAME_NAME_FORMAT_EMPTY);
+            stringBuffer.append(FRAME_EMPTY_FIELD_FORMAT);
             return;
         }
 
         stringBuffer.append(String.format(FRAME_NAME_FORMAT_FILL_SIZE, statesFormat));
+    }
+
+    private static void addScoreState(StringBuffer stringBuffer, Frame frame) {
+        String scoreFormat = frame.isScoreCalculateDone() ?
+                String.format(FRAME_SCORE_FORMAT, frame.getScore().getScore()) :
+                FRAME_EMPTY_FIELD_FORMAT;
+
+        stringBuffer.append(scoreFormat);
     }
 }
