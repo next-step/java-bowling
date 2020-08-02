@@ -19,18 +19,12 @@ public abstract class Frame {
         return rollingResults.getStates();
     }
 
-    public Score getScore() {
+    public Score getFrameScore() {
         return score;
     }
 
     public boolean isScoreCalculateDone() {
         return score != null && score.isCalculateDone();
-    }
-
-    public void calculateInitialScore() {
-        int score = rollingResults.calculateScore();
-
-        calculateByState(score);
     }
 
     private void calculateByState(int score) {
@@ -48,9 +42,15 @@ public abstract class Frame {
     }
 
     public void calculateScore(Frame lastFrame) {
-        int score = lastFrame.score.getScore() + rollingResults.calculateScore();
+        calculateByState(calculateScoreOfFrame(lastFrame));
+    }
 
-        calculateByState(score);
+    private int calculateScoreOfFrame(Frame lastFrame) {
+        if (lastFrame == null) {
+            return rollingResults.calculateScore();
+        }
+
+        return lastFrame.score.getScore() + rollingResults.calculateScore();
     }
 
     public void addScore(int knockedDownPinCount) {
