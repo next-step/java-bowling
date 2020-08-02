@@ -9,7 +9,6 @@ public interface Rollings {
     boolean isRollingPossible();
     boolean isState(State state);
     List<String> getStates();
-    int getLastScore();
     int calculateScore();
     void calculateAdditionalScore(Score score);
 }

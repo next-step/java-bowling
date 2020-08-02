@@ -104,12 +104,6 @@ public class NormalRollings implements Rollings {
     }
 
     @Override
-    public int getLastScore() {
-        return rollingList.get(rollingList.size() - 1)
-                .getKnockedDownPinCount();
-    }
-
-    @Override
     public int calculateScore() {
         return rollingList.stream()
                 .mapToInt(Rolling::getKnockedDownPinCount)

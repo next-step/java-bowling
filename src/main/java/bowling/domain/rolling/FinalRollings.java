@@ -65,16 +65,6 @@ public class FinalRollings implements Rollings {
     }
 
     @Override
-    public int getLastScore() {
-        if (!Objects.isNull(bonusRolling)) {
-            return bonusRolling.getKnockedDownPinCount();
-        }
-
-        return normalRollings.getLastScore();
-    }
-
-
-    @Override
     public int calculateScore() {
         return normalRollings.calculateScore() + bonusRolling.getKnockedDownPinCount();
     }
