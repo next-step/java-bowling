@@ -4,6 +4,7 @@ import bowling.common.exception.InvalidThrowBallException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,5 +52,44 @@ public class FinalFrameTest {
         assertThatExceptionOfType(InvalidThrowBallException.class).isThrownBy(
                 () -> finalFrame.rollingBall(2)
         );
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"10,0", "10,2", "10,10"})
+    @DisplayName("Strike 후 보너스 투구까지 점수 계산")
+    public void calculateScoreOfStrikeFrameWithBonus(int firstPinCount, int secondPinCount) {
+        FinalFrame finalFrame = new FinalFrame();
+
+        finalFrame.rollingBall(firstPinCount);
+        finalFrame.rollingBall(secondPinCount);
+
+        finalFrame.calculateScore(null);
+        assertThat(finalFrame.getFrameScore()).isEqualTo(firstPinCount + secondPinCount);
+    }
+
+    @Test
+    @DisplayName("Spare 후 보너스 투구까지 점수 계산")
+    public void calculateScoreOfSpareFrameWithBonus() {
+        FinalFrame finalFrame = new FinalFrame();
+
+        finalFrame.rollingBall(4);
+        finalFrame.rollingBall(6);
+        finalFrame.rollingBall(5);
+
+        finalFrame.calculateScore(null);
+        assertThat(finalFrame.getFrameScore()).isEqualTo(15);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"0,0", "0,8", "3,5", "9,0"})
+    @DisplayName("Miss/Gutter 점수 계산")
+    public void calculateScoreOfMissFrameWithBonus(int firstPinCount, int secondPinCount) {
+        FinalFrame finalFrame = new FinalFrame();
+
+        finalFrame.rollingBall(firstPinCount);
+        finalFrame.rollingBall(secondPinCount);
+
+        finalFrame.calculateScore(null);
+        assertThat(finalFrame.getFrameScore()).isEqualTo(firstPinCount + secondPinCount);
     }
 }
