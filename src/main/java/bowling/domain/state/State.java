@@ -36,10 +36,6 @@ public abstract class State {
             throw new RollingPinCountException(KNOCKED_DOWN_PIN_EXCEPTION_MESSAGE);
         }
 
-        if (!rollings.isRollingPossible()) {
-            throw new InvalidThrowBallException();
-        }
-
         boolean isRollStarted = rollings.isRollingStarted();
         rollings.roll(knockedDownPinCount);
 
@@ -49,7 +45,7 @@ public abstract class State {
     private State checkStateByPinCount(int knockedDownPinCount, boolean isRollingStarted) {
         int nextRemainPinCount = checkNextRemainPinCount(knockedDownPinCount);
 
-        if (!isRollingStarted && remainPinCount == PIN_COUNT_INITIAL && knockedDownPinCount == PIN_COUNT_INITIAL) {
+        if (!isRollingStarted && remainPinCount == PIN_COUNT_INITIAL && knockedDownPinCount == remainPinCount) {
             return new Strike(rollings, nextRemainPinCount);
         }
 
@@ -67,10 +63,14 @@ public abstract class State {
     private int checkNextRemainPinCount(int knockedDownPinCount) {
         int nextRemainPinCount = remainPinCount - knockedDownPinCount;
 
-        if (nextRemainPinCount == 0 && rollings instanceof FinalRollings && rollings.isRollingPossible()) {
+        if (nextRemainPinCount == 0 && isTurnToBonusRolling()) {
             return PIN_COUNT_INITIAL;
         }
         return nextRemainPinCount;
+    }
+
+    private boolean isTurnToBonusRolling() {
+        return rollings instanceof FinalRollings && rollings.isRollingPossible();
     }
 
     public abstract Score calculateScore();
