@@ -83,7 +83,7 @@ public class FinalFrameTest {
     @ParameterizedTest
     @CsvSource(value = {"0,0", "0,8", "3,5", "9,0"})
     @DisplayName("Miss/Gutter 점수 계산")
-    public void calculateScoreOfMissFrameWithBonus(int firstPinCount, int secondPinCount) {
+    public void calculateScoreOfMissFrame(int firstPinCount, int secondPinCount) {
         FinalFrame finalFrame = new FinalFrame();
 
         finalFrame.rollingBall(firstPinCount);
