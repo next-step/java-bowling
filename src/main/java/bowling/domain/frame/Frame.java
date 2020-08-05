@@ -19,8 +19,8 @@ public abstract class Frame {
         return rollingResults.getStates();
     }
 
-    public Score getFrameScore() {
-        return score;
+    public int getFrameScore() {
+        return score.getScore();
     }
 
     public boolean isScoreCalculateDone() {
@@ -50,7 +50,7 @@ public abstract class Frame {
             return rollingResults.calculateScore();
         }
 
-        return lastFrame.score.getScore() + rollingResults.calculateScore();
+        return lastFrame.getFrameScore() + rollingResults.calculateScore();
     }
 
     public void addScore(int knockedDownPinCount) {

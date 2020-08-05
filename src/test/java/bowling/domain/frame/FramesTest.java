@@ -49,7 +49,7 @@ public class FramesTest {
         frames.play(10);
         frames.play(7);
 
-        assertThat(frames.getFrames().get(0).getFrameScore().getScore()).isEqualTo(17);
+        assertThat(frames.getFrames().get(0).getFrameScore()).isEqualTo(17);
         assertThat(frames.getFrames().get(0).isScoreCalculateDone()).isFalse();
     }
 
@@ -61,10 +61,10 @@ public class FramesTest {
         frames.play(7);
         frames.play(2);
 
-        assertThat(frames.getFrames().get(0).getFrameScore().getScore()).isEqualTo(19);
+        assertThat(frames.getFrames().get(0).getFrameScore()).isEqualTo(19);
         assertThat(frames.getFrames().get(0).isScoreCalculateDone()).isTrue();
 
-        assertThat(frames.getFrames().get(1).getFrameScore().getScore()).isEqualTo(28);
+        assertThat(frames.getFrames().get(1).getFrameScore()).isEqualTo(28);
         assertThat(frames.getFrames().get(1).isScoreCalculateDone()).isTrue();
     }
 
@@ -76,10 +76,10 @@ public class FramesTest {
         frames.play(7);
         frames.play(3);
 
-        assertThat(frames.getFrames().get(0).getFrameScore().getScore()).isEqualTo(20);
+        assertThat(frames.getFrames().get(0).getFrameScore()).isEqualTo(20);
         assertThat(frames.getFrames().get(0).isScoreCalculateDone()).isTrue();
 
-        assertThat(frames.getFrames().get(1).getFrameScore().getScore()).isEqualTo(30);
+        assertThat(frames.getFrames().get(1).getFrameScore()).isEqualTo(30);
         assertThat(frames.getFrames().get(1).isScoreCalculateDone()).isFalse();
     }
 
@@ -91,10 +91,10 @@ public class FramesTest {
         frames.play(10);
         frames.play(3);
 
-        assertThat(frames.getFrames().get(0).getFrameScore().getScore()).isEqualTo(23);
+        assertThat(frames.getFrames().get(0).getFrameScore()).isEqualTo(23);
         assertThat(frames.getFrames().get(0).isScoreCalculateDone()).isTrue();
 
-        assertThat(frames.getFrames().get(1).getFrameScore().getScore()).isEqualTo(36);
+        assertThat(frames.getFrames().get(1).getFrameScore()).isEqualTo(36);
         assertThat(frames.getFrames().get(1).isScoreCalculateDone()).isFalse();
     }
 
@@ -106,7 +106,7 @@ public class FramesTest {
         frames.play(3);
         frames.play(7);
 
-        assertThat(frames.getFrames().get(0).getFrameScore().getScore()).isEqualTo(10);
+        assertThat(frames.getFrames().get(0).getFrameScore()).isEqualTo(10);
         assertThat(frames.getFrames().get(0).isScoreCalculateDone()).isFalse();
     }
 
@@ -119,7 +119,7 @@ public class FramesTest {
         frames.play(7);
         frames.play(7);
 
-        assertThat(frames.getFrames().get(0).getFrameScore().getScore()).isEqualTo(17);
+        assertThat(frames.getFrames().get(0).getFrameScore()).isEqualTo(17);
         assertThat(frames.getFrames().get(0).isScoreCalculateDone()).isTrue();
 
         assertThat(frames.getFrames().get(1).getFrameScore()).isNull();
@@ -132,7 +132,7 @@ public class FramesTest {
         frames.play(3);
         frames.play(5);
 
-        assertThat(frames.getFrames().get(0).getFrameScore().getScore()).isEqualTo(8);
+        assertThat(frames.getFrames().get(0).getFrameScore()).isEqualTo(8);
         assertThat(frames.getFrames().get(0).isScoreCalculateDone()).isTrue();
     }
 
@@ -143,7 +143,7 @@ public class FramesTest {
         frames.play(0);
         frames.play(0);
 
-        assertThat(frames.getFrames().get(0).getFrameScore().getScore()).isEqualTo(0);
+        assertThat(frames.getFrames().get(0).getFrameScore()).isEqualTo(0);
         assertThat(frames.getFrames().get(0).isScoreCalculateDone()).isTrue();
     }
 }
