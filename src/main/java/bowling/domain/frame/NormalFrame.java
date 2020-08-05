@@ -1,14 +1,14 @@
 package bowling.domain.frame;
 
-import bowling.domain.rolling.NormalRollings;
+import bowling.domain.state.InitialState;
 
 public class NormalFrame extends Frame {
     public NormalFrame() {
-        this.rollingResults = NormalRollings.init();
+        state = new InitialState(false);
     }
 
     @Override
-    public void rollingBall(int pinCount) {
-        this.rollingResults.roll(pinCount);
+    public void rollingBall(int knockedDownPinCount) {
+        state = state.roll(knockedDownPinCount);
     }
 }

@@ -1,6 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domain.rolling.State;
+import bowling.domain.state.StateFormat;
 
 import java.util.Objects;
 
@@ -18,15 +18,15 @@ public class Score {
         this.scoreAddableCount = scoreAddableCount;
     }
 
-    static Score calculateStrike(int score) {
+    public static Score calculateStrike(int score) {
         return new Score(score, SCORE_ADDABLE_COUNT_STRIKE);
     }
 
-    static Score calculateSpare(int score) {
+    public static Score calculateSpare(int score) {
         return new Score(score, SCORE_ADDABLE_COUNT_SPARE);
     }
 
-    static Score calculateNormal(int score) {
+    public static Score calculateNormal(int score) {
         return new Score(score, SCORE_ADDABLE_COUNT_DEFAULT);
     }
 
@@ -34,8 +34,8 @@ public class Score {
         return new Score(score, scoreAddableCount);
     }
 
-    public static Score calculateScore(Score lastScore, State state, int knockedDownPinCount) {
-        int addableCount = getAddableCount(state);
+    public static Score calculateScore(Score lastScore, StateFormat stateFormat, int knockedDownPinCount) {
+        int addableCount = getAddableCount(stateFormat);
         int score = knockedDownPinCount;
 
         if (!Objects.isNull(lastScore)) {
@@ -45,12 +45,12 @@ public class Score {
         return new Score(score, addableCount);
     }
 
-    private static int getAddableCount(State state) {
-        if (State.STRIKE.equals(state)) {
+    private static int getAddableCount(StateFormat stateFormat) {
+        if (StateFormat.STRIKE.equals(stateFormat)) {
             return SCORE_ADDABLE_COUNT_STRIKE;
         }
 
-        if (State.SPARE.equals(state)) {
+        if (StateFormat.SPARE.equals(stateFormat)) {
             return SCORE_ADDABLE_COUNT_SPARE;
         }
 

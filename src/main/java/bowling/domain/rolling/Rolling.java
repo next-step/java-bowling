@@ -1,22 +1,24 @@
 package bowling.domain.rolling;
 
+import bowling.domain.state.StateFormat;
+
 public class Rolling {
     private static final int PIN_COUNT_MAX = 10;
 
-    private final State state;
+    private final StateFormat stateFormat;
     private final int knockedDownPinCount;
 
-    Rolling(State state, int knockedDownPinCount) {
-        this.state = state;
+    Rolling(StateFormat stateFormat, int knockedDownPinCount) {
+        this.stateFormat = stateFormat;
         this.knockedDownPinCount = knockedDownPinCount;
     }
 
-    State getState() {
-        return state;
+    StateFormat getStateFormat() {
+        return stateFormat;
     }
 
-    boolean isState(State state) {
-        return this.state == state;
+    boolean isState(StateFormat stateFormat) {
+        return stateFormat == stateFormat;
     }
 
     int getRemainPinCount() {
@@ -27,7 +29,7 @@ public class Rolling {
         return knockedDownPinCount;
     }
 
-    String getStateFormat() {
-        return state.getState(knockedDownPinCount);
+    String getStateFormatValue() {
+        return stateFormat.getState(knockedDownPinCount);
     }
 }

@@ -1,22 +1,21 @@
 package bowling.domain.frame;
 
-import bowling.domain.rolling.Rollings;
-import bowling.domain.rolling.State;
+import bowling.domain.state.State;
 
 import java.util.List;
 
 public abstract class Frame {
-    Rollings rollingResults;
+    State state;
     Score score;
 
-    public abstract void rollingBall(int pinCount);
+    public abstract void rollingBall(int knockedDownPinCount);
 
-    public boolean isRollable() {
-        return rollingResults.isRollingPossible();
+    public boolean isRollingPossible() {
+        return state.isRollingPossible();
     }
 
     public List<String> getStates() {
-        return rollingResults.getStates();
+        return state.getStates();
     }
 
     public int getFrameScore() {
@@ -27,30 +26,13 @@ public abstract class Frame {
         return score != null && score.isCalculateDone();
     }
 
-    private void calculateByState(int score) {
-        if (rollingResults.isState(State.STRIKE)) {
-            this.score = Score.calculateStrike(score);
-            return;
-        }
-
-        if (rollingResults.isState(State.SPARE)) {
-            this.score = Score.calculateSpare(score);
-            return;
-        }
-
-        this.score = Score.calculateNormal(score);
-    }
-
     public void calculateScore(Frame lastFrame) {
-        calculateByState(calculateScoreOfFrame(lastFrame));
-    }
-
-    private int calculateScoreOfFrame(Frame lastFrame) {
         if (lastFrame == null) {
-            return rollingResults.calculateScore();
+            this.score = state.calculateScore();
+            return;
         }
 
-        return lastFrame.getFrameScore() + rollingResults.calculateScore();
+        this.score = state.calculateScore(lastFrame.getFrameScore());
     }
 
     public void addScore(int knockedDownPinCount) {
@@ -58,6 +40,6 @@ public abstract class Frame {
     }
 
     public void addAdditionalScoreOfLastFrame(Frame lastFrame) {
-        rollingResults.calculateAdditionalScore(lastFrame.score);
+        state.calculateAdditionalScore(lastFrame.score);
     }
 }

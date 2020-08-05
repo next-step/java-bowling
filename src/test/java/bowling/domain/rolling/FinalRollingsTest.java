@@ -1,6 +1,7 @@
 package bowling.domain.rolling;
 
 import bowling.domain.frame.Score;
+import bowling.domain.state.StateFormat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +16,7 @@ public class FinalRollingsTest {
         FinalRollings rollings = FinalRollings.init();
         rollings.roll(10);
 
-        assertThat(rollings.isState(State.STRIKE)).isTrue();
+        assertThat(rollings.isState(StateFormat.STRIKE)).isTrue();
     }
 
     @Test
@@ -24,7 +25,7 @@ public class FinalRollingsTest {
         FinalRollings rollings = FinalRollings.init();
         rollings.roll(0);
 
-        assertThat(rollings.isState(State.GUTTER)).isTrue();
+        assertThat(rollings.isState(StateFormat.GUTTER)).isTrue();
     }
 
     @Test
@@ -34,7 +35,7 @@ public class FinalRollingsTest {
         rollings.roll(3);
         rollings.roll(7);
 
-        assertThat(rollings.isState(State.SPARE)).isTrue();
+        assertThat(rollings.isState(StateFormat.SPARE)).isTrue();
     }
 
     @ParameterizedTest
@@ -44,7 +45,7 @@ public class FinalRollingsTest {
         FinalRollings rollings = FinalRollings.init();
         rollings.roll(knockedPinCount);
 
-        assertThat(rollings.isState(State.MISS)).isTrue();
+        assertThat(rollings.isState(StateFormat.MISS)).isTrue();
     }
 
     @ParameterizedTest
@@ -55,7 +56,7 @@ public class FinalRollingsTest {
         rollings.roll(3);
         rollings.roll(knockedPinCount);
 
-        assertThat(rollings.isState(State.MISS)).isTrue();
+        assertThat(rollings.isState(StateFormat.MISS)).isTrue();
     }
 
     @Test
@@ -65,7 +66,7 @@ public class FinalRollingsTest {
         rollings.roll(10);
         rollings.roll(3);
 
-        assertThat(rollings.isState(State.MISS)).isTrue();
+        assertThat(rollings.isState(StateFormat.MISS)).isTrue();
         assertThat(rollings.isRollingPossible()).isFalse();
     }
 
@@ -76,7 +77,7 @@ public class FinalRollingsTest {
         rollings.roll(10);
         rollings.roll(0);
 
-        assertThat(rollings.isState(State.GUTTER)).isTrue();
+        assertThat(rollings.isState(StateFormat.GUTTER)).isTrue();
         assertThat(rollings.isRollingPossible()).isFalse();
     }
 
@@ -87,7 +88,7 @@ public class FinalRollingsTest {
         rollings.roll(10);
         rollings.roll(10);
 
-        assertThat(rollings.isState(State.STRIKE)).isTrue();
+        assertThat(rollings.isState(StateFormat.STRIKE)).isTrue();
         assertThat(rollings.isRollingPossible()).isFalse();
     }
 

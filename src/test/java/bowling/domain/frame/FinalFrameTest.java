@@ -16,7 +16,7 @@ public class FinalFrameTest {
         FinalFrame finalFrame = new FinalFrame();
 
         finalFrame.rollingBall(10);
-        assertThat(finalFrame.isRollable()).isTrue();
+        assertThat(finalFrame.isRollingPossible()).isTrue();
     }
 
     @ParameterizedTest
@@ -26,7 +26,7 @@ public class FinalFrameTest {
         FinalFrame finalFrame = new FinalFrame();
 
         finalFrame.rollingBall(pinCount);
-        assertThat(finalFrame.isRollable()).isTrue();
+        assertThat(finalFrame.isRollingPossible()).isTrue();
     }
 
     @Test
@@ -36,7 +36,7 @@ public class FinalFrameTest {
 
         finalFrame.rollingBall(2);
         finalFrame.rollingBall(8);
-        assertThat(finalFrame.isRollable()).isTrue();
+        assertThat(finalFrame.isRollingPossible()).isTrue();
     }
 
     @ParameterizedTest

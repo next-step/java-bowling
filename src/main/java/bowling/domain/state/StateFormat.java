@@ -1,6 +1,6 @@
-package bowling.domain.rolling;
+package bowling.domain.state;
 
-public enum State {
+public enum StateFormat {
     STRIKE("X"),
     SPARE("/"),
     MISS("%d"),
@@ -11,12 +11,12 @@ public enum State {
 
     private String frameFormat;
 
-    State(String frameFormat) {
+    StateFormat(String frameFormat) {
         this.frameFormat = frameFormat;
     }
 
-    public static final State valueOf(int remainPinCount,
-                                      int knockedDownPinCount) {
+    public static final StateFormat valueOf(int remainPinCount,
+                                            int knockedDownPinCount) {
         if (remainPinCount == knockedDownPinCount) {
             return SPARE;
         }
@@ -32,7 +32,7 @@ public enum State {
         return MISS;
     }
 
-    public static final State valueOf(int knockedDownPinCount) {
+    public static final StateFormat valueOf(int knockedDownPinCount) {
         if (knockedDownPinCount == PIN_COUNT_GUTTER) {
             return GUTTER;
         }

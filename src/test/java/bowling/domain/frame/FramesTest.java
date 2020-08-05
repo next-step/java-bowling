@@ -122,7 +122,7 @@ public class FramesTest {
         assertThat(frames.getFrames().get(0).getFrameScore()).isEqualTo(17);
         assertThat(frames.getFrames().get(0).isScoreCalculateDone()).isTrue();
 
-        assertThat(frames.getFrames().get(1).getFrameScore()).isNull();
+        assertThat(frames.getFrames().get(1).isScoreCalculateDone()).isFalse();
     }
 
     @Test

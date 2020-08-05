@@ -16,7 +16,7 @@ public class NormalFrameTest {
         NormalFrame normalFrame = new NormalFrame();
 
         normalFrame.rollingBall(10);
-        assertThat(normalFrame.isRollable()).isFalse();
+        assertThat(normalFrame.isRollingPossible()).isFalse();
     }
 
     @ParameterizedTest
@@ -26,7 +26,7 @@ public class NormalFrameTest {
         NormalFrame normalFrame = new NormalFrame();
 
         normalFrame.rollingBall(pinCount);
-        assertThat(normalFrame.isRollable()).isTrue();
+        assertThat(normalFrame.isRollingPossible()).isTrue();
     }
 
     @Test
@@ -36,7 +36,7 @@ public class NormalFrameTest {
 
         normalFrame.rollingBall(2);
         normalFrame.rollingBall(2);
-        assertThat(normalFrame.isRollable()).isFalse();
+        assertThat(normalFrame.isRollingPossible()).isFalse();
     }
 
     @Test

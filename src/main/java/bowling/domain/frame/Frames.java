@@ -20,8 +20,8 @@ public class Frames {
         }
         frames.add(new FinalFrame());
 
-        this.frameIndex = FRAME_INDEX_INITIAL;
-        this.lastCalculatedFrameIndex = LAST_CALCULATED_FRAME_INDEX_INITIAL;
+        frameIndex = FRAME_INDEX_INITIAL;
+        lastCalculatedFrameIndex = LAST_CALCULATED_FRAME_INDEX_INITIAL;
     }
 
     public static Frames init() {
@@ -45,7 +45,7 @@ public class Frames {
             return false;
         }
 
-        return frames.get(frameIndex).isRollable();
+        return frames.get(frameIndex).isRollingPossible();
     }
 
     public void play(int knockedDownPinCount) {
@@ -53,7 +53,7 @@ public class Frames {
         currentFrame.rollingBall(knockedDownPinCount);
         calculateScore(knockedDownPinCount);
 
-        if (!currentFrame.isRollable()) {
+        if (!currentFrame.isRollingPossible()) {
             ++frameIndex;
         }
     }
@@ -64,7 +64,7 @@ public class Frames {
 
     private void calculateScore(int knockedDownPinCount) {
         Frame lastCalculatedFrame = frames.get(lastCalculatedFrameIndex);
-        if (lastCalculatedFrame.isRollable()) {
+        if (lastCalculatedFrame.isRollingPossible()) {
             return;
         }
 
@@ -114,7 +114,7 @@ public class Frames {
     }
 
     private void calculateFrameBeforeCurrent(int index, Frame lastCalculatedFrame) {
-        if (lastCalculatedFrame.isRollable()) {
+        if (lastCalculatedFrame.isRollingPossible()) {
             return;
         }
 

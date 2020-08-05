@@ -1,20 +1,19 @@
 package bowling.domain.frame;
 
 import bowling.common.exception.InvalidThrowBallException;
-import bowling.domain.rolling.FinalRollings;
+import bowling.domain.state.InitialState;
 
 public class FinalFrame extends Frame {
     public FinalFrame() {
-        this.rollingResults = FinalRollings.init();
+        state = new InitialState(true);
     }
 
     @Override
-    public void rollingBall(int pinCount) {
-        if (!rollingResults.isRollingPossible()) {
+    public void rollingBall(int knockedDownPinCount) {
+        if (!state.isRollingPossible()) {
             throw new InvalidThrowBallException();
         }
 
-        rollingResults.roll(pinCount);
+        state = state.roll(knockedDownPinCount);
     }
-
 }

@@ -1,9 +1,9 @@
 package bowling.domain.rolling;
 
 import bowling.domain.frame.Score;
+import bowling.domain.state.StateFormat;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class FinalRollings implements Rollings {
@@ -27,20 +27,18 @@ public class FinalRollings implements Rollings {
             return;
         }
 
-        if (normalRollings.isStrikeOrSpare()) {
-            setBonusRolling(pinCount);
-        }
+        setBonusRolling(pinCount);
     }
 
     private void setBonusRolling(int pinCount) {
-        State state = State.valueOf(pinCount);
-        bonusRolling = Optional.of(new Rolling(state, pinCount));
+        StateFormat stateFormat = StateFormat.valueOf(pinCount);
+        bonusRolling = Optional.of(new Rolling(stateFormat, pinCount));
     }
 
     @Override
-    public boolean isState(State state) {
-        return bonusRolling.map(rolling -> rolling.isState(state))
-                .orElseGet(() -> normalRollings.isState(state));
+    public boolean isState(StateFormat stateFormat) {
+        return bonusRolling.map(rolling -> rolling.isState(stateFormat))
+                .orElseGet(() -> normalRollings.isState(stateFormat));
     }
 
     @Override
@@ -58,7 +56,7 @@ public class FinalRollings implements Rollings {
         List<String> states = normalRollings.getStates();
 
         bonusRolling.ifPresent(
-                rolling -> states.add(rolling.getStateFormat())
+                rolling -> states.add(rolling.getStateFormatValue())
         );
 
         return states;

@@ -53,13 +53,13 @@ public class ResultView {
 
     private static void addScoreState(StringBuffer stringBuffer, Frame frame) {
         String scoreFormat = isFrameScoreCanPrint(frame) ?
-                String.format(FRAME_SCORE_FORMAT, frame.getFrameScore().getScore()) :
+                String.format(FRAME_SCORE_FORMAT, frame.getFrameScore()) :
                 FRAME_EMPTY_FIELD_FORMAT;
 
         stringBuffer.append(scoreFormat);
     }
 
     private static boolean isFrameScoreCanPrint(Frame frame) {
-        return frame.isScoreCalculateDone() || (frame instanceof FinalFrame && !frame.isRollable());
+        return frame.isScoreCalculateDone() || (frame instanceof FinalFrame && !frame.isRollingPossible());
     }
 }

@@ -2,6 +2,7 @@ package bowling.domain.rolling;
 
 import bowling.common.exception.InvalidThrowBallException;
 import bowling.domain.frame.Score;
+import bowling.domain.state.StateFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,8 @@ public class NormalRollings implements Rollings {
     }
 
     private void setFirstRolling(int pinCount) {
-        State state = State.valueOf(pinCount);
-        Rolling rolling = new Rolling(state, pinCount);
+        StateFormat stateFormat = StateFormat.valueOf(pinCount);
+        Rolling rolling = new Rolling(stateFormat, pinCount);
 
         rollingList.add(rolling);
     }
@@ -46,8 +47,8 @@ public class NormalRollings implements Rollings {
     private void setSecondRolling(int pinCount) {
         int remainPinCount = rollingList.get(getCurrentRollingIndex())
                 .getRemainPinCount();
-        State state = State.valueOf(remainPinCount, pinCount);
-        Rolling rolling = new Rolling(state, pinCount);
+        StateFormat stateFormat = StateFormat.valueOf(remainPinCount, pinCount);
+        Rolling rolling = new Rolling(stateFormat, pinCount);
 
         rollingList.add(rolling);
     }
@@ -78,18 +79,18 @@ public class NormalRollings implements Rollings {
             return false;
         }
 
-        State lastRollingState = rollingList.get(getCurrentRollingIndex()).getState();
-        return lastRollingState == State.STRIKE || lastRollingState == State.SPARE;
+        StateFormat lastRollingStateFormat = rollingList.get(getCurrentRollingIndex()).getStateFormat();
+        return lastRollingStateFormat == StateFormat.STRIKE || lastRollingStateFormat == StateFormat.SPARE;
     }
 
     @Override
-    public boolean isState(State state) {
+    public boolean isState(StateFormat stateFormat) {
         if (rollingList.size() == ROLLING_COUNT_INITIAL_VALUE) {
             return false;
         }
 
         Rolling lastRolling = rollingList.get(getCurrentRollingIndex());
-        return lastRolling.isState(state);
+        return lastRolling.isState(stateFormat);
     }
 
     private int getCurrentRollingIndex() {
@@ -99,7 +100,7 @@ public class NormalRollings implements Rollings {
     @Override
     public List<String> getStates() {
         return rollingList.stream()
-                .map(Rolling::getStateFormat)
+                .map(Rolling::getStateFormatValue)
                 .collect(Collectors.toList());
     }
 
