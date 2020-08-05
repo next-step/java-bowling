@@ -37,6 +37,19 @@ public class NormalRollings implements Rollings {
         setSecondRolling(pinCount);
     }
 
+    private boolean isRollingEnd() {
+        if (rollingList.size() >= ROLLING_COUNT_MAX_VALUE) {
+            return true;
+        }
+
+        return isStrikeOrSpare();
+    }
+
+    @Override
+    public boolean isRollingStarted() {
+        return rollingList.size() > ROLLING_COUNT_INITIAL_VALUE;
+    }
+
     private void setFirstRolling(int pinCount) {
         StateFormat stateFormat = StateFormat.valueOf(pinCount);
         Rolling rolling = new Rolling(stateFormat, pinCount);
@@ -61,19 +74,6 @@ public class NormalRollings implements Rollings {
 
         return !isRollingEnd();
     }
-
-    private boolean isRollingStarted() {
-        return rollingList.size() > ROLLING_COUNT_INITIAL_VALUE;
-    }
-
-    private boolean isRollingEnd() {
-        if (rollingList.size() >= ROLLING_COUNT_MAX_VALUE) {
-            return true;
-        }
-
-        return isStrikeOrSpare();
-    }
-
     public boolean isStrikeOrSpare() {
         if (!isRollingStarted()) {
             return false;

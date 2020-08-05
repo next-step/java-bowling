@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class State {
     public static String KNOCKED_DOWN_PIN_EXCEPTION_MESSAGE = "남은 핀의 수 보다 많은 핀을 쓰러트릴 수 없습니다!";
     public static int PIN_COUNT_INITIAL = 10;
-    public static int PIN_COUNT_GUTTER = 10;
+    public static int PIN_COUNT_GUTTER = 0;
 
     Rollings rollings;
     int remainPinCount;
@@ -37,18 +37,19 @@ public abstract class State {
         }
 
         if (!rollings.isRollingPossible()) {
-            throw new InvalidThrowBallException();  // TODO: 2020/08/06 다른 예외처리로 변경할 것
+            throw new InvalidThrowBallException();
         }
 
+        boolean isRollStarted = rollings.isRollingStarted();
         rollings.roll(knockedDownPinCount);
 
-        return checkStateByPinCount(knockedDownPinCount);
+        return checkStateByPinCount(knockedDownPinCount, isRollStarted);
     }
 
-    private State checkStateByPinCount(int knockedDownPinCount) {
+    private State checkStateByPinCount(int knockedDownPinCount, boolean isRollingStarted) {
         int nextRemainPinCount = checkNextRemainPinCount(knockedDownPinCount);
 
-        if (remainPinCount == PIN_COUNT_INITIAL && knockedDownPinCount == PIN_COUNT_INITIAL) {
+        if (!isRollingStarted && remainPinCount == PIN_COUNT_INITIAL && knockedDownPinCount == PIN_COUNT_INITIAL) {
             return new Strike(rollings, nextRemainPinCount);
         }
 

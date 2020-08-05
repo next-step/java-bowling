@@ -8,6 +8,7 @@ import java.util.List;
 public interface Rollings {
     void roll(int pinCount);
     boolean isRollingPossible();
+    boolean isRollingStarted();
     boolean isState(StateFormat stateFormat);
     List<String> getStates();
     int calculateScore();

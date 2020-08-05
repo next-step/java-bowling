@@ -52,6 +52,12 @@ public class FinalRollings implements Rollings {
     }
 
     @Override
+    public boolean isRollingStarted() {
+        return !normalRollings.isRollingStarted() ||
+                isRollingPossible();
+    }
+
+    @Override
     public List<String> getStates() {
         List<String> states = normalRollings.getStates();
 
