@@ -45,7 +45,7 @@ public abstract class State {
     private State checkStateByPinCount(int knockedDownPinCount, boolean isRollingStarted) {
         int nextRemainPinCount = checkNextRemainPinCount(knockedDownPinCount);
 
-        if (!isRollingStarted && remainPinCount == PIN_COUNT_INITIAL && knockedDownPinCount == remainPinCount) {
+        if (isStrike(knockedDownPinCount, isRollingStarted)) {
             return new Strike(rollings, nextRemainPinCount);
         }
 
@@ -69,6 +69,10 @@ public abstract class State {
         return nextRemainPinCount;
     }
 
+    private boolean isStrike(int knockedDownPinCount, boolean isRollingStarted) {
+        return !isRollingStarted && remainPinCount == PIN_COUNT_INITIAL && knockedDownPinCount == remainPinCount;
+    }
+
     private boolean isTurnToBonusRolling() {
         return rollings instanceof FinalRollings && rollings.isRollingPossible();
     }
@@ -76,15 +80,15 @@ public abstract class State {
     public abstract Score calculateScore();
     public abstract Score calculateScore(int lastFrameScore);
 
+    public void calculateAdditionalScore(Score score) {
+        rollings.calculateAdditionalScore(score);
+    }
+
     public boolean isRollingPossible() {
         return rollings.isRollingPossible();
     }
 
     public List<String> getStates() {
         return rollings.getStates();
-    }
-
-    public void calculateAdditionalScore(Score score) {
-        rollings.calculateAdditionalScore(score);
     }
 }
