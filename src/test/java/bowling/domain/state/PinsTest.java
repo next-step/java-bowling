@@ -2,13 +2,11 @@ package bowling.domain.state;
 
 import bowling.domian.state.Pins;
 import bowling.domian.state.exception.InvalidPinCountException;
-import org.hibernate.annotations.Source;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Value;
 
 import static org.assertj.core.api.Assertions.*;
 
