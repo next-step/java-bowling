@@ -6,30 +6,35 @@ public class Pins {
     private static int MIN_PIN_COUNT = 0;
     private static int MAX_PIN_COUNT = 10;
 
-    private int falledPinCount;
+    private final int falledPinCount;
 
     private Pins(int falledPinCount) {
         this.falledPinCount = falledPinCount;
     }
 
     public static Pins bowl(int pinCount) {
-        if (pinCount < MIN_PIN_COUNT || pinCount > MAX_PIN_COUNT) {
+        if (!isValidPinCount(pinCount)) {
             throw new InvalidPinCountException();
         }
 
         return new Pins(pinCount);
     }
 
-    public Pins secondBowl(int pinCount) {
-        if (pinCount < MIN_PIN_COUNT || pinCount > MAX_PIN_COUNT) {
-            throw new InvalidPinCountException();
-        }
+    private static boolean isValidPinCount(int pinCount) {
+        return pinCount >= MIN_PIN_COUNT && pinCount <= MAX_PIN_COUNT;
+    }
 
-        if (this.falledPinCount + pinCount > MAX_PIN_COUNT) {
+    public Pins secondBowl(int pinCount) {
+        if (!isValidSecondBowl(pinCount)) {
             throw new InvalidPinCountException();
         }
 
         return new Pins(pinCount);
+    }
+
+    private boolean isValidSecondBowl(int secondPinCount) {
+        return isValidPinCount(secondPinCount) &&
+                this.falledPinCount + secondPinCount <= MAX_PIN_COUNT;
     }
 
     public boolean isStrike() {
