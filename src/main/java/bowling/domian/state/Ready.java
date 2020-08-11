@@ -8,7 +8,7 @@ public class Ready implements State {
             return new Strike();
         }
 
-        return new FirstBowl();
+        return new FirstBowl(pins);
     }
 
     public boolean isBowlPossible() {
