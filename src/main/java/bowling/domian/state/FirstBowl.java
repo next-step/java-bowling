@@ -1,15 +1,23 @@
 package bowling.domian.state;
 
 public class FirstBowl implements State {
-    public FirstBowl(Pins bowl) {
+    private final Pins firstPins;
 
+    public FirstBowl(Pins pins) {
+        this.firstPins = pins;
     }
 
     public State bowl(int falledPinsCount) {
-        return new FirstBowl(Pins.bowl(falledPinsCount));
+        Pins secondPins = firstPins.secondBowl(falledPinsCount);
+
+        if (secondPins.isSpare(firstPins)) {
+            return new Spare();
+        }
+
+        return new Miss();
     }
 
     public boolean isFinished() {
-        return true;
+        return false;
     }
 }

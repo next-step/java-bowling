@@ -24,6 +24,7 @@ public class Pins {
         return pinCount >= MIN_PIN_COUNT && pinCount <= MAX_PIN_COUNT;
     }
 
+    // TODO: 2020/08/12 네이밍 변경하면 좋을 듯
     public Pins secondBowl(int pinCount) {
         if (!isValidSecondBowl(pinCount)) {
             throw new InvalidPinCountException();
