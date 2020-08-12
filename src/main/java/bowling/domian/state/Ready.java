@@ -11,7 +11,7 @@ public class Ready implements State {
         return new FirstBowl(pins);
     }
 
-    public boolean isBowlPossible() {
-        return true;
+    public boolean isFinished() {
+        return false;
     }
 }

@@ -17,10 +17,10 @@ public class ReadyTest {
 
     @Test
     @DisplayName("투구 가능 여부 확인")
-    public void isBowlPossible() {
+    public void isFinished() {
         Ready ready = new Ready();
 
-        assertThat(ready.isBowlPossible()).isTrue();
+        assertThat(ready.isFinished()).isFalse();
     }
 
     @Test
