@@ -5,4 +5,8 @@ public class Miss implements State {
     public State bowl(int falledPinsCount) {
         return null;
     }
+
+    public boolean isFinished() {
+        return false;
+    }
 }
