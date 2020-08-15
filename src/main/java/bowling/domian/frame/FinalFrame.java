@@ -11,4 +11,8 @@ public class FinalFrame implements Frame {
     public Frame bowl(int falledPinsCount) {
         return null;
     }
+
+    public boolean isFrameEnd() {
+        return false;
+    }
 }
