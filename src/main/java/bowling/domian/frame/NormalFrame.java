@@ -1,16 +1,37 @@
 package bowling.domian.frame;
 
+import bowling.domian.state.Ready;
+import bowling.domian.state.State;
+
 public class NormalFrame implements Frame {
+    private final int frameNumber;
+    private State state;
+
+    private NormalFrame(int frameNumber) {
+        this.frameNumber = frameNumber;
+        this.state = new Ready();
+    }
+
     public static NormalFrame firstFrame() {
-        return new NormalFrame();
+        return new NormalFrame(1);
     }
 
     public int getFrameNumber() {
-        return -1;
+        return frameNumber;
     }
 
     public Frame bowl(int falledPinsCount) {
+        State nextState = state.bowl(falledPinsCount);
 
-        return null;
+        if (nextState.isFinished()) {
+            if (frameNumber < 9) {
+                return new NormalFrame(frameNumber + 1);
+            }
+
+            return new FinalFrame();
+        }
+
+        this.state = nextState;
+        return this;
     }
 }

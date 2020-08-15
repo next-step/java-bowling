@@ -1,9 +1,10 @@
 package bowling.domian.frame;
 
 public class FinalFrame implements Frame {
+    private static final int FINAL_FRAME_NUMBER = 10;
     @Override
     public int getFrameNumber() {
-        return 0;
+        return FINAL_FRAME_NUMBER;
     }
 
     @Override
