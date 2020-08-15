@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class FinalFameTest {
+public class FinalFrameTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 9})
