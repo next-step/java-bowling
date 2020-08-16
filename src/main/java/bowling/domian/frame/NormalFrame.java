@@ -24,15 +24,18 @@ public class NormalFrame implements Frame {
         State nextState = state.bowl(falledPinsCount);
 
         if (nextState.isFinished()) {
-            // TODO: 2020/08/15 리팩토링
-            if (frameNumber < 9) {
-                return new NormalFrame(frameNumber + 1);
-            }
-
-            return new FinalFrame();
+            return getNextFrame();
         }
 
         this.state = nextState;
         return this;
+    }
+
+    private Frame getNextFrame() {
+        if (frameNumber < 9) {
+            return new NormalFrame(frameNumber + 1);
+        }
+
+        return new FinalFrame();
     }
 }
