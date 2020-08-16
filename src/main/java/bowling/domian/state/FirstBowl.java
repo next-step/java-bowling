@@ -14,7 +14,7 @@ public class FirstBowl implements State {
             return new Spare();
         }
 
-        return new Miss();
+        return new Miss(firstPins, secondPins);
     }
 
     public boolean isFinished() {
