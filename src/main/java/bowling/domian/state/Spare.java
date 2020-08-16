@@ -1,9 +1,13 @@
 package bowling.domian.state;
 
+import bowling.domian.frame.Score;
 import bowling.domian.state.exception.BowlFinishedException;
 
 public class Spare implements State {
     private static final String BOWL_FINISHED_EXCEPTION_MSG = "Spare 후에는 투구가 불가능 합니다!";
+
+    public Spare(Pins firstPins, Pins secondPins) {
+    }
 
     @Override
     public State bowl(int falledPinsCount) {
@@ -12,5 +16,17 @@ public class Spare implements State {
 
     public boolean isFinished() {
         return true;
+    }
+
+    public boolean canGetScore() {
+        return false;
+    }
+
+    public Score getScore() {
+        return null;
+    }
+
+    public Score calculateAdditional(Score score) {
+        return null;
     }
 }

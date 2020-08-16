@@ -11,7 +11,7 @@ public class FirstBowl implements State {
         Pins secondPins = firstPins.secondBowl(falledPinsCount);
 
         if (secondPins.isSpare(firstPins)) {
-            return new Spare();
+            return new Spare(firstPins, secondPins);
         }
 
         return new Miss(firstPins, secondPins);
