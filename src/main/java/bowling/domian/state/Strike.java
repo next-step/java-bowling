@@ -1,5 +1,6 @@
 package bowling.domian.state;
 
+import bowling.domian.frame.Score;
 import bowling.domian.state.exception.BowlFinishedException;
 
 public class Strike implements State {
@@ -12,5 +13,18 @@ public class Strike implements State {
 
     public boolean isFinished() {
         return true;
+    }
+
+    @Override
+    public boolean canGetScore() {
+        return false;
+    }
+
+    public Score getScore() {
+        return null;
+    }
+
+    public Score calculateAdditional(Score score) {
+        return null;
     }
 }

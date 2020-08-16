@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domian.frame.Score;
 import bowling.domian.state.Strike;
 import bowling.domian.state.exception.BowlFinishedException;
 import org.junit.Test;
@@ -28,5 +29,32 @@ public class StrikeTest {
         assertThatExceptionOfType(BowlFinishedException.class).isThrownBy(
                 () -> strike.bowl(falledPinsCount)
         );
+    }
+
+    @Test
+    @DisplayName("점수 계산 가능 확인")
+    public void canGetScore() {
+        Strike strike = new Strike();
+
+        assertThat(strike.canGetScore()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수 계산 테스트")
+    public void getScore() {
+        Strike strike = new Strike();
+
+        assertThat(strike.getScore().getScore()).isEqualTo(10);
+    }
+
+    @Test
+    @DisplayName("점수 추가 계산 테스트")
+    public void calculateAdditionalScore() {
+        Strike strike = new Strike();
+
+        Score score = Score.strike();
+
+        assertThat(strike.calculateAdditional(score).getScore()).isEqualTo(20);
+        assertThat(score.isCalculateDone()).isFalse();
     }
 }

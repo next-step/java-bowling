@@ -20,4 +20,9 @@ public class FirstBowl implements State {
     public boolean isFinished() {
         return false;
     }
+
+    @Override
+    public boolean canGetScore() {
+        return false;
+    }
 }
