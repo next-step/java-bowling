@@ -30,6 +30,14 @@ public class MissTest {
     }
 
     @Test
+    @DisplayName("점수 계산 가능 확인")
+    public void canGetScore() {
+        Miss miss = new Miss(Pins.bowl(1), Pins.bowl(3));
+
+        assertThat(miss.canGetScore()).isTrue();
+    }
+
+    @Test
     @DisplayName("점수 계산 테스트")
     public void getScore() {
         Miss miss = new Miss(Pins.bowl(1), Pins.bowl(3));

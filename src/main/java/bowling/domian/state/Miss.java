@@ -36,4 +36,8 @@ public class Miss implements State {
 
         return score;
     }
+
+    public boolean canGetScore() {
+        return false;
+    }
 }

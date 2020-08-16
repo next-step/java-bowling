@@ -1,9 +1,7 @@
 package bowling.domain.state;
 
-import bowling.domian.state.FirstBowl;
-import bowling.domian.state.Ready;
-import bowling.domian.state.State;
-import bowling.domian.state.Strike;
+import bowling.domian.frame.exception.InvalidScoreCalculateException;
+import bowling.domian.state.*;
 import bowling.domian.state.exception.InvalidPinCountException;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -55,4 +53,21 @@ public class ReadyTest {
         );
     }
 
+    @Test
+    @DisplayName("점수 계산 가능 확인")
+    public void canGetScore() {
+        Ready ready = new Ready();
+
+        assertThat(ready.canGetScore()).isFalse();
+    }
+
+    @Test
+    @DisplayName("점수 계산 예외 확인")
+    public void getScoreThrowException() {
+        Ready ready = new Ready();
+
+        assertThatExceptionOfType(InvalidScoreCalculateException.class).isThrownBy(
+                () -> ready.getScore()
+        );
+    }
 }
