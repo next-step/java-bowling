@@ -17,14 +17,16 @@ public class Strike implements State {
 
     @Override
     public boolean canGetScore() {
-        return false;
+        return true;
     }
 
     public Score getScore() {
-        return null;
+        return Score.strike();
     }
 
     public Score calculateAdditional(Score score) {
-        return null;
+        score = score.additionalBowl(10);
+
+        return score;
     }
 }
