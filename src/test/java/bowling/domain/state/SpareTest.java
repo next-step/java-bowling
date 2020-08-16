@@ -57,4 +57,12 @@ public class SpareTest {
 
         assertThat(spare.calculateAdditional(score).getScore()).isEqualTo(20);
     }
+
+    @Test
+    @DisplayName("점수 출력 형식 확인")
+    public void getResult() {
+        Spare spare = new Spare(Pins.bowl(3), Pins.bowl(7));
+
+        assertThat(spare.getDesc()).isEqualTo("3|7");
+    }
 }

@@ -73,4 +73,12 @@ public class ReadyTest {
                 () -> ready.getScore()
         );
     }
+
+    @Test
+    @DisplayName("점수 출력 형식 확인")
+    public void getResult() {
+        Ready ready = new Ready();
+
+        assertThat(ready.getDesc()).isEqualTo("");
+    }
 }

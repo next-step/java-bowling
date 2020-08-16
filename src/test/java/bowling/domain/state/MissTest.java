@@ -53,4 +53,12 @@ public class MissTest {
 
         assertThat(miss.calculateAdditional(score).getScore()).isEqualTo(14);
     }
+
+    @Test
+    @DisplayName("점수 출력 형식 확인")
+    public void getResult() {
+        Miss miss = new Miss(Pins.bowl(1), Pins.bowl(3));
+
+        assertThat(miss.getDesc()).isEqualTo("1|3");
+    }
 }

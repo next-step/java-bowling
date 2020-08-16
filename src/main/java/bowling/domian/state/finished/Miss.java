@@ -28,4 +28,9 @@ public class Miss extends Finished {
 
         return lastScore;
     }
+
+    @Override
+    public String getDesc() {
+        return null;
+    }
 }

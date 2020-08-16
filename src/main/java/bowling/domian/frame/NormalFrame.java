@@ -38,4 +38,6 @@ public class NormalFrame implements Frame {
 
         return new FinalFrame();
     }
+
+
 }

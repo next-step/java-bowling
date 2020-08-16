@@ -57,4 +57,12 @@ public class StrikeTest {
         assertThat(strike.calculateAdditional(score).getScore()).isEqualTo(20);
         assertThat(score.isCalculateDone()).isFalse();
     }
+
+    @Test
+    @DisplayName("점수 출력 형식 확인")
+    public void getResult() {
+        Strike strike = new Strike();
+
+        assertThat(strike.getDesc()).isEqualTo("X");
+    }
 }

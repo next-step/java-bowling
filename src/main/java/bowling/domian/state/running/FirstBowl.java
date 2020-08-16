@@ -31,4 +31,9 @@ public class FirstBowl extends Running {
 
         return lastScore;
     }
+
+    @Override
+    public String getDesc() {
+        return null;
+    }
 }

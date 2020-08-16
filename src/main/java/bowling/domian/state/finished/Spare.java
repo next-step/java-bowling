@@ -27,4 +27,9 @@ public class Spare extends Finished {
 
         return score;
     }
+
+    @Override
+    public String getDesc() {
+        return null;
+    }
 }

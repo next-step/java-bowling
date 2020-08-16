@@ -56,4 +56,14 @@ public class FirstBowlTest {
 
         assertThat(state instanceof Miss).isTrue();
     }
+
+    @Test
+    @DisplayName("점수 출력 형식 확인")
+    public void getResult() {
+        int falledPinsCount = 4;
+
+        FirstBowl firstBowl = new FirstBowl(Pins.bowl(falledPinsCount));
+
+        assertThat(firstBowl.getDesc()).isEqualTo(String.valueOf(falledPinsCount));
+    }
 }

@@ -24,4 +24,9 @@ public class Ready extends Running {
     public Score calculateAdditional(Score lastScore) {
         throw new InvalidScoreCalculateException(GET_SCORE_IMPOSSIBLE_ERROR_MESSAGE);
     }
+
+    @Override
+    public String getDesc() {
+        return null;
+    }
 }

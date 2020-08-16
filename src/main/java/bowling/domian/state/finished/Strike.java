@@ -14,4 +14,8 @@ public class Strike extends Finished {
 
         return score;
     }
+
+    public String getDesc() {
+        return null;
+    }
 }
