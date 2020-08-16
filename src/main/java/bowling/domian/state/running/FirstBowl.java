@@ -34,6 +34,6 @@ public class FirstBowl extends Running {
 
     @Override
     public String getDesc() {
-        return String.valueOf(firstPins.getPinsCount());
+        return firstPins.getDesc();
     }
 }

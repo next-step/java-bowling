@@ -4,23 +4,22 @@ import bowling.domian.frame.Score;
 import bowling.domian.state.Pins;
 
 public class Miss extends Finished {
-    // TODO: 2020-08-17 변수명 리팩토링 
-    private Pins first;
+    private Pins firstPins;
     private Pins second;
 
-    public Miss(Pins first, Pins second) {
-        this.first = first;
+    public Miss(Pins firstPins, Pins second) {
+        this.firstPins = firstPins;
         this.second = second;
     }
 
     @Override
     public Score getScore() {
-        return Score.miss(first.totalPinsCount(second));
+        return Score.miss(firstPins.totalPinsCount(second));
     }
 
     @Override
     public Score calculateAdditional(Score lastScore) {
-        lastScore = first.addScore(lastScore);
+        lastScore = firstPins.addScore(lastScore);
 
         if (!lastScore.isCalculateDone()) {
             lastScore = second.addScore(lastScore);
@@ -31,6 +30,6 @@ public class Miss extends Finished {
 
     @Override
     public String getDesc() {
-        return first.getPinsCount() + "|" + second.getPinsCount();
+        return firstPins.getDesc(second);
     }
 }

@@ -39,6 +39,10 @@ public class Pins {
                 this.falledPinCount + secondPinCount <= MAX_PIN_COUNT;
     }
 
+    public boolean isGutter() {
+        return this.falledPinCount == MIN_PIN_COUNT;
+    }
+
     public boolean isStrike() {
         return this.falledPinCount == MAX_PIN_COUNT;
     }
@@ -59,7 +63,23 @@ public class Pins {
         return score.additionalBowl(this.falledPinCount);
     }
 
-    public int getPinsCount() {
-        return falledPinCount;
+    public String getDesc() {
+        if (isStrike()) {
+            return "X";
+        }
+
+        if (isGutter()) {
+            return "-";
+        }
+
+        return String.valueOf(falledPinCount);
+    }
+
+    public String getDesc(Pins secondPins) {
+        if (isSpare(secondPins)) {
+            return getDesc() + "|/";
+        }
+
+        return getDesc() + "|" + secondPins.getDesc();
     }
 }
