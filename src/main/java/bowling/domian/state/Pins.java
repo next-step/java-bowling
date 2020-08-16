@@ -1,5 +1,6 @@
 package bowling.domian.state;
 
+import bowling.domian.frame.Score;
 import bowling.domian.state.exception.InvalidPinCountException;
 
 public class Pins {
@@ -54,7 +55,7 @@ public class Pins {
         return this.falledPinCount + secondPins.falledPinCount;
     }
 
-    public int getPinsCount() {
-        return falledPinCount;
+    public Score addScore(Score score) {
+        return score.additionalBowl(this.falledPinCount);
     }
 }

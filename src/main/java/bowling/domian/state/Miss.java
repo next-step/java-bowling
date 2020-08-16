@@ -28,10 +28,10 @@ public class Miss implements State {
     }
 
     public Score calculateAdditional(Score score) {
-        score = score.additionalBowl(first.getPinsCount());
+        score = first.addScore(score);
 
         if (!score.isCalculateDone()) {
-            score = score.additionalBowl(second.getPinsCount());
+            score = second.addScore(score);
         }
 
         return score;
