@@ -49,4 +49,8 @@ public class Pins {
     public boolean isMiss(Pins secondPins) {
         return this.falledPinCount + secondPins.falledPinCount < MAX_PIN_COUNT;
     }
+
+    public int totalPinsCount(Pins secondPins) {
+        return this.falledPinCount;
+    }
 }

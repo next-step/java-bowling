@@ -57,4 +57,13 @@ public class PinsTest {
 
         assertThat(first.isMiss(second)).isTrue();
     }
+
+    @Test
+    @DisplayName("두 투구 결과 쓰진 편의 갯수 계산")
+    public void checkMissPinCount() {
+        Pins first = Pins.bowl(3);
+        Pins second = first.secondBowl(4);
+
+        assertThat(first.totalPinsCount(second)).isEqualTo(7);
+    }
 }
