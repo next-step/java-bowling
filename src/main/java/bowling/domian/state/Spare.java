@@ -6,7 +6,12 @@ import bowling.domian.state.exception.BowlFinishedException;
 public class Spare implements State {
     private static final String BOWL_FINISHED_EXCEPTION_MSG = "Spare 후에는 투구가 불가능 합니다!";
 
+    private Pins firstPins;
+    private Pins secondPins;
+
     public Spare(Pins firstPins, Pins secondPins) {
+        this.firstPins= firstPins;
+        this.secondPins = secondPins;
     }
 
     @Override
@@ -19,14 +24,20 @@ public class Spare implements State {
     }
 
     public boolean canGetScore() {
-        return false;
+        return true;
     }
 
     public Score getScore() {
-        return null;
+        return Score.spare();
     }
 
     public Score calculateAdditional(Score score) {
-        return null;
+        score = firstPins.addScore(score);
+
+        if (!score.isCalculateDone()) {
+            score = secondPins.addScore(score);
+        }
+
+        return score;
     }
 }
