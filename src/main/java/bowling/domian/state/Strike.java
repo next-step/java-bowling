@@ -11,6 +11,7 @@ public class Strike implements State {
         throw new BowlFinishedException(BOWL_FINISHED_EXCEPTION_MSG);
     }
 
+    @Override
     public boolean isFinished() {
         return true;
     }
@@ -20,10 +21,12 @@ public class Strike implements State {
         return true;
     }
 
+    @Override
     public Score getScore() {
         return Score.strike();
     }
 
+    @Override
     public Score calculateAdditional(Score score) {
         score = score.additionalBowl(10);
 

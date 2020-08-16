@@ -19,25 +19,29 @@ public class Miss implements State {
         throw new BowlFinishedException(BOWL_FINISHED_EXCEPTION_MSG);
     }
 
+    @Override
     public boolean isFinished() {
         return true;
     }
 
+    @Override
+    public boolean canGetScore() {
+        return false;
+    }
+
+    @Override
     public Score getScore() {
         return Score.miss(first.totalPinsCount(second));
     }
 
-    public Score calculateAdditional(Score score) {
-        score = first.addScore(score);
+    @Override
+    public Score calculateAdditional(Score lastScore) {
+        lastScore = first.addScore(lastScore);
 
-        if (!score.isCalculateDone()) {
-            score = second.addScore(score);
+        if (!lastScore.isCalculateDone()) {
+            lastScore = second.addScore(lastScore);
         }
 
-        return score;
-    }
-
-    public boolean canGetScore() {
-        return false;
+        return lastScore;
     }
 }

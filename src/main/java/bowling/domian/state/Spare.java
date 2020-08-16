@@ -19,18 +19,22 @@ public class Spare implements State {
         throw new BowlFinishedException(BOWL_FINISHED_EXCEPTION_MSG);
     }
 
+    @Override
     public boolean isFinished() {
         return true;
     }
 
+    @Override
     public boolean canGetScore() {
         return true;
     }
 
+    @Override
     public Score getScore() {
         return Score.spare();
     }
 
+    @Override
     public Score calculateAdditional(Score score) {
         score = firstPins.addScore(score);
 
