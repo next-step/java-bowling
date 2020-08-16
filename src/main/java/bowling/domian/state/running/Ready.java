@@ -27,6 +27,6 @@ public class Ready extends Running {
 
     @Override
     public String getDesc() {
-        return null;
+        return "";
     }
 }

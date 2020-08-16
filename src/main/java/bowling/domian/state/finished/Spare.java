@@ -30,6 +30,6 @@ public class Spare extends Finished {
 
     @Override
     public String getDesc() {
-        return null;
+        return firstPins.getPinsCount() + "|/";
     }
 }

@@ -4,7 +4,7 @@ import bowling.domian.frame.Score;
 import bowling.domian.state.Pins;
 
 public class Miss extends Finished {
-
+    // TODO: 2020-08-17 변수명 리팩토링 
     private Pins first;
     private Pins second;
 
@@ -31,6 +31,6 @@ public class Miss extends Finished {
 
     @Override
     public String getDesc() {
-        return null;
+        return first.getPinsCount() + "|" + second.getPinsCount();
     }
 }

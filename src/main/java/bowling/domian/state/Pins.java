@@ -58,4 +58,8 @@ public class Pins {
     public Score addScore(Score score) {
         return score.additionalBowl(this.falledPinCount);
     }
+
+    public int getPinsCount() {
+        return falledPinCount;
+    }
 }

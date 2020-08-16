@@ -63,6 +63,6 @@ public class SpareTest {
     public void getResult() {
         Spare spare = new Spare(Pins.bowl(3), Pins.bowl(7));
 
-        assertThat(spare.getDesc()).isEqualTo("3|7");
+        assertThat(spare.getDesc()).isEqualTo("3|/");
     }
 }

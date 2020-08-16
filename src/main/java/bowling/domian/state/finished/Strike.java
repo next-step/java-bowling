@@ -16,6 +16,6 @@ public class Strike extends Finished {
     }
 
     public String getDesc() {
-        return null;
+        return "X";
     }
 }
