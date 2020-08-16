@@ -24,10 +24,16 @@ public class Miss implements State {
     }
 
     public Score getScore() {
-        return Score.miss(3);
+        return Score.miss(first.totalPinsCount(second));
     }
 
     public Score calculateAdditional(Score score) {
+        score = score.additionalBowl(first.getPinsCount());
+
+        if (!score.isCalculateDone()) {
+            score = score.additionalBowl(second.getPinsCount());
+        }
+
         return score;
     }
 }
