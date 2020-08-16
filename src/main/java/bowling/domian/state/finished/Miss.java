@@ -1,7 +1,7 @@
-package bowling.domian.state;
+package bowling.domian.state.finished;
 
 import bowling.domian.frame.Score;
-import bowling.domian.state.exception.BowlFinishedException;
+import bowling.domian.state.Pins;
 
 public class Miss extends Finished {
 

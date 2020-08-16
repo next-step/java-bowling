@@ -1,6 +1,10 @@
-package bowling.domian.state;
+package bowling.domian.state.running;
 
 import bowling.domian.frame.Score;
+import bowling.domian.state.Pins;
+import bowling.domian.state.State;
+import bowling.domian.state.finished.Miss;
+import bowling.domian.state.finished.Spare;
 
 public class FirstBowl extends Running {
 

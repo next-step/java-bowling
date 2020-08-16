@@ -1,6 +1,6 @@
 package bowling.domian.frame;
 
-import bowling.domian.state.Ready;
+import bowling.domian.state.running.Ready;
 import bowling.domian.state.State;
 
 public class NormalFrame implements Frame {

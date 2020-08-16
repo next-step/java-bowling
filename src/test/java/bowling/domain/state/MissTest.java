@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domian.frame.Score;
-import bowling.domian.state.Miss;
+import bowling.domian.state.finished.Miss;
 import bowling.domian.state.Pins;
 import bowling.domian.state.exception.BowlFinishedException;
 import org.junit.Test;

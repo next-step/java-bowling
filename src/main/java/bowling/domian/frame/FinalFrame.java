@@ -1,13 +1,10 @@
 package bowling.domian.frame;
 
 import bowling.domian.frame.exception.FrameEndException;
-import bowling.domian.state.Ready;
-import bowling.domian.state.Spare;
+import bowling.domian.state.running.Ready;
+import bowling.domian.state.finished.Spare;
 import bowling.domian.state.State;
-import bowling.domian.state.Strike;
-
-import java.util.Objects;
-import java.util.Optional;
+import bowling.domian.state.finished.Strike;
 
 public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NUMBER = 10;

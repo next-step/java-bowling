@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domian.frame.Score;
-import bowling.domian.state.Strike;
+import bowling.domian.state.finished.Strike;
 import bowling.domian.state.exception.BowlFinishedException;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;

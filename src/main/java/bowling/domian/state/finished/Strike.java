@@ -1,4 +1,4 @@
-package bowling.domian.state;
+package bowling.domian.state.finished;
 
 import bowling.domian.frame.Score;
 

@@ -2,6 +2,9 @@ package bowling.domain.state;
 
 import bowling.domian.state.*;
 import bowling.domian.state.exception.InvalidPinCountException;
+import bowling.domian.state.finished.Miss;
+import bowling.domian.state.finished.Spare;
+import bowling.domian.state.running.FirstBowl;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
