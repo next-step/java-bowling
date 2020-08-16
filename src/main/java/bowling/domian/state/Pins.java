@@ -51,6 +51,6 @@ public class Pins {
     }
 
     public int totalPinsCount(Pins secondPins) {
-        return this.falledPinCount;
+        return this.falledPinCount + secondPins.falledPinCount;
     }
 }
