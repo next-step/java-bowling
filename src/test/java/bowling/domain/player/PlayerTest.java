@@ -11,7 +11,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 public class PlayerTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"", "AA", "AAAA"})
+    @ValueSource(strings = {"", "AA", "AAAA", "$kk"})
     @DisplayName("사용자의 이름이 3글자 아닌 경우 Exception")
     public void nameValidation(String name) {
         assertThatExceptionOfType(InvalidNameException.class).isThrownBy(
