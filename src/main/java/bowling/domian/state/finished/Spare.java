@@ -19,13 +19,13 @@ public class Spare extends Finished {
 
     @Override
     public Score calculateAdditional(Score score) {
-        score = firstPins.addScore(score);
+        Score additionalScore = firstPins.addScore(score);
 
-        if (!score.isCalculateDone()) {
-            score = secondPins.addScore(score);
+        if (!additionalScore.isCalculateDone()) {
+            additionalScore = secondPins.addScore(additionalScore);
         }
 
-        return score;
+        return additionalScore;
     }
 
     @Override

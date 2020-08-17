@@ -10,9 +10,7 @@ public class Strike extends Finished {
 
     @Override
     public Score calculateAdditional(Score score) {
-        score = score.additionalBowl(10);
-
-        return score;
+        return score.additionalBowl(10);
     }
 
     public String getDesc() {

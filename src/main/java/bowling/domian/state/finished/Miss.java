@@ -19,13 +19,13 @@ public class Miss extends Finished {
 
     @Override
     public Score calculateAdditional(Score lastScore) {
-        lastScore = firstPins.addScore(lastScore);
+        Score additionalScore = firstPins.addScore(lastScore);
 
-        if (!lastScore.isCalculateDone()) {
-            lastScore = second.addScore(lastScore);
+        if (!additionalScore.isCalculateDone()) {
+            additionalScore = second.addScore(additionalScore);
         }
 
-        return lastScore;
+        return additionalScore;
     }
 
     @Override
