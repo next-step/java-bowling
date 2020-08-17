@@ -5,17 +5,14 @@ import bowling.domian.state.State;
 import java.util.Objects;
 
 public class FrameResult {
+    private static final int TOTAL_SCORE_UNCALCULATED = -1;
+
     private State state;
     private Score score;
     private int totalScore;
 
     private FrameResult(State state) {
-        this.state = state;
-        this.totalScore = -1;
-
-        if (state.canGetScore()) {
-            score = state.getScore();
-        }
+        this(state, TOTAL_SCORE_UNCALCULATED);
     }
 
     private FrameResult(State state, int totalScore) {
@@ -36,7 +33,7 @@ public class FrameResult {
     }
 
     public boolean isTotalCalculated() {
-        return this.totalScore > 0;
+        return this.totalScore > TOTAL_SCORE_UNCALCULATED;
     }
 
     public boolean canCalculateScore() {
@@ -44,11 +41,7 @@ public class FrameResult {
     }
 
     public boolean  isCalculateDone() {
-        if (!state.canGetScore()) {
-            return false;
-        }
-
-        if (Objects.isNull(score)) {
+        if (!state.canGetScore() || !isTotalCalculated() || Objects.isNull(score)) {
             return false;
         }
 
