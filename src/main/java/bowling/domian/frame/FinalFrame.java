@@ -37,7 +37,7 @@ public class FinalFrame implements Frame {
         throw new FrameEndException();
     }
 
-    public boolean isFrameEnd() {
+    public boolean isGameEnd() {
         if (!normalState.isFinished()) {
             return false;
         }

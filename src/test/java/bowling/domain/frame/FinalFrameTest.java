@@ -21,7 +21,7 @@ public class FinalFrameTest {
 
         finalFrame.bowl(falledPinsCount);
 
-        assertThat(finalFrame.isFrameEnd()).isFalse();
+        assertThat(finalFrame.isGameEnd()).isFalse();
     }
 
     @Test
@@ -32,7 +32,7 @@ public class FinalFrameTest {
         finalFrame.bowl(4);
         finalFrame.bowl(5);
 
-        assertThat(finalFrame.isFrameEnd()).isTrue();
+        assertThat(finalFrame.isGameEnd()).isTrue();
     }
 
     @Test
@@ -43,7 +43,7 @@ public class FinalFrameTest {
         finalFrame.bowl(4);
         finalFrame.bowl(6);
 
-        assertThat(finalFrame.isFrameEnd()).isFalse();
+        assertThat(finalFrame.isGameEnd()).isFalse();
     }
 
     @Test
@@ -53,7 +53,7 @@ public class FinalFrameTest {
 
         finalFrame.bowl(10);
 
-        assertThat(finalFrame.isFrameEnd()).isFalse();
+        assertThat(finalFrame.isGameEnd()).isFalse();
     }
 
     @Test
@@ -64,7 +64,7 @@ public class FinalFrameTest {
         finalFrame.bowl(10);
         finalFrame.bowl(10);
 
-        assertThat(finalFrame.isFrameEnd()).isTrue();
+        assertThat(finalFrame.isGameEnd()).isTrue();
     }
 
     @ParameterizedTest

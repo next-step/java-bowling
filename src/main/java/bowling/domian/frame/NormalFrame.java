@@ -5,6 +5,7 @@ import bowling.domian.state.State;
 
 public class NormalFrame implements Frame {
     private final int frameNumber;
+
     private State state;
 
     private NormalFrame(int frameNumber) {
@@ -16,6 +17,7 @@ public class NormalFrame implements Frame {
         return new NormalFrame(1);
     }
 
+    @Override
     public int getFrameNumber() {
         return frameNumber;
     }
@@ -37,5 +39,10 @@ public class NormalFrame implements Frame {
         }
 
         return new FinalFrame();
+    }
+
+    @Override
+    public boolean isGameEnd() {
+        return false;
     }
 }
