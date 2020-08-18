@@ -50,10 +50,6 @@ public class NormalFrame implements Frame {
 
     @Override
     public NormalFrameResult getFrameResult() {
-        if (frameNumber == 0) {
-            return NormalFrameResult.get(this.state, 0);
-        }
-
         return NormalFrameResult.get(this.state);
     }
 

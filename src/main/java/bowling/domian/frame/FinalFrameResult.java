@@ -15,19 +15,10 @@ public class FinalFrameResult extends FrameResult {
         this(state, null);
     }
 
-    private FinalFrameResult(State state, int totalScore) {
-        this(state, null, totalScore);
-    }
-
     private FinalFrameResult(State state, State bonusState) {
-        this(state, bonusState, TOTAL_SCORE_UNCALCULATED);
-    }
-
-    private FinalFrameResult(State state, State bonusState, int totalScore) {
         this.state = state;
         this.bonusState = bonusState;
         this.score = calculateScore();
-        this.totalScore = totalScore;
     }
 
     private Score calculateScore() {
@@ -47,16 +38,8 @@ public class FinalFrameResult extends FrameResult {
         return new FinalFrameResult(state);
     }
 
-    public static FinalFrameResult get(State state, int totalScore) {
-        return new FinalFrameResult(state, totalScore);
-    }
-
     public static FinalFrameResult get(State state, State bonusState) {
         return new FinalFrameResult(state, bonusState);
-    }
-
-    public static FinalFrameResult get(State state, State bonusState, int totalScore) {
-        return new FinalFrameResult(state, bonusState, totalScore);
     }
 
     @Override

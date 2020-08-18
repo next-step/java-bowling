@@ -5,15 +5,8 @@ import bowling.domian.state.State;
 import java.util.Objects;
 
 public class NormalFrameResult extends FrameResult {
-    private static final int TOTAL_SCORE_UNCALCULATED = -1;
-
     private NormalFrameResult(State state) {
-        this(state, TOTAL_SCORE_UNCALCULATED);
-    }
-
-    private NormalFrameResult(State state, int totalScore) {
         this.state = state;
-        this.totalScore = totalScore;
 
         if (state.canGetScore()) {
             score = state.getScore();
@@ -22,10 +15,6 @@ public class NormalFrameResult extends FrameResult {
 
     public static NormalFrameResult get(State state) {
         return new NormalFrameResult(state);
-    }
-
-    public static NormalFrameResult get(State state, int totalScore) {
-        return new NormalFrameResult(state, totalScore);
     }
 
     @Override
