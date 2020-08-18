@@ -41,7 +41,7 @@ public class FrameResult {
     }
 
     public boolean isCalculateDone() {
-        if (!state.canGetScore() || !isTotalCalculated() || Objects.isNull(score)) {
+        if (!state.canGetScore() || Objects.isNull(score)) {
             return false;
         }
 
@@ -62,5 +62,14 @@ public class FrameResult {
 
     public void addLastTotalScore(FrameResult lastFrameResult) {
         this.totalScore = lastFrameResult.getTotalScore();
+    }
+
+    // TODO: 2020-08-18 리팩토링 포인트
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+    public Score getScore() {
+        return score;
     }
 }
