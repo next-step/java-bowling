@@ -6,6 +6,8 @@ import bowling.domian.state.finished.Spare;
 import bowling.domian.state.State;
 import bowling.domian.state.finished.Strike;
 
+import java.util.Objects;
+
 public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NUMBER = 10;
 
@@ -37,6 +39,7 @@ public class FinalFrame implements Frame {
         throw new FrameEndException();
     }
 
+    @Override
     public boolean isGameEnd() {
         if (!normalState.isFinished()) {
             return false;
@@ -54,4 +57,22 @@ public class FinalFrame implements Frame {
         return bonusState instanceof Ready;
     }
 
+    @Override
+    public FrameResult getFrameResult() {
+        return FinalFrameResult.get(normalState, bonusState);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FinalFrame that = (FinalFrame) o;
+        return Objects.equals(normalState, that.normalState) &&
+                Objects.equals(bonusState, that.bonusState);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(normalState, bonusState);
+    }
 }

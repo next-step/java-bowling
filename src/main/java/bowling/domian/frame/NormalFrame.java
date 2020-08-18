@@ -3,6 +3,8 @@ package bowling.domian.frame;
 import bowling.domian.state.running.Ready;
 import bowling.domian.state.State;
 
+import java.util.Objects;
+
 public class NormalFrame implements Frame {
     private final int frameNumber;
 
@@ -44,5 +46,28 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isGameEnd() {
         return false;
+    }
+
+    @Override
+    public NormalFrameResult getFrameResult() {
+        if (frameNumber == 0) {
+            return NormalFrameResult.get(this.state, 0);
+        }
+
+        return NormalFrameResult.get(this.state);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalFrame that = (NormalFrame) o;
+        return frameNumber == that.frameNumber &&
+                Objects.equals(state, that.state);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frameNumber, state);
     }
 }

@@ -39,7 +39,7 @@ public class NormalFrameResult extends FrameResult {
             return false;
         }
 
-        return this.score.isCalculateDone();
+        return this.score.isCalculateDone() & isTotalCalculated();
     }
 
     @Override

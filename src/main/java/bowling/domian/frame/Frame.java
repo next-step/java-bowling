@@ -6,4 +6,6 @@ public interface Frame {
     Frame bowl(int falledPinsCount);
 
     boolean isGameEnd();
+
+    FrameResult getFrameResult();
 }

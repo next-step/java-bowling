@@ -91,7 +91,6 @@ public class FinalFrameResult extends FrameResult {
         return Objects.nonNull(score) && isTotalCalculated();
     }
 
-
     public void addLastTotalScore(NormalFrameResult lastNormalFrameResult) {
         this.totalScore = lastNormalFrameResult.getTotalScore();
     }
