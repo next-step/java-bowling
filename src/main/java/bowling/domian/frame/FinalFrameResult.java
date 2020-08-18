@@ -7,13 +7,9 @@ import bowling.domian.state.running.Ready;
 
 import java.util.Objects;
 
-public class FinalFrameResult {
-    private static final int TOTAL_SCORE_UNCALCULATED = -1;
+public class FinalFrameResult extends FrameResult {
 
-    private State state;
     private State bonusState;
-    private Score score;
-    private int totalScore;
 
     private FinalFrameResult(State state) {
         this(state, null);
@@ -63,6 +59,7 @@ public class FinalFrameResult {
         return new FinalFrameResult(state, bonusState, totalScore);
     }
 
+    @Override
     public boolean canCalculateScore() {
         if (isNormalStrikeOrSpare()) {
             return !Objects.isNull(bonusState) && !(bonusState instanceof Ready);
@@ -76,25 +73,24 @@ public class FinalFrameResult {
                 state instanceof Spare;
     }
 
-    public void calculateAdditional(NormalFrameResult lastNormalFrameResult) {
-        Score additionalScore = this.state.calculateAdditional(lastNormalFrameResult.getScore());
+    @Override
+    public void calculateAdditional(FrameResult lastFrameResult) {
+        Score additionalScore = this.state.calculateAdditional(lastFrameResult.score);
 
         if (!additionalScore.isCalculateDone()) {
-            additionalScore = bonusState.calculateAdditional(lastNormalFrameResult.getScore());
+            additionalScore = bonusState.calculateAdditional(lastFrameResult.score);
         }
 
         if (additionalScore.isCalculateDone()) {
-            lastNormalFrameResult.setScore(additionalScore);
+            lastFrameResult.score = additionalScore;
         }
     }
 
+    @Override
     public boolean isCalculateDone() {
-        return Objects.nonNull(score) && totalScore != TOTAL_SCORE_UNCALCULATED;
+        return Objects.nonNull(score) && isTotalCalculated();
     }
 
-    public int getTotalScore() {
-        return score.getScore() + totalScore;
-    }
 
     public void addLastTotalScore(NormalFrameResult lastNormalFrameResult) {
         this.totalScore = lastNormalFrameResult.getTotalScore();

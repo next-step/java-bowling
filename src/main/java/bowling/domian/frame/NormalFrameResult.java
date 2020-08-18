@@ -4,18 +4,14 @@ import bowling.domian.state.State;
 
 import java.util.Objects;
 
-public class FrameResult {
+public class NormalFrameResult extends FrameResult {
     private static final int TOTAL_SCORE_UNCALCULATED = -1;
 
-    private State state;
-    private Score score;
-    private int totalScore;
-
-    private FrameResult(State state) {
+    private NormalFrameResult(State state) {
         this(state, TOTAL_SCORE_UNCALCULATED);
     }
 
-    private FrameResult(State state, int totalScore) {
+    private NormalFrameResult(State state, int totalScore) {
         this.state = state;
         this.totalScore = totalScore;
 
@@ -24,22 +20,20 @@ public class FrameResult {
         }
     }
 
-    public static FrameResult get(State state) {
-        return new FrameResult(state);
+    public static NormalFrameResult get(State state) {
+        return new NormalFrameResult(state);
     }
 
-    public static FrameResult get(State state, int totalScore) {
-        return new FrameResult(state, totalScore);
+    public static NormalFrameResult get(State state, int totalScore) {
+        return new NormalFrameResult(state, totalScore);
     }
 
-    public boolean isTotalCalculated() {
-        return this.totalScore > TOTAL_SCORE_UNCALCULATED;
-    }
-
+    @Override
     public boolean canCalculateScore() {
         return state.canGetScore();
     }
 
+    @Override
     public boolean isCalculateDone() {
         if (!state.canGetScore() || Objects.isNull(score)) {
             return false;
@@ -48,28 +42,12 @@ public class FrameResult {
         return this.score.isCalculateDone();
     }
 
-    public void calculateAdditional(FrameResult lastFrameResult) {
-        Score additionalScore = this.state.calculateAdditional(lastFrameResult.score);
+    @Override
+    public void calculateAdditional(FrameResult lastNormalFrameResult) {
+        Score additionalScore = this.state.calculateAdditional(lastNormalFrameResult.score);
 
         if (this.state.isFinished() || additionalScore.isCalculateDone()) {
-            lastFrameResult.score = additionalScore;
+            lastNormalFrameResult.score = additionalScore;
         }
-    }
-
-    public int getTotalScore() {
-        return this.totalScore + score.getScore();
-    }
-
-    public void addLastTotalScore(FrameResult lastFrameResult) {
-        this.totalScore = lastFrameResult.getTotalScore();
-    }
-
-    // TODO: 2020-08-18 리팩토링 포인트
-    public void setScore(Score score) {
-        this.score = score;
-    }
-
-    public Score getScore() {
-        return score;
     }
 }

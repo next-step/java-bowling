@@ -1,7 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domian.frame.FinalFrameResult;
-import bowling.domian.frame.FrameResult;
+import bowling.domian.frame.NormalFrameResult;
 import bowling.domian.state.Pins;
 import bowling.domian.state.finished.Miss;
 import bowling.domian.state.finished.Strike;
@@ -25,14 +25,14 @@ public class FinalFrameResultTest {
     @Test
     @DisplayName("추가 점수 계산")
     public void additionalCalculation() {
-        FrameResult lastFrameResult = FrameResult.get(new Strike(), 0);
+        NormalFrameResult lastNormalFrameResult = NormalFrameResult.get(new Strike(), 0);
         FinalFrameResult frameResult =
                 FinalFrameResult.get(new Miss(Pins.bowl(3), Pins.bowl(4)), 0);
 
-        frameResult.calculateAdditional(lastFrameResult);
+        frameResult.calculateAdditional(lastNormalFrameResult);
 
-        assertThat(lastFrameResult.isCalculateDone()).isTrue();
-        assertThat(lastFrameResult.getTotalScore()).isEqualTo(17);
+        assertThat(lastNormalFrameResult.isCalculateDone()).isTrue();
+        assertThat(lastNormalFrameResult.getTotalScore()).isEqualTo(17);
     }
 
     @Test
@@ -74,11 +74,11 @@ public class FinalFrameResultTest {
     @Test
     @DisplayName("이전 프레임까지 전체 점수 추가 계산")
     public void totalCalculationWithLastFrameResult() {
-        FrameResult lastFrameResult = FrameResult.get(new Strike(), 0);
+        NormalFrameResult lastNormalFrameResult = NormalFrameResult.get(new Strike(), 0);
         FinalFrameResult frameResult = FinalFrameResult.get(new Miss(Pins.bowl(3), Pins.bowl(5)));
 
-        frameResult.calculateAdditional(lastFrameResult);
-        frameResult.addLastTotalScore(lastFrameResult);
+        frameResult.calculateAdditional(lastNormalFrameResult);
+        frameResult.addLastTotalScore(lastNormalFrameResult);
 
         assertThat(frameResult.getTotalScore()).isEqualTo(26);
     }
