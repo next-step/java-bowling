@@ -40,7 +40,7 @@ public class FrameResult {
         return state.canGetScore();
     }
 
-    public boolean  isCalculateDone() {
+    public boolean isCalculateDone() {
         if (!state.canGetScore() || !isTotalCalculated() || Objects.isNull(score)) {
             return false;
         }

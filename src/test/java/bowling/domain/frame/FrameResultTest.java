@@ -61,6 +61,7 @@ public class FrameResultTest {
         frameResult.calculateAdditional(lastFrameResult);
         frameResult.addLastTotalScore(lastFrameResult);
 
-        assertThat(frameResult.getTotalScore()).isEqualTo(26);
+        assertThat(lastFrameResult.isCalculateDone()).isTrue();
+        assertThat(lastFrameResult.getTotalScore()).isEqualTo(18);
     }
 }
