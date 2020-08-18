@@ -18,19 +18,7 @@ abstract class FrameResult {
 
     public abstract void calculateAdditional(FrameResult lastNormalFrameResult);
 
-    public boolean isTotalCalculated() {
-        return this.totalScore > TOTAL_SCORE_UNCALCULATED;
-    }
-
-    public int getTotalScore() {
+    public int getScore() {
         return score.getScore() + totalScore;
-    }
-
-    public void addLastTotalScore(FrameResult lastFrameResult) {
-        if (Objects.isNull(lastFrameResult)) {
-            totalScore = TOTAL_SCORE_INITIAL;
-        }
-
-        this.totalScore = lastFrameResult.getTotalScore();
     }
 }

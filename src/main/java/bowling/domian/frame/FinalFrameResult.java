@@ -26,11 +26,11 @@ public class FinalFrameResult extends FrameResult {
     private FinalFrameResult(State state, State bonusState, int totalScore) {
         this.state = state;
         this.bonusState = bonusState;
-        this.score = getScore();
+        this.score = calculateScore();
         this.totalScore = totalScore;
     }
 
-    private Score getScore() {
+    private Score calculateScore() {
         if (!canCalculateScore()) {
             return null;
         }
@@ -88,10 +88,6 @@ public class FinalFrameResult extends FrameResult {
 
     @Override
     public boolean isCalculateDone() {
-        return Objects.nonNull(score) && isTotalCalculated();
-    }
-
-    public void addLastTotalScore(NormalFrameResult lastNormalFrameResult) {
-        this.totalScore = lastNormalFrameResult.getTotalScore();
+        return Objects.nonNull(score);
     }
 }
