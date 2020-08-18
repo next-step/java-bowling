@@ -8,6 +8,7 @@ import bowling.domian.state.running.Ready;
 import java.util.Objects;
 
 public class FinalFrameResult {
+    private static final int TOTAL_SCORE_UNCALCULATED = -1;
 
     private State state;
     private State bonusState;
@@ -23,7 +24,7 @@ public class FinalFrameResult {
     }
 
     private FinalFrameResult(State state, State bonusState) {
-        this(state, bonusState, -1);
+        this(state, bonusState, TOTAL_SCORE_UNCALCULATED);
     }
 
     private FinalFrameResult(State state, State bonusState, int totalScore) {
@@ -75,27 +76,27 @@ public class FinalFrameResult {
                 state instanceof Spare;
     }
 
-    public void calculateAdditional(FrameResult lastFrameResult) {
-        Score additionalScore = this.state.calculateAdditional(lastFrameResult.getScore());
+    public void calculateAdditional(NormalFrameResult lastNormalFrameResult) {
+        Score additionalScore = this.state.calculateAdditional(lastNormalFrameResult.getScore());
 
         if (!additionalScore.isCalculateDone()) {
-            additionalScore = bonusState.calculateAdditional(lastFrameResult.getScore());
+            additionalScore = bonusState.calculateAdditional(lastNormalFrameResult.getScore());
         }
 
         if (additionalScore.isCalculateDone()) {
-            lastFrameResult.setScore(additionalScore);
+            lastNormalFrameResult.setScore(additionalScore);
         }
     }
 
     public boolean isCalculateDone() {
-        return Objects.nonNull(score) && totalScore != -1;
+        return Objects.nonNull(score) && totalScore != TOTAL_SCORE_UNCALCULATED;
     }
 
     public int getTotalScore() {
         return score.getScore() + totalScore;
     }
 
-    public void addLastTotalScore(FrameResult lastFrameResult) {
-        this.totalScore = lastFrameResult.getTotalScore();
+    public void addLastTotalScore(NormalFrameResult lastNormalFrameResult) {
+        this.totalScore = lastNormalFrameResult.getTotalScore();
     }
 }
