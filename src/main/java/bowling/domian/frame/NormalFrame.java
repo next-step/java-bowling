@@ -48,14 +48,6 @@ public class NormalFrame implements Frame {
         return false;
     }
 
-    @Override
-    public NormalFrameResult getFrameResult() {
-        return NormalFrameResult.get(this.state);
-    }
-
-    public void addResult(Board board) {
-        board.addResult(getFrameResult(), frameNumber);
-    }
 
     @Override
     public boolean equals(Object o) {

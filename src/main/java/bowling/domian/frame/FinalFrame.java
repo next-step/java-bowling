@@ -58,15 +58,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public FrameResult getFrameResult() {
-        return FinalFrameResult.get(normalState, bonusState);
-    }
-
-    public void addResult(Board board) {
-        board.addResult(getFrameResult(), FINAL_FRAME_NUMBER);
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
