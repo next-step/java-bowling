@@ -32,8 +32,12 @@ abstract class FrameResult {
         if (totalScore == TOTAL_SCORE_UNCALCULATED) {
             return score.getScore();
         }
-        
+
         return score.getScore() + totalScore;
+    }
+
+    public String getDesc() {
+        return state.getDesc();
     }
 
 }
