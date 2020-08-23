@@ -47,10 +47,12 @@ public class FrameResult {
     }
 
     public boolean canAddTotal() {
-        return true;
+        return score != INITIAL_SCORE;
     }
 
     public int addTotalScore(int lastTotalScore) {
-        return INITIAL_SCORE;
+        this.totalScore = lastTotalScore + this.score;
+
+        return this.totalScore;
     }
 }
