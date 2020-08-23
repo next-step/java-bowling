@@ -43,6 +43,10 @@ public class NormalFrame implements Frame {
         return new FinalFrame();
     }
 
+    public FrameResult getFrameResult() {
+        return new FrameResult();
+    }
+
     @Override
     public boolean isGameEnd() {
         return false;
