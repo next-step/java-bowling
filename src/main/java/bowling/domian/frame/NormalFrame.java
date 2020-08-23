@@ -45,6 +45,10 @@ public class NormalFrame implements Frame {
     }
 
     public FrameResult getFrameResult() {
+        if (!this.state.canGetScore()) {
+            return FrameResult.of(this.state.getDesc());
+        }
+
         return FrameResult.of(getScore(), state.getDesc());
     }
 
