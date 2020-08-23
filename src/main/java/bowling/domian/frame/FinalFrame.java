@@ -62,6 +62,10 @@ public class FinalFrame implements Frame {
         return bonusState instanceof Ready;
     }
 
+    public FrameResult getFrameResult() {
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

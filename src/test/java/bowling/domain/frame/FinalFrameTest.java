@@ -1,7 +1,10 @@
 package bowling.domain.frame;
 
 import bowling.domian.frame.FinalFrame;
+import bowling.domian.frame.FrameResult;
+import bowling.domian.frame.Score;
 import bowling.domian.frame.exception.FrameEndException;
+import bowling.domian.state.finished.Miss;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,8 +32,8 @@ public class FinalFrameTest {
     public void bowlDoneWhenMissTwoTimes() {
         FinalFrame finalFrame = new FinalFrame();
 
-        finalFrame.bowl(4);
-        finalFrame.bowl(5);
+        finalFrame.bowl(4)
+                .bowl(5);
 
         assertThat(finalFrame.isGameEnd()).isTrue();
     }
@@ -40,8 +43,8 @@ public class FinalFrameTest {
     public void bonusBowlPossibleWhenSpare() {
         FinalFrame finalFrame = new FinalFrame();
 
-        finalFrame.bowl(4);
-        finalFrame.bowl(6);
+        finalFrame.bowl(4)
+                .bowl(6);
 
         assertThat(finalFrame.isGameEnd()).isFalse();
     }
@@ -61,8 +64,8 @@ public class FinalFrameTest {
     public void bonusBowlOnlyOneTime() {
         FinalFrame finalFrame = new FinalFrame();
 
-        finalFrame.bowl(10);
-        finalFrame.bowl(10);
+        finalFrame.bowl(10)
+                .bowl(10);
 
         assertThat(finalFrame.isGameEnd()).isTrue();
     }
@@ -79,5 +82,46 @@ public class FinalFrameTest {
         assertThatExceptionOfType(FrameEndException.class).isThrownBy(
                 () -> finalFrame.bowl(third)
         );
+    }
+
+    @Test
+    @DisplayName("일반 투구시 점수 계산")
+    public void calculateMissBowl() {
+        FinalFrame finalFrame = new FinalFrame();
+
+        finalFrame.bowl(4).
+                bowl(2);
+
+        FrameResult frameResult = finalFrame.getFrameResult();
+
+        assertThat(frameResult.getScore()).isEqualTo(6);
+        assertThat(frameResult.getdesc()).isEqualTo("4|2");
+    }
+
+    @Test
+    @DisplayName("일반 투구 Strike 시 보너스 점수 추가 계산")
+    public void strikeCalculateAdditional() {
+        FinalFrame finalFrame = new FinalFrame();
+
+        finalFrame.bowl(10).
+                bowl(10);
+
+        FrameResult frameResult = finalFrame.getFrameResult();
+
+        assertThat(frameResult.getScore()).isEqualTo(20);
+        assertThat(frameResult.getdesc()).isEqualTo("X|X");
+    }
+
+    @Test
+    @DisplayName("이전 프레임 추가 점수 계산")
+    public void calculateAdditional() {
+        FinalFrame finalFrame = new FinalFrame();
+
+        finalFrame.bowl(10).
+                bowl(10);
+
+        Score score = finalFrame.calculateAdditional(Score.strike());
+
+        assertThat(score.getScore()).isEqualTo(30);
     }
 }
