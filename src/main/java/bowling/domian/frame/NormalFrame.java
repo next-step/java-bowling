@@ -64,18 +64,21 @@ public class NormalFrame implements Frame {
         }
 
         score = this.state.calculateAdditional(score);
-        if (score.isCalculateDone() || Objects.isNull(next)) {
-            return score;
+        if (needCalculateAdditionalScore(score)) {
+            return next.calculateAdditional(score);
         }
 
-        return next.calculateAdditional(score);
+        return score;
+    }
+
+    private boolean needCalculateAdditionalScore(Score score) {
+        return !score.isCalculateDone() && Objects.nonNull(next);
     }
 
     @Override
     public boolean isGameEnd() {
         return false;
     }
-
 
     @Override
     public boolean equals(Object o) {
