@@ -25,6 +25,7 @@ public class NormalFrame implements Frame {
         return frameNumber;
     }
 
+    @Override
     public Frame bowl(int falledPinsCount) {
         this.state = this.state.bowl(falledPinsCount);
 
@@ -62,6 +63,7 @@ public class NormalFrame implements Frame {
         return next.calculateAdditional(score);
     }
 
+    @Override
     public Score calculateAdditional(Score score) {
         if (this.state instanceof Ready) {
             return score;
@@ -79,6 +81,7 @@ public class NormalFrame implements Frame {
         return !score.isCalculateDone() && Objects.nonNull(next);
     }
 
+    @Override
     public Board addBoard(Board board) {
         if (state instanceof Ready) {
             return board;
