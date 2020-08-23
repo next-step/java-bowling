@@ -102,6 +102,15 @@ public class FinalFrame implements Frame {
         return !isNormalStrikeOrSpare() || !isBonusReady();
     }
 
+    @Override
+    public Board addBoard(Board board) {
+        if (normalState instanceof Ready) {
+            return board;
+        }
+
+        return board.addFrameResult(getFrameResult());
+    }
+
     private boolean isNormalStrikeOrSpare() {
         return normalState instanceof Spare ||
                 normalState instanceof Strike;

@@ -19,6 +19,10 @@ public class FrameResult {
         return new FrameResult(INITIAL_SCORE, desc);
     }
 
+    public static FrameResult of(int score, String desc) {
+        return new FrameResult(score, desc);
+    }
+
     public static FrameResult of(Score score, String desc) {
         if (score.isCalculateDone()) {
             return new FrameResult(score.getScore(), desc);
@@ -51,8 +55,20 @@ public class FrameResult {
     }
 
     public int addTotalScore(int lastTotalScore) {
+        if (!canAddTotal()) {
+            return lastTotalScore;
+        }
         this.totalScore = lastTotalScore + this.score;
 
         return this.totalScore;
+    }
+
+    @Override
+    public String toString() {
+        return "FrameResult{" +
+                "score=" + score +
+                ", desc='" + desc + '\'' +
+                ", totalScore=" + totalScore +
+                '}';
     }
 }

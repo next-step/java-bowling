@@ -79,6 +79,16 @@ public class NormalFrame implements Frame {
         return !score.isCalculateDone() && Objects.nonNull(next);
     }
 
+    public Board addBoard(Board board) {
+        if (state instanceof Ready) {
+            return board;
+        }
+
+        board.addFrameResult(getFrameResult());
+
+        return next.addBoard(board);
+    }
+
     @Override
     public boolean isGameEnd() {
         return false;

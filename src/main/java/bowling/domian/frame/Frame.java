@@ -8,4 +8,6 @@ public interface Frame {
     Score calculateAdditional(Score score);
 
     boolean isGameEnd();
+
+    Board addBoard(Board board);
 }
