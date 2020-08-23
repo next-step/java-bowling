@@ -1,8 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domian.frame.FinalFrame;
-import bowling.domian.frame.FrameResult;
-import bowling.domian.frame.Score;
+import bowling.domian.frame.*;
 import bowling.domian.frame.exception.FrameEndException;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -122,5 +120,30 @@ public class FinalFrameTest {
         Score score = finalFrame.calculateAdditional(Score.strike());
 
         assertThat(score.getScore()).isEqualTo(30);
+    }
+
+    @Test
+    @DisplayName("투구 전일 경우 점수판에 추가하지 않음")
+    public void notAddToBoardWhenReady() {
+        FinalFrame frame = new FinalFrame();
+        Board board = new Board();
+
+        Board result = frame.addBoard(board);
+
+        assertThat(result).isEqualTo(result);
+    }
+
+    @Test
+    @DisplayName("점수판에 투구 결과 추가")
+    public void addToBoard() {
+        FinalFrame frame = new FinalFrame();
+        Board board = new Board();
+
+        frame.bowl(10);
+        frame.bowl(10);
+        frame.addBoard(board);
+
+        assertThat(board.getDescs().get(0)).isEqualTo("X|X");
+        assertThat(board.getTotalScores().get(0)).isEqualTo(20);
     }
 }

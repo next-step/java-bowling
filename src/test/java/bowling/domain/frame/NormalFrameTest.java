@@ -1,9 +1,6 @@
 package bowling.domain.frame;
 
-import bowling.domian.frame.FinalFrame;
-import bowling.domian.frame.Frame;
-import bowling.domian.frame.FrameResult;
-import bowling.domian.frame.NormalFrame;
+import bowling.domian.frame.*;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -120,5 +117,29 @@ public class NormalFrameTest {
         FrameResult frameResult = frame.getFrameResult();
 
         assertThat(frameResult.isCalculateDone()).isFalse();
+    }
+
+    @Test
+    @DisplayName("투구 전일 경우 점수판에 추가하지 않음")
+    public void notAddToBoardWhenReady() {
+        NormalFrame frame = NormalFrame.firstFrame();
+        Board board = new Board();
+
+        Board result = frame.addBoard(board);
+
+        assertThat(result).isEqualTo(result);
+    }
+
+    @Test
+    @DisplayName("점수판에 투구 결과 추가")
+    public void addToBoard() {
+        NormalFrame frame = NormalFrame.firstFrame();
+        Board board = new Board();
+
+        frame.bowl(3).bowl(4);
+        frame.addBoard(board);
+
+        assertThat(board.getDescs().get(0)).isEqualTo("3|4");
+        assertThat(board.getTotalScores().get(0)).isEqualTo(7);
     }
 }
