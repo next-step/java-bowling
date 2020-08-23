@@ -92,6 +92,7 @@ public class FinalFrame implements Frame {
                 bonusDesc);
     }
 
+
     @Override
     public boolean isGameEnd() {
         if (!normalState.isFinished()) {
