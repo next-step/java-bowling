@@ -4,7 +4,6 @@ import bowling.domian.frame.FinalFrame;
 import bowling.domian.frame.FrameResult;
 import bowling.domian.frame.Score;
 import bowling.domian.frame.exception.FrameEndException;
-import bowling.domian.state.finished.Miss;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -95,7 +94,7 @@ public class FinalFrameTest {
         FrameResult frameResult = finalFrame.getFrameResult();
 
         assertThat(frameResult.getScore()).isEqualTo(6);
-        assertThat(frameResult.getdesc()).isEqualTo("4|2");
+        assertThat(frameResult.getDesc()).isEqualTo("4|2");
     }
 
     @Test
@@ -109,7 +108,7 @@ public class FinalFrameTest {
         FrameResult frameResult = finalFrame.getFrameResult();
 
         assertThat(frameResult.getScore()).isEqualTo(20);
-        assertThat(frameResult.getdesc()).isEqualTo("X|X");
+        assertThat(frameResult.getDesc()).isEqualTo("X|X");
     }
 
     @Test

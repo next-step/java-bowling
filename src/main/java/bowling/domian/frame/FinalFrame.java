@@ -12,6 +12,8 @@ import java.util.Optional;
 
 public class FinalFrame implements Frame {
     private static final int FINAL_FRAME_NUMBER = 10;
+    private static final int DESC_EXIST_LENGTH = 1;
+    private static final String FINAL_FRAME_BONUS_EXIST_DESC_FORMAT = "%s|%s";
 
     private State normalState;
     private State bonusState;
@@ -60,7 +62,7 @@ public class FinalFrame implements Frame {
             return FrameResult.of(this.normalState.getDesc());
         }
 
-        return FrameResult.of(getNormalScore(),
+        return FrameResult.ofFinal(getNormalScore(),
                 getBonusScore(),
                 getDesc());
     }
@@ -81,11 +83,13 @@ public class FinalFrame implements Frame {
     private String getDesc() {
         String bonusDesc = bonusState.getDesc();
 
-        if (bonusDesc.length() < 1) {
+        if (bonusDesc.length() < DESC_EXIST_LENGTH) {
             return normalState.getDesc();
         }
 
-        return normalState.getDesc() + "|" + bonusDesc;
+        return String.format(FINAL_FRAME_BONUS_EXIST_DESC_FORMAT,
+                normalState.getDesc(),
+                bonusDesc);
     }
 
     @Override

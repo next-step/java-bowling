@@ -79,7 +79,7 @@ public class NormalFrameTest {
         FrameResult frameResult = frame.getFrameResult();
 
         assertThat(frameResult.getScore()).isEqualTo(3);
-        assertThat(frameResult.getdesc()).isEqualTo("3|-");
+        assertThat(frameResult.getDesc()).isEqualTo("3|-");
     }
 
     @Test
@@ -93,7 +93,7 @@ public class NormalFrameTest {
         FrameResult frameResult = frame.getFrameResult();
 
         assertThat(frameResult.getScore()).isEqualTo(17);
-        assertThat(frameResult.getdesc()).isEqualTo("X");
+        assertThat(frameResult.getDesc()).isEqualTo("X");
     }
 
     @Test
@@ -107,7 +107,7 @@ public class NormalFrameTest {
         FrameResult frameResult = frame.getFrameResult();
 
         assertThat(frameResult.getScore()).isEqualTo(13);
-        assertThat(frameResult.getdesc()).isEqualTo("3|/");
+        assertThat(frameResult.getDesc()).isEqualTo("3|/");
     }
 
     @Test

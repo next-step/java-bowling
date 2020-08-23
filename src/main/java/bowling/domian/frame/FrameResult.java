@@ -27,7 +27,7 @@ public class FrameResult {
         return new FrameResult(INITIAL_SCORE, desc);
     }
 
-    public static FrameResult of(Score normal, Optional<Score> bonus, String desc) {
+    public static FrameResult ofFinal(Score normal, Optional<Score> bonus, String desc) {
         return bonus
                 .map(value -> new FrameResult(normal.getScore() + value.getScore(), desc))
                 .orElseGet(() -> of(normal, desc));
@@ -38,7 +38,7 @@ public class FrameResult {
         return this.score;
     }
 
-    public String getdesc() {
+    public String getDesc() {
         return this.desc;
     }
 
