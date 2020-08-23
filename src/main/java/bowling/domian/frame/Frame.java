@@ -5,5 +5,7 @@ public interface Frame {
 
     Frame bowl(int falledPinsCount);
 
+    Score calculateAdditional(Score score);
+
     boolean isGameEnd();
 }

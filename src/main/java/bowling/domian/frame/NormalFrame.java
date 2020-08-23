@@ -9,6 +9,7 @@ public class NormalFrame implements Frame {
     private final int frameNumber;
 
     private State state;
+    private Frame next;
 
     private NormalFrame(int frameNumber) {
         this.frameNumber = frameNumber;
@@ -25,13 +26,13 @@ public class NormalFrame implements Frame {
     }
 
     public Frame bowl(int falledPinsCount) {
-        State nextState = state.bowl(falledPinsCount);
+        this.state = this.state.bowl(falledPinsCount);
 
-        if (nextState.isFinished()) {
-            return getNextFrame();
+        if (state.isFinished()) {
+            this.next = getNextFrame();
+            return this.next;
         }
 
-        this.state = nextState;
         return this;
     }
 
@@ -44,7 +45,30 @@ public class NormalFrame implements Frame {
     }
 
     public FrameResult getFrameResult() {
-        return new FrameResult();
+        return FrameResult.of(getScore(), state.getDesc());
+    }
+
+    private Score getScore() {
+        Score score = this.state.getScore();
+
+        if (score.isCalculateDone()) {
+            return score;
+        }
+
+        return next.calculateAdditional(score);
+    }
+
+    public Score calculateAdditional(Score score) {
+        if (this.state instanceof Ready) {
+            return score;
+        }
+
+        score = this.state.calculateAdditional(score);
+        if (score.isCalculateDone() || Objects.isNull(next)) {
+            return score;
+        }
+
+        return next.calculateAdditional(score);
     }
 
     @Override

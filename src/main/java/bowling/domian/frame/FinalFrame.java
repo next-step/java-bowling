@@ -40,6 +40,11 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public Score calculateAdditional(Score score) {
+        return null;
+    }
+
+    @Override
     public boolean isGameEnd() {
         if (!normalState.isFinished()) {
             return false;
