@@ -21,6 +21,11 @@ public class Ready extends Running {
     }
 
     @Override
+    public Score getFinalScore() {
+        return this.getScore();
+    }
+
+    @Override
     public Score calculateAdditional(Score lastScore) {
         throw new InvalidScoreCalculateException(GET_SCORE_IMPOSSIBLE_ERROR_MESSAGE);
     }

@@ -73,11 +73,10 @@ public class FinalFrame implements Frame {
 
     private Optional<Score> getBonusScore() {
         try {
-            return Optional.of(this.bonusState.getScore());
+            return Optional.of(this.bonusState.getFinalScore());
         } catch (InvalidScoreCalculateException e) {
             return Optional.empty();
         }
-
     }
 
     private String getDesc() {

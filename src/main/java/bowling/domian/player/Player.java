@@ -10,4 +10,8 @@ public class Player {
     public static Player get(String name) {
         return new Player(Name.get(name));
     }
+
+    public String getName() {
+        return name.getName();
+    }
 }

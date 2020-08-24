@@ -29,4 +29,8 @@ public class Name {
     private static boolean isOnlyAlphabet(String name) {
         return name.matches("^[a-zA-Z]*$");
     }
+
+    public String getName() {
+        return name;
+    }
 }

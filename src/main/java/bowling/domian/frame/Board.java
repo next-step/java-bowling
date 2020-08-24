@@ -33,16 +33,26 @@ public class Board {
     }
 
     public List<Integer> getTotalScores() {
+        if (frameResults.size() < 1) {
+            return new ArrayList<>();
+        }
+
+        return getCalculatedScores();
+    }
+
+    private List<Integer> getCalculatedScores() {
         List<Integer> totalScores = new ArrayList<>();
-        FrameResult frameResult = this.frameResults.get(0);
         int count = this.frameResults.size();
 
-        for (int i = 0; frameResult.canAddTotal() && i < count; ++i) {
-            frameResult = this.frameResults.get(i);
-            totalScores.add(totalScore);
+        for (int i = 0; isTotalAddable(i, count); ++i) {
+            totalScores.add(this.frameResults.get(i).getTotalScore());
         }
 
         return totalScores;
+    }
+
+    private boolean isTotalAddable(int index, int frameCounts) {
+        return index < frameCounts && this.frameResults.get(index).canAddTotal();
     }
 
     @Override

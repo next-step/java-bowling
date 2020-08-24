@@ -26,6 +26,11 @@ public class FirstBowl extends Running {
     }
 
     @Override
+    public Score getFinalScore() {
+        return Score.miss(firstPins.getPinsCount());
+    }
+
+    @Override
     public Score calculateAdditional(Score lastScore) {
         lastScore = firstPins.addScore(lastScore);
 

@@ -70,15 +70,16 @@ public class NormalFrame implements Frame {
         }
 
         score = this.state.calculateAdditional(score);
-        if (needCalculateAdditionalScore(score)) {
-            return next.calculateAdditional(score);
+
+        return calculateSecondAdditional(score);
+    }
+
+    private Score calculateSecondAdditional(Score score) {
+        if (!score.isCalculateDone() && Objects.nonNull(this.next)) {
+            return this.next.calculateAdditional(score);
         }
 
         return score;
-    }
-
-    private boolean needCalculateAdditionalScore(Score score) {
-        return !score.isCalculateDone() && Objects.nonNull(next);
     }
 
     @Override
@@ -88,6 +89,14 @@ public class NormalFrame implements Frame {
         }
 
         board.addFrameResult(getFrameResult());
+
+        return boardWithNextFrame(board);
+    }
+
+    private Board boardWithNextFrame(Board board) {
+        if (Objects.isNull(next)) {
+            return board;
+        }
 
         return next.addBoard(board);
     }

@@ -54,6 +54,10 @@ public class FrameResult {
         return score != INITIAL_SCORE;
     }
 
+    public int getTotalScore() {
+        return totalScore;
+    }
+
     public int addTotalScore(int lastTotalScore) {
         if (!canAddTotal()) {
             return lastTotalScore;

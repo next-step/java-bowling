@@ -1,5 +1,6 @@
 package bowling.domian.state.finished;
 
+import bowling.domian.frame.Score;
 import bowling.domian.state.State;
 import bowling.domian.state.exception.BowlFinishedException;
 
@@ -19,5 +20,10 @@ public abstract class Finished implements State {
     @Override
     public boolean canGetScore() {
         return true;
+    }
+    
+    @Override
+    public Score getFinalScore() {
+        return this.getScore();
     }
 }
