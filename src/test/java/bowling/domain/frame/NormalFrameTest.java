@@ -142,4 +142,24 @@ public class NormalFrameTest {
         assertThat(board.getDescs().get(0)).isEqualTo("3|4");
         assertThat(board.getTotalScores().get(0)).isEqualTo(7);
     }
+
+    @Test
+    @DisplayName("Board 객체 반환 확인")
+    public void getBoard() {
+        NormalFrame frame = NormalFrame.firstFrame();
+        Board board = new Board();
+
+        frame.bowl(10)
+                .bowl(3).bowl(7)
+                .bowl(10)
+                .bowl(0).bowl(0)
+                .bowl(0).bowl(0)
+                .bowl(8).bowl(0)
+                .bowl(10)
+                .bowl(0).bowl(10)
+                .bowl(3).bowl(4)
+                .bowl(10).bowl(4);
+
+        System.out.println(frame.addBoard(board));
+    }
 }
