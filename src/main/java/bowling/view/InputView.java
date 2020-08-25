@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.player.Player;
+import bowling.domian.player.Player;
 
 import java.util.Scanner;
 
@@ -11,32 +11,16 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static Player getPlayer() {
-        String name = null;
+        System.out.println(GET_PLAYER_NAME_MESSAGE);
 
-        do {
-            name = getString(GET_PLAYER_NAME_MESSAGE);
-        } while (!InputValidChecker.isNameValid(name));
+        String name = scanner.nextLine();
 
-        return Player.getInstance(name);
+        return Player.get(name);
     }
 
-    private static String getString(String message) {
-        System.out.println(message);
-        return scanner.nextLine();
-    }
+    public static int getFalledPinsCount(int frameCount) {
+        System.out.println(String.format(GET_ROLLING_PIN_COUNT_MESSAGE, frameCount));
 
-    public static int getRollingCount(int frameCount) {
-        int knockedDownPinCount;
-
-        do {
-            knockedDownPinCount = getInt(String.format(GET_ROLLING_PIN_COUNT_MESSAGE, frameCount));
-        } while (!InputValidChecker.isPinCountValid(knockedDownPinCount));
-
-        return knockedDownPinCount;
-    }
-
-    private static int getInt(String message) {
-        System.out.println(message);
         return scanner.nextInt();
     }
 }
