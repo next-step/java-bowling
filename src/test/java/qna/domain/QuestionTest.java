@@ -18,4 +18,18 @@ public class QuestionTest {
             .isThrownBy(()-> Q1_WRITE_BY_JAVAJIGI.verifyOwner(UserTest.SANJIGI))
         ;
     }
+
+    @DisplayName("모든 답변에 대해서, 다른 사람이 작성한 답변이 있는지 확인")
+    @Test
+    void verifyOwnerForAnswers() {
+        Question question = new Question("title1", "contents1");
+        question.writeBy(UserTest.JAVAJIGI);
+
+        question.addAnswer(AnswerTest.A2_WRITE_BY_SANJIGI); // 다른 사람이 작성한 답변
+
+        assertThatExceptionOfType(CannotDeleteException.class)
+            .isThrownBy(()-> question.verifyOwnerForAnswers(UserTest.JAVAJIGI))
+            .withMessage(Answer.ERROR_MESSAGE_OWNER_CHECK)
+        ;
+    }
 }

@@ -100,4 +100,11 @@ public class Question extends AbstractEntity {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
+
+    public void verifyOwnerForAnswers(User longinUser) throws CannotDeleteException {
+        List<Answer> answers = getAnswers();
+        for (Answer answer : answers) {
+            answer.verifyOwner(longinUser);
+        }
+    }
 }

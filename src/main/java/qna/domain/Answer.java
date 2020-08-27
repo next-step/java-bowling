@@ -75,8 +75,8 @@ public class Answer extends AbstractEntity {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
 
-    public void verifyOwner(User sanjigi) throws CannotDeleteException {
-        if (!isOwner(sanjigi)) {
+    public void verifyOwner(User longinUser) throws CannotDeleteException {
+        if (!isOwner(longinUser)) {
             throw new CannotDeleteException(ERROR_MESSAGE_OWNER_CHECK);
         }
     }
