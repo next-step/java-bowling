@@ -37,13 +37,28 @@ public class QuestionTest {
         ;
     }
 
+    @DisplayName("질문과 답변이 정사적으로 삭제 flag가 설정됬는지 확인")
+    @Test
+    void deleteQna(){
+        Question question = new Question("title1", "contents1");
+        User javajigi = UserTest.JAVAJIGI;
+        question.writeBy(javajigi);
+        question.addAnswer(AnswerTest.A1_WRITE_BY_JAVAJIGI);
+
+        question.deleteQna((q,a) ->{
+            assertThat(q.isDeleted()).isTrue();
+            assertThat(a.get(0).isDeleted()).isTrue();
+        });
+    }
+
+    @DisplayName("삭제 이력이 정상적으로 생성되었는지 확인")
     @Test
     void ToDeleteHistoriesTest(){
         Question question = new Question("title1", "contents1");
         User javajigi = UserTest.JAVAJIGI;
         question.writeBy(javajigi);
         question.addAnswer(AnswerTest.A1_WRITE_BY_JAVAJIGI);
-        List<DeleteHistory> deleteHistories = question.ToDeleteHistories();
+        List<DeleteHistory> deleteHistories = question.toDeleteHistories();
 
         assertThat(deleteHistories.size()).isEqualTo(2);
         assertThat(deleteHistories).containsExactly(

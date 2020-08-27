@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import qna.CannotDeleteException;
 
@@ -79,17 +80,25 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
+    private Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
+    }
+
+    private Question deletedQuestion() {
+        return setDeleted(true);
+    }
+
+    private void deletedAllAnswer(){
+        getAnswers().deletedAllAnswer();;
     }
 
     public boolean isDeleted() {
         return deleted;
     }
 
-    private List<Answer> getAnswers() {
-        return answers;
+    private Answers getAnswers() {
+        return Answers.of(answers);
     }
 
     @Override
@@ -104,20 +113,22 @@ public class Question extends AbstractEntity {
     }
 
     public void verifyOwnerForAnswers(User longinUser) throws CannotDeleteException {
-        List<Answer> answers = getAnswers();
-        for (Answer answer : answers) {
-            answer.verifyOwner(longinUser);
-        }
+       getAnswers().verifyAllOwner(longinUser);
     }
 
-    public List<DeleteHistory> ToDeleteHistories() {
+    public List<DeleteHistory> toDeleteHistories() {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        for (Answer answer : getAnswers()) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
+        deleteHistories.add(toDeleteHistory());
+        deleteHistories.addAll(getAnswers().toDeleteHistories());
         return deleteHistories;
+    }
+
+    private DeleteHistory toDeleteHistory() {
+        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
+    }
+
+    public void deleteQna(BiConsumer<Question, List<Answer>> updateQna) {
+        deletedQuestion().deletedAllAnswer();
+        updateQna.accept(this, answers);
     }
 }
