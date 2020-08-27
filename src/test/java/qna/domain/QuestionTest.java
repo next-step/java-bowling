@@ -1,10 +1,14 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import qna.CannotDeleteException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class QuestionTest {
@@ -31,5 +35,20 @@ public class QuestionTest {
             .isThrownBy(()-> question.verifyOwnerForAnswers(UserTest.JAVAJIGI))
             .withMessage(Answer.ERROR_MESSAGE_OWNER_CHECK)
         ;
+    }
+
+    @Test
+    void ToDeleteHistoriesTest(){
+        Question question = new Question("title1", "contents1");
+        User javajigi = UserTest.JAVAJIGI;
+        question.writeBy(javajigi);
+        question.addAnswer(AnswerTest.A1_WRITE_BY_JAVAJIGI);
+        List<DeleteHistory> deleteHistories = question.ToDeleteHistories();
+
+        assertThat(deleteHistories.size()).isEqualTo(2);
+        assertThat(deleteHistories).containsExactly(
+            new DeleteHistory(ContentType.QUESTION, null, javajigi, LocalDateTime.now()),
+            new DeleteHistory(ContentType.ANSWER, null, javajigi, LocalDateTime.now())
+        );
     }
 }
