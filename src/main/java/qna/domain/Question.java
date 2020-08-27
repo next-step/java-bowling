@@ -90,7 +90,7 @@ public class Question extends AbstractEntity {
     }
 
     private void deletedAllAnswer(){
-        getAnswers().deletedAllAnswer();;
+        getAnswers().deletedAllAnswer();
     }
 
     public boolean isDeleted() {
