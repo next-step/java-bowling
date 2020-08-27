@@ -47,7 +47,9 @@ public class QnAService {
 
     @Transactional
     public void updateQna(Question question, List<Answer> answers){
-        answerRepository.saveAll(answers);
+        if(null != answers && !answers.isEmpty()) {
+            answerRepository.saveAll(answers);
+        }
         questionRepository.save(question);
     }
 }
