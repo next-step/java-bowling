@@ -1,8 +1,10 @@
 package qna.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
+import javax.swing.text.html.Option;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,17 +41,15 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
-        question.verifyOwner(loginUser);
-        question.verifyOwnerForAnswers(loginUser);
-        question.deleteQna(this::updateQna);
-        deleteHistoryService.saveAll(question.toDeleteHistories());
+        question.deleteQna(loginUser, this::updateQna);
     }
 
     @Transactional
     public void updateQna(Question question, List<Answer> answers){
-        if(null != answers && !answers.isEmpty()) {
-            answerRepository.saveAll(answers);
-        }
+        Optional.ofNullable(answers)
+                .filter(a -> !a.isEmpty())
+                .ifPresent(answerRepository::saveAll);
         questionRepository.save(question);
+        deleteHistoryService.saveAll(question.toDeleteHistories());
     }
 }

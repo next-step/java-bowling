@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -80,13 +81,13 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    private Question setDeleted(boolean deleted) {
+    private void setDeleted(boolean deleted) {
         this.deleted = deleted;
-        return this;
     }
 
     private Question deletedQuestion() {
-        return setDeleted(true);
+        setDeleted(true);
+        return this;
     }
 
     private void deletedAllAnswer(){
@@ -127,8 +128,10 @@ public class Question extends AbstractEntity {
         return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
     }
 
-    public void deleteQna(BiConsumer<Question, List<Answer>> updateQna) {
+    public void deleteQna(User loginUser, BiConsumer<Question, List<Answer>> updateQna) throws CannotDeleteException {
+        verifyOwner(loginUser);
+        verifyOwnerForAnswers(loginUser);
         deletedQuestion().deletedAllAnswer();
-        updateQna.accept(this, answers);
+        updateQna.accept(this, Collections.unmodifiableList(answers));
     }
 }

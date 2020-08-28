@@ -37,7 +37,7 @@ final class Answers {
 
     void deletedAllAnswer(){
         for (Answer answer : answers) {
-            answer.setDeleted(true);
+            answer.deletedAnswer();
         }
     }
 }

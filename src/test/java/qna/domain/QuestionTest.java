@@ -39,13 +39,13 @@ public class QuestionTest {
 
     @DisplayName("질문과 답변이 정사적으로 삭제 flag가 설정됬는지 확인")
     @Test
-    void deleteQna(){
+    void deleteQna() throws CannotDeleteException {
         Question question = new Question("title1", "contents1");
         User javajigi = UserTest.JAVAJIGI;
         question.writeBy(javajigi);
         question.addAnswer(AnswerTest.A1_WRITE_BY_JAVAJIGI);
 
-        question.deleteQna((q,a) ->{
+        question.deleteQna(javajigi, (q, a) ->{
             assertThat(q.isDeleted()).isTrue();
             assertThat(a.get(0).isDeleted()).isTrue();
         });
