@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -94,29 +95,32 @@ public class Question extends AbstractEntity {
         if (!isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다");
         }
-
-        this.answers.stream()
-                .filter(a -> !a.isOwner(user))
-                .findAny()
-                .orElseThrow(() -> new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다"));
     }
 
-    public List<DeleteHistory> makeDeleted(User user) {
-        List<DeleteHistory> histories = new ArrayList<>();
+    public DeleteHistories makeDeleted(User user) {
         canDeletedBy(user);
         setDeleted(true);
-        this.answers.forEach(a -> a.makeDeleted(user));
 
-        histories.add(makeDeleteHistory());
+        return generateDeletedHistories(makeDeleteHistory(),
+                makeDeletedAnswerCascade(user));
+    }
 
-        return histories;
+    private DeleteHistories generateDeletedHistories(DeleteHistory history, List<DeleteHistory> histories) {
+        return new DeleteHistories()
+                .record(history)
+                .record(histories);
+    }
+
+    private List<DeleteHistory> makeDeletedAnswerCascade(User user) {
+        return this.answers
+                .stream()
+                .map(a -> a.makeDeleted(user))
+                .collect(Collectors.toList());
     }
 
     private DeleteHistory makeDeleteHistory() {
         return DeleteHistory.of(ContentType.QUESTION, getId(), writer);
     }
-
-
 
     @Override
     public String toString() {

@@ -77,8 +77,13 @@ public class Answer extends AbstractEntity {
 
     public DeleteHistory makeDeleted(User user) {
         canDeletedBy(user);
+        setDeleted(true);
+        return makeDeleteHistory();
     }
 
+    private DeleteHistory makeDeleteHistory() {
+        return DeleteHistory.of(ContentType.ANSWER, getId(), writer);
+    }
 
     @Override
     public String toString() {
