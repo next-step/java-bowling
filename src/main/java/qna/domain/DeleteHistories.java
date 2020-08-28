@@ -12,8 +12,8 @@ public class DeleteHistories {
         return this;
     }
 
-    public DeleteHistories record(List<DeleteHistory> histories) {
-        histories.addAll(histories);
+    public DeleteHistories record(List<DeleteHistory> history) {
+        histories.addAll(history);
         return this;
     }
 
