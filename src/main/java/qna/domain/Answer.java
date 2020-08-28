@@ -75,6 +75,16 @@ public class Answer extends AbstractEntity {
         }
     }
 
+    public DeleteHistory deleteByUser(User loginUser) {
+        canDeleteByUser(loginUser);
+        setDeleted(true);
+        return createDeleteHistory();
+    }
+
+    private DeleteHistory createDeleteHistory() {
+        return DeleteHistory.of(ContentType.ANSWER, getId(), getWriter());
+    }
+
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
