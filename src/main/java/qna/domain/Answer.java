@@ -1,9 +1,11 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.util.Collections;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -66,6 +68,16 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    public DeleteHistory makeDeleted(User user) {
+        if (!isOwner(user)) {
+            throw new CannotDeleteException("답변을 삭제할 권한이 없습니다");
+        }
+
+        setDeleted(true);
+
+        return DeleteHistory.of(ContentType.ANSWER, getId(), writer);
     }
 
     @Override
