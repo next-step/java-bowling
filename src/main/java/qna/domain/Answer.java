@@ -5,6 +5,7 @@ import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.util.Collections;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -69,19 +70,13 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    private void canDeletedBy(User user) {
+    public DeleteHistory makeDeleted(User user) {
         if (!isOwner(user)) {
             throw new CannotDeleteException("답변을 삭제할 권한이 없습니다");
         }
-    }
 
-    public DeleteHistory makeDeleted(User user) {
-        canDeletedBy(user);
         setDeleted(true);
-        return makeDeleteHistory();
-    }
 
-    private DeleteHistory makeDeleteHistory() {
         return DeleteHistory.of(ContentType.ANSWER, getId(), writer);
     }
 

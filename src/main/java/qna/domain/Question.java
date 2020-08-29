@@ -90,24 +90,22 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
-    private void canDeletedBy(User user) {
+    public DeleteHistories makeDeleted(User user) {
         if (!isOwner(user)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다");
         }
-    }
 
-    public DeleteHistories makeDeleted(User user) {
-        canDeletedBy(user);
         setDeleted(true);
 
-        return generateDeletedHistories(makeDeleteHistory(),
-                makeDeletedAnswerCascade(user));
+        List<DeleteHistory> historiesOfAnswers = makeDeletedAnswerCascade(user);
+
+        return generateHistories(historiesOfAnswers);
     }
 
-    private DeleteHistories generateDeletedHistories(DeleteHistory history, List<DeleteHistory> histories) {
-        return new DeleteHistories()
-                .record(history)
-                .record(histories);
+    private DeleteHistories generateHistories(List<DeleteHistory> histories) {
+        return DeleteHistories.emptyHistories()
+                .record(DeleteHistory.of(ContentType.QUESTION, getId(), writer))
+                .recordAll(histories);
     }
 
     private List<DeleteHistory> makeDeletedAnswerCascade(User user) {
@@ -115,10 +113,6 @@ public class Question extends AbstractEntity {
                 .stream()
                 .map(a -> a.makeDeleted(user))
                 .collect(Collectors.toList());
-    }
-
-    private DeleteHistory makeDeleteHistory() {
-        return DeleteHistory.of(ContentType.QUESTION, getId(), writer);
     }
 
     @Override

@@ -62,8 +62,8 @@ public class QnAService {
 ![Mission4-Step1-Hint3](https://nextstep-storage.s3.ap-northeast-2.amazonaws.com/2020-04-08T11%3A45%3A40.213legacy_refactoring_3.png)
 
 ### Step1 리뷰 사항
-* [ ] [fix01][Answer.java] isOwner 가 있으므로 과도한 method 추출 제거 
-* [ ] [fix02][Answer.java] makeDeleteHistory 또한 과도한 method 추출 제거
-* [ ] [fix03][DeleteHistories.java] record(List<DeleteHistory) -> recordAll 로 변경 
-* [ ] [fix04][DeleteHistories.java] DeleteHistories.emptyHistory() 를 통해 객체를 생성할 수 있게 수정  
+* [x] [fix01][Answer.java] isOwner 가 있으므로 과도한 method 추출 제거 
+* [x] [fix02][Answer.java] makeDeleteHistory 또한 과도한 method 추출 제거
+* [x] [fix03][DeleteHistories.java] record(List<DeleteHistory) -> recordAll 로 변경 
+* [x] [fix04][DeleteHistories.java] DeleteHistories.emptyHistory() 를 통해 객체를 생성할 수 있게 수정  
  
