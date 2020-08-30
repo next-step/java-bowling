@@ -38,9 +38,9 @@ public class InputView {
         return Player.get(name);
     }
 
-    public static int getFalledPinsCount(int frameCount) {
-        System.out.println(String.format(GET_ROLLING_PIN_COUNT_MESSAGE, frameCount));
+    public static int getFalledPinsCount(String name) {
+        System.out.println(String.format(GET_ROLLING_PIN_COUNT_MESSAGE, name));
 
-        return scanner.nextInt();
+        return Integer.parseInt(scanner.nextLine());
     }
 }

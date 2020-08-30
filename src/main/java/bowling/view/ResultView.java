@@ -14,6 +14,8 @@ public class ResultView {
     private static final String FRAME_NAME_FORMAT_FULL_SIZE = "%6s|";
     private static final String FRAME_NAME_FORMAT_FILL_SIZE = "  %-4s|";
     private static final String FRAME_SCORE_FORMAT = "  %-4d|";
+    private static final String NEW_LINE = "";
+    private static final String GAME_END = "게임이 종료되었습니다.";
     private static final int FRAME_STRING_SIZE = 5;
     private static final int MAX_FRAME_COUNT = 10;
 
@@ -25,6 +27,7 @@ public class ResultView {
                     printDescs(player.getDescs(), player.getName());
                     printScores(player.getTotalScores());
                 });
+        System.out.println(NEW_LINE);
     }
 
     private static void printDescs(List<String> descs, String name) {
@@ -62,7 +65,10 @@ public class ResultView {
             scoreBuffer.append(FRAME_EMPTY_FIELD_FORMAT);
         }
 
-        scoreBuffer.append("\n");
         System.out.println(scoreBuffer.toString());
+    }
+
+    public static void printGameEnd() {
+        System.out.println(GAME_END);
     }
 }

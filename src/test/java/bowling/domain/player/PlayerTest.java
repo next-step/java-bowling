@@ -25,9 +25,9 @@ public class PlayerTest {
     public void getFrameNumberOfPlayer() {
         Player player = Player.get("AAA");
 
-        assertThat(player.isFrameNumber(1)).isTrue();
+        assertThat(player.isPlayerOfFrame(1)).isTrue();
         player.bowl(10);
 
-        assertThat(player.isFrameNumber(2)).isTrue();
+        assertThat(player.isPlayerOfFrame(2)).isTrue();
     }
 }
