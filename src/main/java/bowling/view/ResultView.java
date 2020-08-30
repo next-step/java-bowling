@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domian.frame.Board;
 import bowling.domian.player.Player;
+import bowling.domian.player.Players;
 
 import java.util.List;
 
@@ -16,11 +17,14 @@ public class ResultView {
     private static final int FRAME_STRING_SIZE = 5;
     private static final int MAX_FRAME_COUNT = 10;
 
-    public static void printFrames(Player player, Board board) {
+    public static void printFrames(Players players) {
         System.out.println(FRAME_INFO_FORMAT);
 
-        printDescs(board.getDescs(), player.getName());
-        printScores(board.getTotalScores());
+        players.getPlayers()
+                .forEach(player -> {
+                    printDescs(player.getDescs(), player.getName());
+                    printScores(player.getTotalScores());
+                });
     }
 
     private static void printDescs(List<String> descs, String name) {

@@ -1,5 +1,7 @@
 package bowling.domian.player;
 
+import java.util.List;
+
 public class Player {
     private final Name name;
 
@@ -13,5 +15,13 @@ public class Player {
 
     public String getName() {
         return name.getName();
+    }
+
+    public List<String> getDescs() {
+        return null;
+    }
+
+    public List<Integer> getTotalScores() {
+        return null;
     }
 }
