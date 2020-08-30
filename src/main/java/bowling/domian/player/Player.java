@@ -37,4 +37,8 @@ public class Player {
     public void bowl(int falledPinsCount) {
         frames.bowl(falledPinsCount);
     }
+
+    public boolean isGameEnd() {
+        return frames.isGameEnd();
+    }
 }
