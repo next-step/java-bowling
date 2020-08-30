@@ -19,6 +19,8 @@ public class Players {
     }
 
     public boolean isGameEnd() {
-        return false;
+        return players.stream()
+                .filter(Player::isGameEnd)
+                .count() == players.size();
     }
 }
