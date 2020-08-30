@@ -24,4 +24,11 @@ public class Player {
     public List<Integer> getTotalScores() {
         return null;
     }
+
+    public boolean isFrameNumber(int frameNumber) {
+        return false;
+    }
+
+    public void bowl(int falledPinsCount) {
+    }
 }
