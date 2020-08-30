@@ -23,7 +23,7 @@ public class Players {
         checkPlayersFrameNumber();
 
         return players.stream()
-                .filter(player -> player.isFrameNumber(currentFrameNumber) && !player.isGameEnd())
+                .filter(player -> player.isPlayerOfFrame(currentFrameNumber))
                 .collect(Collectors.toList());
     }
 
@@ -32,7 +32,7 @@ public class Players {
     }
 
     private void checkPlayersFrameNumber() {
-        boolean needNextFrameNumber = players.stream().noneMatch(player -> player.isFrameNumber(currentFrameNumber));
+        boolean needNextFrameNumber = players.stream().noneMatch(player -> player.isPlayerOfFrame(currentFrameNumber));
 
         if (needNextFrameNumber) {
             this.currentFrameNumber += 1;

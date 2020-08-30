@@ -21,7 +21,6 @@ public class Player {
         return name.getName();
     }
 
-    // TODO: 2020/08/30 리팩토링
     public List<String> getDescs() {
         return frames.getBoard().getDescs();
     }
@@ -30,8 +29,8 @@ public class Player {
         return frames.getBoard().getTotalScores();
     }
 
-    public boolean isFrameNumber(int frameNumber) {
-        return frames.isFrameNumber(frameNumber);
+    public boolean isPlayerOfFrame(int frameNumber) {
+        return !isGameEnd() && frames.isFrameNumber(frameNumber);
     }
 
     public void bowl(int falledPinsCount) {
