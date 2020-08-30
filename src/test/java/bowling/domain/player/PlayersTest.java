@@ -42,4 +42,19 @@ public class PlayersTest {
 
         assertThat(players.isGameEnd()).isFalse();
     }
+
+
+    @Test
+    @DisplayName("현재 프레임에서 투구 가능한 사용자만 출력")
+    public void getPlayersWhoNeedBowl() {
+        Player first = Player.get("aaa");
+        Player second = Player.get("bbb");
+
+        first.bowl(10);
+        second.bowl(3);
+
+        Players players = Players.of(Arrays.asList(first, second));
+
+        assertThat(players.getCurrentPlayers()).hasSize(1);
+    }
 }

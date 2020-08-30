@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Players {
+
     private final List<Player> players;
 
     private Players(List<Player> players) {
@@ -12,6 +13,10 @@ public class Players {
 
     public static Players of(List<Player> players) {
         return new Players(players);
+    }
+
+    public List<Player> getCurrentPlayers() {
+        return null;
     }
 
     public List<Player> getPlayers() {
