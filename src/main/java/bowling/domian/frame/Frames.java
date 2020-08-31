@@ -32,4 +32,8 @@ public class Frames {
     public int getCurrentFrameNumber() {
         return currentFrame.getFrameNumber();
     }
+
+    public boolean isFrameNumber(int frameNumber) {
+        return currentFrame.getFrameNumber() == frameNumber;
+    }
 }
