@@ -8,12 +8,17 @@ public class BowlingGame {
     private final int MAX_FRAME_SCORES = 10;
     private final int MAX_FRAME_ROUNDS = 10;
     private final List<Integer> scores;
+    private final List<Frame> frames;
     private int round = 0;
 
     private BowlingGame() {
         scores = new ArrayList<>();
         for (int i = 0; i < MAX_FRAME_ROUNDS; i++) {
             scores.add(0);
+        }
+        frames = new ArrayList<>();
+        for (int i = 0; i < MAX_FRAME_ROUNDS; i++) {
+            frames.add(Frame.ready());
         }
     }
 

@@ -15,7 +15,7 @@ class ScoreTest {
         int hits = 15;
 
         // when & then
-        assertThatThrownBy(() -> new Score(hits))
+        assertThatThrownBy(() -> Score.of(hits))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("투구 값이 잘못 되었습니다 (볼링 핀 개수 초과) " + hits);
     }
@@ -24,7 +24,7 @@ class ScoreTest {
     @Test
     public void equalTest() {
         // given
-        Score score = new Score(5);
+        Score score = Score.of(5);
 
         // when & then
         assertAll(

@@ -6,13 +6,13 @@ public class Score {
 
     private final Integer hits;
 
-    public Score(int hits) {
+    private Score(int hits) {
         checkRange(hits);
         this.hits = Integer.valueOf(hits);
     }
 
-    public Score(String str) {
-        this(Integer.parseInt(str));
+    public boolean equals(int hits) {
+        return equals(Score.of(hits));
     }
 
     public boolean equals(Score score) {
