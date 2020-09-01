@@ -12,6 +12,11 @@ public class InputView {
         return getLine();
     }
 
+    public static int getHitScore(int frame) {
+        System.out.print(frame + " 프레임 투구 : ");
+        return getInt();
+    }
+
     private static int getInt() {
         if (SCANNER.hasNextInt()) {
             return SCANNER.nextInt();
