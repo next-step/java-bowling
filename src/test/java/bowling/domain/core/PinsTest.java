@@ -45,11 +45,11 @@ class PinsTest {
             , Arguments.of(5, 5, true)
             , Arguments.of(9, 1, true)
             , Arguments.of(4, 6, true)
-            , Arguments.of(5, 0, false)
             , Arguments.of(2, 0, false)
             , Arguments.of(3, 2, false)
             , Arguments.of(1, 7, false)
             , Arguments.of(0, 7, false)
+            , Arguments.of(0, 0, false)
         );
     }
 
@@ -69,11 +69,11 @@ class PinsTest {
             , Arguments.of(5, 5, false)
             , Arguments.of(9, 1, false)
             , Arguments.of(4, 6, false)
-            , Arguments.of(5, 0, true)
             , Arguments.of(2, 0, true)
             , Arguments.of(3, 2, true)
             , Arguments.of(1, 7, true)
             , Arguments.of(0, 7, true)
+            , Arguments.of(0, 0, true)
         );
     }
 

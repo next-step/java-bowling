@@ -9,7 +9,7 @@ import static java.util.stream.Collectors.toList;
 
 final class Pins {
     private static final int MIN_FALLEN_PIN_COUNT = 0;
-    private static final int MAX_FALLEN_PIN_COUNT = 10;
+    static final int MAX_FALLEN_PIN_COUNT = 10;
     private static final List<Pins> cachedPins;
     static final String ERROR_MESSAGE = "지정된 넘어진 핀 갯수가 잘못되었습니다.";
     private final int fallenPinCount;
