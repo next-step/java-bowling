@@ -41,7 +41,6 @@ public class QuestionTest {
         question.delete(UserTest.JAVAJIGI);
 
         assertThat(question.isDeleted()).isTrue();
-        assertThat(answer.isDeleted()).isTrue();
     }
 
     @Test
