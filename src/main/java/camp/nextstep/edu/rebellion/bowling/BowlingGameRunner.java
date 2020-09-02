@@ -8,8 +8,7 @@ public class BowlingGameRunner {
         BowlingGame bowlingGame = BowlingGame.start();
         while (bowlingGame.hasNext()) {
             bowlingGame.record(InputView.getHitScore(bowlingGame.currentRound()));
-            bowlingGame.getScores()
-                    .forEach(n -> System.out.print(n + "\t"));
+            bowlingGame.getFrames().forEach(f -> System.out.print(f.getStatus().makeSymbol() + "\t"));
             System.out.println();
         }
     }
