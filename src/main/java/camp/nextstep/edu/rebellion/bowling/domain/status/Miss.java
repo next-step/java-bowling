@@ -1,13 +1,14 @@
 package camp.nextstep.edu.rebellion.bowling.domain.status;
 
+import camp.nextstep.edu.rebellion.bowling.domain.frame.FrameScore;
+
 public class Miss implements FrameStatus {
     private static final String GUTTER_SYMBOL = "-";
-    private final int first;
-    private final int last;
 
-    public Miss(int first, int last) {
-        this.first = first;
-        this.last = last;
+    private final FrameScore score;
+
+    public Miss(FrameScore score) {
+        this.score = score;
     }
 
     private String ifCutter(int score) {
@@ -19,6 +20,6 @@ public class Miss implements FrameStatus {
 
     @Override
     public String makeSymbol() {
-        return ifCutter(first) + "|" + ifCutter(last);
+        return ifCutter(score.getFirstScore()) + "|" + ifCutter(score.getLastScore());
     }
 }

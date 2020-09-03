@@ -1,13 +1,15 @@
 package camp.nextstep.edu.rebellion.bowling.domain.status;
 
-public class Playing implements FrameStatus {
-    private final int score;
+import camp.nextstep.edu.rebellion.bowling.domain.frame.FrameScore;
 
-    public Playing (int score) {
+public class Playing implements FrameStatus {
+    private final FrameScore score;
+
+    public Playing (FrameScore score) {
         this.score = score;
     }
     @Override
     public String makeSymbol() {
-        return String.valueOf(score);
+        return String.valueOf(score.getFirstScore());
     }
 }

@@ -13,7 +13,7 @@ public class InputView {
     }
 
     public static int getHitScore(int frame) {
-        System.out.print(frame + " 프레임 투구 : ");
+        System.out.print("\n" + frame + " 프레임 투구 : ");
         return getInt();
     }
 

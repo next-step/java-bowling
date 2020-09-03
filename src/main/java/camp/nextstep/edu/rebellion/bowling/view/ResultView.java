@@ -3,30 +3,42 @@ package camp.nextstep.edu.rebellion.bowling.view;
 import camp.nextstep.edu.rebellion.bowling.domain.ScoreBoard;
 import camp.nextstep.edu.rebellion.bowling.util.StringUtil;
 
+import java.util.List;
+
 public class ResultView {
     private static final String FORMAT = "| %3s\t";
     private static final String PIPE = "|";
+    private static final String NAME = "NAME";
+    private static final String ENTER = "\n";
     private ResultView() {}
 
     public static void print(ScoreBoard board) {
-        int frameNumber = 1;
+        StringBuilder output = new StringBuilder();
+        List<String> symbols = board.getResultSymbol();
+        output
+                .append(generateHeader(symbols.size()))
+                .append(ENTER)
+                .append(generateScore(board.getPlayerName(), symbols));
 
-        StringBuilder title = new StringBuilder();
-        StringBuilder score = new StringBuilder();
+        System.out.println(output.toString());
+    }
 
-        title.append(wrapFormat("NAME"));
-        score.append(wrapFormat(board.getPlayerName()));
-
-        for (String symbol : board.getResultSymbol()) {
-            title.append(wrapFormat(StringUtil.parseInt(frameNumber++)));
-            score.append(wrapFormat(symbol));
+    private static String generateHeader(int cols) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(wrapFormat(NAME));
+        for (int i = 0; i < cols; i++) {
+            builder.append(wrapFormat(StringUtil.parseInt(i + 1)));
         }
+        builder.append(PIPE);
+        return builder.toString();
+    }
 
-        title.append(PIPE);
-        score.append(PIPE);
-
-        System.out.println(title.toString());
-        System.out.println(score.toString());
+    private static String generateScore(String playerName, List<String> symbols) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(wrapFormat(playerName));
+        symbols.forEach(s -> builder.append(wrapFormat(s)));
+        builder.append(PIPE);
+        return builder.toString();
     }
 
     private static String wrapFormat(String str) {

@@ -1,9 +1,9 @@
 package camp.nextstep.edu.rebellion.bowling.domain.status;
 
 import camp.nextstep.edu.rebellion.bowling.domain.frame.Frame;
+import camp.nextstep.edu.rebellion.bowling.domain.frame.FrameScore;
 
 public class FrameStatusResolver {
-    private static final int SPARE = 10;
 
     private FrameStatusResolver() {}
 
@@ -13,22 +13,18 @@ public class FrameStatusResolver {
         }
 
         if (!frame.meetEnd()) {
-            return new Playing(frame.getFirstScore());
+            return new Playing(frame.getFrameScore());
         }
 
-        return afterEnd(frame);
+        return afterEnd(frame.getFrameScore());
     }
 
-    private static FrameStatus afterEnd(Frame frame) {
-        if (frame.isStrike()) {
+    private static FrameStatus afterEnd(FrameScore score) {
+        if (score.isStrike()) {
             return new Strike();
         }
 
-        int first = frame.getFirstScore();
-        int last = frame.getLastScore();
-        int score = first + last;
-
-        return SPARE == score ? new Spare(first, last) :
-                new Miss(first, last);
+        return score.isSpare() ? new Spare(score) :
+                new Miss(score);
     }
 }

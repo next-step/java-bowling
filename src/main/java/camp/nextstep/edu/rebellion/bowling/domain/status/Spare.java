@@ -1,16 +1,16 @@
 package camp.nextstep.edu.rebellion.bowling.domain.status;
 
-public class Spare implements FrameStatus {
-    private final int first;
-    private final int last;
+import camp.nextstep.edu.rebellion.bowling.domain.frame.FrameScore;
 
-    public Spare(int first, int last) {
-        this.first = first;
-        this.last = last;
+public class Spare implements FrameStatus {
+    private final FrameScore score;
+
+    public Spare(FrameScore score) {
+        this.score = score;
     }
 
     @Override
     public String makeSymbol() {
-        return first + "|/";
+        return score.getFirstScore() + "|/";
     }
 }
