@@ -20,7 +20,7 @@ public class Score {
     }
 
     public int getHits() {
-        return hits.intValue();
+        return this.hits.intValue();
     }
 
     public static Score of(int hits) {
@@ -35,7 +35,7 @@ public class Score {
 
     @Override
     public int hashCode() {
-        return hits.intValue();
+        return this.hits.intValue();
     }
 
     @Override

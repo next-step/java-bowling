@@ -16,7 +16,7 @@ public class ScoreBoard {
     }
 
     public String getPlayerName() {
-        return player.getName();
+        return this.player.getName();
     }
 
     public List<String> getResultSymbol() {

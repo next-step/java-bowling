@@ -26,12 +26,12 @@ public class FrameScore {
     }
 
     public boolean isStrike() {
-        return first.equals(STRIKE);
+        return this.first.equals(STRIKE);
     }
 
     public boolean isSpare() {
-        int totalScore = first.getHits() + last.getHits();
-        return (first.getHits() > 0 && last.getHits() > 0) &&
+        int totalScore = this.first.getHits() + this.last.getHits();
+        return (this.first.getHits() > 0 && this.last.getHits() > 0) &&
                 STRIKE == totalScore;
     }
 
@@ -44,7 +44,7 @@ public class FrameScore {
     }
 
     private void checkScoreRange(int addedHits) {
-        if (MAX_FRAME_SCORES < first.getHits() + addedHits) {
+        if (MAX_FRAME_SCORES < this.first.getHits() + addedHits) {
             throw new IllegalArgumentException("최대 10 점을 넘을 수 없습니다");
         }
     }
