@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
+import bowling.ui.result.DisplayPlayerBowlingGrade;
+
 final class Player {
     static final String ERROR_MESSAGE = "영어 알파벳 대문자 3자만 등록 가능합니다.";
     public static final String NAME_REGEX = "^[A-Z]{3}$";
@@ -44,6 +46,10 @@ final class Player {
 
     List<String> bowlingGrade(){
         return rolling.framesByRolledResults();
+    }
+
+    DisplayPlayerBowlingGrade toDisplayPlayerBowlingGrade(){
+        return new DisplayPlayerBowlingGrade(name, bowlingGrade());
     }
 
     @Override

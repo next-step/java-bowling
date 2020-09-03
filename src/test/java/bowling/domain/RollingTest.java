@@ -6,6 +6,9 @@ import java.util.function.Function;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import bowling.ui.result.DisplayBowlingBoard;
+import bowling.ui.result.DisplayPlayerBowlingGrade;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 

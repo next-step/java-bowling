@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bowling.domain.core.RolledResult;
-import bowling.domain.core.Spare;
 
+import static bowling.domain.core.Spare.expectSpareAfterBonusBowl;
 import static java.util.stream.Collectors.joining;
 
 public final class TerminateFrame implements Frame {
@@ -20,8 +20,7 @@ public final class TerminateFrame implements Frame {
 
     @Override
     public void updateRolledResult(RolledResult rolledResult) {
-        System.out.println(tryCount + " : " + rolledResult);
-        rolledResult = Spare.expectSpareAfterBonusBowl(tryCount, rolledResult);
+        rolledResult = expectSpareAfterBonusBowl(tryCount, rolledResult);
         if (rolledResult.isCompleteState()) {
             rolledResults.add(rolledResult);
         }
