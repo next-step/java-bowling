@@ -11,7 +11,7 @@ public class UserTest {
       new User(2L, "sanjigi", "password", "name", "sanjigi@slipp.net");
 
   @Test
-  void name() {
+  void isEqual() {
     assertThat(JAVAJIGI)
         .isEqualTo(new User(1L, "nextjigi", "비밀번호", "next", "nextjigi@slipp.net"));
   }
