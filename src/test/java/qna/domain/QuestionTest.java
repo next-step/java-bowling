@@ -24,10 +24,18 @@ public class QuestionTest {
 
   @Test
   void delete_성공_질문자_답변자_같음() throws CannotDeleteException {
+    Q1.addAnswer(AnswerTest.A1);  // 질문자 답변자 같음
     Q1.delete(UserTest.JAVAJIGI);
-    Q1.addAnswer(AnswerTest.A1);
 
     assertThat(Q1.isDeleted()).isTrue();
     Q1.getAnswers().forEach(answer -> assertThat(answer.isDeleted()).isTrue());
+  }
+
+  @Test
+  void delete_답변_중_다른_사람이_쓴_글() {
+    Q1.addAnswer(AnswerTest.A1);  // 질문자 답변자 같음
+    Q1.addAnswer(AnswerTest.A2);  // 질문자 답변자 다름
+
+    assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
   }
 }
