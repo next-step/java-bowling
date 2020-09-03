@@ -1,5 +1,6 @@
 package camp.nextstep.edu.rebellion.bowling.domain;
 
+import camp.nextstep.edu.rebellion.bowling.domain.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

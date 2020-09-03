@@ -1,7 +1,7 @@
 package camp.nextstep.edu.rebellion.bowling;
 
-import camp.nextstep.edu.rebellion.bowling.domain.BowlingGame;
-import camp.nextstep.edu.rebellion.bowling.domain.Player;
+import camp.nextstep.edu.rebellion.bowling.domain.game.BowlingGame;
+import camp.nextstep.edu.rebellion.bowling.domain.game.Player;
 import camp.nextstep.edu.rebellion.bowling.view.InputView;
 import camp.nextstep.edu.rebellion.bowling.view.ResultView;
 

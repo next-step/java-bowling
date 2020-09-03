@@ -1,4 +1,4 @@
-package camp.nextstep.edu.rebellion.bowling.domain;
+package camp.nextstep.edu.rebellion.bowling.domain.game;
 
 
 import camp.nextstep.edu.rebellion.bowling.util.StringUtil;

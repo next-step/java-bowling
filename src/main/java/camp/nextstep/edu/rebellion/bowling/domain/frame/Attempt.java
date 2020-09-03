@@ -29,7 +29,7 @@ public class Attempt {
 
     private void checkRange(int initAttempt) {
         if (initAttempt < FIRST_ATTEMPT || initAttempt > MAX_ATTEMPT_COUNTS) {
-            throw new IllegalArgumentException("시도 회수 초기 값이 잘못 되었습니다 (최대 2) : "
+            throw new IllegalArgumentException("시도 횟 수 초기 값이 잘못 되었습니다 (최대 2) : "
                     + initAttempt);
         }
     }

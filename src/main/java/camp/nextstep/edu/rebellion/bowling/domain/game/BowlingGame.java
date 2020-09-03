@@ -1,7 +1,8 @@
-package camp.nextstep.edu.rebellion.bowling.domain;
+package camp.nextstep.edu.rebellion.bowling.domain.game;
 
 import camp.nextstep.edu.rebellion.bowling.domain.frame.Frame;
 import camp.nextstep.edu.rebellion.bowling.domain.frame.Frames;
+import camp.nextstep.edu.rebellion.bowling.domain.score.ScoreBoard;
 
 public class BowlingGame {
     private final Frames frames;

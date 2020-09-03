@@ -1,5 +1,6 @@
-package camp.nextstep.edu.rebellion.bowling.domain;
+package camp.nextstep.edu.rebellion.bowling.domain.score;
 
+import camp.nextstep.edu.rebellion.bowling.domain.game.Player;
 import camp.nextstep.edu.rebellion.bowling.domain.frame.Frames;
 
 import java.util.List;

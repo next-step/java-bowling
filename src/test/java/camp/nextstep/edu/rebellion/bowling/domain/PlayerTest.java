@@ -1,10 +1,10 @@
 package camp.nextstep.edu.rebellion.bowling.domain;
 
+import camp.nextstep.edu.rebellion.bowling.domain.game.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     @DisplayName("참가자 이름이 3글자 이상일 경우 예외 발생")

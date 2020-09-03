@@ -1,6 +1,6 @@
 package camp.nextstep.edu.rebellion.bowling.domain.frame;
 
-import camp.nextstep.edu.rebellion.bowling.domain.Round;
+import camp.nextstep.edu.rebellion.bowling.domain.game.Round;
 
 import java.util.ArrayList;
 import java.util.Collections;

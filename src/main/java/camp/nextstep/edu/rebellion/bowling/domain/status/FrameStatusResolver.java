@@ -1,7 +1,7 @@
 package camp.nextstep.edu.rebellion.bowling.domain.status;
 
 import camp.nextstep.edu.rebellion.bowling.domain.frame.Frame;
-import camp.nextstep.edu.rebellion.bowling.domain.frame.FrameScore;
+import camp.nextstep.edu.rebellion.bowling.domain.score.FrameScore;
 
 public class FrameStatusResolver {
 

@@ -1,4 +1,4 @@
-package camp.nextstep.edu.rebellion.bowling.domain;
+package camp.nextstep.edu.rebellion.bowling.domain.score;
 
 public class Score {
     private final static int MIN_HITS = 0;

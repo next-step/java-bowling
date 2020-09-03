@@ -1,4 +1,4 @@
-package camp.nextstep.edu.rebellion.bowling.domain;
+package camp.nextstep.edu.rebellion.bowling.domain.game;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

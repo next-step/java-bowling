@@ -1,6 +1,6 @@
 package camp.nextstep.edu.rebellion.bowling.view;
 
-import camp.nextstep.edu.rebellion.bowling.domain.ScoreBoard;
+import camp.nextstep.edu.rebellion.bowling.domain.score.ScoreBoard;
 import camp.nextstep.edu.rebellion.bowling.util.StringUtil;
 
 import java.util.List;
