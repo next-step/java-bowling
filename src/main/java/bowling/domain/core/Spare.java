@@ -1,8 +1,17 @@
 package bowling.domain.core;
 
-final class Spare extends AbstractSecondRolledResult {
+import bowling.domain.TerminateFrame;
+
+public final class Spare extends AbstractSecondRolledResult {
     Spare(Pins first, Pins second) {
         super(first, second);
+    }
+
+    public static RolledResult expectSpareAfterBonusBowl(int tryCount, RolledResult rolledResult){
+        if ((TerminateFrame.MAX_TRY_COUNT_SIZE - 1) == tryCount && rolledResult.isNotCompleteState()){
+            return new SpareAfterBonusBowl(rolledResult);
+        }
+        return rolledResult;
     }
 
     @Override

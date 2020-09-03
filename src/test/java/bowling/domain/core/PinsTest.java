@@ -73,7 +73,7 @@ class PinsTest {
             , Arguments.of(3, 2, true)
             , Arguments.of(1, 7, true)
             , Arguments.of(0, 7, true)
-            , Arguments.of(0, 0, true)
+            , Arguments.of(0, 0, false)
         );
     }
 
