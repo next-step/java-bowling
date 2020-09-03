@@ -1,7 +1,7 @@
 package camp.nextstep.edu.rebellion.bowling.domain.frame;
 
 public class NormalFrame extends Frame {
-    private static final int TRY_TWICE = 0;
+    private static final int TRY_TWICE = 2;
 
     public NormalFrame() {
         super(TRY_TWICE);

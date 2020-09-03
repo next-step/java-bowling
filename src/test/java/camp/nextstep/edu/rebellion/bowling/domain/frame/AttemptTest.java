@@ -12,7 +12,7 @@ class AttemptTest {
     @Test
     public void attemptTest() {
         // given
-        int initCount = 0;
+        int initCount = 2;
 
         // when
         Attempt attempt = new Attempt(initCount);
@@ -28,7 +28,7 @@ class AttemptTest {
     @Test
     public void triedTest() {
         // given
-        int initCount = 0;
+        int initCount = 2;
 
         // when
         Attempt attempt = new Attempt(initCount);
