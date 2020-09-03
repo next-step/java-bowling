@@ -9,7 +9,7 @@ public abstract class Frame {
     protected Attempt attempt;
 
     protected Frame(int initAttempt) {
-        this.frameScore = new FrameScore();
+        this.frameScore = FrameScore.clear();
         this.attempt = new Attempt(initAttempt);
     }
 

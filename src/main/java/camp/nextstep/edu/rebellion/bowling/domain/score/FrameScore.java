@@ -7,9 +7,13 @@ public class FrameScore {
     private Score first;
     private Score last;
 
-    public FrameScore() {
+    private FrameScore() {
         this.first = Score.of(0);
         this.last = Score.of(0);
+    }
+
+    public static FrameScore clear() {
+        return new FrameScore();
     }
 
     public void markFirst(int hits) {
@@ -26,7 +30,9 @@ public class FrameScore {
     }
 
     public boolean isSpare() {
-        return STRIKE == (first.getHits() + last.getHits());
+        int totalScore = first.getHits() + last.getHits();
+        return (first.getHits() > 0 && last.getHits() > 0) &&
+                STRIKE == totalScore;
     }
 
     public int getFirstScore() {

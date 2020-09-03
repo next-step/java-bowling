@@ -40,6 +40,7 @@ class NormalFrameTest {
 
         // and
         frame.markScore(last);
+
         // then
         assertAll(
                 () -> assertThat(frame.isStarted()).isTrue(),
