@@ -8,7 +8,7 @@ public class Round {
     private AtomicInteger current;
 
     private Round(){
-        current = new AtomicInteger(0);
+        this.current = new AtomicInteger(0);
     }
 
     public static Round reset() {
@@ -16,15 +16,15 @@ public class Round {
     }
 
     public void next() {
-        current.incrementAndGet();
+        this.current.incrementAndGet();
     }
 
     public boolean hasNext() {
-        return MAX_ROUNDS > current.get();
+        return MAX_ROUNDS > this.current.get();
     }
 
     public boolean meetLast() {
-        return MAX_ROUNDS == current.get();
+        return MAX_ROUNDS == this.current.get();
     }
 
     public int getCurrent() {
