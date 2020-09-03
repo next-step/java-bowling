@@ -7,12 +7,12 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 
-final class Pins {
-    private static final int MIN_FALLEN_PIN_COUNT = 0;
+public final class Pins {
+    static final int MIN_FALLEN_PIN_COUNT = 0;
     static final int MAX_FALLEN_PIN_COUNT = 10;
-    private static final List<Pins> cachedPins;
     static final String ERROR_MESSAGE = "지정된 넘어진 핀 갯수가 잘못되었습니다.";
-    private final int fallenPinCount;
+    private static final List<Pins> cachedPins;
+    private final int fallenPins;
 
     static {
         final List<Pins> pins = IntStream.rangeClosed(MIN_FALLEN_PIN_COUNT, MAX_FALLEN_PIN_COUNT)
@@ -21,8 +21,8 @@ final class Pins {
         cachedPins = Collections.unmodifiableList(pins);
     }
 
-    private Pins(int fallenPinCount) {
-        this.fallenPinCount = fallenPinCount;
+    private Pins(int fallenPins) {
+        this.fallenPins = fallenPins;
     }
 
     public static Pins of(int fallenPinCount) {
@@ -36,24 +36,28 @@ final class Pins {
         }
     }
 
-    int getFallenPinCount() {
-        return fallenPinCount;
+    int getFallenPins() {
+        return fallenPins;
+    }
+
+    public static boolean isStrike(int fallenPinCount) {
+        return MAX_FALLEN_PIN_COUNT == fallenPinCount;
     }
 
     boolean isStrike() {
-        return MAX_FALLEN_PIN_COUNT == getFallenPinCount();
+        return isStrike(getFallenPins());
     }
 
     boolean isSpare(Pins secondRoll) {
-        return MAX_FALLEN_PIN_COUNT == (getFallenPinCount() + secondRoll.getFallenPinCount());
+        return MAX_FALLEN_PIN_COUNT == (getFallenPins() + secondRoll.getFallenPins());
     }
 
     boolean isMiss(Pins secondRoll) {
-        return !isSpare(secondRoll);
+        return !isSpare(secondRoll) && !(isGutter() && secondRoll.isGutter());
     }
 
     boolean isGutter() {
-        return MIN_FALLEN_PIN_COUNT == getFallenPinCount();
+        return MIN_FALLEN_PIN_COUNT == getFallenPins();
     }
 
     @Override
@@ -65,11 +69,16 @@ final class Pins {
             return false;
         }
         Pins pins = (Pins) o;
-        return getFallenPinCount() == pins.getFallenPinCount();
+        return getFallenPins() == pins.getFallenPins();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getFallenPinCount());
+        return Objects.hashCode(getFallenPins());
+    }
+
+    @Override
+    public String toString() {
+        return "Pins(" + fallenPins + ')';
     }
 }
