@@ -1,4 +1,8 @@
-package camp.nextstep.edu.rebellion.bowling.domain;
+package camp.nextstep.edu.rebellion.bowling.domain.frame;
+
+import camp.nextstep.edu.rebellion.bowling.domain.Score;
+import camp.nextstep.edu.rebellion.bowling.domain.status.FrameStatus;
+import camp.nextstep.edu.rebellion.bowling.domain.status.FrameStatusResolver;
 
 public class Frame {
     private static final int MAX_SCORES = 10;

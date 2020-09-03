@@ -6,7 +6,7 @@ import java.util.List;
 
 public class StringUtil {
     private static final String DEFAULT_SPLIT_DELIMITER = ",";
-    private static final String EMPTY = "";
+    public static final String EMPTY = "";
 
     private StringUtil(){}
 
@@ -23,5 +23,15 @@ public class StringUtil {
 
     public static boolean isEmpty(String str) {
         return null == str || EMPTY.equals(str);
+    }
+
+    public static String parseInt(int number) {
+        String appender = EMPTY;
+
+        if (number < 10) {
+            appender = "0";
+        }
+
+        return appender + number;
     }
 }

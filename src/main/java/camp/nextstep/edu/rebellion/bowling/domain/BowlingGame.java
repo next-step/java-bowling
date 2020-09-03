@@ -1,5 +1,7 @@
 package camp.nextstep.edu.rebellion.bowling.domain;
 
+import camp.nextstep.edu.rebellion.bowling.domain.frame.Frame;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,18 +10,25 @@ public class BowlingGame {
     private final int MAX_ROUNDS = 10;
     private final int FINAL_ROUND = MAX_ROUNDS - 1;
 
+    private final Player player;
     private final List<Frame> frames;
     private int currentRound;
 
-    private BowlingGame() {
-        frames = new ArrayList<>();
+    private BowlingGame(Player player) {
+        this.player = player;
+        this.frames = setup();
+    }
+
+    private List<Frame> setup() {
+        List<Frame> frames = new ArrayList<>();
         for (int i = 0; i < MAX_ROUNDS; i++) {
             frames.add(Frame.ready());
         }
+        return frames;
     }
 
-    public static BowlingGame start() {
-        return new BowlingGame();
+    public static BowlingGame start(Player player) {
+        return new BowlingGame(player);
     }
 
     public void record(int hits) {
@@ -29,8 +38,6 @@ public class BowlingGame {
         if (current.meetEnd()) {
             currentRound++;
         }
-
-        System.out.println("[Record END] " + currentRound);
     }
 
     public int currentRound() {
@@ -51,7 +58,7 @@ public class BowlingGame {
         return false;
     }
 
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
+    public ScoreBoard getScoreBoard() {
+        return new ScoreBoard(player, Collections.unmodifiableList(frames));
     }
 }

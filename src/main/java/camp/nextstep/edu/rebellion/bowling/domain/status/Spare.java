@@ -1,4 +1,4 @@
-package camp.nextstep.edu.rebellion.bowling.domain;
+package camp.nextstep.edu.rebellion.bowling.domain.status;
 
 public class Spare implements FrameStatus {
     private final int first;

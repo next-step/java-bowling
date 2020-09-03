@@ -7,7 +7,7 @@ public class InputView {
 
     private InputView() {}
 
-    public static String getPlayers() {
+    public static String getPlayer() {
         System.out.println("플레이어 이름을 입력해주세요 (영문자만, 최대 3글자) ");
         return getLine();
     }
