@@ -8,6 +8,7 @@ public class Playing implements FrameStatus {
     public Playing (FrameScore score) {
         this.score = score;
     }
+
     @Override
     public String makeSymbol() {
         return String.valueOf(score.getFirstScore());
