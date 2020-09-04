@@ -88,6 +88,13 @@ public class Question extends AbstractEntity {
         return answers;
     }
 
+    public void validateOwner(User user) {
+    }
+
+    public DeleteHistories deleteBy(User user) {
+        return null;
+    }
+
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
