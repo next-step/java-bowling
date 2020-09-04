@@ -2,6 +2,7 @@ package qna.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -14,8 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -61,6 +61,15 @@ public class QnaServiceTest {
     }
 
     @Test
+    @DisplayName("게시물 작성자와 로그인 유저가 같지 않으면 삭제 불가 Exception 발생")
+    public void delete_게시물_작성자와_로그인_유저_다르면_삭제_불가() {
+        assertThatExceptionOfType(CannotDeleteException.class)
+                .isThrownBy(() -> {
+                    qnAService.validateQuestionOwner(UserTest.SANJIGI, question);
+                });
+    }
+
+    @Test
     public void delete_성공_질문자_답변자_같음() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
@@ -69,6 +78,15 @@ public class QnaServiceTest {
         assertThat(question.isDeleted()).isTrue();
         assertThat(answer.isDeleted()).isTrue();
         verifyDeleteHistories();
+    }
+
+    @Test
+    @DisplayName("게시물의 답변 작성자가 게시물 작성자가 아니면 삭제 불가 Exception 발생")
+    public void delete_게시물_작성자와_답변_작성자가_다르면_삭제_불가() {
+        assertThatExceptionOfType(CannotDeleteException.class)
+                .isThrownBy(() -> {
+                    qnAService.validateAnswer(UserTest.SANJIGI, Arrays.asList(answer));
+                });
     }
 
     @Test
