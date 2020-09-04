@@ -97,12 +97,10 @@ public class Question extends AbstractEntity {
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
-        setDeleted(true);
+        deleted = true;
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
 
-        List<Answer> answers = getAnswers();
-
-        for (Answer answer : answers) {
+        for (Answer answer : getAnswers()) {
             deleteHistories.add(answer.delete(loginUser));
         }
 
