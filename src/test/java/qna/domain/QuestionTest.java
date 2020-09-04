@@ -39,7 +39,7 @@ public class QuestionTest {
     @DisplayName("삭제 처리 테스트")
     @ParameterizedTest
     @MethodSource("deleteByTestData")
-    void deleteBy(Question question, User loginUser) {
+    void deleteBy(Question question, User loginUser) throws CannotDeleteException {
         DeleteHistories deleteHistories = question.deleteBy(loginUser);
 
         assertThat(deleteHistories).isNotNull();

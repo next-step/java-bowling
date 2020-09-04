@@ -46,10 +46,10 @@ public class AnswerTest {
     @DisplayName("삭제 처리 테스트")
     @ParameterizedTest
     @MethodSource("deleteByTestData")
-    void deleteBy(Answer answer, User loginUser) {
-        DeleteHistories deleteHistories = answer.deleteBy(loginUser);
+    void deleteBy(Answer answer) {
+        DeleteHistory deleteHistory = answer.delete();
 
-        assertThat(deleteHistories).isNotNull();
+        assertThat(deleteHistory).isNotNull();
         assertThat(answer.isDeleted()).isTrue();
     }
 
