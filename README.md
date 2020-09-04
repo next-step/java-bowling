@@ -13,6 +13,6 @@
 * [X] 답변들을 관리하는 Answers 생성 
 * [X] Answer - 삭제 가능 여부 확인 메소드 생성으로 로직 분리
 * [ ] 삭제 기록 관리하는 DeleteHistories 생성 
-* [ ] Question - 삭제 설정 로직 분리 
-* [ ] Answer - 삭제 설정 로직 분리 
+* [X] Question - 삭제 설정 로직 분리 
+* [X] Answer - 삭제 설정 로직 분리 
 
