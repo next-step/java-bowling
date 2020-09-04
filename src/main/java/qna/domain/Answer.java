@@ -68,6 +68,14 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
+    public void validateOwner(User loginUser) {
+
+    }
+
+    public DeleteHistories deleteBy(User user) {
+        return null;
+    }
+
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
