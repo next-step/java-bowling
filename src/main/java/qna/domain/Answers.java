@@ -20,7 +20,7 @@ public class Answers {
         validateOwner(user);
 
         return answers.stream()
-                .map(Answer::deleteBy)
+                .map(Answer::delete)
                 .collect(Collectors.toList());
     }
 

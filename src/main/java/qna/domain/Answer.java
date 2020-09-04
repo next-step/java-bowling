@@ -80,7 +80,7 @@ public class Answer extends AbstractEntity {
         }
     }
 
-    public DeleteHistory deleteBy() {
+    public DeleteHistory delete() {
         setDeleted(true);
 
         return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
