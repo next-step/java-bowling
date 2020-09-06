@@ -106,7 +106,7 @@ public class Question extends AbstractEntity {
 
         deleted = true;
 
-        return DeleteHistory.of(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
+        return DeleteHistory.ofQuestion(getId(), getWriter(), LocalDateTime.now());
     }
 
     private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
