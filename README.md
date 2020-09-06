@@ -7,3 +7,12 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## 1단계 - 질문 삭제하기 기능 리팩토링
+* [X] Question - 삭제 권한 여부 확인 메소드 생성으로 로직 분리
+* [X] 답변들을 관리하는 Answers 생성 
+* [X] Answer - 삭제 가능 여부 확인 메소드 생성으로 로직 분리
+* [X] 삭제 기록 관리하는 DeleteHistories 생성 
+* [X] Question - 삭제 설정 로직 분리 
+* [X] Answer - 삭제 설정 로직 분리 
+
