@@ -3,7 +3,9 @@ package camp.nextstep.edu.rebellion.bowling.domain.score;
 import camp.nextstep.edu.rebellion.bowling.domain.frame.Frame;
 import camp.nextstep.edu.rebellion.bowling.domain.game.Player;
 import camp.nextstep.edu.rebellion.bowling.domain.frame.Frames;
+import org.apache.logging.log4j.util.Strings;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,11 +30,19 @@ public class ScoreBoard {
                 .collect(Collectors.toList());
     }
 
-    public List<Integer> getHisScore() {
-        return this.frames
-            .getFrames()
-            .stream()
-            .map(Frame::getHitsScore)
-            .collect(Collectors.toList());
+    public List<String> getHisScore() {
+        List<String> scores = new ArrayList<>();
+        int previewScore = 0;
+        for (Frame frame : frames.getFrames()) {
+
+            previewScore = previewScore + frame.getHitsScore();
+            if (frame.canCalculateScore()) {
+                scores.add(String.valueOf(previewScore));
+            } else {
+                scores.add(Strings.EMPTY);
+            }
+        }
+
+        return scores;
     }
 }

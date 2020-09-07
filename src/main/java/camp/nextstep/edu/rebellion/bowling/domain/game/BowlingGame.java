@@ -24,8 +24,8 @@ public class BowlingGame {
         frames.markBonusOnPrevious(gameRound, hits);
 
         if (frames.meetEnd(gameRound)) {
-            gameRound.next();
             frames.makeBonusChance(gameRound);
+            gameRound.next();
         }
     }
 

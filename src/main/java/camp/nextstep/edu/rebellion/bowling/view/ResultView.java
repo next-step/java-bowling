@@ -44,7 +44,7 @@ public class ResultView {
         return builder.toString();
     }
 
-    private static String generateScore(List<Integer> hitScores) {
+    private static String generateScore(List<String> hitScores) {
         StringBuilder builder = new StringBuilder();
         builder.append(wrapFormat(Strings.EMPTY));
         hitScores.forEach(s -> builder.append(wrapFormat(String.valueOf(s))));

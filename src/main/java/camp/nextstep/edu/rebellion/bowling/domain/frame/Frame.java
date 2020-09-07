@@ -46,6 +46,10 @@ public abstract class Frame {
         return frameScore.isStrike() || !attempt.hasAttempt();
     }
 
+    public boolean canCalculateScore() {
+        return meetEnd() && !bonusAttempt.hasAttempt();
+    }
+
     public boolean isStarted() {
         return !attempt.isFirstAttempt();
     }

@@ -28,7 +28,6 @@ public class Frames {
         return frames;
     }
 
-
     public void markScoreOnRound(Round round, int hits) {
         findByRound(round)
                 .markScore(hits);
@@ -44,11 +43,13 @@ public class Frames {
     }
 
     public boolean meetEnd(Round round) {
-        return findByRound(round).meetEnd();
+        return findByRound(round)
+                .meetEnd();
     }
 
     public void makeBonusChance(Round round) {
-        findByRound(round).makeBonusChance();
+        findByRound(round)
+                .makeBonusChance();
     }
 
     public boolean isFinalFrameStrike() {
