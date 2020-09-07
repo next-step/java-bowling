@@ -24,8 +24,15 @@ public class BowlingGame {
         Frame current = frames.findByRound(gameRound);
         current.markScore(hits);
 
+        Round currentRound = Round.currentOf(gameRound);
+        while (currentRound.hasPrev()) {
+            currentRound.prev();
+            frames.findByRound(currentRound).markBonus(hits);
+        }
+
         if (current.meetEnd()) {
             gameRound.next();
+            current.makeBonusChance();
         }
     }
 

@@ -43,6 +43,10 @@ public class FrameScore {
         return this.last.getHits();
     }
 
+    public int getHitsScore() {
+        return this.first.getHits() + this.last.getHits();
+    }
+
     private void checkScoreRange(int addedHits) {
         if (MAX_FRAME_SCORES < this.first.getHits() + addedHits) {
             throw new IllegalArgumentException("최대 10 점을 넘을 수 없습니다");

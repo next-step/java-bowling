@@ -2,6 +2,7 @@ package camp.nextstep.edu.rebellion.bowling.view;
 
 import camp.nextstep.edu.rebellion.bowling.domain.score.ScoreBoard;
 import camp.nextstep.edu.rebellion.bowling.util.StringUtil;
+import org.apache.logging.log4j.util.Strings;
 
 import java.util.List;
 
@@ -18,7 +19,9 @@ public class ResultView {
         output
                 .append(generateHeader(symbols.size()))
                 .append(ENTER)
-                .append(generateScore(board.getPlayerName(), symbols));
+                .append(generateFrameStatus(board.getPlayerName(), symbols))
+                .append(ENTER)
+                .append(generateScore(board.getHisScore()));
 
         System.out.println(output.toString());
     }
@@ -33,10 +36,18 @@ public class ResultView {
         return builder.toString();
     }
 
-    private static String generateScore(String playerName, List<String> symbols) {
+    private static String generateFrameStatus(String playerName, List<String> symbols) {
         StringBuilder builder = new StringBuilder();
         builder.append(wrapFormat(playerName));
         symbols.forEach(s -> builder.append(wrapFormat(s)));
+        builder.append(PIPE);
+        return builder.toString();
+    }
+
+    private static String generateScore(List<Integer> hitScores) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(wrapFormat(Strings.EMPTY));
+        hitScores.forEach(s -> builder.append(wrapFormat(String.valueOf(s))));
         builder.append(PIPE);
         return builder.toString();
     }

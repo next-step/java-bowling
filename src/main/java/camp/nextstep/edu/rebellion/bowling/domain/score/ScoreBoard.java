@@ -1,5 +1,6 @@
 package camp.nextstep.edu.rebellion.bowling.domain.score;
 
+import camp.nextstep.edu.rebellion.bowling.domain.frame.Frame;
 import camp.nextstep.edu.rebellion.bowling.domain.game.Player;
 import camp.nextstep.edu.rebellion.bowling.domain.frame.Frames;
 
@@ -25,5 +26,13 @@ public class ScoreBoard {
                 .stream()
                 .map(f -> f.getStatus().makeSymbol())
                 .collect(Collectors.toList());
+    }
+
+    public List<Integer> getHisScore() {
+        return this.frames
+            .getFrames()
+            .stream()
+            .map(Frame::getHitsScore)
+            .collect(Collectors.toList());
     }
 }

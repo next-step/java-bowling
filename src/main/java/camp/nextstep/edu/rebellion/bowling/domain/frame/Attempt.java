@@ -15,6 +15,10 @@ public class Attempt {
         this.numberOfAttempts = new AtomicInteger(maxAttemptCount);
     }
 
+    public static Attempt reset(int maxAttemptCount) {
+        return new Attempt(maxAttemptCount);
+    }
+
     public void tried() {
         this.numberOfAttempts.decrementAndGet();
     }
