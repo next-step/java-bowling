@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static qna.domain.ThrowingConsumer.wrapper;
+
 @Entity
 public class Question extends AbstractEntity {
   @Column(length = 100, nullable = false)
@@ -98,9 +100,7 @@ public class Question extends AbstractEntity {
     List<DeleteHistory> deleteHistories = new ArrayList<>();
     deleteHistories.add(new DeleteHistory(ContentType.QUESTION, id, writer, LocalDateTime.now()));
 
-    for (Answer answer : answers) { ;
-      deleteHistories.add(answer.delete(loginUser));
-    }
+    answers.forEach(wrapper(answer -> deleteHistories.add(answer.delete(loginUser))));
 
     return deleteHistories;
   }
