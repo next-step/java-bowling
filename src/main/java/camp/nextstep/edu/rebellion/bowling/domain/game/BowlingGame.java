@@ -1,6 +1,5 @@
 package camp.nextstep.edu.rebellion.bowling.domain.game;
 
-import camp.nextstep.edu.rebellion.bowling.domain.frame.Frame;
 import camp.nextstep.edu.rebellion.bowling.domain.frame.Frames;
 import camp.nextstep.edu.rebellion.bowling.domain.score.ScoreBoard;
 
@@ -21,18 +20,12 @@ public class BowlingGame {
     }
 
     public void record(int hits) {
-        Frame current = frames.findByRound(gameRound);
-        current.markScore(hits);
+        frames.markScoreOnRound(gameRound, hits);
+        frames.markBonusOnPrevious(gameRound, hits);
 
-        Round currentRound = Round.currentOf(gameRound);
-        while (currentRound.hasPrev()) {
-            currentRound.prev();
-            frames.findByRound(currentRound).markBonus(hits);
-        }
-
-        if (current.meetEnd()) {
+        if (frames.meetEnd(gameRound)) {
             gameRound.next();
-            current.makeBonusChance();
+            frames.makeBonusChance(gameRound);
         }
     }
 

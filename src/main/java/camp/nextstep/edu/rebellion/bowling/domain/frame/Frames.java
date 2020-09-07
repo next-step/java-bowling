@@ -23,13 +23,32 @@ public class Frames {
     private List<Frame> generateNormalFrames() {
         List<Frame> frames = new ArrayList<>();
         for (int i = 0; i < MAX_FRAMES; i++) {
-            frames.add(new NormalFrame());
+            frames.add(FrameGenerator.generate(FrameType.NORMAL));
         }
         return frames;
     }
 
-    public Frame findByRound(Round round) {
-        return frames.get(round.getCurrent());
+
+    public void markScoreOnRound(Round round, int hits) {
+        findByRound(round)
+                .markScore(hits);
+    }
+
+    public void markBonusOnPrevious(Round round, int hits) {
+        Round currentRound = Round.currentOf(round);
+        while (currentRound.hasPrev()) {
+            currentRound.prev();
+            findByRound(currentRound)
+                    .markBonus(hits);
+        }
+    }
+
+    public boolean meetEnd(Round round) {
+        return findByRound(round).meetEnd();
+    }
+
+    public void makeBonusChance(Round round) {
+        findByRound(round).makeBonusChance();
     }
 
     public boolean isFinalFrameStrike() {
@@ -48,6 +67,10 @@ public class Frames {
             throw new IllegalArgumentException("보너스 프레임은 하나만 생성할 수 있습니다");
         }
 
-        this.frames.add(new BonusFrame());
+        this.frames.add(FrameGenerator.generate(FrameType.BONUS));
+    }
+
+    private Frame findByRound(Round round) {
+        return frames.get(round.getCurrent());
     }
 }
