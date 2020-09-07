@@ -85,20 +85,24 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public List<DeleteHistory> delete(User loginUser, List<Answer> answers) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         this.deleted = true;
         QnaValidation.validateQuestionOwner(loginUser, this);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+        deleteHistories.add(createDeleteHistory());
 
         QnaValidation.validateAnswer(loginUser, answers);
-        addAnswers(answers, deleteHistories);
+        addAnswers(deleteHistories);
 
         return deleteHistories;
     }
 
-    private List<DeleteHistory> addAnswers(List<Answer> answers, List<DeleteHistory> deleteHistories) {
+    private DeleteHistory createDeleteHistory() {
+        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
+    }
+
+    private List<DeleteHistory> addAnswers(List<DeleteHistory> deleteHistories) {
         answers.stream()
                 .map(Answer::delete)
                 .forEach(deleteHistories::add);
