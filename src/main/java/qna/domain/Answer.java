@@ -1,7 +1,7 @@
 package qna.domain;
 
-import qna.exception.NotFoundException;
-import qna.exception.UnAuthorizedException;
+import qna.global.exception.NotFoundException;
+import qna.global.exception.UnAuthorizedException;
 
 import javax.persistence.*;
 

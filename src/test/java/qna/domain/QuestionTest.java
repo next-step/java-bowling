@@ -12,7 +12,7 @@ public class QuestionTest {
     public static final Question Q2 = new Question("title2", "contents2").writeBy(UserTest.SANJIGI);
 
     @Test
-    void delete_확인() throws CannotDeleteException {
+    void delete_질문_삭제_상태_확인() throws CannotDeleteException {
         Q1.delete(UserTest.JAVAJIGI);
         assertThat(Q1.isDeleted()).isTrue();
     }
