@@ -18,7 +18,7 @@ class FramesTest {
         // when & then
         assertAll(
                 () -> assertThat(frames.getFrames()).hasSize(10),
-                () -> assertThat(frames.isFinalFrameStrike()).isFalse()
+                () -> assertThat(frames.isFinalFrameStrikeOrSpare()).isFalse()
         );
     }
 
@@ -28,11 +28,12 @@ class FramesTest {
         // given
         Frames frames = Frames.clear();
         Round round = getRound(10);
-        Frame frame = frames.findByRound(round);
-        frame.markScore(10);
 
-        // when & then
-        assertThat(frames.isFinalFrameStrike()).isTrue();
+        // when
+        frames.markScoreOnRound(round, 10);
+
+        // then
+        assertThat(frames.isFinalFrameStrikeOrSpare()).isTrue();
     }
 
     @DisplayName("보너스 프레임은 1개 여야 만 함, 추가 생성 할 경우 예외 발생")
@@ -47,10 +48,8 @@ class FramesTest {
         // then
         assertAll(
                 () -> assertThat(frames.getFrames()).hasSize(11),
-                () -> assertThat(frames.isFinalFrameStrike()).isFalse(),
-                () -> assertThat(frames
-                        .findByRound(getRound(11)) instanceof BonusFrame
-                ).isTrue()
+                () -> assertThat(frames.isFinalFrameStrikeOrSpare()).isFalse(),
+                () -> assertThat(frames.getFrames().get(11) instanceof BonusFrame).isTrue()
         );
 
         // and & then

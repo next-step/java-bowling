@@ -1,6 +1,7 @@
 package camp.nextstep.edu.rebellion.bowling.domain.frame;
 
 import camp.nextstep.edu.rebellion.bowling.domain.game.Round;
+import camp.nextstep.edu.rebellion.bowling.domain.score.FrameScore;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,14 +53,9 @@ public class Frames {
                 .makeBonusChance();
     }
 
-    public boolean isFinalFrameStrike() {
-        return this.frames.get(FINAL_FRAME)
-                .getFrameScore()
-                .isStrike();
-    }
-
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(this.frames);
+    public boolean isFinalFrameStrikeOrSpare() {
+        FrameScore frameScore = getFinalFrameScore();
+        return frameScore.isStrike() || frameScore.isSpare();
     }
 
     public void makeBonusFrame() {
@@ -68,7 +64,25 @@ public class Frames {
             throw new IllegalArgumentException("보너스 프레임은 하나만 생성할 수 있습니다");
         }
 
-        this.frames.add(FrameGenerator.generate(FrameType.BONUS));
+        FrameScore frameScore = getFinalFrameScore();
+
+        if (frameScore.isStrike()) {
+            this.frames.add(FrameGenerator.generate(FrameType.BONUS_TRY_TWO));
+        }
+
+        if (frameScore.isSpare()) {
+            this.frames.add(FrameGenerator.generate(FrameType.BONUS_TRY_ONE));
+        }
+    }
+
+    private FrameScore getFinalFrameScore() {
+        Frame finalFrame = frames.get(FINAL_FRAME);
+        FrameScore frameScore = finalFrame.getFrameScore();
+        return frameScore;
+    }
+
+    public List<Frame> getFrames() {
+        return Collections.unmodifiableList(this.frames);
     }
 
     private Frame findByRound(Round round) {

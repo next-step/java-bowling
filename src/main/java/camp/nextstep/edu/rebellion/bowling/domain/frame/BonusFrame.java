@@ -1,10 +1,9 @@
 package camp.nextstep.edu.rebellion.bowling.domain.frame;
 
 public class BonusFrame extends Frame {
-    private static final int TRY_ONLY_ONE = 1;
 
-    public BonusFrame() {
-        super(TRY_ONLY_ONE);
+    public BonusFrame(int initAttemptCount) {
+        super(initAttemptCount);
     }
 
     @Override
