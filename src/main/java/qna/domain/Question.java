@@ -1,7 +1,6 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
-import org.hibernate.sql.Delete;
 import qna.global.exception.CannotDeleteException;
 import qna.global.utils.QnaValidation;
 
