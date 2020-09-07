@@ -42,6 +42,7 @@ public abstract class Frame {
         }
     }
 
+    // meet end 조건을 다르게 가야 함
     public boolean meetEnd() {
         return frameScore.isStrike() || !attempt.hasAttempt();
     }

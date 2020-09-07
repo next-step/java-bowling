@@ -3,12 +3,12 @@ package camp.nextstep.edu.rebellion.bowling.domain.game;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Round {
-    private final int FIRST_ROUND = 0;
-    private final int LAST_ROUND = 10;
+    protected final int FIRST_ROUND = 0;
+    protected final int LAST_ROUND = 10;
 
-    private AtomicInteger current;
+    protected AtomicInteger current;
 
-    private Round(int initialValue){
+    protected Round(int initialValue){
         this.current = new AtomicInteger(initialValue);
     }
 

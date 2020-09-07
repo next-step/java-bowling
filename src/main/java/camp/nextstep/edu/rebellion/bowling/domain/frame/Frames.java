@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Frames {
-    private static final int MAX_FRAMES = 10;
+    private static final int COUNT_OF_MAX_FRAMES = 10;
     private static final int FINAL_FRAME = 9;
 
     private final List<Frame> frames;
@@ -23,7 +23,7 @@ public class Frames {
 
     private List<Frame> generateNormalFrames() {
         List<Frame> frames = new ArrayList<>();
-        for (int i = 0; i < MAX_FRAMES; i++) {
+        for (int i = 0; i < COUNT_OF_MAX_FRAMES; i++) {
             frames.add(FrameGenerator.generate(FrameType.NORMAL));
         }
         return frames;

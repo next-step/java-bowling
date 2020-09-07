@@ -34,14 +34,15 @@ public class BowlingGame {
     }
 
     public boolean hasNext() {
-        return gameRound.hasNext() || hasBonusChance();
+        return gameRound.hasNext() || hasBonusFrameChance();
     }
 
-    private boolean hasBonusChance() {
+    private boolean hasBonusFrameChance() {
         if (gameRound.meetLast() && frames.isFinalFrameStrikeOrSpare()) {
             frames.makeBonusFrame();
             return true;
         }
+
 
         return false;
     }
