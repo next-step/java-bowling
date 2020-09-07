@@ -3,28 +3,45 @@ package camp.nextstep.edu.rebellion.bowling.domain.game;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Round {
-    private final int MAX_ROUNDS = 10;
+    private final int FIRST_ROUND = 0;
+    private final int LAST_ROUND = 10;
 
     private AtomicInteger current;
 
-    private Round(){
-        this.current = new AtomicInteger(0);
+    private Round(int initialValue){
+        this.current = new AtomicInteger(initialValue);
     }
 
     public static Round reset() {
-        return new Round();
+        return new Round(0);
+    }
+
+    public static Round currentOf(Round round) {
+        return new Round(round.getCurrent());
     }
 
     public void next() {
         this.current.incrementAndGet();
     }
 
+    public void prev() {
+        this.current.decrementAndGet();
+    }
+
     public boolean hasNext() {
-        return MAX_ROUNDS > this.current.get();
+        return LAST_ROUND > this.current.get();
+    }
+
+    public boolean hasPrev() {
+        return FIRST_ROUND < this.current.get();
     }
 
     public boolean meetLast() {
-        return MAX_ROUNDS == this.current.get();
+        return LAST_ROUND == this.current.get();
+    }
+
+    public boolean meetFirst() {
+        return FIRST_ROUND == this.current.get();
     }
 
     public int getCurrent() {
