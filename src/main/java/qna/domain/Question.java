@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import org.hibernate.sql.Delete;
 import qna.global.exception.CannotDeleteException;
 import qna.global.utils.QnaValidation;
 
@@ -42,6 +43,12 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
+    public Question(String title, String contents, List<Answer> answers) {
+        this.title = title;
+        this.contents = contents;
+        this.answers = answers;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -78,12 +85,23 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser, List<Answer> answers) throws CannotDeleteException {
         this.deleted = true;
         QnaValidation.validateQuestionOwner(loginUser, this);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+
+        QnaValidation.validateAnswer(loginUser, answers);
+        addAnswers(answers, deleteHistories);
+
+        return deleteHistories;
+    }
+
+    private List<DeleteHistory> addAnswers(List<Answer> answers, List<DeleteHistory> deleteHistories) {
+        answers.stream()
+                .map(Answer::delete)
+                .forEach(deleteHistories::add);
         return deleteHistories;
     }
 
