@@ -103,6 +103,10 @@ public class Question extends AbstractEntity {
         return new DeleteHistories(new DeleteHistory(ContentType.QUESTION, super.getId(), writer, LocalDateTime.now()));
     }
 
+    public Answers getBondedAnswers() {
+        return new Answers(answers);
+    }
+
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
