@@ -14,4 +14,10 @@ public class AnswerTest {
         assertThat(A1.isDeleted()).isTrue();
     }
 
+    @Test
+    void delete_삭제시_삭제_기록_생성() {
+        DeleteHistory deleteHistory = A1.delete();
+        assertThat(deleteHistory).isNotNull();
+    }
+
 }
