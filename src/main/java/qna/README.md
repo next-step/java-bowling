@@ -25,3 +25,6 @@ refactor 1. Question 객체에서 담당할 책임 분리하기
             * deleteQuestion Question으로 옮기기
 refactor 2. List<DeleteHistory>의 일급컬렉션 만들기
             * refactor 1에서 만든 deleteQuestion test에서 사용하는 question 객체 before each에서 만들기 (테스트끼리 영향을 끼치지 않기위해)
+refactor 3. Answer 객체에서 담당할 책임 분리하기
+            * answer Owner 확인 로직 Answer로 옮기기
+            * deleteAnswer Answer로 옮기기

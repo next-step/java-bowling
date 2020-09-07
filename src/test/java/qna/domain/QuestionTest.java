@@ -33,11 +33,11 @@ public class QuestionTest {
                 .hasMessage("질문을 삭제할 권한이 없습니다.");
     }
 
-    @DisplayName("삭제 메서드 실행 시 question 삭제 플래그 true,  List<deleteHistory> 객체 반환")
+    @DisplayName("삭제 메서드 실행 시 question 삭제 플래그 true,  DeleteHistories 객체 반환")
     @Test
     void deleteQuestion() throws Exception {
         DeleteHistories deleteResult = preparedQuestion.delete(JAVAJIGI);
         assertThat(preparedQuestion.isDeleted()).isTrue();
-        assertThat(deleteResult).isEqualTo(List.of(new DeleteHistory(ContentType.QUESTION, preparedQuestion.getId(), JAVAJIGI, LocalDateTime.now())));
+        assertThat(deleteResult).isEqualTo(new DeleteHistories(List.of(new DeleteHistory(ContentType.QUESTION, preparedQuestion.getId(), JAVAJIGI, LocalDateTime.now()))));
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    public static final String SHOULD_HAVE_OWNERSHIP_TO_DELETE_QUESTION = "질문을 삭제할 권한이 없습니다.";
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -92,7 +93,7 @@ public class Question extends AbstractEntity {
 
     public void validateQuestionOwner(User loginUser) throws CannotDeleteException {
         if (!this.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+            throw new CannotDeleteException(SHOULD_HAVE_OWNERSHIP_TO_DELETE_QUESTION);
         }
     }
 
