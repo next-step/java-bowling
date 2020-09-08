@@ -3,33 +3,41 @@ package camp.nextstep.edu.rebellion.bowling.domain.game;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Round {
-    protected final int FIRST_ROUND = 0;
-    protected final int LAST_ROUND = 10;
+    private static final int FIRST_ROUND = 0;
+    private static final int LAST_ROUND = 10;
+    private static final int BONUS_ROUND = 1;
 
-    protected AtomicInteger current;
+    private AtomicInteger current;
+    private int lastRound;
 
-    protected Round(int initialValue){
+    private Round(int initialValue, int lastRound){
+        checkLastRound(lastRound);
         this.current = new AtomicInteger(initialValue);
+        this.lastRound = lastRound;
     }
 
     public static Round reset() {
-        return new Round(0);
+        return new Round(0, LAST_ROUND);
     }
 
     public static Round currentOf(Round round) {
-        return new Round(round.getCurrent());
+        return new Round(round.getCurrent(), LAST_ROUND);
     }
 
     public void next() {
-        this.current.incrementAndGet();
+        if (hasNext()) {
+            this.current.incrementAndGet();
+        }
     }
 
     public void prev() {
-        this.current.decrementAndGet();
+        if (hasPrev()) {
+            this.current.decrementAndGet();
+        }
     }
 
     public boolean hasNext() {
-        return LAST_ROUND > this.current.get();
+        return lastRound > this.current.get();
     }
 
     public boolean hasPrev() {
@@ -37,7 +45,7 @@ public class Round {
     }
 
     public boolean meetLast() {
-        return LAST_ROUND == this.current.get();
+        return lastRound == this.current.get();
     }
 
     public boolean meetFirst() {
@@ -46,5 +54,16 @@ public class Round {
 
     public int getCurrent() {
         return this.current.get();
+    }
+
+    public void addLastRound() {
+        this.lastRound++;
+        checkLastRound(lastRound);
+    }
+
+    private void checkLastRound(int lastRound) {
+        if (LAST_ROUND + BONUS_ROUND < lastRound) {
+            throw new IllegalArgumentException("최대 라운드는 허용 범위를 벗어 났습니다 (최대 11) " + lastRound);
+        }
     }
 }

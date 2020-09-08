@@ -41,6 +41,7 @@ class FramesTest {
     public void makeBonusFrameTest() {
         // given
         Frames frames = Frames.clear();
+        int lastPosition = 10;
 
         // when
         frames.makeBonusFrame();
@@ -49,7 +50,7 @@ class FramesTest {
         assertAll(
                 () -> assertThat(frames.getFrames()).hasSize(11),
                 () -> assertThat(frames.isFinalFrameStrikeOrSpare()).isFalse(),
-                () -> assertThat(frames.getFrames().get(11) instanceof BonusFrame).isTrue()
+                () -> assertThat(frames.getFrames().get(lastPosition) instanceof BonusFrame).isTrue()
         );
 
         // and & then

@@ -11,7 +11,7 @@ class NormalFrameTest {
     @Test
     public void normalFrameTest() {
         // given
-        Frame frame = new NormalFrame();
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
 
         // when & then
         assertAll(
@@ -26,7 +26,7 @@ class NormalFrameTest {
         // given
         int first = 1;
         int last = 2;
-        Frame frame = new NormalFrame();
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
 
         // when
         frame.markScore(first);

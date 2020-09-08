@@ -1,7 +1,8 @@
 package camp.nextstep.edu.rebellion.bowling.domain.status;
 
 import camp.nextstep.edu.rebellion.bowling.domain.frame.Frame;
-import camp.nextstep.edu.rebellion.bowling.domain.frame.NormalFrame;
+import camp.nextstep.edu.rebellion.bowling.domain.frame.FrameFactory;
+import camp.nextstep.edu.rebellion.bowling.domain.frame.FrameType;
 import camp.nextstep.edu.rebellion.bowling.util.StringUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class FrameStatusResolverTest {
     @Test
     public void notSTartedTest() {
         // given
-        Frame frame = new NormalFrame();
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
 
         // when
         FrameStatus status = FrameStatusResolver.resolve(frame);
@@ -31,7 +32,7 @@ class FrameStatusResolverTest {
     @Test
     public void playingTest() {
         // given
-        Frame frame = new NormalFrame();
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
         frame.markScore(5);
 
         // when
@@ -49,7 +50,7 @@ class FrameStatusResolverTest {
     @Test
     public void strikeTest() {
         // given
-        Frame frame = new NormalFrame();
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
         frame.markScore(10);
 
         // when
@@ -67,7 +68,7 @@ class FrameStatusResolverTest {
     @Test
     public void spareTest() {
         // given
-        Frame frame = new NormalFrame();
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
         frame.markScore(9);
         frame.markScore(1);
 
@@ -86,7 +87,7 @@ class FrameStatusResolverTest {
     @Test
     public void missTest() {
         // given
-        Frame frame = new NormalFrame();
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
         frame.markScore(1);
         frame.markScore(2);
 
@@ -105,7 +106,7 @@ class FrameStatusResolverTest {
     @Test
     public void missGutterTest() {
         // given
-        Frame frame = new NormalFrame();
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
         frame.markScore(7);
         frame.markScore(0);
 

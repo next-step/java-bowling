@@ -7,7 +7,7 @@ import camp.nextstep.edu.rebellion.bowling.domain.status.FrameStatusResolver;
 
 public abstract class Frame {
     protected FrameScore frameScore;
-    protected BonusScore bonusScore;
+    protected BonusScore bonusScore; // bonus 분리 필요함 score 라는게 필요 없음
     protected Attempt attempt;
     protected Attempt bonusAttempt;
 
@@ -17,12 +17,20 @@ public abstract class Frame {
         this.attempt = new Attempt(initAttempt);
         this.bonusAttempt = new Attempt(0);
     }
-
-    protected abstract void assignScore(int hits);
+    protected abstract void adjustAttempt();
+    protected abstract boolean match(FrameType type);
 
     public void markScore(int hits) {
         assignScore(hits);
-        attempt.tried();
+        adjustAttempt();
+    }
+
+    private void assignScore(int hits) {
+        if (attempt.isFirstAttempt()) {
+            frameScore.markFirst(hits);
+            return;
+        }
+        frameScore.markLast(hits);
     }
 
     public void markBonus(int hits){
@@ -42,9 +50,8 @@ public abstract class Frame {
         }
     }
 
-    // meet end 조건을 다르게 가야 함
     public boolean meetEnd() {
-        return frameScore.isStrike() || !attempt.hasAttempt();
+        return !attempt.hasAttempt();
     }
 
     public boolean canCalculateScore() {

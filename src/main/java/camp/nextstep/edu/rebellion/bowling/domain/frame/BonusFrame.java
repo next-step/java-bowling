@@ -2,12 +2,17 @@ package camp.nextstep.edu.rebellion.bowling.domain.frame;
 
 public class BonusFrame extends Frame {
 
-    public BonusFrame(int initAttemptCount) {
-        super(initAttemptCount);
+    public BonusFrame(int initAttempt) {
+        super(initAttempt);
     }
 
     @Override
-    protected void assignScore(int hits) {
-        frameScore.markFirst(hits);
+    protected void adjustAttempt() {
+        attempt.tried();
+    }
+
+    @Override
+    protected boolean match(FrameType type) {
+        return FrameType.BONUS == type;
     }
 }

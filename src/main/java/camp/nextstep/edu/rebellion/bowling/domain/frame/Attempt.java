@@ -3,8 +3,8 @@ package camp.nextstep.edu.rebellion.bowling.domain.frame;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Attempt {
-    private static final int LIMIT = 0;
-    private static final int MAX_ATTEMPT_COUNTS = 2;
+    private static final int NO_ATTEMPT = 0;
+    private static final int MAX_ATTEMPT = 3;
 
     private final int maxAttemptCount;
     private final AtomicInteger numberOfAttempts;
@@ -25,17 +25,19 @@ public class Attempt {
 
     public boolean isFirstAttempt() {
         return maxAttemptCount == this.numberOfAttempts.get();
-
     }
 
     public boolean hasAttempt() {
-        return this.numberOfAttempts.get() > LIMIT;
+        return this.numberOfAttempts.get() > NO_ATTEMPT;
     }
 
+    public void setNoAttempt() {
+        this.numberOfAttempts.set(NO_ATTEMPT);
+    }
 
     private void checkRange(int maxAttemptCount) {
-        if (LIMIT > maxAttemptCount || MAX_ATTEMPT_COUNTS < maxAttemptCount) {
-            throw new IllegalArgumentException("시도 횟 수 초기 값이 잘못 되었습니다 (최대 2) : "
+        if (NO_ATTEMPT > maxAttemptCount || MAX_ATTEMPT < maxAttemptCount) {
+            throw new IllegalArgumentException("시도 횟 수 초기 값이 잘못 되었습니다 (최대 3) : "
                     + maxAttemptCount);
         }
     }

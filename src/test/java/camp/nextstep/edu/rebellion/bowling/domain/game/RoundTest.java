@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoundTest {
@@ -68,6 +69,29 @@ class RoundTest {
                 () -> assertThat(currentOf.getCurrent()).isEqualTo(0),
                 () -> assertThat(round.getCurrent()).isEqualTo(2)
         );
+    }
+
+    @DisplayName("최대 Round 값이 잘 증가 되는지 확인 ")
+    @Test
+    public void addLastRoundTest() {
+        // given
+        Round round = goAndGet(10);
+
+        // then
+        assertThat(round.hasNext()).isFalse();
+        assertThat(round.meetLast()).isTrue();
+
+        // when
+        round.addLastRound();
+
+        // then
+        assertThat(round.hasNext()).isTrue();
+        assertThat(round.meetLast()).isFalse();
+
+        // and & then
+        assertThatThrownBy(() -> round.addLastRound())
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("최대 라운드는 허용 범위를 벗어 났습니다 (최대 11) 12");
     }
 
     private Round goAndGet(int go) {
