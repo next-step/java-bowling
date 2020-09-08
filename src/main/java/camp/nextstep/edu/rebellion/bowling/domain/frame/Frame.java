@@ -59,8 +59,4 @@ public abstract class Frame {
     public int getHitsScore() {
         return frameScore.getHitsScore() + bonus.getHitsScore();
     }
-
-    public int getHitsScore(int score) {
-        return score + getHitsScore();
-    }
 }
