@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -35,11 +34,19 @@ public class FrameSet {
                 .anyMatch(Frame::hasNextTurn);
     }
 
-    public void record(int hitCount) {
-        frames.stream()
+    public Frame record(int hitCount) {
+        return frames.stream()
                 .filter(Frame::hasNextTurn)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("게임이 끝났습니다."))
                 .record(hitCount);
+    }
+
+    public int getPlayStage() {
+        return frames.stream()
+                .filter(Frame::hasNextTurn)
+                .findFirst()
+                .get()
+                .getStage();
     }
 }

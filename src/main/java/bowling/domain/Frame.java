@@ -91,4 +91,8 @@ public class Frame {
     public boolean match(GameResult result) {
         return this.result.equals(result);
     }
+
+    public int getStage(){
+        return stage;
+    }
 }

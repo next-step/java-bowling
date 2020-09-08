@@ -11,4 +11,11 @@ public class InputScanner {
         System.out.println();
         return result;
     }
+
+    public static int getHitCount(String message) {
+        System.out.print(message);
+        int result = scanner.nextInt();
+        System.out.println();
+        return result;
+    }
 }

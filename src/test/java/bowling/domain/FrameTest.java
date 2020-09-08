@@ -57,4 +57,12 @@ class FrameTest {
         assertThat(Frame.from(Frame.END_STAGE).record(1).record(1).match(GameResult.ofMiss(2))).isTrue();
         assertThat(Frame.from(Frame.END_STAGE).record(GUTTER).record(STRIKE).match(GameResult.ofSpare())).isTrue();
     }
+
+    @Test
+    void getStage() {
+        Frame frame = Frame.from(Frame.BEGIN_STAGE);
+
+        assertThat(frame.getStage()).isEqualTo(1);
+        assertThat(frame.record(GUTTER).getStage()).isEqualTo(1);
+    }
 }
