@@ -3,15 +3,15 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Pins {
-
     public static final int DEFAULT_PIN_COUNT = 10;
     private static final int CLEAR_COUNT = 0;
 
     private int count;
 
     private Pins(int count) {
-        if (count != DEFAULT_PIN_COUNT)
+        if (count != DEFAULT_PIN_COUNT) {
             throw new IllegalArgumentException(String.format("핀의 갯수는 %s보다 많거나 작을 수 없습니다. [%s]", DEFAULT_PIN_COUNT, count));
+        }
 
         this.count = count;
     }
@@ -25,8 +25,9 @@ public class Pins {
     }
 
     public void hitting(int hitCount) {
-        if (count < hitCount)
+        if (count < hitCount) {
             throw new IllegalArgumentException(String.format("남아있는 핀의 갯수 [%s] 보다 큰 값이 입력되었습니다. [%s]", count, hitCount));
+        }
 
         count -= hitCount;
     }

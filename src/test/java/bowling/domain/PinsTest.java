@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class PinsTest {
+class PinsTest {
 
     @Test
     void from() {
@@ -37,7 +37,8 @@ public class PinsTest {
 
     @Test
     void hittingThrowException() {
-        assertThatThrownBy(() -> Pins.from(Pins.DEFAULT_PIN_COUNT).hitting(Pins.DEFAULT_PIN_COUNT + 1))
+        Pins pins = Pins.from(Pins.DEFAULT_PIN_COUNT);
+        assertThatThrownBy(() -> pins.hitting(Pins.DEFAULT_PIN_COUNT + 1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

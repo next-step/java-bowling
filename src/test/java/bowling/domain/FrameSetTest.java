@@ -3,12 +3,27 @@ package bowling.domain;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class FrameSetTest {
+class FrameSetTest {
     @Test
-    void constructor() {
+    void from() {
         assertThat(FrameSet.from("yongdae")).isNotNull();
     }
+
+    @Test
+    void of() {
+        assertThat(FrameSet.of("yongdae", FrameSet.FRAME_COUNT)).isNotNull();
+    }
+
+    @Test
+    void ofThrowException() {
+        assertThatThrownBy(() -> FrameSet.of("yongdae", FrameSet.FRAME_COUNT + 1))
+                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> FrameSet.of("yongdae", FrameSet.FRAME_COUNT - 1))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
 
     @Test
     void isPlayingWithNoCount() {
