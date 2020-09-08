@@ -89,16 +89,12 @@ public class Question extends AbstractEntity {
         QnaValidation.validateQuestionOwner(loginUser, this);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        deleteHistories.add(createDeleteHistory());
+        deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, getId(), writer));
 
         QnaValidation.validateAnswer(loginUser, answers);
         addAnswers(deleteHistories);
 
         return deleteHistories;
-    }
-
-    private DeleteHistory createDeleteHistory() {
-        return new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now());
     }
 
     private List<DeleteHistory> addAnswers(List<DeleteHistory> deleteHistories) {
