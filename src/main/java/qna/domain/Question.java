@@ -5,7 +5,6 @@ import qna.global.exception.CannotDeleteException;
 import qna.global.utils.QnaValidation;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -94,7 +93,7 @@ public class Question extends AbstractEntity {
 
         QnaValidation.validateAnswer(loginUser, answers);
         deleteHistories.addAll(deleteAnswers());
-        
+
         return deleteHistories;
     }
 
@@ -106,10 +105,6 @@ public class Question extends AbstractEntity {
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package qna.domain;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.global.exception.CannotDeleteException;
 
@@ -15,13 +16,15 @@ public class QuestionTest {
     private List<DeleteHistory> result;
 
     @Test
-    void delete_질문_삭제_상태_확인() throws CannotDeleteException {
+    @DisplayName("질문 삭제시 삭제 상태값 변경 확인")
+    void deleteQuestionState() throws CannotDeleteException {
         Q1.delete(UserTest.JAVAJIGI);
         assertThat(Q1.isDeleted()).isTrue();
     }
 
     @Test
-    void delete_DeleteHistory_값이_추가되었는지_확인() throws CannotDeleteException {
+    @DisplayName("질문 삭제시 DeleteHistories 값 추가 확인")
+    void addDeleteHistories() throws CannotDeleteException {
         result = Q1.delete(UserTest.JAVAJIGI);
         assertThat(result).hasSize(1);
     }
