@@ -37,7 +37,7 @@ public class AnswersTest {
         Answers answers = Answers.create(answerList);
 
         assertThatThrownBy(() -> {
-            answers.delete(UserTest.JAVAJIGI,DeleteHistories.create(new ArrayList()));
+            answers.delete(UserTest.JAVAJIGI, DeleteHistories.create(new ArrayList()));
         }).isInstanceOf(CannotDeleteException.class);
     }
 

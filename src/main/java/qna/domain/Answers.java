@@ -12,12 +12,12 @@ public class Answers {
         this.answers = answers;
     }
 
-    public static Answers create(List<Answer> answers){
+    public static Answers create(List<Answer> answers) {
         return new Answers(answers);
     }
 
     public DeleteHistories delete(User user, DeleteHistories deleteHistories) throws CannotDeleteException {
-        for(Answer answer : answers) {
+        for (Answer answer : answers) {
             answer.delete(user, deleteHistories);
         }
 
