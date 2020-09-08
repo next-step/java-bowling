@@ -21,7 +21,7 @@ public class ResultView {
                 .append(ENTER)
                 .append(generateFrameStatus(board.getPlayerName(), symbols))
                 .append(ENTER)
-                .append(generateScore(board.getHisScore()));
+                .append(generateScore(board.getHitsScores()));
 
         System.out.println(output.toString());
     }

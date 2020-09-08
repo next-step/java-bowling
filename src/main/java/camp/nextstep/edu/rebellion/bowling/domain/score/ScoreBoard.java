@@ -30,7 +30,7 @@ public class ScoreBoard {
                 .collect(Collectors.toList());
     }
 
-    public List<String> getHisScore() {
+    public List<String> getHitsScores() {
         List<String> scores = new ArrayList<>();
         int previewScore = 0;
 

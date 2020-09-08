@@ -26,38 +26,38 @@ public class Round {
 
     public void next() {
         if (hasNext()) {
-            this.current.incrementAndGet();
+            current.incrementAndGet();
         }
     }
 
     public void prev() {
         if (hasPrev()) {
-            this.current.decrementAndGet();
+            current.decrementAndGet();
         }
     }
 
     public boolean hasNext() {
-        return lastRound > this.current.get();
+        return lastRound > current.get();
     }
 
     public boolean hasPrev() {
-        return FIRST_ROUND < this.current.get();
+        return FIRST_ROUND < current.get();
     }
 
     public boolean meetFinal() {
-        return lastRound == this.current.get();
+        return lastRound == current.get();
     }
 
     public boolean meetFirst() {
-        return FIRST_ROUND == this.current.get();
+        return FIRST_ROUND == current.get();
     }
 
     public int getCurrent() {
-        return this.current.get();
+        return current.get();
     }
 
     public void addLastRound() {
-        this.lastRound++;
+        lastRound++;
         checkLastRound(lastRound);
     }
 

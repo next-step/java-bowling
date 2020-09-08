@@ -6,49 +6,49 @@ public abstract class FrameScore {
     private static final int TRY_ONE = 1;
     private static final int NO_TRY = 0;
 
-    protected Score first;
-    protected Score last;
+    Score first;
+    Score last;
 
-    protected FrameScore() {
+    FrameScore() {
         this.first = Score.of(0);
         this.last = Score.of(0);
     }
 
+    abstract void checkScoreRange(int addedHits);
+
     public void markFirst(int hits) {
-        this.first = Score.of(hits);
+        first = Score.of(hits);
     }
 
     public void markLast(int hits) {
         checkScoreRange(hits);
-        this.last = Score.of(hits);
+        last = Score.of(hits);
     }
 
     public boolean isStrike() {
-        return this.first.equals(STRIKE);
+        return first.equals(STRIKE);
     }
 
     public boolean isSpare() {
-        int totalScore = this.first.getHits() + this.last.getHits();
-        return (this.first.getHits() > 0 && this.last.getHits() > 0) &&
+        int totalScore = first.getHits() + last.getHits();
+        return (first.getHits() > 0 && last.getHits() > 0) &&
                 STRIKE == totalScore;
     }
 
     public int getFirstScore() {
-        return this.first.getHits();
+        return first.getHits();
     }
 
     public int getLastScore() {
-        return this.last.getHits();
+        return last.getHits();
     }
 
     public int getHitsScore() {
-        return this.first.getHits() + this.last.getHits();
+        return first.getHits() + last.getHits();
     }
 
     public int getTryAttempt() {
         return isStrike() ? TRY_TWO :
                 isSpare() ? TRY_ONE : NO_TRY;
     }
-
-    protected abstract void checkScoreRange(int addedHits);
 }

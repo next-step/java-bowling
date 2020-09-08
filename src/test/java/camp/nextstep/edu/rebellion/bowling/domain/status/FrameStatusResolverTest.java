@@ -120,4 +120,23 @@ class FrameStatusResolverTest {
                 () -> assertThat(status.makeSymbol()).isEqualTo("7|-")
         );
     }
+
+    @DisplayName("보너스 프레임인 경우 상태가 바르게 반환되는지 확인 (BonusStatus)")
+    @Test
+    public void bonusStatusTest() {
+        // given
+        Frame frame = FrameFactory.get(FrameType.BONUS);
+        frame.markScore(10);
+        frame.markScore(10);
+
+        // when
+        FrameStatus status = FrameStatusResolver.resolve(frame);
+
+        // then
+        assertAll(
+                () -> assertThat(status instanceof BonusStatus).isTrue(),
+                () -> assertThat(frame.getStatus() instanceof BonusStatus).isTrue(),
+                () -> assertThat(status.makeSymbol()).isEqualTo("X|X")
+        );
+    }
 }
