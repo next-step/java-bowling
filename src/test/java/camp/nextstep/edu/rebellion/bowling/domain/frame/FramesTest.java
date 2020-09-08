@@ -18,7 +18,7 @@ class FramesTest {
         // when & then
         assertAll(
                 () -> assertThat(frames.getFrames()).hasSize(10),
-                () -> assertThat(frames.isFinalFrameStrikeOrSpare()).isFalse()
+                () -> assertThat(frames.canMakeBonusFrame()).isFalse()
         );
     }
 
@@ -33,7 +33,7 @@ class FramesTest {
         frames.markScoreOnRound(round, 10);
 
         // then
-        assertThat(frames.isFinalFrameStrikeOrSpare()).isTrue();
+        assertThat(frames.canMakeBonusFrame()).isTrue();
     }
 
     @DisplayName("보너스 프레임은 1개 여야 만 함, 추가 생성 할 경우 예외 발생")
@@ -49,7 +49,7 @@ class FramesTest {
         // then
         assertAll(
                 () -> assertThat(frames.getFrames()).hasSize(11),
-                () -> assertThat(frames.isFinalFrameStrikeOrSpare()).isFalse(),
+                () -> assertThat(frames.canMakeBonusFrame()).isFalse(),
                 () -> assertThat(frames.getFrames().get(lastPosition) instanceof BonusFrame).isTrue()
         );
 

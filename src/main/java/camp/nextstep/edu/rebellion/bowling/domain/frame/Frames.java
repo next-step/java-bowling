@@ -10,9 +10,6 @@ import java.util.List;
 public class Frames {
     private static final int COUNT_OF_MAX_FRAMES = 10;
     private static final int FINAL_FRAME = 9;
-    private static final int TRY_TWO = 2;
-    private static final int TRY_ONE = 1;
-    private static final int NO_TRY = 0;
 
     private final List<Frame> frames;
 
@@ -63,13 +60,12 @@ public class Frames {
         frame.makeBonusChance();
     }
 
-    public boolean isFinalFrameStrikeOrSpare() {
-        FrameScore frameScore = getFinalFrameScore();
-        return frameScore.isStrike() || frameScore.isSpare();
-    }
-
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(this.frames);
+    }
+
+    public boolean canMakeBonusFrame() {
+        return isFinalStrikeOrSpare() && !containBonusFrame();
     }
 
     public void makeBonusFrame() {
@@ -78,18 +74,18 @@ public class Frames {
         }
 
         frames.add(FrameFactory.get(FrameType.BONUS,
-                getTryAttempt(getFinalFrameScore())));
+                getFinalFrameScore().getTryAttempt()));
     }
 
-    public boolean containBonusFrame() {
+
+    private boolean isFinalStrikeOrSpare() {
+        FrameScore frameScore = getFinalFrameScore();
+        return frameScore.isStrike() || frameScore.isSpare();
+    }
+
+    private boolean containBonusFrame() {
         return frames.stream()
                 .anyMatch(f -> f instanceof BonusFrame);
-    }
-
-    private int getTryAttempt(FrameScore finalFrameScore) {
-        return finalFrameScore.isStrike() ? TRY_TWO :
-                finalFrameScore.isSpare() ? TRY_ONE :
-                        NO_TRY;
     }
 
     private FrameScore getFinalFrameScore() {

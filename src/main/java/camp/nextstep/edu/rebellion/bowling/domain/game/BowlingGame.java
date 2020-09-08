@@ -38,9 +38,9 @@ public class BowlingGame {
     }
 
     private boolean hasBonusFrameChance() {
-        if (gameRound.meetLast() && frames.isFinalFrameStrikeOrSpare() && !frames.containBonusFrame()) {
-            gameRound.addLastRound();
+        if (gameRound.meetFinal() && frames.canMakeBonusFrame()) {
             frames.makeBonusFrame();
+            gameRound.addLastRound();
 
             return true;
         }

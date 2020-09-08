@@ -1,18 +1,25 @@
 package camp.nextstep.edu.rebellion.bowling.domain.frame;
 
+import camp.nextstep.edu.rebellion.bowling.domain.score.BonusFrameScore;
+
 public class BonusFrame extends Frame {
 
     public BonusFrame(int initAttempt) {
-        super(initAttempt);
+        super(BonusFrameScore.clear(), initAttempt);
     }
 
     @Override
-    protected void adjustAttempt() {
+    void adjustAttempt() {
         attempt.tried();
     }
 
     @Override
-    protected boolean match(FrameType type) {
+    public boolean match(FrameType type) {
         return FrameType.BONUS == type;
+    }
+
+    @Override
+    public boolean canCalculateScore() {
+        return false;
     }
 }

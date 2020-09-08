@@ -49,4 +49,21 @@ class NormalFrameTest {
                 () -> assertThat(frame.getFrameScore().getLastScore()).isEqualTo(last)
         );
     }
+
+    @DisplayName("Strike 를 기록 했을 경우 바로 프레임이 종료 되는지 확인")
+    @Test
+    public void adjustAttemptTest() {
+        // given
+        int strike = 10;
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
+
+        // when
+        frame.markScore(strike);
+
+        // then
+        assertAll(
+                () -> assertThat(frame.isStarted()).isTrue(),
+                () -> assertThat(frame.meetEnd()).isTrue()
+        );
+    }
 }

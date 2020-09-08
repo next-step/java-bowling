@@ -19,7 +19,7 @@ class RoundTest {
                 () -> assertThat(round.hasNext()).isTrue(),
                 () -> assertThat(round.hasPrev()).isFalse(),
                 () -> assertThat(round.meetFirst()).isTrue(),
-                () -> assertThat(round.meetLast()).isFalse()
+                () -> assertThat(round.meetFinal()).isFalse()
         );
     }
 
@@ -38,7 +38,7 @@ class RoundTest {
 
         // then
         assertThat(round.hasNext()).isFalse();
-        assertThat(round.meetLast()).isTrue();
+        assertThat(round.meetFinal()).isTrue();
     }
 
     @DisplayName("Round 가 잘 감소되는지 확인")
@@ -55,7 +55,7 @@ class RoundTest {
         assertAll(
                 () -> assertThat(currentOf.hasPrev()).isTrue(),
                 () -> assertThat(currentOf.meetFirst()).isFalse(),
-                () -> assertThat(currentOf.meetLast()).isFalse()
+                () -> assertThat(currentOf.meetFinal()).isFalse()
         );
 
         // and
@@ -65,7 +65,7 @@ class RoundTest {
         assertAll(
                 () -> assertThat(currentOf.hasPrev()).isFalse(),
                 () -> assertThat(currentOf.meetFirst()).isTrue(),
-                () -> assertThat(currentOf.meetLast()).isFalse(),
+                () -> assertThat(currentOf.meetFinal()).isFalse(),
                 () -> assertThat(currentOf.getCurrent()).isEqualTo(0),
                 () -> assertThat(round.getCurrent()).isEqualTo(2)
         );
@@ -79,14 +79,14 @@ class RoundTest {
 
         // then
         assertThat(round.hasNext()).isFalse();
-        assertThat(round.meetLast()).isTrue();
+        assertThat(round.meetFinal()).isTrue();
 
         // when
         round.addLastRound();
 
         // then
         assertThat(round.hasNext()).isTrue();
-        assertThat(round.meetLast()).isFalse();
+        assertThat(round.meetFinal()).isFalse();
 
         // and & then
         assertThatThrownBy(() -> round.addLastRound())

@@ -12,7 +12,7 @@ class FrameScoreTest {
     @Test
     public void frameScoreTest() {
         // given
-        FrameScore score = FrameScore.clear();
+        FrameScore score = NormalFrameScore.clear();
         int first = 1;
         int last = 2;
 
@@ -33,7 +33,7 @@ class FrameScoreTest {
     @Test
     public void isStrike() {
         // given
-        FrameScore score = FrameScore.clear();
+        FrameScore score = NormalFrameScore.clear();
         int first = 10;
 
         // when
@@ -51,7 +51,7 @@ class FrameScoreTest {
     @Test
     public void isSpare() {
         // given
-        FrameScore score = FrameScore.clear();
+        FrameScore score = NormalFrameScore.clear();
         int first = 9;
         int last = 1;
 
@@ -72,7 +72,7 @@ class FrameScoreTest {
     @Test
     public void scoreRangeThrownTest() {
         // given
-        FrameScore score = FrameScore.clear();
+        FrameScore score = NormalFrameScore.clear();
         int first = 8;
         int last = 3;
 
@@ -83,5 +83,22 @@ class FrameScoreTest {
         assertThatThrownBy(() -> score.markLast(last))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("최대 10 점을 넘을 수 없습니다");
+    }
+
+    @DisplayName("보너스 프레임 점수가 20을 넘는 경우 예외 발생")
+    @Test
+    public void bonusScoreRangeThrownTest() {
+        // given
+        FrameScore score = BonusFrameScore.clear();
+        int first = 10;
+        int last = 15;
+
+        // when
+        score.markFirst(first);
+
+        // then
+        assertThatThrownBy(() -> score.markLast(last))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("최대 20 점을 넘을 수 없습니다");
     }
 }

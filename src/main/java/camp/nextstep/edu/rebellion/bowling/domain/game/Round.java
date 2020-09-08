@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Round {
     private static final int FIRST_ROUND = 0;
-    private static final int LAST_ROUND = 10;
+    private static final int FINAL_ROUND = 10;
     private static final int BONUS_ROUND = 1;
 
     private AtomicInteger current;
@@ -17,11 +17,11 @@ public class Round {
     }
 
     public static Round reset() {
-        return new Round(0, LAST_ROUND);
+        return new Round(0, FINAL_ROUND);
     }
 
     public static Round currentOf(Round round) {
-        return new Round(round.getCurrent(), LAST_ROUND);
+        return new Round(round.getCurrent(), FINAL_ROUND);
     }
 
     public void next() {
@@ -44,7 +44,7 @@ public class Round {
         return FIRST_ROUND < this.current.get();
     }
 
-    public boolean meetLast() {
+    public boolean meetFinal() {
         return lastRound == this.current.get();
     }
 
@@ -62,7 +62,7 @@ public class Round {
     }
 
     private void checkLastRound(int lastRound) {
-        if (LAST_ROUND + BONUS_ROUND < lastRound) {
+        if (FINAL_ROUND + BONUS_ROUND < lastRound) {
             throw new IllegalArgumentException("최대 라운드는 허용 범위를 벗어 났습니다 (최대 11) " + lastRound);
         }
     }

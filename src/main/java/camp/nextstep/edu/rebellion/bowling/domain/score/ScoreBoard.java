@@ -33,14 +33,10 @@ public class ScoreBoard {
     public List<String> getHisScore() {
         List<String> scores = new ArrayList<>();
         int previewScore = 0;
-        for (Frame frame : frames.getFrames()) {
 
+        for (Frame frame : frames.getFrames()) {
             previewScore = previewScore + frame.getHitsScore();
-            if (frame.canCalculateScore()) {
-                scores.add(String.valueOf(previewScore));
-            } else {
-                scores.add(Strings.EMPTY);
-            }
+            scores.add(frame.canCalculateScore() ? String.valueOf(previewScore) : Strings.EMPTY);
         }
 
         return scores;

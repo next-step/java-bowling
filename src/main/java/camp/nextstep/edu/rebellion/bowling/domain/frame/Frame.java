@@ -1,24 +1,23 @@
 package camp.nextstep.edu.rebellion.bowling.domain.frame;
 
-import camp.nextstep.edu.rebellion.bowling.domain.score.BonusScore;
 import camp.nextstep.edu.rebellion.bowling.domain.score.FrameScore;
 import camp.nextstep.edu.rebellion.bowling.domain.status.FrameStatus;
 import camp.nextstep.edu.rebellion.bowling.domain.status.FrameStatusResolver;
 
 public abstract class Frame {
-    protected FrameScore frameScore;
-    protected BonusScore bonusScore; // bonus 분리 필요함 score 라는게 필요 없음
-    protected Attempt attempt;
-    protected Attempt bonusAttempt;
+    FrameScore frameScore;
+    Attempt attempt;
+    Bonus bonus;
 
-    protected Frame(int initAttempt) {
-        this.frameScore = FrameScore.clear();
-        this.bonusScore = BonusScore.clear();
+    Frame(FrameScore frameScore, int initAttempt) {
+        this.frameScore = frameScore;
         this.attempt = new Attempt(initAttempt);
-        this.bonusAttempt = new Attempt(0);
+        this.bonus = Bonus.clear();
     }
-    protected abstract void adjustAttempt();
-    protected abstract boolean match(FrameType type);
+
+    abstract void adjustAttempt();
+    public abstract boolean match(FrameType type);
+    public abstract boolean canCalculateScore();
 
     public void markScore(int hits) {
         assignScore(hits);
@@ -34,28 +33,15 @@ public abstract class Frame {
     }
 
     public void markBonus(int hits){
-        if (bonusAttempt.hasAttempt()) {
-            bonusScore.mark(hits);
-            bonusAttempt.tried();
-        }
+        bonus.markScore(hits);
     }
 
     public void makeBonusChance() {
-        if (frameScore.isStrike()) {
-            this.bonusAttempt = Attempt.reset(2);
-        }
-
-        if (frameScore.isSpare()) {
-            this.bonusAttempt = Attempt.reset(1);
-        }
+        bonus.giveChance(frameScore.getTryAttempt());
     }
 
     public boolean meetEnd() {
         return !attempt.hasAttempt();
-    }
-
-    public boolean canCalculateScore() {
-        return meetEnd() && !bonusAttempt.hasAttempt();
     }
 
     public boolean isStarted() {
@@ -71,6 +57,10 @@ public abstract class Frame {
     }
 
     public int getHitsScore() {
-        return frameScore.getHitsScore() + bonusScore.getHitsScore();
+        return frameScore.getHitsScore() + bonus.getHitsScore();
+    }
+
+    public int getHitsScore(int score) {
+        return score + getHitsScore();
     }
 }
