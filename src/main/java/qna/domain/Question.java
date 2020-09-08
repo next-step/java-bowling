@@ -1,10 +1,13 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.global.exception.CannotDeleteException;
+import qna.global.utils.QnaValidation;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -37,6 +40,12 @@ public class Question extends AbstractEntity {
         super(id);
         this.title = title;
         this.contents = contents;
+    }
+
+    public Question(String title, String contents, List<Answer> answers) {
+        this.title = title;
+        this.contents = contents;
+        this.answers = answers;
     }
 
     public String getTitle() {
@@ -75,17 +84,27 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        this.deleted = true;
+        QnaValidation.validateQuestionOwner(loginUser, this);
+
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, getId(), writer));
+
+        QnaValidation.validateAnswer(loginUser, answers);
+        deleteHistories.addAll(deleteAnswers());
+
+        return deleteHistories;
+    }
+
+    private List<DeleteHistory> deleteAnswers() {
+        return answers.stream()
+                .map(Answer::delete)
+                .collect(Collectors.toList());
     }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override

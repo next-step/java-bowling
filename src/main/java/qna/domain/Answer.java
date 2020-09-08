@@ -1,9 +1,10 @@
 package qna.domain;
 
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
+import qna.global.exception.NotFoundException;
+import qna.global.exception.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -43,9 +44,9 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+    public DeleteHistory delete() {
+        this.deleted = true;
+        return DeleteHistory.of(ContentType.ANSWER, getId(), writer);
     }
 
     public boolean isDeleted() {
