@@ -50,4 +50,10 @@ class FrameSetTest {
 
         assertThat(tryCount).isEqualTo(11);
     }
+
+    @Test
+    void getBowler() {
+        String bowler = "yongdae";
+        assertThat(FrameSet.from(bowler).getBowler()).isEqualTo(bowler);
+    }
 }

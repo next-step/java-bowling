@@ -1,11 +1,15 @@
 package bowling.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Frame {
 
     public static final int BEGIN_STAGE = 1;
     public static final int END_STAGE = 10;
     public static final int BONUS_STAGE = END_STAGE;
 
+    private static final int FIRST_STEP = 1;
     private static final int FINAL_STEP = 2;
     private static final int BONUS_STEP = FINAL_STEP + 1;
 
@@ -13,7 +17,7 @@ public class Frame {
     private int step;
     private Pins pins;
     private Pins bonusPins;
-    private GameResult result;
+    private List<GameResult> results;
 
     private Frame(int stage) {
         if (stage < BEGIN_STAGE) {
@@ -25,10 +29,10 @@ public class Frame {
         }
 
         this.stage = stage;
-        this.step = 1;
+        this.step = FIRST_STEP;
         this.pins = Pins.newPins();
         this.bonusPins = Pins.newPins();
-        this.result = GameResult.ofGutter();
+        this.results = new ArrayList<>();
     }
 
     public static Frame from(int stage) {
@@ -66,18 +70,22 @@ public class Frame {
 
     private Frame hitting(Pins pins, int hitCount) {
         pins.hitting(hitCount);
-        result = toResult(step, pins);
+        results.add(toResult(step, hitCount, pins));
         step++;
 
         return this;
     }
 
-    private GameResult toResult(int step, Pins pins) {
+    private GameResult toResult(int step, int hitCount, Pins pins) {
         if (pins.checkCount(Pins.DEFAULT_PIN_COUNT)) {
             return GameResult.ofGutter();
         }
 
-        if (step == 1 && pins.isClear()) {
+        if (stage == BONUS_STAGE && step == BONUS_STEP && pins.isClear()) {
+            return GameResult.ofStrike();
+        }
+
+        if (step == FIRST_STEP && pins.isClear()) {
             return GameResult.ofStrike();
         }
 
@@ -85,14 +93,18 @@ public class Frame {
             return GameResult.ofSpare();
         }
 
-        return GameResult.ofMiss(pins.getDownPins());
+        return GameResult.ofMiss(hitCount);
     }
 
     public boolean match(GameResult result) {
-        return this.result.equals(result);
+        return this.results.get(this.results.size() - 1).equals(result);
     }
 
-    public int getStage(){
+    public int getStage() {
         return stage;
+    }
+
+    public List<GameResult> getResults() {
+        return results;
     }
 }

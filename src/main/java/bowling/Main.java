@@ -2,6 +2,7 @@ package bowling;
 
 import bowling.domain.FrameSet;
 import bowling.view.InputScanner;
+import bowling.view.Printer;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,6 +13,8 @@ public class Main {
         while (frameSet.isPlaying()) {
             int hitCount = InputScanner.getHitCount(String.format("%s프레임 투구 : ", frameSet.getPlayStage()));
             frameSet.record(hitCount);
+
+            Printer.showResult(frameSet);
         }
     }
 }
