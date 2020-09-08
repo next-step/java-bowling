@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -92,16 +93,15 @@ public class Question extends AbstractEntity {
         deleteHistories.add(DeleteHistory.of(ContentType.QUESTION, getId(), writer));
 
         QnaValidation.validateAnswer(loginUser, answers);
-        addAnswers(deleteHistories);
-
+        deleteHistories.addAll(deleteAnswers());
+        
         return deleteHistories;
     }
 
-    private List<DeleteHistory> addAnswers(List<DeleteHistory> deleteHistories) {
-        answers.stream()
+    private List<DeleteHistory> deleteAnswers() {
+        return answers.stream()
                 .map(Answer::delete)
-                .forEach(deleteHistories::add);
-        return deleteHistories;
+                .collect(Collectors.toList());
     }
 
     public boolean isDeleted() {
