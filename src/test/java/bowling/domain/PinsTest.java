@@ -52,4 +52,15 @@ class PinsTest {
 
         assertThat(pins.isClear()).isTrue();
     }
+
+    @Test
+    void getDownPins() {
+        Pins pins = Pins.from(Pins.DEFAULT_PIN_COUNT);
+
+        assertThat(pins.getDownPins()).isEqualTo(0);
+
+        pins.hitting(Pins.DEFAULT_PIN_COUNT);
+
+        assertThat(pins.getDownPins()).isEqualTo(Pins.DEFAULT_PIN_COUNT);
+    }
 }

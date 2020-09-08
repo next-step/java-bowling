@@ -7,6 +7,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FrameTest {
 
+    public static final int STRIKE = 10;
+    public static final int GUTTER = 0;
+
     @Test
     void from() {
         assertThat(Frame.from(Frame.BEGIN_STAGE)).isNotNull();
@@ -21,12 +24,12 @@ class FrameTest {
     }
 
     @Test
-    void record() {
+    void hasNextTurn() {
         Frame frame = Frame.from(Frame.BEGIN_STAGE);
         int count = 0;
 
         while (frame.hasNextTurn()) {
-            frame.record(0);
+            frame.record(GUTTER);
             count++;
         }
 
@@ -34,15 +37,24 @@ class FrameTest {
     }
 
     @Test
-    void recordWithBonusStep() {
+    void hasNextTurnWithBonusStep() {
         Frame frame = Frame.from(Frame.END_STAGE);
         int count = 0;
 
         while (frame.hasNextTurn()) {
-            frame.record(count == 0 ? 0 : 10);
+            frame.record(count == 0 ? GUTTER : STRIKE);
             count++;
         }
 
         assertThat(count).isEqualTo(3);
+    }
+
+    @Test
+    void record() {
+        assertThat(Frame.from(Frame.END_STAGE).record(GUTTER).match(GameResult.ofGutter())).isTrue();
+        assertThat(Frame.from(Frame.END_STAGE).record(STRIKE).match(GameResult.ofStrike())).isTrue();
+        assertThat(Frame.from(Frame.END_STAGE).record(1).match(GameResult.ofMiss(1))).isTrue();
+        assertThat(Frame.from(Frame.END_STAGE).record(1).record(1).match(GameResult.ofMiss(2))).isTrue();
+        assertThat(Frame.from(Frame.END_STAGE).record(GUTTER).record(STRIKE).match(GameResult.ofSpare())).isTrue();
     }
 }

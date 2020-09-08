@@ -1,8 +1,5 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Frame {
 
     public static final int BEGIN_STAGE = 1;
@@ -16,7 +13,7 @@ public class Frame {
     private int step;
     private Pins pins;
     private Pins bonusPins;
-    private List<GameResult> results;
+    private GameResult result;
 
     private Frame(int stage) {
         if (stage < BEGIN_STAGE) {
@@ -31,7 +28,7 @@ public class Frame {
         this.step = 1;
         this.pins = Pins.newPins();
         this.bonusPins = Pins.newPins();
-        this.results = new ArrayList<>();
+        this.result = GameResult.ofGutter();
     }
 
     public static Frame from(int stage) {
@@ -54,7 +51,7 @@ public class Frame {
         return stage == BONUS_STAGE && pins.isClear() && step <= BONUS_STEP;
     }
 
-    public GameResult record(int hitCount) {
+    public Frame record(int hitCount) {
         if (hasBonusStep()) {
             return bonusRecord(hitCount);
         }
@@ -62,34 +59,36 @@ public class Frame {
         return hitting(pins, hitCount);
     }
 
-    private GameResult bonusRecord(int hitCount) {
+    private Frame bonusRecord(int hitCount) {
         step = BONUS_STEP;
         return hitting(bonusPins, hitCount);
     }
 
-    private GameResult hitting(Pins pins, int hitCount) {
+    private Frame hitting(Pins pins, int hitCount) {
         pins.hitting(hitCount);
-        GameResult result = toResult(step, pins);
+        result = toResult(step, pins);
         step++;
 
-        this.results.add(result);
-
-        return result;
+        return this;
     }
 
     private GameResult toResult(int step, Pins pins) {
         if (pins.checkCount(Pins.DEFAULT_PIN_COUNT)) {
-            return GameResult.GUTTER;
+            return GameResult.ofGutter();
         }
 
         if (step == 1 && pins.isClear()) {
-            return GameResult.STRIKE;
+            return GameResult.ofStrike();
         }
 
         if (pins.isClear()) {
-            return GameResult.SPARE;
+            return GameResult.ofSpare();
         }
 
-        return GameResult.MISS;
+        return GameResult.ofMiss(pins.getDownPins());
+    }
+
+    public boolean match(GameResult result) {
+        return this.result.equals(result);
     }
 }

@@ -40,6 +40,10 @@ public class Pins {
         return checkCount(CLEAR_COUNT);
     }
 
+    public int getDownPins() {
+        return DEFAULT_PIN_COUNT - count;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
