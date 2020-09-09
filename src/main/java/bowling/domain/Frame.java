@@ -1,8 +1,5 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Frame {
 
     public static final int BEGIN_STAGE = 1;
@@ -17,7 +14,7 @@ public class Frame {
     private int step;
     private Pins pins;
     private Pins bonusPins;
-    private List<GameResult> results;
+    private GameResults results;
 
     private Frame(int stage) {
         if (stage < BEGIN_STAGE) {
@@ -32,7 +29,7 @@ public class Frame {
         this.step = FIRST_STEP;
         this.pins = Pins.newPins();
         this.bonusPins = Pins.newPins();
-        this.results = new ArrayList<>();
+        this.results = GameResults.newGameResults();
     }
 
     public static Frame from(int stage) {
@@ -96,15 +93,11 @@ public class Frame {
         return GameResult.ofMiss(hitCount);
     }
 
-    public boolean match(GameResult result) {
-        return this.results.get(this.results.size() - 1).equals(result);
-    }
-
     public int getStage() {
         return stage;
     }
 
-    public List<GameResult> getResults() {
+    public GameResults getResults() {
         return results;
     }
 }

@@ -2,8 +2,6 @@ package bowling.domain;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -53,11 +51,8 @@ class FrameTest {
 
     @Test
     void record() {
-        assertThat(Frame.from(Frame.END_STAGE).record(GUTTER).match(GameResult.ofGutter())).isTrue();
-        assertThat(Frame.from(Frame.END_STAGE).record(STRIKE).match(GameResult.ofStrike())).isTrue();
-        assertThat(Frame.from(Frame.END_STAGE).record(1).match(GameResult.ofMiss(1))).isTrue();
-        assertThat(Frame.from(Frame.END_STAGE).record(1).record(1).match(GameResult.ofMiss(1))).isTrue();
-        assertThat(Frame.from(Frame.END_STAGE).record(GUTTER).record(STRIKE).match(GameResult.ofSpare())).isTrue();
+        assertThat(Frame.from(Frame.END_STAGE).record(GUTTER)).isInstanceOf(Frame.class);
+        assertThat(Frame.from(Frame.END_STAGE).record(1)).isInstanceOf(Frame.class);
     }
 
     @Test
@@ -77,6 +72,5 @@ class FrameTest {
         frame.record(STRIKE);
 
         assertThat(frame.getResults().size()).isEqualTo(2);
-        assertThat(frame.getResults()).containsExactly(GameResult.ofGutter(), GameResult.ofSpare());
     }
 }
