@@ -34,8 +34,8 @@ class PinsTest {
     @DisplayName("strike 유무 확인")
     @Test
     void isStrike() {
-        assertThat(Pins.of(0).isStrike()).isFalse();
-        assertThat(Pins.of(10).isStrike()).isTrue();
+        assertThat(TowFallenPins.mutable().firstFallenPins(0).isStrike()).isFalse();
+        assertThat(TowFallenPins.mutable().firstFallenPins(10).isStrike()).isTrue();
     }
 
     static Stream<Arguments> provideSpareTestCase(){
@@ -57,9 +57,11 @@ class PinsTest {
     @ParameterizedTest
     @MethodSource("provideSpareTestCase")
     void isSpare(int first, int second, boolean result) {
-        Pins firstRoll = Pins.of(first);
-        Pins secondRoll = Pins.of(second);
-        assertThat(firstRoll.isSpare(secondRoll)).isEqualTo(result);
+
+        TowFallenPins towFallenPins = TowFallenPins.mutable()
+                                      .collect(first, second);
+
+        assertThat(towFallenPins.isSpare()).isEqualTo(result);
     }
 
     static Stream<Arguments> provideMissTestCase(){
@@ -81,15 +83,23 @@ class PinsTest {
     @ParameterizedTest
     @MethodSource("provideMissTestCase")
     void isMiss(int first, int second, boolean result) {
-        Pins firstRoll = Pins.of(first);
-        Pins secondRoll = Pins.of(second);
-        assertThat(firstRoll.isMiss(secondRoll)).isEqualTo(result);
+        TowFallenPins towFallenPins = TowFallenPins.mutable()
+                                                   .collect(first, second);
+        assertThat(towFallenPins.isMiss()).isEqualTo(result);
     }
 
     @DisplayName("gutter 유무 확인")
     @Test
     void isGutter() {
-        assertThat(Pins.of(0).isGutter()).isTrue();
-        assertThat(Pins.of(10).isGutter()).isFalse();
+        assertThat(TowFallenPins.mutable().firstFallenPins(0).isGutter()).isTrue();
+        assertThat(TowFallenPins.mutable().firstFallenPins(10).isGutter()).isFalse();
+
+        assertThat(TowFallenPins.mutable().firstFallenPins(0).secondFallenPins(0).isGutter()).isTrue();
+        assertThat(TowFallenPins.mutable().firstFallenPins(0).secondFallenPins(10).isGutter()).isFalse();
+
+        TowFallenPins towFallenPins = TowFallenPins.mutable()
+                                                   .collect(0, 0);
+
+        assertThat(towFallenPins.isGutter()).isTrue();
     }
 }

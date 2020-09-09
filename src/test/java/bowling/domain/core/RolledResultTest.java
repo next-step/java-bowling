@@ -1,15 +1,32 @@
 package bowling.domain.core;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static bowling.domain.core.RolledStateFactory.firstBowl;
-import static bowling.domain.core.RolledStateFactory.secondBowl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 @DisplayName("두번의 투구로 볼링 결과 테스트")
 class RolledResultTest {
+    private RolledResultFactory rolledResultFactory;
+
+    @BeforeEach
+    void setUp() {
+        rolledResultFactory = RolledResultFactory.of();
+    }
+
+    RolledResult firstBowl(int fallenPins){
+        return RolledResultFactory.collectPins(fallenPins).toRolledResult();
+    }
+
+    RolledResult secondBowl(RolledResult rolledResult, int fallenPins){
+        if( 10 == rolledResult.numberOfPinsFallingByAttemptCount(0) ){
+            return rolledResult;
+        }
+        return RolledResultFactory.collectPins(fallenPins).toRolledResult();
+    }
+
     @DisplayName("첫번째 투구가 잘못된 경우 확인")
     @Test
     void firstBowlTest() {
@@ -27,11 +44,11 @@ class RolledResultTest {
     void secondBowlTest() {
         assertThatIllegalArgumentException()
             .isThrownBy(() -> secondBowl(firstBowl(5), 6))
-            .withMessage(RolledStateFactory.ERROR_MESSAGE_SECOND_BOWL);
+            .withMessage(Pins.ERROR_MESSAGE_SECOND_BOWL);
 
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> secondBowl(firstBowl(0), 11))
-            .withMessage(RolledStateFactory.ERROR_MESSAGE_SECOND_BOWL);
+            .isThrownBy(() -> secondBowl(firstBowl(1), 10))
+            .withMessage(Pins.ERROR_MESSAGE_SECOND_BOWL);
     }
 
     @DisplayName("첫번째 투구가 스트라이크이면, 두번째 투구는 의미 없음")
@@ -47,7 +64,6 @@ class RolledResultTest {
     @DisplayName("첫번째 투구가 스트라이크가 아니면, 두번째 투구 결과가 확인이 필요함")
     @Test
     void incompleteState() {
-        assertThat(firstBowl(0).description()).isEqualTo("-|?");
         assertThat(firstBowl(5).description()).isEqualTo("5|?");
     }
 
@@ -84,10 +100,10 @@ class RolledResultTest {
     // 두번째 투구가 완료된 결과는 2번(zero base)의의 쓰러진 핀 갯수가 나옴, 잘못된 투구 회수를 입력했는지 확인
     private void secondBowlRolledResultConfrim(RolledResult rolledResult) {
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> rolledResult.countOfFallenPinsByRolls(Integer.MIN_VALUE))
-            .withMessage(Spare.ERROR_MESSAGE);
+            .isThrownBy(() -> rolledResult.numberOfPinsFallingByAttemptCount(Integer.MIN_VALUE))
+            .withMessage(AbstractTowFallenPins.ERROR_MESSAGE);
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> rolledResult.countOfFallenPinsByRolls(Integer.MAX_VALUE))
-            .withMessage(Spare.ERROR_MESSAGE);
+            .isThrownBy(() -> rolledResult.numberOfPinsFallingByAttemptCount(Integer.MAX_VALUE))
+            .withMessage(AbstractTowFallenPins.ERROR_MESSAGE);
     }
 }
