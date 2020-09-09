@@ -9,6 +9,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -79,6 +80,10 @@ public class Answer extends AbstractEntity {
         if (!isOwner(user)) {
             throw new CannotDeleteException(CANNOT_DELETE_EXCEPTION_MESSAGE);
         }
+    }
+
+    public DeleteHistory toDeleteHistory() {
+        return new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 
     @Override
