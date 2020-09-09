@@ -9,15 +9,11 @@ public interface RolledResult {
         return !isCompleteState();
     }
 
-    default boolean canNotSpendRemainingPins(int fallenPins) {
-        return false;
-    }
-
     default int tryCountByTerminateFrame() {
         return 1;
     }
 
     String description();
 
-    int countOfFallenPinsByRolls(int rollingTryCount);
+    int numberOfPinsFallingByAttemptCount(int rollingAttemptCount);
 }

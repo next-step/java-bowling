@@ -7,7 +7,7 @@ final class Strike implements RolledResult {
     }
 
     @Override
-    public int countOfFallenPinsByRolls(int rollingTryCount) {
+    public int numberOfPinsFallingByAttemptCount(int rollingTryCount) {
         if (0 == rollingTryCount) {
             return Pins.MAX_FALLEN_PIN_COUNT;
         }
