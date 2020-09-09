@@ -10,4 +10,10 @@ class BowlerTest {
     void constructor() {
         assertThat(Bowler.from("yongdae")).isEqualTo(Bowler.from("yongdae"));
     }
+
+    @Test
+    void valueOf() {
+        String bowler = "yongdae";
+        assertThat(Bowler.from(bowler).toString()).isEqualTo(bowler);
+    }
 }
