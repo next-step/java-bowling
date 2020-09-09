@@ -29,3 +29,7 @@ refactor 3. Answer 객체에서 담당할 책임 분리하기
             * answer Owner 확인 로직 Answer로 옮기기
             * deleteAnswer Answer로 옮기기
 refactor 4. List<Answer>의 일급컬렉션 만들기
+
+refactor 5. 코드리뷰 반영
+            * 파라미터로 전달받은 컬렉션을 조작하는 로직 제거
+            * DeleteHistories의 멤버 변수 컬렉션은 unmodifable로 변경 

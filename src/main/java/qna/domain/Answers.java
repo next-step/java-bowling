@@ -36,14 +36,12 @@ public class Answers {
 	}
 
 	public DeleteHistories deleteAnswers(User loginUser) throws CannotDeleteException {
-		return deleteAnswers(loginUser, new DeleteHistories());
-	}
-
-	public DeleteHistories deleteAnswers(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
+		List<DeleteHistory> deleteHistories = new ArrayList<>();
 		for (Answer answer : answers) {
-			answer.delete(loginUser, deleteHistories);
+			DeleteHistory delete = answer.delete(loginUser);
+			deleteHistories.add(delete);
 		}
-		return deleteHistories;
+		return new DeleteHistories(deleteHistories);
 	}
 
 	@Override

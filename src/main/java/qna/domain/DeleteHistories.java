@@ -1,29 +1,26 @@
 package qna.domain;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DeleteHistories {
 	private final List<DeleteHistory> deleteHistories;
 
-	public DeleteHistories() {
-		this.deleteHistories = new ArrayList<>();
-	}
-
 	public DeleteHistories(DeleteHistory deleteHistory) {
-		List<DeleteHistory> deleteHistories = new ArrayList<>();
-		deleteHistories.add(deleteHistory);
-		this.deleteHistories = deleteHistories;
-	}
-	//for test
-	DeleteHistories(List<DeleteHistory> deleteHistories) {
-		this.deleteHistories = deleteHistories;
+		this.deleteHistories = List.of(deleteHistory);
 	}
 
-	public DeleteHistories add(DeleteHistory deleteHistory) {
-		this.deleteHistories.add(deleteHistory);
-		return this;
+	public DeleteHistories(List<DeleteHistory> deleteHistories) {
+		this.deleteHistories = Collections.unmodifiableList(deleteHistories);
+	}
+
+	public static DeleteHistories concat(DeleteHistories one, DeleteHistories theOther) {
+		List<DeleteHistory> concat = Stream.concat(one.deleteHistories.stream(), theOther.deleteHistories.stream())
+										.collect(Collectors.toList());
+		return new DeleteHistories(concat);
 	}
 
 	public List<DeleteHistory> transformToCollection() {

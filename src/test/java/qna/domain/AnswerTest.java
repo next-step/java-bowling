@@ -35,8 +35,8 @@ public class AnswerTest {
     @DisplayName("삭제 메서드 실행 시 answer 삭제 플래그 true,  DeleteHistories 객체 반환")
     @Test
     void deleteQuestion() throws Exception {
-        DeleteHistories deleteResult = preparedAnswer.delete(JAVAJIGI);
+        DeleteHistory deleteResult = preparedAnswer.delete(JAVAJIGI);
         assertThat(preparedAnswer.isDeleted()).isTrue();
-        assertThat(deleteResult).isEqualTo(new DeleteHistories(List.of(new DeleteHistory(ContentType.ANSWER, preparedAnswer.getId(), JAVAJIGI, LocalDateTime.now()))));
+        assertThat(deleteResult).isEqualTo(new DeleteHistory(ContentType.ANSWER, preparedAnswer.getId(), JAVAJIGI, LocalDateTime.now()));
     }
 }
