@@ -7,32 +7,32 @@ public class GameResult {
     public static final int SPARE_COUNT = STRIKE_COUNT;
     public static final int NO_COUNT = 0;
 
-    private Result result;
+    private Status status;
     private int value;
 
-    GameResult(Result result, int value) {
-        this.result = result;
+    GameResult(Status status, int value) {
+        this.status = status;
         this.value = value;
     }
 
     public static GameResult ofGutter() {
-        return new GameResult(Result.GUTTER, NO_COUNT);
+        return new GameResult(Status.GUTTER, NO_COUNT);
     }
 
     public static GameResult ofStrike() {
-        return new GameResult(Result.STRIKE, STRIKE_COUNT);
+        return new GameResult(Status.STRIKE, STRIKE_COUNT);
     }
 
     public static GameResult ofMiss() {
-        return new GameResult(Result.MISS, NO_COUNT);
+        return new GameResult(Status.MISS, NO_COUNT);
     }
 
     public static GameResult ofMiss(int value) {
-        return new GameResult(Result.MISS, value);
+        return new GameResult(Status.MISS, value);
     }
 
     public static GameResult ofSpare() {
-        return new GameResult(Result.SPARE, SPARE_COUNT);
+        return new GameResult(Status.SPARE, SPARE_COUNT);
     }
 
     @Override
@@ -41,20 +41,20 @@ public class GameResult {
         if (o == null || getClass() != o.getClass()) return false;
         GameResult that = (GameResult) o;
         return value == that.value &&
-                result == that.result;
+                status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(result, value);
+        return Objects.hash(status, value);
     }
 
     @Override
     public String toString() {
-        if (result.equals(Result.MISS)) {
+        if (status.equals(Status.MISS)) {
             return String.valueOf(value);
         }
 
-        return String.valueOf(result);
+        return String.valueOf(status);
     }
 }
