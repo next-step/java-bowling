@@ -1,9 +1,9 @@
 package bowling.domain.core;
 
-abstract class AbstractTowFallenPinsRolledResult implements RolledResult {
-    private final ImmutableTowFallenPins towFallenPins;
+abstract class AbstractTwoFallenPinsRolledResult implements RolledResult {
+    private final ImmutableTwoFallenPins towFallenPins;
 
-    public AbstractTowFallenPinsRolledResult(ImmutableTowFallenPins towFallenPins) {
+    public AbstractTwoFallenPinsRolledResult(ImmutableTwoFallenPins towFallenPins) {
         this.towFallenPins = towFallenPins;
     }
 

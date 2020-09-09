@@ -32,11 +32,11 @@ class RolledResultTest {
     void firstBowlTest() {
         assertThatIllegalArgumentException()
             .isThrownBy(() -> firstBowl(Integer.MIN_VALUE))
-            .withMessage(Pins.ERROR_MESSAGE);
+            .withMessage(FallenPins.ERROR_MESSAGE);
 
         assertThatIllegalArgumentException()
             .isThrownBy(() -> firstBowl(Integer.MAX_VALUE))
-            .withMessage(Pins.ERROR_MESSAGE);
+            .withMessage(FallenPins.ERROR_MESSAGE);
     }
 
     @DisplayName("첫번째 투구후 남은 핀수를 기준으로, 두번째 투구가 잘못된 경우 확인")
@@ -44,11 +44,11 @@ class RolledResultTest {
     void secondBowlTest() {
         assertThatIllegalArgumentException()
             .isThrownBy(() -> secondBowl(firstBowl(5), 6))
-            .withMessage(Pins.ERROR_MESSAGE_SECOND_BOWL);
+            .withMessage(FallenPins.ERROR_MESSAGE_SECOND_BOWL);
 
         assertThatIllegalArgumentException()
             .isThrownBy(() -> secondBowl(firstBowl(1), 10))
-            .withMessage(Pins.ERROR_MESSAGE_SECOND_BOWL);
+            .withMessage(FallenPins.ERROR_MESSAGE_SECOND_BOWL);
     }
 
     @DisplayName("첫번째 투구가 스트라이크이면, 두번째 투구는 의미 없음")
@@ -101,9 +101,9 @@ class RolledResultTest {
     private void secondBowlRolledResultConfrim(RolledResult rolledResult) {
         assertThatIllegalArgumentException()
             .isThrownBy(() -> rolledResult.numberOfPinsFallingByAttemptCount(Integer.MIN_VALUE))
-            .withMessage(AbstractTowFallenPins.ERROR_MESSAGE);
+            .withMessage(AbstractTwoFallenPins.ERROR_MESSAGE);
         assertThatIllegalArgumentException()
             .isThrownBy(() -> rolledResult.numberOfPinsFallingByAttemptCount(Integer.MAX_VALUE))
-            .withMessage(AbstractTowFallenPins.ERROR_MESSAGE);
+            .withMessage(AbstractTwoFallenPins.ERROR_MESSAGE);
     }
 }

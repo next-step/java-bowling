@@ -1,12 +1,12 @@
 package bowling.domain.core;
 
-final class SpareAfterBonusBowl extends AbstractTowFallenPinsRolledResult {
+final class SpareAfterBonusBowl extends AbstractTwoFallenPinsRolledResult {
     SpareAfterBonusBowl(RolledResult rolledResult) {
-        super(new ImmutableTowFallenPins(firstFallenPins(rolledResult), Pins.zero()));
+        super(new ImmutableTwoFallenPins(firstFallenPins(rolledResult), FallenPins.zero()));
     }
 
-    private static Pins firstFallenPins(RolledResult rolledResult) {
-        return Pins.of(rolledResult.numberOfPinsFallingByAttemptCount(0));
+    private static FallenPins firstFallenPins(RolledResult rolledResult) {
+        return FallenPins.of(rolledResult.numberOfPinsFallingByAttemptCount(0));
     }
 
     @Override

@@ -3,10 +3,10 @@ package bowling.domain.core;
 public final class RolledResultFactory {
 
     private static final RolledResultFactory rolledResultFactory = new RolledResultFactory();
-    private final TowFallenPins towFallenPins;
+    private final TwoFallenPins towFallenPins;
 
     private RolledResultFactory() {
-        towFallenPins = TowFallenPins.mutable();
+        towFallenPins = TwoFallenPins.mutable();
     }
 
     static RolledResultFactory of(){
@@ -15,10 +15,10 @@ public final class RolledResultFactory {
     }
 
     public static RolledResultFactory collectPins(int fallenPins) {
-        return rolledResultFactory.collect(Pins.of(fallenPins));
+        return rolledResultFactory.collect(FallenPins.of(fallenPins));
     }
 
-    RolledResultFactory collect(Pins fallenPins){
+    RolledResultFactory collect(FallenPins fallenPins){
         towFallenPins.collect(fallenPins);
         return this;
     }

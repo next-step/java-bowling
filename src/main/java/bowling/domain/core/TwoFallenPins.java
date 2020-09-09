@@ -1,12 +1,12 @@
 package bowling.domain.core;
 
-import static bowling.domain.core.Pins.zero;
+import static bowling.domain.core.FallenPins.zero;
 import static java.util.Arrays.asList;
 
-final class TowFallenPins extends AbstractTowFallenPins {
+final class TwoFallenPins extends AbstractTwoFallenPins {
     private int zeroBaseRollingIndex;
 
-    TowFallenPins() {
+    TwoFallenPins() {
         super(asList(zero(), zero()));
         initTowFallenPins();
     }
@@ -15,15 +15,15 @@ final class TowFallenPins extends AbstractTowFallenPins {
         zeroBaseRollingIndex = 0;
     }
 
-    static TowFallenPins mutable(){
-        return new TowFallenPins();
+    static TwoFallenPins mutable(){
+        return new TwoFallenPins();
     }
 
-    ImmutableTowFallenPins immutable(){
-        return new ImmutableTowFallenPins(towFallenPins);
+    ImmutableTwoFallenPins immutable(){
+        return new ImmutableTwoFallenPins(towFallenPins);
     }
 
-    TowFallenPins collect(Pins fallenPins){
+    TwoFallenPins collect(FallenPins fallenPins){
         if (isComplete() || isStrike()){
             initTowFallenPins();
         }
@@ -31,7 +31,7 @@ final class TowFallenPins extends AbstractTowFallenPins {
         return this;
     }
 
-    TowFallenPins collect(int firstFallenPins, int secondFallenPins){
+    TwoFallenPins collect(int firstFallenPins, int secondFallenPins){
         firstFallenPins(firstFallenPins);
         secondFallenPins(secondFallenPins);
         return this;
