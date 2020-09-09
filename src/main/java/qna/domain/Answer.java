@@ -76,12 +76,10 @@ public class Answer extends AbstractEntity {
         }
     }
 
-    public DeleteHistories delete(User user, DeleteHistories deleteHistories) throws CannotDeleteException {
+    public DeleteHistory delete(User user, LocalDateTime now) throws CannotDeleteException {
         validationOwner(user);
         setDeleted(true);
-
-        deleteHistories.addHistory(new DeleteHistory(ContentType.ANSWER, this.getId(), this.getWriter(), LocalDateTime.now()));
-        return deleteHistories;
+        return new DeleteHistory(ContentType.ANSWER, this.getId(), this.getWriter(), now);
     }
 
     @Override
