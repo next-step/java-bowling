@@ -10,7 +10,7 @@ public final class RolledResultFactory {
     }
 
     static RolledResultFactory of(){
-        rolledResultFactory.towFallenPins.initTowFallenPins();
+        rolledResultFactory.towFallenPins.initTwoFallenPins();
         return rolledResultFactory;
     }
 

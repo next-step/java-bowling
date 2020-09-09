@@ -5,10 +5,10 @@ import java.util.List;
 abstract class AbstractTwoFallenPins {
     protected static final int MAX_TOW_FALLEN_PINS_SIZE = 2;
     static final String ERROR_MESSAGE = "볼링 투구 횟수는 2회 입니다.(첫번째 투구(0), 두번째 투구(1))";
-    protected final List<FallenPins> towFallenPins;
+    protected final List<FallenPins> twoFallenPins;
 
-    public AbstractTwoFallenPins(List<FallenPins> towFallenPins) {
-        this.towFallenPins = towFallenPins;
+    public AbstractTwoFallenPins(List<FallenPins> twoFallenPins) {
+        this.twoFallenPins = twoFallenPins;
     }
 
     private void verifyRollingTrialCount(int rollingTrialCount) {
@@ -42,7 +42,7 @@ abstract class AbstractTwoFallenPins {
     }
 
     AbstractTwoFallenPins secondFallenPins(FallenPins fallenPins){
-        towFallenPins.set(1, fallenPins);
+        twoFallenPins.set(1, fallenPins);
         return this;
     }
 
@@ -55,13 +55,13 @@ abstract class AbstractTwoFallenPins {
     }
 
     AbstractTwoFallenPins firstFallenPins(FallenPins fallenPins){
-        towFallenPins.set(0, fallenPins);
+        twoFallenPins.set(0, fallenPins);
         return this;
     }
 
     FallenPins getPins(int index){
         verifyRollingTrialCount(index);
-        return towFallenPins.get(index);
+        return twoFallenPins.get(index);
     }
 
     int getFallenPins(int index){

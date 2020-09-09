@@ -6,8 +6,8 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 final class ImmutableTwoFallenPins extends AbstractTwoFallenPins {
-    ImmutableTwoFallenPins(List<FallenPins> towFallenPins) {
-        super(Collections.unmodifiableList(towFallenPins));
+    ImmutableTwoFallenPins(List<FallenPins> twoFallenPins) {
+        super(Collections.unmodifiableList(twoFallenPins));
     }
 
     ImmutableTwoFallenPins(FallenPins f, FallenPins s) {

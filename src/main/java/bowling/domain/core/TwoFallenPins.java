@@ -8,10 +8,10 @@ final class TwoFallenPins extends AbstractTwoFallenPins {
 
     TwoFallenPins() {
         super(asList(zero(), zero()));
-        initTowFallenPins();
+        initTwoFallenPins();
     }
 
-    void initTowFallenPins() {
+    void initTwoFallenPins() {
         zeroBaseRollingIndex = 0;
     }
 
@@ -20,14 +20,14 @@ final class TwoFallenPins extends AbstractTwoFallenPins {
     }
 
     ImmutableTwoFallenPins immutable(){
-        return new ImmutableTwoFallenPins(towFallenPins);
+        return new ImmutableTwoFallenPins(twoFallenPins);
     }
 
     TwoFallenPins collect(FallenPins fallenPins){
         if (isComplete() || isStrike()){
-            initTowFallenPins();
+            initTwoFallenPins();
         }
-        towFallenPins.set(zeroBaseRollingIndex++, fallenPins);
+        twoFallenPins.set(zeroBaseRollingIndex++, fallenPins);
         return this;
     }
 
