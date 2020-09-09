@@ -2,6 +2,8 @@ package camp.nextstep.edu.rebellion.bowling.domain.score;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -100,5 +102,25 @@ class FrameScoreTest {
         assertThatThrownBy(() -> score.markLast(last))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("최대 20 점을 넘을 수 없습니다");
+    }
+
+    @DisplayName("프레임 점수에 따라 추가 기회가 잘 반영 되는지 확인")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "10:0:2",
+            "9:1:1",
+            "3:4:0"
+    }, delimiter = ':')
+    public void getTryAttemptTest(int first, int last, int attempt) {
+        // given
+        FrameScore score = NormalFrameScore.clear();
+
+        // when
+        score.markFirst(first);
+        score.markLast(last);
+
+        // then
+        assertThat(score.getTryAttempt()).isEqualTo(attempt);
+
     }
 }
