@@ -1,26 +1,16 @@
 package bowling.domain.core;
 
-final class SpareAfterBonusBowl implements RolledResult {
-    private final Pins bonusFallenPins;
-
+final class SpareAfterBonusBowl extends AbstractTowFallenPinsRolledResult {
     SpareAfterBonusBowl(RolledResult rolledResult) {
-        bonusFallenPins = Pins.of(rolledResult.countOfFallenPinsByRolls(0));
+        super(new ImmutableTowFallenPins(firstFallenPins(rolledResult), Pins.zero()));
+    }
+
+    private static Pins firstFallenPins(RolledResult rolledResult) {
+        return Pins.of(rolledResult.numberOfPinsFallingByAttemptCount(0));
     }
 
     @Override
     public String description() {
-        return String.format("%s",gutterOrFallenPinCount());
-    }
-
-    @Override
-    public int countOfFallenPinsByRolls(int rollingTryCount) {
-        return bonusFallenPins.getFallenPins();
-    }
-
-    private String gutterOrFallenPinCount() {
-        if (bonusFallenPins.isGutter()){
-            return "-";
-        }
-        return String.valueOf(bonusFallenPins.getFallenPins());
+        return String.format("%s",gutterOrFallenPinValue(0));
     }
 }

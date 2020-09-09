@@ -15,7 +15,7 @@ final class Gutter implements RolledResult {
     }
 
     @Override
-    public int countOfFallenPinsByRolls(int rollingTryCount) {
+    public int numberOfPinsFallingByAttemptCount(int rollingTryCount) {
         return Pins.MIN_FALLEN_PIN_COUNT;
     }
 }
