@@ -100,10 +100,14 @@ public class Question extends AbstractEntity {
         validationOwner(user);
         setDeleted(true);
 
-        DeleteHistories deleteHistories = DeleteHistories.create(new ArrayList());
-        deleteHistories.addHistory(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), LocalDateTime.now()));
+        LocalDateTime now = LocalDateTime.now();
+        DeleteHistories deleteHistories = DeleteHistories.create();
+        deleteHistories.addHistory(new DeleteHistory(ContentType.QUESTION, this.getId(), this.getWriter(), now));
 
-        return deleteHistories;
+        Answers answers = getAnswers();
+        DeleteHistories answerDeleteHistories = answers.delete(user, now);
+
+        return deleteHistories.addHistory(answerDeleteHistories);
 
     }
 
