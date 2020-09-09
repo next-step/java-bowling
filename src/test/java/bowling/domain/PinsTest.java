@@ -22,7 +22,7 @@ class PinsTest {
 
     @Test
     void newPins() {
-        assertThat(Pins.newPins()).isEqualTo(Pins.from(Pins.COUNT));
+        assertThat(Pins.create()).isEqualTo(Pins.from(Pins.COUNT));
     }
 
     @Test

@@ -25,7 +25,7 @@ public class Frames {
         return new Frames(frameCount);
     }
 
-    public static Frames newFrames() {
+    public static Frames create() {
         return from(COUNT);
     }
 

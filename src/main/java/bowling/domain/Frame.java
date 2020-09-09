@@ -27,9 +27,9 @@ public class Frame {
 
         this.stage = stage;
         this.step = FIRST_STEP;
-        this.pins = Pins.newPins();
-        this.bonusPins = Pins.newPins();
-        this.results = GameResults.newGameResults();
+        this.pins = Pins.create();
+        this.bonusPins = Pins.create();
+        this.results = GameResults.create();
     }
 
     public static Frame from(int stage) {
@@ -67,7 +67,7 @@ public class Frame {
 
     private Frame hitting(Pins pins, int hitCount) {
         pins.hitting(hitCount);
-        results.add(toResult(step, hitCount, pins));
+        results.record(toResult(step, hitCount, pins));
         step++;
 
         return this;

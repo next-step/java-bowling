@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class FramesTest {
     @Test
     void create() {
-        assertThat(Frames.newFrames()).isNotNull();
+        assertThat(Frames.create()).isNotNull();
     }
 
     @Test
@@ -22,7 +22,7 @@ class FramesTest {
 
     @Test
     void isPlayingWithNoCount() {
-        Frames frames = Frames.newFrames();
+        Frames frames = Frames.create();
         int tryCount = 0;
 
         while (frames.isPlaying()) {
@@ -35,7 +35,7 @@ class FramesTest {
 
     @Test
     void isPlayingWithAllStrike() {
-        Frames frames = Frames.newFrames();
+        Frames frames = Frames.create();
         int tryCount = 0;
 
         while (frames.isPlaying()) {

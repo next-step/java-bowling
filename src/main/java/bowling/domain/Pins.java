@@ -20,7 +20,7 @@ public class Pins {
         return new Pins(count);
     }
 
-    public static Pins newPins() {
+    public static Pins create() {
         return Pins.from(COUNT);
     }
 

@@ -67,10 +67,9 @@ class FrameTest {
     void getResults() {
         Frame frame = Frame.from(Frame.BEGIN_STAGE);
 
-        assertThat(frame.getResults().size()).isEqualTo(0);
         frame.record(GUTTER);
         frame.record(STRIKE);
 
-        assertThat(frame.getResults().size()).isEqualTo(2);
+        assertThat(frame.getResults().getHistory().size()).isEqualTo(2);
     }
 }

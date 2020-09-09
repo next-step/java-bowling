@@ -8,22 +8,22 @@ class GameResultsTest {
 
     @Test
     void newGameResults() {
-        assertThat(GameResults.newGameResults()).isNotNull();
+        assertThat(GameResults.create()).isNotNull();
     }
 
     @Test
     void add() {
-        GameResults gameResults = GameResults.newGameResults();
-        assertThat(gameResults.add(GameResult.ofStrike())).isTrue();
-        assertThat(gameResults.size()).isEqualTo(1);
+        GameResults gameResults = GameResults.create();
+        assertThat(gameResults.record(GameResult.ofStrike())).isTrue();
+        assertThat(gameResults.getHistory().size()).isEqualTo(1);
     }
 
     @Test
-    void get() {
-        GameResults gameResults = GameResults.newGameResults();
-        gameResults.add(GameResult.ofStrike());
-        gameResults.add(GameResult.ofSpare());
-        assertThat(gameResults.get(0)).isEqualTo(GameResult.ofStrike());
-        assertThat(gameResults.get(1)).isEqualTo(GameResult.ofSpare());
+    void getAll() {
+        GameResults gameResults = GameResults.create();
+        gameResults.record(GameResult.ofStrike());
+        gameResults.record(GameResult.ofSpare());
+        assertThat(gameResults.getHistory()).hasSize(2);
+        assertThat(gameResults.getHistory()).containsExactly(GameResult.ofStrike(), GameResult.ofSpare());
     }
 }

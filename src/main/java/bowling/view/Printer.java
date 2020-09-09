@@ -2,9 +2,8 @@ package bowling.view;
 
 import bowling.domain.Frame;
 import bowling.domain.FrameSet;
-import bowling.domain.GameResult;
+import bowling.domain.GameResults;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class Printer {
@@ -26,10 +25,10 @@ public class Printer {
         System.out.print(String.format("| %4s |", frameSet.getBowler()));
 
         for (Frame frame : frameSet.getFrames()) {
-            List<GameResult> results = frame.getResults();
+            GameResults results = frame.getResults();
             System.out.printf(
                     String.format("  %-3s |",
-                            results.stream()
+                            results.getHistory().stream()
                                     .map(result -> String.valueOf(result))
                                     .collect(Collectors.joining("|"))
                     )
