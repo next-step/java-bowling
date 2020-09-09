@@ -12,8 +12,8 @@
  - 단위 테스트가 가능한 코드 -> validation 로직.
  - 단위 테스트가 어려운 코드 -> DB와의 connection이 존재하는 로직.
 ### TODO
- - [ ] 질문 삭제 권한 체크 -> Question의 역할로 이전
- - [ ] 답변 관련 삭제 권한 체크 -> Answer의 역할로 이전
+ - [x] 질문 삭제 권한 체크 -> Question의 역할로 이전
+ - [x] 답변 관련 삭제 권한 체크 -> Answer의 역할로 이전
  - [ ] 답변들을 관리하는 Answers 1급 컬렉션 생성
  - [ ] 삭제 이력들을 관리하는 DeleteHistories 1급 컬렉션 생성
  - [ ] Answer / Question 삭제 대상 설정 로직 -> 각 객체로 역할 이전
