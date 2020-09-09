@@ -3,13 +3,14 @@ package bowling.domain;
 import java.util.Objects;
 
 public class GameResult {
-    private static final int ALL_COUNT = 10;
-    private static final int NO_COUNT = 0;
+    public static final int STRIKE_COUNT = 10;
+    public static final int SPARE_COUNT = STRIKE_COUNT;
+    public static final int NO_COUNT = 0;
 
     private Result result;
     private int value;
 
-    private GameResult(Result result, int value) {
+    GameResult(Result result, int value) {
         this.result = result;
         this.value = value;
     }
@@ -19,7 +20,7 @@ public class GameResult {
     }
 
     public static GameResult ofStrike() {
-        return new GameResult(Result.STRIKE, ALL_COUNT);
+        return new GameResult(Result.STRIKE, STRIKE_COUNT);
     }
 
     public static GameResult ofMiss() {
@@ -31,7 +32,7 @@ public class GameResult {
     }
 
     public static GameResult ofSpare() {
-        return new GameResult(Result.SPARE, ALL_COUNT);
+        return new GameResult(Result.SPARE, SPARE_COUNT);
     }
 
     @Override

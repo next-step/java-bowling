@@ -77,7 +77,7 @@ public class Frame {
     }
 
     private GameResult toResult(int step, int hitCount, Pins pins) {
-        if (pins.checkCount(Pins.DEFAULT_PIN_COUNT)) {
+        if (pins.checkCount(Pins.COUNT)) {
             return GameResult.ofGutter();
         }
 

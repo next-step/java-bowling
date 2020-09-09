@@ -9,58 +9,58 @@ class PinsTest {
 
     @Test
     void from() {
-        assertThat(Pins.from(Pins.DEFAULT_PIN_COUNT)).isEqualTo(Pins.from(Pins.DEFAULT_PIN_COUNT));
+        assertThat(Pins.from(Pins.COUNT)).isEqualTo(Pins.from(Pins.COUNT));
     }
 
     @Test
     void fromThrowException() {
-        assertThatThrownBy(() -> Pins.from(Pins.DEFAULT_PIN_COUNT + 1))
+        assertThatThrownBy(() -> Pins.from(Pins.COUNT + 1))
                 .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> Pins.from(Pins.DEFAULT_PIN_COUNT - 1))
+        assertThatThrownBy(() -> Pins.from(Pins.COUNT - 1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void newPins() {
-        assertThat(Pins.newPins()).isEqualTo(Pins.from(Pins.DEFAULT_PIN_COUNT));
+        assertThat(Pins.newPins()).isEqualTo(Pins.from(Pins.COUNT));
     }
 
     @Test
     void hitting() {
         int hitCount = 1;
 
-        Pins pins = Pins.from(Pins.DEFAULT_PIN_COUNT);
+        Pins pins = Pins.from(Pins.COUNT);
         pins.hitting(hitCount);
 
-        assertThat(pins.checkCount(Pins.DEFAULT_PIN_COUNT - hitCount)).isTrue();
+        assertThat(pins.checkCount(Pins.COUNT - hitCount)).isTrue();
     }
 
     @Test
     void hittingThrowException() {
-        Pins pins = Pins.from(Pins.DEFAULT_PIN_COUNT);
-        assertThatThrownBy(() -> pins.hitting(Pins.DEFAULT_PIN_COUNT + 1))
+        Pins pins = Pins.from(Pins.COUNT);
+        assertThatThrownBy(() -> pins.hitting(Pins.COUNT + 1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void isClear() {
-        Pins pins = Pins.from(Pins.DEFAULT_PIN_COUNT);
+        Pins pins = Pins.from(Pins.COUNT);
 
         assertThat(pins.isClear()).isFalse();
 
-        pins.hitting(Pins.DEFAULT_PIN_COUNT);
+        pins.hitting(Pins.COUNT);
 
         assertThat(pins.isClear()).isTrue();
     }
 
     @Test
     void getDownPins() {
-        Pins pins = Pins.from(Pins.DEFAULT_PIN_COUNT);
+        Pins pins = Pins.from(Pins.COUNT);
 
         assertThat(pins.getDownPins()).isEqualTo(0);
 
-        pins.hitting(Pins.DEFAULT_PIN_COUNT);
+        pins.hitting(Pins.COUNT);
 
-        assertThat(pins.getDownPins()).isEqualTo(Pins.DEFAULT_PIN_COUNT);
+        assertThat(pins.getDownPins()).isEqualTo(Pins.COUNT);
     }
 }
