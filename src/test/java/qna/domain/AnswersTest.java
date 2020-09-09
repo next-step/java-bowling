@@ -3,6 +3,7 @@ package qna.domain;
 import org.junit.Test;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +22,9 @@ public class AnswersTest {
 
         Answers answers = Answers.create(answerList);
 
-        DeleteHistories deleteHistories = answers.delete(UserTest.JAVAJIGI, DeleteHistories.create(new ArrayList()));
+        DeleteHistories deleteHistories = answers.delete(UserTest.JAVAJIGI, LocalDateTime.now());
 
         assertThat(deleteHistories.getDeleteHistories()).hasSize(2);
-
     }
 
     @Test
@@ -37,7 +37,7 @@ public class AnswersTest {
         Answers answers = Answers.create(answerList);
 
         assertThatThrownBy(() -> {
-            answers.delete(UserTest.JAVAJIGI, DeleteHistories.create(new ArrayList()));
+            answers.delete(UserTest.JAVAJIGI, LocalDateTime.now());
         }).isInstanceOf(CannotDeleteException.class);
     }
 
