@@ -215,3 +215,8 @@ int score = frame.getScore();
 
 ### Step3 수정 사항 
 * [x] [fix02][Frames.java] 마지막 Frame 에서 스트라이크 일 경우, 보너스 Frame 이 추가, 스페어일 경우 보너스 투구 기회 1번이 추가 되도록 수정
+
+### Step3 리뷰사항
+* [ ] [fix01][Frames.java] 접근제한자 protected 로 수정
+* [ ] [fix02][BonusStatus.java] Symbol 을 매핑하는 객체로 리팩토링
+
