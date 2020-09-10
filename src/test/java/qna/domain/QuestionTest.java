@@ -22,6 +22,7 @@ public class QuestionTest {
         assertThat(deleteHistories)
                 .contains(new DeleteHistory(ContentType.QUESTION, question.getId(), UserTest.JAVAJIGI, LocalDateTime.now()))
                 .contains(new DeleteHistory(ContentType.ANSWER, answer.getId(), UserTest.JAVAJIGI, LocalDateTime.now()));
+        assertThatFullyDeleted(question);
     }
 
     @Test
@@ -40,5 +41,13 @@ public class QuestionTest {
         Question question = new Question("title", "content").writeBy(UserTest.JAVAJIGI);
         question.addAnswer(new Answer(UserTest.SANJIGI, question, "content"));
         assertThatThrownBy(() -> question.deleteByUser(UserTest.JAVAJIGI)).isInstanceOf(CannotDeleteException.class);
+    }
+
+    private static void assertThatFullyDeleted(Question question) {
+        assertThat(question.isDeleted()).isTrue();
+        Answers answers = question.getAnswers();
+        for (int i = 0; i < answers.size(); i++) {
+            assertThat(answers.get(i).isDeleted()).isTrue();
+        }
     }
 }
