@@ -26,8 +26,6 @@ public class Pitching implements State {
 
   @Override
   public String toString() {
-    return "Pitching{" +
-        "first=" + first +
-        '}';
+    return "Pitching{" + "first=" + first + '}';
   }
 }

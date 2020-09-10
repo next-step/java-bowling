@@ -22,8 +22,6 @@ public class Spare implements State {
 
   @Override
   public String toString() {
-    return "Spare{" +
-        "second=" + second +
-        '}';
+    return "Spare{" + "first=" + first + ", second=" + second + '}';
   }
 }

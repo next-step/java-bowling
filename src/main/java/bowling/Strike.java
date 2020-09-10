@@ -21,8 +21,6 @@ public class Strike implements State {
 
   @Override
   public String toString() {
-    return "Strike{" +
-        "first=" + first +
-        '}';
+    return "Strike{" + "first=" + first + '}';
   }
 }

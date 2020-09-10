@@ -11,8 +11,8 @@ public interface State {
     return new Pitching(pitching);
   }
 
-  String symbol();
-
   State roll(int second);
+
+  String symbol();
 
 }

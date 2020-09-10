@@ -26,8 +26,6 @@ public class Open implements State {
 
   @Override
   public String toString() {
-    return "Open{" +
-        "second=" + second +
-        '}';
+    return "Open{" + "first=" + first + ", second=" + second + '}';
   }
 }
