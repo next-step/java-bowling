@@ -1,4 +1,4 @@
-package bowling.player.exception;
+package bowling.global.exception;
 
 public class NotMatchingPlayerNameException extends IllegalArgumentException {
 

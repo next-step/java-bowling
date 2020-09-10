@@ -1,0 +1,42 @@
+package bowling.ball.domain;
+
+import bowling.global.exception.InputPitchNullPointerException;
+import bowling.global.exception.OutOfPitchRangeException;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.*;
+
+class BallTest {
+
+    @Test
+    @DisplayName("볼링공 투구. 0 ~ 10의 값만 허용한다.")
+    void pitch() {
+        Ball ball = Ball.patch(7);
+        assertThat(ball).isBetween(0, 10);
+    }
+
+    @ParameterizedTest
+    @DisplayName("볼링골 투구 입력값이 null일 경우 Exception 발생")
+    @NullAndEmptySource
+    void validateInputPitchIsNull(int input) {
+        assertThatExceptionOfType(InputPitchNullPointerException.class)
+                .isThrownBy(() -> {
+                    Ball ball = Ball.pitch(input);
+                });
+    }
+
+    @Test
+    @DisplayName("볼링골 투구 입력값의 범위가 0 ~ 10을 벗어나는 경우 Exception 발생")
+    void validatePitchRange() {
+        assertThatExceptionOfType(OutOfPitchRangeException.class)
+                .isThrownBy(() -> {
+                    Ball ball = Ball.pitch(11);
+                });
+    }
+    
+}

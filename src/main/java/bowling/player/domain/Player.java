@@ -1,7 +1,7 @@
 package bowling.player.domain;
 
 import bowling.global.utils.ExceptionMessage;
-import bowling.player.exception.NotMatchingPlayerNameException;
+import bowling.global.exception.NotMatchingPlayerNameException;
 
 import java.util.Objects;
 
