@@ -19,13 +19,13 @@ class TurnTest {
         assertThat(turn.have()).isZero();
 
         // and
-        turn.next();
+        turn.handOver();
 
         // then
         assertThat(turn.have()).isOne();
 
         // and
-        turn.next();
+        turn.handOver();
 
         // then
         assertThat(turn.have()).isZero();

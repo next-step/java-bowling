@@ -26,8 +26,8 @@ public class BowlingGames {
 
         currentGame.record(hits);
 
-        if (currentGame.meetPassTurn()) {
-            turn.next();
+        if (currentGame.meetHandOverCondition()) {
+            turn.handOver();
         }
     }
 
@@ -42,7 +42,7 @@ public class BowlingGames {
             if (bowlingGames.get(i).hasNext()) {
                 return true;
             }
-            turn.next();
+            turn.handOver();
         }
 
         return false;

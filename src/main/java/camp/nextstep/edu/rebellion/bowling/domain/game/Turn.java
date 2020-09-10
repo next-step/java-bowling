@@ -21,7 +21,7 @@ public class Turn {
         return current.get();
     }
 
-    public void next() {
+    public void handOver() {
         current.incrementAndGet();
 
         if (noChance()) {

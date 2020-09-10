@@ -45,7 +45,7 @@ public class BowlingGame {
         return round.hasNext() || hasBonusFrameChance();
     }
 
-    public boolean meetPassTurn() {
+    public boolean meetHandOverCondition() {
         return frames.meetEnd(previousRound);
     }
 

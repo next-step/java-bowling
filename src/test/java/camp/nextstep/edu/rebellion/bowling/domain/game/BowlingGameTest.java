@@ -20,7 +20,7 @@ class BowlingGameTest {
        // then
        assertAll(
                () -> assertThat(bowlingGame.hasNext()).isTrue(),
-               () -> assertThat(bowlingGame.meetPassTurn()).isFalse()
+               () -> assertThat(bowlingGame.meetHandOverCondition()).isFalse()
        );
     }
 
@@ -39,7 +39,7 @@ class BowlingGameTest {
         // then
         assertAll(
                 () -> assertThat(bowlingGame.hasNext()).isTrue(),
-                () -> assertThat(bowlingGame.meetPassTurn()).isTrue()
+                () -> assertThat(bowlingGame.meetHandOverCondition()).isTrue()
         );
     }
 
@@ -56,7 +56,7 @@ class BowlingGameTest {
         // then
         assertAll(
                 () -> assertThat(bowlingGame.hasNext()).isTrue(),
-                () -> assertThat(bowlingGame.meetPassTurn()).isFalse()
+                () -> assertThat(bowlingGame.meetHandOverCondition()).isFalse()
         );
     }
 }
