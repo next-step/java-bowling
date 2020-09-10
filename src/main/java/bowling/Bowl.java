@@ -1,11 +1,13 @@
 package bowling;
 
-public interface State {
+public class Bowl {
 
   int MIN_PINS = 0;
   int MAX_PINS = 10;
 
-  static State of(int pins) {
+  private int pins;
+
+  private Bowl(int pins) {
     if (MIN_PINS > pins) {
       throw new IllegalArgumentException(
           String.format("%d개핀 이상 입력하세요. 현재 %d핀이 입력되었습니다.", MIN_PINS, pins)
@@ -18,15 +20,18 @@ public interface State {
       );
     }
 
-    if (MAX_PINS == pins) {
-      return new Strike();
-    }
-
-    return new Pitching(pins);
+    this.pins = pins;
   }
 
-  String symbol();
+  public static Bowl roll(int pins) {
+    return new Bowl(pins);
+  }
 
-  State roll(int second);
+  public boolean isStrike() {
+    return pins == 10;
+  }
 
+  public boolean isPitching() {
+    return true;
+  }
 }
