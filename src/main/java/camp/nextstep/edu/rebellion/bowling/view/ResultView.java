@@ -1,10 +1,12 @@
 package camp.nextstep.edu.rebellion.bowling.view;
 
-import camp.nextstep.edu.rebellion.bowling.domain.score.ScoreBoard;
+import camp.nextstep.edu.rebellion.bowling.domain.score.BowlingGameScoreBoard;
+import camp.nextstep.edu.rebellion.bowling.domain.score.PersonalScoreBoard;
 import camp.nextstep.edu.rebellion.bowling.util.StringUtil;
 import org.apache.logging.log4j.util.Strings;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResultView {
     private static final String FORMAT = "| %3s\t";
@@ -13,17 +15,27 @@ public class ResultView {
     private static final String ENTER = "\n";
     private ResultView() {}
 
-    public static void print(ScoreBoard board) {
+    public static void print(BowlingGameScoreBoard board) {
         StringBuilder output = new StringBuilder();
+        output.append(generateHeader(10)).append(ENTER);
+        output.append(
+                board.getPersonalScoreBoards()
+                        .stream()
+                        .map(ResultView::generatePersonalScoreBoard)
+                        .collect(Collectors.joining(ENTER)));
+
+        System.out.println(output.toString());
+    }
+
+    private static String generatePersonalScoreBoard (PersonalScoreBoard board) {
+        StringBuilder builder = new StringBuilder();
         List<String> symbols = board.getResultSymbol();
-        output
-                .append(generateHeader(symbols.size()))
-                .append(ENTER)
-                .append(generateFrameStatus(board.getPlayerName(), symbols))
+
+        builder.append(generateFrameStatus(board.getPlayerName(), symbols))
                 .append(ENTER)
                 .append(generateScore(board.getHitsScores()));
 
-        System.out.println(output.toString());
+        return builder.toString();
     }
 
     private static String generateHeader(int cols) {

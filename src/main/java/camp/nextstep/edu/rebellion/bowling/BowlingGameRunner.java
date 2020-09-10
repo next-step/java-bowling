@@ -1,19 +1,28 @@
 package camp.nextstep.edu.rebellion.bowling;
 
-import camp.nextstep.edu.rebellion.bowling.domain.game.BowlingGame;
-import camp.nextstep.edu.rebellion.bowling.domain.game.Player;
-import camp.nextstep.edu.rebellion.bowling.view.InputView;
-import camp.nextstep.edu.rebellion.bowling.view.ResultView;
+import camp.nextstep.edu.rebellion.bowling.domain.game.BowlingGames;
+import camp.nextstep.edu.rebellion.bowling.domain.player.Players;
+
+import java.util.List;
+
+import static camp.nextstep.edu.rebellion.bowling.view.InputView.getNumberOfPlayers;
+import static camp.nextstep.edu.rebellion.bowling.view.InputView.getPlayers;
+import static camp.nextstep.edu.rebellion.bowling.view.InputView.getHitScore;
+import static camp.nextstep.edu.rebellion.bowling.view.ResultView.print;
 
 public class BowlingGameRunner {
     public static void main(String[] args) {
-        Player player = new Player(InputView.getPlayer());
-        BowlingGame bowlingGame = BowlingGame.start(player);
+        int numberOfPlayers = getNumberOfPlayers();
+        List<String> participants = getPlayers(numberOfPlayers);
 
-        while (bowlingGame.hasNext()) {
-            ResultView.print(bowlingGame.getScoreBoard());
-            bowlingGame.record(InputView.getHitScore(bowlingGame.currentRound()));
+        Players players = Players.join(participants);
+        BowlingGames bowlingGames = BowlingGames.start(players);
+
+        while (bowlingGames.hasNext()) {
+            print(bowlingGames.getScoreBoard());
+            bowlingGames.record(getHitScore(bowlingGames.currentPlayerName()));
         }
-        ResultView.print(bowlingGame.getScoreBoard());
+
+        print(bowlingGames.getScoreBoard());
     }
 }

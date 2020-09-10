@@ -1,18 +1,21 @@
 package camp.nextstep.edu.rebellion.bowling.domain.game;
 
 import camp.nextstep.edu.rebellion.bowling.domain.frame.Frames;
-import camp.nextstep.edu.rebellion.bowling.domain.score.ScoreBoard;
+import camp.nextstep.edu.rebellion.bowling.domain.player.Player;
+import camp.nextstep.edu.rebellion.bowling.domain.score.PersonalScoreBoard;
 
 public class BowlingGame {
     private final Frames frames;
     private final Player player;
+    private final Round round;
 
-    private Round gameRound;
+    private Round previousRound;
 
     private BowlingGame(Player player) {
         this.player = player;
         this.frames = Frames.clear();
-        this.gameRound = Round.reset();
+        this.round = Round.reset();
+        this.previousRound = Round.reset();
     }
 
     public static BowlingGame start(Player player) {
@@ -20,27 +23,33 @@ public class BowlingGame {
     }
 
     public void record(int hits) {
-        frames.markScoreOnRound(gameRound, hits);
-        frames.markBonusOnPrevious(gameRound, hits);
+        frames.markScoreOnRound(round, hits);
+        frames.markBonusOnPrevious(round, hits);
 
-        if (frames.meetEnd(gameRound)) {
-            frames.makeBonusChance(gameRound);
-            gameRound.next();
+        keepCurrentRound();
+
+        if (frames.meetEnd(round)) {
+            frames.makeBonusChance(round);
+            round.next();
         }
     }
 
-    public int currentRound() {
-        return gameRound.getCurrent() + 1;
+    private void keepCurrentRound() {
+        previousRound = Round.currentOf(round);
     }
 
     public boolean hasNext() {
-        return gameRound.hasNext() || hasBonusFrameChance();
+        return round.hasNext() || hasBonusFrameChance();
+    }
+
+    public boolean meetPassTurn() {
+        return frames.meetEnd(previousRound);
     }
 
     private boolean hasBonusFrameChance() {
-        if (gameRound.meetFinal() && frames.canMakeBonusFrame()) {
+        if (round.meetFinal() && frames.canMakeBonusFrame()) {
             frames.makeBonusFrame();
-            gameRound.addLastRound();
+            round.addLastRound();
 
             return true;
         }
@@ -48,7 +57,7 @@ public class BowlingGame {
         return false;
     }
 
-    public ScoreBoard getScoreBoard() {
-        return new ScoreBoard(player, frames);
+    public PersonalScoreBoard getScoreBoard() {
+        return new PersonalScoreBoard(player, frames);
     }
 }

@@ -7,7 +7,7 @@ public class Round {
     private static final int FINAL_ROUND = 10;
     private static final int BONUS_ROUND = 1;
 
-    private AtomicInteger current;
+    private final AtomicInteger current;
     private int lastRound;
 
     private Round(int initialValue, int lastRound){

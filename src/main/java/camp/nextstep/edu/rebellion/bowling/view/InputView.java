@@ -1,5 +1,7 @@
 package camp.nextstep.edu.rebellion.bowling.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -7,13 +9,22 @@ public class InputView {
 
     private InputView() {}
 
-    public static String getPlayer() {
-        System.out.println("플레이어 이름을 입력해주세요 (영문자만, 최대 3글자) ");
-        return getLine();
+    public static List<String> getPlayers(int numberOfPlayers) {
+        List<String> players = new ArrayList<>();
+        for (int i = 1; i <= numberOfPlayers; i++) {
+            System.out.print("\n플레이어 " + i + "의 이름을 입력해주세요 (영문자만, 최대 3글자) ");
+            players.add(getLine());
+        }
+        return players;
     }
 
-    public static int getHitScore(int frame) {
-        System.out.print("\n" + frame + " 프레임 투구 : ");
+    public static int getHitScore(String playerName) {
+        System.out.print("\n" + playerName + " 님 투구 차례 입니다 : ");
+        return getInt();
+    }
+
+    public static int getNumberOfPlayers() {
+        System.out.print("몇 명의 플레이어가 게임에 참가하나요 ");
         return getInt();
     }
 
