@@ -29,6 +29,12 @@ public class Turn {
         }
     }
 
+    public void times(int times) {
+        for (int i = 0; i < times; i++) {
+           handOver();
+        }
+    }
+
     private boolean noChance() {
         return chances == current.get();
     }

@@ -5,6 +5,7 @@ import camp.nextstep.edu.rebellion.bowling.domain.score.BowlingGameScoreBoard;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BowlingGames {
     private final List<BowlingGame> bowlingGames;
@@ -36,15 +37,15 @@ public class BowlingGames {
     }
 
     public boolean hasNext() {
-        findSuitableTurn();
-        return bowlingGames.stream().anyMatch(BowlingGame::hasNext);
+        for (int i = turn.have(); i < bowlingGames.size(); i++) {
+            if (bowlingGames.get(i).hasNext()) {
+                return true;
+            }
+            turn.handOver();
+        }
+        return false;
     }
 
-    private void findSuitableTurn() {
-        for (int i = turn.have(); !bowlingGames.get(i).hasNext(); i++) {
-            turn.handOver();
-         }
-    }
 
     public BowlingGameScoreBoard getScoreBoard() {
         return bowlingGames.stream()
