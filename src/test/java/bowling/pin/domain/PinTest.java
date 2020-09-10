@@ -18,15 +18,16 @@ class PinTest {
     @DisplayName("투구가 10이면 남은 Pin은 0. 스트라이크")
     void strike() {
         Ball ball = Ball.pitch("10");
-        int result = Pin.eachPitch(ball.getPoint());
-        assertThat(result).isEqualTo(0);
+        Pin result = Pin.eachPitch(ball.getPoint());
+        assertThat(result.getRemainingPins()).isEqualTo(0);
     }
 
     @Test
     @DisplayName("투구가 8이면 남은 Pin은 2")
     void pitchIsEight() {
         Ball ball = Ball.pitch("8");
-        int result = Pin.eachPitch(ball.getPoint());
-        assertThat(result).isEqualTo(2);
+        Pin result = Pin.eachPitch(ball.getPoint());
+        assertThat(result.getRemainingPins()).isEqualTo(2);
     }
+    
 }
