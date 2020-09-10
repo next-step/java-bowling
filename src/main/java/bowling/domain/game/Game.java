@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.game;
 
+import bowling.domain.excpetion.NoFrameFoundException;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
@@ -30,7 +31,7 @@ public class Game {
         return frames.stream()
                 .filter(frame -> frame.canRoll())
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new NoFrameFoundException("더 이상 가능한 프레임이 없습니다"));
     }
 
     public Player getPlayer() {

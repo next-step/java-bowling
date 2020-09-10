@@ -2,8 +2,6 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pins;
 
-
-
 public class FinalFrame implements Frame {
     private static final int PINS_LIMIT = 10;
     private static final int CAN_ROLL_LIMIT = 2;

@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.game;
 
 import bowling.domain.player.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,12 +29,12 @@ class GameTest {
     @Test
     @DisplayName("다음 프레임 가져오기 테스트")
     void testNextFrame() {
-        rolledMany();
+        rolledThird();
 
-        assertThat(game.getNextFrame().getIndex()).isEqualTo(3);
+        assertThat(game.getNextFrame().getIndex()).isEqualTo(4);
     }
 
-    private void rolledMany() {
+    private void rolledThird() {
         game.getNextFrame().roll(STRIKE);
         game.getNextFrame().roll(STRIKE);
         game.getNextFrame().roll(STRIKE);

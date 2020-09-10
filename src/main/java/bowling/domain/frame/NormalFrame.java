@@ -25,11 +25,9 @@ public class NormalFrame implements Frame{
 
     @Override
     public void roll(int pin) {
-
         if (isPinTotalOverTen(pin)) {
             throw new IllegalArgumentException(PIN_MAX_ERROR);
         }
-
         if (canRoll()) {
             pins.addPins(pin);
         }
@@ -40,19 +38,15 @@ public class NormalFrame implements Frame{
         if (isAlreadyStrike() || isRolledTwice()) {
             return false;
         }
-
         return true;
     }
-
 
     private boolean isRolledTwice() {
         return pins.rollCount() >= CAN_ROLL_LIMIT;
     }
-
     private boolean isAlreadyStrike() {
         return pins.rollCount() == FIRST_ROLL && pins.getTotalPins() == PINS_LIMIT;
     }
-
     private boolean isPinTotalOverTen(int pin) {
         return this.getPins() + pin > PINS_LIMIT;
     }
