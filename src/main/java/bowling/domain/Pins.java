@@ -9,14 +9,14 @@ public class Pins {
     private int count;
 
     private Pins(int count) {
-        if (count != COUNT) {
-            throw new IllegalArgumentException(String.format("핀의 갯수는 %s보다 많거나 작을 수 없습니다. [%s]", COUNT, count));
-        }
-
         this.count = count;
     }
 
     public static Pins from(int count) {
+        if (count != COUNT) {
+            throw new IllegalArgumentException(String.format("핀의 갯수는 %s보다 많거나 작을 수 없습니다. [%s]", COUNT, count));
+        }
+
         return new Pins(count);
     }
 

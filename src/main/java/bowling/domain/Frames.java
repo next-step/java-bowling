@@ -10,19 +10,18 @@ public class Frames {
 
     private List<Frame> frames;
 
-    private Frames(int frameCount) {
+    private Frames(List<Frame> frames) {
+        this.frames = frames;
+    }
+
+    public static Frames from(int frameCount) {
         if (frameCount != COUNT) {
             throw new IllegalArgumentException(String.format("프레임 수는 %s보다 많거나 작을 수 없습니다. [%s]", COUNT, frameCount));
         }
 
-        frames = IntStream.rangeClosed(1, frameCount)
+        return new Frames(IntStream.rangeClosed(1, frameCount)
                 .mapToObj(Frame::from)
-                .collect(Collectors.toList());
-    }
-
-
-    public static Frames from(int frameCount) {
-        return new Frames(frameCount);
+                .collect(Collectors.toList()));
     }
 
     public static Frames create() {

@@ -16,7 +16,15 @@ public class Frame {
     private Pins bonusPins;
     private GameResults results;
 
-    private Frame(int stage) {
+    private Frame(int stage, Pins pins, Pins bonusPins, GameResults gameResults) {
+        this.stage = stage;
+        this.step = FIRST_STEP;
+        this.pins = pins;
+        this.bonusPins = bonusPins;
+        this.results = gameResults;
+    }
+
+    public static Frame from(int stage) {
         if (stage < BEGIN_STAGE) {
             throw new IllegalArgumentException(String.format("%s 보다 작은 값은 설정될수 없습니다. [%s]", BEGIN_STAGE, stage));
         }
@@ -25,15 +33,7 @@ public class Frame {
             throw new IllegalArgumentException(String.format("%s 보다 큰 값은 설정될수 없습니다. [%s]", END_STAGE, stage));
         }
 
-        this.stage = stage;
-        this.step = FIRST_STEP;
-        this.pins = Pins.create();
-        this.bonusPins = Pins.create();
-        this.results = GameResults.create();
-    }
-
-    public static Frame from(int stage) {
-        return new Frame(stage);
+        return new Frame(stage, Pins.create(), Pins.create(), GameResults.create());
     }
 
     public boolean hasNextTurn() {
