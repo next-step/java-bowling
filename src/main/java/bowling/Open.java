@@ -2,15 +2,15 @@ package bowling;
 
 public class Open extends Pitching implements State {
 
-  private int second;
+  private Pins second;
 
-  public Open(int first, int second) {
+  public Open(Pins first, Pins second) {
     super(first);
     this.second = second;
   }
 
   public String symbol() {
-    if (second == 0) {
+    if (second.isGutter()) {
       return super.symbol() + "|-";
     }
     return super.symbol() + "|" + second;

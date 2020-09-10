@@ -23,15 +23,32 @@ public class Pins {
     this.count = count;
   }
 
-  public static Pins roll(int pins) {
-    return new Pins(pins);
+  public static Pins roll(int count) {
+    return new Pins(count);
   }
 
   public boolean isStrike() {
-    return count == 10;
+    return count == MAX_PINS;
   }
 
   public boolean isPitching() {
     return true;
+  }
+
+  public boolean isGutter() {
+    return count == MIN_PINS;
+  }
+
+  public boolean isSpare(Pins nextPins) {
+    return nextPins.isSpare(count);
+  }
+
+  private boolean isSpare(int prevCount) {
+    return this.count + prevCount == MAX_PINS;
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(count);
   }
 }

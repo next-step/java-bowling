@@ -2,9 +2,9 @@ package bowling;
 
 public class Spare extends Pitching implements State {
 
-  private int second;
+  private Pins second;
 
-  public Spare(int first, int second) {
+  public Spare(Pins first, Pins second) {
     super(first);
     this.second = second;
   }

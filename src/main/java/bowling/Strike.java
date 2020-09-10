@@ -3,7 +3,7 @@ package bowling;
 public class Strike implements State {
 
   @Override
-  public State roll(int second) {
+  public State roll(Pins second) {
     throw new UnsupportedOperationException();
   }
 
