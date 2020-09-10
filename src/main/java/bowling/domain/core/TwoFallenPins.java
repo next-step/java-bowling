@@ -1,5 +1,7 @@
 package bowling.domain.core;
 
+import java.util.ArrayList;
+
 import static bowling.domain.core.FallenPins.zero;
 import static java.util.Arrays.asList;
 
@@ -20,15 +22,14 @@ final class TwoFallenPins extends AbstractTwoFallenPins {
     }
 
     ImmutableTwoFallenPins immutable(){
-        return new ImmutableTwoFallenPins(twoFallenPins);
+        return new ImmutableTwoFallenPins(new ArrayList<>(twoFallenPins));
     }
 
-    TwoFallenPins collect(FallenPins fallenPins){
+    void collect(FallenPins fallenPins){
         if (isComplete() || isStrike()){
             initTwoFallenPins();
         }
         twoFallenPins.set(zeroBaseRollingIndex++, fallenPins);
-        return this;
     }
 
     TwoFallenPins collect(int firstFallenPins, int secondFallenPins){

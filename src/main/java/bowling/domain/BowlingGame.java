@@ -16,11 +16,14 @@ public class BowlingGame {
         return new BowlingGame(playerName);
     }
 
-    public void gameLoop(Function<Integer, Integer> fallenPinsSupplier, Consumer<DisplayBowlingBoard> displayBowlingBoardConsumer){
+    public void gameLoop(final Function<Integer, Integer> fallenPinsSupplier, final Consumer<DisplayBowlingBoard> displayBowlingBoardConsumer){
         for (int fraemIndex = 0; Frames.MAX_FRAMES_SIZE > fraemIndex; ++fraemIndex){
             final int displayFraemIndex = fraemIndex + 1;
-            player.whileRoll(fraemIndex, (n) -> fallenPinsSupplier.apply(displayFraemIndex));
-            displayBowlingBoardConsumer.accept(new DisplayBowlingBoard(player.toDisplayPlayerBowlingGrade()));
+
+            this.player.whileRoll(fraemIndex,
+                                  (n) -> fallenPinsSupplier.apply(displayFraemIndex),
+                                  (g) -> displayBowlingBoardConsumer.accept(new DisplayBowlingBoard(g))
+            );
         }
     }
 }

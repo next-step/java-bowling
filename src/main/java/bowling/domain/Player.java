@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import bowling.ui.result.DisplayPlayerBowlingGrade;
@@ -9,6 +10,7 @@ import bowling.ui.result.DisplayPlayerBowlingGrade;
 final class Player {
     static final String ERROR_MESSAGE = "영어 알파벳 대문자 3자만 등록 가능합니다.";
     public static final String NAME_REGEX = "^[A-Z]{3}$";
+    public static final Consumer<DisplayPlayerBowlingGrade> EMPTY_DISPLAY_PLAYER_BOWLING_GRADE_CONSUMER = (g) -> {};
     private final String name;
     private final Rolling rolling;
 
@@ -29,9 +31,15 @@ final class Player {
     }
 
     Player whileRoll(int currentIndex, Function<String, Integer> playerFallenPinsService){
+        whileRoll(currentIndex, playerFallenPinsService, EMPTY_DISPLAY_PLAYER_BOWLING_GRADE_CONSUMER);
+        return this;
+    }
+
+    Player whileRoll(int currentIndex, Function<String, Integer> playerFallenPinsService, Consumer<DisplayPlayerBowlingGrade> displayPlayerBowlingGradeConsumer){
         while(isPlayable() && rolling.hasNextFrameIndex(currentIndex)) {
             int fallenPins = playerFallenPinsService.apply(name);
             roll(fallenPins);
+            displayPlayerBowlingGradeConsumer.accept(toDisplayPlayerBowlingGrade());
         }
         return this;
     }
