@@ -4,12 +4,16 @@ public class Pitching implements State {
 
   private Pins first;
 
+  public Pitching(int first) {
+    this(Pins.roll(first));
+  }
+
   public Pitching(Pins first) {
     this.first = first;
   }
 
   @Override
-  public State roll(Pins second) {
+  public State roll(int second) {
     if (first.isSpare(second)) {
       return new Spare(first, second);
     }

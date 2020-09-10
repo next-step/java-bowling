@@ -28,13 +28,13 @@ class PinsTest {
   @Test
   void spare_pins() {
     Pins pitching = Pins.roll(8);
-    assertThat(pitching.isSpare(Pins.roll(2))).isTrue();
+    assertThat(pitching.isSpare(2)).isTrue();
   }
 
   @Test
   void open_roll() {
     Pins pitching = Pins.roll(8);
-    assertThat(pitching.isOpen(Pins.roll(1))).isTrue();
+    assertThat(pitching.isOpen(1)).isTrue();
   }
 
   @Test

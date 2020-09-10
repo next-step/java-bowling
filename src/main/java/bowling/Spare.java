@@ -4,9 +4,9 @@ public class Spare extends Pitching implements State {
 
   private Pins second;
 
-  public Spare(Pins first, Pins second) {
+  public Spare(Pins first, int second) {
     super(first);
-    this.second = second;
+    this.second = Pins.roll(second);
   }
 
   @Override

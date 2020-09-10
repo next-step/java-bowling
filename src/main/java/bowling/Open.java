@@ -4,9 +4,9 @@ public class Open extends Pitching implements State {
 
   private Pins second;
 
-  public Open(Pins first, Pins second) {
+  public Open(Pins first, int second) {
     super(first);
-    this.second = second;
+    this.second = Pins.roll(second);
   }
 
   public String symbol() {

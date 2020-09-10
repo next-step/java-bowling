@@ -31,28 +31,20 @@ public class Pins {
     return count == MAX_PINS;
   }
 
+  public boolean isSpare(int nextCount) {
+    return this.count + nextCount == MAX_PINS;
+  }
+
+  public boolean isOpen(int nextCount) {
+    return this.count + nextCount < MAX_PINS;
+  }
+
   public boolean isPitching() {
     return true;
   }
 
-  public boolean isOpen(Pins nextPins) {
-    return nextPins.isOpen(count);
-  }
-
-  private boolean isOpen(int prevCount) {
-    return this.count + prevCount < MAX_PINS;
-  }
-
   public boolean isGutter() {
     return count == MIN_PINS;
-  }
-
-  public boolean isSpare(Pins nextPins) {
-    return nextPins.isSpare(count);
-  }
-
-  private boolean isSpare(int prevCount) {
-    return this.count + prevCount == MAX_PINS;
   }
 
   @Override

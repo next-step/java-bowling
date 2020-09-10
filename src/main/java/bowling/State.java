@@ -2,19 +2,17 @@ package bowling;
 
 public interface State {
 
-  int MIN_PINS = 0;
-  int MAX_PINS = 10;
-
-  static State of(Pins pins) {
-    if (pins.isStrike()) {
-      return new Strike();
+  static State of(int pins) {
+    Pins pitching = Pins.roll(pins);
+    if (pitching.isStrike()) {
+      return new Strike(pitching);
     }
 
-    return new Pitching(pins);
+    return new Pitching(pitching);
   }
 
   String symbol();
 
-  State roll(Pins second);
+  State roll(int second);
 
 }
