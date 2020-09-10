@@ -22,8 +22,7 @@ public class Answers {
         validateOwner(user);
 
         return answers.stream()
-                .map(answer -> answer.setDeleted(true))
-                .map(Answer::toDeleteHistory)
+                .map(Answer::delete)
                 .collect(Collectors.toList());
     }
 
