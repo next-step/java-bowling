@@ -1,6 +1,11 @@
 package bowling.player.domain;
 
+import bowling.global.utils.ExceptionMessage;
+import bowling.player.exception.NotMatchingPlayerNameException;
+
 import java.util.Objects;
+
+import static bowling.global.utils.CommonConstant.NUMBER_THREE;
 
 public class Player {
 
@@ -8,10 +13,24 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
+        validatePlayerNameisNull();
+        validatePlayerNameLength();
     }
 
     public String getName() {
         return name;
+    }
+
+    private void validatePlayerNameisNull() {
+        if (name == null || name.trim().isEmpty()) {
+            throw new NotMatchingPlayerNameException(ExceptionMessage.INVALID_PLAYER_NAME_IS_NULL);
+        }
+    }
+
+    private void validatePlayerNameLength() {
+        if (name.length() > NUMBER_THREE) {
+            throw new NotMatchingPlayerNameException(ExceptionMessage.INVALID_PLAYER_NAME_LENGTH);
+        }
     }
 
     @Override
@@ -26,4 +45,5 @@ public class Player {
     public int hashCode() {
         return Objects.hash(name);
     }
+
 }
