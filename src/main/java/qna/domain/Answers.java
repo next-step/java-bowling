@@ -2,13 +2,19 @@ package qna.domain;
 
 import qna.CannotDeleteException;
 
+import javax.persistence.Embeddable;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Embeddable
 public class Answers {
 
-    private final List<Answer> answers;
+    private List<Answer> answers;
+
+    public Answers() {
+
+    }
 
     private Answers(List<Answer> answers) {
         this.answers = Collections.unmodifiableList(answers);
@@ -30,5 +36,9 @@ public class Answers {
         for (Answer answer : answers) {
             answer.validateOwner(user);
         }
+    }
+
+    public void add(Answer answer) {
+        answers.add(answer);
     }
 }

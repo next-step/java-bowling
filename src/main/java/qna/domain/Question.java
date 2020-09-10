@@ -4,9 +4,8 @@ import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Optional;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -25,7 +24,8 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    @Embedded
+    private Answers answers;
 
     private boolean deleted = false;
 
@@ -88,7 +88,7 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
+    public Answers getAnswers() {
         return answers;
     }
 
@@ -103,7 +103,10 @@ public class Question extends AbstractEntity {
         setDeleted(true);
 
         return DeleteHistories.of(toDeleteHistory())
-                .merge(Answers.from(answers).delete(user));
+                .merge(Optional.ofNullable(answers)
+                        .orElse(Answers.from(Collections.emptyList()))
+                        .delete(user)
+                );
     }
 
     private DeleteHistory toDeleteHistory() {
