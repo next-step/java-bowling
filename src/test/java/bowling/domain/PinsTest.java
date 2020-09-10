@@ -30,9 +30,7 @@ class PinsTest {
         int hitCount = 1;
 
         Pins pins = Pins.from(Pins.COUNT);
-        pins.hitting(hitCount);
-
-        assertThat(pins.checkCount(Pins.COUNT - hitCount)).isTrue();
+        assertThat(pins.hitting(hitCount)).isEqualTo(Pins.COUNT - hitCount);
     }
 
     @Test

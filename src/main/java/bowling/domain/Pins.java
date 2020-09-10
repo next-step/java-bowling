@@ -24,20 +24,18 @@ public class Pins {
         return Pins.from(COUNT);
     }
 
-    public void hitting(int hitCount) {
+    public int hitting(int hitCount) {
         if (count < hitCount) {
             throw new IllegalArgumentException(String.format("남아있는 핀의 갯수 [%s] 보다 큰 값이 입력되었습니다. [%s]", count, hitCount));
         }
 
         count -= hitCount;
-    }
 
-    public boolean checkCount(int count) {
-        return this.count == count;
+        return count;
     }
 
     public boolean isClear() {
-        return checkCount(CLEAR_COUNT);
+        return count == CLEAR_COUNT;
     }
 
     public int getDownPins() {
