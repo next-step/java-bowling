@@ -27,7 +27,10 @@ public class BowlingGame {
         frames.markBonusOnPrevious(round, hits);
 
         keepCurrentRound();
+        makeBonusAndGoNextRound();
+    }
 
+    private void makeBonusAndGoNextRound() {
         if (frames.meetEnd(round)) {
             frames.makeBonusChance(round);
             round.next();

@@ -17,7 +17,7 @@ public class ResultView {
 
     public static void print(BowlingGameScoreBoard board) {
         StringBuilder output = new StringBuilder();
-        output.append(generateHeader(10)).append(ENTER);
+        output.append(generateHeader(board.getTotalFrames())).append(ENTER);
         output.append(
                 board.getPersonalScoreBoards()
                         .stream()

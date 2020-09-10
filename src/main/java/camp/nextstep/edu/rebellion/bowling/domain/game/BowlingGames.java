@@ -36,8 +36,14 @@ public class BowlingGames {
     }
 
     public boolean hasNext() {
-        return this.bowlingGames.stream()
-                .anyMatch(BowlingGame::hasNext);
+        for (int i = turn.have(); i < bowlingGames.size(); i++) {
+            if (bowlingGames.get(i).hasNext()) {
+                return true;
+            }
+            turn.next();
+        }
+
+        return false;
     }
 
     public BowlingGameScoreBoard getScoreBoard() {

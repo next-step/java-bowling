@@ -20,6 +20,7 @@ public class BowlingGameRunner {
 
         while (bowlingGames.hasNext()) {
             print(bowlingGames.getScoreBoard());
+
             bowlingGames.record(getHitScore(bowlingGames.currentPlayerName()));
         }
 
