@@ -103,7 +103,7 @@ public class Question extends AbstractEntity {
         setDeleted(true);
 
         return DeleteHistories.of(toDeleteHistory())
-                .addAll(Answers.from(answers).delete(user));
+                .merge(Answers.from(answers).delete(user));
     }
 
     private DeleteHistory toDeleteHistory() {

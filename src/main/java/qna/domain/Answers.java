@@ -18,12 +18,12 @@ public class Answers {
         return new Answers(answers);
     }
 
-    public List<DeleteHistory> delete(User user) throws CannotDeleteException {
+    public DeleteHistories delete(User user) throws CannotDeleteException {
         validateOwner(user);
 
-        return answers.stream()
+        return DeleteHistories.of(answers.stream()
                 .map(Answer::delete)
-                .collect(Collectors.toList());
+                .toArray(DeleteHistory[]::new));
     }
 
     private void validateOwner(User user) throws CannotDeleteException {

@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class DeleteHistories {
 
-    private List<DeleteHistory> deleteHistoryList;
+    private final List<DeleteHistory> deleteHistoryList;
 
     private DeleteHistories(List<DeleteHistory> deleteHistories) {
         this.deleteHistoryList = deleteHistories;
@@ -17,10 +17,10 @@ public class DeleteHistories {
         return new DeleteHistories(new LinkedList<>(Arrays.asList(deleteHistories)));
     }
 
-    public DeleteHistories addAll(List<DeleteHistory> deleteHistories) {
-        deleteHistoryList.addAll(deleteHistories);
+    public DeleteHistories merge(DeleteHistories deleteHistories) {
+        deleteHistoryList.addAll(deleteHistories.deleteHistoryList);
 
-        return this;
+        return DeleteHistories.of(deleteHistoryList.toArray(new DeleteHistory[0]));
     }
 
     public List<DeleteHistory> getDeleteHistoryList() {
