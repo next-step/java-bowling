@@ -36,16 +36,14 @@ public class BowlingGames {
     }
 
     public boolean hasNext() {
-        // TODO 규칙 위반
-        // [규칙 1] 한 메서드에 오직 한 단계의 들여쓰기만 한다
-        for (int i = turn.have(); i < bowlingGames.size(); i++) {
-            if (bowlingGames.get(i).hasNext()) {
-                return true;
-            }
-            turn.handOver();
-        }
+        findSuitableTurn();
+        return bowlingGames.stream().anyMatch(BowlingGame::hasNext);
+    }
 
-        return false;
+    private void findSuitableTurn() {
+        for (int i = turn.have(); !bowlingGames.get(i).hasNext(); i++) {
+            turn.handOver();
+         }
     }
 
     public BowlingGameScoreBoard getScoreBoard() {
