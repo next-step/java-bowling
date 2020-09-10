@@ -1,8 +1,8 @@
 package camp.nextstep.edu.rebellion.bowling.domain.status;
 
-public class Strike implements FrameStatus {
-    private static final String STRIKE_SYMBOL = "X";
+import static camp.nextstep.edu.rebellion.bowling.domain.status.FrameSymbol.STRIKE_SYMBOL;
 
+public class Strike implements FrameStatus {
     @Override
     public String makeSymbol() {
         return STRIKE_SYMBOL;

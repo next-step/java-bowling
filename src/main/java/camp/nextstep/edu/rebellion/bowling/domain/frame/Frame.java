@@ -5,11 +5,11 @@ import camp.nextstep.edu.rebellion.bowling.domain.status.FrameStatus;
 import camp.nextstep.edu.rebellion.bowling.domain.status.FrameStatusResolver;
 
 public abstract class Frame {
-    FrameScore frameScore;
-    Attempt attempt;
-    Bonus bonus;
+    protected FrameScore frameScore;
+    protected Attempt attempt;
+    protected Bonus bonus;
 
-    Frame(FrameScore frameScore, int initAttempt) {
+    protected Frame(FrameScore frameScore, int initAttempt) {
         this.frameScore = frameScore;
         this.attempt = new Attempt(initAttempt);
         this.bonus = Bonus.clear();

@@ -303,3 +303,9 @@ PJS's turn :
 
 ...
 </code></pre>
+
+
+### Step3 리뷰사항
+* [X] [fix01][Frames.java] 접근제한자 protected 로 수정
+* [X] [fix02][BonusStatus.java] Symbol 을 매핑하는 객체로 리팩토링
+

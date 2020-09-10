@@ -48,7 +48,14 @@ public abstract class FrameScore {
     }
 
     public int getTryAttempt() {
-        return isStrike() ? TRY_TWO :
-                isSpare() ? TRY_ONE : NO_TRY;
+        if (isStrike()) {
+            return TRY_TWO;
+        }
+
+        if (isSpare()) {
+            return TRY_ONE;
+        }
+
+        return NO_TRY;
     }
 }
