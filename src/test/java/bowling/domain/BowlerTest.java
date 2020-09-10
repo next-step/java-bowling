@@ -8,7 +8,7 @@ class BowlerTest {
 
     @Test
     void constructor() {
-        assertThat(Bowler.from("yongdae")).isEqualTo(Bowler.from("yongdae"));
+        assertThat(Bowler.from("yongdae")).isNotNull();
     }
 
     @Test
