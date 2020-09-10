@@ -16,7 +16,7 @@ final class Frames {
     Frames() {
         frames = Stream.generate(FoundationFrame::new)
                        .limit(MAX_FOUNDATION_FRAME_SIZE)
-                       .collect(java.util.stream.Collectors.toList());
+                       .collect(toList());
         frames.add(new TerminateFrame());
         zeroBaseCurrentFrameIndex = 0;
     }

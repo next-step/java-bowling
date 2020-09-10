@@ -3,6 +3,7 @@ package bowling.domain.core;
 import bowling.domain.TerminateFrame;
 
 final class Gutter implements RolledResult {
+    static final RolledResult gutter = new Gutter();
 
     @Override
     public int tryCountByTerminateFrame() {

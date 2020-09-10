@@ -1,6 +1,8 @@
 package bowling.domain.core;
 
 final class Strike implements RolledResult {
+    static final RolledResult strike = new Strike();
+
     @Override
     public String description() {
         return "X";

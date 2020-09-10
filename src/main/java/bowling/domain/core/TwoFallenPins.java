@@ -3,6 +3,8 @@ package bowling.domain.core;
 import java.util.ArrayList;
 
 import static bowling.domain.core.FallenPins.zero;
+import static bowling.domain.core.Gutter.gutter;
+import static bowling.domain.core.Strike.strike;
 import static java.util.Arrays.asList;
 
 final class TwoFallenPins extends AbstractTwoFallenPins {
@@ -52,7 +54,7 @@ final class TwoFallenPins extends AbstractTwoFallenPins {
 
     public RolledResult toRolledResult() {
         if(isStrike()){
-            return new Strike();
+            return strike;
         }
 
         if (isNotComplete()){
@@ -69,6 +71,6 @@ final class TwoFallenPins extends AbstractTwoFallenPins {
             return new Miss(immutable());
         }
 
-        return new Gutter();
+        return gutter;
     }
 }

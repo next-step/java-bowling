@@ -7,6 +7,7 @@ import bowling.ui.result.DisplayBowlingBoard;
 
 public class BowlingGame {
     private final Player player;
+    private final DisplayBowlingBoard displayBowlingBoard = new DisplayBowlingBoard();
 
     private BowlingGame(String playerName) {
         player = Player.of(playerName);
@@ -22,7 +23,7 @@ public class BowlingGame {
 
             this.player.whileRoll(fraemIndex,
                                   (n) -> fallenPinsSupplier.apply(displayFraemIndex),
-                                  (g) -> displayBowlingBoardConsumer.accept(new DisplayBowlingBoard(g))
+                                  (g) -> displayBowlingBoardConsumer.accept(displayBowlingBoard.updateDisplayPlayerBowlingGrade(g))
             );
         }
     }
