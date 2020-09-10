@@ -35,6 +35,14 @@ public class Pins {
     return true;
   }
 
+  public boolean isOpen(Pins nextPins) {
+    return nextPins.isOpen(count);
+  }
+
+  private boolean isOpen(int prevCount) {
+    return this.count + prevCount < MAX_PINS;
+  }
+
   public boolean isGutter() {
     return count == MIN_PINS;
   }

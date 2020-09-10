@@ -15,9 +15,26 @@ class PinsTest {
 
   @Test
   void pitching_pins() {
-    Pins strike = Pins.roll(8);
-    assertThat(strike.isStrike()).isFalse();
-    assertThat(strike.isPitching()).isTrue();
+    Pins pitching = Pins.roll(8);
+    assertThat(pitching.isPitching()).isTrue();
+  }
+
+  @Test
+  void gutter_pins() {
+    Pins gutter = Pins.roll(0);
+    assertThat(gutter.isGutter()).isTrue();
+  }
+
+  @Test
+  void spare_pins() {
+    Pins pitching = Pins.roll(8);
+    assertThat(pitching.isSpare(Pins.roll(2))).isTrue();
+  }
+
+  @Test
+  void open_roll() {
+    Pins pitching = Pins.roll(8);
+    assertThat(pitching.isOpen(Pins.roll(1))).isTrue();
   }
 
   @Test
