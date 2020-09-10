@@ -8,53 +8,41 @@ class FrameTest {
 
   @Test
   void strike_frame() {
-    Frame strike = new Frame(1);
-    strike.roll(10);
-
-    assertThat(strike.isDone()).isTrue();
+    frame_roll(true, 10);
   }
 
   @Test
   void pitching_frame() {
-    Frame pitching = new Frame(1);
-    pitching.roll(8);
-
-    assertThat(pitching.isDone()).isFalse();
+    frame_roll(false, 8);
   }
 
   @Test
   void gutter_frame() {
-    Frame gutter = new Frame(1);
-    gutter.roll(0);
-
-    assertThat(gutter.isDone()).isFalse();
+    frame_roll(false, 0);
   }
 
   @Test
   void spare_frame() {
-    Frame pitching = new Frame(1);
-    pitching.roll(8);
-    pitching.roll(2);
-
-    assertThat(pitching.isDone()).isTrue();
+    frame_roll(true, 8, 2);
   }
 
   @Test
   void open_frame() {
-    Frame pitching = new Frame(1);
-    pitching.roll(8);
-    pitching.roll(1);
-
-    assertThat(pitching.isDone()).isTrue();
+    frame_roll(true, 8, 1);
   }
 
   @Test
   void open_with_gutter_frame() {
-    Frame pitching = new Frame(1);
-    pitching.roll(8);
-    pitching.roll(0);
+    frame_roll(true, 8, 0);
+  }
 
-    assertThat(pitching.isDone()).isTrue();
+  private void frame_roll(boolean expected, int... pins) {
+    Frame strike = new Frame(1);
+    for (int pin : pins) {
+      strike.roll(pin);
+    }
+
+    assertThat(strike.isDone()).isEqualTo(expected);
   }
 
   @Test
