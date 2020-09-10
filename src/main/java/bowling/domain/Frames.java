@@ -34,8 +34,8 @@ public class Frames {
                 .anyMatch(Frame::hasNextTurn);
     }
 
-    public Frame record(int hitCount) {
-        return frames.stream()
+    public void record(int hitCount) {
+        frames.stream()
                 .filter(Frame::hasNextTurn)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("게임이 끝났습니다."))

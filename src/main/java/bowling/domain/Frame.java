@@ -52,25 +52,24 @@ public class Frame {
         return stage == BONUS_STAGE && pins.isClear() && step <= BONUS_STEP;
     }
 
-    public Frame record(int hitCount) {
+    public void record(int hitCount) {
         if (hasBonusStep()) {
-            return bonusRecord(hitCount);
+            bonusRecord(hitCount);
+            return;
         }
 
-        return hitting(pins, hitCount);
+        hitting(pins, hitCount);
     }
 
-    private Frame bonusRecord(int hitCount) {
+    private void bonusRecord(int hitCount) {
         step = BONUS_STEP;
-        return hitting(bonusPins, hitCount);
+        hitting(bonusPins, hitCount);
     }
 
-    private Frame hitting(Pins pins, int hitCount) {
+    private void hitting(Pins pins, int hitCount) {
         pins.hitting(hitCount);
         results.record(toResult(step, hitCount, pins));
         step++;
-
-        return this;
     }
 
     private GameResult toResult(int step, int hitCount, Pins pins) {

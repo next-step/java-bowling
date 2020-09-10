@@ -19,8 +19,8 @@ public class FrameSet {
         return frames.isPlaying();
     }
 
-    public Frame record(int hitCount) {
-        return frames.record(hitCount);
+    public void record(int hitCount) {
+        frames.record(hitCount);
     }
 
     public int getPlayStage() {

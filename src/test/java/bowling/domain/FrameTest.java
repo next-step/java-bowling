@@ -51,8 +51,11 @@ class FrameTest {
 
     @Test
     void record() {
-        assertThat(Frame.from(Frame.END_STAGE).record(GUTTER)).isInstanceOf(Frame.class);
-        assertThat(Frame.from(Frame.END_STAGE).record(1)).isInstanceOf(Frame.class);
+        Frame frame = Frame.from(Frame.END_STAGE);
+        frame.record(GUTTER);
+        assertThat(frame.getResults().getHistory().size()).isEqualTo(1);
+        frame.record(1);
+        assertThat(frame.getResults().getHistory().size()).isEqualTo(2);
     }
 
     @Test
@@ -60,7 +63,8 @@ class FrameTest {
         Frame frame = Frame.from(Frame.BEGIN_STAGE);
 
         assertThat(frame.getStage()).isEqualTo(1);
-        assertThat(frame.record(GUTTER).getStage()).isEqualTo(1);
+        frame.record(GUTTER);
+        assertThat(frame.getStage()).isEqualTo(1);
     }
 
     @Test
