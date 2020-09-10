@@ -10,9 +10,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DeleteHistoriesTest {
-    public static final DeleteHistory D1 = new DeleteHistory(ContentType.ANSWER, 0L, UserTest.JAVAJIGI, LocalDateTime.now());
-    public static final DeleteHistory D2 = new DeleteHistory(ContentType.ANSWER, 1L, UserTest.JAVAJIGI, LocalDateTime.now());
-    public static final DeleteHistory D3 = new DeleteHistory(ContentType.QUESTION, 2L, UserTest.SANJIGI, LocalDateTime.now());
+    public static final DeleteHistory D1 = DeleteHistory.answer(0L, UserTest.JAVAJIGI);
+    public static final DeleteHistory D2 = DeleteHistory.answer(1L, UserTest.JAVAJIGI);
+    public static final DeleteHistory D3 = DeleteHistory.question(2L, UserTest.SANJIGI);
 
     @DisplayName("생성 테스트")
     @Test
