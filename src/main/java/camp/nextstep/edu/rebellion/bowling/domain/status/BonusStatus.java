@@ -2,16 +2,17 @@ package camp.nextstep.edu.rebellion.bowling.domain.status;
 
 import camp.nextstep.edu.rebellion.bowling.domain.score.FrameScore;
 
-public class Spare implements FrameStatus {
-    private static final String SPARE_SYMBOL = "|/";
+public class BonusStatus implements FrameStatus {
+
     private final FrameScore score;
 
-    public Spare(FrameScore score) {
+    public BonusStatus(FrameScore score) {
         this.score = score;
     }
 
     @Override
     public String makeSymbol() {
-        return score.getFirstScore() + SPARE_SYMBOL;
+        return FrameSymbol.of(score.getFirstScore()) + "|" +
+                FrameSymbol.of(score.getLastScore());
     }
 }

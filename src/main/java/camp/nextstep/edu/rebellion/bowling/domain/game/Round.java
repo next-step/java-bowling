@@ -3,31 +3,67 @@ package camp.nextstep.edu.rebellion.bowling.domain.game;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Round {
-    private final int MAX_ROUNDS = 10;
+    private static final int FIRST_ROUND = 0;
+    private static final int FINAL_ROUND = 10;
+    private static final int BONUS_ROUND = 1;
 
     private AtomicInteger current;
+    private int lastRound;
 
-    private Round(){
-        this.current = new AtomicInteger(0);
+    private Round(int initialValue, int lastRound){
+        checkLastRound(lastRound);
+        this.current = new AtomicInteger(initialValue);
+        this.lastRound = lastRound;
     }
 
     public static Round reset() {
-        return new Round();
+        return new Round(0, FINAL_ROUND);
+    }
+
+    public static Round currentOf(Round round) {
+        return new Round(round.getCurrent(), FINAL_ROUND);
     }
 
     public void next() {
-        this.current.incrementAndGet();
+        if (hasNext()) {
+            current.incrementAndGet();
+        }
+    }
+
+    public void prev() {
+        if (hasPrev()) {
+            current.decrementAndGet();
+        }
     }
 
     public boolean hasNext() {
-        return MAX_ROUNDS > this.current.get();
+        return lastRound > current.get();
     }
 
-    public boolean meetLast() {
-        return MAX_ROUNDS == this.current.get();
+    public boolean hasPrev() {
+        return FIRST_ROUND < current.get();
+    }
+
+    public boolean meetFinal() {
+        return lastRound == current.get();
+    }
+
+    public boolean meetFirst() {
+        return FIRST_ROUND == current.get();
     }
 
     public int getCurrent() {
-        return this.current.get();
+        return current.get();
+    }
+
+    public void addLastRound() {
+        lastRound++;
+        checkLastRound(lastRound);
+    }
+
+    private void checkLastRound(int lastRound) {
+        if (FINAL_ROUND + BONUS_ROUND < lastRound) {
+            throw new IllegalArgumentException("최대 라운드는 허용 범위를 벗어 났습니다 (최대 11) " + lastRound);
+        }
     }
 }

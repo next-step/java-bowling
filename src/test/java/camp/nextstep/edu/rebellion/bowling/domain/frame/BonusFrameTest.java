@@ -11,7 +11,7 @@ class BonusFrameTest {
     @Test
     public void bonusFrameTest() {
         // given
-        Frame frame = new BonusFrame();
+        Frame frame = FrameFactory.get(FrameType.BONUS, 1);
 
         // when & then
         assertAll(
@@ -25,7 +25,8 @@ class BonusFrameTest {
     public void markScoreTest() {
         // given
         int first = 1;
-        Frame frame = new BonusFrame();
+        int initAttemptCount = 1;
+        Frame frame = FrameFactory.get(FrameType.BONUS, initAttemptCount);
 
         // when
         frame.markScore(first);

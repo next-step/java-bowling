@@ -61,7 +61,7 @@ class AttemptTest {
         // when & then
         assertThatThrownBy(() -> new Attempt(initCount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("시도 횟 수 초기 값이 잘못 되었습니다 (최대 2) : "
+                .hasMessageContaining("시도 횟 수 초기 값이 잘못 되었습니다 (최대 3) : "
                         + initCount);
     }
 }

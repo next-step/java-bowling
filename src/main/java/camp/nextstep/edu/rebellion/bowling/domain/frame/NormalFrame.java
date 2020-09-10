@@ -1,18 +1,29 @@
 package camp.nextstep.edu.rebellion.bowling.domain.frame;
 
-public class NormalFrame extends Frame {
-    private static final int TRY_TWICE = 2;
+import camp.nextstep.edu.rebellion.bowling.domain.score.NormalFrameScore;
 
-    public NormalFrame() {
-        super(TRY_TWICE);
+public class NormalFrame extends Frame {
+
+    public NormalFrame(int initAttempt) {
+        super(NormalFrameScore.clear(), initAttempt);
     }
 
     @Override
-    protected void assignScore(int hits) {
-        if (attempt.isFirstAttempt()) {
-            frameScore.markFirst(hits);
+    void adjustAttempt() {
+        if (frameScore.isStrike()) {
+            attempt.setNoAttempt();
             return;
         }
-        frameScore.markLast(hits);
+        attempt.tried();
+    }
+
+    @Override
+    public boolean match(FrameType type) {
+        return FrameType.NORMAL == type;
+    }
+
+    @Override
+    public boolean canCalculateScore() {
+        return !attempt.hasAttempt() && !bonus.hasChance();
     }
 }

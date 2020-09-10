@@ -1,51 +1,61 @@
 package camp.nextstep.edu.rebellion.bowling.domain.score;
 
-public class FrameScore {
-    protected static final int MAX_FRAME_SCORES = 10;
-    protected static final int STRIKE = 10;
+public abstract class FrameScore {
+    private static final int STRIKE = 10;
+    private static final int TRY_TWO = 2;
+    private static final int TRY_ONE = 1;
+    private static final int NO_TRY = 0;
 
-    private Score first;
-    private Score last;
+    Score first;
+    Score last;
 
-    private FrameScore() {
+    FrameScore() {
         this.first = Score.of(0);
         this.last = Score.of(0);
     }
 
-    public static FrameScore clear() {
-        return new FrameScore();
-    }
+    abstract void checkScoreRange(int addedHits);
 
     public void markFirst(int hits) {
-        this.first = Score.of(hits);
+        first = Score.of(hits);
     }
 
     public void markLast(int hits) {
         checkScoreRange(hits);
-        this.last = Score.of(hits);
+        last = Score.of(hits);
     }
 
     public boolean isStrike() {
-        return this.first.equals(STRIKE);
+        return first.equals(STRIKE);
     }
 
     public boolean isSpare() {
-        int totalScore = this.first.getHits() + this.last.getHits();
-        return (this.first.getHits() > 0 && this.last.getHits() > 0) &&
+        int totalScore = first.getHits() + last.getHits();
+        return (first.getHits() > 0 && last.getHits() > 0) &&
                 STRIKE == totalScore;
     }
 
     public int getFirstScore() {
-        return this.first.getHits();
+        return first.getHits();
     }
 
     public int getLastScore() {
-        return this.last.getHits();
+        return last.getHits();
     }
 
-    private void checkScoreRange(int addedHits) {
-        if (MAX_FRAME_SCORES < this.first.getHits() + addedHits) {
-            throw new IllegalArgumentException("최대 10 점을 넘을 수 없습니다");
+    public int getHitsScore() {
+        return first.getHits() + last.getHits();
+    }
+
+    public int getTryAttempt() {
+        if (isStrike()) {
+            return TRY_TWO;
         }
+
+        if (isSpare()) {
+            return TRY_ONE;
+        }
+
+        return NO_TRY;
     }
 }

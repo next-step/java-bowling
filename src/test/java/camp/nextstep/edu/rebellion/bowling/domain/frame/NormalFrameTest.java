@@ -11,7 +11,7 @@ class NormalFrameTest {
     @Test
     public void normalFrameTest() {
         // given
-        Frame frame = new NormalFrame();
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
 
         // when & then
         assertAll(
@@ -26,7 +26,7 @@ class NormalFrameTest {
         // given
         int first = 1;
         int last = 2;
-        Frame frame = new NormalFrame();
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
 
         // when
         frame.markScore(first);
@@ -47,6 +47,23 @@ class NormalFrameTest {
                 () -> assertThat(frame.meetEnd()).isTrue(),
                 () -> assertThat(frame.getFrameScore().getFirstScore()).isEqualTo(first),
                 () -> assertThat(frame.getFrameScore().getLastScore()).isEqualTo(last)
+        );
+    }
+
+    @DisplayName("Strike 를 기록 했을 경우 바로 프레임이 종료 되는지 확인")
+    @Test
+    public void adjustAttemptTest() {
+        // given
+        int strike = 10;
+        Frame frame = FrameFactory.get(FrameType.NORMAL);
+
+        // when
+        frame.markScore(strike);
+
+        // then
+        assertAll(
+                () -> assertThat(frame.isStarted()).isTrue(),
+                () -> assertThat(frame.meetEnd()).isTrue()
         );
     }
 }
