@@ -8,11 +8,11 @@ public class GameResult {
     public static final int NO_COUNT = 0;
 
     private Status status;
-    private int value;
+    private int count;
 
-    GameResult(Status status, int value) {
+    GameResult(Status status, int count) {
         this.status = status;
-        this.value = value;
+        this.count = count;
     }
 
     public static GameResult ofGutter() {
@@ -35,24 +35,48 @@ public class GameResult {
         return new GameResult(Status.SPARE, SPARE_COUNT);
     }
 
+    public static GameResult toResult(int stage, int step, int hitCount, boolean clear) {
+        if (hitCount == NO_COUNT) {
+            return GameResult.ofGutter();
+        }
+
+        if (stage == Frame.BONUS_STAGE && step == Frame.BONUS_STEP && clear) {
+            return GameResult.ofStrike();
+        }
+
+        if (step == Frame.FIRST_STEP && clear) {
+            return GameResult.ofStrike();
+        }
+
+        if (clear) {
+            return GameResult.ofSpare();
+        }
+
+        return GameResult.ofMiss(hitCount);
+    }
+
+    public int getCount() {
+        return count;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GameResult that = (GameResult) o;
-        return value == that.value &&
+        return count == that.count &&
                 status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(status, value);
+        return Objects.hash(status, count);
     }
 
     @Override
     public String toString() {
         if (status.equals(Status.MISS)) {
-            return String.valueOf(value);
+            return String.valueOf(count);
         }
 
         return String.valueOf(status);

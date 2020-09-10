@@ -6,9 +6,9 @@ public class Frame {
     public static final int END_STAGE = 10;
     public static final int BONUS_STAGE = END_STAGE;
 
-    private static final int FIRST_STEP = 1;
-    private static final int FINAL_STEP = 2;
-    private static final int BONUS_STEP = FINAL_STEP + 1;
+    public static final int FIRST_STEP = 1;
+    public static final int FINAL_STEP = 2;
+    public static final int BONUS_STEP = FINAL_STEP + 1;
 
     private int stage;
     private int step;
@@ -68,28 +68,8 @@ public class Frame {
 
     private void hitting(Pins pins, int hitCount) {
         pins.hitting(hitCount);
-        results.record(toResult(step, hitCount, pins));
+        results.record(GameResult.toResult(stage, step, hitCount, pins.isClear()));
         step++;
-    }
-
-    private GameResult toResult(int step, int hitCount, Pins pins) {
-        if (pins.isClear()) {
-            return GameResult.ofGutter();
-        }
-
-        if (stage == BONUS_STAGE && step == BONUS_STEP && pins.isClear()) {
-            return GameResult.ofStrike();
-        }
-
-        if (step == FIRST_STEP && pins.isClear()) {
-            return GameResult.ofStrike();
-        }
-
-        if (pins.isClear()) {
-            return GameResult.ofSpare();
-        }
-
-        return GameResult.ofMiss(hitCount);
     }
 
     public int getStage() {
