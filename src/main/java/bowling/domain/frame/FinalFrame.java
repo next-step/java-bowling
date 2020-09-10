@@ -38,7 +38,7 @@ public class FinalFrame implements Frame {
             return false;
         }
 
-        if (pins.rollCount() <= 3) {
+        if (pins.rollCount() < 3) {
             return true;
         }
         return false;

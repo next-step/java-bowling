@@ -18,7 +18,6 @@ class GameTest {
     public void setUp() {
         player = new Player("TDD");
         game = new Game(player);
-        game.startGame();
     }
 
     @Test
