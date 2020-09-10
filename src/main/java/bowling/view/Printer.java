@@ -29,7 +29,7 @@ public class Printer {
             System.out.printf(
                     String.format("  %-3s |",
                             results.getHistory().stream()
-                                    .map(result -> String.valueOf(result))
+                                    .map(String::valueOf)
                                     .collect(Collectors.joining("|"))
                     )
             );
