@@ -18,4 +18,11 @@ public class Strike implements State {
     return "X";
   }
 
+
+  @Override
+  public String toString() {
+    return "Strike{" +
+        "first=" + first +
+        '}';
+  }
 }

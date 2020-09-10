@@ -4,10 +4,6 @@ public class Pitching implements State {
 
   private Pins first;
 
-  public Pitching(int first) {
-    this(Pins.roll(first));
-  }
-
   public Pitching(Pins first) {
     this.first = first;
   }
@@ -28,4 +24,10 @@ public class Pitching implements State {
     return first.toString();
   }
 
+  @Override
+  public String toString() {
+    return "Pitching{" +
+        "first=" + first +
+        '}';
+  }
 }

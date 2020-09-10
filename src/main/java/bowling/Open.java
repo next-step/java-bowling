@@ -1,18 +1,33 @@
 package bowling;
 
-public class Open extends Pitching implements State {
+public class Open implements State {
 
+  private Pins first;
   private Pins second;
 
   public Open(Pins first, int second) {
-    super(first);
+    this.first = first;
     this.second = Pins.roll(second);
   }
 
+  @Override
+  public State roll(int second) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public String symbol() {
     if (second.isGutter()) {
-      return super.symbol() + "|-";
+      return first.isGutter() ? "-|-" : first + "|-";
     }
-    return super.symbol() + "|" + second;
+
+    return first.isGutter() ? "-|" + second : first + "|" + second;
+  }
+
+  @Override
+  public String toString() {
+    return "Open{" +
+        "second=" + second +
+        '}';
   }
 }
