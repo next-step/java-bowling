@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static qna.domain.DeleteHistoriesTestFixture.fromList;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QnaServiceTest {
@@ -84,6 +85,6 @@ public class QnaServiceTest {
         List<DeleteHistory> deleteHistories = Arrays.asList(
                 new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
                 new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        verify(deleteHistoryService).saveAll(deleteHistories);
+        verify(deleteHistoryService).saveAll(fromList(deleteHistories));
     }
 }

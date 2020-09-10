@@ -1,12 +1,15 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
+    public static final String SHOULD_HAVE_OWNERSHIP_TO_DELETE_ANSWER = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -66,6 +69,18 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    public void validateAnswerOwner(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException(SHOULD_HAVE_OWNERSHIP_TO_DELETE_ANSWER);
+        }
+    }
+
+    public DeleteHistory delete(User user) throws CannotDeleteException {
+        validateAnswerOwner(user);
+        deleted = true;
+        return new DeleteHistory(ContentType.ANSWER, super.getId(), writer, LocalDateTime.now());
     }
 
     @Override
