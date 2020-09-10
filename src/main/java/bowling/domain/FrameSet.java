@@ -8,7 +8,7 @@ public class FrameSet {
 
     private FrameSet(String name) {
         bowler = Bowler.from(name);
-        frames = Frames.from(Frames.COUNT);
+        frames = Frames.create();
     }
 
     public static FrameSet from(String name) {
