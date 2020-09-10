@@ -1,6 +1,7 @@
 package bowling;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
@@ -63,4 +64,17 @@ class StateTest {
     assertThat(open.symbol()).isEqualTo("8|-");
   }
 
+  @Test
+  void invalid_under_0pins() {
+    assertThatThrownBy(() -> State.of(-1))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("0개핀 이상 입력하세요. 현재 -1핀이 입력되었습니다.");
+  }
+
+  @Test
+  void invalid_over_10pins() {
+    assertThatThrownBy(() -> State.of(11))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("10개핀을 초과할 수 없습니다. 현재 11핀이 입력되었습니다.");
+  }
 }

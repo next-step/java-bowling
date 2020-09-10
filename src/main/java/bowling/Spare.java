@@ -9,6 +9,7 @@ public class Spare extends Pitching implements State {
     this.second = second;
   }
 
+  @Override
   public String symbol() {
     return super.symbol() + "|/";
   }
