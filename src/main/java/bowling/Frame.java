@@ -29,6 +29,7 @@ public class Frame {
   }
 
   public boolean isDone() {
+    System.out.println("isDone:" + state);
     if (state instanceof Pitching) {
       return false;
     }
@@ -54,6 +55,6 @@ public class Frame {
 
   @Override
   public String toString() {
-    return "Frame{" + "state=" + state + '}';
+    return "Frame{" + "number=" + number + ", state=" + state + '}';
   }
 }
