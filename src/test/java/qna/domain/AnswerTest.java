@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -8,6 +9,7 @@ import qna.CannotDeleteException;
 
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -46,5 +48,15 @@ public class AnswerTest {
                 Arguments.of(A1, UserTest.SANJIGI),
                 Arguments.of(A2, UserTest.JAVAJIGI)
         );
+    }
+
+    @DisplayName("답변 삭제 테스트")
+    @Test
+    void delete() {
+        // when
+        A1.delete();
+
+        // then
+        assertThat(A1.isDeleted()).isTrue();
     }
 }
