@@ -46,7 +46,7 @@ public class Answer extends AbstractEntity {
 
     public DeleteHistory delete() {
         this.deleted = true;
-        return DeleteHistory.of(ContentType.ANSWER, getId(), writer);
+        return DeleteHistory.answer(getId(), writer);
     }
 
     public boolean isDeleted() {
