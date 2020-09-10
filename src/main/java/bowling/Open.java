@@ -1,6 +1,7 @@
 package bowling;
 
-public class Open extends Pitching {
+public class Open extends Pitching implements State {
+
   private int second;
 
   public Open(int first, int second) {

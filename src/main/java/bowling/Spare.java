@@ -1,6 +1,6 @@
 package bowling;
 
-public class Spare  extends Pitching {
+public class Spare extends Pitching implements State {
 
   private int second;
 

@@ -1,6 +1,7 @@
 package bowling;
 
-public class Pitching extends State {
+public class Pitching implements State {
+
   private int first;
 
   public Pitching(int first) {
@@ -9,7 +10,7 @@ public class Pitching extends State {
   }
 
   public State roll(int second) {
-    if (first + second ==10) {
+    if (first + second == 10) {
       return new Spare(first, second);
     }
     return new Open(first, second);

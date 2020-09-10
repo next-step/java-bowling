@@ -1,12 +1,8 @@
 package bowling;
 
-public class State {
+public interface State {
 
-  public String symbol() {
-    return "";
-  }
-
-  public static State of(int pins) {
+  static State of(int pins) {
     if (pins == 10) {
       return new Strike();
     }
@@ -14,8 +10,8 @@ public class State {
     return new Pitching(pins);
   }
 
-  public State roll(int second) {
-    return null;
-  }
+  String symbol();
+
+  State roll(int second);
 
 }
