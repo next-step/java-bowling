@@ -18,10 +18,10 @@ public class AnswersTest {
         Answers answers = makeMockAnswers();
 
         // when
-        List<DeleteHistory> result = answers.delete(UserTest.JAVAJIGI);
+        DeleteHistories result = answers.delete(UserTest.JAVAJIGI);
 
         // then
-        assertThat(result).hasSize(2);
+        assertThat(result.getDeleteHistoryList()).hasSize(2);
         assertThat(AnswerTest.A1.isDeleted()).isTrue();
         assertThat(AnswerTest.A3.isDeleted()).isTrue();
     }

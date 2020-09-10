@@ -27,16 +27,16 @@ public class DeleteHistoriesTest {
         assertThat(deleteHistoriesList).hasSize(2);
     }
 
-    @DisplayName("히스토리 목록에 다른 히스토리 추가 테스트")
+    @DisplayName("히스토리 목록에 다른 히스토리 병합 테스트")
     @Test
-    void addAll() {
+    void merge() {
         // given
         DeleteHistories deleteHistories = DeleteHistories.of(D1);
 
         // when
-        List<DeleteHistory> deleteHistoryList = deleteHistories.addAll(Arrays.asList(D2, D3)).getDeleteHistoryList();
+        DeleteHistories result = deleteHistories.merge(DeleteHistories.of(D2, D3));
 
         // then
-        assertThat(deleteHistoryList).containsExactly(D1, D2, D3);
+        assertThat(result.getDeleteHistoryList()).containsExactly(D1, D2, D3);
     }
 }
