@@ -4,31 +4,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class StateTest {
+class StateTest {
 
   @Test
-  void strike_roll() {
+  void strike_symbol() {
     State strike = State.of(10);
     assertThat(strike).isInstanceOf(Strike.class);
     assertThat(strike.symbol()).isEqualTo("X");
   }
 
   @Test
-  void pitching_roll() {
+  void pitching_symbol() {
     State pitching = State.of(8);
     assertThat(pitching).isInstanceOf(Pitching.class);
     assertThat(pitching.symbol()).isEqualTo("8");
   }
 
   @Test
-  void gutter_roll() {
+  void gutter_symbol() {
     State gutter = State.of(0);
     assertThat(gutter).isInstanceOf(Pitching.class);
     assertThat(gutter.symbol()).isEqualTo("-");
   }
 
   @Test
-  void spare_roll() {
+  void spare_symbol() {
     State pitching = State.of(8);
     assertThat(pitching).isInstanceOf(Pitching.class);
     assertThat(pitching.symbol()).isEqualTo("8");
@@ -40,7 +40,7 @@ public class StateTest {
   }
 
   @Test
-  void open_roll() {
+  void open_symbol() {
     State pitching = State.of(8);
     assertThat(pitching).isInstanceOf(Pitching.class);
     assertThat(pitching.symbol()).isEqualTo("8");
@@ -52,7 +52,7 @@ public class StateTest {
   }
 
   @Test
-  void open_with_gutter_roll() {
+  void open_with_gutter_symbol() {
     State pitching = State.of(8);
     assertThat(pitching).isInstanceOf(Pitching.class);
     assertThat(pitching.symbol()).isEqualTo("8");

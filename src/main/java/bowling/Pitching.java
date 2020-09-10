@@ -5,7 +5,6 @@ public class Pitching implements State {
   private int first;
 
   public Pitching(int first) {
-    super();
     this.first = first;
   }
 
