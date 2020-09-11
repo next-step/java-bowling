@@ -1,7 +1,5 @@
 package qna.service;
 
-import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,18 +12,24 @@ import qna.domain.Question;
 import qna.domain.QuestionRepository;
 import qna.domain.User;
 
-@Service("qnaService")
+@Service
 public class QnAService {
+
     private static final Logger log = LoggerFactory.getLogger(QnAService.class);
 
-    @Resource(name = "questionRepository")
-    private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
 
-    @Resource(name = "answerRepository")
-    private AnswerRepository answerRepository;
+    private final AnswerRepository answerRepository;
 
-    @Resource(name = "deleteHistoryService")
-    private DeleteHistoryService deleteHistoryService;
+    private final DeleteHistoryService deleteHistoryService;
+
+    public QnAService(QuestionRepository questionRepository,
+                      AnswerRepository answerRepository,
+                      DeleteHistoryService deleteHistoryService) {
+        this.questionRepository = questionRepository;
+        this.answerRepository = answerRepository;
+        this.deleteHistoryService = deleteHistoryService;
+    }
 
     @Transactional(readOnly = true)
     public Question findQuestionById(Long id) {
