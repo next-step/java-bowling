@@ -18,7 +18,7 @@ public class FinalFrame extends Frame {
   }
 
   public FinalFrame roll(int pins) {
-    if (this.pins.size() < 4) {
+    if (this.pins.size() < 3) {
       if (state != null && !super.isDone()) {
         state = state.roll(pins);
       }
@@ -39,6 +39,11 @@ public class FinalFrame extends Frame {
     if (super.state instanceof Open) {
       return true;
     }
+
+    if (this.pins.size() == 3) {
+      return true;
+    }
+
     return false;
   }
 

@@ -23,7 +23,6 @@ public class Bowling {
   public void roll(int pins) {
     if (nextFrame() <= FRAME_COUNT) {
       frames.add(frames.last().roll(pins));
-      frames.last().roll(pins);
     }
   }
 

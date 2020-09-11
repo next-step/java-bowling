@@ -14,6 +14,7 @@ public class OutputView {
   public static final String PLAYER_FORMAT = "|  %s |";
   public static final String FIRST_FORMAT = "  %s   |";
   public static final String SECOND_FORMAT = "  %s |";
+  public static final String FINAL_FORMAT = " %s|";
 
   private final String player;
 
@@ -67,6 +68,10 @@ public class OutputView {
   static String format(String symbol) {
     if (symbol.length() == 1) {
       return String.format(FIRST_FORMAT, symbol);
+    }
+
+    if (symbol.length() == 5) {
+      return String.format(FINAL_FORMAT, symbol);
     }
 
     return String.format(SECOND_FORMAT, symbol);

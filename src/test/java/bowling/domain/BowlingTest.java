@@ -3,7 +3,6 @@ package bowling.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Collectors;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 class BowlingTest {
@@ -54,7 +53,6 @@ class BowlingTest {
     assertThat(first.nextFrame()).isEqualTo(3);
   }
 
-  @Ignore
   @Test
   void perfect() {
     Bowling perfect = Bowling.first(10);
@@ -63,6 +61,19 @@ class BowlingTest {
     }
     assertThat(perfect.symbols()
         .stream()
-        .collect(Collectors.joining())).isEqualTo("XXXXXXXXXXXX");
+        .collect(Collectors.joining())).isEqualTo("XXXXXXXXXX|X|X");
+  }
+
+
+
+  @Test
+  void perfect_9frame() {
+    Bowling perfect = Bowling.first(10);
+    for (int i = 0; i < 8; i++) {
+      perfect.roll(10);
+    }
+    assertThat(perfect.symbols()
+        .stream()
+        .collect(Collectors.joining())).isEqualTo("XXXXXXXXX");
   }
 }

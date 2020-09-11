@@ -20,6 +20,13 @@ public class Frame implements Comparable<Frame> {
       return this;
     }
 
+    if (isDone() && number + 1 == 10) {  // final frame
+      FinalFrame finalFrame = new FinalFrame();
+      finalFrame.roll(pins);
+
+      return finalFrame;
+    }
+
     if (isDone()) {
       Frame next = new Frame(number + 1);
       next.roll(pins);

@@ -7,6 +7,15 @@ import org.junit.jupiter.api.Test;
 public class FinalFrameTest {
 
   @Test
+  void strike() {
+    FinalFrame finalFrame = new FinalFrame();
+    finalFrame.roll(10);
+
+    System.out.println(finalFrame);
+    assertThat(finalFrame.symbol()).isEqualTo("X");
+  }
+
+  @Test
   void triple() {
     FinalFrame finalFrame = new FinalFrame();
     finalFrame.roll(10);
@@ -14,6 +23,7 @@ public class FinalFrameTest {
     finalFrame.roll(10);
 
     System.out.println(finalFrame);
+    assertThat(finalFrame.isDone()).isTrue();
     assertThat(finalFrame.symbol()).isEqualTo("X|X|X");
   }
 
@@ -26,6 +36,7 @@ public class FinalFrameTest {
     finalFrame.roll(9);
 
     System.out.println(finalFrame);
+    assertThat(finalFrame.isDone()).isTrue();
     assertThat(finalFrame.symbol()).isEqualTo("X|X|9");
   }
 
@@ -37,6 +48,7 @@ public class FinalFrameTest {
     finalFrame.roll(1);
 
     System.out.println(finalFrame);
+    assertThat(finalFrame.isDone()).isTrue();
     assertThat(finalFrame.symbol()).isEqualTo("X|8|1");
   }
 
@@ -47,7 +59,7 @@ public class FinalFrameTest {
     finalFrame.roll(8);
     finalFrame.roll(0);
 
-    System.out.println(finalFrame);
+    assertThat(finalFrame.isDone()).isTrue();
     assertThat(finalFrame.symbol()).isEqualTo("X|8|-");
   }
 
@@ -58,7 +70,7 @@ public class FinalFrameTest {
     finalFrame.roll(2);
     finalFrame.roll(10);
 
-    System.out.println(finalFrame);
+    assertThat(finalFrame.isDone()).isTrue();
     assertThat(finalFrame.symbol()).isEqualTo("8|/|X");
   }
 
@@ -69,7 +81,7 @@ public class FinalFrameTest {
     finalFrame.roll(2);
     finalFrame.roll(8);
 
-    System.out.println(finalFrame);
+    assertThat(finalFrame.isDone()).isTrue();
     assertThat(finalFrame.symbol()).isEqualTo("8|/|8");
   }
 
@@ -80,7 +92,7 @@ public class FinalFrameTest {
     finalFrame.roll(2);
     finalFrame.roll(0);
 
-    System.out.println(finalFrame);
+    assertThat(finalFrame.isDone()).isTrue();
     assertThat(finalFrame.symbol()).isEqualTo("8|/|-");
   }
 }
