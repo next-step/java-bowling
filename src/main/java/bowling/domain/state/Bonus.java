@@ -1,7 +1,5 @@
 package bowling.domain.state;
 
-import static bowling.domain.state.Strike.STRIKE;
-
 public class Bonus implements State {
 
   private Pins pins;
@@ -17,7 +15,7 @@ public class Bonus implements State {
 
   @Override
   public String symbol() {
-    return pins.isStrike() ? STRIKE : pins.isGutter() ? GUTTER : pins.toString();
+    return pins.isStrike() ? State.STRIKE : pins.isGutter() ? GUTTER : pins.toString();
   }
 
   @Override

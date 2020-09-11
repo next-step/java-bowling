@@ -2,8 +2,6 @@ package bowling.domain.state;
 
 public class Strike implements State {
 
-  static final String STRIKE = "X";
-  
   private Pins first;
 
   public Strike(Pins first) {

@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 public interface State {
 
+  String STRIKE = "X";
   String GUTTER = "-";
   String DELIMITER = "|";
 

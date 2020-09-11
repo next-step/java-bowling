@@ -41,6 +41,18 @@ public class FinalFrameTest {
   }
 
   @Test
+  void strike_spare() {
+    FinalFrame finalFrame = new FinalFrame();
+    finalFrame.roll(10);
+    finalFrame.roll(8);
+    finalFrame.roll(2);
+
+    System.out.println(finalFrame);
+    assertThat(finalFrame.isDone()).isTrue();
+    assertThat(finalFrame.symbol()).isEqualTo("X|8|/");
+  }
+
+  @Test
   void strike_open() {
     FinalFrame finalFrame = new FinalFrame();
     finalFrame.roll(10);
