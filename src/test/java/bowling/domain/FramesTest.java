@@ -18,7 +18,7 @@ class FramesTest {
         int tryCount = 0;
 
         while (!frames.isFinish()) {
-            frames.hit(Frame.PIN_CLEAR_COUNT);
+            frames.hit(Frames.PIN_CLEAR_COUNT);
             tryCount++;
         }
 
@@ -32,7 +32,7 @@ class FramesTest {
         int tryCount = 0;
 
         while (!frames.isFinish()) {
-            frames.hit(Frame.PIN_COUNT);
+            frames.hit(Frames.PIN_COUNT);
             tryCount++;
         }
 

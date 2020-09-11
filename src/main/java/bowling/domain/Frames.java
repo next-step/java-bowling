@@ -4,23 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Frames {
-    public static final int BONUS_NUMBER = Frame.END_NUMBER;
+    public static final int PIN_COUNT = 10;
+    public static final int PIN_CLEAR_COUNT = 0;
+
+    public static final int BEGIN_NUMBER = 1;
+    public static final int END_NUMBER = 10;
+    public static final int BONUS_NUMBER = END_NUMBER;
 
     private static final int FIRST_STEP = 1;
     private static final int FINAL_STEP = 2;
     private static final int BONUS_STEP = FINAL_STEP + 1;
 
-    private List<Frame> frames;
+    private List<Frame> normalFrames;
     private int step;
 
-    public Frames(List<Frame> frames) {
-        this.frames = frames;
+    public Frames(List<Frame> normalFrames) {
+        this.normalFrames = normalFrames;
         this.step = FIRST_STEP;
     }
 
     public static Frames create() {
         return new Frames(new ArrayList<Frame>() {{
-            add(Frame.first());
+            add(NormalFrame.first());
         }});
     }
 
@@ -30,12 +35,12 @@ public class Frames {
         step++;
 
         if (reminderCount == 0 && !tail.isEndFrame()) {
-            frames.add(getTail().next());
+            normalFrames.add(getTail().next());
             step = FIRST_STEP;
         }
 
         if (step == FINAL_STEP + 1 && !tail.isEndFrame()) {
-            frames.add(getTail().next());
+            normalFrames.add(getTail().next());
             step = FIRST_STEP;
         }
 
@@ -57,6 +62,6 @@ public class Frames {
     }
 
     private Frame getTail() {
-        return frames.get(frames.size() - 1);
+        return normalFrames.get(normalFrames.size() - 1);
     }
 }
