@@ -29,5 +29,5 @@ class PinTest {
         Pin result = Pin.eachPitch(ball.getPoint());
         assertThat(result.getRemainingPins()).isEqualTo(2);
     }
-    
+
 }

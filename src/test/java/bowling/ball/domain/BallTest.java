@@ -19,6 +19,13 @@ class BallTest {
         assertThat(ball.getPoint()).isBetween(0, 10);
     }
 
+    @Test
+    @DisplayName("볼링공 투구 시 투구 횟수 증가")
+    void increasePitchNumber() {
+        Ball ball = Ball.pitch("6");
+        assertThat(ball.getPitchNumber()).isEqualTo(2);
+    }
+
     @ParameterizedTest
     @DisplayName("볼링골 투구 입력값이 null일 경우 Exception 발생")
     @NullAndEmptySource

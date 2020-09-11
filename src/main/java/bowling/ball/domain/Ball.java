@@ -10,19 +10,18 @@ import java.util.Objects;
 public class Ball {
 
     private int point;
+    private int pitchNumber = 1;
+
 
     private Ball(String point) {
         validateInputPitchPointIsNull(point);
         this.point = new StringParser(point).toInt();
         validateOutofPitchRange();
+        pitchNumber += 1;
     }
 
     public static Ball pitch(String point) {
         return new Ball(point);
-    }
-
-    public int getPoint() {
-        return point;
     }
 
     private void validateInputPitchPointIsNull(String point) {
@@ -35,6 +34,14 @@ public class Ball {
         if (point < 0 || point > 10) {
             throw new OutOfPitchRangeException(ExceptionMessage.INVALID_PITCH_RANGE);
         }
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public int getPitchNumber() {
+        return pitchNumber;
     }
 
     @Override
