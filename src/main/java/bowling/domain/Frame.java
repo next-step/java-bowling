@@ -4,7 +4,7 @@ import bowling.domain.state.Pitching;
 import bowling.domain.state.State;
 import java.util.Objects;
 
-public class Frame {
+public class Frame implements Comparable<Frame> {
 
   protected int number;
   protected State state;
@@ -61,5 +61,10 @@ public class Frame {
   @Override
   public String toString() {
     return "Frame{" + "number=" + number + ", state=" + state + '}';
+  }
+
+  @Override
+  public int compareTo(Frame that) {
+    return Integer.compare(this.number, that.number);
   }
 }

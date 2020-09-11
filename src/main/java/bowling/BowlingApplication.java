@@ -17,7 +17,7 @@ public class BowlingApplication {
     Bowling bowling = Bowling.first(pins);
     outputView.render(bowling);
 
-    while (bowling.nextFrame() != 11) {
+    while (bowling.nextFrame() < 11) {
       bowling.roll(inputView.requestPins(bowling.nextFrame()));
       outputView.render(bowling);
     }

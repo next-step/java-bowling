@@ -1,12 +1,14 @@
 package bowling.domain;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class Bowling {
 
-  private List<Frame> frames = new ArrayList<>();
+  public static final int FRAME_COUNT = 10;
+  private SortedSet<Frame> frames = new TreeSet<>();
 
   private Bowling(Frame frame) {
     frames.add(frame);
@@ -19,13 +21,9 @@ public class Bowling {
   }
 
   public void roll(int pins) {
-    if (nextFrame() < 11) {
-      Frame last = frames.get(frames.size() - 1);
-      Frame next = last.roll(pins);
-
-      if (!last.equals(next)) {
-        frames.add(next);
-      }
+    if (nextFrame() <= FRAME_COUNT) {
+      frames.add(frames.last().roll(pins));
+      frames.last().roll(pins);
     }
   }
 
