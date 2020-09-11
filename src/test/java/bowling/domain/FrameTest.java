@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FrameTest {
+class FrameTest {
     @Test
     void first() {
         assertThat(Frame.first()).isNotNull();
@@ -16,11 +16,11 @@ public class FrameTest {
     }
 
     @Test
-    void nextToFinish() {
+    void nextToEnd() {
         Frame frame = Frame.first();
         int count = 1;
 
-        while (!frame.isFinish()) {
+        while (!frame.isEndFrame()) {
             frame = frame.next();
             count++;
         }
@@ -35,8 +35,15 @@ public class FrameTest {
 
     @Test
     void hit() {
-        int NO_COUNT = 0;
-        assertThat(Frame.first().hit(NO_COUNT)).isEqualTo(Frame.PIN_COUNT);
-        assertThat(Frame.first().hit(Frame.PIN_COUNT)).isEqualTo(NO_COUNT);
+        assertThat(Frame.first().hit(Frame.PIN_CLEAR_COUNT)).isEqualTo(Frame.PIN_COUNT);
+        assertThat(Frame.first().hit(Frame.PIN_COUNT)).isEqualTo(Frame.PIN_CLEAR_COUNT);
+    }
+
+    @Test
+    void isClear() {
+        Frame first = Frame.first();
+        first.hit(Frame.PIN_COUNT);
+
+        assertThat(first.isClear()).isTrue();
     }
 }

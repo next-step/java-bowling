@@ -2,6 +2,7 @@ package bowling.domain;
 
 public class Frame {
     public static final int PIN_COUNT = 10;
+    public static final int PIN_CLEAR_COUNT = 0;
     public static final int BEGIN_NUMBER = 1;
     public static final int END_NUMBER = 10;
 
@@ -39,8 +40,12 @@ public class Frame {
         return from(number + 1);
     }
 
-    public boolean isFinish() {
-        return number == END_NUMBER;
+    public boolean isEndFrame() {
+        return !next;
+    }
+
+    public boolean isClear() {
+        return pinCount == PIN_CLEAR_COUNT;
     }
 
     public int getNumber() {
