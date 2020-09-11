@@ -20,7 +20,7 @@ public class NameTest {
         assertThat(actual).isEqualTo(Name.from(name));
     }
 
-    @DisplayName("Name 생성 테스트")
+    @DisplayName("Name 3글자 제한 생성 테스트")
     @ParameterizedTest
     @ValueSource(strings = {"SL", "sleep"})
     void from_invalid_name(String name) {
@@ -31,11 +31,11 @@ public class NameTest {
                 .withMessage(exceptionMessage);
     }
 
-    @DisplayName("Name 생성 테스트")
+    @DisplayName("Name 빈 이름 생성 테스트")
     @ParameterizedTest
     @NullAndEmptySource
     void from_empty_name(String name) {
-        String exceptionMessage = ExceptionMessage.INVALID_NAME_LENGTH;
+        String exceptionMessage = ExceptionMessage.NAME_NOT_NULL;
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Name.from(name))
