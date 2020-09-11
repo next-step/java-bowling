@@ -11,16 +11,17 @@ public class Frames {
     public static final int END_NUMBER = 10;
     public static final int BONUS_NUMBER = END_NUMBER;
 
-    private static final int FIRST_STEP = 1;
-    private static final int FINAL_STEP = 2;
-    private static final int BONUS_STEP = FINAL_STEP + 1;
+    private static final int DEFAULT_TRY_COUNT = 2;
+    private static final int BONUS_TRY_COUNT = DEFAULT_TRY_COUNT + 1;
 
     private List<Frame> frames;
-    private int step;
+    private int maxTryCount;
+    private int tryCount;
 
     public Frames(List<Frame> frames) {
         this.frames = frames;
-        this.step = FIRST_STEP;
+        this.maxTryCount = DEFAULT_TRY_COUNT;
+        this.tryCount = 0;
     }
 
     public static Frames from() {
@@ -42,30 +43,35 @@ public class Frames {
     }
 
     private Frame next() {
-        return createFrame(getTail().getNumber() + 1);
+        int nextNumber = getTail().getNumber() + 1;
+
+        tryCount = 0;
+        maxTryCount = DEFAULT_TRY_COUNT;
+
+        if (nextNumber == END_NUMBER) {
+            return LastFrame.from(END_NUMBER);
+        }
+
+        return createFrame(nextNumber);
     }
 
     public Frame hit(int count) {
         Frame tail = getTail();
 
-        if(tail.getNumber() == BONUS_NUMBER && tail.isClear() && step < BONUS_STEP) {
-//            tail.hit(count);
-            step = BONUS_STEP;
+        int reminderCount = tail.hit(count);
+        tryCount++;
 
+        if (tail.getNumber() == BONUS_NUMBER && tryCount == maxTryCount && tail.isClear()) {
+            tryCount = BONUS_TRY_COUNT;
             return getTail();
         }
 
-        int reminderCount = tail.hit(count);
-        step++;
-
         if (reminderCount == 0 && !tail.isEndFrame()) {
             frames.add(next());
-            step = FIRST_STEP;
         }
 
-        if (step == FINAL_STEP + 1 && !tail.isEndFrame()) {
+        if (tryCount == DEFAULT_TRY_COUNT && !tail.isEndFrame()) {
             frames.add(next());
-            step = FIRST_STEP;
         }
 
         return getTail();
@@ -74,14 +80,15 @@ public class Frames {
     public boolean isFinish() {
         Frame tail = getTail();
 
-        if (tail.getNumber() == BONUS_NUMBER && tail.isClear() && step < BONUS_STEP)
+        if (tail.getNumber() == BONUS_NUMBER && tryCount < BONUS_TRY_COUNT && tail.isClear()) {
             return false;
+        }
 
         if (tail.isEndFrame() && tail.isClear()) {
             return true;
         }
 
-        if (tail.isEndFrame() && step == FINAL_STEP + 1) {
+        if (tail.isEndFrame() && tryCount == maxTryCount) {
             return true;
         }
 
@@ -91,7 +98,4 @@ public class Frames {
     private Frame getTail() {
         return frames.get(frames.size() - 1);
     }
-
-    ////\\\\
-
 }

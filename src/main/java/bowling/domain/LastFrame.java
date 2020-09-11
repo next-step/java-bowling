@@ -9,7 +9,7 @@ public class LastFrame implements Frame {
         this.pinCount = pinCount;
     }
 
-    private static LastFrame from(int number) {
+    public static LastFrame from(int number) {
         return new LastFrame(number, Frames.PIN_COUNT);
     }
 
