@@ -309,9 +309,9 @@ PJS's turn :
 * [X] [fix02][BonusStatus.java] Symbol 을 매핑하는 객체로 리팩토링
 
 ### Step4 리뷰사항
-* [ ] [fix01][ResultView.java] generatePersonalScoreBoard PersonalScoreBoard로 이동할 것
-* [ ] [fix02][InputView.java] 개행문자의 사용보다는 print, println 을 시나리오에 맞게 구분해서 사용하시는 편이 좋음 (https://moon1226.tistory.com/12)
-* [ ] [fix03][Players.java] Getter 를 없애볼 것 
+* [X] [fix01][ResultView.java] generatePersonalScoreBoard PersonalScoreBoard 로 이동할 것
+* [X] [fix02][InputView.java] 개행문자의 사용보다는 print, println 을 시나리오에 맞게 구분해서 사용하시는 편이 좋음 (https://moon1226.tistory.com/12)
+* [X] [fix03][Players.java] Getter 를 없애볼 것 
 
 
 

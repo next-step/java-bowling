@@ -1,6 +1,6 @@
 package camp.nextstep.edu.rebellion.bowling.domain.game;
 
-import camp.nextstep.edu.rebellion.bowling.domain.player.Players;
+import camp.nextstep.edu.rebellion.bowling.domain.player.GamePlayers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +18,8 @@ class BowlingGamesTest {
         String firstPlayer = "ABC";
         String secondPlayer = "DEF";
 
-        Players players = Players.join(Arrays.asList(firstPlayer, secondPlayer));
-        BowlingGames bowlingGames = BowlingGames.start(players);
+        GamePlayers gamePlayers = GamePlayers.join(Arrays.asList(firstPlayer, secondPlayer));
+        BowlingGames bowlingGames = BowlingGames.start(gamePlayers);
 
         // when & then
         assertAll(

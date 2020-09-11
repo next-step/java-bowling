@@ -1,7 +1,7 @@
 package camp.nextstep.edu.rebellion.bowling;
 
 import camp.nextstep.edu.rebellion.bowling.domain.game.BowlingGames;
-import camp.nextstep.edu.rebellion.bowling.domain.player.Players;
+import camp.nextstep.edu.rebellion.bowling.domain.player.GamePlayers;
 
 import java.util.List;
 
@@ -15,15 +15,15 @@ public class BowlingGameRunner {
         int numberOfPlayers = getNumberOfPlayers();
         List<String> participants = getPlayers(numberOfPlayers);
 
-        Players players = Players.join(participants);
-        BowlingGames bowlingGames = BowlingGames.start(players);
+        GamePlayers gamePlayers = GamePlayers.join(participants);
+        BowlingGames bowlingGames = BowlingGames.start(gamePlayers);
 
         while (bowlingGames.hasNext()) {
-            print(bowlingGames.getScoreBoard());
+            print(bowlingGames.getScoreStatus());
 
             bowlingGames.record(getHitScore(bowlingGames.currentPlayerName()));
         }
 
-        print(bowlingGames.getScoreBoard());
+        print(bowlingGames.getScoreStatus());
     }
 }

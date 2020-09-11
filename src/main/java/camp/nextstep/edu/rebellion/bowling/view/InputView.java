@@ -12,14 +12,14 @@ public class InputView {
     public static List<String> getPlayers(int numberOfPlayers) {
         List<String> players = new ArrayList<>();
         for (int i = 1; i <= numberOfPlayers; i++) {
-            System.out.print("\n플레이어 " + i + "의 이름을 입력해주세요 (영문자만, 최대 3글자) ");
+            System.out.print("플레이어 " + i + "의 이름을 입력해주세요 (영문자만, 최대 3글자) ");
             players.add(getLine());
         }
         return players;
     }
 
     public static int getHitScore(String playerName) {
-        System.out.print("\n" + playerName + " 님 투구 차례 입니다 : ");
+        System.out.print(playerName + " 님 투구 차례 입니다 : ");
         return getInt();
     }
 

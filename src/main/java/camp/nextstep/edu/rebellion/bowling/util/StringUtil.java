@@ -7,6 +7,10 @@ import java.util.List;
 public class StringUtil {
     private static final String DEFAULT_SPLIT_DELIMITER = ",";
     public static final String EMPTY = "";
+    public static final String FORMAT = "| %3s\t";
+    public static final String PIPE = "|";
+    public static final String NAME = "NAME";
+    public static final String ENTER = "\n";
 
     private StringUtil(){}
 

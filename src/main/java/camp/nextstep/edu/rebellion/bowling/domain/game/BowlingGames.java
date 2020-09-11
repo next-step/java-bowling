@@ -1,29 +1,23 @@
 package camp.nextstep.edu.rebellion.bowling.domain.game;
 
-import camp.nextstep.edu.rebellion.bowling.domain.player.Players;
+import camp.nextstep.edu.rebellion.bowling.domain.player.GamePlayers;
 import camp.nextstep.edu.rebellion.bowling.domain.score.BowlingGameScoreBoard;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 public class BowlingGames {
-    private final List<BowlingGame> bowlingGames;
-    private final Players players;
+    private final GamePlayers gamePlayers;
     private final Turn turn;
 
-    private BowlingGames(Players players) {
-        this.bowlingGames = ready(players);
-        this.players = players;
-        this.turn = Turn.setup(players.getNumberOfPlayers());
+    private BowlingGames(GamePlayers gamePlayers) {
+        this.gamePlayers = gamePlayers;
+        this.turn = Turn.setup(gamePlayers.getNumberOfPlayers());
     }
 
-    public static BowlingGames start(Players players) {
-        return new BowlingGames(players);
+    public static BowlingGames start(GamePlayers gamePlayers) {
+        return new BowlingGames(gamePlayers);
     }
 
     public void record(int hits) {
-        BowlingGame currentGame = bowlingGames.get(turn.have());
+        BowlingGame currentGame = gamePlayers.choose(turn.have());
 
         currentGame.record(hits);
 
@@ -33,12 +27,12 @@ public class BowlingGames {
     }
 
     public String currentPlayerName() {
-        return players.findNameByOrdinal(turn.have());
+        return gamePlayers.findNameByOrdinal(turn.have());
     }
 
     public boolean hasNext() {
-        for (int i = turn.have(); i < bowlingGames.size(); i++) {
-            if (bowlingGames.get(i).hasNext()) {
+        for (int i = turn.have(); i < gamePlayers.getNumberOfPlayers(); i++) {
+            if (gamePlayers.choose(i).hasNext()) {
                 return true;
             }
             turn.handOver();
@@ -46,18 +40,7 @@ public class BowlingGames {
         return false;
     }
 
-
-    public BowlingGameScoreBoard getScoreBoard() {
-        return bowlingGames.stream()
-                .map(BowlingGame::getScoreBoard)
-                .collect(Collectors.collectingAndThen(Collectors.toList(),
-                        BowlingGameScoreBoard::new));
-    }
-
-    private List<BowlingGame> ready(Players players) {
-        return players.getPlayers()
-                .stream()
-                .map(BowlingGame::start)
-                .collect(Collectors.toList());
+    public BowlingGameScoreBoard getScoreStatus() {
+        return gamePlayers.getScoreBoard();
     }
 }
