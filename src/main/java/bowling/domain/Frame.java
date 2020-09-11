@@ -2,7 +2,7 @@ package bowling.domain;
 
 public interface Frame {
 
-    boolean isEndFrame();
+    boolean isLastFrame();
 
     boolean isClear();
 

@@ -26,7 +26,7 @@ public class BaseFrame implements Frame {
     }
 
     @Override
-    public boolean isEndFrame() {
+    public boolean isLastFrame() {
         return !next;
     }
 

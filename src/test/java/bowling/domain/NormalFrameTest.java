@@ -7,6 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class NormalFrameTest {
     @Test
     void from() {
-        assertThat(NormalFrame.from().isEndFrame()).isFalse();
+        assertThat(NormalFrame.from().isLastFrame()).isFalse();
     }
 }

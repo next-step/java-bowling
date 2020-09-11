@@ -36,7 +36,7 @@ public class Frames {
         tryCount = 0;
         maxTryCount = DEFAULT_TRY_COUNT;
 
-        return nextFrame.isEndFrame() ? LastFrame.from() : nextFrame;
+        return nextFrame.isLastFrame() ? LastFrame.from() : nextFrame;
     }
 
     public Result hit(int count) {
@@ -53,11 +53,11 @@ public class Frames {
             return result;
         }
 
-        if (reminderCount == 0 && !tail.isEndFrame()) {
+        if (reminderCount == 0 && !tail.isLastFrame()) {
             frames.add(next());
         }
 
-        if (tryCount == DEFAULT_TRY_COUNT && !tail.isEndFrame()) {
+        if (tryCount == DEFAULT_TRY_COUNT && !tail.isLastFrame()) {
             frames.add(next());
         }
 
@@ -71,11 +71,11 @@ public class Frames {
             return false;
         }
 
-        if (tail.isEndFrame() && tail.isClear()) {
+        if (tail.isLastFrame() && tail.isClear()) {
             return true;
         }
 
-        if (tail.isEndFrame() && tryCount == maxTryCount) {
+        if (tail.isLastFrame() && tryCount == maxTryCount) {
             return true;
         }
 
