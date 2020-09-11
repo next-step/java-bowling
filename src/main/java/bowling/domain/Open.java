@@ -28,7 +28,11 @@ public class Open implements State {
       return FIRST_GUTTER + second;
     }
 
-    return first + SECOND_GUTTER;
+    if (second.isGutter()) {
+      return first + SECOND_GUTTER;
+    }
+
+    return first + "|" + second;
   }
 
   private boolean isDoubleGutter() {
