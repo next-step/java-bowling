@@ -30,3 +30,5 @@
     * 출력하자.
 
 1. Symbol 을 리팩토링하자.
+
+1. FinalFrame 에서 Pins 아닌 States 를 가지는 것은?
