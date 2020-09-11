@@ -1,17 +1,14 @@
 package bowling;
 
+import bowling.domain.Player;
 import bowling.view.InputView;
 
 public class BowlingController {
 
     public static void main(String[] args) {
         String name = InputView.scanPlayer();
-        System.out.println(name);
 
+        Player player = Player.from(name);
     }
 
-    public void start() {
-        String name = InputView.scanPlayer();
-        System.out.println(name);
-    }
 }
