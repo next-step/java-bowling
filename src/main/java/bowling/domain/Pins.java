@@ -32,6 +32,12 @@ public class Pins {
   }
 
   public boolean isSpare(int nextCount) {
+    if (this.count + nextCount > MAX_PINS) {
+      throw new IllegalArgumentException(
+          String.format("한 프레임은 %d개핀을 초과할 수 없습니다.(이전 %d개핀) 현재 %d핀이 입력되었습니다.", MAX_PINS, count, nextCount)
+      );
+    }
+
     return this.count + nextCount == MAX_PINS;
   }
 

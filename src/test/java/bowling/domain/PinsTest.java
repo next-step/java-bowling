@@ -51,5 +51,13 @@ class PinsTest {
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("10개핀을 초과할 수 없습니다. 현재 11핀이 입력되었습니다.");
   }
+
+  @Test
+  void invalid_sum_over_10pins() {
+    Pins pitching = Pins.roll(8);
+    assertThatThrownBy(() -> pitching.isSpare(3))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("한 프레임은 10개핀을 초과할 수 없습니다.(이전 8개핀) 현재 3핀이 입력되었습니다.");
+  }
 }
 

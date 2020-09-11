@@ -12,7 +12,7 @@ public class Frame {
   }
 
   public Frame roll(int pins) {
-    if (state == null) {
+    if (state == null) {  // first
       state = State.of(pins);
 
       return this;
@@ -29,11 +29,14 @@ public class Frame {
   }
 
   public boolean isDone() {
-    System.out.println("isDone:" + state);
     if (state instanceof Pitching) {
       return false;
     }
     return true;
+  }
+
+  public String symbol() {
+    return state.symbol();
   }
 
   @Override
