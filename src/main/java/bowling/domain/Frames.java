@@ -11,8 +11,8 @@ public class Frames {
     public static final int END_NUMBER = 10;
     public static final int BONUS_NUMBER = END_NUMBER;
 
-    private static final int DEFAULT_TRY_COUNT = 2;
-    private static final int BONUS_TRY_COUNT = DEFAULT_TRY_COUNT + 1;
+    public static final int DEFAULT_TRY_COUNT = 2;
+    public static final int BONUS_TRY_COUNT = DEFAULT_TRY_COUNT + 1;
 
     private List<Frame> frames;
     private int maxTryCount;
@@ -55,15 +55,16 @@ public class Frames {
         return createFrame(nextNumber);
     }
 
-    public Frame hit(int count) {
+    public Result hit(int count) {
         Frame tail = getTail();
 
         int reminderCount = tail.hit(count);
+        Result result = Result.of(tail.getNumber(), tryCount, count, tail.isClear());
         tryCount++;
 
         if (tail.getNumber() == BONUS_NUMBER && tryCount == maxTryCount && tail.isClear()) {
             tryCount = BONUS_TRY_COUNT;
-            return getTail();
+            return result;
         }
 
         if (reminderCount == 0 && !tail.isEndFrame()) {
@@ -74,7 +75,8 @@ public class Frames {
             frames.add(next());
         }
 
-        return getTail();
+
+        return result;
     }
 
     public boolean isFinish() {

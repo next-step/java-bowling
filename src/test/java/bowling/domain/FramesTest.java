@@ -43,6 +43,7 @@ class FramesTest {
     void getNumber() {
         Frames frames = Frames.from();
         assertThat(frames.getNumber()).isEqualTo(1);
-        assertThat(frames.hit(Frames.PIN_COUNT).getNumber()).isEqualTo(2);
+        frames.hit(Frames.PIN_COUNT);
+        assertThat(frames.getNumber()).isEqualTo(2);
     }
 }
