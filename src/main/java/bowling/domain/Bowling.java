@@ -8,7 +8,7 @@ public class Bowling {
 
   private List<Frame> frames = new ArrayList<>();
 
-  Bowling(Frame frame) {
+  private Bowling(Frame frame) {
     frames.add(frame);
   }
 

@@ -2,6 +2,8 @@ package bowling.domain;
 
 public interface State {
 
+  String FIRST_GUTTER = "-|";
+
   static State of(int pins) {
     Pins pitching = Pins.roll(pins);
     if (pitching.isStrike()) {

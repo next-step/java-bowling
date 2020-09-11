@@ -2,6 +2,8 @@ package bowling.domain;
 
 public class Strike implements State {
 
+  static final String STRIKE = "X";
+  
   private Pins first;
 
   public Strike(Pins first) {
@@ -15,7 +17,7 @@ public class Strike implements State {
 
   @Override
   public String symbol() {
-    return "X";
+    return STRIKE;
   }
 
 
