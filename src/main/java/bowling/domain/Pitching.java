@@ -19,7 +19,7 @@ public class Pitching implements State {
   @Override
   public String symbol() {
     if (first.isGutter()) {
-      return "-";
+      return GUTTER;
     }
     return first.toString();
   }

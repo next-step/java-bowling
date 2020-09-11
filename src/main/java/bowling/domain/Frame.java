@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Frame {
 
-  private int number;
-  private State state;
+  protected int number;
+  protected State state;
 
   public Frame(int number) {
     this.number = number;

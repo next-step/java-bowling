@@ -2,7 +2,7 @@ package bowling.domain;
 
 public class Spare implements State {
 
-  static final String SPARE = "|/";
+  static final String SPARE = "/";
 
   private Pins first;
   private Pins second;
@@ -20,10 +20,10 @@ public class Spare implements State {
   @Override
   public String symbol() {
     if (first.isGutter()) {
-      return FIRST_GUTTER + SPARE;
+      return String.join(DELIMITER, GUTTER, SPARE);
     }
 
-    return first + SPARE;
+    return String.join(DELIMITER, first.toString(), SPARE);
   }
 
   @Override

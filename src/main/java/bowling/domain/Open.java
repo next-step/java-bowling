@@ -2,9 +2,6 @@ package bowling.domain;
 
 public class Open implements State {
 
-  static final String SECOND_GUTTER = "|-";
-  static final String DOUBLE_GUTTER = "-|-";
-
   private Pins first;
   private Pins second;
 
@@ -21,18 +18,18 @@ public class Open implements State {
   @Override
   public String symbol() {
     if (isDoubleGutter()) {
-      return DOUBLE_GUTTER;
+      return String.join(DELIMITER, GUTTER, GUTTER);
     }
 
     if (first.isGutter()) {
-      return FIRST_GUTTER + second;
+      return String.join(DELIMITER, GUTTER, second.toString());
     }
 
     if (second.isGutter()) {
-      return first + SECOND_GUTTER;
+      return String.join(DELIMITER, first.toString(), GUTTER);
     }
 
-    return first + "|" + second;
+    return String.join(DELIMITER, first.toString(), second.toString());
   }
 
   private boolean isDoubleGutter() {

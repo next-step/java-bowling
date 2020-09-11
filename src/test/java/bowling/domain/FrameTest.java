@@ -2,48 +2,47 @@ package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.domain.Frame;
 import org.junit.jupiter.api.Test;
 
 class FrameTest {
 
   @Test
   void strike_frame() {
-    frame_roll(true, 10);
+    frame_rolls(true, 10);
   }
 
   @Test
   void pitching_frame() {
-    frame_roll(false, 8);
+    frame_rolls(false, 8);
   }
 
   @Test
   void gutter_frame() {
-    frame_roll(false, 0);
+    frame_rolls(false, 0);
   }
 
   @Test
   void spare_frame() {
-    frame_roll(true, 8, 2);
+    frame_rolls(true, 8, 2);
   }
 
   @Test
   void open_frame() {
-    frame_roll(true, 8, 1);
+    frame_rolls(true, 8, 1);
   }
 
   @Test
   void open_with_gutter_frame() {
-    frame_roll(true, 8, 0);
+    frame_rolls(true, 8, 0);
   }
 
-  private void frame_roll(boolean expected, int... pins) {
-    Frame strike = new Frame(1);
+  private void frame_rolls(boolean expected, int... pins) {
+    Frame frame = new Frame(1);
     for (int pin : pins) {
-      strike.roll(pin);
+      frame.roll(pin);
     }
 
-    assertThat(strike.isDone()).isEqualTo(expected);
+    assertThat(frame.isDone()).isEqualTo(expected);
   }
 
   @Test

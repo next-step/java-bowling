@@ -19,11 +19,13 @@ public class Bowling {
   }
 
   public void roll(int pins) {
-    Frame last = frames.get(frames.size() - 1);
-    Frame next = last.roll(pins);
+    if (nextFrame() < 11) {
+      Frame last = frames.get(frames.size() - 1);
+      Frame next = last.roll(pins);
 
-    if (!last.equals(next)) {
-      frames.add(next);
+      if (!last.equals(next)) {
+        frames.add(next);
+      }
     }
   }
 

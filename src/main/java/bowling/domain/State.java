@@ -2,7 +2,8 @@ package bowling.domain;
 
 public interface State {
 
-  String FIRST_GUTTER = "-|";
+  String GUTTER = "-";
+  String DELIMITER = "|";
 
   static State of(int pins) {
     Pins pitching = Pins.roll(pins);
