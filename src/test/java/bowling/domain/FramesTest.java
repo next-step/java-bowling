@@ -38,4 +38,11 @@ class FramesTest {
 
         assertThat(tryCount).isEqualTo(11);
     }
+
+    @Test
+    void getNumber() {
+        Frames frames = Frames.from();
+        assertThat(frames.getNumber()).isEqualTo(1);
+        assertThat(frames.hit(Frames.PIN_COUNT).getNumber()).isEqualTo(2);
+    }
 }

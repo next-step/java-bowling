@@ -98,4 +98,8 @@ public class Frames {
     private Frame getTail() {
         return frames.get(frames.size() - 1);
     }
+
+    public int getNumber() {
+        return getTail().getNumber();
+    }
 }
