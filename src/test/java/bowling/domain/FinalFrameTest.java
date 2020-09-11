@@ -12,6 +12,7 @@ public class FinalFrameTest {
     finalFrame.roll(10);
 
     System.out.println(finalFrame);
+    assertThat(finalFrame.isDone()).isFalse();
     assertThat(finalFrame.symbol()).isEqualTo("X");
   }
 
@@ -38,6 +39,18 @@ public class FinalFrameTest {
     System.out.println(finalFrame);
     assertThat(finalFrame.isDone()).isTrue();
     assertThat(finalFrame.symbol()).isEqualTo("X|X|9");
+  }
+
+  @Test
+  void double_gutter() {
+    FinalFrame finalFrame = new FinalFrame();
+    finalFrame.roll(10);
+    finalFrame.roll(10);
+    finalFrame.roll(0);
+
+    System.out.println(finalFrame);
+    assertThat(finalFrame.isDone()).isTrue();
+    assertThat(finalFrame.symbol()).isEqualTo("X|X|-");
   }
 
   @Test
@@ -104,6 +117,7 @@ public class FinalFrameTest {
     finalFrame.roll(2);
     finalFrame.roll(0);
 
+    System.out.println(finalFrame);
     assertThat(finalFrame.isDone()).isTrue();
     assertThat(finalFrame.symbol()).isEqualTo("8|/|-");
   }
