@@ -1,5 +1,10 @@
 package bowling.domain;
 
+import bowling.domain.state.Bonus;
+import bowling.domain.state.Open;
+import bowling.domain.state.Pins;
+import bowling.domain.state.Spare;
+import bowling.domain.state.State;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

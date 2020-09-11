@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.state.Pitching;
+import bowling.domain.state.State;
 import java.util.Objects;
 
 public class Frame {

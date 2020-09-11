@@ -1,6 +1,6 @@
-package bowling.domain;
+package bowling.domain.state;
 
-import static bowling.domain.Strike.STRIKE;
+import static bowling.domain.state.Strike.STRIKE;
 
 public class Bonus implements State {
 
