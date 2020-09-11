@@ -33,8 +33,8 @@
     * [ ] 투구 값 (0 ~ 10) 숫자 입력
     * [ ] 1번째 2번째 투구 합 10 초과 불가
     
-* [ ] 기본 실행결과판 생성 Bowling Score Board
-    * [ ] 10 frame (9 NormalFrame + 1 FinalFrame)
+* [X] 기본 실행결과판 생성 Bowling Score Board
+    * [X] 10 frame (9 NormalFrame + 1 FinalFrame)
     
 * [ ] 게임 결과 표시
     * 첫번째 투구 = 초구 , 두번째 투구 = 2구
