@@ -10,8 +10,7 @@ import java.util.Objects;
 public class Ball {
 
     private int point;
-    private int pitchNumber = 1;
-
+    private int pitchNumber = 0;
 
     private Ball(String point) {
         validateInputPitchPointIsNull(point);
