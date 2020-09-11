@@ -14,11 +14,11 @@ public class DeleteHistories {
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         question.setDeleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
+        deleteHistories.add(questionDeleteHistory(question));
 
         for (Answer answer : answers.getCollection()) {
             answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+            deleteHistories.add(answerDeleteHistory(answer));
         }
 
         this.deleteHistories = Collections.unmodifiableList(deleteHistories);
@@ -26,5 +26,13 @@ public class DeleteHistories {
 
     public Collection<DeleteHistory> getCollection() {
         return deleteHistories;
+    }
+
+    private DeleteHistory questionDeleteHistory(Question question) {
+        return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+    }
+
+    private DeleteHistory answerDeleteHistory(Answer answer) {
+        return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
     }
 }
