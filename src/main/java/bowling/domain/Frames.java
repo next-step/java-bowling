@@ -59,11 +59,13 @@ public class Frames {
         Frame tail = getTail();
 
         int reminderCount = tail.hit(count);
-        Result result = Result.of(tail.getNumber(), tryCount, count, tail.isClear());
         tryCount++;
 
-        if (tail.getNumber() == BONUS_NUMBER && tryCount == maxTryCount && tail.isClear()) {
-            tryCount = BONUS_TRY_COUNT;
+        Result result = Result.of(tail.getNumber(), tryCount, count, tail.isClear());
+
+        if (tail.getNumber() == BONUS_NUMBER && tryCount <= maxTryCount && tail.isClear()) {
+            maxTryCount = BONUS_TRY_COUNT;
+            tryCount = BONUS_TRY_COUNT - 1;
             return result;
         }
 
@@ -75,14 +77,13 @@ public class Frames {
             frames.add(next());
         }
 
-
         return result;
     }
 
     public boolean isFinish() {
         Frame tail = getTail();
 
-        if (tail.getNumber() == BONUS_NUMBER && tryCount < BONUS_TRY_COUNT && tail.isClear()) {
+        if (tail.getNumber() == BONUS_NUMBER && tryCount <= maxTryCount && tail.isClear()) {
             return false;
         }
 

@@ -40,11 +40,11 @@ public class Result {
             return Result.ofGutter();
         }
 
-        if (stage == Frames.BONUS_NUMBER && step == Frames.BONUS_TRY_COUNT && clear) {
+        if (stage == Frames.BONUS_NUMBER && step == Frames.BONUS_TRY_COUNT && hitCount == STRIKE_COUNT) {
             return Result.ofStrike();
         }
 
-        if (step == Frames.BONUS_NUMBER && clear) {
+        if (step == Frames.BEGIN_NUMBER && clear) {
             return Result.ofStrike();
         }
 

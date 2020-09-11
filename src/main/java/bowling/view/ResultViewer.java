@@ -33,15 +33,20 @@ public class ResultViewer {
         System.out.print(String.format(NAME_FORMAT, name));
 
         IntStream.rangeClosed(1, frameCount)
-                .forEach(frame ->
-                        System.out.printf(
-                                String.format(GAME_RESULT_FORMAT,
-                                        scores.containsKey(frame) ?
-                                                scores.get(frame).stream()
-                                                        .map(String::valueOf)
-                                                        .collect(Collectors.joining(GAME_RESULT_DELIMITER))
-                                                : ""
-                                )
-                        ));
+                .forEach(frame -> System.out.printf(framesToString(frame, scores)));
+    }
+
+    private static String framesToString(int frameNumber, Map<Integer, List<Result>> scores) {
+        if (!scores.containsKey(frameNumber)) {
+            return String.format(GAME_RESULT_FORMAT, "");
+        }
+
+        return String.format(GAME_RESULT_FORMAT, scoresToString(scores.get(frameNumber)));
+    }
+
+    private static String scoresToString(List<Result> results) {
+        return results.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(GAME_RESULT_DELIMITER));
     }
 }

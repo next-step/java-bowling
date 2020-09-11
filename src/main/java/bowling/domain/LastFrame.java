@@ -33,4 +33,12 @@ public class LastFrame implements Frame {
         pinCount -= count;
         return pinCount;
     }
+
+    @Override
+    public String toString() {
+        return "LastFrame{" +
+                "number=" + number +
+                ", pinCount=" + pinCount +
+                '}';
+    }
 }
