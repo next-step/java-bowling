@@ -9,4 +9,6 @@ public interface Frame {
     int getNumber();
 
     int hit(int count);
+
+    Frame next();
 }

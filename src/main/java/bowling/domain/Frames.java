@@ -26,33 +26,17 @@ public class Frames {
 
     public static Frames from() {
         return new Frames(new ArrayList<Frame>() {{
-            add(createFrame(BEGIN_NUMBER));
+            add(NormalFrame.from());
         }});
     }
 
-    private static Frame createFrame(int number) {
-        if (number < Frames.BEGIN_NUMBER) {
-            throw new IllegalArgumentException(String.format("%s 보다 작은 값은 설정할 수 없습니다. [%s]", Frames.BEGIN_NUMBER, number));
-        }
-
-        if (number > Frames.END_NUMBER) {
-            throw new IllegalArgumentException(String.format("%s 보다 큰 값은 설정할 수 없습니다. [%s]", Frames.END_NUMBER, number));
-        }
-
-        return NormalFrame.from(number);
-    }
-
     private Frame next() {
-        int nextNumber = getTail().getNumber() + 1;
+        Frame nextFrame = getTail().next();
 
         tryCount = 0;
         maxTryCount = DEFAULT_TRY_COUNT;
 
-        if (nextNumber == END_NUMBER) {
-            return LastFrame.from(END_NUMBER);
-        }
-
-        return createFrame(nextNumber);
+        return nextFrame.isEndFrame() ? LastFrame.from() : nextFrame;
     }
 
     public Result hit(int count) {

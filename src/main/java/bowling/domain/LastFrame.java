@@ -1,44 +1,12 @@
 package bowling.domain;
 
-public class LastFrame implements Frame {
-    private int number;
-    private int pinCount;
+public class LastFrame extends BaseFrame {
 
-    private LastFrame(int number, int pinCount) {
-        this.number = number;
-        this.pinCount = pinCount;
+    LastFrame(int number, int pinCount, boolean next) {
+        super(number, pinCount, next);
     }
 
-    public static LastFrame from(int number) {
-        return new LastFrame(number, Frames.PIN_COUNT);
-    }
-
-    @Override
-    public boolean isEndFrame() {
-        return true;
-    }
-
-    @Override
-    public boolean isClear() {
-        return pinCount == Frames.PIN_CLEAR_COUNT;
-    }
-
-    @Override
-    public int getNumber() {
-        return number;
-    }
-
-    @Override
-    public int hit(int count) {
-        pinCount -= count;
-        return pinCount;
-    }
-
-    @Override
-    public String toString() {
-        return "LastFrame{" +
-                "number=" + number +
-                ", pinCount=" + pinCount +
-                '}';
+    public static Frame from() {
+        return new LastFrame(Frames.END_NUMBER, Frames.PIN_COUNT, false);
     }
 }
