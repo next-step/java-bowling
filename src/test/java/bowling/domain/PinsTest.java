@@ -1,8 +1,9 @@
-package bowling;
+package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import bowling.domain.Pins;
 import org.junit.jupiter.api.Test;
 
 class PinsTest {

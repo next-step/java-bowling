@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public class Spare implements State {
 

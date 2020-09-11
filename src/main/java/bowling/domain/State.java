@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public interface State {
 

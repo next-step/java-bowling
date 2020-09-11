@@ -1,7 +1,12 @@
-package bowling;
+package bowling.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bowling.domain.Open;
+import bowling.domain.Pitching;
+import bowling.domain.Spare;
+import bowling.domain.State;
+import bowling.domain.Strike;
 import org.junit.jupiter.api.Test;
 
 class StateTest {
