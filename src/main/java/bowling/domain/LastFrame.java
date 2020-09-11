@@ -10,20 +10,7 @@ public class LastFrame implements Frame {
     }
 
     private static LastFrame from(int number) {
-        if (number < Frames.BEGIN_NUMBER) {
-            throw new IllegalArgumentException(String.format("%s 보다 작은 값은 설정할 수 없습니다. [%s]", Frames.BEGIN_NUMBER, number));
-        }
-
-        if (number > Frames.END_NUMBER) {
-            throw new IllegalArgumentException(String.format("%s 보다 큰 값은 설정할 수 없습니다. [%s]", Frames.END_NUMBER, number));
-        }
-
         return new LastFrame(number, Frames.PIN_COUNT);
-    }
-
-    @Override
-    public Frame next() {
-        throw new RuntimeException("남아있는 프레임이 없습니다.");
     }
 
     @Override

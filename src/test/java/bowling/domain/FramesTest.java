@@ -7,13 +7,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FramesTest {
 
     @Test
-    void create() {
-        assertThat(Frames.create()).isNotNull();
+    void from() {
+        assertThat(Frames.from()).isNotNull();
     }
 
     @Test
-    void next() {
-        Frames frames = Frames.create();
+    void hit() {
+        Frames frames = Frames.from();
 
         int tryCount = 0;
 
@@ -27,7 +27,7 @@ class FramesTest {
 
     @Test
     void nextWithAllStrike() {
-        Frames frames = Frames.create();
+        Frames frames = Frames.from();
 
         int tryCount = 0;
 

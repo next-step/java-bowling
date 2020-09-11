@@ -1,7 +1,6 @@
 package bowling.domain;
 
 public interface Frame {
-    Frame next();
 
     boolean isEndFrame();
 
