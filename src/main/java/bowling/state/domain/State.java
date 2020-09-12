@@ -4,7 +4,8 @@ public enum State {
     STRIKE("X"),
     SPARE("/"),
     MISS(""),
-    GUTTER("-");
+    GUTTER("-"),
+    PASS("");
 
     private String result;
 

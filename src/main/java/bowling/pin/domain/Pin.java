@@ -45,6 +45,9 @@ public class Pin {
         return new Pin(State.GUTTER, point, remainingPins);
     }
 
+    public static Pin toPass(Ball point, int remainingPins) {
+        return new Pin(State.PASS, point, remainingPins);
+    }
 
     public int getRemainingPins() {
         return remainingPins;

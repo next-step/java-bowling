@@ -1,8 +1,10 @@
 package bowling.pin.domain;
 
 import bowling.ball.domain.Ball;
+import bowling.state.domain.State;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,37 +12,43 @@ public class Pins {
 
     private static final int DEFAULT_PITCH_COUNT = 2;
 
-    private static List<Pin> pins = new ArrayList<>();
+    public static List<Pin> pins = new ArrayList<>();
 
     public Pins(List<Pin> pins) {
         this.pins = pins;
     }
 
     public static Pins playPitch(String point, int tryPitchNumber) {
+        if (pins.size() == 2) {
+            pins.clear();
+        }
         Pin pin = pitchResult(Ball.pitch(point, tryPitchNumber));
         pins.add(pin);
         return new Pins(pins);
     }
 
-    public static Pin pitchResult(Ball ball) {
+    private static Pin pitchResult(Ball ball) {
         int remainingPins = getRemainingPins(ball);
-        if (ball.getPitchNumber() == 1 && remainingPins == 0) {
+        if (ball.getPitchNumber() == 1 && remainingPins == 0) { // 1회차 스트라이크
             return Pin.toStrike(ball, remainingPins);
         }
 
-        if (ball.getPitchNumber() == 2 && remainingPins == 0) {
+        if (ball.getPitchNumber() == 2 && remainingPins == 0) { // 2회차 스페어
+            if (pins.get(0).getState().equals(State.STRIKE.getResult())) {
+                return Pin.toPass(ball, remainingPins);
+            }
             return Pin.toSpare(ball, remainingPins);
         }
 
-        if (ball.getPitchNumber() == 1 && remainingPins == Pin.initPins) {
+        if (ball.getPitchNumber() == 1 && remainingPins == Pin.initPins) { // 1회차 거터
             return Pin.toGutter(ball, remainingPins);
         }
 
-        if (ball.getPitchNumber() == 2 && remainingPins == ball.getPoint()) {
+        if (ball.getPitchNumber() == 2 && remainingPins == pins.get(0).getRemainingPins()) { // 2회차 거터
             return Pin.toGutter(ball, remainingPins);
         }
 
-        return Pin.toMiss(ball, remainingPins);
+        return Pin.toMiss(ball, remainingPins); // 핀이 낱개로 남음
     }
 
     private static int getRemainingPins(Ball ball) {
@@ -52,6 +60,10 @@ public class Pins {
 
     public int size() {
         return pins.size();
+    }
+
+    public Pin getPinsIndex(int index) {
+        return pins.get(index);
     }
 
     @Override
