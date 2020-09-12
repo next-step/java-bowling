@@ -79,10 +79,10 @@ public class Answer extends AbstractEntity {
 		validateDeleteUserEqualsAnswerUser(deleteUser);
 		this.deleted = true;
 
-		return new DeleteHistory(ContentType.ANSWER,
-								 this.getId(),
-								 this.writer,
-								 LocalDateTime.now());
+		return DeleteHistory.of(ContentType.ANSWER,
+								this.getId(),
+								this.writer,
+								LocalDateTime.now());
 	}
 
 	private void validateDeleteUserEqualsAnswerUser(User loginUser) throws CannotDeleteException {

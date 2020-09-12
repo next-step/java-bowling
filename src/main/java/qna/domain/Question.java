@@ -83,21 +83,12 @@ public class Question extends AbstractEntity {
 		answers.add(answer);
 	}
 
-	private boolean isOwner(User loginUser) {
-		return writer.equals(loginUser);
-	}
-
 	public boolean isDeleted() {
 		return deleted;
 	}
 
 	public Answers getAnswers() {
 		return Answers.of(answers);
-	}
-
-	@Override
-	public String toString() {
-		return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
 	}
 
 	public DeleteHistories delete(User loginUser) throws CannotDeleteException {
@@ -116,5 +107,14 @@ public class Question extends AbstractEntity {
 		if (!this.isOwner(loginUser)) {
 			throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
 		}
+	}
+
+	private boolean isOwner(User loginUser) {
+		return writer.equals(loginUser);
+	}
+
+	@Override
+	public String toString() {
+		return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
 	}
 }
