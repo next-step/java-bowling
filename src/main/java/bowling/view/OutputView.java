@@ -14,6 +14,7 @@ public class OutputView {
 	private static final String NO_SPACE_PARAM = "|%s  ";
 	private static final String ONE_SPACE_PARAM = "| %s  ";
 	private static final String TWO_SPACE_PARAM = "|  %s  ";
+	private static final int START_FRAME_NO = 1;
 	private static final int FINAL_FRAME_NO = 10;
 	private static final int DISPLAY_COLUMN_COUNT = 11;
 
@@ -29,7 +30,7 @@ public class OutputView {
 
 	private static String getFrameLine() {
 		String name = "| NAME ";
-		String frameNos = IntStream.range(1, DISPLAY_COLUMN_COUNT)
+		String frameNos = IntStream.range(START_FRAME_NO, DISPLAY_COLUMN_COUNT)
 								   .mapToObj(i -> i < FINAL_FRAME_NO ? String.format("0%d", i) : String.format("%d", i))
 								   .map(frameNo -> makeLine(frameNo))
 								   .collect(joining());
