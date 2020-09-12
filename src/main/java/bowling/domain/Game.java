@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private List<Frame> frames;
+    private List<Frame> normalFrames;
 
     private Game() {
-        this.frames = new ArrayList<Frame>() {{
-            add(Frame.from());
+        this.normalFrames = new ArrayList<Frame>() {{
+            add(NormalFrame.from());
         }};
     }
 
@@ -23,14 +23,16 @@ public class Game {
     public String hit(int count) {
         Frame last = getLast();
         String result = last.hit(count);
+
         if (last.getNumber() == 9 && last.isFinish()) {
-            this.frames.add(LastFrame.from());
+            this.normalFrames.add(LastFrame.from());
             return result;
         }
 
         if (!last.isLastFrame() && last.isFinish()) {
-            this.frames.add(last.next());
+            this.normalFrames.add(last.next());
         }
+
         return result;
     }
 
@@ -39,6 +41,6 @@ public class Game {
     }
 
     private Frame getLast() {
-        return this.frames.get(this.frames.size() - 1);
+        return this.normalFrames.get(this.normalFrames.size() - 1);
     }
 }

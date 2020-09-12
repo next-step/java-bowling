@@ -36,15 +36,15 @@ public class Pin {
         this.count -= count;
 
         if (this.count == 0 && tryCount == 1) {
-            return "X";
+            return Status.STRIKE.toString();
         }
 
         if (this.count == 0) {
-            return "/";
+            return Status.SPARE.toString();
         }
 
         if (count == 0) {
-            return "-";
+            return Status.GUTTER.toString();
         }
 
         return String.valueOf(count);

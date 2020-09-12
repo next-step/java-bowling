@@ -18,10 +18,6 @@ public class Frame {
         this.results = new ArrayList<>();
     }
 
-    public static Frame from() {
-        return new Frame(1);
-    }
-
     public String hit(int count) {
         results.add(getLastPin().hit(count));
         return results.stream().collect(Collectors.joining("|"));
@@ -39,8 +35,8 @@ public class Frame {
         return getLastPin().isFinish();
     }
 
-    public Frame next() {
-        return new Frame(number + 1);
+    public NormalFrame next() {
+        return new NormalFrame(number + 1);
     }
 
     public boolean isLastFrame() {
