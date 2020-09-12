@@ -1,7 +1,5 @@
-package bowling;
+package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class LastFrame extends Frame {

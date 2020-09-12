@@ -1,4 +1,4 @@
-package bowling;
+package bowling.domain;
 
 public class Pin {
     public static final int DEFAULT_TRY_COUNT = 0;
