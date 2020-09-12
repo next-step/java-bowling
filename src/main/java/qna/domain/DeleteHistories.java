@@ -5,21 +5,22 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import qna.CannotDeleteException;
+
 public class DeleteHistories {
 
-    private List<DeleteHistory> deleteHistories;
+    private final List<DeleteHistory> deleteHistories;
 
-    public DeleteHistories(Question question, Answers answers) {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+    public DeleteHistories() {
+        this.deleteHistories = new ArrayList<>();
     }
 
-    public void addDeleteQuestionHistory(Question question) {
-        // todo 여기
-        // deleteHistories.add(question.delete());
+    public void addDeleteQuestionHistory(Question question, User loginUser) throws CannotDeleteException {
+        deleteHistories.add(question.delete(loginUser));
     }
 
-    public void addDeleteAnswersHistories(Answers answers) {
-        deleteHistories.addAll(answers.delete());
+    public void addDeleteAnswersHistories(Answers answers, User loginUser) throws CannotDeleteException {
+        deleteHistories.addAll(answers.delete(loginUser));
     }
 
     public Collection<DeleteHistory> getCollection() {

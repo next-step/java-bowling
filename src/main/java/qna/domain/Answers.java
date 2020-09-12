@@ -1,13 +1,11 @@
 package qna.domain;
 
-import qna.CannotDeleteException;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import qna.CannotDeleteException;
 
 public class Answers {
 
@@ -19,6 +17,19 @@ public class Answers {
         this.answers = Collections.unmodifiableList(answers);
     }
 
+    public static Answers ofQuestion(Question question) {
+        return new Answers(question.getAnswers());
+    }
+
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+
+        verifyAnotherUserAnswer(loginUser);
+
+        return answers.stream()
+                      .map(Answer::deleteAtNow)
+                      .collect(Collectors.toList());
+    }
+
     public void verifyAnotherUserAnswer(User loginUser) throws CannotDeleteException {
         if (isNotLoginUser(loginUser)) {
             throw new CannotDeleteException(ERR_HAS_ANOTHER_PERSON_ANSWER);
@@ -28,15 +39,5 @@ public class Answers {
     private boolean isNotLoginUser(User loginUser) {
         return answers.stream()
                       .anyMatch(answer -> !answer.isOwner(loginUser));
-    }
-
-    public Collection<Answer> getCollection() {
-        return answers;
-    }
-
-    public List<DeleteHistory> delete() {
-        return answers.stream()
-                      .map(Answer::deleteAtNow)
-                      .collect(Collectors.toList());
     }
 }
