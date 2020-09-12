@@ -12,7 +12,7 @@ public class BowlingController {
 
         Player player = Player.from(name);
 
-        Frames defaultFrames = FrameManager.makeDefaultFrames();
+        Frames defaultFrames = FrameManager.makeDefaultFrames(player);
 
     }
 

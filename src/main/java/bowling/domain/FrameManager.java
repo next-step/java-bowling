@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class FrameManager {
     private static final int BOWLING_FRAME_COUNT = 10;
 
-    public static Frames makeDefaultFrames() {
+    public static Frames makeDefaultFrames(Player player) {
         LinkedList<Frame> frames = new LinkedList<>();
 
         NormalFrame normalFrame = NormalFrame.create();
@@ -16,7 +16,7 @@ public class FrameManager {
         FinalFrame finalFrame = FinalFrame.from(normalFrame);
         frames.add(finalFrame);
 
-        return Frames.getDefault(frames);
+        return Frames.getDefault(player, frames);
     }
 
 }
