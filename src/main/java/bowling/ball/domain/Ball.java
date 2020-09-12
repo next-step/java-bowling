@@ -12,15 +12,15 @@ public class Ball {
     private int point;
     private int pitchNumber = 0;
 
-    private Ball(String point) {
+    private Ball(String point, int pitchNumber) {
         validateInputPitchPointIsNull(point);
         this.point = new StringParser(point).toInt();
         validateOutofPitchRange();
-        pitchNumber += 1;
+        this.pitchNumber = pitchNumber;
     }
 
-    public static Ball pitch(String point) {
-        return new Ball(point);
+    public static Ball pitch(String point, int pitchNumber) {
+        return new Ball(point, pitchNumber);
     }
 
     private void validateInputPitchPointIsNull(String point) {
@@ -56,4 +56,11 @@ public class Ball {
         return Objects.hash(point);
     }
 
+    @Override
+    public String toString() {
+        return "Ball{" +
+                "point=" + point +
+                ", pitchNumber=" + pitchNumber +
+                '}';
+    }
 }

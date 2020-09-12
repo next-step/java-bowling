@@ -15,14 +15,14 @@ class BallTest {
     @Test
     @DisplayName("볼링공 투구. 0 ~ 10의 값만 허용한다.")
     void pitch() {
-        Ball ball = Ball.pitch("7");
+        Ball ball = Ball.pitch("7", 1);
         assertThat(ball.getPoint()).isBetween(0, 10);
     }
 
     @Test
     @DisplayName("볼링공 투구 시 투구 횟수 증가")
     void increasePitchNumber() {
-        Ball ball = Ball.pitch("6");
+        Ball ball = Ball.pitch("6", 2);
         assertThat(ball.getPitchNumber()).isEqualTo(2);
     }
 
@@ -32,7 +32,7 @@ class BallTest {
     void validateInputPitchIsNull(String input) {
         assertThatExceptionOfType(InputPitchPointNullPointerException.class)
                 .isThrownBy(() -> {
-                    Ball.pitch(input);
+                    Ball.pitch(input, 1);
                 });
     }
 
@@ -41,7 +41,7 @@ class BallTest {
     void validatePitchRange() {
         assertThatExceptionOfType(OutOfPitchRangeException.class)
                 .isThrownBy(() -> {
-                    Ball.pitch("11");
+                    Ball.pitch("11", 1);
                 });
     }
 

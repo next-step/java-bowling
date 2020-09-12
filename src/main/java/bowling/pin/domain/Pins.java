@@ -1,86 +1,46 @@
 package bowling.pin.domain;
 
-import bowling.state.domain.State;
+import bowling.ball.domain.Ball;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Pins {
 
-    public static final int initPins = 10;
-    public static final int completedPins = 0;
+    private static final int DEFAULT_PITCH_COUNT = 2;
 
-    private int remainingPins;
-    private static boolean cleared = false;
-    private State state;
+    private static List<Pin> pins = new ArrayList<>();
 
-    private Pins(int point) {
-        this.remainingPins = initPins - point;
+    public Pins(List<Pin> pins) {
+        this.pins = pins;
     }
 
-    private Pins(State state, int point) {
-        this.remainingPins = initPins - point;
-        this.state = state;
-    }
-
-    public static Pins toStrike(int point) {
-        return new Pins(State.STRIKE, point);
-    }
-
-    public static Pins toSpare(int point) {
-        return new Pins(State.SPARE, point);
-    }
-
-    public static Pins toMiss(int point) {
-        return new Pins(State.MISS, point);
-    }
-
-    public static Pins toGutter(int point) {
-        return new Pins(State.GUTTER, point);
-    }
-
-    public static Pins pitchResult(int point, int pitchNumber) {
-        int remainingPins = initPins - point;
-        if (pitchNumber == 1 && remainingPins == 0) {
-            return Pins.toStrike(point);
+    public static Pins playPitch(String point) {
+        int pitchNumber = 1;
+        while (pitchNumber < DEFAULT_PITCH_COUNT) {
+            Pin pin = Pin.firstPitch(Ball.pitch(point, pitchNumber));
+            pins.add(pin);
+            pitchNumber += 1;
         }
-
-        if (pitchNumber == 2 && remainingPins == 0) {
-            return Pins.toSpare(point);
-        }
-
-        if (pitchNumber == 1 && remainingPins == initPins) {
-            return Pins.toGutter(point);
-        }
-
-        if (pitchNumber == 2 && remainingPins == point) {
-            return Pins.toGutter(point);
-        }
-
-        return Pins.toMiss(point);
+        return new Pins(pins);
     }
 
-    public int getRemainingPins() {
-        return remainingPins;
-    }
-
-    public boolean isCleared() {
-        return cleared;
-    }
-
-    public State getState() {
-        return state;
+    public int size() {
+        return pins.size();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pins pins = (Pins) o;
-        return remainingPins == pins.remainingPins;
+        Pins pins1 = (Pins) o;
+        return Objects.equals(pins, pins1.pins);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(remainingPins);
+        return Objects.hash(pins);
     }
+
 }
