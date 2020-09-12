@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Ball {
 
     private int point;
-    private int pitchNumber = 0;
+    private int pitchNumber;
 
     private Ball(String point, int pitchNumber) {
         validateInputPitchPointIsNull(point);
@@ -48,12 +48,13 @@ public class Ball {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ball ball = (Ball) o;
-        return point == ball.point;
+        return point == ball.point &&
+                pitchNumber == ball.pitchNumber;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(point);
+        return Objects.hash(point, pitchNumber);
     }
 
     @Override

@@ -16,14 +16,38 @@ public class Pins {
         this.pins = pins;
     }
 
-    public static Pins playPitch(String point) {
-        int pitchNumber = 1;
-        while (pitchNumber < DEFAULT_PITCH_COUNT) {
-            Pin pin = Pin.firstPitch(Ball.pitch(point, pitchNumber));
-            pins.add(pin);
-            pitchNumber += 1;
-        }
+    public static Pins playPitch(String point, int tryPitchNumber) {
+        Pin pin = pitchResult(Ball.pitch(point, tryPitchNumber));
+        pins.add(pin);
         return new Pins(pins);
+    }
+
+    public static Pin pitchResult(Ball ball) {
+        int remainingPins = getRemainingPins(ball);
+        if (ball.getPitchNumber() == 1 && remainingPins == 0) {
+            return Pin.toStrike(ball, remainingPins);
+        }
+
+        if (ball.getPitchNumber() == 2 && remainingPins == 0) {
+            return Pin.toSpare(ball, remainingPins);
+        }
+
+        if (ball.getPitchNumber() == 1 && remainingPins == Pin.initPins) {
+            return Pin.toGutter(ball, remainingPins);
+        }
+
+        if (ball.getPitchNumber() == 2 && remainingPins == ball.getPoint()) {
+            return Pin.toGutter(ball, remainingPins);
+        }
+
+        return Pin.toMiss(ball, remainingPins);
+    }
+
+    private static int getRemainingPins(Ball ball) {
+        if (pins.size() != 0) {
+            return pins.get(0).getRemainingPins() - ball.getPoint();
+        }
+        return Pin.initPins - ball.getPoint();
     }
 
     public int size() {
@@ -43,4 +67,8 @@ public class Pins {
         return Objects.hash(pins);
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(pins);
+    }
 }

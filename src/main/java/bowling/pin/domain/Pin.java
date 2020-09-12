@@ -9,70 +9,42 @@ public class Pin {
 
     public static final int initPins = 10;
 
-    // 역할 : Pin들을 관리, 10개 치면 남은 핀 확인, 남은 핀에 따라 상태 관리
     private Ball ball;
-    private int remainingPins; // 남은핀
+    private int remainingPins;
     private State state;
 
     public Pin(Ball ball) {
-        this.remainingPins = initPins - ball.getPoint();
         this.ball = ball;
     }
 
-    private Pin(State state, Ball ball) { // firstPitch
+    private Pin(State state, Ball ball) {
+        this.ball = ball;
         this.remainingPins = initPins - ball.getPoint();
         this.state = state;
     }
 
-    private Pin(State state, int point) { // secondPitch
-        this.remainingPins = point;
+    private Pin(State state, Ball ball, int remainingPins) {
+        this.ball = ball;
+        this.remainingPins = remainingPins;
         this.state = state;
     }
 
-    public static Pin firstPitch(Ball pitchPoint) {
-        return new Pin(pitchPoint);
+    public static Pin toStrike(Ball pitchPoint, int remainingPins) {
+        return new Pin(State.STRIKE, pitchPoint, remainingPins);
     }
 
-    public static Pin secondPitch(Ball pitchPoint) {
-        return new Pin(pitchPoint);
+    public static Pin toSpare(Ball point, int remainingPins) {
+        return new Pin(State.SPARE, point, remainingPins);
     }
 
-    public static Pin toStrike(Ball pitchPoint) {
-        return new Pin(State.STRIKE, pitchPoint);
+    public static Pin toMiss(Ball point, int remainingPins) {
+        return new Pin(State.MISS, point, remainingPins);
     }
 
-    public static Pin toSpare(Ball point) {
-        return new Pin(State.SPARE, point);
+    public static Pin toGutter(Ball point, int remainingPins) {
+        return new Pin(State.GUTTER, point, remainingPins);
     }
 
-    public static Pin toMiss(Ball point) {
-        return new Pin(State.MISS, point);
-    }
-
-    public static Pin toGutter(Ball point) {
-        return new Pin(State.GUTTER, point);
-    }
-
-    public static Pin pitchResult(int point, Ball ball) {
-        int remainingPins = initPins - point;
-        if (ball.getPitchNumber() == 1 && remainingPins == 0) {
-            return Pin.toStrike(ball);
-        }
-
-        if (ball.getPitchNumber() == 2 && remainingPins == 0) {
-            return Pin.toSpare(ball);
-        }
-
-        if (ball.getPitchNumber() == 1 && remainingPins == initPins) {
-            return Pin.toGutter(ball);
-        }
-
-        if (ball.getPitchNumber() == 2 && remainingPins == point) {
-            return Pin.toGutter(ball);
-        }
-
-        return Pin.toMiss(ball);
-    }
 
     public int getRemainingPins() {
         return remainingPins;
