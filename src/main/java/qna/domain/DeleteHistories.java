@@ -2,6 +2,7 @@ package qna.domain;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,7 +29,6 @@ public class DeleteHistories {
 	}
 
 	public List<DeleteHistory> getDeleteHistories() {
-		return deleteHistories.stream()
-							  .collect(Collectors.toList());
+		return Collections.unmodifiableList(deleteHistories);
 	}
 }
