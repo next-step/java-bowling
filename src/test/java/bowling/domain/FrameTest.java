@@ -56,4 +56,14 @@ public class FrameTest {
             frame.hit(0);
         }).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void getNumber() {
+        assertThat(Frame.from().getNumber()).isEqualTo(1);
+    }
+
+    @Test
+    void next() {
+        assertThat(Frame.from().next().getNumber()).isEqualTo(2);
+    }
 }

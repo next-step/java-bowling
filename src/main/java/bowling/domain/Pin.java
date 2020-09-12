@@ -50,11 +50,22 @@ public class Pin {
         return String.valueOf(count);
     }
 
+    public boolean isFinish() {
+        if (this.tryCount == this.maxTryCount)
+            return true;
+
+        if (this.count == NO_COUNT)
+            return true;
+
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Pin{" +
-                "pin=" + count +
+                "maxTryCount=" + maxTryCount +
                 ", tryCount=" + tryCount +
+                ", count=" + count +
                 '}';
     }
 }

@@ -36,4 +36,39 @@ public class PinTest {
         assertThat(pin.hit(0)).isEqualTo("-");
         assertThat(pin.hit(2)).isEqualTo("2");
     }
+
+    @Test
+    void isFinish() {
+        Pin pin = Pin.from();
+        pin.hit(1);
+        assertThat(pin.isFinish()).isFalse();
+        pin.hit(9);
+
+        assertThat(pin.isFinish()).isTrue();
+    }
+
+    @Test
+    void isFinish_strike() {
+        Pin pin = Pin.from();
+        pin.hit(10);
+
+        assertThat(pin.isFinish()).isTrue();
+    }
+
+    @Test
+    void isFinish_spare() {
+        Pin pin = Pin.from();
+        pin.hit(1);
+        pin.hit(9);
+
+        assertThat(pin.isFinish()).isTrue();
+    }
+
+    @Test
+    void isFinish_custom() {
+        Pin pin = Pin.of(1, 0);
+        pin.hit(1);
+
+        assertThat(pin.isFinish()).isTrue();
+    }
 }
