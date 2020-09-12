@@ -1,6 +1,6 @@
 package camp.nextstep.edu.rebellion.bowling.domain;
 
-import camp.nextstep.edu.rebellion.bowling.domain.game.Player;
+import camp.nextstep.edu.rebellion.bowling.domain.player.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
