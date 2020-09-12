@@ -1,9 +1,7 @@
 package qna.domain;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import qna.CannotDeleteException;
 
@@ -21,13 +19,9 @@ public class Answers {
         return new Answers(question.getAnswers());
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
-
+    public void delete(User loginUser) throws CannotDeleteException {
         verifyAnotherUserAnswer(loginUser);
-
-        return answers.stream()
-                      .map(Answer::deleteAtNow)
-                      .collect(Collectors.toList());
+        answers.forEach(Answer::deleteAtNow);
     }
 
     public void verifyAnotherUserAnswer(User loginUser) throws CannotDeleteException {
@@ -39,5 +33,9 @@ public class Answers {
     private boolean isNotLoginUser(User loginUser) {
         return answers.stream()
                       .anyMatch(answer -> !answer.isOwner(loginUser));
+    }
+
+    public List<Answer> getCollection() {
+        return answers;
     }
 }
