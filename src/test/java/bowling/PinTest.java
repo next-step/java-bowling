@@ -14,8 +14,6 @@ public class PinTest {
     void hit_strike() {
         Pin pin = Pin.from();
         assertThat(pin.hit(10)).isEqualTo("X");
-        assertThat(pin.hit(10)).isEqualTo("X");
-        assertThat(pin.hit(10)).isEqualTo("X");
     }
 
     @Test
