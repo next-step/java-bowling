@@ -14,6 +14,8 @@ public class OutputView {
 	private static final String NO_SPACE_PARAM = "|%s  ";
 	private static final String ONE_SPACE_PARAM = "| %s  ";
 	private static final String TWO_SPACE_PARAM = "|  %s  ";
+	private static final int FINAL_FRAME_NO = 10;
+	private static final int DISPLAY_COLUMN_COUNT = 11;
 
 	public static void viewInit(Player player) {
 
@@ -27,8 +29,8 @@ public class OutputView {
 
 	private static String getFrameLine() {
 		String name = "| NAME ";
-		String frameNos = IntStream.range(1, 11)
-								   .mapToObj(i -> i < 10 ? String.format("0%d", i) : String.format("%d", i))
+		String frameNos = IntStream.range(1, DISPLAY_COLUMN_COUNT)
+								   .mapToObj(i -> i < FINAL_FRAME_NO ? String.format("0%d", i) : String.format("%d", i))
 								   .map(frameNo -> makeLine(frameNo))
 								   .collect(joining());
 		return name + frameNos + "|";
@@ -51,11 +53,19 @@ public class OutputView {
 
 		System.out.println(getFrameLine());
 		System.out.println(name + knockingDownPinsSigns + "|");
+		System.out.println("|      " + frames.getScoresToDate()
+											 .stream()
+											 .map(score -> makeLine(score.isDoneCalculates() ? String.valueOf(score.getScore()) : " "))
+											 .collect(joining())
+						   + IntStream.range(0, DISPLAY_COLUMN_COUNT - frames.getScoresToDate().size())
+									  .mapToObj(i -> makeLine(" "))
+									  .collect(joining())
+						  );
 
 	}
 
 	private static String getKnockingDownPinsSignsString(Frames frames) {
-		return IntStream.range(0, 10)
+		return IntStream.range(0, FINAL_FRAME_NO)
 						.mapToObj(i -> frames.getKnockingDownPinsSignsOf(i)
 											 .stream()
 											 .collect(joining("|")))
