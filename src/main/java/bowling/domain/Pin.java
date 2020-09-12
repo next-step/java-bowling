@@ -1,19 +1,18 @@
 package bowling.domain;
 
+import static bowling.domain.PinState.DEFAULT_TRY_COUNT;
+import static bowling.domain.PinState.MAX_TRY_COUNT;
+
 public class Pin {
-    public static final int DEFAULT_TRY_COUNT = 0;
-    public static final int DEFAULT_PIN_COUNT = 10;
-    public static final int MAX_TRY_COUNT = 2;
+    public static final int FULL_COUNT = 10;
     public static final int NO_COUNT = 0;
 
-    private int maxTryCount;
-    private int tryCount;
+    private PinState state;
     private int count;
 
     private Pin(int maxTryCount, int tryCount) {
-        this.maxTryCount = maxTryCount;
-        this.tryCount = tryCount;
-        this.count = DEFAULT_PIN_COUNT;
+        this.state = PinState.of(maxTryCount, tryCount);
+        this.count = FULL_COUNT;
     }
 
     public static Pin from() {
@@ -25,17 +24,18 @@ public class Pin {
     }
 
     public String hit(int count) {
-        tryCount++;
-
-        if (tryCount > this.maxTryCount)
+        if (!state.canHit()) {
             throw new IllegalArgumentException("더이상 공을 던질수 없습니다.");
+        }
 
-        if (this.count == NO_COUNT || count > this.count)
+        if (this.count == NO_COUNT || count > this.count) {
             throw new IllegalArgumentException("더이상 쓰러질 핀이 없습니다.");
+        }
 
+        state.counting();
         this.count -= count;
 
-        if (this.count == 0 && tryCount == 1) {
+        if (this.count == 0 && state.isFirstTime()) {
             return Status.STRIKE.toString();
         }
 
@@ -51,20 +51,17 @@ public class Pin {
     }
 
     public boolean isFinish() {
-        if (this.tryCount == this.maxTryCount)
+        if (!state.canHit()) {
             return true;
+        }
 
-        if (this.count == NO_COUNT)
-            return true;
-
-        return false;
+        return this.count == NO_COUNT;
     }
 
     @Override
     public String toString() {
         return "Pin{" +
-                "maxTryCount=" + maxTryCount +
-                ", tryCount=" + tryCount +
+                "state=" + state +
                 ", count=" + count +
                 '}';
     }
