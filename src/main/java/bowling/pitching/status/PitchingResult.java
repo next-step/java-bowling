@@ -57,4 +57,12 @@ public class PitchingResult {
 	public int hashCode() {
 		return Objects.hash(knockingDownPins, pitchingState);
 	}
+
+	public boolean alreadyReflectToNextScore() {
+		return reflectToNextScore;
+	}
+
+	public void reflectToNextScore() {
+		reflectToNextScore = true;
+	}
 }

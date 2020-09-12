@@ -3,9 +3,10 @@ package bowling.frame;
 import java.util.List;
 
 import bowling.pin.Pins;
+import bowling.score.Score;
 
 public interface Frame {
-	void reflect(Pins knockingDownPins);
+	Score reflect(Pins knockingDownPins);
 
 	boolean finish();
 
