@@ -2,25 +2,21 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Frame {
 
-    protected final int number;
+    protected final FrameState state;
     protected final List<Pin> pins;
-    protected final List<String> results;
 
     protected Frame(int number) {
-        this.number = number;
+        this.state = FrameState.from(number);
         this.pins = new ArrayList() {{
             add(Pin.from());
         }};
-        this.results = new ArrayList<>();
     }
 
     public String hit(int count) {
-        results.add(getLastPin().hit(count));
-        return results.stream().collect(Collectors.joining("|"));
+        return state.store(getLastPin().hit(count));
     }
 
     protected Pin getLastPin() {
@@ -28,7 +24,7 @@ public class Frame {
     }
 
     public int getNumber() {
-        return number;
+        return state.getNumber();
     }
 
     public boolean isFinish() {
@@ -36,7 +32,7 @@ public class Frame {
     }
 
     public NormalFrame next() {
-        return new NormalFrame(number + 1);
+        return new NormalFrame(state.getNumber() + 1);
     }
 
     public boolean isLastFrame() {
@@ -46,9 +42,8 @@ public class Frame {
     @Override
     public String toString() {
         return "Frame{" +
-                "number=" + number +
+                "state=" + state +
                 ", pins=" + pins +
-                ", results=" + results +
                 '}';
     }
 }

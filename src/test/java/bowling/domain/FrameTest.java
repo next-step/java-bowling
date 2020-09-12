@@ -58,11 +58,6 @@ public class FrameTest {
     }
 
     @Test
-    void getNumber() {
-        assertThat(NormalFrame.from().getNumber()).isEqualTo(1);
-    }
-
-    @Test
     void next() {
         assertThat(NormalFrame.from().next().getNumber()).isEqualTo(2);
     }
