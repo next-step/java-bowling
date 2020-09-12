@@ -1,10 +1,13 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import qna.CannotDeleteException;
+import java.util.stream.Collectors;
 
 public class Answers {
 
@@ -29,5 +32,11 @@ public class Answers {
 
     public Collection<Answer> getCollection() {
         return answers;
+    }
+
+    public List<DeleteHistory> delete() {
+        return answers.stream()
+                      .map(Answer::deleteAtNow)
+                      .collect(Collectors.toList());
     }
 }
