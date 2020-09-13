@@ -1,6 +1,5 @@
 package bowling.pin;
 
-import bowling.ball.Ball;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,8 +24,7 @@ class PinsTest {
     @DisplayName("2번의 투구")
     void pitch() {
         for (int i = 1; i <= 2; i++) {
-            pin = Pin.of(pinList, Ball.pitch("5", i));
-            pins = Pins.eachPitchResult(pinList, pin);
+            pins = Pins.eachPitchResult(pinList, "5", i);
         }
         assertThat(pins.size()).isEqualTo(2);
     }
@@ -34,8 +32,7 @@ class PinsTest {
     @Test
     @DisplayName("투구가 8이면 남은 Pin은 2")
     void pitchIsEight() {
-        pin = Pin.of(pinList, Ball.pitch("8", 1));
-        pins = Pins.eachPitchResult(pinList, pin);
+        pins = Pins.eachPitchResult(pinList, "8", 1);
         pin = pins.getPinsIndex(0);
         assertThat(pin.getRemainingPins()).isEqualTo(2);
     }
@@ -43,8 +40,7 @@ class PinsTest {
     @Test
     @DisplayName("투구가 10이면 남은 Pin이 0이면, 스트라이크")
     void strike() {
-        pin = Pin.of(pinList, Ball.pitch("10", 1));
-        pins = Pins.eachPitchResult(pinList, pin);
+        pins = Pins.eachPitchResult(pinList, "10", 1);
         pin = pins.getPinsIndex(0);
         assertThat(pin.getRemainingPins()).isEqualTo(0);
         assertThat(pin.getState()).isEqualTo("X");
@@ -54,8 +50,7 @@ class PinsTest {
     @DisplayName("투구 횟수가 2이고 남은 Pin이 0이면, 스페어")
     void spare() {
         for (int i = 1; i <= 2; i++) {
-            pin = Pin.of(pinList, Ball.pitch("5", i));
-            pins = Pins.eachPitchResult(pinList, pin);
+            pins = Pins.eachPitchResult(pinList, "5", i);
         }
         Pin pin = pins.getPinsIndex(1);
         String state = pin.getState();
@@ -65,8 +60,7 @@ class PinsTest {
     @Test
     @DisplayName("투구 횟수가 1이고 쓰러트린 Pin이 없으면, 거터")
     void gutterCaseOne() {
-        pin = Pin.of(pinList, Ball.pitch("0", 1));
-        pins = Pins.eachPitchResult(pinList, pin);
+        pins = Pins.eachPitchResult(pinList, "0", 1);
         pin = pins.getPinsIndex(0);
         assertThat(pin.getState()).isEqualTo("-");
     }
@@ -74,10 +68,8 @@ class PinsTest {
     @Test
     @DisplayName("투구 횟수가 2이고 쓰러트린 Pin이 없으면, 거터")
     void gutterCaseTwo() {
-        pin = Pin.of(pinList, Ball.pitch("5", 1));
-        pins = Pins.eachPitchResult(pinList, pin);
-        Pin result2 = Pin.of(pinList, Ball.pitch("0", 2));
-        Pins.eachPitchResult(pinList, result2);
+        pins = Pins.eachPitchResult(pinList, "5", 1);
+        Pins.eachPitchResult(pinList, "0", 2);
 
         pin = pins.getPinsIndex(1);
         assertThat(pin.getState()).isEqualTo("-");
@@ -86,11 +78,9 @@ class PinsTest {
     @Test
     @DisplayName("투구 횟수가 1이고 쓰러트린 Pin이 있으면, 미쓰")
     void miss() {
-        Ball ball = Ball.pitch("1", 1);
-        pin = Pin.of(pinList, ball);
-        pins = Pins.eachPitchResult(pinList, pin);
+        pins = Pins.eachPitchResult(pinList, "1",1);
         pin = pins.getPinsIndex(0);
-        assertThat(pin.getState()).isEqualTo(String.valueOf(ball.getPoint()));
+        assertThat(pin.getState()).isEqualTo(String.valueOf(1));
     }
 
 }

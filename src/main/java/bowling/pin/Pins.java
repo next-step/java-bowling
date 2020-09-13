@@ -1,5 +1,7 @@
 package bowling.pin;
 
+import bowling.ball.Ball;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -14,10 +16,11 @@ public class Pins {
         this.pins = pins;
     }
 
-    public static Pins eachPitchResult(List<Pin> pins, Pin pin) {
-        pinsClear(pins);
-        pins.add(pin);
-        return new Pins(pins);
+    public static Pins eachPitchResult(List<Pin> pinList, String pitchPoint, int pitchCount) {
+        pinsClear(pinList);
+        Pin pin = Pin.eachPitch(pinList, Ball.pitch(pitchPoint, pitchCount));
+        pinList.add(pin);
+        return new Pins(pinList);
     }
 
     private static void pinsClear(List<Pin> pins) {

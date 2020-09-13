@@ -26,7 +26,7 @@ public class Pin {
         this.state = state;
     }
 
-    public static Pin of(List<Pin> pins, Ball ball) {
+    public static Pin eachPitch(List<Pin> pins, Ball ball) {
         int remainingPins = getRemainingPins(pins, ball);
         String state = pitchResultState(pins, ball);
         return new Pin(ball, remainingPins, state);
@@ -40,11 +40,7 @@ public class Pin {
             return State.STRIKE.toString();
         }
         if (pitchCount == SECOND_PITCH && remainingPins == CLEAR_PINS) {
-            String firstPitchState = pins.get(FIRST_PITCH_INDEX).getState();
-            if (firstPitchState.equals(State.STRIKE.toString())) {
-                return "";
-            }
-            return State.SPARE.toString();
+            return getSecondPitchResult(pins);
         }
 
         if (pitchCount == FIRST_PITCH && remainingPins == Pin.INIT_PINS) {
@@ -56,6 +52,14 @@ public class Pin {
         }
 
         return String.valueOf(ball.getPoint());
+    }
+
+    private static String getSecondPitchResult(List<Pin> pins) {
+        String firstPitchState = pins.get(FIRST_PITCH_INDEX).getState();
+        if (firstPitchState.equals(State.STRIKE.toString())) {
+            return " ";
+        }
+        return State.SPARE.toString();
     }
 
     public String getState() {

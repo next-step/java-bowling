@@ -16,8 +16,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class FramesTest {
 
-    private Ball ball;
-    private Pin pin;
     private List<Pin> pinList;
     private Pins pins;
     private List<Frame> frameList;
@@ -32,9 +30,7 @@ class FramesTest {
     @DisplayName("1개의 프레임 생성 2개의 Pins 보유")
     void createFrames() {
         for (int i = 1; i <= 2; i++) {
-            ball = Ball.pitch("5", i);
-            pin = Pin.of(pinList, ball);
-            pins = Pins.eachPitchResult(pinList, pin);
+            pins = Pins.eachPitchResult(pinList, "5", i);
         }
         Frames frames = Frames.nextFrame(frameList, pins);
         assertThat(frames.size()).isEqualTo(1);
@@ -45,9 +41,7 @@ class FramesTest {
     void invalidNomalFrameNumberException() {
         assertThatExceptionOfType(OutOfFrameRangeException.class)
                 .isThrownBy(() -> {
-                    ball = Ball.pitch("5", 1);
-                    pin = Pin.of(pinList, ball);
-//                    Frames.createFrame(11, Pins.eachPitchResult(pinList, pin));
+//                    Frames.createFrame(11, Pins.eachPitchResult(pinList, "5", 1));
                 });
     }
 
