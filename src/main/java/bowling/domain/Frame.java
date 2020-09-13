@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import bowling.domain.state.Pitching;
 import bowling.domain.state.State;
 import java.util.Objects;
 
@@ -38,10 +37,7 @@ public class Frame implements Comparable<Frame> {
   }
 
   public boolean isDone() {
-    if (state instanceof Pitching) {
-      return false;
-    }
-    return true;
+    return state.isDone();
   }
 
   public String symbol() {

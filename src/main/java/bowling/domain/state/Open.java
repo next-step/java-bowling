@@ -32,6 +32,11 @@ public class Open implements State {
     return String.join(DELIMITER, first.toString(), second.toString());
   }
 
+  @Override
+  public boolean isDone() {
+    return true;
+  }
+
   private boolean isDoubleGutter() {
     return second.isGutter() && first.isGutter();
   }

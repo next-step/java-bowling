@@ -27,6 +27,11 @@ public class Spare implements State {
   }
 
   @Override
+  public boolean isDone() {
+    return true;
+  }
+
+  @Override
   public String toString() {
     return "Spare{" + "first=" + first + ", second=" + second + '}';
   }

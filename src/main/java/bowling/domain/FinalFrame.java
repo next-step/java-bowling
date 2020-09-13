@@ -1,18 +1,13 @@
 package bowling.domain;
 
-import bowling.domain.state.Open;
-import bowling.domain.state.Pitching;
-import bowling.domain.state.Spare;
 import bowling.domain.state.State;
-import bowling.domain.state.Strike;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FinalFrame extends Frame {
 
-  private static final int MAX_ROLL = 3;
-
+  private boolean canTriple = true;
   private List<State> states = new ArrayList<>();
 
   public FinalFrame() {
@@ -23,34 +18,42 @@ public class FinalFrame extends Frame {
   public FinalFrame roll(int pins) {
     if (!states.isEmpty()) {
       State last = states.get(states.size() - 1);
-      if (last instanceof Pitching) {
+      if (!last.isDone()) {
         states.remove(states.size() - 1);
         states.add(last.roll(pins));
+
+        canTriple = false;
         return this;
       }
     }
 
     states.add(State.of(pins));
-    state = states.get(0);
     return this;
   }
 
   @Override
   public boolean isDone() {
-    if (this.states.size() == MAX_ROLL) {
+    if (this.states.size() == 3) {
       return true;
     }
 
-    State last = states.get(states.size() - 1);
-    if (state instanceof Strike && (last instanceof Spare || last instanceof Open)) {
-      return true;
+    if (atLeastDouble()) {
+      return false;
     }
 
-    if (state instanceof Spare && this.states.size() == 2) {
+    if (atLeastOneStrikeOrOneSpare()) {
       return true;
     }
 
     return false;
+  }
+
+  private boolean atLeastDouble() {
+    return this.states.size() == 2 && canTriple;
+  }
+
+  private boolean atLeastOneStrikeOrOneSpare() {
+    return this.states.size() == 2 && !canTriple;
   }
 
   @Override
@@ -66,6 +69,7 @@ public class FinalFrame extends Frame {
         "states=" + states +
         ", number=" + number +
         ", state=" + state +
+        ", canTriple=" + canTriple +
         '}';
   }
 }

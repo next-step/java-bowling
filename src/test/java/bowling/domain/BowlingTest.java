@@ -64,8 +64,6 @@ class BowlingTest {
         .collect(Collectors.joining())).isEqualTo("XXXXXXXXXX|X|X");
   }
 
-
-
   @Test
   void perfect_9frame() {
     Bowling perfect = Bowling.first(10);

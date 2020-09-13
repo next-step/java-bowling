@@ -18,6 +18,10 @@ public class Strike implements State {
     return STRIKE;
   }
 
+  @Override
+  public boolean isDone() {
+    return true;
+  }
 
   @Override
   public String toString() {
