@@ -7,14 +7,18 @@ public enum State {
     GUTTER("-"),
     PASS("");
 
-    private String result;
+    private String mark;
 
-    public String getResult() {
-        return result;
+    public String getMark() {
+        return mark;
     }
 
-    State(String result) {
-        this.result = result;
+    State(String mark) {
+        this.mark = mark;
     }
 
+    @Override
+    public String toString() {
+        return mark;
+    }
 }

@@ -48,7 +48,7 @@ class PinsTest {
         pins = Pins.eachPitchResult(pinList, pin);
         pin = pins.getPinsIndex(0);
         assertThat(pin.getRemainingPins()).isEqualTo(0);
-        assertThat(pin.getState().getResult()).isEqualTo(State.STRIKE.getResult());
+        assertThat(pin.getState().getMark()).isEqualTo(State.STRIKE.getMark());
     }
 
     @Test
@@ -59,8 +59,8 @@ class PinsTest {
             pins = Pins.eachPitchResult(pinList, pin);
         }
         Pin pin = pins.getPinsIndex(1);
-        String state = pin.getState().getResult();
-        assertThat(state).isEqualTo(State.SPARE.getResult());
+        String state = pin.getState().getMark();
+        assertThat(state).isEqualTo(State.SPARE.getMark());
     }
 
     @Test
@@ -69,7 +69,7 @@ class PinsTest {
         pin = Pin.pitchResult(pinList, Ball.pitch("0", 1));
         pins = Pins.eachPitchResult(pinList, pin);
         pin = pins.getPinsIndex(0);
-        assertThat(pin.getState().getResult()).isEqualTo(State.GUTTER.getResult());
+        assertThat(pin.getState().getMark()).isEqualTo(State.GUTTER.getMark());
     }
 
     @Test
@@ -81,7 +81,7 @@ class PinsTest {
         Pins.eachPitchResult(pinList, result2);
 
         pin = pins.getPinsIndex(1);
-        assertThat(pin.getState().getResult()).isEqualTo(State.GUTTER.getResult());
+        assertThat(pin.getState().getMark()).isEqualTo(State.GUTTER.getMark());
     }
 
     @Test
@@ -90,7 +90,7 @@ class PinsTest {
         pin = Pin.pitchResult(pinList, Ball.pitch("1", 1));
         pins = Pins.eachPitchResult(pinList, pin);
         pin = pins.getPinsIndex(0);
-        assertThat(pin.getState().getResult()).isEqualTo(State.MISS.getResult());
+        assertThat(pin.getState().getMark()).isEqualTo(State.MISS.getMark());
     }
 
 }
