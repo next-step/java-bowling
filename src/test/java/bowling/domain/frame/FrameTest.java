@@ -14,15 +14,17 @@ class FrameTest {
 	@DisplayName("객체 생성 및 pitchTheBall 메서드 테스트")
 	@Test
 	void constructTest() {
-		Frame frame = new Frame();
+		int index = 0;
+		Frame frame = new Frame(index);
 		frame.pitchTheBall(ONE);
-		assertThat(frame).isEqualTo(new Frame(ONE));
+		assertThat(frame).isEqualTo(new Frame(index, ONE));
 	}
 
 	@DisplayName("10개 핀이 다 쓰러진 상태에서 더 쓰러뜨리려고 하면 Exception 테스트")
 	@Test
 	void failPitchingTest1() {
-		Frame frame = new Frame(TEN);
+		int index = 0;
+		Frame frame = new Frame(index, TEN);
 		assertThatThrownBy(() -> frame.pitchTheBall(ONE))
 				.isInstanceOf(BowlingException.class)
 				.hasMessage(String.format(OVER_MAX_PIN_COUNT_PER_FRAME, MAX_PIN_COUNT_PER_FRAME));
@@ -31,7 +33,8 @@ class FrameTest {
 	@DisplayName("최대 투구 횟수만큼 투구했는데 더 투구하려고하면 Exception 테스트")
 	@Test
 	void failPitchingTest2() {
-		Frame frame = new Frame(FIVE);
+		int index = 0;
+		Frame frame = new Frame(index, FIVE);
 		frame.pitchTheBall(ONE);
 		assertThatThrownBy(() -> frame.pitchTheBall(ONE))
 				.isInstanceOf(BowlingException.class)

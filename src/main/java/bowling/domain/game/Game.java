@@ -19,8 +19,16 @@ public class Game {
 	public Game(Player player) {
 		this.player = player;
 		this.frames = IntStream.range(START_INDEX, MAX_FRAMES_PER_GAME)
-						.mapToObj(index -> new Frame())
+						.mapToObj(Frame::new)
 						.collect(Collectors.toList());
+	}
+
+	public String getPlayersName() {
+		return player.getName();
+	}
+
+	public List<Frame> getFrames() {
+		return frames;
 	}
 
 	@Override

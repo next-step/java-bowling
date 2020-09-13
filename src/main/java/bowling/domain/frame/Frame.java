@@ -13,15 +13,19 @@ public class Frame {
 	static final String OVER_MAX_PIN_COUNT_PER_FRAME = "한 프레임 당 쓰러뜨린 핀의 갯수는 %d개를 초과할 수 없습니다.";
 	static final int DEFAULT_MAX_PITCH_COUNT = 2;
 	static final int MAX_PIN_COUNT_PER_FRAME = 10;
+	private static final int SEQUENCE_ADDER = 1;
 
+	private final int frameSequence;
 	private final List<DownedPinCount> downedPinCounts;
 
-	public Frame() {
+	public Frame(int index) {
+		this.frameSequence = index + SEQUENCE_ADDER;
 		this.downedPinCounts = new ArrayList<>();
 	}
 
 	//forTest
-	Frame(DownedPinCount downedPinCount) {
+	Frame(int index, DownedPinCount downedPinCount) {
+		this.frameSequence = index + SEQUENCE_ADDER;
 		List<DownedPinCount> downedPinCounts = new ArrayList<>();
 		downedPinCounts.add(downedPinCount);
 		this.downedPinCounts = downedPinCounts;
@@ -30,6 +34,10 @@ public class Frame {
 	public boolean pitchTheBall(DownedPinCount downedPinCount) {
 		validateBeforeAdd(downedPinCount);
 		return downedPinCounts.add(downedPinCount);
+	}
+
+	public int getFrameSequence() {
+		return frameSequence;
 	}
 
 	private void validateBeforeAdd(DownedPinCount downedPinCount) {

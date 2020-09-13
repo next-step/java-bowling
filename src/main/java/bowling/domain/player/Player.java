@@ -21,7 +21,7 @@ public class Player {
 		this.name = name.toUpperCase();
 	}
 
-	public String getPlayerName() {
+	public String getName() {
 		return name;
 	}
 
