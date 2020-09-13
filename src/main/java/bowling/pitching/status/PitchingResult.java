@@ -40,6 +40,18 @@ public class PitchingResult {
 		return canMoveNextFrame();
 	}
 
+	public boolean alreadyReflectToNextScore() {
+		return reflectToNextScore;
+	}
+
+	public void reflectToNextScore() {
+		reflectToNextScore = true;
+	}
+
+	public int getNextPitchingCountToReflect(int frameNo) {
+		return pitchingState.getNextPitchingCountToReflect(frameNo);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -56,13 +68,5 @@ public class PitchingResult {
 	@Override
 	public int hashCode() {
 		return Objects.hash(knockingDownPins, pitchingState);
-	}
-
-	public boolean alreadyReflectToNextScore() {
-		return reflectToNextScore;
-	}
-
-	public void reflectToNextScore() {
-		reflectToNextScore = true;
 	}
 }

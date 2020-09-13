@@ -13,7 +13,7 @@ public class NormalScore implements Score {
 
 	private NormalScore(PitchingResult pitchingResult, int frameNo) {
 		this.score = pitchingResult.getKnockingDownPins();
-		this.nextPitchingCountToReflect = pitchingResult.getPitchingState().getNextPitchingCountToReflect(frameNo);
+		this.nextPitchingCountToReflect = pitchingResult.getNextPitchingCountToReflect(frameNo);
 		this.pitchingResult = pitchingResult;
 	}
 
@@ -37,6 +37,13 @@ public class NormalScore implements Score {
 		this.score += nextScore.getScore();
 	}
 
+	private void minusNextPitchingCountToReflect() {
+		if (nextPitchingCountToReflect <= 0) {
+			throw new BowlingScoreException("더 이상 점수를 반영할 수 없습니다.");
+		}
+		nextPitchingCountToReflect -= 1;
+	}
+
 	@Override
 	public boolean reflectPreviousScore(Score previousScore) {
 		if (!previousScore.reflectableNextScore()) {
@@ -46,13 +53,6 @@ public class NormalScore implements Score {
 		this.score += previousScore.getScore();
 		previousScore.reflectToNextScore();
 		return true;
-	}
-
-	private void minusNextPitchingCountToReflect() {
-		if (nextPitchingCountToReflect <= 0) {
-			throw new BowlingScoreException("더 이상 점수를 반영할 수 없습니다.");
-		}
-		nextPitchingCountToReflect -= 1;
 	}
 
 	@Override
