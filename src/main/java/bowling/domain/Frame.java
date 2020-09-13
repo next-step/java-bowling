@@ -17,8 +17,13 @@ public class Frame {
         }};
     }
 
-    public List<String> hit(int count) {
-        return state.store(getLastPin().hit(count));
+    public Frame hit(int count) {
+        state.store(getLastPin().hit(count));
+
+        if (canGoNextFrame())
+            return next();
+
+        return this;
     }
 
     protected Pin getLastPin() {
@@ -29,8 +34,13 @@ public class Frame {
         return state.getNumber();
     }
 
+    public List<String> getResults() {
+        return state.getResult();
+    }
+
     public boolean isFinish() {
-        return getLastPin().isClear();
+        Pin lastPin = getLastPin();
+        return !lastPin.catHit() || lastPin.isClear();
     }
 
     public Frame next() {

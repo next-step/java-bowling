@@ -51,7 +51,15 @@ public class Pin {
     }
 
     public boolean isClear() {
-        return this.count == NO_COUNT;
+        return count == NO_COUNT;
+    }
+
+    public boolean catHit() {
+        if (isClear()) {
+            return false;
+        }
+
+        return state.canHit();
     }
 
     @Override

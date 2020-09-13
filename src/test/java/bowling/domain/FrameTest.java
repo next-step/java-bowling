@@ -2,10 +2,7 @@ package bowling.domain;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class FrameTest {
 
@@ -16,47 +13,29 @@ public class FrameTest {
 
     @Test
     void hit_strike() {
-        assertThat(NormalFrame.from().hit(10)).isEqualTo(Arrays.asList("X"));
+        Frame frame = NormalFrame.from();
+        assertThat(frame.hit(10).getNumber()).isEqualTo(2);
     }
 
     @Test
     void hit_spare() {
         Frame frame = NormalFrame.from();
-        assertThat(frame.hit(1)).isEqualTo(Arrays.asList("1"));
-        assertThat(frame.hit(9)).isEqualTo(Arrays.asList("1", "/"));
+        assertThat(frame.hit(1).getNumber()).isEqualTo(1);
+        assertThat(frame.hit(9).getNumber()).isEqualTo(2);
     }
 
     @Test
     void hit_miss() {
         Frame frame = NormalFrame.from();
-        assertThat(frame.hit(1)).isEqualTo(Arrays.asList("1"));
-        assertThat(frame.hit(8)).isEqualTo(Arrays.asList("1", "8"));
+        assertThat(frame.hit(1).getNumber()).isEqualTo(1);
+        assertThat(frame.hit(8).getNumber()).isEqualTo(2);
     }
 
     @Test
     void hit_gutter() {
         Frame frame = NormalFrame.from();
-        assertThat(frame.hit(0)).isEqualTo(Arrays.asList("-"));
-        assertThat(frame.hit(0)).isEqualTo(Arrays.asList("-", "-"));
-    }
-
-    @Test
-    void hit_exception() {
-        assertThatThrownBy(() -> {
-            Frame frame = NormalFrame.from();
-            frame.hit(0);
-            frame.hit(0);
-            frame.hit(0);
-        }).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    void hit_strike_exception() {
-        assertThatThrownBy(() -> {
-            Frame frame = NormalFrame.from();
-            frame.hit(10);
-            frame.hit(0);
-        }).isInstanceOf(IllegalArgumentException.class);
+        assertThat(frame.hit(0).getNumber()).isEqualTo(1);
+        assertThat(frame.hit(0).getNumber()).isEqualTo(2);
     }
 
     @Test
@@ -69,7 +48,7 @@ public class FrameTest {
         Frame frame = NormalFrame.from();
 
         for (int index = 0; index < 9; index++) {
-            frame = frame.next();
+            frame = frame.hit(10);
         }
 
         assertThat(frame.getNumber()).isEqualTo(10);

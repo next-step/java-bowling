@@ -19,9 +19,9 @@ public class Main {
             int number = game.getPlayNumber();
             int hitCount = InputScanner.getHitCount(String.format("%s프레임 투구 : ", number));
 
-            score.put(number, game.hit(hitCount));
-
-            ResultViewer.showResult(10, name, score);
+//            score.put(number, game.hit(hitCount));
+//
+//            ResultViewer.showResult(10, name, score);
         }
     }
 }

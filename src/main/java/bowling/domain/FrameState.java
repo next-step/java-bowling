@@ -27,15 +27,15 @@ public class FrameState {
         return Collections.unmodifiableList(results);
     }
 
+    public List<String> getResult() {
+        return Collections.unmodifiableList(results);
+    }
+
     @Override
     public String toString() {
         return "FrameState{" +
                 "number=" + number +
                 ", results=" + results +
                 '}';
-    }
-
-    public String getPrevResult() {
-        return results.get(results.size() - 2);
     }
 }

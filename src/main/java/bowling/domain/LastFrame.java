@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 public class LastFrame extends Frame {
 
     protected LastFrame(int number) {
@@ -13,9 +11,9 @@ public class LastFrame extends Frame {
     }
 
     @Override
-    public List<String> hit(int count) {
+    public Frame hit(int count) {
         String result = getLastPin().hit(count);
-        List<String> status = state.store(result);
+        state.store(result);
 
         int pinsSize = pins.size();
 
@@ -23,7 +21,7 @@ public class LastFrame extends Frame {
             pins.add(Pin.from());
         }
 
-        if (pinsSize == 2 && status.get(status.size() - 2).equals("X") && result.equals("X")) {
+        if (pinsSize == 2 && state.getResult().get(state.getResult().size() - 2).equals("X") && result.equals("X")) {
             pins.add(Pin.from());
         }
 
@@ -31,7 +29,7 @@ public class LastFrame extends Frame {
             pins.add(Pin.of(1, 0));
         }
 
-        return status;
+        return this;
     }
 
     @Override

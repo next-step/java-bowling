@@ -38,7 +38,7 @@ public class PinTest {
     }
 
     @Test
-    void isFinish() {
+    void isClear() {
         Pin pin = Pin.from();
         pin.hit(1);
         assertThat(pin.isClear()).isFalse();
@@ -48,19 +48,29 @@ public class PinTest {
     }
 
     @Test
-    void isFinish_strike() {
+    void canHit() {
         Pin pin = Pin.from();
-        pin.hit(10);
+        pin.hit(1);
+        assertThat(pin.catHit()).isTrue();
+        pin.hit(9);
 
-        assertThat(pin.isClear()).isTrue();
+        assertThat(pin.catHit()).isFalse();
     }
 
     @Test
-    void isFinish_spare() {
+    void canHit_strike() {
+        Pin pin = Pin.from();
+        pin.hit(10);
+
+        assertThat(pin.catHit()).isFalse();
+    }
+
+    @Test
+    void canHit_spare() {
         Pin pin = Pin.from();
         pin.hit(1);
         pin.hit(9);
 
-        assertThat(pin.isClear()).isTrue();
+        assertThat(pin.catHit()).isFalse();
     }
 }

@@ -2,8 +2,6 @@ package bowling.domain;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -12,36 +10,6 @@ public class LastFrameTest {
     @Test
     void last() {
         assertThat(LastFrame.from()).isNotNull();
-    }
-
-    @Test
-    void hit_strike() {
-        Frame frame = LastFrame.from();
-        assertThat(frame.hit(10)).isEqualTo(Arrays.asList("X"));
-        assertThat(frame.hit(10)).isEqualTo(Arrays.asList("X", "X"));
-        assertThat(frame.hit(10)).isEqualTo(Arrays.asList("X", "X", "X"));
-    }
-
-    @Test
-    void hit_spare() {
-        Frame frame = LastFrame.from();
-        assertThat(frame.hit(1)).isEqualTo(Arrays.asList("1"));
-        assertThat(frame.hit(9)).isEqualTo(Arrays.asList("1", "/"));
-        assertThat(frame.hit(10)).isEqualTo(Arrays.asList("1", "/", "X"));
-    }
-
-    @Test
-    void hit_miss() {
-        Frame frame = LastFrame.from();
-        assertThat(frame.hit(1)).isEqualTo(Arrays.asList("1"));
-        assertThat(frame.hit(8)).isEqualTo(Arrays.asList("1", "8"));
-    }
-
-    @Test
-    void hit_gutter() {
-        Frame frame = LastFrame.from();
-        assertThat(frame.hit(0)).isEqualTo(Arrays.asList("-"));
-        assertThat(frame.hit(0)).isEqualTo(Arrays.asList("-", "-"));
     }
 
     @Test
