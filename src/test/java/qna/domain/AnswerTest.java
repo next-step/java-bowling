@@ -11,10 +11,8 @@ public class AnswerTest {
 
     @Test
     void delete() {
-        DeleteHistories deleteHistories = new DeleteHistories();
-        A1.delete(deleteHistories);
+        A1.delete(new DeleteHistories());
 
         assertThat(A1.isDeleted()).isTrue();
-        assertThat(deleteHistories.getDeleteHistories()).hasSize(1);
     }
 }
