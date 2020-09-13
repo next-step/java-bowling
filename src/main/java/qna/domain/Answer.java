@@ -1,9 +1,12 @@
 package qna.domain;
 
+import lombok.Builder;
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -23,6 +26,7 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
+    @Builder
     public Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
     }
@@ -66,6 +70,20 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    public DeleteHistory deleteAnswer(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("답변을 삭제할 권한이 없습니다");
+        }
+
+        setDeleted(true);
+        return DeleteHistory.builder()
+                .contentType(ContentType.ANSWER)
+                .contentId(getId())
+                .deletedBy(getWriter())
+                .createDate(LocalDateTime.now())
+                .build();
     }
 
     @Override
