@@ -21,7 +21,7 @@
      * 작성자 체크
      * 삭제
 
-- [ ] DeleteHistory를 Wrap하는 DeleteHistories 생성하여 삭제 이 기록
+- [X] DeleteHistory를 Wrap하는 DeleteHistories 생성하여 삭제 이 기록
     * 데이터의 상태를 삭제 상태(deleted - boolean type)로 변경
     * 답변이 없는 경우 삭제 가능
     * 질문자와 답변글의 모든 답변자 같은 경우 삭제 가능
