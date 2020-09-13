@@ -17,7 +17,7 @@ public class Frame {
         }};
     }
 
-    public String hit(int count) {
+    public List<String> hit(int count) {
         return state.store(getLastPin().hit(count));
     }
 

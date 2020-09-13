@@ -2,6 +2,8 @@ package bowling.domain;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -14,28 +16,28 @@ public class FrameTest {
 
     @Test
     void hit_strike() {
-        assertThat(NormalFrame.from().hit(10)).isEqualTo("X");
+        assertThat(NormalFrame.from().hit(10)).isEqualTo(Arrays.asList("X"));
     }
 
     @Test
     void hit_spare() {
         Frame frame = NormalFrame.from();
-        assertThat(frame.hit(1)).isEqualTo("1");
-        assertThat(frame.hit(9)).isEqualTo("1|/");
+        assertThat(frame.hit(1)).isEqualTo(Arrays.asList("1"));
+        assertThat(frame.hit(9)).isEqualTo(Arrays.asList("1", "/"));
     }
 
     @Test
     void hit_miss() {
         Frame frame = NormalFrame.from();
-        assertThat(frame.hit(1)).isEqualTo("1");
-        assertThat(frame.hit(8)).isEqualTo("1|8");
+        assertThat(frame.hit(1)).isEqualTo(Arrays.asList("1"));
+        assertThat(frame.hit(8)).isEqualTo(Arrays.asList("1", "8"));
     }
 
     @Test
     void hit_gutter() {
         Frame frame = NormalFrame.from();
-        assertThat(frame.hit(0)).isEqualTo("-");
-        assertThat(frame.hit(0)).isEqualTo("-|-");
+        assertThat(frame.hit(0)).isEqualTo(Arrays.asList("-"));
+        assertThat(frame.hit(0)).isEqualTo(Arrays.asList("-", "-"));
     }
 
     @Test

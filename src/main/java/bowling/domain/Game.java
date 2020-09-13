@@ -24,9 +24,9 @@ public class Game {
         return getLastFrame().getNumber();
     }
 
-    public String hit(int count) {
+    public List<String> hit(int count) {
         Frame last = getLastFrame();
-        String result = last.hit(count);
+        List<String> result = last.hit(count);
 
         if (last.canGoNextFrame()) {
             addNextFrame();

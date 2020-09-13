@@ -1,6 +1,8 @@
 package bowling.view;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ResultViewer {
@@ -8,8 +10,9 @@ public class ResultViewer {
     private static final String FRAME_FORMAT = "  %02d  |";
     private static final String NAME_FORMAT = "| %4s |";
     private static final String GAME_RESULT_FORMAT = "  %-3s |";
+    private static final String GAME_RESULT_DELIMITER = "|";
 
-    public static void showResult(int frameCount, String name, Map<Integer, String> scores) {
+    public static void showResult(int frameCount, String name, Map<Integer, List<String>> scores) {
         showHead(frameCount);
         showBody(name, frameCount, scores);
         System.out.println();
@@ -24,18 +27,24 @@ public class ResultViewer {
         System.out.println();
     }
 
-    private static void showBody(String name, int frameCount, Map<Integer, String> scores) {
+    private static void showBody(String name, int frameCount, Map<Integer, List<String>> scores) {
         System.out.print(String.format(NAME_FORMAT, name));
 
         IntStream.rangeClosed(1, frameCount)
-                .forEach(frame -> System.out.printf(framesToString(scores.get(frame))));
+                .forEach(frame -> System.out.printf(framesToString(frame, scores)));
     }
 
-    private static String framesToString(String result) {
-        if (result == null) {
+    private static String framesToString(int frameNumber, Map<Integer, List<String>> scores) {
+        if (!scores.containsKey(frameNumber)) {
             return String.format(GAME_RESULT_FORMAT, "");
         }
 
-        return String.format(GAME_RESULT_FORMAT, result);
+        return String.format(GAME_RESULT_FORMAT, scoresToString(scores.get(frameNumber)));
+    }
+
+    private static String scoresToString(List<String> results) {
+        return results.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(GAME_RESULT_DELIMITER));
     }
 }

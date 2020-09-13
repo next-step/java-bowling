@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.List;
+
 public class LastFrame extends Frame {
 
     protected LastFrame(int number) {
@@ -11,9 +13,9 @@ public class LastFrame extends Frame {
     }
 
     @Override
-    public String hit(int count) {
+    public List<String> hit(int count) {
         String result = getLastPin().hit(count);
-        String status = state.store(result);
+        List<String> status = state.store(result);
 
         int pinsSize = pins.size();
 

@@ -1,10 +1,12 @@
 package bowling.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FrameState {
+
     private final int number;
     private final List<String> results;
 
@@ -21,9 +23,9 @@ public class FrameState {
         return number;
     }
 
-    public String store(String result) {
+    public List<String> store(String result) {
         results.add(result);
-        return results.stream().collect(Collectors.joining("|"));
+        return Collections.unmodifiableList(results);
     }
 
     @Override
