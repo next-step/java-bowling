@@ -37,22 +37,14 @@ public class FinalFrame extends Frame {
       return true;
     }
 
-    if (atLeastDouble()) {
-      return false;
-    }
-
-    if (atLeastOneStrikeOrOneSpare()) {
+    if (impossibleTriple()) {
       return true;
     }
 
     return false;
   }
 
-  private boolean atLeastDouble() {
-    return this.states.size() == 2 && canTriple;
-  }
-
-  private boolean atLeastOneStrikeOrOneSpare() {
+  private boolean impossibleTriple() {
     return this.states.size() == 2 && !canTriple;
   }
 
