@@ -13,4 +13,5 @@
 ## 구현 리스트
 1. 핀을 쓰러뜨리는 경우의 수는 0 - 10으로 고정되어 있으므로 그 수를 나타내는 PinScore enum 작성 
 2. PinScore -> DownedPinCount 명칭 변경, 정적 팩토리 메서드 테스트 추가
+3. Player 클래스 작성
 
