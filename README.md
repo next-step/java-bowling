@@ -11,7 +11,7 @@
 ## 1단계 - 질문 삭제하기 기능 리팩토링
 ### 기능 목록
 [X] Question 삭제 가능 여부 로직 분리
-[ ] Answer 삭제 가능 여부 로직 분리
+[X] Answer 삭제 가능 여부 로직 분리
 [ ] Questions 일급 콜렉션 구현
 [ ] Answers 일급 콜렉션 구현
 [ ] DeleteHistories 일급 콜렉션 구현

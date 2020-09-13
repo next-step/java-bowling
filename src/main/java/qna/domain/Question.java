@@ -98,13 +98,11 @@ public class Question extends AbstractEntity {
         }
 
         deleted = true;
-
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
-        for (Answer answer : answers) {
-            answer.setDeleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
 
+        for (Answer answer : answers) {
+            deleteHistories.add(answer.delete(loginUser));
+        }
         return deleteHistories;
     }
 
@@ -112,5 +110,4 @@ public class Question extends AbstractEntity {
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
-
 }
