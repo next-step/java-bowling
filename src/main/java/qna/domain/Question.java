@@ -1,6 +1,5 @@
 package qna.domain;
 
-import lombok.Builder;
 import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
 
@@ -104,17 +103,15 @@ public class Question extends AbstractEntity {
 
         this.setDeleted(true);
 
-        List<DeleteHistory> historiesOfAnswers = deleteRelatedAnswer(loginUser);
+        DeleteHistories deleteHistories = generateQuestionHistories();
+        deleteHistories.addHistories(deleteRelatedAnswer(loginUser));
 
-        DeleteHistories deleteHistories = generateHistories(historiesOfAnswers);
         return deleteHistories;
     }
 
-    private DeleteHistories generateHistories(List<DeleteHistory> histories) {
+    private DeleteHistories generateQuestionHistories() {
         return DeleteHistories.of()
-                .addHistory(DeleteHistory.of(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()))
-                .addAll(histories);
-
+                .addHistory(DeleteHistory.of(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
     }
 
     public List<DeleteHistory> deleteRelatedAnswer(User loginUser) {

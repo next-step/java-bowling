@@ -1,6 +1,5 @@
 package qna.domain;
 
-import lombok.Builder;
 import qna.UnAuthorizedException;
 
 import javax.persistence.Column;
