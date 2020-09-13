@@ -1,13 +1,18 @@
 package qna.domain;
 
+import lombok.Builder;
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -33,6 +38,7 @@ public class Question extends AbstractEntity {
         this.contents = contents;
     }
 
+    @Builder
     public Question(long id, String title, String contents) {
         super(id);
         this.title = title;
@@ -84,8 +90,35 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        this.setDeleted(true);
+
+        List<DeleteHistory> historiesOfAnswers = deleteRelatedAnswer(loginUser);
+
+        DeleteHistories deleteHistories = generateHistories(historiesOfAnswers);
+        return deleteHistories;
+    }
+
+    private DeleteHistories generateHistories(List<DeleteHistory> histories) {
+        return DeleteHistories.of()
+                .addHistory(DeleteHistory.builder()
+                        .contentType(ContentType.QUESTION)
+                        .contentId(getId())
+                        .deletedBy(getWriter())
+                        .createDate(LocalDateTime.now())
+                        .build())
+                .addAll(histories);
+    }
+
+    public List<DeleteHistory> deleteRelatedAnswer(User loginUser) {
+        return this.answers.stream()
+                .map(answer -> answer.deleteAnswer(loginUser))
+                .collect(Collectors.toList());
     }
 
     @Override
