@@ -1,11 +1,9 @@
 package bowling.frame.domain;
 
-public interface Frame {
+public abstract class Frame {
 
-    boolean isEnd();
+    public abstract boolean isFinal();
 
-    boolean clear();
-
-    int getNumber();
+    public abstract int getNumber();
 
 }

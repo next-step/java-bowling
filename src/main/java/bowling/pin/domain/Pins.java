@@ -4,13 +4,10 @@ import bowling.ball.domain.Ball;
 import bowling.state.domain.State;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Pins {
-
-    private static final int DEFAULT_PITCH_COUNT = 2;
 
     public static List<Pin> pins = new ArrayList<>();
 

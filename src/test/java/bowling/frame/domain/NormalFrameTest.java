@@ -1,21 +1,21 @@
 package bowling.frame.domain;
 
 import bowling.global.exception.OutOfFrameRangeException;
+import bowling.pin.domain.Pins;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.*;
 
-class NomalFrameTest {
+class NormalFrameTest {
 
     private Frame nomalFrame;
 
     @Test
     @DisplayName("게임 단위인 Frame 생성")
     void create() {
-        nomalFrame = NomalFrame.newFrame(2);
+        nomalFrame = NormalFrame.newFrame(2, Pins.playPitch("5", 1));
         assertThat(nomalFrame.getNumber()).isEqualTo(2);
     }
 
@@ -24,7 +24,7 @@ class NomalFrameTest {
     void invalidNomalFrameNumberException() {
         assertThatExceptionOfType(OutOfFrameRangeException.class)
                 .isThrownBy(() -> {
-                    nomalFrame = NomalFrame.newFrame(11);
+                    nomalFrame = NormalFrame.newFrame(11, Pins.playPitch("5", 1));
                 });
     }
 }
