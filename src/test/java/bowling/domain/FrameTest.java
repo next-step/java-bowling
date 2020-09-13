@@ -66,11 +66,33 @@ public class FrameTest {
     void next_last() {
         Frame frame = NormalFrame.from();
 
-        for(int index = 0 ; index < 9; index++) {
+        for (int index = 0; index < 9; index++) {
             frame = frame.next();
         }
 
         assertThat(frame.getNumber()).isEqualTo(10);
         assertThat(frame).isInstanceOf(LastFrame.class);
+    }
+
+    @Test
+    void canGoNext() {
+        Frame frame = NormalFrame.from();
+
+        assertThat(frame.canGoNextFrame()).isFalse();
+        frame.hit(10);
+
+        assertThat(frame.canGoNextFrame()).isTrue();
+    }
+
+    @Test
+    void canGoNext_last() {
+        Frame frame = LastFrame.from();
+
+        assertThat(frame.canGoNextFrame()).isFalse();
+        frame.hit(10);
+        frame.hit(10);
+        frame.hit(10);
+
+        assertThat(frame.canGoNextFrame()).isFalse();
     }
 }

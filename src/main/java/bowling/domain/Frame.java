@@ -11,8 +11,8 @@ public class Frame {
     protected final List<Pin> pins;
 
     protected Frame(int number) {
-        this.state = FrameState.from(number);
-        this.pins = new ArrayList() {{
+        state = FrameState.from(number);
+        pins = new ArrayList() {{
             add(Pin.from());
         }};
     }
@@ -34,6 +34,10 @@ public class Frame {
     }
 
     public Frame next() {
+        if (isLastFrame()) {
+            throw new RuntimeException("다음 프레임이 존재하지 않습니다.");
+        }
+
         int nextFrameNumber = nextFrameNumber();
         return nextFrameNumber == LAST_FRAME_NUMBER ? LastFrame.from() : NormalFrame.of(nextFrameNumber);
     }
@@ -44,6 +48,10 @@ public class Frame {
 
     public boolean isLastFrame() {
         return false;
+    }
+
+    public boolean canGoNextFrame() {
+        return !isLastFrame() && isFinish();
     }
 
     @Override

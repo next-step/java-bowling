@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    public static final int LAST_FRAME_PREV_NUMBER = Frame.LAST_FRAME_NUMBER - 1;
     private List<Frame> frames;
 
     private Game() {
-        this.frames = new ArrayList<Frame>() {{
+        frames = new ArrayList<Frame>() {{
             add(NormalFrame.from());
         }};
     }
@@ -18,30 +17,29 @@ public class Game {
     }
 
     public boolean isFinish() {
-        return getLast().isFinish();
+        return getLastFrame().isFinish();
+    }
+
+    public int getPlayNumber() {
+        return getLastFrame().getNumber();
     }
 
     public String hit(int count) {
-        Frame last = getLast();
+        Frame last = getLastFrame();
         String result = last.hit(count);
 
-        if (last.getNumber() == LAST_FRAME_PREV_NUMBER && last.isFinish()) {
-            this.frames.add(last.next());
-            return result;
-        }
-
-        if (!last.isLastFrame() && last.isFinish()) {
-            this.frames.add(last.next());
+        if (last.canGoNextFrame()) {
+            addNextFrame();
         }
 
         return result;
     }
 
-    public int getPlayNumber() {
-        return getLast().getNumber();
+    private void addNextFrame() {
+        frames.add(getLastFrame().next());
     }
 
-    private Frame getLast() {
-        return this.frames.get(this.frames.size() - 1);
+    private Frame getLastFrame() {
+        return frames.get(frames.size() - 1);
     }
 }
