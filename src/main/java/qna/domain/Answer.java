@@ -82,7 +82,7 @@ public class Answer extends AbstractEntity {
             throw new CannotDeleteException("답변을 삭제할 권한이 없습니다");
         }
 
-        setDeleted(true);
+        this.deleted = true;
         return DeleteHistory.of(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 
