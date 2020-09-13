@@ -1,4 +1,4 @@
-package bowling.pin.domain;
+package bowling.pin;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

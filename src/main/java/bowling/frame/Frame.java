@@ -1,4 +1,4 @@
-package bowling.frame.domain;
+package bowling.frame;
 
 public abstract class Frame {
 

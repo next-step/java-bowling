@@ -1,8 +1,10 @@
-package bowling.frame.domain;
+package bowling.frame;
 
-import bowling.ball.domain.Ball;
-import bowling.pin.domain.Pin;
-import bowling.pin.domain.Pins;
+import bowling.ball.Ball;
+import bowling.frame.Frame;
+import bowling.frame.NormalFrame;
+import bowling.pin.Pin;
+import bowling.pin.Pins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +32,7 @@ class NormalFrameTest {
     void createFrame() {
         for (int i = 1; i <= 2; i++) {
             ball = Ball.pitch("5", i);
-            pin = Pin.pitchResult(pinList, ball);
+            pin = Pin.of(pinList, ball);
             pins = Pins.eachPitchResult(pinList, pin);
         }
         nomalFrame = NormalFrame.newFrame(1, pins);

@@ -1,6 +1,6 @@
-package bowling.frame.domain;
+package bowling.frame;
 
-import bowling.pin.domain.Pins;
+import bowling.pin.Pins;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package bowling.ball.domain;
+package bowling.ball;
 
 import bowling.global.exception.InputPitchPointNullPointerException;
 import bowling.global.exception.OutOfPitchRangeException;

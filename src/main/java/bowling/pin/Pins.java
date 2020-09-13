@@ -1,4 +1,4 @@
-package bowling.pin.domain;
+package bowling.pin;
 
 import java.util.Collections;
 import java.util.List;

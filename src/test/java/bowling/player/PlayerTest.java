@@ -1,4 +1,4 @@
-package bowling.player.domain;
+package bowling.player;
 
 import bowling.global.exception.NotMatchingPlayerNameException;
 import org.junit.jupiter.api.DisplayName;

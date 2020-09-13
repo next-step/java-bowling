@@ -1,9 +1,9 @@
-package bowling.frame.domain;
+package bowling.frame;
 
-import bowling.ball.domain.Ball;
+import bowling.ball.Ball;
 import bowling.global.exception.OutOfFrameRangeException;
-import bowling.pin.domain.Pin;
-import bowling.pin.domain.Pins;
+import bowling.pin.Pin;
+import bowling.pin.Pins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class FramesTest {
     void createFrames() {
         for (int i = 1; i <= 2; i++) {
             ball = Ball.pitch("5", i);
-            pin = Pin.pitchResult(pinList, ball);
+            pin = Pin.of(pinList, ball);
             pins = Pins.eachPitchResult(pinList, pin);
         }
         Frames frames = Frames.nextFrame(frameList, pins);
@@ -46,7 +46,7 @@ class FramesTest {
         assertThatExceptionOfType(OutOfFrameRangeException.class)
                 .isThrownBy(() -> {
                     ball = Ball.pitch("5", 1);
-                    pin = Pin.pitchResult(pinList, ball);
+                    pin = Pin.of(pinList, ball);
 //                    Frames.createFrame(11, Pins.eachPitchResult(pinList, pin));
                 });
     }

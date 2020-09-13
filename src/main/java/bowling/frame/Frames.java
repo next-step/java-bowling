@@ -1,8 +1,8 @@
-package bowling.frame.domain;
+package bowling.frame;
 
 import bowling.global.exception.OutOfFrameRangeException;
 import bowling.global.utils.ExceptionMessage;
-import bowling.pin.domain.Pins;
+import bowling.pin.Pins;
 
 import java.util.List;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package bowling.player.domain;
+package bowling.player;
 
 import bowling.global.utils.ExceptionMessage;
 import bowling.global.exception.NotMatchingPlayerNameException;
@@ -12,22 +12,22 @@ public class Player {
     private String name;
 
     public Player(String name) {
-        this.name = name;
-        validatePlayerNameisNull();
-        validatePlayerNameLength();
+        validatePlayerNameisNull(name);
+        validatePlayerNameLength(name);
+        this.name = name.toUpperCase();
     }
 
     public String getName() {
         return name;
     }
 
-    private void validatePlayerNameisNull() {
+    private void validatePlayerNameisNull(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new NotMatchingPlayerNameException(ExceptionMessage.INVALID_PLAYER_NAME_IS_NULL);
         }
     }
 
-    private void validatePlayerNameLength() {
+    private void validatePlayerNameLength(String name) {
         if (name.length() > NUMBER_THREE) {
             throw new NotMatchingPlayerNameException(ExceptionMessage.INVALID_PLAYER_NAME_LENGTH);
         }
