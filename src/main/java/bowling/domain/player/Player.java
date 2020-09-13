@@ -18,11 +18,11 @@ public class Player {
 
 	public Player(String name) {
 		validateName(name);
-		this.name = name;
+		this.name = name.toUpperCase();
 	}
 
 	public String getPlayerName() {
-		return name.toUpperCase();
+		return name;
 	}
 
 	private void validateName(String name) {
