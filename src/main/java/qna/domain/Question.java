@@ -75,6 +75,11 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
+    public boolean isAllAnswerOwner() {
+        Answers allAnswer = new Answers(this.answers);
+        return allAnswer.isOwner(writer);
+    }
+
     public Question setDeleted(boolean deleted) {
         this.deleted = deleted;
         return this;
