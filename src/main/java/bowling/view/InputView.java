@@ -18,8 +18,8 @@ public class InputView {
 		return new Player(getStringValue());
 	}
 
-	public static DownedPinCount getPitchResult() {
-		System.out.println(PLEASE_INPUT_N_FRAME_PITCH_RESULT);
+	public static DownedPinCount getCurrentFramePitch(int currentFrameSequence) {
+		System.out.println(String.format(PLEASE_INPUT_N_FRAME_PITCH_RESULT, currentFrameSequence));
 		return DownedPinCount.from(getIntValue());
 	}
 
@@ -36,5 +36,4 @@ public class InputView {
 	private static String getStringValue() {
 		return SCANNER.nextLine();
 	}
-
 }

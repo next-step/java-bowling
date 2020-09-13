@@ -1,6 +1,8 @@
 package bowling.domain.game;
 
+import bowling.domain.DownedPinCount;
 import bowling.domain.player.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,11 +11,43 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
+	private final Player givenPlayer = new Player("TED");
+	private Game givenGame;
+
+	@BeforeEach
+	void setup() {
+		givenGame = new Game(givenPlayer);
+	}
+
 	@DisplayName("객체 생성 테스트")
 	@Test
 	void construct() {
-		Player givenPlayer = new Player("TED");
-		assertThat(new Game(givenPlayer)).isEqualTo(new Game(givenPlayer));
+		assertThat(givenGame).isEqualTo(new Game(givenPlayer));
+	}
+
+	@DisplayName("현재 게임 진행중인 프레임 번호 얻기 테스트")
+	@Test
+	void getCurrentFrameSequence() {
+		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(1);
+	}
+
+	@DisplayName("게임 플레이 테스트")
+	@Test
+	void pitchTheBall() {
+		givenGame.pitchTheBall(DownedPinCount.EIGHT);
+		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(1);
+		givenGame.pitchTheBall(DownedPinCount.TWO);
+		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(2);
+	}
+
+	@DisplayName("10프레임까지 게임이 진행되었는지 확인이 가능한지 테스트")
+	@Test
+	void isGameFinished() {
+		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(1);
+		while (!givenGame.isGameFinished()) {
+			givenGame.pitchTheBall(DownedPinCount.TEN);
+		}
+		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(10);
 	}
 
 }

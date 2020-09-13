@@ -31,13 +31,17 @@ public class Frame {
 		this.downedPinCounts = downedPinCounts;
 	}
 
-	public boolean pitchTheBall(DownedPinCount downedPinCount) {
+	public boolean record(DownedPinCount downedPinCount) {
 		validateBeforeAdd(downedPinCount);
 		return downedPinCounts.add(downedPinCount);
 	}
 
 	public int getFrameSequence() {
 		return frameSequence;
+	}
+
+	public boolean isFrameFinished() {
+		return isAllPinDowned(getDownedPinCountSum()) || isMaxCountPitched();
 	}
 
 	private void validateBeforeAdd(DownedPinCount downedPinCount) {
@@ -53,14 +57,26 @@ public class Frame {
 	}
 
 	private boolean isValidPinCountSumPerFrame(DownedPinCount downedPinCount) {
-		Integer pinScoreSum = downedPinCounts.stream()
+		Integer pinScoreSum = getDownedPinCountSum();
+		return isAllPinDowned(pinScoreSum) || (MAX_PIN_COUNT_PER_FRAME - pinScoreSum < downedPinCount.intValue());
+	}
+
+	private Integer getDownedPinCountSum() {
+		return downedPinCounts.stream()
 				.map(DownedPinCount::intValue)
 				.reduce(0, Integer::sum);
-		return (pinScoreSum == MAX_PIN_COUNT_PER_FRAME) || (MAX_PIN_COUNT_PER_FRAME - pinScoreSum < downedPinCount.intValue());
+	}
+
+	private boolean isAllPinDowned(int pinScoreSum) {
+		return (pinScoreSum == MAX_PIN_COUNT_PER_FRAME);
+	}
+
+	private boolean isMaxCountPitched() {
+		return downedPinCounts.size() >= DEFAULT_MAX_PITCH_COUNT;
 	}
 
 	private void validatePinScoresCount() {
-		if(downedPinCounts.size() >= DEFAULT_MAX_PITCH_COUNT) {
+		if(isMaxCountPitched()) {
 			throw new BowlingException(String.format(OVER_DEFAULT_MAX_PITCH_COUNT, DEFAULT_MAX_PITCH_COUNT));
 		}
 	}

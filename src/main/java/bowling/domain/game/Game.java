@@ -1,5 +1,6 @@
 package bowling.domain.game;
 
+import bowling.domain.DownedPinCount;
 import bowling.domain.frame.Frame;
 import bowling.domain.player.Player;
 
@@ -14,6 +15,7 @@ public class Game {
 
 	private final Player player;
 	private final List<Frame> frames;
+	private int currentIndex = START_INDEX;
 
 
 	public Game(Player player) {
@@ -29,6 +31,23 @@ public class Game {
 
 	public List<Frame> getFrames() {
 		return frames;
+	}
+
+	public int getCurrentFrameSequence() {
+		return frames.get(currentIndex).getFrameSequence();
+	}
+
+	public boolean isGameFinished() {
+		return frames.stream()
+				.allMatch(Frame::isFrameFinished);
+	}
+
+	public void pitchTheBall(DownedPinCount currentFramePitch) {
+		Frame currentFrame = frames.get(currentIndex);
+		currentFrame.record(currentFramePitch);
+		if(currentFrame.isFrameFinished()) {
+			currentIndex = currentIndex == MAX_FRAMES_PER_GAME -1 ? currentIndex : currentIndex + 1;
+		}
 	}
 
 	@Override
