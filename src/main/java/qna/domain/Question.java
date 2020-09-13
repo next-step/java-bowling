@@ -33,16 +33,22 @@ public class Question extends AbstractEntity {
     public Question() {
     }
 
-    public Question(String title, String contents) {
+    private Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
 
-    @Builder
-    public Question(long id, String title, String contents) {
+    private Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
+    }
+
+    public static Question ofQuestion(Long id, String title, String contents) {
+        if(id == null) {
+            return new Question(title, contents);
+        }
+        return new Question(id, title, contents);
     }
 
     public String getTitle() {
@@ -106,13 +112,9 @@ public class Question extends AbstractEntity {
 
     private DeleteHistories generateHistories(List<DeleteHistory> histories) {
         return DeleteHistories.of()
-                .addHistory(DeleteHistory.builder()
-                        .contentType(ContentType.QUESTION)
-                        .contentId(getId())
-                        .deletedBy(getWriter())
-                        .createDate(LocalDateTime.now())
-                        .build())
+                .addHistory(DeleteHistory.of(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()))
                 .addAll(histories);
+
     }
 
     public List<DeleteHistory> deleteRelatedAnswer(User loginUser) {

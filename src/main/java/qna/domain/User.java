@@ -29,13 +29,16 @@ public class User extends AbstractEntity {
         this(null, userId, password, name, email);
     }
 
-    @Builder
-    public User(Long id, String userId, String password, String name, String email) {
+    private User(Long id, String userId, String password, String name, String email) {
         super(id);
         this.userId = userId;
         this.password = password;
         this.name = name;
         this.email = email;
+    }
+
+    public static User ofUser(Long id, String userId, String password, String name, String email) {
+        return new User(id, userId, password, name, email);
     }
 
     public String getUserId() {

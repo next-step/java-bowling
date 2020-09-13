@@ -37,8 +37,8 @@ public class QnaServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        question = Question.ofQuestion(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        answer = Answer.ofAnswer(11L, UserTest.JAVAJIGI, QuestionTest.Q1,"Answers Contents1");
         question.addAnswer(answer);
     }
 
@@ -81,19 +81,14 @@ public class QnaServiceTest {
     public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
 
         // given
-        User otherAnswerWriter = User.builder()
-                .id(2L)
-                .userId("kjyang")
-                .password("Password")
-                .name("Name")
-                .email("slamdunk7575@slipp.net")
-                .build();
+        User otherAnswerWriter = User.ofUser(2L, "kjyang", "Password", "Name", "slamdunk7575@slipp.net");
 
-        Answer answer = Answer.builder()
+        /*Answer answer = Answer.builder()
                 .writer(otherAnswerWriter)
                 .question(question)
                 .contents("Content of answer")
-                .build();
+                .build();*/
+        Answer answer = Answer.ofAnswer(null, otherAnswerWriter, question,"Content of answer");
 
         question.addAnswer(answer);
 
@@ -107,19 +102,8 @@ public class QnaServiceTest {
     }
 
     private void verifyDeleteHistories() {
-        DeleteHistory questionHistory = DeleteHistory.builder()
-                .contentType(ContentType.QUESTION)
-                .contentId(question.getId())
-                .deletedBy(question.getWriter())
-                .createDate(LocalDateTime.now())
-                .build();
-
-        DeleteHistory answerHistory = DeleteHistory.builder()
-                .contentType(ContentType.ANSWER)
-                .contentId(answer.getId())
-                .deletedBy(answer.getWriter())
-                .createDate(LocalDateTime.now())
-                .build();
+        DeleteHistory questionHistory = DeleteHistory.of(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+        DeleteHistory answerHistory = DeleteHistory.of(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
 
         List<DeleteHistory> deleteHistories = Arrays.asList(questionHistory, answerHistory);
         verify(deleteHistoryService).saveAll(deleteHistories);

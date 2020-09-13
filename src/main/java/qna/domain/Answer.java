@@ -26,12 +26,11 @@ public class Answer extends AbstractEntity {
     public Answer() {
     }
 
-    @Builder
-    public Answer(User writer, Question question, String contents) {
+    private Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
     }
 
-    public Answer(Long id, User writer, Question question, String contents) {
+    private Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
         if(writer == null) {
@@ -45,6 +44,13 @@ public class Answer extends AbstractEntity {
         this.writer = writer;
         this.question = question;
         this.contents = contents;
+    }
+
+    public static Answer ofAnswer(Long id, User writer, Question question, String contents) {
+        if(id == null) {
+            return new Answer(writer, question, contents);
+        }
+        return new Answer(id, writer, question, contents);
     }
 
     public Answer setDeleted(boolean deleted) {
@@ -78,12 +84,7 @@ public class Answer extends AbstractEntity {
         }
 
         setDeleted(true);
-        return DeleteHistory.builder()
-                .contentType(ContentType.ANSWER)
-                .contentId(getId())
-                .deletedBy(getWriter())
-                .createDate(LocalDateTime.now())
-                .build();
+        return DeleteHistory.of(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now());
     }
 
     @Override
