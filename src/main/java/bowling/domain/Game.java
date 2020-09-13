@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    public static final int LAST_FRAME_PREV_NUMBER = 9;
+    public static final int LAST_FRAME_PREV_NUMBER = Frame.LAST_FRAME_NUMBER - 1;
     private List<Frame> frames;
 
     private Game() {
@@ -26,7 +26,7 @@ public class Game {
         String result = last.hit(count);
 
         if (last.getNumber() == LAST_FRAME_PREV_NUMBER && last.isFinish()) {
-            this.frames.add(LastFrame.from());
+            this.frames.add(last.next());
             return result;
         }
 

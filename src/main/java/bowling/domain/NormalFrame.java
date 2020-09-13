@@ -9,4 +9,8 @@ public class NormalFrame extends Frame {
     public static NormalFrame from() {
         return new NormalFrame(1);
     }
+
+    public static NormalFrame of(int number) {
+        return new NormalFrame(number);
+    }
 }

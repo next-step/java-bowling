@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Frame {
 
+    public static final int LAST_FRAME_NUMBER = 10;
+
     protected final FrameState state;
     protected final List<Pin> pins;
 
@@ -31,8 +33,13 @@ public class Frame {
         return getLastPin().isFinish();
     }
 
-    public NormalFrame next() {
-        return new NormalFrame(state.getNumber() + 1);
+    public Frame next() {
+        int nextFrameNumber = nextFrameNumber();
+        return nextFrameNumber == LAST_FRAME_NUMBER ? LastFrame.from() : NormalFrame.of(nextFrameNumber);
+    }
+
+    private int nextFrameNumber() {
+        return state.getNumber() + 1;
     }
 
     public boolean isLastFrame() {
