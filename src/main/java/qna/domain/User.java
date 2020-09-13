@@ -1,5 +1,6 @@
 package qna.domain;
 
+import lombok.Builder;
 import qna.UnAuthorizedException;
 
 import javax.persistence.Column;
@@ -28,6 +29,7 @@ public class User extends AbstractEntity {
         this(null, userId, password, name, email);
     }
 
+    @Builder
     public User(Long id, String userId, String password, String name, String email) {
         super(id);
         this.userId = userId;

@@ -1,5 +1,7 @@
 package qna.domain;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -24,6 +26,7 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
+    @Builder
     public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
         this.contentType = contentType;
         this.contentId = contentId;
