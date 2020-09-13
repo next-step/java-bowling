@@ -1,7 +1,5 @@
 package qna.domain;
 
-import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +86,13 @@ public class Question extends AbstractEntity {
 
     public List<Answer> getAnswers() {
         return answers.getAnswers();
+    }
+
+    public List<DeleteHistory> delete() {
+        this.deleted = true;
+        DeleteHistories deleteHistories = new DeleteHistories(this);
+        answers.delete(deleteHistories);
+        return deleteHistories.getDeleteHistories();
     }
 
     @Override

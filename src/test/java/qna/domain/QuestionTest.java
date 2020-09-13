@@ -2,6 +2,8 @@ package qna.domain;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class QuestionTest {
@@ -13,5 +15,14 @@ public class QuestionTest {
         Q1.addAnswer(AnswerTest.A1);
 
         assertThat(Q1.isAllAnswerOwner()).isTrue();
+    }
+
+    @Test
+    void delete() {
+        List<DeleteHistory> deleteHistories = Q1.delete();
+        Q1.addAnswer(AnswerTest.A1);
+
+        assertThat(Q1.isDeleted()).isTrue();
+        assertThat(deleteHistories).hasSize(1);
     }
 }

@@ -17,11 +17,11 @@ public class Answers {
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
-    public Answers(List<Answer> answers) {
-        this.answers = answers;
+    public Answers() {
     }
 
-    public Answers() {
+    public Answers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     public boolean isOwner(User owner) {
@@ -30,6 +30,12 @@ public class Answers {
                 .filter(it -> it.equals(false))
                 .findFirst()
                 .orElse(true);
+    }
+
+    public void delete(DeleteHistories deleteHistories) {
+        for (Answer answer : this.answers) {
+            answer.delete(deleteHistories);
+        }
     }
 
     public List<Answer> getAnswers() {
