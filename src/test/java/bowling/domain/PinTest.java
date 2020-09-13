@@ -41,10 +41,10 @@ public class PinTest {
     void isFinish() {
         Pin pin = Pin.from();
         pin.hit(1);
-        assertThat(pin.isFinish()).isFalse();
+        assertThat(pin.isClear()).isFalse();
         pin.hit(9);
 
-        assertThat(pin.isFinish()).isTrue();
+        assertThat(pin.isClear()).isTrue();
     }
 
     @Test
@@ -52,7 +52,7 @@ public class PinTest {
         Pin pin = Pin.from();
         pin.hit(10);
 
-        assertThat(pin.isFinish()).isTrue();
+        assertThat(pin.isClear()).isTrue();
     }
 
     @Test
@@ -61,14 +61,6 @@ public class PinTest {
         pin.hit(1);
         pin.hit(9);
 
-        assertThat(pin.isFinish()).isTrue();
-    }
-
-    @Test
-    void isFinish_custom() {
-        Pin pin = Pin.of(1, 0);
-        pin.hit(1);
-
-        assertThat(pin.isFinish()).isTrue();
+        assertThat(pin.isClear()).isTrue();
     }
 }

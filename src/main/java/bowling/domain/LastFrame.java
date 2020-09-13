@@ -23,7 +23,7 @@ public class LastFrame extends Frame {
             pins.add(Pin.from());
         }
 
-        if (pinsSize == 2 && state.getPrevResult().equals("X") && result.equals("X")) {
+        if (pinsSize == 2 && status.get(status.size() - 2).equals("X") && result.equals("X")) {
             pins.add(Pin.from());
         }
 

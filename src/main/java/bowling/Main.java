@@ -19,10 +19,6 @@ public class Main {
             int number = game.getPlayNumber();
             int hitCount = InputScanner.getHitCount(String.format("%s프레임 투구 : ", number));
 
-            if (!score.containsKey(number)) {
-                score.put(number, new ArrayList<>());
-            }
-
             score.put(number, game.hit(hitCount));
 
             ResultViewer.showResult(10, name, score);

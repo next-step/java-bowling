@@ -30,7 +30,7 @@ public class Frame {
     }
 
     public boolean isFinish() {
-        return getLastPin().isFinish();
+        return getLastPin().isClear();
     }
 
     public Frame next() {

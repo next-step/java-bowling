@@ -50,11 +50,7 @@ public class Pin {
         return String.valueOf(count);
     }
 
-    public boolean isFinish() {
-        if (!state.canHit()) {
-            return true;
-        }
-
+    public boolean isClear() {
         return this.count == NO_COUNT;
     }
 
