@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class Frame implements Comparable<Frame> {
 
+  private static final int MAX_FRAME = 10;
+
   protected int number;
   protected State state;
 
@@ -19,7 +21,7 @@ public class Frame implements Comparable<Frame> {
       return this;
     }
 
-    if (isDone() && number + 1 == 10) {  // final frame
+    if (nextFinalFrame()) {
       FinalFrame finalFrame = new FinalFrame();
       finalFrame.roll(pins);
 
@@ -34,6 +36,10 @@ public class Frame implements Comparable<Frame> {
 
     state = state.roll(pins);
     return this;
+  }
+
+  private boolean nextFinalFrame() {
+    return isDone() && number + 1 == MAX_FRAME;
   }
 
   public boolean isDone() {
