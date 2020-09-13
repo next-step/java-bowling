@@ -1,17 +1,12 @@
-package bowling.state.domain;
+package bowling.state;
 
 public enum State {
     STRIKE("X"),
     SPARE("/"),
     MISS(""),
-    GUTTER("-"),
-    PASS("");
+    GUTTER("-");
 
     private String mark;
-
-    public String getMark() {
-        return mark;
-    }
 
     State(String mark) {
         this.mark = mark;
