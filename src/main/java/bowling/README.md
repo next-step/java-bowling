@@ -15,4 +15,6 @@
 2. PinScore -> DownedPinCount 명칭 변경, 정적 팩토리 메서드 테스트 추가
 3. Player 클래스 작성
 4. InputView 클래스 작성
+5. 볼링의 한 게임의 10프레임 중 하나를 나타내는 Frame 클래스 작성
+
 
