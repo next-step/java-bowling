@@ -4,14 +4,18 @@ import bowling.global.exception.OutOfFrameRangeException;
 import bowling.global.utils.ExceptionMessage;
 import bowling.pin.domain.Pins;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static bowling.global.utils.CommonConstant.NUMBER_TWO;
+import static bowling.global.utils.CommonConstant.NUMBER_ZERO;
+
 public class Frames {
 
-    public static int TOTAL_FRAME_NUMBER = 1;
+    public static int CURRENT_FRAME_NUMBER = 1;
     public static int PITCH_COUNT = 2;
+    public static final int FINAL_FRAME_COUNT = 10;
+    private static final int INCREASE_FRAME_NUMBER = 1;
 
     private List<Frame> frames;
 
@@ -20,35 +24,30 @@ public class Frames {
     }
 
     public static Frames nextFrame(List<Frame> frames, Pins pins) {
-        Frame frame = createFrame(TOTAL_FRAME_NUMBER, pins);
+        Frame frame = createFrame(CURRENT_FRAME_NUMBER, pins);
         increaseTotalFrameNumber(frame, pins);
         frames.add(frame);
         return new Frames(frames);
     }
 
     private static Frame createFrame(int frameNumber, Pins pins) {
-        if (frameNumber == 10) {
+        if (frameNumber == FINAL_FRAME_COUNT) {
             return FinalFrame.finalFrame(pins);
         }
-        if (frameNumber > 0 && frameNumber < 10) {
+        if (frameNumber > NUMBER_ZERO && frameNumber < FINAL_FRAME_COUNT) {
             return NormalFrame.newFrame(frameNumber, pins);
         }
         throw new OutOfFrameRangeException(ExceptionMessage.INVALID_NOMAL_FRAME_NUMBER);
     }
 
     private static int increaseTotalFrameNumber(Frame frame, Pins pins) {
-        if (frame.isFinal() && TOTAL_FRAME_NUMBER == 10) {
-//            TOTAL_FRAME_NUMBER += 1;
-            System.out.println("finalFrame");
+        if (CURRENT_FRAME_NUMBER == FINAL_FRAME_COUNT && (frame.isFinal() && pins.size() >= NUMBER_TWO)) {
+            CURRENT_FRAME_NUMBER += INCREASE_FRAME_NUMBER;
         }
-        if (!frame.isFinal() && pins.size() == 2) {
-            TOTAL_FRAME_NUMBER += 1;
+        if (!frame.isFinal() && pins.size() == NUMBER_TWO) {
+            CURRENT_FRAME_NUMBER += INCREASE_FRAME_NUMBER;
         }
-        return TOTAL_FRAME_NUMBER;
-    }
-
-    public List<Frame> getFrames() {
-        return Collections.unmodifiableList(frames);
+        return CURRENT_FRAME_NUMBER;
     }
 
     public int size() {

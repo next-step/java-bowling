@@ -1,10 +1,10 @@
 package bowling.pin.domain;
 
-import bowling.state.domain.State;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import static bowling.global.utils.CommonConstant.NUMBER_TWO;
 
 public class Pins {
 
@@ -15,11 +15,15 @@ public class Pins {
     }
 
     public static Pins eachPitchResult(List<Pin> pins, Pin pin) {
-        if (pins.size() == 2) {
-            pins.clear();
-        }
+        pinsClear(pins);
         pins.add(pin);
         return new Pins(pins);
+    }
+
+    private static void pinsClear(List<Pin> pins) {
+        if (pins.size() == NUMBER_TWO) {
+            pins.clear();
+        }
     }
 
     public int size() {

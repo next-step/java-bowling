@@ -9,6 +9,10 @@ import java.util.Objects;
 
 public class Ball {
 
+    private static final int PITCHI_MIN_NUMBER = 0;
+    private static final int PITCHI_MAX_NUMBER = 10;
+
+
     private int point;
     private int pitchNumber;
 
@@ -30,7 +34,7 @@ public class Ball {
     }
 
     private void validateOutofPitchRange() {
-        if (point < 0 || point > 10) {
+        if (point < PITCHI_MIN_NUMBER || point > PITCHI_MAX_NUMBER) {
             throw new OutOfPitchRangeException(ExceptionMessage.INVALID_PITCH_RANGE);
         }
     }

@@ -15,9 +15,8 @@ public class FinalFrame extends Frame {
     }
 
     public static Frame finalFrame(Pins pins) {
-        return new FinalFrame(10, pins);
+        return new FinalFrame(Frames.FINAL_FRAME_COUNT, pins);
     }
-
 
     @Override
     public boolean isFinal() {
