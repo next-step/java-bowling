@@ -2,17 +2,19 @@ package bowling.domain;
 
 import org.junit.jupiter.api.Test;
 
+import static bowling.domain.PinState.DEFAULT_TRY_COUNT;
+import static bowling.domain.PinState.MAX_TRY_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PinStateTest {
     @Test
-    void constructor() {
-        assertThat(PinState.from()).isNotNull();
+    void of() {
+        assertThat(PinState.of(MAX_TRY_COUNT, DEFAULT_TRY_COUNT)).isNotNull();
     }
 
     @Test
     void canHitAndCounting() {
-        PinState pinState = PinState.from();
+        PinState pinState = PinState.of(MAX_TRY_COUNT, DEFAULT_TRY_COUNT);
 
         assertThat(pinState.canHit()).isTrue();
         pinState.counting();
@@ -23,7 +25,7 @@ public class PinStateTest {
 
     @Test
     void isFirstTime() {
-        PinState pinState = PinState.from();
+        PinState pinState = PinState.of(MAX_TRY_COUNT, DEFAULT_TRY_COUNT);
 
         assertThat(pinState.isFirstTime()).isFalse();
         pinState.counting();

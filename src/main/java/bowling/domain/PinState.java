@@ -12,10 +12,6 @@ public class PinState {
         this.tryCount = tryCount;
     }
 
-    public static PinState from() {
-        return new PinState(MAX_TRY_COUNT, DEFAULT_TRY_COUNT);
-    }
-
     public static PinState of(int maxTryCount, int tryCount) {
         return new PinState(maxTryCount, tryCount);
     }
