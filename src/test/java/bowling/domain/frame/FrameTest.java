@@ -20,16 +20,6 @@ class FrameTest {
 		assertThat(frame).isEqualTo(new Frame(index, ONE));
 	}
 
-	@DisplayName("10개 핀이 다 쓰러진 상태에서 더 쓰러뜨리려고 하면 Exception 테스트")
-	@Test
-	void failRecordingTest1() {
-		int index = 0;
-		Frame frame = new Frame(index, TEN);
-		assertThatThrownBy(() -> frame.record(ONE))
-				.isInstanceOf(BowlingException.class)
-				.hasMessage(String.format(OVER_MAX_PIN_COUNT_PER_FRAME, MAX_PIN_COUNT_PER_FRAME));
-	}
-
 	@DisplayName("최대 투구 횟수만큼 투구했는데 더 투구하려고하면 Exception 테스트")
 	@Test
 	void failRecordingTest2() {

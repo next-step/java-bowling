@@ -1,38 +1,35 @@
 package bowling.domain.frame;
 
 import bowling.domain.DownedPinCount;
+import bowling.domain.DownedPinCounts;
 import bowling.exception.BowlingException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Frame {
 
 	static final String OVER_DEFAULT_MAX_PITCH_COUNT = "이번 프레임에 %d회를 초과해서 투구할 수 없습니다.";
-	static final String OVER_MAX_PIN_COUNT_PER_FRAME = "한 프레임 당 쓰러뜨린 핀의 갯수는 %d개를 초과할 수 없습니다.";
+
 	static final int DEFAULT_MAX_PITCH_COUNT = 2;
-	static final int MAX_PIN_COUNT_PER_FRAME = 10;
+
 	private static final int SEQUENCE_ADDER = 1;
 
 	private final int frameSequence;
-	private final List<DownedPinCount> downedPinCounts;
+	private final DownedPinCounts downedPinCounts;
 
 	public Frame(int index) {
 		this.frameSequence = index + SEQUENCE_ADDER;
-		this.downedPinCounts = new ArrayList<>();
+		this.downedPinCounts = new DownedPinCounts();
 	}
 
 	//forTest
 	Frame(int index, DownedPinCount downedPinCount) {
 		this.frameSequence = index + SEQUENCE_ADDER;
-		List<DownedPinCount> downedPinCounts = new ArrayList<>();
-		downedPinCounts.add(downedPinCount);
-		this.downedPinCounts = downedPinCounts;
+		this.downedPinCounts = new DownedPinCounts(downedPinCount);
 	}
 
 	public boolean record(DownedPinCount downedPinCount) {
-		validateBeforeAdd(downedPinCount);
+		validatePinScoresCount();
 		return downedPinCounts.add(downedPinCount);
 	}
 
@@ -41,34 +38,7 @@ public class Frame {
 	}
 
 	public boolean isFrameFinished() {
-		return isAllPinDowned(getDownedPinCountSum()) || isMaxCountPitched();
-	}
-
-	private void validateBeforeAdd(DownedPinCount downedPinCount) {
-		validatePinScoreSum(downedPinCount);
-		validatePinScoresCount();
-
-	}
-
-	private void validatePinScoreSum(DownedPinCount downedPinCount) {
-		if(isValidPinCountSumPerFrame(downedPinCount)) {
-			throw new BowlingException(String.format(OVER_MAX_PIN_COUNT_PER_FRAME, MAX_PIN_COUNT_PER_FRAME));
-		}
-	}
-
-	private boolean isValidPinCountSumPerFrame(DownedPinCount downedPinCount) {
-		Integer pinScoreSum = getDownedPinCountSum();
-		return isAllPinDowned(pinScoreSum) || (MAX_PIN_COUNT_PER_FRAME - pinScoreSum < downedPinCount.intValue());
-	}
-
-	private Integer getDownedPinCountSum() {
-		return downedPinCounts.stream()
-				.map(DownedPinCount::intValue)
-				.reduce(0, Integer::sum);
-	}
-
-	private boolean isAllPinDowned(int pinScoreSum) {
-		return (pinScoreSum == MAX_PIN_COUNT_PER_FRAME);
+		return downedPinCounts.isAllPinDowned() || isMaxCountPitched();
 	}
 
 	private boolean isMaxCountPitched() {
