@@ -35,13 +35,13 @@ class AnswersTest {
 
     @Test
     @DisplayName("answers 삭제하기 실패")
-    void deleteBy_fail() {
+    void deleteBy_other_user() {
         // given
         Answer answer1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "answer1 by javajigi");
         Answer answer2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "answer1 by sanjigi");
         Answers answers =  new Answers(Arrays.asList(answer1, answer2));
 
-        // when & then
+        // when
         assertThatThrownBy(() -> { answers.deleteBy(UserTest.JAVAJIGI); })
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
