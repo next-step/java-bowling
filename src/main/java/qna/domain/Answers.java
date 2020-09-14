@@ -13,15 +13,11 @@ public class Answers {
         this.answers = new ArrayList<>(answers);
     }
 
-    public void validateAnswersWhenDeleting(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            answer.validateOwnerWhenDeleting(loginUser);
-        }
-    }
-
-    public List<DeleteHistory> deleteAnswers() {
+    public List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
         List<DeleteHistory> deleteHistories = new ArrayList<>();
-        answers.forEach(answer -> deleteHistories.add(answer.delete()));
+        for (Answer answer : answers) {
+            deleteHistories.add(answer.delete(loginUser));
+        }
         return deleteHistories;
     }
 

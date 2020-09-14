@@ -45,19 +45,20 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public DeleteHistory delete() {
+    private void validateOwnerWhenDeleting(User loginUser) throws CannotDeleteException {
+        if (!writer.equals(loginUser)) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+    }
+
+    public DeleteHistory delete(User loginUser) throws CannotDeleteException {
+        validateOwnerWhenDeleting(loginUser);
         this.deleted = true;
         return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public void validateOwnerWhenDeleting(User loginUser) throws CannotDeleteException {
-        if (!writer.equals(loginUser)) {
-            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-        }
     }
 
     public User getWriter() {

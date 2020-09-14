@@ -20,14 +20,14 @@ class AnswersTest {
 
     @Test
     void validateAnswersWhenDeleting() {
-        assertThatThrownBy(() -> answers.validateAnswersWhenDeleting(UserTest.SANJIGI))
+        assertThatThrownBy(() -> answers.deleteAnswers(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 
     @Test
-    void deleteAnswers() {
-        answers.deleteAnswers();
+    void deleteAnswers() throws CannotDeleteException {
+        answers.deleteAnswers(UserTest.JAVAJIGI);
         then(AnswerTest.A1.isDeleted()).isTrue();
     }
 }
