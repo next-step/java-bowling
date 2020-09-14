@@ -4,6 +4,7 @@ import bowling.domain.FrameManager;
 import bowling.domain.Frames;
 import bowling.domain.Player;
 import bowling.view.InputView;
+import bowling.view.OutputView;
 
 public class BowlingController {
 
@@ -14,6 +15,7 @@ public class BowlingController {
 
         Frames defaultFrames = FrameManager.makeDefaultFrames(player);
 
+        OutputView.printFrames(defaultFrames);
     }
 
 }
