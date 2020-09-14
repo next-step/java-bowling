@@ -13,6 +13,9 @@ import bowling.pitching.status.PitchingResult;
 
 public class PitchingResults {
 
+	private static final int DEFAULT_PITCH_COUNT = 2;
+	private static final int MAX_PITCH_COUNT = 3;
+
 	private List<PitchingResult> pitchingResults;
 
 	private PitchingResults() {
@@ -85,7 +88,11 @@ public class PitchingResults {
 		return getLastPitchingState().canMoveNextFrame();
 	}
 
-	public int getPitchingCountToDate() {
-		return pitchingResults.size();
+	public boolean finishFinalFrame(boolean oneMorePitching) {
+		int currentPitchingCount = pitchingResults.size();
+
+		return oneMorePitching ?
+				currentPitchingCount == MAX_PITCH_COUNT :
+				currentPitchingCount == DEFAULT_PITCH_COUNT;
 	}
 }

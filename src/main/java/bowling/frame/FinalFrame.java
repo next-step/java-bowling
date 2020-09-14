@@ -9,10 +9,6 @@ import bowling.score.FinalScore;
 import bowling.score.Score;
 
 public class FinalFrame implements Frame {
-
-	private static final int DEFAULT_PITCH_COUNT = 2;
-	private static final int MAX_PITCH_COUNT = 3;
-
 	private PitchingResults pitchingResults;
 	private boolean oneMorePitching;
 
@@ -37,10 +33,7 @@ public class FinalFrame implements Frame {
 
 	@Override
 	public boolean finish() {
-		int currentPitchingCount = pitchingResults.getPitchingCountToDate();
-		return oneMorePitching ?
-				currentPitchingCount == MAX_PITCH_COUNT :
-				currentPitchingCount == DEFAULT_PITCH_COUNT;
+		return pitchingResults.finishFinalFrame(oneMorePitching);
 	}
 
 	@Override
