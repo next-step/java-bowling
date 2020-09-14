@@ -23,7 +23,7 @@ public class FinalFrame implements Frame {
 
 	@Override
 	public Score reflect(Pins knockingDownPins) {
-		PitchingResult pitchingResult = pitchingResults.reflectPitching(knockingDownPins);
+		PitchingResult pitchingResult = pitchingResults.makeResultUsing(knockingDownPins);
 		if (pitchingResult.isStrikeOrSpare()) {
 			oneMorePitching = Boolean.TRUE;
 		}

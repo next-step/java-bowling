@@ -26,7 +26,7 @@ public class PitchingResults {
 		return new PitchingResults();
 	}
 
-	public PitchingResult reflectPitching(Pins knockingDownPins) {
+	public PitchingResult makeResultUsing(Pins knockingDownPins) {
 		PitchingState nextPitchingState = getNextPitchingState(knockingDownPins);
 		PitchingResult pitchingResult = PitchingResult.of(knockingDownPins, nextPitchingState);
 		pitchingResults.add(pitchingResult);
@@ -38,7 +38,7 @@ public class PitchingResults {
 		List<Pins> allKnockingDownPins = getAllKnockingDownPins();
 		allKnockingDownPins.add(knockingDownPins);
 
-		return getLastPitchingState().reflect(allKnockingDownPins);
+		return getLastPitchingState().calculatePitchingStateUsing(allKnockingDownPins);
 	}
 
 	private List<Pins> getAllKnockingDownPins() {

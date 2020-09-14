@@ -30,7 +30,7 @@ public class NormalFrame implements Frame {
 
 	@Override
 	public Score reflect(Pins knockingDownPins) {
-		PitchingResult pitchingResult = pitchingResults.reflectPitching(knockingDownPins);
+		PitchingResult pitchingResult = pitchingResults.makeResultUsing(knockingDownPins);
 
 		return NormalScore.of(pitchingResult, frameNo);
 	}
