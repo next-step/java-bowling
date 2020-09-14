@@ -1,6 +1,6 @@
 package qna.service;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import qna.CannotDeleteException;
 import qna.NotFoundException;
-import qna.domain.*;
+import qna.domain.Answer;
+import qna.domain.AnswerRepository;
+import qna.domain.DeleteHistories;
+import qna.domain.Question;
+import qna.domain.QuestionRepository;
+import qna.domain.User;
 
 @Service
 public class QnAService {
@@ -38,29 +43,19 @@ public class QnAService {
 
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
-
         Question question = findQuestionById(questionId);
-        question.delete(loginUser);
+        DeleteHistories deleteHistories = question.delete(loginUser, this::deleteQuestion);
+        saveDeleteHistories(deleteHistories);
+    }
+
+    @Transactional
+    public void deleteQuestion(Question question, List<Answer> answers) {
+        answerRepository.saveAll(answers);
         questionRepository.save(question);
-
-        Answers answers = Answers.ofQuestion(question);
-        deleteAnswers(answers, loginUser);
-
-        saveDeleteHistories(question, answers);
     }
 
     @Transactional
-    public void deleteAnswers(Answers answers, User loginUser) throws CannotDeleteException {
-        answers.delete(loginUser);
-        answerRepository.saveAll(answers.getCollection());
-    }
-
-    @Transactional
-    public void saveDeleteHistories(Question question, Answers answers) {
-        LocalDateTime now = LocalDateTime.now();
-        deleteHistoryService.saveAll(DeleteHistories.build()
-                                                    .addQuestionHistory(question, now)
-                                                    .addAnswersHistories(answers, now)
-                                                    .getCollection());
+    public void saveDeleteHistories(DeleteHistories deleteHistories) {
+        deleteHistoryService.saveAll(deleteHistories.getCollection());
     }
 }

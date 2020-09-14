@@ -1,14 +1,20 @@
 package qna.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 @Entity
 public class Answer extends AbstractEntity {
+
+    public static final String ERR_HAS_ANOTHER_PERSON_ANSWER = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -70,13 +76,13 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public DeleteHistory delete(LocalDateTime deleteTime) {
-        this.deleted = true;
-        return DeleteHistory.ofAnswer(this, deleteTime);
-    }
+    public void delete(User loginUser) throws CannotDeleteException {
 
-    public DeleteHistory deleteAtNow() {
-        return delete(LocalDateTime.now());
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(ERR_HAS_ANOTHER_PERSON_ANSWER);
+        }
+
+        setDeleted(true);
     }
 
     @Override

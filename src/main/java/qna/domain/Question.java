@@ -1,7 +1,9 @@
 package qna.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +21,9 @@ import qna.CannotDeleteException;
 
 @Entity
 public class Question extends AbstractEntity {
+
+    private static final String ERR_NO_DELETE_PERMISSION = "질문을 삭제할 권한이 없습니다.";
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -101,11 +106,28 @@ public class Question extends AbstractEntity {
 
     public void delete(User loginUser) throws CannotDeleteException {
 
-        if (!this.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-
+        verifyDeleteUserIsOwner(loginUser);
         setDeleted(true);
+    }
+
+    public DeleteHistories delete(User loginUser, BiConsumer<Question, List<Answer>> deleteService) throws CannotDeleteException {
+
+        delete(loginUser);
+
+        Answers answers = new Answers(this.answers);
+        answers.delete(loginUser);
+        deleteService.accept(this, answers.getCollection());
+
+        LocalDateTime now = LocalDateTime.now();
+        return DeleteHistories.build()
+                              .addQuestionHistory(this, now)
+                              .addAnswersHistories(answers, now);
+    }
+
+    public void verifyDeleteUserIsOwner(User loginUser) throws CannotDeleteException {
+        if (!this.isOwner(loginUser)) {
+            throw new CannotDeleteException(ERR_NO_DELETE_PERMISSION);
+        }
     }
 
     @Override
