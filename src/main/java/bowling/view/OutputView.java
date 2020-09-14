@@ -2,12 +2,14 @@ package bowling.view;
 
 import static java.util.stream.Collectors.joining;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import org.apache.logging.log4j.util.Strings;
 
 import bowling.frame.Frames;
 import bowling.user.Player;
+import bowling.user.Players;
 
 public class OutputView {
 
@@ -18,7 +20,12 @@ public class OutputView {
 	private static final int FINAL_FRAME_NO = 10;
 	private static final int DISPLAY_COLUMN_COUNT = 11;
 
-	public static void viewInit(Player player) {
+	public static void viewInit(Players players) {
+		IntStream.range(0, players.size())
+				 .forEach(i -> viewInit(players.indexOf(i)));
+	}
+
+	private static void viewInit(Player player) {
 
 		String line2 = String.format("|%s   |     |     |     |     |     |     |     |     |     |     |", player.getName());
 		String line3 = "|      |     |     |     |     |     |     |     |     |     |     |";
@@ -46,6 +53,11 @@ public class OutputView {
 		}
 		return String.format(TWO_SPACE_PARAM, param);
 
+	}
+
+	public static void viewPitchingResults(Players players, List<Frames> framesList) {
+		IntStream.range(0, players.size())
+				 .forEach(i -> viewPitchingResult(players.indexOf(i), framesList.get(i)));
 	}
 
 	public static void viewPitchingResult(Player player, Frames frames) {
