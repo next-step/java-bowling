@@ -2,6 +2,7 @@ package qna.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -10,6 +11,7 @@ import qna.CannotDeleteException;
 import qna.domain.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -86,4 +88,44 @@ public class QnaServiceTest {
                 new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
         verify(deleteHistoryService).saveAll(deleteHistories);
     }
+
+    @Test
+    @DisplayName("Question 삭제 불가능한 경우")
+    public void confirmDeletableQuestion_throw_Exception() {
+        assertThatThrownBy(() -> {
+            qnAService.confirmDeletableQuestion(question, UserTest.SANJIGI);
+        }).isInstanceOf(CannotDeleteException.class)
+          .hasMessage("질문을 삭제할 권한이 없습니다.");
+    }
+
+    @Test
+    @DisplayName("Answers 삭제 불가능한 경우")
+    public void confirmDeletableAnswers_throw_Exception() {
+        // given
+        question.addAnswer(new Answer(12L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1"));
+
+        assertThatThrownBy(() -> {
+            qnAService.confirmDeletableAnswers(question, UserTest.SANJIGI);
+        }).isInstanceOf(CannotDeleteException.class)
+                .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("Question 삭제하기")
+    public void deleteQuestion() {
+        // given
+        List<DeleteHistory> expected = new ArrayList<>();
+        expected.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
+        expected.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+
+        // when
+        List<DeleteHistory> result = qnAService.deleteQuestion(question);
+
+        // then
+        assertThat(result).isEqualTo(expected);
+
+    }
+
+
+
 }
