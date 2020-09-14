@@ -12,14 +12,22 @@ public class Ready implements State {
     private Pin current;
 
     public Ready() {
-        this.current = Pin.from();
     }
 
     @Override
     public State roll(int count) {
+        Pin pin = Pin.of(count);
+
+        if (pin.isStrike()) {
+            return new Strike(pin);
+        }
+
+        current = pin;
+
         if (current.isSpare(count)) {
             return new Spare(current, count);
         }
+
         return new Open(current, count);
     }
 

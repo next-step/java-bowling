@@ -23,12 +23,6 @@ public class PinTest {
     }
 
     @Test
-    void roll_open() {
-        Pin pin = Pin.of(1);
-        assertThat(pin.isOpen(1)).isTrue();
-    }
-
-    @Test
     void roll_gutter() {
         Pin pin = Pin.of(0);
         pin = pin.roll(0);

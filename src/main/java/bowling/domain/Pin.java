@@ -34,10 +34,6 @@ public class Pin {
         return this.count + count == FULL_COUNT;
     }
 
-    public boolean isOpen(int nextCount) {
-        return this.count + nextCount > NO_COUNT;
-    }
-
     public boolean isGutter() {
         return count == NO_COUNT;
     }

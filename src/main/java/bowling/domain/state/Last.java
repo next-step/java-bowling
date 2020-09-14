@@ -1,32 +1,34 @@
 package bowling.domain.state;
 
-import bowling.domain.Pin;
 import bowling.domain.State;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Last implements State {
+    private LinkedList<State> states;
 
-    private static final int THIRD_COUNT = 3;
-
-    private boolean isThird = true;
-    private List<State> states = new ArrayList<>();
+    public Last() {
+        states = new LinkedList<>();
+    }
 
     @Override
     public State roll(int count) {
-        if (!states.isEmpty()) {
-            State last = states.get(states.size() - 1);
-            if (!last.isFinish()) {
-                states.remove(states.size() - 1);
-                states.add(last.roll(count));
-
-                isThird = false;
-                return this;
-            }
+        if (states.isEmpty()) {
+            states.add(State.from(count));
+            return this;
         }
-        states.add(State.from(count));
+        State current = states.getLast();
+
+        if (current.isFinish()) {
+            states.add(State.from(count));
+            return this;
+        }
+
+        states.removeLast();
+        states.add(current.roll(count));
+
         return this;
     }
 
@@ -35,23 +37,32 @@ public class Last implements State {
         return states.stream()
                 .flatMap(state -> state.value().stream())
                 .collect(Collectors.toList());
+
     }
 
     @Override
     public boolean isFinish() {
-        if (states.size() == THIRD_COUNT) {
+        State last = states.getLast();
+        State first = states.getFirst();
+        int size = states.size();
+
+        if (size == 1 && !(last instanceof Open) && last.isFinish()) {
+            return false;
+        }
+
+        if (size == 2 && first instanceof Strike && last instanceof Strike) {
+            return false;
+        }
+
+        if (size == 2 && first instanceof Spare && last instanceof Playing) {
             return true;
         }
 
-        if (isNotThirdCondition()) {
+        if (size == 3) {
             return true;
         }
 
-        return false;
-    }
-
-    private boolean isNotThirdCondition() {
-        return states.size() == 2 && !isThird;
+        return states.getLast().isFinish();
     }
 }
 

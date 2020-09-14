@@ -20,8 +20,8 @@ public class GameTest {
         int tryCount = 0;
 
         while (!game.isFinish()) {
-            game.hit(0);
             tryCount++;
+            game.hit(0);
         }
 
         assertThat(tryCount).isEqualTo(20);
