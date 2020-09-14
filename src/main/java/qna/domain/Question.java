@@ -73,13 +73,22 @@ public class Question extends AbstractEntity {
         answers.add(answer);
     }
 
-    public void validateOwnerWhenDeleting(User loginUser) throws CannotDeleteException {
+    private void validateOwnerWhenDeleting(User loginUser) throws CannotDeleteException {
         if (!writer.equals(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
     }
 
-    public List<DeleteHistory> delete() {
+    private void validateAnswersWhenDeleting(User loginUser) throws CannotDeleteException {
+        for (Answer answer : answers) {
+            answer.validateOwnerWhenDeleting(loginUser);
+        }
+    }
+
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        validateOwnerWhenDeleting(loginUser);
+        validateAnswersWhenDeleting(loginUser);
+
         List<DeleteHistory> deleteHistories = new ArrayList<>();
 
         this.deleted = true;
@@ -91,12 +100,6 @@ public class Question extends AbstractEntity {
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public void validateAnswersWhenDeleting(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            answer.validateOwnerWhenDeleting(loginUser);
-        }
     }
 
     @Override

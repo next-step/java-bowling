@@ -14,7 +14,7 @@ public class QuestionTest {
     @Test
     @DisplayName("질문이 로그인 된 사용자에 의해 작성 됐는지 검증")
     void validateOwnerWhenDeleting() {
-        assertThatThrownBy(() -> Q1.validateOwnerWhenDeleting(UserTest.SANJIGI))
+        assertThatThrownBy(() -> Q1.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("질문을 삭제할 권한이 없습니다.");
     }
@@ -23,16 +23,16 @@ public class QuestionTest {
     @DisplayName("질문의 답변들이 로그인 된 사용자에 의해 작성 됐는지 검증")
     void validateAnswersWhenDeleting() {
         Q1.addAnswer(AnswerTest.A2);
-        assertThatThrownBy(() -> Q1.validateAnswersWhenDeleting(UserTest.JAVAJIGI))
+        assertThatThrownBy(() -> Q1.delete(UserTest.JAVAJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 
     @Test
     @DisplayName("질문을 삭제하는 메소드 검증")
-    void delete() {
+    void delete() throws CannotDeleteException {
         Q1.addAnswer(AnswerTest.A1);
-        Q1.delete();
+        Q1.delete(UserTest.JAVAJIGI);
 
         then(Q1.isDeleted()).isTrue();
         then(AnswerTest.A1.isDeleted()).isTrue();
