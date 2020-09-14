@@ -11,19 +11,18 @@ public class ScoreBoard {
     public static ScoreBoard from(String userName) {
         List<Frame> result = new LinkedList<>();
         Frame head = HeadFrame.from(userName);
-        result.add(head);
-
-        Frame next = head.makeNextFrame();
-        while(true) {
-            if(next.isFinalFrame()){
-                result.add(next);
-                break;
-            }
-            result.add(next);
-            next = next.makeNextFrame();
-        }
+        makeFramesRecursive(result, head);
 
         return new ScoreBoard(result);
+    }
+
+    private static void makeFramesRecursive(List<Frame> frameList, Frame frame) {
+        if (frame.isFinalFrame()) {
+            frameList.add(frame);
+            return;
+        }
+        frameList.add(frame);
+        makeFramesRecursive(frameList, frame.makeNextFrame());
     }
 
     private ScoreBoard(List<Frame> frames) {
@@ -34,6 +33,7 @@ public class ScoreBoard {
         String titleLine = frames.stream()
                 .map(Frame::printableTitle)
                 .collect(Collectors.joining());
+
         String valueLine = frames.stream()
                 .map(Frame::printableValue)
                 .collect(Collectors.joining());
