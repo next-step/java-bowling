@@ -15,6 +15,7 @@ public class PitchingResults {
 
 	private static final int DEFAULT_PITCH_COUNT = 2;
 	private static final int MAX_PITCH_COUNT = 3;
+	private static final int KNOCKING_DOWN_MAX_COUNT_FOR_DISPLAY = 10;
 
 	private List<PitchingResult> pitchingResults;
 
@@ -70,11 +71,11 @@ public class PitchingResults {
 		int allKnockingDownPins = IntStream.range(0, size)
 										   .map(i -> pitchingResults.get(i).getKnockingDownPins())
 										   .sum();
-		if (allKnockingDownPins < 10) {
+		if (allKnockingDownPins < KNOCKING_DOWN_MAX_COUNT_FOR_DISPLAY) {
 			return pitchingResults.get(size - 1).getKnockingDownPins();
 		}
-		if (allKnockingDownPins > 10) {
-			return 10 % allKnockingDownPins;
+		if (allKnockingDownPins > KNOCKING_DOWN_MAX_COUNT_FOR_DISPLAY) {
+			return KNOCKING_DOWN_MAX_COUNT_FOR_DISPLAY % allKnockingDownPins;
 		}
 		return allKnockingDownPins;
 	}
