@@ -1,72 +1,49 @@
 package bowling.domain;
 
-import static bowling.domain.PinState.DEFAULT_TRY_COUNT;
-import static bowling.domain.PinState.MAX_TRY_COUNT;
-
 public class Pin {
     public static final int FULL_COUNT = 10;
     public static final int NO_COUNT = 0;
 
-    private PinState state;
     private int count;
 
-    private Pin(int maxTryCount, int tryCount) {
-        this.state = PinState.of(maxTryCount, tryCount);
-        this.count = FULL_COUNT;
+    private Pin(int count) {
+        this.count = count;
     }
 
     public static Pin from() {
-        return new Pin(MAX_TRY_COUNT, DEFAULT_TRY_COUNT);
+        return new Pin(FULL_COUNT);
     }
 
-    public static Pin of(int maxTryCount, int tryCount) {
-        return new Pin(maxTryCount, tryCount);
+    public static Pin of(int count) {
+        return new Pin(count);
     }
 
-    public String hit(int count) {
-        if (!state.canHit()) {
-            throw new IllegalArgumentException("더이상 공을 던질수 없습니다.");
-        }
-
-        if (this.count == NO_COUNT || count > this.count) {
+    public Pin roll(int count) {
+        if (this.count + count > FULL_COUNT || count > this.count) {
             throw new IllegalArgumentException("더이상 쓰러질 핀이 없습니다.");
         }
 
-        state.counting();
-        this.count -= count;
-
-        if (this.count == 0 && state.isFirstTime()) {
-            return Status.STRIKE.toString();
-        }
-
-        if (this.count == 0) {
-            return Status.SPARE.toString();
-        }
-
-        if (count == 0) {
-            return Status.GUTTER.toString();
-        }
-
-        return String.valueOf(count);
+        return new Pin(count);
     }
 
-    public boolean isClear() {
+    public boolean isStrike() {
+        return count == FULL_COUNT;
+    }
+
+    public boolean isSpare(int count) {
+        return this.count + count == FULL_COUNT;
+    }
+
+    public boolean isOpen(int nextCount) {
+        return this.count + nextCount > NO_COUNT;
+    }
+
+    public boolean isGutter() {
         return count == NO_COUNT;
-    }
-
-    public boolean catHit() {
-        if (isClear()) {
-            return false;
-        }
-
-        return state.canHit();
     }
 
     @Override
     public String toString() {
-        return "Pin{" +
-                "state=" + state +
-                ", count=" + count +
-                '}';
+        return String.valueOf(count);
     }
 }

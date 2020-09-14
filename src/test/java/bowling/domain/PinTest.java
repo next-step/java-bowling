@@ -6,71 +6,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PinTest {
     @Test
-    void constructor() {
+    void from() {
         assertThat(Pin.from()).isNotNull();
     }
 
     @Test
-    void hit_strike() {
-        Pin pin = Pin.from();
-        assertThat(pin.hit(10)).isEqualTo("X");
+    void roll_strike() {
+        Pin pin = Pin.of(10);
+        assertThat(pin.isStrike()).isTrue();
     }
 
     @Test
-    void hit_spare() {
-        Pin pin = Pin.from();
-        assertThat(pin.hit(8)).isEqualTo("8");
-        assertThat(pin.hit(2)).isEqualTo("/");
+    void roll_spare() {
+        Pin pin = Pin.of(8);
+        assertThat(pin.isSpare(2)).isTrue();
     }
 
     @Test
-    void hit_miss() {
-        Pin pin = Pin.from();
-        assertThat(pin.hit(1)).isEqualTo("1");
-        assertThat(pin.hit(2)).isEqualTo("2");
+    void roll_open() {
+        Pin pin = Pin.of(1);
+        assertThat(pin.isOpen(1)).isTrue();
     }
 
     @Test
-    void hit_gutter() {
-        Pin pin = Pin.from();
-        assertThat(pin.hit(0)).isEqualTo("-");
-        assertThat(pin.hit(2)).isEqualTo("2");
-    }
-
-    @Test
-    void isClear() {
-        Pin pin = Pin.from();
-        pin.hit(1);
-        assertThat(pin.isClear()).isFalse();
-        pin.hit(9);
-
-        assertThat(pin.isClear()).isTrue();
-    }
-
-    @Test
-    void canHit() {
-        Pin pin = Pin.from();
-        pin.hit(1);
-        assertThat(pin.catHit()).isTrue();
-        pin.hit(9);
-
-        assertThat(pin.catHit()).isFalse();
-    }
-
-    @Test
-    void canHit_strike() {
-        Pin pin = Pin.from();
-        pin.hit(10);
-
-        assertThat(pin.catHit()).isFalse();
-    }
-
-    @Test
-    void canHit_spare() {
-        Pin pin = Pin.from();
-        pin.hit(1);
-        pin.hit(9);
-
-        assertThat(pin.catHit()).isFalse();
+    void roll_gutter() {
+        Pin pin = Pin.of(0);
+        pin = pin.roll(0);
+        assertThat(pin.isGutter()).isTrue();
     }
 }

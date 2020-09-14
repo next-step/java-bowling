@@ -22,7 +22,8 @@ public class Game {
     }
 
     public boolean isFinish() {
-        return getLastFrame().isFinish();
+        Frame lastFrame = getLastFrame();
+        return !lastFrame.hasNextFrame() && lastFrame.isFinish();
     }
 
     public int getPlayNumber() {
@@ -33,7 +34,7 @@ public class Game {
         Frame lastFrame = getLastFrame();
         Frame nextFrame = lastFrame.hit(count);
 
-        results.put(lastFrame.getNumber(), lastFrame.getResults());
+        results.put(nextFrame.getNumber(), nextFrame.value());
 
         addNextFrame(nextFrame);
 

@@ -1,50 +1,47 @@
 package bowling.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Frame {
 
     public static final int LAST_FRAME_NUMBER = 10;
 
-    protected final FrameState state;
-    protected final List<Pin> pins;
+    protected int number;
+    protected State state;
 
     protected Frame(int number) {
-        state = FrameState.from(number);
-        pins = new ArrayList() {{
-            add(Pin.from());
-        }};
+        this.number = number;
     }
 
     public Frame hit(int count) {
-        state.store(getLastPin().hit(count));
+        if (state == null) {
+            state = State.from(count);
+            return this;
+        }
 
-        if (canGoNextFrame())
-            return next();
+        if (nextIsLastFrame()) {
+            Frame lastFrame = LastFrame.from();
+            lastFrame.hit(count);
 
+            return lastFrame;
+        }
+
+        if (isFinish()) {
+            Frame next = new Frame(nextFrameNumber());
+            next.hit(count);
+            return next;
+        }
+
+        state = state.roll(count);
         return this;
     }
 
-    protected Pin getLastPin() {
-        return pins.get(pins.size() - 1);
-    }
-
-    public int getNumber() {
-        return state.getNumber();
-    }
-
-    public List<String> getResults() {
-        return state.getResult();
-    }
-
-    public boolean isFinish() {
-        Pin lastPin = getLastPin();
-        return !lastPin.catHit() || lastPin.isClear();
+    private boolean nextIsLastFrame() {
+        return isFinish() && nextFrameNumber() == LAST_FRAME_NUMBER;
     }
 
     public Frame next() {
-        if (isLastFrame()) {
+        if (!hasNextFrame()) {
             throw new RuntimeException("다음 프레임이 존재하지 않습니다.");
         }
 
@@ -52,23 +49,31 @@ public class Frame {
         return nextFrameNumber == LAST_FRAME_NUMBER ? LastFrame.from() : NormalFrame.of(nextFrameNumber);
     }
 
+    public boolean hasNextFrame() {
+        return nextFrameNumber() <= LAST_FRAME_NUMBER;
+    }
+
     private int nextFrameNumber() {
-        return state.getNumber() + 1;
+        return number + 1;
     }
 
-    public boolean isLastFrame() {
-        return false;
+    public boolean isFinish() {
+        return state.isFinish();
     }
 
-    public boolean canGoNextFrame() {
-        return !isLastFrame() && isFinish();
+    public int getNumber() {
+        return number;
+    }
+
+    public List<String> value() {
+        return state.value();
     }
 
     @Override
     public String toString() {
         return "Frame{" +
-                "state=" + state +
-                ", pins=" + pins +
+                "number=" + number +
+                ", state=" + state +
                 '}';
     }
 }

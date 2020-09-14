@@ -1,39 +1,21 @@
 package bowling.domain;
 
+import bowling.domain.state.Last;
+
 public class LastFrame extends Frame {
 
     protected LastFrame(int number) {
         super(number);
+        state = new Last();
     }
 
     public static Frame from() {
-        return new LastFrame(10);
+        return new LastFrame(LAST_FRAME_NUMBER);
     }
 
     @Override
     public Frame hit(int count) {
-        String result = getLastPin().hit(count);
-        state.store(result);
-
-        int pinsSize = pins.size();
-
-        if (pinsSize == 1 && result.equals("X")) {
-            pins.add(Pin.from());
-        }
-
-        if (pinsSize == 2 && state.getResult().get(state.getResult().size() - 2).equals("X") && result.equals("X")) {
-            pins.add(Pin.from());
-        }
-
-        if (pinsSize == 1 && result.equals("/")) {
-            pins.add(Pin.of(1, 0));
-        }
-
+        state.roll(count);
         return this;
-    }
-
-    @Override
-    public boolean isLastFrame() {
-        return true;
     }
 }

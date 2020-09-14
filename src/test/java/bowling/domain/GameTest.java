@@ -63,14 +63,6 @@ public class GameTest {
     }
 
     @Test
-    void getNumber() {
-        Game game = Game.start();
-        assertThat(game.getPlayNumber()).isEqualTo(1);
-        game.hit(10);
-        assertThat(game.getPlayNumber()).isEqualTo(2);
-    }
-
-    @Test
     void hit_strike() {
         Game game = Game.start();
         assertThat(game.hit(10).get(0)).isEqualTo(Arrays.asList("X"));
