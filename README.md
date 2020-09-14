@@ -7,3 +7,23 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## 1단계 질문 삭제하기 기능 리팩토링
+#### 기능 요구사항
+
+- [X] deleteQuestion()에서 테스트 할 수 있는 부분과 없는 부분을 구분하여 로직을 객체에 위임
+- [X] Question 객체에서 아래 로직 수행
+    * 작성자 체크 (로그인 사용자와 질문한 사람이 같은 경우 삭제 가능)
+    * 삭제
+    * 연관된 답변 삭제
+
+- [X] Answer 객체에서 아래 로직 수행
+     * 작성자 체크
+     * 삭제
+
+- [X] DeleteHistory를 Wrap하는 DeleteHistories 생성하여 삭제 이 기록
+    * 데이터의 상태를 삭제 상태(deleted - boolean type)로 변경
+    * 답변이 없는 경우 삭제 가능
+    * 질문자와 답변글의 모든 답변자 같은 경우 삭제 가능
+    * 질문자와 답변자가 다른 경우 답변을 삭제할 수 없음
+    

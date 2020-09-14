@@ -2,6 +2,7 @@ package qna.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -32,19 +33,21 @@ public class QnaServiceTest {
 
     private Question question;
     private Answer answer;
+    private User user;
 
     @Before
     public void setUp() throws Exception {
-        question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        question = Question.ofQuestion(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        answer = Answer.ofAnswer(11L, UserTest.JAVAJIGI, QuestionTest.Q1,"Answers Contents1");
         question.addAnswer(answer);
     }
 
     @Test
+    @DisplayName("Question 삭제 테스트")
     public void delete_성공() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
-
         assertThat(question.isDeleted()).isFalse();
+
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
 
         assertThat(question.isDeleted()).isTrue();
@@ -52,6 +55,7 @@ public class QnaServiceTest {
     }
 
     @Test
+    @DisplayName("다른 사람이 작성한 Question 삭제 테스트")
     public void delete_다른_사람이_쓴_글() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
@@ -61,7 +65,9 @@ public class QnaServiceTest {
     }
 
     @Test
+    @DisplayName("Question 작성자와 답변자가 같은 경우 테스트")
     public void delete_성공_질문자_답변자_같음() throws Exception {
+
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
@@ -73,17 +79,34 @@ public class QnaServiceTest {
 
     @Test
     public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
+
+        // given
+        User otherAnswerWriter = User.ofUser(2L, "kjyang", "Password", "Name", "slamdunk7575@slipp.net");
+
+        /*Answer answer = Answer.builder()
+                .writer(otherAnswerWriter)
+                .question(question)
+                .contents("Content of answer")
+                .build();*/
+        Answer answer = Answer.ofAnswer(null, otherAnswerWriter, question,"Content of answer");
+
+        question.addAnswer(answer);
+
+        // when
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
-        assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        // then
+        assertThatThrownBy(() -> qnAService.deleteQuestion(question.getWriter(), question.getId()))
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessageContaining("답변을 삭제할 권한이 없습니다");
     }
 
     private void verifyDeleteHistories() {
-        List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        DeleteHistory questionHistory = DeleteHistory.of(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
+        DeleteHistory answerHistory = DeleteHistory.of(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
+
+        List<DeleteHistory> deleteHistories = Arrays.asList(questionHistory, answerHistory);
         verify(deleteHistoryService).saveAll(deleteHistories);
     }
+
 }

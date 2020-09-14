@@ -1,13 +1,17 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
+
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -28,15 +32,22 @@ public class Question extends AbstractEntity {
     public Question() {
     }
 
-    public Question(String title, String contents) {
+    private Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
 
-    public Question(long id, String title, String contents) {
+    private Question(long id, String title, String contents) {
         super(id);
         this.title = title;
         this.contents = contents;
+    }
+
+    public static Question ofQuestion(Long id, String title, String contents) {
+        if(id == null) {
+            return new Question(title, contents);
+        }
+        return new Question(id, title, contents);
     }
 
     public String getTitle() {
@@ -84,8 +95,29 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public DeleteHistories delete(User loginUser) throws CannotDeleteException {
+
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+
+        this.deleted = true;
+
+        DeleteHistories deleteHistories = generateQuestionHistories();
+        deleteHistories.addHistories(deleteRelatedAnswer(loginUser));
+
+        return deleteHistories;
+    }
+
+    private DeleteHistories generateQuestionHistories() {
+        return DeleteHistories.of()
+                .addHistory(DeleteHistory.of(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+    }
+
+    public List<DeleteHistory> deleteRelatedAnswer(User loginUser) {
+        return this.answers.stream()
+                .map(answer -> answer.deleteAnswer(loginUser))
+                .collect(Collectors.toList());
     }
 
     @Override
