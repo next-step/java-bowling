@@ -18,5 +18,6 @@
     -[X] Question 삭제 기능
     -[X] Answer 삭제 기능
 
--[ ] 일급 콜렉션을 사용한다.
+-[X] 일급 콜렉션을 사용한다.
     -[X] List<Answer>을 랩핑한 Answers 구현하기
+    -[X] List<DeleteHistory>을 랩핑한 DeleteHistories 구현하기

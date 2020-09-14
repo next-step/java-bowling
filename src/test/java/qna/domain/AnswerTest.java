@@ -2,7 +2,6 @@ package qna.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import qna.CannotDeleteException;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +13,7 @@ public class AnswerTest {
 
     @Test
     @DisplayName("answer 삭제하기")
-    void delete() throws CannotDeleteException {
+    void delete() {
         // given
         Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "answer1 by javajigi");
         DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, answer.getId(), UserTest.JAVAJIGI, LocalDateTime.now());

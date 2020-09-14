@@ -4,9 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -21,12 +19,10 @@ class AnswersTest {
         Answer answer2 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "answer2 by javajigi");
         Answers answers =  new Answers(Arrays.asList(answer1, answer2));
 
-        List<DeleteHistory> expected = new ArrayList<>();
-        expected.add(answer1.delete());
-        expected.add(answer2.delete());
+        DeleteHistories expected = DeleteHistories.of(answer1.delete(), answer2.delete());
 
         // when
-        List<DeleteHistory> result = answers.deleteBy(UserTest.JAVAJIGI);
+        DeleteHistories result = answers.deleteBy(UserTest.JAVAJIGI);
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -34,7 +30,7 @@ class AnswersTest {
     }
 
     @Test
-    @DisplayName("answers 삭제하기 실패")
+    @DisplayName("answers 삭제하기 실패 : 로그인한 유저가 아닌 답변 작성자가 있는 경우")
     void deleteBy_other_user() {
         // given
         Answer answer1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "answer1 by javajigi");

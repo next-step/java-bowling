@@ -5,6 +5,8 @@ import qna.CannotDeleteException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 public class Answers {
 
     private final List<Answer> answers;
@@ -22,11 +24,11 @@ public class Answers {
 
     }
 
-    public List<DeleteHistory> deleteBy(User loginUser) throws CannotDeleteException {
+    public DeleteHistories deleteBy(User loginUser) throws CannotDeleteException {
         confirmDeletableAnswers(loginUser);
         return answers.stream()
                 .map(Answer::delete)
-                .collect(Collectors.toList());
+                .collect(Collectors.collectingAndThen(toList(), DeleteHistories::new));
     }
 
 }
