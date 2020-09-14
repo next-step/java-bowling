@@ -79,22 +79,17 @@ public class Question extends AbstractEntity {
         }
     }
 
-    private void validateAnswersWhenDeleting(User loginUser) throws CannotDeleteException {
-        for (Answer answer : answers) {
-            answer.validateOwnerWhenDeleting(loginUser);
-        }
-    }
-
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateOwnerWhenDeleting(loginUser);
-        validateAnswersWhenDeleting(loginUser);
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        Answers answers = Answers.of(this.answers);
+        answers.validateAnswersWhenDeleting(loginUser);
 
         this.deleted = true;
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
 
-        answers.forEach(answer -> deleteHistories.add(answer.delete()));
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
+        deleteHistories.addAll(answers.deleteAnswers());
         return deleteHistories;
     }
 
