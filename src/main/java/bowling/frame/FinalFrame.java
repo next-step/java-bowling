@@ -5,6 +5,8 @@ import java.util.List;
 import bowling.pin.Pins;
 import bowling.pitching.PitchingResults;
 import bowling.pitching.status.PitchingResult;
+import bowling.score.FinalScore;
+import bowling.score.Score;
 
 public class FinalFrame implements Frame {
 
@@ -24,11 +26,13 @@ public class FinalFrame implements Frame {
 	}
 
 	@Override
-	public void reflect(Pins knockingDownPins) {
+	public Score reflect(Pins knockingDownPins) {
 		PitchingResult pitchingResult = pitchingResults.reflectPitching(knockingDownPins);
 		if (pitchingResult.isStrikeOrSpare()) {
 			oneMorePitching = Boolean.TRUE;
 		}
+
+		return FinalScore.of(knockingDownPins, finish());
 	}
 
 	@Override

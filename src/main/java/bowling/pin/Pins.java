@@ -6,6 +6,7 @@ import bowling.exception.PinsException;
 
 public class Pins {
 
+	private static final int ZERO = 0;
 	private static final int ALL_PINS_COUNT = 10;
 	private final int knockingDownPins;
 
@@ -37,7 +38,7 @@ public class Pins {
 	}
 
 	public boolean isNotKnockedDownAtAll() {
-		return this.knockingDownPins == 0;
+		return this.knockingDownPins == ZERO;
 	}
 
 	@Override

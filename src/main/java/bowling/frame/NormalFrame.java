@@ -5,6 +5,9 @@ import java.util.List;
 import bowling.exception.FrameException;
 import bowling.pin.Pins;
 import bowling.pitching.PitchingResults;
+import bowling.pitching.status.PitchingResult;
+import bowling.score.NormalScore;
+import bowling.score.Score;
 
 public class NormalFrame implements Frame {
 	private static final int LAST_NO_OF_NORMAL_FRAME = 9;
@@ -26,8 +29,10 @@ public class NormalFrame implements Frame {
 	}
 
 	@Override
-	public void reflect(Pins knockingDownPins) {
-		pitchingResults.reflectPitching(knockingDownPins);
+	public Score reflect(Pins knockingDownPins) {
+		PitchingResult pitchingResult = pitchingResults.reflectPitching(knockingDownPins);
+
+		return NormalScore.of(pitchingResult, frameNo);
 	}
 
 	@Override

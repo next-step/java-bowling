@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import bowling.pin.Pins;
+import bowling.score.Score;
+import bowling.score.Scores;
 
 public class Frames {
 
@@ -14,6 +16,7 @@ public class Frames {
 
 	private final List<Frame> frames;
 	private int currentFrameIndex;
+	private Scores scores;
 
 	private Frames() {
 		this.frames = IntStream.range(START_FRAME_INDEX, FRAMES_COUNT - 1)
@@ -21,6 +24,7 @@ public class Frames {
 							   .collect(toList());
 		this.frames.add(FinalFrame.newInstance());
 		this.currentFrameIndex = START_FRAME_INDEX;
+		this.scores = Scores.newInstance();
 	}
 
 	public static Frames newInstance() {
@@ -33,7 +37,9 @@ public class Frames {
 
 	public Frames reflect(Pins pins) {
 		Frame currentFrame = frames.get(currentFrameIndex);
-		currentFrame.reflect(pins);
+		Score score = currentFrame.reflect(pins);
+		this.scores.calculateScore(score);
+
 		if (currentFrame.finish()) {
 			currentFrameIndex++;
 		}
@@ -47,6 +53,10 @@ public class Frames {
 
 	public List<String> getKnockingDownPinsSignsOf(int frameIndex) {
 		return frames.get(frameIndex).getKnockingDownPinsSigns();
+	}
+
+	public List<Score> getScoresToDate() {
+		return scores.getScores();
 	}
 
 }
