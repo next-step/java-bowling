@@ -32,3 +32,12 @@
 1. Symbol 을 리팩토링하자.
 
 1. FinalFrame 에서 Pins 아닌 States 변경 (#9)
+
+
+
+## 3단계 - 볼링 점수판(점수 계산)
+
+1. Gutter 에 대한 점수 계산
+1. Open 에 대한 점수 계산
+1. Perfect 에 대한 점수 계산
+1. Spare 에 대한 점수 계산
