@@ -4,7 +4,8 @@ public enum ScoringStatus {
 
     SPARE("/"),
     STRIKE("X"),
-    NONE("");
+    NONE(""),
+    EMPTY("");
 
     private String symbol;
 

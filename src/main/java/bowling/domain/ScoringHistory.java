@@ -1,13 +1,20 @@
 package bowling.domain;
 
 import bowling.constant.ScoringStatus;
+import bowling.ui.BowlingResultView;
 
 public class ScoringHistory {
-    private static final String INVALID_SECOND_SCORE_MESSAGE = "남은 핀의 갯수보다 많은 값입니다.";
-    private static final String SCORE_DELIMITER = " | ";
+    private static final String INVALID_SECOND_SCORE_MESSAGE = "남은 핀의 개수 보다 많은 값입니다.";
+    private static final ScoringHistory EMPTY_HISTORY = new ScoringHistory(BowlingScore.zeroScore()
+            , BowlingScore.zeroScore(), ScoringStatus.EMPTY);
+
     private BowlingScore firstRecord;
     private BowlingScore secondRecord;
     private ScoringStatus scoringStatus;
+
+    public static ScoringHistory emptyHistory() {
+        return EMPTY_HISTORY;
+    }
 
     public static ScoringHistory from(BowlingScore firstRecord) {
         if (firstRecord.isPerfect()) {
@@ -43,18 +50,26 @@ public class ScoringHistory {
     }
 
     public String printableScoringHistoryStatus() {
+        if (isEmptyStatus()) {
+            return "";
+        }
+
         if (scoringStatus == ScoringStatus.STRIKE) {
             return ScoringStatus.STRIKE.getSymbol();
         }
 
         if (scoringStatus == ScoringStatus.SPARE) {
             return firstRecord.printableScore() +
-                    SCORE_DELIMITER +
+                    BowlingResultView.SCORE_DELIMITER +
                     ScoringStatus.SPARE.getSymbol();
         }
 
         return firstRecord.printableScore() +
-                SCORE_DELIMITER +
+                BowlingResultView.SCORE_DELIMITER +
                 secondRecord.printableScore();
+    }
+
+    public boolean isEmptyStatus() {
+        return scoringStatus == ScoringStatus.EMPTY;
     }
 }
