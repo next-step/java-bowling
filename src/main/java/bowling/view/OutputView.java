@@ -26,7 +26,6 @@ public class OutputView {
 	}
 
 	private static void viewInit(Player player) {
-
 		String line2 = String.format("|%s   |     |     |     |     |     |     |     |     |     |     |", player.getName());
 		String line3 = "|      |     |     |     |     |     |     |     |     |     |     |";
 
