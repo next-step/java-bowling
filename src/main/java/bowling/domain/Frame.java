@@ -61,33 +61,32 @@ public class Frame implements Comparable<Frame> {
       return null;
     }
 
-    if (acc.hasLeft()) {
-      if (next == null) {
-        return null;
-      }
-
-      return next.accumulate(acc);
+    if (!acc.hasLeft()) {
+      return acc;
     }
 
-    return acc;
+    if (next == null) {
+      return null;
+    }
+
+    return next.accumulate(acc);
   }
 
   public Score accumulate(Score score) {
-    Score acc = state.accumulate(score);;
+    Score acc = state.accumulate(score);
 
     if (acc == null) {
       return null;
     }
-
-    if (acc.hasLeft()) {
-      if (next == null) {
-        return null;
-      }
-
-      return next.accumulate(acc);
+    if (!acc.hasLeft()) {
+      return acc;
     }
 
-    return acc;
+    if (next == null) {
+      return null;
+    }
+
+    return next.accumulate(acc);
   }
 
   @Override

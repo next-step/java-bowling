@@ -67,7 +67,7 @@ public class Final implements State {
     if (isDone()) {
       return score.accumulate(states.stream()
           .map(state -> state.score(null))
-          .mapToInt(s -> s.value())
+          .mapToInt(Score::value)
           .sum());
     }
 
@@ -82,14 +82,15 @@ public class Final implements State {
       return null;
     }
 
-    if (acc.hasLeft()) {
-      if (states.size() > 1) {
-        return accumulate(acc);
-      }
-      return null;
+    if (!acc.hasLeft()) {
+      return acc;
     }
 
-    return acc;
+    if (states.size() > 1) {
+      return accumulate(acc);
+    }
+
+    return null;
   }
 
   @Override
