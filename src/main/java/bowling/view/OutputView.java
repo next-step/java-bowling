@@ -1,8 +1,13 @@
 package bowling.view;
 
 import bowling.domain.game.Game;
+import bowling.domain.state.State;
 
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static bowling.domain.state.InitState.EMPTY;
 
 public class OutputView {
 	private static final String AREA_PER_FRAME = "      ";
@@ -12,29 +17,49 @@ public class OutputView {
 	private static final String DOUBLE_DIGIT_FORMAT_PREFIX = "0";
 
 	public static void showInitializedGame(Game game) {
-		System.out.println(getHeaderAreaText(game));
-		System.out.println(getValueAreaText(game));
+		System.out.println(getHeaderAreaText());
+		System.out.println(getInitValueAreaText(game));
 	}
 
-	private static String getHeaderAreaText(Game game) {
-		return buildStartFrame(NAME_HEADER) + getHeaderTitlePerFrame(game);
-	}
-	private static String getValueAreaText(Game game) {
-		return buildStartFrame(game.getPlayersName()) + getValueTextPerFrame(game);
+	public static void showDashBoard(Game game) {
+		System.out.println(getHeaderAreaText());
+		System.out.println(getCurrentValueAreaText(game));
 	}
 
-	private static String getHeaderTitlePerFrame(Game game) {
-		return game.getFrames()
-				.stream()
-				.map(frame -> buildNoneStartFrame(getFormattedSequence(frame.getFrameSequence())))
+	private static String getHeaderAreaText() {
+		return buildStartFrame(NAME_HEADER) + getHeaderTitlePerFrame();
+	}
+	private static String getInitValueAreaText(Game game) {
+		return buildStartFrame(game.getPlayersName()) + getEmptyValueTextPerFrame();
+	}
+
+	private static String getCurrentValueAreaText(Game game) {
+		return buildStartFrame(game.getPlayersName()) + getCurrentValueTextPerFrame(game.getStateGroupedBy());
+	}
+
+	private static String getHeaderTitlePerFrame() {
+		return IntStream.rangeClosed(1,10)
+				.mapToObj(index -> buildNoneStartFrame(getFormattedSequence(index)))
 				.collect(Collectors.joining());
 	}
 
-	private static String getValueTextPerFrame(Game game) {
-		return game.getFrames()
-				.stream()
-				.map(frame -> buildNoneStartFrame(AREA_PER_FRAME))
+	private static String getEmptyValueTextPerFrame() {
+		return IntStream.rangeClosed(1,10)
+				.mapToObj(index -> buildNoneStartFrame(AREA_PER_FRAME))
 				.collect(Collectors.joining());
+	}
+
+	private static String getCurrentValueTextPerFrame(Map<Integer, State> grouped) {
+		return IntStream.rangeClosed(1,10)
+				.mapToObj(index -> buildNoneStartFrame(getValueText(grouped.get(index))))
+				.collect(Collectors.joining());
+	}
+
+	private static String getValueText(State state) {
+		if(state == null) {
+			return AREA_PER_FRAME;
+		}
+		return state.reportState();
 	}
 
 	private static String buildStartFrame(String value) {
@@ -48,6 +73,9 @@ public class OutputView {
 	}
 
 	private static String padToSameLength(String value) {
+		if(value == EMPTY) {
+			return AREA_PER_FRAME;
+		}
 		StringBuilder stringBuilder = new StringBuilder(AREA_PER_FRAME);
 		int paddingStartIndex = getPaddingStartIndex(value);
 		stringBuilder.replace(paddingStartIndex, paddingStartIndex + value.length(), value);

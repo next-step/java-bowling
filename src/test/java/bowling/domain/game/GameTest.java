@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
@@ -34,9 +33,9 @@ class GameTest {
 	@DisplayName("게임 플레이 테스트")
 	@Test
 	void pitchTheBall() {
-		givenGame.pitchTheBall(DownedPinCount.EIGHT);
+		givenGame.play(DownedPinCount.EIGHT);
 		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(1);
-		givenGame.pitchTheBall(DownedPinCount.TWO);
+		givenGame.play(DownedPinCount.TWO);
 		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(2);
 	}
 
@@ -45,7 +44,7 @@ class GameTest {
 	void isGameFinished() {
 		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(1);
 		while (!givenGame.isGameFinished()) {
-			givenGame.pitchTheBall(DownedPinCount.TEN);
+			givenGame.play(DownedPinCount.TEN);
 		}
 		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(10);
 	}

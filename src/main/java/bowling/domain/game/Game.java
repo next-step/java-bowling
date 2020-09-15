@@ -3,9 +3,9 @@ package bowling.domain.game;
 import bowling.domain.DownedPinCount;
 import bowling.domain.frame.Frame;
 import bowling.domain.player.Player;
+import bowling.domain.state.State;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -14,40 +14,49 @@ public class Game {
 	private static final int MAX_FRAMES_PER_GAME = 10;
 
 	private final Player player;
-	private final List<Frame> frames;
-	private int currentIndex = START_INDEX;
-
+	private final LinkedList<Frame> frames;
 
 	public Game(Player player) {
 		this.player = player;
-		this.frames = IntStream.range(START_INDEX, MAX_FRAMES_PER_GAME)
+		this.frames = IntStream.of(START_INDEX)
 						.mapToObj(Frame::new)
-						.collect(Collectors.toList());
+						.collect(Collectors.toCollection(LinkedList::new));
 	}
 
 	public String getPlayersName() {
 		return player.getName();
 	}
 
-	public List<Frame> getFrames() {
-		return frames;
+	public int getCurrentFrameSequence() {
+		return frames.getLast()
+					.getFrameSequence();
 	}
 
-	public int getCurrentFrameSequence() {
-		return frames.get(currentIndex).getFrameSequence();
+	public Map<Integer, State> getStateGroupedBy() {
+		Map<Integer, State> grouped = frames.stream()
+										.collect(Collectors.toMap(Frame::getFrameSequence, Frame::getState, (frame1, frame2) -> frame1, LinkedHashMap::new));
+		return Collections.unmodifiableMap(grouped);
 	}
 
 	public boolean isGameFinished() {
-		return frames.stream()
-				.allMatch(Frame::isFrameFinished);
+		return isFullFrame() && isAllFrameDone();
 	}
 
-	public void pitchTheBall(DownedPinCount currentFramePitch) {
-		Frame currentFrame = frames.get(currentIndex);
-		currentFrame.record(currentFramePitch);
-		if(currentFrame.isFrameFinished()) {
-			currentIndex = currentIndex == MAX_FRAMES_PER_GAME -1 ? currentIndex : currentIndex + 1;
+	public void play(DownedPinCount currentFramePitch) {
+		Frame last = frames.getLast();
+		Frame frame = last.roll(currentFramePitch);
+		if(!isFullFrame() && !last.equals(frame)) {
+			frames.add(frame);
 		}
+	}
+
+	private boolean isFullFrame() {
+		return frames.size() == MAX_FRAMES_PER_GAME;
+	}
+
+	private boolean isAllFrameDone() {
+		return frames.stream()
+				.allMatch(Frame::isFrameFinished);
 	}
 
 	@Override

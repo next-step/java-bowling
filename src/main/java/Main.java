@@ -9,7 +9,8 @@ public class Main {
 		OutputView.showInitializedGame(game);
 		while (!game.isGameFinished()) {
 			DownedPinCount currentFramePitch = InputView.getCurrentFramePitch(game.getCurrentFrameSequence());
-			game.pitchTheBall(currentFramePitch);
+			game.play(currentFramePitch);
+			OutputView.showDashBoard(game);
 		}
 	}
 }
