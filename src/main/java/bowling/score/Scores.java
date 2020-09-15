@@ -1,20 +1,15 @@
 package bowling.score;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class Scores {
+public abstract class Scores {
 
-    private Score firstScore;
-    private Score secondScore;
+    protected Score firstScore;
+    protected Score secondScore;
 
-    private Scores(Score firstScore, Score secondScore) {
+    protected Scores(Score firstScore, Score secondScore) {
         this.firstScore = firstScore;
         this.secondScore = secondScore;
-    }
-
-    public static Scores init() {
-        return new Scores(null, null);
     }
 
     public boolean isDone() {
@@ -26,14 +21,22 @@ public class Scores {
     }
 
     public static boolean isSpare(List<Score> scores) {
-        return scores.stream()
-                .map(Score::getScore)
-                .reduce(Integer::sum)
-                .map(sum -> sum == Score.MAX_SCORE)
-                .orElse(false);
+        if (scores.get(0) == null || scores.get(1) == null) {
+            return false;
+        }
+
+        return Score.of(scores.get(0).toString())
+                .sum(Score.of(scores.get(1).toString()))
+                .isStrike();
     }
 
-    public List<Score> getResult() {
-        return Arrays.asList(firstScore, secondScore);
+    public boolean hasSecondScore() {
+        return secondScore != null;
     }
+
+    public abstract void add(Score score);
+
+    public abstract boolean hasBonusScore();
+
+    public abstract List<Score> getResult();
 }

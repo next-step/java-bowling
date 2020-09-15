@@ -14,10 +14,10 @@ import java.util.stream.IntStream;
 public class OutputView {
     private static final String NAME_TEXT = "| NAME |";
     private static final String PLAYER_NAME_TEXT = "|  %s |";
-    private static final String FRAME_NUMBER_TEXT = "  %d  |";
-    private static final String FRAME_RESULT_TEXT = "  %s  |";
+    private static final String FRAME_NUMBER_TEXT = "  %02d  |";
+    private static final String FRAME_RESULT_TEXT = "  %s|";
     private static final String SCORE_DELIMITER = "|";
-    private static final String TEXT_BLANK = "   ";
+    private static final String TEXT_BLANK = " ";
 
     public static void printFrame(Frames frames) {
         printFrameTop();
@@ -25,13 +25,11 @@ public class OutputView {
     }
 
     private static void printFrameTop() {
-        System.out.print(NAME_TEXT);
-
-        String text = IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME + 1)
+        String topText = IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME + 1)
                 .mapToObj(frameNumber -> String.format(FRAME_NUMBER_TEXT, frameNumber))
                 .collect(Collectors.joining());
 
-        System.out.println(text);
+        System.out.println(NAME_TEXT + topText);
     }
 
     private static void printFrameResult(Frames frames) {
@@ -39,10 +37,19 @@ public class OutputView {
 
         String playerResult = IntStream.range(Frame.FIRST_FRAME, Frame.LAST_FRAME + 1)
                 .mapToObj(frameNumber -> makeScoreExpression(frames, frameNumber))
+                .map(OutputView::attachBlank)
                 .map(result -> String.format(FRAME_RESULT_TEXT, result))
                 .collect(Collectors.joining());
 
         System.out.println(playerName + playerResult);
+    }
+
+    private static String attachBlank(String result) {
+        String blank = IntStream.range(0, 4 - result.length())
+                .mapToObj(i -> TEXT_BLANK)
+                .collect(Collectors.joining());
+
+        return result + blank;
     }
 
     private static String makeScoreExpression(Frames frames, int frameNumber) {
@@ -50,8 +57,9 @@ public class OutputView {
 
         return IntStream.range(0, scores.size())
                 .mapToObj(index -> scores.get(index) == null
-                        ? TEXT_BLANK
+                        ? null
                         : getScoreResult(scores, index))
+                .filter(Objects::nonNull)
                 .collect(Collectors.joining(SCORE_DELIMITER));
     }
 

@@ -18,7 +18,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static String scanFirstBowl(Frame frame) {
+    public static String scanBowl(Frame frame) {
         System.out.println(String.format(ASK_FIRST_BOWL, frame.getNumber()));
 
         return scanner.nextLine();

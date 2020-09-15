@@ -1,10 +1,10 @@
 package bowling.domain;
 
-import bowling.score.Score;
+import bowling.score.FinalScores;
+import bowling.score.NormalScores;
 import bowling.score.Scores;
 
 public class NormalFrame extends Frame {
-    private Scores scores;
 
     private NormalFrame(int frameNumber, Scores scores) {
         super(frameNumber, scores);
@@ -15,22 +15,10 @@ public class NormalFrame extends Frame {
     }
 
     public static NormalFrame first() {
-        return new NormalFrame(Frame.FIRST_FRAME, Scores.init());
+        return new NormalFrame(Frame.FIRST_FRAME, NormalScores.init());
     }
 
     @Override
-    public Frame next() {
-        int nextFrameNumber = this.frameNumber + 1;
-        return nextFrameNumber < Frame.LAST_FRAME
-                ? NormalFrame.of(nextFrameNumber, Scores.init())
-                : FinalFrame.of(nextFrameNumber, Scores.init());
-    }
-
-    @Override
-    public void bowl(Score score) {
-
-    }
-
     public boolean canBowl() {
         if (scores == null) {
             return true;
@@ -43,4 +31,11 @@ public class NormalFrame extends Frame {
         return !scores.isDone();
     }
 
+    @Override
+    public Frame next() {
+        int nextFrameNumber = this.frameNumber + 1;
+        return nextFrameNumber < Frame.LAST_FRAME
+                ? NormalFrame.of(nextFrameNumber, NormalScores.init())
+                : FinalFrame.of(nextFrameNumber, FinalScores.init());
+    }
 }

@@ -27,7 +27,7 @@ public class BowlingController {
         frames = Frames.of(frames, frame);
         OutputView.printFrame(frames);
 
-        for (int number = 0; number < Frame.LAST_FRAME; number++) {
+        for (int number = 0; number < Frame.LAST_FRAME - 1; number++) {
             frame = processNormalFrame(frames, frame);
             frames = Frames.of(frames, frame);
         }
@@ -35,15 +35,24 @@ public class BowlingController {
     }
 
     private static void processFinalFrame(Frames frames, Frame frame) {
+        Score score = Score.of(InputView.scanBowl(frame));
+        frame.bowl(score);
+        OutputView.printFrame(frames);
+
+        while (frame.canBowl()) {
+            score = Score.of(InputView.scanBowl(frame));
+            frame.bowl(score);
+            OutputView.printFrame(frames);
+        }
     }
 
     private static Frame processNormalFrame(Frames frames, Frame frame) {
-        Score score = Score.of(InputView.scanFirstBowl(frame));
+        Score score = Score.of(InputView.scanBowl(frame));
         frame.bowl(score);
-
         OutputView.printFrame(frames);
+
         if (frame.canBowl()) {
-            score = Score.of(InputView.scanFirstBowl(frame));;
+            score = Score.of(InputView.scanBowl(frame));
             frame.bowl(score);
             OutputView.printFrame(frames);
         }

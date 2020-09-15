@@ -22,7 +22,7 @@ public class Score {
     private static int validate(String scoreValue) {
         int score = Integer.parseInt(scoreValue);
 
-        if(score < MIN_SCORE || score > MAX_SCORE) {
+        if (score < MIN_SCORE) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_SCORE_VALUE);
         }
 
@@ -40,4 +40,19 @@ public class Score {
     public int getScore() {
         return score;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(score);
+    }
+
+    public Score sum(Score score) {
+        if (score == null) {
+            return this;
+        }
+
+        String sumScore = String.valueOf(this.score + score.score);
+        return Score.of(sumScore);
+    }
+
 }

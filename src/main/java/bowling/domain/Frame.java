@@ -22,7 +22,9 @@ public abstract class Frame {
         return null;
     }
 
-    public abstract void bowl(Score score);
+    public void bowl(Score score) {
+        scores.add(score);
+    }
 
     public abstract boolean canBowl();
 
