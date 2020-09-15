@@ -12,7 +12,13 @@ public class ResultViewer {
     private static final String GAME_RESULT_FORMAT = "  %-3s |";
     private static final String GAME_RESULT_DELIMITER = "|";
 
-    public static void showHead() {
+    public static void print(int hitCount, GameView gameView) {
+        ResultViewer.showHead();
+        ResultViewer.showResultFrames(gameView.getName(), gameView.hit(hitCount));
+        ResultViewer.showResultScores(gameView.getSumScores());
+    }
+
+    private static void showHead() {
         System.out.print(STAGE_PREFIX_STRING);
 
         IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
@@ -21,7 +27,7 @@ public class ResultViewer {
         System.out.println();
     }
 
-    public static void showResultFrames(String name, List<List<String>> frames) {
+    private static void showResultFrames(String name, List<List<String>> frames) {
         showFramesBody(name, SHOW_FRAME_NUMBER, frames);
         System.out.println();
     }
@@ -47,7 +53,7 @@ public class ResultViewer {
                 .collect(Collectors.joining(GAME_RESULT_DELIMITER));
     }
 
-    public static void showResultScores(List<Integer> scores) {
+    private static void showResultScores(List<Integer> scores) {
         System.out.print(String.format(NAME_FORMAT, ""));
 
         IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
