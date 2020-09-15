@@ -28,4 +28,5 @@
     *           else open                            => OPEN
 11. Frame에서 상태를 갖고 있게 수정 후 Frame에서 다음 Frame을 생성하게 변경 
 12. Game 수정 및 OutputView 구현
+13. 쓰지 않게 된 클래스 정리
 
