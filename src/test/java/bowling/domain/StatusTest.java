@@ -9,21 +9,21 @@ class StatusTest {
 
     @Test
     void strikeTest() {
-        assertThat(Status.of(true,1)).isEqualTo(Status.STRIKE);
+        assertThat(Status.of(true, 1)).isEqualTo(Status.STRIKE);
     }
 
     @Test
     void spareTest() {
-        assertThat(Status.of(true,2)).isEqualTo(Status.SPARE);
+        assertThat(Status.of(true, 2)).isEqualTo(Status.SPARE);
     }
 
     @Test
     void missTest() {
-        assertThat(Status.of(false,2)).isEqualTo(Status.MISS);
+        assertThat(Status.of(false, 2)).isEqualTo(Status.MISS);
     }
 
     @Test
     void ingTest() {
-        assertThat(Status.of(false,1)).isEqualTo(Status.ING);
+        assertThat(Status.of(false, 1)).isEqualTo(Status.ING);
     }
 }
