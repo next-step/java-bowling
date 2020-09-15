@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Last implements State {
+    private static final int MAX_SIZE = 3;
+
     private LinkedList<State> states;
 
     public Last() {
@@ -19,6 +21,7 @@ public class Last implements State {
             states.add(State.from(count));
             return this;
         }
+
         State current = states.getLast();
 
         if (current.isFinish()) {
@@ -42,6 +45,10 @@ public class Last implements State {
 
     @Override
     public boolean isFinish() {
+        if (states.isEmpty()) {
+            return false;
+        }
+
         State last = states.getLast();
         State first = states.getFirst();
         int size = states.size();
@@ -58,7 +65,7 @@ public class Last implements State {
             return true;
         }
 
-        if (size == 3) {
+        if (size == MAX_SIZE) {
             return true;
         }
 

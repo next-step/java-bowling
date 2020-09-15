@@ -31,21 +31,20 @@ public class Game {
     }
 
     public List<List<String>> hit(int count) {
-        Frame lastFrame = getLastFrame();
-        Frame nextFrame = lastFrame.hit(count);
+        Frame frame = getLastFrame().hit(count);
 
-        results.put(nextFrame.getNumber(), nextFrame.value());
+        results.put(frame.getNumber(), frame.value());
 
-        addNextFrame(nextFrame);
+        addNextFrame();
 
         return toHitResult();
     }
 
-    private void addNextFrame(Frame nextFrame) {
+    private void addNextFrame() {
         Frame lastFrame = getLastFrame();
 
-        if (lastFrame.getNumber() != nextFrame.getNumber()) {
-            frames.add(nextFrame);
+        if (lastFrame.isFinish() && lastFrame.hasNextFrame()) {
+            frames.add(lastFrame.next());
         }
     }
 
