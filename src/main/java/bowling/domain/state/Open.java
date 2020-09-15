@@ -5,11 +5,11 @@ import bowling.domain.DownedPinCount;
 import java.util.Objects;
 
 public class Open implements State {
-	private static final String SPLITTER = "|";
-	private final DownedPinCount first;
-	private final DownedPinCount second;
+	protected static final String SPLITTER = "|";
+	protected final DownedPinCount first;
+	protected final DownedPinCount second;
 
-	Open(DownedPinCount first, DownedPinCount second) {
+	protected Open(DownedPinCount first, DownedPinCount second) {
 		this.first = first;
 		this.second = second;
 	}

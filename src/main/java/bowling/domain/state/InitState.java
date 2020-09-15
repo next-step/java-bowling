@@ -7,7 +7,7 @@ public class InitState implements State {
 	public static final String EMPTY = "";
 	private static final State INIT = new InitState();
 
-	private InitState() {}
+	protected InitState() {}
 
 	public static State getInstance() {
 		return INIT;
@@ -30,6 +30,4 @@ public class InitState implements State {
 	public String reportState() {
 		return EMPTY;
 	}
-
-
 }

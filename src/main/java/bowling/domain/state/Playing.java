@@ -10,9 +10,9 @@ public class Playing implements State {
 
 	private static final String PLAYING_MESSAGE = "%s  ";
 
-	private final DownedPinCount first;
+	protected final DownedPinCount first;
 
-	Playing(DownedPinCount downedPinCount) {
+	protected Playing(DownedPinCount downedPinCount) {
 		this.first = downedPinCount;
 	}
 
