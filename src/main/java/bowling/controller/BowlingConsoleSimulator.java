@@ -27,7 +27,6 @@ public class BowlingConsoleSimulator implements BowlingSimulator{
 
     @Override
     public void simulate() {
-        while(true) {
             BowlingInputView.printScoreInputPhrase(bowlingUser.currentFrameNo());
             BowlingScore bowlingScore = new BowlingScore(BowlingInputView.readInteger());
             boolean isDone = bowlingUser.bowl(bowlingScore);
@@ -36,6 +35,7 @@ public class BowlingConsoleSimulator implements BowlingSimulator{
             if(isDone) {
                 return;
             }
-        }
+            simulate();
     }
+
 }

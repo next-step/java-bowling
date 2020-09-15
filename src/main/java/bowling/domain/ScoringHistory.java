@@ -57,6 +57,7 @@ public class ScoringHistory {
     }
 
     private static class EmptyScoringHistory extends ScoringHistory{
+
         @Override
         public String printableScoringHistoryStatus() {
             return "";

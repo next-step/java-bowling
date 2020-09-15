@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.constant.FrameConstants;
+
 public class HeadFrame implements Frame {
     private static final String HEAD_TITLE = "NAME";
 
@@ -15,12 +17,14 @@ public class HeadFrame implements Frame {
 
     @Override
     public String printableTitle() {
-        return String.format(COLUMN_WITH_FORMAT, BLANK, HEAD_TITLE, BLANK);
+        return String.format(FrameConstants.COLUMN_WITH_FORMAT,
+                FrameConstants.BLANK, HEAD_TITLE, FrameConstants.BLANK);
     }
 
     @Override
     public String printableValue() {
-        return String.format(COLUMN_WITH_FORMAT, BLANK, value, BLANK);
+        return String.format(FrameConstants.COLUMN_WITH_FORMAT,
+                FrameConstants.BLANK, value, FrameConstants.BLANK);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.constant.FrameConstants;
+
 public class FinalFrame implements Frame {
     private static final String COLUMN = "|";
     private static final int FRAME_NO = 10;
@@ -18,22 +20,24 @@ public class FinalFrame implements Frame {
 
     @Override
     public String printableTitle() {
-        return String.format(COLUMN_WITH_FORMAT, BLANK, FRAME_NO, BLANK) + COLUMN;
+        return String.format(FrameConstants.COLUMN_WITH_FORMAT,
+                FrameConstants.BLANK, FRAME_NO, FrameConstants.BLANK) + COLUMN;
     }
 
     @Override
     public String printableValue() {
-        return String.format(COLUMN_WITH_FORMAT, BLANK, bonusScoringHistory.printableBonusHistoryStatus(), BLANK) + COLUMN;
+        return String.format(FrameConstants.COLUMN_WITH_FORMAT, FrameConstants.BLANK,
+                bonusScoringHistory.printableBonusHistoryStatus(), FrameConstants.BLANK) + COLUMN;
     }
 
     @Override
     public boolean record(BowlingScore score) {
-        if(bonusScoringHistory.isFirstTry()) {
+        if (bonusScoringHistory.isFirstTry()) {
             this.bonusScoringHistory = BonusScoringHistory.firstTry(score);
             return isEnd();
         }
 
-        if(bonusScoringHistory.isSecondTry()) {
+        if (bonusScoringHistory.isSecondTry()) {
             this.bonusScoringHistory = BonusScoringHistory.secondTry(bonusScoringHistory, score);
             return isEnd();
         }

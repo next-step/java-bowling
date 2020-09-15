@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ScoreBoard {
+    private static final String NEW_LINE = System.lineSeparator();
 
     private final List<Frame> frames;
     private int currentIndex = 1;
@@ -39,11 +40,7 @@ public class ScoreBoard {
             currentIndex++;
         }
 
-        if(currentFrame.isFinalFrame() && isDone) {
-            return true;
-        }
-
-        return false;
+        return currentFrame.isFinalFrame() && isDone;
     }
 
     public String printableStatus() {
@@ -55,7 +52,7 @@ public class ScoreBoard {
                 .map(Frame::printableValue)
                 .collect(Collectors.joining());
 
-        return titleLine + "\n" + valueLine + "\n";
+        return titleLine + NEW_LINE + valueLine + NEW_LINE;
     }
 
     public int getCurrentIndex() {

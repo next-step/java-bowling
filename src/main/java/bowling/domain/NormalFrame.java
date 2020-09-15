@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.constant.FrameConstants;
+
 public class NormalFrame implements Frame {
     private static final String LAST_FRAME_NO = "09";
 
@@ -19,12 +21,13 @@ public class NormalFrame implements Frame {
 
     @Override
     public String printableTitle() {
-        return String.format(COLUMN_WITH_FORMAT, BLANK, frameNo, BLANK);
+        return String.format(FrameConstants.COLUMN_WITH_FORMAT, FrameConstants.BLANK, frameNo, FrameConstants.BLANK);
     }
 
     @Override
     public String printableValue() {
-        return String.format(COLUMN_WITH_FORMAT, BLANK, scoringHistory.printableScoringHistoryStatus(), BLANK);
+        return String.format(FrameConstants.COLUMN_WITH_FORMAT, FrameConstants.BLANK,
+                scoringHistory.printableScoringHistoryStatus(), FrameConstants.BLANK);
     }
 
     @Override
