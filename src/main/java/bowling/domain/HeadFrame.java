@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public class HeadFrame implements Frame{
+public class HeadFrame implements Frame {
     private static final String HEAD_TITLE = "NAME";
 
     private String value;
@@ -15,12 +15,12 @@ public class HeadFrame implements Frame{
 
     @Override
     public String printableTitle() {
-        return String.format(COLUMN_WITH_FORMAT, HEAD_TITLE, BLANK);
+        return String.format(COLUMN_WITH_FORMAT, BLANK, HEAD_TITLE, BLANK);
     }
 
     @Override
     public String printableValue() {
-        return String.format(COLUMN_WITH_FORMAT, value, BLANK);
+        return String.format(COLUMN_WITH_FORMAT, BLANK, value, BLANK);
     }
 
     @Override

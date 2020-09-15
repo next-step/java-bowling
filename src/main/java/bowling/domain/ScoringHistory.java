@@ -10,16 +10,16 @@ public class ScoringHistory {
     private BowlingScore secondRecord = BowlingScore.emptyScore();
     private ScoringStatus scoringStatus;
 
+    private ScoringHistory() {
+
+    }
+
     public static ScoringHistory emptyHistory() {
         return EMPTY_HISTORY;
     }
 
     public static ScoringHistory firstTry(BowlingScore firstRecord) {
         return new ScoringHistory(firstRecord);
-    }
-
-    private ScoringHistory() {
-
     }
 
     private ScoringHistory(BowlingScore firstRecord) {
@@ -56,10 +56,6 @@ public class ScoringHistory {
         return this.equals(EMPTY_HISTORY);
     }
 
-    public boolean isStrikeOrSpare() {
-        return scoringStatus == ScoringStatus.STRIKE || scoringStatus == ScoringStatus.SPARE;
-    }
-
     private static class EmptyScoringHistory extends ScoringHistory{
         @Override
         public String printableScoringHistoryStatus() {
@@ -74,11 +70,6 @@ public class ScoringHistory {
         @Override
         public boolean isEmpty() {
             return true;
-        }
-
-        @Override
-        public boolean isStrikeOrSpare() {
-            return false;
         }
     }
 }

@@ -19,12 +19,12 @@ public class NormalFrame implements Frame {
 
     @Override
     public String printableTitle() {
-        return String.format(COLUMN_WITH_FORMAT, frameNo, BLANK);
+        return String.format(COLUMN_WITH_FORMAT, BLANK, frameNo, BLANK);
     }
 
     @Override
     public String printableValue() {
-        return String.format(COLUMN_WITH_FORMAT, scoringHistory.printableScoringHistoryStatus(), BLANK);
+        return String.format(COLUMN_WITH_FORMAT, BLANK, scoringHistory.printableScoringHistoryStatus(), BLANK);
     }
 
     @Override
@@ -63,6 +63,4 @@ public class NormalFrame implements Frame {
     public boolean isEnd() {
         return scoringHistory.isDone();
     }
-
-
 }

@@ -64,15 +64,15 @@ public class BowlingScore {
         return String.valueOf(score);
     }
 
-    private static class EmptyBowlingScore extends BowlingScore{
+    private static class EmptyBowlingScore extends BowlingScore {
         @Override
         public BowlingScore add(BowlingScore bowlingScore) {
-            throw new UnsupportedOperationException();
+            return bowlingScore;
         }
 
         @Override
         public boolean isPerfect() {
-            throw new UnsupportedOperationException();
+            return false;
         }
 
         @Override

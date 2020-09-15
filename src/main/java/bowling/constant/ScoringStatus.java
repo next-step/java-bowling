@@ -41,7 +41,7 @@ public enum ScoringStatus {
     }
 
     private static class StatusPrintFunction {
-        static final String SCORE_DELIMITER = " | ";
+        static final String SCORE_DELIMITER = "|";
         static final BiFunction<BowlingScore, BowlingScore, String> SPARE = (first, second) ->
                 first.printableScore() + SCORE_DELIMITER + "/";
         static final BiFunction<BowlingScore, BowlingScore, String> STRIKE = (first, second) -> "X";

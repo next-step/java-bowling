@@ -39,8 +39,8 @@ public class ScoreBoard {
             currentIndex++;
         }
 
-        if(currentFrame.isFinalFrame()) {
-            return currentFrame.isEnd();
+        if(currentFrame.isFinalFrame() && isDone) {
+            return true;
         }
 
         return false;
@@ -55,7 +55,7 @@ public class ScoreBoard {
                 .map(Frame::printableValue)
                 .collect(Collectors.joining());
 
-        return titleLine + "\n" + valueLine;
+        return titleLine + "\n" + valueLine + "\n";
     }
 
     public int getCurrentIndex() {

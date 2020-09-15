@@ -4,52 +4,41 @@ public class FinalFrame implements Frame {
     private static final String COLUMN = "|";
     private static final int FRAME_NO = 10;
 
-    private ScoringHistory scoringHistory;
-    private BowlingScore bonusRecord;
+    private BonusScoringHistory bonusScoringHistory;
     private Frame parent;
 
     public static FinalFrame from(Frame parent) {
-        return new FinalFrame(ScoringHistory.emptyHistory(), BowlingScore.emptyScore(), parent);
+        return new FinalFrame(BonusScoringHistory.emptyBonusHistory(), parent);
     }
 
-    private FinalFrame(ScoringHistory scoringHistory, BowlingScore bonusRecord, Frame parent) {
-        this.scoringHistory = scoringHistory;
-        this.bonusRecord = bonusRecord;
+    private FinalFrame(BonusScoringHistory bonusScoringHistory, Frame parent) {
+        this.bonusScoringHistory = bonusScoringHistory;
         this.parent = parent;
     }
 
     @Override
     public String printableTitle() {
-        return String.format(COLUMN_WITH_FORMAT, FRAME_NO, BLANK) + COLUMN;
+        return String.format(COLUMN_WITH_FORMAT, BLANK, FRAME_NO, BLANK) + COLUMN;
     }
 
     @Override
     public String printableValue() {
-        return String.format(COLUMN_WITH_FORMAT, scoringHistory.printableScoringHistoryStatus()
-                + printableBonusScore(), BLANK) + COLUMN;
-    }
-
-    private String printableBonusScore() {
-        if (scoringHistory.isStrikeOrSpare()) {
-            return " | " + bonusRecord.printableScore();
-        }
-
-        return "";
+        return String.format(COLUMN_WITH_FORMAT, BLANK, bonusScoringHistory.printableBonusHistoryStatus(), BLANK) + COLUMN;
     }
 
     @Override
     public boolean record(BowlingScore score) {
-        if(scoringHistory.isEmpty()) {
-            this.scoringHistory = ScoringHistory.firstTry(score);
+        if(bonusScoringHistory.isFirstTry()) {
+            this.bonusScoringHistory = BonusScoringHistory.firstTry(score);
             return isEnd();
         }
 
-        if(scoringHistory.isDone()) {
-            bonusRecord = score;
+        if(bonusScoringHistory.isSecondTry()) {
+            this.bonusScoringHistory = BonusScoringHistory.secondTry(bonusScoringHistory, score);
             return isEnd();
         }
 
-        this.scoringHistory = ScoringHistory.secondTry(scoringHistory, score);
+        this.bonusScoringHistory = BonusScoringHistory.thirdTry(bonusScoringHistory, score);
         return isEnd();
     }
 
@@ -65,6 +54,6 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return (scoringHistory.isStrikeOrSpare() && !bonusRecord.isEmpty()) || (scoringHistory.isDone());
+        return bonusScoringHistory.isDone();
     }
 }
