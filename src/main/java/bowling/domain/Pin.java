@@ -2,6 +2,8 @@ package bowling.domain;
 
 import java.util.Objects;
 
+import static bowling.common.ExceptionMessage.PIN_BOWL_RANGE;
+
 public class Pin {
 
     private final int MAXIMUM_PIN_COUNT = 10;
@@ -20,7 +22,7 @@ public class Pin {
 
     private void validationPinCount() {
         if (pins > MAXIMUM_PIN_COUNT || pins < MINIMUM_PIN_COUNT) {
-            throw new IllegalArgumentException("볼링 한 구당 쓰러트릴수 있는 핀의 갯수는 0 ~ 10 사이입니다.");
+            throw new IllegalArgumentException(PIN_BOWL_RANGE);
         }
     }
 
