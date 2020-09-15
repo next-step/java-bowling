@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Pin;
 import bowling.domain.Result;
+import bowling.domain.Score;
 import bowling.domain.State;
 
 import java.util.Arrays;
@@ -17,13 +18,17 @@ public class Open implements State {
         this.next = Pin.of(count);
     }
 
+    private boolean isDoubleGutter() {
+        return next.isGutter() && current.isGutter();
+    }
+
     @Override
     public State roll(int count) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<String> value() {
+    public List<String> getValue() {
         if (isDoubleGutter()) {
             return Arrays.asList(Result.GUTTER.toString(), Result.GUTTER.toString());
         }
@@ -44,7 +49,8 @@ public class Open implements State {
         return true;
     }
 
-    private boolean isDoubleGutter() {
-        return next.isGutter() && current.isGutter();
+    @Override
+    public Score getScore() {
+        return new Score(current.getCount() + next.getCount());
     }
 }

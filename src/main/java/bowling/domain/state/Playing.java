@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Pin;
 import bowling.domain.Result;
+import bowling.domain.Score;
 import bowling.domain.State;
 
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class Playing implements State {
 
-    private Pin current;
+    protected Pin current;
 
     public Playing(Pin current) {
         this.current = current;
@@ -24,10 +25,15 @@ public class Playing implements State {
     }
 
     @Override
-    public List<String> value() {
+    public List<String> getValue() {
         if (current.isGutter()) {
             return Arrays.asList(Result.GUTTER.toString());
         }
         return Arrays.asList(current.toString());
+    }
+
+    @Override
+    public Score getScore() {
+        throw new UnsupportedOperationException();
     }
 }

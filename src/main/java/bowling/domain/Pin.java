@@ -38,6 +38,10 @@ public class Pin {
         return count == NO_COUNT;
     }
 
+    public int getCount() {
+        return this.count;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(count);

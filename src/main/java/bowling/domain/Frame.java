@@ -66,7 +66,11 @@ public class Frame {
     }
 
     public List<String> value() {
-        return state.value();
+        return state.getValue();
+    }
+
+    public int getScore() {
+        return state.getScore().toInt();
     }
 
     @Override

@@ -2,6 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Pin;
 import bowling.domain.Result;
+import bowling.domain.Score;
 import bowling.domain.State;
 
 import java.util.Arrays;
@@ -21,12 +22,17 @@ public class Strike implements State {
     }
 
     @Override
-    public List<String> value() {
+    public List<String> getValue() {
         return Arrays.asList(Result.STRIKE.toString());
     }
 
     @Override
     public boolean isFinish() {
         return true;
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(current.getCount());
     }
 }

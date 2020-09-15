@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
 import bowling.domain.State;
 
 import java.util.LinkedList;
@@ -25,7 +26,7 @@ public class Last implements State {
         State current = states.getLast();
 
         if (current.isFinish()) {
-            states.add(State.from(count));
+            states.add(Finish.from(current, count));
             return this;
         }
 
@@ -36,9 +37,9 @@ public class Last implements State {
     }
 
     @Override
-    public List<String> value() {
+    public List<String> getValue() {
         return states.stream()
-                .flatMap(state -> state.value().stream())
+                .flatMap(state -> state.getValue().stream())
                 .collect(Collectors.toList());
 
     }
@@ -70,6 +71,15 @@ public class Last implements State {
         }
 
         return states.getLast().isFinish();
+    }
+
+    @Override
+    public Score getScore() {
+        return new Score(
+                states.stream()
+                        .mapToInt(state -> state.getScore().toInt())
+                        .sum()
+        );
     }
 }
 

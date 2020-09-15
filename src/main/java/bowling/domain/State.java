@@ -18,7 +18,9 @@ public interface State {
 
     State roll(int count);
 
-    List<String> value();
+    List<String> getValue();
+
+    Score getScore();
 
     default boolean isFinish() {
         return false;

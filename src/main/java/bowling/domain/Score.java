@@ -11,7 +11,7 @@ public class Score {
         return new Score(this.count + count);
     }
 
-    public int getScore() {
+    public int toInt() {
         return count;
     }
 }
