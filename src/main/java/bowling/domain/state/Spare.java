@@ -2,8 +2,6 @@ package bowling.domain.state;
 
 public class Spare implements State {
 
-  static final String SPARE = "/";
-
   private Pins first;
   private Pins second;
 

@@ -2,9 +2,10 @@ package bowling.domain.state;
 
 public interface State {
 
-  String STRIKE = "X";
-  String GUTTER = "-";
   String DELIMITER = "|";
+  String STRIKE = "X";
+  String SPARE = "/";
+  String GUTTER = "-";
 
   static State of(int pins) {
     Pins pitching = Pins.roll(pins);
