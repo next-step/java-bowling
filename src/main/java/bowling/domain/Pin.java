@@ -17,8 +17,9 @@ public class Pin {
     public int count() {
         return pins;
     }
+
     private void validationPinCount() {
-        if(pins > MAXIMUM_PIN_COUNT || pins < MINIMUM_PIN_COUNT) {
+        if (pins > MAXIMUM_PIN_COUNT || pins < MINIMUM_PIN_COUNT) {
             throw new IllegalArgumentException("볼링 한 구당 쓰러트릴수 있는 핀의 갯수는 0 ~ 10 사이입니다.");
         }
     }
