@@ -23,8 +23,6 @@ public class Final implements State {
         canBonus = states.get(0).score(null).hasLeft();
         return this;
       }
-
-      return this;
     }
 
     states.add(State.of(pins));
@@ -66,9 +64,6 @@ public class Final implements State {
 
   @Override
   public Score score(Score score) {
-    System.out.println("final score: " + score);
-    System.out.println("final states: " + states);
-
     if (isDone()) {
       return score.accumulate(states.stream()
           .map(state -> state.score(null))
@@ -81,10 +76,7 @@ public class Final implements State {
 
   @Override
   public Score accumulate(Score score) {
-    System.out.println("        final accumulate  score: " + score);
-
     Score acc = states.get(0).accumulate(score);
-    System.out.println("        final accumulate    acc: " + acc);
 
     if (acc == null) {
       return null;
@@ -96,21 +88,6 @@ public class Final implements State {
       }
       return null;
     }
-
-//    List<Score> scores = states.stream()
-//        .map(state -> state.score(null))
-//        .collect(Collectors.toList());
-//    System.out.println("scores: " + scores + ", size: "+ scores.size());
-//
-//    if (score.isStrike()) {
-//      if (scores.size() > 1)
-//        return score.accumulate(scores.get(0).value(), scores.get(1).value());
-//      return null;
-//    }
-//
-//    if (score.isSpare()) {
-//      return score.accumulate(scores.get(0).value());
-//    }
 
     return acc;
   }

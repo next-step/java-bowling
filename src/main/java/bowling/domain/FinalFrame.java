@@ -28,8 +28,6 @@ public class FinalFrame extends Frame {
 
   @Override
   public Score accumulate(Score score) {
-    System.out.println("        " + number + ", accumulate score: " + score);
-
     return state.accumulate(score);
   }
 

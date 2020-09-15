@@ -55,11 +55,9 @@ public class Frame implements Comparable<Frame> {
   }
 
   public Score score(Score score) {
-    System.out.println("number: " + number + ", score: " + score);
-
     Score acc = state.score(score);
 
-    if (acc == null) {  //
+    if (acc == null) {
       return null;
     }
 
@@ -75,8 +73,6 @@ public class Frame implements Comparable<Frame> {
   }
 
   public Score accumulate(Score score) {
-    System.out.println("        " + number + ", accumulate score: " + score);
-
     Score acc = state.accumulate(score);;
 
     if (acc == null) {

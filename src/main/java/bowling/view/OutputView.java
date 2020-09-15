@@ -18,7 +18,7 @@ public class OutputView {
   public static final String FIRST_FORMAT = "  %s   |";
   public static final String SECOND_FORMAT = "  %s |";
   public static final String FINAL_FORMAT = " %s|";
-  public static final String SCORE_FORMAT = "  %d  |";
+  public static final String SCORE_FORMAT = "  %3d |";
 
 
   private final String player;
@@ -38,7 +38,6 @@ public class OutputView {
 
     return String.format(SECOND_FORMAT, symbol);
   }
-
   public void render() {
     writeHeader();
     writeNameWithSymbols(Collections.emptyList());
@@ -48,7 +47,7 @@ public class OutputView {
   public void render(Bowling bowling) {
     writeHeader();
     writeNameWithSymbols(bowling.symbols());
-    writeScores(bowling.scores()); // TODO Scores
+    writeScores(bowling.scores());
   }
 
   private void writeHeader() {
