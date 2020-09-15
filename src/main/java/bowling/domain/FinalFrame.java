@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.constant.GameState;
 import bowling.ui.BowlingResultView;
 
 public class FinalFrame implements Frame {
@@ -40,8 +41,21 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public void record() {
+    public GameState record(BowlingScore score) {
+        if(scoringHistory.isEmptyStatus()) {
+            this.scoringHistory = ScoringHistory.firstTry(score);
+            return scoringHistory.getGameState();
+        }
 
+        if(scoringHistory.isPlayingStatus()) {
+            this.scoringHistory = ScoringHistory.secondTry(scoringHistory, score);
+        }
+
+        if(scoringHistory.isSpareOrStrike()) {
+            return GameState.PLAYING;
+        }
+
+        return GameState.FINISH_CURRENT_FRAME;
     }
 
     @Override

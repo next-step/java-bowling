@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.constant.GameState;
+
 import java.util.regex.Pattern;
 
 public class BowlingUser {
@@ -9,6 +11,16 @@ public class BowlingUser {
     private static final String INVALID_INPUT_MESSAGE = "유저 이름은 영문 이여야 합니다.";
 
     private String name;
+    private ScoreBoard scoreBoard;
+
+    public static BowlingUser withScoreBoard(String name) {
+        return new BowlingUser(name, ScoreBoard.from(name));
+    }
+
+    private BowlingUser(String name, ScoreBoard scoreBoard) {
+        this.name = name;
+        this.scoreBoard = scoreBoard;
+    }
 
     public static BowlingUser from(String name) {
         return new BowlingUser(name);
@@ -33,8 +45,20 @@ public class BowlingUser {
         }
     }
 
+    public GameState bowl(BowlingScore score) {
+        return scoreBoard.record(score);
+    }
+
     public String getName() {
         return name;
+    }
+
+    public String printableScoreStatus() {
+        return scoreBoard.printableStatus();
+    }
+
+    public String currentFrameNo() {
+        return String.valueOf(scoreBoard.getCurrentIndex());
     }
 }
 

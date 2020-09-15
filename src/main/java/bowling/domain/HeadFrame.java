@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.constant.GameState;
+
 public class HeadFrame implements Frame{
     private static final String HEAD_TITLE = "NAME";
 
@@ -24,8 +26,8 @@ public class HeadFrame implements Frame{
     }
 
     @Override
-    public void record() {
-
+    public GameState record(BowlingScore score) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

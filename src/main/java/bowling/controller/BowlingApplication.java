@@ -7,5 +7,6 @@ public class BowlingApplication {
         bowlingSimulator.readPlayerName();
         bowlingSimulator.initScoreBoard();
         bowlingSimulator.printScoreBoardStatus();
+        bowlingSimulator.simulate();
     }
 }

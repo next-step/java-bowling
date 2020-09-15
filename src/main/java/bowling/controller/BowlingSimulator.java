@@ -5,4 +5,5 @@ public interface BowlingSimulator {
     void readPlayerName();
     void initScoreBoard();
     void printScoreBoardStatus();
+    void simulate();
 }

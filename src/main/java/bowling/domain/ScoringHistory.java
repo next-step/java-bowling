@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.constant.GameState;
 import bowling.constant.ScoringStatus;
 import bowling.ui.BowlingResultView;
 
@@ -8,19 +9,19 @@ public class ScoringHistory {
     private static final ScoringHistory EMPTY_HISTORY = new ScoringHistory(BowlingScore.zeroScore()
             , BowlingScore.zeroScore(), ScoringStatus.EMPTY);
 
-    private BowlingScore firstRecord;
-    private BowlingScore secondRecord;
-    private ScoringStatus scoringStatus;
+    private final BowlingScore firstRecord;
+    private BowlingScore secondRecord = BowlingScore.zeroScore();
+    private final ScoringStatus scoringStatus;
 
     public static ScoringHistory emptyHistory() {
         return EMPTY_HISTORY;
     }
 
-    public static ScoringHistory from(BowlingScore firstRecord) {
+    public static ScoringHistory firstTry(BowlingScore firstRecord) {
         if (firstRecord.isPerfect()) {
             return new ScoringHistory(firstRecord, ScoringStatus.STRIKE);
         }
-        return new ScoringHistory(firstRecord, ScoringStatus.NONE);
+        return new ScoringHistory(firstRecord, ScoringStatus.PLAYING);
     }
 
     private ScoringHistory(BowlingScore firstRecord, ScoringStatus scoringStatus) {
@@ -28,13 +29,13 @@ public class ScoringHistory {
         this.scoringStatus = scoringStatus;
     }
 
-    public static ScoringHistory of(ScoringHistory scoringHistory, BowlingScore secondRecord) {
+    public static ScoringHistory secondTry(ScoringHistory scoringHistory, BowlingScore secondRecord) {
         validateInvalidSecondScore(scoringHistory.firstRecord, secondRecord);
         BowlingScore combinedScore = scoringHistory.firstRecord.add(secondRecord);
         if (combinedScore.isPerfect()) {
             return new ScoringHistory(scoringHistory.firstRecord, secondRecord, ScoringStatus.SPARE);
         }
-        return new ScoringHistory(scoringHistory.firstRecord, secondRecord, ScoringStatus.NONE);
+        return new ScoringHistory(scoringHistory.firstRecord, secondRecord, ScoringStatus.DONE);
     }
 
     private static void validateInvalidSecondScore(BowlingScore firstRecord, BowlingScore secondRecord) {
@@ -64,6 +65,10 @@ public class ScoringHistory {
                     ScoringStatus.SPARE.getSymbol();
         }
 
+        if (scoringStatus == ScoringStatus.PLAYING) {
+            return firstRecord.printableScore();
+        }
+
         return firstRecord.printableScore() +
                 BowlingResultView.SCORE_DELIMITER +
                 secondRecord.printableScore();
@@ -71,5 +76,17 @@ public class ScoringHistory {
 
     public boolean isEmptyStatus() {
         return scoringStatus == ScoringStatus.EMPTY;
+    }
+
+    public boolean isPlayingStatus() {
+        return scoringStatus == ScoringStatus.PLAYING;
+    }
+
+    public GameState getGameState() {
+        return scoringStatus.getState();
+    }
+
+    public boolean isSpareOrStrike() {
+        return scoringStatus == ScoringStatus.SPARE || scoringStatus == ScoringStatus.STRIKE;
     }
 }
