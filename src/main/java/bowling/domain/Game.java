@@ -55,28 +55,37 @@ public class Game {
             int nextIndex = node.nextIndex();
 
             Score score = frame.getScore();
-            int sum = sumScore(score, nextIndex, frames);
 
-            if (!result.isEmpty()) {
-                sum += result.get(result.size() - 1);
-            }
+            int sum = sumScore(score, nextIndex, frames);
+            sum = addMore(result, sum);
 
             result.add(sum);
         }
     }
 
+    private int addMore(List<Integer> result, int score) {
+        if (!result.isEmpty()) {
+            score += result.get(result.size() - 1);
+        }
+
+        return score;
+    }
+
     private int sumScore(Score score, int nextIndex, List<Frame> frames) {
         while (score.canNextSum() && nextIndex < frames.size()) {
-            Frame nextFrame = frames.get(nextIndex);
-
-            if (nextFrame.isFinish()) {
-                score = nextFrame.sumScore(score);
-            }
-
+            score = sumMore(frames.get(nextIndex), score);
             nextIndex = nextIndex + 1;
         }
 
         return score.toInt();
+    }
+
+    private Score sumMore(Frame nextFrame, Score score) {
+        if (nextFrame.isFinish()) {
+            score = nextFrame.sumScore(score);
+        }
+
+        return score;
     }
 
     private void addNextFrame() {
