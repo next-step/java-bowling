@@ -36,7 +36,20 @@ public enum DownedPinCount {
 				.orElseThrow(() -> new BowlingException(String.format(INVALID_COUNT, count)));
 	}
 
+	public static DownedPinCount sum(DownedPinCount one, DownedPinCount theOther) {
+		int sum = one.count + theOther.count;
+		if(sum > TEN.count) {
+
+		}
+		return DownedPinCount.from(sum);
+	}
+
 	public int intValue() {
 		return count;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(count);
 	}
 }

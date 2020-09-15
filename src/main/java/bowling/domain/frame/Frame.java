@@ -1,54 +1,38 @@
 package bowling.domain.frame;
 
 import bowling.domain.DownedPinCount;
-import bowling.domain.DownedPinCounts;
-import bowling.exception.BowlingException;
+import bowling.domain.state.InitState;
+import bowling.domain.state.State;
 
 import java.util.Objects;
 
 public class Frame {
 
-	static final String OVER_DEFAULT_MAX_PITCH_COUNT = "이번 프레임에 %d회를 초과해서 투구할 수 없습니다.";
-
-	static final int DEFAULT_MAX_PITCH_COUNT = 2;
-
 	private static final int SEQUENCE_ADDER = 1;
 
-	private final int frameSequence;
-	private final DownedPinCounts downedPinCounts;
+	private final int index;
+
+	private State state;
 
 	public Frame(int index) {
-		this.frameSequence = index + SEQUENCE_ADDER;
-		this.downedPinCounts = new DownedPinCounts();
+		this.index = index;
+		this.state = InitState.getInstance();
 	}
 
-	//forTest
-	Frame(int index, DownedPinCount downedPinCount) {
-		this.frameSequence = index + SEQUENCE_ADDER;
-		this.downedPinCounts = new DownedPinCounts(downedPinCount);
-	}
-
-	public boolean record(DownedPinCount downedPinCount) {
-		validatePinScoresCount();
-		return downedPinCounts.add(downedPinCount);
+	public Frame roll(DownedPinCount downedPinCount) {
+		state = state.roll(downedPinCount);
+		if(state.isDone()) {
+			return new Frame(index + SEQUENCE_ADDER);
+		}
+		return this;
 	}
 
 	public int getFrameSequence() {
-		return frameSequence;
+		return index + SEQUENCE_ADDER;
 	}
 
-	public boolean isFrameFinished() {
-		return downedPinCounts.isAllPinDowned() || isMaxCountPitched();
-	}
-
-	private boolean isMaxCountPitched() {
-		return downedPinCounts.size() >= DEFAULT_MAX_PITCH_COUNT;
-	}
-
-	private void validatePinScoresCount() {
-		if(isMaxCountPitched()) {
-			throw new BowlingException(String.format(OVER_DEFAULT_MAX_PITCH_COUNT, DEFAULT_MAX_PITCH_COUNT));
-		}
+	public State getState() {
+		return state;
 	}
 
 	@Override
@@ -56,11 +40,15 @@ public class Frame {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Frame frame = (Frame) o;
-		return downedPinCounts.equals(frame.downedPinCounts);
+		return index == frame.index;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(downedPinCounts);
+		return Objects.hash(index);
+	}
+
+	public boolean isFrameFinished() {
+		return state.isDone();
 	}
 }
