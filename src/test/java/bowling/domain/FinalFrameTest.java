@@ -121,4 +121,33 @@ public class FinalFrameTest {
     assertThat(finalFrame.isDone()).isTrue();
     assertThat(finalFrame.symbol()).isEqualTo("8|/|-");
   }
+
+  @Test
+  void open() {
+    FinalFrame finalFrame = new FinalFrame();
+    finalFrame.roll(8);
+    finalFrame.roll(1);
+
+    System.out.println(finalFrame);
+    assertThat(finalFrame.isDone()).isTrue();
+    assertThat(finalFrame.symbol()).isEqualTo("8|1");
+  }
+
+  @Test
+  void strike_score() {
+    FinalFrame finalFrame = new FinalFrame();
+    finalFrame.roll(10);
+
+    System.out.println(finalFrame.score(null));
+  }
+
+  @Test
+  void triple_score() {
+    FinalFrame finalFrame = new FinalFrame();
+    finalFrame.roll(10);
+    finalFrame.roll(10);
+    finalFrame.roll(10);
+
+    System.out.println(finalFrame.score(null));
+  }
 }

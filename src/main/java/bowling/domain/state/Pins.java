@@ -53,6 +53,10 @@ public class Pins {
     return count == MIN_PINS;
   }
 
+  public int getCount() {
+    return count;
+  }
+
   @Override
   public String toString() {
     return String.valueOf(count);

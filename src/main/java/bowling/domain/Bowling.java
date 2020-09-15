@@ -1,6 +1,8 @@
 package bowling.domain;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -38,4 +40,18 @@ public class Bowling {
         .collect(Collectors.toList());
   }
 
+
+  public List<Score> scores() {
+    List<Score> scores = new ArrayList<>();
+
+    Score score = null;
+    for (Frame frame : frames) {
+      score = frame.score(score);
+      scores.add(score);
+    }
+
+    return scores.stream()
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
+  }
 }

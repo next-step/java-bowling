@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
+
 public interface State {
 
   String DELIMITER = "|";
@@ -20,8 +22,13 @@ public interface State {
 
   String symbol();
 
+  int pins();
+
   default boolean isDone() {
     return false;
   }
 
+  Score score(Score score);
+
+  Score accumulate(Score score);
 }
