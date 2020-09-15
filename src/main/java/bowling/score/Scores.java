@@ -1,5 +1,8 @@
 package bowling.score;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Scores {
 
     private Score firstScore;
@@ -19,10 +22,18 @@ public class Scores {
     }
 
     public boolean isStrike() {
-        return firstScore == Score.MAX;
+        return firstScore != null && firstScore.isStrike();
     }
 
-    public String getResult() {
-        return "";
+    public static boolean isSpare(List<Score> scores) {
+        return scores.stream()
+                .map(Score::getScore)
+                .reduce(Integer::sum)
+                .map(sum -> sum == Score.MAX_SCORE)
+                .orElse(false);
+    }
+
+    public List<Score> getResult() {
+        return Arrays.asList(firstScore, secondScore);
     }
 }

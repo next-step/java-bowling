@@ -3,6 +3,8 @@ package bowling.domain;
 import bowling.score.Score;
 import bowling.score.Scores;
 
+import java.util.List;
+
 public abstract class Frame {
     public static final int FIRST_FRAME = 1;
     public static final int LAST_FRAME = 10;
@@ -26,7 +28,15 @@ public abstract class Frame {
 
     public abstract Frame next();
 
-    public String getResult() {
+    public List<Score> getResult() {
         return scores.getResult();
+    }
+
+    public boolean getBy(int frameNumber) {
+        return this.frameNumber == frameNumber;
+    }
+
+    public int getNumber() {
+        return frameNumber;
     }
 }

@@ -28,4 +28,16 @@ public class Score {
 
         return score;
     }
+
+    public boolean isStrike() {
+        return this.score == MAX_SCORE;
+    }
+
+    public boolean isGutter() {
+        return this.score == MIN_SCORE;
+    }
+
+    public int getScore() {
+        return score;
+    }
 }

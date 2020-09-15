@@ -19,7 +19,7 @@ public class InputView {
     }
 
     public static String scanFirstBowl(Frame frame) {
-        System.out.print(ASK_FIRST_BOWL);
+        System.out.println(String.format(ASK_FIRST_BOWL, frame.getNumber()));
 
         return scanner.nextLine();
     }

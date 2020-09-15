@@ -1,6 +1,10 @@
 package bowling.domain;
 
+import bowling.score.Score;
+
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Frames {
     private Player player;
@@ -16,15 +20,18 @@ public class Frames {
     }
 
     public static Frames of(Frames previousFrames, Frame frame) {
-        LinkedList<Frame> nowFrames = previousFrames.frames;
+        LinkedList<Frame> nowFrames = new LinkedList<>(previousFrames.frames);
         nowFrames.add(frame);
 
         return new Frames(previousFrames.player, nowFrames);
     }
 
-    public String getResult(int frameNumber) {
-        return frames.get(frameNumber)
-                .getResult();
+    public List<Score> getResult(int frameNumber) {
+        return frames.stream()
+                .filter(frame -> frame.getBy(frameNumber))
+                .findFirst()
+                .map(Frame::getResult)
+                .orElse(Collections.emptyList());
     }
 
     public String getPlayerName() {

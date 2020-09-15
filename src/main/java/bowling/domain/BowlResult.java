@@ -13,16 +13,7 @@ public enum BowlResult {
         this.expression = expression;
     }
 
-    public static String of(int previous) {
-        if (previous == 10) {
-            return BowlResult.STRIKE.expression;
-        } else if (previous == 0) {
-            return BowlResult.GUTTER.expression;
-        }
-        return String.valueOf(previous);
-    }
-
-    public static String of(Integer previous, Integer now) {
-        return BowlResult.SPARE;
+    public String getExpression() {
+        return expression;
     }
 }

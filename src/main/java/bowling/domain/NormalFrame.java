@@ -32,6 +32,10 @@ public class NormalFrame extends Frame {
     }
 
     public boolean canBowl() {
+        if (scores == null) {
+            return true;
+        }
+
         if (scores.isStrike()) {
             return false;
         }
