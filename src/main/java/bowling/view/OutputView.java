@@ -1,7 +1,7 @@
 package bowling.view;
 
 import bowling.domain.Frame;
-import bowling.domain.Player;
+import bowling.domain.Frames;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -13,9 +13,9 @@ public class OutputView {
     private static final String FRAME_RESULT_TEXT = "  %s  |";
     private static final int BOWLING_FIRST_FRAME = 1;
 
-    public static void printFrame(Frame frame, Player player) {
+    public static void printFrame(Frames frames) {
         printFrameTop();
-        printFrameResult(frame, player);
+        printFrameResult(frames);
     }
 
     private static void printFrameTop() {
@@ -29,12 +29,12 @@ public class OutputView {
         System.out.println(text);
     }
 
-    private static void printFrameResult(Frame frame, Player player) {
-        String playerName = String.format(PLAYER_NAME_TEXT, player.getName());
+    private static void printFrameResult(Frames frames) {
+        String playerName = String.format(PLAYER_NAME_TEXT, frames.getPlayerName());
 
         String playerResult = IntStream.iterate(BOWLING_FIRST_FRAME, index -> index + 1)
                 .limit(Frame.LAST_FRAME)
-                .mapToObj(frame::getResult)
+                .mapToObj(frames::getResult)
                 .map(result -> String.format(FRAME_RESULT_TEXT, result))
                 .collect(Collectors.joining());
 

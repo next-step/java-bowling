@@ -26,7 +26,7 @@ public abstract class Frame {
 
     public abstract Frame next();
 
-    public String getResult(int i) {
-        return "";
+    public String getResult() {
+        return scores.getResult();
     }
 }

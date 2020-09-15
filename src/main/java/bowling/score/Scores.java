@@ -1,7 +1,5 @@
 package bowling.score;
 
-import bowling.domain.NormalFrame;
-
 public class Scores {
 
     private Score firstScore;
@@ -16,18 +14,15 @@ public class Scores {
         return new Scores(null, null);
     }
 
-    public static Scores first(Score firstScore, Score secondScore) {
-        if(secondScore == null) {
-
-        }
-        return new Scores(firstScore, null);
-    }
-
     public boolean isDone() {
         return firstScore != null && secondScore != null;
     }
 
     public boolean isStrike() {
         return firstScore == Score.MAX;
+    }
+
+    public String getResult() {
+        return "";
     }
 }
