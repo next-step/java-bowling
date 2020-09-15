@@ -8,12 +8,14 @@ import static bowling.domain.DownedPinCount.TEN;
 
 public class FinalFrameSecondState extends Open {
 
+	private static final int ALL_PIN_DOWN = 10;
+
 	public FinalFrameSecondState(DownedPinCount first, DownedPinCount second) {
 		super(first, second);
 	}
 
 	protected boolean isSpare() {
-		return DownedPinCount.sum(first, second) == TEN;
+		return DownedPinCount.sumIntValue(first, second) == ALL_PIN_DOWN;
 	}
 
 	protected boolean containsStrike() {

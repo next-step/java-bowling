@@ -8,6 +8,7 @@ import static bowling.domain.DownedPinCount.TEN;
 
 public class Playing implements State {
 
+	private static final int ALL_PIN_DOWN = 10;
 	private static final String PLAYING_MESSAGE = "%s  ";
 
 	protected final DownedPinCount first;
@@ -18,7 +19,7 @@ public class Playing implements State {
 
 	@Override
 	public State roll(DownedPinCount downedPinCount) {
-		if(DownedPinCount.sum(first, downedPinCount) == TEN) {
+		if(DownedPinCount.sumIntValue(first, downedPinCount) == ALL_PIN_DOWN) {
 			return new Spare(first, downedPinCount);
 		}
 		return new Open(first, downedPinCount);

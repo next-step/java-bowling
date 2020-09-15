@@ -31,4 +31,5 @@
 13. 쓰지 않게 된 클래스 정리
 14. FinalFrame용 State 작성
 15. Frame을 상속한 FinalFrame 작성
+16. 마지막 프레임에서 첫번째, 두번째 투구의 합이 10이 넘을 수 있어서 Exception 나던 현상 수정
 
