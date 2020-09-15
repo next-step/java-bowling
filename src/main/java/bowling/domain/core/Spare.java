@@ -20,6 +20,13 @@ public final class Spare extends AbstractTwoFallenPinsRolledResult {
     }
 
     @Override
+    public int getNextRolledResultMergeScore(RolledResult nextRolledResult) {
+        return super.getNextRolledResultMergeScore(nextRolledResult)
+            + nextRolledResult.twoFallenPins()
+                              .firstFallenPinsValue();
+    }
+
+    @Override
     public String description() {
         return String.format("%s|/", gutterOrFallenPinValue(0));
     }

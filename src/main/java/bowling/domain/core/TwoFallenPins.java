@@ -16,6 +16,8 @@ final class TwoFallenPins extends AbstractTwoFallenPins {
     }
 
     void initTwoFallenPins() {
+        firstFallenPins(zero());
+        secondFallenPins(zero());
         zeroBaseRollingIndex = 0;
     }
 

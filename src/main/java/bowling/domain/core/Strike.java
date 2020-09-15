@@ -1,18 +1,31 @@
 package bowling.domain.core;
 
-final class Strike implements RolledResult {
+import static bowling.domain.core.RolledResultFactory.notAtRolledResult;
+
+final class Strike extends AbstractTwoFallenPinsRolledResult {
     static final RolledResult strike = new Strike();
+
+    public Strike() {
+        super(ImmutableTwoFallenPins.strike());
+    }
+
+    @Override
+    public int getNextRolledResultMergeScore(RolledResult nextRolledResult) {
+        final ImmutableTwoFallenPins twoFallenPins = nextRolledResult.twoFallenPins();
+
+        int score = FallenPins.MAX_FALLEN_PIN_COUNT
+            + twoFallenPins.firstFallenPinsValue()
+            + twoFallenPins.secondFallenPinsValue();
+
+        if (this == nextRolledResult){
+            return score + nextRolledResult.getNextRolledResultMergeScore(notAtRolledResult());
+        }
+
+        return score;
+    }
 
     @Override
     public String description() {
         return "X";
-    }
-
-    @Override
-    public int numberOfPinsFallingByAttemptCount(int rollingTryCount) {
-        if (0 == rollingTryCount) {
-            return FallenPins.MAX_FALLEN_PIN_COUNT;
-        }
-        return FallenPins.MIN_FALLEN_PIN_COUNT;
     }
 }

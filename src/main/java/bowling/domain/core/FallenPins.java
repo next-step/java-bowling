@@ -31,6 +31,10 @@ public final class FallenPins {
         return cachedPins.get(fallenPinCount);
     }
 
+    public static FallenPins ten(){
+        return FallenPins.of(MAX_FALLEN_PIN_COUNT);
+    }
+
     public static FallenPins zero(){
         return FallenPins.of(MIN_FALLEN_PIN_COUNT);
     }

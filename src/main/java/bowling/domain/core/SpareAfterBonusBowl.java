@@ -1,12 +1,16 @@
 package bowling.domain.core;
 
+import static bowling.domain.core.FallenPins.zero;
+import static bowling.domain.core.ImmutableTwoFallenPins.of;
+
 final class SpareAfterBonusBowl extends AbstractTwoFallenPinsRolledResult {
     SpareAfterBonusBowl(RolledResult rolledResult) {
-        super(new ImmutableTwoFallenPins(firstFallenPins(rolledResult), FallenPins.zero()));
+        super(of(firstFallenPins(rolledResult), zero()));
     }
 
     private static FallenPins firstFallenPins(RolledResult rolledResult) {
-        return FallenPins.of(rolledResult.numberOfPinsFallingByAttemptCount(0));
+        return rolledResult.twoFallenPins()
+                           .firstFallenPins();
     }
 
     @Override

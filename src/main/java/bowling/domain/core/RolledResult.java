@@ -13,7 +13,11 @@ public interface RolledResult {
         return 1;
     }
 
-    String description();
+    default String description() {
+        return "";
+    }
 
-    int numberOfPinsFallingByAttemptCount(int rollingAttemptCount);
+    int getNextRolledResultMergeScore(RolledResult nextRolledResult);
+
+    ImmutableTwoFallenPins twoFallenPins();
 }

@@ -1,15 +1,15 @@
 package bowling.domain.core;
 
 abstract class AbstractTwoFallenPinsRolledResult implements RolledResult {
-    private final ImmutableTwoFallenPins twoFallenPins;
+    protected final ImmutableTwoFallenPins twoFallenPins;
 
     public AbstractTwoFallenPinsRolledResult(ImmutableTwoFallenPins twoFallenPins) {
         this.twoFallenPins = twoFallenPins;
     }
 
     @Override
-    public int numberOfPinsFallingByAttemptCount(int rollingAttemptCount) {
-        return twoFallenPins.getFallenPins(rollingAttemptCount);
+    public ImmutableTwoFallenPins twoFallenPins() {
+        return twoFallenPins;
     }
 
     String gutterOrFallenPinValue(int rollingAttemptCount) {
@@ -17,5 +17,10 @@ abstract class AbstractTwoFallenPinsRolledResult implements RolledResult {
             return "-";
         }
         return String.valueOf(twoFallenPins.getFallenPins(rollingAttemptCount));
+    }
+
+    @Override
+    public int getNextRolledResultMergeScore(RolledResult nextRolledResult) {
+        return twoFallenPins.totalScore();
     }
 }
