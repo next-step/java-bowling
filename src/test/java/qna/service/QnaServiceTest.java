@@ -82,14 +82,7 @@ public class QnaServiceTest {
 
         // given
         User otherAnswerWriter = User.ofUser(2L, "kjyang", "Password", "Name", "slamdunk7575@slipp.net");
-
-        /*Answer answer = Answer.builder()
-                .writer(otherAnswerWriter)
-                .question(question)
-                .contents("Content of answer")
-                .build();*/
         Answer answer = Answer.ofAnswer(null, otherAnswerWriter, question,"Content of answer");
-
         question.addAnswer(answer);
 
         // when
@@ -102,8 +95,8 @@ public class QnaServiceTest {
     }
 
     private void verifyDeleteHistories() {
-        DeleteHistory questionHistory = DeleteHistory.of(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
-        DeleteHistory answerHistory = DeleteHistory.of(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
+        DeleteHistory questionHistory = DeleteHistory.ofQuestion(question.getId(), question.getWriter());
+        DeleteHistory answerHistory = DeleteHistory.ofAnswer(answer.getId(), answer.getWriter());
 
         List<DeleteHistory> deleteHistories = Arrays.asList(questionHistory, answerHistory);
         verify(deleteHistoryService).saveAll(deleteHistories);
