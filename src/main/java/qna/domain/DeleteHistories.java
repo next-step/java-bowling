@@ -1,11 +1,13 @@
 package qna.domain;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DeleteHistories {
 
@@ -20,15 +22,19 @@ public class DeleteHistories {
     }
 
     public DeleteHistories combine(DeleteHistories target) {
-        List<DeleteHistory> combinedDeleteHistories = new ArrayList<>();
-        combinedDeleteHistories.addAll(this.deleteHistories);
-        combinedDeleteHistories.addAll(target.deleteHistories);
+        List<DeleteHistory> combinedDeleteHistories = Stream
+                .concat(deleteHistories.stream(), target.deleteHistories.stream())
+                .collect(Collectors.toList());
 
         return new DeleteHistories(combinedDeleteHistories);
     }
 
     public List<DeleteHistory> getDeleteHistories() {
         return Collections.unmodifiableList(deleteHistories);
+    }
+
+    public void iterateDeleteHistories(Consumer<DeleteHistory> deleteHistoryConsumer) {
+        deleteHistories.forEach(deleteHistoryConsumer::accept);
     }
 
     @Override
