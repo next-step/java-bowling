@@ -1,13 +1,13 @@
-package bowling.pin;
+package bowling.pitching;
 
 import bowling.ball.Ball;
-import bowling.state.State;
 
 import java.util.List;
 import java.util.Objects;
 
 import static bowling.global.utils.CommonConstant.NUMBER_ZERO;
 
+// 삭제 예정
 public class Pin {
 
     public static final int INIT_PINS = 10;
@@ -36,30 +36,19 @@ public class Pin {
         int remainingPins = getRemainingPins(pins, ball);
         int pitchCount = ball.getPitchNumber();
 
-        if (pitchCount == FIRST_PITCH && remainingPins == CLEAR_PINS) {
-            return State.STRIKE.toString();
-        }
-        if (pitchCount == SECOND_PITCH && remainingPins == CLEAR_PINS) {
-            return getSecondPitchResult(pins);
+        if (remainingPins == CLEAR_PINS && pitchCount == 1) {
+            return PitchingState.STRIKE.toString();
         }
 
-        if (pitchCount == FIRST_PITCH && remainingPins == Pin.INIT_PINS) {
-            return State.GUTTER.toString();
+        if (remainingPins == CLEAR_PINS) {
+            return PitchingState.SPARE.toString();
         }
 
-        if (pitchCount == SECOND_PITCH && remainingPins == pins.get(FIRST_PITCH_INDEX).getRemainingPins()) {
-            return State.GUTTER.toString();
+        if (ball.getPoint() == CLEAR_PINS) {
+            return PitchingState.GUTTER.toString();
         }
 
         return String.valueOf(ball.getPoint());
-    }
-
-    private static String getSecondPitchResult(List<Pin> pins) {
-        String firstPitchState = pins.get(FIRST_PITCH_INDEX).getState();
-        if (firstPitchState.equals(State.STRIKE.toString())) {
-            return " ";
-        }
-        return State.SPARE.toString();
     }
 
     public String getState() {

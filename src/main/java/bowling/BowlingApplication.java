@@ -1,43 +1,39 @@
 package bowling;
 
-import bowling.ball.domain.Ball;
-import bowling.frame.domain.Frame;
-import bowling.frame.domain.Frames;
-import bowling.pin.domain.Pin;
-import bowling.pin.domain.Pins;
-import bowling.state.domain.State;
+import bowling.frame.Frame;
+import bowling.frame.Frames;
+import bowling.pitching.Pin;
+import bowling.pitching.Pins;
+import bowling.player.Player;
+import bowling.pitching.PitchingState;
+import bowling.view.ResultView;
 import bowling.view.InputView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static bowling.global.utils.CommonConstant.GAME_FINISH_COUNT;
 
 public class BowlingApplication {
 
     public static void main(String[] args) {
-//        String player = InputView.inputPlayer();
+        Player player = new Player(InputView.inputPlayer());
+        Map<Integer, Pins> score = new HashMap<>();
 
-        while (Frames.TOTAL_FRAME_NUMBER  < 11) {
+        while (Frames.CURRENT_FRAME_NUMBER < GAME_FINISH_COUNT) {
             List<Pin> pinList = new ArrayList<>();
             List<Frame> frameList = new ArrayList<>();
 
             for (int i = 1; i <= Frames.PITCH_COUNT; i++) {
-                String inputPitchPoint = InputView.inputPitch(Frames.TOTAL_FRAME_NUMBER);
-
-                Ball ball = Ball.pitch(inputPitchPoint, i);
-                Pin pin = Pin.pitchResult(pinList, ball);
-                Pins pins = Pins.eachPitchResult(pinList, pin);
-
-                Frames frames = Frames.nextFrame(frameList, pins);
-                if (pinList.get(0).getState().equals(State.STRIKE)) {
-                    Ball ball1 = Ball.pitch("0", 2);
-                    Pin pin1 = Pin.pitchResult(pinList, ball1);
-                    Pins pins1 = Pins.eachPitchResult(pinList, pin1);
-
-                    Frames.nextFrame(frameList, pins1);
-                    System.out.println(frames);
+                ResultView.printFrameViewHeader(GAME_FINISH_COUNT, player.getName(), score);
+                String inputPitchPoint = InputView.inputPitch(Frames.CURRENT_FRAME_NUMBER);
+                Frames frames = BowlingGame.playBowling(pinList, frameList, inputPitchPoint, i);
+                if (pinList.get(0).getState().equals(PitchingState.STRIKE.toString())) {
+                    BowlingGame.playBowling(pinList, frameList, "0", 2);
                     break;
                 }
-                System.out.println(frames);
             }
         }
     }

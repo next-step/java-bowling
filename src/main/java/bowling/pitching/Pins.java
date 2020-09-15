@@ -1,4 +1,4 @@
-package bowling.pin;
+package bowling.pitching;
 
 import bowling.ball.Ball;
 
@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import static bowling.global.utils.CommonConstant.NUMBER_TWO;
 
+// 삭제 예정
 public class Pins {
 
     private List<Pin> pins;

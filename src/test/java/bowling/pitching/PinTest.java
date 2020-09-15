@@ -1,4 +1,4 @@
-package bowling.pin;
+package bowling.pitching;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

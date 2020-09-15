@@ -1,14 +1,13 @@
-package bowling.state;
+package bowling.pitching;
 
-public enum State {
+public enum PitchingState {
     STRIKE("X"),
     SPARE("/"),
-    MISS(""),
     GUTTER("-");
 
     private String mark;
 
-    State(String mark) {
+    PitchingState(String mark) {
         this.mark = mark;
     }
 

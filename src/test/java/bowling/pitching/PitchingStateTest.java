@@ -1,30 +1,30 @@
-package bowling.state;
+package bowling.pitching;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StateTest {
+class PitchingStateTest {
 
     @Test
     @DisplayName("스트라이크 기호 확인")
     void state() {
-        String mark = State.STRIKE.toString();
+        String mark = PitchingState.STRIKE.toString();
         assertThat(mark).isEqualTo("X");
     }
 
     @Test
     @DisplayName("스페어 기호 확인")
     void spare() {
-        String mark = State.SPARE.toString();
+        String mark = PitchingState.SPARE.toString();
         assertThat(mark).isEqualTo("/");
     }
 
     @Test
     @DisplayName("거터 기호 확인")
     void gutter() {
-        String mark = State.GUTTER.toString();
+        String mark = PitchingState.GUTTER.toString();
         assertThat(mark).isEqualTo("-");
     }
 
