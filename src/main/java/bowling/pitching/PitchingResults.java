@@ -13,6 +13,10 @@ import bowling.pitching.status.PitchingResult;
 
 public class PitchingResults {
 
+	private static final int DEFAULT_PITCH_COUNT = 2;
+	private static final int MAX_PITCH_COUNT = 3;
+	private static final int KNOCKING_DOWN_MAX_COUNT_FOR_DISPLAY = 10;
+
 	private List<PitchingResult> pitchingResults;
 
 	private PitchingResults() {
@@ -23,7 +27,7 @@ public class PitchingResults {
 		return new PitchingResults();
 	}
 
-	public PitchingResult reflectPitching(Pins knockingDownPins) {
+	public PitchingResult makeResultUsing(Pins knockingDownPins) {
 		PitchingState nextPitchingState = getNextPitchingState(knockingDownPins);
 		PitchingResult pitchingResult = PitchingResult.of(knockingDownPins, nextPitchingState);
 		pitchingResults.add(pitchingResult);
@@ -35,7 +39,7 @@ public class PitchingResults {
 		List<Pins> allKnockingDownPins = getAllKnockingDownPins();
 		allKnockingDownPins.add(knockingDownPins);
 
-		return getLastPitchingState().reflect(allKnockingDownPins);
+		return getLastPitchingState().calculatePitchingStateUsing(allKnockingDownPins);
 	}
 
 	private List<Pins> getAllKnockingDownPins() {
@@ -67,11 +71,11 @@ public class PitchingResults {
 		int allKnockingDownPins = IntStream.range(0, size)
 										   .map(i -> pitchingResults.get(i).getKnockingDownPins())
 										   .sum();
-		if (allKnockingDownPins < 10) {
+		if (allKnockingDownPins < KNOCKING_DOWN_MAX_COUNT_FOR_DISPLAY) {
 			return pitchingResults.get(size - 1).getKnockingDownPins();
 		}
-		if (allKnockingDownPins > 10) {
-			return 10 % allKnockingDownPins;
+		if (allKnockingDownPins > KNOCKING_DOWN_MAX_COUNT_FOR_DISPLAY) {
+			return KNOCKING_DOWN_MAX_COUNT_FOR_DISPLAY % allKnockingDownPins;
 		}
 		return allKnockingDownPins;
 	}
@@ -85,7 +89,11 @@ public class PitchingResults {
 		return getLastPitchingState().canMoveNextFrame();
 	}
 
-	public int getPitchingCountToDate() {
-		return pitchingResults.size();
+	public boolean finishFinalFrame(boolean oneMorePitching) {
+		int currentPitchingCount = pitchingResults.size();
+
+		return oneMorePitching ?
+				currentPitchingCount == MAX_PITCH_COUNT :
+				currentPitchingCount == DEFAULT_PITCH_COUNT;
 	}
 }

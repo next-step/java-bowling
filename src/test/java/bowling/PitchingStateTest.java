@@ -21,7 +21,7 @@ public class PitchingStateTest {
 	@MethodSource("beforeProvider")
 	public void beforeTest(List<Pins> pins, PitchingState expect) {
 		PitchingState before = PitchingState.READY;
-		PitchingState result = before.reflect(pins);
+		PitchingState result = before.calculatePitchingStateUsing(pins);
 		assertThat(result).isEqualTo(expect);
 	}
 
@@ -44,7 +44,7 @@ public class PitchingStateTest {
 	@MethodSource("onGoingProvider")
 	public void onGoingTest(List<Pins> pins, PitchingState expect) {
 		PitchingState onGoing = PitchingState.ON_GOING;
-		PitchingState result = onGoing.reflect(pins);
+		PitchingState result = onGoing.calculatePitchingStateUsing(pins);
 		assertThat(result).isEqualTo(expect);
 	}
 
@@ -67,7 +67,7 @@ public class PitchingStateTest {
 	public void pitchingStateExceptionTest(PitchingState pitchingState, String message) {
 		List<Pins> pins = Arrays.asList(Pins.of(4));
 		assertThatThrownBy(() -> {
-			pitchingState.reflect(pins);
+			pitchingState.calculatePitchingStateUsing(pins);
 		}).isInstanceOf(PitchingStateException.class)
 		  .hasMessage(message);
 	}

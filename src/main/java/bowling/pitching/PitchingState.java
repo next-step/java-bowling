@@ -11,7 +11,7 @@ import bowling.pin.Pins;
 public enum PitchingState {
 	READY(0, Strings.EMPTY) {
 		@Override
-		public PitchingState reflect(List<Pins> knockingDownPins) {
+		public PitchingState calculatePitchingStateUsing(List<Pins> knockingDownPins) {
 			return knockingDownPins.get(0).isAllKnockingDown() ? STRIKE : ON_GOING;
 		}
 
@@ -23,7 +23,7 @@ public enum PitchingState {
 
 	STRIKE(2, "X") {
 		@Override
-		public PitchingState reflect(List<Pins> knockingDownPins) {
+		public PitchingState calculatePitchingStateUsing(List<Pins> knockingDownPins) {
 			if (knockingDownPins.get(knockingDownPins.size() - 1).isAllKnockingDown()) {
 				return PitchingState.STRIKE;
 			}
@@ -38,7 +38,7 @@ public enum PitchingState {
 
 	ON_GOING(0, Strings.EMPTY) {
 		@Override
-		public PitchingState reflect(List<Pins> knockingDownPins) {
+		public PitchingState calculatePitchingStateUsing(List<Pins> knockingDownPins) {
 			Pins firstKnockingDownPins = knockingDownPins.get(0);
 			Pins secondKnockingDownPins = knockingDownPins.get(1);
 			if (secondKnockingDownPins.isNotKnockedDownAtAll()) {
@@ -57,7 +57,7 @@ public enum PitchingState {
 
 	SPARE(1, "/") {
 		@Override
-		public PitchingState reflect(List<Pins> knockingDownPins) {
+		public PitchingState calculatePitchingStateUsing(List<Pins> knockingDownPins) {
 			if (knockingDownPins.get(knockingDownPins.size() - 1).isAllKnockingDown()) {
 				return PitchingState.STRIKE;
 			}
@@ -72,7 +72,7 @@ public enum PitchingState {
 
 	MISS(0, Strings.EMPTY) {
 		@Override
-		public PitchingState reflect(List<Pins> knockingDownPins) {
+		public PitchingState calculatePitchingStateUsing(List<Pins> knockingDownPins) {
 			throw new PitchingStateException("해당 프레임에서는 더 던질 수 없습니다.");
 		}
 
@@ -84,7 +84,7 @@ public enum PitchingState {
 
 	GUTTER(0, "-") {
 		@Override
-		public PitchingState reflect(List<Pins> knockingDownPins) {
+		public PitchingState calculatePitchingStateUsing(List<Pins> knockingDownPins) {
 			throw new PitchingStateException("해당 프레임에서는 더 던질 수 없습니다.");
 		}
 
@@ -96,7 +96,7 @@ public enum PitchingState {
 
 	private static final int ALL_PIN_COUNT = 10;
 
-	public abstract PitchingState reflect(List<Pins> knockingDownPins);
+	public abstract PitchingState calculatePitchingStateUsing(List<Pins> knockingDownPins);
 
 	public abstract boolean canMoveNextFrame();
 

@@ -40,15 +40,7 @@ public class Frames {
 		Score score = currentFrame.reflect(pins);
 		this.scores.calculateScore(score);
 
-		if (currentFrame.finish()) {
-			currentFrameIndex++;
-		}
-
 		return this;
-	}
-
-	public int getCurrentFrameNo() {
-		return currentFrameIndex + 1;
 	}
 
 	public List<String> getKnockingDownPinsSignsOf(int frameIndex) {
@@ -59,4 +51,11 @@ public class Frames {
 		return scores.getScores();
 	}
 
+	public boolean finishCurrentFrame() {
+		return frames.get(currentFrameIndex).finish();
+	}
+
+	public void moveNextFrame() {
+		++currentFrameIndex;
+	}
 }
