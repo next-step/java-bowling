@@ -1,17 +1,14 @@
 package bowling.domain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Game {
-    private List<Frame> frames;
+    private LinkedList<Frame> frames;
     private Map<Integer, List<String>> results;
 
     private Game() {
-        frames = new ArrayList<Frame>() {{
+        frames = new LinkedList<Frame>() {{
             add(NormalFrame.from());
         }};
         results = new HashMap<>();
@@ -38,6 +35,48 @@ public class Game {
         addNextFrame();
 
         return toHitResult();
+    }
+
+    public List<Integer> getSumScores() {
+        List<Integer> result = new ArrayList<>();
+
+        List<Frame> frameSet = frames.stream()
+                .filter(Frame::isFinish)
+                .collect(Collectors.toList());
+
+        setScore(result, frameSet);
+
+        return result;
+    }
+
+    private void setScore(List<Integer> result, List<Frame> frames) {
+        for (ListIterator<Frame> node = frames.listIterator(); node.hasNext(); ) {
+            Frame frame = node.next();
+            int nextIndex = node.nextIndex();
+
+            Score score = frame.getScore();
+            int sum = sumScore(score, nextIndex, frames);
+
+            if (!result.isEmpty()) {
+                sum += result.get(result.size() - 1);
+            }
+
+            result.add(sum);
+        }
+    }
+
+    private int sumScore(Score score, int nextIndex, List<Frame> frames) {
+        while (score.canNextSum() && nextIndex < frames.size()) {
+            Frame nextFrame = frames.get(nextIndex);
+
+            if (nextFrame.isFinish()) {
+                score = nextFrame.sumScore(score);
+            }
+
+            nextIndex = nextIndex + 1;
+        }
+
+        return score.toInt();
     }
 
     private void addNextFrame() {

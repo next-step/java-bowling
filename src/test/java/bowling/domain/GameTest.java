@@ -3,6 +3,7 @@ package bowling.domain;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -66,6 +67,7 @@ public class GameTest {
     void hit_strike() {
         Game game = Game.start();
         assertThat(game.hit(10).get(0)).isEqualTo(Arrays.asList("X"));
+        assertThat(game.getSumScores()).isEqualTo(Arrays.asList(10));
     }
 
     @Test
@@ -73,6 +75,7 @@ public class GameTest {
         Game game = Game.start();
         assertThat(game.hit(1).get(0)).isEqualTo(Arrays.asList("1"));
         assertThat(game.hit(9).get(0)).isEqualTo(Arrays.asList("1", "/"));
+        assertThat(game.getSumScores()).isEqualTo(Arrays.asList(10));
     }
 
     @Test
@@ -80,6 +83,7 @@ public class GameTest {
         Game game = Game.start();
         assertThat(game.hit(1).get(0)).isEqualTo(Arrays.asList("1"));
         assertThat(game.hit(8).get(0)).isEqualTo(Arrays.asList("1", "8"));
+        assertThat(game.getSumScores()).isEqualTo(Arrays.asList(9));
     }
 
     @Test
@@ -87,6 +91,7 @@ public class GameTest {
         Game game = Game.start();
         assertThat(game.hit(0).get(0)).isEqualTo(Arrays.asList("-"));
         assertThat(game.hit(0).get(0)).isEqualTo(Arrays.asList("-", "-"));
+        assertThat(game.getSumScores()).isEqualTo(Arrays.asList(0));
     }
 
     private Game setLastGame() {
@@ -105,6 +110,7 @@ public class GameTest {
         assertThat(game.hit(10).get(9)).isEqualTo(Arrays.asList("X"));
         assertThat(game.hit(10).get(9)).isEqualTo(Arrays.asList("X", "X"));
         assertThat(game.hit(10).get(9)).isEqualTo(Arrays.asList("X", "X", "X"));
+        assertThat(game.getSumScores().get(9)).isEqualTo(300);
     }
 
     @Test
@@ -113,6 +119,7 @@ public class GameTest {
         assertThat(game.hit(1).get(9)).isEqualTo(Arrays.asList("1"));
         assertThat(game.hit(9).get(9)).isEqualTo(Arrays.asList("1", "/"));
         assertThat(game.hit(10).get(9)).isEqualTo(Arrays.asList("1", "/", "X"));
+        assertThat(game.getSumScores().get(9)).isEqualTo(290);
     }
 
     @Test
@@ -120,6 +127,7 @@ public class GameTest {
         Game game = setLastGame();
         assertThat(game.hit(1).get(9)).isEqualTo(Arrays.asList("1"));
         assertThat(game.hit(8).get(9)).isEqualTo(Arrays.asList("1", "8"));
+        assertThat(game.getSumScores().get(9)).isEqualTo(267);
     }
 
     @Test
@@ -127,5 +135,62 @@ public class GameTest {
         Game game = setLastGame();
         assertThat(game.hit(0).get(9)).isEqualTo(Arrays.asList("-"));
         assertThat(game.hit(0).get(9)).isEqualTo(Arrays.asList("-", "-"));
+        assertThat(game.getSumScores().get(9)).isEqualTo(240);
+    }
+
+    @Test
+    void getSumScores() {
+        Game game = Game.start();
+        game.hit(9);
+        game.hit(1);
+        assertThat(game.getSumScores().get(0)).isEqualTo(10);
+    }
+
+    @Test
+    void getSumScores_all_strike() {
+        Game game = Game.start();
+        for (int index = 0; index < 12; index++) {
+            game.hit(10);
+        }
+
+        List<Integer> scores = game.getSumScores();
+
+        assertThat(scores.get(0)).isEqualTo(30);
+        assertThat(scores.get(1)).isEqualTo(60);
+        assertThat(scores.get(2)).isEqualTo(90);
+        assertThat(scores.get(3)).isEqualTo(120);
+        assertThat(scores.get(4)).isEqualTo(150);
+        assertThat(scores.get(5)).isEqualTo(180);
+        assertThat(scores.get(6)).isEqualTo(210);
+        assertThat(scores.get(7)).isEqualTo(240);
+        assertThat(scores.get(8)).isEqualTo(270);
+        assertThat(scores.get(9)).isEqualTo(300);
+    }
+
+    @Test
+    void getSumScores_lastSpare() {
+        Game game = Game.start();
+        for (int index = 0; index < 12; index++) {
+            if (index == 9) {
+                game.hit(9);
+            } else if (index == 10) {
+                game.hit(1);
+            } else {
+                game.hit(10);
+            }
+        }
+
+        List<Integer> scores = game.getSumScores();
+
+        assertThat(scores.get(0)).isEqualTo(30);
+        assertThat(scores.get(1)).isEqualTo(60);
+        assertThat(scores.get(2)).isEqualTo(90);
+        assertThat(scores.get(3)).isEqualTo(120);
+        assertThat(scores.get(4)).isEqualTo(150);
+        assertThat(scores.get(5)).isEqualTo(180);
+        assertThat(scores.get(6)).isEqualTo(210);
+        assertThat(scores.get(7)).isEqualTo(240);
+        assertThat(scores.get(8)).isEqualTo(270);
+        assertThat(scores.get(9)).isEqualTo(290);
     }
 }

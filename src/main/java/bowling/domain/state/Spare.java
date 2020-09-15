@@ -37,6 +37,6 @@ public class Spare implements State {
 
     @Override
     public Score getScore() {
-        return new Score(current.getCount() + next.getCount());
+        return Score.ofSpare(current.getCount() + next.getCount());
     }
 }

@@ -25,4 +25,12 @@ public interface State {
     default boolean isFinish() {
         return false;
     }
+
+    default Score sumScore(Score before) {
+        if (before.canNextSum()) {
+            before.sum(getScore());
+        }
+
+        return before;
+    }
 }

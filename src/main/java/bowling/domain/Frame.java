@@ -58,6 +58,10 @@ public class Frame {
     }
 
     public boolean isFinish() {
+        if (state == null) {
+            return false;
+        }
+
         return state.isFinish();
     }
 
@@ -69,8 +73,14 @@ public class Frame {
         return state.getValue();
     }
 
-    public int getScore() {
-        return state.getScore().toInt();
+    public Score getScore() {
+        return state.getScore();
+    }
+    public Score sumScore(Score before) {
+        if (before.canNextSum()) {
+            state.sumScore(before);
+        }
+        return before;
     }
 
     @Override

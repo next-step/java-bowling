@@ -53,6 +53,6 @@ public class Finish implements State {
 
     @Override
     public Score getScore() {
-        return new Score(current.getCount());
+        return Score.ofOpen(current.getCount());
     }
 }

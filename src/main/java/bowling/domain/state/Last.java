@@ -75,11 +75,23 @@ public class Last implements State {
 
     @Override
     public Score getScore() {
-        return new Score(
+        return Score.ofOpen(
                 states.stream()
                         .mapToInt(state -> state.getScore().toInt())
                         .sum()
         );
+    }
+
+    @Override
+    public Score sumScore(Score before) {
+        states.stream()
+                .forEach(state -> {
+                    if (before.canNextSum()) {
+                        before.sum(state.getScore());
+                    }
+                });
+
+        return before;
     }
 }
 
