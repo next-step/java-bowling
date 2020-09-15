@@ -1,10 +1,28 @@
 package bowling.domain;
 
-public interface Frame {
+import bowling.score.Score;
+import bowling.score.Scores;
 
-    boolean canBowl();
+public abstract class Frame {
+    public static final int FIRST_FRAME = 1;
+    public static final int LAST_FRAME = 10;
 
-    BowlResult bowl(int value);
+    protected int frameNumber;
+    protected Scores scores;
 
-    String getResult();
+    public Frame(int frameNumber, Scores scores) {
+        this.frameNumber = frameNumber;
+        this.scores = scores;
+    }
+
+    @Deprecated
+    public static Frame create() {
+        return null;
+    }
+
+    public abstract void bowl(Score score);
+
+    public abstract boolean canBowl();
+
+    public abstract Frame next();
 }

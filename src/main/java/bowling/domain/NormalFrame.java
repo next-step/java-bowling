@@ -1,48 +1,42 @@
 package bowling.domain;
 
-import bowling.state.State;
+import bowling.score.Score;
+import bowling.score.Scores;
 
-import java.util.ArrayList;
-import java.util.List;
+public class NormalFrame extends Frame {
+    private Scores scores;
 
-public class NormalFrame implements Frame {
-    private List<Integer> bowls;
-    private State state;
-
-    public static NormalFrame create() {
-        return null;
+    private NormalFrame(int frameNumber, Scores scores) {
+        super(frameNumber, scores);
     }
 
-    public static NormalFrame from(Frame previous) {
-        return null;
+    private static NormalFrame of(int frameNumber, Scores scores) {
+        return new NormalFrame(frameNumber, scores);
     }
 
-    @Override
-    public BowlResult bowl(int value) {
-        State state = State.bowl(value);
-        return null;
+    public static NormalFrame first() {
+        return new NormalFrame(Frame.FIRST_FRAME, Scores.init());
     }
 
     @Override
+    public Frame next() {
+        int nextFrameNumber = this.frameNumber + 1;
+        return nextFrameNumber < Frame.LAST_FRAME
+                ? NormalFrame.of(nextFrameNumber, Scores.init())
+                : FinalFrame.of(nextFrameNumber, Scores.init());
+    }
+
+    @Override
+    public void bowl(Score score) {
+
+    }
+
     public boolean canBowl() {
-        return false;
-    }
+        if (scores.isStrike()) {
+            return false;
+        }
 
-    @Override
-    public String getResult() {
-//        List<BowlResult> bowlResults = new ArrayList<>();
-//
-//        int previous = bowls.get(0);
-//        BowlResult firstResult = BowlResult.of(previous);
-//        for (int i = 1; i < bowls.size() - 1; i++) {
-//            int now = bowls.get(i + 1);
-//            BowlResult bowlResult = BowlResult.of(previous, now);
-//            bowlResults.add(bowlResult);
-//            previous = bowls.get(i);
-//        }
-//
-//        return "bowlResults";
-        return state.expression();
+        return !scores.isDone();
     }
 
 }

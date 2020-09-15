@@ -36,7 +36,7 @@ public class NormalFrameTest {
     @ValueSource(strings = {"22", "-1"})
     void bowl_invalid_value(int firstValue) {
         NormalFrame normalFrame = NormalFrame.create();
-        String exceptionMessage = ExceptionMessage.INVALID_BOWL_VALUE;
+        String exceptionMessage = ExceptionMessage.INVALID_SCORE_VALUE;
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> normalFrame.bowl(firstValue))

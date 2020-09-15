@@ -9,7 +9,7 @@ public class FrameManager {
         LinkedList<Frame> frames = new LinkedList<>();
 
         NormalFrame normalFrame = NormalFrame.create();
-        for (int i = 0; i < BOWLING_FRAME_COUNT - 2; i++) {
+        for (int i = 0; i < BOWLING_FRAME_COUNT - 1; i++) {
             frames.add(normalFrame);
             normalFrame = NormalFrame.from(normalFrame);
         }
@@ -19,4 +19,7 @@ public class FrameManager {
         return Frames.getDefault(player, frames);
     }
 
+    public static void process(Frames defaultFrames) {
+//        InputView.scanFrameBowl();
+    }
 }
