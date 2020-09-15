@@ -3,6 +3,7 @@ package bowling;
 import bowling.domain.*;
 import bowling.score.Score;
 import bowling.view.InputView;
+import bowling.view.OutputView;
 
 public class BowlingController {
 
@@ -21,6 +22,7 @@ public class BowlingController {
     }
 
     private static Frame processNormalFrame(Frame frame, Player player) {
+        OutputView.printFrame(frame, player);
         Score score = Score.of(InputView.scanFirstBowl(frame));
         frame.bowl(score);
 

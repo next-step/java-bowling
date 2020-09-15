@@ -25,4 +25,8 @@ public abstract class Frame {
     public abstract boolean canBowl();
 
     public abstract Frame next();
+
+    public String getResult(int i) {
+        return "";
+    }
 }
