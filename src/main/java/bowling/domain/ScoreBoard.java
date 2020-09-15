@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.constant.GameState;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,16 +30,20 @@ public class ScoreBoard {
         this.frames = frames;
     }
 
-    public GameState record(BowlingScore score) {
+    public boolean record(BowlingScore score) {
         Frame currentFrame = frames.get(currentIndex);
 
-        GameState state = currentFrame.record(score);
+        boolean isDone = currentFrame.record(score);
 
-        if(state == GameState.FINISH_CURRENT_FRAME) {
+        if(isDone) {
             currentIndex++;
         }
 
-        return state;
+        if(currentFrame.isFinalFrame()) {
+            return currentFrame.isEnd();
+        }
+
+        return false;
     }
 
     public String printableStatus() {

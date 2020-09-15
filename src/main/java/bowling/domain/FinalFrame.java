@@ -1,8 +1,5 @@
 package bowling.domain;
 
-import bowling.constant.GameState;
-import bowling.ui.BowlingResultView;
-
 public class FinalFrame implements Frame {
     private static final String COLUMN = "|";
     private static final int FRAME_NO = 10;
@@ -12,7 +9,7 @@ public class FinalFrame implements Frame {
     private Frame parent;
 
     public static FinalFrame from(Frame parent) {
-        return new FinalFrame(ScoringHistory.emptyHistory(), BowlingScore.zeroScore(), parent);
+        return new FinalFrame(ScoringHistory.emptyHistory(), BowlingScore.emptyScore(), parent);
     }
 
     private FinalFrame(ScoringHistory scoringHistory, BowlingScore bonusRecord, Frame parent) {
@@ -33,29 +30,27 @@ public class FinalFrame implements Frame {
     }
 
     private String printableBonusScore() {
-        if (scoringHistory.isEmptyStatus()) {
-            return "";
+        if (scoringHistory.isStrikeOrSpare()) {
+            return " | " + bonusRecord.printableScore();
         }
 
-        return BowlingResultView.SCORE_DELIMITER + bonusRecord.printableScore();
+        return "";
     }
 
     @Override
-    public GameState record(BowlingScore score) {
-        if(scoringHistory.isEmptyStatus()) {
+    public boolean record(BowlingScore score) {
+        if(scoringHistory.isEmpty()) {
             this.scoringHistory = ScoringHistory.firstTry(score);
-            return scoringHistory.getGameState();
+            return isEnd();
         }
 
-        if(scoringHistory.isPlayingStatus()) {
-            this.scoringHistory = ScoringHistory.secondTry(scoringHistory, score);
+        if(scoringHistory.isDone()) {
+            bonusRecord = score;
+            return isEnd();
         }
 
-        if(scoringHistory.isSpareOrStrike()) {
-            return GameState.PLAYING;
-        }
-
-        return GameState.FINISH_CURRENT_FRAME;
+        this.scoringHistory = ScoringHistory.secondTry(scoringHistory, score);
+        return isEnd();
     }
 
     @Override
@@ -66,5 +61,10 @@ public class FinalFrame implements Frame {
     @Override
     public boolean isFinalFrame() {
         return true;
+    }
+
+    @Override
+    public boolean isEnd() {
+        return (scoringHistory.isStrikeOrSpare() && !bonusRecord.isEmpty()) || (scoringHistory.isDone());
     }
 }

@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.constant.GameState;
-
 public class NormalFrame implements Frame {
     private static final String LAST_FRAME_NO = "09";
 
@@ -30,17 +28,14 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public GameState record(BowlingScore score) {
-        if(scoringHistory.isEmptyStatus()) {
+    public boolean record(BowlingScore score) {
+        if(scoringHistory.isEmpty()) {
             this.scoringHistory = ScoringHistory.firstTry(score);
-            return scoringHistory.getGameState();
+            return isEnd();
         }
 
-        if(scoringHistory.isPlayingStatus()) {
-            this.scoringHistory = ScoringHistory.secondTry(scoringHistory, score);
-        }
-
-        return scoringHistory.getGameState();
+        this.scoringHistory = ScoringHistory.secondTry(scoringHistory, score);
+        return isEnd();
     }
 
     @Override
@@ -62,6 +57,11 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isFinalFrame() {
         return false;
+    }
+
+    @Override
+    public boolean isEnd() {
+        return scoringHistory.isDone();
     }
 
 

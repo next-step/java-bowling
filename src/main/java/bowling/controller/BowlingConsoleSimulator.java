@@ -1,6 +1,5 @@
 package bowling.controller;
 
-import bowling.constant.GameState;
 import bowling.domain.BowlingScore;
 import bowling.domain.BowlingUser;
 import bowling.ui.BowlingInputView;
@@ -31,10 +30,10 @@ public class BowlingConsoleSimulator implements BowlingSimulator{
         while(true) {
             BowlingInputView.printScoreInputPhrase(bowlingUser.currentFrameNo());
             BowlingScore bowlingScore = new BowlingScore(BowlingInputView.readInteger());
-            GameState state = bowlingUser.bowl(bowlingScore);
+            boolean isDone = bowlingUser.bowl(bowlingScore);
             BowlingResultView.printStatus(bowlingUser.printableScoreStatus());
 
-            if(state == GameState.ALL_DONE) {
+            if(isDone) {
                 return;
             }
         }

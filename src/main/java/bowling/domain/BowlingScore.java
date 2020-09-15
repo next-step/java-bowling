@@ -6,12 +6,16 @@ public class BowlingScore {
     private static final String UNDER_LOWER_BOUND_EXCEPTION_MESSAGE = "점수는 0이상의 값이여야 합니다.";
     private static final String EXCEED_UPPER_BOUND_EXCEPTION_MESSAGE = "점수는 10이하의 값이여야 합니다.";
     private static final String GUTTER_SYMBOL = "-";
-    private static final BowlingScore ZERO_SCORE = new BowlingScore(0);
+    private static final BowlingScore EMPTY_SCORE = new EmptyBowlingScore();
 
     private int score;
 
-    public static BowlingScore zeroScore() {
-        return ZERO_SCORE;
+    public static BowlingScore emptyScore() {
+        return EMPTY_SCORE;
+    }
+
+    private BowlingScore() {
+
     }
 
     public BowlingScore(int score) {
@@ -49,11 +53,37 @@ public class BowlingScore {
         return score == UPPER_BOUND;
     }
 
+    public boolean isEmpty() {
+        return this.equals(EMPTY_SCORE);
+    }
+
     public String printableScore() {
-        if(score == LOWER_BOUND) {
+        if (score == LOWER_BOUND) {
             return GUTTER_SYMBOL;
         }
         return String.valueOf(score);
+    }
+
+    private static class EmptyBowlingScore extends BowlingScore{
+        @Override
+        public BowlingScore add(BowlingScore bowlingScore) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean isPerfect() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return true;
+        }
+
+        @Override
+        public String printableScore() {
+            return "";
+        }
     }
 }
 

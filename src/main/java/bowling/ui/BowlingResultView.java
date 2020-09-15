@@ -1,7 +1,6 @@
 package bowling.ui;
 
 public class BowlingResultView {
-    public static final String SCORE_DELIMITER = " | ";
 
     private BowlingResultView() {
 

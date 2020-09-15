@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import bowling.constant.GameState;
-
 import java.util.regex.Pattern;
 
 public class BowlingUser {
@@ -45,7 +43,7 @@ public class BowlingUser {
         }
     }
 
-    public GameState bowl(BowlingScore score) {
+    public boolean bowl(BowlingScore score) {
         return scoreBoard.record(score);
     }
 
