@@ -8,7 +8,8 @@ import java.util.Objects;
 
 public class Frame {
 
-	private static final int SEQUENCE_ADDER = 1;
+	private static final int INCREMENTAL = 1;
+	private static final int FINAL_INDEX = 10;
 
 	private final int index;
 
@@ -19,20 +20,36 @@ public class Frame {
 		this.state = InitState.getInstance();
 	}
 
+	public boolean isFrameFinished() {
+		return state.isDone();
+	}
+
 	public Frame roll(DownedPinCount downedPinCount) {
 		state = state.roll(downedPinCount);
-		if(state.isDone()) {
-			return new Frame(index + SEQUENCE_ADDER);
+		if(isFrameFinished()) {
+			return getNextFrame();
 		}
 		return this;
 	}
 
 	public int getFrameSequence() {
-		return index + SEQUENCE_ADDER;
+		return index;
 	}
 
 	public State getState() {
 		return state;
+	}
+
+	private Frame getNextFrame() {
+		int nextIndex = index + INCREMENTAL;
+		if(isNextFinal(nextIndex)) {
+			return new FinalFrame(nextIndex);
+		}
+		return new Frame(nextIndex);
+	}
+
+	private boolean isNextFinal(int nextIndex) {
+		return nextIndex == FINAL_INDEX;
 	}
 
 	@Override
@@ -48,7 +65,4 @@ public class Frame {
 		return Objects.hash(index);
 	}
 
-	public boolean isFrameFinished() {
-		return state.isDone();
-	}
 }

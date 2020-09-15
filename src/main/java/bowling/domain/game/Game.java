@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Game {
-	private static final int START_INDEX = 0;
+	private static final int START_INDEX = 1;
 	private static final int MAX_FRAMES_PER_GAME = 10;
 
 	private final Player player;

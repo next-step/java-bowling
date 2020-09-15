@@ -1,15 +1,10 @@
 package bowling.domain.frame;
 
-import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import javax.persistence.OneToMany;
-
 import static bowling.domain.DownedPinCount.*;
-import static bowling.domain.frame.Frame.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FrameTest {
 

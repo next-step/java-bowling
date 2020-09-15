@@ -30,4 +30,5 @@
 12. Game 수정 및 OutputView 구현
 13. 쓰지 않게 된 클래스 정리
 14. FinalFrame용 State 작성
+15. Frame을 상속한 FinalFrame 작성
 
