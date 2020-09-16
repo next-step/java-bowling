@@ -16,7 +16,7 @@ public class QuestionTest {
 
     @DisplayName("삭제 테스트")
     @Test
-    public void deleteTest() throws CannotDeleteException {
+    public void deleteTest() {
         assertThat(Q1.deleteBy(Q1.getWriter()))
                 .containsAnyOf(new DeleteHistory(ContentType.QUESTION, Q1.getId(), Q1.getWriter(), LocalDateTime.now()));
     }
@@ -30,7 +30,7 @@ public class QuestionTest {
 
     @DisplayName("삭제 히스토리 테스트")
     @Test
-    public void deleteEqualDeleteHistoriesTest() throws CannotDeleteException {
+    public void deleteEqualDeleteHistoriesTest() {
         Question question = Question.of(Q1);
         question.addAnswer(AnswerTest.A1);
 
