@@ -5,7 +5,7 @@ import bowling.score.Scores;
 
 public class FinalFrame extends Frame {
 
-    public FinalFrame(int frameNumber, Scores scores) {
+    private FinalFrame(int frameNumber, Scores scores) {
         super(frameNumber, scores);
     }
 

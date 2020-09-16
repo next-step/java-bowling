@@ -5,7 +5,7 @@ import java.util.List;
 
 public class NormalScores extends Scores {
 
-    public NormalScores(Score firstScore, Score secondScore) {
+    private NormalScores(Score firstScore, Score secondScore) {
         super(firstScore, secondScore);
     }
 

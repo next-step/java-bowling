@@ -10,7 +10,7 @@ public class Frames {
     private Player player;
     private LinkedList<Frame> frames;
 
-    public Frames(Player player, LinkedList<Frame> frames) {
+    private Frames(Player player, LinkedList<Frame> frames) {
         this.player = player;
         this.frames = frames;
     }

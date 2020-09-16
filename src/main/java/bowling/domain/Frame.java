@@ -12,7 +12,7 @@ public abstract class Frame {
     protected int frameNumber;
     protected Scores scores;
 
-    public Frame(int frameNumber, Scores scores) {
+    Frame(int frameNumber, Scores scores) {
         this.frameNumber = frameNumber;
         this.scores = scores;
     }

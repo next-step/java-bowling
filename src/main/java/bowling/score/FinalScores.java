@@ -6,7 +6,7 @@ import java.util.List;
 public class FinalScores extends Scores {
     private Score bonusScore;
 
-    public FinalScores(Score firstScore, Score secondScore) {
+    private FinalScores(Score firstScore, Score secondScore) {
         super(firstScore, secondScore);
         this.bonusScore = null;
     }

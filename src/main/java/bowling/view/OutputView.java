@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class OutputView {
+public final class OutputView {
     private static final String NAME_TEXT = "| NAME |";
     private static final String PLAYER_NAME_TEXT = "|  %s |";
     private static final String FRAME_NUMBER_TEXT = "  %02d  |";

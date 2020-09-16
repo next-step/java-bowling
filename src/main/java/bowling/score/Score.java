@@ -5,7 +5,6 @@ import bowling.exception.ExceptionMessage;
 public class Score {
     public static final int MIN_SCORE = 0;
     public static final int MAX_SCORE = 10;
-    public static final Score MAX = new Score(MAX_SCORE);
 
     private int score;
 

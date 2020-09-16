@@ -4,7 +4,7 @@ import bowling.domain.Frame;
 
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String ASK_PLAYER_NAME = "플레이어 이름은(3 english letters)?";
     private static final String ASK_FIRST_BOWL = "%d프레임 투구 : ";
