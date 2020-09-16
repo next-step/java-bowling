@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,9 @@ import static bowling.domain.NumberOfPins.MAX_NUMBER_OF_PINS;
 import static bowling.domain.NumberOfPins.MIN_NUMBER_OF_PINS;
 
 public class FrameBowl {
+
+    public static final int FIRST_BOWL = 1;
+    public static final int SECOND_BOWL = 2;
 
     private final List<NumberOfPins> numberOfPins = new ArrayList<>();
 
@@ -43,20 +47,20 @@ public class FrameBowl {
     }
 
     public boolean isStrike() {
-        return getBowlCount() == 1 && getTotalNumberOfPins() == MAX_NUMBER_OF_PINS;
+        return getBowlCount() == FIRST_BOWL && getTotalNumberOfPins() == MAX_NUMBER_OF_PINS;
     }
 
     public boolean isSpare() {
-        return getBowlCount() == 2 && getTotalNumberOfPins() == MAX_NUMBER_OF_PINS;
+        return getBowlCount() == SECOND_BOWL && getTotalNumberOfPins() == MAX_NUMBER_OF_PINS;
     }
 
     public boolean isMiss() {
         int totalNumberOfPins = getTotalNumberOfPins();
-        return getBowlCount() == 2 && (totalNumberOfPins > MIN_NUMBER_OF_PINS && totalNumberOfPins < MAX_NUMBER_OF_PINS);
+        return getBowlCount() == SECOND_BOWL && (totalNumberOfPins > MIN_NUMBER_OF_PINS && totalNumberOfPins < MAX_NUMBER_OF_PINS);
     }
 
     public boolean isGutter() {
-        return getBowlCount() == 2 && getTotalNumberOfPins() == MIN_NUMBER_OF_PINS;
+        return getBowlCount() == SECOND_BOWL && getTotalNumberOfPins() == MIN_NUMBER_OF_PINS;
     }
 
     public int getBowlCount() {

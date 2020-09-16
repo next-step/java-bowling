@@ -3,12 +3,13 @@ package bowling.domain;
 import java.util.Arrays;
 import java.util.function.Function;
 
-public enum  BowlResult {
+public enum BowlResult {
 
     STRIKE(frameBowl -> frameBowl.isStrike()),
     SPARE(frameBowl -> frameBowl.isSpare()),
     MISS(frameBowl -> frameBowl.isMiss()),
-    GUTTER(frameBowl -> frameBowl.isGutter())
+    GUTTER(frameBowl -> frameBowl.isGutter()),
+    NONE(frameBowl -> true)
     ;
 
     BowlResult(Function<FrameBowl, Boolean> getTypeFunction) {
@@ -21,7 +22,7 @@ public enum  BowlResult {
         return Arrays.stream(values())
                 .filter(bowlResult -> bowlResult.getTypeFunction.apply(frameBowl))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(IllegalArgumentException::new);
     }
 
 }
