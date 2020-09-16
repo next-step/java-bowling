@@ -41,7 +41,6 @@ public class Last implements State {
         return states.stream()
                 .flatMap(state -> state.getValue().stream())
                 .collect(Collectors.toList());
-
     }
 
     @Override
@@ -50,28 +49,30 @@ public class Last implements State {
             return false;
         }
 
-        int size = states.size();
+        State lastState = states.getLast();
 
-        if (size == MAX_SIZE) {
-            return true;
-        }
-
-        State first = states.getFirst();
-        State last = states.getLast();
-
-        if (size == 1 && last.isFinish() && last.getScore().canNextSum()) {
+        if (!lastState.isFinish()) {
             return false;
         }
 
-        if (first instanceof Strike && last.isFinish() && last.getScore().canNextSum()) {
-            return false;
+        return !getCurrentScore().canNextSum();
+    }
+
+    private Score getCurrentScore() {
+        State state = states.getFirst();
+        Score score = Score.of(0, 0);
+
+        if (!state.isFinish()) {
+            return score;
         }
 
-        if (first.isFinish() && !last.isFinish()) {
-            return true;
+        score = state.getScore();
+
+        for (int index = 1; index < states.size(); index++) {
+            score = states.get(index).sumScore(score);
         }
 
-        return last.isFinish();
+        return score;
     }
 
     @Override
