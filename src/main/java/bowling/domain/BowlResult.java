@@ -3,9 +3,8 @@ package bowling.domain;
 public enum BowlResult {
     STRIKE("X"),
     SPARE("/"),
-    GUTTER("-"),
-    MISS("%d"),
-    DEFAULT("%d");
+    GUTTER("-")
+    ;
 
     private String expression;
 
