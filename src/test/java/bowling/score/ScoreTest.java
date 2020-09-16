@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class ScoreTest {
+    public static final Score MAX_SCORE = Score.of("10");
 
     @DisplayName("생성 테스트")
     @ParameterizedTest

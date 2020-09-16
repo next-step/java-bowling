@@ -10,16 +10,23 @@ public abstract class Frame {
     public static final int LAST_FRAME = 10;
 
     protected int frameNumber;
-    protected Scores scores;
+    Scores scores;
 
     Frame(int frameNumber, Scores scores) {
         this.frameNumber = frameNumber;
         this.scores = scores;
     }
 
-    @Deprecated
-    public static Frame create() {
-        return null;
+    public int getNumber() {
+        return frameNumber;
+    }
+
+    public boolean getBy(int frameNumber) {
+        return this.frameNumber == frameNumber;
+    }
+
+    public List<Score> getResult() {
+        return scores.getResult();
     }
 
     public void bowl(Score score) {
@@ -29,16 +36,4 @@ public abstract class Frame {
     public abstract boolean canBowl();
 
     public abstract Frame next();
-
-    public List<Score> getResult() {
-        return scores.getResult();
-    }
-
-    public boolean getBy(int frameNumber) {
-        return this.frameNumber == frameNumber;
-    }
-
-    public int getNumber() {
-        return frameNumber;
-    }
 }

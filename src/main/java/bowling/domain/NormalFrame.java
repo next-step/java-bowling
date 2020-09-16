@@ -10,7 +10,7 @@ public class NormalFrame extends Frame {
         super(frameNumber, scores);
     }
 
-    private static NormalFrame of(int frameNumber, Scores scores) {
+    public static NormalFrame of(int frameNumber, Scores scores) {
         return new NormalFrame(frameNumber, scores);
     }
 
