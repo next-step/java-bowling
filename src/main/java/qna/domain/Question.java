@@ -2,6 +2,7 @@ package qna.domain;
 
 import org.hibernate.annotations.Where;
 import qna.CannotDeleteException;
+import qna.NotAuthorizedDeleteException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -104,7 +105,7 @@ public class Question extends AbstractEntity {
 
     private void confirmDeletableQuestion(User loginUser) throws CannotDeleteException {
         if (!isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+            throw new NotAuthorizedDeleteException();
         }
     }
 
