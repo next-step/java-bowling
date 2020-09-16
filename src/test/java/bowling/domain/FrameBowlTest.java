@@ -34,4 +34,21 @@ public class FrameBowlTest {
         assertThatIllegalArgumentException().isThrownBy(() -> frameBowl.bowl(numberOfPins));
     }
 
+    @DisplayName("투구 수 테스트")
+    @Test
+    public void getBowlCount() {
+        FrameBowl frameBowl = new FrameBowl();
+        frameBowl.bowl(5);
+        assertThat(frameBowl.getBowlCount()).isEqualTo(1);
+    }
+
+    @DisplayName("전체 핀 갯수 테스트")
+    @Test
+    public void getTotalNumberOfPins() {
+        FrameBowl frameBowl = new FrameBowl();
+        frameBowl.bowl(5);
+        frameBowl.bowl(3);
+        assertThat(frameBowl.getTotalNumberOfPins()).isEqualTo(8);
+    }
+
 }

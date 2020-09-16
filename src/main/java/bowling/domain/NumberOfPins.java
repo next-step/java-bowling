@@ -16,6 +16,10 @@ public class NumberOfPins {
         this.numberOfPins = numberOfPins;
     }
 
+    public int getNumberOfPins() {
+        return numberOfPins;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
