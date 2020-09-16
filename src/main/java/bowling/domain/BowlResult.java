@@ -25,4 +25,8 @@ public enum BowlResult {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
+    public boolean isCompleted() {
+        return !this.equals(NONE);
+    }
+
 }
