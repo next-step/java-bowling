@@ -19,7 +19,7 @@ public class Frame {
             return this;
         }
 
-        if (nextIsLastFrame()) {
+        if (IsNextLastFrame()) {
             Frame lastFrame = LastFrame.from();
             lastFrame.hit(count);
 
@@ -36,7 +36,7 @@ public class Frame {
         return this;
     }
 
-    private boolean nextIsLastFrame() {
+    private boolean IsNextLastFrame() {
         return isFinish() && nextFrameNumber() == LAST_FRAME_NUMBER;
     }
 
