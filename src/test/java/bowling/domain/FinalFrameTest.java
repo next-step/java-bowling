@@ -26,7 +26,7 @@ public class FinalFrameTest {
     @DisplayName("초구에서 스트라이크 후, 투구가 가능한지 확인 테스트")
     @Test
     void canBowl_firstBowl_strike_test() {
-        FinalFrame finalFrame = FrameTest.FINAL_FRAME;
+        FinalFrame finalFrame = FinalFrame.of(Frame.LAST_FRAME, FinalScores.init());
         finalFrame.bowl(ScoreTest.MAX_SCORE);
 
         boolean actual = finalFrame.canBowl();

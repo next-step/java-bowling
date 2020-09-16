@@ -13,15 +13,12 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FrameTest {
-    public static final Frame NORMAL_FRAME = NormalFrame.of(Frame.FIRST_FRAME, NormalScores.init());
-    public static final Frame NINE_FRAME = NormalFrame.of(Frame.LAST_FRAME - 1, NormalScores.init());
-    public static final FinalFrame FINAL_FRAME = FinalFrame.of(Frame.LAST_FRAME, FinalScores.init());
 
     @DisplayName("Frame Scores 반환 테스트")
     @ParameterizedTest
     @MethodSource("makeBowlResultData")
     void getResult(Score firstValue, Score secondValue) {
-        Frame frame = NORMAL_FRAME;
+        Frame frame = NormalFrame.of(Frame.FIRST_FRAME, NormalScores.init());
 
         frame.bowl(firstValue);
         frame.bowl(secondValue);
