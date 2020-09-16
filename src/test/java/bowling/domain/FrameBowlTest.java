@@ -11,13 +11,6 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 @DisplayName("프레임 투구 객체 테스트")
 public class FrameBowlTest {
 
-    @DisplayName("생성 테스트")
-    @Test
-    public void create() {
-        FrameBowl frameBowl = new FrameBowl();
-        // TODO: 생성 테스트 추가, 없으면 삭제
-    }
-
     @DisplayName("투구 테스트: 스트라이크")
     @Test
     public void bowl_strike() {
