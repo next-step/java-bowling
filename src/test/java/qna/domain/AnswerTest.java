@@ -1,23 +1,34 @@
 package qna.domain;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDateTime;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnswerTest {
-    public static final Answer A1 = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-    public static final Answer A2 = new Answer(UserTest.SANJIGI, QuestionTest.Q1, "Answers Contents2");
 
-    @Test
+    private static Stream<Arguments> provideForDeleteAnswer() {
+        return Stream.of(
+                Arguments.of(
+                        new Answer(1L, UserTest.JAVAJIGI, QuestionTest.Q1, "answer1 by javajigi"),
+                        new DeleteHistory(ContentType.ANSWER, 1L, UserTest.JAVAJIGI, LocalDateTime.now())
+                ),
+                Arguments.of(
+                        new Answer(77L, UserTest.SANJIGI, QuestionTest.Q2, "answer77 by sanjigi"),
+                        new DeleteHistory(ContentType.ANSWER, 77L, UserTest.SANJIGI, LocalDateTime.now())
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideForDeleteAnswer")
     @DisplayName("answer 삭제하기")
-    void delete() {
-        // given
-        Answer answer = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "answer1 by javajigi");
-        DeleteHistory expected = new DeleteHistory(ContentType.ANSWER, answer.getId(), UserTest.JAVAJIGI, LocalDateTime.now());
-
+    void delete(Answer answer, DeleteHistory expected) {
         // when
         DeleteHistory result = answer.delete();
 
