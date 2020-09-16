@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import bowling.domain.core.RolledResult;
 import bowling.ui.result.DisplayRolledResult;

@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import bowling.domain.frame.Frames;
 import bowling.ui.result.DisplayPlayerBowlingGrade;
 import bowling.ui.result.DisplayRolledResult;
 

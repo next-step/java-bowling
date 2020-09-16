@@ -1,6 +1,6 @@
 package bowling.domain.core;
 
-import bowling.domain.TerminateFrame;
+import bowling.domain.frame.TerminateFrame;
 
 public final class Spare extends AbstractTwoFallenPinsRolledResult {
 

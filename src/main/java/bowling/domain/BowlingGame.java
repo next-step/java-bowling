@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import bowling.domain.frame.Frames;
 import bowling.ui.result.DisplayBowlingBoard;
 
 public class BowlingGame {

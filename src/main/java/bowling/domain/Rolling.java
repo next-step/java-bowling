@@ -4,6 +4,7 @@ import java.util.List;
 
 import bowling.domain.core.RolledResult;
 import bowling.domain.core.RolledResultFactory;
+import bowling.domain.frame.Frames;
 import bowling.ui.result.DisplayRolledResult;
 
 final class Rolling {
@@ -11,7 +12,7 @@ final class Rolling {
 
     Rolling() {
         RolledResultFactory.init();
-        frames = new Frames();
+        frames = Frames.of();
     }
 
     void roll(int fallenPins){
@@ -29,10 +30,10 @@ final class Rolling {
     }
 
     boolean hasNextFrameIndex(int currentFrameIndex){
-        return frames.currentFrameIndex() <= currentFrameIndex;
+        return frames.hasNextFrameIndex(currentFrameIndex);
     }
 
     int getTotalFrameScore(){
-        return frames.getScore();
+        return frames.getTotalScore();
     }
 }

@@ -6,6 +6,8 @@ import java.util.function.Function;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import bowling.domain.frame.Frames;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("모든 프레임에 같은 투구 후 마지막 결과 확인 테스트")

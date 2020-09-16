@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -9,8 +9,8 @@ import bowling.ui.result.DisplayRolledResult;
 import static bowling.domain.core.RolledResultFactory.notAtRolledResult;
 import static java.util.stream.Collectors.toList;
 
-final class Frames {
-    static final int MAX_FRAMES_SIZE = 10;
+public final class Frames {
+    public static final int MAX_FRAMES_SIZE = 10;
     static final int MAX_FOUNDATION_FRAME_SIZE = 9;
     private final List<Frame> frames;
     private int zeroBaseCurrentFrameIndex;
@@ -23,13 +23,16 @@ final class Frames {
         zeroBaseCurrentFrameIndex = 0;
     }
 
-    void saveRolledResultAndShouldNextFrame(RolledResult rolledResult){
+    public static Frames of() {
+        return new Frames();
+    }
+
+    public void saveRolledResultAndShouldNextFrame(RolledResult rolledResult){
         updateCurrentFrameByRolledResult(rolledResult);
         updatePreviousFrameByScore(rolledResult);
         shouldNextFrame();
         updateTerminalFrameByScore();
     }
-
 
     private void updateCurrentFrameByRolledResult(RolledResult rolledResult) {
         if (isNotCompleteFrames()) {
@@ -63,21 +66,21 @@ final class Frames {
         return MAX_FRAMES_SIZE <= currentFrameIndex();
     }
 
-    boolean isNotCompleteFrames(){
+    public boolean isNotCompleteFrames(){
         return !isCompleteFrames();
     }
 
-    int currentFrameIndex(){
+    public int currentFrameIndex(){
         return zeroBaseCurrentFrameIndex;
     }
 
-    int getScore(){
+    public int getTotalScore(){
         return frames.stream()
                      .mapToInt(Frame::getScore)
                      .sum();
     }
 
-    List<DisplayRolledResult> toRolledResults() {
+    public List<DisplayRolledResult> toRolledResults() {
         return frames.stream()
                      .map(Frame::toDisplayRolledResult)
                      .collect(toList());
@@ -89,5 +92,9 @@ final class Frames {
 
     private Frame currentFrame(){
         return frames.get(currentFrameIndex());
+    }
+
+    public boolean hasNextFrameIndex(int currentFrameIndex) {
+        return currentFrameIndex() <= currentFrameIndex;
     }
 }
