@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.domain.Game;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -12,10 +14,10 @@ public class ResultViewer {
     private static final String GAME_RESULT_FORMAT = "  %-3s |";
     private static final String GAME_RESULT_DELIMITER = "|";
 
-    public static void print(int hitCount, GameView gameView) {
+    public static void print(int hitCount, Game game) {
         ResultViewer.showHead();
-        ResultViewer.showResultFrames(gameView.getName(), gameView.hit(hitCount));
-        ResultViewer.showResultScores(gameView.getSumScores());
+//        ResultViewer.showResultFrames(game.getPlayerName(), game.hit(hitCount));
+//        ResultViewer.showResultScores(game.getSumScores());
     }
 
     private static void showHead() {

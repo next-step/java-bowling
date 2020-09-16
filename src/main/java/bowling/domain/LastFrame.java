@@ -97,4 +97,11 @@ public class LastFrame implements Frame {
 
         return score;
     }
+
+    @Override
+    public String toString() {
+        return "LastFrame{" +
+                "states=" + states +
+                '}';
+    }
 }

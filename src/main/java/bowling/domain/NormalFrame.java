@@ -18,6 +18,10 @@ public class NormalFrame implements Frame {
         return new NormalFrame(1);
     }
 
+    public static Frame of(int frameNumber) {
+        return new NormalFrame(frameNumber);
+    }
+
     @Override
     public Frame hit(int count) {
         state = state.roll(count);
@@ -47,5 +51,13 @@ public class NormalFrame implements Frame {
     @Override
     public Score additionalScore(Score beforeScore) {
         return state.getScore().sum(beforeScore);
+    }
+
+    @Override
+    public String toString() {
+        return "NormalFrame{" +
+                "number=" + number +
+                ", state=" + state +
+                '}';
     }
 }
