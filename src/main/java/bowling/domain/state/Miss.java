@@ -28,7 +28,7 @@ public class Miss extends Finished {
     }
 
     @Override
-    public List<String> getValue() {
+    public List<String> toValues() {
         if (isDoubleGutter()) {
             return Arrays.asList(Result.GUTTER.toString(), Result.GUTTER.toString());
         }
@@ -46,7 +46,7 @@ public class Miss extends Finished {
 
     @Override
     public Score getScore() {
-        return Score.ofOpen(current.getCount() + next.getCount());
+        return Score.ofMiss(current.getCount() + next.getCount());
     }
 
     @Override

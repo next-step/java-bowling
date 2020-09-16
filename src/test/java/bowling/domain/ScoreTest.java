@@ -59,7 +59,7 @@ public class ScoreTest {
 
     @Test
     public void ofOpen() {
-        Score score = Score.ofOpen(0);
+        Score score = Score.ofMiss(0);
         int tryCount = 0;
 
         while (score.canNextSum()) {

@@ -8,24 +8,24 @@ import bowling.domain.State;
 import java.util.Arrays;
 import java.util.List;
 
-public class Finish implements State {
+public class Final implements State {
 
     private Pin previous;
     private Pin current;
 
-    private Finish(Pin previous, int count) {
+    private Final(Pin previous, int count) {
         this.previous = previous;
         this.current = Pin.of(count);
     }
 
-    static State from(State current, int count) {
+    public static State from(State current, int count) {
         Pin pin = Pin.of(count);
 
         if (pin.isStrike()) {
             return new Strike(pin);
         }
 
-        return new Finish(Pin.of(current.getScore().toInt()), count);
+        return new Final(Pin.of(current.getScore().toInt()), count);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Finish implements State {
     }
 
     @Override
-    public List<String> getValue() {
+    public List<String> toValues() {
         if (current.isGutter()) {
             return Arrays.asList(Result.GUTTER.toString());
         }
@@ -53,15 +53,6 @@ public class Finish implements State {
 
     @Override
     public Score getScore() {
-        System.out.println(current.getCount());
-        return Score.ofOpen(current.getCount());
-    }
-
-    @Override
-    public String toString() {
-        return "Finish{" +
-                "previous=" + previous +
-                ", current=" + current +
-                '}';
+        return Score.ofMiss(current.getCount());
     }
 }

@@ -138,6 +138,19 @@ public class GameTest {
         assertThat(game.getSumScores().get(9)).isEqualTo(240);
     }
 
+
+    @Test
+    void next_last() {
+        Frame frame = NormalFrame.from();
+
+        for (int index = 0; index < 10; index++) {
+            frame = frame.hit(10);
+        }
+
+        assertThat(frame.getNumber()).isEqualTo(10);
+        assertThat(frame).isInstanceOf(LastFrame.class);
+    }
+
     @Test
     void getSumScores() {
         Game game = Game.start();

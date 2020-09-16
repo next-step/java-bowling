@@ -20,7 +20,7 @@ public class Ready extends Running {
     }
 
     @Override
-    public List<String> getValue() {
+    public List<String> toValues() {
         throw new UnsupportedOperationException();
     }
 

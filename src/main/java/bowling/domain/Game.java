@@ -8,10 +8,10 @@ public class Game {
     private Map<Integer, List<String>> results;
 
     private Game() {
-        frames = new LinkedList<Frame>() {{
-            add(NormalFrame.from());
-        }};
-        results = new HashMap<>();
+//        frames = new LinkedList<Frame>() {{
+//            add(NormalFrame.from());
+//        }};
+//        results = new HashMap<>();
     }
 
     public static Game start() {
@@ -19,8 +19,9 @@ public class Game {
     }
 
     public boolean isFinish() {
-        Frame lastFrame = getLastFrame();
-        return !lastFrame.hasNextFrame() && lastFrame.isFinish();
+//        Frame lastFrame = getLastFrame();
+//        return !lastFrame.hasNextFrame() && lastFrame.isFinish();
+        return false;
     }
 
     public int getPlayNumber() {
@@ -28,13 +29,14 @@ public class Game {
     }
 
     public List<List<String>> hit(int count) {
-        Frame frame = getLastFrame().hit(count);
-
-        results.put(frame.getNumber(), frame.value());
-
-        addNextFrame();
-
-        return toHitResult();
+//        Frame frame = getLastFrame().hit(count);
+//
+//        results.put(frame.getNumber(), frame.value());
+//
+//        addNextFrame();
+//
+//        return toHitResult();
+        return null;
     }
 
     public List<Integer> getSumScores() {
@@ -50,17 +52,18 @@ public class Game {
     }
 
     private void setScore(List<Integer> result, List<Frame> frames) {
-        for (ListIterator<Frame> node = frames.listIterator(); node.hasNext(); ) {
-            Frame frame = node.next();
-            int nextIndex = node.nextIndex();
+//        for (ListIterator<Frame> node = frames.listIterator(); node.hasNext(); ) {
+//            Frame frame = node.next();
+//            int nextIndex = node.nextIndex();
+//
+//            Score score = frame.getScore();
+//
+//            int sum = sumScore(score, nextIndex, frames);
+//            sum = addMore(result, sum);
+//
+//            result.add(sum);
+//        }
 
-            Score score = frame.getScore();
-
-            int sum = sumScore(score, nextIndex, frames);
-            sum = addMore(result, sum);
-
-            result.add(sum);
-        }
     }
 
     private int addMore(List<Integer> result, int score) {
@@ -82,18 +85,38 @@ public class Game {
 
     private Score sumMore(Frame nextFrame, Score score) {
         if (nextFrame.isFinish()) {
-            score = nextFrame.sumScore(score);
+            score = nextFrame.additionalScore(score);
         }
 
         return score;
     }
 
     private void addNextFrame() {
-        Frame lastFrame = getLastFrame();
+//        Frame lastFrame = getLastFrame();
+//
+//        if (lastFrame.isFinish() && lastFrame.hasNextFrame()) {
+//            frames.add(lastFrame.next());
+//        }
+    }
 
-        if (lastFrame.isFinish() && lastFrame.hasNextFrame()) {
-            frames.add(lastFrame.next());
-        }
+    private Frame next() {
+//        if (!hasNextFrame()) {
+//            throw new RuntimeException("다음 프레임이 존재하지 않습니다.");
+//        }
+//
+//        int nextFrameNumber = nextFrameNumber();
+//        return nextFrameNumber == LAST_FRAME_NUMBER ? LastFrame.from() : NormalFrame.of(nextFrameNumber);
+        return null;
+    }
+
+    public boolean hasNextFrame() {
+//        return nextFrameNumber() <= LAST_FRAME_NUMBER;
+        return false;
+    }
+
+    private int nextFrameNumber() {
+//        return number + 1;
+        return 0;
     }
 
     private List<List<String>> toHitResult() {

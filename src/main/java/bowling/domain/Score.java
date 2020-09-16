@@ -27,7 +27,7 @@ public class Score {
         return new Score(count, SPARE_OPPORTUNITY);
     }
 
-    public static Score ofOpen(int count) {
+    public static Score ofMiss(int count) {
         return new Score(count, NO_OPPORTUNITY);
     }
 
@@ -40,8 +40,10 @@ public class Score {
     }
 
     public Score sum(Score score) {
-        this.count += score.count;
-        this.opportunity += OPPORTUNITY_DECREASE_COUNT;
+        if (canNextSum()) {
+            this.count += score.count;
+            this.opportunity += OPPORTUNITY_DECREASE_COUNT;
+        }
         return this;
     }
 

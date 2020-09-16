@@ -1,7 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.state.Hold;
-import bowling.domain.state.Strike;
+import bowling.domain.state.*;
 
 import java.util.List;
 
@@ -16,9 +15,19 @@ public interface State {
         return new Hold(pin);
     }
 
+    static State last(State current, int count) {
+        Pin pin = Pin.of(count);
+
+        if (pin.isStrike()) {
+            return new Strike(pin);
+        }
+
+        return Final.from(current, count);
+    }
+
     State roll(int count);
 
-    List<String> getValue();
+    List<String> toValues();
 
     Score getScore();
 

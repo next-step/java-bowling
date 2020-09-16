@@ -1,21 +1,100 @@
 package bowling.domain;
 
-import bowling.domain.state.Last;
+import bowling.domain.state.Ready;
 
-public class LastFrame extends Frame {
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-    protected LastFrame(int number) {
-        super(number);
-        state = new Last();
+public class LastFrame implements Frame {
+    public static final int LAST_FRAME_NUMBER = 10;
+
+    private LinkedList<State> states = new LinkedList<>();
+
+    public LastFrame() {
+        states.add(new Ready());
     }
 
     public static Frame from() {
-        return new LastFrame(LAST_FRAME_NUMBER);
+        return new LastFrame();
     }
 
     @Override
-    public Frame hit(int count) {
-        state.roll(count);
+    public LastFrame hit(int count) {
+
+        State currentState = states.getLast();
+
+        if (currentState.isFinish()) {
+            states.add(State.last(currentState, count));
+            return this;
+        }
+
+        states.removeLast();
+        states.add(currentState.roll(count));
         return this;
+    }
+
+    @Override
+    public int getNumber() {
+        return LAST_FRAME_NUMBER;
+    }
+
+    @Override
+    public List<String> toResults() {
+        return states.stream()
+                .flatMap(state -> state.toValues().stream())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isFinish() {
+        if (states.isEmpty()) {
+            return false;
+        }
+
+        State lastState = states.getLast();
+
+        if (!lastState.isFinish()) {
+            return false;
+        }
+
+        return !getCurrentScore().canNextSum();
+    }
+
+    private Score getCurrentScore() {
+        State state = states.getFirst();
+        Score score = Score.of(0, 0);
+
+        if (!state.isFinish()) {
+            return score;
+        }
+
+        score = state.getScore();
+
+        for (int index = 1; index < states.size(); index++) {
+            score = states.get(index).sumScore(score);
+        }
+
+        return score;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofMiss(
+                states.stream()
+                        .mapToInt(state -> state.getScore().toInt())
+                        .sum()
+        );
+    }
+
+    @Override
+    public Score additionalScore(Score beforeScore) {
+        Score score = beforeScore;
+
+        for (State state : states) {
+            score = state.getScore().sum(score);
+        }
+
+        return score;
     }
 }

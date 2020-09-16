@@ -23,7 +23,7 @@ public class Spare extends Finished {
     }
 
     @Override
-    public List<String> getValue() {
+    public List<String> toValues() {
         if (current.isGutter()) {
             return Arrays.asList(Result.GUTTER.toString(), Result.SPARE.toString());
         }

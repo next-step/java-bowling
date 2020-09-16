@@ -22,7 +22,7 @@ public class Strike extends Finished {
     }
 
     @Override
-    public List<String> getValue() {
+    public List<String> toValues() {
         return Arrays.asList(Result.STRIKE.toString());
     }
 

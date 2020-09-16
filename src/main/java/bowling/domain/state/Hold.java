@@ -26,7 +26,7 @@ public class Hold extends Running {
     }
 
     @Override
-    public List<String> getValue() {
+    public List<String> toValues() {
         if (current.isGutter()) {
             return Arrays.asList(Result.GUTTER.toString());
         }
