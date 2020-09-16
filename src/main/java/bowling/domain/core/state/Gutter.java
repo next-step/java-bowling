@@ -1,12 +1,15 @@
-package bowling.domain.core;
+package bowling.domain.core.state;
 
+import bowling.domain.core.RolledResult;
 import bowling.domain.frame.TerminateFrame;
+
+import static bowling.domain.core.state.ImmutableTwoFallenPins.gutterTwoFallenPins;
 
 final class Gutter extends AbstractTwoFallenPinsRolledResult {
     static final RolledResult gutter = new Gutter();
 
-    public Gutter() {
-        super(ImmutableTwoFallenPins.gutter());
+    private Gutter() {
+        super(gutterTwoFallenPins());
     }
 
     @Override

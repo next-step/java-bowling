@@ -1,13 +1,15 @@
-package bowling.domain.core;
+package bowling.domain.core.state;
 
 import java.util.Collections;
 import java.util.List;
+
+import bowling.domain.core.FallenPins;
 
 import static bowling.domain.core.FallenPins.ten;
 import static bowling.domain.core.FallenPins.zero;
 import static java.util.Arrays.asList;
 
-final class ImmutableTwoFallenPins extends AbstractTwoFallenPins {
+public final class ImmutableTwoFallenPins extends AbstractTwoFallenPins {
     private static final ImmutableTwoFallenPins gutter = new ImmutableTwoFallenPins(zero(), zero());
     private static final ImmutableTwoFallenPins strike = new ImmutableTwoFallenPins(ten(), zero());
 
@@ -23,11 +25,11 @@ final class ImmutableTwoFallenPins extends AbstractTwoFallenPins {
         return new ImmutableTwoFallenPins(f, s);
     }
 
-    static ImmutableTwoFallenPins gutter() {
+    static ImmutableTwoFallenPins gutterTwoFallenPins() {
         return gutter;
     }
 
-    static ImmutableTwoFallenPins strike() {
+    static ImmutableTwoFallenPins strikeTwoFallenPins() {
         return strike;
     }
 

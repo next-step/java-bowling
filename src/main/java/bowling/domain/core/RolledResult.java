@@ -1,6 +1,8 @@
 package bowling.domain.core;
 
-import static bowling.domain.core.RolledResultFactory.notAtRolledResult;
+import bowling.domain.core.state.ImmutableTwoFallenPins;
+
+import static bowling.domain.core.state.NotAtRolledResult.notAtRolledResult;
 
 public interface RolledResult {
     default boolean isCompleteState() {

@@ -1,10 +1,13 @@
-package bowling.domain.core;
+package bowling.domain.core.state;
 
 import java.util.ArrayList;
 
+import bowling.domain.core.FallenPins;
+import bowling.domain.core.RolledResult;
+
 import static bowling.domain.core.FallenPins.zero;
-import static bowling.domain.core.Gutter.gutter;
-import static bowling.domain.core.Strike.strike;
+import static bowling.domain.core.state.Gutter.gutter;
+import static bowling.domain.core.state.Strike.strike;
 import static java.util.Arrays.asList;
 
 final class TwoFallenPins extends AbstractTwoFallenPins {
@@ -15,13 +18,13 @@ final class TwoFallenPins extends AbstractTwoFallenPins {
         initTwoFallenPins();
     }
 
-    void initTwoFallenPins() {
+    public void initTwoFallenPins() {
         firstFallenPins(zero());
         secondFallenPins(zero());
         zeroBaseRollingIndex = 0;
     }
 
-    static TwoFallenPins mutable(){
+    public static TwoFallenPins mutable(){
         return new TwoFallenPins();
     }
 
@@ -29,14 +32,14 @@ final class TwoFallenPins extends AbstractTwoFallenPins {
         return new ImmutableTwoFallenPins(new ArrayList<>(twoFallenPins));
     }
 
-    void collect(FallenPins fallenPins){
+    public void collect(FallenPins fallenPins){
         if (isComplete() || isStrike()){
             initTwoFallenPins();
         }
         twoFallenPins.set(zeroBaseRollingIndex++, fallenPins);
     }
 
-    TwoFallenPins collect(int firstFallenPins, int secondFallenPins){
+    public TwoFallenPins collect(int firstFallenPins, int secondFallenPins){
         firstFallenPins(firstFallenPins);
         secondFallenPins(secondFallenPins);
         return this;

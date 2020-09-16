@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.List;
 
 import bowling.domain.core.RolledResult;
-import bowling.domain.core.RolledResultFactory;
+import bowling.domain.core.state.RolledResultFactory;
 import bowling.domain.frame.Frames;
 import bowling.ui.result.DisplayRolledResult;
 

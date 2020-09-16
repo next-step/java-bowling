@@ -1,10 +1,13 @@
-package bowling.domain.core;
+package bowling.domain.core.state;
+
+import bowling.domain.core.FallenPins;
+import bowling.domain.core.RolledResult;
 
 final class Strike extends AbstractTwoFallenPinsRolledResult {
     static final RolledResult strike = new Strike();
 
-    public Strike() {
-        super(ImmutableTwoFallenPins.strike());
+    Strike() {
+        super(ImmutableTwoFallenPins.strikeTwoFallenPins());
     }
 
     @Override

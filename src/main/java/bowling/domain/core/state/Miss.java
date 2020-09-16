@@ -1,10 +1,10 @@
-package bowling.domain.core;
+package bowling.domain.core.state;
 
 import bowling.domain.frame.TerminateFrame;
 
 final class Miss extends AbstractTwoFallenPinsRolledResult {
 
-    public Miss(ImmutableTwoFallenPins towFallenPins) {
+    Miss(ImmutableTwoFallenPins towFallenPins) {
         super(towFallenPins);
     }
 

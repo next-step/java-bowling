@@ -1,14 +1,11 @@
-package bowling.domain.core;
+package bowling.domain.core.state;
+
+import bowling.domain.core.FallenPins;
+import bowling.domain.core.RolledResult;
 
 public final class RolledResultFactory {
 
     private static final RolledResultFactory rolledResultFactory = new RolledResultFactory();
-
-    private static final RolledResult NOT_AT_ROLLED_RESULT = new NotAtRolledResult();
-
-    public static RolledResult notAtRolledResult() {
-        return NOT_AT_ROLLED_RESULT;
-    }
 
     private final TwoFallenPins towFallenPins;
 
@@ -20,7 +17,7 @@ public final class RolledResultFactory {
         rolledResultFactory.towFallenPins.initTwoFallenPins();
     }
 
-    static RolledResultFactory of(){
+    public static RolledResultFactory of(){
         return rolledResultFactory;
     }
 

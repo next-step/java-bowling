@@ -8,9 +8,9 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 
 public final class FallenPins {
-    static final int MIN_FALLEN_PIN_COUNT = 0;
-    static final int MAX_FALLEN_PIN_COUNT = 10;
-    static final String ERROR_MESSAGE = "지정된 넘어진 핀 갯수가 잘못되었습니다.";
+    public static final int MIN_FALLEN_PIN_COUNT = 0;
+    public static final int MAX_FALLEN_PIN_COUNT = 10;
+    public static final String ERROR_MESSAGE = "지정된 넘어진 핀 갯수가 잘못되었습니다.";
     static final String ERROR_MESSAGE_SECOND_BOWL = "두번째 투구에서 남은 핀보다 많이 쓰러뜨릴 수 없습니다.";
     private static final List<FallenPins> cachedPins;
     private final int fallenPins;
@@ -50,17 +50,17 @@ public final class FallenPins {
         return (0 != remainingPins) && (remainingPins < secondFallenPins.getPrimitive());
     }
 
-    void verifySecondBowlFallenPins(FallenPins secondFallenPins) {
+    public void verifySecondBowlFallenPins(FallenPins secondFallenPins) {
         if (canNotSpendRemainingPins(secondFallenPins)){
             throw new IllegalArgumentException(ERROR_MESSAGE_SECOND_BOWL);
         }
     }
 
-    int getPrimitive() {
+    public int getPrimitive() {
         return fallenPins;
     }
 
-    int plus(FallenPins secondFallenFallenPins){
+    public int plus(FallenPins secondFallenFallenPins){
         return getPrimitive() + secondFallenFallenPins.getPrimitive();
     }
 

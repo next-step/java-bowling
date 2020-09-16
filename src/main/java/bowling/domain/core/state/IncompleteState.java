@@ -1,9 +1,11 @@
-package bowling.domain.core;
+package bowling.domain.core.state;
+
+import bowling.domain.core.FallenPins;
 
 import static bowling.domain.core.FallenPins.zero;
-import static bowling.domain.core.ImmutableTwoFallenPins.of;
+import static bowling.domain.core.state.ImmutableTwoFallenPins.of;
 
-final class  IncompleteState extends AbstractTwoFallenPinsRolledResult {
+final class IncompleteState extends AbstractTwoFallenPinsRolledResult {
     IncompleteState(FallenPins firstFallenFallenPins) {
         super(of(firstFallenFallenPins, zero()));
     }

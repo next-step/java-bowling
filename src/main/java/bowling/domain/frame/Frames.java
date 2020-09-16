@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import bowling.domain.core.RolledResult;
 import bowling.ui.result.DisplayRolledResult;
 
-import static bowling.domain.core.RolledResultFactory.notAtRolledResult;
+import static bowling.domain.core.state.NotAtRolledResult.notAtRolledResult;
 import static java.util.stream.Collectors.toList;
 
 public final class Frames {
@@ -58,7 +58,8 @@ public final class Frames {
 
     private void updateTerminalFrameByScore(){
         if (isCompleteFrames()) {
-            frames.get(MAX_FOUNDATION_FRAME_SIZE).updateScore(notAtRolledResult());
+            frames.get(MAX_FOUNDATION_FRAME_SIZE)
+                  .updateScore(notAtRolledResult());
         }
     }
 

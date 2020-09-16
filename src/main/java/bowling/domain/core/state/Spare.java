@@ -1,10 +1,11 @@
-package bowling.domain.core;
+package bowling.domain.core.state;
 
+import bowling.domain.core.RolledResult;
 import bowling.domain.frame.TerminateFrame;
 
 public final class Spare extends AbstractTwoFallenPinsRolledResult {
 
-    public Spare(ImmutableTwoFallenPins towFallenPins) {
+    Spare(ImmutableTwoFallenPins towFallenPins) {
         super(towFallenPins);
     }
 

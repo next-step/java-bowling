@@ -1,22 +1,24 @@
-package bowling.domain.core;
+package bowling.domain.core.state;
 
-abstract class AbstractTwoFallenPinsRolledResult implements RolledResult {
+import bowling.domain.core.RolledResult;
+
+public abstract class AbstractTwoFallenPinsRolledResult implements RolledResult {
     protected final ImmutableTwoFallenPins twoFallenPins;
 
-    public AbstractTwoFallenPinsRolledResult(ImmutableTwoFallenPins twoFallenPins) {
+    protected AbstractTwoFallenPinsRolledResult(ImmutableTwoFallenPins twoFallenPins) {
         this.twoFallenPins = twoFallenPins;
+    }
+
+    protected String gutterOrFallenPinValue(int rollingAttemptCount) {
+        if (twoFallenPins.isGutter(rollingAttemptCount)){
+            return "-";
+        }
+        return String.valueOf(twoFallenPins.getFallenPins(rollingAttemptCount));
     }
 
     @Override
     public ImmutableTwoFallenPins twoFallenPins() {
         return twoFallenPins;
-    }
-
-    String gutterOrFallenPinValue(int rollingAttemptCount) {
-        if (twoFallenPins.isGutter(rollingAttemptCount)){
-            return "-";
-        }
-        return String.valueOf(twoFallenPins.getFallenPins(rollingAttemptCount));
     }
 
     @Override

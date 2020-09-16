@@ -3,7 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.core.RolledResult;
 import bowling.ui.result.DisplayRolledResult;
 
-import static bowling.domain.core.RolledResultFactory.notAtRolledResult;
+import static bowling.domain.core.state.NotAtRolledResult.notAtRolledResult;
 
 final class FoundationFrame implements Frame {
     private RolledResult rolledResult;

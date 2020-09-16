@@ -6,7 +6,7 @@ import java.util.List;
 import bowling.domain.core.RolledResult;
 import bowling.ui.result.DisplayRolledResult;
 
-import static bowling.domain.core.Spare.expectSpareAfterBonusBowl;
+import static bowling.domain.core.state.Spare.expectSpareAfterBonusBowl;
 import static java.util.stream.Collectors.joining;
 
 public final class TerminateFrame implements Frame {

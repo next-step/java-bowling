@@ -1,7 +1,10 @@
-package bowling.domain.core;
+package bowling.domain.core.state;
+
+import bowling.domain.core.FallenPins;
+import bowling.domain.core.RolledResult;
 
 import static bowling.domain.core.FallenPins.zero;
-import static bowling.domain.core.ImmutableTwoFallenPins.of;
+import static bowling.domain.core.state.ImmutableTwoFallenPins.of;
 
 final class SpareAfterBonusBowl extends AbstractTwoFallenPinsRolledResult {
     SpareAfterBonusBowl(RolledResult rolledResult) {
