@@ -36,13 +36,12 @@ public class Score {
     }
 
     public boolean canNextSum() {
-        return opportunity != 0;
+        return opportunity > 0;
     }
 
     public Score sum(Score score) {
         this.count += score.count;
         this.opportunity += OPPORTUNITY_DECREASE_COUNT;
-
         return this;
     }
 

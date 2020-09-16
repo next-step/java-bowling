@@ -35,4 +35,11 @@ public class Strike implements State {
     public Score getScore() {
         return Score.ofStrike(current.getCount());
     }
+
+    @Override
+    public String toString() {
+        return "Strike{" +
+                "current=" + current +
+                '}';
+    }
 }

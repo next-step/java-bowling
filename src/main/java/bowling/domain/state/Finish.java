@@ -55,4 +55,12 @@ public class Finish implements State {
     public Score getScore() {
         return Score.ofOpen(current.getCount());
     }
+
+    @Override
+    public String toString() {
+        return "Finish{" +
+                "previous=" + previous +
+                ", current=" + current +
+                '}';
+    }
 }

@@ -39,4 +39,12 @@ public class Spare implements State {
     public Score getScore() {
         return Score.ofSpare(current.getCount() + next.getCount());
     }
+
+    @Override
+    public String toString() {
+        return "Spare{" +
+                "current=" + current +
+                ", next=" + next +
+                '}';
+    }
 }

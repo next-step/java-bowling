@@ -53,4 +53,12 @@ public class Open implements State {
     public Score getScore() {
         return Score.ofOpen(current.getCount() + next.getCount());
     }
+
+    @Override
+    public String toString() {
+        return "Open{" +
+                "current=" + current +
+                ", next=" + next +
+                '}';
+    }
 }

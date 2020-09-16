@@ -50,27 +50,28 @@ public class Last implements State {
             return false;
         }
 
-        State last = states.getLast();
-        State first = states.getFirst();
         int size = states.size();
-
-        if (size == 1 && !(last instanceof Open) && last.isFinish()) {
-            return false;
-        }
-
-        if (size == 2 && first instanceof Strike && last instanceof Strike) {
-            return false;
-        }
-
-        if (size == 2 && first instanceof Spare && last instanceof Playing) {
-            return true;
-        }
 
         if (size == MAX_SIZE) {
             return true;
         }
 
-        return states.getLast().isFinish();
+        State first = states.getFirst();
+        State last = states.getLast();
+
+        if (size == 1 && last.isFinish() && last.getScore().canNextSum()) {
+            return false;
+        }
+
+        if (first instanceof Strike && last.isFinish() && last.getScore().canNextSum()) {
+            return false;
+        }
+
+        if (first.isFinish() && !last.isFinish()) {
+            return true;
+        }
+
+        return last.isFinish();
     }
 
     @Override
@@ -90,7 +91,6 @@ public class Last implements State {
                         before.sum(state.getScore());
                     }
                 });
-
         return before;
     }
 }

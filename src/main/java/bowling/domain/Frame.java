@@ -76,6 +76,7 @@ public class Frame {
     public Score getScore() {
         return state.getScore();
     }
+
     public Score sumScore(Score before) {
         if (before.canNextSum()) {
             state.sumScore(before);

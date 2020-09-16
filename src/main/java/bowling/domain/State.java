@@ -30,7 +30,6 @@ public interface State {
         if (before.canNextSum()) {
             before.sum(getScore());
         }
-
         return before;
     }
 }
