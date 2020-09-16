@@ -8,7 +8,7 @@ import bowling.domain.State;
 import java.util.Arrays;
 import java.util.List;
 
-public class Spare implements State {
+public class Spare extends Finished {
     private Pin current;
     private Pin next;
 
@@ -28,11 +28,6 @@ public class Spare implements State {
             return Arrays.asList(Result.GUTTER.toString(), Result.SPARE.toString());
         }
         return Arrays.asList(current.toString(), Result.SPARE.toString());
-    }
-
-    @Override
-    public boolean isFinish() {
-        return true;
     }
 
     @Override

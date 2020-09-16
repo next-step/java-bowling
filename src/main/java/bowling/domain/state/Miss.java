@@ -8,12 +8,12 @@ import bowling.domain.State;
 import java.util.Arrays;
 import java.util.List;
 
-public class Open implements State {
+public class Miss extends Finished {
 
     private Pin current;
     private Pin next;
 
-    public Open(Pin current, int count) {
+    public Miss(Pin current, int count) {
         this.current = current;
         this.next = Pin.of(count);
     }
@@ -42,11 +42,6 @@ public class Open implements State {
         }
 
         return Arrays.asList(current.toString(), next.toString());
-    }
-
-    @Override
-    public boolean isFinish() {
-        return true;
     }
 
     @Override

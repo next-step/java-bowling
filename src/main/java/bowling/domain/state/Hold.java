@@ -8,11 +8,11 @@ import bowling.domain.State;
 import java.util.Arrays;
 import java.util.List;
 
-public class Playing implements State {
+public class Hold extends Running {
 
-    protected Pin current;
+    private Pin current;
 
-    public Playing(Pin current) {
+    public Hold(Pin current) {
         this.current = current;
     }
 
@@ -21,7 +21,8 @@ public class Playing implements State {
         if (current.isSpare(count)) {
             return new Spare(current, count);
         }
-        return new Open(current, count);
+
+        return new Miss(current, count);
     }
 
     @Override

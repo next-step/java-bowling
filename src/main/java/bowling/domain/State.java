@@ -1,6 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.state.Playing;
+import bowling.domain.state.Hold;
 import bowling.domain.state.Strike;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public interface State {
             return new Strike(pin);
         }
 
-        return new Playing(pin);
+        return new Hold(pin);
     }
 
     State roll(int count);

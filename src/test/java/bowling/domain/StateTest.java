@@ -1,7 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.state.Open;
-import bowling.domain.state.Playing;
+import bowling.domain.state.Hold;
+import bowling.domain.state.Miss;
 import bowling.domain.state.Spare;
 import bowling.domain.state.Strike;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class StateTest {
     @Test
     void playing_symbol() {
         State state = State.from(8);
-        assertThat(state).isInstanceOf(Playing.class);
+        assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.getValue()).isEqualTo(Arrays.asList("8"));
 
         assertThatThrownBy(() -> state.getScore()).isInstanceOf(UnsupportedOperationException.class);
@@ -33,7 +33,7 @@ public class StateTest {
     @Test
     void gutter_symbol() {
         State state = State.from(0);
-        assertThat(state).isInstanceOf(Playing.class);
+        assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.getValue()).isEqualTo(Arrays.asList("-"));
 
         assertThatThrownBy(() -> state.getScore()).isInstanceOf(UnsupportedOperationException.class);
@@ -42,7 +42,7 @@ public class StateTest {
     @Test
     void spare_symbol() {
         State state = State.from(8);
-        assertThat(state).isInstanceOf(Playing.class);
+        assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.getValue()).isEqualTo(Arrays.asList("8"));
 
         State spare = state.roll(2);
@@ -55,12 +55,12 @@ public class StateTest {
     @Test
     void open_symbol() {
         State state = State.from(8);
-        assertThat(state).isInstanceOf(Playing.class);
+        assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.getValue()).isEqualTo(Arrays.asList("8"));
 
         State open = state.roll(1);
 
-        assertThat(open).isInstanceOf(Open.class);
+        assertThat(open).isInstanceOf(Miss.class);
         assertThat(open.getValue()).isEqualTo(Arrays.asList("8", "1"));
         assertThat(open.getScore().toInt()).isEqualTo(9);
     }
@@ -68,12 +68,12 @@ public class StateTest {
     @Test
     void open_with_gutter_symbol() {
         State state = State.from(8);
-        assertThat(state).isInstanceOf(Playing.class);
+        assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.getValue()).isEqualTo(Arrays.asList("8"));
 
         State open = state.roll(0);
 
-        assertThat(open).isInstanceOf(Open.class);
+        assertThat(open).isInstanceOf(Miss.class);
         assertThat(open.getValue()).isEqualTo(Arrays.asList("8", "-"));
         assertThat(open.getScore().toInt()).isEqualTo(8);
     }

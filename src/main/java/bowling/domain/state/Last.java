@@ -7,8 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Last implements State {
-    private static final int MAX_SIZE = 3;
+public class Last extends Finished {
 
     private LinkedList<State> states;
 
