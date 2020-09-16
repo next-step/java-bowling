@@ -13,19 +13,18 @@ public class FinalFrame extends Frame {
         return new FinalFrame(frameNumber, scores);
     }
 
-
     @Override
     public boolean canBowl() {
         if (scores == null) {
             return true;
         }
-        if (scores.isStrike() && !scores.hasBonusScore()) {
+        if (!scores.hasSecondScore() && !scores.hasBonusScore()) {
             return true;
         }
-        if (scores.hasSecondScore() && FinalScores.isSpare(scores)) {
+        if (FinalScores.isSpare(scores) && !scores.hasBonusScore()) {
             return true;
         }
-        return !scores.hasSecondScore();
+        return false;
     }
 
     @Override

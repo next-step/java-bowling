@@ -35,12 +35,8 @@ public class BowlingController {
     }
 
     private static void processFinalFrame(Frames frames, Frame frame) {
-        Score score = Score.of(InputView.scanBowl(frame));
-        frame.bowl(score);
-        OutputView.printFrame(frames);
-
         while (frame.canBowl()) {
-            score = Score.of(InputView.scanBowl(frame));
+            Score score = Score.of(InputView.scanBowl(frame));
             frame.bowl(score);
             OutputView.printFrame(frames);
         }
