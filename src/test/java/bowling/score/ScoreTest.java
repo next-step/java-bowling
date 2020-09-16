@@ -2,7 +2,6 @@ package bowling.score;
 
 import bowling.exception.ExceptionMessage;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -55,7 +54,7 @@ public class ScoreTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("두개의 Score의 합 결과 테스트")
+    @DisplayName("두 개의 Score의 합 결과 테스트")
     @ParameterizedTest
     @CsvSource(value = {"1:2:3", "4:1:5", "10:3:13", "7:9:16"}, delimiter = ':')
     void sum(String firstValue, String secondValue, String expectedValue) {
