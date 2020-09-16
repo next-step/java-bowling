@@ -19,19 +19,6 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean canBowl() {
-        if (scores == null) {
-            return true;
-        }
-
-        if (scores.isStrike()) {
-            return false;
-        }
-
-        return !scores.isDone();
-    }
-
-    @Override
     public Frame next() {
         int nextFrameNumber = this.frameNumber + 1;
         return nextFrameNumber < Frame.LAST_FRAME

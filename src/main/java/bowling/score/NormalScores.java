@@ -24,8 +24,24 @@ public class NormalScores extends Scores {
     }
 
     @Override
-    public boolean hasBonusScore() {
-        return false;
+    public boolean canBowl() {
+        if (!hasFirstScore()) {
+            return true;
+        }
+
+        if (isStrike()) {
+            return false;
+        }
+
+        return !isDone();
+    }
+
+    private boolean isDone() {
+        return hasFirstScore() && hasSecondScore();
+    }
+
+    private boolean isStrike() {
+        return firstScore != null && firstScore.isStrike();
     }
 
     @Override

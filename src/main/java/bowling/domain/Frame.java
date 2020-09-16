@@ -33,7 +33,9 @@ public abstract class Frame {
         scores.add(score);
     }
 
-    public abstract boolean canBowl();
+    public boolean canBowl() {
+        return scores.canBowl();
+    }
 
     public abstract Frame next();
 }

@@ -14,20 +14,6 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean canBowl() {
-        if (scores == null) {
-            return true;
-        }
-        if (!scores.hasSecondScore() && !scores.hasBonusScore()) {
-            return true;
-        }
-        if (FinalScores.isSpare(scores) && !scores.hasBonusScore()) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public Frame next() {
         int nextFrameNumber = this.frameNumber + 1;
 
