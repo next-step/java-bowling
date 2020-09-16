@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
