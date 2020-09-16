@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import bowling.domain.core.RolledResult;
+import bowling.ui.result.DisplayRolledResult;
 
+import static bowling.domain.core.RolledResultFactory.notAtRolledResult;
 import static java.util.stream.Collectors.toList;
 
 final class Frames {
     static final int MAX_FRAMES_SIZE = 10;
-    private static final int MAX_FOUNDATION_FRAME_SIZE = 9;
+    static final int MAX_FOUNDATION_FRAME_SIZE = 9;
     private final List<Frame> frames;
     private int zeroBaseCurrentFrameIndex;
 
@@ -23,7 +25,38 @@ final class Frames {
 
     void saveRolledResultAndShouldNextFrame(RolledResult rolledResult){
         updateCurrentFrameByRolledResult(rolledResult);
+        updatePreviousFrameByScore(rolledResult);
         shouldNextFrame();
+        updateTerminalFrameByScore();
+    }
+
+
+    private void updateCurrentFrameByRolledResult(RolledResult rolledResult) {
+        if (isNotCompleteFrames()) {
+            currentFrame().updateRolledResult(rolledResult);
+        }
+    }
+
+    private void updatePreviousFrameByScore(RolledResult rolledResult) {
+        if (hasPreviousFrameIndex() && isNotCompleteFrames()){
+            previousFrame().updateScore(rolledResult);
+        }
+    }
+
+    private boolean hasPreviousFrameIndex() {
+        return 0 < currentFrameIndex();
+    }
+
+    private void shouldNextFrame(){
+        if (isNotCompleteFrames()) {
+            zeroBaseCurrentFrameIndex += currentFrame().increaseNextStepFrame();
+        }
+    }
+
+    private void updateTerminalFrameByScore(){
+        if (isCompleteFrames()) {
+            frames.get(MAX_FOUNDATION_FRAME_SIZE).updateScore(notAtRolledResult());
+        }
     }
 
     boolean isCompleteFrames(){
@@ -38,24 +71,20 @@ final class Frames {
         return zeroBaseCurrentFrameIndex;
     }
 
-    List<String> toRolledResults() {
+    int getScore(){
         return frames.stream()
-                     .map(Frame::toRolledResult)
+                     .mapToInt(Frame::getScore)
+                     .sum();
+    }
+
+    List<DisplayRolledResult> toRolledResults() {
+        return frames.stream()
+                     .map(Frame::toDisplayRolledResult)
                      .collect(toList());
     }
 
-    private void updateCurrentFrameByRolledResult(RolledResult rolledResult) {
-        if (isNotCompleteFrames()) {
-            Frame currentFrame = currentFrame();
-            currentFrame.updateRolledResult(rolledResult);
-            frames.set(currentFrameIndex(), currentFrame);
-        }
-    }
-
-    private void shouldNextFrame(){
-        if (isNotCompleteFrames()) {
-            zeroBaseCurrentFrameIndex += currentFrame().increaseNextStepFrame();
-        }
+    private Frame previousFrame() {
+        return frames.get(currentFrameIndex()-1);
     }
 
     private Frame currentFrame(){

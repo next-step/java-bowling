@@ -6,14 +6,10 @@ import java.util.function.Function;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import bowling.ui.result.DisplayBowlingBoard;
-import bowling.ui.result.DisplayPlayerBowlingGrade;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("모든 프레임에 같은 투구 후 마지막 결과 확인 테스트")
-class RollingTest {
+class RollingAndTerminateFrameResultTest {
 
     private Function<String, Integer> testPlayerFallenPinsService(final int fallenPins){
         return (s) -> fallenPins;
@@ -24,7 +20,7 @@ class RollingTest {
     void allGutter() {
         Function<String, Integer> gutter = testPlayerFallenPinsService(0);
         List<String> ksgGutterBowlingGrade = Player.of("KSG")
-                                                   .whileRoll(Frames.MAX_FRAMES_SIZE, gutter)
+                                                   .whileRollAndDisplay(Frames.MAX_FRAMES_SIZE, gutter)
                                                    .bowlingGrade();
 
         assertThat(ksgGutterBowlingGrade).last().isEqualTo("-");
@@ -35,7 +31,7 @@ class RollingTest {
     void allMiss() {
         Function<String, Integer> spare = testPlayerFallenPinsService(1);
         List<String> ksgSpareBowlingGrade = Player.of("KSG")
-                                                  .whileRoll(Frames.MAX_FRAMES_SIZE, spare)
+                                                  .whileRollAndDisplay(Frames.MAX_FRAMES_SIZE, spare)
                                                   .bowlingGrade();
 
         assertThat(ksgSpareBowlingGrade).last().isEqualTo("1|1");
@@ -46,7 +42,7 @@ class RollingTest {
     void allSpare() {
         Function<String, Integer> spare = testPlayerFallenPinsService(5);
         List<String> ksgSpareBowlingGrade = Player.of("KSG")
-                                                  .whileRoll(Frames.MAX_FRAMES_SIZE, spare)
+                                                  .whileRollAndDisplay(Frames.MAX_FRAMES_SIZE, spare)
                                                   .bowlingGrade();
 
         assertThat(ksgSpareBowlingGrade).last().isEqualTo("5|/|5");
@@ -58,7 +54,7 @@ class RollingTest {
         Function<String, Integer> stirke = testPlayerFallenPinsService(10);
 
         List<String> ksgStirkeBowlingGrade = Player.of("KSG")
-                                                   .whileRoll(Frames.MAX_FRAMES_SIZE, stirke)
+                                                   .whileRollAndDisplay(Frames.MAX_FRAMES_SIZE, stirke)
                                                    .bowlingGrade();
 
         assertThat(ksgStirkeBowlingGrade).last().isEqualTo("X|X|X");

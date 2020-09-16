@@ -4,11 +4,13 @@ import java.util.List;
 
 import bowling.domain.core.RolledResult;
 import bowling.domain.core.RolledResultFactory;
+import bowling.ui.result.DisplayRolledResult;
 
 final class Rolling {
     private final Frames frames;
 
     Rolling() {
+        RolledResultFactory.init();
         frames = new Frames();
     }
 
@@ -18,7 +20,7 @@ final class Rolling {
         frames.saveRolledResultAndShouldNextFrame(rolledResult);
     }
 
-    List<String> framesByRolledResults() {
+    List<DisplayRolledResult> framesByRolledResults() {
         return frames.toRolledResults();
     }
 
@@ -28,5 +30,9 @@ final class Rolling {
 
     boolean hasNextFrameIndex(int currentFrameIndex){
         return frames.currentFrameIndex() <= currentFrameIndex;
+    }
+
+    int getTotalFrameScore(){
+        return frames.getScore();
     }
 }

@@ -1,5 +1,7 @@
 package bowling.domain.core;
 
+import static bowling.domain.core.RolledResultFactory.notAtRolledResult;
+
 public interface RolledResult {
     default boolean isCompleteState() {
         return true;
@@ -15,6 +17,10 @@ public interface RolledResult {
 
     default String description() {
         return "";
+    }
+
+    default int getRolledResultScore(){
+        return getNextRolledResultMergeScore(notAtRolledResult());
     }
 
     int getNextRolledResultMergeScore(RolledResult nextRolledResult);

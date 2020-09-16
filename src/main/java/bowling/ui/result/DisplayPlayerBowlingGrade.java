@@ -6,9 +6,9 @@ import static java.util.stream.Collectors.joining;
 
 public final class DisplayPlayerBowlingGrade implements Display {
     private final String playerName;
-    private final List<String> playerBowlingGrades;
+    private final List<DisplayRolledResult> playerBowlingGrades;
 
-    public DisplayPlayerBowlingGrade(String playerName, List<String> playerBowlingGrades) {
+    public DisplayPlayerBowlingGrade(String playerName, List<DisplayRolledResult> playerBowlingGrades) {
         this.playerName = playerName;
         this.playerBowlingGrades = playerBowlingGrades;
     }
@@ -25,7 +25,19 @@ public final class DisplayPlayerBowlingGrade implements Display {
 
     @Override
     public String toResults() {
+        return String.format("%s|\n|        |%s", description(), scores());
+    }
+
+    private String description() {
         return playerBowlingGrades.stream()
+                                  .map(DisplayRolledResult::getDescription)
+                                  .map(this::toResult)
+                                  .collect(joining("|"));
+    }
+
+    private String scores() {
+        return playerBowlingGrades.stream()
+                                  .map(DisplayRolledResult::getScore)
                                   .map(this::toResult)
                                   .collect(joining("|"));
     }

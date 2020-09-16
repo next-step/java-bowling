@@ -1,9 +1,13 @@
 package bowling.domain;
 
 import bowling.domain.core.RolledResult;
+import bowling.ui.result.DisplayRolledResult;
 
 interface Frame {
     void updateRolledResult(RolledResult rolledResult);
-    String toRolledResult();
+    void updateScore(RolledResult nextRolledResult);
+    int getScore();
+    RolledResult getRolledResult();
+    DisplayRolledResult toDisplayRolledResult();
     int increaseNextStepFrame();
 }

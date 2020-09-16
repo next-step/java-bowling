@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bowling.domain.core.RolledResult;
+import bowling.ui.result.DisplayRolledResult;
 
 import static bowling.domain.core.Spare.expectSpareAfterBonusBowl;
 import static java.util.stream.Collectors.joining;
@@ -28,10 +29,30 @@ public final class TerminateFrame implements Frame {
     }
 
     @Override
-    public String toRolledResult() {
+    public int getScore() {
         return rolledResults.stream()
-            .map(RolledResult::description)
-            .collect(joining("|"));
+                            .mapToInt(RolledResult::getRolledResultScore)
+                            .sum();
+    }
+
+    @Override
+    public void updateScore(final RolledResult nextRolledResult) {
+    }
+
+    @Override
+    public RolledResult getRolledResult() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public DisplayRolledResult toDisplayRolledResult() {
+        return new DisplayRolledResult(description(), getScore());
+    }
+
+    private String description() {
+        return rolledResults.stream()
+                            .map(RolledResult::description)
+                            .collect(joining("|"));
     }
 
     @Override

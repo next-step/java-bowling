@@ -21,9 +21,9 @@ public class BowlingGame {
         for (int fraemIndex = 0; Frames.MAX_FRAMES_SIZE > fraemIndex; ++fraemIndex){
             final int displayFraemIndex = fraemIndex + 1;
 
-            this.player.whileRoll(fraemIndex,
-                                  (n) -> fallenPinsSupplier.apply(displayFraemIndex),
-                                  (g) -> displayBowlingBoardConsumer.accept(displayBowlingBoard.updateDisplayPlayerBowlingGrade(g))
+            this.player.whileRollAndDisplay(fraemIndex,
+                                            (n) -> fallenPinsSupplier.apply(displayFraemIndex),
+                                            (g) -> displayBowlingBoardConsumer.accept(displayBowlingBoard.updateDisplayPlayerBowlingGrade(g))
             );
         }
     }

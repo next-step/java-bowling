@@ -1,7 +1,5 @@
 package bowling.domain.core;
 
-import static bowling.domain.core.RolledResultFactory.notAtRolledResult;
-
 final class Strike extends AbstractTwoFallenPinsRolledResult {
     static final RolledResult strike = new Strike();
 
@@ -18,7 +16,7 @@ final class Strike extends AbstractTwoFallenPinsRolledResult {
             + twoFallenPins.secondFallenPinsValue();
 
         if (this == nextRolledResult){
-            return score + nextRolledResult.getNextRolledResultMergeScore(notAtRolledResult());
+            return score + nextRolledResult.getRolledResultScore();
         }
 
         return score;

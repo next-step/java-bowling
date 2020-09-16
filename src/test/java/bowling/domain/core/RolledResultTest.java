@@ -13,6 +13,7 @@ class RolledResultTest {
 
     @BeforeEach
     void setUp() {
+        RolledResultFactory.init();
         rolledResultFactory = RolledResultFactory.of();
     }
 
@@ -21,7 +22,7 @@ class RolledResultTest {
     }
 
     RolledResult secondBowl(RolledResult rolledResult, int fallenPins){
-        if( 10 == rolledResult.numberOfPinsFallingByAttemptCount(0) ){
+        if (10 == rolledResult.twoFallenPins().secondFallenPinsValue() ){
             return rolledResult;
         }
         return RolledResultFactory.collectPins(fallenPins).toRolledResult();
@@ -74,8 +75,6 @@ class RolledResultTest {
 
         RolledResult rolledResult = secondBowl(firstBowl(5), 5);
         assertThat(rolledResult.description()).isEqualTo("5|/");
-
-        secondBowlRolledResultConfrim(rolledResult);
     }
 
     @DisplayName("두번째 투구 결과로 미스 처리되었는지 확인")
@@ -87,8 +86,6 @@ class RolledResultTest {
         RolledResult firstBowlRolledResult = firstBowl(5);
         RolledResult rolledResult = secondBowl(firstBowlRolledResult, 2);
         assertThat(rolledResult.description()).isEqualTo("5|2");
-
-        secondBowlRolledResultConfrim(rolledResult);
     }
 
     @DisplayName("두번의 투구로 한개의 핀도 처리하지 못한 경우")
@@ -97,13 +94,4 @@ class RolledResultTest {
         assertThat(secondBowl(firstBowl(0), 0).description()).isEqualTo("-");
     }
 
-    // 두번째 투구가 완료된 결과는 2번(zero base)의의 쓰러진 핀 갯수가 나옴, 잘못된 투구 회수를 입력했는지 확인
-    private void secondBowlRolledResultConfrim(RolledResult rolledResult) {
-        assertThatIllegalArgumentException()
-            .isThrownBy(() -> rolledResult.numberOfPinsFallingByAttemptCount(Integer.MIN_VALUE))
-            .withMessage(AbstractTwoFallenPins.ERROR_MESSAGE);
-        assertThatIllegalArgumentException()
-            .isThrownBy(() -> rolledResult.numberOfPinsFallingByAttemptCount(Integer.MAX_VALUE))
-            .withMessage(AbstractTwoFallenPins.ERROR_MESSAGE);
-    }
 }
