@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
+
+import java.util.List;
 
 public class FinalFrame implements Frame {
     private static final int PINS_LIMIT = 10;
@@ -45,7 +48,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int getPins() {
+    public int getTotal() {
         return this.pins.getTotalPins();
     }
 
@@ -53,6 +56,14 @@ public class FinalFrame implements Frame {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public List<Pin> getPinInfo() {
+        return pins.getPins();
+    }
+
+    @Override
+    public Pins getPins() { return pins;}
 
     private boolean isPinUnderTen() {
         return pins.getTotalPins() < PINS_LIMIT;

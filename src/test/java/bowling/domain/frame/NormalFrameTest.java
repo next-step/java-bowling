@@ -31,7 +31,7 @@ class NormalFrameTest {
         normalFrame.roll(pin);
 
         // then
-        assertThat(hitedPins).isEqualTo(normalFrame.getPins());
+        assertThat(hitedPins).isEqualTo(normalFrame.getTotal());
     }
 
     @DisplayName("스트라이크 이후 던지기 테스트")
@@ -56,7 +56,7 @@ class NormalFrameTest {
         assertThat(normalFrame.canRoll()).isFalse();
 
         normalFrame.roll(2);
-        assertThat(normalFrame.getPins()).isEqualTo(5);
+        assertThat(normalFrame.getTotal()).isEqualTo(5);
 
     }
 

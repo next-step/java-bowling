@@ -20,7 +20,7 @@ class FinalFrameTest {
         finalFrame.roll(3);
 
         // then
-        assertThat(finalFrame.getPins()).isEqualTo(16);
+        assertThat(finalFrame.getTotal()).isEqualTo(16);
     }
 
     @DisplayName("스페어인 경우 테스트")
@@ -35,7 +35,7 @@ class FinalFrameTest {
         finalFrame.roll(3);
 
         // then
-        assertThat(finalFrame.getPins()).isEqualTo(13);
+        assertThat(finalFrame.getTotal()).isEqualTo(13);
     }
 
     @DisplayName("두번 이상 던지기 테스트")
@@ -49,7 +49,7 @@ class FinalFrameTest {
         assertThat(finalFrame.canRoll()).isFalse();
 
         finalFrame.roll(2);
-        assertThat(finalFrame.getPins()).isEqualTo(5);
+        assertThat(finalFrame.getTotal()).isEqualTo(5);
 
     }
 

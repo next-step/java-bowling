@@ -1,7 +1,9 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
 
+import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
@@ -19,8 +21,15 @@ public class NormalFrame implements Frame {
         this.index = index;
     }
 
+    public NormalFrame() {
+    }
+
     public static NormalFrame firstFrame() {
         return new NormalFrame(FIRST_FRAME);
+    }
+
+    public static NormalFrame frame() {
+        return new NormalFrame();
     }
 
     @Override
@@ -50,11 +59,11 @@ public class NormalFrame implements Frame {
     }
 
     private boolean isPinTotalOverTen(int pin) {
-        return this.getPins() + pin > PINS_LIMIT;
+        return this.getTotal() + pin > PINS_LIMIT;
     }
 
     @Override
-    public int getPins() {
+    public int getTotal() {
         return this.pins.getTotalPins();
     }
 
@@ -64,16 +73,24 @@ public class NormalFrame implements Frame {
     }
 
     @Override
+    public List<Pin> getPinInfo() {
+        return pins.getPins();
+    }
+
+    @Override
+    public Pins getPins() { return pins;}
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof NormalFrame)) return false;
         NormalFrame that = (NormalFrame) o;
         return getIndex() == that.getIndex() &&
-                Objects.equals(getPins(), that.getPins());
+                Objects.equals(getTotal(), that.getTotal());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPins(), getIndex());
+        return Objects.hash(getTotal(), getIndex());
     }
 }

@@ -12,6 +12,10 @@ public class Pins {
         this.pins = new ArrayList<>();
     }
 
+    public Pins(List<Pin> pins) {
+        this.pins = pins;
+    }
+
     public int getTotalPins() {
         return this.pins.stream()
                 .map(Pin::getPin)
@@ -25,6 +29,14 @@ public class Pins {
 
     public void addPins(int pin) {
         this.pins.add(new Pin(pin));
+    }
+
+    public List<Pin> getPins() {
+        return pins;
+    }
+
+    public int getPinCount(int index) {
+        return pins.get(index).getPin();
     }
 
     public int rollCount() {

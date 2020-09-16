@@ -3,6 +3,7 @@ package bowling;
 import bowling.domain.frame.Frame;
 import bowling.domain.game.Game;
 import bowling.domain.player.Player;
+import bowling.domain.score.ScoreConverter;
 import bowling.domain.view.InputView;
 
 public class Main {
@@ -13,7 +14,9 @@ public class Main {
 
         while (frame != null) {
             askPinRoll(frame);
+            System.out.println(ScoreConverter.convert(frame));
             frame = game.getNextFrame();
+
         }
     }
 
