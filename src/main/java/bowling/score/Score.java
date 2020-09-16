@@ -2,6 +2,8 @@ package bowling.score;
 
 import bowling.exception.ExceptionMessage;
 
+import java.util.Objects;
+
 public class Score {
     public static final int MIN_SCORE = 0;
     public static final int MAX_SCORE = 10;
@@ -50,4 +52,16 @@ public class Score {
         return Score.of(sumScore);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Score that = (Score) o;
+        return score == that.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score);
+    }
 }
