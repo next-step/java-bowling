@@ -7,3 +7,17 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## Step01 : To Do List
+-[X] 단위 테스트 가능한 코드 테스트
+    -[X] Question 삭제 가능한지 확인하기
+        -[X] Question 작성자가 로그인한 유저와 동일 인물 인지 확인하기
+        -[X] Answers 중에서 로그인한 유저가 아닌 다른 사람이 작성한 답변이 있는지 확인하기
+    
+-[X] 도메인 로직으로 이동
+    -[X] Question 삭제 기능
+    -[X] Answer 삭제 기능
+
+-[X] 일급 콜렉션을 사용한다.
+    -[X] List<Answer>을 랩핑한 Answers 구현하기
+    -[X] List<DeleteHistory>을 랩핑한 DeleteHistories 구현하기
