@@ -36,10 +36,6 @@ public class Score {
         return this.score == MIN_SCORE;
     }
 
-    public int getScore() {
-        return score;
-    }
-
     @Override
     public String toString() {
         return String.valueOf(score);
