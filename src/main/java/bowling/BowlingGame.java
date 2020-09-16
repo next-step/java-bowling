@@ -5,10 +5,10 @@ import bowling.score.Score;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
-public class BowlingController {
+public class BowlingGame {
     private Frames frames;
 
-    public BowlingController(Frames frames) {
+    public BowlingGame(Frames frames) {
         this.frames = frames;
     }
 
@@ -17,9 +17,9 @@ public class BowlingController {
         Player player = Player.from(name);
 
         Frames frames = Frames.init(player);
-        BowlingController bowlingController = new BowlingController(frames);
+        BowlingGame bowlingGame = new BowlingGame(frames);
 
-        bowlingController.start();
+        bowlingGame.start();
     }
 
     private void start() {
