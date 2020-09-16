@@ -28,14 +28,14 @@ public class ResultViewer {
     }
 
     private static void showResultFrames(String name, List<List<String>> frames) {
-        showFramesBody(name, SHOW_FRAME_NUMBER, frames);
+        showFramesBody(name, frames);
         System.out.println();
     }
 
-    private static void showFramesBody(String name, int frameCount, List<List<String>> frames) {
+    private static void showFramesBody(String name, List<List<String>> frames) {
         System.out.print(String.format(NAME_FORMAT, name));
 
-        IntStream.rangeClosed(1, frameCount)
+        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
                 .forEach(frame -> System.out.printf(framesToString(frame, frames)));
     }
 
