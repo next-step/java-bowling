@@ -56,7 +56,6 @@ public class Frame {
 
     @Override
     public String toString() {
-
         return frameBowl.getBowlCount() == 0 ? "" : MessageFormat.format("{0}:{1}", frameNumber, frameBowl.getTotalNumberOfPins());
     }
 
