@@ -97,10 +97,7 @@ public class Game {
     }
 
     private List<List<String>> toHitResult() {
-        return results.entrySet()
-                .stream()
-                .map(entry -> entry.getValue())
-                .collect(Collectors.toList());
+        return new ArrayList<>(results.values());
     }
 
     private Frame getLastFrame() {
