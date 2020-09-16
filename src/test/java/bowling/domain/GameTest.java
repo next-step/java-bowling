@@ -193,4 +193,33 @@ public class GameTest {
         assertThat(scores.get(8)).isEqualTo(270);
         assertThat(scores.get(9)).isEqualTo(290);
     }
+
+    @Test
+    void getSumScores_sample() {
+        Game game = Game.start();
+
+        game.hit(1); game.hit(2);
+        game.hit(9); game.hit(1);
+        game.hit(2); game.hit(2);
+        game.hit(10); game.hit(0);
+        game.hit(10); game.hit(0);
+        game.hit(10); game.hit(0);
+        game.hit(10); game.hit(9);
+        game.hit(10); game.hit(0);
+        game.hit(9); game.hit(1);
+        game.hit(10); game.hit(9);  game.hit(1);
+
+        List<Integer> scores = game.getSumScores();
+
+        assertThat(scores.get(0)).isEqualTo(3);
+        assertThat(scores.get(1)).isEqualTo(15);
+        assertThat(scores.get(2)).isEqualTo(20);
+        assertThat(scores.get(3)).isEqualTo(50);
+        assertThat(scores.get(4)).isEqualTo(80);
+        assertThat(scores.get(5)).isEqualTo(110);
+        assertThat(scores.get(6)).isEqualTo(139);
+        assertThat(scores.get(7)).isEqualTo(159);
+        assertThat(scores.get(8)).isEqualTo(179);
+        assertThat(scores.get(9)).isEqualTo(199);
+    }
 }
