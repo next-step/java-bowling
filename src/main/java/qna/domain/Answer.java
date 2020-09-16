@@ -1,6 +1,5 @@
 package qna.domain;
 
-import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
 
@@ -9,8 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
-    private static final String ALREADY_EXIST_MESSAGE = "다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.";
-    
+
     @ManyToOne(optional = false)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
@@ -63,11 +61,7 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public DeleteHistory deleteBy(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException(ALREADY_EXIST_MESSAGE);
-        }
-
+    public DeleteHistory delete() {
         this.deleted = true;
         return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }

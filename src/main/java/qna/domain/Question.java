@@ -66,10 +66,12 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public List<DeleteHistory> deleteBy(User loginUser) throws CannotDeleteException {
-        if (!isOwner(loginUser)) {
-            throw new CannotDeleteException(NOT_PERMISSION_MESSAGE);
-        }
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public List<DeleteHistory> deleteBy(User loginUser) {
+        validatePermission(loginUser);
 
         List<DeleteHistory> deleteHistories = new ArrayList<>();
         deleteHistories.add(new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now()));
@@ -79,12 +81,14 @@ public class Question extends AbstractEntity {
         return deleteHistories;
     }
 
-    private List<DeleteHistory> deleteAnswers(User loginUser) throws CannotDeleteException {
+    private List<DeleteHistory> deleteAnswers(User loginUser) {
         return new Answers(answers).deleteAll(loginUser);
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    private void validatePermission(User loginUser) {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException(NOT_PERMISSION_MESSAGE);
+        }
     }
 
     @Override
