@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 public class FinalFrame extends AbstractFrame {
 
+    public static final String DELIMITER = "|";
+
     private final List<NormalBowl> normalBowls = new ArrayList<>();
 
     public FinalFrame() {
@@ -34,7 +36,7 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public String toString() {
-        return String.join("|", normalBowls.stream()
+        return String.join(DELIMITER, normalBowls.stream()
                 .map(normalBowl -> NormalBowlResult.getType(normalBowl).format(normalBowl))
                 .collect(Collectors.toList()));
     }

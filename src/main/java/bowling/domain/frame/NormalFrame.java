@@ -24,7 +24,9 @@ public class NormalFrame extends AbstractFrame {
     }
 
     private Frame createNextFrame() {
-        nextNormalFrame = (frameNumber == LAST_NORMAL_FRAME_NUMBER) ? new FinalFrame() : new NormalFrame(frameNumber + 1);
+        nextNormalFrame = (frameNumber == LAST_NORMAL_FRAME_NUMBER) ?
+                new FinalFrame() :
+                new NormalFrame(frameNumber + 1);
         return nextNormalFrame;
     }
 
