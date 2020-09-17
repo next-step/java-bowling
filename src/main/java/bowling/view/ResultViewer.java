@@ -28,11 +28,7 @@ public class ResultViewer {
         this.status = new HashMap<>();
     }
 
-    public void addScore(int hitCount) {
-        record(game.hit(hitCount));
-    }
-
-    private void record(Frame frame) {
+    public void record(Frame frame) {
         status.put(frame.getNumber(), frame.toResults());
     }
 

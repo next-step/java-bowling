@@ -17,8 +17,8 @@ public class ResultViewerTest {
 
         ResultViewer resultViewer = new ResultViewer(game);
 
-        resultViewer.addScore(9);
-        resultViewer.addScore(1);
+        resultViewer.record(game.hit(9));
+        resultViewer.record(game.hit(1));
 
         List<Integer> scores = resultViewer.getScores();
 
@@ -32,7 +32,7 @@ public class ResultViewerTest {
         ResultViewer resultViewer = new ResultViewer(game);
 
         for (int index = 0; index < 12; index++) {
-            resultViewer.addScore(10);
+            resultViewer.record(game.hit(10));
         }
 
         List<Integer> scores = resultViewer.getScores();
@@ -57,11 +57,11 @@ public class ResultViewerTest {
 
         for (int index = 0; index < 12; index++) {
             if (index == 9) {
-                resultViewer.addScore(9);
+                resultViewer.record(game.hit(9));
             } else if (index == 10) {
-                resultViewer.addScore(1);
+                resultViewer.record(game.hit(1));
             } else {
-                resultViewer.addScore(10);
+                resultViewer.record(game.hit(10));
             }
         }
 
@@ -85,8 +85,8 @@ public class ResultViewerTest {
 
         ResultViewer resultViewer = new ResultViewer(game);
 
-        resultViewer.addScore(9);
-        resultViewer.addScore(1);
+        resultViewer.record(game.hit(9));
+        resultViewer.record(game.hit(1));
 
         List<List<String>> status = resultViewer.getStatus();
 
@@ -100,7 +100,7 @@ public class ResultViewerTest {
         ResultViewer resultViewer = new ResultViewer(game);
 
         for (int index = 0; index < 12; index++) {
-            resultViewer.addScore(10);
+            resultViewer.record(game.hit(10));
         }
 
         List<List<String>> status = resultViewer.getStatus();
@@ -125,11 +125,11 @@ public class ResultViewerTest {
 
         for (int index = 0; index < 12; index++) {
             if (index == 9) {
-                resultViewer.addScore(9);
+                resultViewer.record(game.hit(9));
             } else if (index == 10) {
-                resultViewer.addScore(1);
+                resultViewer.record(game.hit(1));
             } else {
-                resultViewer.addScore(10);
+                resultViewer.record(game.hit(10));
             }
         }
 
@@ -153,22 +153,22 @@ public class ResultViewerTest {
 
         ResultViewer resultViewer = new ResultViewer(game);
 
-        resultViewer.addScore(1);
-        resultViewer.addScore(2);
-        resultViewer.addScore(9);
-        resultViewer.addScore(1);
-        resultViewer.addScore(2);
-        resultViewer.addScore(3);
-        resultViewer.addScore(10);
-        resultViewer.addScore(10);
-        resultViewer.addScore(10);
-        resultViewer.addScore(10);
-        resultViewer.addScore(10);
-        resultViewer.addScore(9);
-        resultViewer.addScore(1);
-        resultViewer.addScore(10);
-        resultViewer.addScore(9);
-        resultViewer.addScore(1);
+        resultViewer.record(game.hit(1));
+        resultViewer.record(game.hit(2));
+        resultViewer.record(game.hit(9));
+        resultViewer.record(game.hit(1));
+        resultViewer.record(game.hit(2));
+        resultViewer.record(game.hit(3));
+        resultViewer.record(game.hit(10));
+        resultViewer.record(game.hit(10));
+        resultViewer.record(game.hit(10));
+        resultViewer.record(game.hit(10));
+        resultViewer.record(game.hit(10));
+        resultViewer.record(game.hit(9));
+        resultViewer.record(game.hit(1));
+        resultViewer.record(game.hit(10));
+        resultViewer.record(game.hit(9));
+        resultViewer.record(game.hit(1));
 
         List<List<String>> status = resultViewer.getStatus();
 

@@ -1,5 +1,6 @@
 package bowling;
 
+import bowling.domain.Frame;
 import bowling.domain.Game;
 import bowling.view.InputScanner;
 import bowling.view.ResultViewer;
@@ -12,7 +13,10 @@ public class Main {
         ResultViewer resultViewer = new ResultViewer(game);
 
         while (!game.isEnd()) {
-            resultViewer.addScore(InputScanner.getHitCount(String.format("%s프레임 투구 : ", game.getPlayFrameNumber())));
+            int hitCount = InputScanner.getHitCount(String.format("%s프레임 투구 : ", game.getPlayFrameNumber()));
+
+            Frame frame = game.hit(hitCount);
+            resultViewer.record(frame);
 
             resultViewer.printing();
         }
