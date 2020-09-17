@@ -31,6 +31,7 @@ public class Question extends AbstractEntity {
         this.title = title;
         this.contents = contents;
         this.writer = writer;
+        this.answers = answers;
         this.deleted = false;
     }
 
@@ -39,6 +40,7 @@ public class Question extends AbstractEntity {
         this.title = title;
         this.contents = contents;
         this.writer = writer;
+        this.answers = answers;
         this.deleted = false;
     }
 
@@ -54,9 +56,8 @@ public class Question extends AbstractEntity {
         return writer;
     }
 
-    public Question writeBy(User loginUser) {
-        this.writer = loginUser;
-        return this;
+    public List<Answer> getAnswers() {
+        return answers;
     }
 
     public void addAnswer(Answer answer) {
@@ -68,13 +69,14 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
+    public void delete() {
+        isDeleted();
+        //delete조건
+        this.deleted = true;
+    }
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
     }
 
     @Override

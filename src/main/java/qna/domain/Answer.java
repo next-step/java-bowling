@@ -8,17 +8,18 @@ import javax.persistence.*;
 @Entity
 public class Answer extends AbstractEntity {
     @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
+    @JoinColumn(name = "writer", foreignKey = @ForeignKey(name = "fk_answer_writer"), nullable = false)
     private User writer;
 
     @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
+    @JoinColumn(name = " question", foreignKey = @ForeignKey(name = "fk_answer_to_question"), nullable = false)
     private Question question;
 
-    @Lob
+    @Column(name = "contents")
     private String contents;
 
-    private boolean deleted = false;
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
 
     public Answer() {
     }
@@ -29,31 +30,10 @@ public class Answer extends AbstractEntity {
 
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
-
-        if(writer == null) {
-            throw new UnAuthorizedException();
-        }
-
-        if(question == null) {
-            throw new NotFoundException();
-        }
-
         this.writer = writer;
         this.question = question;
         this.contents = contents;
-    }
-
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public boolean isOwner(User writer) {
-        return this.writer.equals(writer);
+        this.deleted = false;
     }
 
     public User getWriter() {
@@ -67,6 +47,21 @@ public class Answer extends AbstractEntity {
     public void toQuestion(Question question) {
         this.question = question;
     }
+
+    public void delete() {
+        isDeleted();
+        //delete조건
+        this.deleted = true;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public boolean isOwner(User writer) {
+        return this.writer.equals(writer);
+    }
+
 
     @Override
     public String toString() {
