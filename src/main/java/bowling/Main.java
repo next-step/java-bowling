@@ -13,6 +13,8 @@ public class Main {
 
         while (!game.isEnd()) {
             resultViewer.addScore(InputScanner.getHitCount(String.format("%s프레임 투구 : ", game.getPlayFrameNumber())));
+
+            resultViewer.printing();
         }
     }
 }

@@ -5,8 +5,11 @@ import bowling.domain.Game;
 import bowling.domain.Score;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ResultViewer {
     private static final int SHOW_FRAME_NUMBER = 10;
@@ -17,21 +20,61 @@ public class ResultViewer {
     private static final String GAME_RESULT_DELIMITER = "|";
 
     private final Game game;
+    private final Map<Integer, List<String>> status;
 
     public ResultViewer(Game game) {
         this.game = game;
+        this.status = new HashMap<>();
     }
 
     public void addScore(int hitCount) {
-//        ResultViewer.showHead();
         record(game.hit(hitCount));
-//        ResultViewer.showFramesBody();
-//        ResultViewer.showResultFrames(game.getPlayerName(), game.hit(hitCount));
-//        ResultViewer.showResultScores(game.getSumScores());
     }
 
     private void record(Frame frame) {
-//        System.out.println(frame.toResults());
+        status.put(frame.getNumber(), frame.toResults());
+    }
+
+    public void printing() {
+        showHead();
+        showStatus(getStatus());
+        showResultScores(getScores());
+    }
+
+    private static void showHead() {
+        System.out.print(STAGE_PREFIX_STRING);
+
+        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
+                .forEach(frame -> System.out.printf(String.format(FRAME_FORMAT, frame)));
+
+        System.out.println();
+    }
+
+    public List<List<String>> getStatus() {
+        return new ArrayList<>(status.values());
+    }
+
+    private void showStatus(List<List<String>> frames) {
+        System.out.print(String.format(NAME_FORMAT, game.getPlayerName()));
+
+        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
+                .forEach(frame -> System.out.printf(statusToString(frame, frames)));
+
+        System.out.println();
+    }
+
+    private String statusToString(int frameNumber, List<List<String>> frames) {
+        if (frames.size() < frameNumber) {
+            return String.format(GAME_RESULT_FORMAT, "");
+        }
+
+        return String.format(GAME_RESULT_FORMAT, frameToString(frames.get(frameNumber - 1)));
+    }
+
+    private String frameToString(List<String> results) {
+        return results.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(GAME_RESULT_DELIMITER));
     }
 
     public List<Integer> getScores() {
@@ -81,56 +124,22 @@ public class ResultViewer {
         return score;
     }
 
+    private void showResultScores(List<Integer> scores) {
+        System.out.print(String.format(NAME_FORMAT, ""));
 
-//    private void showResultFrames(String name, List<List<String>> frames) {
-//        showFramesBody(name, frames);
-//        System.out.println();
-//    }
-//
-//    private String framesToString(int frameNumber, List<List<String>> frames) {
-//        if (frames.size() < frameNumber) {
-//            return String.format(GAME_RESULT_FORMAT, "");
-//        }
-//
-//        return String.format(GAME_RESULT_FORMAT, scoresToString(frames.get(frameNumber - 1)));
-//    }
-//
-//    private String scoresToString(List<String> results) {
-//        return results.stream()
-//                .map(String::valueOf)
-//                .collect(Collectors.joining(GAME_RESULT_DELIMITER));
-//    }
-//
-//    private String scoresToString(int frameNumber, List<Integer> scores) {
-//        if (scores.size() < frameNumber) {
-//            return String.format(GAME_RESULT_FORMAT, "");
-//        }
-//
-//        return String.format(GAME_RESULT_FORMAT, scores.get(frameNumber - 1));
-//    }
-//
-//    private static void showHead() {
-//        System.out.print(STAGE_PREFIX_STRING);
-//
-//        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
-//                .forEach(frame -> System.out.printf(String.format(FRAME_FORMAT, frame)));
-//
-//        System.out.println();
-//    }
-//
-//    private static String showFramesBody(String name, List<List<String>> frames) {
-//        System.out.print(String.format(NAME_FORMAT, name));
-//
-//        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
-//                .forEach(frame -> System.out.printf(framesToString(frame, frames)));
-//    }
-//
-//    private static void showResultScores(List<Integer> scores) {
-//        System.out.print(String.format(NAME_FORMAT, ""));
-//
-//        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
-//                .forEach(frame -> System.out.printf(scoresToString(frame, scores)));
-//
-//        System.out.println();
-//    }
+        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
+                .forEach(frame -> System.out.printf(frameToString(frame, scores)));
+
+        System.out.println();
+    }
+
+    private String frameToString(int frameNumber, List<Integer> scores) {
+        if (scores.size() < frameNumber) {
+            return String.format(GAME_RESULT_FORMAT, "");
+        }
+
+        return String.format(GAME_RESULT_FORMAT, scores.get(frameNumber - 1));
+    }
+
+
 }
