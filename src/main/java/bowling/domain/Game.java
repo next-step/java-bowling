@@ -43,15 +43,15 @@ public class Game {
             throw new RuntimeException("다음 프레임이 존재하지 않습니다.");
         }
 
-        int nextFrameNumber = nextFrameNumber();
+        int nextFrameNumber = getNextFrameNumber();
         return nextFrameNumber == LAST_FRAME_NUMBER ? LastFrame.from() : NormalFrame.of(nextFrameNumber);
     }
 
     public boolean hasNextFrame() {
-        return nextFrameNumber() <= LAST_FRAME_NUMBER;
+        return getNextFrameNumber() <= LAST_FRAME_NUMBER;
     }
 
-    private int nextFrameNumber() {
+    private int getNextFrameNumber() {
         return getLastFrame().getNumber() + 1;
     }
 
