@@ -9,6 +9,7 @@ import static bowling.domain.DownedPinCount.TEN;
 public class FinalFrameSecondState extends Open {
 
 	private static final int ALL_PIN_DOWN = 10;
+	private static final String SPARE_REPORT_PATTERN = "/";
 
 	public FinalFrameSecondState(DownedPinCount first, DownedPinCount second) {
 		super(first, second);
@@ -23,10 +24,8 @@ public class FinalFrameSecondState extends Open {
 	}
 
 	protected String getSecondReportPattern(DownedPinCount second) {
-		if(isSpare()) {
-			return "/";
-		}
-		return convertReportPattern(second);
+
+		return isSpare() ? SPARE_REPORT_PATTERN : convertReportPattern(second);
 	}
 
 	@Override
