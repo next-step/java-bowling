@@ -20,10 +20,32 @@ class FinalFrameTest {
         int frameIndex = 10;
 
         FinalFrame finalFrame = new FinalFrame(frameIndex);
-        finalFrame.bowl(2);
-        finalFrame.bowl(5);
+        finalFrame.bowl(new Pin(2));
+        finalFrame.bowl(new Pin(5));
 
         assertTrue(finalFrame.rollingEnd());
     }
 
+    @Test
+    void canTryExtraRollingTest() {
+        int frameIndex = 10;
+
+        FinalFrame finalFrame = new FinalFrame(frameIndex);
+        finalFrame.bowl(new Pin(2));
+        finalFrame.bowl(new Pin(8));
+
+        assertFalse(finalFrame.rollingEnd());
+    }
+
+    @Test
+    void isFinishExtraRollingTest() {
+        int frameIndex = 10;
+
+        FinalFrame finalFrame = new FinalFrame(frameIndex);
+        finalFrame.bowl(new Pin(2));
+        finalFrame.bowl(new Pin(8));
+        finalFrame.bowl(new Pin(5));
+
+        assertTrue(finalFrame.rollingEnd());
+    }
 }
