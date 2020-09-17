@@ -2,7 +2,7 @@ package bowling.domain;
 
 public interface Bowl {
 
-    BowlResult bowl(int numberOfPins);
+    NormalBowlResult bowl(int numberOfPins);
     int getBowlCount();
     int getTotalNumberOfPins();
 

@@ -9,37 +9,37 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 @DisplayName("프레임 투구 객체 테스트")
-public class NormalNormalBowlTest {
+public class NormalBowlTest {
 
     @DisplayName("투구 테스트: 스트라이크")
     @Test
     public void bowl_strike() {
         NormalBowl normalBowl = new NormalBowl();
-        assertThat(normalBowl.bowl(10)).isEqualTo(BowlResult.STRIKE);
+        assertThat(normalBowl.bowl(10)).isEqualTo(NormalBowlResult.STRIKE);
     }
 
     @DisplayName("투구 테스트: 스페어")
     @Test
     public void bowl_spare() {
         NormalBowl normalBowl = new NormalBowl();
-        assertThat(normalBowl.bowl(9)).isEqualTo(BowlResult.NONE);
-        assertThat(normalBowl.bowl(1)).isEqualTo(BowlResult.SPARE);
+        assertThat(normalBowl.bowl(9)).isEqualTo(NormalBowlResult.DEFAULT);
+        assertThat(normalBowl.bowl(1)).isEqualTo(NormalBowlResult.SPARE);
     }
 
     @DisplayName("투구 테스트: 미스")
     @Test
     public void bowl_miss() {
         NormalBowl normalBowl = new NormalBowl();
-        assertThat(normalBowl.bowl(9)).isEqualTo(BowlResult.NONE);
-        assertThat(normalBowl.bowl(0)).isEqualTo(BowlResult.MISS);
+        assertThat(normalBowl.bowl(9)).isEqualTo(NormalBowlResult.DEFAULT);
+        assertThat(normalBowl.bowl(0)).isEqualTo(NormalBowlResult.MISS);
     }
 
     @DisplayName("투구 테스트: 거터")
     @Test
     public void bowl_gutter() {
         NormalBowl normalBowl = new NormalBowl();
-        assertThat(normalBowl.bowl(0)).isEqualTo(BowlResult.NONE);
-        assertThat(normalBowl.bowl(0)).isEqualTo(BowlResult.GUTTER);
+        assertThat(normalBowl.bowl(0)).isEqualTo(NormalBowlResult.DEFAULT);
+        assertThat(normalBowl.bowl(0)).isEqualTo(NormalBowlResult.GUTTER);
     }
 
     @DisplayName("투구 유효성 테스트: 0보다 작거나 10보다 큰 수 입력")
