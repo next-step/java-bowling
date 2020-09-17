@@ -1,7 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Frame;
-import bowling.domain.Frames;
+import bowling.domain.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,21 +16,22 @@ public class ResultView {
     private final String FRAME_RESULT_BOARD_TEMPLATE = "| %4s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-5s |\n";
 
 
-    public void showScoreBoard(Frames frames) {
+    public void showScoreBoard(Player player) {
         System.out.println(makeScoreBoardHeader());
 
         List<String> frameBody = new ArrayList<>();
-        frameBody.add(frames.getPlayerName());
-        frameBody.addAll(frames.getFrames().stream().map(frame -> frame.desc()).collect(Collectors.toList()));
+        frameBody.add(player.name());
+        frameBody.addAll(player.frames().stream()
+                .map(frame -> frame.currentFrameStatus())
+                .collect(Collectors.toList()));
 
-        blankFrame(frames, frameBody);
+        blankFrame(player.frameSize(), frameBody);
 
         System.out.printf(FRAME_RESULT_BOARD_TEMPLATE, frameBody.toArray());
     }
 
-    private void blankFrame(Frames frames, List<String> frameBody) {
-        int size = frames.size();
-        for (int i = 0; i < 10 - size; i++) {
+    private void blankFrame(int frameSize, List<String> frameBody) {
+        for (int i = 0; i < 10 - frameSize; i++) {
             frameBody.add("");
         }
     }
