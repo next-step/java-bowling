@@ -8,31 +8,22 @@ public class NormalFrame extends AbstractFrame {
 
     public static final int LAST_NORMAL_FRAME_NUMBER = 9;
 
-    private Frame nextNormalFrame;
-
     public NormalFrame(int frameNumber) {
         super(frameNumber);
     }
 
+    @Override
     public Frame bowl(int numberOfPins) {
         BowlResult bowlResult = frameBowl.bowl(numberOfPins);
-        return isCompleted(bowlResult) ? nextStep() : this;
+        return isCompleted(bowlResult) ? createNextFrame() : this;
     }
 
     public boolean isCompleted(BowlResult bowlResult) {
         return !bowlResult.equals(BowlResult.NONE);
     }
 
-    private Frame nextStep() {
-        if (frameNumber == LAST_NORMAL_FRAME_NUMBER) {
-            return null;
-        }
-        nextNormalFrame = new NormalFrame(frameNumber + 1);
-        return nextNormalFrame;
-    }
-
-    @Override
-    public Frame getNextFrame() {
+    private Frame createNextFrame() {
+        nextNormalFrame = (frameNumber == LAST_NORMAL_FRAME_NUMBER) ? new FinalFrame() : new NormalFrame(frameNumber + 1);
         return nextNormalFrame;
     }
 
