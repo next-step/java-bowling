@@ -1,10 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.Frame;
-
-import static bowling.common.ExceptionMessage.NORMAL_FRAME_RANGE;
-
 public class NormalFrame extends Frame {
+
+    private final String NORMAL_FRAME_RANGE = "NormalFrame의 범위는 1~9 사이입니다.";
 
     private NormalRollingResult normalRollingResult = new NormalRollingResult();
 
@@ -25,8 +23,8 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    void bowl(int countOfPins) {
-        normalRollingResult.bowl(countOfPins);
+    void bowl(Pin pin) {
+        normalRollingResult.bowl(pin);
     }
 
     @Override
@@ -40,7 +38,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public String desc() {
-        return normalRollingResult.desc();
+    public String currentFrameStatus() {
+        return normalRollingResult.currentFrameStatus();
     }
 }

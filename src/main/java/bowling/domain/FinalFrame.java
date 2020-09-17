@@ -1,10 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.Frame;
-
-import static bowling.common.ExceptionMessage.FINAL_FRAME_RANGE;
-
 public class FinalFrame extends Frame {
+
+    private final String FINAL_FRAME_RANGE = "FinalFrame의 인덱스는 10이여야합니다.";
 
     private FinalRollingResult finalRollingResult = new FinalRollingResult();
 
@@ -25,8 +23,8 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    void bowl(int countOfPins) {
-        finalRollingResult.bowl(countOfPins);
+    void bowl(Pin pin) {
+        finalRollingResult.bowl(pin);
     }
 
     @Override
@@ -40,7 +38,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public String desc() {
-        return finalRollingResult.desc();
+    public String currentFrameStatus() {
+        return finalRollingResult.currentFrameStatus();
     }
 }

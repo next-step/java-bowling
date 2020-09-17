@@ -21,9 +21,13 @@ public abstract class Frame {
 
     abstract public String index();
 
-    abstract public String desc();
+    abstract public String currentFrameStatus();
 
-    abstract void bowl(int countOfPins);
+    abstract void bowl(Pin pin);
+
+    public int currentFrameIndex() {
+        return frameIndex;
+    }
 
     public Frame next() {
         int nextFrameIndex = frameIndex + 1;

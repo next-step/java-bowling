@@ -8,24 +8,22 @@ import java.util.List;
 public class Frames {
 
     private final List<Frame> frames = new ArrayList<>();
-    private Player player;
 
-    public Frames(Player player) {
-        this.player = player;
+    public Frames() {
         this.frames.add(new NormalFrame(Frame.MIN_FRAME_INDEX));
     }
 
-    public void play(int countOfPins) {
+    public void play(Pin pin) {
         Frame currentFrame = getLastFrame();
-        currentFrame.bowl(countOfPins);
+        currentFrame.bowl(pin);
 
         if (currentFrame.rollingEnd() && !currentFrame.allFrameEnd()) {
             frames.add(currentFrame.next());
         }
     }
 
-    public String currentFrame() {
-        return String.valueOf(frames.size());
+    public String currentFrameIndex() {
+        return String.valueOf(getLastFrame().currentFrameIndex());
     }
 
     public boolean allFrameEnd() {
@@ -34,10 +32,6 @@ public class Frames {
 
     private Frame getLastFrame() {
         return frames.get(frames.size() - 1);
-    }
-
-    public String getPlayerName() {
-        return player.name();
     }
 
     public List<Frame> getFrames() {
