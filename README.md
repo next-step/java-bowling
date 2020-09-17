@@ -28,6 +28,7 @@
     -[ ] 1~9번 Frame : NormalFrame으로 구현
     -[ ] 10번 Frame : FinalFrame으로 구현
 -[ ] 하나의 투구 구현 (Delivery)
+-[X] Pins 구현
 
 -[ ] 투구마다 넘어뜨린 핀 갯수 입력받기
 -[ ] 투구 입력 받고 점수판 현황 출력
