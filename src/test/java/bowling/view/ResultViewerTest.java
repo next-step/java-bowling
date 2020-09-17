@@ -3,6 +3,7 @@ package bowling.view;
 import bowling.domain.Game;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,20 +16,25 @@ public class ResultViewerTest {
         Game game = Game.start(USERNAME);
 
         ResultViewer resultViewer = new ResultViewer(game);
+
         resultViewer.addScore(9);
         resultViewer.addScore(1);
+
         List<Integer> scores = resultViewer.getScores();
+
         assertThat(scores.get(0)).isEqualTo(10);
     }
 
     @Test
     void getSumScores_all_strike() {
         Game game = Game.start(USERNAME);
-        for (int index = 0; index < 12; index++) {
-            game.hit(10);
-        }
 
         ResultViewer resultViewer = new ResultViewer(game);
+
+        for (int index = 0; index < 12; index++) {
+            resultViewer.addScore(10);
+        }
+
         List<Integer> scores = resultViewer.getScores();
 
         assertThat(scores.get(0)).isEqualTo(30);
@@ -46,17 +52,19 @@ public class ResultViewerTest {
     @Test
     void getSumScores_lastSpare() {
         Game game = Game.start(USERNAME);
+
+        ResultViewer resultViewer = new ResultViewer(game);
+
         for (int index = 0; index < 12; index++) {
             if (index == 9) {
-                game.hit(9);
+                resultViewer.addScore(9);
             } else if (index == 10) {
-                game.hit(1);
+                resultViewer.addScore(1);
             } else {
-                game.hit(10);
+                resultViewer.addScore(10);
             }
         }
 
-        ResultViewer resultViewer = new ResultViewer(game);
         List<Integer> scores = resultViewer.getScores();
 
         assertThat(scores.get(0)).isEqualTo(30);
@@ -72,38 +80,107 @@ public class ResultViewerTest {
     }
 
     @Test
-    void getSumScores_sample() {
+    void getStatus() {
         Game game = Game.start(USERNAME);
 
-        game.hit(1);
-        game.hit(2);
-        game.hit(9);
-        game.hit(1);
-        game.hit(2);
-        game.hit(3);
-        game.hit(10);
-        game.hit(10);
-        game.hit(10);
-        game.hit(10);
-        game.hit(10);
-        game.hit(9);
-        game.hit(1);
-        game.hit(10);
-        game.hit(9);
-        game.hit(1);
+        ResultViewer resultViewer = new ResultViewer(game);
+
+        resultViewer.addScore(9);
+        resultViewer.addScore(1);
+
+        List<List<String>> status = resultViewer.getStatus();
+
+        assertThat(status.get(0)).isEqualTo(Arrays.asList("9", "/"));
+    }
+
+    @Test
+    void getStatus_all_strike() {
+        Game game = Game.start(USERNAME);
 
         ResultViewer resultViewer = new ResultViewer(game);
-        List<Integer> scores = resultViewer.getScores();
 
-        assertThat(scores.get(0)).isEqualTo(3);
-        assertThat(scores.get(1)).isEqualTo(15);
-        assertThat(scores.get(2)).isEqualTo(20);
-        assertThat(scores.get(3)).isEqualTo(50);
-        assertThat(scores.get(4)).isEqualTo(80);
-        assertThat(scores.get(5)).isEqualTo(110);
-        assertThat(scores.get(6)).isEqualTo(139);
-        assertThat(scores.get(7)).isEqualTo(159);
-        assertThat(scores.get(8)).isEqualTo(179);
-        assertThat(scores.get(9)).isEqualTo(199);
+        for (int index = 0; index < 12; index++) {
+            resultViewer.addScore(10);
+        }
+
+        List<List<String>> status = resultViewer.getStatus();
+
+        assertThat(status.get(0)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(1)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(2)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(3)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(4)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(5)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(6)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(7)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(8)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(9)).isEqualTo(Arrays.asList("X", "X", "X"));
+    }
+
+    @Test
+    void getStatus_lastSpare() {
+        Game game = Game.start(USERNAME);
+
+        ResultViewer resultViewer = new ResultViewer(game);
+
+        for (int index = 0; index < 12; index++) {
+            if (index == 9) {
+                resultViewer.addScore(9);
+            } else if (index == 10) {
+                resultViewer.addScore(1);
+            } else {
+                resultViewer.addScore(10);
+            }
+        }
+
+        List<List<String>> status = resultViewer.getStatus();
+
+        assertThat(status.get(0)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(1)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(2)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(3)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(4)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(5)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(6)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(7)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(8)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(9)).isEqualTo(Arrays.asList("9", "/", "X"));
+    }
+
+    @Test
+    void getStatus_sample() {
+        Game game = Game.start(USERNAME);
+
+        ResultViewer resultViewer = new ResultViewer(game);
+
+        resultViewer.addScore(1);
+        resultViewer.addScore(2);
+        resultViewer.addScore(9);
+        resultViewer.addScore(1);
+        resultViewer.addScore(2);
+        resultViewer.addScore(3);
+        resultViewer.addScore(10);
+        resultViewer.addScore(10);
+        resultViewer.addScore(10);
+        resultViewer.addScore(10);
+        resultViewer.addScore(10);
+        resultViewer.addScore(9);
+        resultViewer.addScore(1);
+        resultViewer.addScore(10);
+        resultViewer.addScore(9);
+        resultViewer.addScore(1);
+
+        List<List<String>> status = resultViewer.getStatus();
+
+        assertThat(status.get(0)).isEqualTo(Arrays.asList("1", "2"));
+        assertThat(status.get(1)).isEqualTo(Arrays.asList("9", "/"));
+        assertThat(status.get(2)).isEqualTo(Arrays.asList("2", "3"));
+        assertThat(status.get(3)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(4)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(5)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(6)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(7)).isEqualTo(Arrays.asList("X"));
+        assertThat(status.get(8)).isEqualTo(Arrays.asList("9", "/"));
+        assertThat(status.get(9)).isEqualTo(Arrays.asList("X", "9", "/"));
     }
 }
