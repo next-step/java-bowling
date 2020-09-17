@@ -18,9 +18,7 @@ public class Question extends AbstractEntity {
     @JoinColumn(name = "writer", foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
+    @Column(name = "answers")
     private Answers answers;
 
     @Column(name = "deleted", nullable = false)
@@ -52,17 +50,23 @@ public class Question extends AbstractEntity {
         return contents;
     }
 
+    public List<Answer> getAnswers() {
+        if (answers != null) {
+            return answers.getAnswers();
+        }
+        return null;
+    }
+
     public User getWriter() {
         return writer;
     }
 
-    public List<Answer> getAnswers() {
-        return answers.getAnswers();
+    public void addAnswer(Answer answer) {
+        if (answers != null && answer != null) {
+            answers.addAnswer(answer);
+        }
     }
 
-    public void addAnswer(Answer answer) {
-        answers.addAnswer(answer);
-    }
     public boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }

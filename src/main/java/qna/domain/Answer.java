@@ -8,11 +8,11 @@ import javax.persistence.*;
 @Entity
 public class Answer extends AbstractEntity {
     @ManyToOne(optional = false)
-    @JoinColumn(name = "writer", foreignKey = @ForeignKey(name = "fk_answer_writer"), nullable = false)
+    @JoinColumn(name = "writer", foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = " question", foreignKey = @ForeignKey(name = "fk_answer_to_question"), nullable = false)
+    @JoinColumn(name = " question", foreignKey = @ForeignKey(name = "fk_answer_to_question"))
     private Question question;
 
     @Column(name = "contents")
@@ -30,6 +30,14 @@ public class Answer extends AbstractEntity {
 
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
+        if(writer == null) {
+            throw new UnAuthorizedException();
+        }
+
+        if(question == null) {
+            throw new NotFoundException();
+        }
+
         this.writer = writer;
         this.question = question;
         this.contents = contents;

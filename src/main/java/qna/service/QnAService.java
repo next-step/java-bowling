@@ -26,12 +26,15 @@ public class QnAService {
     @Resource(name = "deleteHistoryService")
     private DeleteHistoryService deleteHistoryService;
 
-    @Resource(name = "questionFindDao")
-    private QuestionFindDao questionFindDao;
+    @Transactional(readOnly = true)
+    public Question findQuestionById(Long id) {
+        return questionRepository.findByIdAndDeletedFalse(id)
+                .orElseThrow(NotFoundException::new);
+    }
 
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
-        Question question = questionFindDao.findById(questionId);
+        Question question = findQuestionById(questionId);
         if (!question.isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
