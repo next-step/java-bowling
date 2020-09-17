@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.bowl;
+
+import bowling.domain.bowl.formatter.*;
 
 import java.util.Arrays;
 

@@ -1,4 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.bowl.NormalBowl;
+import bowling.domain.bowl.NormalBowlResult;
 
 public class NormalFrame extends AbstractFrame {
 

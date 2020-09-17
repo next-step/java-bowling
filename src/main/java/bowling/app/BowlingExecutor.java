@@ -1,12 +1,12 @@
 package bowling.app;
 
-import bowling.domain.Frame;
-import bowling.domain.NormalFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
-import static bowling.domain.AbstractFrame.FIRST_FRAME_NUMBER;
+import static bowling.domain.frame.AbstractFrame.FIRST_FRAME_NUMBER;
 
 public class BowlingExecutor {
 

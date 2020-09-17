@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.bowl.NormalBowl;
+import bowling.domain.bowl.NormalBowlResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

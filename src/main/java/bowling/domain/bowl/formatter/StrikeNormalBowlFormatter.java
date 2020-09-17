@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.bowl.formatter;
+
+import bowling.domain.bowl.NormalBowl;
 
 import static bowling.domain.NumberOfPins.MAX_NUMBER_OF_PINS;
 

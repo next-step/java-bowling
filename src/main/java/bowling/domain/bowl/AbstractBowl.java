@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.bowl;
+
+import bowling.domain.NumberOfPins;
 
 import java.util.ArrayList;
 import java.util.List;

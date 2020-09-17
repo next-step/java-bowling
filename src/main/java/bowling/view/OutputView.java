@@ -1,13 +1,13 @@
 package bowling.view;
 
-import bowling.domain.Frame;
+import bowling.domain.frame.Frame;
 import bowling.domain.Player;
 import bowling.util.StringUtils;
 
 import java.text.MessageFormat;
 import java.util.stream.IntStream;
 
-import static bowling.domain.AbstractFrame.LAST_FRAME_NUMBER;
+import static bowling.domain.frame.AbstractFrame.LAST_FRAME_NUMBER;
 
 public class OutputView {
 

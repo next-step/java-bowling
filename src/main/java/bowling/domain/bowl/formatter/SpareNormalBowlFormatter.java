@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.bowl.formatter;
+
+import bowling.domain.bowl.NormalBowl;
 
 import java.text.MessageFormat;
 
