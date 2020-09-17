@@ -33,7 +33,7 @@
 - 프레임(frame)
 - [X] 볼링 점수판 1~9 프레임을 나타내는 NormalFrame 객체 생성
 - [X] 마지막 프레임을 나타내는 EndFrame 객체 생성
-- [ ] Frame 인터페이스 추출
+- [X] Frame 인터페이스 추출
 - [ ] 볼링 점수판을 나타내는 ScoreBoard 객체 생성
 
 - 상태(state)
