@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class LastFrameTest {
 
@@ -21,7 +20,7 @@ public class LastFrameTest {
         frame.hit(10);
 
         assertThat(frame.isFinish()).isFalse();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10)));
         assertThat(frame.getScore().toInt()).isEqualTo(10);
     }
 
@@ -33,7 +32,7 @@ public class LastFrameTest {
         frame = frame.hit(10);
 
         assertThat(frame.isFinish()).isFalse();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X", "X"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(10)));
         assertThat(frame.getScore().toInt()).isEqualTo(20);
     }
 
@@ -42,7 +41,7 @@ public class LastFrameTest {
         Frame frame = LastFrame.from().hit(1).hit(8);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("1", "8"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(1), Pin.of(8)));
         assertThat(frame.getScore().toInt()).isEqualTo(9);
     }
 
@@ -51,7 +50,7 @@ public class LastFrameTest {
         Frame frame = LastFrame.from().hit(10).hit(10).hit(10);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X", "X", "X"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(10), Pin.of(10)));
         assertThat(frame.getScore().toInt()).isEqualTo(30);
     }
 
@@ -65,7 +64,7 @@ public class LastFrameTest {
         frame.hit(9);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X", "X", "9"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(10), Pin.of(9)));
         assertThat(frame.getScore().toInt()).isEqualTo(29);
     }
 
@@ -78,7 +77,7 @@ public class LastFrameTest {
         frame.hit(0);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X", "X", "-"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(10), Pin.of(0)));
         assertThat(frame.getScore().toInt()).isEqualTo(20);
     }
 
@@ -91,7 +90,7 @@ public class LastFrameTest {
         frame.hit(2);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X", "8", "/"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(8), Pin.of(2)));
         assertThat(frame.getScore().toInt()).isEqualTo(20);
     }
 
@@ -104,7 +103,7 @@ public class LastFrameTest {
         frame.hit(1);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X", "8", "1"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(8), Pin.of(1)));
         assertThat(frame.getScore().toInt()).isEqualTo(19);
     }
 
@@ -117,7 +116,7 @@ public class LastFrameTest {
         frame.hit(0);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X", "8", "-"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(8), Pin.of(0)));
         assertThat(frame.getScore().toInt()).isEqualTo(18);
     }
 
@@ -130,7 +129,7 @@ public class LastFrameTest {
         frame.hit(10);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("8", "/", "X"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(8), Pin.of(2), Pin.of(10)));
         assertThat(frame.getScore().toInt()).isEqualTo(20);
     }
 
@@ -143,7 +142,7 @@ public class LastFrameTest {
         frame.hit(8);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("8", "/", "8"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(8), Pin.of(2), Pin.of(8)));
         assertThat(frame.getScore().toInt()).isEqualTo(18);
     }
 
@@ -156,7 +155,7 @@ public class LastFrameTest {
         frame.hit(0);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("8", "/", "-"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(8), Pin.of(2), Pin.of(0)));
         assertThat(frame.getScore().toInt()).isEqualTo(10);
     }
 }

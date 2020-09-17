@@ -1,9 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Frame;
-import bowling.domain.Game;
-import bowling.domain.LastFrame;
-import bowling.domain.Score;
+import bowling.domain.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +18,7 @@ public class ResultViewer {
     private static final String GAME_RESULT_DELIMITER = "|";
 
     private final Game game;
-    private final Map<Integer, List<String>> status;
+    private final Map<Integer, List<Pin>> status;
 
     public ResultViewer(Game game) {
         this.game = game;
@@ -29,7 +26,7 @@ public class ResultViewer {
     }
 
     public void record(Frame frame) {
-        status.put(frame.getNumber(), frame.toResults());
+        status.put(frame.getNumber(), frame.toPins());
     }
 
     public void printing() {
@@ -48,7 +45,36 @@ public class ResultViewer {
     }
 
     public List<List<String>> getStatus() {
-        return new ArrayList<>(status.values());
+        return new ArrayList<>(
+                status.values()
+                        .stream()
+                        .map(this::toStatus)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    private List<String> toStatus(List<Pin> pins) {
+        List<String> results = new ArrayList<String>() {{
+            add(toResult(Pin.of(0), pins.get(0)));
+        }};
+
+        for (int index = 0; index < pins.size() - 1; index++) {
+            results.add(toResult(pins.get(index), pins.get(index + 1)));
+        }
+
+        return results;
+    }
+
+    private String toResult(Pin prev, Pin current) {
+        if (current.isStrike()) {
+            return Result.STRIKE.toString();
+        }
+
+        if (current.isSpare(prev.getCount())) {
+            return Result.SPARE.toString();
+        }
+
+        return String.valueOf(current.getCount());
     }
 
     private void showStatus(List<List<String>> frames) {

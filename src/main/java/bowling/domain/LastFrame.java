@@ -40,9 +40,9 @@ public class LastFrame implements Frame {
     }
 
     @Override
-    public List<String> toResults() {
+    public List<Pin> toPins() {
         return states.stream()
-                .flatMap(state -> state.toValues().stream())
+                .flatMap(state -> state.toPins().stream())
                 .collect(Collectors.toList());
     }
 

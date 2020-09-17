@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import java.util.Objects;
+
 public class Pin {
     public static final int FULL_COUNT = 10;
     public static final int NO_COUNT = 0;
@@ -45,5 +47,18 @@ public class Pin {
     @Override
     public String toString() {
         return String.valueOf(count);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pin pin = (Pin) o;
+        return count == pin.count;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(count);
     }
 }

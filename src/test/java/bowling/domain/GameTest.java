@@ -80,7 +80,7 @@ public class GameTest {
 
         Frame frame = game.hit(10).hit(10).hit(10);
 
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X", "X", "X"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(10), Pin.of(10)));
         assertThat(frame.getScore().toInt()).isEqualTo(30);
     }
 
@@ -90,7 +90,7 @@ public class GameTest {
 
         Frame frame = game.hit(1).hit(9).hit(10);
 
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("1", "/", "X"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(1), Pin.of(9), Pin.of(10)));
         assertThat(frame.getScore().toInt()).isEqualTo(20);
     }
 
@@ -100,7 +100,7 @@ public class GameTest {
 
         Frame frame = game.hit(1).hit(8);
 
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("1", "8"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(1), Pin.of(8)));
         assertThat(frame.getScore().toInt()).isEqualTo(9);
     }
 
@@ -110,7 +110,7 @@ public class GameTest {
 
         Frame frame = game.hit(0).hit(0);
 
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("-", "-"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(0), Pin.of(0)));
         assertThat(frame.getScore().toInt()).isEqualTo(0);
     }
 

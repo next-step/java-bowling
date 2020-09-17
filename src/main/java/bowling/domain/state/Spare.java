@@ -23,11 +23,8 @@ public class Spare extends Finished {
     }
 
     @Override
-    public List<String> toValues() {
-        if (current.isGutter()) {
-            return Arrays.asList(Result.GUTTER.toString(), Result.SPARE.toString());
-        }
-        return Arrays.asList(current.toString(), Result.SPARE.toString());
+    public List<Pin> toPins() {
+        return Arrays.asList(current, next);
     }
 
     @Override

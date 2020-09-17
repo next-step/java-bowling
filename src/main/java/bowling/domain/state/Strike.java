@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
-import bowling.domain.Result;
 import bowling.domain.Score;
 import bowling.domain.State;
 
@@ -22,8 +21,8 @@ public class Strike extends Finished {
     }
 
     @Override
-    public List<String> toValues() {
-        return Arrays.asList(Result.STRIKE.toString());
+    public List<Pin> toPins() {
+        return Arrays.asList(current);
     }
 
     @Override

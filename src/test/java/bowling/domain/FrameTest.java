@@ -20,7 +20,7 @@ public class FrameTest {
         frame.hit(1);
 
         assertThat(frame.isFinish()).isFalse();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("1"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(1)));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class FrameTest {
         frame.hit(10);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10)));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class FrameTest {
         frame.hit(9);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("1", "/"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(1), Pin.of(9)));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class FrameTest {
         frame.hit(8);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("1", "8"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(1), Pin.of(8)));
     }
 
     @Test
@@ -63,6 +63,6 @@ public class FrameTest {
         frame.hit(0);
 
         assertThat(frame.isFinish()).isTrue();
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("-", "-"));
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(0), Pin.of(0)));
     }
 }

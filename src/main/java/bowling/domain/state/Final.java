@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
-import bowling.domain.Result;
 import bowling.domain.Score;
 import bowling.domain.State;
 
@@ -34,16 +33,8 @@ public class Final implements State {
     }
 
     @Override
-    public List<String> toValues() {
-        if (current.isGutter()) {
-            return Arrays.asList(Result.GUTTER.toString());
-        }
-
-        if (current.isSpare(previous.getCount())) {
-            return Arrays.asList(Result.SPARE.toString());
-        }
-
-        return Arrays.asList(current.toString());
+    public List<Pin> toPins() {
+        return Arrays.asList(current);
     }
 
     @Override

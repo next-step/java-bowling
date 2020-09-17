@@ -18,7 +18,7 @@ public interface State {
 
     State roll(int count);
 
-    List<String> toValues();
+    List<Pin> toPins();
 
     Score getScore();
 

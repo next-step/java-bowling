@@ -1,7 +1,6 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
-import bowling.domain.Result;
 import bowling.domain.Score;
 import bowling.domain.State;
 
@@ -18,30 +17,16 @@ public class Miss extends Finished {
         this.next = Pin.of(count);
     }
 
-    private boolean isDoubleGutter() {
-        return next.isGutter() && current.isGutter();
-    }
-
     @Override
     public State roll(int count) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<String> toValues() {
-        if (isDoubleGutter()) {
-            return Arrays.asList(Result.GUTTER.toString(), Result.GUTTER.toString());
-        }
-
-        if (current.isGutter()) {
-            return Arrays.asList(Result.GUTTER.toString(), next.toString());
-        }
-
-        if (next.isGutter()) {
-            return Arrays.asList(current.toString(), Result.GUTTER.toString());
-        }
-
-        return Arrays.asList(current.toString(), next.toString());
+    public List<Pin> toPins() {
+        System.out.println(current);
+        System.out.println(next);
+        return Arrays.asList(current, next);
     }
 
     @Override

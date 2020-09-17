@@ -39,8 +39,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public List<String> toResults() {
-        return state.toValues();
+    public List<Pin> toPins() {
+        return state.toPins();
     }
 
     @Override

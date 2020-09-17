@@ -10,7 +10,7 @@ public interface Frame {
 
     boolean isFinish();
 
-    List<String> toResults();
+    List<Pin> toPins();
 
     Score getScore();
 

@@ -26,11 +26,8 @@ public class Hold extends Running {
     }
 
     @Override
-    public List<String> toValues() {
-        if (current.isGutter()) {
-            return Arrays.asList(Result.GUTTER.toString());
-        }
-        return Arrays.asList(current.toString());
+    public List<Pin> toPins() {
+        return Arrays.asList(current);
     }
 
     @Override
