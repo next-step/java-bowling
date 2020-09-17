@@ -60,7 +60,6 @@
 - 화면(view)
 - [X] 입력(InputView)화면 객체 생성
 - [X] 출력(OutputView)화면 객체 생성
-- [ ] 플레이어(User) 객체 생성
 - [ ] FrameDTO, FrameAssembler 생성
 - [ ] ScoreBoardDTO, ScoreBoardAssembler 생성
 - [ ] UserDTO, UserAssembler 생성
