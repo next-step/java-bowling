@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 @DisplayName("프레임 투구 객체 테스트")
-public class FrameBowlTest {
+public class NormalFrameBowlTest {
 
     @DisplayName("투구 테스트: 스트라이크")
     @Test
@@ -22,7 +22,7 @@ public class FrameBowlTest {
     @Test
     public void bowl_spare() {
         FrameBowl frameBowl = new FrameBowl();
-        assertThat(frameBowl.bowl(9)).isEqualTo(null);
+        assertThat(frameBowl.bowl(9)).isEqualTo(BowlResult.NONE);
         assertThat(frameBowl.bowl(1)).isEqualTo(BowlResult.SPARE);
     }
 
@@ -30,7 +30,7 @@ public class FrameBowlTest {
     @Test
     public void bowl_miss() {
         FrameBowl frameBowl = new FrameBowl();
-        assertThat(frameBowl.bowl(9)).isEqualTo(null);
+        assertThat(frameBowl.bowl(9)).isEqualTo(BowlResult.NONE);
         assertThat(frameBowl.bowl(0)).isEqualTo(BowlResult.MISS);
     }
 
@@ -38,7 +38,7 @@ public class FrameBowlTest {
     @Test
     public void bowl_gutter() {
         FrameBowl frameBowl = new FrameBowl();
-        assertThat(frameBowl.bowl(0)).isEqualTo(null);
+        assertThat(frameBowl.bowl(0)).isEqualTo(BowlResult.NONE);
         assertThat(frameBowl.bowl(0)).isEqualTo(BowlResult.GUTTER);
     }
 

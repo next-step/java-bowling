@@ -3,30 +3,30 @@ package bowling.domain;
 import java.text.MessageFormat;
 import java.util.Objects;
 
-public class Frame {
+public class NormalFrame {
 
     public static final int LAST_FRAME_NUMBER = 10;
 
     private final int frameNumber;
     private final FrameBowl frameBowl = new FrameBowl();
 
-    private Frame nextFrame;
+    private NormalFrame nextNormalFrame;
 
-    public Frame(int frameNumber) {
+    public NormalFrame(int frameNumber) {
         this.frameNumber = frameNumber;
     }
 
-    public Frame bowl(int numberOfPins) {
+    public NormalFrame bowl(int numberOfPins) {
         BowlResult bowlResult = frameBowl.bowl(numberOfPins);
         return bowlResult.isCompleted() ? createNextFrame() : this;
     }
 
-    private Frame createNextFrame() {
+    private NormalFrame createNextFrame() {
         if (frameNumber == LAST_FRAME_NUMBER) {
             return null;
         }
-        nextFrame = new Frame(frameNumber + 1);
-        return nextFrame;
+        nextNormalFrame = new NormalFrame(frameNumber + 1);
+        return nextNormalFrame;
     }
 
     public int getFrameNumber() {
@@ -34,18 +34,18 @@ public class Frame {
     }
 
     public boolean hasNext() {
-        return Objects.nonNull(nextFrame);
+        return Objects.nonNull(nextNormalFrame);
     }
 
-    public Frame next() {
-        return nextFrame;
+    public NormalFrame next() {
+        return nextNormalFrame;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Frame that = (Frame) o;
+        NormalFrame that = (NormalFrame) o;
         return frameNumber == that.frameNumber;
     }
 
