@@ -9,22 +9,20 @@ import java.util.List;
 
 public class Final implements State {
 
-    private Pin previous;
     private Pin current;
 
-    private Final(int previous, int count) {
-        this.previous = Pin.of(previous);
+    private Final(int count) {
         this.current = Pin.of(count);
     }
 
-    public static State from(State previous, int count) {
+    public static State from(int count) {
         Pin pin = Pin.of(count);
 
         if (pin.isStrike()) {
             return new Strike(pin);
         }
 
-        return new Final(previous.getScore().toInt(), count);
+        return new Final(count);
     }
 
     @Override

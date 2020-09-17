@@ -1,6 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.state.Final;
 import bowling.domain.state.Ready;
+import bowling.domain.state.Strike;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,13 +27,23 @@ public class LastFrame implements Frame {
         State currentState = states.getLast();
 
         if (currentState.isFinish()) {
-            states.add(State.last(currentState, count));
+            states.add(addFrame(count));
             return this;
         }
 
         states.removeLast();
         states.add(currentState.roll(count));
         return this;
+    }
+
+    static final State addFrame(int count) {
+        Pin pin = Pin.of(count);
+
+        if (pin.isStrike()) {
+            return new Strike(pin);
+        }
+
+        return Final.from(count);
     }
 
     @Override
