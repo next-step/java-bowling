@@ -64,7 +64,7 @@ class FrameTest {
     assertThat(strike.score(null)).isNull();
 
     spare.roll(2);
-    assertThat(strike.score(null)).isEqualTo(new Score(20));
+    assertThat(strike.score(null)).isEqualTo(Score.of(20));
   }
 
   @Test
@@ -77,10 +77,10 @@ class FrameTest {
     assertThat(spare.score(null)).isNull();
 
     Frame pitching = spare.roll(8);
-    assertThat(spare.score(null)).isEqualTo(new Score(18));
+    assertThat(spare.score(null)).isEqualTo(Score.of(18));
 
     pitching.roll(1);
-    assertThat(spare.score(null)).isEqualTo(new Score(18));
+    assertThat(spare.score(null)).isEqualTo(Score.of(18));
   }
 
   @Test
@@ -90,6 +90,6 @@ class FrameTest {
     assertThat(open.score(null)).isNull();
 
     open.roll(1);
-    assertThat(open.score(null)).isEqualTo(new Score(9));
+    assertThat(open.score(null)).isEqualTo(Score.of(9));
   }
 }

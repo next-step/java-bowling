@@ -33,16 +33,16 @@ public class Strike implements State {
   @Override
   public Score score(Score score) {
     if (score == null) {
-      return new Score(first.getCount(), 2);
+      return Score.strike(first.getCount());
     }
 
-    return score.accumulate(first.getCount(), 2);
+    return score.accumulateTwice(first.getCount());
   }
 
   @Override
   public Score accumulate(Score score) {
     if (score.isStrike()) {
-      return score.accumulate(first.getCount(), 1);
+      return score.accumulateOnce(first.getCount());
     }
 
     if (score.isSpare()) {

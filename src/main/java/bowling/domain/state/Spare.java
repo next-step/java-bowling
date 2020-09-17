@@ -39,10 +39,10 @@ public class Spare implements State {
   @Override
   public Score score(Score score) {
     if (score == null) {
-      return new Score(first.getCount() + second.getCount(), 1);
+      return Score.spare(first.getCount() + second.getCount());
     }
 
-    return score.accumulate(first.getCount() + second.getCount(), 1);
+    return score.accumulateOnce(first.getCount() + second.getCount());
   }
 
   @Override

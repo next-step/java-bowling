@@ -4,32 +4,48 @@ import java.util.Objects;
 
 public class Score {
 
+  public static final int DECREASE_ZERO = 0;
+  public static final int DECREASE_ONCE = 1;
+  public static final int DECREASE_TWICE = 2;
+
   private final int acc;
   private final int decrease;
 
-  public Score(int acc) {
-    this(acc, 0);
-  }
-
-  public Score(int acc, int decrease) {
+  private Score(int acc, int decrease) {
     this.acc = acc;
     this.decrease = decrease;
   }
 
-  public boolean isStrike() {
-    return decrease == 2;
+  public static Score of(int acc) {
+    return new Score(acc, DECREASE_ZERO);
+  }
+
+  public static Score strike(int acc) {
+    return new Score(acc, DECREASE_TWICE);
+  }
+
+  public static Score spare(int acc) {
+    return new Score(acc, DECREASE_ONCE);
   }
 
   public boolean isSpare() {
-    return decrease == 1;
+    return decrease == DECREASE_ONCE;
+  }
+
+  public boolean isStrike() {
+    return decrease == DECREASE_TWICE;
   }
 
   public Score accumulate(int pins) {
-    return new Score(acc + pins);
+    return new Score(acc + pins, DECREASE_ZERO);
   }
 
-  public Score accumulate(int pins, int decrease) {
-    return new Score(acc + pins, decrease);
+  public Score accumulateOnce(int pins) {
+    return new Score(acc + pins, DECREASE_ONCE);
+  }
+
+  public Score accumulateTwice(int pins) {
+    return new Score(acc + pins, DECREASE_TWICE);
   }
 
   public boolean hasLeft() {

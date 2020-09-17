@@ -93,12 +93,12 @@ class BowlingTest {
     assertThat(bowling.scores()).isEqualTo(Collections.EMPTY_LIST);
 
     bowling.roll(2);
-    assertThat(bowling.scores()).isEqualTo(Arrays.asList(new Score(20)));
+    assertThat(bowling.scores()).isEqualTo(Arrays.asList(Score.of(20)));
 
     bowling.roll(8);
-    assertThat(bowling.scores()).isEqualTo(Arrays.asList(new Score(20), new Score(38)));
+    assertThat(bowling.scores()).isEqualTo(Arrays.asList(Score.of(20), Score.of(38)));
 
     bowling.roll(1);
-    assertThat(bowling.scores()).isEqualTo(Arrays.asList(new Score(20), new Score(38), new Score(47)));
+    assertThat(bowling.scores()).isEqualTo(Arrays.asList(Score.of(20), Score.of(38), Score.of(47)));
   }
 }

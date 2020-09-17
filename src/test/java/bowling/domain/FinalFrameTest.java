@@ -138,7 +138,7 @@ public class FinalFrameTest {
     FinalFrame finalFrame = new FinalFrame();
     finalFrame.roll(10);
 
-    System.out.println(finalFrame.score(null));
+    assertThat(finalFrame.score(Score.of(0))).isNull();
   }
 
   @Test
@@ -148,6 +148,6 @@ public class FinalFrameTest {
     finalFrame.roll(10);
     finalFrame.roll(10);
 
-    System.out.println(finalFrame.score(null));
+    assertThat(finalFrame.score(Score.of(0))).isEqualTo(Score.of(30));
   }
 }

@@ -51,7 +51,7 @@ public class Open implements State {
   @Override
   public Score score(Score score) {
     if (score == null) {
-      return new Score(first.getCount() + second.getCount());
+      return Score.of(first.getCount() + second.getCount());
     }
 
     return score.accumulate(first.getCount() + second.getCount());
