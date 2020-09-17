@@ -1,9 +1,6 @@
 package bowling.domain;
 
-import bowling.domain.state.Hold;
-import bowling.domain.state.Miss;
-import bowling.domain.state.Spare;
-import bowling.domain.state.Strike;
+import bowling.domain.state.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -15,7 +12,7 @@ public class StateTest {
 
     @Test
     void strike_symbol() {
-        State state = State.from(10);
+        State state = new Strike(Pin.of(10));
 
         assertThat(state).isInstanceOf(Strike.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("X"));
@@ -23,8 +20,8 @@ public class StateTest {
     }
 
     @Test
-    void playing_symbol() {
-        State state = State.from(8);
+    void ready_symbol() {
+        State state = new Ready().roll(8);
 
         assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("8"));
@@ -34,7 +31,7 @@ public class StateTest {
 
     @Test
     void gutter_symbol() {
-        State state = State.from(0);
+        State state = new Ready().roll(0);
 
         assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("-"));
@@ -44,7 +41,7 @@ public class StateTest {
 
     @Test
     void spare_symbol() {
-        State state = State.from(8);
+        State state = new Ready().roll(8);
 
         assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("8"));
@@ -58,7 +55,7 @@ public class StateTest {
 
     @Test
     void open_symbol() {
-        State state = State.from(8);
+        State state = new Ready().roll(8);
 
         assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("8"));
@@ -72,7 +69,7 @@ public class StateTest {
 
     @Test
     void open_with_gutter_symbol() {
-        State state = State.from(8);
+        State state = new Ready().roll(8);
 
         assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("8"));
