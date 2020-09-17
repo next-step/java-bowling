@@ -47,6 +47,9 @@
 - [X] 마지막 투구(EndFrameStates) 상태 객체 생성
 - [X] 마지막 투구 갯수(EndFrameCount)를 나타내는 객체 생성
 
+- 핀(pin)
+- [X] 볼링핀(Pin) 객체 생성
+
 - 플레이어(user)
 - [X] 플레이어(User) 객체 생성
 
