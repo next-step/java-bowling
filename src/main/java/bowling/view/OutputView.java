@@ -7,6 +7,8 @@ import bowling.util.StringUtils;
 import java.text.MessageFormat;
 import java.util.stream.IntStream;
 
+import static bowling.domain.Frame.LAST_FRAME_NUMBER;
+
 public class OutputView {
 
     public static void printBoard(Player player, Frame frame) {
@@ -16,7 +18,7 @@ public class OutputView {
             frame = frame.next();
             System.out.print(StringUtils.leftPad(frame.toString(), 5) + " |");
         }
-        IntStream.range(frame.getFrameNumber(), 10)
+        IntStream.range(frame.getFrameNumber(), LAST_FRAME_NUMBER)
                 .forEach(i -> System.out.print(StringUtils.leftPad("", 5) + " |"));
     }
 
