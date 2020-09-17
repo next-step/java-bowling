@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class AbstractEntity {
+    public final boolean DELETED = true;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
