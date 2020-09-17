@@ -12,81 +12,47 @@ class NormalRollingResultTest {
     @Test
     void strikeDesc() {
         NormalRollingResult normalRollingResult = new NormalRollingResult();
-        normalRollingResult.bowl(10);
-        assertThat(normalRollingResult.desc()).isEqualTo("X");
+        normalRollingResult.bowl(new Pin(10));
+        assertThat(normalRollingResult.currentFrameStatus()).isEqualTo("X");
     }
 
     @Test
     void spareDesc() {
         NormalRollingResult normalRollingResult = new NormalRollingResult();
-        normalRollingResult.bowl(8);
-        normalRollingResult.bowl(2);
-        assertThat(normalRollingResult.desc()).isEqualTo("8|/");
+        normalRollingResult.bowl(new Pin(8));
+        normalRollingResult.bowl(new Pin(2));
+        assertThat(normalRollingResult.currentFrameStatus()).isEqualTo("8|/");
     }
 
     @Test
     void missDesc() {
         NormalRollingResult normalRollingResult = new NormalRollingResult();
-        normalRollingResult.bowl(5);
-        normalRollingResult.bowl(2);
-        assertThat(normalRollingResult.desc()).isEqualTo("5|2");
+        normalRollingResult.bowl(new Pin(5));
+        normalRollingResult.bowl(new Pin(2));
+        assertThat(normalRollingResult.currentFrameStatus()).isEqualTo("5|2");
     }
 
     @Test
     void runDesc() {
         NormalRollingResult normalRollingResult = new NormalRollingResult();
-        normalRollingResult.bowl(5);
-        assertThat(normalRollingResult.desc()).isEqualTo("5");
+        normalRollingResult.bowl(new Pin(5));
+        assertThat(normalRollingResult.currentFrameStatus()).isEqualTo("5");
     }
 
     @Test
     void gutterDesc() {
         NormalRollingResult normalRollingResult = new NormalRollingResult();
-        normalRollingResult.bowl(0);
-        normalRollingResult.bowl(2);
-        assertThat(normalRollingResult.desc()).isEqualTo("-|2");
-    }
-
-    @Test
-    void isStrikeTest() {
-        NormalRollingResult normalRollingResult = new NormalRollingResult();
-        normalRollingResult.bowl(10);
-
-        assertThat(normalRollingResult.status()).isEqualTo(Status.STRIKE);
-    }
-
-    @Test
-    void isSpareTest() {
-        NormalRollingResult normalRollingResult = new NormalRollingResult();
-        normalRollingResult.bowl(2);
-        normalRollingResult.bowl(8);
-
-        assertThat(normalRollingResult.status()).isEqualTo(Status.SPARE);
-    }
-
-    @Test
-    void isMISSTest() {
-        NormalRollingResult normalRollingResult = new NormalRollingResult();
-        normalRollingResult.bowl(2);
-        normalRollingResult.bowl(5);
-
-        assertThat(normalRollingResult.status()).isEqualTo(Status.MISS);
-    }
-
-    @Test
-    void isRunTest() {
-        NormalRollingResult normalRollingResult = new NormalRollingResult();
-        normalRollingResult.bowl(2);
-
-        assertThat(normalRollingResult.status()).isEqualTo(Status.ING);
+        normalRollingResult.bowl(new Pin(0));
+        normalRollingResult.bowl(new Pin(2));
+        assertThat(normalRollingResult.currentFrameStatus()).isEqualTo("-|2");
     }
 
     @Test
     void countOfAllPinsOverTenTest() {
         assertThatThrownBy(() -> {
             NormalRollingResult normalRollingResult = new NormalRollingResult();
-            normalRollingResult.bowl(5);
-            normalRollingResult.bowl(6);
+            normalRollingResult.bowl(new Pin(5));
+            normalRollingResult.bowl(new Pin(6));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -94,7 +60,7 @@ class NormalRollingResultTest {
     void isFinish_Test() {
         NormalRollingResult normalRollingResult = new NormalRollingResult();
 
-        normalRollingResult.bowl(10);
+        normalRollingResult.bowl(new Pin(10));
 
         assertTrue(normalRollingResult.isFinish());
     }
