@@ -20,7 +20,7 @@ public class InputView {
 
 	public static DownedPinCount getCurrentFramePitch(int currentFrameSequence) {
 		System.out.println(String.format(PLEASE_INPUT_N_FRAME_PITCH_RESULT, currentFrameSequence));
-		return DownedPinCount.from(getIntValue());
+		return DownedPinCount.fromDownCount(getIntValue());
 	}
 
 	private static int getIntValue() {

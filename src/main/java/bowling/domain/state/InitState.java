@@ -2,6 +2,8 @@ package bowling.domain.state;
 
 import bowling.domain.DownedPinCount;
 
+import static bowling.domain.DownedPinCount.ALL_PIN_DOWN;
+
 public class InitState implements State {
 
 	public static final String EMPTY = "";
@@ -15,7 +17,7 @@ public class InitState implements State {
 
 	@Override
 	public State roll(DownedPinCount downedPinCount) {
-		if(downedPinCount == DownedPinCount.TEN) {
+		if(ALL_PIN_DOWN.equals(downedPinCount)) {
 			return new Strike(downedPinCount);
 		}
 		return new Playing(downedPinCount);

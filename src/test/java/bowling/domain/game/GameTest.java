@@ -33,9 +33,9 @@ class GameTest {
 	@DisplayName("게임 플레이 테스트")
 	@Test
 	void pitchTheBall() {
-		givenGame.play(DownedPinCount.EIGHT);
+		givenGame.play(DownedPinCount.fromDownCount(8));
 		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(1);
-		givenGame.play(DownedPinCount.TWO);
+		givenGame.play(DownedPinCount.fromDownCount(2));
 		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(2);
 	}
 
@@ -44,7 +44,7 @@ class GameTest {
 	void isGameFinished() {
 		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(1);
 		while (!givenGame.isGameFinished()) {
-			givenGame.play(DownedPinCount.TEN);
+			givenGame.play(DownedPinCount.fromDownCount(10));
 		}
 		assertThat(givenGame.getCurrentFrameSequence()).isEqualTo(10);
 	}

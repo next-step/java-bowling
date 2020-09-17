@@ -4,11 +4,10 @@ import bowling.domain.DownedPinCount;
 import bowling.domain.state.Open;
 import bowling.domain.state.State;
 
-import static bowling.domain.DownedPinCount.TEN;
+import static bowling.domain.DownedPinCount.ALL_PIN_DOWN;
 
 public class FinalFrameSecondState extends Open {
 
-	private static final int ALL_PIN_DOWN = 10;
 	private static final String SPARE_REPORT_PATTERN = "/";
 
 	public FinalFrameSecondState(DownedPinCount first, DownedPinCount second) {
@@ -16,11 +15,11 @@ public class FinalFrameSecondState extends Open {
 	}
 
 	protected boolean isSpare() {
-		return DownedPinCount.sumIntValue(first, second) == ALL_PIN_DOWN;
+		return ALL_PIN_DOWN.equals(DownedPinCount.sum(first, second));
 	}
 
 	protected boolean containsStrike() {
-		return first == TEN || second == TEN;
+		return ALL_PIN_DOWN.equals(first) || ALL_PIN_DOWN.equals(second);
 	}
 
 	protected String getSecondReportPattern(DownedPinCount second) {

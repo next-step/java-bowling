@@ -34,7 +34,7 @@ public class Strike implements State {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Strike strike = (Strike) o;
-		return first == strike.first;
+		return first.equals(strike.first);
 	}
 
 	@Override

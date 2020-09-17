@@ -36,4 +36,4 @@
 
 ## 리뷰 후 리팩토링
 1. 복잡하지 않은 if 로직 삼항연상자로 바꾸기
-
+2. Enum으로 되어있던 DownedPinCount int Wrapper Class로 바꾸기

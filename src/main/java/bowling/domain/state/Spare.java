@@ -36,8 +36,8 @@ public class Spare implements State {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Spare spare = (Spare) o;
-		return first == spare.first &&
-				second == spare.second;
+		return first.equals(spare.first) &&
+				second.equals(spare.second);
 	}
 
 	@Override

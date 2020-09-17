@@ -25,17 +25,18 @@ class StateTest {
 	@DisplayName("주어지는 핀 개수에 따라 상태가 알맞게 변하는지 테스트")
 	@Test
 	void roll() {
-		State strike = state.roll(DownedPinCount.TEN);
-		assertThat(strike).isEqualTo(new Strike(DownedPinCount.TEN));
+		State strike = state.roll(DownedPinCount.fromDownCount(10));
+		assertThat(DownedPinCount.fromDownCount(10)).isEqualTo(DownedPinCount.fromDownCount(10));
+		assertThat(strike).isEqualTo(new Strike(DownedPinCount.fromDownCount(10)));
 
-		State playing = state.roll(DownedPinCount.FIVE);
-		assertThat(playing).isEqualTo(new Playing(DownedPinCount.FIVE));
+		State playing = state.roll(DownedPinCount.fromDownCount(5));
+		assertThat(playing).isEqualTo(new Playing(DownedPinCount.fromDownCount(5)));
 
-		State spare = playing.roll(DownedPinCount.FIVE);
-		assertThat(spare).isEqualTo(new Spare(DownedPinCount.FIVE, DownedPinCount.FIVE));
+		State spare = playing.roll(DownedPinCount.fromDownCount(5));
+		assertThat(spare).isEqualTo(new Spare(DownedPinCount.fromDownCount(5), DownedPinCount.fromDownCount(5)));
 
-		State open = playing.roll(DownedPinCount.FOUR);
-		assertThat(open).isEqualTo(new Open(DownedPinCount.FIVE, DownedPinCount.FOUR));
+		State open = playing.roll(DownedPinCount.fromDownCount(4));
+		assertThat(open).isEqualTo(new Open(DownedPinCount.fromDownCount(5), DownedPinCount.fromDownCount(4)));
 	}
 
 	@DisplayName("Strike, Spare, Open 상태만 종료 상태로 반환하는지 테스트")
@@ -43,16 +44,16 @@ class StateTest {
 	void isDone() {
 		assertThat(state.isDone()).isFalse();
 
-		State strike = state.roll(DownedPinCount.TEN);
+		State strike = state.roll(DownedPinCount.fromDownCount(10));
 		assertThat(strike.isDone()).isTrue();
 
-		State playing = state.roll(DownedPinCount.FIVE);
+		State playing = state.roll(DownedPinCount.fromDownCount(5));
 		assertThat(playing.isDone()).isFalse();
 
-		State spare = playing.roll(DownedPinCount.FIVE);
+		State spare = playing.roll(DownedPinCount.fromDownCount(5));
 		assertThat(spare.isDone()).isTrue();
 
-		State open = playing.roll(DownedPinCount.FOUR);
+		State open = playing.roll(DownedPinCount.fromDownCount(4));
 		assertThat(open.isDone()).isTrue();
 	}
 }

@@ -2,8 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.DownedPinCount;
 
-import static bowling.domain.DownedPinCount.TEN;
-import static bowling.domain.DownedPinCount.ZERO;
+import static bowling.domain.DownedPinCount.*;
 
 public interface State {
 
@@ -11,10 +10,10 @@ public interface State {
 	String GUTTER = "-";
 
 	default String convertReportPattern(DownedPinCount downedPinCount) {
-		if(downedPinCount == TEN) {
+		if(ALL_PIN_DOWN.equals(downedPinCount)) {
 			return STRIKE;
 		}
-		if(downedPinCount == ZERO) {
+		if(NO_PIN_DOWN.equals(downedPinCount)) {
 			return GUTTER;
 		}
 		return downedPinCount.toString();

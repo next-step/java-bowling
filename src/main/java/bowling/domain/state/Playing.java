@@ -4,11 +4,10 @@ import bowling.domain.DownedPinCount;
 
 import java.util.Objects;
 
-import static bowling.domain.DownedPinCount.TEN;
+import static bowling.domain.DownedPinCount.ALL_PIN_DOWN;
 
 public class Playing implements State {
 
-	private static final int ALL_PIN_DOWN = 10;
 	private static final String PLAYING_MESSAGE = "%s  ";
 
 	protected final DownedPinCount first;
@@ -19,7 +18,7 @@ public class Playing implements State {
 
 	@Override
 	public State roll(DownedPinCount downedPinCount) {
-		if(DownedPinCount.sumIntValue(first, downedPinCount) == ALL_PIN_DOWN) {
+		if(ALL_PIN_DOWN.equals(DownedPinCount.sum(first, downedPinCount))) {
 			return new Spare(first, downedPinCount);
 		}
 		return new Open(first, downedPinCount);
@@ -40,7 +39,7 @@ public class Playing implements State {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Playing playing = (Playing) o;
-		return first == playing.first;
+		return first.equals(playing.first);
 	}
 
 	@Override

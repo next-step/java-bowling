@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.DownedPinCount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +14,9 @@ class FrameTest {
 	void constructTest() {
 		int index = 0;
 		Frame frame1 = new Frame(index);
-		frame1.roll(ONE);
+		frame1.roll(DownedPinCount.fromDownCount(1));
 		Frame frame2 = new Frame(index);
-		frame2.roll(ONE);
+		frame2.roll(DownedPinCount.fromDownCount(1));
 		assertThat(frame1).isEqualTo(frame2);
 	}
 
@@ -24,11 +25,11 @@ class FrameTest {
 	void isFrameFinished() {
 		int index = 0;
 		Frame frame1 = new Frame(index);
-		frame1.roll(TEN);
+		frame1.roll(DownedPinCount.fromDownCount(10));
 
 		Frame frame2 = new Frame(index);
-		frame2.roll(FIVE);
-		frame2.roll(ZERO);
+		frame2.roll(DownedPinCount.fromDownCount(5));
+		frame2.roll(DownedPinCount.fromDownCount(0));
 
 		assertThat(frame1.isFrameFinished()).isTrue();
 		assertThat(frame2.isFrameFinished()).isTrue();

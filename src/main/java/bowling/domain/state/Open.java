@@ -34,8 +34,8 @@ public class Open implements State {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Open open = (Open) o;
-		return first == open.first &&
-				second == open.second;
+		return first.equals(open.first) &&
+				second.equals(open.second);
 	}
 
 	@Override
