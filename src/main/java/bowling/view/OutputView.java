@@ -1,7 +1,7 @@
 package bowling.view;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.Player;
+import bowling.domain.frame.Frame;
 import bowling.util.StringUtils;
 
 import java.text.MessageFormat;

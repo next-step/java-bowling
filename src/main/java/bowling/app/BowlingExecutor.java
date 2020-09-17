@@ -1,8 +1,8 @@
 package bowling.app;
 
+import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
-import bowling.domain.Player;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
