@@ -64,44 +64,6 @@ public class GameTest {
         assertThat(tryCount).isEqualTo(12);
     }
 
-    @Test
-    void hit_strike() {
-        Game game = Game.start(USERNAME);
-        Frame frame = game.hit(10);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X"));
-        assertThat(frame.getScore().toInt()).isEqualTo(10);
-    }
-
-    @Test
-    void hit_spare() {
-        Game game = Game.start(USERNAME);
-        Frame frame = game.hit(9);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("9"));
-        game.hit(1);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("9", "/"));
-        assertThat(frame.getScore().toInt()).isEqualTo(10);
-    }
-
-    @Test
-    void hit_miss() {
-        Game game = Game.start(USERNAME);
-        Frame frame = game.hit(1);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("1"));
-        game.hit(8);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("1", "8"));
-        assertThat(frame.getScore().toInt()).isEqualTo(9);
-    }
-
-    @Test
-    void hit_gutter() {
-        Game game = Game.start(USERNAME);
-        Frame frame = game.hit(0);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("-"));
-        game.hit(0);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("-", "-"));
-        assertThat(frame.getScore().toInt()).isEqualTo(0);
-    }
-
     private Game setLastGame() {
         Game game = Game.start(USERNAME);
 
@@ -115,11 +77,9 @@ public class GameTest {
     @Test
     void hit_strike_last() {
         Game game = setLastGame();
-        Frame frame = game.hit(10);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X"));
-        frame = game.hit(10);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("X", "X"));
-        frame = game.hit(10);
+
+        Frame frame = game.hit(10).hit(10).hit(10);
+
         assertThat(frame.toResults()).isEqualTo(Arrays.asList("X", "X", "X"));
         assertThat(frame.getScore().toInt()).isEqualTo(30);
     }
@@ -127,11 +87,9 @@ public class GameTest {
     @Test
     void hit_spare_last() {
         Game game = setLastGame();
-        Frame frame = game.hit(1);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("1"));
-        frame = game.hit(9);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("1", "/"));
-        frame = game.hit(10);
+
+        Frame frame = game.hit(1).hit(9).hit(10);
+
         assertThat(frame.toResults()).isEqualTo(Arrays.asList("1", "/", "X"));
         assertThat(frame.getScore().toInt()).isEqualTo(20);
     }
@@ -139,9 +97,9 @@ public class GameTest {
     @Test
     void hit_miss_last() {
         Game game = setLastGame();
-        Frame frame = game.hit(1);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("1"));
-        frame = game.hit(8);
+
+        Frame frame = game.hit(1).hit(8);
+
         assertThat(frame.toResults()).isEqualTo(Arrays.asList("1", "8"));
         assertThat(frame.getScore().toInt()).isEqualTo(9);
     }
@@ -149,9 +107,9 @@ public class GameTest {
     @Test
     void hit_gutter_last() {
         Game game = setLastGame();
-        Frame frame = game.hit(0);
-        assertThat(frame.toResults()).isEqualTo(Arrays.asList("-"));
-        frame = game.hit(0);
+
+        Frame frame = game.hit(0).hit(0);
+
         assertThat(frame.toResults()).isEqualTo(Arrays.asList("-", "-"));
         assertThat(frame.getScore().toInt()).isEqualTo(0);
     }

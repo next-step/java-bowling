@@ -17,6 +17,7 @@ public class LastFrameTest {
     @Test
     void strike() {
         Frame frame = LastFrame.from();
+
         frame.hit(10);
 
         assertThat(frame.isFinish()).isFalse();
@@ -27,6 +28,7 @@ public class LastFrameTest {
     @Test
     void double_strike() {
         Frame frame = LastFrame.from();
+
         frame = frame.hit(10);
         frame = frame.hit(10);
 
@@ -57,6 +59,7 @@ public class LastFrameTest {
     @Test
     void double_open() {
         Frame frame = LastFrame.from();
+
         frame.hit(10);
         frame.hit(10);
         frame.hit(9);
@@ -69,6 +72,7 @@ public class LastFrameTest {
     @Test
     void double_gutter() {
         Frame frame = LastFrame.from();
+
         frame.hit(10);
         frame.hit(10);
         frame.hit(0);
@@ -81,6 +85,7 @@ public class LastFrameTest {
     @Test
     void strike_spare() {
         Frame frame = LastFrame.from();
+
         frame.hit(10);
         frame.hit(8);
         frame.hit(2);
@@ -93,6 +98,7 @@ public class LastFrameTest {
     @Test
     void strike_open() {
         Frame frame = LastFrame.from();
+
         frame.hit(10);
         frame.hit(8);
         frame.hit(1);
@@ -105,6 +111,7 @@ public class LastFrameTest {
     @Test
     void strike_gutter() {
         Frame frame = LastFrame.from();
+
         frame.hit(10);
         frame.hit(8);
         frame.hit(0);
@@ -117,6 +124,7 @@ public class LastFrameTest {
     @Test
     void spare_strike() {
         Frame frame = LastFrame.from();
+
         frame.hit(8);
         frame.hit(2);
         frame.hit(10);
@@ -129,6 +137,7 @@ public class LastFrameTest {
     @Test
     void spare_open() {
         Frame frame = LastFrame.from();
+
         frame.hit(8);
         frame.hit(2);
         frame.hit(8);
@@ -141,6 +150,7 @@ public class LastFrameTest {
     @Test
     void spare_gutter() {
         Frame frame = LastFrame.from();
+
         frame.hit(8);
         frame.hit(2);
         frame.hit(0);

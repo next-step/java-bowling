@@ -16,6 +16,7 @@ public class StateTest {
     @Test
     void strike_symbol() {
         State state = State.from(10);
+
         assertThat(state).isInstanceOf(Strike.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("X"));
         assertThat(state.getScore().toInt()).isEqualTo(10);
@@ -24,6 +25,7 @@ public class StateTest {
     @Test
     void playing_symbol() {
         State state = State.from(8);
+
         assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("8"));
 
@@ -33,6 +35,7 @@ public class StateTest {
     @Test
     void gutter_symbol() {
         State state = State.from(0);
+
         assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("-"));
 
@@ -42,6 +45,7 @@ public class StateTest {
     @Test
     void spare_symbol() {
         State state = State.from(8);
+
         assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("8"));
 
@@ -55,6 +59,7 @@ public class StateTest {
     @Test
     void open_symbol() {
         State state = State.from(8);
+
         assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("8"));
 
@@ -68,6 +73,7 @@ public class StateTest {
     @Test
     void open_with_gutter_symbol() {
         State state = State.from(8);
+
         assertThat(state).isInstanceOf(Hold.class);
         assertThat(state.toValues()).isEqualTo(Arrays.asList("8"));
 
