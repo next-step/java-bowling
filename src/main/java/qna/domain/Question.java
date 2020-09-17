@@ -8,14 +8,14 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
-    @Column(length = 100, nullable = false)
+    @Column(name = "title", length = 100, nullable = false)
     private String title;
 
-    @Lob
+    @Column(name = "contents")
     private String contents;
 
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+    @JoinColumn(name = "writer", foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
@@ -23,38 +23,31 @@ public class Question extends AbstractEntity {
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
-    private boolean deleted = false;
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
 
-    public Question() {
-    }
 
-    public Question(String title, String contents) {
+    public Question(String title, String contents, User writer) {
         this.title = title;
         this.contents = contents;
+        this.writer = writer;
+        this.deleted = false;
     }
 
-    public Question(long id, String title, String contents) {
+    public Question(long id, String title, String contents, User writer) {
         super(id);
         this.title = title;
         this.contents = contents;
+        this.writer = writer;
+        this.deleted = false;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
     public String getContents() {
         return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
     }
 
     public User getWriter() {
@@ -75,10 +68,6 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
 
     public boolean isDeleted() {
         return deleted;
