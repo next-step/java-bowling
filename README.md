@@ -22,14 +22,14 @@
 #### 기능 목록
 * NumberOfPins: 넘어간 핀 갯수 저장 객체
     * 생성
-* FrameBowl: 프레임 투구 객체
+* Bowl: 투구 객체(Normal, Bonus - First, Second)
     * 생성
     * 투구
-* FrameIdentity: 프레임 ID 객체
+    * 완료 여부 체크
+* Frame: 프레임 객체(Normal, Final)
     * 생성
+    * 투구
     * 다음 프레임 생성
-* Frame: 프레임
-    * 생성
 * BowlResult: 투구 결과 객체(스트라이크, 스페어, 미스, 거터)
     * 타입 가져오기
     * toString
