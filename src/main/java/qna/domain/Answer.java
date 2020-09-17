@@ -46,7 +46,7 @@ public class Answer extends AbstractEntity {
         this.contents = contents;
     }
 
-    public void setDeleted(boolean deleted) {
+    private void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
@@ -70,23 +70,13 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public Answer delete(User user, DeleteHistoryService deleteHistoryService) throws CannotDeleteException {
+    public DeleteHistory delete(User user, LocalDateTime deleteDateTime) throws CannotDeleteException {
         if(!isOwner(user)){
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
 
         setDeleted(true);
-        saveAnswerDeletedHistory(deleteHistoryService);
-
-        return this;
-    }
-
-    private void saveAnswerDeletedHistory(DeleteHistoryService deleteHistoryService){
-        deleteHistoryService.save(new DeleteHistory(ContentType.ANSWER, this.getId(), writer, LocalDateTime.now()));
-    }
-
-    private void verifyExistOtherOwner(User writer) throws CannotDeleteException {
-
+        return new DeleteHistory(ContentType.ANSWER, this.getId(), writer, deleteDateTime);
     }
 
     @Override
