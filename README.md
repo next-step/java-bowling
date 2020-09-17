@@ -21,9 +21,43 @@
      * 작성자 체크
      * 삭제
 
-- [X] DeleteHistory를 Wrap하는 DeleteHistories 생성하여 삭제 이 기록
+- [X] DeleteHistory를 Wrap하는 DeleteHistories 생성하여 삭제 이력 기록
     * 데이터의 상태를 삭제 상태(deleted - boolean type)로 변경
     * 답변이 없는 경우 삭제 가능
     * 질문자와 답변글의 모든 답변자 같은 경우 삭제 가능
     * 질문자와 답변자가 다른 경우 답변을 삭제할 수 없음
-    
+
+## 2단계 볼링 점수판(그리기)
+#### 기능 요구사항
+
+- 프레임(frame)
+- [X] 볼링 점수판 1~9 프레임을 나타내는 NormalFrame 객체 생성
+- [X] 마지막 프레임을 나타내는 EndFrame 객체 생성
+- [ ] Frame 인터페이스 추출
+- [ ] 볼링 점수판을 나타내는 ScoreBoard 객체 생성
+
+- 상태(state)
+- [ ] 상태(State)를 나타내는 인터페이스 정의
+- [ ] 스트라이크(Strike) 상태 객체 생성
+- [ ] 스페어(Spare) 상태 객체 생성
+- [ ] 미스(Miss) 상태 객체 생성
+- [ ] 거터(Gutter) 상태 객체 생성
+- [ ] 초기 준비(Ready) 상태 객체 생성
+- [ ] 투구 계속(Continue) 상태 객체 생성
+- [ ] 마지막 투구(EndFrameStates) 상태 객체 생성
+
+- 플레이어(user)
+- [ ] 플레이어(User) 객체 생성
+
+- 실행
+- [ ] BowlingGame 메인 생성
+- [ ] BowlingController 생성
+
+- 화면(view)
+- [ ] 입력(InputView)화면 객체 생성
+- [ ] 출력(OutputView)화면 객체 생성
+- [ ] 플레이어(User) 객체 생성
+- [ ] FrameDTO, FrameAssembler 생성
+- [ ] ScoreBoardDTO, ScoreBoardAssembler 생성
+- [ ] UserDTO, UserAssembler 생성
+
