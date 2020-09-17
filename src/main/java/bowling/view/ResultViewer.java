@@ -87,12 +87,7 @@ public class ResultViewer {
     }
 
     private void setScore(List<Integer> result, List<Frame> frames) {
-        frames.stream()
-                .forEach(frame ->
-                        result.add(
-                                addBeforeScore(result, sumScore(frame, frames))
-                        )
-                );
+        frames.forEach(frame -> result.add(addBeforeScore(result, sumScore(frame, frames))));
     }
 
     private int addBeforeScore(List<Integer> result, int score) {
