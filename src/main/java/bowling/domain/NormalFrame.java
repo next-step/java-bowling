@@ -1,10 +1,10 @@
 package bowling.domain;
 
-import java.text.MessageFormat;
-
 public class NormalFrame extends AbstractFrame {
 
-    public static final int LAST_NORMAL_FRAME_NUMBER = 9;
+    private static final int LAST_NORMAL_FRAME_NUMBER = 9;
+
+    private final NormalBowl normalBowl = new NormalBowl();
 
     public NormalFrame(int frameNumber) {
         super(frameNumber);
@@ -12,12 +12,12 @@ public class NormalFrame extends AbstractFrame {
 
     @Override
     public Frame bowl(int numberOfPins) {
-        BowlResult bowlResult = frameBowl.bowl(numberOfPins);
-        return isCompleted(bowlResult) ? createNextFrame() : this;
+        NormalBowlResult normalBowlResult = normalBowl.bowl(numberOfPins);
+        return isCompleted(normalBowlResult) ? createNextFrame() : this;
     }
 
-    private boolean isCompleted(BowlResult bowlResult) {
-        return !bowlResult.equals(BowlResult.NONE);
+    private boolean isCompleted(NormalBowlResult normalBowlResult) {
+        return !normalBowlResult.equals(NormalBowlResult.DEFAULT);
     }
 
     private Frame createNextFrame() {
@@ -27,7 +27,8 @@ public class NormalFrame extends AbstractFrame {
 
     @Override
     public String toString() {
-        return frameBowl.getBowlCount() == 0 ? "" : MessageFormat.format("{0}:{1}", frameNumber, frameBowl.getTotalNumberOfPins());
+        return NormalBowlResult.getType(normalBowl)
+                .format(normalBowl);
     }
 
 }

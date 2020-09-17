@@ -9,7 +9,6 @@ public abstract class AbstractFrame implements Frame {
     public static final int LAST_FRAME_NUMBER = 10;
 
     protected final int frameNumber;
-    protected final Bowl frameBowl = new NormalBowl();
 
     protected Frame nextNormalFrame;
 

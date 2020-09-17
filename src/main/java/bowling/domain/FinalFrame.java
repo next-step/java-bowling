@@ -1,22 +1,27 @@
 package bowling.domain;
 
-import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FinalFrame extends AbstractFrame {
 
+    private final List<NormalBowl> normalBowls = new ArrayList<>();
+
     public FinalFrame() {
         super(LAST_FRAME_NUMBER);
+        normalBowls.add(new NormalBowl());
     }
 
     @Override
     public Frame bowl(int numberOfPins) {
-        BowlResult bowlResult = frameBowl.bowl(numberOfPins);
-        return isCompleted(bowlResult) ? null : this;
+        NormalBowlResult normalBowlResult = normalBowls.get(0).bowl(numberOfPins);
+        return isCompleted(normalBowlResult) ? null : this;
     }
 
-    public boolean isCompleted(BowlResult bowlResult) {
-        return !bowlResult.equals(BowlResult.NONE);
+    public boolean isCompleted(NormalBowlResult normalBowlResult) {
+        return !normalBowlResult.equals(NormalBowlResult.DEFAULT);
     }
 
     @Override
@@ -26,7 +31,9 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public String toString() {
-        return frameBowl.getBowlCount() == 0 ? "" : MessageFormat.format("{0}:{1}", frameNumber, frameBowl.getTotalNumberOfPins());
+        return String.join("|", normalBowls.stream()
+                .map(normalBowl -> NormalBowlResult.getType(normalBowl).format(normalBowl))
+                .collect(Collectors.toList()));
     }
 
 }
