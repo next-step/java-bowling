@@ -2,9 +2,9 @@ package bowling.domain;
 
 import java.util.Objects;
 
-import static bowling.common.ExceptionMessage.PIN_BOWL_RANGE;
-
 public class Pin {
+
+    private final String PIN_BOWL_RANGE = "볼링 한 구당 쓰러트릴수 있는 핀의 갯수는 0 ~ 10 사이입니다.";
 
     private final int MAXIMUM_PIN_COUNT = 10;
     private final int MINIMUM_PIN_COUNT = 0;
