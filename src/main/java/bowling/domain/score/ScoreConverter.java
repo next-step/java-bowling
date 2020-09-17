@@ -5,17 +5,17 @@ import bowling.domain.pin.Pins;
 
 public class ScoreConverter {
 
-    public static final int SECOND_ROLL = 1;
-    public static final int BONUS_GAME = 2;
-    public static final int STRIKE = 10;
-    public static final int SPARE = 10;
-    public static final int FINAL_FRAME = 10;
-    public static final String GUTTER = "G";
-    public static final String STRING_STRIKE = "X";
-    public static final int FIRST_ROLL = 0;
-    public static final String STRING_MISS = "-";
-    public static final String STRING_SPARE = "/";
-    public static final String SCORE_SPLIT = "|";
+    private static final int SECOND_ROLL = 1;
+    private static final int BONUS_GAME = 2;
+    private static final int STRIKE = 10;
+    private static final int SPARE = 10;
+    private static final int FINAL_FRAME = 10;
+    private static final String GUTTER = "G";
+    private static final String STRING_STRIKE = "X";
+    private static final int FIRST_ROLL = 0;
+    private static final String STRING_MISS = "-";
+    private static final String STRING_SPARE = "/";
+    private static final String SCORE_SPLIT = "|";
 
     private ScoreConverter() {
     }
@@ -44,6 +44,7 @@ public class ScoreConverter {
 
         convertStrike(pins, sb);
         convertRollOnce(pins, sb);
+        convertRollTwice(pins, sb);
         convertDoubleStrike(pins, sb);
         convertOneStrikeNormal(pins, sb);
 
@@ -58,7 +59,7 @@ public class ScoreConverter {
     }
 
     private static void convertStrikeSpare(Pins pins, StringBuilder sb) {
-        if (firstRollStrike(pins) && secondRollNormal(pins) && isLastSpare(pins)
+        if (isFirstRollStrike(pins) && isSecondRollNormal(pins) && isLastSpare(pins)
         ) {
             sb.append(STRING_STRIKE);
             sb.append(SCORE_SPLIT);
@@ -68,12 +69,12 @@ public class ScoreConverter {
         }
     }
 
-    private static boolean secondRollNormal(Pins pins) {
+    private static boolean isSecondRollNormal(Pins pins) {
         return pins.getPinCount(SECOND_ROLL) != 10;
     }
 
     private static boolean isLastSpare(Pins pins) {
-        return  pins.getPinCount(SECOND_ROLL) +  pins.getPinCount(BONUS_GAME) == SPARE;
+        return pins.getPinCount(SECOND_ROLL) + pins.getPinCount(BONUS_GAME) == SPARE;
     }
 
     private static void convertDoubleStrikeBonusGame(Pins pins, StringBuilder sb) {
@@ -82,7 +83,7 @@ public class ScoreConverter {
             sb.append(SCORE_SPLIT);
             sb.append(STRING_STRIKE);
             sb.append(SCORE_SPLIT);
-            sb.append(pins.getPinCount(BONUS_GAME) == 0 ? "G" : pins.getPinCount(BONUS_GAME));
+            sb.append(pins.getPinCount(BONUS_GAME) == 0 ? GUTTER : pins.getPinCount(BONUS_GAME));
         }
     }
 
@@ -92,19 +93,19 @@ public class ScoreConverter {
             sb.append(SCORE_SPLIT);
             sb.append(STRING_SPARE);
             sb.append(SCORE_SPLIT);
-            sb.append(pins.getPinCount(BONUS_GAME) == 0 ? "G" : pins.getPinCount(BONUS_GAME));
+            sb.append(pins.getPinCount(BONUS_GAME) == 0 ? GUTTER : pins.getPinCount(BONUS_GAME));
         }
     }
 
     private static boolean isDoubleStrike(Pins pins) {
-        return firstRollStrike(pins) && secondRollStrike(pins);
+        return isFirstRollStrike(pins) && secondRollStrike(pins);
     }
 
     private static boolean secondRollStrike(Pins pins) {
         return pins.getPinCount(SECOND_ROLL) == STRIKE;
     }
 
-    private static boolean firstRollStrike(Pins pins) {
+    private static boolean isFirstRollStrike(Pins pins) {
         return pins.getPinCount(FIRST_ROLL) == STRIKE;
     }
 
@@ -118,7 +119,7 @@ public class ScoreConverter {
 
     private static void convertRollOnce(Pins pins, StringBuilder sb) {
         if (isRollOnce(pins) && pins.getTotalPins() < 10) {
-            sb.append(pins.getPinCount(FIRST_ROLL) == 0 ? "G" : pins.getPinCount(FIRST_ROLL));
+            sb.append(pins.getPinCount(FIRST_ROLL) == 0 ? GUTTER : pins.getPinCount(FIRST_ROLL));
         }
     }
 
@@ -132,9 +133,9 @@ public class ScoreConverter {
 
     private static void convertRollTwice(Pins pins, StringBuilder sb) {
         if (isRollTwice(pins) && isPinHit(pins)) {
-            sb.append(pins.getPins().get(0).getPin() == 0 ? GUTTER : pins.getPins().get(0).getPin());
+            sb.append(pins.getPinCount(FIRST_ROLL) == 0 ? GUTTER : pins.getPinCount(FIRST_ROLL));
             sb.append(SCORE_SPLIT);
-            sb.append(pins.getPins().get(1).getPin() == 0 ? GUTTER : pins.getPins().get(1).getPin());
+            sb.append(pins.getPinCount(SECOND_ROLL) == 0 ? GUTTER : pins.getPinCount(SECOND_ROLL));
         }
     }
 
@@ -169,7 +170,7 @@ public class ScoreConverter {
     }
 
     private static void convertOneStrikeNormal(Pins pins, StringBuilder sb) {
-        if (isRollTwice(pins) && pins.getTotalPins() < 20) {
+        if (isRollTwice(pins) && isFirstRollStrike(pins) && pins.getTotalPins() < 20) {
             sb.append(STRING_STRIKE);
             sb.append(SCORE_SPLIT);
             sb.append(pins.getPinCount(SECOND_ROLL) == 0 ? GUTTER : pins.getPinCount(SECOND_ROLL));

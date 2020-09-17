@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.ScoreConverter;
 
 import java.util.List;
 import java.util.Objects;
@@ -93,4 +94,8 @@ public class NormalFrame implements Frame {
     public int hashCode() {
         return Objects.hash(getTotal(), getIndex());
     }
+
+    @Override
+    public String getScore() { return ScoreConverter.convert(this); }
+
 }

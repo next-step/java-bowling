@@ -3,8 +3,8 @@ package bowling;
 import bowling.domain.frame.Frame;
 import bowling.domain.game.Game;
 import bowling.domain.player.Player;
-import bowling.domain.score.ScoreConverter;
 import bowling.domain.view.InputView;
+import bowling.domain.view.OutputView;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,9 +14,8 @@ public class Main {
 
         while (frame != null) {
             askPinRoll(frame);
-            System.out.println(ScoreConverter.convert(frame));
+            OutputView.getScoreBoard(player, frame);
             frame = game.getNextFrame();
-
         }
     }
 

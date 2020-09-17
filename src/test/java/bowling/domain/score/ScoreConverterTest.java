@@ -117,8 +117,22 @@ class ScoreConverterTest {
         assertThat(ScoreConverter.finalFrameConvert(expect)).isEqualTo("X|X");
     }
 
+
     @Test
-    void OneAndNormal() {
+    void RolTwice() {
+        List<Pin> pins = new ArrayList<>();
+        Pin pin = new Pin(5);
+        Pin pin2 = new Pin(2);
+
+        pins.add(pin);
+        pins.add(pin2);
+        Pins expect = new Pins(pins);
+
+        assertThat(ScoreConverter.finalFrameConvert(expect)).isEqualTo("5|2");
+    }
+
+    @Test
+    void OneStrikeAndNormal() {
         List<Pin> pins = new ArrayList<>();
         Pin pin = new Pin(10);
         Pin pin2 = new Pin(5);

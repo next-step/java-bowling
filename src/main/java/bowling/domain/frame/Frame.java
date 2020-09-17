@@ -17,4 +17,6 @@ public interface Frame {
     List<Pin> getPinInfo();
 
     Pins getPins();
+
+    String getScore();
 }

@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.ScoreConverter;
 
 import java.util.List;
 
@@ -76,4 +77,7 @@ public class FinalFrame implements Frame {
     private boolean isRolledOnce() {
         return pins.rollCount() < CAN_ROLL_LIMIT;
     }
+
+    @Override
+    public String getScore() { return ScoreConverter.convert(this); }
 }
