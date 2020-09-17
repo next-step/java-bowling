@@ -9,7 +9,7 @@ import org.apache.logging.log4j.util.Strings;
 public class Pitching {
 
     private static final int PITCHING_MIN_NUMBER = 0;
-    private static final int PITCHING_MAX_NUMBER = 10;
+    public static final int PITCHING_MAX_NUMBER = 10;
     private static final int FIRST_PITCHING_COUNT = 1;
     private static final int PITCHING_INCREASE_NUMBER = 1;
 
@@ -59,4 +59,11 @@ public class Pitching {
         return pitchingCount += PITCHING_INCREASE_NUMBER;
     }
 
+    @Override
+    public String toString() {
+        return "Pitching{" +
+                "pitchingPoint=" + pitchingPoint +
+                ", pitchingCount=" + pitchingCount +
+                '}';
+    }
 }

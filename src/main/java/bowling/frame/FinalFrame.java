@@ -1,49 +1,56 @@
 package bowling.frame;
 
-import bowling.pin.Pins;
-
-import java.util.Objects;
+import bowling.pitching.Pitching;
+import bowling.pitching.PitchingResult;
 
 public class FinalFrame extends Frame {
 
-    private int number;
-    private Pins pins;
+    private int bonusPitchingCount;
 
-    private FinalFrame(int number, Pins pins) {
-        this.number = number;
-        this.pins = pins;
+    private FinalFrame(PitchingResult pitchingResult) {
+        super(10, pitchingResult);
     }
 
-    public static Frame finalFrame(Pins pins) {
-        return new FinalFrame(Frames.FINAL_FRAME_COUNT, pins);
+    private FinalFrame() {
+        super(10);
     }
+
+    public static FinalFrame pitchi(Pitching pitching, int remainingPins, int bonusPitchingCount) {
+        PitchingResult pitchingResult = PitchingResult.from(pitching, remainingPins, bonusPitchingCount);
+//        pitchingResult =
+        return new FinalFrame(pitchingResult);
+    }
+
+    public static FinalFrame from() {
+        return new FinalFrame();
+    }
+
+    public PitchingResult finalPitching(PitchingResult pitchingResult) {
+        PitchingResult prevPitchingResult = getPrevPitchingResult();
+        if (pitchingResult.getFirstPitchingCount() && pitchingResult.getPitchResultState().equals("X")) {
+
+        }
+
+        if (pitchingResult.getPitchingCount() == 2 && pitchingResult.getPitchResultState().equals("X") && prevPitchingResult.equals("X")) {
+
+        }
+
+        if (pitchingResult.getPitchingCount() == 2 && pitchingResult.getPitchResultState().equals("/")) {
+
+        }
+        return pitchingResult;
+    }
+
+
 
     @Override
     public boolean isFinal() {
-        return true;
+
+        return false;
     }
 
     @Override
     public int getNumber() {
         return number;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FinalFrame that = (FinalFrame) o;
-        return number == that.number &&
-                Objects.equals(pins, that.pins);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(number, pins);
-    }
-
-    @Override
-    public String toString() {
-        return number + " : " + pins;
     }
 }

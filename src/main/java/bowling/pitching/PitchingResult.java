@@ -8,27 +8,28 @@ public class PitchingResult {
 
     private static final int CLEAR_PINS = 0;
     private static final int PITCHING_COUNT_MAX = 2;
-    private static final int INIT_PINS_NUMBER = 10;
 
-    private final Pitching pitching;
-    private final String pitchResultState;
+
+    private Pitching pitching;
+    private String pitchResultState;
     private int remainingPins;
 
-    public PitchingResult(Pitching pitching) {
+    private PitchingResult(Pitching pitching, int remainingPins, int pitchingMaxCount) {
         this.pitching = pitching;
-        this.remainingPins = INIT_PINS_NUMBER;
-        this.pitchResultState = pitchResultState(pitching.getPitchingPoint());
+        this.remainingPins = remainingPins;
+        this.pitchResultState = pitchResultState(pitching, pitchingMaxCount); // 결과를 받아온다.
     }
 
-    public static PitchingResult from(Pitching pitching) {
-        return new PitchingResult(pitching);
+    public static PitchingResult from(Pitching pitching, int remainingPins, int pitchingMaxCount) { // 투구를 했고, 결과를 받으려고 한다.
+        return new PitchingResult(pitching, remainingPins, pitchingMaxCount);
     }
 
-    private String pitchResultState(int pitchPoint) {
+    public String pitchResultState(Pitching pitching, int pitchingMaxCount) {
         pitching.increasePitchingCount();
-        remainingPins -= pitching.getPitchingPoint();
 
-        validatePitchingCount(PITCHING_COUNT_MAX);
+        this.remainingPins -= pitching.getPitchingPoint();
+
+        validatePitchingCount(pitching, pitchingMaxCount);
 
         if (isRemainingPinsClear() && pitching.isFirstPitchingCount()) {
             return PitchingState.STRIKE.toString();
@@ -38,17 +39,17 @@ public class PitchingResult {
             return PitchingState.SPARE.toString();
         }
 
-        if (pitchPoint == CLEAR_PINS) {
+        if (pitching.getPitchingPoint() == CLEAR_PINS) {
             return PitchingState.GUTTER.toString();
         }
-        return String.valueOf(pitchPoint);
+        return String.valueOf(pitching.getPitchingPoint());
     }
 
     private boolean isRemainingPinsClear() {
         return remainingPins == CLEAR_PINS;
     }
 
-    public void validatePitchingCount(int pitchingCountLimit) {
+    public void validatePitchingCount(Pitching pitching, int pitchingCountLimit) {
         if (!pitching.canPitch(pitchingCountLimit)) {
             throw new CanNotPitchingException(String.format("투구는 %d회만 가능합니다.", pitchingCountLimit));
         }
@@ -56,6 +57,18 @@ public class PitchingResult {
 
     public String getPitchResultState() {
         return pitchResultState;
+    }
+
+    public int getPitchingCount() {
+        return pitching.getPitchingCount();
+    }
+
+    public int getRemainingPins() {
+        return remainingPins;
+    }
+
+    public boolean getFirstPitchingCount() {
+        return pitching.getPitchingCount() == 1;
     }
 
     @Override
@@ -74,10 +87,10 @@ public class PitchingResult {
 
     @Override
     public String toString() {
-        return "PitchResult{" +
+        return "PitchingResult{" +
                 "pitching=" + pitching +
                 ", pitchResultState='" + pitchResultState + '\'' +
+                ", remainingPins=" + remainingPins +
                 '}';
     }
-
 }

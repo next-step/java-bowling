@@ -16,7 +16,7 @@ class PitchingResultTest {
     @DisplayName("첫번째 투구시 남은 Pin이 0개라면 Strike")
     void pitchingResultIsStrike() {
         pitching = Pitching.pitch("10", 0);
-        pitchResult = PitchingResult.from(pitching);
+        pitchResult = PitchingResult.from(pitching, 10, 2);
         assertThat(pitchResult.getPitchResultState()).isEqualTo("X");
     }
 
@@ -24,7 +24,7 @@ class PitchingResultTest {
     @DisplayName("두번째 투구시 남은 Pin이 0개라면 Spare")
     void pitchingResultIsSpare() {
         pitching = Pitching.pitch("10", 1);
-        pitchResult = PitchingResult.from(pitching);
+        pitchResult = PitchingResult.from(pitching, 10, 2);
         assertThat(pitchResult.getPitchResultState()).isEqualTo("/");
     }
 
@@ -32,7 +32,7 @@ class PitchingResultTest {
     @DisplayName("첫번째 투구시 쓰러트린 Pin이 없으면 Gutter")
     void pitchingResultIsGutter1() {
         pitching = Pitching.pitch("0", 0);
-        pitchResult = PitchingResult.from(pitching);
+        pitchResult = PitchingResult.from(pitching, 10, 2);
         assertThat(pitchResult.getPitchResultState()).isEqualTo("-");
     }
 
@@ -40,7 +40,7 @@ class PitchingResultTest {
     @DisplayName("두번째 투구시 쓰러트린 Pin이 없으면 Gutter")
     void pitchingResultIsGutter2() {
         pitching = Pitching.pitch("0", 1);
-        pitchResult = PitchingResult.from(pitching);
+        pitchResult = PitchingResult.from(pitching, 10, 2);
         assertThat(pitchResult.getPitchResultState()).isEqualTo("-");
     }
 
@@ -48,7 +48,7 @@ class PitchingResultTest {
     @DisplayName("첫번째 투구시 쓰러트린 Pin의 값 확인")
     void pitchingResult1() {
         pitching = Pitching.pitch("5", 0);
-        pitchResult = PitchingResult.from(pitching);
+        pitchResult = PitchingResult.from(pitching, 10, 2);
         assertThat(pitchResult.getPitchResultState()).isEqualTo("5");
     }
 
@@ -56,7 +56,7 @@ class PitchingResultTest {
     @DisplayName("두번째 투구시 쓰러트린 Pin의 값 확인")
     void pitchingResult2() {
         pitching = Pitching.pitch("5", 1);
-        pitchResult = PitchingResult.from(pitching);
+        pitchResult = PitchingResult.from(pitching, 10, 2);
         assertThat(pitchResult.getPitchResultState()).isEqualTo("5");
     }
 
@@ -66,7 +66,7 @@ class PitchingResultTest {
         assertThatExceptionOfType(CanNotPitchingException.class)
                 .isThrownBy(() -> {
                     pitching = Pitching.pitch("5", 2);
-                    pitchResult = PitchingResult.from(pitching);
+                    pitchResult = PitchingResult.from(pitching, 10, 2);
                 });
     }
 

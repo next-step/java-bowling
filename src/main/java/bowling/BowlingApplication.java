@@ -2,39 +2,39 @@ package bowling;
 
 import bowling.frame.Frame;
 import bowling.frame.Frames;
-import bowling.pitching.Pin;
-import bowling.pitching.Pins;
+import bowling.pitching.Pitching;
 import bowling.player.Player;
-import bowling.pitching.PitchingState;
-import bowling.view.ResultView;
 import bowling.view.InputView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static bowling.global.utils.CommonConstant.GAME_FINISH_COUNT;
-
 public class BowlingApplication {
 
     public static void main(String[] args) {
-        Player player = new Player(InputView.inputPlayer());
-        Map<Integer, Pins> score = new HashMap<>();
+        Map<String, Player> gameInfo = new HashMap<>();
+        List<Frame> frameList;
+        Frames frames = Frames.startBowling();
 
-        while (Frames.CURRENT_FRAME_NUMBER < GAME_FINISH_COUNT) {
-            List<Pin> pinList = new ArrayList<>();
-            List<Frame> frameList = new ArrayList<>();
+        String name = InputView.inputPlayer();
+        Player player = new Player(name, frames);
+        gameInfo.put(player.getName(), player);
 
-            for (int i = 1; i <= Frames.PITCH_COUNT; i++) {
-                ResultView.printFrameViewHeader(GAME_FINISH_COUNT, player.getName(), score);
-                String inputPitchPoint = InputView.inputPitch(Frames.CURRENT_FRAME_NUMBER);
-                Frames frames = BowlingGame.playBowling(pinList, frameList, inputPitchPoint, i);
-                if (pinList.get(0).getState().equals(PitchingState.STRIKE.toString())) {
-                    BowlingGame.playBowling(pinList, frameList, "0", 2);
-                    break;
-                }
-            }
+        while (!frames.isFinal()) {
+            int frameNumber = frames.getFrameNumber();
+            String inputPitchPoint = InputView.inputPitch(frameNumber);
+
+            int pitchingCount = frames.getPitchingCount();
+            Pitching pitching = Pitching.pitch(inputPitchPoint, pitchingCount);
+
+            int remainingPins = frames.getRemainingPins();
+            frameList = frames.playBowling(frameNumber, pitching, remainingPins);
+
+            frames.pitchingResult(frameList);
+
+            player = new Player(name, frames);
+            gameInfo.put(name, player);
         }
     }
 }

@@ -1,21 +1,21 @@
 package bowling.frame;
 
-import bowling.pin.Pins;
-
-import java.util.Objects;
+import bowling.pitching.Pitching;
+import bowling.pitching.PitchingResult;
 
 public class NormalFrame extends Frame {
 
-    private final int number;
-    private final Pins pins;
-
-    private NormalFrame(int number, Pins pins) {
-        this.number = number;
-        this.pins = pins;
+    private NormalFrame(int number, PitchingResult pitchingResult) {
+        super(number, pitchingResult);
     }
 
-    public static Frame newFrame(int number, Pins pins) {
-        return new NormalFrame(number, pins);
+    public NormalFrame(int number) {
+        super(number);
+    }
+
+    public static NormalFrame pitchi(int number, Pitching pitching, int remainingPins) { // 1개의 프레임에 첫 번째 투구 결과를 저장한다.
+        PitchingResult pitchingResult = PitchingResult.from(pitching, remainingPins, 2); // 첫번째 투구 결과를 받아와야한다.
+        return new NormalFrame(number, pitchingResult);
     }
 
     @Override
@@ -29,21 +29,10 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NormalFrame that = (NormalFrame) o;
-        return number == that.number &&
-                Objects.equals(pins, that.pins);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(number, pins);
-    }
-
-    @Override
     public String toString() {
-        return number + " : " + pins;
+        return "OrdinayFrame{" +
+                "number=" + number +
+                ", pitchingResults=" + pitchingResults +
+                '}';
     }
 }
