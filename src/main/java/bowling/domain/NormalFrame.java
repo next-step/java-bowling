@@ -1,57 +1,70 @@
 package bowling.domain;
 
 import java.text.MessageFormat;
+import java.util.Iterator;
 import java.util.Objects;
 
-public class NormalFrame {
+public class NormalFrame extends AbstractFrame {
 
-    public static final int LAST_FRAME_NUMBER = 10;
+    public static final int LAST_NORMAL_FRAME_NUMBER = 9;
 
-    private final int frameNumber;
-    private final FrameBowl frameBowl = new FrameBowl();
-
-    private NormalFrame nextNormalFrame;
+    private Frame nextNormalFrame;
 
     public NormalFrame(int frameNumber) {
-        this.frameNumber = frameNumber;
+        super(frameNumber);
     }
 
-    public NormalFrame bowl(int numberOfPins) {
+    public Frame bowl(int numberOfPins) {
         BowlResult bowlResult = frameBowl.bowl(numberOfPins);
-        return bowlResult.isCompleted() ? createNextFrame() : this;
+        return isCompleted(bowlResult) ? nextStep() : this;
     }
 
-    private NormalFrame createNextFrame() {
-        if (frameNumber == LAST_FRAME_NUMBER) {
+    public boolean isCompleted(BowlResult bowlResult) {
+        return !bowlResult.equals(BowlResult.NONE);
+    }
+
+    private Frame nextStep() {
+        if (frameNumber == LAST_NORMAL_FRAME_NUMBER) {
             return null;
         }
         nextNormalFrame = new NormalFrame(frameNumber + 1);
         return nextNormalFrame;
     }
 
-    public int getFrameNumber() {
-        return frameNumber;
-    }
-
-    public boolean hasNext() {
-        return Objects.nonNull(nextNormalFrame);
-    }
-
-    public NormalFrame next() {
+    @Override
+    public Frame getNextFrame() {
         return nextNormalFrame;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NormalFrame that = (NormalFrame) o;
-        return frameNumber == that.frameNumber;
-    }
+    public Iterator<Frame> iterator() {
+        final Frame me = this;
+        return new Iterator<Frame>() {
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(frameNumber);
+            int frameNumber = 0;
+            Frame frame = me;
+
+            @Override
+            public boolean hasNext() {
+                if (frameNumber == 0) {
+                    return true;
+                }
+                return Objects.nonNull(frame.getNextFrame());
+            }
+
+            @Override
+            public Frame next() {
+                if (frameNumber == 0) {
+                    frameNumber++;
+                    return frame;
+                }
+                for (int i = 0; i < frameNumber; i++) {
+                    frame = frame.getNextFrame();
+                }
+                return frame;
+            }
+
+        };
     }
 
     @Override
