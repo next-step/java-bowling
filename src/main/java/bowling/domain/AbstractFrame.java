@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Iterator;
 import java.util.Objects;
 
 public abstract class AbstractFrame implements Frame {
@@ -24,6 +25,11 @@ public abstract class AbstractFrame implements Frame {
     @Override
     public Frame getNextFrame() {
         return nextNormalFrame;
+    }
+
+    @Override
+    public Iterator<Frame> iterator() {
+        return new FrameIterator(this);
     }
 
     @Override

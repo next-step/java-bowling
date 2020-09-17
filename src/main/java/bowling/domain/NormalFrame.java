@@ -1,7 +1,6 @@
 package bowling.domain;
 
 import java.text.MessageFormat;
-import java.util.Iterator;
 
 public class NormalFrame extends AbstractFrame {
 
@@ -17,18 +16,13 @@ public class NormalFrame extends AbstractFrame {
         return isCompleted(bowlResult) ? createNextFrame() : this;
     }
 
-    public boolean isCompleted(BowlResult bowlResult) {
+    private boolean isCompleted(BowlResult bowlResult) {
         return !bowlResult.equals(BowlResult.NONE);
     }
 
     private Frame createNextFrame() {
         nextNormalFrame = (frameNumber == LAST_NORMAL_FRAME_NUMBER) ? new FinalFrame() : new NormalFrame(frameNumber + 1);
         return nextNormalFrame;
-    }
-
-    @Override
-    public Iterator<Frame> iterator() {
-        return new FrameIterator(this);
     }
 
     @Override

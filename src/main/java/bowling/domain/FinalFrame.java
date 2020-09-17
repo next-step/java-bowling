@@ -20,11 +20,6 @@ public class FinalFrame extends AbstractFrame {
     }
 
     @Override
-    public Frame getNextFrame() {
-        return null;
-    }
-
-    @Override
     public Iterator<Frame> iterator() {
         throw new UnsupportedOperationException();
     }
