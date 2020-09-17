@@ -9,9 +9,7 @@ import qna.NotFoundException;
 import qna.domain.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @Service("qnaService")
 public class QnAService {
@@ -26,7 +24,7 @@ public class QnAService {
     @Resource(name = "deleteHistoryService")
     private DeleteHistoryService deleteHistoryService;
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Question findQuestionById(Long id) {
         return questionRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(NotFoundException::new);
@@ -34,24 +32,34 @@ public class QnAService {
 
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
+        DeleteHistories deleteHistories = new DeleteHistories();
         Question question = findQuestionById(questionId);
+        if (question == null) {
+            throw new IllegalArgumentException();
+        }
         if (!question.isOwner(loginUser)) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-
         for (Answer answer : question.getAnswers()) {
             if (!answer.isOwner(loginUser)) {
                 throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
             }
         }
+        deleteQuestionHistories(question, deleteHistories);
+        deleteHistoryService.saveAll(deleteHistories.getDeleteHistories());
+    }
 
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-        question.delete();
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        for (Answer answer : question.getAnswers()) {
-            answer.delete();
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+    @Transactional
+    private void deleteQuestionHistories(Question question, DeleteHistories deleteHistories) {
+        deleteHistories.addQuestionDeleteHistory(question);
+        if (question.getAnswers() != null) {
+            question.getAnswers().forEach(
+                    answer -> deleteAnswerHistories(answer, deleteHistories));
         }
-        deleteHistoryService.saveAll(deleteHistories);
+    }
+
+    @Transactional
+    private void deleteAnswerHistories(Answer answer, DeleteHistories deleteHistories) {
+        deleteHistories.addAnswerDeleteHistory(answer);
     }
 }
