@@ -45,13 +45,14 @@
 - [X] 초기 준비(Ready) 상태 객체 생성
 - [X] 투구 계속(Continue) 상태 객체 생성
 - [X] 마지막 투구(EndFrameStates) 상태 객체 생성
+- [X] 마지막 투구 갯수(EndFrameCount)를 나타내는 객체 생성
 
 - 플레이어(user)
 - [X] 플레이어(User) 객체 생성
 
 - 실행
-- [ ] BowlingGame 메인 생성
-- [ ] BowlingController 생성
+- [X] BowlingGame 메인 생성
+- [X] BowlingController 생성
 
 - 화면(view)
 - [ ] 입력(InputView)화면 객체 생성
