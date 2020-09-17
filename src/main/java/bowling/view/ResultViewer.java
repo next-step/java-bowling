@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.Frame;
 import bowling.domain.Game;
+import bowling.domain.LastFrame;
 import bowling.domain.Score;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class ResultViewer {
     private static void showHead() {
         System.out.print(STAGE_PREFIX_STRING);
 
-        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
+        IntStream.rangeClosed(1, LastFrame.LAST_FRAME_NUMBER)
                 .forEach(frame -> System.out.printf(String.format(FRAME_FORMAT, frame)));
 
         System.out.println();
@@ -140,6 +141,4 @@ public class ResultViewer {
 
         return String.format(GAME_RESULT_FORMAT, scores.get(frameNumber - 1));
     }
-
-
 }

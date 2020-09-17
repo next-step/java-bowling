@@ -1,6 +1,8 @@
 package bowling.domain;
 
-import bowling.domain.state.*;
+import bowling.domain.state.Final;
+import bowling.domain.state.Hold;
+import bowling.domain.state.Strike;
 
 import java.util.List;
 
