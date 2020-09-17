@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import static bowling.domain.LastFrame.LAST_FRAME_NUMBER;
 
@@ -55,10 +56,14 @@ public class Game {
     }
 
     private Frame getLastFrame() {
-        return frames.get(frames.size() - 1);
+        return frames.getLast();
     }
 
     public boolean isEnd() {
         return !hasNextFrame() && getLastFrame().isFinish();
+    }
+
+    public List<Frame> getFrames() {
+        return frames;
     }
 }

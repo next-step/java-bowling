@@ -24,7 +24,7 @@ public class ScoreTest {
         Score score = Score.of(0, 10);
 
         while (score.canNextSum()) {
-            score = score.sum(Score.of(10,0));
+            score = Score.of(10,99).sum(score);
         }
 
         assertThat(score.toInt()).isEqualTo(100);

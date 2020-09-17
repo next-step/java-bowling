@@ -40,11 +40,11 @@ public class Score {
     }
 
     public Score sum(Score score) {
-        if (canNextSum()) {
-            this.count += score.count;
-            this.opportunity += OPPORTUNITY_DECREASE_COUNT;
+        if (score.canNextSum()) {
+            score.count += this.count;
+            score.opportunity += OPPORTUNITY_DECREASE_COUNT;
         }
-        return this;
+        return score;
     }
 
     @Override

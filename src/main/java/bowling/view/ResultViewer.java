@@ -1,10 +1,12 @@
 package bowling.view;
 
+import bowling.domain.Frame;
 import bowling.domain.Game;
+import bowling.domain.Score;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class ResultViewer {
     private static final int SHOW_FRAME_NUMBER = 10;
@@ -14,61 +16,121 @@ public class ResultViewer {
     private static final String GAME_RESULT_FORMAT = "  %-3s |";
     private static final String GAME_RESULT_DELIMITER = "|";
 
-    public static void print(int hitCount, Game game) {
-        ResultViewer.showHead();
+    private final Game game;
+
+    public ResultViewer(Game game) {
+        this.game = game;
+    }
+
+    public void addScore(int hitCount) {
+//        ResultViewer.showHead();
+        record(game.hit(hitCount));
+//        ResultViewer.showFramesBody();
 //        ResultViewer.showResultFrames(game.getPlayerName(), game.hit(hitCount));
 //        ResultViewer.showResultScores(game.getSumScores());
     }
 
-    private static void showHead() {
-        System.out.print(STAGE_PREFIX_STRING);
-
-        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
-                .forEach(frame -> System.out.printf(String.format(FRAME_FORMAT, frame)));
-
-        System.out.println();
+    private void record(Frame frame) {
+//        System.out.println(frame.toResults());
     }
 
-    private static void showResultFrames(String name, List<List<String>> frames) {
-        showFramesBody(name, frames);
-        System.out.println();
+    public List<Integer> getScores() {
+        List<Integer> result = new ArrayList<>();
+
+        List<Frame> frameSet = game.getFrames().stream()
+                .filter(Frame::isFinish)
+                .collect(Collectors.toList());
+
+        setScore(result, frameSet);
+
+        return result;
     }
 
-    private static void showFramesBody(String name, List<List<String>> frames) {
-        System.out.print(String.format(NAME_FORMAT, name));
-
-        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
-                .forEach(frame -> System.out.printf(framesToString(frame, frames)));
+    private void setScore(List<Integer> result, List<Frame> frames) {
+        frames.stream()
+                .forEach(frame ->
+                        result.add(
+                                addBeforeScore(result, sumScore(frame, frames))
+                        )
+                );
     }
 
-    private static String framesToString(int frameNumber, List<List<String>> frames) {
-        if (frames.size() < frameNumber) {
-            return String.format(GAME_RESULT_FORMAT, "");
+    private int addBeforeScore(List<Integer> result, int score) {
+        if (!result.isEmpty()) {
+            score += result.get(result.size() - 1);
+        }
+        return score;
+    }
+
+    private int sumScore(Frame frame, List<Frame> frames) {
+        Score score = frame.getScore();
+        int nextIndex = frame.getNumber();
+
+        while (score.canNextSum() && nextIndex < frames.size()) {
+            score = sumMore(score, frames.get(nextIndex));
+            nextIndex = nextIndex + 1;
         }
 
-        return String.format(GAME_RESULT_FORMAT, scoresToString(frames.get(frameNumber - 1)));
+        return score.toInt();
     }
 
-    private static String scoresToString(List<String> results) {
-        return results.stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining(GAME_RESULT_DELIMITER));
-    }
-
-    private static void showResultScores(List<Integer> scores) {
-        System.out.print(String.format(NAME_FORMAT, ""));
-
-        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
-                .forEach(frame -> System.out.printf(scoresToString(frame, scores)));
-
-        System.out.println();
-    }
-
-    private static String scoresToString(int frameNumber, List<Integer> scores) {
-        if (scores.size() < frameNumber) {
-            return String.format(GAME_RESULT_FORMAT, "");
+    private Score sumMore(Score score, Frame nextFrame) {
+        if (nextFrame.isFinish()) {
+            score = nextFrame.additionalScore(score);
         }
-
-        return String.format(GAME_RESULT_FORMAT, scores.get(frameNumber - 1));
+        return score;
     }
+
+
+//    private void showResultFrames(String name, List<List<String>> frames) {
+//        showFramesBody(name, frames);
+//        System.out.println();
+//    }
+//
+//    private String framesToString(int frameNumber, List<List<String>> frames) {
+//        if (frames.size() < frameNumber) {
+//            return String.format(GAME_RESULT_FORMAT, "");
+//        }
+//
+//        return String.format(GAME_RESULT_FORMAT, scoresToString(frames.get(frameNumber - 1)));
+//    }
+//
+//    private String scoresToString(List<String> results) {
+//        return results.stream()
+//                .map(String::valueOf)
+//                .collect(Collectors.joining(GAME_RESULT_DELIMITER));
+//    }
+//
+//    private String scoresToString(int frameNumber, List<Integer> scores) {
+//        if (scores.size() < frameNumber) {
+//            return String.format(GAME_RESULT_FORMAT, "");
+//        }
+//
+//        return String.format(GAME_RESULT_FORMAT, scores.get(frameNumber - 1));
+//    }
+//
+//    private static void showHead() {
+//        System.out.print(STAGE_PREFIX_STRING);
+//
+//        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
+//                .forEach(frame -> System.out.printf(String.format(FRAME_FORMAT, frame)));
+//
+//        System.out.println();
+//    }
+//
+//    private static String showFramesBody(String name, List<List<String>> frames) {
+//        System.out.print(String.format(NAME_FORMAT, name));
+//
+//        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
+//                .forEach(frame -> System.out.printf(framesToString(frame, frames)));
+//    }
+//
+//    private static void showResultScores(List<Integer> scores) {
+//        System.out.print(String.format(NAME_FORMAT, ""));
+//
+//        IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
+//                .forEach(frame -> System.out.printf(scoresToString(frame, scores)));
+//
+//        System.out.println();
+//    }
 }

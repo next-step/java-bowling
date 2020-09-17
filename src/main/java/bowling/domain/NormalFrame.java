@@ -50,7 +50,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public Score additionalScore(Score beforeScore) {
-        return state.getScore().sum(beforeScore);
+        return state.sumScore(beforeScore);
     }
 
     @Override

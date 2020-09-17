@@ -48,10 +48,6 @@ public class LastFrame implements Frame {
 
     @Override
     public boolean isFinish() {
-        if (states.isEmpty()) {
-            return false;
-        }
-
         State lastState = states.getLast();
 
         if (!lastState.isFinish()) {
@@ -63,13 +59,7 @@ public class LastFrame implements Frame {
 
     private Score getCurrentScore() {
         State state = states.getFirst();
-        Score score = Score.of(0, 0);
-
-        if (!state.isFinish()) {
-            return score;
-        }
-
-        score = state.getScore();
+        Score score = state.getScore();
 
         for (int index = 1; index < states.size(); index++) {
             score = states.get(index).sumScore(score);
@@ -89,13 +79,10 @@ public class LastFrame implements Frame {
 
     @Override
     public Score additionalScore(Score beforeScore) {
-        Score score = beforeScore;
-
         for (State state : states) {
-            score = state.getScore().sum(score);
+            beforeScore = state.sumScore(beforeScore);
         }
-
-        return score;
+        return beforeScore;
     }
 
     @Override

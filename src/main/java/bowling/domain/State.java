@@ -37,7 +37,7 @@ public interface State {
 
     default Score sumScore(Score before) {
         if (before.canNextSum()) {
-            before.sum(getScore());
+            getScore().sum(before);
         }
         return before;
     }

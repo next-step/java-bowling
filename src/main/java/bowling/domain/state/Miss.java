@@ -50,8 +50,21 @@ public class Miss extends Finished {
     }
 
     @Override
+    public Score sumScore(Score before) {
+        if (before.canNextSum()) {
+            before = Score.of(current.getCount(), 0).sum(before);
+        }
+
+        if (before.canNextSum()) {
+            before = Score.of(next.getCount(), 0).sum(before);
+        }
+
+        return before;
+    }
+
+    @Override
     public String toString() {
-        return "Open{" +
+        return "Miss{" +
                 "current=" + current +
                 ", next=" + next +
                 '}';

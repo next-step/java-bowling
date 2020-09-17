@@ -36,6 +36,19 @@ public class Spare extends Finished {
     }
 
     @Override
+    public Score sumScore(Score before) {
+        if (before.canNextSum()) {
+            before = Score.of(current.getCount(), 0).sum(before);
+        }
+
+        if (before.canNextSum()) {
+            before = Score.of(next.getCount(), 0).sum(before);
+        }
+
+        return before;
+    }
+
+    @Override
     public String toString() {
         return "Spare{" +
                 "current=" + current +
