@@ -23,7 +23,7 @@
     -[X] List<DeleteHistory>을 랩핑한 DeleteHistories 구현하기
     
 ## Step02 
--[ ] User 구현
+-[X] User 구현
 -[ ] Frame 구현
     -[ ] 1~9번 Frame : NormalFrame으로 구현
     -[ ] 10번 Frame : FinalFrame으로 구현
