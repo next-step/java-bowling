@@ -71,9 +71,12 @@ public class NormalBowl {
                 .reduce(0, Integer::sum);
     }
 
+    public NormalBowlResult getNormalBowlResult() {
+        return NormalBowlResult.getType(this);
+    }
+
     public boolean isCompleted() {
-        return NormalBowlResult.getType(this)
-                .isCompleted();
+        return getNormalBowlResult().isCompleted();
     }
 
 }
