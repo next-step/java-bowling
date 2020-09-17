@@ -43,7 +43,7 @@ class ScoreTest {
     }
 
     @Test
-    @DisplayName("투구 입력값의 범위가 0 ~ 10을 벗어나는 경우 Exception 발생")
+    @DisplayName("입력값의 범위가 0 ~ 10을 벗어나는 경우 Exception 발생")
     void validateScoreRange() {
         assertThatExceptionOfType(OutOfScoreRangeException.class)
                 .isThrownBy(() -> {
@@ -52,7 +52,7 @@ class ScoreTest {
     }
 
     @ParameterizedTest
-    @DisplayName("투구 입력값이 null일 경우 Exception 발생")
+    @DisplayName("입력값이 null일 경우 Exception 발생")
     @NullAndEmptySource
     void validateScoreIsNull(String input) {
         assertThatExceptionOfType(InputScoreNullPointerException.class)
