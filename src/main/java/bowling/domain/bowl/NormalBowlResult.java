@@ -7,11 +7,11 @@ import java.util.Arrays;
 public enum NormalBowlResult {
 
     NONE(new NoneNormalBowlFormatter()),
+    PROGRESS(new ProgressNormalBowlFormatter()),
     STRIKE(new StrikeNormalBowlFormatter()),
     SPARE(new SpareNormalBowlFormatter()),
     MISS(new MissNormalBowlFormatter()),
-    GUTTER(new GutterNormalBowlFormatter()),
-    DEFAULT(new DefaultNormalBowlFormatter())
+    GUTTER(new GutterNormalBowlFormatter())
     ;
 
     NormalBowlResult(NormalBowlFormatter normalBowlFormatter) {
@@ -29,6 +29,10 @@ public enum NormalBowlResult {
 
     public String format(NormalBowl normalBowl) {
         return normalBowlFormatter.format(normalBowl);
+    }
+
+    public boolean isCompleted() {
+        return this.compareTo(PROGRESS) > 0 ;
     }
 
 }

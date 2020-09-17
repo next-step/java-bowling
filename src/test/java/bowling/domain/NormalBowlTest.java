@@ -24,7 +24,7 @@ public class NormalBowlTest {
     @Test
     public void bowl_spare() {
         NormalBowl normalBowl = new NormalBowl();
-        assertThat(normalBowl.bowl(9)).isEqualTo(NormalBowlResult.DEFAULT);
+        assertThat(normalBowl.bowl(9)).isEqualTo(NormalBowlResult.PROGRESS);
         assertThat(normalBowl.bowl(1)).isEqualTo(NormalBowlResult.SPARE);
     }
 
@@ -32,7 +32,7 @@ public class NormalBowlTest {
     @Test
     public void bowl_miss() {
         NormalBowl normalBowl = new NormalBowl();
-        assertThat(normalBowl.bowl(9)).isEqualTo(NormalBowlResult.DEFAULT);
+        assertThat(normalBowl.bowl(9)).isEqualTo(NormalBowlResult.PROGRESS);
         assertThat(normalBowl.bowl(0)).isEqualTo(NormalBowlResult.MISS);
     }
 
@@ -40,7 +40,7 @@ public class NormalBowlTest {
     @Test
     public void bowl_gutter() {
         NormalBowl normalBowl = new NormalBowl();
-        assertThat(normalBowl.bowl(0)).isEqualTo(NormalBowlResult.DEFAULT);
+        assertThat(normalBowl.bowl(0)).isEqualTo(NormalBowlResult.PROGRESS);
         assertThat(normalBowl.bowl(0)).isEqualTo(NormalBowlResult.GUTTER);
     }
 

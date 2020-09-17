@@ -21,12 +21,12 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public Frame bowl(int numberOfPins) {
-        NormalBowlResult normalBowlResult = normalBowls.get(0).bowl(numberOfPins);
-        return isCompleted(normalBowlResult) ? null : this;
+        normalBowls.get(0).bowl(numberOfPins);
+        return isCompleted() ? null : this;
     }
 
-    public boolean isCompleted(NormalBowlResult normalBowlResult) {
-        return !normalBowlResult.equals(NormalBowlResult.DEFAULT);
+    public boolean isCompleted() {
+        return normalBowls.get(0).isCompleted();
     }
 
     @Override

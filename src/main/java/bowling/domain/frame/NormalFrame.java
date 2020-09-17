@@ -15,12 +15,12 @@ public class NormalFrame extends AbstractFrame {
 
     @Override
     public Frame bowl(int numberOfPins) {
-        NormalBowlResult normalBowlResult = normalBowl.bowl(numberOfPins);
-        return isCompleted(normalBowlResult) ? createNextFrame() : this;
+        normalBowl.bowl(numberOfPins);
+        return isCompleted() ? createNextFrame() : this;
     }
 
-    private boolean isCompleted(NormalBowlResult normalBowlResult) {
-        return !normalBowlResult.equals(NormalBowlResult.DEFAULT);
+    private boolean isCompleted() {
+        return normalBowl.isCompleted();
     }
 
     private Frame createNextFrame() {

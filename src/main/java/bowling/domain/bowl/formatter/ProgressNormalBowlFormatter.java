@@ -4,13 +4,17 @@ import bowling.domain.bowl.NormalBowl;
 
 import java.text.MessageFormat;
 
-public class DefaultNormalBowlFormatter implements NormalBowlFormatter {
+import static bowling.domain.NumberOfPins.MAX_NUMBER_OF_PINS;
 
+public class ProgressNormalBowlFormatter implements NormalBowlFormatter {
+
+    public static final int FIRST_BOWL = 1;
     public static final String DEFAULT = "{0}";
 
     @Override
     public boolean isSupport(NormalBowl normalBowl) {
-        return true;
+        return normalBowl.getBowlCount() == FIRST_BOWL &&
+                normalBowl.getTotalNumberOfPins() < MAX_NUMBER_OF_PINS;
     }
 
     @Override

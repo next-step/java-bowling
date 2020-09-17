@@ -27,11 +27,10 @@ public class NormalBowl {
         bowl(secondNumberOfPins);
     }
 
-    public NormalBowlResult bowl(int numberOfPins) {
+    public void bowl(int numberOfPins) {
         validateBowlCount();
         validateTotalNumberOfPins(numberOfPins);
         addNumberOfPins(numberOfPins);
-        return NormalBowlResult.getType(this);
     }
 
     private void addNumberOfPins(int numberOfPins) {
@@ -70,6 +69,11 @@ public class NormalBowl {
         return numberOfPins.stream()
                 .map(NumberOfPins::getNumberOfPins)
                 .reduce(0, Integer::sum);
+    }
+
+    public boolean isCompleted() {
+        return NormalBowlResult.getType(this)
+                .isCompleted();
     }
 
 }
