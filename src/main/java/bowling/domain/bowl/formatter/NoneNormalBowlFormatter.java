@@ -2,7 +2,7 @@ package bowling.domain.bowl.formatter;
 
 import bowling.domain.bowl.NormalBowl;
 
-public class NoneNormalBowlFormatter implements NormalBowlFormatter {
+public class NoneNormalBowlFormatter extends AbstractNormalBowlFormatter {
 
     public static final String EMPTY = "";
 

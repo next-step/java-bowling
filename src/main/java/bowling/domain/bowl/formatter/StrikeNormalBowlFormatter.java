@@ -4,9 +4,8 @@ import bowling.domain.bowl.NormalBowl;
 
 import static bowling.domain.NumberOfPins.MAX_NUMBER_OF_PINS;
 
-public class StrikeNormalBowlFormatter implements NormalBowlFormatter {
+public class StrikeNormalBowlFormatter extends AbstractNormalBowlFormatter {
 
-    public static final int FIRST_BOWL = 1;
     public static final String STRIKE = "X";
 
     @Override

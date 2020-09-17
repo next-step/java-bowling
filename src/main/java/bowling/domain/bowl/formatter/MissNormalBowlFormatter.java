@@ -7,9 +7,8 @@ import java.text.MessageFormat;
 import static bowling.domain.NumberOfPins.MAX_NUMBER_OF_PINS;
 import static bowling.domain.NumberOfPins.MIN_NUMBER_OF_PINS;
 
-public class MissNormalBowlFormatter implements NormalBowlFormatter {
+public class MissNormalBowlFormatter extends AbstractNormalBowlFormatter {
 
-    public static final int SECOND_BOWL = 2;
     public static final String MISS = "{0}|{1}";
 
     @Override

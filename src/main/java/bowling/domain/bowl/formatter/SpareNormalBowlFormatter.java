@@ -6,9 +6,8 @@ import java.text.MessageFormat;
 
 import static bowling.domain.NumberOfPins.MAX_NUMBER_OF_PINS;
 
-public class SpareNormalBowlFormatter implements NormalBowlFormatter {
+public class SpareNormalBowlFormatter extends AbstractNormalBowlFormatter {
 
-    public static final int SECOND_BOWL = 2;
     public static final String SPARE = "{0}|/";
 
     @Override

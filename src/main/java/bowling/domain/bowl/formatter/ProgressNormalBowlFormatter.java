@@ -6,9 +6,8 @@ import java.text.MessageFormat;
 
 import static bowling.domain.NumberOfPins.MAX_NUMBER_OF_PINS;
 
-public class ProgressNormalBowlFormatter implements NormalBowlFormatter {
+public class ProgressNormalBowlFormatter extends AbstractNormalBowlFormatter {
 
-    public static final int FIRST_BOWL = 1;
     public static final String DEFAULT = "{0}";
 
     @Override

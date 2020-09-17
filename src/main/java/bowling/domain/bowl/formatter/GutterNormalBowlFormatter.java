@@ -4,9 +4,8 @@ import bowling.domain.bowl.NormalBowl;
 
 import static bowling.domain.NumberOfPins.MIN_NUMBER_OF_PINS;
 
-public class GutterNormalBowlFormatter implements NormalBowlFormatter {
+public class GutterNormalBowlFormatter extends AbstractNormalBowlFormatter {
 
-    public static final int SECOND_BOWL = 2;
     public static final String GUTTER = "-|-";
 
     @Override
