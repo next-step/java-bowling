@@ -58,8 +58,8 @@
 - [X] BowlingController 생성
 
 - 화면(view)
-- [ ] 입력(InputView)화면 객체 생성
-- [ ] 출력(OutputView)화면 객체 생성
+- [X] 입력(InputView)화면 객체 생성
+- [X] 출력(OutputView)화면 객체 생성
 - [ ] 플레이어(User) 객체 생성
 - [ ] FrameDTO, FrameAssembler 생성
 - [ ] ScoreBoardDTO, ScoreBoardAssembler 생성
