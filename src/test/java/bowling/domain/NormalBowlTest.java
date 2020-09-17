@@ -17,31 +17,35 @@ public class NormalBowlTest {
     @Test
     public void bowl_strike() {
         NormalBowl normalBowl = new NormalBowl();
-        assertThat(normalBowl.bowl(10)).isEqualTo(NormalBowlResult.STRIKE);
+        normalBowl.bowl(10);
+        assertThat(NormalBowlResult.getType(normalBowl)).isEqualTo(NormalBowlResult.STRIKE);
     }
 
     @DisplayName("투구 테스트: 스페어")
     @Test
     public void bowl_spare() {
         NormalBowl normalBowl = new NormalBowl();
-        assertThat(normalBowl.bowl(9)).isEqualTo(NormalBowlResult.PROGRESS);
-        assertThat(normalBowl.bowl(1)).isEqualTo(NormalBowlResult.SPARE);
+        normalBowl.bowl(9);
+        normalBowl.bowl(1);
+        assertThat(NormalBowlResult.getType(normalBowl)).isEqualTo(NormalBowlResult.SPARE);
     }
 
     @DisplayName("투구 테스트: 미스")
     @Test
     public void bowl_miss() {
         NormalBowl normalBowl = new NormalBowl();
-        assertThat(normalBowl.bowl(9)).isEqualTo(NormalBowlResult.PROGRESS);
-        assertThat(normalBowl.bowl(0)).isEqualTo(NormalBowlResult.MISS);
+        normalBowl.bowl(9);
+        normalBowl.bowl(0);
+        assertThat(NormalBowlResult.getType(normalBowl)).isEqualTo(NormalBowlResult.MISS);
     }
 
     @DisplayName("투구 테스트: 거터")
     @Test
     public void bowl_gutter() {
         NormalBowl normalBowl = new NormalBowl();
-        assertThat(normalBowl.bowl(0)).isEqualTo(NormalBowlResult.PROGRESS);
-        assertThat(normalBowl.bowl(0)).isEqualTo(NormalBowlResult.GUTTER);
+        normalBowl.bowl(0);
+        normalBowl.bowl(0);
+        assertThat(NormalBowlResult.getType(normalBowl)).isEqualTo(NormalBowlResult.GUTTER);
     }
 
     @DisplayName("투구 유효성 테스트: 0보다 작거나 10보다 큰 수 입력")
