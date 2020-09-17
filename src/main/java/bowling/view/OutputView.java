@@ -16,6 +16,7 @@ public class OutputView {
         System.out.print(MessageFormat.format("| {0} |", StringUtils.leftPad(player.getName(), 4)));
         Frame lastFrame = printFrame(firstFrame);
         printEmptyBoard(lastFrame);
+        System.out.println();
     }
 
     private static Frame printFrame(Frame firstFrame) {

@@ -5,22 +5,22 @@ import java.util.function.Function;
 
 public enum BowlResult {
 
-    STRIKE(frameBowl -> frameBowl.isStrike()),
-    SPARE(frameBowl -> frameBowl.isSpare()),
-    MISS(frameBowl -> frameBowl.isMiss()),
-    GUTTER(frameBowl -> frameBowl.isGutter()),
-    NONE(frameBowl -> true)
+    STRIKE(normalBowl -> normalBowl.isStrike()),
+    SPARE(normalBowl -> normalBowl.isSpare()),
+    MISS(normalBowl -> normalBowl.isMiss()),
+    GUTTER(normalBowl -> normalBowl.isGutter()),
+    NONE(normalBowl -> true)
     ;
 
-    BowlResult(Function<FrameBowl, Boolean> getTypeFunction) {
+    BowlResult(Function<NormalBowl, Boolean> getTypeFunction) {
         this.getTypeFunction = getTypeFunction;
     }
 
-    private Function<FrameBowl, Boolean> getTypeFunction;
+    private Function<NormalBowl, Boolean> getTypeFunction;
 
-    public static BowlResult getType(FrameBowl frameBowl) {
+    public static BowlResult getType(NormalBowl normalBowl) {
         return Arrays.stream(values())
-                .filter(bowlResult -> bowlResult.getTypeFunction.apply(frameBowl))
+                .filter(bowlResult -> bowlResult.getTypeFunction.apply(normalBowl))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
     }
