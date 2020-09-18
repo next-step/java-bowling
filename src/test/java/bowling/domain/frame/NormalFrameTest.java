@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,7 +14,7 @@ class NormalFrameTest {
     void frameIndexExceptionTest() {
         int frameIndex = 10;
         assertThatThrownBy(() -> {
-                new NormalFrame(frameIndex);
+            new NormalFrame(frameIndex);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

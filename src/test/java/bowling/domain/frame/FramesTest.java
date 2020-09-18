@@ -1,5 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.Pin;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -22,7 +23,7 @@ class FramesTest {
     @Test
     void frameFinishTest() {
         Frames frames = new Frames();
-        for(int i = 0; i < 12; i++) {
+        for (int i = 0; i < 12; i++) {
             frames.play(new Pin(10));
         }
         assertTrue(frames.isEndAllFrame());
