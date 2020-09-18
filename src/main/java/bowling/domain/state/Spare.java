@@ -1,12 +1,12 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.Pin;
+import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 import java.util.Objects;
 
 public class Spare implements State {
 
-    public static final String SPARE_MARK = "|/";
     private final Pin first;
 
     private Spare(Pin first) {
@@ -28,8 +28,8 @@ public class Spare implements State {
     }
 
     @Override
-    public String view() {
-        return first + SPARE_MARK;
+    public String makeSymbol() {
+        return first + Symbol.SPARE.toString();
     }
 
     @Override

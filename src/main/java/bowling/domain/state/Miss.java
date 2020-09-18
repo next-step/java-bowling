@@ -4,7 +4,6 @@ import bowling.domain.pin.Pin;
 
 public class Miss implements State {
 
-    public static final String MISS_MARK = "|";
     private final Pin first;
     private final Pin second;
 
@@ -28,7 +27,7 @@ public class Miss implements State {
     }
 
     @Override
-    public String view() {
-        return first + MISS_MARK + second;
+    public String makeSymbol() {
+        return first + Symbol.MISS.toString() + second;
     }
 }

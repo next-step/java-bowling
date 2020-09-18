@@ -32,7 +32,7 @@ public class Continue implements State {
     }
 
     @Override
-    public String view() {
+    public String makeSymbol() {
         return first.toString();
     }
 

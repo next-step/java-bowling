@@ -25,7 +25,7 @@ public class Ready implements State {
     }
 
     @Override
-    public String view() {
+    public String makeSymbol() {
         return "";
     }
 }

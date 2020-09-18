@@ -4,8 +4,6 @@ import bowling.domain.pin.Pin;
 
 public class Strike implements State {
 
-    public static final String STRIKE_MARK = "X";
-
     private Strike() {
     }
 
@@ -24,7 +22,7 @@ public class Strike implements State {
     }
 
     @Override
-    public String view() {
-        return STRIKE_MARK;
+    public String makeSymbol() {
+        return Symbol.STRIKE.toString();
     }
 }

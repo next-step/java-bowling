@@ -8,5 +8,5 @@ public interface State {
 
     boolean isEnd();
 
-    String view();
+    String makeSymbol();
 }
