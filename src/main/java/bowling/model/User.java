@@ -7,12 +7,16 @@ public class User {
 
     private final String name;
 
-    public User(String name) {
-        validateName(name);
+    private User(String name) {
         this.name = name;
     }
 
-    private void validateName(String name) {
+    public static User valueOf(String name) {
+        validateName(name);
+        return new User(name);
+    }
+
+    private static void validateName(String name) {
         if (name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException(ExceptionMessages.USER_NAME_EXCEPTION);
         }

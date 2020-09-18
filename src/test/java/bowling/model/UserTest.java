@@ -15,7 +15,7 @@ class UserTest {
     @DisplayName("유저 생성 실패 : 이름 3글자 초과")
     public void create_fail(String name) throws Exception {
 
-        assertThatThrownBy(() -> new User(name))
+        assertThatThrownBy(() -> User.valueOf(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExceptionMessages.USER_NAME_EXCEPTION);
 

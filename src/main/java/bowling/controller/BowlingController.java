@@ -9,7 +9,7 @@ public class BowlingController {
 
     public static void main(String[] args) {
         BowlingGame bowlingGame = new BowlingGame();
-        User user = new User(InputView.getUserName());
+        User user = User.valueOf(InputView.getUserName());
 
         while (!bowlingGame.isEnd()) {
             int frameNo = bowlingGame.getPlayFrameNo();
