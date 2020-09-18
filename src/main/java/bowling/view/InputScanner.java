@@ -18,7 +18,7 @@ public class InputScanner {
     }
 
     public static String getName(int playerNumber) {
-        System.out.printf(String.format("플레이어 %s의 이름은?(3 english letters):", playerNumber));
+        System.out.printf(String.format("플레이어 %s의 이름은?(3 english letters): ", playerNumber));
         String result = scanner.next();
 
         if (!Pattern.matches(REGX_ONLY_ENGLISH_NAME, result)) {

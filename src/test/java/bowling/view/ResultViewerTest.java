@@ -1,6 +1,6 @@
 package bowling.view;
 
-import bowling.domain.Game;
+import bowling.domain.Bowling;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -13,12 +13,12 @@ public class ResultViewerTest {
 
     @Test
     void getSumScores() {
-        Game game = Game.from(USERNAME);
+        Bowling bowling = Bowling.from(USERNAME);
 
-        ResultViewer resultViewer = new ResultViewer(game);
+        ResultViewer resultViewer = new ResultViewer(USERNAME);
 
-        resultViewer.record(game.hit(9));
-        resultViewer.record(game.hit(1));
+        resultViewer.record(bowling.hit(9));
+        resultViewer.record(bowling.hit(1));
 
         List<Integer> scores = resultViewer.getScores();
 
@@ -27,12 +27,12 @@ public class ResultViewerTest {
 
     @Test
     void getSumScores_all_strike() {
-        Game game = Game.from(USERNAME);
+        Bowling bowling = Bowling.from(USERNAME);
 
-        ResultViewer resultViewer = new ResultViewer(game);
+        ResultViewer resultViewer = new ResultViewer(USERNAME);
 
         for (int index = 0; index < 12; index++) {
-            resultViewer.record(game.hit(10));
+            resultViewer.record(bowling.hit(10));
         }
 
         List<Integer> scores = resultViewer.getScores();
@@ -51,17 +51,17 @@ public class ResultViewerTest {
 
     @Test
     void getSumScores_lastSpare() {
-        Game game = Game.from(USERNAME);
+        Bowling bowling = Bowling.from(USERNAME);
 
-        ResultViewer resultViewer = new ResultViewer(game);
+        ResultViewer resultViewer = new ResultViewer(USERNAME);
 
         for (int index = 0; index < 12; index++) {
             if (index == 9) {
-                resultViewer.record(game.hit(9));
+                resultViewer.record(bowling.hit(9));
             } else if (index == 10) {
-                resultViewer.record(game.hit(1));
+                resultViewer.record(bowling.hit(1));
             } else {
-                resultViewer.record(game.hit(10));
+                resultViewer.record(bowling.hit(10));
             }
         }
 
@@ -81,12 +81,12 @@ public class ResultViewerTest {
 
     @Test
     void getStatus() {
-        Game game = Game.from(USERNAME);
+        Bowling bowling = Bowling.from(USERNAME);
 
-        ResultViewer resultViewer = new ResultViewer(game);
+        ResultViewer resultViewer = new ResultViewer(USERNAME);
 
-        resultViewer.record(game.hit(9));
-        resultViewer.record(game.hit(1));
+        resultViewer.record(bowling.hit(9));
+        resultViewer.record(bowling.hit(1));
 
         List<List<String>> status = resultViewer.getStatus();
 
@@ -95,12 +95,12 @@ public class ResultViewerTest {
 
     @Test
     void getStatus_all_strike() {
-        Game game = Game.from(USERNAME);
+        Bowling bowling = Bowling.from(USERNAME);
 
-        ResultViewer resultViewer = new ResultViewer(game);
+        ResultViewer resultViewer = new ResultViewer(USERNAME);
 
         for (int index = 0; index < 12; index++) {
-            resultViewer.record(game.hit(10));
+            resultViewer.record(bowling.hit(10));
         }
 
         List<List<String>> status = resultViewer.getStatus();
@@ -119,17 +119,17 @@ public class ResultViewerTest {
 
     @Test
     void getStatus_lastSpare() {
-        Game game = Game.from(USERNAME);
+        Bowling bowling = Bowling.from(USERNAME);
 
-        ResultViewer resultViewer = new ResultViewer(game);
+        ResultViewer resultViewer = new ResultViewer(USERNAME);
 
         for (int index = 0; index < 12; index++) {
             if (index == 9) {
-                resultViewer.record(game.hit(9));
+                resultViewer.record(bowling.hit(9));
             } else if (index == 10) {
-                resultViewer.record(game.hit(1));
+                resultViewer.record(bowling.hit(1));
             } else {
-                resultViewer.record(game.hit(10));
+                resultViewer.record(bowling.hit(10));
             }
         }
 
@@ -149,26 +149,26 @@ public class ResultViewerTest {
 
     @Test
     void getStatus_sample() {
-        Game game = Game.from(USERNAME);
+        Bowling bowling = Bowling.from(USERNAME);
 
-        ResultViewer resultViewer = new ResultViewer(game);
+        ResultViewer resultViewer = new ResultViewer(USERNAME);
 
-        resultViewer.record(game.hit(1));
-        resultViewer.record(game.hit(2));
-        resultViewer.record(game.hit(9));
-        resultViewer.record(game.hit(1));
-        resultViewer.record(game.hit(2));
-        resultViewer.record(game.hit(3));
-        resultViewer.record(game.hit(10));
-        resultViewer.record(game.hit(10));
-        resultViewer.record(game.hit(10));
-        resultViewer.record(game.hit(10));
-        resultViewer.record(game.hit(10));
-        resultViewer.record(game.hit(9));
-        resultViewer.record(game.hit(1));
-        resultViewer.record(game.hit(10));
-        resultViewer.record(game.hit(9));
-        resultViewer.record(game.hit(1));
+        resultViewer.record(bowling.hit(1));
+        resultViewer.record(bowling.hit(2));
+        resultViewer.record(bowling.hit(9));
+        resultViewer.record(bowling.hit(1));
+        resultViewer.record(bowling.hit(2));
+        resultViewer.record(bowling.hit(3));
+        resultViewer.record(bowling.hit(10));
+        resultViewer.record(bowling.hit(10));
+        resultViewer.record(bowling.hit(10));
+        resultViewer.record(bowling.hit(10));
+        resultViewer.record(bowling.hit(10));
+        resultViewer.record(bowling.hit(9));
+        resultViewer.record(bowling.hit(1));
+        resultViewer.record(bowling.hit(10));
+        resultViewer.record(bowling.hit(9));
+        resultViewer.record(bowling.hit(1));
 
         List<List<String>> status = resultViewer.getStatus();
 

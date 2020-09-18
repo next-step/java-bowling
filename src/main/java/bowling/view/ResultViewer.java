@@ -2,10 +2,7 @@ package bowling.view;
 
 import bowling.domain.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,11 +18,11 @@ public class ResultViewer {
     private static final String GAME_RESULT_LAST_FORMAT = "  %-5s |";
     private static final String GAME_RESULT_DELIMITER = "|";
 
-    private final Game game;
+    private final String name;
     private final Map<Integer, Frame> status;
 
-    public ResultViewer(Game game) {
-        this.game = game;
+    public ResultViewer(String name) {
+        this.name = name;
         this.status = new HashMap<>();
     }
 
@@ -34,12 +31,11 @@ public class ResultViewer {
     }
 
     public void printing() {
-        showHead();
         showStatus(getStatus());
         showResultScores(getScores());
     }
 
-    private static void showHead() {
+    public static void showHead() {
         System.out.print(STAGE_PREFIX_STRING);
 
         IntStream.rangeClosed(1, LastFrame.LAST_FRAME_NUMBER)
@@ -88,7 +84,7 @@ public class ResultViewer {
     }
 
     private void showStatus(List<List<String>> frames) {
-        System.out.print(String.format(NAME_FORMAT, game.getPlayerName()));
+        System.out.print(String.format(NAME_FORMAT, name));
 
         IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
                 .forEach(frame -> System.out.printf(statusToString(frame, frames)));
@@ -175,5 +171,23 @@ public class ResultViewer {
         return String.format(
                 frameNumber != SHOW_LAST_FRAME_NUMBER ? GAME_RESULT_FORMAT : GAME_RESULT_LAST_FORMAT,
                 scores.get(frameNumber - 1));
+    }
+
+    public static Map<String, ResultViewer> makeResultMap(List<String> names) {
+        Map<String, ResultViewer> result = new HashMap<>();
+
+        for (String name : names) {
+            result.put(name, new ResultViewer(name));
+        }
+
+        return result;
+    }
+
+    public static void printAll(List<String> names, Map<String, ResultViewer> resultViewerMap) {
+        ResultViewer.showHead();
+
+        for (String name : names) {
+            resultViewerMap.get(name).printing();
+        }
     }
 }

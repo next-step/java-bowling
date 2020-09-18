@@ -1,64 +1,66 @@
 package bowling.domain;
 
-import java.util.LinkedList;
-
-import static bowling.domain.LastFrame.LAST_FRAME_NUMBER;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Game {
-    private String username;
-    private LinkedList<Frame> frames;
+    private List<Bowling> bowlingList;
+    private int cursor;
 
-    private Game(String username) {
-        this.username = username;
-        this.frames = new LinkedList<Frame>() {{
-            add(NormalFrame.from());
-        }};
+    private Game(List<String> names) {
+        bowlingList = names.stream()
+                .map(Bowling::from)
+                .collect(Collectors.toList());
+
+        cursor = 0;
     }
 
-    public static Game from(String username) {
-        return new Game(username);
+    public static Game from(List<String> names) {
+        return new Game(names);
+    }
+
+    private Bowling getCurrent() {
+        return bowlingList.get(cursor);
+    }
+
+    private Bowling findBowlingWithIsNotEnd() {
+        if (isEnd()) {
+            throw new RuntimeException("Test");
+        }
+
+        Bowling bowling = getCurrent();
+
+        while (bowling.isEnd()) {
+            cursor++;
+            bowling = getCurrent();
+        }
+
+        return bowling;
     }
 
     public String getPlayerName() {
-        return username;
-    }
-
-    public int getPlayFrameNumber() {
-        return getLastFrame().getNumber();
+        return getCurrent().getPlayerName();
     }
 
     public Frame hit(int count) {
-        Frame frame = getLastFrame().hit(count);
+        Bowling bowling = findBowlingWithIsNotEnd();
 
-        if (hasNextFrame() && getLastFrame().isFinish()) {
-            frames.add(next());
+        Frame frame = bowling.hit(count);
+
+        if (frame.isFinish()) {
+            cursor++;
+        }
+
+        if (cursor == bowlingList.size()) {
+            cursor = 0;
         }
 
         return frame;
     }
 
-    private Frame next() {
-        if (!hasNextFrame()) {
-            throw new RuntimeException("다음 프레임이 존재하지 않습니다.");
-        }
-
-        int nextFrameNumber = getNextFrameNumber();
-        return nextFrameNumber == LAST_FRAME_NUMBER ? LastFrame.from() : NormalFrame.of(nextFrameNumber);
-    }
-
-    public boolean hasNextFrame() {
-        return getNextFrameNumber() <= LAST_FRAME_NUMBER;
-    }
-
-    private int getNextFrameNumber() {
-        return getLastFrame().getNumber() + 1;
-    }
-
-    private Frame getLastFrame() {
-        return frames.getLast();
-    }
-
     public boolean isEnd() {
-        return !hasNextFrame() && getLastFrame().isFinish();
+        return bowlingList.stream()
+                .allMatch(Bowling::isEnd);
     }
 }

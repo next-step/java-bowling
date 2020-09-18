@@ -1,0 +1,60 @@
+package bowling.domain;
+
+import java.util.LinkedList;
+
+import static bowling.domain.LastFrame.LAST_FRAME_NUMBER;
+
+public class Bowling {
+    private String username;
+    private LinkedList<Frame> frames;
+
+    private Bowling(String username) {
+        this.username = username;
+        this.frames = new LinkedList<Frame>() {{
+            add(NormalFrame.from());
+        }};
+    }
+
+    public static Bowling from(String username) {
+        return new Bowling(username);
+    }
+
+    public String getPlayerName() {
+        return username;
+    }
+
+    public Frame hit(int count) {
+        Frame frame = getLastFrame().hit(count);
+
+        if (hasNextFrame() && getLastFrame().isFinish()) {
+            frames.add(next());
+        }
+
+        return frame;
+    }
+
+    private Frame next() {
+        if (!hasNextFrame()) {
+            throw new RuntimeException("다음 프레임이 존재하지 않습니다.");
+        }
+
+        int nextFrameNumber = getNextFrameNumber();
+        return nextFrameNumber == LAST_FRAME_NUMBER ? LastFrame.from() : NormalFrame.of(nextFrameNumber);
+    }
+
+    public boolean hasNextFrame() {
+        return getNextFrameNumber() <= LAST_FRAME_NUMBER;
+    }
+
+    private int getNextFrameNumber() {
+        return getLastFrame().getNumber() + 1;
+    }
+
+    private Frame getLastFrame() {
+        return frames.getLast();
+    }
+
+    public boolean isEnd() {
+        return !hasNextFrame() && getLastFrame().isFinish();
+    }
+}
