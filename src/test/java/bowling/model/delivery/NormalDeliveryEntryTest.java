@@ -1,6 +1,9 @@
-package bowling.model;
+package bowling.model.delivery;
 
 import bowling.ExceptionMessages;
+import bowling.model.State;
+import bowling.model.delivery.Delivery;
+import bowling.model.delivery.NormalDeliveryEntry;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,7 +18,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-import static org.junit.jupiter.api.Assertions.*;
 
 class NormalDeliveryEntryTest {
 

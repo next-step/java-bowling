@@ -1,8 +1,10 @@
-package bowling.model;
+package bowling.model.delivery;
 
 import bowling.ExceptionMessages;
+import bowling.model.State;
 
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class NormalDeliveryEntry {
@@ -45,4 +47,16 @@ public class NormalDeliveryEntry {
         return lastDelivery.getState();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NormalDeliveryEntry that = (NormalDeliveryEntry) o;
+        return Objects.equals(deliveries, that.deliveries);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(deliveries);
+    }
 }

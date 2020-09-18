@@ -1,4 +1,7 @@
-package bowling.model;
+package bowling.model.delivery;
+
+import bowling.model.Pins;
+import bowling.model.State;
 
 import java.util.Objects;
 

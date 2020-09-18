@@ -1,7 +1,10 @@
-package bowling.model;
+package bowling.model.delivery;
+
+import bowling.model.State;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class FinalDeliveryEntry {
@@ -65,4 +68,19 @@ public class FinalDeliveryEntry {
     public Stream<Delivery> getDeliveries() {
         return deliveries.stream();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FinalDeliveryEntry that = (FinalDeliveryEntry) o;
+        return canBonusDelivery == that.canBonusDelivery &&
+                Objects.equals(deliveries, that.deliveries);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(deliveries, canBonusDelivery);
+    }
+
 }
