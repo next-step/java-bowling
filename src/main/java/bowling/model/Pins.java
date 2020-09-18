@@ -10,10 +10,6 @@ public class Pins {
 
     private final int fallenPins;
 
-    public Pins() {
-        this(MAX_PINS);
-    }
-
     private Pins(int fallenPins) {
         this.fallenPins = fallenPins;
     }
@@ -33,12 +29,30 @@ public class Pins {
         }
     }
 
+    public State getState() {
+        return State.getStateByPins(fallenPins, true);
+    }
+
     private void verifyNextFallenPins(int nextFallenPins) {
         validatePins(nextFallenPins);
         if (this.fallenPins + nextFallenPins > MAX_PINS) {
             throw new IllegalArgumentException(ExceptionMessages.PINS_LAST_PINS_EXCEPTION);
         }
     }
+
+    private boolean areAllPinsFallen(int nextFallenPins) {
+        return fallenPins + nextFallenPins == MAX_PINS;
+    }
+
+    public State getNextState(int nextFallenPins) {
+        verifyNextFallenPins(nextFallenPins);
+        if (areAllPinsFallen(nextFallenPins)) {
+            return State.getStateByPins(MAX_PINS, false);
+        }
+
+        return State.getStateByPins(nextFallenPins, false);
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -51,19 +65,6 @@ public class Pins {
     @Override
     public int hashCode() {
         return Objects.hash(fallenPins);
-    }
-
-    public State getNextState(int nextFallenPins) {
-        verifyNextFallenPins(nextFallenPins);
-        if (fallenPins + nextFallenPins == MAX_PINS) {
-            return State.getStateByPins(MAX_PINS, false);
-        }
-
-        return State.getStateByPins(nextFallenPins, false);
-    }
-
-    public State getState() {
-        return State.getStateByPins(fallenPins, true);
     }
 
 }
