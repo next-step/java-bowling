@@ -14,8 +14,8 @@ public class NormalFrame extends AbstractFrame {
     }
 
     @Override
-    public Frame bowl(int numberOfPins) {
-        normalBowl.bowl(numberOfPins);
+    public Frame bowl(int numberOfPin) {
+        normalBowl.bowl(numberOfPin);
         return isCompleted() ? createNextFrame() : this;
     }
 
@@ -24,16 +24,15 @@ public class NormalFrame extends AbstractFrame {
     }
 
     private Frame createNextFrame() {
-        nextNormalFrame = (frameNumber == LAST_NORMAL_FRAME_NUMBER) ?
+        nextFrame = (frameNumber == LAST_NORMAL_FRAME_NUMBER) ?
                 new FinalFrame() :
                 new NormalFrame(frameNumber + 1);
-        return nextNormalFrame;
+        return nextFrame;
     }
 
     @Override
     public String toString() {
-        return NormalBowlResult.getType(normalBowl)
-                .format(normalBowl);
+        return normalBowl.format();
     }
 
 }

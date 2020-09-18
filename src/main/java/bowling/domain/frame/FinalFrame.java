@@ -13,8 +13,8 @@ public class FinalFrame extends AbstractFrame {
     }
 
     @Override
-    public Frame bowl(int numberOfPins) {
-        normalBowls.bowl(numberOfPins);
+    public Frame bowl(int numberOfPin) {
+        normalBowls.bowl(numberOfPin);
         return isCompleted() ? null : this;
     }
 
@@ -29,7 +29,7 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public String toString() {
-        return normalBowls.toString();
+        return normalBowls.format();
     }
 
 }

@@ -10,7 +10,7 @@ public abstract class AbstractFrame implements Frame {
 
     protected final int frameNumber;
 
-    protected Frame nextNormalFrame;
+    protected Frame nextFrame;
 
     public AbstractFrame(int frameNumber) {
         this.frameNumber = frameNumber;
@@ -23,7 +23,7 @@ public abstract class AbstractFrame implements Frame {
 
     @Override
     public Frame getNextFrame() {
-        return nextNormalFrame;
+        return nextFrame;
     }
 
     @Override
