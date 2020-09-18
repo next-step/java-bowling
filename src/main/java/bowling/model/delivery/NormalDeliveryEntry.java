@@ -59,4 +59,5 @@ public class NormalDeliveryEntry {
     public int hashCode() {
         return Objects.hash(deliveries);
     }
+
 }

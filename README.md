@@ -24,6 +24,7 @@
     
 ## Step02 
 -[X] User 구현
+-[X] Frames 구현
 -[X] Frame 구현
     -[X] 1~9번 Frame : NormalFrame 으로 구현
     -[X] 10번 Frame : FinalFrame 으로 구현
