@@ -1,4 +1,6 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.Pin;
 
 public abstract class Frame {
 
@@ -13,18 +15,6 @@ public abstract class Frame {
         validationFrameIndex(frameIndex);
     }
 
-    abstract protected void validationFrameIndex(int frameIndex);
-
-    abstract public boolean rollingEnd();
-
-    abstract public boolean isEndAllFrame();
-
-    abstract public String index();
-
-    abstract public String currentFrameStatus();
-
-    abstract void bowl(Pin pin);
-
     public int currentFrameIndex() {
         return frameIndex;
     }
@@ -37,4 +27,17 @@ public abstract class Frame {
 
         return new NormalFrame(nextFrameIndex);
     }
+
+    abstract protected void validationFrameIndex(int frameIndex);
+
+    abstract public boolean rollingEnd();
+
+    abstract public boolean isEndAllFrame();
+
+    abstract public String index();
+
+    abstract public String currentFrameStatus();
+
+    abstract void bowl(Pin pin);
+
 }
