@@ -24,8 +24,6 @@ public class Miss extends Finished {
 
     @Override
     public List<Pin> toPins() {
-        System.out.println(current);
-        System.out.println(next);
         return Arrays.asList(current, next);
     }
 
