@@ -45,13 +45,11 @@ public class ResultViewer {
     }
 
     public List<List<String>> getStatus() {
-        return new ArrayList<>(
-                status.values()
-                        .stream()
-                        .map(Frame::toPins)
-                        .map(this::toStatus)
-                        .collect(Collectors.toList())
-        );
+        return status.values()
+                .stream()
+                .map(Frame::toPins)
+                .map(this::toStatus)
+                .collect(Collectors.toList());
     }
 
     private List<String> toStatus(List<Pin> pins) {
