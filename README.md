@@ -21,3 +21,17 @@
 -[X] 일급 콜렉션을 사용한다.
     -[X] List<Answer>을 랩핑한 Answers 구현하기
     -[X] List<DeleteHistory>을 랩핑한 DeleteHistories 구현하기
+    
+## Step02 
+-[X] User 구현
+-[X] Frames 구현
+-[X] Frame 구현
+    -[X] 1~9번 Frame : NormalFrame 으로 구현
+    -[X] 10번 Frame : FinalFrame 으로 구현
+-[X] 하나의 투구 구현 (Delivery)
+-[X] 각 프레임에서 사용하는 DeliveryEntry 구현
+-[X] Pins 구현
+
+-[X] 투구마다 넘어뜨린 핀 갯수 입력받기
+-[X] 투구 입력 받고 점수판 현황 출력
+
