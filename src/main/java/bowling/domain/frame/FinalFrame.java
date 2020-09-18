@@ -1,10 +1,14 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.Pin;
+import bowling.domain.rolling.FinalRolling;
+import bowling.domain.rolling.Rolling;
 
 public class FinalFrame extends Frame {
 
     private final String FINAL_FRAME_RANGE = "FinalFrame의 인덱스는 10이여야합니다.";
 
-    private RollingResult finalRollingResult = new FinalRollingResult();
+    private Rolling finalRolling = new FinalRolling();
 
     public FinalFrame(int frameIndex) {
         super(frameIndex);
@@ -19,17 +23,17 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean rollingEnd() {
-        return finalRollingResult.isFinish();
+        return finalRolling.isFinish();
     }
 
     @Override
     void bowl(Pin pin) {
-        finalRollingResult.bowl(pin);
+        finalRolling.bowl(pin);
     }
 
     @Override
     public boolean isEndAllFrame() {
-        return finalRollingResult.isFinish();
+        return finalRolling.isFinish();
     }
 
     @Override
@@ -39,6 +43,6 @@ public class FinalFrame extends Frame {
 
     @Override
     public String currentFrameStatus() {
-        return finalRollingResult.currentFrameStatus();
+        return finalRolling.currentFrameStatus();
     }
 }

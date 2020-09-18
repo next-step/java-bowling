@@ -1,10 +1,14 @@
-package bowling.domain;
+package bowling.domain.frame;
+
+import bowling.domain.Pin;
+import bowling.domain.rolling.NormalRolling;
+import bowling.domain.rolling.Rolling;
 
 public class NormalFrame extends Frame {
 
     private final String NORMAL_FRAME_RANGE = "NormalFrame의 범위는 1~9 사이입니다.";
 
-    private RollingResult normalRollingResult = new NormalRollingResult();
+    private Rolling normalRolling = new NormalRolling();
 
     public NormalFrame(int frameIndex) {
         super(frameIndex);
@@ -19,12 +23,12 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean rollingEnd() {
-        return normalRollingResult.isFinish();
+        return normalRolling.isFinish();
     }
 
     @Override
     void bowl(Pin pin) {
-        normalRollingResult.bowl(pin);
+        normalRolling.bowl(pin);
     }
 
     @Override
@@ -39,6 +43,6 @@ public class NormalFrame extends Frame {
 
     @Override
     public String currentFrameStatus() {
-        return normalRollingResult.currentFrameStatus();
+        return normalRolling.currentFrameStatus();
     }
 }
