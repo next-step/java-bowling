@@ -4,8 +4,8 @@ import bowling.domain.bowl.NormalBowl;
 
 import java.text.MessageFormat;
 
-import static bowling.domain.NumberOfPins.MAX_NUMBER_OF_PINS;
-import static bowling.domain.NumberOfPins.MIN_NUMBER_OF_PINS;
+import static bowling.domain.NumberOfPin.MAX_NUMBER_OF_PIN;
+import static bowling.domain.NumberOfPin.MIN_NUMBER_OF_PIN;
 
 public class MissNormalBowlFormatter extends AbstractNormalBowlFormatter {
 
@@ -14,7 +14,7 @@ public class MissNormalBowlFormatter extends AbstractNormalBowlFormatter {
     @Override
     public boolean isSupport(NormalBowl normalBowl) {
         return normalBowl.getBowlCount() == SECOND_BOWL &&
-                (normalBowl.getTotalNumberOfPins() > MIN_NUMBER_OF_PINS && normalBowl.getTotalNumberOfPins() < MAX_NUMBER_OF_PINS);
+                (normalBowl.getTotalNumberOfPins() > MIN_NUMBER_OF_PIN && normalBowl.getTotalNumberOfPins() < MAX_NUMBER_OF_PIN);
     }
 
     @Override

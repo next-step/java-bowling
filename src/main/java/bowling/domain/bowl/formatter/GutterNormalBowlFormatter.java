@@ -2,7 +2,7 @@ package bowling.domain.bowl.formatter;
 
 import bowling.domain.bowl.NormalBowl;
 
-import static bowling.domain.NumberOfPins.MIN_NUMBER_OF_PINS;
+import static bowling.domain.NumberOfPin.MIN_NUMBER_OF_PIN;
 
 public class GutterNormalBowlFormatter extends AbstractNormalBowlFormatter {
 
@@ -11,7 +11,7 @@ public class GutterNormalBowlFormatter extends AbstractNormalBowlFormatter {
     @Override
     public boolean isSupport(NormalBowl normalBowl) {
         return normalBowl.getBowlCount() == SECOND_BOWL &&
-                normalBowl.getTotalNumberOfPins() == MIN_NUMBER_OF_PINS;
+                normalBowl.getTotalNumberOfPins() == MIN_NUMBER_OF_PIN;
     }
 
     @Override

@@ -2,7 +2,7 @@ package bowling.domain.bowl.formatter;
 
 import bowling.domain.bowl.NormalBowl;
 
-import static bowling.domain.NumberOfPins.MAX_NUMBER_OF_PINS;
+import static bowling.domain.NumberOfPin.MAX_NUMBER_OF_PIN;
 
 public class StrikeNormalBowlFormatter extends AbstractNormalBowlFormatter {
 
@@ -11,7 +11,7 @@ public class StrikeNormalBowlFormatter extends AbstractNormalBowlFormatter {
     @Override
     public boolean isSupport(NormalBowl normalBowl) {
         return normalBowl.getBowlCount() == FIRST_BOWL &&
-                normalBowl.getTotalNumberOfPins() == MAX_NUMBER_OF_PINS;
+                normalBowl.getTotalNumberOfPins() == MAX_NUMBER_OF_PIN;
     }
 
     @Override
