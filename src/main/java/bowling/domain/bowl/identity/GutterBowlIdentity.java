@@ -1,15 +1,32 @@
 package bowling.domain.bowl.identity;
 
-import bowling.domain.bowl.Bowl;
+import bowling.domain.bowl.BowlResult;
 
 import static bowling.domain.NumberOfPin.MIN_NUMBER_OF_PIN;
 
 public class GutterBowlIdentity extends AbstractBowlIdentity {
 
+    public static final String GUTTER = "-|-";
+
     @Override
-    public boolean identity(Bowl bowl) {
-        return bowl.getBowlCount() == SECOND_BOWL &&
-                bowl.getTotalNumberOfPin() == MIN_NUMBER_OF_PIN;
+    public boolean identity(BowlResult bowlResult) {
+        return bowlResult.getBowlCount() == SECOND_BOWL &&
+                bowlResult.getTotalNumberOfPin() == MIN_NUMBER_OF_PIN;
+    }
+
+    @Override
+    public boolean isCompleted() {
+        return true;
+    }
+
+    @Override
+    public boolean isBonus() {
+        return false;
+    }
+
+    @Override
+    public String format(BowlResult bowlResult) {
+        return GUTTER;
     }
 
 }

@@ -1,10 +1,12 @@
 package bowling.domain.bowl.identity;
 
-import bowling.domain.bowl.Bowl;
+import bowling.domain.bowl.BowlResult;
 
-@FunctionalInterface
 public interface BowlIdentity {
 
-    boolean identity(Bowl bowl);
+    boolean identity(BowlResult bowlResult);
+    boolean isCompleted();
+    boolean isBonus();
+    String format(BowlResult bowlResult);
 
 }

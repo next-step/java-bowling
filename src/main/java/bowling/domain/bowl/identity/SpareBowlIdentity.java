@@ -1,15 +1,34 @@
 package bowling.domain.bowl.identity;
 
-import bowling.domain.bowl.Bowl;
+import bowling.domain.bowl.BowlResult;
+
+import java.text.MessageFormat;
 
 import static bowling.domain.NumberOfPin.MAX_NUMBER_OF_PIN;
 
 public class SpareBowlIdentity extends AbstractBowlIdentity {
 
+    public static final String SPARE = "{0}|/";
+
     @Override
-    public boolean identity(Bowl bowl) {
-        return bowl.getBowlCount() == SECOND_BOWL &&
-                bowl.getTotalNumberOfPin() == MAX_NUMBER_OF_PIN;
+    public boolean identity(BowlResult bowlResult) {
+        return bowlResult.getBowlCount() == SECOND_BOWL &&
+                bowlResult.getTotalNumberOfPin() == MAX_NUMBER_OF_PIN;
+    }
+
+    @Override
+    public boolean isCompleted() {
+        return true;
+    }
+
+    @Override
+    public boolean isBonus() {
+        return true;
+    }
+
+    @Override
+    public String format(BowlResult bowlResult) {
+        return MessageFormat.format(SPARE, bowlResult.getFirstNumberOfPins());
     }
 
 }
