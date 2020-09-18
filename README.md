@@ -28,6 +28,7 @@
     -[ ] 1~9번 Frame : NormalFrame으로 구현
     -[ ] 10번 Frame : FinalFrame으로 구현
 -[X] 하나의 투구 구현 (Delivery)
+-[X] 각 프레임에서 사용하는 DeliveryEntry 구현
 -[X] Pins 구현
 
 -[ ] 투구마다 넘어뜨린 핀 갯수 입력받기
