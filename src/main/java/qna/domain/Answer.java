@@ -52,13 +52,11 @@ public class Answer extends AbstractEntity {
     }
 
     public DeleteHistory setDeleted() {
-        this.deleted = true;
-        return new DeleteHistory(ContentType.ANSWER, this.getId(), this.writer, LocalDateTime.now());
-    }
-
-    public DeleteHistory setDeleted(User loginUser) throws CannotDeleteException {
-        validAnswerCanDelete(loginUser);
-        return setDeleted();
+        this.deleted = this.isOwner(question.getWriter());
+        if (this.isDeleted()) {
+            return DeleteHistory.ofAnswer(this.getId(), this.writer);
+        }
+        return null;
     }
 
     public boolean isDeleted() {
