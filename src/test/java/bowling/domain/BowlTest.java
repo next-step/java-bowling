@@ -18,7 +18,7 @@ public class BowlTest {
     public void bowl_strike() {
         Bowl bowl = new Bowl();
         bowl.bowl(10);
-        assertThat(BowlStatus.getType(bowl)).isEqualTo(BowlStatus.STRIKE);
+        assertThat(bowl.getBowlStatus()).isEqualTo(BowlStatus.STRIKE);
     }
 
     @DisplayName("투구 테스트: 스페어")
@@ -27,7 +27,7 @@ public class BowlTest {
         Bowl bowl = new Bowl();
         bowl.bowl(9);
         bowl.bowl(1);
-        assertThat(BowlStatus.getType(bowl)).isEqualTo(BowlStatus.SPARE);
+        assertThat(bowl.getBowlStatus()).isEqualTo(BowlStatus.SPARE);
     }
 
     @DisplayName("투구 테스트: 미스")
@@ -36,7 +36,7 @@ public class BowlTest {
         Bowl bowl = new Bowl();
         bowl.bowl(9);
         bowl.bowl(0);
-        assertThat(BowlStatus.getType(bowl)).isEqualTo(BowlStatus.MISS);
+        assertThat(bowl.getBowlStatus()).isEqualTo(BowlStatus.MISS);
     }
 
     @DisplayName("투구 테스트: 거터")
@@ -45,7 +45,7 @@ public class BowlTest {
         Bowl bowl = new Bowl();
         bowl.bowl(0);
         bowl.bowl(0);
-        assertThat(BowlStatus.getType(bowl)).isEqualTo(BowlStatus.GUTTER);
+        assertThat(bowl.getBowlStatus()).isEqualTo(BowlStatus.GUTTER);
     }
 
     @DisplayName("투구 유효성 테스트: 0보다 작거나 10보다 큰 수 입력")

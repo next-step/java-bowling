@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Bowls {
+public class FinalBowl {
 
     public static final String DELIMITER = "|";
     public static final int MAX_BOWL_COUNT = 3;
 
     private final List<Bowl> bowls = new ArrayList<>();
 
-    public Bowls() {
+    public FinalBowl() {
         bowls.add(new Bowl());
     }
 

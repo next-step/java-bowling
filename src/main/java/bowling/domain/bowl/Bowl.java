@@ -22,17 +22,17 @@ public class Bowl {
     }
 
     public void bowl(int numberOfPin) {
-        BowlValidator.validateBowlCount(getBowlCount());
-        BowlValidator.validateTotalNumberOfPins(getTotalNumberOfPin(), numberOfPin);
+        numberOfPins.validateBowlCount();
+        numberOfPins.validateTotalNumberOfPins(numberOfPin);
         addNumberOfPins(numberOfPin);
-        updateNormalBowlResult();
+        updateNormalBowlStatus();
     }
 
     private void addNumberOfPins(int numberOfPin) {
         numberOfPins.addNumberOfPins(numberOfPin);
     }
 
-    private void updateNormalBowlResult() {
+    private void updateNormalBowlStatus() {
         bowlStatus = BowlStatus.getType(this);
     }
 
@@ -50,6 +50,10 @@ public class Bowl {
 
     public boolean isBonus() {
         return bowlStatus.isBonus();
+    }
+
+    public BowlStatus getBowlStatus() {
+        return bowlStatus;
     }
 
     public int getFirstNumberOfPins() {
