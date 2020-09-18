@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class RollingResult {
-    protected final String BOWLING_SCORE_SEPERATOR = "|";
-    protected final String BOWLING_STATUS_STRIKE = "X";
-    protected final String BOWLING_STATUS_SPARE = "/";
-    protected final String BOWLING_STATUS_GUTTER = "-";
-    protected final String BOWLING_FALLEN_PIN_ZERO = "0";
+    protected static final String BOWLING_SCORE_SEPERATOR = "|";
+    protected static final String BOWLING_STATUS_STRIKE = "X";
+    protected static final String BOWLING_STATUS_SPARE = "/";
+    protected static final String BOWLING_STATUS_GUTTER = "-";
+    protected static final String BOWLING_FALLEN_PIN_ZERO = "0";
 
-    protected final int PIN_COUNT_TOTAL = 10;
+    protected static final int PIN_COUNT_TOTAL = 10;
 
     protected final List<Pin> rollingPin = new ArrayList<>();
     protected final List<String> recordBowl = new ArrayList<>();
