@@ -53,10 +53,10 @@ public class Scores {
     }
 
     public boolean isSpare() {
-        if (scores.size() == 2) {
-            return sumAll() == SCORE_MAX_VALUE;
+        if (scores.size() != 2) {
+            return false;
         }
-        return false;
+        return sumAll() == SCORE_MAX_VALUE;
     }
 
     private int sumAll() {
