@@ -13,7 +13,7 @@ public class ResultViewerTest {
 
     @Test
     void getSumScores() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
 
         ResultViewer resultViewer = new ResultViewer(game);
 
@@ -27,7 +27,7 @@ public class ResultViewerTest {
 
     @Test
     void getSumScores_all_strike() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
 
         ResultViewer resultViewer = new ResultViewer(game);
 
@@ -51,7 +51,7 @@ public class ResultViewerTest {
 
     @Test
     void getSumScores_lastSpare() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
 
         ResultViewer resultViewer = new ResultViewer(game);
 
@@ -81,7 +81,7 @@ public class ResultViewerTest {
 
     @Test
     void getStatus() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
 
         ResultViewer resultViewer = new ResultViewer(game);
 
@@ -95,7 +95,7 @@ public class ResultViewerTest {
 
     @Test
     void getStatus_all_strike() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
 
         ResultViewer resultViewer = new ResultViewer(game);
 
@@ -119,7 +119,7 @@ public class ResultViewerTest {
 
     @Test
     void getStatus_lastSpare() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
 
         ResultViewer resultViewer = new ResultViewer(game);
 
@@ -149,7 +149,7 @@ public class ResultViewerTest {
 
     @Test
     void getStatus_sample() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
 
         ResultViewer resultViewer = new ResultViewer(game);
 

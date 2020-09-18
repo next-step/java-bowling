@@ -11,13 +11,13 @@ public class GameTest {
     public static final String USERNAME = "kyd";
 
     @Test
-    void start() {
-        assertThat(Game.start(USERNAME)).isNotNull();
+    void from() {
+        assertThat(Game.from(USERNAME)).isNotNull();
     }
 
     @Test
     void isFinish() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
 
         int tryCount = 0;
 
@@ -31,7 +31,7 @@ public class GameTest {
 
     @Test
     void isFinishWithAllStrike() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
 
         int tryCount = 0;
 
@@ -45,7 +45,7 @@ public class GameTest {
 
     @Test
     void isFinishWithLastSpare() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
 
         int tryCount = 0;
 
@@ -65,7 +65,7 @@ public class GameTest {
     }
 
     private Game setLastGame() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
 
         for (int index = 0; index < 9; index++) {
             game.hit(10);
@@ -116,7 +116,7 @@ public class GameTest {
 
     @Test
     void next_last() {
-        Game game = Game.start(USERNAME);
+        Game game = Game.from(USERNAME);
         Frame frame = null;
 
         for (int index = 0; index < 10; index++) {
