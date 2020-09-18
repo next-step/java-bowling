@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -24,6 +27,7 @@ public class Player {
             throw new IllegalArgumentException(PLAYER_NAME_LENGTH);
         }
     }
+
     public boolean isEndGame() {
         return frames.isEndAllFrame();
     }
@@ -41,6 +45,10 @@ public class Player {
         return frames.size();
     }
 
+    public String name() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,9 +60,5 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public String name() {
-        return name;
     }
 }
