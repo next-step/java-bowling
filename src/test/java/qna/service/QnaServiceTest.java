@@ -9,7 +9,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import qna.CannotDeleteException;
 import qna.domain.*;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +44,7 @@ public class QnaServiceTest {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
         assertThat(question.isDeleted()).isFalse();
-        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
+        qnAService.delete(UserTest.JAVAJIGI, question.getId());
 
         assertThat(question.isDeleted()).isTrue();
         verifyDeleteHistories();
@@ -55,16 +54,16 @@ public class QnaServiceTest {
     public void delete_다른_사람이_쓴_글() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
-        assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> qnAService.delete(UserTest.SANJIGI, question.getId()))
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessage("질문을 삭제할 권한이 없습니다.");
     }
 
     @Test
     public void delete_성공_질문자_답변자_같음() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
-        qnAService.deleteQuestion(UserTest.JAVAJIGI, question.getId());
+        qnAService.delete(UserTest.JAVAJIGI, question.getId());
 
         assertThat(question.isDeleted()).isTrue();
         assertThat(answer.isDeleted()).isTrue();
@@ -75,15 +74,15 @@ public class QnaServiceTest {
     public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
         when(questionRepository.findByIdAndDeletedFalse(question.getId())).thenReturn(Optional.of(question));
 
-        assertThatThrownBy(() -> {
-            qnAService.deleteQuestion(UserTest.SANJIGI, question.getId());
-        }).isInstanceOf(CannotDeleteException.class);
+        assertThatThrownBy(() -> qnAService.delete(UserTest.SANJIGI, question.getId()))
+                .isInstanceOf(CannotDeleteException.class)
+                .hasMessage("질문을 삭제할 권한이 없습니다.");
     }
 
     private void verifyDeleteHistories() {
         List<DeleteHistory> deleteHistories = Arrays.asList(
-                new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()),
-                new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+                DeleteHistory.ofQuestion(question.getId(), question.getWriter()),
+                DeleteHistory.ofAnswer(answer.getId(), answer.getWriter()));
         verify(deleteHistoryService).saveAll(deleteHistories);
     }
 }
