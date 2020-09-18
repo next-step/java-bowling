@@ -31,9 +31,11 @@ public class Answers {
 		}
 	}
 
-	public void delete(List<DeleteHistory> deleteHistories) {
+	public List<DeleteHistory> delete() {
+		List<DeleteHistory> deleteHistories = new ArrayList<>();
 		for (Answer answer : answers) {
 			deleteHistories.add(answer.setDeleted());
 		}
+		return deleteHistories;
 	}
 }
