@@ -20,7 +20,7 @@ public class Frames {
             return nextPlayFrameNo(frameNo);
         }
 
-        Frame newFrame = isFinalFrame(frameNo) ? firstRollWithFinalFrame(pins) : firstRollWithNormalFrame(pins);
+        Frame newFrame = isFinalFrame(frameNo) ? FinalFrame.of(pins) : NormalFrame.of(pins);
         frames.add(newFrame);
         return nextPlayFrameNo(frameNo);
 
@@ -32,14 +32,6 @@ public class Frames {
 
     private boolean remainDelivery(int frameNo) {
         return frames.size() == frameNo;
-    }
-
-    private Frame firstRollWithFinalFrame(int pins) {
-        return FinalFrame.firstRoll(pins);
-    }
-
-    private Frame firstRollWithNormalFrame(int pins) {
-        return NormalFrame.firstRoll(pins);
     }
 
     private boolean isFinalFrame(int frameNo) {

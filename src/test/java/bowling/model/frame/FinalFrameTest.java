@@ -28,7 +28,7 @@ class FinalFrameTest {
     @DisplayName("투구 진행하기 : 보너스 투구까지 가능한 경우")
     void roll(int firstPins, int secondPins, int thirdPins) {
         // given
-        Frame finalFrame = FinalFrame.firstRoll(firstPins);
+        Frame finalFrame = FinalFrame.of(firstPins);
 
         FinalDeliveryEntry expectedEntry = new FinalDeliveryEntry(firstPins);
         expectedEntry.roll(secondPins);
@@ -56,7 +56,7 @@ class FinalFrameTest {
     @DisplayName("투구 끝났는지 확인하기")
     void isEnd(boolean expected, List<Integer> pins) {
         // given
-        Frame finalFrame = FinalFrame.firstRoll(pins.get(0));
+        Frame finalFrame = FinalFrame.of(pins.get(0));
         for (int i = 1; i < pins.size(); i++) {
             finalFrame = finalFrame.roll(pins.get(i));
         }

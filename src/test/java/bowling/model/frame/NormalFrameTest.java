@@ -25,7 +25,7 @@ class NormalFrameTest {
     @DisplayName("투구 진행하기")
     void roll(int firstPins, int secondPins, NormalDeliveryEntry expectedEntry) {
         // given
-        Frame normalFrame = NormalFrame.firstRoll(firstPins);
+        Frame normalFrame = NormalFrame.of(firstPins);
         expectedEntry.roll(secondPins);
         NormalFrame expected = new NormalFrame(expectedEntry);
 
@@ -49,7 +49,7 @@ class NormalFrameTest {
     @DisplayName("투구 끝났는지 확인하기")
     void isEnd(boolean expected, Integer firstPins, Integer secondPins) {
         // given
-        Frame normalFrame = NormalFrame.firstRoll(firstPins);
+        Frame normalFrame = NormalFrame.of(firstPins);
         if (Objects.nonNull(secondPins)) {
             normalFrame = normalFrame.roll(secondPins);
         }

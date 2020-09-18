@@ -1,38 +1,37 @@
 package bowling.model.frame;
 
 import bowling.model.delivery.Delivery;
+import bowling.model.delivery.DeliveryEntry;
 import bowling.model.delivery.NormalDeliveryEntry;
 
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class NormalFrame implements Frame {
+public class NormalFrame extends Frame {
 
-    private NormalDeliveryEntry normalDeliveryEntry;
-
-    NormalFrame(NormalDeliveryEntry normalDeliveryEntry) {
-        this.normalDeliveryEntry = normalDeliveryEntry;
+    NormalFrame(DeliveryEntry normalDeliveryEntry) {
+        super(normalDeliveryEntry);
     }
 
-    public static Frame firstRoll(int fallenPins) {
+    public static Frame of(int fallenPins) {
         NormalDeliveryEntry normalDeliveryEntry = NormalDeliveryEntry.of(fallenPins);
         return new NormalFrame(normalDeliveryEntry);
     }
 
     @Override
     public Frame roll(int fallenPins) {
-        normalDeliveryEntry.roll(fallenPins);
-        return new NormalFrame(normalDeliveryEntry);
+        deliveryEntry.roll(fallenPins);
+        return new NormalFrame(deliveryEntry);
     }
 
     @Override
     public boolean isEnd() {
-        return normalDeliveryEntry.isEnd();
+        return deliveryEntry.isEnd();
     }
 
     @Override
     public Stream<Delivery> getDeliveries() {
-        return normalDeliveryEntry.getDeliveries();
+        return deliveryEntry.getDeliveries();
     }
 
     @Override
@@ -40,12 +39,12 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
-        return Objects.equals(normalDeliveryEntry, that.normalDeliveryEntry);
+        return Objects.equals(deliveryEntry, that.deliveryEntry);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(normalDeliveryEntry);
+        return Objects.hash(deliveryEntry);
     }
 
 }
