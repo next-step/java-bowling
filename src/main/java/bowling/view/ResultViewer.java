@@ -18,7 +18,7 @@ public class ResultViewer {
     private static final String GAME_RESULT_DELIMITER = "|";
 
     private final Game game;
-    private final Map<Integer, List<Pin>> status;
+    private final Map<Integer, Frame> status;
 
     public ResultViewer(Game game) {
         this.game = game;
@@ -26,7 +26,7 @@ public class ResultViewer {
     }
 
     public void record(Frame frame) {
-        status.put(frame.getNumber(), frame.toPins());
+        status.put(frame.getNumber(), frame);
     }
 
     public void printing() {
@@ -48,6 +48,7 @@ public class ResultViewer {
         return new ArrayList<>(
                 status.values()
                         .stream()
+                        .map(Frame::toPins)
                         .map(this::toStatus)
                         .collect(Collectors.toList())
         );
@@ -103,7 +104,7 @@ public class ResultViewer {
     public List<Integer> getScores() {
         List<Integer> result = new ArrayList<>();
 
-        List<Frame> frameSet = game.getFrames().stream()
+        List<Frame> frameSet = status.values().stream()
                 .filter(Frame::isFinish)
                 .collect(Collectors.toList());
 
