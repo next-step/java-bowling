@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -13,15 +14,18 @@ public class Player {
     private Frames frames;
 
     public Player(String name) {
+        validationUserName(name);
         this.name = name;
         this.frames = new Frames();
+    }
+
+    private void validationUserName(String name) {
         if (name.length() > 3) {
             throw new IllegalArgumentException(PLAYER_NAME_LENGTH);
         }
     }
-
     public boolean isEndGame() {
-        return frames.allFrameEnd();
+        return frames.isEndAllFrame();
     }
 
     public void bowl(Function<String, String> rollingBall) {
@@ -30,7 +34,7 @@ public class Player {
     }
 
     public List<Frame> frames() {
-        return frames.getFrames();
+        return Collections.unmodifiableList(frames.getFrames());
     }
 
     public int frameSize() {

@@ -12,19 +12,20 @@ public class Pin {
     private int pins;
 
     public Pin(int pins) {
+        validationPinCount(pins);
         this.pins = pins;
-        validationPinCount();
     }
 
     public int count() {
         return pins;
     }
 
-    private void validationPinCount() {
+    private void validationPinCount(int pins) {
         if (pins > MAXIMUM_PIN_COUNT || pins < MINIMUM_PIN_COUNT) {
             throw new IllegalArgumentException(PIN_BOWL_RANGE);
         }
     }
+
 
     @Override
     public boolean equals(Object o) {
