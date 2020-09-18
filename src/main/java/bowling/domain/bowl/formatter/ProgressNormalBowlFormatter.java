@@ -1,6 +1,6 @@
 package bowling.domain.bowl.formatter;
 
-import bowling.domain.bowl.NormalBowl;
+import bowling.domain.bowl.Bowl;
 
 import java.text.MessageFormat;
 
@@ -11,14 +11,14 @@ public class ProgressNormalBowlFormatter extends AbstractNormalBowlFormatter {
     public static final String DEFAULT = "{0}";
 
     @Override
-    public boolean isSupport(NormalBowl normalBowl) {
-        return normalBowl.getBowlCount() == FIRST_BOWL &&
-                normalBowl.getTotalNumberOfPins() < MAX_NUMBER_OF_PIN;
+    public boolean isSupport(Bowl bowl) {
+        return bowl.getBowlCount() == FIRST_BOWL &&
+                bowl.getTotalNumberOfPins() < MAX_NUMBER_OF_PIN;
     }
 
     @Override
-    public String format(NormalBowl normalBowl) {
-        return MessageFormat.format(DEFAULT, normalBowl.getFirstNumberOfPins());
+    public String format(Bowl bowl) {
+        return MessageFormat.format(DEFAULT, bowl.getFirstNumberOfPins());
     }
 
 }

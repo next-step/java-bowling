@@ -1,6 +1,6 @@
 package bowling.domain.bowl.formatter;
 
-import bowling.domain.bowl.NormalBowl;
+import bowling.domain.bowl.Bowl;
 
 import static bowling.domain.NumberOfPin.MIN_NUMBER_OF_PIN;
 
@@ -9,13 +9,13 @@ public class GutterNormalBowlFormatter extends AbstractNormalBowlFormatter {
     public static final String GUTTER = "-|-";
 
     @Override
-    public boolean isSupport(NormalBowl normalBowl) {
-        return normalBowl.getBowlCount() == SECOND_BOWL &&
-                normalBowl.getTotalNumberOfPins() == MIN_NUMBER_OF_PIN;
+    public boolean isSupport(Bowl bowl) {
+        return bowl.getBowlCount() == SECOND_BOWL &&
+                bowl.getTotalNumberOfPins() == MIN_NUMBER_OF_PIN;
     }
 
     @Override
-    public String format(NormalBowl normalBowl) {
+    public String format(Bowl bowl) {
         return GUTTER;
     }
 

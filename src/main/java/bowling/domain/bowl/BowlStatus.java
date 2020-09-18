@@ -4,7 +4,7 @@ import bowling.domain.bowl.formatter.*;
 
 import java.util.Arrays;
 
-public enum NormalBowlResult {
+public enum BowlStatus {
 
     NONE(new NoneNormalBowlFormatter()),
     PROGRESS(new ProgressNormalBowlFormatter()),
@@ -14,21 +14,21 @@ public enum NormalBowlResult {
     GUTTER(new GutterNormalBowlFormatter())
     ;
 
-    NormalBowlResult(NormalBowlFormatter normalBowlFormatter) {
+    BowlStatus(NormalBowlFormatter normalBowlFormatter) {
         this.normalBowlFormatter = normalBowlFormatter;
     }
 
     private NormalBowlFormatter normalBowlFormatter;
 
-    public static NormalBowlResult getType(NormalBowl normalBowl) {
+    public static BowlStatus getType(Bowl bowl) {
         return Arrays.stream(values())
-                .filter(bowlResult -> bowlResult.normalBowlFormatter.isSupport(normalBowl))
+                .filter(bowlResult -> bowlResult.normalBowlFormatter.isSupport(bowl))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public String format(NormalBowl normalBowl) {
-        return normalBowlFormatter.format(normalBowl);
+    public String format(Bowl bowl) {
+        return normalBowlFormatter.format(bowl);
     }
 
     public boolean isCompleted() {

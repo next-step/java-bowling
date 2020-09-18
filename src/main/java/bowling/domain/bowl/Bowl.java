@@ -5,24 +5,24 @@ import bowling.domain.NumberOfPin;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalBowl {
+public class Bowl {
 
     public static final int FIRST_NUMBER_OF_PINS_INDEX = 0;
     public static final int SECOND_NUMBER_OF_PINS_INDEX = 1;
 
     private final List<NumberOfPin> numberOfPins = new ArrayList<>();
 
-    private NormalBowlResult normalBowlResult = NormalBowlResult.NONE;
+    private BowlStatus bowlStatus = BowlStatus.NONE;
 
-    public NormalBowl() {
+    public Bowl() {
 
     }
 
-    public NormalBowl(int firstNumberOfPins) {
+    public Bowl(int firstNumberOfPins) {
         bowl(firstNumberOfPins);
     }
 
-    public NormalBowl(int firstNumberOfPins, int secondNumberOfPins) {
+    public Bowl(int firstNumberOfPins, int secondNumberOfPins) {
         bowl(firstNumberOfPins);
         bowl(secondNumberOfPins);
     }
@@ -39,7 +39,7 @@ public class NormalBowl {
     }
 
     private void updateNormalBowlResult() {
-        normalBowlResult = NormalBowlResult.getType(this);
+        bowlStatus = BowlStatus.getType(this);
     }
 
     public boolean isNone() {
@@ -47,11 +47,11 @@ public class NormalBowl {
     }
 
     public boolean isCompleted() {
-        return normalBowlResult.isCompleted();
+        return bowlStatus.isCompleted();
     }
 
     public boolean isBonus() {
-        return normalBowlResult.isBonus();
+        return bowlStatus.isBonus();
     }
 
     public int getFirstNumberOfPins() {
@@ -73,7 +73,7 @@ public class NormalBowl {
     }
 
     public String format() {
-        return normalBowlResult.format(this);
+        return bowlStatus.format(this);
     }
 
 }

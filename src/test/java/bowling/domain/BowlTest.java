@@ -1,7 +1,7 @@
 package bowling.domain;
 
-import bowling.domain.bowl.NormalBowl;
-import bowling.domain.bowl.NormalBowlResult;
+import bowling.domain.bowl.Bowl;
+import bowling.domain.bowl.BowlStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,87 +11,87 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 @DisplayName("프레임 투구 객체 테스트")
-public class NormalBowlTest {
+public class BowlTest {
 
     @DisplayName("투구 테스트: 스트라이크")
     @Test
     public void bowl_strike() {
-        NormalBowl normalBowl = new NormalBowl();
-        normalBowl.bowl(10);
-        assertThat(NormalBowlResult.getType(normalBowl)).isEqualTo(NormalBowlResult.STRIKE);
+        Bowl bowl = new Bowl();
+        bowl.bowl(10);
+        assertThat(BowlStatus.getType(bowl)).isEqualTo(BowlStatus.STRIKE);
     }
 
     @DisplayName("투구 테스트: 스페어")
     @Test
     public void bowl_spare() {
-        NormalBowl normalBowl = new NormalBowl();
-        normalBowl.bowl(9);
-        normalBowl.bowl(1);
-        assertThat(NormalBowlResult.getType(normalBowl)).isEqualTo(NormalBowlResult.SPARE);
+        Bowl bowl = new Bowl();
+        bowl.bowl(9);
+        bowl.bowl(1);
+        assertThat(BowlStatus.getType(bowl)).isEqualTo(BowlStatus.SPARE);
     }
 
     @DisplayName("투구 테스트: 미스")
     @Test
     public void bowl_miss() {
-        NormalBowl normalBowl = new NormalBowl();
-        normalBowl.bowl(9);
-        normalBowl.bowl(0);
-        assertThat(NormalBowlResult.getType(normalBowl)).isEqualTo(NormalBowlResult.MISS);
+        Bowl bowl = new Bowl();
+        bowl.bowl(9);
+        bowl.bowl(0);
+        assertThat(BowlStatus.getType(bowl)).isEqualTo(BowlStatus.MISS);
     }
 
     @DisplayName("투구 테스트: 거터")
     @Test
     public void bowl_gutter() {
-        NormalBowl normalBowl = new NormalBowl();
-        normalBowl.bowl(0);
-        normalBowl.bowl(0);
-        assertThat(NormalBowlResult.getType(normalBowl)).isEqualTo(NormalBowlResult.GUTTER);
+        Bowl bowl = new Bowl();
+        bowl.bowl(0);
+        bowl.bowl(0);
+        assertThat(BowlStatus.getType(bowl)).isEqualTo(BowlStatus.GUTTER);
     }
 
     @DisplayName("투구 유효성 테스트: 0보다 작거나 10보다 큰 수 입력")
     @ParameterizedTest
     @ValueSource(ints = { -5, 12 })
     public void validate_bowl(int numberOfPins) {
-        NormalBowl normalBowl = new NormalBowl();
-        assertThatIllegalArgumentException().isThrownBy(() -> normalBowl.bowl(numberOfPins));
+        Bowl bowl = new Bowl();
+        assertThatIllegalArgumentException().isThrownBy(() -> bowl.bowl(numberOfPins));
     }
 
     @DisplayName("투구 유효성 테스트: 3번 투구")
     @Test
     public void validate_bowlCount() {
-        NormalBowl normalBowl = new NormalBowl();
+        Bowl bowl = new Bowl();
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            normalBowl.bowl(5);
-            normalBowl.bowl(2);
-            normalBowl.bowl(1);
+            bowl.bowl(5);
+            bowl.bowl(2);
+            bowl.bowl(1);
         });
     }
 
     @DisplayName("투구 유효성 테스트: 핀갯수가 10을 초과")
     @Test
     public void validate_totalNumberOfPins() {
-        NormalBowl normalBowl = new NormalBowl();
+        Bowl bowl = new Bowl();
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            normalBowl.bowl(8);
-            normalBowl.bowl(3);
+            bowl.bowl(8);
+            bowl.bowl(3);
         });
     }
 
     @DisplayName("투구 수 테스트")
     @Test
     public void getBowlCount() {
-        NormalBowl normalBowl = new NormalBowl();
-        normalBowl.bowl(5);
-        assertThat(normalBowl.getBowlCount()).isEqualTo(1);
+        Bowl bowl = new Bowl();
+        bowl.bowl(5);
+        assertThat(bowl.getBowlCount()).isEqualTo(1);
     }
 
     @DisplayName("전체 핀 갯수 테스트")
     @Test
     public void getTotalNumberOfPins() {
-        NormalBowl normalBowl = new NormalBowl();
-        normalBowl.bowl(5);
-        normalBowl.bowl(3);
-        assertThat(normalBowl.getTotalNumberOfPins()).isEqualTo(8);
+        Bowl bowl = new Bowl();
+        bowl.bowl(5);
+        bowl.bowl(3);
+        assertThat(bowl.getTotalNumberOfPins()).isEqualTo(8);
     }
 
 }

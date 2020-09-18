@@ -1,10 +1,10 @@
 package bowling.domain.bowl.formatter;
 
-import bowling.domain.bowl.NormalBowl;
+import bowling.domain.bowl.Bowl;
 
 public interface NormalBowlFormatter {
 
-    boolean isSupport(NormalBowl normalBowl);
-    String format(NormalBowl normalBowl);
+    boolean isSupport(Bowl bowl);
+    String format(Bowl bowl);
 
 }

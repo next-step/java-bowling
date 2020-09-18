@@ -1,12 +1,12 @@
 package bowling.domain.frame;
 
-import bowling.domain.bowl.NormalBowls;
+import bowling.domain.bowl.Bowls;
 
 import java.util.Iterator;
 
 public class FinalFrame extends AbstractFrame {
 
-    private final NormalBowls normalBowls = new NormalBowls();
+    private final Bowls bowls = new Bowls();
 
     public FinalFrame() {
         super(LAST_FRAME_NUMBER);
@@ -14,12 +14,12 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public Frame bowl(int numberOfPin) {
-        normalBowls.bowl(numberOfPin);
+        bowls.bowl(numberOfPin);
         return isCompleted() ? null : this;
     }
 
     public boolean isCompleted() {
-        return normalBowls.isCompleted();
+        return bowls.isCompleted();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public String toString() {
-        return normalBowls.format();
+        return bowls.format();
     }
 
 }
