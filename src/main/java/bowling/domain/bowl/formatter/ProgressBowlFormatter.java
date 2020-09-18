@@ -4,8 +4,6 @@ import bowling.domain.bowl.Bowl;
 
 import java.text.MessageFormat;
 
-import static bowling.domain.NumberOfPin.MAX_NUMBER_OF_PIN;
-
 public class ProgressBowlFormatter extends AbstractBowlFormatter {
 
     public static final String DEFAULT = "{0}";
