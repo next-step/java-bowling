@@ -14,7 +14,7 @@ public class MissNormalBowlFormatter extends AbstractNormalBowlFormatter {
     @Override
     public boolean isSupport(Bowl bowl) {
         return bowl.getBowlCount() == SECOND_BOWL &&
-                (bowl.getTotalNumberOfPins() > MIN_NUMBER_OF_PIN && bowl.getTotalNumberOfPins() < MAX_NUMBER_OF_PIN);
+                (bowl.getTotalNumberOfPin() > MIN_NUMBER_OF_PIN && bowl.getTotalNumberOfPin() < MAX_NUMBER_OF_PIN);
     }
 
     @Override

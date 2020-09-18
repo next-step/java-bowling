@@ -91,7 +91,7 @@ public class BowlTest {
         Bowl bowl = new Bowl();
         bowl.bowl(5);
         bowl.bowl(3);
-        assertThat(bowl.getTotalNumberOfPins()).isEqualTo(8);
+        assertThat(bowl.getTotalNumberOfPin()).isEqualTo(8);
     }
 
 }

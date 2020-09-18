@@ -22,9 +22,13 @@ public enum BowlStatus {
 
     public static BowlStatus getType(Bowl bowl) {
         return Arrays.stream(values())
-                .filter(bowlResult -> bowlResult.normalBowlFormatter.isSupport(bowl))
+                .filter(bowlStatus -> bowlStatus.isSupport(bowl))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public boolean isSupport(Bowl bowl) {
+        return normalBowlFormatter.isSupport(bowl);
     }
 
     public String format(Bowl bowl) {

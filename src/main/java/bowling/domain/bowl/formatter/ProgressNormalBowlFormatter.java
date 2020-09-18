@@ -13,7 +13,7 @@ public class ProgressNormalBowlFormatter extends AbstractNormalBowlFormatter {
     @Override
     public boolean isSupport(Bowl bowl) {
         return bowl.getBowlCount() == FIRST_BOWL &&
-                bowl.getTotalNumberOfPins() < MAX_NUMBER_OF_PIN;
+                bowl.getTotalNumberOfPin() < MAX_NUMBER_OF_PIN;
     }
 
     @Override
