@@ -24,9 +24,9 @@
     
 ## Step02 
 -[X] User 구현
--[ ] Frame 구현
+-[X] Frame 구현
     -[X] 1~9번 Frame : NormalFrame 으로 구현
-    -[ ] 10번 Frame : FinalFrame 으로 구현
+    -[X] 10번 Frame : FinalFrame 으로 구현
 -[X] 하나의 투구 구현 (Delivery)
 -[X] 각 프레임에서 사용하는 DeliveryEntry 구현
 -[X] Pins 구현
