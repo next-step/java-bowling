@@ -14,7 +14,8 @@ public class NormalDeliveryEntry implements DeliveryEntry {
     private LinkedList<Delivery> deliveries;
 
     private NormalDeliveryEntry(Delivery firstDelivery) {
-        deliveries = new LinkedList<>(Arrays.asList(firstDelivery));
+        deliveries = new LinkedList<>();
+        deliveries.add(firstDelivery);
     }
 
     public static NormalDeliveryEntry of(int firstFallenPins) {
