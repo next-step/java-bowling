@@ -6,69 +6,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PinTest {
     @Test
-    void constructor() {
+    void from() {
         assertThat(Pin.from()).isNotNull();
     }
 
     @Test
-    void hit_strike() {
-        Pin pin = Pin.from();
-        assertThat(pin.hit(10)).isEqualTo("X");
+    void roll_strike() {
+        Pin pin = Pin.of(10);
+
+        assertThat(pin.isStrike()).isTrue();
     }
 
     @Test
-    void hit_spare() {
-        Pin pin = Pin.from();
-        assertThat(pin.hit(8)).isEqualTo("8");
-        assertThat(pin.hit(2)).isEqualTo("/");
+    void roll_spare() {
+        Pin pin = Pin.of(8);
+
+        assertThat(pin.isSpare(2)).isTrue();
     }
 
     @Test
-    void hit_miss() {
-        Pin pin = Pin.from();
-        assertThat(pin.hit(1)).isEqualTo("1");
-        assertThat(pin.hit(2)).isEqualTo("2");
-    }
+    void roll_gutter() {
+        Pin pin = Pin.of(0);
 
-    @Test
-    void hit_gutter() {
-        Pin pin = Pin.from();
-        assertThat(pin.hit(0)).isEqualTo("-");
-        assertThat(pin.hit(2)).isEqualTo("2");
-    }
+        pin = pin.roll(0);
 
-    @Test
-    void isFinish() {
-        Pin pin = Pin.from();
-        pin.hit(1);
-        assertThat(pin.isFinish()).isFalse();
-        pin.hit(9);
-
-        assertThat(pin.isFinish()).isTrue();
-    }
-
-    @Test
-    void isFinish_strike() {
-        Pin pin = Pin.from();
-        pin.hit(10);
-
-        assertThat(pin.isFinish()).isTrue();
-    }
-
-    @Test
-    void isFinish_spare() {
-        Pin pin = Pin.from();
-        pin.hit(1);
-        pin.hit(9);
-
-        assertThat(pin.isFinish()).isTrue();
-    }
-
-    @Test
-    void isFinish_custom() {
-        Pin pin = Pin.of(1, 0);
-        pin.hit(1);
-
-        assertThat(pin.isFinish()).isTrue();
+        assertThat(pin.isGutter()).isTrue();
     }
 }

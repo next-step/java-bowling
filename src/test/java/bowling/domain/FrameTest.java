@@ -2,8 +2,9 @@ package bowling.domain;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class FrameTest {
 
@@ -13,52 +14,55 @@ public class FrameTest {
     }
 
     @Test
+    void hit_one() {
+        Frame frame = NormalFrame.from();
+
+        frame.hit(1);
+
+        assertThat(frame.isFinish()).isFalse();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(1)));
+    }
+
+    @Test
     void hit_strike() {
-        assertThat(NormalFrame.from().hit(10)).isEqualTo("X");
+        Frame frame = NormalFrame.from();
+
+        frame.hit(10);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10)));
     }
 
     @Test
     void hit_spare() {
         Frame frame = NormalFrame.from();
-        assertThat(frame.hit(1)).isEqualTo("1");
-        assertThat(frame.hit(9)).isEqualTo("1|/");
+
+        frame.hit(1);
+        frame.hit(9);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(1), Pin.of(9)));
     }
 
     @Test
     void hit_miss() {
         Frame frame = NormalFrame.from();
-        assertThat(frame.hit(1)).isEqualTo("1");
-        assertThat(frame.hit(8)).isEqualTo("1|8");
+
+        frame.hit(1);
+        frame.hit(8);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(1), Pin.of(8)));
     }
 
     @Test
     void hit_gutter() {
         Frame frame = NormalFrame.from();
-        assertThat(frame.hit(0)).isEqualTo("-");
-        assertThat(frame.hit(0)).isEqualTo("-|-");
-    }
 
-    @Test
-    void hit_exception() {
-        assertThatThrownBy(() -> {
-            Frame frame = NormalFrame.from();
-            frame.hit(0);
-            frame.hit(0);
-            frame.hit(0);
-        }).isInstanceOf(IllegalArgumentException.class);
-    }
+        frame.hit(0);
+        frame.hit(0);
 
-    @Test
-    void hit_strike_exception() {
-        assertThatThrownBy(() -> {
-            Frame frame = NormalFrame.from();
-            frame.hit(10);
-            frame.hit(0);
-        }).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    void next() {
-        assertThat(NormalFrame.from().next().getNumber()).isEqualTo(2);
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(0), Pin.of(0)));
     }
 }

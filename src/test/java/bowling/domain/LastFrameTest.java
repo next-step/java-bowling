@@ -2,8 +2,9 @@ package bowling.domain;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class LastFrameTest {
 
@@ -13,64 +14,148 @@ public class LastFrameTest {
     }
 
     @Test
-    void hit_strike() {
+    void strike() {
         Frame frame = LastFrame.from();
-        assertThat(frame.hit(10)).isEqualTo("X");
-        assertThat(frame.hit(10)).isEqualTo("X|X");
-        assertThat(frame.hit(10)).isEqualTo("X|X|X");
+
+        frame.hit(10);
+
+        assertThat(frame.isFinish()).isFalse();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10)));
+        assertThat(frame.getScore().toInt()).isEqualTo(10);
     }
 
     @Test
-    void hit_spare() {
+    void double_strike() {
         Frame frame = LastFrame.from();
-        assertThat(frame.hit(1)).isEqualTo("1");
-        assertThat(frame.hit(9)).isEqualTo("1|/");
-        assertThat(frame.hit(10)).isEqualTo("1|/|X");
+
+        frame = frame.hit(10);
+        frame = frame.hit(10);
+
+        assertThat(frame.isFinish()).isFalse();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(10)));
+        assertThat(frame.getScore().toInt()).isEqualTo(20);
     }
 
     @Test
-    void hit_miss() {
+    void open() {
+        Frame frame = LastFrame.from().hit(1).hit(8);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(1), Pin.of(8)));
+        assertThat(frame.getScore().toInt()).isEqualTo(9);
+    }
+
+    @Test
+    void triple() {
+        Frame frame = LastFrame.from().hit(10).hit(10).hit(10);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(10), Pin.of(10)));
+        assertThat(frame.getScore().toInt()).isEqualTo(30);
+    }
+
+
+    @Test
+    void double_open() {
         Frame frame = LastFrame.from();
-        assertThat(frame.hit(1)).isEqualTo("1");
-        assertThat(frame.hit(8)).isEqualTo("1|8");
+
+        frame.hit(10);
+        frame.hit(10);
+        frame.hit(9);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(10), Pin.of(9)));
+        assertThat(frame.getScore().toInt()).isEqualTo(29);
     }
 
     @Test
-    void hit_gutter() {
+    void double_gutter() {
         Frame frame = LastFrame.from();
-        assertThat(frame.hit(0)).isEqualTo("-");
-        assertThat(frame.hit(0)).isEqualTo("-|-");
+
+        frame.hit(10);
+        frame.hit(10);
+        frame.hit(0);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(10), Pin.of(0)));
+        assertThat(frame.getScore().toInt()).isEqualTo(20);
     }
 
     @Test
-    void hit_exception() {
-        assertThatThrownBy(() -> {
-            Frame frame = LastFrame.from();
-            frame.hit(0);
-            frame.hit(0);
-            frame.hit(0);
-        }).isInstanceOf(IllegalArgumentException.class);
+    void strike_spare() {
+        Frame frame = LastFrame.from();
+
+        frame.hit(10);
+        frame.hit(8);
+        frame.hit(2);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(8), Pin.of(2)));
+        assertThat(frame.getScore().toInt()).isEqualTo(20);
     }
 
     @Test
-    void hit_spare_exception() {
-        assertThatThrownBy(() -> {
-            Frame frame = LastFrame.from();
-            frame.hit(1);
-            frame.hit(9);
-            frame.hit(0);
-            frame.hit(0);
-        }).isInstanceOf(IllegalArgumentException.class);
+    void strike_open() {
+        Frame frame = LastFrame.from();
+
+        frame.hit(10);
+        frame.hit(8);
+        frame.hit(1);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(8), Pin.of(1)));
+        assertThat(frame.getScore().toInt()).isEqualTo(19);
     }
 
     @Test
-    void hit_strike_exception() {
-        assertThatThrownBy(() -> {
-            Frame frame = LastFrame.from();
-            frame.hit(10);
-            frame.hit(0);
-            frame.hit(0);
-            frame.hit(0);
-        }).isInstanceOf(IllegalArgumentException.class);
+    void strike_gutter() {
+        Frame frame = LastFrame.from();
+
+        frame.hit(10);
+        frame.hit(8);
+        frame.hit(0);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(10), Pin.of(8), Pin.of(0)));
+        assertThat(frame.getScore().toInt()).isEqualTo(18);
+    }
+
+    @Test
+    void spare_strike() {
+        Frame frame = LastFrame.from();
+
+        frame.hit(8);
+        frame.hit(2);
+        frame.hit(10);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(8), Pin.of(2), Pin.of(10)));
+        assertThat(frame.getScore().toInt()).isEqualTo(20);
+    }
+
+    @Test
+    void spare_open() {
+        Frame frame = LastFrame.from();
+
+        frame.hit(8);
+        frame.hit(2);
+        frame.hit(8);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(8), Pin.of(2), Pin.of(8)));
+        assertThat(frame.getScore().toInt()).isEqualTo(18);
+    }
+
+    @Test
+    void spare_gutter() {
+        Frame frame = LastFrame.from();
+
+        frame.hit(8);
+        frame.hit(2);
+        frame.hit(0);
+
+        assertThat(frame.isFinish()).isTrue();
+        assertThat(frame.toPins()).isEqualTo(Arrays.asList(Pin.of(8), Pin.of(2), Pin.of(0)));
+        assertThat(frame.getScore().toInt()).isEqualTo(10);
     }
 }

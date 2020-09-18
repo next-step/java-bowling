@@ -1,46 +1,69 @@
 package bowling.domain;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class Game {
-    private List<Frame> normalFrames;
+import static bowling.domain.LastFrame.LAST_FRAME_NUMBER;
 
-    private Game() {
-        this.normalFrames = new ArrayList<Frame>() {{
+public class Game {
+    private String username;
+    private LinkedList<Frame> frames;
+
+    private Game(String username) {
+        this.username = username;
+        this.frames = new LinkedList<Frame>() {{
             add(NormalFrame.from());
         }};
     }
 
-    public static Game start() {
-        return new Game();
+    public static Game start(String username) {
+        return new Game(username);
     }
 
-    public boolean isFinish() {
-        return getLast().isFinish();
+    public String getPlayerName() {
+        return username;
     }
 
-    public String hit(int count) {
-        Frame last = getLast();
-        String result = last.hit(count);
+    public int getPlayFrameNumber() {
+        return getLastFrame().getNumber();
+    }
 
-        if (last.getNumber() == 9 && last.isFinish()) {
-            this.normalFrames.add(LastFrame.from());
-            return result;
+    public Frame hit(int count) {
+        Frame frame = getLastFrame().hit(count);
+
+        if (hasNextFrame() && getLastFrame().isFinish()) {
+            frames.add(next());
         }
 
-        if (!last.isLastFrame() && last.isFinish()) {
-            this.normalFrames.add(last.next());
+        return frame;
+    }
+
+    private Frame next() {
+        if (!hasNextFrame()) {
+            throw new RuntimeException("다음 프레임이 존재하지 않습니다.");
         }
 
-        return result;
+        int nextFrameNumber = getNextFrameNumber();
+        return nextFrameNumber == LAST_FRAME_NUMBER ? LastFrame.from() : NormalFrame.of(nextFrameNumber);
     }
 
-    public int getPlayNumber() {
-        return getLast().getNumber();
+    public boolean hasNextFrame() {
+        return getNextFrameNumber() <= LAST_FRAME_NUMBER;
     }
 
-    private Frame getLast() {
-        return this.normalFrames.get(this.normalFrames.size() - 1);
+    private int getNextFrameNumber() {
+        return getLastFrame().getNumber() + 1;
+    }
+
+    private Frame getLastFrame() {
+        return frames.getLast();
+    }
+
+    public boolean isEnd() {
+        return !hasNextFrame() && getLastFrame().isFinish();
+    }
+
+    public List<Frame> getFrames() {
+        return frames;
     }
 }
