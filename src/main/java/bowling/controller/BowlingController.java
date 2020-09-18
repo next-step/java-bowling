@@ -19,4 +19,5 @@ public class BowlingController {
             ResultView.printScoreBoard(frameNo, user.getName(), bowlingGame.getFrames());
         }
     }
+
 }

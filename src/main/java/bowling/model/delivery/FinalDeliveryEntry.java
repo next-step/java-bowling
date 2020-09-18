@@ -54,14 +54,14 @@ public class FinalDeliveryEntry {
     }
 
     public boolean isEnd() {
-        return canBonusDelivery ? isEndBonusDelivery() : isEndNotBonusDelivery();
+        return canBonusDelivery ? isEndWithBonusDelivery() : isEndDefaultDelivery();
     }
 
-    private boolean isEndNotBonusDelivery() {
+    private boolean isEndDefaultDelivery() {
         return deliveries.size() == DEFAULT_COUNT;
     }
 
-    private boolean isEndBonusDelivery() {
+    private boolean isEndWithBonusDelivery() {
         return deliveries.size() == DEFAULT_COUNT + 1;
     }
 
