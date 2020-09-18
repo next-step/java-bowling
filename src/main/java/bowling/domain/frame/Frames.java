@@ -1,5 +1,7 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+
+import bowling.domain.Pin;
 
 import java.util.ArrayList;
 import java.util.Collections;
