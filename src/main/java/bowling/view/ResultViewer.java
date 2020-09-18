@@ -11,10 +11,14 @@ import java.util.stream.IntStream;
 
 public class ResultViewer {
     private static final int SHOW_FRAME_NUMBER = 10;
+    private static final int SHOW_LAST_FRAME_NUMBER = SHOW_FRAME_NUMBER;
+
     private static final String STAGE_PREFIX_STRING = "| NAME |";
     private static final String FRAME_FORMAT = "  %02d  |";
+    private static final String FRAME_LAST_FORMAT = "   %02d   |";
     private static final String NAME_FORMAT = "| %4s |";
     private static final String GAME_RESULT_FORMAT = "  %-3s |";
+    private static final String GAME_RESULT_LAST_FORMAT = "  %-5s |";
     private static final String GAME_RESULT_DELIMITER = "|";
 
     private final Game game;
@@ -39,7 +43,14 @@ public class ResultViewer {
         System.out.print(STAGE_PREFIX_STRING);
 
         IntStream.rangeClosed(1, LastFrame.LAST_FRAME_NUMBER)
-                .forEach(frame -> System.out.printf(String.format(FRAME_FORMAT, frame)));
+                .forEach(frame ->
+                        System.out.printf(
+                                String.format(
+                                        frame != SHOW_LAST_FRAME_NUMBER ? FRAME_FORMAT : FRAME_LAST_FORMAT,
+                                        frame
+                                )
+                        )
+                );
 
         System.out.println();
     }
@@ -87,10 +98,14 @@ public class ResultViewer {
 
     private String statusToString(int frameNumber, List<List<String>> frames) {
         if (frames.size() < frameNumber) {
-            return String.format(GAME_RESULT_FORMAT, "");
+            return String.format(
+                    frameNumber != SHOW_LAST_FRAME_NUMBER ? GAME_RESULT_FORMAT : GAME_RESULT_LAST_FORMAT,
+                    "");
         }
 
-        return String.format(GAME_RESULT_FORMAT, frameToString(frames.get(frameNumber - 1)));
+        return String.format(
+                frameNumber != SHOW_LAST_FRAME_NUMBER ? GAME_RESULT_FORMAT : GAME_RESULT_LAST_FORMAT,
+                frameToString(frames.get(frameNumber - 1)));
     }
 
     private String frameToString(List<String> results) {
@@ -152,9 +167,13 @@ public class ResultViewer {
 
     private String frameToString(int frameNumber, List<Integer> scores) {
         if (scores.size() < frameNumber) {
-            return String.format(GAME_RESULT_FORMAT, "");
+            return String.format(
+                    frameNumber != SHOW_LAST_FRAME_NUMBER ? GAME_RESULT_FORMAT : GAME_RESULT_LAST_FORMAT,
+                    "");
         }
 
-        return String.format(GAME_RESULT_FORMAT, scores.get(frameNumber - 1));
+        return String.format(
+                frameNumber != SHOW_LAST_FRAME_NUMBER ? GAME_RESULT_FORMAT : GAME_RESULT_LAST_FORMAT,
+                scores.get(frameNumber - 1));
     }
 }
