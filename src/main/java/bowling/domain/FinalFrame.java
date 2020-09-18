@@ -4,7 +4,7 @@ public class FinalFrame extends Frame {
 
     private final String FINAL_FRAME_RANGE = "FinalFrame의 인덱스는 10이여야합니다.";
 
-    private FinalRollingResult finalRollingResult = new FinalRollingResult();
+    private RollingResult finalRollingResult = new FinalRollingResult();
 
     public FinalFrame(int frameIndex) {
         super(frameIndex);
@@ -28,7 +28,7 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean allFrameEnd() {
+    public boolean isEndAllFrame() {
         return finalRollingResult.isFinish();
     }
 

@@ -25,6 +25,6 @@ class FramesTest {
         for(int i = 0; i < 12; i++) {
             frames.play(new Pin(10));
         }
-        assertTrue(frames.allFrameEnd());
+        assertTrue(frames.isEndAllFrame());
     }
 }

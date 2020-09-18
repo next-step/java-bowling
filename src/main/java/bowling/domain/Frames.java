@@ -17,7 +17,7 @@ public class Frames {
         Frame currentFrame = getLastFrame();
         currentFrame.bowl(pin);
 
-        if (currentFrame.rollingEnd() && !currentFrame.allFrameEnd()) {
+        if (currentFrame.rollingEnd() && !currentFrame.isEndAllFrame()) {
             frames.add(currentFrame.next());
         }
     }
@@ -26,8 +26,8 @@ public class Frames {
         return String.valueOf(getLastFrame().currentFrameIndex());
     }
 
-    public boolean allFrameEnd() {
-        return getLastFrame().allFrameEnd();
+    public boolean isEndAllFrame() {
+        return getLastFrame().isEndAllFrame();
     }
 
     private Frame getLastFrame() {

@@ -17,7 +17,7 @@ public abstract class Frame {
 
     abstract public boolean rollingEnd();
 
-    abstract public boolean allFrameEnd();
+    abstract public boolean isEndAllFrame();
 
     abstract public String index();
 

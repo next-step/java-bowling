@@ -4,7 +4,7 @@ public class NormalFrame extends Frame {
 
     private final String NORMAL_FRAME_RANGE = "NormalFrame의 범위는 1~9 사이입니다.";
 
-    private NormalRollingResult normalRollingResult = new NormalRollingResult();
+    private RollingResult normalRollingResult = new NormalRollingResult();
 
     public NormalFrame(int frameIndex) {
         super(frameIndex);
@@ -28,7 +28,7 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean allFrameEnd() {
+    public boolean isEndAllFrame() {
         return false;
     }
 
