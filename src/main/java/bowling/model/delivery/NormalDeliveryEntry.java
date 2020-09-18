@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class NormalDeliveryEntry {
+public class NormalDeliveryEntry implements DeliveryEntry {
     private final static int TOTAL_COUNT = 2;
 
     private LinkedList<Delivery> deliveries;
@@ -22,6 +22,7 @@ public class NormalDeliveryEntry {
         return new NormalDeliveryEntry(firstDelivery);
     }
 
+    @Override
     public void roll(int secondFallenPins) {
         verifyCanSecondDelivery();
         Delivery before = deliveries.getLast();
@@ -34,10 +35,12 @@ public class NormalDeliveryEntry {
         }
     }
 
+    @Override
     public Stream<Delivery> getDeliveries() {
         return deliveries.stream();
     }
 
+    @Override
     public boolean isEnd() {
         return getState() == State.STRIKE || deliveries.size() == TOTAL_COUNT;
     }

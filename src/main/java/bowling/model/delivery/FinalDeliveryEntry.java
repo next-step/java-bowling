@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class FinalDeliveryEntry {
+public class FinalDeliveryEntry implements DeliveryEntry {
     private final static int DEFAULT_COUNT = 2;
 
     private List<Delivery> deliveries;
@@ -18,6 +18,7 @@ public class FinalDeliveryEntry {
         deliveries.add(playFirstDelivery(firstFallenPins));
     }
 
+    @Override
     public void roll(int fallenPins) {
         Delivery delivery = playDelivery(fallenPins);
         if (!canBonusDelivery) {
@@ -53,6 +54,7 @@ public class FinalDeliveryEntry {
         }
     }
 
+    @Override
     public boolean isEnd() {
         return canBonusDelivery ? isEndWithBonusDelivery() : isEndDefaultDelivery();
     }
@@ -65,6 +67,7 @@ public class FinalDeliveryEntry {
         return deliveries.size() == DEFAULT_COUNT + 1;
     }
 
+    @Override
     public Stream<Delivery> getDeliveries() {
         return deliveries.stream();
     }
