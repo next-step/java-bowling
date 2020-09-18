@@ -8,32 +8,22 @@ public class Pins {
     public static final int MIN_PINS = 0;
     public static final int MAX_PINS = 10;
 
-    private final int countOfPins;
+    private final int fallenPins;
 
     public Pins() {
-        countOfPins = MAX_PINS;
+        this(MAX_PINS);
     }
 
-    public Pins(int countOfPins) {
-        validatePins(countOfPins);
-        this.countOfPins = countOfPins;
+    private Pins(int fallenPins) {
+        this.fallenPins = fallenPins;
     }
 
-    public static Pins remainPins(int fallenPins) {
-        return new Pins(MAX_PINS - fallenPins);
+    public static Pins of(int fallenPins) {
+        validatePins(fallenPins);
+        return new Pins(fallenPins);
     }
 
-    public Pins fallingPins(int fallenPins) {
-        validateLastPins(fallenPins);
-
-        return new Pins(countOfPins - fallenPins);
-    }
-
-    public boolean areAllPinsFallen() {
-        return this.countOfPins == MIN_PINS;
-    }
-
-    private void validatePins(int pins) {
+    private static void validatePins(int pins) {
         if (pins < MIN_PINS) {
             throw new IllegalArgumentException(ExceptionMessages.PINS_MIN_EXCEPTION);
         }
@@ -43,8 +33,9 @@ public class Pins {
         }
     }
 
-    private void validateLastPins(int fallenPins) {
-        if (countOfPins - fallenPins < MIN_PINS) {
+    private void verifyNextFallenPins(int nextFallenPins) {
+        validatePins(nextFallenPins);
+        if (this.fallenPins + nextFallenPins > MAX_PINS) {
             throw new IllegalArgumentException(ExceptionMessages.PINS_LAST_PINS_EXCEPTION);
         }
     }
@@ -54,12 +45,25 @@ public class Pins {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pins pins = (Pins) o;
-        return countOfPins == pins.countOfPins;
+        return fallenPins == pins.fallenPins;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countOfPins);
+        return Objects.hash(fallenPins);
+    }
+
+    public State getNextState(int nextFallenPins) {
+        verifyNextFallenPins(nextFallenPins);
+        if (fallenPins + nextFallenPins == MAX_PINS) {
+            return State.getStateByPins(MAX_PINS, false);
+        }
+
+        return State.getStateByPins(nextFallenPins, false);
+    }
+
+    public State getState() {
+        return State.getStateByPins(fallenPins, true);
     }
 
 }

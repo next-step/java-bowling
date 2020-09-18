@@ -10,26 +10,19 @@ public class Delivery {
     private final int fallenPins;
     private final State state;
 
-    public Delivery(int fallenPins, State state) {
+    Delivery(int fallenPins, State state) {
         this.fallenPins = fallenPins;
         this.state = state;
     }
 
     public static Delivery of(int fallenPins) {
-        Pins pins = new Pins();
-        pins.fallingPins(fallenPins);
-        return new Delivery(fallenPins, State.getStateByPins(fallenPins));
+        Pins pins = Pins.of(fallenPins);
+        return new Delivery(fallenPins, pins.getState());
     }
 
     public Delivery next(int nextFallenPins) {
-        Pins remainPins = Pins.remainPins(fallenPins);
-        remainPins = remainPins.fallingPins(nextFallenPins);
-
-        if (remainPins.areAllPinsFallen()) {
-            return new Delivery(nextFallenPins, State.SPARE);
-        }
-
-        return new Delivery(nextFallenPins, State.getStateByPins(nextFallenPins));
+        Pins pins = Pins.of(fallenPins);
+        return new Delivery(nextFallenPins, pins.getNextState(nextFallenPins));
     }
 
     public State getState() {
