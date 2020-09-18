@@ -16,14 +16,14 @@ public class Bowls {
     }
 
     public void bowl(int numberOfPins) {
-        Bowl bowl = findNormalBowl();
+        Bowl bowl = findIncompleteBowl();
         bowl.bowl(numberOfPins);
         bonus(bowl);
     }
 
-    private Bowl findNormalBowl() {
+    private Bowl findIncompleteBowl() {
         return bowls.stream()
-                .filter(normalBowl1 -> !normalBowl1.isCompleted())
+                .filter(Bowl::isIncomplete)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }

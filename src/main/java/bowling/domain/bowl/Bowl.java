@@ -1,16 +1,10 @@
 package bowling.domain.bowl;
 
-import bowling.domain.NumberOfPin;
-
-import java.util.ArrayList;
-import java.util.List;
+import bowling.domain.NumberOfPins;
 
 public class Bowl {
 
-    public static final int FIRST_NUMBER_OF_PINS_INDEX = 0;
-    public static final int SECOND_NUMBER_OF_PINS_INDEX = 1;
-
-    private final List<NumberOfPin> numberOfPins = new ArrayList<>();
+    private final NumberOfPins numberOfPins = new NumberOfPins();
 
     private BowlStatus bowlStatus = BowlStatus.NONE;
 
@@ -34,8 +28,8 @@ public class Bowl {
         updateNormalBowlResult();
     }
 
-    private void addNumberOfPins(int numberOfPins) {
-        this.numberOfPins.add(new NumberOfPin(numberOfPins));
+    private void addNumberOfPins(int numberOfPin) {
+        numberOfPins.addNumberOfPins(numberOfPin);
     }
 
     private void updateNormalBowlResult() {
@@ -43,11 +37,15 @@ public class Bowl {
     }
 
     public boolean isNone() {
-        return numberOfPins.isEmpty();
+        return numberOfPins.isNone();
     }
 
     public boolean isCompleted() {
         return bowlStatus.isCompleted();
+    }
+
+    public boolean isIncomplete() {
+        return !isCompleted();
     }
 
     public boolean isBonus() {
@@ -55,21 +53,19 @@ public class Bowl {
     }
 
     public int getFirstNumberOfPins() {
-        return numberOfPins.get(FIRST_NUMBER_OF_PINS_INDEX).getNumberOfPin();
+        return numberOfPins.getFirstNumberOfPins();
     }
 
     public int getSecondNumberOfPins() {
-        return numberOfPins.get(SECOND_NUMBER_OF_PINS_INDEX).getNumberOfPin();
+        return numberOfPins.getSecondNumberOfPins();
     }
 
     public int getBowlCount() {
-        return numberOfPins.size();
+        return numberOfPins.getBowlCount();
     }
 
     public int getTotalNumberOfPin() {
-        return numberOfPins.stream()
-                .map(NumberOfPin::getNumberOfPin)
-                .reduce(0, Integer::sum);
+        return numberOfPins.getTotalNumberOfPin();
     }
 
     public String format() {
