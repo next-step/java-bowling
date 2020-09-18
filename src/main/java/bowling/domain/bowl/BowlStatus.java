@@ -1,38 +1,41 @@
 package bowling.domain.bowl;
 
 import bowling.domain.bowl.formatter.*;
+import bowling.domain.bowl.identity.*;
 
 import java.util.Arrays;
 
 public enum BowlStatus {
 
-    NONE(new NoneNormalBowlFormatter()),
-    PROGRESS(new ProgressNormalBowlFormatter()),
-    STRIKE(new StrikeNormalBowlFormatter()),
-    SPARE(new SpareNormalBowlFormatter()),
-    MISS(new MissNormalBowlFormatter()),
-    GUTTER(new GutterNormalBowlFormatter())
+    NONE(new NoneBowlIdentity(), new NoneBowlFormatter()),
+    PROGRESS(new ProgressBowlIdentity(), new ProgressBowlFormatter()),
+    STRIKE(new StrikeBowlIdentity(), new StrikeBowlFormatter()),
+    SPARE(new SpareBowlIdentity(), new SpareBowlFormatter()),
+    MISS(new MissBowlIdentity(), new MissBowlFormatter()),
+    GUTTER(new GutterBowlIdentity(), new GutterBowlFormatter())
     ;
 
-    BowlStatus(NormalBowlFormatter normalBowlFormatter) {
-        this.normalBowlFormatter = normalBowlFormatter;
+    BowlStatus(BowlIdentity bowlIdentity, BowlFormatter bowlFormatter) {
+        this.bowlIdentity = bowlIdentity;
+        this.bowlFormatter = bowlFormatter;
     }
 
-    private NormalBowlFormatter normalBowlFormatter;
+    private BowlIdentity bowlIdentity;
+    private BowlFormatter bowlFormatter;
 
     public static BowlStatus getType(Bowl bowl) {
         return Arrays.stream(values())
-                .filter(bowlStatus -> bowlStatus.isSupport(bowl))
+                .filter(bowlStatus -> bowlStatus.identity(bowl))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public boolean isSupport(Bowl bowl) {
-        return normalBowlFormatter.isSupport(bowl);
+    public boolean identity(Bowl bowl) {
+        return bowlIdentity.identity(bowl);
     }
 
     public String format(Bowl bowl) {
-        return normalBowlFormatter.format(bowl);
+        return bowlFormatter.format(bowl);
     }
 
     public boolean isCompleted() {

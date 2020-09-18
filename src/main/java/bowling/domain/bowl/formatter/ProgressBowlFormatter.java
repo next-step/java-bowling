@@ -6,16 +6,9 @@ import java.text.MessageFormat;
 
 import static bowling.domain.NumberOfPin.MAX_NUMBER_OF_PIN;
 
-public class ProgressNormalBowlFormatter extends AbstractNormalBowlFormatter {
+public class ProgressBowlFormatter extends AbstractBowlFormatter {
 
     public static final String DEFAULT = "{0}";
-
-    @Override
-    public boolean isSupport(Bowl bowl) {
-        return bowl.getBowlCount() == FIRST_BOWL &&
-                bowl.getTotalNumberOfPin() < MAX_NUMBER_OF_PIN;
-    }
-
     @Override
     public String format(Bowl bowl) {
         return MessageFormat.format(DEFAULT, bowl.getFirstNumberOfPins());

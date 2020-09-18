@@ -6,15 +6,9 @@ import java.text.MessageFormat;
 
 import static bowling.domain.NumberOfPin.MAX_NUMBER_OF_PIN;
 
-public class SpareNormalBowlFormatter extends AbstractNormalBowlFormatter {
+public class SpareBowlFormatter extends AbstractBowlFormatter {
 
     public static final String SPARE = "{0}|/";
-
-    @Override
-    public boolean isSupport(Bowl bowl) {
-        return bowl.getBowlCount() == SECOND_BOWL &&
-                bowl.getTotalNumberOfPin() == MAX_NUMBER_OF_PIN;
-    }
 
     @Override
     public String format(Bowl bowl) {

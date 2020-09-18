@@ -2,14 +2,9 @@ package bowling.domain.bowl.formatter;
 
 import bowling.domain.bowl.Bowl;
 
-public class NoneNormalBowlFormatter extends AbstractNormalBowlFormatter {
+public class NoneBowlFormatter extends AbstractBowlFormatter {
 
     public static final String EMPTY = "";
-
-    @Override
-    public boolean isSupport(Bowl bowl) {
-        return bowl.isNone();
-    }
 
     @Override
     public String format(Bowl bowl) {
