@@ -8,7 +8,7 @@ import bowling.view.ResultView;
 public class BowlingController {
 
     public static void main(String[] args) {
-        BowlingGame bowlingGame = new BowlingGame();
+        BowlingGame bowlingGame = BowlingGame.of();
         User user = User.valueOf(InputView.getUserName());
 
         while (!bowlingGame.isEnd()) {
