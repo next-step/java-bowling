@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Pin {
 
-    private final String PIN_BOWL_RANGE = "볼링 한 구당 쓰러트릴수 있는 핀의 갯수는 0 ~ 10 사이입니다.";
+    private static final String PIN_BOWL_RANGE = "볼링 한 구당 쓰러트릴수 있는 핀의 갯수는 0 ~ 10 사이입니다.";
 
     private static final String BOWLING_STATUS_STRIKE = "X";
     private static final String BOWLING_STATUS_SPARE = "/";

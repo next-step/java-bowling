@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 public class Player {
 
-    private final String PLAYER_NAME_LENGTH = "플레이어 이름은 최대 영문3 글자 입니다.";
+    private static final String PLAYER_NAME_LENGTH = "플레이어 이름은 최대 영문3 글자 입니다.";
 
     private String name;
 

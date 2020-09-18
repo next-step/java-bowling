@@ -6,7 +6,7 @@ import bowling.domain.rolling.Rolling;
 
 public class NormalFrame extends Frame {
 
-    private final String NORMAL_FRAME_RANGE = "NormalFrame의 범위는 1~9 사이입니다.";
+    private static final String NORMAL_FRAME_RANGE = "NormalFrame의 범위는 1~9 사이입니다.";
 
     private Rolling normalRolling = new NormalRolling();
 

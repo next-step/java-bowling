@@ -9,11 +9,11 @@ import java.util.stream.Stream;
 
 public class ResultView {
 
-    private final String FRAME_PREFIX_SEPERATOR = "| ";
-    private final String FRAME_SURFIX_SEPERATOR = "   |";
-    private final String FRAME_SEPERATOR = " | ";
+    private static final String FRAME_PREFIX_SEPERATOR = "| ";
+    private static final String FRAME_SURFIX_SEPERATOR = "   |";
+    private static final String FRAME_SEPERATOR = " | ";
 
-    private final String FRAME_RESULT_BOARD_TEMPLATE = "| %4s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-5s |\n";
+    private static final String FRAME_RESULT_BOARD_TEMPLATE = "| %4s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-3s |  %-5s |\n";
 
 
     public void showScoreBoard(Player player) {

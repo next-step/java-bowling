@@ -6,7 +6,7 @@ import bowling.domain.rolling.Rolling;
 
 public class FinalFrame extends Frame {
 
-    private final String FINAL_FRAME_RANGE = "FinalFrame의 인덱스는 10이여야합니다.";
+    private static final String FINAL_FRAME_RANGE = "FinalFrame의 인덱스는 10이여야합니다.";
 
     private Rolling finalRolling = new FinalRolling();
 

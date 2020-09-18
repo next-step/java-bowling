@@ -5,7 +5,7 @@ import bowling.domain.Pin;
 
 public class NormalRolling extends Rolling {
 
-    private final String PIN_BOWL_RANGE = "한 프레임에 쓰러트릴수 있는 핀의 총합은 0 ~ 10 사이입니다.";
+    private static final String PIN_BOWL_RANGE = "한 프레임에 쓰러트릴수 있는 핀의 총합은 0 ~ 10 사이입니다.";
 
     @Override
     public void bowl(Pin pin) {
