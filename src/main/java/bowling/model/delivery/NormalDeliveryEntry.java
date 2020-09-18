@@ -3,6 +3,7 @@ package bowling.model.delivery;
 import bowling.ExceptionMessages;
 import bowling.model.State;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -13,8 +14,7 @@ public class NormalDeliveryEntry implements DeliveryEntry {
     private LinkedList<Delivery> deliveries;
 
     private NormalDeliveryEntry(Delivery firstDelivery) {
-        deliveries = new LinkedList<>();
-        deliveries.add(firstDelivery);
+        deliveries = new LinkedList<>(Arrays.asList(firstDelivery));
     }
 
     public static NormalDeliveryEntry of(int firstFallenPins) {
