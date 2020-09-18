@@ -18,19 +18,19 @@ public class Bowl {
 
     }
 
-    public Bowl(int firstNumberOfPins) {
-        bowl(firstNumberOfPins);
+    public Bowl(int firstNumberOfPin) {
+        bowl(firstNumberOfPin);
     }
 
-    public Bowl(int firstNumberOfPins, int secondNumberOfPins) {
-        bowl(firstNumberOfPins);
-        bowl(secondNumberOfPins);
+    public Bowl(int firstNumberOfPin, int secondNumberOfPin) {
+        bowl(firstNumberOfPin);
+        bowl(secondNumberOfPin);
     }
 
-    public void bowl(int numberOfPins) {
+    public void bowl(int numberOfPin) {
         BowlValidator.validateBowlCount(getBowlCount());
-        BowlValidator.validateTotalNumberOfPins(getTotalNumberOfPins(), numberOfPins);
-        addNumberOfPins(numberOfPins);
+        BowlValidator.validateTotalNumberOfPins(getTotalNumberOfPin(), numberOfPin);
+        addNumberOfPins(numberOfPin);
         updateNormalBowlResult();
     }
 
@@ -66,7 +66,7 @@ public class Bowl {
         return numberOfPins.size();
     }
 
-    public int getTotalNumberOfPins() {
+    public int getTotalNumberOfPin() {
         return numberOfPins.stream()
                 .map(NumberOfPin::getNumberOfPin)
                 .reduce(0, Integer::sum);
