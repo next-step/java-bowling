@@ -13,7 +13,7 @@ public class EndFrame implements Frame {
 
     @Override
     public void bowl(Pin felledPin) {
-        states.bowl(felledPin);
+        this.states.bowl(felledPin);
     }
 
     @Override

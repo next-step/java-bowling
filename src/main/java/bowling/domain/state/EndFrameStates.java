@@ -27,13 +27,17 @@ public class EndFrameStates {
 
     public boolean isEnd() {
         State first = states.getFirst();
-        return first instanceof Miss || first instanceof Gutter || count.isMax();
+        return isClear(first) || count.isMax();
     }
 
-    public String view() {
+    private boolean isClear(State state) {
+        return state instanceof Miss || state instanceof Gutter;
+    }
+
+    public String makeSymbol() {
         return states.stream()
                 .filter(s -> !(s instanceof Ready))
-                .map(State::view)
+                .map(State::makeSymbol)
                 .collect(Collectors.joining("|"));
     }
 }
