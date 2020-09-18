@@ -29,26 +29,30 @@ public class NormalBowls {
     }
 
     private void bonus(NormalBowl normalBowl) {
-        if (isStrikeOrSpare(normalBowl)) {
+        if (normalBowl.isBonus()) {
             normalBowls.add(new NormalBowl());
         }
     }
 
-    private boolean isStrikeOrSpare(NormalBowl normalBowl) {
-        return normalBowl.getNormalBowlResult().equals(NormalBowlResult.STRIKE) ||
-                normalBowl.getNormalBowlResult().equals(NormalBowlResult.SPARE);
-    }
-
     public boolean isCompleted() {
-        return normalBowls.stream().allMatch(NormalBowl::isCompleted) ||
-                normalBowls.stream().map(NormalBowl::getBowlCount).reduce(0, Integer::sum) == MAX_BOWL_COUNT;
+        return isAllCompleted() || isMaxBonusCount();
     }
 
-    @Override
-    public String toString() {
+    private boolean isAllCompleted() {
+        return normalBowls.stream()
+                .allMatch(NormalBowl::isCompleted);
+    }
+
+    private boolean isMaxBonusCount() {
+        return normalBowls.stream()
+                .map(NormalBowl::getBowlCount)
+                .reduce(0, Integer::sum) == MAX_BOWL_COUNT;
+    }
+
+    public String format() {
         return normalBowls.stream()
                 .filter(normalBowl -> !normalBowl.isNone())
-                .map(normalBowl -> NormalBowlResult.getType(normalBowl).format(normalBowl))
+                .map(NormalBowl::format)
                 .collect(Collectors.joining(DELIMITER));
     }
 

@@ -32,7 +32,11 @@ public enum NormalBowlResult {
     }
 
     public boolean isCompleted() {
-        return this.compareTo(PROGRESS) > 0 ;
+        return compareTo(PROGRESS) > 0 ;
+    }
+
+    public boolean isBonus() {
+        return equals(STRIKE) || equals(SPARE);
     }
 
 }
