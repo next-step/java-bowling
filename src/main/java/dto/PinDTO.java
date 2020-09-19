@@ -12,9 +12,13 @@ public class PinDTO implements DTO {
         this.pin = pin;
     }
 
+    public static PinDTO of(int pin) {
+        validate(pin);
+        return new PinDTO(pin);
+    }
 
-    public int getPin() {
-        return pin;
+    public static PinDTO from(Pin pin) {
+        return new PinDTO(pin.getPin());
     }
 
     public static void validate(int pin) throws IllegalArgumentException {
@@ -23,12 +27,7 @@ public class PinDTO implements DTO {
         }
     }
 
-    public static PinDTO of(int pin) {
-        validate(pin);
-        return new PinDTO(pin);
-    }
-
-    public static PinDTO from(Pin pin) {
-        return new PinDTO(pin.getPin());
+    public int getPin() {
+        return pin;
     }
 }

@@ -12,6 +12,11 @@ public class ScoreBoard {
         this.frames = frames;
     }
 
+    public static ScoreBoard of(Player player, int totalFrames) {
+        Frames frames = Frames.of(totalFrames);
+        return new ScoreBoard(player, frames);
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -26,10 +31,5 @@ public class ScoreBoard {
 
     public boolean isFinished() {
         return frames.isFinished();
-    }
-
-    public static ScoreBoard of(Player player, int totalFrames) {
-        Frames frames = Frames.of(totalFrames);
-        return new ScoreBoard(player, frames);
     }
 }

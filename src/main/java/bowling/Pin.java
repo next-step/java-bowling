@@ -20,14 +20,20 @@ public class Pin {
         this.pin = pin;
     }
 
-    public int getPin() {
-        return pin;
+    public static Pin of(int pin) {
+        validate(pin);
+        return INSTANCES.get(pin);
     }
 
     private static void validate(int pin) throws IllegalArgumentException {
         if (pin < MIN_PINS || pin > MAX_PINS) {
             throw new IllegalArgumentException("입력된 핀 갯수가 범위를 초과했습니다.");
         }
+    }
+
+    public static Pin of(Pin pin) {
+        validate(pin.pin);
+        return INSTANCES.get(pin.pin);
     }
 
     public static Pin ofMin() {
@@ -38,14 +44,8 @@ public class Pin {
         return INSTANCES.get(MAX_PINS);
     }
 
-    public static Pin of(int pin) {
-        validate(pin);
-        return INSTANCES.get(pin);
-    }
-
-    public static Pin of(Pin pin) {
-        validate(pin.pin);
-        return INSTANCES.get(pin.pin);
+    public int getPin() {
+        return pin;
     }
 
     @Override

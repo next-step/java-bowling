@@ -17,6 +17,18 @@ public class ResultFrameDTO {
         this.bonusResultPitchingDTO = bonusResultPitchingDTO;
     }
 
+    public static ResultFrameDTO from(Frame frame) {
+        ResultPitchingDTO firstResultPitchingDTO =
+                ResultPitchingDTO.of(PinDTO.from(frame.getFirstPin()), frame.isFirstDone());
+        ResultPitchingDTO secondResultPitchingDTO =
+                ResultPitchingDTO.of(PinDTO.from(frame.getSecondPin()), frame.isSecondDone());
+        ResultPitchingDTO bonusResultPitchingDTO = null;
+        if (frame.isLastFrame()) {
+            bonusResultPitchingDTO =ResultPitchingDTO.of(PinDTO.from(frame.getBonusPin()), frame.isBonusDone());
+        }
+        return new ResultFrameDTO(firstResultPitchingDTO, secondResultPitchingDTO, bonusResultPitchingDTO);
+    }
+
     public int getFirstPin() {
         return firstResultPitchingDTO.getPin();
     }
@@ -43,17 +55,5 @@ public class ResultFrameDTO {
 
     public boolean isLastResultFrameDTO() {
         return !Objects.isNull(bonusResultPitchingDTO);
-    }
-
-    public static ResultFrameDTO from(Frame frame) {
-        ResultPitchingDTO firstResultPitchingDTO =
-                ResultPitchingDTO.of(PinDTO.from(frame.getFirstPin()), frame.isFirstDone());
-        ResultPitchingDTO secondResultPitchingDTO =
-                ResultPitchingDTO.of(PinDTO.from(frame.getSecondPin()), frame.isSecondDone());
-        ResultPitchingDTO bonusResultPitchingDTO = null;
-        if (frame.isLastFrame()) {
-            bonusResultPitchingDTO =ResultPitchingDTO.of(PinDTO.from(frame.getBonusPin()), frame.isBonusDone());
-        }
-        return new ResultFrameDTO(firstResultPitchingDTO, secondResultPitchingDTO, bonusResultPitchingDTO);
     }
 }

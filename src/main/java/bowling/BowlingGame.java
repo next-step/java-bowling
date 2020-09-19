@@ -10,6 +10,11 @@ public class BowlingGame {
         this.scoreBoard = scoreBoard;
     }
 
+    public static BowlingGame of(int totalFrames, String name) {
+        ScoreBoard scoreBoard = ScoreBoard.of(Player.of(name), totalFrames);
+        return new BowlingGame(scoreBoard);
+    }
+
     public Player getPlayer() {
         return scoreBoard.getPlayer();
     }
@@ -24,10 +29,5 @@ public class BowlingGame {
 
     public boolean isFinished() {
         return scoreBoard.isFinished();
-    }
-
-    public static BowlingGame of(int totalFrames, String name) {
-        ScoreBoard scoreBoard = ScoreBoard.of(Player.of(name), totalFrames);
-        return new BowlingGame(scoreBoard);
     }
 }

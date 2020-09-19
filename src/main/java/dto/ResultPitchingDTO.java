@@ -10,15 +10,15 @@ public class ResultPitchingDTO {
         this.isDone = isDone;
     }
 
+    public static ResultPitchingDTO of(PinDTO pinDTO, boolean isDone) {
+        return new ResultPitchingDTO(pinDTO, isDone);
+    }
+
     public int getPin() {
         return pinDTO.getPin();
     }
 
     public boolean isDone() {
         return isDone;
-    }
-
-    public static ResultPitchingDTO of(PinDTO pinDTO, boolean isDone) {
-        return new ResultPitchingDTO(pinDTO, isDone);
     }
 }

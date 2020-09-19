@@ -11,8 +11,9 @@ public class NameDTO implements DTO {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
+    public static NameDTO of(String name) {
+        validate(name);
+        return new NameDTO(name);
     }
 
     private static void validate(String name) throws IllegalArgumentException {
@@ -21,8 +22,7 @@ public class NameDTO implements DTO {
         }
     }
 
-    public static NameDTO of(String name) {
-        validate(name);
-        return new NameDTO(name);
+    public String getName() {
+        return name;
     }
 }

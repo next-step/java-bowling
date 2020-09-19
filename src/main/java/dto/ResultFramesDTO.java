@@ -15,14 +15,14 @@ public class ResultFramesDTO {
         this.resultFrameDTOs = new ArrayList<>(resultFrameDTOs);
     }
 
-    public List<ResultFrameDTO> getResultFrameDTOs() {
-        return Collections.unmodifiableList(resultFrameDTOs);
-    }
-
     public static ResultFramesDTO of(List<Frame> frames) {
         List<ResultFrameDTO> resultFrameDTOs = frames.stream()
                 .map(ResultFrameDTO::from)
                 .collect(Collectors.toList());
         return new ResultFramesDTO(resultFrameDTOs);
+    }
+
+    public List<ResultFrameDTO> getResultFrameDTOs() {
+        return Collections.unmodifiableList(resultFrameDTOs);
     }
 }

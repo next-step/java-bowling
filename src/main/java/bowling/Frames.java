@@ -17,6 +17,15 @@ public class Frames {
         this.currentFrame = startFrame;
     }
 
+    public static Frames of(int totalFrames) {
+        Frame startFrame = Frame.of();
+        AtomicReference<Frame> frame = new AtomicReference<>(startFrame);
+        IntStream.range(START_FRAME + 1, totalFrames - 1)
+                .forEach(index -> frame.set(frame.get().next()));
+        frame.get().last();
+        return new Frames(startFrame);
+    }
+
     public List<Frame> getFrames() {
         List<Frame> frames = new ArrayList<>(Collections.singletonList(startFrame));
         Frame currentFrame = startFrame;
@@ -43,14 +52,5 @@ public class Frames {
 
     public boolean isFinished() {
         return currentFrame.isLastFrame() && currentFrame.isDone();
-    }
-
-    public static Frames of(int totalFrames) {
-        Frame startFrame = Frame.of();
-        AtomicReference<Frame> frame = new AtomicReference<>(startFrame);
-        IntStream.range(START_FRAME + 1, totalFrames - 1)
-                .forEach(index -> frame.set(frame.get().next()));
-        frame.get().last();
-        return new Frames(startFrame);
     }
 }

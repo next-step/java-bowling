@@ -12,6 +12,14 @@ public class Pitching {
         this.pin = pin;
     }
 
+    public static Pitching of(PitchingStatus pitchingStatus, Pin pin) {
+        return new Pitching(pitchingStatus, pin);
+    }
+
+    public static Pitching ofReady() {
+        return new Pitching(PitchingStatus.Ready, Pin.ofMin());
+    }
+
     public Pin getPin() {
         return pin;
     }
@@ -30,14 +38,6 @@ public class Pitching {
 
     public boolean isClear() {
         return pin.equals(Pin.ofMax());
-    }
-
-    public static Pitching ofReady() {
-        return new Pitching(PitchingStatus.Ready, Pin.ofMin());
-    }
-
-    public static Pitching of(PitchingStatus pitchingStatus, Pin pin) {
-        return new Pitching(pitchingStatus, pin);
     }
 
     @Override

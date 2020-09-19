@@ -11,6 +11,10 @@ public class Frame {
         this.pitchings = pitchings;
     }
 
+    public static Frame of() {
+        return new Frame(NormalPitchings.ofReady());
+    }
+
     public Frame getNextFrame() {
         return this.nextFrame;
     }
@@ -58,9 +62,5 @@ public class Frame {
 
     public void last() {
         this.nextFrame = new Frame(LastPitchings.of());
-    }
-
-    public static Frame of() {
-        return new Frame(NormalPitchings.ofReady());
     }
 }

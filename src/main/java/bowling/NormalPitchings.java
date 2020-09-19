@@ -12,6 +12,14 @@ public class NormalPitchings implements Pitchings {
         this.secondPitching = secondPitching;
     }
 
+    public static NormalPitchings of(Pitching firstPitching, Pitching secondPitching) {
+        return new NormalPitchings(firstPitching, secondPitching);
+    }
+
+    public static NormalPitchings ofReady() {
+        return new NormalPitchings(Pitching.ofReady(), Pitching.ofReady());
+    }
+
     @Override
     public void bowl(Pin pin) {
         if (isDone()) {
@@ -60,14 +68,6 @@ public class NormalPitchings implements Pitchings {
     @Override
     public boolean isDone() {
         return isFirstDone() && isSecondDone();
-    }
-
-    public static NormalPitchings ofReady() {
-        return new NormalPitchings(Pitching.ofReady(), Pitching.ofReady());
-    }
-
-    public static NormalPitchings of(Pitching firstPitching, Pitching secondPitching) {
-        return new NormalPitchings(firstPitching, secondPitching);
     }
 
     @Override

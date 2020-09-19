@@ -12,14 +12,19 @@ public class Player {
         this.name = name;
     }
 
-    public String getName() {
-        return this.name;
+    public static Player of(String name) {
+        validate(name);
+        return new Player(name);
     }
 
     private static void validate(String name) throws IllegalArgumentException {
         if (!NAMING_PATTERN.matcher(name).matches()) {
             throw new IllegalArgumentException("이름은 영문 3 글자만 허용 됩니다.");
         }
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     @Override
@@ -35,10 +40,5 @@ public class Player {
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
-    }
-
-    public static Player of(String name) {
-        validate(name);
-        return new Player(name);
     }
 }

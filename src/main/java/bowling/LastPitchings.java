@@ -12,6 +12,10 @@ public class LastPitchings implements Pitchings {
         this.bonusPitching = bonusPitching;
     }
 
+    public static LastPitchings of() {
+        return new LastPitchings(Pitching.ofReady(), Pitching.ofReady(), Pitching.ofReady());
+    }
+
     @Override
     public void bowl(Pin pin) {
         if (isDone()) {
@@ -86,9 +90,5 @@ public class LastPitchings implements Pitchings {
     @Override
     public boolean isDone() {
         return isFirstDone() && isSecondDone() && isBonusDone();
-    }
-
-    public static LastPitchings of() {
-        return new LastPitchings(Pitching.ofReady(), Pitching.ofReady(), Pitching.ofReady());
     }
 }
