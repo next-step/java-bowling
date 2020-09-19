@@ -44,7 +44,7 @@ class PinTest {
     @Test
     void spareRecordTest() {
         Pin pin = new Pin(8);
-        assertThat(pin.record(new Pin(2))).isEqualTo("/");
+        assertThat(pin.record(new Pin(2))).isEqualTo("8|/");
     }
 
     @Test
