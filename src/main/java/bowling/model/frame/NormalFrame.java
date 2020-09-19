@@ -1,5 +1,6 @@
 package bowling.model.frame;
 
+import bowling.model.Score;
 import bowling.model.delivery.Delivery;
 import bowling.model.delivery.DeliveryEntry;
 import bowling.model.delivery.NormalDeliveryEntry;
@@ -45,6 +46,18 @@ public class NormalFrame extends Frame {
     @Override
     public int hashCode() {
         return Objects.hash(deliveryEntry);
+    }
+
+    @Override
+    public Score getScore() {
+        int countOfBonusScore = getState().getCountOfBonusScore();
+        Score score = Score.of(deliveryEntry.getTotalFallenPins(), countOfBonusScore);
+
+        if (!score.isEndCalculate() && canCalculateBonus()) {
+            next.calculateAdditionalScore(score);
+        }
+
+        return score;
     }
 
 }

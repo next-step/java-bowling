@@ -9,4 +9,7 @@ public final class ExceptionMessages {
 
     public static final String NO_LEFT_DELIVERY = "더이상 투구를 할 수 없습니다.";
 
+    public static final String SCORE_MIN_ADDITIONAL_COUNT_EXCEPTION = "추가 점수 갯수는 최소 0입니다.";
+    public static final String SCORE_MAX_ADDITIONAL_COUNT_EXCEPTION = "추가 점수 갯수는 최대 2입니다.";
+
 }
