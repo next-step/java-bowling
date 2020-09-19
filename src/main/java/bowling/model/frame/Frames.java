@@ -21,7 +21,7 @@ public class Frames {
         }
 
         Frame newFrame = isFinalFrame(frameNo) ? FinalFrame.of(pins) : NormalFrame.of(pins);
-        frames.add(newFrame);
+        addNext(newFrame);
         return nextPlayFrameNo(frameNo);
 
     }
@@ -44,6 +44,14 @@ public class Frames {
 
     public Stream<Frame> getFrames() {
         return frames.stream();
+    }
+
+    private void addNext(Frame newFrame) {
+        if (frames.size() > 0) {
+            frames.getLast().next = newFrame;
+        }
+
+        frames.add(newFrame);
     }
 
 }
