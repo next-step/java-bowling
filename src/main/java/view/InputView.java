@@ -1,7 +1,6 @@
 package view;
 
 import dto.DTO;
-import dto.FrameDTO;
 import dto.PinDTO;
 import dto.NameDTO;
 
