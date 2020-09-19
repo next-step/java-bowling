@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Pin {
 
-    private static final String PIN_BOWL_RANGE = "볼링 한 구당 쓰러트릴수 있는 핀의 갯수는 0 ~ 10 사이입니다.";
+    private static final String PIN_BOWL_RANGE = "한 프레임에 쓰러트릴수 있는 핀의 총합은 0 ~ 10 사이입니다.";
 
     private static final String BOWLING_STATUS_STRIKE = "X";
     private static final String BOWLING_STATUS_SPARE = "/";
@@ -35,17 +35,18 @@ public class Pin {
     }
 
     public boolean isSpare(Pin secondPins) {
+        validationPinCount(totalFallenPins(secondPins));
         if (isStrike()) {
             return false;
         }
         return totalFallenPins(secondPins) == MAXIMUM_PIN_COUNT;
     }
 
-    private int totalFallenPins(Pin secondPins) {
+    public int totalFallenPins(Pin secondPins) {
         return pins + secondPins.count();
     }
 
-    private String ifCountOfPinsZeroTransGutter() {
+    private String ifCountOfPinsZeroTransGutter(int pins) {
         if (pins == MINIMUM_PIN_COUNT) {
             return BOWLING_STATUS_GUTTER;
         }
@@ -56,14 +57,19 @@ public class Pin {
         if (isStrike()) {
             return BOWLING_STATUS_STRIKE;
         }
-        return ifCountOfPinsZeroTransGutter();
+        return ifCountOfPinsZeroTransGutter(pins);
     }
 
     public String record(Pin secondPin) {
+        String prevRecord = ifCountOfPinsZeroTransGutter(pins)+"|";
         if (isSpare(secondPin)) {
-            return BOWLING_STATUS_SPARE;
+            return prevRecord+BOWLING_STATUS_SPARE;
         }
-        return String.valueOf(secondPin.count());
+        return prevRecord + ifCountOfPinsZeroTransGutter(secondPin.count());
+    }
+
+    public Score sumScore(Score score) {
+        return score.bowl(this);
     }
 
     @Override
