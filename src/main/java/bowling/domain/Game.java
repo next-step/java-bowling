@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Game {
-    private List<Bowling> bowlingList;
+    private List<Bowling> bowlingGames;
     private int cursor;
 
-    private Game(List<Bowling> bowlingList, int cursor) {
-        this.bowlingList = bowlingList;
+    private Game(List<Bowling> bowlingGames, int cursor) {
+        this.bowlingGames = bowlingGames;
         this.cursor = cursor;
     }
 
@@ -21,7 +21,7 @@ public class Game {
     }
 
     private Bowling getCurrent() {
-        return bowlingList.get(cursor);
+        return bowlingGames.get(cursor);
     }
 
     private Bowling findBowlingWithIsNotEnd() {
@@ -52,7 +52,7 @@ public class Game {
             cursor++;
         }
 
-        if (cursor == bowlingList.size()) {
+        if (cursor == bowlingGames.size()) {
             cursor = 0;
         }
 
@@ -60,7 +60,7 @@ public class Game {
     }
 
     public boolean isEnd() {
-        return bowlingList.stream()
+        return bowlingGames.stream()
                 .allMatch(Bowling::isEnd);
     }
 }
