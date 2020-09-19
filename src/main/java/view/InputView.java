@@ -1,7 +1,8 @@
 package view;
 
 import dto.DTO;
-import dto.FalledPinsDTO;
+import dto.FrameDTO;
+import dto.PinDTO;
 import dto.NameDTO;
 
 import java.util.Scanner;
@@ -15,10 +16,10 @@ public class InputView {
         try {
             return supplier.get();
         } catch (NumberFormatException e) {
-            System.out.println("숫자만 입력할 수 있습니다.\n");
+            System.out.println("숫자만 입력할 수 있습니다.");
             return tryCatch(supplier);
         } catch (IllegalArgumentException e) {
-            System.out.printf("%s\n\n", e.getMessage());
+            System.out.printf("%s\n", e.getMessage());
             return tryCatch(supplier);
         }
     }
@@ -31,11 +32,11 @@ public class InputView {
         });
     }
 
-    public FalledPinsDTO inputFalledPins(int frame) {
-        return (FalledPinsDTO) tryCatch(() -> {
-            System.out.printf("%d 프레임 투구 : ", frame);
-            int falledPins = Integer.parseInt(scanner.nextLine());
-            return FalledPinsDTO.of(falledPins);
+    public PinDTO inputPin(NameDTO nameDTO) {
+        return (PinDTO) tryCatch(() -> {
+            System.out.printf("\n%s' turn : ", nameDTO.getName());
+            int pin = Integer.parseInt(scanner.nextLine());
+            return PinDTO.of(pin);
         });
     }
 }
