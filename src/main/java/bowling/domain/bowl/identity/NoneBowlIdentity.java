@@ -1,6 +1,7 @@
 package bowling.domain.bowl.identity;
 
 import bowling.domain.bowl.BowlResult;
+import bowling.domain.frame.Frame;
 
 public class NoneBowlIdentity extends AbstractBowlIdentity {
 
@@ -19,6 +20,11 @@ public class NoneBowlIdentity extends AbstractBowlIdentity {
     @Override
     public boolean isBonus() {
         return false;
+    }
+
+    @Override
+    public int getScore(Frame frame) {
+        return -1;
     }
 
     @Override

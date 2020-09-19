@@ -1,6 +1,8 @@
 package bowling.domain.bowl.identity;
 
 import bowling.domain.bowl.BowlResult;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 
 import java.text.MessageFormat;
 
@@ -27,8 +29,13 @@ public class ProgressBowlIdentity extends AbstractBowlIdentity {
     }
 
     @Override
+    public int getScore(Frame frame) {
+        return ((NormalFrame) frame).getTotalNumberOfPin();
+    }
+
+    @Override
     public String message(BowlResult bowlResult) {
-        return MessageFormat.format(PROGRESS, bowlResult.getFirstNumberOfPins());
+        return MessageFormat.format(PROGRESS, bowlResult.getFirstNumberOfPin());
     }
 
 }
