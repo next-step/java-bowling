@@ -40,6 +40,10 @@ public class Player {
     return bowling.scores();
   }
 
+  public boolean isPlaying() {
+    return bowling.nextFrame() < 11;
+  }
+
   @Override
   public String toString() {
     return "Player{" +

@@ -43,6 +43,11 @@ public class Bowlings {
         .ifPresent(p -> p.roll(pins));
   }
 
+  public boolean isPlaying() {
+    return players.stream()
+        .anyMatch(Player::isPlaying);
+  }
+
   public List<Player> players() {
     return players;
   }

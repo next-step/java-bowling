@@ -18,11 +18,9 @@ public class BowlingApplication {
 
     Bowlings bowlings = Bowlings.ofNames(names);
 
-    String nextPlayer = bowlings.nextPlayer();
-    while (nextPlayer != null) {
-      bowlings.roll(inputView.requestPinsOf(nextPlayer));
+    while (bowlings.isPlaying()) {
+      bowlings.roll(inputView.requestPinsOf(bowlings.nextPlayer()));
       outputView.render(bowlings);
-      nextPlayer = bowlings.nextPlayer();
     }
 
   }

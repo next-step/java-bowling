@@ -46,7 +46,6 @@ public class Bowling {
         .collect(Collectors.toList());
   }
 
-
   public List<Score> scores() {
     List<Score> scores = new ArrayList<>();
 
