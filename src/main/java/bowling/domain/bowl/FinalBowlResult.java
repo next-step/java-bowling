@@ -59,4 +59,8 @@ public class FinalBowlResult {
                 .reduce(0, Integer::sum);
     }
 
+    public int getFirstNumberOfPin() {
+        return bowlResults.getFirst().getFirstNumberOfPin();
+    }
+
 }

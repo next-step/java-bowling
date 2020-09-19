@@ -44,6 +44,14 @@ public class FinalFrame extends AbstractFrame {
     }
 
     @Override
+    public int getFirstNumberOfPin() {
+        if (finalBowlResult.isNone()) {
+            return -1;
+        }
+        return finalBowlResult.getFirstNumberOfPin();
+    }
+
+    @Override
     public String toString() {
         return finalBowlResult.format();
     }

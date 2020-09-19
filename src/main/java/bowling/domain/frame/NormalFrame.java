@@ -37,6 +37,10 @@ public class NormalFrame extends AbstractFrame {
         return bowlResult.getTotalNumberOfPin();
     }
 
+    public int getNextFrameFirstNumberOfPin() {
+        return nextFrame.getFirstNumberOfPin();
+    }
+
     @Override
     public boolean isEnd() {
         return false;
@@ -45,6 +49,14 @@ public class NormalFrame extends AbstractFrame {
     @Override
     public int getScore() {
         return bowlResult.getScore(this);
+    }
+
+    @Override
+    public int getFirstNumberOfPin() {
+        if (bowlResult.isNone()) {
+            return -1;
+        }
+        return bowlResult.getFirstNumberOfPin();
     }
 
     @Override

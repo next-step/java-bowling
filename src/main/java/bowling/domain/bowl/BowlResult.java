@@ -63,6 +63,9 @@ public class BowlResult {
     }
 
     public int getScore(NormalFrame frame) {
+        if (!isCompleted()) {
+            return -1;
+        }
         return findBowlIdentity().getScore(frame);
     }
 

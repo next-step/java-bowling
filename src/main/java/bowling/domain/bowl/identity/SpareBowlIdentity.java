@@ -2,6 +2,7 @@ package bowling.domain.bowl.identity;
 
 import bowling.domain.bowl.BowlResult;
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 
 import java.text.MessageFormat;
 
@@ -29,7 +30,11 @@ public class SpareBowlIdentity extends AbstractBowlIdentity {
 
     @Override
     public int getScore(Frame frame) {
-        return MAX_NUMBER_OF_PIN + 1;
+        int bonusScore = ((NormalFrame) frame).getNextFrameFirstNumberOfPin();
+        if (bonusScore == -1) {
+            return -1;
+        }
+        return MAX_NUMBER_OF_PIN + bonusScore;
     }
 
     @Override

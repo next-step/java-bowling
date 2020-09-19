@@ -6,6 +6,7 @@ public interface Frame extends Iterable<Frame> {
     Frame getNextFrame();
     int getFrameNumber();
     int getScore();
+    int getFirstNumberOfPin();
     boolean isEnd();
 
 }
