@@ -1,33 +1,33 @@
 package bowling;
 
+import java.util.List;
+
 public class BowlingGame {
 
-    private final int totalFrames;
     private final ScoreBoard scoreBoard;
 
-    private BowlingGame(int totalFrames, ScoreBoard scoreBoard) {
-        this.totalFrames = totalFrames;
+    private BowlingGame(ScoreBoard scoreBoard) {
         this.scoreBoard = scoreBoard;
     }
 
-    public int getTotalFrames() {
-        return this.totalFrames;
+    public Player getPlayer() {
+        return scoreBoard.getPlayer();
     }
 
-    public String getPlayerName() {
-        return scoreBoard.getPlayerName();
+    public List<Frame> getFrames() {
+        return scoreBoard.getFrames();
     }
 
-    public int getCurrentFrame() {
-        return scoreBoard.getCurrentFrame();
+    public void bowl(Pin pin) {
+        scoreBoard.bowl(pin);
     }
 
-    public void bowl(int falledPins) {
-        scoreBoard.bowl(falledPins);
+    public boolean isFinished() {
+        return scoreBoard.isFinished();
     }
 
     public static BowlingGame of(int totalFrames, String name) {
         ScoreBoard scoreBoard = ScoreBoard.of(Player.of(name), totalFrames);
-        return new BowlingGame(totalFrames, scoreBoard);
+        return new BowlingGame(scoreBoard);
     }
 }
