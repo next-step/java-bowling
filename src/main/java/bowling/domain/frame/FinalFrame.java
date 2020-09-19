@@ -39,6 +39,11 @@ public class FinalFrame extends AbstractFrame {
     }
 
     @Override
+    public int getScore() {
+        return finalBowlResult.getScore();
+    }
+
+    @Override
     public String toString() {
         return finalBowlResult.format();
     }

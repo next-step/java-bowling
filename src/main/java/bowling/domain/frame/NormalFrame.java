@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.NumberOfPin;
 import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.BowlResult;
 
@@ -33,9 +34,18 @@ public class NormalFrame extends AbstractFrame {
         return nextFrame;
     }
 
+    public int getTotalNumberOfPin() {
+        return bowlResult.getTotalNumberOfPin();
+    }
+
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    @Override
+    public int getScore() {
+        return bowlResult.getScore(this);
     }
 
     @Override
