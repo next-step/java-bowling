@@ -2,7 +2,7 @@ package dto;
 
 import bowling.Pin;
 
-public class PinDTO implements DTO {
+public class PinDTO {
 
     private static final int MAX_PINS = 10;
     private static final int MIN_PINS = 0;

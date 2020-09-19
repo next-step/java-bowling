@@ -2,7 +2,7 @@ package dto;
 
 import java.util.regex.Pattern;
 
-public class NameDTO implements DTO {
+public class NameDTO {
 
     private static final String NAMING_REGEX = "^[a-zA-Z]{3,}$";
     private final String name;

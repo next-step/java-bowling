@@ -1,6 +1,5 @@
 package view;
 
-import dto.DTO;
 import dto.PinDTO;
 import dto.NameDTO;
 
@@ -11,7 +10,7 @@ public class InputView {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    private DTO tryCatch(Supplier<DTO> supplier) {
+    private <T> T tryCatch(Supplier<T> supplier) {
         try {
             return supplier.get();
         } catch (NumberFormatException e) {
@@ -24,7 +23,7 @@ public class InputView {
     }
 
     public NameDTO inputName() {
-        return (NameDTO) tryCatch(() -> {
+        return tryCatch(() -> {
             System.out.print("플레이어 이름은? ( 3 english letters ) : ");
             String name = scanner.nextLine();
             return NameDTO.of(name);
@@ -32,7 +31,7 @@ public class InputView {
     }
 
     public PinDTO inputPin(NameDTO nameDTO) {
-        return (PinDTO) tryCatch(() -> {
+        return tryCatch(() -> {
             System.out.printf("\n%s' turn : ", nameDTO.getName());
             int pin = Integer.parseInt(scanner.nextLine());
             return PinDTO.of(pin);
