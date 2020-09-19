@@ -1,6 +1,5 @@
 package bowling.domain.frame;
 
-import bowling.domain.NumberOfPin;
 import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.BowlResult;
 

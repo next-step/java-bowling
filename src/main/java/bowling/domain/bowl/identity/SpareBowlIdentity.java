@@ -2,10 +2,8 @@ package bowling.domain.bowl.identity;
 
 import bowling.domain.bowl.BowlResult;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 
 import java.text.MessageFormat;
-import java.util.Objects;
 
 import static bowling.domain.NumberOfPin.MAX_NUMBER_OF_PIN;
 
