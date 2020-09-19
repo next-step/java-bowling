@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class Player {
 
-    private static final String NAMING_REGEX = "^[a-zA-Z]{3}$";
+    private static final Pattern NAMING_PATTERN = Pattern.compile("^[a-zA-Z]{3}$");
     private final String name;
 
     private Player(String name) {
@@ -17,7 +17,7 @@ public class Player {
     }
 
     private static void validate(String name) throws IllegalArgumentException {
-        if (!Pattern.matches(NAMING_REGEX, name)) {
+        if (!NAMING_PATTERN.matcher(name).matches()) {
             throw new IllegalArgumentException("이름은 영문 3 글자만 허용 됩니다.");
         }
     }
