@@ -41,7 +41,9 @@ public class LastPitchings implements Pitchings {
     }
 
     private void validateAndSetBonusPitching() {
-        if (secondPitching.isClear()) return;
+        if (secondPitching.isClear()) {
+            return;
+        };
 
         Pin firstPitchingPin = firstPitching.getPin();
         Pin secondPitchingPin = secondPitching.getPin();
