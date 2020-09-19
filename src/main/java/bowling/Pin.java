@@ -48,6 +48,14 @@ public class Pin {
         return pin;
     }
 
+    public boolean isOverMaxPins(Pin pin) {
+        return this.pin + pin.pin > MAX_PINS;
+    }
+
+    public boolean isSpare(Pin pin) {
+        return this.pin + pin.pin == MAX_PINS;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

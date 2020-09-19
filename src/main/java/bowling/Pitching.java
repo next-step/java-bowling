@@ -40,6 +40,14 @@ public class Pitching {
         return pin.equals(Pin.ofMax());
     }
 
+    public boolean isOverMaxPins(Pin pin) {
+        return this.pin.isOverMaxPins(pin);
+    }
+
+    public boolean isSpare(Pitching pitching) {
+        return this.pin.isSpare(pitching.pin);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

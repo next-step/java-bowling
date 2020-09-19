@@ -39,8 +39,7 @@ public class NormalPitchings implements Pitchings {
     }
 
     private void validateSecondPitching(Pin secondPitchingPin) {
-        Pin firstPitchingPin = firstPitching.getPin();
-        if (firstPitchingPin.getPin() + secondPitchingPin.getPin() > Pin.MAX_PINS) {
+        if (firstPitching.isOverMaxPins(secondPitchingPin)) {
             throw new IllegalStateException("첫 번째 투구와 두 번째 투구의 합이 범위를 초과했습니다.");
         }
     }

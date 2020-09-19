@@ -59,4 +59,26 @@ class PitchingTest {
     void ofReady() {
         then(Pitching.ofReady()).isEqualTo(Pitching.of(PitchingStatus.Ready, Pin.ofMin()));
     }
+
+    @Test
+    @DisplayName("두 핀의 합이 최댓값 보다 큰지 검증")
+    void isOverMaxPins() {
+        Pitching pitching = Pitching.of(PitchingStatus.Done, Pin.ofMax());
+        Pin min = Pin.ofMin();
+        Pin one = Pin.of(1);
+
+        then(pitching.isOverMaxPins(min)).isFalse();
+        then(pitching.isOverMaxPins(one)).isTrue();
+    }
+
+    @Test
+    @DisplayName("두 핀의 합이 최댓값과 같은지 검증")
+    void isSpare() {
+        Pitching pitching = Pitching.of(PitchingStatus.Done, Pin.ofMax());
+        Pitching min = Pitching.of(PitchingStatus.Done, Pin.ofMin());
+        Pitching one = Pitching.of(PitchingStatus.Done, Pin.of(1));
+
+        then(pitching.isSpare(min)).isTrue();
+        then(pitching.isSpare(one)).isFalse();
+    }
 }

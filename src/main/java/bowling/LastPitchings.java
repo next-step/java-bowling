@@ -40,8 +40,7 @@ public class LastPitchings implements Pitchings {
             return;
         }
 
-        Pin firstPitchingPin = firstPitching.getPin();
-        if (firstPitchingPin.getPin() + secondPitchingPin.getPin() > Pin.MAX_PINS) {
+        if (firstPitching.isOverMaxPins(secondPitchingPin)) {
             throw new IllegalStateException("첫 번째 투구와 두 번째 투구의 합이 범위를 초과했습니다.");
         }
     }
@@ -49,12 +48,9 @@ public class LastPitchings implements Pitchings {
     private void validateAndSetBonusPitching() {
         if (secondPitching.isClear()) {
             return;
-        };
+        }
 
-        Pin firstPitchingPin = firstPitching.getPin();
-        Pin secondPitchingPin = secondPitching.getPin();
-        if (!firstPitching.isClear()
-                && firstPitchingPin.getPin() + secondPitchingPin.getPin() == Pin.MAX_PINS) {
+        if (!firstPitching.isClear() && firstPitching.isSpare(secondPitching)) {
             return;
         }
 

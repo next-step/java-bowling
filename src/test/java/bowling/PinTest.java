@@ -61,4 +61,26 @@ class PinTest {
 
         then(Pin.of(expected).hashCode()).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("두 핀의 합이 최댓값 보다 큰지 검증")
+    void isOverMaxPins() {
+        Pin max = Pin.ofMax();
+        Pin min = Pin.ofMin();
+        Pin one = Pin.of(1);
+
+        then(max.isOverMaxPins(min)).isFalse();
+        then(max.isOverMaxPins(one)).isTrue();
+    }
+
+    @Test
+    @DisplayName("두 핀의 합이 최댓값과 같은지 검증")
+    void isSpare() {
+        Pin max = Pin.ofMax();
+        Pin min = Pin.ofMin();
+        Pin one = Pin.of(1);
+
+        then(max.isSpare(min)).isTrue();
+        then(max.isSpare(one)).isFalse();
+    }
 }
