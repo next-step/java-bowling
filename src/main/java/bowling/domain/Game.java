@@ -1,6 +1,5 @@
 package bowling.domain;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,16 +7,17 @@ public class Game {
     private List<Bowling> bowlingList;
     private int cursor;
 
-    private Game(List<String> names) {
-        bowlingList = names.stream()
-                .map(Bowling::from)
-                .collect(Collectors.toList());
-
-        cursor = 0;
+    private Game(List<Bowling> bowlingList, int cursor) {
+        this.bowlingList = bowlingList;
+        this.cursor = cursor;
     }
 
     public static Game from(List<String> names) {
-        return new Game(names);
+        List<Bowling> bowlingList = names.stream()
+                .map(Bowling::from)
+                .collect(Collectors.toList());
+
+        return new Game(bowlingList, 0);
     }
 
     private Bowling getCurrent() {
