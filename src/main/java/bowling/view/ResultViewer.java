@@ -76,6 +76,10 @@ public class ResultViewer {
     }
 
     private String toResult(Pin prev, Pin current) {
+        if (current.isGutter()) {
+            return Result.GUTTER.toString();
+        }
+
         if (current.isStrike()) {
             return Result.STRIKE.toString();
         }
