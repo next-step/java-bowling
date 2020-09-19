@@ -3,7 +3,6 @@ package bowling.score;
 import bowling.global.utils.ExceptionMessage;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Scores {
@@ -22,6 +21,9 @@ public class Scores {
     }
 
     public void add(Score score) {
+        if (scores.size() < 2 && !bonus) {
+            validateScoreIsLargethanRemainingPins(score);
+        }
         this.scores.add(score);
     }
 
@@ -39,11 +41,6 @@ public class Scores {
 
     public boolean isSecondCount() {
         return scores.size() >= 2;
-    }
-
-    public List<Score> getScores() {
-        validateSumAllMaxIsTen();
-        return Collections.unmodifiableList(scores);
     }
 
     public Score getScore() {
@@ -98,9 +95,9 @@ public class Scores {
         return false;
     }
 
-    private void validateSumAllMaxIsTen() {
-        if (sumAll() > SCORE_MAX_VALUE) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_SCORES_SUMALL);
+    private void validateScoreIsLargethanRemainingPins(Score score) {
+        if (score.getScore() != 10 && score.getScore() > getRemainingPins()) {
+            throw new IllegalArgumentException(String.format(ExceptionMessage.INVALID_LARGE_THAN_REMAINING_PINS, getRemainingPins()));
         }
     }
 

@@ -32,17 +32,6 @@ class ScoresTest {
     }
 
     @Test
-    @DisplayName("Scores의 합이 10이 넘을 경우 Exception 발생")
-    void sumAllMaxIsTenException() {
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> {
-                    scores.add(Score.from("7"));
-                    scores.add(Score.from("4"));
-                    scores.getScores();
-                });
-    }
-
-    @Test
     @DisplayName("노말 프레임의 경우 다음 횟수 여부 확인. 첫번째 점수가 10점 (스트라이크)이면 해당 프레임에서 추가로 던질 수 없음.")
     void canNormalPitchIsStrike() {
         scores.add(Score.from("10"));
@@ -134,5 +123,15 @@ class ScoresTest {
         scores.add(Score.from("0"));
         scores.add(Score.from("0"));
         assertThat(scores.canFinalPitching()).isFalse();
+    }
+
+    @Test
+    @DisplayName("첫번째의 점수보다 큰 값을 두번째 점수때 입력할 경우 Exception 발생")
+    void scoreLaretIsRemainingPinsException() {
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> {
+                    scores.add(Score.from("7"));
+                    scores.add(Score.from("4"));
+                });
     }
 }
