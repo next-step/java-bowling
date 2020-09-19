@@ -50,7 +50,7 @@ public class ResultViewer {
 
     private static String frameNumberToString(int frameNumber) {
         return String.format(
-                frameNumber != SHOW_LAST_FRAME_NUMBER ? FRAME_FORMAT : FRAME_LAST_FORMAT,
+                getMessageWithLastFrameNumber(frameNumber, FRAME_FORMAT, FRAME_LAST_FORMAT),
                 frameNumber
         );
     }
@@ -98,14 +98,10 @@ public class ResultViewer {
 
     private String statusToString(int frameNumber, List<List<String>> frames) {
         if (frames.size() < frameNumber) {
-            return String.format(
-                    frameNumber != SHOW_LAST_FRAME_NUMBER ? GAME_RESULT_FORMAT : GAME_RESULT_LAST_FORMAT,
-                    "");
+            return getEmptyResultMessage(frameNumber);
         }
 
-        return String.format(
-                frameNumber != SHOW_LAST_FRAME_NUMBER ? GAME_RESULT_FORMAT : GAME_RESULT_LAST_FORMAT,
-                frameToString(frames.get(frameNumber - 1)));
+        return getResultMessage(frameNumber, frameToString(frames.get(frameNumber - 1)));
     }
 
     private String frameToString(List<String> results) {
@@ -167,14 +163,28 @@ public class ResultViewer {
 
     private String frameToString(int frameNumber, List<Integer> scores) {
         if (scores.size() < frameNumber) {
-            return String.format(
-                    frameNumber != SHOW_LAST_FRAME_NUMBER ? GAME_RESULT_FORMAT : GAME_RESULT_LAST_FORMAT,
-                    "");
+            return getEmptyResultMessage(frameNumber);
         }
 
+        return getResultMessage(frameNumber, scores.get(frameNumber - 1));
+    }
+
+    private static String getEmptyResultMessage(int frameNumber) {
         return String.format(
-                frameNumber != SHOW_LAST_FRAME_NUMBER ? GAME_RESULT_FORMAT : GAME_RESULT_LAST_FORMAT,
-                scores.get(frameNumber - 1));
+                getMessageWithLastFrameNumber(frameNumber, GAME_RESULT_FORMAT, GAME_RESULT_LAST_FORMAT),
+                ""
+        );
+    }
+
+    private static String getResultMessage(int frameNumber, Object... args) {
+        return String.format(
+                getMessageWithLastFrameNumber(frameNumber, GAME_RESULT_FORMAT, GAME_RESULT_LAST_FORMAT),
+                args
+        );
+    }
+
+    private static String getMessageWithLastFrameNumber(int frameNumber, String message, String lastMessage) {
+        return frameNumber != SHOW_LAST_FRAME_NUMBER ? message : lastMessage;
     }
 
     public static Map<String, ResultViewer> makeResultMap(List<String> names) {
