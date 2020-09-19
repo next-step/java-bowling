@@ -13,7 +13,8 @@ public class NormalFrame extends Frame {
     }
 
     public static NormalFrame first() {
-        return new NormalFrame(Frame.FIRST_FRAME_NUMBER, Scores.newInstance());
+//        return new NormalFrame(Frame.FIRST_FRAME_NUMBER, Scores.newInstance());
+        return new NormalFrame(9, Scores.newInstance());
     }
 
     @Override

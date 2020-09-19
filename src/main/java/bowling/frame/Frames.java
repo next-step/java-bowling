@@ -30,4 +30,9 @@ public class Frames {
         int frameIndex = this.frames.size() - NUMBER_ONE;
         return frames.get(frameIndex).isFinal();
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(frames);
+    }
 }

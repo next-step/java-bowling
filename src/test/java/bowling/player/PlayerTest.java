@@ -1,5 +1,6 @@
 package bowling.player;
 
+import bowling.frame.Frame;
 import bowling.global.exception.NotMatchingPlayerNameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,11 +13,12 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class PlayerTest {
 
     private Player player;
+    private Frame frame;
 
     @Test
     @DisplayName("플레이어 입력")
     void createPlayer() {
-        player = new Player("PJS");
+        player = Player.join("PJS", frame);
         assertThat(player.getName()).isEqualTo("PJS");
     }
 
@@ -25,7 +27,7 @@ class PlayerTest {
     void validatePlayerNameLength() {
         assertThatExceptionOfType(NotMatchingPlayerNameException.class)
                 .isThrownBy(() -> {
-                    player = new Player("ABCD");
+                    player = Player.join("ABCD", frame);
                 });
     }
 
@@ -35,7 +37,7 @@ class PlayerTest {
     void validatePlayerNameIsNull(String name) {
         assertThatExceptionOfType(NotMatchingPlayerNameException.class)
                 .isThrownBy(() -> {
-                    player = new Player(name);
+                    player = Player.join(name, frame);
                 });
     }
 

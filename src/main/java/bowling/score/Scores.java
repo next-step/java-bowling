@@ -103,4 +103,8 @@ public class Scores {
         }
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(scores);
+    }
 }

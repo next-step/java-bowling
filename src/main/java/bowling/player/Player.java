@@ -1,5 +1,7 @@
 package bowling.player;
 
+import bowling.frame.Frame;
+import bowling.frame.Frames;
 import bowling.global.utils.ExceptionMessage;
 import bowling.global.exception.NotMatchingPlayerNameException;
 
@@ -10,11 +12,17 @@ import static bowling.global.utils.CommonConstant.NUMBER_THREE;
 public class Player {
 
     private String name;
+    private Frame frames;
 
-    public Player(String name) {
+    private Player(String name, Frame frame) {
         validatePlayerNameisNull(name);
         validatePlayerNameLength(name);
         this.name = name.toUpperCase();
+        this.frames = frame;
+    }
+
+    public static Player join(String name, Frame frame) {
+        return new Player(name, frame);
     }
 
     public String getName() {
@@ -46,4 +54,11 @@ public class Player {
         return Objects.hash(name);
     }
 
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                ", frames=" + frames +
+                '}';
+    }
 }

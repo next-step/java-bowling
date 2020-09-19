@@ -51,4 +51,9 @@ public abstract class Frame {
     public int hashCode() {
         return Objects.hash(frameNumber);
     }
+
+    @Override
+    public String toString() {
+        return frameNumber + " : " + scores;
+    }
 }
