@@ -2,7 +2,10 @@ package bowling.view;
 
 import bowling.domain.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -39,16 +42,17 @@ public class ResultViewer {
         System.out.print(STAGE_PREFIX_STRING);
 
         IntStream.rangeClosed(1, LastFrame.LAST_FRAME_NUMBER)
-                .forEach(frame ->
-                        System.out.printf(
-                                String.format(
-                                        frame != SHOW_LAST_FRAME_NUMBER ? FRAME_FORMAT : FRAME_LAST_FORMAT,
-                                        frame
-                                )
-                        )
-                );
+                .mapToObj(ResultViewer::frameNumberToString)
+                .forEach(System.out::printf);
 
         System.out.println();
+    }
+
+    private static String frameNumberToString(int frameNumber) {
+        return String.format(
+                frameNumber != SHOW_LAST_FRAME_NUMBER ? FRAME_FORMAT : FRAME_LAST_FORMAT,
+                frameNumber
+        );
     }
 
     public List<List<String>> getStatus() {
