@@ -20,9 +20,8 @@ public class EndFrameCount {
         return new EndFrameCount(count);
     }
 
-    public EndFrameCount increment() {
+    public void increment() {
         count++;
-        return this;
     }
 
     public boolean isMax() {

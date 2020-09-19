@@ -14,10 +14,4 @@ class EndFrameCountTest {
         assertThat(EndFrameCount.of(3).isMax()).isTrue();
     }
 
-    @Test
-    @DisplayName("EndFrameCount 값 1 증가시키는 테스트")
-    void increment_test() {
-        assertThat(EndFrameCount.of().increment()).isEqualTo(EndFrameCount.of(1));
-    }
-
 }
