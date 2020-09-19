@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 
 public abstract class Frame {
 
@@ -8,11 +11,13 @@ public abstract class Frame {
     protected static final int MAX_FRAME_INDEX = 10;
 
     protected int frameIndex;
+    protected State state;
+    protected Frame next;
 
     public Frame(int frameIndex) {
-        this.frameIndex = frameIndex;
-
         validationFrameIndex(frameIndex);
+        this.frameIndex = frameIndex;
+        state = new Ready();
     }
 
     public int currentFrameIndex() {
@@ -22,22 +27,27 @@ public abstract class Frame {
     public Frame next() {
         int nextFrameIndex = frameIndex + 1;
         if (nextFrameIndex == MAX_FRAME_INDEX) {
-            return new FinalFrame(MAX_FRAME_INDEX);
+            next = new FinalFrame(MAX_FRAME_INDEX);
+            return next;
         }
-
-        return new NormalFrame(nextFrameIndex);
+        next = new NormalFrame(nextFrameIndex);
+        return next;
     }
 
-    abstract protected void validationFrameIndex(int frameIndex);
+    protected abstract void validationFrameIndex(int frameIndex);
 
-    abstract public boolean rollingEnd();
+    public abstract boolean rollingEnd();
 
-    abstract public boolean isEndAllFrame();
+    public abstract boolean isEndAllFrame();
 
-    abstract public String index();
+    public abstract String index();
 
-    abstract public String currentFrameStatus();
+    public abstract String currentFrameStatus();
 
-    abstract void bowl(Pin pin);
+    public abstract void bowl(Pin pin);
+
+    protected abstract Score calculateAdditionalScore(Score score);
+
+    public abstract int score();
 
 }
