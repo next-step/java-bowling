@@ -1,11 +1,15 @@
 package bowling.view;
 
+import bowling.model.Score;
 import bowling.model.State;
 import bowling.model.delivery.Delivery;
 import bowling.model.frame.Frame;
 import bowling.model.frame.Frames;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -31,6 +35,14 @@ public class ResultView {
 
         printUserName(userName);
         printScores(frames);
+        printBlank(countOfBlank);
+        System.out.println();
+    }
+
+    public static void printTotalScoreBoard(List<Integer> totalScores) {
+        int countOfBlank = Frames.TOTAL_FRAME_COUNT - totalScores.size();
+
+        printTotalScores(totalScores);
         printBlank(countOfBlank);
         System.out.println();
     }
@@ -66,6 +78,16 @@ public class ResultView {
             System.out.printf(BOARD_FORMAT, "");
             countOfBlank--;
         }
+    }
+
+    private static void printTotalScores(List<Integer> totalScores) {
+        System.out.print(VERTICAL_LINE);
+        System.out.printf(BOARD_FORMAT, "SCORE");
+
+        totalScores.forEach(totalScore -> {
+            System.out.printf(BOARD_FORMAT, BLANK + totalScore);
+        });
+
     }
 
 }
