@@ -1,6 +1,8 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.state.Gutter;
+import bowling.domain.state.Miss;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 
@@ -23,6 +25,11 @@ public class NormalFrame implements Frame {
     @Override
     public boolean isEnd() {
         return state.isEnd();
+    }
+
+    @Override
+    public boolean isClear() {
+        return state instanceof Miss || state instanceof Gutter;
     }
 
     public State getState() {

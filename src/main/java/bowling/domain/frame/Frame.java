@@ -15,4 +15,6 @@ public interface Frame {
     void bowl(Pin felledPin);
 
     boolean isEnd();
+
+    boolean isClear();
 }
