@@ -1,10 +1,14 @@
 package bowling.domain;
 
 import java.util.LinkedList;
+import java.util.regex.Pattern;
 
 import static bowling.domain.LastFrame.LAST_FRAME_NUMBER;
 
 public class Bowling {
+    public static final int NAME_LENGTH = 3;
+    public static final String REGX_ONLY_ENGLISH_NAME = "^[a-zA-Z]*$";
+
     private String username;
     private LinkedList<Frame> frames;
 
@@ -16,6 +20,13 @@ public class Bowling {
     }
 
     public static Bowling from(String username) {
+        if (!Pattern.matches(REGX_ONLY_ENGLISH_NAME, username)) {
+            throw new IllegalArgumentException("폴레이어의 이름은 영어로만 입력가능합니다.");
+        }
+
+        if (username.length() != NAME_LENGTH) {
+            throw new IllegalArgumentException("폴레이어의 이름은 3자리로 제한됩니다.");
+        }
         return new Bowling(username);
     }
 

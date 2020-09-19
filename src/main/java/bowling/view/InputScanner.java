@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.domain.Bowling;
+
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -8,8 +10,6 @@ import java.util.stream.IntStream;
 
 public class InputScanner {
     private static final Scanner scanner = new Scanner(System.in);
-    public static final int NAME_LENGTH = 3;
-    public static final String REGX_ONLY_ENGLISH_NAME = "^[a-zA-Z]*$";
 
     public static List<String> getNames(int playerCount) {
         return IntStream.rangeClosed(1, playerCount)
@@ -21,11 +21,11 @@ public class InputScanner {
         System.out.printf(String.format("플레이어 %s의 이름은?(3 english letters): ", playerNumber));
         String result = scanner.next();
 
-        if (!Pattern.matches(REGX_ONLY_ENGLISH_NAME, result)) {
+        if (!Pattern.matches(Bowling.REGX_ONLY_ENGLISH_NAME, result)) {
             throw new IllegalArgumentException("폴레이어의 이름은 영어로만 입력가능합니다.");
         }
 
-        if (result.length() != NAME_LENGTH) {
+        if (result.length() != Bowling.NAME_LENGTH) {
             throw new IllegalArgumentException("폴레이어의 이름은 3자리로 제한됩니다.");
         }
 

@@ -5,10 +5,14 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BowlingTest {
 
     public static final String USERNAME = "kyd";
+    public static final String EMPTY_USERNAME = "";
+    public static final String ERROR_USERNAME_1 = USERNAME + "_";
+    public static final String ERROR_USERNAME_2 = "권용대";
 
     @Test
     void from() {
@@ -16,7 +20,22 @@ public class BowlingTest {
     }
 
     @Test
-    void isFinish() {
+    void from_exception() {
+        assertThatThrownBy(() -> {
+            Bowling.from(EMPTY_USERNAME);
+        }).isInstanceOf(IllegalArgumentException.class);
+
+        assertThatThrownBy(() -> {
+            Bowling.from(ERROR_USERNAME_1);
+        }).isInstanceOf(IllegalArgumentException.class);
+
+        assertThatThrownBy(() -> {
+            Bowling.from(ERROR_USERNAME_2);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void isEnd() {
         Bowling bowling = Bowling.from(USERNAME);
 
         int tryCount = 0;
@@ -30,7 +49,7 @@ public class BowlingTest {
     }
 
     @Test
-    void isFinishWithAllStrike() {
+    void isEndWithAllStrike() {
         Bowling bowling = Bowling.from(USERNAME);
 
         int tryCount = 0;
@@ -44,7 +63,7 @@ public class BowlingTest {
     }
 
     @Test
-    void isFinishWithLastSpare() {
+    void isEndWithLastSpare() {
         Bowling bowling = Bowling.from(USERNAME);
 
         int tryCount = 0;

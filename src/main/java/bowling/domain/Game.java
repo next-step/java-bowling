@@ -1,23 +1,19 @@
 package bowling.domain;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Game {
-    private List<Bowling> bowlingGames;
+
+    private BowlingGames bowlingGames;
     private int cursor;
 
-    private Game(List<Bowling> bowlingGames, int cursor) {
+    private Game(BowlingGames bowlingGames, int cursor) {
         this.bowlingGames = bowlingGames;
         this.cursor = cursor;
     }
 
     public static Game from(List<String> names) {
-        List<Bowling> bowlingList = names.stream()
-                .map(Bowling::from)
-                .collect(Collectors.toList());
-
-        return new Game(bowlingList, 0);
+        return new Game(BowlingGames.from(names), 0);
     }
 
     private Bowling getCurrent() {
@@ -52,7 +48,7 @@ public class Game {
             cursor++;
         }
 
-        if (cursor == bowlingGames.size()) {
+        if (bowlingGames.matchLastIndex(cursor)) {
             cursor = 0;
         }
 
@@ -60,7 +56,6 @@ public class Game {
     }
 
     public boolean isEnd() {
-        return bowlingGames.stream()
-                .allMatch(Bowling::isEnd);
+        return bowlingGames.isEnd();
     }
 }
