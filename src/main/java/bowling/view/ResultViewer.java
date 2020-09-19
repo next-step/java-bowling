@@ -188,13 +188,8 @@ public class ResultViewer {
     }
 
     public static Map<String, ResultViewer> makeResultMap(List<String> names) {
-        Map<String, ResultViewer> result = new HashMap<>();
-
-        for (String name : names) {
-            result.put(name, new ResultViewer(name));
-        }
-
-        return result;
+        return names.stream()
+                .collect(Collectors.toMap(name -> name, ResultViewer::new));
     }
 
     public static void printAll(List<String> names, Map<String, ResultViewer> resultViewerMap) {
