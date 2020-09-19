@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public abstract class AbstractFrame implements Frame {
 
-    public static final int FIRST_FRAME_NUMBER = 1;
     public static final int LAST_FRAME_NUMBER = 10;
 
     protected final int frameNumber;

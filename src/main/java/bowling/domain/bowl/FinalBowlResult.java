@@ -43,9 +43,7 @@ public class FinalBowlResult {
         if (isNone()) {
             return -1;
         }
-        return bowlResults.stream()
-                .map(bowlResult -> bowlResult.getTotalNumberOfPin())
-                .reduce(0, Integer::sum);
+        return getTotalNumberOfPin();
     }
 
     public String format() {
@@ -53,6 +51,12 @@ public class FinalBowlResult {
                 .filter(normalBowl -> !normalBowl.isNone())
                 .map(BowlResult::format)
                 .collect(Collectors.joining(DELIMITER));
+    }
+
+    public int getTotalNumberOfPin() {
+        return bowlResults.stream()
+                .map(bowlResult -> bowlResult.getTotalNumberOfPin())
+                .reduce(0, Integer::sum);
     }
 
 }
