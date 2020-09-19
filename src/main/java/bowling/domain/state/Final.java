@@ -1,11 +1,13 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Final implements State {
 
+  private boolean canBonus = true;
   private boolean canTriple = true;
   private List<State> states = new ArrayList<>();
 
@@ -18,6 +20,7 @@ public class Final implements State {
         states.add(last.roll(pins));
 
         canTriple = false;
+        canBonus = states.get(0).score(null).hasLeft();
         return this;
       }
     }
@@ -34,6 +37,11 @@ public class Final implements State {
   }
 
   @Override
+  public int pins() {
+    return 0;
+  }
+
+  @Override
   public boolean isDone() {
     if (this.states.size() == 3) {
       return true;
@@ -43,11 +51,46 @@ public class Final implements State {
       return true;
     }
 
+    if (!canBonus) {
+      return true;
+    }
+
     return false;
   }
 
   private boolean impossibleTriple() {
     return this.states.size() == 2 && !canTriple;
+  }
+
+  @Override
+  public Score score(Score score) {
+    if (isDone()) {
+      return score.accumulate(states.stream()
+          .map(state -> state.score(null))
+          .mapToInt(Score::value)
+          .sum());
+    }
+
+    return null;
+  }
+
+  @Override
+  public Score accumulate(Score score) {
+    Score acc = states.get(0).accumulate(score);
+
+    if (acc == null) {
+      return null;
+    }
+
+    if (!acc.hasLeft()) {
+      return acc;
+    }
+
+    if (states.size() > 1) {
+      return accumulate(acc);
+    }
+
+    return null;
   }
 
   @Override

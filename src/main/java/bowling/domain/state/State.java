@@ -1,10 +1,13 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
+
 public interface State {
 
-  String STRIKE = "X";
-  String GUTTER = "-";
   String DELIMITER = "|";
+  String STRIKE = "X";
+  String SPARE = "/";
+  String GUTTER = "-";
 
   static State of(int pins) {
     Pins pitching = Pins.roll(pins);
@@ -19,8 +22,13 @@ public interface State {
 
   String symbol();
 
+  int pins();
+
   default boolean isDone() {
     return false;
   }
 
+  Score score(Score score);
+
+  Score accumulate(Score score);
 }

@@ -52,4 +52,44 @@ class FrameTest {
 
     assertThat(strike).isNotEqualTo(strike.roll(10));
   }
+
+  @Test
+  void strike_score() {
+    Frame strike = new Frame(1);
+    strike.roll(10);
+
+    assertThat(strike.score(null)).isNull();
+
+    Frame spare = strike.roll(8);
+    assertThat(strike.score(null)).isNull();
+
+    spare.roll(2);
+    assertThat(strike.score(null)).isEqualTo(Score.of(20));
+  }
+
+  @Test
+  void spare_score() {
+    Frame spare = new Frame(1);
+    spare.roll(8);
+    assertThat(spare.score(null)).isNull();
+
+    spare.roll(2);
+    assertThat(spare.score(null)).isNull();
+
+    Frame pitching = spare.roll(8);
+    assertThat(spare.score(null)).isEqualTo(Score.of(18));
+
+    pitching.roll(1);
+    assertThat(spare.score(null)).isEqualTo(Score.of(18));
+  }
+
+  @Test
+  void open_score() {
+    Frame open = new Frame(1);
+    open.roll(8);
+    assertThat(open.score(null)).isNull();
+
+    open.roll(1);
+    assertThat(open.score(null)).isEqualTo(Score.of(9));
+  }
 }

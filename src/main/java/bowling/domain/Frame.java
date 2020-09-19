@@ -9,6 +9,7 @@ public class Frame implements Comparable<Frame> {
 
   protected int number;
   protected State state;
+  private Frame next;
 
   public Frame(int number) {
     this.number = number;
@@ -24,6 +25,7 @@ public class Frame implements Comparable<Frame> {
     if (nextFinalFrame()) {
       FinalFrame finalFrame = new FinalFrame();
       finalFrame.roll(pins);
+      this.next = finalFrame;
 
       return finalFrame;
     }
@@ -31,6 +33,8 @@ public class Frame implements Comparable<Frame> {
     if (isDone()) {
       Frame next = new Frame(number + 1);
       next.roll(pins);
+      this.next = next;
+
       return next;
     }
 
@@ -48,6 +52,41 @@ public class Frame implements Comparable<Frame> {
 
   public String symbol() {
     return state.symbol();
+  }
+
+  public Score score(Score score) {
+    Score acc = state.score(score);
+
+    if (acc == null) {
+      return null;
+    }
+
+    if (!acc.hasLeft()) {
+      return acc;
+    }
+
+    if (next == null) {
+      return null;
+    }
+
+    return next.accumulate(acc);
+  }
+
+  public Score accumulate(Score score) {
+    Score acc = state.accumulate(score);
+
+    if (acc == null) {
+      return null;
+    }
+    if (!acc.hasLeft()) {
+      return acc;
+    }
+
+    if (next == null) {
+      return null;
+    }
+
+    return next.accumulate(acc);
   }
 
   @Override

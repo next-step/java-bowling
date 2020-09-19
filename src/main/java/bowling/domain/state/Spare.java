@@ -1,8 +1,8 @@
 package bowling.domain.state;
 
-public class Spare implements State {
+import bowling.domain.Score;
 
-  static final String SPARE = "/";
+public class Spare implements State {
 
   private Pins first;
   private Pins second;
@@ -27,8 +27,35 @@ public class Spare implements State {
   }
 
   @Override
+  public int pins() {
+    return first.getCount() + second.getCount();
+  }
+
+  @Override
   public boolean isDone() {
     return true;
+  }
+
+  @Override
+  public Score score(Score score) {
+    if (score == null) {
+      return Score.spare(first.getCount() + second.getCount());
+    }
+
+    return score.accumulateOnce(first.getCount() + second.getCount());
+  }
+
+  @Override
+  public Score accumulate(Score score) {
+    if (score.isStrike()) {
+      return score.accumulate(first.getCount() + second.getCount());
+    }
+
+    if (score.isSpare()) {
+      return score.accumulate(first.getCount());
+    }
+
+    return null;
   }
 
   @Override

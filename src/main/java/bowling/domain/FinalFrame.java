@@ -22,6 +22,16 @@ public class FinalFrame extends Frame {
   }
 
   @Override
+  public Score score(Score score) {
+    return state.score(score);
+  }
+
+  @Override
+  public Score accumulate(Score score) {
+    return state.accumulate(score);
+  }
+
+  @Override
   public String toString() {
     return "FinalFrame{" +
         "number=" + number +

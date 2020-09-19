@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.Score;
+
 public class Open implements State {
 
   private Pins first;
@@ -32,13 +34,40 @@ public class Open implements State {
     return String.join(DELIMITER, first.toString(), second.toString());
   }
 
+  private boolean isDoubleGutter() {
+    return second.isGutter() && first.isGutter();
+  }
+
+  @Override
+  public int pins() {
+    return first.getCount() + second.getCount();
+  }
+
   @Override
   public boolean isDone() {
     return true;
   }
 
-  private boolean isDoubleGutter() {
-    return second.isGutter() && first.isGutter();
+  @Override
+  public Score score(Score score) {
+    if (score == null) {
+      return Score.of(first.getCount() + second.getCount());
+    }
+
+    return score.accumulate(first.getCount() + second.getCount());
+  }
+
+  @Override
+  public Score accumulate(Score score) {
+    if (score.isStrike()) {
+      return score.accumulate(first.getCount() + second.getCount());
+    }
+
+    if (score.isSpare()) {
+      return score.accumulate(first.getCount());
+    }
+
+    return null;
   }
 
   @Override
