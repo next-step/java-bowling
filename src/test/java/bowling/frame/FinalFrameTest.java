@@ -12,7 +12,7 @@ class FinalFrameTest {
     @Test
     @DisplayName("FinalFrame 생성")
     void create() {
-        frame = FinalFrame.create();
+        frame = FinalFrame.create(10);
         assertThat(frame.getFrameNumber()).isEqualTo(10);
     }
 
@@ -26,7 +26,7 @@ class FinalFrameTest {
     @Test
     @DisplayName("FinalFrame 종료. Next로 이동")
     void next() {
-        frame = FinalFrame.create();
+        frame = FinalFrame.create(10);
         assertThat(frame.next().getFrameNumber()).isEqualTo(11);
     }
 

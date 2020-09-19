@@ -9,6 +9,7 @@ public abstract class Frame {
 
     public static final int FIRST_FRAME_NUMBER = 1;
     public static final int FINAL_FRAME_NUMBER = 10;
+    public static final int INCREASE_FRAME_NUMBER = 1;
 
     protected int frameNumber;
     protected Scores scores;
@@ -16,10 +17,6 @@ public abstract class Frame {
     public Frame(int frameNumber, Scores scores) {
         this.frameNumber = frameNumber;
         this.scores = scores;
-    }
-
-    public Frame(int frameNumber) {
-        this.frameNumber = frameNumber;
     }
 
     public boolean canNormalPitching() {

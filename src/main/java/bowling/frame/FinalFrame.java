@@ -8,25 +8,17 @@ public class FinalFrame extends Frame {
         super(frameNumber, scores);
     }
 
-    public FinalFrame(int frameNumber) {
-        super(frameNumber);
-    }
-
     public static FinalFrame create(int frameNumber) {
         return new FinalFrame(frameNumber, Scores.newInstance());
     }
 
-    public static FinalFrame create() {
-        return new FinalFrame(10);
-    }
-
     @Override
     public Frame next() {
-        return FinalFrame.create(getFrameNumber() + 1);
+        return FinalFrame.create(getFrameNumber() + INCREASE_FRAME_NUMBER);
     }
 
     @Override
     public boolean isFinal() {
-        return getFrameNumber() >= 10;
+        return getFrameNumber() >= Frame.FINAL_FRAME_NUMBER;
     }
 }

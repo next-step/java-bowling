@@ -5,6 +5,8 @@ import bowling.global.utils.ExceptionMessage;
 import java.util.ArrayList;
 import java.util.List;
 
+import static bowling.global.utils.CommonConstant.*;
+
 public class Scores {
 
     private static final int SCORE_MAX_VALUE = 10;
@@ -21,7 +23,7 @@ public class Scores {
     }
 
     public void add(Score score) {
-        if (scores.size() < 2 && !bonus) {
+        if (scores.size() < NUMBER_TWO && !bonus) {
             validateScoreIsLargethanRemainingPins(score);
         }
         this.scores.add(score);
@@ -32,27 +34,27 @@ public class Scores {
     }
 
     public boolean isInitCount() {
-        return scores.size() == 0;
+        return scores.size() == NUMBER_ZERO;
     }
 
     public boolean isFirstCount() {
-        return scores.size() == 1;
+        return scores.size() == NUMBER_ONE;
     }
 
     public boolean isSecondCount() {
-        return scores.size() >= 2;
+        return scores.size() >= NUMBER_TWO;
     }
 
     public Score getScore() {
-        if (scores.size() != 0) {
-            int index = this.scores.size() - 1;
+        if (scores.size() != NUMBER_ZERO) {
+            int index = this.scores.size() - NUMBER_ONE;
             return scores.get(index);
         }
         return scores.get(scores.size());
     }
 
     public boolean isSpare() {
-        if (scores.size() != 2) {
+        if (scores.size() != NUMBER_TWO) {
             return false;
         }
         return sumAll() == SCORE_MAX_VALUE;
@@ -78,7 +80,7 @@ public class Scores {
     }
 
     public boolean canFinalPitching() {
-        if (scores.size() != 0 && getScore().isStrike()) {
+        if (scores.size() != NUMBER_ZERO && getScore().isStrike()) {
             bonus = true;
         }
         if (isInitCount() || isFirstCount()) {
@@ -96,7 +98,7 @@ public class Scores {
     }
 
     private void validateScoreIsLargethanRemainingPins(Score score) {
-        if (score.getScore() != 10 && score.getScore() > getRemainingPins()) {
+        if (score.getScore() != SCORE_MAX_VALUE && score.getScore() > getRemainingPins()) {
             throw new IllegalArgumentException(String.format(ExceptionMessage.INVALID_LARGE_THAN_REMAINING_PINS, getRemainingPins()));
         }
     }

@@ -2,6 +2,8 @@ package bowling.frame;
 
 import java.util.LinkedList;
 
+import static bowling.global.utils.CommonConstant.NUMBER_ONE;
+
 public class Frames {
 
     LinkedList<Frame> frames;
@@ -25,6 +27,7 @@ public class Frames {
     }
 
     public boolean isNormalFinish() {
-        return frames.get(this.frames.size() - 1).isFinal();
+        int frameIndex = this.frames.size() - NUMBER_ONE;
+        return frames.get(frameIndex).isFinal();
     }
 }

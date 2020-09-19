@@ -18,7 +18,7 @@ public class NormalFrame extends Frame {
 
     @Override
     public Frame next() {
-        int nextFrameNumber = getFrameNumber() + 1;
+        int nextFrameNumber = getFrameNumber() + INCREASE_FRAME_NUMBER;
         if (nextFrameNumber < Frame.FINAL_FRAME_NUMBER) {
             return NormalFrame.create(nextFrameNumber);
         }
@@ -27,6 +27,6 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean isFinal() {
-        return (frameNumber == 10);
+        return (frameNumber == FINAL_FRAME_NUMBER);
     }
 }
