@@ -3,6 +3,8 @@ package bowling.view;
 import static java.lang.System.out;
 
 import bowling.domain.Bowling;
+import bowling.domain.Bowlings;
+import bowling.domain.Player;
 import bowling.domain.Score;
 import java.util.Collections;
 import java.util.List;
@@ -21,10 +23,10 @@ public class OutputView {
   public static final String SCORE_FORMAT = "  %3d |";
 
 
-  private final String player;
+  private final List<String> players;
 
-  public OutputView(String player) {
-    this.player = player;
+  public OutputView(List<String> players) {
+    this.players = players;
   }
 
   static String format(String symbol) {
@@ -38,16 +40,30 @@ public class OutputView {
 
     return String.format(SECOND_FORMAT, symbol);
   }
+
   public void render() {
     writeHeader();
-    writeNameWithSymbols(Collections.emptyList());
-    writeScores(Collections.emptyList());
+    for (String player : players) {
+      writeNameWithSymbols(player, Collections.emptyList());
+      writeScores(Collections.emptyList());
+    }
+  }
+
+  public void render(Bowlings bowlings) {
+    writeHeader();
+    for (Player player : bowlings.players()) {
+      writeNameWithSymbols(player.name(), player.symbols());
+      writeScores(player.scores());
+    }
+
   }
 
   public void render(Bowling bowling) {
     writeHeader();
-    writeNameWithSymbols(bowling.symbols());
-    writeScores(bowling.scores());
+    for (String player : players) {
+      writeNameWithSymbols(player, bowling.symbols());
+      writeScores(bowling.scores());
+    }
   }
 
   private void writeHeader() {
@@ -58,7 +74,7 @@ public class OutputView {
     out.print("\n");
   }
 
-  private void writeNameWithSymbols(List<String> symbols) {
+  private void writeNameWithSymbols(String player, List<String> symbols) {
     System.out.printf(PLAYER_HEADER, player);
     writeSymbols(symbols);
     writeNonPitch(symbols.size());

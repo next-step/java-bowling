@@ -47,14 +47,26 @@ public class Frame implements Comparable<Frame> {
   }
 
   public boolean isDone() {
+    if (state == null) {
+      return false;
+    }
+
     return state.isDone();
   }
 
   public String symbol() {
+    if (state == null) {
+      return null;
+    }
+
     return state.symbol();
   }
 
   public Score score(Score score) {
+    if (state == null) {
+      return null;
+    }
+
     Score acc = state.score(score);
 
     if (acc == null) {

@@ -1,26 +1,30 @@
 package bowling;
 
-import bowling.domain.Bowling;
+import bowling.domain.Bowlings;
 import bowling.view.InputView;
 import bowling.view.OutputView;
+import java.util.List;
 
 public class BowlingApplication {
 
   public static void main(String[] args) {
     InputView inputView = new InputView();
-    String name = inputView.requestName();
+    int numberOfPlayers = inputView.requestNumberOfPlayers();
 
-    OutputView outputView = new OutputView(name);
+    List<String> names = inputView.requestNames(numberOfPlayers);
+
+    OutputView outputView = new OutputView(names);
     outputView.render();
 
-    int pins = inputView.requestPins(1);
-    Bowling bowling = Bowling.first(pins);
-    outputView.render(bowling);
+    Bowlings bowlings = Bowlings.ofNames(names);
 
-    while (bowling.nextFrame() < 11) {
-      bowling.roll(inputView.requestPins(bowling.nextFrame()));
-      outputView.render(bowling);
+    String nextPlayer = bowlings.nextPlayer();
+    while (nextPlayer != null) {
+      bowlings.roll(inputView.requestPinsOf(nextPlayer));
+      outputView.render(bowlings);
+      nextPlayer = bowlings.nextPlayer();
     }
+
   }
 
 }
