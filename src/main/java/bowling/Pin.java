@@ -8,12 +8,12 @@ public class Pin {
 
     public final static int MAX_PINS = 10;
     public final static int MIN_PINS = 0;
-    private final static Map<Integer, Pin> instances = new HashMap<>();
+    private final static Map<Integer, Pin> INSTANCES = new HashMap<>();
     private final int pin;
 
     static {
         IntStream.rangeClosed(MIN_PINS, MAX_PINS)
-                .forEach(pin -> instances.put(pin, new Pin(pin)));
+                .forEach(pin -> INSTANCES.put(pin, new Pin(pin)));
     }
 
     private Pin(int pin) {
@@ -31,21 +31,21 @@ public class Pin {
     }
 
     public static Pin ofMin() {
-        return instances.get(MIN_PINS);
+        return INSTANCES.get(MIN_PINS);
     }
 
     public static Pin ofMax() {
-        return instances.get(MAX_PINS);
+        return INSTANCES.get(MAX_PINS);
     }
 
     public static Pin of(int pin) {
         validate(pin);
-        return instances.get(pin);
+        return INSTANCES.get(pin);
     }
 
     public static Pin of(Pin pin) {
         validate(pin.pin);
-        return instances.get(pin.pin);
+        return INSTANCES.get(pin.pin);
     }
 
     @Override
