@@ -32,9 +32,13 @@ public class Frames {
             throw new IllegalStateException("모든 프레임이 완료된 상태 입니다.");
         }
         currentFrame.bowl(pin);
-        if (!currentFrame.isLastFrame() && currentFrame.isDone()) {
+        if (hasNextFrameAndIsCurrentFrameFinished()) {
             currentFrame = currentFrame.getNextFrame();
         }
+    }
+
+    private boolean hasNextFrameAndIsCurrentFrameFinished() {
+        return !currentFrame.isLastFrame() && currentFrame.isDone();
     }
 
     public boolean isFinished() {
