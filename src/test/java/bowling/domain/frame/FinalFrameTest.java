@@ -1,13 +1,18 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FinalFrameTest {
-
+    FinalFrame finalFrame;
+    @BeforeEach
+    void makeFinalFrame() {
+        finalFrame = new FinalFrame(10);
+    }
     @Test
     void frameIndexExceptionTest() {
         int frameIndex = 9;
@@ -18,35 +23,26 @@ class FinalFrameTest {
 
     @Test
     void rollingEndTest() {
-        int frameIndex = 10;
-
-        FinalFrame finalFrame = new FinalFrame(frameIndex);
         finalFrame.bowl(new Pin(2));
         finalFrame.bowl(new Pin(5));
 
-        assertTrue(finalFrame.rollingEnd());
+        assertTrue(finalFrame.isEndAllFrame());
     }
 
     @Test
     void canTryExtraRollingTest() {
-        int frameIndex = 10;
-
-        FinalFrame finalFrame = new FinalFrame(frameIndex);
         finalFrame.bowl(new Pin(2));
         finalFrame.bowl(new Pin(8));
 
-        assertFalse(finalFrame.rollingEnd());
+        assertFalse(finalFrame.isEndAllFrame());
     }
 
     @Test
     void isFinishExtraRollingTest() {
-        int frameIndex = 10;
-
-        FinalFrame finalFrame = new FinalFrame(frameIndex);
         finalFrame.bowl(new Pin(2));
         finalFrame.bowl(new Pin(8));
         finalFrame.bowl(new Pin(5));
 
-        assertTrue(finalFrame.rollingEnd());
+        assertTrue(finalFrame.isEndAllFrame());
     }
 }
