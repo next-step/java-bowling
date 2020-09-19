@@ -25,7 +25,7 @@ public class GutterBowlIdentity extends AbstractBowlIdentity {
     }
 
     @Override
-    public String format(BowlResult bowlResult) {
+    public String message(BowlResult bowlResult) {
         return GUTTER;
     }
 

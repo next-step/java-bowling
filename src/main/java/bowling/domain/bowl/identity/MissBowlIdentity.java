@@ -28,7 +28,7 @@ public class MissBowlIdentity extends AbstractBowlIdentity {
     }
 
     @Override
-    public String format(BowlResult bowlResult) {
+    public String message(BowlResult bowlResult) {
         return MessageFormat.format(MISS, bowlResult.getFirstNumberOfPins(), bowlResult.getSecondNumberOfPins());
     }
 

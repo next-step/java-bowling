@@ -27,7 +27,7 @@ public class ProgressBowlIdentity extends AbstractBowlIdentity {
     }
 
     @Override
-    public String format(BowlResult bowlResult) {
+    public String message(BowlResult bowlResult) {
         return MessageFormat.format(PROGRESS, bowlResult.getFirstNumberOfPins());
     }
 
