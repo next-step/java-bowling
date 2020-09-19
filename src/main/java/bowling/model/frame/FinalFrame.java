@@ -1,5 +1,6 @@
 package bowling.model.frame;
 
+import bowling.model.Score;
 import bowling.model.delivery.Delivery;
 import bowling.model.delivery.DeliveryEntry;
 import bowling.model.delivery.FinalDeliveryEntry;
@@ -45,6 +46,11 @@ public class FinalFrame extends Frame {
     @Override
     public int hashCode() {
         return Objects.hash(deliveryEntry);
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.of(getTotalFallenPins(), 0);
     }
 
 }

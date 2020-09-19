@@ -2,7 +2,13 @@ package bowling.model;
 
 public enum State {
 
-    STRIKE, SPARE, MISS, GUTTER;
+    STRIKE(2), SPARE(1), MISS(0), GUTTER(0);
+
+    final private int countOfBonusScore;
+
+    State(int countOfBonusScore) {
+        this.countOfBonusScore = countOfBonusScore;
+    }
 
     public static State getStateByPins(int pins, boolean isFirst) {
         if (pins == Pins.MAX_PINS) {
@@ -14,6 +20,10 @@ public enum State {
         }
 
         return MISS;
+    }
+
+    public int getCountOfBonusScore() {
+        return countOfBonusScore;
     }
 
 }

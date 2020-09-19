@@ -3,7 +3,6 @@ package bowling.model.delivery;
 import bowling.ExceptionMessages;
 import bowling.model.State;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -46,9 +45,17 @@ public class NormalDeliveryEntry implements DeliveryEntry {
         return getState() == State.STRIKE || deliveries.size() == TOTAL_COUNT;
     }
 
+    @Override
     public State getState() {
         Delivery lastDelivery = deliveries.getLast();
         return lastDelivery.getState();
+    }
+
+    @Override
+    public int getTotalFallenPins() {
+        return deliveries.stream()
+                .map(Delivery::getFallenPins)
+                .reduce(0, (a, b) -> a + b);
     }
 
     @Override

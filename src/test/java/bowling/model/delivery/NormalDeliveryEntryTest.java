@@ -142,4 +142,29 @@ class NormalDeliveryEntryTest {
 
     }
 
+    private static Stream<Arguments> provideForGetTotalFallenPins() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(2, 8), 10),
+                Arguments.of(Arrays.asList(10), 10),
+                Arguments.of(Arrays.asList(2, 7), 9)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideForGetTotalFallenPins")
+    @DisplayName("넘어뜨린 총 핀수 구하기")
+    void getTotalFallenPins(List<Integer> pins, int expected) {
+        // given
+        NormalDeliveryEntry normalDeliveryEntry = NormalDeliveryEntry.of(pins.get(0));
+        for (int i = 1; i < pins.size(); i++) {
+            normalDeliveryEntry.roll(pins.get(i));
+        }
+
+        // when
+        int result = normalDeliveryEntry.getTotalFallenPins();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 }
