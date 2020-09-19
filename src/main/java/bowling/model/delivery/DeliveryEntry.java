@@ -1,5 +1,7 @@
 package bowling.model.delivery;
 
+import bowling.model.State;
+
 import java.util.stream.Stream;
 
 public interface DeliveryEntry {
@@ -9,4 +11,9 @@ public interface DeliveryEntry {
     boolean isEnd();
 
     Stream<Delivery> getDeliveries();
+
+    State getState();
+
+    int getTotalFallenPins();
+
 }

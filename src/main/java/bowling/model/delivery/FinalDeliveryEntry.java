@@ -2,6 +2,7 @@ package bowling.model.delivery;
 
 import bowling.model.State;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,7 @@ public class FinalDeliveryEntry implements DeliveryEntry {
     private boolean canBonusDelivery;
 
     public FinalDeliveryEntry(int firstFallenPins) {
-        deliveries = Arrays.asList(playFirstDelivery(firstFallenPins));
+        deliveries = new ArrayList<>(Arrays.asList(playFirstDelivery(firstFallenPins)));
     }
 
     @Override
@@ -69,6 +70,18 @@ public class FinalDeliveryEntry implements DeliveryEntry {
     @Override
     public Stream<Delivery> getDeliveries() {
         return deliveries.stream();
+    }
+
+    @Override
+    public State getState() {
+        return deliveries.get(deliveries.size() - 1).getState();
+    }
+
+    @Override
+    public int getTotalFallenPins() {
+        return deliveries.stream()
+                .map(Delivery::getFallenPins)
+                .reduce(0, (a, b) -> a + b);
     }
 
     @Override

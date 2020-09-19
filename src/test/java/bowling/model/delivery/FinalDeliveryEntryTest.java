@@ -3,6 +3,8 @@ package bowling.model.delivery;
 import bowling.model.State;
 import bowling.model.delivery.Delivery;
 import bowling.model.delivery.FinalDeliveryEntry;
+import bowling.model.frame.FinalFrame;
+import bowling.model.frame.Frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -70,5 +72,32 @@ class FinalDeliveryEntryTest {
         // then
         assertThat(result).isEqualTo(expected);
     }
+
+    private static Stream<Arguments> provideForGetTotalFallenPins() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(2, 8, 9), 19),
+                Arguments.of(Arrays.asList(10, 10, 10), 30),
+                Arguments.of(Arrays.asList(0, 10, 7), 17),
+                Arguments.of(Arrays.asList(5, 4), 9)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideForGetTotalFallenPins")
+    @DisplayName("넘어뜨린 총 핀수 구하기")
+    void getTotalFallenPins(List<Integer> pins, int expected) {
+        // given
+        FinalDeliveryEntry finalDeliveryEntry = new FinalDeliveryEntry(pins.get(0));
+        for (int i = 1; i < pins.size(); i++) {
+            finalDeliveryEntry.roll(pins.get(i));
+        }
+
+        // when
+        int result = finalDeliveryEntry.getTotalFallenPins();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+    }
+
 
 }
