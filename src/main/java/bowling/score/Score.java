@@ -13,14 +13,15 @@ public class Score {
 
     private int score;
 
-    private Score(String score) {
-        validateScoreIsNull(score);
-        this.score = new StringParser(score).toInt();
+    private Score(int score) {
+        this.score = score;
         validateOutofScoreRange();
     }
 
     public static Score from(String score) {
-        return new Score(score);
+        validateScoreIsNull(score);
+        int scoreToInt = new StringParser(score).toInt();
+        return new Score(scoreToInt);
     }
 
     public boolean isStrike() {
@@ -31,7 +32,7 @@ public class Score {
         return this.score == SCORE_MIN_VALUE;
     }
 
-    private void validateScoreIsNull(String score) {
+    private static void validateScoreIsNull(String score) {
         if (Strings.isBlank(score)) {
             throw new InputScoreNullPointerException(ExceptionMessage.INVALID_PITCH_BALL_IS_NULL);
         }
@@ -45,12 +46,5 @@ public class Score {
 
     public int getScore() {
         return score;
-    }
-
-    @Override
-    public String toString() {
-        return "Score{" +
-                "score=" + score +
-                '}';
     }
 }

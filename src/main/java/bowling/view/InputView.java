@@ -12,12 +12,12 @@ public class InputView {
     private InputView() {
     }
 
-    public static String inputPlayer() {
+    public static String inputPlayerName() {
         System.out.print(PRINT_INPUT_PLAYER);
         return scanner.nextLine();
     }
 
-    public static String inputPitch(int frameNumber) {
+    public static String inputScore(int frameNumber) {
         System.out.print(String.format(PRINT_INPUT_FRAME_NUMBER_PITCH, frameNumber));
         return scanner.nextLine();
     }

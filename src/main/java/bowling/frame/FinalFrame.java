@@ -12,21 +12,12 @@ public class FinalFrame extends Frame {
         super(frameNumber);
     }
 
-    public static FinalFrame create(int frameNumber, Scores scores) {
-        return new FinalFrame(frameNumber, scores);
-    }
-
     public static FinalFrame create(int frameNumber) {
-        return new FinalFrame(frameNumber);
+        return new FinalFrame(frameNumber, Scores.newInstance());
     }
 
     public static FinalFrame create() {
         return new FinalFrame(10);
-    }
-
-    @Override
-    public boolean pitching() {
-        return false;
     }
 
     @Override
@@ -36,6 +27,6 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean isFinal() {
-        return getFrameNumber() == 11;
+        return getFrameNumber() >= 10;
     }
 }
