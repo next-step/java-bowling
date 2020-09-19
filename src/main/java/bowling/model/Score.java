@@ -7,11 +7,11 @@ public class Score {
     private static final int ADD_DELIVERY_COUNT_MIN = 0;
 
     private int score;
-    private int leftAddDeliveryCount;
+    private int leftAddScoreCount;
 
-    private Score(int score, int leftAddDeliveryCount) {
+    private Score(int score, int leftAddScoreCount) {
         this.score = score;
-        this.leftAddDeliveryCount = leftAddDeliveryCount;
+        this.leftAddScoreCount = leftAddScoreCount;
     }
 
     public static Score of(int score, int leftAddDeliveryCount) {
@@ -41,13 +41,13 @@ public class Score {
     public void addScore(int additionalScore) {
         if (!isEndCalculate()) {
             score += additionalScore;
-            leftAddDeliveryCount--;
+            leftAddScoreCount--;
         }
 
     }
 
     public boolean isEndCalculate() {
-        return leftAddDeliveryCount == ADD_DELIVERY_COUNT_MIN;
+        return leftAddScoreCount == ADD_DELIVERY_COUNT_MIN;
     }
 
     @Override
@@ -56,12 +56,12 @@ public class Score {
         if (o == null || getClass() != o.getClass()) return false;
         Score score1 = (Score) o;
         return score == score1.score &&
-                leftAddDeliveryCount == score1.leftAddDeliveryCount;
+                leftAddScoreCount == score1.leftAddScoreCount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(score, leftAddDeliveryCount);
+        return Objects.hash(score, leftAddScoreCount);
     }
 
 }

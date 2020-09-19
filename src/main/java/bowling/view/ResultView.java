@@ -1,14 +1,11 @@
 package bowling.view;
 
-import bowling.model.Score;
 import bowling.model.State;
 import bowling.model.delivery.Delivery;
 import bowling.model.frame.Frame;
 import bowling.model.frame.Frames;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
