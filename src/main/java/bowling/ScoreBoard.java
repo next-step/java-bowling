@@ -1,32 +1,35 @@
 package bowling;
 
+import java.util.List;
+
 public class ScoreBoard {
 
-    private static final int START_FRAME = 1;
     private final Player player;
-    private Frame currentFrame;
+    private final Frames frames;
 
-    private ScoreBoard(Player player, Frame frame) {
+    private ScoreBoard(Player player, Frames frames) {
         this.player = player;
-        this.currentFrame = frame;
+        this.frames = frames;
     }
 
-    public String getPlayerName() {
-        return player.getName();
+    public Player getPlayer() {
+        return player;
     }
 
-    public int getCurrentFrame() {
-        return currentFrame.getFrame();
+    public List<Frame> getFrames() {
+        return frames.getFrames();
     }
 
-    public void bowl(int falledPins) {
-        currentFrame.bowl(falledPins);
-        if (currentFrame.isFinish()) {
-            currentFrame = currentFrame.getNextFrame();
-        }
+    public void bowl(Pin pin) {
+        frames.bowl(pin);
+    }
+
+    public boolean isFinished() {
+        return frames.isFinished();
     }
 
     public static ScoreBoard of(Player player, int totalFrames) {
-        return new ScoreBoard(player, Frame.of(START_FRAME, totalFrames));
+        Frames frames = Frames.of(totalFrames);
+        return new ScoreBoard(player, frames);
     }
 }
