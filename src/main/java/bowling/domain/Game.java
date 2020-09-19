@@ -26,7 +26,7 @@ public class Game {
 
     private Bowling findBowlingWithIsNotEnd() {
         if (isEnd()) {
-            throw new RuntimeException("Test");
+            throw new IllegalArgumentException("볼링 게임은 종료되었습니다.");
         }
 
         Bowling bowling = getCurrent();
