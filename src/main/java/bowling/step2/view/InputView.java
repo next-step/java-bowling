@@ -10,7 +10,7 @@ public class InputView {
 	private InputView() {}
 
 	public static String inputPlayerName() {
-		System.out.println(INPUT_PLAYER_NAME);
+		System.out.print(INPUT_PLAYER_NAME);
 		return scanner.nextLine();
 	}
 }
