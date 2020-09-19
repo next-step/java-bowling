@@ -20,7 +20,8 @@ class PinTest {
     @DisplayName("핀 범위가 0~10 사이가 아닐 경우 예외발생 테스트")
     void exception_test(int felledPin) {
         assertThatThrownBy(() -> Pin.of(felledPin))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("쓰러트린 핀의 갯수는 0~10 사이여야 합니다.");
     }
 
     @Test
