@@ -3,6 +3,7 @@ package bowling.domain.bowl;
 import bowling.domain.NumberOfPin;
 import bowling.domain.bowl.identity.BowlIdentity;
 import bowling.domain.bowl.identity.BowlIdentityFinder;
+import bowling.domain.frame.NormalFrame;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,11 +44,11 @@ public class BowlResult {
         return findBowlIdentity().isBonus();
     }
 
-    public int getFirstNumberOfPins() {
+    public int getFirstNumberOfPin() {
         return numberOfPins.get(FIRST_NUMBER_OF_PINS_INDEX).getNumberOfPin();
     }
 
-    public int getSecondNumberOfPins() {
+    public int getSecondNumberOfPin() {
         return numberOfPins.get(SECOND_NUMBER_OF_PINS_INDEX).getNumberOfPin();
     }
 
@@ -59,6 +60,10 @@ public class BowlResult {
         return numberOfPins.stream()
                 .map(NumberOfPin::getNumberOfPin)
                 .reduce(0, Integer::sum);
+    }
+
+    public int getScore(NormalFrame frame) {
+        return findBowlIdentity().getScore(frame);
     }
 
     public String format() {

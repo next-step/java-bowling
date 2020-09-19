@@ -14,6 +14,10 @@ public class FinalBowlResult {
         bowlResults.add(bowlResult);
     }
 
+    public boolean isNone() {
+        return bowlResults.isEmpty();
+    }
+
     public boolean isEnd() {
         if (bowlResults.isEmpty()) {
             return false;
@@ -33,6 +37,15 @@ public class FinalBowlResult {
 
     private boolean isBonus() {
         return bowlResults.getLast().isBonus();
+    }
+
+    public int getScore() {
+        if (isNone()) {
+            return -1;
+        }
+        return bowlResults.stream()
+                .map(bowlResult -> bowlResult.getTotalNumberOfPin())
+                .reduce(0, Integer::sum);
     }
 
     public String format() {
