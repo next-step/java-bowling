@@ -19,7 +19,7 @@ public class Answers {
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
-    public List<DeleteHistory> validCanDeleteAnswers(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> deleteAnswers(User loginUser) {
         List<DeleteHistory> deleteHistories = new LinkedList<>();
 
         for (Answer answer : answers) {
