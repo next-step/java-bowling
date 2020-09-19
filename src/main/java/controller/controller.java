@@ -20,13 +20,17 @@ public class controller {
         BowlingGame bowlingGame = BowlingGame.of(TOTAL_FRAMES, nameDTO.getName());
 
         ResultFramesDTO resultFramesDTO = ResultFramesDTO.of(bowlingGame.getFrames());
-        resultView.printColumns(TOTAL_FRAMES);
-        resultView.printPlayerName(nameDTO);
-        resultView.printPins(resultFramesDTO);
+        printScoreBoard(nameDTO, resultFramesDTO);
 
         while (!bowlingGame.isFinished()) {
             printScoreBoard(bowlingGame);
         }
+    }
+
+    private static void printScoreBoard(NameDTO nameDTO, ResultFramesDTO resultFramesDTO) {
+        resultView.printColumns(TOTAL_FRAMES);
+        resultView.printPlayerName(nameDTO);
+        resultView.printPins(resultFramesDTO);
     }
 
     private static void printScoreBoard(BowlingGame bowlingGame) {
@@ -38,9 +42,7 @@ public class controller {
             bowlingGame.bowl(Pin.of(pinDTO.getPin()));
             ResultFramesDTO resultFramesDTO = ResultFramesDTO.of(bowlingGame.getFrames());
 
-            resultView.printColumns(TOTAL_FRAMES);
-            resultView.printPlayerName(nameDTO);
-            resultView.printPins(resultFramesDTO);
+            printScoreBoard(nameDTO, resultFramesDTO);
         } catch (Exception exception) {
             resultView.printExceptionMessage(exception);
             printScoreBoard(bowlingGame);
