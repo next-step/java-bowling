@@ -1,11 +1,9 @@
 package bowling.domain.state;
 
 import bowling.domain.pin.Pin;
-import sun.jvm.hotspot.debugger.cdbg.Sym;
-
 import java.util.Objects;
 
-public class Spare implements State {
+public class Spare extends FinishedState {
 
     private final Pin first;
 
@@ -17,19 +15,8 @@ public class Spare implements State {
         return new Spare(first);
     }
 
-    @Override
-    public State bowl(Pin pin) {
-        throw new IllegalArgumentException();
-    }
-
-    @Override
-    public boolean isEnd() {
-        return true;
-    }
-
-    @Override
-    public String makeSymbol() {
-        return first + Symbol.SPARE.toString();
+    public String getFirstPin() {
+        return this.first.toString();
     }
 
     @Override

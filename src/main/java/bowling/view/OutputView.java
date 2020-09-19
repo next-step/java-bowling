@@ -1,14 +1,17 @@
 package bowling.view;
 
+import bowling.domain.frame.EndFrame;
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import bowling.domain.frame.ScoreBoard;
-import bowling.domain.frame.dto.FrameDTO;
-import bowling.domain.frame.dto.ScoreBoardDTO;
+import bowling.domain.state.*;
 import bowling.domain.user.dto.UserDTO;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -24,25 +27,25 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void print(UserDTO userDTO, ScoreBoardDTO scoreBoardDTO) {
+    public static void print(UserDTO userDTO, ScoreBoard scoreBoard) {
         System.out.println(HEADER);
-        String format = MessageFormat.format(SCORE, toScoreArray(userDTO, scoreBoardDTO));
+        String format = MessageFormat.format(SCORE, toScoreArray(userDTO, scoreBoard));
         System.out.println(format);
     }
 
-    private static String[] toScoreArray(UserDTO userDTO, ScoreBoardDTO scoreBoardDTO) {
+    private static String[] toScoreArray(UserDTO userDTO, ScoreBoard scoreBoard) {
         List<String> result = new ArrayList<>(Arrays.asList(String.format(STRING_FORMAT, userDTO.getName())));
-        scoreBoardDTO.getScoreBoardDTO().stream()
-                .map(FrameDTO::getRecord)
+        scoreBoard.getFrames().stream()
+                .map(frame -> makeGameResult(frame))
                 .map(gameResult -> String.format(STRING_FORMAT, gameResult))
-                .collect(collectingAndThen(toList(), result::addAll));
+                .collect(Collectors.toCollection(() -> result));
 
         generateEmptyFrame(result);
         return result.stream().toArray(String[]::new);
     }
 
     private static void generateEmptyFrame(List<String> result) {
-        for (int size = result.size(); size < ScoreBoard.END_FRAME_COUNT + 1; size++) {
+        for (int size = result.size(); size <= ScoreBoard.END_FRAME_COUNT; size++) {
             result.add(String.format(STRING_FORMAT, EMPTY_STRING));
         }
     }
@@ -50,5 +53,52 @@ public class OutputView {
     public static void printCurrentFrame(int size) {
         System.out.println();
         System.out.print(MessageFormat.format(CURRENT_FRAME_TXT, size));
+    }
+
+
+    public static String makeGameResult(Frame frame) {
+
+        if(frame instanceof EndFrame) {
+            return ((EndFrame) frame).getStates().stream()
+                    .filter(state -> !(state instanceof Ready))
+                    .map(endState -> makeSymbol(endState))
+                    .collect(Collectors.joining("|"));
+        }
+
+        return makeSymbol(((NormalFrame) frame).getState());
+    }
+
+
+    private static String makeSymbol(State state) {
+
+        String stateSymbol = null;
+        Symbol symbol = Symbol.valueOf(state.getClass().getSimpleName());
+
+        switch (symbol) {
+            case Strike:
+                stateSymbol = Symbol.Strike.toString();
+                break;
+            case Spare:
+                stateSymbol = ((Spare) state).getFirstPin() + Symbol.Spare.toString();
+                break;
+            case Miss:
+                stateSymbol = Symbol.Miss.toString();
+                break;
+            case Gutter:
+                stateSymbol = Symbol.Gutter.toString();
+                break;
+            case Ready:
+                stateSymbol = Symbol.Ready.toString();
+                break;
+            case Continue:
+                stateSymbol = ((Continue) state).getFirstPin();
+                break;
+        }
+        return stateSymbol;
+    }
+
+    private static String makeEndSymbol(List<State> states) {
+        return states.stream().map(state -> makeSymbol(state))
+                .collect(Collectors.joining());
     }
 }

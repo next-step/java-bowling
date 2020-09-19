@@ -24,8 +24,4 @@ public class Ready implements State {
         return false;
     }
 
-    @Override
-    public String makeSymbol() {
-        return "";
-    }
 }

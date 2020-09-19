@@ -31,9 +31,7 @@ public class Continue implements State {
         return false;
     }
 
-    @Override
-    public String makeSymbol() {
-        return first.toString();
+    public String getFirstPin() {
+        return this.first.toString();
     }
-
 }

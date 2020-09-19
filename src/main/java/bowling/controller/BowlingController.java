@@ -1,7 +1,6 @@
 package bowling.controller;
 
 import bowling.domain.frame.ScoreBoard;
-import bowling.domain.frame.dto.ScoreBoardAssembler;
 import bowling.domain.pin.Pin;
 import bowling.domain.user.User;
 import bowling.domain.user.dto.UserAssembler;
@@ -16,13 +15,13 @@ public class BowlingController {
         User user = User.of(InputView.getUserName());
         UserDTO userDTO = UserAssembler.assemble(user);
 
-        OutputView.print(userDTO, ScoreBoardAssembler.assemble(scoreBoard));
+        OutputView.print(userDTO, scoreBoard);
 
         while (!scoreBoard.isGameOver()) {
             OutputView.printCurrentFrame(scoreBoard.size());
             scoreBoard.bowl(Pin.of(InputView.getFelledPin()));
 
-            OutputView.print(userDTO, ScoreBoardAssembler.assemble(scoreBoard));
+            OutputView.print(userDTO, scoreBoard);
         }
     }
 }

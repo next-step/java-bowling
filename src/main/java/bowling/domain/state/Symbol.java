@@ -1,10 +1,12 @@
 package bowling.domain.state;
 
 public enum Symbol {
-    STRIKE("X"),
-    SPARE("|/"),
-    GUTTER("-"),
-    MISS("");
+    Strike("X"),
+    Spare("|/"),
+    Gutter("-"),
+    Miss("|"),
+    Ready(""),
+    Continue("");
 
     private String symbol;
 
