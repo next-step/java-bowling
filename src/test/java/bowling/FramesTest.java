@@ -8,7 +8,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 class FramesTest {
 
     @Test
-    @DisplayName("경기 종료 여부 검")
+    @DisplayName("경기 종료 여부 검증")
     void isFinished() {
         Frames frames = Frames.of(2);
 
