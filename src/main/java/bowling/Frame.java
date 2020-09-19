@@ -4,37 +4,63 @@ import java.util.Objects;
 
 public class Frame {
 
-    private final int frame;
-    private final Frame nextFrame;
+    private final Pitchings pitchings;
+    private Frame nextFrame;
 
-    private Frame(int frame, int totalFrames) {
-        this.frame = frame;
-        this.nextFrame = Frame.of(frame + 1, totalFrames);
-    }
-
-    public int getFrame() {
-        return this.frame;
+    private Frame(Pitchings pitchings) {
+        this.pitchings = pitchings;
     }
 
     public Frame getNextFrame() {
         return this.nextFrame;
     }
 
-    public void bowl(int falledPins) {
-    }
-
-    public boolean isFinish() {
-        return true;
-    }
-
     public boolean isLastFrame() {
         return Objects.isNull(nextFrame);
     }
 
-    public static Frame of(int frame, int totalFrames) {
-        if (frame > totalFrames) {
-            return null;
-        }
-        return new Frame(frame, totalFrames);
+    public void bowl(Pin pin) {
+        pitchings.bowl(pin);
+    }
+
+    public Pin getFirstPin() {
+        return pitchings.getFirstPin();
+    }
+
+    public Pin getSecondPin() {
+        return pitchings.getSecondPin();
+    }
+
+    public Pin getBonusPin() {
+        return pitchings.getBonusPin();
+    }
+
+    public boolean isFirstDone() {
+        return pitchings.isFirstDone();
+    }
+
+    public boolean isSecondDone() {
+        return pitchings.isSecondDone();
+    }
+
+    public boolean isBonusDone() {
+        return pitchings.isBonusDone();
+    }
+
+    public boolean isDone() {
+        return pitchings.isDone();
+    }
+
+    public Frame next() {
+        this.nextFrame = of();
+        return this.nextFrame;
+    }
+
+    public void last() {
+        this.nextFrame = new Frame(LastPitchings.of());
+    }
+
+    public static Frame of() {
+        return new Frame(NormalPitchings.ofReady());
     }
 }

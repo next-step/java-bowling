@@ -1,5 +1,6 @@
 package bowling;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.BDDAssertions.then;
@@ -7,25 +8,15 @@ import static org.assertj.core.api.BDDAssertions.then;
 class FramesTest {
 
     @Test
-    void getFrames() {
-        Frames frames = Frames.of(3);
-
-        then(frames.getFrames().get(2).isLastFrame()).isTrue();
-    }
-
-    @Test
-    void getCurrentFrame() {
-    }
-
-    @Test
-    void bowl() {
-    }
-
-    @Test
+    @DisplayName("경기 종료 여부 검")
     void isFinished() {
-    }
+        Frames frames = Frames.of(2);
 
-    @Test
-    void of() {
+        frames.bowl(Pin.ofMin());
+        frames.bowl(Pin.ofMin());
+        frames.bowl(Pin.ofMin());
+        frames.bowl(Pin.ofMin());
+
+        then(frames.isFinished()).isTrue();
     }
 }
