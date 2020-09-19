@@ -11,46 +11,56 @@ import java.util.stream.IntStream;
 
 public class ResultViewer {
     private static final int SHOW_FRAME_NUMBER = 10;
+    private static final int SHOW_LAST_FRAME_NUMBER = SHOW_FRAME_NUMBER;
+
     private static final String STAGE_PREFIX_STRING = "| NAME |";
     private static final String FRAME_FORMAT = "  %02d  |";
+    private static final String FRAME_LAST_FORMAT = "   %02d   |";
     private static final String NAME_FORMAT = "| %4s |";
     private static final String GAME_RESULT_FORMAT = "  %-3s |";
+    private static final String GAME_RESULT_LAST_FORMAT = "  %-5s |";
     private static final String GAME_RESULT_DELIMITER = "|";
 
-    private final Game game;
-    private final Map<Integer, List<Pin>> status;
+    private final String name;
+    private final Map<Integer, Frame> status;
 
-    public ResultViewer(Game game) {
-        this.game = game;
+    public ResultViewer(String name) {
+        this.name = name;
         this.status = new HashMap<>();
     }
 
     public void record(Frame frame) {
-        status.put(frame.getNumber(), frame.toPins());
+        status.put(frame.getNumber(), frame);
     }
 
     public void printing() {
-        showHead();
         showStatus(getStatus());
         showResultScores(getScores());
     }
 
-    private static void showHead() {
+    public static void showHead() {
         System.out.print(STAGE_PREFIX_STRING);
 
         IntStream.rangeClosed(1, LastFrame.LAST_FRAME_NUMBER)
-                .forEach(frame -> System.out.printf(String.format(FRAME_FORMAT, frame)));
+                .mapToObj(ResultViewer::frameNumberToString)
+                .forEach(System.out::printf);
 
         System.out.println();
     }
 
-    public List<List<String>> getStatus() {
-        return new ArrayList<>(
-                status.values()
-                        .stream()
-                        .map(this::toStatus)
-                        .collect(Collectors.toList())
+    private static String frameNumberToString(int frameNumber) {
+        return String.format(
+                getMessageWithLastFrameNumber(frameNumber, FRAME_FORMAT, FRAME_LAST_FORMAT),
+                frameNumber
         );
+    }
+
+    public List<List<String>> getStatus() {
+        return status.values()
+                .stream()
+                .map(Frame::toPins)
+                .map(this::toStatus)
+                .collect(Collectors.toList());
     }
 
     private List<String> toStatus(List<Pin> pins) {
@@ -66,6 +76,10 @@ public class ResultViewer {
     }
 
     private String toResult(Pin prev, Pin current) {
+        if (current.isGutter()) {
+            return Result.GUTTER.toString();
+        }
+
         if (current.isStrike()) {
             return Result.STRIKE.toString();
         }
@@ -78,7 +92,7 @@ public class ResultViewer {
     }
 
     private void showStatus(List<List<String>> frames) {
-        System.out.print(String.format(NAME_FORMAT, game.getPlayerName()));
+        System.out.print(String.format(NAME_FORMAT, name));
 
         IntStream.rangeClosed(1, SHOW_FRAME_NUMBER)
                 .forEach(frame -> System.out.printf(statusToString(frame, frames)));
@@ -88,10 +102,10 @@ public class ResultViewer {
 
     private String statusToString(int frameNumber, List<List<String>> frames) {
         if (frames.size() < frameNumber) {
-            return String.format(GAME_RESULT_FORMAT, "");
+            return getEmptyResultMessage(frameNumber);
         }
 
-        return String.format(GAME_RESULT_FORMAT, frameToString(frames.get(frameNumber - 1)));
+        return getResultMessage(frameNumber, frameToString(frames.get(frameNumber - 1)));
     }
 
     private String frameToString(List<String> results) {
@@ -103,7 +117,7 @@ public class ResultViewer {
     public List<Integer> getScores() {
         List<Integer> result = new ArrayList<>();
 
-        List<Frame> frameSet = game.getFrames().stream()
+        List<Frame> frameSet = status.values().stream()
                 .filter(Frame::isFinish)
                 .collect(Collectors.toList());
 
@@ -153,9 +167,40 @@ public class ResultViewer {
 
     private String frameToString(int frameNumber, List<Integer> scores) {
         if (scores.size() < frameNumber) {
-            return String.format(GAME_RESULT_FORMAT, "");
+            return getEmptyResultMessage(frameNumber);
         }
 
-        return String.format(GAME_RESULT_FORMAT, scores.get(frameNumber - 1));
+        return getResultMessage(frameNumber, scores.get(frameNumber - 1));
+    }
+
+    private static String getEmptyResultMessage(int frameNumber) {
+        return String.format(
+                getMessageWithLastFrameNumber(frameNumber, GAME_RESULT_FORMAT, GAME_RESULT_LAST_FORMAT),
+                ""
+        );
+    }
+
+    private static String getResultMessage(int frameNumber, Object... args) {
+        return String.format(
+                getMessageWithLastFrameNumber(frameNumber, GAME_RESULT_FORMAT, GAME_RESULT_LAST_FORMAT),
+                args
+        );
+    }
+
+    private static String getMessageWithLastFrameNumber(int frameNumber, String message, String lastMessage) {
+        return frameNumber != SHOW_LAST_FRAME_NUMBER ? message : lastMessage;
+    }
+
+    public static Map<String, ResultViewer> makeResultMap(List<String> names) {
+        return names.stream()
+                .collect(Collectors.toMap(name -> name, ResultViewer::new));
+    }
+
+    public static void printAll(List<String> names, Map<String, ResultViewer> resultViewerMap) {
+        ResultViewer.showHead();
+
+        for (String name : names) {
+            resultViewerMap.get(name).printing();
+        }
     }
 }

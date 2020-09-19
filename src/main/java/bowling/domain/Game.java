@@ -1,69 +1,61 @@
 package bowling.domain;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import static bowling.domain.LastFrame.LAST_FRAME_NUMBER;
-
 public class Game {
-    private String username;
-    private LinkedList<Frame> frames;
 
-    private Game(String username) {
-        this.username = username;
-        this.frames = new LinkedList<Frame>() {{
-            add(NormalFrame.from());
-        }};
+    private BowlingGames bowlingGames;
+    private int cursor;
+
+    private Game(BowlingGames bowlingGames, int cursor) {
+        this.bowlingGames = bowlingGames;
+        this.cursor = cursor;
     }
 
-    public static Game start(String username) {
-        return new Game(username);
+    public static Game from(List<String> names) {
+        return new Game(BowlingGames.from(names), 0);
+    }
+
+    private Bowling getCurrent() {
+        return bowlingGames.get(cursor);
+    }
+
+    private Bowling findBowlingWithIsNotEnd() {
+        if (isEnd()) {
+            throw new IllegalArgumentException("볼링 게임은 종료되었습니다.");
+        }
+
+        Bowling bowling = getCurrent();
+
+        while (bowling.isEnd()) {
+            cursor++;
+            bowling = getCurrent();
+        }
+
+        return bowling;
     }
 
     public String getPlayerName() {
-        return username;
-    }
-
-    public int getPlayFrameNumber() {
-        return getLastFrame().getNumber();
+        return getCurrent().getPlayerName();
     }
 
     public Frame hit(int count) {
-        Frame frame = getLastFrame().hit(count);
+        Bowling bowling = findBowlingWithIsNotEnd();
 
-        if (hasNextFrame() && getLastFrame().isFinish()) {
-            frames.add(next());
+        Frame frame = bowling.hit(count);
+
+        if (frame.isFinish()) {
+            cursor++;
+        }
+
+        if (bowlingGames.matchLastIndex(cursor)) {
+            cursor = 0;
         }
 
         return frame;
     }
 
-    private Frame next() {
-        if (!hasNextFrame()) {
-            throw new RuntimeException("다음 프레임이 존재하지 않습니다.");
-        }
-
-        int nextFrameNumber = getNextFrameNumber();
-        return nextFrameNumber == LAST_FRAME_NUMBER ? LastFrame.from() : NormalFrame.of(nextFrameNumber);
-    }
-
-    public boolean hasNextFrame() {
-        return getNextFrameNumber() <= LAST_FRAME_NUMBER;
-    }
-
-    private int getNextFrameNumber() {
-        return getLastFrame().getNumber() + 1;
-    }
-
-    private Frame getLastFrame() {
-        return frames.getLast();
-    }
-
     public boolean isEnd() {
-        return !hasNextFrame() && getLastFrame().isFinish();
-    }
-
-    public List<Frame> getFrames() {
-        return frames;
+        return bowlingGames.isEnd();
     }
 }
