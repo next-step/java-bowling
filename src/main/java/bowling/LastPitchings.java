@@ -36,7 +36,9 @@ public class LastPitchings implements Pitchings {
     }
 
     private void validateSecondPitching(Pin secondPitchingPin) {
-        if (firstPitching.isClear()) return;
+        if (firstPitching.isClear()) {
+            return;
+        }
 
         Pin firstPitchingPin = firstPitching.getPin();
         if (firstPitchingPin.getPin() + secondPitchingPin.getPin() > Pin.MAX_PINS) {
@@ -52,7 +54,9 @@ public class LastPitchings implements Pitchings {
         Pin firstPitchingPin = firstPitching.getPin();
         Pin secondPitchingPin = secondPitching.getPin();
         if (!firstPitching.isClear()
-                && firstPitchingPin.getPin() + secondPitchingPin.getPin() == Pin.MAX_PINS) return;
+                && firstPitchingPin.getPin() + secondPitchingPin.getPin() == Pin.MAX_PINS) {
+            return;
+        }
 
         bonusPitching.bowl(Pin.ofMin());
     }
