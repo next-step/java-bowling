@@ -31,6 +31,18 @@ public class DownedPinCount {
 		return new DownedPinCount(sum);
 	}
 
+	public static boolean isSpare(DownedPinCount first, DownedPinCount second) {
+		return ALL_PIN_DOWN.equals(DownedPinCount.sum(first, second));
+	}
+
+	public static boolean containsStrike(DownedPinCount first, DownedPinCount second) {
+		return ALL_PIN_DOWN.equals(first) || ALL_PIN_DOWN.equals(second);
+	}
+
+	public int intValue() {
+		return count;
+	}
+
 	@Override
 	public String toString() {
 		return String.valueOf(count);
