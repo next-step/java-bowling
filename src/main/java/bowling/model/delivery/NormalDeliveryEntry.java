@@ -1,5 +1,6 @@
 package bowling.model.delivery;
 
+import bowling.exception.NoLeftDeliveryException;
 import bowling.model.State;
 
 import java.util.LinkedList;
@@ -30,7 +31,7 @@ public class NormalDeliveryEntry implements DeliveryEntry {
 
     private void verifyCanSecondDelivery() {
         if (isEnd()) {
-            throw new IllegalStateException(ExceptionMessages.NO_LEFT_DELIVERY);
+            throw new NoLeftDeliveryException();
         }
     }
 

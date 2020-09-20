@@ -1,5 +1,8 @@
 package bowling.model;
 
+import bowling.exception.ScoreMaxAdditionalCountException;
+import bowling.exception.ScoreMinAdditionalCountException;
+
 import java.util.Objects;
 
 public class Score {
@@ -25,11 +28,11 @@ public class Score {
 
     private static void validateScore(int leftAddDeliveryCount) {
         if (leftAddDeliveryCount > ADD_DELIVERY_COUNT_MAX) {
-            throw new IllegalArgumentException("추가 점수 갯수는 최대 2입니다.");
+            throw new ScoreMaxAdditionalCountException();
         }
 
         if (leftAddDeliveryCount < ADD_DELIVERY_COUNT_MIN) {
-            throw new IllegalArgumentException("추가 점수 갯수는 최소 0입니다.");
+            throw new ScoreMinAdditionalCountException();
         }
 
     }
