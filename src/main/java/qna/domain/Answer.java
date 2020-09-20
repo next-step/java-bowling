@@ -6,6 +6,7 @@ import qna.UnAuthorizedException;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -34,11 +35,11 @@ public class Answer extends AbstractEntity {
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
 
-        if (writer == null) {
+        if (Objects.isNull(writer)) {
             throw new UnAuthorizedException();
         }
 
-        if (question == null) {
+        if (Objects.isNull(question)) {
             throw new NotFoundException();
         }
 
