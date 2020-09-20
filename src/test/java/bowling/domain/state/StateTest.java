@@ -44,4 +44,16 @@ class StateTest {
         assertTrue(state.isFinish());
     }
 
+    @Test
+    void gutterTest() {
+        State state = new Ready().bowl(new Pin(0));
+        assertThat(state.record()).isEqualTo("-");
+    }
+
+    @Test
+    void gutterFrameTest() {
+        State state = new Ready().bowl(new Pin(0)).bowl(new Pin(0));
+        assertThat(state.record()).isEqualTo("-|-");
+    }
+
 }
