@@ -1,10 +1,6 @@
 package bowling.model.delivery;
 
 import bowling.model.State;
-import bowling.model.delivery.Delivery;
-import bowling.model.delivery.FinalDeliveryEntry;
-import bowling.model.frame.FinalFrame;
-import bowling.model.frame.Frame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
