@@ -167,4 +167,90 @@ class FrameTest {
         frame.bowl(Pin.ofMax());
         then(frame.isDone()).isTrue();
     }
+
+    @Test
+    @DisplayName("점수 계산 가능 여부 검증")
+    void canCalculateScore() {
+        Frame frame = Frame.of();
+        frame.last();
+
+        then(frame.canCalculateScore()).isFalse();
+
+        frame.bowl(Pin.ofMin());
+        frame.bowl(Pin.ofMin());
+
+        then(frame.canCalculateScore()).isTrue();
+    }
+
+    @Test
+    @DisplayName("스페어일 경우 점수 계산 가능 여부 검증")
+    void canCalculateScoreWhenSpare() {
+        Frame frame = Frame.of();
+        Frame next = frame.next();
+
+        then(frame.canCalculateScore()).isFalse();
+
+        frame.bowl(Pin.ofMin());
+        frame.bowl(Pin.ofMax());
+        then(frame.canCalculateScore()).isFalse();
+
+        next.bowl(Pin.ofMin());
+        then(frame.canCalculateScore()).isTrue();
+    }
+
+    @Test
+    @DisplayName("스트라이크일 경우 점수 계산 가능 여부 검증")
+    void canCalculateScoreWhenStrike() {
+        Frame frame = Frame.of();
+        Frame next = frame.next();
+
+        then(frame.canCalculateScore()).isFalse();
+
+        frame.bowl(Pin.ofMax());
+        then(frame.canCalculateScore()).isFalse();
+
+        next.bowl(Pin.ofMin());
+        next.bowl(Pin.ofMin());
+        then(frame.canCalculateScore()).isTrue();
+    }
+
+    @Test
+    @DisplayName("점수 계산 검증")
+    void calculateScore() {
+        int expected1 = 2, expected2 = 3;
+        Frame frame = Frame.of();
+
+        frame.bowl(Pin.of(expected1));
+        frame.bowl(Pin.of(expected2));
+
+        then(frame.calculateScore()).isEqualTo(expected1 + expected2);
+    }
+
+    @Test
+    @DisplayName("스페어일 경우 점수 계산 검증")
+    void calculateScoreWhenSpare() {
+        int expected1 = 2, expected2 = 8, expected3 = 3;
+        Frame frame = Frame.of();
+        Frame next = frame.next();
+
+        frame.bowl(Pin.of(expected1));
+        frame.bowl(Pin.of(expected2));
+        next.bowl(Pin.of(expected3));
+
+        then(frame.calculateScore()).isEqualTo(expected1 + expected2 + expected3);
+    }
+
+    @Test
+    @DisplayName("스트라이크일 경우 점수 계산 검증")
+    void calculateScoreWhenStrike() {
+        int expected1 = 10, expected2 = 2, expected3 = 3;
+        Frame frame = Frame.of();
+        Frame next = frame.next();
+
+        frame.bowl(Pin.of(expected1));
+        next.bowl(Pin.of(expected2));
+        next.bowl(Pin.of(expected3));
+
+        then(frame.calculateScore()).isEqualTo(expected1 + expected2 + expected3);
+    }
 }

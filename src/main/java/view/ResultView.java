@@ -1,8 +1,6 @@
 package view;
 
-import dto.NameDTO;
-import dto.ResultFrameDTO;
-import dto.ResultFramesDTO;
+import dto.*;
 
 import java.util.stream.IntStream;
 
@@ -78,6 +76,40 @@ public class ResultView {
             return;
         }
         frames.append("   |");
+    }
+
+    public void printScores(ScoresDTO scoresDTO) {
+        StringBuilder scores = new StringBuilder("|      |");
+        scoresDTO.getScoreDTOs()
+                .forEach(scoreDTO -> {
+                    printScore(scores, scoreDTO);
+                    printLastScore(scores, scoreDTO);
+                });
+        System.out.println(scores);
+    }
+
+    private void printScore(StringBuilder scores, ScoreDTO scoreDTO) {
+        if (scoreDTO.isLast()) {
+            return;
+        }
+
+        if (!scoreDTO.hasScore()) {
+            scores.append("     |");
+            return;
+        }
+        scores.append(String.format(" %3s |", scoreDTO.getScore()));
+    }
+
+    private void printLastScore(StringBuilder scores, ScoreDTO scoreDTO) {
+        if (!scoreDTO.isLast()) {
+            return;
+        }
+
+        if (!scoreDTO.hasScore()) {
+            scores.append("       |");
+            return;
+        }
+        scores.append(String.format("  %3d  |", scoreDTO.getScore()));
     }
 
     public void printExceptionMessage(Exception exception) {

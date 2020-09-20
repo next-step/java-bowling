@@ -61,6 +61,39 @@ public class Frame {
     }
 
     public void last() {
-        this.nextFrame = new Frame(LastPitchings.of());
+        this.nextFrame = new Frame(LastPitchings.ofReady());
+    }
+
+    public boolean canCalculateScore() {
+        if (isLastFrame()) {
+            return isDone();
+        }
+        if (pitchings.isFirstPitchingClear()) {
+            return nextFrame.canCalculateScore();
+        }
+        if (pitchings.isSpare()) {
+            return nextFrame.isFirstDone();
+        }
+        return isDone();
+    }
+
+    public int calculateScore() {
+        if (!canCalculateScore()) {
+            throw new IllegalStateException("점수를 계산할 수 없습니다.");
+        }
+        if (isLastFrame()) {
+            return pitchings.calculateScore();
+        }
+        if (pitchings.isFirstPitchingClear()) {
+            return pitchings.calculateScore() + nextFrame.calculateScore();
+        }
+        if (pitchings.isSpare()) {
+            return pitchings.calculateScore() + nextFrame.getFirstScore();
+        }
+        return pitchings.calculateScore();
+    }
+
+    private int getFirstScore() {
+        return pitchings.getFirstScore();
     }
 }
