@@ -18,7 +18,7 @@ public class Frames {
         Frame frame = NormalFrame.start();
         frames.add(frame);
 
-        for (int i = 1; i < NormalFrame.MAX_FRAME_INDEX; i++) {
+        for (int i = 1; i < Frame.MAX_FRAME_INDEX; i++) {
             frame = frame.next();
             frames.add(frame);
         }
