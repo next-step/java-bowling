@@ -4,20 +4,16 @@ import bowling.domain.frame.Frame;
 
 public abstract class AbstractScore implements Score {
 
+    public static final int NAN = -1;
+
     protected final Frame frame;
     protected final int score;
     protected final boolean valid;
 
-    public AbstractScore(int score) {
-        this.frame = null;
-        this.score = score;
-        this.valid = true;
-    }
-
     public AbstractScore(Frame frame) {
         this.frame = frame;
-        this.score = calculateScore();
         this.valid = checkValid();
+        this.score = this.valid ? calculateScore() : NAN;
     }
 
     protected abstract int calculateScore();

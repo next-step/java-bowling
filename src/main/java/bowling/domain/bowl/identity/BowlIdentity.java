@@ -9,6 +9,7 @@ public interface BowlIdentity {
     boolean identity(BowlResult bowlResult);
     boolean isCompleted();
     boolean isBonus();
+    boolean isStrike();
     Score getScore(Frame frame);
     String format(BowlResult bowlResult);
 

@@ -64,4 +64,8 @@ public class FinalBowlResult {
         return bowlResults.getFirst().getFirstNumberOfPin();
     }
 
+    public boolean isStrike() {
+        return bowlResults.getFirst().isStrike();
+    }
+
 }

@@ -31,6 +31,11 @@ public class MissBowlIdentity extends AbstractBowlIdentity {
     }
 
     @Override
+    public boolean isStrike() {
+        return false;
+    }
+
+    @Override
     public Score getScore(Frame frame) {
         return new NormalScore(frame);
     }

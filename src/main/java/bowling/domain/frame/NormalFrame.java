@@ -45,6 +45,16 @@ public class NormalFrame extends AbstractFrame {
     }
 
     @Override
+    public boolean isNone() {
+        return bowlResult.isNone();
+    }
+
+    @Override
+    public boolean isStrike() {
+        return bowlResult.isStrike();
+    }
+
+    @Override
     public boolean isEnd() {
         return false;
     }
@@ -52,6 +62,11 @@ public class NormalFrame extends AbstractFrame {
     @Override
     public Score getScore() {
         return bowlResult.getScore(this);
+    }
+
+    @Override
+    public int getFirstNumberOfPin() {
+        return bowlResult.getFirstNumberOfPin();
     }
 
     @Override

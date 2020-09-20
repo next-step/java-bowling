@@ -45,6 +45,11 @@ public class FinalFrame extends AbstractFrame {
     }
 
     @Override
+    public int getFirstNumberOfPin() {
+        return finalBowlResult.getFirstNumberOfPin();
+    }
+
+    @Override
     public boolean isCompleted() {
         return isEnd();
     }
@@ -52,6 +57,16 @@ public class FinalFrame extends AbstractFrame {
     @Override
     public int getTotalNumberOfPin() {
         return finalBowlResult.getTotalNumberOfPin();
+    }
+
+    @Override
+    public boolean isNone() {
+        return finalBowlResult.isNone();
+    }
+
+    @Override
+    public boolean isStrike() {
+        return finalBowlResult.isStrike();
     }
 
     @Override

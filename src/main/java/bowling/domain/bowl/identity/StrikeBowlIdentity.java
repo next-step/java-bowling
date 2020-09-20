@@ -28,6 +28,11 @@ public class StrikeBowlIdentity extends AbstractBowlIdentity {
     }
 
     @Override
+    public boolean isStrike() {
+        return true;
+    }
+
+    @Override
     public Score getScore(Frame frame) {
         return new StrikeScore(frame);
     }

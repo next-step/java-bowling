@@ -10,12 +10,14 @@ public class SpareScore extends AbstractScore {
 
     @Override
     protected int calculateScore() {
-        return frame.getTotalNumberOfPin();
+        int normalScore = new NormalScore(frame).getScore();
+        int bonusScore = frame.getNextFrame().getFirstNumberOfPin();
+        return normalScore + bonusScore;
     }
 
     @Override
     protected boolean checkValid() {
-        return frame.isCompleted();
+        return frame.isCompleted() && !frame.getNextFrame().isNone();
     }
 
 }

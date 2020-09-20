@@ -71,4 +71,8 @@ public class BowlResult {
         return findBowlIdentity().format(this);
     }
 
+    public boolean isStrike() {
+        return findBowlIdentity().isStrike();
+    }
+
 }

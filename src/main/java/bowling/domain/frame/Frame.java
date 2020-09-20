@@ -8,8 +8,11 @@ public interface Frame extends Iterable<Frame> {
     Frame getNextFrame();
     int getFrameNumber();
     Score getScore();
-    boolean isCompleted();
+    int getFirstNumberOfPin();
     int getTotalNumberOfPin();
+    boolean isNone();
+    boolean isStrike();
+    boolean isCompleted();
     boolean isEnd();
 
 }
