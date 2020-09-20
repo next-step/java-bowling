@@ -49,17 +49,21 @@ public class FinalFrame extends Frame {
         if (!first.canBowlFinalFrame()) {
             return true;
         }
-        if (states.size() == 3) {
+        if (isEqualSize(3)) {
             return true;
         }
-        if (states.size() == 2 && containsSpare()) {
+        if (isEqualSize(2) && containsSpare()) {
             return true;
         }
 
-        if (states.size() == 2 && onlyFirstStrike() && isSecondFinish()) {
+        if (isEqualSize(2) && onlyFirstStrike() && isSecondFinish()) {
             return true;
         }
         return false;
+    }
+
+    private boolean isEqualSize(int size) {
+        return states.size() == size;
     }
 
     private boolean isSecondFinish() {
