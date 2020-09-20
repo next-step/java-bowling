@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 public class BowlingGames {
 
-    private List<BowlingGame> bowlingGames;
+    private final List<BowlingGame> bowlingGames;
     private int playFrameNo;
     private int gameIndex;
 
