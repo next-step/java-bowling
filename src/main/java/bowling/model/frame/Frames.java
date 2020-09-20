@@ -54,4 +54,12 @@ public class Frames {
         frames.add(newFrame);
     }
 
+    public boolean isEndOf(int frameNo) {
+        return frames.size() == frameNo && frames.get(frameNo - 1).isEnd();
+    }
+
+    public int getFramesSize() {
+        return frames.size();
+    }
+
 }
