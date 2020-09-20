@@ -20,6 +20,7 @@ public class Answers {
     public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
         validateDeletion(loginUser);
         return answers.stream()
+                .peek(it -> it.setDeleted(true))
                 .map(it -> new DeleteHistory(ContentType.ANSWER, it.getId(), it.getWriter(), LocalDateTime.now()))
                 .collect(Collectors.toList())
                 ;
