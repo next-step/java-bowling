@@ -1,6 +1,6 @@
 package bowling.model;
 
-import bowling.ExceptionMessages;
+import bowling.exception.UserNameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -16,8 +16,7 @@ class UserTest {
     public void create_fail(String name) throws Exception {
 
         assertThatThrownBy(() -> User.valueOf(name))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ExceptionMessages.USER_NAME_EXCEPTION);
+                .isInstanceOf(UserNameException.class);
 
     }
 
