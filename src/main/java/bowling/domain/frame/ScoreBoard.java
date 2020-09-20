@@ -1,6 +1,7 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.user.User;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -8,43 +9,38 @@ import java.util.List;
 
 public class ScoreBoard {
 
-    public static final int END_FRAME_COUNT = 10;
-    private static final int NORMAL_FRAME_COUNT = 9;
-    private final List<Frame> frames;
+    private final User user;
+    private final Frame firstFrame;
+    private Frame currentFrame;
 
-    private ScoreBoard(List<Frame> frames) {
-        this.frames = frames;
+    private ScoreBoard(User user) {
+        this.user = user;
+        this.firstFrame = Frame.init();
+        this.currentFrame = firstFrame;
     }
 
-    public static ScoreBoard init() {
-        return new ScoreBoard(new LinkedList<>(Arrays.asList(Frame.normalFrame())));
+    public static ScoreBoard init(User user) {
+        return new ScoreBoard(user);
     }
 
     public void bowl(Pin felledPin) {
-        Frame current = frames.get(frames.size() - 1);
-        current.bowl(felledPin);
-        if (current.isEnd() && !isGameOver()) {
-            generateFrame();
-        }
+        currentFrame = currentFrame.bowl(felledPin);
     }
 
-    private void generateFrame() {
-        if (frames.size() < NORMAL_FRAME_COUNT) {
-            frames.add(Frame.normalFrame());
-            return;
-        }
-        frames.add(Frame.endFrame());
-    }
-
-    public int size() {
-        return frames.size();
+    public User getUser() {
+        return user;
     }
 
     public boolean isGameOver() {
-        return frames.size() == END_FRAME_COUNT && frames.get(frames.size() - 1).isEnd();
+        return currentFrame.isEnd();
     }
 
-    public List<Frame> getFrames() {
-        return this.frames;
+    public Frame getFirstFrame() {
+        return firstFrame;
     }
+
+    public Index getLastIndex() {
+        return currentFrame.getIndex();
+    }
+
 }
