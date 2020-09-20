@@ -111,7 +111,7 @@ public class Question extends AbstractEntity {
 
     private DeleteHistories generateQuestionHistories() {
         return DeleteHistories.of()
-                .addHistory(DeleteHistory.of(ContentType.QUESTION, getId(), getWriter(), LocalDateTime.now()));
+                .addHistory(DeleteHistory.ofQuestion(getId(), getWriter()));
     }
 
     public List<DeleteHistory> deleteRelatedAnswer(User loginUser) {
