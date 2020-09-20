@@ -1,12 +1,10 @@
 package bowling.model.frame;
 
 import bowling.model.Score;
-import bowling.model.delivery.Delivery;
 import bowling.model.delivery.DeliveryEntry;
 import bowling.model.delivery.NormalDeliveryEntry;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class NormalFrame extends Frame {
 
@@ -26,13 +24,15 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public boolean isEnd() {
-        return deliveryEntry.isEnd();
-    }
+    public Score getScore() {
+        int countOfBonusScore = getState().getCountOfBonusScore();
+        Score score = Score.of(deliveryEntry.getTotalFallenPins(), countOfBonusScore);
 
-    @Override
-    public Stream<Delivery> getDeliveries() {
-        return deliveryEntry.getDeliveries();
+        if (!score.isEndCalculate() && canCalculateBonus()) {
+            next.calculateAdditionalScore(score);
+        }
+
+        return score;
     }
 
     @Override
@@ -46,18 +46,6 @@ public class NormalFrame extends Frame {
     @Override
     public int hashCode() {
         return Objects.hash(deliveryEntry);
-    }
-
-    @Override
-    public Score getScore() {
-        int countOfBonusScore = getState().getCountOfBonusScore();
-        Score score = Score.of(deliveryEntry.getTotalFallenPins(), countOfBonusScore);
-
-        if (!score.isEndCalculate() && canCalculateBonus()) {
-            next.calculateAdditionalScore(score);
-        }
-
-        return score;
     }
 
 }

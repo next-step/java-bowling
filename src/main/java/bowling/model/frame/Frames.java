@@ -22,8 +22,8 @@ public class Frames {
 
         Frame newFrame = isFinalFrame(frameNo) ? FinalFrame.of(pins) : NormalFrame.of(pins);
         addNext(newFrame);
-        return nextPlayFrameNo(frameNo);
 
+        return nextPlayFrameNo(frameNo);
     }
 
     private int nextPlayFrameNo(int frameNo) {
