@@ -1,3 +1,17 @@
+# 1단계 - 질문 삭제하기 기능 리팩토링
+ * Question - delete 성공
+ * Question - delete 다른 사람이 쓴 글 (Exception 처리)
+ * Question - delete 성공(질문자와 답변자가 같을 경우)
+ * Question - delete 성공(질문자와 답변자가 다를 경우 - Exception 처리)
+ 
+ * Answer - delete 성공
+ * Answer - delete 다른 사람이 쓴 답변 (Exception 처리)
+
+
+ 
+
+
+
 # 볼링 게임 점수판
 ## 진행 방법
 * 볼링 게임 점수판 요구사항을 파악한다.
