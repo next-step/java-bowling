@@ -77,7 +77,7 @@ public class NormalFrame extends AbstractFrame {
     }
 
     public boolean checkStrikeBonus() {
-        return bowlResult.checkSrikeBonus();
+        return bowlResult.checkStrikeBonus();
     }
 
     public int getStrikeBonus() {

@@ -1,7 +1,6 @@
 package bowling.domain.score;
 
 import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
 
 public abstract class AbstractFinalScore implements Score {
 

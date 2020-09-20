@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
 
 public class DefaultNormalScore extends AbstractNormalScore {

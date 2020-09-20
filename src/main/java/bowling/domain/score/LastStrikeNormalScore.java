@@ -1,5 +1,6 @@
 package bowling.domain.score;
 
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.NormalFrame;
 
 public class LastStrikeNormalScore extends AbstractNormalScore {
@@ -10,12 +11,16 @@ public class LastStrikeNormalScore extends AbstractNormalScore {
 
     @Override
     protected int calculateScore() {
-        return 0;
+        FinalFrame nextFrame = (FinalFrame) normalFrame.getNextFrame();
+        int score = new DefaultNormalScore(normalFrame).getScore();
+        int bonusScore = nextFrame.getStrikeBonus();
+        return score + bonusScore;
     }
 
     @Override
     public boolean checkValid() {
-        return true;
+        FinalFrame nextFrame = (FinalFrame) normalFrame.getNextFrame();
+        return normalFrame.isCompleted() && nextFrame.checkStrikeBonus();
     }
 
 }

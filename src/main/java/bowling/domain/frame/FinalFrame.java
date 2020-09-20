@@ -72,4 +72,12 @@ public class FinalFrame extends AbstractFrame {
         return finalBowlResult.getSpareBonus();
     }
 
+    public boolean checkStrikeBonus() {
+        return finalBowlResult.checkStrikeBonus();
+    }
+
+    public int getStrikeBonus() {
+        return finalBowlResult.getStrikeBonus();
+    }
+
 }

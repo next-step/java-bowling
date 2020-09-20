@@ -1,12 +1,13 @@
 package bowling.domain.bowl;
 
+import bowling.domain.NumberOfPin;
 import bowling.domain.frame.FinalFrame;
-import bowling.domain.frame.Frame;
-import bowling.domain.score.DefaultNormalScore;
-import bowling.domain.score.FinalScore;
+import bowling.domain.score.DefaultFinalScore;
 import bowling.domain.score.Score;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class FinalBowlResult {
@@ -32,9 +33,13 @@ public class FinalBowlResult {
     }
 
     private boolean isMaxBonusCount() {
+        return getTotalBowlCount() == MAX_BOWL_COUNT;
+    }
+
+    private Integer getTotalBowlCount() {
         return bowlResults.stream()
                 .map(BowlResult::getBowlCount)
-                .reduce(0, Integer::sum) == MAX_BOWL_COUNT;
+                .reduce(0, Integer::sum);
     }
 
     public boolean isCompleted() {
@@ -46,7 +51,7 @@ public class FinalBowlResult {
     }
 
     public Score getScore(FinalFrame finalFrame) {
-        return new FinalScore(finalFrame);
+        return new DefaultFinalScore(finalFrame);
     }
 
     public String format() {
@@ -62,20 +67,35 @@ public class FinalBowlResult {
                 .reduce(0, Integer::sum);
     }
 
-    public int getFirstNumberOfPin() {
-        return bowlResults.getFirst().getFirstNumberOfPin();
-    }
-
     public boolean isStrike() {
-        return bowlResults.getFirst().isStrike();
+        return !isNone() && bowlResults.getFirst().isStrike();
     }
 
     public boolean checkSpareBonus() {
-        return !isNone() && !bowlResults.getFirst().isNone();
+        return getTotalBowlCount() >= 1;
     }
 
     public int getSpareBonus() {
-        return bowlResults.getFirst().getFirstNumberOfPin();
+        List<NumberOfPin> numberOfPins = flatBowlResults();
+        return numberOfPins.get(0).getNumberOfPin();
+    }
+
+    public boolean checkStrikeBonus() {
+        return getTotalBowlCount() >= 2;
+    }
+
+    public int getStrikeBonus() {
+        List<NumberOfPin> numberOfPins = flatBowlResults();
+        return numberOfPins.get(0).getNumberOfPin() + numberOfPins.get(1).getNumberOfPin();
+    }
+
+    private List<NumberOfPin> flatBowlResults() {
+        return bowlResults.stream()
+                .map(bowlResult -> bowlResult.getNumberOfPins())
+                .reduce(new ArrayList<>(), (a, b) -> {
+                    a.addAll(b);
+                    return a;
+                });
     }
 
 }

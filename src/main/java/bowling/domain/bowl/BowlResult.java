@@ -16,7 +16,7 @@ public class BowlResult {
     public static final int FIRST_BOWL_COUNT = 1;
     public static final int SECOND_BOWL_COUNT = 2;
 
-    public final List<NumberOfPin> numberOfPins;
+    private final List<NumberOfPin> numberOfPins;
 
     public BowlResult() {
         this(Collections.EMPTY_LIST);
@@ -28,6 +28,10 @@ public class BowlResult {
 
     private BowlIdentity findBowlIdentity() {
         return BowlIdentityFinder.find(this);
+    }
+
+    public List<NumberOfPin> getNumberOfPins() {
+        return numberOfPins;
     }
 
     public boolean isNone() {
@@ -84,7 +88,7 @@ public class BowlResult {
         return !isNone();
     }
 
-    public boolean checkSrikeBonus() {
+    public boolean checkStrikeBonus() {
         return isSecond();
     }
 
