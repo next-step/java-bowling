@@ -3,6 +3,9 @@ package bowling.model;
 import java.util.Objects;
 
 public class Result {
+    private static final int UNKNOWN_COUNT = -1;
+    public static final Result UNKNOWN = new Result();
+
     public static final int MAX_PIN_COUNT = 10;
     public static final Result STRIKE = Result.of(MAX_PIN_COUNT);
 
@@ -12,6 +15,11 @@ public class Result {
 
     private final boolean spare;
     private final int pinCount;
+
+    private Result() {
+        this.pinCount = UNKNOWN_COUNT;
+        this.spare = false;
+    }
 
     private Result(int pinCount, boolean spare) {
         if (pinCount < 0 || pinCount > MAX_PIN_COUNT) {
