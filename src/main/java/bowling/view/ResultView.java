@@ -1,6 +1,8 @@
 package bowling.view;
 
 import bowling.domain.Player;
+import bowling.domain.frame.Frame;
+import bowling.exception.CannotCalculateException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,12 @@ public class ResultView {
     }
     private List<String> calculateScore(Player player) {
         List<String> calculateScoreByFrame = new ArrayList<>();
-        List<Integer> scores = player.frames().stream().map(frame -> frame.score()).filter(integer -> integer >= 0).collect(Collectors.toList());
+
+        List<Integer> scores = player.frames()
+                .stream()
+                .map(frame -> cannotCalculateCase(frame))
+                .filter(integer -> integer >= 0)
+                .collect(Collectors.toList());
 
         int accumulateScore = 0;
         for(int score : scores) {
@@ -51,6 +58,14 @@ public class ResultView {
             calculateScoreByFrame.add(String.valueOf(accumulateScore));
         }
         return calculateScoreByFrame;
+    }
+
+    private int cannotCalculateCase(Frame frame) {
+        try {
+            return frame.score().getScore();
+        }catch (CannotCalculateException exception){
+            return -1;
+        }
     }
 
     private void blankFrame(int frameSize, List<String> frameBody) {

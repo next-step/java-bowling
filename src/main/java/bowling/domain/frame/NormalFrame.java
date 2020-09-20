@@ -55,20 +55,16 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public int score() {
+    public Score score() {
         if (!rollingEnd()) {
-            return -1;
+            throw new CannotCalculateException();
         }
+        Score score = state.getScore();
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return next.calculateAdditionalScore(score);
 
-        try {
-            Score score = state.getScore();
-            if (score.canCalculateScore()) {
-                return score.getScore();
-            }
-            return next.calculateAdditionalScore(score).getScore();
-        } catch (CannotCalculateException e) {
-            return -1;
-        }
     }
 
 }

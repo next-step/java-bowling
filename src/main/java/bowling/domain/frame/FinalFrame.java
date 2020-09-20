@@ -4,7 +4,6 @@ import bowling.domain.Pin;
 import bowling.domain.Score;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
-import bowling.exception.CannotCalculateException;
 
 import java.util.LinkedList;
 import java.util.stream.Collectors;
@@ -29,7 +28,7 @@ public class FinalFrame extends Frame {
 
     @Override
     public boolean rollingEnd() {
-        return state.isFinish();
+        return states.getLast().isFinish();
     }
 
     @Override
@@ -56,7 +55,19 @@ public class FinalFrame extends Frame {
         if (states.size() == 2 && containsSpare()) {
             return true;
         }
+
+        if (states.size() == 2 && onlyFirstStrike() && isSecondFinish()) {
+            return true;
+        }
         return false;
+    }
+
+    private boolean isSecondFinish() {
+        return states.get(1).isFinish();
+    }
+
+    private boolean onlyFirstStrike() {
+        return states.getFirst().record().contains("X") && !states.getLast().record().contains("X");
     }
 
     private boolean containsSpare() {
@@ -75,22 +86,8 @@ public class FinalFrame extends Frame {
                 .collect(Collectors.joining("|"));
     }
 
-    public int score() {
-        int finalFrameScore = -1;
-        try {
-            Score score = getFirstScore();
-
-            score = calculateScore(score);
-
-            finalFrameScore = score.getScore();
-        } catch (CannotCalculateException e) {
-            finalFrameScore = -1;
-        }
-
-        return finalFrameScore;
-    }
-
-    private Score calculateScore(Score score) {
+    public Score score() {
+        Score score = getFirstScore();
         for (int i = 1; i < states.size(); i++) {
             State state = states.get(i);
             score = state.calculateAdditionalScore(score);
@@ -100,8 +97,16 @@ public class FinalFrame extends Frame {
 
     public Score calculateAdditionalScore(Score beforeScore) {
         Score score = beforeScore;
-        for (State state : states) {
+
+        for(int i = 0; i< states.size(); i++) {
+            State state = states.get(i);
             score = state.calculateAdditionalScore(score);
+
+            if(score.canCalculateScore()){
+                return score;
+            }
+
+            calculateAdditionalScore(score);
         }
         return score;
     }

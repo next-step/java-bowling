@@ -48,6 +48,6 @@ public abstract class Frame {
 
     protected abstract Score calculateAdditionalScore(Score score);
 
-    public abstract int score();
+    public abstract Score score();
 
 }
