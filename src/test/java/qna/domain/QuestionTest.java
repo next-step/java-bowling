@@ -3,6 +3,9 @@ package qna.domain;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
@@ -12,7 +15,10 @@ public class QuestionTest {
     @Test
     void delete_성공() throws CannotDeleteException {
         Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
-        question.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistoryList = question.delete(UserTest.JAVAJIGI);
+
+        assertThat(question.isDeleted()).isTrue();
+        assertThat(deleteHistoryList).hasSize(1);
     }
 
     @Test
@@ -22,4 +28,20 @@ public class QuestionTest {
                 .isInstanceOf(CannotDeleteException.class);
     }
 
+    @Test
+    void delete_성공_질문자_와_답변자_같음() throws CannotDeleteException {
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.addAnswer(AnswerTest.ofUser(11L, UserTest.JAVAJIGI));
+
+        List<DeleteHistory> deleteHistories = question.delete(UserTest.JAVAJIGI);
+        assertThat(question.isDeleted()).isTrue();
+    }
+
+    @Test
+    void delete_질문자_와_답변자_다름() throws CannotDeleteException {
+        Question question = new Question("title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.addAnswer(AnswerTest.ofUser(12L, UserTest.SANJIGI));
+        assertThatThrownBy(() -> question.delete(UserTest.JAVAJIGI))
+                .isInstanceOf(CannotDeleteException.class);
+    }
 }
