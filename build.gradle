@@ -25,6 +25,8 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.hibernate:hibernate-java8')
+    compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
     runtime('com.h2database:h2')
     testCompile('org.junit.jupiter:junit-jupiter:5.6.0')
     testCompile('org.assertj:assertj-core:3.15.0')
