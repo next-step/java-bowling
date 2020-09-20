@@ -1,9 +1,13 @@
 package bowling.domain;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import bowling.domain.frame.Frames;
+import bowling.ui.result.DisplayPlayerBowlingGrade;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,12 +18,23 @@ class RollingAndScoreTest {
         return (s) -> fallenPins;
     }
 
+    private static final Consumer<DisplayPlayerBowlingGrade> EMPTY_DISPLAY_PLAYER_BOWLING_GRADE_CONSUMER = (g) -> {};
+
+    private static Player whileRollAndDisplay(Player player, Function<String, Integer> playerFallenPinsService){
+        player.whileRollAndDisplay(Frames.MAX_FRAMES_SIZE, playerFallenPinsService, EMPTY_DISPLAY_PLAYER_BOWLING_GRADE_CONSUMER);
+        return player;
+    }
+
+    private static Player whileRollAndDisplay(Player player, int currentIndex, Function<String, Integer> playerFallenPinsService){
+        player.whileRollAndDisplay(currentIndex, playerFallenPinsService, EMPTY_DISPLAY_PLAYER_BOWLING_GRADE_CONSUMER);
+        return player;
+    }
+
     @DisplayName("모든 프레임이 거터인 경우 0점")
     @Test
     void gutter() {
         Function<String, Integer> gutter = testPlayerFallenPinsService(0);
-        int totalFrameScore = Player.of("KSG")
-                        .whileRollAndDisplay(gutter)
+        int totalFrameScore = whileRollAndDisplay(Player.of("KSG"), gutter)
                         .getTotalFrameScore();
         assertThat(totalFrameScore).isEqualTo(0);
     }
@@ -28,8 +43,7 @@ class RollingAndScoreTest {
     @Test
     void allOnes() {
         Function<String, Integer> one = testPlayerFallenPinsService(1);
-        int totalFrameScore = Player.of("KSG")
-                                    .whileRollAndDisplay(one)
+        int totalFrameScore = whileRollAndDisplay(Player.of("KSG"), one)
                                     .getTotalFrameScore();
         assertThat(totalFrameScore).isEqualTo(20);
     }
@@ -62,24 +76,21 @@ class RollingAndScoreTest {
     void allGutterAndTerminalFrameScore() {
         Function<String, Integer> gutter = testPlayerFallenPinsService(0);
         final int FRAME_9 = 8;
-        Player st1 = Player.of("AAA")
-                           .whileRollAndDisplay(FRAME_9, gutter)
+        Player st1 =  whileRollAndDisplay(Player.of("AAA"), FRAME_9, gutter)
                            .roll(10)
                            .roll(5)
                            .roll(5);
 
         assertThat(st1.getTotalFrameScore()).isEqualTo(20);
 
-        Player st2 = Player.of("BBB")
-                           .whileRollAndDisplay(FRAME_9, gutter)
+        Player st2 = whileRollAndDisplay(Player.of("BBB"), FRAME_9, gutter)
                            .roll(3)
                            .roll(5);
 
         assertThat(st2.getTotalFrameScore()).isEqualTo(8);
 
 
-        Player st3 = Player.of("CCC")
-                           .whileRollAndDisplay(FRAME_9, gutter)
+        Player st3 = whileRollAndDisplay(Player.of("CCC"), FRAME_9, gutter)
                            .roll(5)
                            .roll(5)
                            .roll(5);
@@ -91,8 +102,7 @@ class RollingAndScoreTest {
     void perfectGame() {
         Function<String, Integer> stirke = testPlayerFallenPinsService(10);
 
-        int totalFrameScore = Player.of("KSG")
-                                    .whileRollAndDisplay(stirke)
+        int totalFrameScore = whileRollAndDisplay(Player.of("KSG"), stirke)
                                     .getTotalFrameScore();
         assertThat(totalFrameScore).isEqualTo(300);
     }

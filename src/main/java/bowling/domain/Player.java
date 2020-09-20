@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import bowling.domain.frame.Frames;
 import bowling.ui.result.DisplayPlayerBowlingGrade;
 import bowling.ui.result.DisplayRolledResult;
 
@@ -14,7 +13,6 @@ import static java.util.stream.Collectors.toList;
 final class Player {
     static final String ERROR_MESSAGE = "영어 알파벳 대문자 3자만 등록 가능합니다.";
     public static final String NAME_REGEX = "^[A-Z]{3}$";
-    public static final Consumer<DisplayPlayerBowlingGrade> EMPTY_DISPLAY_PLAYER_BOWLING_GRADE_CONSUMER = (g) -> {};
     private final String name;
     private final Rolling rolling;
 
@@ -32,16 +30,6 @@ final class Player {
         if (null == name || !name.matches(NAME_REGEX)) {
             throw new IllegalArgumentException(ERROR_MESSAGE);
         }
-    }
-
-    Player whileRollAndDisplay(Function<String, Integer> playerFallenPinsService){
-        whileRollAndDisplay(Frames.MAX_FRAMES_SIZE, playerFallenPinsService, EMPTY_DISPLAY_PLAYER_BOWLING_GRADE_CONSUMER);
-        return this;
-    }
-
-    Player whileRollAndDisplay(int currentIndex, Function<String, Integer> playerFallenPinsService){
-        whileRollAndDisplay(currentIndex, playerFallenPinsService, EMPTY_DISPLAY_PLAYER_BOWLING_GRADE_CONSUMER);
-        return this;
     }
 
     void whileRollAndDisplay(int currentIndex, Function<String, Integer> playerFallenPinsService, Consumer<DisplayPlayerBowlingGrade> displayPlayerBowlingGradeConsumer){
