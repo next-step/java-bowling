@@ -34,7 +34,7 @@ public class OutputView {
     private static String[] toScoreArray(UserDTO userDTO, ScoreBoard scoreBoard) {
         List<String> result = new ArrayList<>(Arrays.asList(String.format(STRING_FORMAT, userDTO.getName())));
         scoreBoard.getFrames().stream()
-                .map(frame -> makeGameResult(frame))
+                .map(OutputView::makeGameResult)
                 .map(gameResult -> String.format(STRING_FORMAT, gameResult))
                 .collect(Collectors.toCollection(() -> result));
 
@@ -59,7 +59,7 @@ public class OutputView {
         if(frame instanceof EndFrame) {
             return ((EndFrame) frame).getStates().stream()
                     .filter(state -> !(state instanceof Ready))
-                    .map(endState -> makeSymbol(endState))
+                    .map(OutputView::makeSymbol)
                     .collect(Collectors.joining("|"));
         }
 
