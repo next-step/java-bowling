@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.DownedPinCount;
+import bowling.domain.score.Score;
 
 import static bowling.domain.DownedPinCount.*;
 
@@ -19,7 +20,9 @@ public interface State {
 		return downedPinCount.toString();
 	}
 
-	State roll(DownedPinCount downedPinCount);
+	State roll(DownedPinCount downedPinCount, Score accumulated);
 	boolean isDone();
 	String reportState();
+	Score getScore();
+	void addPreviousCount(DownedPinCount pinCount);
 }

@@ -1,6 +1,8 @@
 package bowling.domain.state;
 
 import bowling.domain.DownedPinCount;
+import bowling.domain.score.Score;
+import bowling.domain.score.StrikeScore;
 
 import java.util.Objects;
 
@@ -10,12 +12,15 @@ public class Strike implements State {
 
 	private final DownedPinCount first;
 
-	Strike(DownedPinCount downedPinCount) {
+	private Score score;
+
+	Strike(DownedPinCount downedPinCount, Score accumulated) {
 		this.first = downedPinCount;
+		this.score = new StrikeScore(accumulated);
 	}
 
 	@Override
-	public State roll(DownedPinCount downedPinCount) {
+	public State roll(DownedPinCount downedPinCount, Score accumulated) {
 		return this;
 	}
 
@@ -27,6 +32,16 @@ public class Strike implements State {
 	@Override
 	public String reportState() {
 		return STRIKE_MESSAGE;
+	}
+
+	@Override
+	public Score getScore() {
+		return score;
+	}
+
+	@Override
+	public void addPreviousCount(DownedPinCount pinCount) {
+		score.addExtraCount(pinCount);
 	}
 
 	@Override

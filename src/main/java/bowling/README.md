@@ -17,5 +17,6 @@
 * 쓰러뜨린 핀의 수는 State 구현체들에 있으므로 구현체에서 Score를 생성해야 함.
 * Score는 상태에 때라 계산 법이 다르므로 Srike Score, Spare Score, Open Score 구현체가 따로 있어야 함 
 
-
-    
+## 구현 리스트
+1. Score 인터페이스 및 구현체 작성
+2. State 구현체에 Score 멤버변수로 추가 및 필요 메서드 추가
