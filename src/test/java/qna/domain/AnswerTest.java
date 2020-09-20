@@ -14,15 +14,15 @@ public class AnswerTest {
     @Test
     @DisplayName("답변이 로그인 된 사용자에 의해 작성 됐는지 검증")
     void validateOwnerWhenDeleting() {
-        assertThatThrownBy(() -> A1.validateOwnerWhenDeleting(UserTest.SANJIGI))
+        assertThatThrownBy(() -> A1.delete(UserTest.SANJIGI))
                 .isInstanceOf(CannotDeleteException.class)
                 .hasMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
     }
 
     @Test
     @DisplayName("답변을 삭제하는 메소드 검증")
-    void delete() {
-        A1.delete();
+    void delete() throws CannotDeleteException {
+        A1.delete(UserTest.JAVAJIGI);
         then(A1.isDeleted()).isTrue();
     }
 }
