@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Score;
 import bowling.domain.pin.Pin;
 
 public interface State {
@@ -8,4 +9,11 @@ public interface State {
 
     boolean isEnd();
 
+    Score calculate(Score baseScore);
+
+    Score getScore();
+
+    default boolean isFrameFinish(State state) {
+        return state instanceof Miss || state instanceof Gutter;
+    }
 }
