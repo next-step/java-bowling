@@ -1,4 +1,4 @@
-package bowling.domain.state;
+package bowling.view;
 
 public enum Symbol {
     Strike("X"),
