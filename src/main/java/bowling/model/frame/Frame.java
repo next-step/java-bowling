@@ -50,7 +50,7 @@ public abstract class Frame {
                 .anyMatch(Result::isStrike);
     }
 
-    protected int getTotalPinCount() {
+    public int getTotalPinCount() {
         return results.stream()
                 .map(Result::get)
                 .reduce(0, (acc, cur) -> acc += cur);
