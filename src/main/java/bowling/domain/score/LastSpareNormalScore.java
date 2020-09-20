@@ -12,13 +12,13 @@ public class LastSpareNormalScore extends AbstractNormalScore {
     @Override
     protected int calculateScore() {
         FinalFrame nextFrame = (FinalFrame) normalFrame.getNextFrame();
-        int normalScore = new DefaultNormalScore(normalFrame).getScore();
+        int score = new DefaultNormalScore(normalFrame).getScore();
         int bonusScore = nextFrame.getSpareBonus();
-        return normalScore + bonusScore;
+        return score + bonusScore;
     }
 
     @Override
-    protected boolean checkValid() {
+    public boolean checkValid() {
         FinalFrame nextFrame = (FinalFrame) normalFrame.getNextFrame();
         return normalFrame.isCompleted() && nextFrame.checkSpareBonus();
     }

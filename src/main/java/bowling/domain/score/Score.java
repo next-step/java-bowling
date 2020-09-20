@@ -4,5 +4,6 @@ public interface Score {
 
     int getScore();
     boolean isValid();
+    boolean checkValid();
 
 }

@@ -18,7 +18,6 @@ public abstract class AbstractFinalScore implements Score {
     }
 
     protected abstract int calculateScore();
-    protected abstract boolean checkValid();
 
     public int getScore() {
         return score;

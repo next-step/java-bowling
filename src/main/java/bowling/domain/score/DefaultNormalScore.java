@@ -15,7 +15,7 @@ public class DefaultNormalScore extends AbstractNormalScore {
     }
 
     @Override
-    protected boolean checkValid() {
+    public boolean checkValid() {
         return normalFrame.isCompleted();
     }
 

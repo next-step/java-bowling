@@ -14,6 +14,7 @@ public class BowlResult {
     public static final int FIRST_NUMBER_OF_PINS_INDEX = 0;
     public static final int SECOND_NUMBER_OF_PINS_INDEX = 1;
     public static final int FIRST_BOWL_COUNT = 1;
+    public static final int SECOND_BOWL_COUNT = 2;
 
     public final List<NumberOfPin> numberOfPins;
 
@@ -35,6 +36,10 @@ public class BowlResult {
 
     public boolean isFirst() {
         return numberOfPins.size() == FIRST_BOWL_COUNT;
+    }
+
+    public boolean isSecond() {
+        return numberOfPins.size() == SECOND_BOWL_COUNT;
     }
 
     public boolean isCompleted() {
@@ -77,6 +82,10 @@ public class BowlResult {
 
     public boolean checkSpareBonus() {
         return !isNone();
+    }
+
+    public boolean checkSrikeBonus() {
+        return isSecond();
     }
 
 }

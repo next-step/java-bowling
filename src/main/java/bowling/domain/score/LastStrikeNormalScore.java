@@ -14,7 +14,7 @@ public class LastStrikeNormalScore extends AbstractNormalScore {
     }
 
     @Override
-    protected boolean checkValid() {
+    public boolean checkValid() {
         return true;
     }
 

@@ -76,4 +76,12 @@ public class NormalFrame extends AbstractFrame {
         return bowlResult.getFirstNumberOfPin();
     }
 
+    public boolean checkStrikeBonus() {
+        return bowlResult.checkSrikeBonus();
+    }
+
+    public int getStrikeBonus() {
+        return bowlResult.getTotalNumberOfPin();
+    }
+
 }
