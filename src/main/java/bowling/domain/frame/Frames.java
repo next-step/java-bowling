@@ -19,9 +19,13 @@ public class Frames {
         Frame currentFrame = getLastFrame();
         currentFrame.bowl(pin);
 
-        if (currentFrame.rollingEnd() && !currentFrame.isEndAllFrame()) {
+        if (isMaxFrameSize() && currentFrame.rollingEnd() && !currentFrame.isEndAllFrame()) {
             frames.add(currentFrame.next());
         }
+    }
+
+    private boolean isMaxFrameSize() {
+        return frames.size() < 10;
     }
 
     public String currentFrameIndex() {
