@@ -19,7 +19,7 @@ public interface Frame {
 
     boolean isEnd();
 
-    default boolean isClear(State state) {
+    default boolean isFrameFinish(State state) {
         return state instanceof Miss || state instanceof Gutter;
     }
 }

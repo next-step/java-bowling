@@ -31,7 +31,7 @@ public class EndFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return isClear(states.getFirst()) || count.isMax();
+        return isFrameFinish(states.getFirst()) || count.isMax();
     }
 
     public LinkedList<State> getStates() {
