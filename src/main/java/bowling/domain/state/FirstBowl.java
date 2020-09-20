@@ -21,7 +21,7 @@ class FirstBowl extends Running {
     }
 
     public Score calculateAdditionalScore(Score score) {
-        score = firstPins.sumScore(score);
+        score = score.sumScore(firstPins);
         if (score.canCalculateScore()) {
             return score;
         }
@@ -30,7 +30,7 @@ class FirstBowl extends Running {
 
     @Override
     public String record() {
-        return firstPins.record();
+        return ifCountOfPinsZeroTransGutter(firstPins.count());
     }
 
     @Override

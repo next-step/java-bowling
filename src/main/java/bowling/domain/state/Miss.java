@@ -20,17 +20,18 @@ class Miss extends Finished {
     }
 
     public Score calculateAdditionalScore(Score score) {
-        score = firstPins.sumScore(score);
+        score = score.sumScore(firstPins);
         if (score.canCalculateScore()) {
             return score;
         }
-        score = secondPins.sumScore(score);
+        score = score.sumScore(secondPins);
         return score;
     }
 
     @Override
     public String record() {
-        return firstPins.record(secondPins);
+        String prevRecord = ifCountOfPinsZeroTransGutter(firstPins.count())+"|";
+        return prevRecord + ifCountOfPinsZeroTransGutter(secondPins.count());
     }
 
 

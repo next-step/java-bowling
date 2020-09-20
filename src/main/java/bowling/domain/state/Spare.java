@@ -5,6 +5,9 @@ import bowling.domain.Pin;
 import bowling.domain.Score;
 
 class Spare extends Finished {
+
+    private static final String BOWLING_STATUS_SPARE = "/";
+
     private final Pin firstPins;
     private final Pin secondPins;
 
@@ -24,11 +27,11 @@ class Spare extends Finished {
 
     @Override
     public Score calculateAdditionalScore(Score score) {
-        score = firstPins.sumScore(score);
+        score = score.sumScore(firstPins);
         if (score.canCalculateScore()) {
             return score;
         }
-        score = secondPins.sumScore(score);
+        score = score.sumScore(secondPins);
         return score;
     }
 
@@ -39,6 +42,7 @@ class Spare extends Finished {
 
     @Override
     public String record() {
-        return firstPins.record(secondPins);
+        String prevRecord = ifCountOfPinsZeroTransGutter(firstPins.count())+"|";
+        return prevRecord+BOWLING_STATUS_SPARE;
     }
 }

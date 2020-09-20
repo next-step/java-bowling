@@ -26,6 +26,10 @@ public class Score {
         return this.score;
     }
 
+    public Score sumScore(Pin pin) {
+        return bowl(pin);
+    }
+
     public boolean canCalculateScore() {
         return left == 0;
     }
