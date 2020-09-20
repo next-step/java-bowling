@@ -1,6 +1,5 @@
 package bowling.domain.score;
 
-import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.NormalFrame;
 
 public class SpareNormalScore extends AbstractNormalScore {
