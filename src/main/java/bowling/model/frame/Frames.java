@@ -40,6 +40,10 @@ public class Frames {
         return getCurrentFrame() == null;
     }
 
+    public List<Frame> getFrames() {
+        return frames;
+    }
+
     public FramesDto getDto() {
         return new FramesDto(frames.stream()
                 .map(Frame::getDto)
