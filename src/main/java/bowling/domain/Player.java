@@ -33,7 +33,7 @@ public class Player {
     }
 
     public void bowl(Function<String, String> rollingBall) {
-        int countOfPins = Integer.parseInt(rollingBall.apply(frames.currentFrameIndex()));
+        int countOfPins = Integer.parseInt(rollingBall.apply(name));
         frames.play(new Pin(countOfPins));
     }
 
@@ -43,6 +43,10 @@ public class Player {
 
     public int frameSize() {
         return frames.size();
+    }
+
+    public int getLastFrameIndex() {
+        return frames.currentFrameIndex();
     }
 
     public String name() {
