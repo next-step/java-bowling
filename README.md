@@ -83,5 +83,5 @@
     * ScoreBoard에서 Frame객체 생성 안하도록 제거
     * ScoreBoardDTO, ScoreBoardAssembler 생성
     
-- [ ] 출력(OutputView) 화면에 점수 출력
+- [X] 출력(OutputView) 화면에 점수 출력
 
