@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.toList;
+
 public class BowlingGames {
 
     private final List<BowlingGame> bowlingGames;
@@ -17,12 +19,12 @@ public class BowlingGames {
     }
 
     public static BowlingGames of(List<String> userNames) {
-        List<BowlingGame> bowlingGames = userNames.stream()
-                                                  .map(User::valueOf)
-                                                  .map(BowlingGame::of)
-                                                  .collect(Collectors.toList());
-
-        return new BowlingGames(bowlingGames, 1, 0);
+        return userNames.stream()
+                        .map(User::valueOf)
+                        .map(BowlingGame::of)
+                        .collect(Collectors.collectingAndThen(
+                            toList(), list -> new BowlingGames(list, 1, 0))
+                        );
     }
 
     public void bowling(int countOfPins) {
