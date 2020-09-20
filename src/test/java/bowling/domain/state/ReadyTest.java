@@ -24,7 +24,7 @@ class ReadyTest {
     }
 
     @Test
-    @DisplayName("Ready는 투구 가능(False) 상태를 가지는 테스트")
+    @DisplayName("Ready 상태는 추가 투구 가능(False) 값을 가지는 테스트")
     void ready_isEnd_test() {
         assertThat(Ready.of().isEnd()).isFalse();
     }

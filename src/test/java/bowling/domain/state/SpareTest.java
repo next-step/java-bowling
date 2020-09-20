@@ -22,4 +22,10 @@ class SpareTest {
         assertThat(Continue.of(Pin.of(7)).bowl(Pin.of(3)))
                 .isEqualTo(Spare.of(Pin.of(7)));
     }
+
+    @Test
+    @DisplayName("SPARE 상태는 추가 투구 없이 종료(True) 값을 가지는 테스트")
+    void spare_isEnd_test() {
+        assertThat(Spare.of(Pin.of(7)).isEnd()).isTrue();
+    }
 }

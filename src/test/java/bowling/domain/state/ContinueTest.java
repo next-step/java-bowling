@@ -32,4 +32,10 @@ class ContinueTest {
                 .isInstanceOf(Gutter.class);
     }
 
+    @Test
+    @DisplayName("Continue 상태는 추가 투구 가능한(False) 값을 가지는 테스트")
+    void continue_isEnd_test() {
+        assertThat(Continue.of(Pin.of(5)).isEnd()).isFalse();
+    }
+
 }

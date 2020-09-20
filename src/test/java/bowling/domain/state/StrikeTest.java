@@ -17,9 +17,10 @@ class StrikeTest {
     }
 
     @Test
-    @DisplayName("Strike 상태는 종료(True)를 가지는 테스트")
+    @DisplayName("Strike 상태는 추가 투구 없이 종료(True) 값을 가지는 테스트")
     void strike_isEnd_test() {
         assertThat(Strike.of().isEnd()).isTrue();
     }
+
 
 }
