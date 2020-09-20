@@ -35,8 +35,16 @@ public abstract class Frame {
         return frameNumber;
     }
 
+    public Scores getScores() {
+        return scores;
+    }
+
     public void pitch(Score score) {
         scores.add(score);
+    }
+
+    public boolean isStrikeIgnore() {
+        return (getScores().isFirstCount() && scores.getScore().isStrike());
     }
 
     @Override
@@ -52,8 +60,4 @@ public abstract class Frame {
         return Objects.hash(frameNumber);
     }
 
-    @Override
-    public String toString() {
-        return frameNumber + " : " + scores;
-    }
 }

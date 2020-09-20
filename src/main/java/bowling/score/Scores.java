@@ -3,6 +3,7 @@ package bowling.score;
 import bowling.global.utils.ExceptionMessage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static bowling.global.utils.CommonConstant.*;
@@ -103,8 +104,13 @@ public class Scores {
         }
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(scores);
+    public Score getScoreIndex(int index) {
+        return Collections.unmodifiableList(scores)
+                .get(index);
     }
+
+    public int size() {
+        return scores.size();
+    }
+
 }

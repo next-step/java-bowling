@@ -1,27 +1,34 @@
 package bowling.frame;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.LinkedList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FramesTest {
 
     private Frames frames;
+    private Frame frame;
+
+    @BeforeEach
+    void setUp() {
+        frame = NormalFrame.first();
+    }
 
     @Test
     @DisplayName("Frames 초기화")
     void init() {
-        frames = Frames.start();
+        frames = Frames.saveScore(new LinkedList<>(), frame);
         assertThat(frames).isNotNull();
     }
 
     @Test
     @DisplayName("Frames에 Frame 추가")
     void add() {
-        frames = Frames.start();
-        Frame frame = NormalFrame.first();
-        Frames currentFrame = Frames.of(frames, frame);
-        assertThat(currentFrame.getFrameNumber()).isEqualTo(1);
+        frames = Frames.saveScore(new LinkedList<>(), frame);
+        assertThat(frames.getFrameNumber()).isEqualTo(1);
     }
 }

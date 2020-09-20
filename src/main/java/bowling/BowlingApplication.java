@@ -6,34 +6,49 @@ import bowling.frame.NormalFrame;
 import bowling.player.Player;
 import bowling.player.PlayerInfo;
 import bowling.view.InputView;
+import bowling.view.ResultView;
+
+import java.util.LinkedList;
 
 public class BowlingApplication {
 
     public static void main(String[] args) {
-        Frames frames = Frames.start();
         Frame frame = NormalFrame.first();
-        Frames currentFrames = Frames.of(frames, frame);
+        LinkedList<Frame> nowFrame = new LinkedList<>();
+        Frames frames = Frames.saveScore(nowFrame, frame);
         PlayerInfo playerInfo = PlayerInfo.info();
 
         String name = InputView.inputPlayerName();
-        Player player = Player.join(name, frame);
+        Player player = Player.of(name, frames);
         playerInfo.put(name, player);
+        ResultView.printGameBoard(name, playerInfo.getPlayerInfo());
 
-        while (!currentFrames.isNormalFinish()) {
-            int frameNumber = currentFrames.getFrameNumber();
-            frame = BowlingAdministrator.playBowling(InputView.inputScore(frameNumber), frame);
+        while (!frames.isNormalFinish()) {
+            frame = BowlingAdministrator.playBowling(frame, InputView.inputScore(frames.getFrameNumber()));
+            playerInfo.put(name, Player.of(name, frames));
+            ResultView.printGameBoard(name, playerInfo.getPlayerInfo());
 
-            frame = BowlingAdministrator.normalFramePitchi(frame, frameNumber);
-            playerInfo.put(name, player);
+            frame = normalFramePitchi(frame, frames.getFrameNumber());
+            playerInfo.put(name, Player.of(name, frames));
+            if (!frame.isStrikeIgnore()) {
+                ResultView.printGameBoard(name, playerInfo.getPlayerInfo());
+            }
+
             frame = frame.next();
-            currentFrames = Frames.of(frames, frame);
+            frames = Frames.saveScore(nowFrame, frame);
         }
 
         while (frame.canFinalPitching()) {
-            frame = BowlingAdministrator.playBowling(InputView.inputScore(frame.getFrameNumber()), frame);
-            playerInfo.put(name, player);
+            frame = BowlingAdministrator.playBowling(frame, InputView.inputScore(frame.getFrameNumber()));
+            playerInfo.put(name, Player.of(name, frames));
+            ResultView.printGameBoard(name, playerInfo.getPlayerInfo());
         }
+    }
 
-        System.out.println(playerInfo);
+    public static Frame normalFramePitchi(Frame frame, int frameNumber) {
+        if (frame.canNormalPitching()) {
+            frame = BowlingAdministrator.playBowling(frame, InputView.inputScore(frameNumber));
+        }
+        return frame;
     }
 }

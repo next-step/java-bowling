@@ -1,8 +1,8 @@
 package bowling.player;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class PlayerInfo {
 
@@ -20,27 +20,12 @@ public class PlayerInfo {
         return this.playerInfo.put(name, player);
     }
 
+    public Map<String, Player> getPlayerInfo() {
+        return Collections.unmodifiableMap(playerInfo);
+    }
+
     public int size() {
         return playerInfo.size();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PlayerInfo that = (PlayerInfo) o;
-        return Objects.equals(playerInfo, that.playerInfo);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(playerInfo);
-    }
-
-    @Override
-    public String toString() {
-        return "PlayerInfo{" +
-                "playerInfo=" + playerInfo +
-                '}';
-    }
 }
