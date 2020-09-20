@@ -1,7 +1,7 @@
 package bowling.domain.bowl.identity;
 
 import bowling.domain.bowl.BowlResult;
-import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 import bowling.domain.score.Score;
 
 public interface BowlIdentity {
@@ -10,7 +10,7 @@ public interface BowlIdentity {
     boolean isCompleted();
     boolean isBonus();
     boolean isStrike();
-    Score getScore(Frame frame);
+    Score getScore(NormalFrame normalFrame);
     String format(BowlResult bowlResult);
 
 }

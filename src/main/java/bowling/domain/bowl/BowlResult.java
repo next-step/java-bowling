@@ -63,8 +63,8 @@ public class BowlResult {
                 .reduce(0, Integer::sum);
     }
 
-    public Score getScore(NormalFrame frame) {
-        return findBowlIdentity().getScore(frame);
+    public Score getScore(NormalFrame normalFrame) {
+        return findBowlIdentity().getScore(normalFrame);
     }
 
     public String format() {

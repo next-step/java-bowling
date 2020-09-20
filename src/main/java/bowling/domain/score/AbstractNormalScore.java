@@ -1,17 +1,17 @@
 package bowling.domain.score;
 
-import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
 
-public abstract class AbstractScore implements Score {
+public abstract class AbstractNormalScore implements Score {
 
     public static final int NAN = -1;
 
-    protected final Frame frame;
+    protected final NormalFrame normalFrame;
     protected final int score;
     protected final boolean valid;
 
-    public AbstractScore(Frame frame) {
-        this.frame = frame;
+    public AbstractNormalScore(NormalFrame normalFrame) {
+        this.normalFrame = normalFrame;
         this.valid = checkValid();
         this.score = this.valid ? calculateScore() : NAN;
     }

@@ -44,6 +44,14 @@ public class FinalFrame extends AbstractFrame {
         return finalBowlResult.getScore(this);
     }
 
+    public boolean checkSpareBonus() {
+        return finalBowlResult.checkSpareBonus();
+    }
+
+    public int getSpareBonus() {
+        return finalBowlResult.getSpareBonus();
+    }
+
     @Override
     public int getFirstNumberOfPin() {
         return finalBowlResult.getFirstNumberOfPin();

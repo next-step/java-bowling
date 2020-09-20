@@ -1,9 +1,10 @@
 package bowling.domain.bowl.identity;
 
 import bowling.domain.bowl.BowlResult;
-import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
+import bowling.domain.score.LastSpareNormalScore;
 import bowling.domain.score.Score;
-import bowling.domain.score.SpareScore;
+import bowling.domain.score.SpareNormalScore;
 
 import java.text.MessageFormat;
 
@@ -35,8 +36,10 @@ public class SpareBowlIdentity extends AbstractBowlIdentity {
     }
 
     @Override
-    public Score getScore(Frame frame) {
-        return new SpareScore(frame);
+    public Score getScore(NormalFrame normalFrame) {
+        return normalFrame.isLast() ?
+                new LastSpareNormalScore(normalFrame) :
+                new SpareNormalScore(normalFrame);
     }
 
     @Override

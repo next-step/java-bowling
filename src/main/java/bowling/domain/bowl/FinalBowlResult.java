@@ -1,7 +1,9 @@
 package bowling.domain.bowl;
 
+import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
-import bowling.domain.score.NormalScore;
+import bowling.domain.score.DefaultNormalScore;
+import bowling.domain.score.FinalScore;
 import bowling.domain.score.Score;
 
 import java.util.LinkedList;
@@ -43,8 +45,8 @@ public class FinalBowlResult {
         return bowlResults.getLast().isBonus();
     }
 
-    public Score getScore(Frame frame) {
-        return new NormalScore(frame);
+    public Score getScore(FinalFrame finalFrame) {
+        return new FinalScore(finalFrame);
     }
 
     public String format() {
@@ -66,6 +68,14 @@ public class FinalBowlResult {
 
     public boolean isStrike() {
         return bowlResults.getFirst().isStrike();
+    }
+
+    public boolean checkSpareBonus() {
+        return !isNone() && !bowlResults.getFirst().isNone();
+    }
+
+    public int getSpareBonus() {
+        return bowlResults.getFirst().getFirstNumberOfPin();
     }
 
 }

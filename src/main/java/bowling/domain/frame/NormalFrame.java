@@ -28,10 +28,14 @@ public class NormalFrame extends AbstractFrame {
     }
 
     private Frame createNextFrame() {
-        nextFrame = (frameNumber == LAST_NORMAL_FRAME_NUMBER) ?
+        nextFrame = isLast() ?
                 new FinalFrame() :
                 new NormalFrame(frameNumber + 1);
         return nextFrame;
+    }
+
+    public boolean isLast() {
+        return frameNumber == LAST_NORMAL_FRAME_NUMBER;
     }
 
     @Override
