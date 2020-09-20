@@ -1,5 +1,9 @@
 package bowling.domain.bowl;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.score.NormalScore;
+import bowling.domain.score.Score;
+
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
@@ -31,7 +35,7 @@ public class FinalBowlResult {
                 .reduce(0, Integer::sum) == MAX_BOWL_COUNT;
     }
 
-    private boolean isCompleted() {
+    public boolean isCompleted() {
         return bowlResults.getLast().isCompleted();
     }
 
@@ -39,11 +43,8 @@ public class FinalBowlResult {
         return bowlResults.getLast().isBonus();
     }
 
-    public int getScore() {
-        if (isNone()) {
-            return -1;
-        }
-        return getTotalNumberOfPin();
+    public Score getScore(Frame frame) {
+        return new NormalScore(frame);
     }
 
     public String format() {

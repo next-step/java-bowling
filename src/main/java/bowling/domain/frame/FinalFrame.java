@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.bowl.BowlResult;
 import bowling.domain.bowl.FinalBowl;
 import bowling.domain.bowl.FinalBowlResult;
+import bowling.domain.score.Score;
 
 import java.util.Iterator;
 
@@ -39,16 +40,18 @@ public class FinalFrame extends AbstractFrame {
     }
 
     @Override
-    public int getScore() {
-        return finalBowlResult.getScore();
+    public Score getScore() {
+        return finalBowlResult.getScore(this);
     }
 
     @Override
-    public int getFirstNumberOfPin() {
-        if (finalBowlResult.isNone()) {
-            return -1;
-        }
-        return finalBowlResult.getFirstNumberOfPin();
+    public boolean isCompleted() {
+        return isEnd();
+    }
+
+    @Override
+    public int getTotalNumberOfPin() {
+        return finalBowlResult.getTotalNumberOfPin();
     }
 
     @Override

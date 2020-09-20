@@ -2,7 +2,8 @@ package bowling.domain.bowl.identity;
 
 import bowling.domain.bowl.BowlResult;
 import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
+import bowling.domain.score.NormalScore;
+import bowling.domain.score.Score;
 
 import java.text.MessageFormat;
 
@@ -30,8 +31,8 @@ public class MissBowlIdentity extends AbstractBowlIdentity {
     }
 
     @Override
-    public int getScore(Frame frame) {
-        return ((NormalFrame) frame).getTotalNumberOfPin();
+    public Score getScore(Frame frame) {
+        return new NormalScore(frame);
     }
 
     @Override

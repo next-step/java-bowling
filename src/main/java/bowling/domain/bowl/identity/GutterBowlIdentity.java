@@ -2,6 +2,8 @@ package bowling.domain.bowl.identity;
 
 import bowling.domain.bowl.BowlResult;
 import bowling.domain.frame.Frame;
+import bowling.domain.score.NormalScore;
+import bowling.domain.score.Score;
 
 import static bowling.domain.NumberOfPin.MIN_NUMBER_OF_PIN;
 
@@ -26,8 +28,8 @@ public class GutterBowlIdentity extends AbstractBowlIdentity {
     }
 
     @Override
-    public int getScore(Frame frame) {
-        return MIN_NUMBER_OF_PIN;
+    public Score getScore(Frame frame) {
+        return new NormalScore(frame);
     }
 
     @Override

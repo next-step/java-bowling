@@ -2,6 +2,8 @@ package bowling.domain.bowl.identity;
 
 import bowling.domain.bowl.BowlResult;
 import bowling.domain.frame.Frame;
+import bowling.domain.score.NormalScore;
+import bowling.domain.score.Score;
 
 public class NoneBowlIdentity extends AbstractBowlIdentity {
 
@@ -23,8 +25,8 @@ public class NoneBowlIdentity extends AbstractBowlIdentity {
     }
 
     @Override
-    public int getScore(Frame frame) {
-        return -1;
+    public Score getScore(Frame frame) {
+        return new NormalScore(frame);
     }
 
     @Override

@@ -4,6 +4,7 @@ import bowling.domain.NumberOfPin;
 import bowling.domain.bowl.identity.BowlIdentity;
 import bowling.domain.bowl.identity.BowlIdentityFinder;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.score.Score;
 
 import java.util.Collections;
 import java.util.List;
@@ -62,10 +63,7 @@ public class BowlResult {
                 .reduce(0, Integer::sum);
     }
 
-    public int getScore(NormalFrame frame) {
-        if (!isCompleted()) {
-            return -1;
-        }
+    public Score getScore(NormalFrame frame) {
         return findBowlIdentity().getScore(frame);
     }
 

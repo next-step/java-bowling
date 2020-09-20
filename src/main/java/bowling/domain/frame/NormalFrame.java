@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.bowl.Bowl;
 import bowling.domain.bowl.BowlResult;
+import bowling.domain.score.Score;
 
 public class NormalFrame extends AbstractFrame {
 
@@ -23,7 +24,7 @@ public class NormalFrame extends AbstractFrame {
     @Override
     public Frame bowl(int numberOfPin) {
         bowlResult = bowl.bowl(numberOfPin);
-        return bowlResult.isCompleted() ? createNextFrame() : this;
+        return isCompleted() ? createNextFrame() : this;
     }
 
     private Frame createNextFrame() {
@@ -33,12 +34,14 @@ public class NormalFrame extends AbstractFrame {
         return nextFrame;
     }
 
-    public int getTotalNumberOfPin() {
-        return bowlResult.getTotalNumberOfPin();
+    @Override
+    public boolean isCompleted() {
+        return bowlResult.isCompleted();
     }
 
-    public int getNextFrameFirstNumberOfPin() {
-        return nextFrame.getFirstNumberOfPin();
+    @Override
+    public int getTotalNumberOfPin() {
+        return bowlResult.getTotalNumberOfPin();
     }
 
     @Override
@@ -47,16 +50,8 @@ public class NormalFrame extends AbstractFrame {
     }
 
     @Override
-    public int getScore() {
+    public Score getScore() {
         return bowlResult.getScore(this);
-    }
-
-    @Override
-    public int getFirstNumberOfPin() {
-        if (bowlResult.isNone()) {
-            return -1;
-        }
-        return bowlResult.getFirstNumberOfPin();
     }
 
     @Override

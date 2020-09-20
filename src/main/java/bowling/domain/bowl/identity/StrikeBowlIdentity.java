@@ -2,6 +2,8 @@ package bowling.domain.bowl.identity;
 
 import bowling.domain.bowl.BowlResult;
 import bowling.domain.frame.Frame;
+import bowling.domain.score.Score;
+import bowling.domain.score.StrikeScore;
 
 import static bowling.domain.NumberOfPin.MAX_NUMBER_OF_PIN;
 
@@ -26,8 +28,8 @@ public class StrikeBowlIdentity extends AbstractBowlIdentity {
     }
 
     @Override
-    public int getScore(Frame frame) {
-        return MAX_NUMBER_OF_PIN + 2;
+    public Score getScore(Frame frame) {
+        return new StrikeScore(frame);
     }
 
     @Override

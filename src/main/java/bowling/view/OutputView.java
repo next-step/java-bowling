@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.Player;
 import bowling.domain.frame.Frame;
+import bowling.domain.score.Score;
 import bowling.util.StringUtils;
 
 import java.text.MessageFormat;
@@ -41,8 +42,8 @@ public class OutputView {
         printEmptyBoard(lastFrame);
     }
 
-    private static String convertScore(int score) {
-        return score == -1 ? EMPTY : String.valueOf(score);
+    private static String convertScore(Score score) {
+        return score.isValid() ? String.valueOf(score.getScore()) : EMPTY;
     }
 
     private static void printEmptyBoard(Frame lastFrame) {
