@@ -94,6 +94,16 @@ public class NormalPitchings implements Pitchings {
     }
 
     @Override
+    public int getFirstScore() {
+        return firstPitching.getScore();
+    }
+
+    @Override
+    public int calculateScore() {
+        return firstPitching.getScore() + secondPitching.getScore();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

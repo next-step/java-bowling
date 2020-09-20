@@ -173,4 +173,26 @@ class NormalPitchingsTest {
         then(pitchingForTrue.isSpare()).isTrue();
         then(pitchingForFalse.isSpare()).isFalse();
     }
+
+    @Test
+    @DisplayName("첫 번째 투구 점수 계산 검증")
+    void getFirstScore() {
+        int expected = 3;
+        Pitching pitching = Pitching.of(PitchingStatus.Done, Pin.of(expected));
+        Pitching min = Pitching.of(PitchingStatus.Done, Pin.ofMin());
+        NormalPitchings normalPitchings = NormalPitchings.of(pitching, min);
+
+        then(normalPitchings.getFirstScore()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("점수 계산 검증")
+    void calculateScore() {
+        int expected1 = 2, expected2 = 3;
+        Pitching pitching1 = Pitching.of(PitchingStatus.Done, Pin.of(expected1));
+        Pitching pitching2 = Pitching.of(PitchingStatus.Done, Pin.of(expected2));
+        NormalPitchings normalPitchings = NormalPitchings.of(pitching1, pitching2);
+
+        then(normalPitchings.calculateScore()).isEqualTo(expected1 + expected2);
+    }
 }

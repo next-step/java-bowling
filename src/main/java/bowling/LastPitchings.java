@@ -10,7 +10,11 @@ public class LastPitchings implements Pitchings {
         this.bonusPitching = bonusPitching;
     }
 
-    public static LastPitchings of() {
+    public static LastPitchings of(NormalPitchings normalPitchings, Pitching pitching) {
+        return new LastPitchings(normalPitchings, pitching);
+    }
+
+    public static LastPitchings ofReady() {
         return new LastPitchings(NormalPitchings.ofReady(), Pitching.ofReady());
     }
 
@@ -88,5 +92,30 @@ public class LastPitchings implements Pitchings {
     @Override
     public boolean isDone() {
         return isFirstDone() && isSecondDone() && isBonusDone();
+    }
+
+    @Override
+    public boolean isFirstPitchingClear() {
+        return normalPitchings.isFirstPitchingClear();
+    }
+
+    @Override
+    public boolean isSecondPitchingClear() {
+        return normalPitchings.isSecondPitchingClear();
+    }
+
+    @Override
+    public boolean isSpare() {
+        return normalPitchings.isSpare();
+    }
+
+    @Override
+    public int getFirstScore() {
+        return normalPitchings.getFirstScore();
+    }
+
+    @Override
+    public int calculateScore() {
+        return normalPitchings.calculateScore() + bonusPitching.getScore();
     }
 }

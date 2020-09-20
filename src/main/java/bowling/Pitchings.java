@@ -21,4 +21,14 @@ public interface Pitchings {
     }
 
     boolean isDone();
+
+    boolean isFirstPitchingClear();
+
+    boolean isSecondPitchingClear();
+
+    boolean isSpare();
+
+    int getFirstScore();
+
+    int calculateScore();
 }
