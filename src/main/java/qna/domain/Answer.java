@@ -22,7 +22,6 @@ public class Answer extends AbstractEntity {
     @Lob
     private String contents;
 
-
     private List<Answer> answers;
 
     private Answer answer;
@@ -31,6 +30,10 @@ public class Answer extends AbstractEntity {
 
     public Answer(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public Answer(Answer answer) {
+        this.answer = answer;
     }
 
     public Answer(User writer, Question question, String contents) {
@@ -93,8 +96,8 @@ public class Answer extends AbstractEntity {
     }
 
 
-    public DeleteHistory deleteAnswer(User user) throws CannotDeleteException {
-        if(!writer.equals(user)) {
+    public DeleteHistory deleteAnswer(User loginUser) throws CannotDeleteException {
+        if(!answer.isOwner(loginUser)) {
             throw new CannotDeleteException("답변을 삭제할 권한이 없습니다.");
         }
         return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
