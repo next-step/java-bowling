@@ -31,13 +31,7 @@ public class EndFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return isClear() || count.isMax();
-    }
-
-    @Override
-    public boolean isClear() {
-        State first = states.getFirst();
-        return first instanceof Miss || first instanceof Gutter;
+        return isClear(states.getFirst()) || count.isMax();
     }
 
     public LinkedList<State> getStates() {

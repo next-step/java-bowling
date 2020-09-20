@@ -27,11 +27,6 @@ public class NormalFrame implements Frame {
         return state.isEnd();
     }
 
-    @Override
-    public boolean isClear() {
-        return state instanceof Miss || state instanceof Gutter;
-    }
-
     public State getState() {
         return state;
     }

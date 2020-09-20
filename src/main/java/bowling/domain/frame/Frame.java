@@ -1,6 +1,9 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
+import bowling.domain.state.Gutter;
+import bowling.domain.state.Miss;
+import bowling.domain.state.State;
 
 public interface Frame {
 
@@ -16,5 +19,7 @@ public interface Frame {
 
     boolean isEnd();
 
-    boolean isClear();
+    default boolean isClear(State state) {
+        return state instanceof Miss || state instanceof Gutter;
+    }
 }
