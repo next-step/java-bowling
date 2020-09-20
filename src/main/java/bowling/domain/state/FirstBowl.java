@@ -37,4 +37,14 @@ class FirstBowl extends Running {
     public boolean canBowlFinalFrame() {
         return true;
     }
+
+    @Override
+    public boolean isStrike() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
 }
