@@ -31,7 +31,6 @@ public final class Frames {
         updateCurrentFrameByRolledResult(rolledResult);
         updatePreviousFrameByScore(rolledResult);
         shouldNextFrame();
-        updateTerminalFrameByScore();
     }
 
     private void updateCurrentFrameByRolledResult(RolledResult rolledResult) {
@@ -53,13 +52,6 @@ public final class Frames {
     private void shouldNextFrame(){
         if (isNotCompleteFrames()) {
             zeroBaseCurrentFrameIndex += currentFrame().increaseNextStepFrame();
-        }
-    }
-
-    private void updateTerminalFrameByScore(){
-        if (isCompleteFrames()) {
-            frames.get(MAX_FOUNDATION_FRAME_SIZE)
-                  .updateScore(notAtRolledResult());
         }
     }
 

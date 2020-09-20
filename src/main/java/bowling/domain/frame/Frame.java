@@ -5,9 +5,9 @@ import bowling.ui.result.DisplayRolledResult;
 
 interface Frame {
     void updateRolledResult(RolledResult rolledResult);
-    void updateScore(RolledResult nextRolledResult);
+    default void updateScore(RolledResult nextRolledResult) {}
     int getScore();
-    RolledResult getRolledResult();
+    default RolledResult getRolledResult() {throw new UnsupportedOperationException(); }
     DisplayRolledResult toDisplayRolledResult();
     int increaseNextStepFrame();
 }

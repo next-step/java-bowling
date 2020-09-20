@@ -36,15 +36,6 @@ public final class TerminateFrame implements Frame {
     }
 
     @Override
-    public void updateScore(final RolledResult nextRolledResult) {
-    }
-
-    @Override
-    public RolledResult getRolledResult() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public DisplayRolledResult toDisplayRolledResult() {
         return new DisplayRolledResult(description(), getScore());
     }
