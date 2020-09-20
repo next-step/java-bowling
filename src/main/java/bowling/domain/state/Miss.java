@@ -15,4 +15,12 @@ public class Miss extends FinishedState {
     public static State of(Pin firstPin, Pin felledPin) {
         return new Miss(firstPin, felledPin);
     }
+
+    public Pin getFirstPin() {
+        return this.first;
+    }
+
+    public Pin getSecondPin() {
+        return this.second;
+    }
 }

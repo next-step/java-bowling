@@ -13,8 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
 
 public class OutputView {
 
@@ -79,26 +77,41 @@ public class OutputView {
                 stateSymbol = Symbol.Strike.toString();
                 break;
             case Spare:
-                stateSymbol = ((Spare) state).getFirstPin() + Symbol.Spare.toString();
+                String spareFirst = ((Spare) state).getFirstPin().toString();
+                if(checkGutter(spareFirst))
+                    spareFirst = Symbol.Gutter.toString();
+                stateSymbol = spareFirst + Symbol.Spare.toString();
                 break;
             case Miss:
-                stateSymbol = Symbol.Miss.toString();
+                String missFirst = ((Miss) state).getFirstPin().toString();
+                String missSecond = ((Miss) state).getSecondPin().toString();
+
+                if(checkGutter(missFirst))
+                    missFirst = Symbol.Gutter.toString();
+                if(checkGutter(missSecond))
+                    missSecond = Symbol.Gutter.toString();
+
+                stateSymbol = missFirst + Symbol.Miss.toString() + missSecond;
                 break;
             case Gutter:
-                stateSymbol = Symbol.Gutter.toString();
+                stateSymbol = Symbol.AllGutter.toString();
                 break;
             case Ready:
                 stateSymbol = Symbol.Ready.toString();
                 break;
             case Continue:
-                stateSymbol = ((Continue) state).getFirstPin();
+                String continueFirst = ((Continue) state).getFirstPin().toString();
+
+                if(checkGutter(continueFirst))
+                    continueFirst = Symbol.Gutter.toString();
+
+                stateSymbol = continueFirst;
                 break;
         }
         return stateSymbol;
     }
 
-    private static String makeEndSymbol(List<State> states) {
-        return states.stream().map(state -> makeSymbol(state))
-                .collect(Collectors.joining());
+    private static boolean checkGutter(String felledPin) {
+        return Integer.parseInt(felledPin) == 0 ? true : false;
     }
 }

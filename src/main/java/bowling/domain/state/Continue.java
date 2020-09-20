@@ -31,7 +31,7 @@ public class Continue implements State {
         return false;
     }
 
-    public String getFirstPin() {
-        return this.first.toString();
+    public Pin getFirstPin() {
+        return this.first;
     }
 }

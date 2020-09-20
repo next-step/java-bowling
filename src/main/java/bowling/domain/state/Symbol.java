@@ -6,7 +6,8 @@ public enum Symbol {
     Gutter("-"),
     Miss("|"),
     Ready(""),
-    Continue("");
+    Continue(""),
+    AllGutter("-|-");
 
     private String symbol;
 

@@ -15,8 +15,8 @@ public class Spare extends FinishedState {
         return new Spare(first);
     }
 
-    public String getFirstPin() {
-        return this.first.toString();
+    public Pin getFirstPin() {
+        return this.first;
     }
 
     @Override
