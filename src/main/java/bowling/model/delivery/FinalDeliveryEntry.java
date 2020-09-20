@@ -81,7 +81,7 @@ public class FinalDeliveryEntry implements DeliveryEntry {
     public int getTotalFallenPins() {
         return deliveries.stream()
                 .map(Delivery::getFallenPins)
-                .reduce(0, (a, b) -> a + b);
+                .reduce(0, Integer::sum);
     }
 
     @Override
