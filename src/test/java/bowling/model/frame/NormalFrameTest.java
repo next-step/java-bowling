@@ -47,4 +47,19 @@ public class NormalFrameTest {
         assertThatIllegalArgumentException().isThrownBy(() -> frame.addResult(-1));
         assertThatIllegalArgumentException().isThrownBy(() -> frame.addResult(Result.MAX_PIN_COUNT + 1));
     }
+
+    @Test
+    public void getResult() {
+        Frame frame = NormalFrame.start();
+        assertThat(frame.getResult(0)).isEqualTo(Result.UNKNOWN);
+
+        frame.addResult(5);
+        assertThat(frame.getResult(0)).isEqualTo(Result.of(5));
+        assertThat(frame.getResult(1)).isEqualTo(Result.UNKNOWN);
+
+        frame.addResult(5);
+        assertThat(frame.getResult(0)).isEqualTo(Result.of(5));
+        assertThat(frame.getResult(1)).isEqualTo(Result.spare(5));
+
+    }
 }

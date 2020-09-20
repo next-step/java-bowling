@@ -56,6 +56,13 @@ public abstract class Frame {
                 .reduce(0, (acc, cur) -> acc += cur);
     }
 
+    public Result getResult(int index) {
+        if (results.size() <= index) {
+            return Result.UNKNOWN;
+        }
+        return results.get(index);
+    }
+
     public FrameDto getDto() {
         return new FrameDto(index, results);
     }
