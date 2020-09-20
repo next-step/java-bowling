@@ -19,7 +19,7 @@ class ScoreBoardTest {
         scoreBoard.bowl(Pin.of(10));
 
         // then
-        assertThat(scoreBoard.getLastIndex()).isEqualTo(2);
+        assertThat(scoreBoard.getLastIndex()).isEqualTo(Index.of(2));
     }
 
     @Test@DisplayName("모든 프레임이 종료 되면 게임이 종료되는 테스트")
