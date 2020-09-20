@@ -15,26 +15,35 @@ public class Frame implements Comparable<Frame> {
     this.number = number;
   }
 
+  public static Frame initialFrame() {
+    return new Frame(1);
+  }
+
+  public static Frame initialFrame(int pins) {
+    Frame frame = new Frame(1);
+    frame.roll(pins);
+    return frame;
+  }
+
+  public static Frame valueOf(int number, int pins) {
+    Frame frame = new Frame(number);
+    frame.roll(pins);
+    return frame;
+  }
+
   public Frame roll(int pins) {
     if (state == null) {  // first
       state = State.of(pins);
-
       return this;
     }
 
     if (nextFinalFrame()) {
-      FinalFrame finalFrame = new FinalFrame();
-      finalFrame.roll(pins);
-      this.next = finalFrame;
-
-      return finalFrame;
+      next = FinalFrame.initialFrame(pins);
+      return next;
     }
 
     if (isDone()) {
-      Frame next = new Frame(number + 1);
-      next.roll(pins);
-      this.next = next;
-
+      next = Frame.valueOf(number + 1, pins);
       return next;
     }
 

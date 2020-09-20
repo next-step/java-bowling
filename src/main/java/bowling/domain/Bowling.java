@@ -17,14 +17,11 @@ public class Bowling {
   }
 
   public static Bowling init() {
-    Frame frame = new Frame(1);
-    return new Bowling(frame);
+    return new Bowling(Frame.initialFrame());
   }
 
   public static Bowling first(int pins) {
-    Frame frame = new Frame(1);
-    frame.roll(pins);
-    return new Bowling(frame);
+    return new Bowling(Frame.initialFrame(pins));
   }
 
   public void roll(int pins) {

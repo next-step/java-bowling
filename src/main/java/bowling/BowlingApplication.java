@@ -22,7 +22,6 @@ public class BowlingApplication {
       bowlings.roll(inputView.requestPinsOf(bowlings.nextPlayer()));
       outputView.render(bowlings);
     }
-
   }
 
 }

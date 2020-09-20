@@ -1,7 +1,7 @@
 package bowling.domain;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Bowlings {
 
@@ -9,10 +9,9 @@ public class Bowlings {
   private final List<Player> players;
 
   public Bowlings(List<String> playerNames) {
-    players = new ArrayList<>();
-    for (String playerName : playerNames) {
-      players.add(Player.ofName(playerName));
-    }
+    this.players = playerNames.stream()
+        .map(Player::ofName)
+        .collect(Collectors.toList());
   }
 
   public static Bowlings ofNames(List<String> playerNames) {
