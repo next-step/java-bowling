@@ -79,7 +79,7 @@
 - [X] 인텍스(Index)를 관리하는 객체 생성
 - [X] 볼링핀(Pint)를 점수 계산 관련 추가
 
-- [ ] ScoreBoard, BowlingController 수정
+- [X] ScoreBoard, BowlingController 수정
     * ScoreBoard에서 Frame객체 생성 안하도록 제거
     * ScoreBoardDTO, ScoreBoardAssembler 생성
     
