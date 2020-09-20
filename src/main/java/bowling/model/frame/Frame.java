@@ -47,7 +47,7 @@ public abstract class Frame {
 
     public boolean hasStrike() {
         return results.stream()
-                .anyMatch(Result.STRIKE::equals);
+                .anyMatch(Result::isStrike);
     }
 
     protected int getTotalPinCount() {

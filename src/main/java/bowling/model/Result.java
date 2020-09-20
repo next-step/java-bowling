@@ -43,6 +43,10 @@ public class Result {
         return spare;
     }
 
+    public boolean isStrike() {
+        return STRIKE.equals(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
