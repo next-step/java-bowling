@@ -1,6 +1,8 @@
 package bowling.view;
 
+import bowling.domain.DownedPinCount;
 import bowling.domain.game.Game;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 
 import java.util.Map;
@@ -19,22 +21,33 @@ public class OutputView {
 	public static void showInitializedGame(Game game) {
 		System.out.println(getHeaderAreaText());
 		System.out.println(getInitValueAreaText(game));
+		System.out.println(getInitScoreAreaText());
 	}
 
 	public static void showDashBoard(Game game) {
 		System.out.println(getHeaderAreaText());
 		System.out.println(getCurrentValueAreaText(game));
+		System.out.println(getCurrentScoreAreaText(game));
 	}
 
 	private static String getHeaderAreaText() {
 		return buildStartFrame(NAME_HEADER) + getHeaderTitlePerFrame();
 	}
+
 	private static String getInitValueAreaText(Game game) {
-		return buildStartFrame(game.getPlayersName()) + getEmptyValueTextPerFrame();
+		return buildStartFrame(game.getPlayersName()) + getEmptyTenFrames();
+	}
+
+	private static String getInitScoreAreaText() {
+		return buildStartFrame(AREA_PER_FRAME) + getEmptyTenFrames();
 	}
 
 	private static String getCurrentValueAreaText(Game game) {
 		return buildStartFrame(game.getPlayersName()) + getCurrentValueTextPerFrame(game.getStateGroupedBy());
+	}
+
+	private static String getCurrentScoreAreaText(Game game) {
+		return buildStartFrame(AREA_PER_FRAME) + getCurrentScorePerFrame(game.getScoreGroupedBy());
 	}
 
 	private static String getHeaderTitlePerFrame() {
@@ -43,7 +56,7 @@ public class OutputView {
 				.collect(Collectors.joining());
 	}
 
-	private static String getEmptyValueTextPerFrame() {
+	private static String getEmptyTenFrames() {
 		return IntStream.rangeClosed(1,10)
 				.mapToObj(index -> buildNoneStartFrame(AREA_PER_FRAME))
 				.collect(Collectors.joining());
@@ -55,11 +68,25 @@ public class OutputView {
 				.collect(Collectors.joining());
 	}
 
+	private static String getCurrentScorePerFrame(Map<Integer, Score> grouped) {
+//		grouped.entrySet().stream().forEach(entry -> System.out.println("key : '" + entry.getKey() + "' value : '" + entry.getValue().getIntegerValue() + "'"));
+		return IntStream.rangeClosed(1,10)
+				.mapToObj(index -> buildNoneStartFrame(getScoreText(grouped.get(index))))
+				.collect(Collectors.joining());
+	}
+
 	private static String getValueText(State state) {
 		if(state == null) {
 			return AREA_PER_FRAME;
 		}
 		return state.reportState();
+	}
+
+	private static String getScoreText(Score score) {
+		if(score == null || score.getValue() == DownedPinCount.NO_PIN_DOWN) {
+			return AREA_PER_FRAME;
+		}
+		return String.valueOf(score.getValue());
 	}
 
 	private static String buildStartFrame(String value) {

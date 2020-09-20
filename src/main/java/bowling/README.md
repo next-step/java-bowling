@@ -22,3 +22,4 @@
 2. State 구현체에 Score 멤버변수로 추가 및 필요 메서드 추가
 3. Frame에서 이전 Frame을 멤버 변수로 갖게 수정 후 공을 굴릴 때 이전 프레임의 Score에 더해주게 변경
 4. FinalFrame용 스코어와 그에 따른 FinalFrame용 State 구현체 변경
+5. Game 및 OutputView에 Score 추가에 따른 필요 로직 작성
