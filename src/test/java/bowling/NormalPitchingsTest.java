@@ -127,4 +127,50 @@ class NormalPitchingsTest {
 
         then(NormalPitchings.ofReady()).isEqualTo(expected);
     }
+
+    private static Stream<Arguments> provideIsCleareArguments() {
+        Pitching min = Pitching.of(PitchingStatus.Done, Pin.ofMin());
+        Pitching max = Pitching.of(PitchingStatus.Done, Pin.ofMax());
+        return Stream.of(
+                Arguments.of(NormalPitchings.of(max, min), Boolean.TRUE),
+                Arguments.of(NormalPitchings.of(min, max), Boolean.FALSE)
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("쓰러뜨린 첫 번째 핀 확인 검증")
+    @MethodSource("provideIsCleareArguments")
+    void isFirstPitchingClear(NormalPitchings normalPitchings, boolean expected) {
+        then(normalPitchings.isFirstPitchingClear()).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @DisplayName("쓰러뜨린 두 번째 핀 확인 검증")
+    @MethodSource("provideIsCleareArguments")
+    void isSecondPitchingClear(NormalPitchings normalPitchings, boolean expected) {
+        then(normalPitchings.isFirstPitchingClear()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("핀 갯수가 범위를 초과하는지 확인 검증")
+    void isOverMaxPins() {
+        Pitching pitching = Pitching.of(PitchingStatus.Done, Pin.ofMax());
+        NormalPitchings normalPitchings = NormalPitchings.of(pitching, Pitching.ofReady());
+
+        then(normalPitchings.isOverMaxPins(Pin.ofMin())).isFalse();
+        then(normalPitchings.isOverMaxPins(Pin.of(1))).isTrue();
+    }
+
+    @Test
+    @DisplayName("스페어 여부 확인 검증")
+    void isSpare() {
+        Pitching min = Pitching.of(PitchingStatus.Done, Pin.ofMin());
+        Pitching max = Pitching.of(PitchingStatus.Done, Pin.ofMax());
+        Pitching one = Pitching.of(PitchingStatus.Done, Pin.of(1));
+        NormalPitchings pitchingForTrue = NormalPitchings.of(min, max);
+        NormalPitchings pitchingForFalse = NormalPitchings.of(min, one);
+
+        then(pitchingForTrue.isSpare()).isTrue();
+        then(pitchingForFalse.isSpare()).isFalse();
+    }
 }

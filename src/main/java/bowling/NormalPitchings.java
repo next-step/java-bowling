@@ -69,6 +69,30 @@ public class NormalPitchings implements Pitchings {
         return isFirstDone() && isSecondDone();
     }
 
+    public void bowlFirstPitching(Pin pin) {
+        firstPitching.bowl(pin);
+    }
+
+    public void bowlSecondPitching(Pin pin) {
+        secondPitching.bowl(pin);
+    }
+
+    public boolean isFirstPitchingClear() {
+        return firstPitching.isClear();
+    }
+
+    public boolean isSecondPitchingClear() {
+        return secondPitching.isClear();
+    }
+
+    public boolean isOverMaxPins(Pin pin) {
+        return firstPitching.isOverMaxPins(pin);
+    }
+
+    public boolean isSpare() {
+        return firstPitching.isSpare(secondPitching);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

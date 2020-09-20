@@ -2,18 +2,16 @@ package bowling;
 
 public class LastPitchings implements Pitchings {
 
-    private final Pitching firstPitching;
-    private final Pitching secondPitching;
+    private final NormalPitchings normalPitchings;
     private final Pitching bonusPitching;
 
-    private LastPitchings(Pitching firstPitching, Pitching secondPitching, Pitching bonusPitching) {
-        this.firstPitching = firstPitching;
-        this.secondPitching = secondPitching;
+    private LastPitchings(NormalPitchings normalPitchings, Pitching bonusPitching) {
+        this.normalPitchings = normalPitchings;
         this.bonusPitching = bonusPitching;
     }
 
     public static LastPitchings of() {
-        return new LastPitchings(Pitching.ofReady(), Pitching.ofReady(), Pitching.ofReady());
+        return new LastPitchings(NormalPitchings.ofReady(), Pitching.ofReady());
     }
 
     @Override
@@ -22,35 +20,35 @@ public class LastPitchings implements Pitchings {
             throw new IllegalStateException("투구가 모두 완료된 상태 입니다.");
         }
 
-        if (firstPitching.isDone() && !secondPitching.isDone()) {
+        if (normalPitchings.isFirstDone() && !normalPitchings.isSecondDone()) {
             validateSecondPitching(pin);
-            secondPitching.bowl(pin);
+            normalPitchings.bowlSecondPitching(pin);
             validateAndSetBonusPitching();
             return;
         }
-        if (secondPitching.isDone()) {
+        if (normalPitchings.isSecondDone()) {
             bonusPitching.bowl(pin);
             return;
         }
-        firstPitching.bowl(pin);
+        normalPitchings.bowlFirstPitching(pin);
     }
 
     private void validateSecondPitching(Pin secondPitchingPin) {
-        if (firstPitching.isClear()) {
+        if (normalPitchings.isFirstPitchingClear()) {
             return;
         }
 
-        if (firstPitching.isOverMaxPins(secondPitchingPin)) {
+        if (normalPitchings.isOverMaxPins(secondPitchingPin)) {
             throw new IllegalStateException("첫 번째 투구와 두 번째 투구의 합이 범위를 초과했습니다.");
         }
     }
 
     private void validateAndSetBonusPitching() {
-        if (secondPitching.isClear()) {
+        if (normalPitchings.isSecondPitchingClear()) {
             return;
         }
 
-        if (!firstPitching.isClear() && firstPitching.isSpare(secondPitching)) {
+        if (!normalPitchings.isFirstPitchingClear() && normalPitchings.isSpare()) {
             return;
         }
 
@@ -59,12 +57,12 @@ public class LastPitchings implements Pitchings {
 
     @Override
     public Pin getFirstPin() {
-        return firstPitching.getPin();
+        return normalPitchings.getFirstPin();
     }
 
     @Override
     public Pin getSecondPin() {
-        return secondPitching.getPin();
+        return normalPitchings.getSecondPin();
     }
 
     @Override
@@ -74,12 +72,12 @@ public class LastPitchings implements Pitchings {
 
     @Override
     public boolean isFirstDone() {
-        return firstPitching.isDone();
+        return normalPitchings.isFirstDone();
     }
 
     @Override
     public boolean isSecondDone() {
-        return secondPitching.isDone();
+        return normalPitchings.isSecondDone();
     }
 
     @Override
