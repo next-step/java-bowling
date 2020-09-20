@@ -12,7 +12,9 @@ class Miss extends Finished {
         this.secondPins = secondPins;
     }
 
-    public boolean canBowlFinalFrame() { return false;}
+    public boolean canBowlFinalFrame() {
+        return false;
+    }
 
     @Override
     public Score getScore() {
@@ -30,7 +32,7 @@ class Miss extends Finished {
 
     @Override
     public String record() {
-        String prevRecord = ifCountOfPinsZeroTransGutter(firstPins.count())+"|";
+        String prevRecord = ifCountOfPinsZeroTransGutter(firstPins.count()) + "|";
         return prevRecord + ifCountOfPinsZeroTransGutter(secondPins.count());
     }
 

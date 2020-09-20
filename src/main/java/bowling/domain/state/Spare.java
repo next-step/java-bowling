@@ -42,7 +42,7 @@ class Spare extends Finished {
 
     @Override
     public String record() {
-        String prevRecord = ifCountOfPinsZeroTransGutter(firstPins.count())+"|";
-        return prevRecord+BOWLING_STATUS_SPARE;
+        String prevRecord = ifCountOfPinsZeroTransGutter(firstPins.count()) + "|";
+        return prevRecord + BOWLING_STATUS_SPARE;
     }
 }

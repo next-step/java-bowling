@@ -24,7 +24,7 @@ public class ResultView {
         System.out.printf(FRAME_RESULT_BOARD_TEMPLATE, makeFrameScoreBody(player).toArray());
     }
 
-    private List<String> makeFrameBody(Player player){
+    private List<String> makeFrameBody(Player player) {
         List<String> frameBody = new ArrayList<>();
         frameBody.add(player.name());
         frameBody.addAll(player.frames().stream()
@@ -35,7 +35,7 @@ public class ResultView {
         return frameBody;
     }
 
-    private List<String> makeFrameScoreBody(Player player){
+    private List<String> makeFrameScoreBody(Player player) {
         List<String> frameScoreBody = new ArrayList<>();
         frameScoreBody.add("");
         frameScoreBody.addAll(calculateScore(player));
@@ -43,6 +43,7 @@ public class ResultView {
 
         return frameScoreBody;
     }
+
     private List<String> calculateScore(Player player) {
         List<String> calculateScoreByFrame = new ArrayList<>();
 
@@ -53,7 +54,7 @@ public class ResultView {
                 .collect(Collectors.toList());
 
         int accumulateScore = 0;
-        for(int score : scores) {
+        for (int score : scores) {
             accumulateScore += score;
             calculateScoreByFrame.add(String.valueOf(accumulateScore));
         }
@@ -63,7 +64,7 @@ public class ResultView {
     private int cannotCalculateCase(Frame frame) {
         try {
             return frame.score().getScore();
-        }catch (CannotCalculateException exception){
+        } catch (CannotCalculateException exception) {
             return -1;
         }
     }

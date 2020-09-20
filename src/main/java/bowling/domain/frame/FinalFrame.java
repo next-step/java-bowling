@@ -98,11 +98,11 @@ public class FinalFrame extends Frame {
     public Score calculateAdditionalScore(Score beforeScore) {
         Score score = beforeScore;
 
-        for(int i = 0; i< states.size(); i++) {
+        for (int i = 0; i < states.size(); i++) {
             State state = states.get(i);
             score = state.calculateAdditionalScore(score);
 
-            if(score.canCalculateScore()){
+            if (score.canCalculateScore()) {
                 return score;
             }
 
