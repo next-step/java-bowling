@@ -1,6 +1,6 @@
 package bowling;
 
-import bowling.domain.Player;
+import bowling.domain.Players;
 import bowling.play.BowlingGame;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -15,11 +15,8 @@ public class PlayGame {
     }
 
     public void start() {
-        Player player = new Player(inputView.inputPlayerName());
-
-        BowlingGame bowlingGame = new BowlingGame(player);
-
-        bowlingGame.round(inputView::inputFrameShoot, resultView::showScoreBoard);
-
+        Players players = inputView.inputPlayers();
+        BowlingGame bowlingGame = new BowlingGame(players);
+        bowlingGame.start(inputView::inputFrameShoot, resultView::showScoreBoard);
     }
 }
