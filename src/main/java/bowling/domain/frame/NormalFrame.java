@@ -39,8 +39,8 @@ public class NormalFrame extends AbstractFrame {
     }
 
     @Override
-    public boolean isCompleted() {
-        return bowlResult.isCompleted();
+    public Score getScore() {
+        return bowlResult.getScore(this);
     }
 
     @Override
@@ -49,13 +49,13 @@ public class NormalFrame extends AbstractFrame {
     }
 
     @Override
-    public boolean isNone() {
-        return bowlResult.isNone();
+    public boolean isStrike() {
+        return bowlResult.isStrike();
     }
 
     @Override
-    public boolean isStrike() {
-        return bowlResult.isStrike();
+    public boolean isCompleted() {
+        return bowlResult.isCompleted();
     }
 
     @Override
@@ -64,18 +64,16 @@ public class NormalFrame extends AbstractFrame {
     }
 
     @Override
-    public Score getScore() {
-        return bowlResult.getScore(this);
-    }
-
-    @Override
-    public int getFirstNumberOfPin() {
-        return bowlResult.getFirstNumberOfPin();
-    }
-
-    @Override
     public String toString() {
         return bowlResult.format();
+    }
+
+    public boolean checkSpareBonus() {
+        return bowlResult.checkSpareBonus();
+    }
+
+    public int getSpareBonus() {
+        return bowlResult.getFirstNumberOfPin();
     }
 
 }

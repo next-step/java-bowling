@@ -30,36 +30,8 @@ public class FinalFrame extends AbstractFrame {
     }
 
     @Override
-    public boolean isEnd() {
-        return finalBowlResult.isEnd();
-    }
-
-    @Override
-    public Iterator<Frame> iterator() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Score getScore() {
         return finalBowlResult.getScore(this);
-    }
-
-    public boolean checkSpareBonus() {
-        return finalBowlResult.checkSpareBonus();
-    }
-
-    public int getSpareBonus() {
-        return finalBowlResult.getSpareBonus();
-    }
-
-    @Override
-    public int getFirstNumberOfPin() {
-        return finalBowlResult.getFirstNumberOfPin();
-    }
-
-    @Override
-    public boolean isCompleted() {
-        return isEnd();
     }
 
     @Override
@@ -68,18 +40,36 @@ public class FinalFrame extends AbstractFrame {
     }
 
     @Override
-    public boolean isNone() {
-        return finalBowlResult.isNone();
-    }
-
-    @Override
     public boolean isStrike() {
         return finalBowlResult.isStrike();
     }
 
     @Override
+    public boolean isEnd() {
+        return finalBowlResult.isEnd();
+    }
+
+    @Override
+    public boolean isCompleted() {
+        return isEnd();
+    }
+
+    @Override
+    public Iterator<Frame> iterator() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public String toString() {
         return finalBowlResult.format();
+    }
+
+    public boolean checkSpareBonus() {
+        return finalBowlResult.checkSpareBonus();
+    }
+
+    public int getSpareBonus() {
+        return finalBowlResult.getSpareBonus();
     }
 
 }

@@ -75,4 +75,8 @@ public class BowlResult {
         return findBowlIdentity().isStrike();
     }
 
+    public boolean checkSpareBonus() {
+        return !isNone();
+    }
+
 }
