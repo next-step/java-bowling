@@ -77,6 +77,7 @@
     * 현재 Frame에서 다음 프레임을 가지도록 수정
     * 현재 Frame에서 점수(Score)의 계산 가능 여부에 따라 다음 Frame에 점수 계산을 위임할 것인지 판단
 - [X] 인텍스(Index)를 관리하는 객체 생성
+- [X] 볼링핀(Pint)를 점수 계산 관련 추가
 
 - [ ] ScoreBoard, BowlingController 수정
     * ScoreBoard에서 Frame객체 생성 안하도록 제거
