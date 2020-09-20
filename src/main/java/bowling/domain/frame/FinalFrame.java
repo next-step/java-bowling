@@ -5,8 +5,6 @@ import bowling.domain.bowl.FinalBowl;
 import bowling.domain.bowl.FinalBowlResult;
 import bowling.domain.score.Score;
 
-import java.util.Iterator;
-
 public class FinalFrame extends AbstractFrame {
 
     private final FinalBowl finalBowl = new FinalBowl();
@@ -34,12 +32,10 @@ public class FinalFrame extends AbstractFrame {
         return finalBowlResult.getScore(this);
     }
 
-    @Override
     public int getTotalNumberOfPin() {
         return finalBowlResult.getTotalNumberOfPin();
     }
 
-    @Override
     public boolean isStrike() {
         return finalBowlResult.isStrike();
     }
@@ -47,16 +43,6 @@ public class FinalFrame extends AbstractFrame {
     @Override
     public boolean isEnd() {
         return finalBowlResult.isEnd();
-    }
-
-    @Override
-    public boolean isCompleted() {
-        return isEnd();
-    }
-
-    @Override
-    public Iterator<Frame> iterator() {
-        throw new UnsupportedOperationException();
     }
 
     @Override

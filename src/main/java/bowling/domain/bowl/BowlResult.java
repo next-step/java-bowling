@@ -42,8 +42,8 @@ public class BowlResult {
         return numberOfPins.size() == FIRST_BOWL_COUNT;
     }
 
-    public boolean isSecond() {
-        return numberOfPins.size() == SECOND_BOWL_COUNT;
+    public boolean isStrike() {
+        return findBowlIdentity().isStrike();
     }
 
     public boolean isCompleted() {
@@ -80,16 +80,12 @@ public class BowlResult {
         return findBowlIdentity().format(this);
     }
 
-    public boolean isStrike() {
-        return findBowlIdentity().isStrike();
-    }
-
     public boolean checkSpareBonus() {
-        return !isNone();
+        return numberOfPins.size() >= FIRST_BOWL_COUNT;
     }
 
     public boolean checkStrikeBonus() {
-        return isSecond();
+        return numberOfPins.size() >= SECOND_BOWL_COUNT;
     }
 
 }

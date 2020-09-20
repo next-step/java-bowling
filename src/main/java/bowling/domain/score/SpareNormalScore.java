@@ -11,9 +11,9 @@ public class SpareNormalScore extends AbstractNormalScore {
     @Override
     protected int calculateScore() {
         NormalFrame nextFrame = (NormalFrame) normalFrame.getNextFrame();
-        int normalScore = new DefaultNormalScore(normalFrame).getScore();
+        int score = new DefaultNormalScore(normalFrame).getScore();
         int bonusScore = nextFrame.getSpareBonus();
-        return normalScore + bonusScore;
+        return score + bonusScore;
     }
 
     @Override

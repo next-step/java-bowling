@@ -43,17 +43,14 @@ public class NormalFrame extends AbstractFrame {
         return bowlResult.getScore(this);
     }
 
-    @Override
     public int getTotalNumberOfPin() {
         return bowlResult.getTotalNumberOfPin();
     }
 
-    @Override
     public boolean isStrike() {
         return bowlResult.isStrike();
     }
 
-    @Override
     public boolean isCompleted() {
         return bowlResult.isCompleted();
     }

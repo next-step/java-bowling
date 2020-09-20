@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static bowling.domain.bowl.BowlResult.*;
+
 public class FinalBowlResult {
 
     public static final String DELIMITER = "|";
@@ -25,10 +27,19 @@ public class FinalBowlResult {
         return bowlResults.isEmpty();
     }
 
+    public boolean isStrike() {
+        return !isNone() && bowlResults.getFirst().isStrike();
+    }
+
+    public boolean isCompleted() {
+        return !isNone() && bowlResults.getLast().isCompleted();
+    }
+
+    private boolean isBonus() {
+        return !isNone() && bowlResults.getLast().isBonus();
+    }
+
     public boolean isEnd() {
-        if (bowlResults.isEmpty()) {
-            return false;
-        }
         return isMaxBonusCount() || (isCompleted() && !isBonus());
     }
 
@@ -36,18 +47,16 @@ public class FinalBowlResult {
         return getTotalBowlCount() == MAX_BOWL_COUNT;
     }
 
-    private Integer getTotalBowlCount() {
+    private int getTotalBowlCount() {
         return bowlResults.stream()
                 .map(BowlResult::getBowlCount)
                 .reduce(0, Integer::sum);
     }
 
-    public boolean isCompleted() {
-        return bowlResults.getLast().isCompleted();
-    }
-
-    private boolean isBonus() {
-        return bowlResults.getLast().isBonus();
+    public int getTotalNumberOfPin() {
+        return bowlResults.stream()
+                .map(bowlResult -> bowlResult.getTotalNumberOfPin())
+                .reduce(0, Integer::sum);
     }
 
     public Score getScore(FinalFrame finalFrame) {
@@ -61,32 +70,22 @@ public class FinalBowlResult {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    public int getTotalNumberOfPin() {
-        return bowlResults.stream()
-                .map(bowlResult -> bowlResult.getTotalNumberOfPin())
-                .reduce(0, Integer::sum);
-    }
-
-    public boolean isStrike() {
-        return !isNone() && bowlResults.getFirst().isStrike();
-    }
-
     public boolean checkSpareBonus() {
-        return getTotalBowlCount() >= 1;
+        return getTotalBowlCount() >= FIRST_BOWL_COUNT;
     }
 
     public int getSpareBonus() {
         List<NumberOfPin> numberOfPins = flatBowlResults();
-        return numberOfPins.get(0).getNumberOfPin();
+        return numberOfPins.get(FIRST_NUMBER_OF_PINS_INDEX).getNumberOfPin();
     }
 
     public boolean checkStrikeBonus() {
-        return getTotalBowlCount() >= 2;
+        return getTotalBowlCount() >= SECOND_BOWL_COUNT;
     }
 
     public int getStrikeBonus() {
         List<NumberOfPin> numberOfPins = flatBowlResults();
-        return numberOfPins.get(0).getNumberOfPin() + numberOfPins.get(1).getNumberOfPin();
+        return numberOfPins.get(FIRST_NUMBER_OF_PINS_INDEX).getNumberOfPin() + numberOfPins.get(SECOND_NUMBER_OF_PINS_INDEX).getNumberOfPin();
     }
 
     private List<NumberOfPin> flatBowlResults() {

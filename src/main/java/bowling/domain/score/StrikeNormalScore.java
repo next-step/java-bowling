@@ -13,10 +13,8 @@ public class StrikeNormalScore extends AbstractNormalScore {
         NormalFrame nextFrame = (NormalFrame) normalFrame.getNextFrame();
         int score = new DefaultNormalScore(normalFrame).getScore();
         if (nextFrame.isStrike()) {
-            Score normalScore = nextFrame.isLast() ?
-                    new LastSpareNormalScore(nextFrame) :
-                    new SpareNormalScore(nextFrame);
-            return score + normalScore.getScore();
+            Score spareNormalScore = getSpareNormalScore(nextFrame);
+            return score + spareNormalScore.getScore();
         }
         return score + nextFrame.getStrikeBonus();
     }
@@ -25,12 +23,16 @@ public class StrikeNormalScore extends AbstractNormalScore {
     public boolean checkValid() {
         NormalFrame nextFrame = (NormalFrame) normalFrame.getNextFrame();
         if (nextFrame.isStrike()) {
-            Score normalScore = nextFrame.isLast() ?
-                    new LastSpareNormalScore(nextFrame) :
-                    new SpareNormalScore(nextFrame);
-            return normalScore.checkValid();
+            Score spareNormalScore = getSpareNormalScore(nextFrame);
+            return spareNormalScore.checkValid();
         }
         return normalFrame.isCompleted() && nextFrame.checkStrikeBonus();
+    }
+
+    private Score getSpareNormalScore(NormalFrame nextFrame) {
+        return nextFrame.isLast() ?
+                new LastSpareNormalScore(nextFrame) :
+                new SpareNormalScore(nextFrame);
     }
 
 }
