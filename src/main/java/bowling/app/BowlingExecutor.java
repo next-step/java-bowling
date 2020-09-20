@@ -17,7 +17,7 @@ public class BowlingExecutor {
         Frame frame = firstFrame;
         OutputView.printBoard(player, firstFrame);
         while (!frame.isEnd()) {
-            int numberOfPins = InputView.getNumberOfPins();
+            int numberOfPins = InputView.getNumberOfPins(frame);
             frame = frame.bowl(numberOfPins);
             OutputView.printBoard(player, firstFrame);
         }

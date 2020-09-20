@@ -1,5 +1,8 @@
 package bowling.view;
 
+import bowling.domain.frame.Frame;
+
+import java.text.MessageFormat;
 import java.util.Scanner;
 
 public class InputView {
@@ -15,9 +18,9 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static int getNumberOfPins() {
+    public static int getNumberOfPins(Frame frame) {
         System.out.println();
-        System.out.print("프레임 투구 : ");
+        System.out.print(MessageFormat.format("{0}프레임 투구 : ", frame.getFrameNumber()));
         return nextInt();
     }
 
