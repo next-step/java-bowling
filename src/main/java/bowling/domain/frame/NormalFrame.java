@@ -1,14 +1,12 @@
 package bowling.domain.frame;
 
 import bowling.domain.Pin;
-import bowling.domain.rolling.NormalRolling;
-import bowling.domain.rolling.Rolling;
+import bowling.domain.Score;
+import bowling.exception.CannotCalculateException;
 
 public class NormalFrame extends Frame {
 
     private static final String NORMAL_FRAME_RANGE = "NormalFrame의 범위는 1~9 사이입니다.";
-
-    private Rolling normalRolling = new NormalRolling();
 
     public NormalFrame(int frameIndex) {
         super(frameIndex);
@@ -23,12 +21,12 @@ public class NormalFrame extends Frame {
 
     @Override
     public boolean rollingEnd() {
-        return normalRolling.isFinish();
+        return state.isFinish();
     }
 
     @Override
-    void bowl(Pin pin) {
-        normalRolling.bowl(pin);
+    public void bowl(Pin pin) {
+        state = state.bowl(pin);
     }
 
     @Override
@@ -43,6 +41,30 @@ public class NormalFrame extends Frame {
 
     @Override
     public String currentFrameStatus() {
-        return normalRolling.currentFrameStatus();
+        return state.record();
     }
+
+
+    public Score calculateAdditionalScore(Score beforeScore) {
+        Score score = state.calculateAdditionalScore(beforeScore);
+
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return next.calculateAdditionalScore(score);
+    }
+
+    @Override
+    public Score score() {
+        if (!rollingEnd()) {
+            throw new CannotCalculateException();
+        }
+        Score score = state.getScore();
+        if (score.canCalculateScore()) {
+            return score;
+        }
+        return next.calculateAdditionalScore(score);
+
+    }
+
 }

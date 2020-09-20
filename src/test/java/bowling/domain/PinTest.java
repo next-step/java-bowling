@@ -33,23 +33,4 @@ class PinTest {
 
         assertTrue(pin.isSpare(new Pin(5)));
     }
-
-    @Test
-    void strikeRecordTest() {
-        Pin pin = new Pin(10);
-
-        assertThat(pin.record()).isEqualTo("X");
-    }
-
-    @Test
-    void spareRecordTest() {
-        Pin pin = new Pin(8);
-        assertThat(pin.record(new Pin(2))).isEqualTo("/");
-    }
-
-    @Test
-    void gutterRecordTest() {
-        Pin pin = new Pin(0);
-        assertThat(pin.record()).isEqualTo("-");
-    }
 }

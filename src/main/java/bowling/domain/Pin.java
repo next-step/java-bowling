@@ -4,14 +4,10 @@ import java.util.Objects;
 
 public class Pin {
 
-    private static final String PIN_BOWL_RANGE = "볼링 한 구당 쓰러트릴수 있는 핀의 갯수는 0 ~ 10 사이입니다.";
-
-    private static final String BOWLING_STATUS_STRIKE = "X";
-    private static final String BOWLING_STATUS_SPARE = "/";
-    private static final String BOWLING_STATUS_GUTTER = "-";
+    private static final String PIN_BOWL_RANGE = "한 프레임에 쓰러트릴수 있는 핀의 총합은 0 ~ 10 사이입니다.";
 
     public static final int MAXIMUM_PIN_COUNT = 10;
-    private static final int MINIMUM_PIN_COUNT = 0;
+    public static final int MINIMUM_PIN_COUNT = 0;
 
     private int pins;
 
@@ -35,36 +31,17 @@ public class Pin {
     }
 
     public boolean isSpare(Pin secondPins) {
+        validationPinCount(totalFallenPins(secondPins));
         if (isStrike()) {
             return false;
         }
         return totalFallenPins(secondPins) == MAXIMUM_PIN_COUNT;
     }
 
-    private int totalFallenPins(Pin secondPins) {
-        return pins + secondPins.count();
+    public int totalFallenPins(Pin secondPins) {
+        return pins + secondPins.pins;
     }
 
-    private String ifCountOfPinsZeroTransGutter() {
-        if (pins == MINIMUM_PIN_COUNT) {
-            return BOWLING_STATUS_GUTTER;
-        }
-        return String.valueOf(pins);
-    }
-
-    public String record() {
-        if (isStrike()) {
-            return BOWLING_STATUS_STRIKE;
-        }
-        return ifCountOfPinsZeroTransGutter();
-    }
-
-    public String record(Pin secondPin) {
-        if (isSpare(secondPin)) {
-            return BOWLING_STATUS_SPARE;
-        }
-        return String.valueOf(secondPin.count());
-    }
 
     @Override
     public boolean equals(Object o) {
