@@ -25,8 +25,26 @@ public class Frames {
         return new Frames(frames);
     }
 
+    public Frame pitch(String inputScore) {
+        Frame frame = getCurrentFrame();
+        frame.pitch(inputScore);
+        return frame;
+    }
+
+    public Frame next() {
+        return getCurrentFrame().next();
+    }
+
     public int getFrameNumber() {
         return frames.get(currentFrameIndex()).getFrameNumber();
+    }
+
+    public boolean canPitching() {
+        return getCurrentFrame().canPitching();
+    }
+
+    public boolean isStrikeIgnore() {
+        return getCurrentFrame().isStrikeIgnore();
     }
 
     public List<Frame> getFrames() {

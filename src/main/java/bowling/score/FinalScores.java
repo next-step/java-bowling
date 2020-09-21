@@ -22,7 +22,6 @@ public class FinalScores extends Scores{
         if (isFirstCount()) {
             return true;
         }
-        //scores.size() != NUMBER_ZERO
         if (isSecondCount() && getScore().isStrike()) {
             bonus = true;
             return true;

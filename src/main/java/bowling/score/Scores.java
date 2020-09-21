@@ -38,6 +38,10 @@ public abstract class Scores {
                 .get(index);
     }
 
+    public boolean getBonus() {
+        return bonus;
+    }
+
     public int getRemainingPins() {
         return SCORE_MAX_VALUE - sumAll();
     }
@@ -49,7 +53,7 @@ public abstract class Scores {
     }
 
     public boolean isSpare() {
-        if (scores.size() != NUMBER_TWO) {
+        if (scores.size() < NUMBER_TWO) {
             return false;
         }
         return sumAll() == SCORE_MAX_VALUE;

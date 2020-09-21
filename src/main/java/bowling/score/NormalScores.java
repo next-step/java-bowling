@@ -18,10 +18,10 @@ public class NormalScores extends Scores {
         if (isInitCount()) {
             return true;
         }
-        if (getScore().isStrike()) {
+        if (isSpare()) {
             return false;
         }
-        if (isSpare()) {
+        if (getScore().isStrike()) {
             return false;
         }
         if (isSecondCount()) {

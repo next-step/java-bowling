@@ -17,27 +17,24 @@ public class BowlingApplication {
 
         while (!bowling.isFinish()) {
             int frameNumber = bowling.getFrameNumber();
-            Frame frame = bowling.getCurrentFrame();
-
-            frame.pitch(InputView.inputScore(frameNumber));
+            bowling.pitch(InputView.inputScore(frameNumber));
             ResultView.printGameBoard(playerName, bowling);
 
-            canSecondPitching(bowling, playerName, frame);
-            Frame nextFrame = frame.next();
-            bowling.saveScore(nextFrame);
+            canSecondPitching(bowling, playerName);
+            bowling.saveScore(bowling.next());
         }
     }
 
-    private static void canSecondPitching(Frames bowling, String playerName, Frame frame) {
-        while (frame.canPitching()) {
+    private static void canSecondPitching(Frames bowling, String playerName) {
+        while (bowling.canPitching()) {
             int frameNumber = bowling.getFrameNumber();
-            frame.pitch(InputView.inputScore(frameNumber));
-            printSecondPitching(playerName, frame, bowling);
+            bowling.pitch(InputView.inputScore(frameNumber));
+            printSecondPitching(playerName, bowling);
         }
     }
 
-    private static void printSecondPitching(String playerName, Frame frame, Frames bowling) {
-        if (!frame.isStrikeIgnore()) {
+    private static void printSecondPitching(String playerName, Frames bowling) {
+        if (!bowling.isStrikeIgnore()) {
             ResultView.printGameBoard(playerName, bowling);
         }
     }

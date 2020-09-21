@@ -82,15 +82,16 @@ public class ResultView {
 
     private static String getScoreMark(Scores scores, int index, int frameNumber) {
         Score score = scores.getScoreIndex(index);
-        if ((frameNumber == Frame.FINAL_FRAME_NUMBER && score.isStrike()) || score.isStrike()) {
+        if ((frameNumber == Frame.FINAL_FRAME_NUMBER && score.isStrike())
+                || (index == NUMBER_ZERO && score.isStrike())) {
             return ScoreMark.STRIKE.toString();
+        }
+        if (((index == NUMBER_ONE) && scores.isSpare())
+                || (index == NUMBER_ONE && frameNumber == Frame.FINAL_FRAME_NUMBER) && scores.getBonus()) {
+            return ScoreMark.SPARE.toString();
         }
         if (score.isGutter()) {
             return ScoreMark.GUTTER.toString();
-        }
-        if ((index == NUMBER_ONE && scores.isSpare())
-                || ((frameNumber == Frame.FINAL_FRAME_NUMBER && index == NUMBER_ONE) && scores.size() == NUMBER_THREE)) {
-            return ScoreMark.SPARE.toString();
         }
         return String.valueOf(score);
     }
