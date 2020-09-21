@@ -25,7 +25,7 @@ public class Bowling {
         }
     }
 
-    public boolean isAllLaneEnd() {
+    boolean isAllLaneEnd() {
         return playerFrames.stream()
                 .allMatch(PlayerFrame::isComplete);
     }
