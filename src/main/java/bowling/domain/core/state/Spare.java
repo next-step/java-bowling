@@ -5,14 +5,14 @@ import bowling.domain.core.RolledResult;
 import bowling.domain.frame.TerminateFrame;
 
 public final class Spare implements RolledResult {
-    private final ImmutableTwoFallenPins twoFallenPins;
+    private ImmutableTwoFallenPins immutableTwoFallenPins;
 
     Spare(ImmutableTwoFallenPins twoFallenPins) {
-        this.twoFallenPins = twoFallenPins;
+        this.immutableTwoFallenPins = twoFallenPins;
     }
 
-    public static RolledResult expectSpareAfterBonusBowl(int rollingAttemptCount, RolledResult rolledResult){
-        if (isFinalTryCount(rollingAttemptCount) && rolledResult.isNotCompleteState()){
+    public static RolledResult expectSpareAfterBonusBowl(RolledResult rolledResult){
+        if (rolledResult instanceof Spare){
             return new SpareAfterBonusBowl(rolledResult);
         }
         return rolledResult;
@@ -31,11 +31,17 @@ public final class Spare implements RolledResult {
 
     @Override
     public ImmutableTwoFallenPins twoFallenPins() {
-        return twoFallenPins;
+        return immutableTwoFallenPins;
     }
 
     @Override
     public String description() {
         return String.format("%s|/", gutterOrFallenPinValue(0));
+    }
+
+    @Override
+    public String toString() {
+        return "Spare{" + immutableTwoFallenPins.getFallenPins(0) + ", " + immutableTwoFallenPins.getFallenPins(1) +
+            '}';
     }
 }

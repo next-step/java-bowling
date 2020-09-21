@@ -4,6 +4,7 @@ import bowling.domain.core.FallenPins;
 import bowling.domain.core.RolledResult;
 
 import static bowling.domain.core.state.ImmutableTwoFallenPins.strikeTwoFallenPins;
+import static bowling.domain.core.state.NotAtRolledResult.notAtRolledResult;
 
 final class Strike implements RolledResult {
     static final RolledResult strike = new Strike();
@@ -21,6 +22,11 @@ final class Strike implements RolledResult {
         }
 
         return score;
+    }
+
+    @Override
+    public RolledResult nextRolledResult(int fallenPinsValue) {
+        return notAtRolledResult().nextRolledResult(fallenPinsValue);
     }
 
     @Override

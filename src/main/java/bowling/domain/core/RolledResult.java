@@ -31,6 +31,9 @@ public interface RolledResult {
 
     default String gutterOrFallenPinValue(int rollingAttemptCount) {
         final ImmutableTwoFallenPins twoFallenPins = twoFallenPins();
+        if (FallenPins.empty().equals(twoFallenPins.getPins(rollingAttemptCount))){
+            return "?";
+        }
         if (twoFallenPins.isGutter(rollingAttemptCount)){
             return "-";
         }
@@ -38,4 +41,8 @@ public interface RolledResult {
     }
 
     ImmutableTwoFallenPins twoFallenPins();
+
+    default RolledResult nextRolledResult(int fallenPinsValue){
+        return notAtRolledResult();
+    }
 }

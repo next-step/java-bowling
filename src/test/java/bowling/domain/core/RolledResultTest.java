@@ -4,30 +4,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import bowling.domain.core.state.RolledResultFactory;
-
+import static bowling.domain.core.state.NotAtRolledResult.notAtRolledResult;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 @DisplayName("두번의 투구로 볼링 결과 테스트")
 class RolledResultTest {
-    private RolledResultFactory rolledResultFactory;
 
+    private RolledResult rolledResult;
     @BeforeEach
     void setUp() {
-        RolledResultFactory.init();
-        rolledResultFactory = RolledResultFactory.of();
+        rolledResult = notAtRolledResult();
     }
 
     RolledResult firstBowl(int fallenPins){
-        return RolledResultFactory.collectPins(fallenPins).toRolledResult();
+        rolledResult = rolledResult.nextRolledResult(fallenPins);
+        return rolledResult;
     }
 
     RolledResult secondBowl(RolledResult rolledResult, int fallenPins){
-        if (10 == rolledResult.twoFallenPins().secondFallenPinsValue() ){
-            return rolledResult;
-        }
-        return RolledResultFactory.collectPins(fallenPins).toRolledResult();
+        this.rolledResult = notAtRolledResult();
+        return rolledResult.nextRolledResult(fallenPins);
     }
 
     @DisplayName("첫번째 투구가 잘못된 경우 확인")
@@ -74,6 +71,7 @@ class RolledResultTest {
     @Test
     void spare() {
         assertThat(secondBowl(firstBowl(0), 10).description()).isEqualTo("-|/");
+
 
         RolledResult rolledResult = secondBowl(firstBowl(5), 5);
         assertThat(rolledResult.description()).isEqualTo("5|/");

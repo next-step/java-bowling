@@ -6,11 +6,13 @@ import java.util.List;
 import bowling.domain.core.RolledResult;
 import bowling.ui.result.DisplayRolledResult;
 
+import static bowling.domain.core.state.NotAtRolledResult.notAtRolledResult;
 import static bowling.domain.core.state.Spare.expectSpareAfterBonusBowl;
 import static java.util.stream.Collectors.joining;
 
 public final class TerminateFrame implements Frame {
     public static final int MAX_TRY_COUNT_SIZE = 3;
+    private RolledResult rolledResult = notAtRolledResult();
     private final List<RolledResult> rolledResults;
     private int tryCount;
 
@@ -20,12 +22,18 @@ public final class TerminateFrame implements Frame {
     }
 
     @Override
+    public RolledResult getRolledResult() {
+        return rolledResult;
+    }
+
+    @Override
     public void updateRolledResult(RolledResult rolledResult) {
-        rolledResult = expectSpareAfterBonusBowl(tryCount, rolledResult);
         if (rolledResult.isCompleteState()) {
-            rolledResults.add(rolledResult);
+            this.rolledResults.add(rolledResult);
+            this.rolledResult = notAtRolledResult();
+            this.tryCount += rolledResult.tryCountByTerminateFrame();
         }
-        tryCount += rolledResult.tryCountByTerminateFrame();
+        this.rolledResult = expectSpareAfterBonusBowl(rolledResult);
     }
 
     @Override

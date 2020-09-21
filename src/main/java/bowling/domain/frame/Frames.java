@@ -6,7 +6,6 @@ import java.util.stream.Stream;
 import bowling.domain.core.RolledResult;
 import bowling.ui.result.DisplayRolledResult;
 
-import static bowling.domain.core.state.NotAtRolledResult.notAtRolledResult;
 import static java.util.stream.Collectors.toList;
 
 public final class Frames {
@@ -27,15 +26,33 @@ public final class Frames {
         return new Frames();
     }
 
+    @Deprecated
     public void saveRolledResultAndShouldNextFrame(RolledResult rolledResult){
         updateCurrentFrameByRolledResult(rolledResult);
         updatePreviousFrameByScore(rolledResult);
         shouldNextFrame();
     }
 
+    public void saveRolledResultAndShouldNextFrame(int fallenPins){
+        updateCurrentFrameByRolledResult(fallenPins);
+        updatePreviousFrameByScore(currentRolledResult());
+        shouldNextFrame();
+    }
+
+    private RolledResult currentRolledResult() {
+        return currentFrame().getRolledResult();
+    }
+
+    @Deprecated
     private void updateCurrentFrameByRolledResult(RolledResult rolledResult) {
         if (isNotCompleteFrames()) {
             currentFrame().updateRolledResult(rolledResult);
+        }
+    }
+
+    private void updateCurrentFrameByRolledResult(int fallenPins) {
+        if (isNotCompleteFrames()) {
+            currentFrame().updateRolledResult(currentRolledResult().nextRolledResult(fallenPins));
         }
     }
 

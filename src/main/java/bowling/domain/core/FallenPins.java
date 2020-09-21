@@ -15,6 +15,8 @@ public final class FallenPins {
     private static final List<FallenPins> cachedPins;
     private final int fallenPins;
 
+    private static final FallenPins empty = new FallenPins(-1);
+
     static {
         final List<FallenPins> pins = IntStream.rangeClosed(MIN_FALLEN_PIN_COUNT, MAX_FALLEN_PIN_COUNT)
                                                .mapToObj(FallenPins::new)
@@ -37,6 +39,10 @@ public final class FallenPins {
 
     public static FallenPins zero(){
         return FallenPins.of(MIN_FALLEN_PIN_COUNT);
+    }
+
+    public static FallenPins empty(){
+        return empty;
     }
 
     private static void verifyPins(int fallenPinCount) {

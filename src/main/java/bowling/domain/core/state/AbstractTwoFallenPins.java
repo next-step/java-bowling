@@ -32,7 +32,7 @@ abstract class AbstractTwoFallenPins {
     }
 
     public boolean isGutter(){
-        return FallenPins.MIN_FALLEN_PIN_COUNT == firstFallenPins().plus(secondFallenPins());
+        return FallenPins.MIN_FALLEN_PIN_COUNT >= firstFallenPins().plus(secondFallenPins());
     }
 
     FallenPins secondFallenPins() {
@@ -61,7 +61,7 @@ abstract class AbstractTwoFallenPins {
         return this;
     }
 
-    FallenPins getPins(int index){
+    public FallenPins getPins(int index){
         verifyRollingTrialCount(index);
         return twoFallenPins.get(index);
     }
