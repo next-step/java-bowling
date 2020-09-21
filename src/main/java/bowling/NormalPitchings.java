@@ -77,12 +77,8 @@ public class NormalPitchings implements Pitchings {
         secondPitching.bowl(pin);
     }
 
-    public boolean isFirstPitchingClear() {
+    public boolean isStrike() {
         return firstPitching.isClear();
-    }
-
-    public boolean isSecondPitchingClear() {
-        return secondPitching.isClear();
     }
 
     public boolean isOverMaxPins(Pin pin) {

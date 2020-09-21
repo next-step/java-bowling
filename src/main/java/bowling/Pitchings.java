@@ -22,9 +22,7 @@ public interface Pitchings {
 
     boolean isDone();
 
-    boolean isFirstPitchingClear();
-
-    boolean isSecondPitchingClear();
+    boolean isStrike();
 
     boolean isSpare();
 

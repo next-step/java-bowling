@@ -41,7 +41,7 @@ public class LastPitchings implements Pitchings {
     }
 
     private void checkAndSetSecondPitching() {
-        if (normalPitchings.isFirstPitchingClear()) {
+        if (normalPitchings.isStrike()) {
             normalPitchings.bowlSecondPitching(Pin.ofMin());
         }
     }
@@ -53,7 +53,7 @@ public class LastPitchings implements Pitchings {
     }
 
     private void validateAndSetBonusPitching() {
-        if (normalPitchings.isFirstPitchingClear() || normalPitchings.isSpare()) {
+        if (normalPitchings.isStrike() || normalPitchings.isSpare()) {
             return;
         }
         bonusPitching.bowl(Pin.ofMin());
@@ -91,17 +91,12 @@ public class LastPitchings implements Pitchings {
 
     @Override
     public boolean isDone() {
-        return isFirstDone() && isSecondDone() && isBonusDone();
+        return normalPitchings.isDone() && isBonusDone();
     }
 
     @Override
-    public boolean isFirstPitchingClear() {
-        return normalPitchings.isFirstPitchingClear();
-    }
-
-    @Override
-    public boolean isSecondPitchingClear() {
-        return normalPitchings.isSecondPitchingClear();
+    public boolean isStrike() {
+        return normalPitchings.isStrike();
     }
 
     @Override

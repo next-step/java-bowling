@@ -68,7 +68,7 @@ public class Frame {
         if (isLastFrame()) {
             return isDone();
         }
-        if (pitchings.isFirstPitchingClear()) {
+        if (pitchings.isStrike()) {
             return nextFrame.canCalculateScore();
         }
         if (pitchings.isSpare()) {
@@ -84,7 +84,7 @@ public class Frame {
         if (isLastFrame()) {
             return pitchings.calculateScore();
         }
-        if (pitchings.isFirstPitchingClear()) {
+        if (pitchings.isStrike()) {
             return pitchings.calculateScore() + nextFrame.calculateScore();
         }
         if (pitchings.isSpare()) {
