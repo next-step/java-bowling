@@ -10,6 +10,8 @@ public class FinalFrame implements Frame {
     private static final int PINS_LIMIT = 10;
     private static final int CAN_ROLL_LIMIT = 2;
     private static final String ROLL_COUNT_ERRORS = "일반 게임에서는 두번만 던질 수 있습니다.";
+    public static final int TOTAL_PIN_COUNT = 10;
+    public static final int MAXIMUM_CAN_ROLL = 3;
 
     private Pins pins;
     private int index;
@@ -30,7 +32,7 @@ public class FinalFrame implements Frame {
     }
 
     private boolean isPinOverflowRolledOnce(int pin) {
-        return isRolledOnce() && (isPinUnderTen()) && pins.getTotalPins() + pin > 10;
+        return isRolledOnce() && (isPinUnderTen()) && pins.getTotalPins() + pin > TOTAL_PIN_COUNT;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class FinalFrame implements Frame {
         if (isRolledTwice() && pins.getTotalPins() < PINS_LIMIT) {
             return false;
         }
-        if (pins.rollCount() < 3) {
+        if (pins.rollCount() < MAXIMUM_CAN_ROLL) {
             return true;
         }
         return false;
