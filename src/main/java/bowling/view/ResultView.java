@@ -1,7 +1,7 @@
 package bowling.view;
 
 import bowling.frame.Frame;
-import bowling.player.Player;
+import bowling.frame.Frames;
 import bowling.score.Score;
 import bowling.score.ScoreMark;
 import bowling.score.Scores;
@@ -24,9 +24,9 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printGameBoard(String name, Map<String, Player> playerInfo) {
+    public static void printGameBoard(String name, Map<String, Frames> bowlingInfo) {
         printHeader();
-        printBody(name, playerInfo);
+        printBody(name, bowlingInfo);
     }
 
     private static void printHeader() {
@@ -39,11 +39,11 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printBody(String name, Map<String, Player> playerInfo) {
-        System.out.print(String.format(PRINT_BODY_PLAYER_NAME_COLUMN, name.toUpperCase()));
+    private static void printBody(String name, Map<String, Frames> bowlingInfo) {
+        System.out.print(String.format(PRINT_BODY_PLAYER_NAME_COLUMN, name));
 
-        List<Frame> frames = playerInfo.get(name).getFrames();
-        int frameNumber = playerInfo.get(name).getFrameNumber();
+        List<Frame> frames = bowlingInfo.get(name).getFrames();
+        int frameNumber = bowlingInfo.get(name).getFrameNumber();
         List<String> results = getScores(frames, frameNumber);
 
         printProgressed(results);

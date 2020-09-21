@@ -1,11 +1,8 @@
 package bowling.player;
 
-import bowling.frame.Frame;
-import bowling.frame.Frames;
-import bowling.global.utils.ExceptionMessage;
 import bowling.global.exception.NotMatchingPlayerNameException;
+import bowling.global.utils.ExceptionMessage;
 
-import java.util.List;
 import java.util.Objects;
 
 import static bowling.global.utils.CommonConstant.NUMBER_THREE;
@@ -13,30 +10,21 @@ import static bowling.global.utils.CommonConstant.NUMBER_THREE;
 public class Player {
 
     private String name;
-    private Frames frames;
 
-    private Player(String name, Frames frame) {
+    private Player(String name) {
         validatePlayerNameisNull(name);
         validatePlayerNameLength(name);
         this.name = name.toUpperCase();
-        this.frames = frame;
     }
 
-    public static Player of(String name, Frames frame) {
-        return new Player(name, frame);
+    public static Player of(String name) {
+        return new Player(name);
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Frame> getFrames() {
-        return frames.getFrames();
-    }
-
-    public int getFrameNumber() {
-        return frames.getFrameNumber();
-    }
     private void validatePlayerNameisNull(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new NotMatchingPlayerNameException(ExceptionMessage.INVALID_PLAYER_NAME_IS_NULL);

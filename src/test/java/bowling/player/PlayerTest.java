@@ -24,7 +24,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어 입력")
     void createPlayer() {
-        player = Player.of("PJS", frames);
+        player = Player.of("PJS");
         assertThat(player.getName()).isEqualTo("PJS");
     }
 
@@ -33,7 +33,7 @@ class PlayerTest {
     void validatePlayerNameLength() {
         assertThatExceptionOfType(NotMatchingPlayerNameException.class)
                 .isThrownBy(() -> {
-                    player = Player.of("ABCD", frames);
+                    player = Player.of("ABCD");
                 });
     }
 
@@ -43,7 +43,7 @@ class PlayerTest {
     void validatePlayerNameIsNull(String name) {
         assertThatExceptionOfType(NotMatchingPlayerNameException.class)
                 .isThrownBy(() -> {
-                    player = Player.of(name, frames);
+                    player = Player.of(name);
                 });
     }
 

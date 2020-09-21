@@ -3,46 +3,46 @@ package bowling;
 import bowling.frame.Frame;
 import bowling.frame.Frames;
 import bowling.player.Player;
-import bowling.player.PlayerInfo;
+import bowling.frame.BowlingInfo;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
 public class BowlingApplication {
 
     public static void main(String[] args) {
-        Frames frames = Frames.init();
-        PlayerInfo playerInfo = PlayerInfo.info();
+        Frames bowling = Frames.init();
+        BowlingInfo bowlingInfo = BowlingInfo.info();
 
-        Player player = Player.of(InputView.inputPlayerName(), frames);
+        Player player = Player.of(InputView.inputPlayerName());
         String playerName = player.getName();
-        playerInfo.put(playerName, player);
-        ResultView.printGameBoard(playerName, playerInfo.getPlayerInfo());
+        bowlingInfo.put(playerName, bowling);
+        ResultView.printGameBoard(playerName, bowlingInfo.getPlayerInfo());
 
-        while (!frames.isFinish()) {
-            int frameNumber = frames.getFrameNumber();
-            Frame frame = frames.getCurrentFrame();
+        while (!bowling.isFinish()) {
+            int frameNumber = bowling.getFrameNumber();
+            Frame frame = bowling.getCurrentFrame();
 
             frame.pitch(InputView.inputScore(frameNumber));
-            playerInfo.put(playerName, Player.of(playerName, frames));
-            ResultView.printGameBoard(playerName, playerInfo.getPlayerInfo());
+            bowlingInfo.put(playerName, bowling);
+            ResultView.printGameBoard(playerName, bowlingInfo.getPlayerInfo());
 
-            canSecondPitching(frames, playerInfo, playerName, frameNumber, frame);
+            canSecondPitching(bowling, bowlingInfo, playerName, frameNumber, frame);
             Frame nextFrame = frame.next();
-            frames.saveScore(nextFrame);
+            bowling.saveScore(nextFrame);
         }
     }
 
-    private static void canSecondPitching(Frames frames, PlayerInfo playerInfo, String playerName, int frameNumber, Frame frame) {
+    private static void canSecondPitching(Frames bowling, BowlingInfo bowlingInfo, String playerName, int frameNumber, Frame frame) {
         while (frame.canPitching()) {
             frame.pitch(InputView.inputScore(frameNumber));
-            playerInfo.put(playerName, Player.of(playerName, frames));
-            printSecondPitching(playerInfo, playerName, frame);
+            bowlingInfo.put(playerName, bowling);
+            printSecondPitching(bowlingInfo, playerName, frame);
         }
     }
 
-    private static void printSecondPitching(PlayerInfo playerInfo, String playerName, Frame frame) {
+    private static void printSecondPitching(BowlingInfo bowlingInfo, String playerName, Frame frame) {
         if (!frame.isStrikeIgnore()) {
-            ResultView.printGameBoard(playerName, playerInfo.getPlayerInfo());
+            ResultView.printGameBoard(playerName, bowlingInfo.getPlayerInfo());
         }
     }
 }
