@@ -45,9 +45,6 @@ class LastPitchingsTest {
         then(pitchings.isDone()).isFalse();
 
         pitchings.bowl(Pin.ofMax());
-        then(pitchings.isDone()).isFalse();
-
-        pitchings.bowl(Pin.ofMax());
         then(pitchings.isDone()).isTrue();
     }
 
@@ -56,7 +53,7 @@ class LastPitchingsTest {
     void bowlThrownEnd() {
         Pitchings pitchings = LastPitchings.ofReady();
 
-        pitchings.bowl(Pin.ofMin());
+        pitchings.bowl(Pin.ofMax());
         pitchings.bowl(Pin.ofMin());
 
         assertThatThrownBy(() -> pitchings.bowl(Pin.of(2)))
