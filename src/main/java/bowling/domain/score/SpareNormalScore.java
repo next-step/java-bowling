@@ -17,7 +17,7 @@ public class SpareNormalScore extends AbstractNormalScore {
     }
 
     @Override
-    public boolean checkValid() {
+    protected boolean checkValid() {
         NormalFrame nextFrame = (NormalFrame) normalFrame.getNextFrame();
         return normalFrame.isCompleted() && nextFrame.checkSpareBonus();
     }

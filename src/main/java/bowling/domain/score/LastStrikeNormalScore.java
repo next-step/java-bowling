@@ -18,7 +18,7 @@ public class LastStrikeNormalScore extends AbstractNormalScore {
     }
 
     @Override
-    public boolean checkValid() {
+    protected boolean checkValid() {
         FinalFrame nextFrame = (FinalFrame) normalFrame.getNextFrame();
         return normalFrame.isCompleted() && nextFrame.checkStrikeBonus();
     }

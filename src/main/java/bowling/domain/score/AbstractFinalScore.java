@@ -16,6 +16,8 @@ public abstract class AbstractFinalScore implements Score {
         this.score = this.valid ? calculateScore() : NAN;
     }
 
+    protected abstract boolean checkValid();
+
     protected abstract int calculateScore();
 
     public int getScore() {

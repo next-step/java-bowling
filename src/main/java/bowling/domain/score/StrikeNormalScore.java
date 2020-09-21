@@ -20,11 +20,11 @@ public class StrikeNormalScore extends AbstractNormalScore {
     }
 
     @Override
-    public boolean checkValid() {
+    protected boolean checkValid() {
         NormalFrame nextFrame = (NormalFrame) normalFrame.getNextFrame();
         if (nextFrame.isStrike()) {
             Score spareNormalScore = getSpareNormalScore(nextFrame);
-            return spareNormalScore.checkValid();
+            return spareNormalScore.isValid();
         }
         return normalFrame.isCompleted() && nextFrame.checkStrikeBonus();
     }

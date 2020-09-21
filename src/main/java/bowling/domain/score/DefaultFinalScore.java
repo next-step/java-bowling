@@ -14,7 +14,7 @@ public class DefaultFinalScore extends AbstractFinalScore {
     }
 
     @Override
-    public boolean checkValid() {
+    protected boolean checkValid() {
         return finalFrame.isEnd();
     }
 
