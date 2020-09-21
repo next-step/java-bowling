@@ -34,10 +34,6 @@ public class NormalFrame extends AbstractFrame {
         return nextFrame;
     }
 
-    public boolean isLast() {
-        return frameNumber == LAST_NORMAL_FRAME_NUMBER;
-    }
-
     @Override
     public Score getScore() {
         return bowlResult.getScore(this);
@@ -53,6 +49,10 @@ public class NormalFrame extends AbstractFrame {
 
     public boolean isCompleted() {
         return bowlResult.isCompleted();
+    }
+
+    public boolean isLast() {
+        return frameNumber == LAST_NORMAL_FRAME_NUMBER;
     }
 
     @Override
