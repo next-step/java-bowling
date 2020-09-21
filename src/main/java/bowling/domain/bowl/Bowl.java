@@ -1,12 +1,17 @@
 package bowling.domain.bowl;
 
-import bowling.domain.NumberOfPins;
+import bowling.domain.NumberOfPin;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static bowling.domain.NumberOfPin.MAX_NUMBER_OF_PIN;
 
 public class Bowl {
 
-    private final NumberOfPins numberOfPins = new NumberOfPins();
+    public static final int MAX_BOWL_COUNT = 2;
 
-    private BowlStatus bowlStatus = BowlStatus.NONE;
+    private final List<NumberOfPin> numberOfPins = new ArrayList<>();
 
     public Bowl() {
 
@@ -21,55 +26,33 @@ public class Bowl {
         bowl(secondNumberOfPin);
     }
 
-    public void bowl(int numberOfPin) {
-        BowlValidator.validateBowlCount(getBowlCount());
-        BowlValidator.validateTotalNumberOfPins(getTotalNumberOfPin(), numberOfPin);
-        addNumberOfPins(numberOfPin);
-        updateNormalBowlResult();
+    public BowlResult bowl(int numberOfPin) {
+        validateBowlCount();
+        validateTotalNumberOfPins(numberOfPin);
+        numberOfPins.add(new NumberOfPin(numberOfPin));
+        return new BowlResult(numberOfPins);
     }
 
-    private void addNumberOfPins(int numberOfPin) {
-        numberOfPins.addNumberOfPins(numberOfPin);
+    public void validateBowlCount() {
+        if (getBowlCount() >= MAX_BOWL_COUNT) {
+            throw new IllegalArgumentException("2번까지만 투구할 수 있습니다.");
+        }
     }
 
-    private void updateNormalBowlResult() {
-        bowlStatus = BowlStatus.getType(this);
-    }
-
-    public boolean isNone() {
-        return numberOfPins.isNone();
-    }
-
-    public boolean isCompleted() {
-        return bowlStatus.isCompleted();
-    }
-
-    public boolean isIncomplete() {
-        return !isCompleted();
-    }
-
-    public boolean isBonus() {
-        return bowlStatus.isBonus();
-    }
-
-    public int getFirstNumberOfPins() {
-        return numberOfPins.getFirstNumberOfPins();
-    }
-
-    public int getSecondNumberOfPins() {
-        return numberOfPins.getSecondNumberOfPins();
+    public void validateTotalNumberOfPins(int numberOfPin) {
+        if (getTotalNumberOfPin() + numberOfPin > MAX_NUMBER_OF_PIN) {
+            throw new IllegalArgumentException("핀 갯수가 10개를 초과했습니다.");
+        }
     }
 
     public int getBowlCount() {
-        return numberOfPins.getBowlCount();
+        return numberOfPins.size();
     }
 
     public int getTotalNumberOfPin() {
-        return numberOfPins.getTotalNumberOfPin();
-    }
-
-    public String format() {
-        return bowlStatus.format(this);
+        return numberOfPins.stream()
+                .map(NumberOfPin::getNumberOfPin)
+                .reduce(0, Integer::sum);
     }
 
 }

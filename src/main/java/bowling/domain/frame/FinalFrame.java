@@ -1,12 +1,15 @@
 package bowling.domain.frame;
 
-import bowling.domain.bowl.Bowls;
-
-import java.util.Iterator;
+import bowling.domain.bowl.BowlResult;
+import bowling.domain.bowl.FinalBowl;
+import bowling.domain.bowl.FinalBowlResult;
+import bowling.domain.score.Score;
 
 public class FinalFrame extends AbstractFrame {
 
-    private final Bowls bowls = new Bowls();
+    private final FinalBowl finalBowl = new FinalBowl();
+
+    private FinalBowlResult finalBowlResult = new FinalBowlResult();
 
     public FinalFrame() {
         super(LAST_FRAME_NUMBER);
@@ -14,22 +17,53 @@ public class FinalFrame extends AbstractFrame {
 
     @Override
     public Frame bowl(int numberOfPin) {
-        bowls.bowl(numberOfPin);
-        return isCompleted() ? null : this;
-    }
-
-    public boolean isCompleted() {
-        return bowls.isCompleted();
+        BowlResult bowlResult = finalBowl.bowl(numberOfPin);
+        if (bowlResult.isBonus()) {
+            finalBowl.add();
+        }
+        if (bowlResult.isFirst()) {
+            finalBowlResult.add(bowlResult);
+        }
+        return this;
     }
 
     @Override
-    public Iterator<Frame> iterator() {
-        throw new UnsupportedOperationException();
+    public Score getScore() {
+        return finalBowlResult.getScore(this);
+    }
+
+    public int getTotalNumberOfPin() {
+        return finalBowlResult.getTotalNumberOfPin();
+    }
+
+    public boolean isStrike() {
+        return finalBowlResult.isStrike();
+    }
+
+    @Override
+    public boolean isEnd() {
+        return finalBowlResult.isEnd();
     }
 
     @Override
     public String toString() {
-        return bowls.format();
+        return finalBowlResult.format();
+    }
+
+    public boolean checkSpareBonus() {
+        return finalBowlResult.checkSpareBonus();
+    }
+
+    public int getSpareBonus() {
+        return finalBowlResult.getSpareBonus();
+    }
+
+    public boolean checkStrikeBonus() {
+        return finalBowlResult.checkStrikeBonus();
+    }
+
+    public int getStrikeBonus() {
+        return finalBowlResult.getStrikeBonus();
     }
 
 }
