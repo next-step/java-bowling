@@ -26,19 +26,23 @@ public class Frames {
     }
 
     public int getFrameNumber() {
-        return frames.get(getCurrentFrame()).getFrameNumber();
+        return frames.get(currentFrameIndex()).getFrameNumber();
     }
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
     }
 
-    public int getCurrentFrame() {
+    private int currentFrameIndex() {
         return this.frames.size() - NUMBER_ONE;
     }
 
+    public Frame getCurrentFrame() {
+        return frames.get(currentFrameIndex());
+    }
+
     public boolean isFinish() {
-        return frames.get(getCurrentFrame()).isFinal();
+        return frames.get(currentFrameIndex()).isFinal();
     }
 
 }

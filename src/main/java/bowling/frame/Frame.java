@@ -9,6 +9,7 @@ public abstract class Frame {
 
     public static final int FIRST_FRAME_NUMBER = 1;
     public static final int FINAL_FRAME_NUMBER = 10;
+    public static final int FINISH_FRAME_NUMBER = 11;
     public static final int INCREASE_FRAME_NUMBER = 1;
 
     protected int frameNumber;
@@ -19,17 +20,15 @@ public abstract class Frame {
         this.scores = scores;
     }
 
-    public boolean canNormalPitching() {
-        return scores.canNormalPitching();
-    }
-
-    public boolean canFinalPitching() {
-        return scores.canFinalPitching();
+    public boolean canPitching() {
+        return scores.canPitching();
     }
 
     public abstract Frame next();
 
-    public abstract boolean isFinal();
+    public boolean isFinal() {
+        return this.frameNumber >= FINISH_FRAME_NUMBER;
+    }
 
     public int getFrameNumber() {
         return frameNumber;
@@ -39,8 +38,8 @@ public abstract class Frame {
         return scores;
     }
 
-    public void pitch(Score score) {
-        scores.add(score);
+    public void pitch(String inputScore) {
+        scores.add(Score.from(inputScore));
     }
 
     public boolean isStrikeIgnore() {

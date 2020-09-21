@@ -7,43 +7,42 @@ import bowling.player.PlayerInfo;
 import bowling.view.InputView;
 import bowling.view.ResultView;
 
-
 public class BowlingApplication {
 
     public static void main(String[] args) {
         Frames frames = Frames.init();
         PlayerInfo playerInfo = PlayerInfo.info();
 
-        String name = InputView.inputPlayerName();
-        Player player = Player.of(name, frames);
-        playerInfo.put(name, player);
-        ResultView.printGameBoard(name, playerInfo.getPlayerInfo());
+        Player player = Player.of(InputView.inputPlayerName(), frames);
+        String playerName = player.getName();
+        playerInfo.put(playerName, player);
+        ResultView.printGameBoard(playerName, playerInfo.getPlayerInfo());
 
         while (!frames.isFinish()) {
-            // 1회차 투구
-            Frame frame = frames.getFrames().get(frames.getCurrentFrame());
-            frame.pitch(InputView.inputScore(frames.getFrameNumber()));
-            playerInfo.put(name, Player.of(name, frames));
-            ResultView.printGameBoard(name, playerInfo.getPlayerInfo());
+            int frameNumber = frames.getFrameNumber();
+            Frame frame = frames.getCurrentFrame();
 
-            // 아래 리팩토링
-            if (frame.canPitching()) {
-                frame.pitch(InputView.inputScore(frame.getFrameNumber()));
-            }
-            playerInfo.put(name, Player.of(name, frames));
-            if (!frame.isStrikeIgnore()) {
-                ResultView.printGameBoard(name, playerInfo.getPlayerInfo());
-            }
+            frame.pitch(InputView.inputScore(frameNumber));
+            playerInfo.put(playerName, Player.of(playerName, frames));
+            ResultView.printGameBoard(playerName, playerInfo.getPlayerInfo());
 
-            frame = frame.next();
-            frames.saveScore(frame);
+            canSecondPitching(frames, playerInfo, playerName, frameNumber, frame);
+            Frame nextFrame = frame.next();
+            frames.saveScore(nextFrame);
         }
-
-//        while (frame.canFinalPitching()) {
-//            frame = playBowling(frame, InputView.inputScore(frame.getFrameNumber()));
-//            playerInfo.put(name, Player.of(name, frames));
-//            ResultView.printGameBoard(name, playerInfo.getPlayerInfo());
-//        }
     }
 
+    private static void canSecondPitching(Frames frames, PlayerInfo playerInfo, String playerName, int frameNumber, Frame frame) {
+        while (frame.canPitching()) {
+            frame.pitch(InputView.inputScore(frameNumber));
+            playerInfo.put(playerName, Player.of(playerName, frames));
+            printSecondPitching(playerInfo, playerName, frame);
+        }
+    }
+
+    private static void printSecondPitching(PlayerInfo playerInfo, String playerName, Frame frame) {
+        if (!frame.isStrikeIgnore()) {
+            ResultView.printGameBoard(playerName, playerInfo.getPlayerInfo());
+        }
+    }
 }

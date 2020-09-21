@@ -1,5 +1,6 @@
 package bowling.frame;
 
+import bowling.score.FinalScores;
 import bowling.score.Scores;
 
 public class FinalFrame extends Frame {
@@ -9,7 +10,7 @@ public class FinalFrame extends Frame {
     }
 
     public static FinalFrame create(int frameNumber) {
-        return new FinalFrame(frameNumber, Scores.newInstance());
+        return new FinalFrame(frameNumber, FinalScores.newInstance());
     }
 
     @Override
@@ -17,8 +18,4 @@ public class FinalFrame extends Frame {
         return FinalFrame.create(getFrameNumber() + INCREASE_FRAME_NUMBER);
     }
 
-    @Override
-    public boolean isFinal() {
-        return getFrameNumber() >= Frame.FINAL_FRAME_NUMBER;
-    }
 }

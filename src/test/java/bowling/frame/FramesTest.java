@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedList;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FramesTest {
@@ -21,14 +19,15 @@ class FramesTest {
     @Test
     @DisplayName("Frames 초기화")
     void init() {
-        frames = Frames.saveScore(new LinkedList<>(), frame);
+        frames = Frames.init();
         assertThat(frames).isNotNull();
     }
 
     @Test
     @DisplayName("Frames에 Frame 추가")
     void add() {
-        frames = Frames.saveScore(new LinkedList<>(), frame);
+        frames = Frames.init();
+        frames.saveScore(frame);
         assertThat(frames.getFrameNumber()).isEqualTo(1);
     }
 }

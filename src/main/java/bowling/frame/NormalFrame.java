@@ -1,5 +1,6 @@
 package bowling.frame;
 
+import bowling.score.NormalScores;
 import bowling.score.Scores;
 
 public class NormalFrame extends Frame {
@@ -9,11 +10,11 @@ public class NormalFrame extends Frame {
     }
 
     public static NormalFrame create(int frameNumber) {
-        return new NormalFrame(frameNumber, Scores.newInstance());
+        return new NormalFrame(frameNumber, NormalScores.newInstance());
     }
 
     public static NormalFrame first() {
-        return new NormalFrame(Frame.FIRST_FRAME_NUMBER, Scores.newInstance());
+        return new NormalFrame(Frame.FIRST_FRAME_NUMBER, NormalScores.newInstance());
     }
 
     @Override
@@ -25,8 +26,4 @@ public class NormalFrame extends Frame {
         return FinalFrame.create(nextFrameNumber);
     }
 
-    @Override
-    public boolean isFinal() {
-        return (frameNumber == FINAL_FRAME_NUMBER);
-    }
 }

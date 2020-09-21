@@ -1,15 +1,12 @@
 package bowling.player;
 
 import bowling.frame.Frames;
-import bowling.frame.NormalFrame;
 import bowling.global.exception.NotMatchingPlayerNameException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-
-import java.util.LinkedList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -21,7 +18,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        frames = Frames.saveScore(new LinkedList<>(), NormalFrame.first());
+        frames = Frames.init();
     }
 
     @Test
