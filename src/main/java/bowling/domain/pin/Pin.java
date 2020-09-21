@@ -23,7 +23,6 @@ public class Pin {
         if (pins > MAXIMUM_PIN_NUMBER) {
             throw new IllegalArgumentException(PIN_MAX_ERROR);
         }
-
         if (pins < MINIMUM_PIN_NUMBER) {
             throw new IllegalArgumentException(PIN_MIN_ERROR);
         }

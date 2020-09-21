@@ -21,11 +21,9 @@ public class FinalFrame implements Frame {
 
     @Override
     public void roll(int pin) {
-
         if (isPinOverflowRolledOnce(pin)) {
             throw new IllegalArgumentException(ROLL_COUNT_ERRORS);
         }
-
         if (canRoll()) {
             pins.addPins(pin);
         }
@@ -36,12 +34,10 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public boolean canRoll () {
-
+    public boolean canRoll() {
         if (isRolledTwice() && pins.getTotalPins() < PINS_LIMIT) {
             return false;
         }
-
         if (pins.rollCount() < 3) {
             return true;
         }
@@ -64,7 +60,9 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Pins getPins() { return pins;}
+    public Pins getPins() {
+        return pins;
+    }
 
     private boolean isPinUnderTen() {
         return pins.getTotalPins() < PINS_LIMIT;
@@ -79,5 +77,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String getScore() { return ScoreConverter.convert(this); }
+    public String getScore() {
+        return ScoreConverter.convert(this);
+    }
 }

@@ -23,11 +23,9 @@ public class EnglishName {
         if (Objects.isNull(inputText) || inputText.isEmpty()) {
             throw new IllegalArgumentException("빈값이 입력될 수는 없습니다.");
         }
-
         if (isNotEnglish(inputText)) {
             throw new IllegalArgumentException(ENGLISH_INPUT_ONLY);
         }
-
         if (inputText.length() > MAXIMUM_NAME_LENGTH) {
             throw new IllegalArgumentException(ALLOW_THREE_WORD);
         }
