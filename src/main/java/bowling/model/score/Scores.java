@@ -18,8 +18,11 @@ public class Scores {
     public static Scores of(Frames framesInstance) {
         List<Frame> frames = framesInstance.getFrames();
         List<Score> scores = new ArrayList<>();
+        Score prev = Score.of(0);
         for (int i = 0; i < Frame.MAX_FRAME_INDEX; i++) {
-            scores.add(getScoreOfFrame(frames, frames.get(i)));
+            Score score = getScoreOfFrame(frames, frames.get(i));
+            prev = prev.add(score);
+            scores.add(prev);
         }
         return new Scores(scores);
     }
