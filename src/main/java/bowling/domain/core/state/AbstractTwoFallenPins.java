@@ -66,7 +66,7 @@ abstract class AbstractTwoFallenPins {
         return twoFallenPins.get(index);
     }
 
-    int getFallenPins(int index){
+    public int getFallenPins(int index){
         return getPins(index).getPrimitive();
     }
 }

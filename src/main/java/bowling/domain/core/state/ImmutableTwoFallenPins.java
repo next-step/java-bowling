@@ -33,11 +33,11 @@ public final class ImmutableTwoFallenPins extends AbstractTwoFallenPins {
         return strike;
     }
 
-    boolean isGutter(int tryCount){
+    public boolean isGutter(int tryCount){
         return FallenPins.MIN_FALLEN_PIN_COUNT == getPins(tryCount).getPrimitive();
     }
 
-    int totalScore(){
+    public int totalScore(){
         return twoFallenPins.stream()
                             .mapToInt(FallenPins::getPrimitive)
                             .sum();

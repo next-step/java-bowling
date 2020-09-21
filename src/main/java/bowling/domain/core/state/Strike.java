@@ -3,12 +3,10 @@ package bowling.domain.core.state;
 import bowling.domain.core.FallenPins;
 import bowling.domain.core.RolledResult;
 
-final class Strike extends AbstractTwoFallenPinsRolledResult {
-    static final RolledResult strike = new Strike();
+import static bowling.domain.core.state.ImmutableTwoFallenPins.strikeTwoFallenPins;
 
-    Strike() {
-        super(ImmutableTwoFallenPins.strikeTwoFallenPins());
-    }
+final class Strike implements RolledResult {
+    static final RolledResult strike = new Strike();
 
     @Override
     public int getNextRolledResultMergeScore(RolledResult nextRolledResult) {
@@ -23,6 +21,11 @@ final class Strike extends AbstractTwoFallenPinsRolledResult {
         }
 
         return score;
+    }
+
+    @Override
+    public ImmutableTwoFallenPins twoFallenPins() {
+        return strikeTwoFallenPins();
     }
 
     @Override

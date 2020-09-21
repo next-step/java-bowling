@@ -5,12 +5,8 @@ import bowling.domain.frame.TerminateFrame;
 
 import static bowling.domain.core.state.ImmutableTwoFallenPins.gutterTwoFallenPins;
 
-final class Gutter extends AbstractTwoFallenPinsRolledResult {
+final class Gutter implements RolledResult {
     static final RolledResult gutter = new Gutter();
-
-    private Gutter() {
-        super(gutterTwoFallenPins());
-    }
 
     @Override
     public int tryCountByTerminateFrame() {
@@ -20,5 +16,15 @@ final class Gutter extends AbstractTwoFallenPinsRolledResult {
     @Override
     public String description() {
         return "-";
+    }
+
+    @Override
+    public int getNextRolledResultMergeScore(RolledResult nextRolledResult) {
+        return 0;
+    }
+
+    @Override
+    public ImmutableTwoFallenPins twoFallenPins() {
+        return gutterTwoFallenPins();
     }
 }

@@ -25,7 +25,17 @@ public interface RolledResult {
         return getNextRolledResultMergeScore(notAtRolledResult());
     }
 
-    int getNextRolledResultMergeScore(RolledResult nextRolledResult);
+    default int getNextRolledResultMergeScore(RolledResult nextRolledResult){
+        return twoFallenPins().totalScore();
+    }
+
+    default String gutterOrFallenPinValue(int rollingAttemptCount) {
+        final ImmutableTwoFallenPins twoFallenPins = twoFallenPins();
+        if (twoFallenPins.isGutter(rollingAttemptCount)){
+            return "-";
+        }
+        return String.valueOf(twoFallenPins.getFallenPins(rollingAttemptCount));
+    }
 
     ImmutableTwoFallenPins twoFallenPins();
 }

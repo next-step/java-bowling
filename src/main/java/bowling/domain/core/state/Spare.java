@@ -1,12 +1,14 @@
 package bowling.domain.core.state;
 
+import bowling.domain.core.FallenPins;
 import bowling.domain.core.RolledResult;
 import bowling.domain.frame.TerminateFrame;
 
-public final class Spare extends AbstractTwoFallenPinsRolledResult {
+public final class Spare implements RolledResult {
+    private final ImmutableTwoFallenPins twoFallenPins;
 
-    Spare(ImmutableTwoFallenPins towFallenPins) {
-        super(towFallenPins);
+    Spare(ImmutableTwoFallenPins twoFallenPins) {
+        this.twoFallenPins = twoFallenPins;
     }
 
     public static RolledResult expectSpareAfterBonusBowl(int rollingAttemptCount, RolledResult rolledResult){
@@ -22,9 +24,14 @@ public final class Spare extends AbstractTwoFallenPinsRolledResult {
 
     @Override
     public int getNextRolledResultMergeScore(RolledResult nextRolledResult) {
-        return super.getNextRolledResultMergeScore(nextRolledResult)
+        return FallenPins.MAX_FALLEN_PIN_COUNT
             + nextRolledResult.twoFallenPins()
                               .firstFallenPinsValue();
+    }
+
+    @Override
+    public ImmutableTwoFallenPins twoFallenPins() {
+        return twoFallenPins;
     }
 
     @Override

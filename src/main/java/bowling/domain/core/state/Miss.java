@@ -1,11 +1,13 @@
 package bowling.domain.core.state;
 
+import bowling.domain.core.RolledResult;
 import bowling.domain.frame.TerminateFrame;
 
-final class Miss extends AbstractTwoFallenPinsRolledResult {
+final class Miss implements RolledResult {
+    private final ImmutableTwoFallenPins twoFallenPins;
 
-    Miss(ImmutableTwoFallenPins towFallenPins) {
-        super(towFallenPins);
+    Miss(ImmutableTwoFallenPins twoFallenPins) {
+        this.twoFallenPins = twoFallenPins;
     }
 
     @Override
@@ -16,5 +18,15 @@ final class Miss extends AbstractTwoFallenPinsRolledResult {
     @Override
     public String description() {
         return String.format("%s|%s", gutterOrFallenPinValue(0), gutterOrFallenPinValue(1));
+    }
+
+    @Override
+    public int getNextRolledResultMergeScore(RolledResult nextRolledResult) {
+        return twoFallenPins.totalScore();
+    }
+
+    @Override
+    public ImmutableTwoFallenPins twoFallenPins() {
+        return twoFallenPins;
     }
 }
