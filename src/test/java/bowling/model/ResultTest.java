@@ -15,12 +15,6 @@ public class ResultTest {
         assertThatIllegalArgumentException().isThrownBy(() -> Result.of(count));
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 })
-    public void of(int count) {
-        assertThat(Result.of(count)).isEqualTo(Result.of(count));
-    }
-
     @Test
     public void spare() {
         assertThatIllegalArgumentException().isThrownBy(() -> Result.spare(0));

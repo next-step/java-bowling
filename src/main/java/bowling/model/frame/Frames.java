@@ -1,5 +1,6 @@
 package bowling.model.frame;
 
+import bowling.model.score.Scores;
 import bowling.model.frame.dto.FramesDto;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Frames {
     }
 
     private void initFrames() {
-        Frame frame = Frame.start();
+        Frame frame = NormalFrame.start();
         frames.add(frame);
 
         for (int i = 1; i < Frame.MAX_FRAME_INDEX; i++) {
@@ -38,6 +39,14 @@ public class Frames {
 
     public boolean isEnded() {
         return getCurrentFrame() == null;
+    }
+
+    public Scores getScores() {
+        return Scores.of(this);
+    }
+
+    public List<Frame> getFrames() {
+        return frames;
     }
 
     public FramesDto getDto() {
