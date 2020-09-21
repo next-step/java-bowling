@@ -2,12 +2,14 @@ package bowling.domain;
 
 import bowling.domain.frame.Frames;
 import bowling.domain.roll.Roll;
+import bowling.domain.score.FrameScoreManager;
 
 import java.util.function.ToIntFunction;
 
 public class PlayerFrame {
 
     private final Frames frames = new Frames();
+    private final FrameScoreManager scoreManager = new FrameScoreManager();
     private final Pins pins = new Pins();
     private final Player player;
 
@@ -23,6 +25,7 @@ public class PlayerFrame {
         doRoll(playerRollFunction);
         if (!canRoll()) {
             frames.endCurrentFrame();
+            scoreManager.registerEndFrame(frames.getCurrFrameScore());
         }
         runnable.run();
     }
@@ -32,7 +35,9 @@ public class PlayerFrame {
     }
 
     public FrameRecordIterator getFrameRecordIterator() {
-        return new FrameRecordIterator(player, frames.markingIterator());
+        return new FrameRecordIterator(player,
+                frames.markingIterator(),
+                scoreManager.scoreIterator());
     }
 
     public void nextFrame() {
@@ -46,5 +51,6 @@ public class PlayerFrame {
         int countOfPins = playerRollFunction.applyAsInt(frames.getCurrentFrameNumber());
         Roll roll = pins.knockedDown(countOfPins);
         frames.addRoll(roll);
+        scoreManager.notify(roll);
     }
 }
