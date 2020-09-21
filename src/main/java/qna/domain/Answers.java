@@ -17,11 +17,11 @@ public class Answers {
         return new Answers(answer);
     }
 
-    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser, LocalDateTime now) throws CannotDeleteException {
         validateDeletion(loginUser);
         return answers.stream()
                 .peek(it -> it.setDeleted(true))
-                .map(it -> new DeleteHistory(ContentType.ANSWER, it.getId(), it.getWriter(), LocalDateTime.now()))
+                .map(it -> new DeleteHistory(ContentType.ANSWER, it.getId(), it.getWriter(), now))
                 .collect(Collectors.toList())
                 ;
 

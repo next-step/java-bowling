@@ -6,7 +6,10 @@ import qna.CannotDeleteException;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Question extends AbstractEntity {
@@ -95,10 +98,16 @@ public class Question extends AbstractEntity {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
 
-    public DeleteHistory delete(User loginUser) throws CannotDeleteException {
+    public List<DeleteHistory> delete(User loginUser, LocalDateTime now) throws CannotDeleteException {
         validateQuestion(loginUser);
+        Answers answers = Answers.of(getAnswers());
         setDeleted(true);
-        return new DeleteHistory(ContentType.QUESTION,getId(),loginUser, LocalDateTime.now());
+        return Stream.concat(
+                Stream.<DeleteHistory>builder()
+                        .add(new DeleteHistory(ContentType.QUESTION,getId(),loginUser,now))
+                        .build(), answers.delete(loginUser,now).stream()
+                )
+                .collect(Collectors.toList());
     }
 
     private void validateQuestion(User loginUser) throws CannotDeleteException {

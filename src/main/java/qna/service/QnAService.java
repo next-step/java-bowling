@@ -10,8 +10,6 @@ import qna.domain.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service("qnaService")
 public class QnAService {
@@ -35,11 +33,6 @@ public class QnAService {
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
         Question question = findQuestionById(questionId);
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
-
-        Answers answerList = Answers.of(question.getAnswers());
-        deleteHistories.add(question.delete(loginUser));
-        deleteHistories.addAll(answerList.delete(loginUser));
-        deleteHistoryService.saveAll(deleteHistories);
+        deleteHistoryService.saveAll(question.delete(loginUser,LocalDateTime.now()));
     }
 }

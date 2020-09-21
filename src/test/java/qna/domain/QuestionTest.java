@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import qna.CannotDeleteException;
 
+import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +28,7 @@ public class QuestionTest {
     @MethodSource("parameterForQuestionTest")
     @DisplayName("Question 생성 및 삭제기능 Test-DeleteHistory가 정상적으로 반환?")
     void initialize_Question(Question value) throws CannotDeleteException {
-        assertThat(value.delete(new User(1L, "javajigi", "password", "name", "javajigi@slipp.net"))).isNotNull();
+        assertThat(value.delete(new User(1L, "javajigi", "password", "name", "javajigi@slipp.net"), LocalDateTime.of(2020,5,21,14,23,11))).isNotNull();
     }
 
     @ParameterizedTest
@@ -36,7 +37,7 @@ public class QuestionTest {
     void initialize_Question_And_Exception(Question value) {
         assertThatExceptionOfType(CannotDeleteException.class)
                 .isThrownBy(
-                        () -> value.delete(new User( "javajigi", "password", "name", "javajigi@slipp.net"))
+                        () -> value.delete(new User( "javajigi", "password", "name", "javajigi@slipp.net"), LocalDateTime.of(2020,5,21,14,23,11))
                 ).withMessageMatching("질문을 삭제할 권한이 없습니다.");
     }
 }

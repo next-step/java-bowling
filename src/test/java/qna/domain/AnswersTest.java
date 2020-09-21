@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import qna.CannotDeleteException;
 
-import java.util.Arrays;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -36,7 +36,7 @@ public class AnswersTest {
     @DisplayName("기능이 정상적으로 작동했는지(Return이 Null이 아닌지) 확인")
     void initialize_Answers_And_Deletion(List<Answer> answerList) throws CannotDeleteException {
         Answers answers = Answers.of(answerList);
-        assertThat(answers.delete(new User(1L,"javajigi", "password", "name", "javajigi@slipp.net"))).isNotNull();
+        assertThat(answers.delete(new User(1L,"javajigi", "password", "name", "javajigi@slipp.net"), LocalDateTime.of(2020,5,21,14,23,11))).isNotNull();
     }
 
     @ParameterizedTest
@@ -46,7 +46,7 @@ public class AnswersTest {
         Answers answers = Answers.of(answerList);
         assertThatExceptionOfType(CannotDeleteException.class)
                 .isThrownBy(
-                        ()->answers.delete(new User("javajigi", "password", "name", "javajigi@slipp.net"))
+                        ()->answers.delete(new User("javajigi", "password", "name", "javajigi@slipp.net"), LocalDateTime.of(2020,5,21,14,23,11))
                 );
     }
 }
