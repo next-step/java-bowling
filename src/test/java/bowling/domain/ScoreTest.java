@@ -14,8 +14,7 @@ public class ScoreTest {
     @Test
     public void normalFrame_miss_gutter() {
         NormalFrame first = NormalFrame.firstFrame();
-        first.bowl(8);
-        first.bowl(1);
+        first.bowl(8).bowl(1);
         assertThat(first.getScore().isValid()).isTrue();
         assertThat(first.getScore().getScore()).isEqualTo(9);
     }
@@ -24,8 +23,7 @@ public class ScoreTest {
     @Test
     public void finalFrame_miss_gutter() {
         FinalFrame finalFrame = new FinalFrame();
-        finalFrame.bowl(8);
-        finalFrame.bowl(1);
+        finalFrame.bowl(8).bowl(1);
         assertThat(finalFrame.getScore().isValid()).isTrue();
         assertThat(finalFrame.getScore().getScore()).isEqualTo(9);
     }
@@ -70,9 +68,7 @@ public class ScoreTest {
     @Test
     public void finalFrame_spare() {
         FinalFrame finalFrame = new FinalFrame();
-        finalFrame.bowl(9);
-        finalFrame.bowl(1);
-        finalFrame.bowl(5);
+        finalFrame.bowl(9).bowl(1).bowl(5);
         assertThat(finalFrame.getScore().isValid()).isTrue();
         assertThat(finalFrame.getScore().getScore()).isEqualTo(15);
     }
@@ -81,9 +77,7 @@ public class ScoreTest {
     @Test
     public void finalFrame_srike() {
         FinalFrame finalFrame = new FinalFrame();
-        finalFrame.bowl(10);
-        finalFrame.bowl(10);
-        finalFrame.bowl(5);
+        finalFrame.bowl(10).bowl(10).bowl(5);
         assertThat(finalFrame.getScore().isValid()).isTrue();
         assertThat(finalFrame.getScore().getScore()).isEqualTo(25);
     }
