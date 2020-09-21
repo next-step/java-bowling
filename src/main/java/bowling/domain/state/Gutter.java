@@ -24,4 +24,9 @@ public class Gutter extends FinishedState {
     public Score getScore() {
         return Score.ofGutter();
     }
+
+    @Override
+    public boolean isFrameFinish(State state) {
+        return true;
+    }
 }

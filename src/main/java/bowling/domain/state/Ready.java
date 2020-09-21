@@ -35,4 +35,9 @@ public class Ready implements State {
         return Score.ofReady();
     }
 
+    @Override
+    public boolean isFrameFinish(State state) {
+        return false;
+    }
+
 }

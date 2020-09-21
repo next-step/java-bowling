@@ -13,7 +13,5 @@ public interface State {
 
     Score getScore();
 
-    default boolean isFrameFinish(State state) {
-        return state instanceof Miss || state instanceof Gutter;
-    }
+    boolean isFrameFinish(State state);
 }

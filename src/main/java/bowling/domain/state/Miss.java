@@ -38,4 +38,9 @@ public class Miss extends FinishedState {
     public Score getScore() {
         return first.add(second).toScore();
     }
+
+    @Override
+    public boolean isFrameFinish(State state) {
+        return true;
+    }
 }

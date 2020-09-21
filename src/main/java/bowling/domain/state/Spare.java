@@ -35,6 +35,11 @@ public class Spare extends FinishedState {
     }
 
     @Override
+    public boolean isFrameFinish(State state) {
+        return false;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

@@ -20,4 +20,9 @@ public class Strike extends FinishedState {
     public Score getScore() {
         return Score.ofStrike();
     }
+
+    @Override
+    public boolean isFrameFinish(State state) {
+        return false;
+    }
 }

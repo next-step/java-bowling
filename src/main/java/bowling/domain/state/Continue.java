@@ -43,6 +43,11 @@ public class Continue implements State {
         return first.toScore(Remaining.CONTINUE);
     }
 
+    @Override
+    public boolean isFrameFinish(State state) {
+        return false;
+    }
+
     public Pin getFirstPin() {
         return this.first;
     }
