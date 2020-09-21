@@ -84,13 +84,17 @@ public class Frame {
         if (isLastFrame()) {
             return pitchings.calculateScore();
         }
+        return pitchings.calculateScore() + getBonusScore();
+    }
+
+    public int getBonusScore() {
         if (pitchings.isStrike()) {
-            return pitchings.calculateScore() + nextFrame.calculateScore();
+            return nextFrame.calculateScore();
         }
         if (pitchings.isSpare()) {
-            return pitchings.calculateScore() + nextFrame.getFirstScore();
+            return nextFrame.getFirstScore();
         }
-        return pitchings.calculateScore();
+        return 0;
     }
 
     private int getFirstScore() {
