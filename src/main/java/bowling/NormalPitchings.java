@@ -86,7 +86,7 @@ public class NormalPitchings implements Pitchings {
     }
 
     public boolean isSpare() {
-        return firstPitching.isSpare(secondPitching);
+        return !isStrike() && firstPitching.isSpare(secondPitching);
     }
 
     @Override

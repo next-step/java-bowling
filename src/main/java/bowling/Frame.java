@@ -15,6 +15,10 @@ public class Frame {
         return new Frame(NormalPitchings.ofReady());
     }
 
+    public Pitchings getPitchings() {
+        return this.pitchings;
+    }
+
     public Frame getNextFrame() {
         return this.nextFrame;
     }
@@ -76,19 +80,6 @@ public class Frame {
         if (isLastFrame()) {
             return isDone();
         }
-//        if (isSpare()) {
-//            return nextFrame.isFirstDone();
-//        }
-//        if (isStrike()) {
-//            if (nextFrame.isStrike()) {
-//                if (nextFrame.isLastFrame() && isStrike()) {
-//                    return nextFrame.isDone();
-//                }
-//                return nextFrame.nextFrame.isFirstDone();
-//            }
-//            return nextFrame.isDone();
-//        }
-//        return isDone();
         FrameStatus frameStatus = FrameStatus.of(this);
         return frameStatus.canCalculateScore(this);
     }
@@ -100,30 +91,7 @@ public class Frame {
         if (isLastFrame()) {
             return pitchings.calculateScore();
         }
-        return pitchings.calculateScore() + getBonusScore();
-    }
-
-    public int getBonusScore() {
-        if (isStrike()) {
-            return nextFrame.giveStrikeBonusScore();
-        }
-        if (isSpare()) {
-            return nextFrame.giveSpareBonusScore();
-        }
-        return 0;
-    }
-
-    private int giveStrikeBonusScore() {
-        if (isLastFrame() && isStrike()) {
-            return pitchings.giveStrikeBonusScore() + pitchings.giveBonusScore();
-        }
-        if (isStrike()) {
-            return pitchings.giveStrikeBonusScore() + nextFrame.giveSpareBonusScore();
-        }
-        return pitchings.giveStrikeBonusScore();
-    }
-
-    private int giveSpareBonusScore() {
-        return pitchings.giveSpareBonusScore();
+        FrameStatus frameStatus = FrameStatus.of(this);
+        return pitchings.calculateScore() + frameStatus.getBonusScore(this);
     }
 }
