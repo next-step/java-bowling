@@ -110,7 +110,6 @@ class FrameTest {
         Pin expected = Pin.of(2);
 
         last.bowl(Pin.ofMax());
-        last.bowl(Pin.ofMax());
         last.bowl(expected);
 
         then(last.getBonusPin()).isEqualTo(expected);
@@ -145,9 +144,6 @@ class FrameTest {
         Frame frame = Frame.of();
         frame.last();
         Frame last = frame.getNextFrame();
-
-        last.bowl(Pin.ofMax());
-        then(last.isBonusDone()).isFalse();
 
         last.bowl(Pin.ofMax());
         then(last.isBonusDone()).isFalse();
