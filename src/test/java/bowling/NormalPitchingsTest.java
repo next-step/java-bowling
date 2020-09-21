@@ -128,27 +128,27 @@ class NormalPitchingsTest {
         then(NormalPitchings.ofReady()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> provideIsCleareArguments() {
+    private static Stream<Arguments> provideIsClearArguments() {
         Pitching min = Pitching.of(PitchingStatus.Done, Pin.ofMin());
         Pitching max = Pitching.of(PitchingStatus.Done, Pin.ofMax());
         return Stream.of(
-                Arguments.of(NormalPitchings.of(max, min), Boolean.TRUE),
-                Arguments.of(NormalPitchings.of(min, max), Boolean.FALSE)
+                Arguments.of(NormalPitchings.of(max, max), Boolean.TRUE),
+                Arguments.of(NormalPitchings.of(min, min), Boolean.FALSE)
         );
     }
 
     @ParameterizedTest
     @DisplayName("쓰러뜨린 첫 번째 핀 확인 검증")
-    @MethodSource("provideIsCleareArguments")
+    @MethodSource("provideIsClearArguments")
     void isFirstPitchingClear(NormalPitchings normalPitchings, boolean expected) {
         then(normalPitchings.isFirstPitchingClear()).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @DisplayName("쓰러뜨린 두 번째 핀 확인 검증")
-    @MethodSource("provideIsCleareArguments")
+    @MethodSource("provideIsClearArguments")
     void isSecondPitchingClear(NormalPitchings normalPitchings, boolean expected) {
-        then(normalPitchings.isFirstPitchingClear()).isEqualTo(expected);
+        then(normalPitchings.isSecondPitchingClear()).isEqualTo(expected);
     }
 
     @Test
