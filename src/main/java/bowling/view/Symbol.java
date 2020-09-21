@@ -6,13 +6,64 @@ import bowling.domain.state.Spare;
 import bowling.domain.state.State;
 
 public enum Symbol {
-    Strike("X"),
-    Spare("|/"),
-    Gutter("-"),
-    Miss("|"),
-    Ready(""),
-    Continue(""),
-    AllGutter("-|-");
+    STRIKE("X") {
+        @Override
+        public String getSymbol(State state) {
+            return STRIKE.toString();
+        }
+    },
+    SPARE("|/") {
+        @Override
+        public String getSymbol(State state) {
+            String spareFirst = ((Spare) state).getFirstPin().toString();
+            if(checkGutter(spareFirst))
+                spareFirst = GUTTER.toString();
+            return spareFirst + SPARE.toString();
+        }
+    },
+    GUTTER("-") {
+        @Override
+        public String getSymbol(State state) {
+            return GUTTER.toString();
+        }
+    },
+    MISS("|") {
+        @Override
+        public String getSymbol(State state) {
+            String missFirst = ((Miss) state).getFirstPin().toString();
+            String missSecond = ((Miss) state).getSecondPin().toString();
+
+            if(checkGutter(missFirst))
+                missFirst = GUTTER.toString();
+            if(checkGutter(missSecond))
+                missSecond = GUTTER.toString();
+
+            return missFirst + MISS.toString() + missSecond;
+        }
+    },
+    READY("") {
+        @Override
+        public String getSymbol(State state) {
+            return READY.toString();
+        }
+    },
+    CONTINUE("") {
+        @Override
+        public String getSymbol(State state) {
+            String continueFirst = ((Continue) state).getFirstPin().toString();
+
+            if(checkGutter(continueFirst))
+                continueFirst = Symbol.GUTTER.toString();
+
+            return continueFirst;
+        }
+    },
+    ALL_GUTTER("-|-") {
+        @Override
+        public String getSymbol(State state) {
+            return ALL_GUTTER.toString();
+        }
+    };
 
     private String symbol;
 
@@ -20,38 +71,11 @@ public enum Symbol {
         this.symbol = symbol;
     }
 
+    public abstract String getSymbol(State state);
+
     @Override
     public String toString() {
         return symbol;
-    }
-
-
-    public static String getSpareSymbol(State state) {
-        String spareFirst = ((Spare) state).getFirstPin().toString();
-        if(checkGutter(spareFirst))
-            spareFirst = Symbol.Gutter.toString();
-        return spareFirst + Symbol.Spare.toString();
-    }
-
-    public static String getMissSymbol(State state) {
-        String missFirst = ((Miss) state).getFirstPin().toString();
-        String missSecond = ((Miss) state).getSecondPin().toString();
-
-        if(checkGutter(missFirst))
-            missFirst = Symbol.Gutter.toString();
-        if(checkGutter(missSecond))
-            missSecond = Symbol.Gutter.toString();
-
-        return missFirst + Symbol.Miss.toString() + missSecond;
-    }
-
-    public static String getContinueSymbol(State state) {
-        String continueFirst = ((Continue) state).getFirstPin().toString();
-
-        if(checkGutter(continueFirst))
-            continueFirst = Symbol.Gutter.toString();
-
-        return continueFirst;
     }
 
     private static boolean checkGutter(String felledPin) {

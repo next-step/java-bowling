@@ -89,26 +89,26 @@ public class OutputView {
     private static String makeSymbol(State state) {
 
         String stateSymbol = null;
-        Symbol symbol = Symbol.valueOf(state.getClass().getSimpleName());
+        Symbol symbol = Symbol.valueOf(state.getClass().getSimpleName().toUpperCase());
 
         switch (symbol) {
-            case Strike:
-                stateSymbol = Symbol.Strike.toString();
+            case STRIKE:
+                stateSymbol = Symbol.STRIKE.getSymbol(state);
                 break;
-            case Spare:
-                stateSymbol = Symbol.getSpareSymbol(state);
+            case SPARE:
+                stateSymbol = Symbol.SPARE.getSymbol(state);
                 break;
-            case Miss:
-                stateSymbol = Symbol.getMissSymbol(state);
+            case MISS:
+                stateSymbol = Symbol.MISS.getSymbol(state);
                 break;
-            case Gutter:
-                stateSymbol = Symbol.AllGutter.toString();
+            case GUTTER:
+                stateSymbol = Symbol.ALL_GUTTER.getSymbol(state);
                 break;
-            case Ready:
-                stateSymbol = Symbol.Ready.toString();
+            case READY:
+                stateSymbol = Symbol.READY.getSymbol(state);
                 break;
-            case Continue:
-                stateSymbol = Symbol.getContinueSymbol(state);
+            case CONTINUE:
+                stateSymbol = Symbol.CONTINUE.getSymbol(state);
                 break;
         }
         return stateSymbol;
