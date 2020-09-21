@@ -7,7 +7,6 @@ import bowling.score.ScoreMark;
 import bowling.score.Scores;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -24,9 +23,9 @@ public class ResultView {
     private ResultView() {
     }
 
-    public static void printGameBoard(String name, Map<String, Frames> bowlingInfo) {
+    public static void printGameBoard(String name, Frames bowling) {
         printHeader();
-        printBody(name, bowlingInfo);
+        printBody(name, bowling);
     }
 
     private static void printHeader() {
@@ -39,11 +38,11 @@ public class ResultView {
         System.out.println();
     }
 
-    private static void printBody(String name, Map<String, Frames> bowlingInfo) {
+    private static void printBody(String name, Frames bowling) {
         System.out.print(String.format(PRINT_BODY_PLAYER_NAME_COLUMN, name));
 
-        List<Frame> frames = bowlingInfo.get(name).getFrames();
-        int frameNumber = bowlingInfo.get(name).getFrameNumber();
+        List<Frame> frames = bowling.getFrames();
+        int frameNumber = bowling.getFrameNumber();
         List<String> results = getScores(frames, frameNumber);
 
         printProgressed(results);
