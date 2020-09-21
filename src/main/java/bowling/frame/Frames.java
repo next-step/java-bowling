@@ -8,29 +8,37 @@ import static bowling.global.utils.CommonConstant.NUMBER_ONE;
 
 public class Frames {
 
-    LinkedList<Frame> frames;
+    private List<Frame> frames;
 
-    public Frames(LinkedList<Frame> frames) {
+    public Frames(List<Frame> frames) {
         this.frames = frames;
     }
 
-    public static Frames saveScore(LinkedList<Frame> frames, Frame frame) {
-        LinkedList<Frame> currentFrame = frames;
-        currentFrame.add(frame);
-        return new Frames(currentFrame);
+    public void saveScore(Frame frame) {
+        this.frames.add(frame);
+    }
+
+    public static Frames init() {
+        Frame frame = NormalFrame.first();
+        List<Frame> frames = new LinkedList<>();
+        frames.add(frame);
+        return new Frames(frames);
     }
 
     public int getFrameNumber() {
-        return frames.getLast().getFrameNumber();
+        return frames.get(getCurrentFrame()).getFrameNumber();
     }
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
     }
 
-    public boolean isNormalFinish() {
-        int frameIndex = this.frames.size() - NUMBER_ONE;
-        return frames.get(frameIndex).isFinal();
+    public int getCurrentFrame() {
+        return this.frames.size() - NUMBER_ONE;
+    }
+
+    public boolean isFinish() {
+        return frames.get(getCurrentFrame()).isFinal();
     }
 
 }
