@@ -15,16 +15,20 @@ public class OutputView {
     private static final String BLANK = " ";
     private static final int MAX_NAME_LENGTH = 5;
     private static final String BOARD_TITLE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
-
+    private static final String BLANK_BLOCK = "      |";
+    public static final int NAME_BLOCK = 0;
     private static Map<Integer, String> map = new HashMap<>();
-    private static String[] scores = new String[11];
+    private static final int BOARD_BOX = 11;
+    private static String[] scores = new String[BOARD_BOX];
 
+    private OutputView() {
+    }
 
     private static void arrayInit(Player player) {
         System.out.println(BOARD_TITLE);
-        scores[0] = ("|" + makeSpaceName(player.getName()) + "|");
+        scores[NAME_BLOCK] = ("|" + makeSpaceName(player.getName()) + "|");
         for (int i = 1; i < scores.length; i++) {
-            scores[i] = "      |";
+            scores[i] = BLANK_BLOCK;
         }
     }
 
@@ -46,7 +50,7 @@ public class OutputView {
 
     private static void scoreAppend(Frame frame, Map map) {
         for (int i = 1; i <= frame.getIndex(); i++) {
-            scores[i] = makeSpaceScore(frame.getPins(), String.valueOf(map.get(i)));
+            scores[i] = makeSpaceScore(String.valueOf(map.get(i)));
         }
     }
 
@@ -66,7 +70,7 @@ public class OutputView {
         return makeSpaceName(userName + BLANK);
     }
 
-    private static String makeSpaceScore(Pins pins, String score) {
+    private static String makeSpaceScore(String score) {
         if (score.length() > MAX_NAME_LENGTH) {
             return score;
         }
