@@ -23,6 +23,10 @@ public class Scores {
                 .map(Score::toString)
                 .collect(Collectors.joining(" | "));
 
-        return String.format("%-5.5s%2s", str , "");
+        return String.format("%-7.7s", str);
+    }
+
+    public int getSize(){
+        return scores.size();
     }
 }

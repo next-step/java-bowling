@@ -2,25 +2,22 @@ package bowling;
 
 import java.util.Stack;
 
-public class FinalFrame implements Frame{
+public class LastFrame implements Frame{
 
     private Stack<BowlingPin> bowlingPins = new Stack<>();
     private Scores scores;
 
-    private int tryCount;
-    private int NORMAL_TRY_COUNT = 2;
-
-    public FinalFrame() {
+    public LastFrame() {
         this.scores = Scores.init();
         bowlingPins.push(BowlingPin.getInitialPin());
     }
 
-    public static FinalFrame of() {
-        return new FinalFrame();
+    public static LastFrame of() {
+        return new LastFrame();
     }
 
     @Override
-    public void play(int numberOfFallenPin) {
+    public LastFrame play(int numberOfFallenPin) {
         if(!isTerminate()){
             bowlingPins.push(BowlingPin.getInitialPin());
         }
@@ -33,28 +30,42 @@ public class FinalFrame implements Frame{
         Score score = Score.of(numberOfFallenPin, isSpare());
         scores.add(score);
 
-        increaseTryCount();
+        return this;
     }
 
     private boolean isSpare(){
         BowlingPin lastBowlingPin = bowlingPins.peek();
-        if(tryCount == 2 && lastBowlingPin.isAllFallen()){
+        if(scores.getSize() == 2 && lastBowlingPin.isAllFallen()){
             return true;
         }
         return false;
     }
 
-    private void increaseTryCount() {
-        tryCount++;
+    public boolean isTerminate(){
+        return  isExceedMaxTryCount() && isLeftBowlingPin();
     }
 
-    public boolean isTerminate(){
+    private boolean isExceedMaxTryCount(){
+        return scores.getSize() >= 2;
+    }
+
+    private boolean isLeftBowlingPin(){
         BowlingPin lastBowlingPin = bowlingPins.peek();
-        return  (tryCount >= 2 && !lastBowlingPin.isAllFallen());
+        return lastBowlingPin.isAllFallen();
     }
 
     @Override
     public String getScores() {
         return scores.toString();
+    }
+
+    @Override
+    public Frame getNext() {
+        throw new IllegalArgumentException("this is fianl frame");
+    }
+
+    @Override
+    public boolean isLastFrame() {
+        return true;
     }
 }
