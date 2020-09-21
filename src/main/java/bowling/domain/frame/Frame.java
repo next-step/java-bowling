@@ -8,6 +8,7 @@ public interface Frame extends Iterable<Frame> {
     Frame getNextFrame();
     Score getScore();
     int getFrameNumber();
+    boolean isCompleted();
     boolean isEnd();
 
 }
