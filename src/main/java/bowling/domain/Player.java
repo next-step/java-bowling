@@ -1,5 +1,8 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.frame.NormalFrame;
+
 import java.util.Objects;
 
 public class Player {
@@ -7,6 +10,9 @@ public class Player {
     public static final int MAX_NAME_LENGTH = 3;
 
     private final String name;
+    private final Frame firstFrame = NormalFrame.firstFrame();
+
+    private Frame frame = firstFrame;
 
     public Player(String name) {
         if (name.length() > MAX_NAME_LENGTH) {
@@ -17,6 +23,19 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public Frame bowl(int numberOfPins) {
+        frame = frame.bowl(numberOfPins);
+        return frame;
+    }
+
+    public Frame getFirstFrame() {
+        return firstFrame;
+    }
+
+    public Frame getFrame() {
+        return frame;
     }
 
     @Override

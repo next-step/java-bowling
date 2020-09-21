@@ -1,5 +1,6 @@
 package bowling.view;
 
+import bowling.domain.Player;
 import bowling.domain.frame.Frame;
 
 import java.text.MessageFormat;
@@ -13,14 +14,19 @@ public class InputView {
 
     }
 
+    public static int getPlayerCount() {
+        System.out.print("player count?: ");
+        return nextInt();
+    }
+
     public static String getPlayerName() {
         System.out.print("플레이어 이름은(3 english letters)?: ");
         return scanner.nextLine();
     }
 
-    public static int getNumberOfPins(Frame frame) {
+    public static int getNumberOfPins(Player player) {
         System.out.println();
-        System.out.print(MessageFormat.format("{0}프레임 투구 : ", frame.getFrameNumber()));
+        System.out.print(MessageFormat.format("{0}'s turn : ", player.getName()));
         return nextInt();
     }
 

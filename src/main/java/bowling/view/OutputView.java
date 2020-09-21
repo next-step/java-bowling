@@ -6,6 +6,7 @@ import bowling.domain.score.Score;
 import bowling.util.StringUtils;
 
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static bowling.domain.frame.AbstractFrame.LAST_FRAME_NUMBER;
@@ -14,16 +15,19 @@ public class OutputView {
 
     public static final String EMPTY = "      |";
 
-    public static void printBoard(Player player, Frame firstFrame) {
+    public static void printBoard(List<Player> players) {
         System.out.println("| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |");
-        printPins(player, firstFrame);
-        System.out.println();
-        printScore(firstFrame);
-        System.out.println();
+        players.forEach(player -> {
+            printPins(player);
+            System.out.println();
+            printScore(player);
+            System.out.println();
+        });
     }
 
-    private static void printPins(Player player, Frame firstFrame) {
+    private static void printPins(Player player) {
         System.out.print(MessageFormat.format("| {0} |", StringUtils.leftPad(player.getName(), 4)));
+        Frame firstFrame = player.getFirstFrame();
         Frame lastFrame = firstFrame;
         for (Frame nextFrame: firstFrame) {
             System.out.print(StringUtils.leftPad(nextFrame.toString(), 5) + " |");
@@ -32,9 +36,10 @@ public class OutputView {
         printEmptyBoard(lastFrame);
     }
 
-    private static void printScore(Frame firstFrame) {
+    private static void printScore(Player player) {
         System.out.print("|      |");
         int totalScore = 0;
+        Frame firstFrame = player.getFirstFrame();
         Frame lastFrame = firstFrame;
         for (Frame nextFrame: firstFrame) {
             totalScore = printScore(totalScore, nextFrame);

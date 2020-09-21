@@ -32,6 +32,11 @@ public class FinalFrame extends AbstractFrame {
         return finalBowlResult.getScore(this);
     }
 
+    @Override
+    public boolean isCompleted() {
+        return isEnd();
+    }
+
     public int getTotalNumberOfPin() {
         return finalBowlResult.getTotalNumberOfPin();
     }
