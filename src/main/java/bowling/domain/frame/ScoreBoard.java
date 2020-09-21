@@ -3,28 +3,22 @@ package bowling.domain.frame;
 import bowling.domain.pin.Pin;
 import bowling.domain.user.User;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 public class ScoreBoard {
 
     private final User user;
-    private final Frame firstFrame;
-    private Frame currentFrame;
+    private final Frames frames;
 
-    private ScoreBoard(User user) {
+    private ScoreBoard(User user, Frames frames) {
         this.user = user;
-        this.firstFrame = Frame.init();
-        this.currentFrame = firstFrame;
+        this.frames = frames;
     }
 
-    public static ScoreBoard init(User user) {
-        return new ScoreBoard(user);
+    public static ScoreBoard init(User user, Frames frames) {
+        return new ScoreBoard(user, frames);
     }
 
     public void bowl(Pin felledPin) {
-        currentFrame = currentFrame.bowl(felledPin);
+        frames.bowl(felledPin);
     }
 
     public User getUser() {
@@ -32,15 +26,7 @@ public class ScoreBoard {
     }
 
     public boolean isGameOver() {
-        return currentFrame.isEnd();
-    }
-
-    public Frame getFirstFrame() {
-        return firstFrame;
-    }
-
-    public Index getLastIndex() {
-        return currentFrame.getIndex();
+        return frames.isGameOver();
     }
 
 }
