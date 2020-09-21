@@ -1,8 +1,9 @@
 package bowling.controller;
 
 import bowling.model.BowlingGame;
-import bowling.model.BowlingGames;
 import bowling.model.Score;
+import bowling.model.User;
+import bowling.model.BowlingUsers;
 import bowling.model.frame.Frame;
 import bowling.view.InputView;
 import bowling.view.ResultView;
@@ -15,13 +16,13 @@ public class BowlingController {
 
     public static void main(String[] args) {
         int countOfUsers = InputView.getCountOfUsers();
-        BowlingGames bowlingGames = BowlingGames.of(InputView.getUserNames(countOfUsers));
+        BowlingUsers bowlingUsers = BowlingUsers.of(InputView.getUserNames(countOfUsers));
 
-        while (!bowlingGames.isEnd()) {
-            String userName = bowlingGames.getTurnToUser();
+        while (!bowlingUsers.isEnd()) {
+            String userName = bowlingUsers.getTurnUserName();
             int countOfPins = InputView.getFallenPins(userName);
-            bowlingGames.bowling(countOfPins);
-            printResults(bowlingGames.getBowlingGames());
+            bowlingUsers.bowling(countOfPins);
+            printResults(bowlingUsers.getUsers());
         }
     }
 
@@ -37,9 +38,10 @@ public class BowlingController {
         return Arrays.asList(scoreArray);
     }
 
-    private static void printResults(Stream<BowlingGame> bowlingGames) {
-        bowlingGames.forEach(bowlingGame -> {
-            ResultView.printScoreBoard(bowlingGame.getFramesSize(), bowlingGame.getUserName(), bowlingGame.getFrames());
+    private static void printResults(Stream<User> users) {
+        users.forEach(user -> {
+            BowlingGame bowlingGame = user.getBowlingGame();
+            ResultView.printScoreBoard(bowlingGame.getFramesSize(), user.getName(), bowlingGame.getFrames());
             ResultView.printTotalScoreBoard(getTotalScores(bowlingGame.getFrames()));
         });
     }
