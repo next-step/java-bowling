@@ -52,13 +52,23 @@ public class FinalFrame extends Frame {
         if (isEqualSize(3)) {
             return true;
         }
-        if (isEqualSize(2) && containsSpare()) {
+
+        if (isEqualSize(2) && isSecondEndTryCheck()) {
             return true;
         }
 
-        if (isEqualSize(2) && onlyFirstStrike() && isSecondFinish()) {
+        return false;
+    }
+
+    private boolean isSecondEndTryCheck() {
+        if (containsSpare()) {
             return true;
         }
+
+        if (onlyFirstStrike() && isSecondFinish()) {
+            return true;
+        }
+
         return false;
     }
 
@@ -106,7 +116,7 @@ public class FinalFrame extends Frame {
     public Score calculateAdditionalScore(Score beforeScore) {
         Score score = getStateByIndex(0).calculateAdditionalScore(beforeScore);
 
-        if(score.canCalculateScore() || states.size() == 1){
+        if (score.canCalculateScore() || states.size() == 1) {
             return score;
         }
 
