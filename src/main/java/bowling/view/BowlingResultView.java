@@ -39,17 +39,26 @@ public class BowlingResultView {
         return (frameRecordIterator) -> {
             Player player = frameRecordIterator.getPlayer();
             System.out.println(getPlayerRow(player, frameRecordIterator.getMarkingIterator()));
+            System.out.println(getScoreRow(frameRecordIterator.getScoreIterator()));
         };
     }
 
     private static String getEmptyScoreBoard(Player player) {
-        return getPlayerRow(player, Collections.emptyIterator());
+        String playerRow = getPlayerRow(player, Collections.emptyIterator());
+        String scoreRow = getScoreRow(Collections.emptyIterator());
+        return playerRow + System.lineSeparator() + scoreRow;
     }
 
     private static String getPlayerRow(Player player, Iterator<String> iterator) {
         return createRow(i -> i == 0
                 ? String.format("%4s", player.getName())
                 : iterator.hasNext() ? iterator.next() : EMPTY_SECTION);
+    }
+
+    private static String getScoreRow(Iterator<Integer> iterator) {
+        return createRow(i -> i == 0
+                ? EMPTY_SECTION
+                : iterator.hasNext() ? iterator.next().toString() : EMPTY_SECTION);
     }
 
     private static String createRow(IntFunction<String> mapper) {
