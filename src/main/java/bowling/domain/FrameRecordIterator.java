@@ -6,10 +6,14 @@ public class FrameRecordIterator {
 
     private final Player player;
     private final Iterator<String> markingIterator;
+    private final Iterator<Integer> scoreIterator;
 
-    public FrameRecordIterator(Player player, Iterator<String> markingIterator) {
+    public FrameRecordIterator(Player player,
+                               Iterator<String> markingIterator,
+                               Iterator<Integer> scoreIterator) {
         this.player = player;
         this.markingIterator = markingIterator;
+        this.scoreIterator = scoreIterator;
     }
 
     public Player getPlayer() {
@@ -18,5 +22,9 @@ public class FrameRecordIterator {
 
     public Iterator<String> getMarkingIterator() {
         return markingIterator;
+    }
+
+    public Iterator<Integer> getScoreIterator() {
+        return scoreIterator;
     }
 }
