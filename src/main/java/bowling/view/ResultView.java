@@ -79,7 +79,7 @@ public class ResultView {
 
     private static void printTotalScores(List<Integer> totalScores) {
         System.out.print(VERTICAL_LINE);
-        System.out.printf(BOARD_FORMAT, "SCORE");
+        System.out.printf(BOARD_FORMAT, "");
 
         totalScores.forEach(totalScore -> {
             System.out.printf(BOARD_FORMAT, BLANK + totalScore);

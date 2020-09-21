@@ -1,12 +1,10 @@
 package bowling.model.frame;
 
 import bowling.model.Score;
-import bowling.model.delivery.Delivery;
 import bowling.model.delivery.DeliveryEntry;
 import bowling.model.delivery.FinalDeliveryEntry;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class FinalFrame extends Frame {
 
@@ -26,13 +24,8 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public boolean isEnd() {
-        return deliveryEntry.isEnd();
-    }
-
-    @Override
-    public Stream<Delivery> getDeliveries() {
-        return deliveryEntry.getDeliveries();
+    public Score getScore() {
+        return Score.of(getTotalFallenPins(), 0);
     }
 
     @Override
@@ -46,11 +39,6 @@ public class FinalFrame extends Frame {
     @Override
     public int hashCode() {
         return Objects.hash(deliveryEntry);
-    }
-
-    @Override
-    public Score getScore() {
-        return Score.of(getTotalFallenPins(), 0);
     }
 
 }

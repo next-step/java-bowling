@@ -1,6 +1,7 @@
 package bowling.model;
 
-import bowling.ExceptionMessages;
+import bowling.exception.PinsLastPinsException;
+import bowling.exception.PinsMinException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,8 +21,7 @@ class PinsTest {
     @DisplayName("Pins 생성 실패 : 0이하인 경우 ")
     void create_fail_min(int countOfPins) {
         assertThatThrownBy(() -> Pins.of(countOfPins))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ExceptionMessages.PINS_MIN_EXCEPTION);
+                .isInstanceOf(PinsMinException.class);
     }
 
     private static Stream<Arguments> provideForGetState() {
@@ -75,8 +75,7 @@ class PinsTest {
 
         // when
         assertThatThrownBy(() -> pins.getNextState(nextFallenPins))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ExceptionMessages.PINS_LAST_PINS_EXCEPTION);
+                .isInstanceOf(PinsLastPinsException.class);
     }
 
 }

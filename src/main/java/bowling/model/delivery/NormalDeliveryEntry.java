@@ -1,6 +1,6 @@
 package bowling.model.delivery;
 
-import bowling.ExceptionMessages;
+import bowling.exception.NoLeftDeliveryException;
 import bowling.model.State;
 
 import java.util.LinkedList;
@@ -31,7 +31,7 @@ public class NormalDeliveryEntry implements DeliveryEntry {
 
     private void verifyCanSecondDelivery() {
         if (isEnd()) {
-            throw new IllegalStateException(ExceptionMessages.NO_LEFT_DELIVERY);
+            throw new NoLeftDeliveryException();
         }
     }
 
@@ -55,7 +55,7 @@ public class NormalDeliveryEntry implements DeliveryEntry {
     public int getTotalFallenPins() {
         return deliveries.stream()
                 .map(Delivery::getFallenPins)
-                .reduce(0, (a, b) -> a + b);
+                .reduce(0, Integer::sum);
     }
 
     @Override

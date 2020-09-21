@@ -1,9 +1,7 @@
 package bowling.model.delivery;
 
-import bowling.ExceptionMessages;
+import bowling.exception.NoLeftDeliveryException;
 import bowling.model.State;
-import bowling.model.delivery.Delivery;
-import bowling.model.delivery.NormalDeliveryEntry;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +15,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalDeliveryEntryTest {
 
@@ -50,9 +48,8 @@ class NormalDeliveryEntryTest {
         NormalDeliveryEntry normalDeliveryEntry = NormalDeliveryEntry.of(10);
 
         // when
-        assertThatIllegalStateException()
-                .isThrownBy(() -> { normalDeliveryEntry.roll(3); })
-                .withMessage(ExceptionMessages.NO_LEFT_DELIVERY);
+        assertThatThrownBy(() -> { normalDeliveryEntry.roll(3); })
+                .isInstanceOf(NoLeftDeliveryException.class);
     }
 
 

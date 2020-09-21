@@ -1,6 +1,7 @@
 package bowling.model;
 
-import bowling.ExceptionMessages;
+import bowling.exception.ScoreMaxAdditionalCountException;
+import bowling.exception.ScoreMinAdditionalCountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,8 +20,7 @@ class ScoreTest {
     @DisplayName("Score 생성 실패 : 추가 점수 갯수가 0미만인 경우 ")
     void create_fail_min(int leftAddScoreCount) {
         assertThatThrownBy(() -> Score.of(10, leftAddScoreCount))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ExceptionMessages.SCORE_MIN_ADDITIONAL_COUNT_EXCEPTION);
+                .isInstanceOf(ScoreMinAdditionalCountException.class);
     }
 
     @ParameterizedTest
@@ -28,8 +28,7 @@ class ScoreTest {
     @DisplayName("Score 생성 실패 : 추가 점수 갯수가 2초과인 경우 ")
     void create_fail_max(int leftAddScoreCount) {
         assertThatThrownBy(() -> Score.of(10, leftAddScoreCount))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ExceptionMessages.SCORE_MIN_ADDITIONAL_COUNT_EXCEPTION);
+                .isInstanceOf(ScoreMaxAdditionalCountException.class);
     }
 
     private static Stream<Arguments> provideForAddScore() {

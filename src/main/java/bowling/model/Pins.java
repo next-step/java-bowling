@@ -1,6 +1,8 @@
 package bowling.model;
 
-import bowling.ExceptionMessages;
+import bowling.exception.PinsLastPinsException;
+import bowling.exception.PinsMaxException;
+import bowling.exception.PinsMinException;
 
 import java.util.Objects;
 
@@ -21,11 +23,11 @@ public class Pins {
 
     private static void validatePins(int pins) {
         if (pins < MIN_PINS) {
-            throw new IllegalArgumentException(ExceptionMessages.PINS_MIN_EXCEPTION);
+            throw new PinsMinException();
         }
 
         if (pins > MAX_PINS) {
-            throw new IllegalArgumentException(ExceptionMessages.PINS_MAX_EXCEPTION);
+            throw new PinsMaxException();
         }
     }
 
@@ -36,7 +38,7 @@ public class Pins {
     private void verifyNextFallenPins(int nextFallenPins) {
         validatePins(nextFallenPins);
         if (this.fallenPins + nextFallenPins > MAX_PINS) {
-            throw new IllegalArgumentException(ExceptionMessages.PINS_LAST_PINS_EXCEPTION);
+            throw new PinsLastPinsException();
         }
     }
 

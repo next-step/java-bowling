@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 public class BowlingGame {
 
-    private Frames frames;
+    private final Frames frames;
     private int playFrameNo;
 
     private BowlingGame(Frames frames, int playFrameNo) {
@@ -19,10 +19,6 @@ public class BowlingGame {
         return new BowlingGame(new Frames(), 1);
     }
 
-    public static BowlingGame of(Frames frames, int playFrameNo) {
-        return new BowlingGame(frames, playFrameNo);
-    }
-
     public void bowling(int countOfPins) {
         playFrameNo = frames.playBowling(playFrameNo, countOfPins);
     }
@@ -31,12 +27,16 @@ public class BowlingGame {
         return frames.isEnd();
     }
 
-    public int getPlayFrameNo() {
-        return playFrameNo;
+    public int getFramesSize() {
+        return frames.getFramesSize();
     }
 
     public Stream<Frame> getFrames() {
         return frames.getFrames();
+    }
+
+    public boolean isEndOf(int playFrameNo) {
+        return frames.isEndOf(playFrameNo);
     }
 
 }
