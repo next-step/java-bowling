@@ -64,17 +64,33 @@ public class Frame {
         this.nextFrame = new Frame(LastPitchings.ofReady());
     }
 
+    public boolean isStrike() {
+        return pitchings.isStrike();
+    }
+
+    public boolean isSpare() {
+        return pitchings.isSpare();
+    }
+
     public boolean canCalculateScore() {
         if (isLastFrame()) {
             return isDone();
         }
-        if (pitchings.isStrike()) {
-            return nextFrame.canCalculateScore();
-        }
-        if (pitchings.isSpare()) {
-            return nextFrame.isFirstDone();
-        }
-        return isDone();
+//        if (isSpare()) {
+//            return nextFrame.isFirstDone();
+//        }
+//        if (isStrike()) {
+//            if (nextFrame.isStrike()) {
+//                if (nextFrame.isLastFrame() && isStrike()) {
+//                    return nextFrame.isDone();
+//                }
+//                return nextFrame.nextFrame.isFirstDone();
+//            }
+//            return nextFrame.isDone();
+//        }
+//        return isDone();
+        FrameStatus frameStatus = FrameStatus.of(this);
+        return frameStatus.canCalculateScore(this);
     }
 
     public int calculateScore() {
@@ -88,16 +104,26 @@ public class Frame {
     }
 
     public int getBonusScore() {
-        if (pitchings.isStrike()) {
-            return nextFrame.calculateScore();
+        if (isStrike()) {
+            return nextFrame.giveStrikeBonusScore();
         }
-        if (pitchings.isSpare()) {
-            return nextFrame.getFirstScore();
+        if (isSpare()) {
+            return nextFrame.giveSpareBonusScore();
         }
         return 0;
     }
 
-    private int getFirstScore() {
-        return pitchings.getFirstScore();
+    private int giveStrikeBonusScore() {
+        if (isLastFrame() && isStrike()) {
+            return pitchings.giveStrikeBonusScore() + pitchings.giveBonusScore();
+        }
+        if (isStrike()) {
+            return pitchings.giveStrikeBonusScore() + nextFrame.giveSpareBonusScore();
+        }
+        return pitchings.giveStrikeBonusScore();
+    }
+
+    private int giveSpareBonusScore() {
+        return pitchings.giveSpareBonusScore();
     }
 }

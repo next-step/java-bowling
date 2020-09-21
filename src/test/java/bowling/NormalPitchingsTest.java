@@ -175,7 +175,7 @@ class NormalPitchingsTest {
         Pitching min = Pitching.of(PitchingStatus.Done, Pin.ofMin());
         NormalPitchings normalPitchings = NormalPitchings.of(pitching, min);
 
-        then(normalPitchings.getFirstScore()).isEqualTo(expected);
+        then(normalPitchings.giveSpareBonusScore()).isEqualTo(expected);
     }
 
     @Test

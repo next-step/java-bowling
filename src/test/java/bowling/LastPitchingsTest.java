@@ -157,7 +157,7 @@ class LastPitchingsTest {
         NormalPitchings normalPitchings = NormalPitchings.of(pitching, min);
         LastPitchings lastPitchings = LastPitchings.of(normalPitchings, min);
 
-        then(lastPitchings.getFirstScore()).isEqualTo(expected);
+        then(lastPitchings.giveSpareBonusScore()).isEqualTo(expected);
     }
 
     @Test

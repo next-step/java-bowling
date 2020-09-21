@@ -12,7 +12,7 @@ import java.util.List;
 
 public class controller {
 
-    private static final int TOTAL_FRAMES = 3;
+    private static final int TOTAL_FRAMES = 5;
     private static final InputView inputView = new InputView();
     private static final ResultView resultView = new ResultView();
 

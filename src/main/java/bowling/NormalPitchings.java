@@ -90,7 +90,12 @@ public class NormalPitchings implements Pitchings {
     }
 
     @Override
-    public int getFirstScore() {
+    public int giveStrikeBonusScore() {
+        return firstPitching.getScore() + secondPitching.getScore();
+    }
+
+    @Override
+    public int giveSpareBonusScore() {
         return firstPitching.getScore();
     }
 

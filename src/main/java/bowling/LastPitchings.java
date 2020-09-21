@@ -105,12 +105,21 @@ public class LastPitchings implements Pitchings {
     }
 
     @Override
-    public int getFirstScore() {
-        return normalPitchings.getFirstScore();
+    public int giveStrikeBonusScore() {
+        return normalPitchings.giveStrikeBonusScore();
+    }
+    @Override
+    public int giveSpareBonusScore() {
+        return normalPitchings.giveSpareBonusScore();
     }
 
     @Override
     public int calculateScore() {
         return normalPitchings.calculateScore() + bonusPitching.getScore();
+    }
+
+    @Override
+    public int giveBonusScore() {
+        return bonusPitching.getScore();
     }
 }

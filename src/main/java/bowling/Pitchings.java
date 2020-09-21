@@ -26,7 +26,13 @@ public interface Pitchings {
 
     boolean isSpare();
 
-    int getFirstScore();
-
     int calculateScore();
+
+    int giveStrikeBonusScore();
+
+    int giveSpareBonusScore();
+
+    default int giveBonusScore() {
+        return 0;
+    }
 }
