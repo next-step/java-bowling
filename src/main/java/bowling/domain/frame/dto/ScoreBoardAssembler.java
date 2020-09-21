@@ -1,6 +1,7 @@
 package bowling.domain.frame.dto;
 
 import bowling.domain.frame.Frame;
+import bowling.domain.frame.Frames;
 import bowling.domain.frame.ScoreBoard;
 import bowling.domain.user.dto.UserAssembler;
 
@@ -12,9 +13,10 @@ public class ScoreBoardAssembler {
     private ScoreBoardAssembler() {
     }
 
-    public static ScoreBoardDTO assemble(ScoreBoard scoreBoard) {
+    public static ScoreBoardDTO assemble(ScoreBoard scoreBoard, Frames initFrames) {
         List<Frame> frames = new ArrayList<>();
-        Frame currentFrame = scoreBoard.getFirstFrame();
+        Frame currentFrame = initFrames.getFirstFrame();
+        // Frame currentFrame = scoreBoard.getFirstFrame();
         frames.add(currentFrame);
         while (currentFrame.hasNext()) {
             currentFrame = currentFrame.next();
