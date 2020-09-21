@@ -1,6 +1,5 @@
 package bowling.view;
 
-import bowling.model.score.Scores;
 import bowling.model.frame.dto.FramesDto;
 import bowling.model.Player;
 import bowling.model.Result;
@@ -25,16 +24,7 @@ public class ResultView {
                 .map(frameDto -> frameDto.getResults().stream()
                     .map(Result::toString)
                     .collect(Collectors.joining(DELIMITER)))
-                .forEach(str -> System.out.printf("%s %s", StringUtils.center(str, RESULT_LENGTH), DELIMITER));
-
-        System.out.println();
-    }
-
-    public void printScores(Scores scores) {
-        System.out.printf("%s%s%s", DELIMITER, StringUtils.center("", PLAYER_LENGTH), DELIMITER);
-
-        scores.getScores()
-                .forEach(score -> System.out.printf("%s %s", StringUtils.center(score.toString(), RESULT_LENGTH), DELIMITER));
+                .forEach(str -> System.out.print(String.format("%s %s", StringUtils.center(str, RESULT_LENGTH), DELIMITER)));
 
         System.out.println();
         System.out.println();

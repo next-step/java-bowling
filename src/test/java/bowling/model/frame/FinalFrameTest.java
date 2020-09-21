@@ -16,8 +16,8 @@ public class FinalFrameTest {
         assertThat(frame.hasStrike()).isTrue();
         assertThat(frame.hasSpare()).isFalse();
 
-        frame.addResult(NormalFrame.MAX_FRAME_INDEX);
-        frame.addResult(NormalFrame.MAX_FRAME_INDEX);
+        frame.addResult(Frame.MAX_FRAME_INDEX);
+        frame.addResult(Frame.MAX_FRAME_INDEX);
         assertThat(frame.isEnded()).isTrue();
 
         assertThatIllegalStateException().isThrownBy(() -> frame.addResult(1));

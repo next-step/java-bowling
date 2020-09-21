@@ -11,7 +11,7 @@ public class FramesTest {
         Frames frames = new Frames();
         assertThat(frames.getCurrentFrame().getIndex()).isEqualTo(1);
         frames.addResult(Result.MAX_PIN_COUNT);
-        for (int i = 2; i < NormalFrame.MAX_FRAME_INDEX; i++) {
+        for (int i = 2; i < Frame.MAX_FRAME_INDEX; i++) {
             assertThat(frames.isEnded()).isFalse();
             assertThat(frames.getCurrentFrame().getIndex()).isEqualTo(i);
             frames.addResult(Result.MAX_PIN_COUNT);

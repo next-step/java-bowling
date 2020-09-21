@@ -3,9 +3,10 @@ package bowling.model.frame;
 import bowling.model.Result;
 import bowling.model.frame.dto.FrameDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Frame {
+public class Frame {
     public static final int MAX_FRAME_INDEX = 10;
 
     protected final int index;
@@ -16,7 +17,13 @@ public abstract class Frame {
         this.results = results;
     }
 
-    public abstract Frame next();
+    public static Frame start() {
+        return new Frame(1, new ArrayList<>());
+    }
+
+    public int getIndex() {
+        return index;
+    }
 
     public void addResult(int count) {
         if (isEnded()) {
@@ -32,8 +39,14 @@ public abstract class Frame {
         results.add(Result.of(count));
     }
 
-    public int getIndex() {
-        return index;
+    public Frame next() {
+        if (index == MAX_FRAME_INDEX) {
+            throw new RuntimeException("마지막 프레임입니다.");
+        }
+        if (index == MAX_FRAME_INDEX - 1) {
+            return new FinalFrame();
+        }
+        return new Frame(index + 1, new ArrayList<>());
     }
 
     public boolean isEnded() {
@@ -47,28 +60,21 @@ public abstract class Frame {
 
     public boolean hasStrike() {
         return results.stream()
-                .anyMatch(Result::isStrike);
+                .anyMatch(Result.STRIKE::equals);
     }
 
-    public int getTotalPinCount() {
+    protected int getTotalPinCount() {
         return results.stream()
                 .map(Result::get)
                 .reduce(0, (acc, cur) -> acc += cur);
     }
 
-    public Result getResult(int index) {
-        if (results.size() <= index) {
-            return Result.UNKNOWN;
-        }
-        return results.get(index);
+    private boolean willBeSpare(int pinCount) {
+        int totalPinCount = getTotalPinCount();
+        return totalPinCount != 0 && totalPinCount + pinCount == Result.MAX_PIN_COUNT;
     }
 
     public FrameDto getDto() {
         return new FrameDto(index, results);
-    }
-
-    private boolean willBeSpare(int pinCount) {
-        int totalPinCount = getTotalPinCount();
-        return totalPinCount != 0 && totalPinCount + pinCount == Result.MAX_PIN_COUNT;
     }
 }

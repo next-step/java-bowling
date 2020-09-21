@@ -23,7 +23,6 @@ public class BowlingGame {
             tryUntilSuccess(() -> addResult(frames), resultView::printError);
             resultView.printHeader();
             resultView.printFrames(player, frames.getDto());
-            resultView.printScores(frames.getScores());
         }
     }
 

@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class NormalFrameTest {
+public class FrameTest {
     @Test
     public void addResult_Strike() {
-        Frame frame = NormalFrame.start();
+        Frame frame = Frame.start();
         frame.addResult(Result.MAX_PIN_COUNT);
 
         assertThat(frame.isEnded()).isTrue();
@@ -20,7 +20,7 @@ public class NormalFrameTest {
 
     @Test
     public void addResult_Spare() {
-        Frame frame = NormalFrame.start();
+        Frame frame = Frame.start();
         frame.addResult(5);
         frame.addResult(5);
 
@@ -33,7 +33,7 @@ public class NormalFrameTest {
 
     @Test
     public void addResult_NotEnded() {
-        Frame frame = NormalFrame.start();
+        Frame frame = Frame.start();
         frame.addResult(5);
 
         assertThat(frame.isEnded()).isFalse();
@@ -43,23 +43,8 @@ public class NormalFrameTest {
 
     @Test
     public void addResult_ShouldThrow_IllegalArgumentException() {
-        Frame frame = NormalFrame.start();
+        Frame frame = Frame.start();
         assertThatIllegalArgumentException().isThrownBy(() -> frame.addResult(-1));
         assertThatIllegalArgumentException().isThrownBy(() -> frame.addResult(Result.MAX_PIN_COUNT + 1));
-    }
-
-    @Test
-    public void getResult() {
-        Frame frame = NormalFrame.start();
-        assertThat(frame.getResult(0)).isEqualTo(Result.UNKNOWN);
-
-        frame.addResult(5);
-        assertThat(frame.getResult(0)).isEqualTo(Result.of(5));
-        assertThat(frame.getResult(1)).isEqualTo(Result.UNKNOWN);
-
-        frame.addResult(5);
-        assertThat(frame.getResult(0)).isEqualTo(Result.of(5));
-        assertThat(frame.getResult(1)).isEqualTo(Result.spare(5));
-
     }
 }
