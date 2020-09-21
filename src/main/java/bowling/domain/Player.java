@@ -33,8 +33,9 @@ public class Player {
     }
 
     public void bowl(Function<String, String> rollingBall) {
-        int countOfPins = Integer.parseInt(rollingBall.apply(frames.currentFrameIndex()));
-        frames.play(new Pin(countOfPins));
+        int countOfPins = Integer.parseInt(rollingBall.apply(name));
+        Pin pin = new Pin(countOfPins);
+        frames.play(pin);
     }
 
     public List<Frame> frames() {
@@ -45,8 +46,16 @@ public class Player {
         return frames.size();
     }
 
+    public int getLastFrameIndex() {
+        return frames.currentFrameIndex();
+    }
+
     public String name() {
         return name;
+    }
+
+    public boolean isSameFrameIndex(int frameIndex) {
+        return getLastFrameIndex() == frameIndex;
     }
 
     @Override

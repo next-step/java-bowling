@@ -28,8 +28,8 @@ public class Frames {
         return frames.size() < 10;
     }
 
-    public String currentFrameIndex() {
-        return String.valueOf(getLastFrame().currentFrameIndex());
+    public int currentFrameIndex() {
+        return getLastFrame().currentFrameIndex();
     }
 
     public boolean isEndAllFrame() {

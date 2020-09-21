@@ -26,6 +26,16 @@ class Spare extends Finished {
     }
 
     @Override
+    public boolean isStrike() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return true;
+    }
+
+    @Override
     public Score calculateAdditionalScore(Score score) {
         score = score.sumScore(firstPins);
         if (score.canCalculateScore()) {

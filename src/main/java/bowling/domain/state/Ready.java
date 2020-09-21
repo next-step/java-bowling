@@ -19,6 +19,16 @@ public class Ready extends Running {
     }
 
     @Override
+    public boolean isStrike() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
     public Score calculateAdditionalScore(Score score) {
         throw new CannotCalculateException();
     }

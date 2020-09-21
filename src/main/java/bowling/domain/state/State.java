@@ -15,4 +15,8 @@ public interface State {
     String record();
 
     boolean canBowlFinalFrame();
+
+    boolean isStrike();
+
+    boolean isSpare();
 }

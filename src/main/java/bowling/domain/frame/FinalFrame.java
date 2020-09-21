@@ -52,13 +52,23 @@ public class FinalFrame extends Frame {
         if (isEqualSize(3)) {
             return true;
         }
-        if (isEqualSize(2) && containsSpare()) {
+
+        if (isEqualSize(2) && isSecondEndTryCheck()) {
             return true;
         }
 
-        if (isEqualSize(2) && onlyFirstStrike() && isSecondFinish()) {
+        return false;
+    }
+
+    private boolean isSecondEndTryCheck() {
+        if (containsSpare()) {
             return true;
         }
+
+        if (onlyFirstStrike() && isSecondFinish()) {
+            return true;
+        }
+
         return false;
     }
 
@@ -71,11 +81,15 @@ public class FinalFrame extends Frame {
     }
 
     private boolean onlyFirstStrike() {
-        return states.getFirst().record().contains("X") && !states.getLast().record().contains("X");
+        return getStateByIndex(0).isStrike() && !getStateByIndex(1).isStrike();
+    }
+
+    private State getStateByIndex(int index) {
+        return states.get(index);
     }
 
     private boolean containsSpare() {
-        return states.getFirst().record().contains("/");
+        return getStateByIndex(0).isSpare();
     }
 
     @Override
@@ -100,22 +114,20 @@ public class FinalFrame extends Frame {
     }
 
     public Score calculateAdditionalScore(Score beforeScore) {
-        Score score = beforeScore;
+        Score score = getStateByIndex(0).calculateAdditionalScore(beforeScore);
 
-        for (int i = 0; i < states.size(); i++) {
-            State state = states.get(i);
-            score = state.calculateAdditionalScore(score);
-
-            if (score.canCalculateScore()) {
-                return score;
-            }
-
-            calculateAdditionalScore(score);
+        if (score.canCalculateScore() || states.size() == 1) {
+            return score;
         }
-        return score;
+
+        State secondState = getStateByIndex(1);
+        return secondState.calculateAdditionalScore(score);
+
     }
 
     private Score getFirstScore() {
         return states.getFirst().getScore();
     }
+
+
 }

@@ -17,6 +17,16 @@ class Miss extends Finished {
     }
 
     @Override
+    public boolean isStrike() {
+        return false;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
     public Score getScore() {
         return new Score(firstPins.totalFallenPins(secondPins), 0);
     }

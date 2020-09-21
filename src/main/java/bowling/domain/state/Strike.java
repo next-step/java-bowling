@@ -11,6 +11,16 @@ class Strike extends Finished {
     }
 
     @Override
+    public boolean isStrike() {
+        return true;
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
     public Score getScore() {
         return new Score(Pin.MAXIMUM_PIN_COUNT, 2);
     }
