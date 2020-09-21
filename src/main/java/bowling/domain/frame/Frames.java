@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.Pins;
 import bowling.domain.roll.Roll;
+import bowling.domain.score.FrameScore;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,6 +36,10 @@ public class Frames {
 
     public void endCurrentFrame() {
         currFrame.setComplete();
+    }
+
+    public FrameScore getCurrFrameScore() {
+        return currFrame.getFrameScore();
     }
 
     public void nextFrame() {
