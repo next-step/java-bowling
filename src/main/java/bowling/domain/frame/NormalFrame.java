@@ -45,10 +45,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean canRoll() {
-        if (isAlreadyStrike() || isRolledTwice()) {
-            return false;
-        }
-        return true;
+        return !isAlreadyStrike() && !isRolledTwice();
     }
 
     private boolean isRolledTwice() {

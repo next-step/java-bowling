@@ -40,10 +40,7 @@ public class FinalFrame implements Frame {
         if (isRolledTwice() && pins.getTotalPins() < PINS_LIMIT) {
             return false;
         }
-        if (pins.rollCount() < MAXIMUM_CAN_ROLL) {
-            return true;
-        }
-        return false;
+        return pins.rollCount() < MAXIMUM_CAN_ROLL;
     }
 
     @Override
