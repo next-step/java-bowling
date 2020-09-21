@@ -7,3 +7,10 @@
 
 ## 온라인 코드 리뷰 과정
 * [텍스트와 이미지로 살펴보는 온라인 코드 리뷰 과정](https://github.com/next-step/nextstep-docs/tree/master/codereview)
+
+## 기능 구현 목록
+* 볼링 게임 진행 사용자 기능 구현
+* 1회 단위의 진행을 구성하는 Ball 기능 구현
+* Ball로 몇개의 Pin을 쓰러트리는지에 대한 기능 구현
+* 쓰러트린 Pin을 기준으로 Rank 책정하는 기능 구현
+* 책정된 Rank를 각 Frame에 저장하는 기능 구현

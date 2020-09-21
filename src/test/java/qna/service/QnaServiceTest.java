@@ -32,12 +32,14 @@ public class QnaServiceTest {
 
     private Question question;
     private Answer answer;
+    private Answers answers;
 
     @Before
     public void setUp() throws Exception {
         question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-        question.addAnswer(answer);
+        answers = question.getAnswers();
+        answers.addAnswer(answer, question);
     }
 
     @Test
