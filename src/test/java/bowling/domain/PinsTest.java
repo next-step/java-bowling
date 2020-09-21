@@ -38,10 +38,7 @@ public class PinsTest {
         pins.knockedDown(5);
         pins.knockedDown(5);
         // then
-        assertThat(pins.cannotRollMore()).isTrue();
-        assertThat(pins.isAllPinsDown()).isTrue();
-        assertThat(pins.isNotAvailable()).isTrue();
-        assertThat(pins.getCountOfRemain()).isEqualTo(0);
+        assertPin(pins, true, true, true, 0);
     }
 
     @Test
@@ -53,10 +50,7 @@ public class PinsTest {
         pins.knockedDown(5);
         pins.knockedDown(3);
         // then
-        assertThat(pins.cannotRollMore()).isTrue();
-        assertThat(pins.isAllPinsDown()).isFalse();
-        assertThat(pins.isNotAvailable()).isTrue();
-        assertThat(pins.getCountOfRemain()).isEqualTo(2);
+        assertPin(pins, true, false, true, 2);
     }
 
     @Test
@@ -67,10 +61,7 @@ public class PinsTest {
         // when
         pins.knockedDown(5);
         // then
-        assertThat(pins.cannotRollMore()).isFalse();
-        assertThat(pins.isAllPinsDown()).isFalse();
-        assertThat(pins.isNotAvailable()).isFalse();
-        assertThat(pins.getCountOfRemain()).isEqualTo(5);
+        assertPin(pins, false, false, false, 5);
     }
 
     @Test
@@ -81,10 +72,7 @@ public class PinsTest {
         // when
         pins.knockedDown(10);
         // then
-        assertThat(pins.cannotRollMore()).isFalse(); // 횟수는 1번이라 다시 가능
-        assertThat(pins.isAllPinsDown()).isTrue();
-        assertThat(pins.isNotAvailable()).isTrue();
-        assertThat(pins.getCountOfRemain()).isEqualTo(0);
+        assertPin(pins, false, true, true, 0);
     }
 
     @Test
@@ -96,9 +84,17 @@ public class PinsTest {
         pins.knockedDown(10);
         pins.reset();
         // then
-        assertThat(pins.cannotRollMore()).isFalse();
-        assertThat(pins.isAllPinsDown()).isFalse();
-        assertThat(pins.isNotAvailable()).isFalse();
-        assertThat(pins.getCountOfRemain()).isEqualTo(10);
+        assertPin(pins, false, false, false, 10);
+    }
+
+    private void assertPin(Pins pins,
+                           boolean cannotRollMore,
+                           boolean isAllPinsDown,
+                           boolean isNotAvailable,
+                           int countOfRemain) {
+        assertThat(pins.cannotRollMore()).isEqualTo(cannotRollMore);
+        assertThat(pins.isAllPinsDown()).isEqualTo(isAllPinsDown);
+        assertThat(pins.isNotAvailable()).isEqualTo(isNotAvailable);
+        assertThat(pins.getCountOfRemain()).isEqualTo(countOfRemain);
     }
 }
