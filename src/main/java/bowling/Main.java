@@ -12,7 +12,7 @@ public class Main {
         Game game = new Game(player);
         Frame frame = game.getNextFrame();
 
-        while (frame != null) {
+        while (frame.isGameOver() ) {
             askPinRoll(frame);
             OutputView.getScoreBoard(player, frame);
             frame = game.getNextFrame();

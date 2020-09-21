@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class NormalFrame implements Frame {
     private static final int FIRST_FRAME = 1;
+    private static final int FINAL_FRAME = 10;
     private static final int PINS_LIMIT = 10;
     private static final String PIN_MAX_ERROR = "핀의 합계가 10개보다 클 수 없습니다.";
     private static final int CAN_ROLL_LIMIT = 2;
@@ -48,6 +49,11 @@ public class NormalFrame implements Frame {
         return !isAlreadyStrike() && !isRolledTwice();
     }
 
+    @Override
+    public boolean isGameOver() {
+        return index != FINAL_FRAME;
+    }
+
     private boolean isRolledTwice() {
         return pins.rollCount() >= CAN_ROLL_LIMIT;
     }
@@ -76,7 +82,9 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Pins getPins() { return pins;}
+    public Pins getPins() {
+        return pins;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -93,6 +101,8 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String getScore() { return ScoreConverter.convert(this); }
+    public String getScore() {
+        return ScoreConverter.convert(this);
+    }
 
 }

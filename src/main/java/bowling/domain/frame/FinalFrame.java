@@ -12,6 +12,7 @@ public class FinalFrame implements Frame {
     private static final String ROLL_COUNT_ERRORS = "일반 게임에서는 두번만 던질 수 있습니다.";
     public static final int TOTAL_PIN_COUNT = 10;
     public static final int MAXIMUM_CAN_ROLL = 3;
+    private static final int FINAL_FRAME = 10;
 
     private Pins pins;
     private int index;
@@ -73,6 +74,11 @@ public class FinalFrame implements Frame {
 
     private boolean isRolledOnce() {
         return pins.rollCount() < CAN_ROLL_LIMIT;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return index == FINAL_FRAME && canRoll();
     }
 
     @Override

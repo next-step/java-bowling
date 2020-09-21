@@ -6,10 +6,12 @@ import bowling.domain.frame.NormalFrame;
 import bowling.domain.player.Player;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
-    private final List<Frame> frames;
+    private static final int FINAL_FRAME = 9;
+    private final LinkedList<Frame> frames;
     private final Player player;
 
     public Game(Player player) {
@@ -17,9 +19,9 @@ public class Game {
         this.player = player;
     }
 
-    private List<Frame> startGame() {
-        List<Frame> frames = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
+    private LinkedList<Frame> startGame() {
+        LinkedList<Frame> frames = new LinkedList<>();
+        for (int i = 1; i <= FINAL_FRAME; i++) {
             frames.add(new NormalFrame(i));
         }
         frames.add(new FinalFrame());
@@ -30,7 +32,7 @@ public class Game {
         return frames.stream()
                 .filter(Frame::canRoll)
                 .findFirst()
-                .orElse(null);
+                .orElseGet(() -> frames.get(FINAL_FRAME));
     }
 
     public Player getPlayer() {
