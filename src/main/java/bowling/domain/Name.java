@@ -17,4 +17,8 @@ public class Name {
             throw new IllegalArgumentException(ERR_NAME);
         }
     }
+
+    public String getValue() {
+        return value;
+    }
 }
