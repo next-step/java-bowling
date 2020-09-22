@@ -69,7 +69,6 @@ public class OutputView {
 	}
 
 	private static String getCurrentScorePerFrame(Map<Integer, Score> grouped) {
-//		grouped.entrySet().stream().forEach(entry -> System.out.println("key : '" + entry.getKey() + "' value : '" + entry.getValue().getIntegerValue() + "'"));
 		return IntStream.rangeClosed(1,10)
 				.mapToObj(index -> buildNoneStartFrame(getScoreText(grouped.get(index))))
 				.collect(Collectors.joining());

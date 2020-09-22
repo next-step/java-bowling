@@ -23,3 +23,7 @@
 3. Frame에서 이전 Frame을 멤버 변수로 갖게 수정 후 공을 굴릴 때 이전 프레임의 Score에 더해주게 변경
 4. FinalFrame용 스코어와 그에 따른 FinalFrame용 State 구현체 변경
 5. Game 및 OutputView에 Score 추가에 따른 필요 로직 작성
+
+##코드 리뷰 반영
+1. 불필요한 LinkedHashMap + Collections.unmodifiableMap -> Collectors.toUnmodifiableMap 으로 한번에 불변 Map으로 변경
+2. 반복되는 Score 구현체 생성자 로직 absctract 클래스 이용해서 중복 줄이기, 구현체에서 쓰이는 stream api 개행으로 가독성 높이기

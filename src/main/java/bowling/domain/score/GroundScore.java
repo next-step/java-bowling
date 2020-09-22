@@ -18,9 +18,7 @@ public class GroundScore implements Score {
 	}
 
 	@Override
-	public void addExtraCount(DownedPinCount count) {
-
-	}
+	public void addExtraCount(DownedPinCount count) {}
 
 	@Override
 	public DownedPinCount getValue() {

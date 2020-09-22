@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.DownedPinCount;
-import bowling.domain.score.PlayingScore;
+import bowling.domain.score.normalframe.PlayingScore;
 import bowling.domain.score.Score;
 
 import java.util.Objects;

@@ -1,3 +1,5 @@
+package bowling;
+
 import bowling.domain.DownedPinCount;
 import bowling.domain.game.Game;
 import bowling.view.InputView;

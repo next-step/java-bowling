@@ -1,15 +1,16 @@
 package bowling.domain.score;
 
 import bowling.domain.DownedPinCount;
-import bowling.domain.state.InitState;
-import bowling.domain.state.State;
+import bowling.domain.score.normalframe.OpenScore;
+import bowling.domain.score.normalframe.PlayingScore;
+import bowling.domain.score.normalframe.SpareScore;
+import bowling.domain.score.normalframe.StrikeScore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ScoreTest {
 

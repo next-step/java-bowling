@@ -4,9 +4,6 @@ import bowling.exception.BowlingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -28,57 +25,4 @@ class DownedPinCountTest {
 				.isInstanceOf(BowlingException.class)
 				.hasMessage(String.format("쓰러진 핀 수는 0 이상 10 이하의 자연수입니다. 입력 된 수 : %d",given));
 	}
-
-	@Test
-	void test() {
-
-		Temp temp1 = new Temp(2, 1);
-		Temp temp2 = new Temp(1, 2);
-		Temp temp3 = new Temp(0, 3);
-
-		List<Temp> list = List.of(temp1, temp2, temp3);
-
-		System.out.println(list.stream().map(Temp::getI).map(String::valueOf).collect(Collectors.joining(",")));
-
-		list.stream().filter(Temp::isCaculatable).forEach(temp -> temp.add(1));
-
-		System.out.println(list.stream().map(Temp::getI).map(String::valueOf).collect(Collectors.joining(",")));
-
-		list.stream().filter(Temp::isCaculatable).forEach(temp -> temp.add(1));
-
-		System.out.println(list.stream().map(Temp::getI).map(String::valueOf).collect(Collectors.joining(",")));
-
-		list.stream().filter(Temp::isCaculatable).forEach(temp -> temp.add(1));
-
-		System.out.println(list.stream().map(Temp::getI).map(String::valueOf).collect(Collectors.joining(",")));
-
-
-
-	}
-
-
-	private static class Temp {
-		private int count;
-		private int i;
-
-		public Temp(int count, int i) {
-			this.count = count;
-			this.i = i;
-		}
-
-		public int getI() {
-			return i;
-		}
-
-		public boolean isCaculatable() {
-			return count > 0;
-		}
-
-		public void add(int num) {
-			i = i + num;
-			count--;
-		}
-	}
-
-
 }
