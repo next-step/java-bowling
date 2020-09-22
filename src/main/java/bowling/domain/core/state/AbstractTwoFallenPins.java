@@ -1,13 +1,15 @@
-package bowling.domain.core;
+package bowling.domain.core.state;
 
 import java.util.List;
+
+import bowling.domain.core.FallenPins;
 
 abstract class AbstractTwoFallenPins {
     protected static final int MAX_TOW_FALLEN_PINS_SIZE = 2;
     static final String ERROR_MESSAGE = "볼링 투구 횟수는 2회 입니다.(첫번째 투구(0), 두번째 투구(1))";
     protected final List<FallenPins> twoFallenPins;
 
-    public AbstractTwoFallenPins(List<FallenPins> twoFallenPins) {
+    protected AbstractTwoFallenPins(List<FallenPins> twoFallenPins) {
         this.twoFallenPins = twoFallenPins;
     }
 
@@ -29,8 +31,8 @@ abstract class AbstractTwoFallenPins {
         return FallenPins.MAX_FALLEN_PIN_COUNT == getFallenPins(0);
     }
 
-    boolean isGutter(){
-        return FallenPins.MIN_FALLEN_PIN_COUNT == firstFallenPins().plus(secondFallenPins());
+    public boolean isGutter(){
+        return FallenPins.MIN_FALLEN_PIN_COUNT >= firstFallenPins().plus(secondFallenPins());
     }
 
     FallenPins secondFallenPins() {
@@ -59,12 +61,12 @@ abstract class AbstractTwoFallenPins {
         return this;
     }
 
-    FallenPins getPins(int index){
+    public FallenPins getPins(int index){
         verifyRollingTrialCount(index);
         return twoFallenPins.get(index);
     }
 
-    int getFallenPins(int index){
+    public int getFallenPins(int index){
         return getPins(index).getPrimitive();
     }
 }

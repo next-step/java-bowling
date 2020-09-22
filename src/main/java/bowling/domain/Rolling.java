@@ -2,23 +2,21 @@ package bowling.domain;
 
 import java.util.List;
 
-import bowling.domain.core.RolledResult;
-import bowling.domain.core.RolledResultFactory;
+import bowling.domain.frame.Frames;
+import bowling.ui.result.DisplayRolledResult;
 
 final class Rolling {
     private final Frames frames;
 
     Rolling() {
-        frames = new Frames();
+        frames = Frames.of();
     }
 
     void roll(int fallenPins){
-        RolledResult rolledResult = RolledResultFactory.collectPins(fallenPins)
-            .toRolledResult();
-        frames.saveRolledResultAndShouldNextFrame(rolledResult);
+        frames.saveRolledResultAndShouldNextFrame(fallenPins);
     }
 
-    List<String> framesByRolledResults() {
+    List<DisplayRolledResult> framesByRolledResults() {
         return frames.toRolledResults();
     }
 
@@ -27,6 +25,10 @@ final class Rolling {
     }
 
     boolean hasNextFrameIndex(int currentFrameIndex){
-        return frames.currentFrameIndex() <= currentFrameIndex;
+        return frames.hasNextFrameIndex(currentFrameIndex);
+    }
+
+    int getTotalFrameScore(){
+        return frames.getTotalScore();
     }
 }

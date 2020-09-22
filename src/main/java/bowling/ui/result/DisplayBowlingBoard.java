@@ -1,6 +1,6 @@
 package bowling.ui.result;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.util.stream.Collectors.joining;
@@ -8,10 +8,28 @@ import static java.util.stream.Collectors.joining;
 public final class DisplayBowlingBoard {
     private final List<Display> boards;
 
-    public DisplayBowlingBoard(DisplayPlayerBowlingGrade displayPlayerBowlingGrade ) {
-        this.boards = new ArrayList<>();
-        this.boards.add(new DisplayBowlingHeader());
-        this.boards.add(displayPlayerBowlingGrade);
+    private static final Display empty = new Display() {
+        @Override
+        public String getName() {
+            return "";
+        }
+
+        @Override
+        public String toResults() {
+            return "";
+        }
+    };
+
+    public DisplayBowlingBoard() {
+        this.boards = Arrays.asList(
+            new DisplayBowlingHeader(),
+            empty
+        );
+    }
+
+    public DisplayBowlingBoard updateDisplayPlayerBowlingGrade(DisplayPlayerBowlingGrade displayPlayerBowlingGrade){
+        boards.set(1, displayPlayerBowlingGrade);
+        return this;
     }
 
     @Override

@@ -2,9 +2,13 @@ package bowling.domain;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import bowling.ui.result.DisplayPlayerBowlingGrade;
+import bowling.ui.result.DisplayRolledResult;
+
+import static java.util.stream.Collectors.toList;
 
 final class Player {
     static final String ERROR_MESSAGE = "영어 알파벳 대문자 3자만 등록 가능합니다.";
@@ -28,16 +32,21 @@ final class Player {
         }
     }
 
-    Player whileRoll(int currentIndex, Function<String, Integer> playerFallenPinsService){
+    void whileRollAndDisplay(int currentIndex, Function<String, Integer> playerFallenPinsService, Consumer<DisplayPlayerBowlingGrade> displayPlayerBowlingGradeConsumer){
         while(isPlayable() && rolling.hasNextFrameIndex(currentIndex)) {
             int fallenPins = playerFallenPinsService.apply(name);
             roll(fallenPins);
+            displayPlayerBowlingGradeConsumer.accept(toDisplayPlayerBowlingGrade());
         }
+    }
+
+    Player roll(int fallenPins){
+        rolling.roll(fallenPins);
         return this;
     }
 
-    void roll(int fallenPins){
-        rolling.roll(fallenPins);
+    int getTotalFrameScore(){
+        return rolling.getTotalFrameScore();
     }
 
     boolean isPlayable(){
@@ -45,11 +54,14 @@ final class Player {
     }
 
     List<String> bowlingGrade(){
-        return rolling.framesByRolledResults();
+        return rolling.framesByRolledResults()
+                      .stream()
+                      .map(DisplayRolledResult::getDescription)
+                      .collect(toList());
     }
 
     DisplayPlayerBowlingGrade toDisplayPlayerBowlingGrade(){
-        return new DisplayPlayerBowlingGrade(name, bowlingGrade());
+        return new DisplayPlayerBowlingGrade(name, rolling.framesByRolledResults());
     }
 
     @Override
