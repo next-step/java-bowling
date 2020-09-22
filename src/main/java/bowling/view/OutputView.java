@@ -10,16 +10,20 @@ import static java.util.stream.Collectors.joining;
 
 public class OutputView {
 
-    public static final String VERTICAL_SIGN = " | ";
     public static final int MAX_FRAME_COUNT = 10;
+    public static final String VERTICAL_SIGN = " | ";
     public static final String SCORE_BOARD_HEADER = " | NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
+    private static final Object EMPTY_SPACE = "    ";
 
     private OutputView() {
     }
 
     public static void printScore(String playerName, List<Frame> frames) {
         printScoreHeader();
-        printScoreBoard(playerName, frames);
+        printNameSpace(playerName);
+        printScores(frames);
+        printEmptySpace(frames.size());
+        System.out.println(VERTICAL_SIGN);
     }
 
     public static void printEmptyScore(String playerName) {
@@ -30,21 +34,21 @@ public class OutputView {
         System.out.println(SCORE_BOARD_HEADER);
     }
 
-    private static void printScoreBoard(String playerName, List<Frame> frames) {
-        System.out.print(String.format("%s%3s ", VERTICAL_SIGN, playerName));
+    private static void printNameSpace(String playerName) {
+        System.out.print(String.format("%s%4s", VERTICAL_SIGN, playerName));
+    }
 
+    private static void printScores(List<Frame> frames) {
         for (Frame frame : frames) {
-            //frame.getScore();
-            System.out.print(String.format("%s%s", VERTICAL_SIGN,
-                    frame.getScore()
-                            .stream()
-                            .collect(joining("|"))));
-        }
+            String score = String.join("|", frame.getScore());
 
-        for (int i = frames.size() ; i < MAX_FRAME_COUNT; i++) {
-            System.out.print(String.format("%s    ", VERTICAL_SIGN));
+            System.out.print(String.format("%s%-4s", VERTICAL_SIGN, score));
         }
+    }
 
-        System.out.println();
+    private static void printEmptySpace(int size) {
+        for (int i = size; i < MAX_FRAME_COUNT; i++) {
+            System.out.print(String.format("%s%s", VERTICAL_SIGN, EMPTY_SPACE));
+        }
     }
 }
