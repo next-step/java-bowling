@@ -1,20 +1,18 @@
 package bowling.domain;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
+    private static final int MIN_PITCH_COUNT = 2;
     private static final int MAX_PITCH_COUNT = 3;
 
-    private final int index;
-    private final List<Pin> pins;
+    private final Pins pins;
 
     public FinalFrame() {
-        this.index = 9;
-        this.pins = new ArrayList<>();
+        this.pins = new Pins();
     }
 
     public void pitch(int count) {
@@ -22,8 +20,7 @@ public class FinalFrame implements Frame {
             throw new IllegalArgumentException("");
         }
 
-        pins.add(pins.isEmpty() || getLastPin().isEnd()
-                ? new Pin(count) : getLastPin().next(count));
+        pins.pitch(count);
     }
 
     public boolean isEnd() {
@@ -31,23 +28,15 @@ public class FinalFrame implements Frame {
             return false;
         }
 
-        if (pins.size() == MAX_PITCH_COUNT - 1 && pins.stream().mapToInt(Pin::getCount).sum() < 10) {
+        if (pins.size() == MIN_PITCH_COUNT && pins.sumAll() < Pins.MAX_PIN_COUNT) {
             return true;
         }
 
-        return pins.size() >= MAX_PITCH_COUNT;
+        return pins.overPitching(MAX_PITCH_COUNT);
     }
 
     public List<Pin> getPins() {
-        return pins;
-    }
-
-    private Pin getLastPin() {
-        if (getPins().isEmpty()) {
-            throw new IllegalArgumentException("");
-        }
-
-        return pins.get(pins.size() - 1);
+        return Collections.unmodifiableList(pins.getPins());
     }
 
     @Override
@@ -57,9 +46,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public List<String> getScore() {
-        return pins.stream()
-                .map(Pin::getSymbolValue)
-                .collect(Collectors.toList());
+        return pins.getScore();
     }
 
     @Override
@@ -67,12 +54,11 @@ public class FinalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FinalFrame that = (FinalFrame) o;
-        return index == that.index &&
-                Objects.equals(pins, that.pins);
+        return Objects.equals(pins, that.pins);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(index, pins);
+        return Objects.hash(pins);
     }
 }
