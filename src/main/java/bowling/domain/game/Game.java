@@ -34,15 +34,13 @@ public class Game {
 	}
 
 	public Map<Integer, State> getStateGroupedBy() {
-		Map<Integer, State> grouped = frames.stream()
-										.collect(Collectors.toMap(Frame::getFrameSequence, Frame::getState, (frame1, frame2) -> frame1, LinkedHashMap::new));
-		return Collections.unmodifiableMap(grouped);
+		return frames.stream()
+				.collect(Collectors.toUnmodifiableMap(Frame::getFrameSequence, Frame::getState));
 	}
 
 	public Map<Integer, Score> getScoreGroupedBy() {
-		Map<Integer, Score> grouped = frames.stream()
-										.collect(Collectors.toMap(Frame::getFrameSequence, Frame::getScore, (frame1, frame2) -> frame1, LinkedHashMap::new));
-		return Collections.unmodifiableMap(grouped);
+		return frames.stream()
+				.collect(Collectors.toUnmodifiableMap(Frame::getFrameSequence, Frame::getScore));
 	}
 
 	public boolean isGameFinished() {
