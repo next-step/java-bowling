@@ -17,7 +17,7 @@ class ScoreBoardTest {
         String expected = "abc";
         ScoreBoard scoreBoard = ScoreBoard.of(Player.of(expected), 2);
 
-        then(scoreBoard.getPlayerName()).isEqualTo(Player.of(expected));
+        then(scoreBoard.getPlayerName()).isEqualTo(expected);
     }
 
     @ParameterizedTest
@@ -29,6 +29,9 @@ class ScoreBoardTest {
         IntStream.range(0, totalFrames + 1).forEach(index -> {
             then(scoreBoard.isFinished()).isFalse();
             scoreBoard.bowl(Pin.ofMax());
+            if (scoreBoard.hasNextFrameAndIsCurrentFrameFinished()) {
+                scoreBoard.shiftCurrentFrame();
+            }
         });
 
         then(scoreBoard.isFinished()).isTrue();
