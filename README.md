@@ -91,6 +91,6 @@
 - [X] 기존 Main 메소드가 있는 클래스 BowlingMain 으로 이름 변경
 - [X] 1명 이상의 점수판을 관리하는 BowlingGame 객체 생성
 - [X] BowlingGameAssembler, BowlingGameDTO 생성
-- [ ] BowlingController 수정
+- [X] BowlingController 수정
 - [ ] 입력(InputView) 화면 수정
 - [ ] 출력(OutputView) 화면 수정
