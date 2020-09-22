@@ -8,6 +8,12 @@ public class FinalFrame extends Frame {
     super(10);
   }
 
+  public static FinalFrame initialFrame(int pins) {
+    FinalFrame frame = new FinalFrame();
+    frame.roll(pins);
+    return frame;
+  }
+
   @Override
   public FinalFrame roll(int pins) {
     if (state == null) {  // first

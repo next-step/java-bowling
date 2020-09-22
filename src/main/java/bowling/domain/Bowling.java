@@ -16,10 +16,12 @@ public class Bowling {
     frames.add(frame);
   }
 
+  public static Bowling init() {
+    return new Bowling(Frame.initialFrame());
+  }
+
   public static Bowling first(int pins) {
-    Frame frame = new Frame(1);
-    frame.roll(pins);
-    return new Bowling(frame);
+    return new Bowling(Frame.initialFrame(pins));
   }
 
   public void roll(int pins) {
@@ -37,9 +39,9 @@ public class Bowling {
   public List<String> symbols() {
     return frames.stream()
         .map(Frame::symbol)
+        .filter(Objects::nonNull)
         .collect(Collectors.toList());
   }
-
 
   public List<Score> scores() {
     List<Score> scores = new ArrayList<>();
