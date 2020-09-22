@@ -1,7 +1,6 @@
 package bowling;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -17,7 +16,7 @@ class FramesTest {
     void isFinished(int totalFrames) {
         Frames frames = Frames.of(totalFrames);
 
-        IntStream.range(0, totalFrames + 2).forEach(index -> {
+        IntStream.range(0, totalFrames + 1).forEach(index -> {
             then(frames.isFinished()).isFalse();
             frames.bowl(Pin.ofMax());
         });
