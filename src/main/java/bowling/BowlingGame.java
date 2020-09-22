@@ -5,18 +5,24 @@ import java.util.List;
 public class BowlingGame {
 
     private final ScoreBoard scoreBoard;
+    private final int entry;
 
-    private BowlingGame(ScoreBoard scoreBoard) {
+    private BowlingGame(ScoreBoard scoreBoard, int entry) {
         this.scoreBoard = scoreBoard;
+        this.entry = entry;
     }
 
-    public static BowlingGame of(int totalFrames, String name) {
+    public static BowlingGame of(int totalFrames, String name, int entry) {
         ScoreBoard scoreBoard = ScoreBoard.of(Player.of(name), totalFrames);
-        return new BowlingGame(scoreBoard);
+        return new BowlingGame(scoreBoard, entry);
     }
 
-    public Player getPlayer() {
-        return scoreBoard.getPlayer();
+    public int getEntry() {
+        return this.entry;
+    }
+
+    public String getPlayerName() {
+        return scoreBoard.getPlayerName();
     }
 
     public List<Frame> getFrames() {
@@ -29,5 +35,13 @@ public class BowlingGame {
 
     public boolean isFinished() {
         return scoreBoard.isFinished();
+    }
+
+    public boolean hasNextFrameAndIsCurrentFrameFinished() {
+        return scoreBoard.hasNextFrameAndIsCurrentFrameFinished();
+    }
+
+    public void shiftCurrentFrame() {
+        scoreBoard.shiftCurrentFrame();
     }
 }
