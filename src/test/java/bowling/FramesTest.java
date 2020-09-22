@@ -19,6 +19,9 @@ class FramesTest {
         IntStream.range(0, totalFrames + 1).forEach(index -> {
             then(frames.isFinished()).isFalse();
             frames.bowl(Pin.ofMax());
+            if (frames.hasNextFrameAndIsCurrentFrameFinished()) {
+                frames.shiftCurrentFrame();
+            }
         });
 
         then(frames.isFinished()).isTrue();
