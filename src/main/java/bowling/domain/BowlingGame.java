@@ -1,12 +1,20 @@
 package bowling.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class BowlingGame {
     private final Player player;
+    private final List<Frame> frames;
 
     public BowlingGame(String playerName) {
         this.player = new Player(playerName);
+        this.frames = new ArrayList<>();
+    }
+
+    public List<Frame> pitch(int count) {
+        return null;
     }
 
     @Override

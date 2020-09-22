@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FinalFrame {
+public class FinalFrame implements Frame {
 
     private static final int MAX_PITCH_COUNT = 3;
 
@@ -47,6 +47,11 @@ public class FinalFrame {
         }
 
         return pins.get(pins.size() - 1);
+    }
+
+    @Override
+    public Frame next() {
+        throw new IllegalArgumentException("");
     }
 
     @Override
