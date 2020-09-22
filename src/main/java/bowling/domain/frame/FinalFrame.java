@@ -28,7 +28,7 @@ public class FinalFrame implements Frame {
             throw new IllegalArgumentException(ROLL_COUNT_ERRORS);
         }
         if (canRoll()) {
-            pins.addPins(pin);
+            pins.addPins(this, pin);
         }
     }
 

@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class NormalFrameTest {
 
@@ -32,18 +31,6 @@ class NormalFrameTest {
 
         // then
         assertThat(hitedPins).isEqualTo(normalFrame.getTotal());
-    }
-
-    @DisplayName("스트라이크 이후 던지기 테스트")
-    @Test
-    void testRollAfterStrike() {
-        NormalFrame normalFrame = NormalFrame.firstFrame();
-
-        assertThatThrownBy(() -> {
-            normalFrame.roll(10);
-            normalFrame.roll(2);
-
-        }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("두번 이상 던지기 테스트")
