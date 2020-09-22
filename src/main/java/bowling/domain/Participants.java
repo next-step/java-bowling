@@ -15,8 +15,7 @@ public class Participants {
     }
 
     public boolean bowl(int numberOfPins) {
-        Player player = players.get(currentPosition);
-        Frame currentFrame = player.getFrame();
+        Frame currentFrame = players.get(currentPosition).getFrame();
         Frame nextFrame = players.get(currentPosition).bowl(numberOfPins);
         if (nextFrame.isEnd() && isLastPlayer()) {
             return true;
