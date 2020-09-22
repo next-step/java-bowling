@@ -52,8 +52,7 @@ public class ResultView {
     }
 
     private void printSecondPin(StringBuilder frames, ResultFrameDTO resultFrameDTO) {
-        if (!resultFrameDTO.isSecondDone()
-                || resultFrameDTO.getFirstPin() == MAX_PINS && !resultFrameDTO.isLastResultFrameDTO()) {
+        if (!resultFrameDTO.isSecondDone() || resultFrameDTO.getFirstPin() == MAX_PINS) {
             frames.append("  ");
             return;
         }
@@ -71,13 +70,15 @@ public class ResultView {
             frames.append(" |");
             return;
         }
-        if (resultFrameDTO.isBonusDone()) {
-            String pin = String.valueOf(resultFrameDTO.getBonusPin() == MIN_PINS ? GUTTER : resultFrameDTO.getBonusPin());
-            pin = String.valueOf(resultFrameDTO.getBonusPin() == MAX_PINS ? STRIKE : pin);
-            frames.append(String.format("|%s |", pin));
+        boolean hasNoBonus = resultFrameDTO.getFirstPin() + resultFrameDTO.getSecondPin() != MAX_PINS;
+        if (!resultFrameDTO.isBonusDone() || hasNoBonus) {
+            frames.append("   |");
             return;
         }
-        frames.append("   |");
+        int bonusPin = resultFrameDTO.getBonusPin();
+        String pin = String.valueOf(bonusPin == MIN_PINS ? GUTTER : resultFrameDTO.getBonusPin());
+        pin = String.valueOf(bonusPin == MAX_PINS ? STRIKE : pin);
+        frames.append(String.format("|%s |", pin));
     }
 
     public void printScores(ScoresDTO scoresDTO) {
