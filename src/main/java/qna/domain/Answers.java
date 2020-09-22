@@ -1,6 +1,7 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -9,6 +10,7 @@ import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Embeddable
 public class Answers {
@@ -27,6 +29,19 @@ public class Answers {
 
     public void add(Answer answer) {
         answers.add(answer);
+    }
+
+    public void deleteAnswers(User loginUser) {
+        Optional<Answer> maybeAnswer = answers.stream().filter(answer -> !answer.isOwner(loginUser)).findAny();
+        if (maybeAnswer.isPresent()) {
+            throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+        }
+        setAllDeleted();
+    }
+
+    private void setAllDeleted() {
+        answers.stream()
+                .forEach(answer -> answer.setDeleted(true));
     }
 
     public List<Answer> getAnswers() {
