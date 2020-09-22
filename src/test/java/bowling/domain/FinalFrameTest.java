@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import bowling.exception.GameOverException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -46,7 +47,7 @@ public class FinalFrameTest {
         frame.pitch(8);
 
         assertThatThrownBy(() -> frame.pitch(10)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(GameOverException.class);
     }
 
     @Test
@@ -57,7 +58,7 @@ public class FinalFrameTest {
         frame.pitch(10);
 
         assertThatThrownBy(() -> frame.pitch(10)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(GameOverException.class);
     }
 
     @Test

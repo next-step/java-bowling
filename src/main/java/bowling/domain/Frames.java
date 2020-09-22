@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.GameOverException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +18,7 @@ public class Frames {
 
     public void pitch(int count) {
         if (isEnd()) {
-            throw new IllegalArgumentException("");
+            throw new GameOverException();
         }
 
         Frame frame = findFrame();
@@ -31,7 +33,7 @@ public class Frames {
         }
 
         if (getLastFrame().isEnd()) {
-            Frame frame = frames.size() == MAX_FRAME_COUNT -1 ? new FinalFrame() : getLastFrame().next();
+            Frame frame = frames.size() == MAX_FRAME_COUNT - 1 ? new FinalFrame() : getLastFrame().next();
             frames.add(frame);
             return frame;
         }
@@ -49,7 +51,7 @@ public class Frames {
 
     private Frame getLastFrame() {
         if (frames.isEmpty()) {
-            throw new IllegalArgumentException("");
+            throw new GameOverException();
         }
 
         return frames.get(frames.size() - 1);
@@ -60,7 +62,7 @@ public class Frames {
     }
 
     public int getIndex() {
-        if(frames.isEmpty() || getLastFrame().isEnd()) {
+        if (frames.isEmpty() || getLastFrame().isEnd()) {
             return frames.size() + 1;
         }
 

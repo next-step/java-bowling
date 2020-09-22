@@ -17,12 +17,12 @@ public class Pin {
         this.symbol = initSymbol(count, true);
     }
 
-    public Pin(int count, int sumCount) {
+    public Pin(int count, int totalCount) {
         this.validate(count);
 
         this.count = count;
-        this.totalCount = sumCount;
-        this.symbol = initSymbol(sumCount, false);
+        this.totalCount = totalCount;
+        this.symbol = initSymbol(totalCount, false);
     }
 
     public ScoreSymbol initSymbol(int count, boolean isFirst) {
@@ -31,11 +31,11 @@ public class Pin {
 
     private void validate(int count) {
         if (count < 0) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("쓰러트린 핀의 개수는 0이상 이어야 합니다.");
         }
 
         if (count > MAX_PIN_COUNT) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("쓰러트린 핀의 개수는 10이하 이어야 합니다.");
         }
     }
 
@@ -53,7 +53,7 @@ public class Pin {
 
     public String getSymbolValue() {
         if (getSymbol().equals(ScoreSymbol.MISS)) {
-            return String.valueOf(totalCount);
+            return String.valueOf(count);
         }
 
         return symbol.getValue();

@@ -25,7 +25,7 @@ public class Pins {
 
     private Pin getLastPin() {
         if (pins.isEmpty()) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("가져올 수 있는 핀이 없습니다.");
         }
 
         return pins.get(pins.size() - 1);

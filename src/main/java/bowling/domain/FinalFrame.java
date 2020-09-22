@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.exception.GameOverException;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +19,7 @@ public class FinalFrame implements Frame {
 
     public void pitch(int count) {
         if (this.isEnd()) {
-            throw new IllegalArgumentException("");
+            throw new GameOverException();
         }
 
         pins.pitch(count);
@@ -41,7 +43,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public Frame next() {
-        throw new IllegalArgumentException("");
+        throw new GameOverException();
     }
 
     @Override
