@@ -16,7 +16,6 @@ public class ScoreBoardAssembler {
     public static ScoreBoardDTO assemble(ScoreBoard scoreBoard, Frames initFrames) {
         List<Frame> frames = new ArrayList<>();
         Frame currentFrame = initFrames.getFirstFrame();
-        // Frame currentFrame = scoreBoard.getFirstFrame();
         frames.add(currentFrame);
         while (currentFrame.hasNext()) {
             currentFrame = currentFrame.next();
