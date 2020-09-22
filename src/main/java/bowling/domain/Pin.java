@@ -10,40 +10,36 @@ public class Pin {
     private final ScoreSymbol symbol;
 
     public Pin(int count) {
-        this.validate(count);
-
-        this.count = count;
-        this.totalCount = count;
-        this.symbol = initSymbol(count, true);
+        this(count, count, true);
     }
 
-    public Pin(int count, int totalCount) {
-        this.validate(count);
+    private Pin(int count, int totalCount) {
+        this(count, totalCount, false);
+    }
+
+    private Pin(int count, int totalCount, boolean isFirst) {
+        this.validate(count, totalCount);
 
         this.count = count;
         this.totalCount = totalCount;
-        this.symbol = initSymbol(totalCount, false);
+        this.symbol = initSymbol(totalCount, isFirst);
     }
 
     public ScoreSymbol initSymbol(int count, boolean isFirst) {
         return ScoreSymbol.valueOf(count, isFirst);
     }
 
-    private void validate(int count) {
+    private void validate(int count, int totalCount) {
         if (count < 0) {
             throw new IllegalArgumentException("쓰러트린 핀의 개수는 0이상 이어야 합니다.");
         }
 
-        if (count > MAX_PIN_COUNT) {
+        if (count > MAX_PIN_COUNT || totalCount > MAX_PIN_COUNT) {
             throw new IllegalArgumentException("쓰러트린 핀의 개수는 10이하 이어야 합니다.");
         }
     }
 
     public Pin next(int nextCount) {
-        if (count + nextCount > MAX_PIN_COUNT) {
-            throw new IllegalArgumentException("");
-        }
-
         return new Pin(nextCount, count + nextCount);
     }
 
