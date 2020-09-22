@@ -12,14 +12,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class StrikeTest {
 
     @Test
-    @DisplayName("Strike 상태에서는 더 이상 공을 굴릴 수 없는 테스트")
+    @DisplayName("STRIKE 상태에서는 더 이상 공을 굴릴 수 없는 테스트")
     void strike_throw_exception_test() {
         assertThatThrownBy(() -> Strike.of().bowl(Pin.of(10)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    @DisplayName("Strike 상태는 추가 투구 없이 종료(True) 값을 가지는 테스트")
+    @DisplayName("STRIKE 상태는 추가 투구 없이 종료(True) 값을 가지는 테스트")
     void strike_isEnd_test() {
         assertThat(Strike.of().isEnd()).isTrue();
     }

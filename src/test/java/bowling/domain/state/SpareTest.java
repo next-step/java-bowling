@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Remaining;
+import bowling.domain.frame.Score;
 import bowling.domain.pin.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,5 +29,34 @@ class SpareTest {
     @DisplayName("SPARE 상태는 추가 투구 없이 종료(True) 값을 가지는 테스트")
     void spare_isEnd_test() {
         assertThat(Spare.of(Pin.of(7)).isEnd()).isTrue();
+    }
+
+    @Test
+    @DisplayName("SPARE 상태는 최대 점수 10점, 추가 투구 1회를 가짐")
+    void spare_getScore_test() {
+
+        // given
+        State spare = Spare.of(Pin.of(5));
+
+        // when
+        Score score = spare.getScore();
+
+        // then
+        assertThat(score).isEqualTo(Score.of(10, Remaining.of(1)));
+    }
+
+    @Test
+    @DisplayName("SPARE 상태는 First 투구와 Second 투구를 더해서 점수 계산")
+    void spare_calculate_test() {
+
+        // given
+        Score baseScore = Score.of(5, Remaining.of(1));
+
+        // when
+        Score calculateScore = Spare.of(Pin.of(3)).calculate(baseScore);
+
+        // then
+        assertThat(calculateScore).isEqualTo(Score.of(8, Remaining.of(0)));
+        assertThat(calculateScore.isPending()).isEqualTo(Boolean.FALSE);
     }
 }
