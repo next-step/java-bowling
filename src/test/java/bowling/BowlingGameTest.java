@@ -26,7 +26,7 @@ class BowlingGameTest {
     void isFinished(int totalFrames) {
         BowlingGame bowlingGame = BowlingGame.of(totalFrames, "abc");
 
-        IntStream.range(0, totalFrames + 2).forEach(index -> {
+        IntStream.range(0, totalFrames + 1).forEach(index -> {
             then(bowlingGame.isFinished()).isFalse();
             bowlingGame.bowl(Pin.ofMax());
         });
