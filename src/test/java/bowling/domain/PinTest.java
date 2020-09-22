@@ -39,4 +39,11 @@ public class PinTest {
                 .isInstanceOf(IllegalArgumentException.class);
 
     }
+
+    @Test
+    void isEnd() {
+        Pin pin = new Pin(10);
+
+        assertThat(pin.isEnd()).isTrue();
+    }
 }

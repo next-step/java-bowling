@@ -26,7 +26,11 @@ public class Pin {
             throw new IllegalArgumentException("");
         }
 
-        return new Pin(count);
+        return new Pin(nextCount);
+    }
+
+    public boolean isEnd() {
+        return count == MAX_PIN_COUNT;
     }
 
     @Override
@@ -41,5 +45,4 @@ public class Pin {
     public int hashCode() {
         return Objects.hash(count);
     }
-
 }
