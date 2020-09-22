@@ -32,7 +32,9 @@ public class Answers {
     }
 
     public void deleteAnswers(User loginUser) {
-        Optional<Answer> maybeAnswer = answers.stream().filter(answer -> !answer.isOwner(loginUser)).findAny();
+        Optional<Answer> maybeAnswer = answers.stream()
+                .filter(answer -> !answer.isOwner(loginUser))
+                .findAny();
         if (maybeAnswer.isPresent()) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
