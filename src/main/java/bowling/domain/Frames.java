@@ -2,11 +2,15 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class Frames implements Frame {
+import static java.util.stream.Collectors.toList;
+
+public class Frames {
 
     private static final int SIZE_ROUND_GAP = 1;
     private static final int FINAL_FRAME_NO = 10;
+    private static final String EMPTY_HISTORY = "";
 
     private final List<NormalFrame> frames;
 
@@ -18,7 +22,6 @@ public class Frames implements Frame {
         return frames.size() + SIZE_ROUND_GAP;
     }
 
-    @Override
     public void swing(int score) {
         NormalFrame lastFrame = lastFrame();
         lastFrame.swing(score);
@@ -43,14 +46,12 @@ public class Frames implements Frame {
 
     public List<String> getSwingInfo() {
 
-        List<String> swingInfos = new ArrayList<>();
-
-        for (NormalFrame frame : frames) {
-            // TODO 로직 작성
-        }
+        List<String> swingInfos = frames.stream()
+                                        .map(Frame::swingHistoryToString)
+                                        .collect(toList());
 
         for (int i = frames.size(); i < FINAL_FRAME_NO; i++) {
-            swingInfos.add("");
+            swingInfos.add(EMPTY_HISTORY);
         }
 
         return swingInfos;
