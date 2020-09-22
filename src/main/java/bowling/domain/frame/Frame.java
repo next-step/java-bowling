@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.Pins;
 import bowling.domain.roll.Roll;
 import bowling.domain.roll.RollRecord;
+import bowling.domain.score.FrameScore;
 
 import static bowling.domain.BowlingErrorMessage.INVALID_FRAME_NUMBER;
 import static bowling.domain.BowlingProperty.*;
@@ -45,6 +46,10 @@ public abstract class Frame {
 
     public boolean isFinalFrame() {
         return false;
+    }
+
+    public final FrameScore getFrameScore() {
+        return new FrameScore(FrameState.valueOf(rollRecord), rollRecord.getCountOfPins());
     }
 
     public final boolean isComplete() {

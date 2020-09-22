@@ -171,6 +171,7 @@ public class FrameTest {
         // when
         frame.addRoll(new Roll(RollType.STRIKE, 10));
         // then
+        assertThat(frame.getFrameScore().getScore().getScore()).isEqualTo(10);
         assertThat(frame.getMarking()).isEqualTo("X");
     }
 
@@ -183,6 +184,7 @@ public class FrameTest {
         frame.addRoll(new Roll(RollType.DEFAULT, 2));
         frame.addRoll(new Roll(RollType.SPARE, 8));
         // then
+        assertThat(frame.getFrameScore().getScore().getScore()).isEqualTo(10);
         assertThat(frame.getMarking()).isEqualTo("2|/");
     }
 }

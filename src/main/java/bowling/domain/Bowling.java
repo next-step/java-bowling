@@ -25,18 +25,20 @@ public class Bowling {
         }
     }
 
-    public boolean isAllLaneEnd() {
+    boolean isAllLaneEnd() {
         return playerFrames.stream()
                 .allMatch(PlayerFrame::isComplete);
     }
 
     private void rolling() {
-        playerFrames.forEach(playerFrame -> {
-            while (playerFrame.canRoll()) {
-                playerFrame.roll(rollFunction, () -> recordConsumer.acceptAndApply(playerFrames));
-            }
-            playerFrame.nextFrame();
-        });
+        playerFrames.forEach(this::rollingPlayerFrame);
+    }
+
+    private void rollingPlayerFrame(PlayerFrame playerFrame) {
+        while (playerFrame.canRoll()) {
+            playerFrame.roll(rollFunction, () -> recordConsumer.acceptAndApply(playerFrames));
+        }
+        playerFrame.nextFrame();
     }
 
     public static class Builder {

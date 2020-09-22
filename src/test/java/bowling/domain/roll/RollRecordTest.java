@@ -15,11 +15,7 @@ public class RollRecordTest {
         // when
         record.add(new Roll(RollType.STRIKE, 10));
         // then
-        assertThat(record.isStrike()).isTrue();
-        assertThat(record.isSpare()).isFalse();
-        assertThat(record.isRollTwice()).isFalse();
-        assertThat(record.isRollThreeTimes()).isFalse();
-        assertThat(record.getMarking()).isEqualTo("X");
+        assertRecord(record, true, false, false, false, "X");
     }
 
     @Test
@@ -31,11 +27,7 @@ public class RollRecordTest {
         record.add(new Roll(RollType.DEFAULT, 5));
         record.add(new Roll(RollType.SPARE, 5));
         // then
-        assertThat(record.isStrike()).isFalse();
-        assertThat(record.isSpare()).isTrue();
-        assertThat(record.isRollTwice()).isTrue();
-        assertThat(record.isRollThreeTimes()).isFalse();
-        assertThat(record.getMarking()).isEqualTo("5|/");
+        assertRecord(record, false, true, true, false, "5|/");
     }
 
     @Test
@@ -47,11 +39,7 @@ public class RollRecordTest {
         record.add(new Roll(RollType.DEFAULT, 5));
         record.add(new Roll(RollType.DEFAULT, 1));
         // then
-        assertThat(record.isStrike()).isFalse();
-        assertThat(record.isSpare()).isFalse();
-        assertThat(record.isRollTwice()).isTrue();
-        assertThat(record.isRollThreeTimes()).isFalse();
-        assertThat(record.getMarking()).isEqualTo("5|1");
+        assertRecord(record, false, false, true, false, "5|1");
     }
 
     @Test
@@ -63,11 +51,7 @@ public class RollRecordTest {
         record.add(new Roll(RollType.DEFAULT, 5));
         record.add(new Roll(RollType.GUTTER, 0));
         // then
-        assertThat(record.isStrike()).isFalse();
-        assertThat(record.isSpare()).isFalse();
-        assertThat(record.isRollTwice()).isTrue();
-        assertThat(record.isRollThreeTimes()).isFalse();
-        assertThat(record.getMarking()).isEqualTo("5|-");
+        assertRecord(record, false, false, true, false, "5|-");
     }
 
     @Test
@@ -80,10 +64,19 @@ public class RollRecordTest {
         record.add(new Roll(RollType.SPARE, 5));
         record.add(new Roll(RollType.DEFAULT, 1));
         // then
-        assertThat(record.isStrike()).isFalse();
-        assertThat(record.isSpare()).isFalse();
-        assertThat(record.isRollTwice()).isFalse();
-        assertThat(record.isRollThreeTimes()).isTrue();
-        assertThat(record.getMarking()).isEqualTo("5|/|1");
+        assertRecord(record, false, false, false, true, "5|/|1");
+    }
+
+    private void assertRecord(RollRecord record,
+                              boolean isStrike,
+                              boolean isSpare,
+                              boolean isRollTwice,
+                              boolean isRollThreeTimes,
+                              String marking) {
+        assertThat(record.isStrike()).isEqualTo(isStrike);
+        assertThat(record.isSpare()).isEqualTo(isSpare);
+        assertThat(record.isRollTwice()).isEqualTo(isRollTwice);
+        assertThat(record.isRollThreeTimes()).isEqualTo(isRollThreeTimes);
+        assertThat(record.getMarking()).isEqualTo(marking);
     }
 }
