@@ -1,10 +1,11 @@
 package bowling.app;
 
+import bowling.domain.Participants;
 import bowling.domain.Player;
-import bowling.domain.frame.Frame;
-import bowling.domain.frame.NormalFrame;
 import bowling.view.InputView;
 import bowling.view.OutputView;
+
+import java.util.List;
 
 public class BowlingExecutor {
 
@@ -12,14 +13,14 @@ public class BowlingExecutor {
 
     }
 
-    public static void execute(Player player) {
-        Frame firstFrame = NormalFrame.firstFrame();
-        Frame frame = firstFrame;
-        OutputView.printBoard(player, firstFrame);
-        while (!frame.isEnd()) {
-            int numberOfPins = InputView.getNumberOfPins(frame);
-            frame = frame.bowl(numberOfPins);
-            OutputView.printBoard(player, firstFrame);
+    public static void execute(List<Player> players) {
+        Participants participants = new Participants(players);
+        OutputView.printBoard(participants);
+        boolean isEnd = false;
+        while (!isEnd) {
+            int numberOfPins = InputView.getNumberOfPins(participants.getCurrentPlayer());
+            isEnd = participants.bowl(numberOfPins);
+            OutputView.printBoard(participants);
         }
     }
 

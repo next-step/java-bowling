@@ -47,6 +47,7 @@ public class NormalFrame extends AbstractFrame {
         return bowlResult.isStrike();
     }
 
+    @Override
     public boolean isCompleted() {
         return bowlResult.isCompleted();
     }
