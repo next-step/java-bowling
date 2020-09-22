@@ -41,16 +41,20 @@ public class Frames {
             throw new IllegalStateException("모든 프레임이 완료된 상태 입니다.");
         }
         currentFrame.bowl(pin);
-        if (hasNextFrameAndIsCurrentFrameFinished()) {
-            currentFrame = currentFrame.getNextFrame();
-        }
     }
 
-    private boolean hasNextFrameAndIsCurrentFrameFinished() {
+    public boolean hasNextFrameAndIsCurrentFrameFinished() {
         return !currentFrame.isLastFrame() && currentFrame.isDone();
     }
 
     public boolean isFinished() {
         return currentFrame.isLastFrame() && currentFrame.isDone();
+    }
+
+    public void shiftCurrentFrame() {
+        if (currentFrame.isLastFrame()) {
+            throw new IllegalStateException("다음 프레임이 없습니다.");
+        }
+        currentFrame = currentFrame.getNextFrame();
     }
 }
