@@ -1,5 +1,7 @@
 package bowling.domain.frame;
 
+import java.util.Objects;
+
 import bowling.domain.core.RolledResult;
 import bowling.ui.result.DisplayRolledResult;
 
@@ -7,39 +9,25 @@ import static bowling.domain.core.state.NotAtRolledResult.notAtRolledResult;
 
 final class FoundationFrame implements Frame {
     private RolledResult rolledResult;
-    private int score;
+    private Score score;
 
     FoundationFrame() {
         this.rolledResult = notAtRolledResult();
-        score = 0;
     }
 
     @Override
-    public void updateRolledResult(RolledResult rolledResult) {
-        this.rolledResult = rolledResult;
-        updateScoreForMiss(rolledResult);
+    public void score(Frame prevFrame, Frame nextFrame) {
+        score = new Score(prevFrame, nextFrame);
     }
 
     @Override
-    public void updateScore(RolledResult nextRolledResult) {
-        updateScoreForStrikeOrSpare(nextRolledResult);
-    }
-
-    private void updateScoreForMiss(RolledResult rolledResult) {
-        if (this.rolledResult.isCompleteState()){
-            score = rolledResult.getRolledResultScore();
-        }
-    }
-
-    private void updateScoreForStrikeOrSpare(RolledResult nextRolledResult) {
-        if (rolledResult.isCompleteState() && nextRolledResult.isCompleteState()) {
-            score = rolledResult.getNextRolledResultMergeScore(nextRolledResult);
-        }
+    public void updateRolledResult(int fallenPins) {
+        this.rolledResult = rolledResult.nextRolledResult(fallenPins);
     }
 
     @Override
     public int getScore() {
-        return score;
+        return score.getScore(rolledResult);
     }
 
     @Override

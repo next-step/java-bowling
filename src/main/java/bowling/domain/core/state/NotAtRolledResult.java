@@ -24,11 +24,6 @@ public final class NotAtRolledResult implements RolledResult {
     }
 
     @Override
-    public int getNextRolledResultMergeScore(RolledResult nextRolledResult) {
-        return 0;
-    }
-
-    @Override
     public ImmutableTwoFallenPins twoFallenPins() {
         return gutterTwoFallenPins();
     }

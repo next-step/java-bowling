@@ -22,11 +22,14 @@ public interface RolledResult {
     }
 
     default int getRolledResultScore(){
-        return getNextRolledResultMergeScore(notAtRolledResult());
+        if (isCompleteState()) {
+            return twoFallenPins().totalScore();
+        }
+        return 0;
     }
 
     default int getNextRolledResultMergeScore(RolledResult nextRolledResult){
-        return twoFallenPins().totalScore();
+        return 0;
     }
 
     default String gutterOrFallenPinValue(int rollingAttemptCount) {

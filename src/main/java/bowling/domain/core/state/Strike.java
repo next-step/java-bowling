@@ -1,6 +1,5 @@
 package bowling.domain.core.state;
 
-import bowling.domain.core.FallenPins;
 import bowling.domain.core.RolledResult;
 
 import static bowling.domain.core.state.ImmutableTwoFallenPins.strikeTwoFallenPins;
@@ -13,8 +12,7 @@ final class Strike implements RolledResult {
     public int getNextRolledResultMergeScore(RolledResult nextRolledResult) {
         final ImmutableTwoFallenPins twoFallenPins = nextRolledResult.twoFallenPins();
 
-        int score = FallenPins.MAX_FALLEN_PIN_COUNT
-            + twoFallenPins.firstFallenPinsValue()
+        int score = twoFallenPins.firstFallenPinsValue()
             + twoFallenPins.secondFallenPinsValue();
 
         if (this == nextRolledResult){
