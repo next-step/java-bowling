@@ -92,5 +92,5 @@
 - [X] 1명 이상의 점수판을 관리하는 BowlingGame 객체 생성
 - [X] BowlingGameAssembler, BowlingGameDTO 생성
 - [X] BowlingController 수정
-- [ ] 입력(InputView) 화면 수정
-- [ ] 출력(OutputView) 화면 수정
+- [X] 입력(InputView) 화면 수정
+- [X] 출력(OutputView) 화면 수정
