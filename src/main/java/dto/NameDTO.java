@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class NameDTO {
 
-    private static final String NAMING_REGEX = "^[a-zA-Z]{3,}$";
+    private static final String NAMING_REGEX = "^[a-zA-Z]{3}$";
     private final String name;
 
     private NameDTO(String name) {
