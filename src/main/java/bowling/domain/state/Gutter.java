@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Score;
+
 public class Gutter extends FinishedState {
 
     private Gutter() {
@@ -9,4 +11,22 @@ public class Gutter extends FinishedState {
         return new Gutter();
     }
 
+    @Override
+    public Score calculate(Score baseScore) {
+        baseScore = baseScore.add(Score.ofGutter());
+        if (baseScore.isPending()) {
+            baseScore = baseScore.add(Score.ofGutter());
+        }
+        return baseScore;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofGutter();
+    }
+
+    @Override
+    public boolean isFrameFinish(State state) {
+        return true;
+    }
 }

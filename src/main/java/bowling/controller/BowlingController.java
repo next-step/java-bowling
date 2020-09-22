@@ -1,27 +1,26 @@
 package bowling.controller;
 
+import bowling.domain.frame.Frames;
 import bowling.domain.frame.ScoreBoard;
+import bowling.domain.frame.dto.ScoreBoardAssembler;
 import bowling.domain.pin.Pin;
 import bowling.domain.user.User;
-import bowling.domain.user.dto.UserAssembler;
-import bowling.domain.user.dto.UserDTO;
 import bowling.view.InputView;
 import bowling.view.OutputView;
 
 public class BowlingController {
 
     public void start() {
-        ScoreBoard scoreBoard = ScoreBoard.init();
         User user = User.of(InputView.getUserName());
-        UserDTO userDTO = UserAssembler.assemble(user);
+        Frames frames = Frames.init();
+        ScoreBoard scoreBoard = ScoreBoard.init(user, frames);
 
-        OutputView.print(userDTO, scoreBoard);
+        OutputView.print(ScoreBoardAssembler.assemble(scoreBoard, frames));
 
         while (!scoreBoard.isGameOver()) {
-            OutputView.printCurrentFrame(scoreBoard.size());
+            OutputView.printCurrentFrame(frames.getLastIndex());
             scoreBoard.bowl(Pin.of(InputView.getFelledPin()));
-
-            OutputView.print(userDTO, scoreBoard);
+            OutputView.print(ScoreBoardAssembler.assemble(scoreBoard, frames));
         }
     }
 }

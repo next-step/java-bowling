@@ -5,6 +5,7 @@ import bowling.domain.state.*;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class EndFrame implements Frame {
 
@@ -16,12 +17,13 @@ public class EndFrame implements Frame {
     }
 
     @Override
-    public void bowl(Pin felledPin) {
+    public Frame bowl(Pin felledPin) {
         count.increment();
         bowlAndSet(felledPin);
         if (states.getLast().isEnd()) {
             states.add(Ready.of());
         }
+        return this;
     }
 
     private void bowlAndSet(Pin felledPin) {
@@ -31,10 +33,59 @@ public class EndFrame implements Frame {
 
     @Override
     public boolean isEnd() {
-        return isFrameFinish(states.getFirst()) || count.isMax();
+        State firstState = states.getFirst();
+        return firstState.isFrameFinish(firstState) || count.isMax();
+    }
+
+    @Override
+    public Score calculateScore(Score baseScore) {
+        for (State state : states) {
+            baseScore = state.calculate(baseScore);
+        }
+        return baseScore;
+    }
+
+    @Override
+    public Score getScore() {
+        if (!isEnd()) {
+            return Score.ofPending();
+        }
+        return states.stream()
+                .map(State::getScore)
+                .reduce(Score::add)
+                .orElseThrow(IllegalAccessError::new);
+    }
+
+    @Override
+    public boolean hasNext() {
+        return false;
+    }
+
+    @Override
+    public Frame next() {
+        throw new IllegalArgumentException("마지막 Frame 입니다.");
+    }
+
+    @Override
+    public Index getIndex() {
+        return Index.of(Index.MAX_INDEX);
     }
 
     public LinkedList<State> getStates() {
         return states;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EndFrame endFrame = (EndFrame) o;
+        return Objects.equals(states, endFrame.states) &&
+                Objects.equals(count, endFrame.count);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(states, count);
     }
 }

@@ -1,5 +1,7 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Remaining;
+import bowling.domain.frame.Score;
 import bowling.domain.pin.Pin;
 
 public class Continue implements State {
@@ -28,6 +30,21 @@ public class Continue implements State {
 
     @Override
     public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public Score calculate(Score baseScore) {
+        return baseScore.add(first.toScore());
+    }
+
+    @Override
+    public Score getScore() {
+        return first.toScore(Remaining.CONTINUE);
+    }
+
+    @Override
+    public boolean isFrameFinish(State state) {
         return false;
     }
 

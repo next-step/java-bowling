@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Score;
 import bowling.domain.pin.Pin;
 
 public class Miss extends FinishedState {
@@ -22,5 +23,24 @@ public class Miss extends FinishedState {
 
     public Pin getSecondPin() {
         return this.second;
+    }
+
+    @Override
+    public Score calculate(Score baseScore) {
+        baseScore = baseScore.add(first.toScore());
+        if (baseScore.isPending()) {
+            baseScore = baseScore.add(second.toScore());
+        }
+        return baseScore;
+    }
+
+    @Override
+    public Score getScore() {
+        return first.add(second).toScore();
+    }
+
+    @Override
+    public boolean isFrameFinish(State state) {
+        return true;
     }
 }

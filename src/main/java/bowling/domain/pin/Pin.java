@@ -1,5 +1,8 @@
 package bowling.domain.pin;
 
+import bowling.domain.frame.Remaining;
+import bowling.domain.frame.Score;
+
 import java.util.Objects;
 import java.util.stream.IntStream;
 
@@ -37,6 +40,18 @@ public class Pin {
 
     public boolean isNotFelled() {
         return countOfFelledPin == MIN;
+    }
+
+    public Score toScore() {
+        return Score.of(countOfFelledPin);
+    }
+
+    public Score toScore(Remaining remaining) {
+        return Score.of(countOfFelledPin, remaining);
+    }
+
+    public Score toComplementedScore() {
+        return Score.of(MAX - countOfFelledPin);
     }
 
     @Override

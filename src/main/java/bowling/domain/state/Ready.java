@@ -1,5 +1,6 @@
 package bowling.domain.state;
 
+import bowling.domain.frame.Score;
 import bowling.domain.pin.Pin;
 
 public class Ready implements State {
@@ -21,6 +22,21 @@ public class Ready implements State {
 
     @Override
     public boolean isEnd() {
+        return false;
+    }
+
+    @Override
+    public Score calculate(Score baseScore) {
+        return baseScore;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofReady();
+    }
+
+    @Override
+    public boolean isFrameFinish(State state) {
         return false;
     }
 
