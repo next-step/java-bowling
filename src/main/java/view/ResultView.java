@@ -1,9 +1,8 @@
 package view;
 
-import dto.NameDTO;
-import dto.ResultFrameDTO;
-import dto.ResultFramesDTO;
+import dto.*;
 
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ResultView {
@@ -14,6 +13,7 @@ public class ResultView {
     private static final String GUTTER = "-";
     private static final String STRIKE = "X";
     private static final String SPARE = "/";
+    private static final String DELIMITER = "|";
 
     public void printColumns(int totalFrames) {
         StringBuilder columns = new StringBuilder("| NAME |");
@@ -78,6 +78,23 @@ public class ResultView {
             return;
         }
         frames.append("   |");
+    }
+
+    public void printScores(ScoresDTO scoresDTO) {
+        StringBuilder scores = new StringBuilder("|      |");
+        String scoreString = scoresDTO.getScoreDTOs().stream()
+                .map(this::getScore)
+                .collect(Collectors.joining(DELIMITER));
+        scores.append(scoreString);
+        scores.append(DELIMITER);
+        System.out.println(scores);
+    }
+
+    private String getScore(ScoreDTO scoreDTO) {
+        if (!scoreDTO.hasScore()) {
+            return scoreDTO.isLast() ?  "       " : "     ";
+        }
+        return String.format(scoreDTO.isLast() ? "  %3d  " : " %3s ", scoreDTO.getScore());
     }
 
     public void printExceptionMessage(Exception exception) {

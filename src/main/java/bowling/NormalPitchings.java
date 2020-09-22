@@ -77,12 +77,8 @@ public class NormalPitchings implements Pitchings {
         secondPitching.bowl(pin);
     }
 
-    public boolean isFirstPitchingClear() {
+    public boolean isStrike() {
         return firstPitching.isClear();
-    }
-
-    public boolean isSecondPitchingClear() {
-        return secondPitching.isClear();
     }
 
     public boolean isOverMaxPins(Pin pin) {
@@ -90,7 +86,22 @@ public class NormalPitchings implements Pitchings {
     }
 
     public boolean isSpare() {
-        return firstPitching.isSpare(secondPitching);
+        return !isStrike() && firstPitching.isSpare(secondPitching);
+    }
+
+    @Override
+    public int giveStrikeBonusScore() {
+        return firstPitching.getScore() + secondPitching.getScore();
+    }
+
+    @Override
+    public int giveSpareBonusScore() {
+        return firstPitching.getScore();
+    }
+
+    @Override
+    public int calculateScore() {
+        return firstPitching.getScore() + secondPitching.getScore();
     }
 
     @Override

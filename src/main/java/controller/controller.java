@@ -1,17 +1,18 @@
 package controller;
 
 import bowling.BowlingGame;
+import bowling.Frame;
 import bowling.Pin;
 import bowling.Player;
-import dto.PinDTO;
-import dto.NameDTO;
-import dto.ResultFramesDTO;
+import dto.*;
 import view.InputView;
 import view.ResultView;
 
+import java.util.List;
+
 public class controller {
 
-    private static final int TOTAL_FRAMES = 3;
+    private static final int TOTAL_FRAMES = 5;
     private static final InputView inputView = new InputView();
     private static final ResultView resultView = new ResultView();
 
@@ -19,18 +20,22 @@ public class controller {
         NameDTO nameDTO = inputView.inputName();
         BowlingGame bowlingGame = BowlingGame.of(TOTAL_FRAMES, nameDTO.getName());
 
-        ResultFramesDTO resultFramesDTO = ResultFramesDTO.of(bowlingGame.getFrames());
-        printScoreBoard(nameDTO, resultFramesDTO);
+        List<Frame> frames = bowlingGame.getFrames();
+        ResultFramesDTO resultFramesDTO = ResultFramesDTO.of(frames);
+        ScoresDTO scoresDTO = ScoresDTO.of(frames);
+
+        printScoreBoard(nameDTO, resultFramesDTO, scoresDTO);
 
         while (!bowlingGame.isFinished()) {
             printScoreBoard(bowlingGame);
         }
     }
 
-    private static void printScoreBoard(NameDTO nameDTO, ResultFramesDTO resultFramesDTO) {
+    private static void printScoreBoard(NameDTO nameDTO, ResultFramesDTO resultFramesDTO, ScoresDTO scoresDTO) {
         resultView.printColumns(TOTAL_FRAMES);
         resultView.printPlayerName(nameDTO);
         resultView.printPins(resultFramesDTO);
+        resultView.printScores(scoresDTO);
     }
 
     private static void printScoreBoard(BowlingGame bowlingGame) {
@@ -40,9 +45,12 @@ public class controller {
 
             PinDTO pinDTO = inputView.inputPin(nameDTO);
             bowlingGame.bowl(Pin.of(pinDTO.getPin()));
-            ResultFramesDTO resultFramesDTO = ResultFramesDTO.of(bowlingGame.getFrames());
 
-            printScoreBoard(nameDTO, resultFramesDTO);
+            List<Frame> frames = bowlingGame.getFrames();
+            ResultFramesDTO resultFramesDTO = ResultFramesDTO.of(frames);
+            ScoresDTO scoresDTO = ScoresDTO.of(frames);
+
+            printScoreBoard(nameDTO, resultFramesDTO, scoresDTO);
         } catch (Exception exception) {
             resultView.printExceptionMessage(exception);
             printScoreBoard(bowlingGame);

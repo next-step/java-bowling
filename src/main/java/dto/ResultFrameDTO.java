@@ -24,7 +24,7 @@ public class ResultFrameDTO {
                 ResultPitchingDTO.of(PinDTO.from(frame.getSecondPin()), frame.isSecondDone());
         ResultPitchingDTO bonusResultPitchingDTO = null;
         if (frame.isLastFrame()) {
-            bonusResultPitchingDTO =ResultPitchingDTO.of(PinDTO.from(frame.getBonusPin()), frame.isBonusDone());
+            bonusResultPitchingDTO = ResultPitchingDTO.of(PinDTO.from(frame.getBonusPin()), frame.isBonusDone());
         }
         return new ResultFrameDTO(firstResultPitchingDTO, secondResultPitchingDTO, bonusResultPitchingDTO);
     }

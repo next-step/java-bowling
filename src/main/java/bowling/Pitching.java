@@ -48,6 +48,10 @@ public class Pitching {
         return this.pin.isSpare(pitching.pin);
     }
 
+    public int getScore() {
+        return pin.getPin();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

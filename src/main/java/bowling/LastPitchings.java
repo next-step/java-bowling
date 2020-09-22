@@ -10,7 +10,11 @@ public class LastPitchings implements Pitchings {
         this.bonusPitching = bonusPitching;
     }
 
-    public static LastPitchings of() {
+    public static LastPitchings of(NormalPitchings normalPitchings, Pitching pitching) {
+        return new LastPitchings(normalPitchings, pitching);
+    }
+
+    public static LastPitchings ofReady() {
         return new LastPitchings(NormalPitchings.ofReady(), Pitching.ofReady());
     }
 
@@ -20,38 +24,38 @@ public class LastPitchings implements Pitchings {
             throw new IllegalStateException("투구가 모두 완료된 상태 입니다.");
         }
 
-        if (normalPitchings.isFirstDone() && !normalPitchings.isSecondDone()) {
+        if (!normalPitchings.isFirstDone()) {
+            normalPitchings.bowlFirstPitching(pin);
+            checkAndSetSecondPitching();
+            return;
+        }
+
+        if (!normalPitchings.isSecondDone()) {
             validateSecondPitching(pin);
             normalPitchings.bowlSecondPitching(pin);
             validateAndSetBonusPitching();
             return;
         }
-        if (normalPitchings.isSecondDone()) {
-            bonusPitching.bowl(pin);
-            return;
+
+        bonusPitching.bowl(pin);
+    }
+
+    private void checkAndSetSecondPitching() {
+        if (normalPitchings.isStrike()) {
+            normalPitchings.bowlSecondPitching(Pin.ofMin());
         }
-        normalPitchings.bowlFirstPitching(pin);
     }
 
     private void validateSecondPitching(Pin secondPitchingPin) {
-        if (normalPitchings.isFirstPitchingClear()) {
-            return;
-        }
-
         if (normalPitchings.isOverMaxPins(secondPitchingPin)) {
             throw new IllegalStateException("첫 번째 투구와 두 번째 투구의 합이 범위를 초과했습니다.");
         }
     }
 
     private void validateAndSetBonusPitching() {
-        if (normalPitchings.isSecondPitchingClear()) {
+        if (normalPitchings.isStrike() || normalPitchings.isSpare()) {
             return;
         }
-
-        if (!normalPitchings.isFirstPitchingClear() && normalPitchings.isSpare()) {
-            return;
-        }
-
         bonusPitching.bowl(Pin.ofMin());
     }
 
@@ -87,6 +91,35 @@ public class LastPitchings implements Pitchings {
 
     @Override
     public boolean isDone() {
-        return isFirstDone() && isSecondDone() && isBonusDone();
+        return normalPitchings.isDone() && isBonusDone();
+    }
+
+    @Override
+    public boolean isStrike() {
+        return normalPitchings.isStrike();
+    }
+
+    @Override
+    public boolean isSpare() {
+        return normalPitchings.isSpare();
+    }
+
+    @Override
+    public int giveStrikeBonusScore() {
+        return normalPitchings.giveStrikeBonusScore();
+    }
+    @Override
+    public int giveSpareBonusScore() {
+        return normalPitchings.giveSpareBonusScore();
+    }
+
+    @Override
+    public int calculateScore() {
+        return normalPitchings.calculateScore() + bonusPitching.getScore();
+    }
+
+    @Override
+    public int giveBonusScore() {
+        return bonusPitching.getScore();
     }
 }

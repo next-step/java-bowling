@@ -128,27 +128,20 @@ class NormalPitchingsTest {
         then(NormalPitchings.ofReady()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> provideIsCleareArguments() {
+    private static Stream<Arguments> provideIsClearArguments() {
         Pitching min = Pitching.of(PitchingStatus.Done, Pin.ofMin());
         Pitching max = Pitching.of(PitchingStatus.Done, Pin.ofMax());
         return Stream.of(
                 Arguments.of(NormalPitchings.of(max, min), Boolean.TRUE),
-                Arguments.of(NormalPitchings.of(min, max), Boolean.FALSE)
+                Arguments.of(NormalPitchings.of(min, min), Boolean.FALSE)
         );
     }
 
     @ParameterizedTest
-    @DisplayName("쓰러뜨린 첫 번째 핀 확인 검증")
-    @MethodSource("provideIsCleareArguments")
+    @DisplayName("스트라이크 확인 검증")
+    @MethodSource("provideIsClearArguments")
     void isFirstPitchingClear(NormalPitchings normalPitchings, boolean expected) {
-        then(normalPitchings.isFirstPitchingClear()).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @DisplayName("쓰러뜨린 두 번째 핀 확인 검증")
-    @MethodSource("provideIsCleareArguments")
-    void isSecondPitchingClear(NormalPitchings normalPitchings, boolean expected) {
-        then(normalPitchings.isFirstPitchingClear()).isEqualTo(expected);
+        then(normalPitchings.isStrike()).isEqualTo(expected);
     }
 
     @Test
@@ -172,5 +165,27 @@ class NormalPitchingsTest {
 
         then(pitchingForTrue.isSpare()).isTrue();
         then(pitchingForFalse.isSpare()).isFalse();
+    }
+
+    @Test
+    @DisplayName("첫 번째 투구 점수 계산 검증")
+    void getFirstScore() {
+        int expected = 3;
+        Pitching pitching = Pitching.of(PitchingStatus.Done, Pin.of(expected));
+        Pitching min = Pitching.of(PitchingStatus.Done, Pin.ofMin());
+        NormalPitchings normalPitchings = NormalPitchings.of(pitching, min);
+
+        then(normalPitchings.giveSpareBonusScore()).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("점수 계산 검증")
+    void calculateScore() {
+        int expected1 = 2, expected2 = 3;
+        Pitching pitching1 = Pitching.of(PitchingStatus.Done, Pin.of(expected1));
+        Pitching pitching2 = Pitching.of(PitchingStatus.Done, Pin.of(expected2));
+        NormalPitchings normalPitchings = NormalPitchings.of(pitching1, pitching2);
+
+        then(normalPitchings.calculateScore()).isEqualTo(expected1 + expected2);
     }
 }

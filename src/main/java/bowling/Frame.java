@@ -15,6 +15,10 @@ public class Frame {
         return new Frame(NormalPitchings.ofReady());
     }
 
+    public Pitchings getPitchings() {
+        return this.pitchings;
+    }
+
     public Frame getNextFrame() {
         return this.nextFrame;
     }
@@ -61,6 +65,33 @@ public class Frame {
     }
 
     public void last() {
-        this.nextFrame = new Frame(LastPitchings.of());
+        this.nextFrame = new Frame(LastPitchings.ofReady());
+    }
+
+    public boolean isStrike() {
+        return pitchings.isStrike();
+    }
+
+    public boolean isSpare() {
+        return pitchings.isSpare();
+    }
+
+    public boolean canCalculateScore() {
+        if (isLastFrame()) {
+            return isDone();
+        }
+        FrameStatus frameStatus = FrameStatus.of(this);
+        return frameStatus.canCalculateScore(this);
+    }
+
+    public int calculateScore() {
+        if (!canCalculateScore()) {
+            throw new IllegalStateException("점수를 계산할 수 없습니다.");
+        }
+        if (isLastFrame()) {
+            return pitchings.calculateScore();
+        }
+        FrameStatus frameStatus = FrameStatus.of(this);
+        return pitchings.calculateScore() + frameStatus.getBonusScore(this);
     }
 }
