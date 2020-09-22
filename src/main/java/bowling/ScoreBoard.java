@@ -17,8 +17,8 @@ public class ScoreBoard {
         return new ScoreBoard(player, frames);
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getPlayerName() {
+        return player.getName();
     }
 
     public List<Frame> getFrames() {
@@ -31,5 +31,13 @@ public class ScoreBoard {
 
     public boolean isFinished() {
         return frames.isFinished();
+    }
+
+    public boolean hasNextFrameAndIsCurrentFrameFinished() {
+        return frames.hasNextFrameAndIsCurrentFrameFinished();
+    }
+
+    public void shiftCurrentFrame() {
+        frames.shiftCurrentFrame();
     }
 }

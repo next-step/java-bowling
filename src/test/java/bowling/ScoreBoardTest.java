@@ -17,7 +17,7 @@ class ScoreBoardTest {
         String expected = "abc";
         ScoreBoard scoreBoard = ScoreBoard.of(Player.of(expected), 2);
 
-        then(scoreBoard.getPlayer()).isEqualTo(Player.of(expected));
+        then(scoreBoard.getPlayerName()).isEqualTo(Player.of(expected));
     }
 
     @ParameterizedTest
