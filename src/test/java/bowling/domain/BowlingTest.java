@@ -34,7 +34,7 @@ public class BowlingTest {
                 .collect(Collectors.toList());
         Iterator<Integer> itr = rolls.iterator();
 
-        ToIntFunction<Integer> rollFunction = value -> itr.next();
+        ToIntFunction<Player> rollFunction = value -> itr.next();
 
         Bowling bowling = new Bowling
                 .Builder(players, rollFunction)
@@ -55,7 +55,7 @@ public class BowlingTest {
                 .collect(Collectors.toList());
         Iterator<Integer> itr = rolls.iterator();
 
-        ToIntFunction<Integer> rollFunction = value -> itr.next();
+        ToIntFunction<Player> rollFunction = value -> itr.next();
 
         Bowling bowling = new Bowling
                 .Builder(players, rollFunction)

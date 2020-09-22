@@ -1,5 +1,7 @@
 package bowling.view;
 
+import bowling.domain.Player;
+
 import java.util.Scanner;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
@@ -15,14 +17,14 @@ public class BowlingInputView {
 
     public static IntFunction<String> playerName() {
         return (index) -> {
-            System.out.print("플레이어 이름은(3 english letters)?: ");
+            System.out.printf("플레이어 %d의 이름은(3 english letters)?: ", index);
             return SCANNER.next();
         };
     }
 
-    public static ToIntFunction<Integer> countOfPins() {
-        return (frameNumber) -> {
-            System.out.printf("%d프레임 투구 : ", frameNumber);
+    public static ToIntFunction<Player> countOfPins() {
+        return (player) -> {
+            System.out.printf("%s's turn : ", player.getName());
             return SCANNER.nextInt();
         };
     }

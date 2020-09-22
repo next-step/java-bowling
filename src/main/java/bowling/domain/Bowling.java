@@ -8,11 +8,11 @@ import java.util.function.ToIntFunction;
 public class Bowling {
 
     private final List<PlayerFrame> playerFrames;
-    private final ToIntFunction<Integer> rollFunction;
+    private final ToIntFunction<Player> rollFunction;
     private final RecordConsumer recordConsumer;
 
     public Bowling(List<PlayerFrame> playerFrames,
-                   ToIntFunction<Integer> rollFunction,
+                   ToIntFunction<Player> rollFunction,
                    RecordConsumer recordConsumer) {
         this.playerFrames = playerFrames;
         this.rollFunction = rollFunction;
@@ -43,11 +43,11 @@ public class Bowling {
 
     public static class Builder {
         private final List<PlayerFrame> playerFrames = new ArrayList<>();
-        private final ToIntFunction<Integer> rollFunction;
+        private final ToIntFunction<Player> rollFunction;
         private Runnable action = () -> {};
         private Consumer<FrameRecordIterator> recordConsumer = recordIterator -> {};
 
-        public Builder(Players players, ToIntFunction<Integer> rollFunction) {
+        public Builder(Players players, ToIntFunction<Player> rollFunction) {
             this.rollFunction = rollFunction;
             players.stream()
                     .forEach(player -> playerFrames.add(new PlayerFrame(player)));

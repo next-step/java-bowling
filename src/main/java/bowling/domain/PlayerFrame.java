@@ -21,7 +21,7 @@ public class PlayerFrame {
         return !frames.cannotRollMore(pins);
     }
 
-    public void roll(ToIntFunction<Integer> playerRollFunction, Runnable runnable) {
+    public void roll(ToIntFunction<Player> playerRollFunction, Runnable runnable) {
         doRoll(playerRollFunction);
         if (!canRoll()) {
             frames.endCurrentFrame();
@@ -47,8 +47,8 @@ public class PlayerFrame {
         }
     }
 
-    private void doRoll(ToIntFunction<Integer> playerRollFunction) {
-        int countOfPins = playerRollFunction.applyAsInt(frames.getCurrentFrameNumber());
+    private void doRoll(ToIntFunction<Player> playerRollFunction) {
+        int countOfPins = playerRollFunction.applyAsInt(player);
         Roll roll = pins.knockedDown(countOfPins);
         frames.addRoll(roll);
         scoreManager.notify(roll);
