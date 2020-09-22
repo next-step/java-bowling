@@ -2,6 +2,8 @@ package bowling;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -109,43 +111,39 @@ class LastPitchingsTest {
         then(lastPitchings.isFirstDone()).isTrue();
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {"2,false", "10,true"})
     @DisplayName("두 번째 투구 완료 여부 검증")
-    void isSecondDone() {
+    void isSecondDone(int pin, boolean expected) {
         Pitchings lastPitchings = LastPitchings.ofReady();
 
-        lastPitchings.bowl(Pin.of(10));
-        then(lastPitchings.isSecondDone()).isFalse();
-
-        lastPitchings.bowl(Pin.of(10));
-        then(lastPitchings.isSecondDone()).isTrue();
+        lastPitchings.bowl(Pin.of(pin));
+        then(lastPitchings.isSecondDone()).isEqualTo(expected);
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {"0,10,false", "0,0,true"})
     @DisplayName("보너스 투구 완료 여부 검증")
-    void isBonusDone() {
+    void isBonusDone(int firstPin, int secondPin, boolean expected) {
         Pitchings lastPitchings = LastPitchings.ofReady();
 
-        lastPitchings.bowl(Pin.of(10));
-        lastPitchings.bowl(Pin.of(10));
-        lastPitchings.bowl(Pin.of(10));
+        lastPitchings.bowl(Pin.of(firstPin));
+        lastPitchings.bowl(Pin.of(secondPin));
 
-        then(lastPitchings.isBonusDone()).isTrue();
+        then(lastPitchings.isBonusDone()).isEqualTo(expected);
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {"0,10,false", "2,3,true"})
     @DisplayName("완료 상태 확인 검증")
-    void isDone() {
+    void isDone(int firstPin, int secondPin, boolean expected) {
         Pitchings lastPitchings = LastPitchings.ofReady();
 
-        lastPitchings.bowl(Pin.of(10));
+        lastPitchings.bowl(Pin.of(firstPin));
         then(lastPitchings.isDone()).isFalse();
 
-        lastPitchings.bowl(Pin.of(10));
-        then(lastPitchings.isDone()).isFalse();
-
-        lastPitchings.bowl(Pin.of(10));
-        then(lastPitchings.isDone()).isTrue();
+        lastPitchings.bowl(Pin.of(secondPin));
+        then(lastPitchings.isDone()).isEqualTo(expected);
     }
 
     @Test
