@@ -30,6 +30,10 @@ class TerminateRolledResult {
                             .collect(joining("|"));
     }
 
+    boolean isNotEmpty(){
+        return !rolledResults.isEmpty();
+    }
+
     int increaseNextStepFrame() {
         if (MAX_TRY_COUNT_SIZE <= tryCount) {
             return 1;

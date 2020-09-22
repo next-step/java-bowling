@@ -17,6 +17,11 @@ public final class Spare implements RolledResult {
     }
 
     @Override
+    public int tryCountByTerminateFrame() {
+        return 2;
+    }
+
+    @Override
     public int getNextRolledResultMergeScore(RolledResult nextRolledResult) {
         if (isCompleteState() && nextRolledResult.isCompleteState()) {
             return nextRolledResult.twoFallenPins()

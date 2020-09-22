@@ -44,7 +44,13 @@ public final class TerminateFrame implements Frame {
 
     @Override
     public DisplayRolledResult toDisplayRolledResult() {
-        return new DisplayRolledResult(terminateRolledResult.description(), getScore());
+        String description = currentRolledResult.description();
+        if(terminateRolledResult.isNotEmpty()) {
+            description = currentRolledResult.isNotCompleteState()
+                ? String.join("|", terminateRolledResult.description(), currentRolledResult.description())
+                : terminateRolledResult.description();
+        }
+        return new DisplayRolledResult(description, getScore());
     }
 
     @Override
