@@ -48,10 +48,6 @@ public class Answers {
         deleteHistories.add(answers);
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
