@@ -42,4 +42,33 @@ public class NormalFrameTest {
         assertThat(frame.getPins()).containsExactly(new Pin(10));
     }
 
+    @Test
+    void pitch2() {
+        NormalFrame frame = NormalFrame.firstFrame();
+        frame.pitch(5);
+        frame.pitch(5);
+
+        assertThat(frame.getPins()).containsExactly(new Pin(5), new Pin(5));
+    }
+
+
+    @Test
+    void pitch_overCount() {
+        NormalFrame frame = NormalFrame.firstFrame();
+        frame.pitch(1);
+        frame.pitch(2);
+
+        assertThatThrownBy(() -> frame.pitch(3))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void pitch_overPin() {
+        NormalFrame frame = NormalFrame.firstFrame();
+        frame.pitch(10);
+
+        assertThatThrownBy(() ->  frame.pitch(2))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
 }

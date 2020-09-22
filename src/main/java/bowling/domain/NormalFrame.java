@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class NormalFrame {
     private static final int MAX_FRAME_INDEX = 8;
+    private static final int MAX_PITCH_COUNT = 2;
+
     private final int index;
     private final List<Pin> pins;
 
@@ -36,11 +38,35 @@ public class NormalFrame {
     }
 
     public void pitch(int count) {
-        this.pins.add(new Pin(count));
+        if (this.isEnd()) {
+            throw new IllegalArgumentException("");
+        }
+
+        pins.add(pins.isEmpty() ? new Pin(count) : getLastPin().next(count));
+    }
+
+    public boolean isEnd() {
+        if (pins.isEmpty()) {
+            return false;
+        }
+
+        if (getLastPin().isEnd()) {
+            return true;
+        }
+
+        return pins.size() >= MAX_PITCH_COUNT;
     }
 
     public List<Pin> getPins() {
         return pins;
+    }
+
+    private Pin getLastPin() {
+        if (getPins().isEmpty()) {
+            throw new IllegalArgumentException("");
+        }
+
+        return pins.get(pins.size() - 1);
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Pin {
     public static final int MAX_PIN_COUNT = 10;
+
     private final int count;
 
     public Pin(int count) {
