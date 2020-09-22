@@ -1,20 +1,31 @@
 package bowling.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class BowlingGame {
     private final Player player;
-    private final List<Frame> frames;
+    private final Frames frames;
 
     public BowlingGame(String playerName) {
         this.player = new Player(playerName);
-        this.frames = new ArrayList<>();
+        this.frames = new Frames();
     }
 
-    public List<Frame> pitch(int count) {
-        return null;
+    public void pitch(int count) {
+        if (isEnd()) {
+            throw new IllegalArgumentException("");
+        }
+
+        frames.pitch(count);
+    }
+
+    public boolean isEnd() {
+        return frames.isEnd();
+    }
+
+    public List<Frame> getFrames() {
+        return frames.getFrames();
     }
 
     @Override
