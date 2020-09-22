@@ -101,30 +101,7 @@ public class OutputView {
     }
 
     private static String makeSymbol(State state) {
-
-        String stateSymbol = null;
         Symbol symbol = Symbol.valueOf(state.getClass().getSimpleName().toUpperCase());
-
-        switch (symbol) {
-            case STRIKE:
-                stateSymbol = Symbol.STRIKE.getSymbol(state);
-                break;
-            case SPARE:
-                stateSymbol = Symbol.SPARE.getSymbol(state);
-                break;
-            case MISS:
-                stateSymbol = Symbol.MISS.getSymbol(state);
-                break;
-            case GUTTER:
-                stateSymbol = Symbol.ALL_GUTTER.getSymbol(state);
-                break;
-            case READY:
-                stateSymbol = Symbol.READY.getSymbol(state);
-                break;
-            case CONTINUE:
-                stateSymbol = Symbol.CONTINUE.getSymbol(state);
-                break;
-        }
-        return stateSymbol;
+        return symbol.getSymbol(state);
     }
 }
