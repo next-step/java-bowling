@@ -4,8 +4,10 @@ import bowling.model.score.Scores;
 import bowling.model.frame.dto.FramesDto;
 import bowling.model.Player;
 import bowling.model.Result;
+import bowling.model.scoreboard.ScoreBoardDto;
 import bowling.util.StringUtils;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResultView {
@@ -37,7 +39,15 @@ public class ResultView {
                 .forEach(score -> System.out.printf("%s %s", StringUtils.center(score.toString(), RESULT_LENGTH), DELIMITER));
 
         System.out.println();
-        System.out.println();
+    }
+
+    public void printScoreBoard(ScoreBoardDto scoreBoard) {
+        Map<Player, FramesDto> playerFrames = scoreBoard.getFrames();
+        Map<Player, Scores> scores = scoreBoard.getScores();
+        playerFrames.forEach(((player, frames) -> {
+            printFrames(player, frames);
+            printScores(scores.get(player));
+        }));
     }
 
     public void printError(Throwable throwable) {
