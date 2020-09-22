@@ -3,10 +3,10 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Frames {
-
-    private static final int MAX_FRAME_COUNT = 10;
+    public static final int MAX_FRAME_COUNT = 10;
 
     private final List<Frame> frames;
 
@@ -57,5 +57,26 @@ public class Frames {
 
     public List<Frame> getFrames() {
         return Collections.unmodifiableList(frames);
+    }
+
+    public int getIndex() {
+        if(frames.isEmpty() || getLastFrame().isEnd()) {
+            return frames.size() + 1;
+        }
+
+        return frames.size();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Frames frames1 = (Frames) o;
+        return Objects.equals(frames, frames1.frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames);
     }
 }

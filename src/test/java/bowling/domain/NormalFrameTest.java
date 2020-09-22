@@ -40,6 +40,7 @@ public class NormalFrameTest {
         frame.pitch(10);
 
         assertThat(frame.getPins()).containsExactly(new Pin(10));
+        assertThat(frame.getScore()).containsExactly("X");
     }
 
     @Test
@@ -49,6 +50,7 @@ public class NormalFrameTest {
         frame.pitch(5);
 
         assertThat(frame.getPins()).containsExactly(new Pin(5), new Pin(5));
+        assertThat(frame.getScore()).containsExactly("5", "/");
     }
 
 
@@ -70,5 +72,4 @@ public class NormalFrameTest {
         assertThatThrownBy(() ->  frame.pitch(2))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
 }

@@ -28,6 +28,10 @@ public class BowlingGame {
         return frames.getFrames();
     }
 
+    public int getFrameCount() {
+        return frames.getIndex();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

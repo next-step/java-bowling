@@ -22,17 +22,21 @@ public class FinalFrameTest {
         frame.pitch(8);
 
         assertThat(frame.getPins()).containsExactly(new Pin(1), new Pin(8));
+        assertThat(frame.getScore()).containsExactly("1", "9");
+
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"1, 9, 1", "10, 10, 10", "10, 1, 2"})
-    void pitch(int first, int second, int third) {
+    @CsvSource(value = {"1, 9, 1, 1, /, 1", "10, 10, 10, X, X, X", "10, 1, 2, X, 1, 3"})
+    void pitch_third(int first, int second, int third, String expect, String expect2, String expect3) {
         FinalFrame frame = new FinalFrame();
         frame.pitch(first);
         frame.pitch(second);
         frame.pitch(third);
 
         assertThat(frame.getPins()).containsExactly(new Pin(first), new Pin(second), new Pin(third));
+        assertThat(frame.getScore()).containsExactly(expect, expect2, expect3);
+
     }
 
     @Test

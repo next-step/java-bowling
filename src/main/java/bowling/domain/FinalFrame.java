@@ -3,6 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
@@ -52,6 +53,13 @@ public class FinalFrame implements Frame {
     @Override
     public Frame next() {
         throw new IllegalArgumentException("");
+    }
+
+    @Override
+    public List<String> getScore() {
+        return pins.stream()
+                .map(Pin::getSymbolValue)
+                .collect(Collectors.toList());
     }
 
     @Override

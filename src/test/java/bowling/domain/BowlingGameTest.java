@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BowlingGameTest {
 
@@ -24,7 +25,7 @@ public class BowlingGameTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"10,1,9,10,3", "1,1,1,1,2", "10,10,10,10,4"})
+    @CsvSource(value = {"10,5,5,10,3", "1,1,1,1,2", "10,10,10,10,4"})
     void pitch(int first, int second, int third, int fourth, int expect) {
         bowlingGame.pitch(first);
         bowlingGame.pitch(second);
@@ -32,5 +33,14 @@ public class BowlingGameTest {
         bowlingGame.pitch(fourth);
 
         assertThat(bowlingGame.getFrames()).hasSize(expect);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"5,6", "1,-1", "10,12"})
+    void pitch_invalid(int first, int second) {
+        bowlingGame.pitch(first);
+
+        assertThatThrownBy(() -> bowlingGame.pitch(second))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
