@@ -1,6 +1,7 @@
 package bowling.domain;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,11 +20,13 @@ public class BowlingGameTest {
         bowlingGame = new BowlingGame("PJS");
     }
 
+    @DisplayName("bowlingGame 생성")
     @Test
     void create() {
         assertThat(bowlingGame).isEqualTo(new BowlingGame("PJS"));
     }
 
+    @DisplayName("bowlingGame 프레임 생성")
     @ParameterizedTest
     @CsvSource(value = {"10,5,5,10,3", "1,1,1,1,2", "10,10,10,10,4"})
     void pitch(int first, int second, int third, int fourth, int expect) {
@@ -35,6 +38,7 @@ public class BowlingGameTest {
         assertThat(bowlingGame.getFrames()).hasSize(expect);
     }
 
+    @DisplayName("유효하지 않은 게임 진행")
     @ParameterizedTest
     @CsvSource(value = {"5,6", "1,-1", "10,12"})
     void pitch_invalid(int first, int second) {

@@ -1,5 +1,6 @@
 package bowling.domain;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 public class PinTest {
+    @DisplayName("Pin 생성")
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
     void create(int input) {
@@ -21,6 +23,7 @@ public class PinTest {
         assertThat(pin).isEqualTo(new Pin(input));
     }
 
+    @DisplayName("Pin 생성 - 유효하지 않은 핀")
     @ParameterizedTest
     @ValueSource(ints = {-1, 11})
     void create_invalid(int input) {
@@ -28,6 +31,7 @@ public class PinTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("Pin 생성 - 다음 핀")
     @Test
     void next() {
         Pin pin = new Pin(9);
@@ -36,6 +40,7 @@ public class PinTest {
         assertThat(nextPin).isEqualTo(new Pin(1));
     }
 
+    @DisplayName("Pin 생성 - 유효하지 않은 개수")
     @Test
     void next_invalid() {
         Pin pin = new Pin(9);
@@ -44,6 +49,7 @@ public class PinTest {
 
     }
 
+    @DisplayName("게임 종료된 pin")
     @Test
     void isEnd() {
         Pin pin = new Pin(10);
@@ -51,18 +57,21 @@ public class PinTest {
         assertThat(pin.isEnd()).isTrue();
     }
 
+    @DisplayName("pin 맞힌 개수로 score symbol 생성 - stike")
     @Test
     void getSymbol_strike() {
         Pin pin = new Pin(10);
         assertThat(pin.getSymbol()).isEqualTo(ScoreSymbol.STRIKE);
     }
 
+    @DisplayName("pin 맞힌 개수로 score symbol 생성 - miss")
     @Test
     void getSymbol_miss() {
         Pin pin = new Pin(0);
         assertThat(pin.getSymbol()).isEqualTo(ScoreSymbol.MISS);
     }
 
+    @DisplayName("pin 맞힌 개수로 score symbol 생성")
     @ParameterizedTest
     @MethodSource("parameters")
     void getSymbol(int first, int second, ScoreSymbol expect) {
