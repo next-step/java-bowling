@@ -26,7 +26,7 @@ class ScoreBoardTest {
     void isFinished(int totalFrames) {
         ScoreBoard scoreBoard = ScoreBoard.of(Player.of("abc"), totalFrames);
 
-        IntStream.range(0, totalFrames + 2).forEach(index -> {
+        IntStream.range(0, totalFrames + 1).forEach(index -> {
             then(scoreBoard.isFinished()).isFalse();
             scoreBoard.bowl(Pin.ofMax());
         });
