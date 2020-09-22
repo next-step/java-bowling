@@ -2,7 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -12,7 +12,7 @@ public class Frames {
     private static final int FINAL_FRAME_NO = 10;
     private static final String EMPTY_HISTORY = "";
 
-    private final List<NormalFrame> frames;
+    private final List<Frame> frames;
 
     public Frames() {
         frames = new ArrayList<>();
@@ -23,37 +23,35 @@ public class Frames {
     }
 
     public void swing(int score) {
-        NormalFrame lastFrame = lastFrame();
-        lastFrame.swing(score);
+        // TODO 로직 작성
     }
 
-    private NormalFrame lastFrame() {
+    private Frame lastFrame() {
 
         if (frames.isEmpty()) {
-            frames.add(new NormalFrame());
+            frames.add(FrameFactory.first());
         }
 
         return frames.get(frames.size() - 1);
     }
 
     private void addFrame() {
-//        frames.add(lastFrame().nextFrame(isFinalFrame()));
+        // TODO 로직 작성
     }
 
     private boolean isFinalFrame() {
         return frames.size() >= FINAL_FRAME_NO;
     }
 
-    public List<String> getSwingInfo() {
+    public List<String> getSwingHistory() {
 
-        List<String> swingInfos = frames.stream()
-                                        .map(Frame::swingHistoryToString)
-                                        .collect(toList());
+        Stream<String> framesStream = frames.stream()
+                                            .map(Frame::swingHistoryToString);
 
-        for (int i = frames.size(); i < FINAL_FRAME_NO; i++) {
-            swingInfos.add(EMPTY_HISTORY);
-        }
+        Stream<String> emptyStream = Stream.generate(() -> EMPTY_HISTORY)
+                                           .limit(FINAL_FRAME_NO - frames.size());
 
-        return swingInfos;
+        return Stream.concat(framesStream, emptyStream)
+                     .collect(toList());
     }
 }

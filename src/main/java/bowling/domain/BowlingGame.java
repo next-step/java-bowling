@@ -19,7 +19,7 @@ public class BowlingGame {
     }
 
     public List<String> getSwingInfo() {
-        return frames.getSwingInfo();
+        return frames.getSwingHistory();
     }
 
     public void swing(int score) {
