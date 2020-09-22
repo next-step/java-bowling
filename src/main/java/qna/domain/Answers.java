@@ -44,6 +44,10 @@ public class Answers {
                 .forEach(answer -> answer.setDeleted(true));
     }
 
+    public void addToDeleteHistory(DeleteHistories deleteHistories) {
+        deleteHistories.add(answers);
+    }
+
     public List<Answer> getAnswers() {
         return answers;
     }
