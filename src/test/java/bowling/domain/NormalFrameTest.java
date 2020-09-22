@@ -9,14 +9,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-public class FrameTest {
+public class NormalFrameTest {
 
     @DisplayName("Frame 생성")
     @Test
     void frameInstanceCreate() {
-        Frame frame = new Frame();
-        assertThat(frame.nextFrame(false)).isInstanceOf(Frame.class);
-        assertThat(frame.nextFrame(true)).isInstanceOf(FinalFrame.class);
+        NormalFrame frame = FrameFactory.first();
+        assertThat(FrameFactory.next(frame)).isInstanceOf(Frame.class);
     }
 
     @DisplayName("투구 점수가 범위를 벗어난 경우")
@@ -25,10 +24,10 @@ public class FrameTest {
     void swingFailCase(int score) {
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> (new Frame()).swing(score));
+                .isThrownBy(() -> (new NormalFrame()).swing(score));
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> (new FinalFrame()).swing(score));
+                .isThrownBy(() -> (new NormalFrame()).swing(score));
     }
 
     @DisplayName("한 프레임 당 점수는 합쳐서 10점")
@@ -36,7 +35,7 @@ public class FrameTest {
     @ParameterizedTest
     void overScoreCase(int score1, int score2) {
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            Frame frame = new Frame();
+            NormalFrame frame = new NormalFrame();
             frame.swing(score1);
             frame.swing(score2);
         });

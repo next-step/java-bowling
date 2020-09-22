@@ -19,7 +19,7 @@ public class Application {
     public static class SystemOutput implements Output {
 
         private static final String PIPE = "|";
-        private static final int CELL_WIDTH = 8;
+        private static final int CELL_WIDTH = 6;
 
         @Override
         public void print(String line) {

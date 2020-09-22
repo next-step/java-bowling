@@ -1,5 +1,9 @@
 package bowling.domain;
 
-public class FinalFrame extends Frame {
+public class FinalFrame implements Frame {
 
+    @Override
+    public void swing(int score) {
+
+    }
 }
