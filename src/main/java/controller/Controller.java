@@ -7,7 +7,7 @@ import view.ResultView;
 
 import java.util.List;
 
-public class controller {
+public class Controller {
 
     private static final int TOTAL_FRAMES = 3;
     private static final InputView inputView = new InputView();
@@ -19,12 +19,7 @@ public class controller {
         BowlingGames bowlingGames = BowlingGames.of(TOTAL_FRAMES, namesDTO.getNames());
 
         while (!bowlingGames.isAllFinished()) {
-            NameDTO nameDTO = NameDTO.of(bowlingGames.getCurrentPlayerName());
-            PinDTO pinDTO = inputView.inputPin(nameDTO);
-            bowlingGames.bowlCurrentEntry(Pin.of(pinDTO.getPin()));
-
-            resultView.printColumns(TOTAL_FRAMES);
-            bowlingGames.roundBowlingGames(bowlingGame -> printScoreBoard(bowlingGame));
+            printScoreBoard(bowlingGames);
         }
     }
 
@@ -46,6 +41,20 @@ public class controller {
         } catch (Exception exception) {
             resultView.printExceptionMessage(exception);
             printScoreBoard(bowlingGame);
+        }
+    }
+
+    private static void printScoreBoard(BowlingGames bowlingGames) {
+        try {
+            NameDTO nameDTO = NameDTO.of(bowlingGames.getCurrentPlayerName());
+            PinDTO pinDTO = inputView.inputPin(nameDTO);
+            bowlingGames.bowlCurrentEntry(Pin.of(pinDTO.getPin()));
+
+            resultView.printColumns(TOTAL_FRAMES);
+            bowlingGames.roundBowlingGames(Controller::printScoreBoard);
+        } catch (Exception exception) {
+            resultView.printExceptionMessage(exception);
+            printScoreBoard(bowlingGames);
         }
     }
 }
