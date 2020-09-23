@@ -22,6 +22,8 @@ public class OutputView {
     private static final String TOTAL_SCORE= "|        |{0}   |{1}   |{2}   |{3}   |{4}   |{5}   |{6}   |{7}   |{8}   |{9}   |";
     private static final String EMPTY_STRING = "";
     private static final String STRING_FORMAT = "%5s";
+    public static final String SYMBOL_DELIMITER = "|";
+    public static final String SCORE_DELIMITER = SYMBOL_DELIMITER;
 
     private OutputView() {
     }
@@ -38,7 +40,7 @@ public class OutputView {
 
     private static String[] toScoreArray(ScoreBoardDTO scoreBoardDTO) {
         List<String> result = new ArrayList<>(Arrays.asList(String.format(STRING_FORMAT, scoreBoardDTO.getUser().getName())));
-        scoreBoardDTO.getFrames().stream()
+        scoreBoardDTO.getFrames().getFrames().stream()
                 .map(OutputView::makeGameResult)
                 .map(gameResult -> String.format(STRING_FORMAT, gameResult))
                 .collect(Collectors.toCollection(() -> result));
@@ -58,13 +60,7 @@ public class OutputView {
     }
 
     private static String[] toTotalScoreArray(ScoreBoardDTO scoreBoardDTO) {
-        List<Integer> result = scoreBoardDTO.getFrames().stream()
-                .map(frame -> frame.getScore())
-                .filter(score -> !score.isPending())
-                .map(score -> score.getScore())
-                .collect(toList());
-
-        return collectedTotalScore(result).stream()
+        return collectedTotalScore(scoreBoardDTO.getFrames().getFrameScore()).stream()
                 .toArray(String[]::new);
     }
 
@@ -79,23 +75,12 @@ public class OutputView {
         return result;
     }
 
-    public static String makeTotalScoreResult(Frame frame) {
-        if(frame instanceof EndFrame) {
-            return ((EndFrame) frame).getStates().stream()
-                    .filter(state -> !(state instanceof Ready))
-                    .map(endState -> makeSymbol(endState))
-                    .collect(Collectors.joining("|"));
-        }
-
-        return makeSymbol(((NormalFrame) frame).getState());
-    }
-
     public static String makeGameResult(Frame frame) {
         if(frame instanceof EndFrame) {
             return ((EndFrame) frame).getStates().stream()
                     .filter(state -> !(state instanceof Ready))
-                    .map(endState -> makeSymbol(endState))
-                    .collect(Collectors.joining("|"));
+                    .map(OutputView::makeSymbol)
+                    .collect(Collectors.joining(SCORE_DELIMITER));
         }
         return makeSymbol(((NormalFrame) frame).getState());
     }
