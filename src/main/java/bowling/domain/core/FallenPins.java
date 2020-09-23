@@ -45,6 +45,10 @@ public final class FallenPins {
         return empty;
     }
 
+    public static boolean isNotEmpty(FallenPins fallenPins){
+        return !empty().equals(fallenPins);
+    }
+
     private static void verifyPins(int fallenPinCount) {
         if (MIN_FALLEN_PIN_COUNT > fallenPinCount || MAX_FALLEN_PIN_COUNT < fallenPinCount) {
             throw new IllegalArgumentException(ERROR_MESSAGE);
