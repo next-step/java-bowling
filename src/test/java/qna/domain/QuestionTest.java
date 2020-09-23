@@ -35,11 +35,12 @@ public class QuestionTest {
     public void delete_성공_질문자_답변자_같음() throws CannotDeleteException {
         Question Q1 = new Question("title1", "contents1", UserTest.JAVAJIGI);
         Answer A1 = new Answer(UserTest.JAVAJIGI, Q1, "Answers Contents1");
+        A1.toQuestion(Q1);
 
         Q1.deleteBy(UserTest.JAVAJIGI);
 
         assertThat(Q1.isDeleted()).isTrue();
-       // assertThat(A1.isDeleted()).isTrue();
+        assertThat(A1.isDeleted()).isTrue();
       //  verifyDeleteHistories();
     }
 
@@ -47,6 +48,8 @@ public class QuestionTest {
     public void delete_답변_중_다른_사람이_쓴_글() throws Exception {
         Question Q1 = new Question("title1", "contents1", UserTest.JAVAJIGI);
         Answer A2 = new Answer(UserTest.SANJIGI, Q1, "Answers Contents2");
+        A2.toQuestion(Q1);
+
         assertThatThrownBy(() -> {
             Q1.deleteBy(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);

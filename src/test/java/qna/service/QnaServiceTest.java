@@ -38,7 +38,7 @@ public class QnaServiceTest {
         question = new Question(1L, "title1", "contents1",UserTest.JAVAJIGI);
         Question question2 = new Question("title1", "contents1", UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, question2, "Answers Contents1");
-        question.addAnswer(answer);
+//        question.addAnswer(answer);
     }
 
     @Test

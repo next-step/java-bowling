@@ -32,24 +32,24 @@ public class QnAService {
 
     @Transactional
     public void deleteQuestion(User loginUser, long questionId) throws CannotDeleteException {
-        Question question = findQuestionById(questionId);
-        if (!question.isOwner(loginUser)) {
-            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
-        }
-
-        for (Answer answer : question.getAnswers()) {
-            if (!answer.isOwner(loginUser)) {
-                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
-            }
-        }
-
-        DeleteHistories deleteHistories = new DeleteHistories();
-        question.deleted(true);
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
-        for (Answer answer : question.getAnswers()) {
-            answer.deleted(true);
-            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
-        }
-       deleteHistoryService.saveAll(deleteHistories);
+//        Question question = findQuestionById(questionId);
+//        if (!question.isOwner(loginUser)) {
+//            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+//        }
+//
+//        for (Answer answer : question.getAnswers()) {
+//            if (!answer.isOwner(loginUser)) {
+//                throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
+//            }
+//        }
+//
+//        DeleteHistories deleteHistories = new DeleteHistories();
+//        question.deleted(true);
+//        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId, question.getWriter(), LocalDateTime.now()));
+//        for (Answer answer : question.getAnswers()) {
+//            answer.deleted(true);
+//            deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+//        }
+//       deleteHistoryService.saveAll(deleteHistories);
     }
 }

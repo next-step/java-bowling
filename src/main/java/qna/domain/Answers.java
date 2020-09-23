@@ -3,6 +3,7 @@ package qna.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Answers {
 
@@ -19,8 +20,29 @@ public class Answers {
         return answers;
     }
 
+    public boolean isEmpty() {
+        return answers == null || answers.isEmpty() ? true : false;
+    }
+
     public void add(Answer answer) {
-        answers.add(answer);
+        if (!answers.isEmpty()) {
+            answers.add(answer);
+        }
+    }
+
+    public boolean haveSameWriter(User loginUser) {
+        if (!answers.isEmpty()) {
+            return answers.stream()
+                    .allMatch(answer -> answer.getWriter() == loginUser);
+        }
+        return true;
+    }
+
+
+    public void deleted(boolean bool) {
+        if (!answers.isEmpty()) {
+            answers.forEach(answer -> answer.deleted(true));
+        }
     }
 
     @Override
