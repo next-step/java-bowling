@@ -15,6 +15,7 @@ public class DeleteHistoriesTest {
     void add_question() {
         // given
         Question question = new Question(1L, "title1", "contents1").writeBy(UserTest.JAVAJIGI);
+        question.deleteQuestion(UserTest.JAVAJIGI);
         LocalDateTime now = LocalDateTime.now();
 
         // when
@@ -22,7 +23,7 @@ public class DeleteHistoriesTest {
         actual.add(question);
 
         // then
-        DeleteHistory deleteHistory = new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), now);
+        DeleteHistory deleteHistory = DeleteHistory.of(question, now);
         DeleteHistories expected = new DeleteHistories(Arrays.asList(deleteHistory));
 
         assertEquals(actual, expected);
@@ -34,6 +35,10 @@ public class DeleteHistoriesTest {
         // given
         Answer answerA = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         Answer answerB = new Answer(21L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents2");
+
+        answerA.deleteAnswer(UserTest.JAVAJIGI);
+        answerB.deleteAnswer(UserTest.JAVAJIGI);
+
         LocalDateTime now = LocalDateTime.now();
 
         // when
@@ -41,8 +46,8 @@ public class DeleteHistoriesTest {
         actual.add(Arrays.asList(answerA, answerB));
 
         // then
-        DeleteHistory deleteHistoryA = new DeleteHistory(ContentType.ANSWER, answerA.getId(), answerA.getWriter(), now);
-        DeleteHistory deleteHistoryB = new DeleteHistory(ContentType.ANSWER, answerB.getId(), answerB.getWriter(), now);
+        DeleteHistory deleteHistoryA = DeleteHistory.of(answerA, now);
+        DeleteHistory deleteHistoryB = DeleteHistory.of(answerB, now);
         DeleteHistories expected = new DeleteHistories(Arrays.asList(deleteHistoryA, deleteHistoryB));
 
         assertEquals(actual, expected);

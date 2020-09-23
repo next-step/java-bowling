@@ -19,7 +19,7 @@ public class DeleteHistories {
     }
 
     public void add(Question question) {
-        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now()));
+        deleteHistories.add(DeleteHistory.of(question));
     }
 
     public void add(List<Answer> answers) {
@@ -28,7 +28,7 @@ public class DeleteHistories {
     }
 
     private void add(Answer answer) {
-        deleteHistories.add(new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now()));
+        deleteHistories.add(DeleteHistory.of(answer));
     }
 
     public List<DeleteHistory> getDeleteHistories() {
