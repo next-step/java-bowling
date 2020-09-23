@@ -3,6 +3,7 @@ package bowling.domain;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FrameTest {
 
@@ -25,5 +26,6 @@ public class FrameTest {
         Frame frame = frame();
         frame.swing(0);
         assertThat(frame.swingHistoryToString()).isInstanceOf(String.class);
+        assertEquals(frame.firstSwing(), 0);
     }
 }
