@@ -5,7 +5,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.CannotDeleteException;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class QuestionTest {
@@ -23,10 +27,13 @@ public class QuestionTest {
     @DisplayName("답변글이 없는 질문 삭제")
     void deleteQuestion_noAnswer() throws Exception {
         // when
-        question.deleteQuestion(UserTest.JAVAJIGI);
+        List<DeleteHistory> actual = question.deleteQuestion(UserTest.JAVAJIGI);
 
         // then
         assertTrue(question.isDeleted());
+
+        DeleteHistory deleteHistory = DeleteHistory.of(question);
+        assertEquals(actual, Arrays.asList(deleteHistory));
     }
 
     @Test
@@ -36,11 +43,15 @@ public class QuestionTest {
         question.addAnswer(AnswerTest.A1);
 
         // when
-        question.deleteQuestion(UserTest.JAVAJIGI);
+        List<DeleteHistory> actual = question.deleteQuestion(UserTest.JAVAJIGI);
 
         // then
         assertTrue(question.isDeleted());
         assertTrue(AnswerTest.A1.isDeleted());
+
+        DeleteHistory questionDelete = DeleteHistory.of(question);
+        DeleteHistory answerDelete = DeleteHistory.of(AnswerTest.A1);
+        assertEquals(actual, Arrays.asList(questionDelete, answerDelete));
     }
 
     @Test
