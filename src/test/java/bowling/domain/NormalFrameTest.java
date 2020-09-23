@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NormalFrameTest {
 
@@ -39,5 +40,18 @@ public class NormalFrameTest {
             frame.swing(score1);
             frame.swing(score2);
         });
+    }
+
+
+    @DisplayName("NormalFrame은 swing을 두 번 하면 종료")
+    @CsvSource(value = {"1,2", "3,4"})
+    @ParameterizedTest
+    void only2swing(int score1, int score2) {
+
+        NormalFrame frame = new NormalFrame();
+        frame.swing(score1);
+        frame.swing(score2);
+
+        assertTrue(frame.isEndedFrame());
     }
 }
