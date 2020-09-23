@@ -3,9 +3,11 @@ package qna.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import qna.CannotDeleteException;
 
 import java.util.Arrays;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -55,6 +57,17 @@ public class AnswersTest {
 
         Answers expected = new Answers(Arrays.asList(deleted));
         assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("복수 Answer 삭제 시, 작성자가 다른 경우 예외 발")
+    void deleteAnswers_validateOwner() {
+        Answers temp = answers.add(answerOfJavajigi);
+        Answers addedAnswers = temp.add(answerOfSanjigi);
+
+        assertThatThrownBy(() ->
+                addedAnswers.deleteAnswers(UserTest.JAVAJIGI)
+        ).isInstanceOf(CannotDeleteException.class);
     }
 
     @Test
