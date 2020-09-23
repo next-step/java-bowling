@@ -6,7 +6,6 @@ public class Pin {
     public static final int MAX_PIN_COUNT = 10;
 
     private final int count;
-    private final int totalCount;
     private final ScoreSymbol symbol;
 
     public Pin(int count) {
@@ -21,7 +20,6 @@ public class Pin {
         this.validate(count, totalCount);
 
         this.count = count;
-        this.totalCount = totalCount;
         this.symbol = initSymbol(totalCount, isFirst);
     }
 
@@ -55,17 +53,10 @@ public class Pin {
         return symbol.getValue();
     }
 
-    public int getCount() {
-        return count;
-    }
-
     public ScoreSymbol getSymbol() {
         return symbol;
     }
 
-    public int getTotalCount() {
-        return totalCount;
-    }
 
     @Override
     public boolean equals(Object o) {
