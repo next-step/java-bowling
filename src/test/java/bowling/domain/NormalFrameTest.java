@@ -15,7 +15,7 @@ public class NormalFrameTest {
     @Test
     void frameInstanceCreate() {
         NormalFrame frame = FrameFactory.first();
-        assertThat(FrameFactory.next(frame)).isInstanceOf(Frame.class);
+        assertThat(FrameFactory.next(frame, 1)).isInstanceOf(Frame.class);
     }
 
     @DisplayName("투구 점수가 범위를 벗어난 경우")

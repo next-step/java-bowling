@@ -6,4 +6,9 @@ public class FinalFrame extends Frame {
     public void swing(int score) {
 
     }
+
+    @Override
+    boolean isEndedFrame() {
+        return false;
+    }
 }

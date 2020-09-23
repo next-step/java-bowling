@@ -4,8 +4,6 @@ import java.util.List;
 
 public class BowlingGame {
 
-    private static final int FINAL_FRAME_NO = 10;
-
     private final Name name;
     private final Frames frames;
 
@@ -23,7 +21,7 @@ public class BowlingGame {
     }
 
     public void swing(int score) {
-        // TODO 로직 작성
+        frames.swing(score);
     }
 
     public int currentRound() {
@@ -31,6 +29,6 @@ public class BowlingGame {
     }
 
     public boolean isBowlingGameRun() {
-        return currentRound() <= FINAL_FRAME_NO;
+        return frames.isEnd();
     }
 }

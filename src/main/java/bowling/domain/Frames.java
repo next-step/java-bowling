@@ -8,7 +8,6 @@ import static java.util.stream.Collectors.toList;
 
 public class Frames {
 
-    private static final int SIZE_ROUND_GAP = 1;
     private static final int FINAL_FRAME_NO = 10;
     private static final String EMPTY_HISTORY = "";
 
@@ -16,31 +15,25 @@ public class Frames {
 
     public Frames() {
         frames = new ArrayList<>();
+        frames.add(FrameFactory.first());
     }
 
     public int getRound() {
-        return frames.size() + SIZE_ROUND_GAP;
+        return frames.size();
     }
 
     public void swing(int score) {
-        // TODO 로직 작성
+
+        Frame frame = lastFrame();
+        frame.swing(score);
+
+        if (frame.isEndedFrame()) {
+            frames.add(FrameFactory.next(frame, frames.size()));
+        }
     }
 
     private Frame lastFrame() {
-
-        if (frames.isEmpty()) {
-            frames.add(FrameFactory.first());
-        }
-
         return frames.get(frames.size() - 1);
-    }
-
-    private void addFrame() {
-        // TODO 로직 작성
-    }
-
-    private boolean isFinalFrame() {
-        return frames.size() >= FINAL_FRAME_NO;
     }
 
     public List<String> getSwingHistory() {
@@ -53,5 +46,9 @@ public class Frames {
 
         return Stream.concat(framesStream, emptyStream)
                      .collect(toList());
+    }
+
+    public boolean isEnd() {
+        return frames.size() == FINAL_FRAME_NO && lastFrame().isEndedFrame();
     }
 }
