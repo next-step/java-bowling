@@ -40,6 +40,10 @@ final class Player {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
     Player roll(int fallenPins){
         rolling.roll(fallenPins);
         return this;
