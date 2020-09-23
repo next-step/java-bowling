@@ -2,6 +2,9 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
 import java.util.LinkedList;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class Frames {
 
@@ -33,4 +36,29 @@ public class Frames {
     public Index getLastIndex() {
         return frames.getLast().getIndex();
     }
+
+    public List<Frame> getFrames() {
+        return this.frames;
+    }
+
+    public Frame getFrame(Index idx) {
+        return frames.get(idx.getIndex()-1);
+    }
+
+    public List<Integer> getFrameScore() {
+        return frames.stream()
+                .map(frame -> frame.getScore(this))
+                .filter(score -> !score.isPending())
+                .map(Score::getScore)
+                .collect(toList());
+    }
+
+    public Frame getNextFrame(Index idx) {
+        Frame nextFrame = null;
+        if(this.getFrames().size() > idx.getIndex()) {
+            nextFrame = this.frames.get(idx.getIndex());
+        }
+        return nextFrame;
+    }
+
 }
