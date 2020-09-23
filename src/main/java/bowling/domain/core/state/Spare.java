@@ -1,5 +1,6 @@
 package bowling.domain.core.state;
 
+import bowling.domain.core.FallenPins;
 import bowling.domain.core.RolledResult;
 
 public final class Spare implements RolledResult {
@@ -22,12 +23,21 @@ public final class Spare implements RolledResult {
     }
 
     @Override
-    public int getNextRolledResultMergeScore(RolledResult nextRolledResult) {
-        if (isCompleteState() && nextRolledResult.isCompleteState()) {
-            return nextRolledResult.twoFallenPins()
-                                  .firstFallenPinsValue();
+    public Score getScore() {
+        return new Score(FallenPins.MAX_FALLEN_PIN_COUNT, 1);
+    }
+
+    @Override
+    public Score calculateScore(Score score) {
+        final ImmutableTwoFallenPins immutableTwoFallenPins = twoFallenPins();
+        score = score.sum(immutableTwoFallenPins.firstFallenPinsValue());
+        System.out.println("spare : " + score);
+
+        if (score.hasNotAttemptLeft()){
+            return score;
         }
-        return 0;
+
+        return score.sum(immutableTwoFallenPins.secondFallenPinsValue());
     }
 
     @Override
