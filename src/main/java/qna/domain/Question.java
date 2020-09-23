@@ -23,9 +23,7 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-//    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-//    @Where(clause = "deleted = false")
-//    @OrderBy("id ASC")
+
 //    private Answers answers = new Answers();
 //@Resource(name = "answerRepository")
 //private AnswerRepository answerRepository;
@@ -65,13 +63,16 @@ public class Question extends AbstractEntity {
     }
 
     public void deleteBy(User loginUser) throws CannotDeleteException {
-        if (findAnswers().isEmpty() && loginUser != this.writer) {
+        Answers answers = findAnswers();
+       // if (findAnswers().isEmpty() && loginUser != this.writer) {
+        if (loginUser != this.writer) {
             throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
         }
-        if (findAnswers().isEmpty() && loginUser == this.writer) {
+//        if (findAnswers().isEmpty() && loginUser == this.writer) {
+        if (loginUser == this.writer) {
             this.deleted(true);
         }
-        if (!findAnswers().haveSameWriter(loginUser)) {
+        if (!answers.haveSameWriter(loginUser)) {
             throw new CannotDeleteException("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");
         }
            //상태
