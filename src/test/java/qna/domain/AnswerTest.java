@@ -14,17 +14,23 @@ public class AnswerTest {
     @Test
     @DisplayName("삭제")
     void deleteAnswer() {
+        // given
+        Answer actual = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+
         // when
-        A1.deleteAnswer(UserTest.JAVAJIGI);
-        assertTrue(A1.isDeleted());
+        actual.deleteAnswer(UserTest.JAVAJIGI);
+
+        // then
+        assertTrue(actual.isDeleted());
     }
 
     @Test
     @DisplayName("삭제 실패")
     void deleteAnswer_validate() {
         // when
+        Answer actual = new Answer(UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
         assertThatThrownBy(() ->
-                A1.deleteAnswer(UserTest.SANJIGI)
+                actual.deleteAnswer(UserTest.SANJIGI)
         ).isInstanceOf(CannotDeleteException.class);
     }
 }
