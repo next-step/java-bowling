@@ -56,7 +56,9 @@ public class EndFrameTest {
     @DisplayName("모두 STRIKE 를 기록할 경우 점수 계산")
     void strikeGetScore() {
         // given
+        Frames frames = Frames.init();
         Frame frame = EndFrame.of();
+        frames.getFrames().add(frame);
 
         // when
         frame.bowl(Pin.of(10));
@@ -64,14 +66,16 @@ public class EndFrameTest {
         frame.bowl(Pin.of(10));
 
         // then
-        assertThat(frame.getScore()).isEqualTo(Score.of(30));
+        assertThat(frame.getScore(frames)).isEqualTo(Score.of(30));
     }
 
     @Test
     @DisplayName("SPARE 를 기록할 경우 점수 계산")
     void spareGetScore() {
         // given
+        Frames frames = Frames.init();
         Frame frame = EndFrame.of();
+        frames.getFrames().add(frame);
 
         // when
         frame.bowl(Pin.of(9));
@@ -79,20 +83,22 @@ public class EndFrameTest {
         frame.bowl(Pin.of(10));
 
         // then
-        assertThat(frame.getScore()).isEqualTo(Score.of(20));
+        assertThat(frame.getScore(frames)).isEqualTo(Score.of(20));
     }
 
     @Test
     @DisplayName("MISS 기록할 경우 점수 계산")
     void missGetScore() {
         // given
+        Frames frames = Frames.init();
         Frame frame = EndFrame.of();
+        frames.getFrames().add(frame);
 
         // when
         frame.bowl(Pin.of(6));
         frame.bowl(Pin.of(1));
 
         // then
-        assertThat(frame.getScore()).isEqualTo(Score.of(7));
+        assertThat(frame.getScore(frames)).isEqualTo(Score.of(7));
     }
 }
