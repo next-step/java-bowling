@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NameTest {
 
@@ -12,7 +13,7 @@ public class NameTest {
     @ValueSource(strings = {"ABC", "MDH", "QQQ", "ZZZ", "ASF"})
     @ParameterizedTest
     void validNameTest(String value) {
-        new Name(value);
+        assertEquals(new Name(value).getValue(), value);
     }
 
     @DisplayName("부적절한 이름 테스트")

@@ -40,6 +40,6 @@ public class FinalFrame extends Frame {
     }
 
     private boolean isSpare() {
-        return swingHistory.firstSwing() != MAXIMUM_SCORE && sumOfScores == MAXIMUM_SCORE;
+        return firstSwing() != MAXIMUM_SCORE && sumOfScores == MAXIMUM_SCORE;
     }
 }
