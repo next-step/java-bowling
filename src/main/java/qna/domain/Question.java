@@ -1,8 +1,14 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import qna.CannotDeleteException;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,5 +97,54 @@ public class Question extends AbstractEntity {
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    private void checkOwner(User loginUser) throws CannotDeleteException {
+        if (!isOwner(loginUser)) {
+            throw new CannotDeleteException("질문을 삭제할 권한이 없습니다.");
+        }
+    }
+
+    private void checkAnswerOwner(User loginUser) throws CannotDeleteException {
+        for (Answer answer : answers) {
+            answer.checkOwner(loginUser);
+        }
+    }
+
+    public List<DeleteHistory> recordForDeletedQnAHistory(long questionId) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        setDeleted(true);
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId
+                , this.getWriter(), LocalDateTime.now()));
+
+        for (Answer answer : answers) {
+            answer.dealWithAnswerDelete(deleteHistories);
+        }
+
+        return deleteHistories;
+    }
+/*
+    @Bean
+    public List<DeleteHistory> recordForDeletedQnAHistory(long questionId
+            , @Value("#{jobParameters[createDate]") String createDateStr) {
+        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        setDeleted(true);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate createDate = LocalDate.parse(createDateStr,formatter);
+
+        deleteHistories.add(new DeleteHistory(ContentType.QUESTION, questionId
+                , this.getWriter(), createDate));
+
+        for (Answer answer : answers) {
+            answer.dealWithAnswerDelete(deleteHistories);
+        }
+
+        return deleteHistories;
+    }*/
+
+    public void delete(User loginUser) throws CannotDeleteException {
+        checkOwner(loginUser);
+        checkAnswerOwner(loginUser);
     }
 }
