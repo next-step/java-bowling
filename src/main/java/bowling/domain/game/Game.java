@@ -47,12 +47,14 @@ public class Game {
 		return isFullFrame() && isAllFrameDone();
 	}
 
-	public void play(DownedPinCount currentFramePitch) {
+	public boolean play(DownedPinCount currentFramePitch) {
 		Frame last = frames.getLast();
 		Frame frame = last.roll(currentFramePitch);
 		if(!isFullFrame() && !last.equals(frame)) {
 			frames.add(frame);
+			return true;
 		}
+		return false;
 	}
 
 	private boolean isFullFrame() {
