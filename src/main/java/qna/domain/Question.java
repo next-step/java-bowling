@@ -1,9 +1,13 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
+import qna.CannotDeleteException;
+import qna.common.ExceptionMessage;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -21,7 +25,7 @@ public class Question extends AbstractEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
+    private Answers answers = new Answers();
 
     private boolean deleted = false;
 
@@ -84,12 +88,22 @@ public class Question extends AbstractEntity {
         return deleted;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
+    public Answers getAnswers() {
+        return this.answers;
     }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
+    }
+
+    public List<DeleteHistory> delete(User loginUser) throws CannotDeleteException {
+        if(!isOwner(loginUser)) {
+            throw new IllegalArgumentException(ExceptionMessage.NOT_HAVE_PERMISSION_QUESTION);
+        }
+        this.deleted = true;
+        return Arrays.asList(new Answer(answers).delete(loginUser),
+                new DeleteHistory(ContentType.QUESTION, getId(), writer, LocalDateTime.now())
+        );
     }
 }

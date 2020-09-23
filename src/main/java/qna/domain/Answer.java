@@ -1,9 +1,12 @@
 package qna.domain;
 
+import qna.CannotDeleteException;
 import qna.NotFoundException;
 import qna.UnAuthorizedException;
+import qna.common.ExceptionMessage;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -18,9 +21,18 @@ public class Answer extends AbstractEntity {
     @Lob
     private String contents;
 
+    private Answers answers;
+
+    private Answer answer;
+
     private boolean deleted = false;
 
-    public Answer() {
+    public Answer(Answers answers) {
+        this.answers = answers;
+    }
+
+    public Answer(Answer answer) {
+        this.answer = answer;
     }
 
     public Answer(User writer, Question question, String contents) {
@@ -71,5 +83,20 @@ public class Answer extends AbstractEntity {
     @Override
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
+    }
+
+    public DeleteHistory delete(User loginUser) {
+        if(!answer.isOwner(loginUser)) {
+            throw new IllegalArgumentException(ExceptionMessage.NOT_HAVE_PERMISSION_OTHER_ANSWER);
+        }
+        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
+    }
+
+
+    public DeleteHistory deleteAnswer(User loginUser) throws CannotDeleteException {
+        if(!answer.isOwner(loginUser)) {
+            throw new CannotDeleteException(ExceptionMessage.NOT_HAVE_PERMISSION_ANSWER);
+        }
+        return new DeleteHistory(ContentType.ANSWER, getId(), writer, LocalDateTime.now());
     }
 }
