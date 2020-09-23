@@ -38,15 +38,13 @@ public class EndFrame implements Frame {
     }
 
     @Override
-    public Score calculateScore(Score baseScore) {
-        for (State state : states) {
-            baseScore = state.calculate(baseScore);
-        }
-        return baseScore;
+    public Score calculateScore(Score baseScore, Frames frames) {
+        Score lastScore = frames.getFrame(frames.getLastIndex()).getScore(frames);
+        return lastScore;
     }
 
     @Override
-    public Score getScore() {
+    public Score getScore(Frames frames) {
         if (!isEnd()) {
             return Score.ofPending();
         }
@@ -54,16 +52,6 @@ public class EndFrame implements Frame {
                 .map(State::getScore)
                 .reduce(Score::add)
                 .orElseThrow(IllegalAccessError::new);
-    }
-
-    @Override
-    public boolean hasNext() {
-        return false;
-    }
-
-    @Override
-    public Frame next() {
-        throw new IllegalArgumentException("마지막 Frame 입니다.");
     }
 
     @Override
