@@ -33,8 +33,8 @@ public class ScoreBoard {
         return frames.getLastIndex();
     }
 
-    public Frame getFirstFrame() {
-        return this.frames.getFirstFrame();
+    public Frames getFrames() {
+        return this.frames;
     }
 
 }

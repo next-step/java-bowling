@@ -10,7 +10,6 @@ public class NormalFrame implements Frame {
 
     private final Index idx;
     private State state;
-    private Frame nextFrame;
 
     private NormalFrame(Index idx) {
         this.idx = idx;
@@ -29,11 +28,9 @@ public class NormalFrame implements Frame {
 
     private Frame generate() {
         if (idx.isLast()) {
-            this.nextFrame = Frame.endFrame();
-            return this.nextFrame;
+            return Frame.endFrame();
         }
-        this.nextFrame = NormalFrame.of(idx.increment());
-        return this.nextFrame;
+        return NormalFrame.of(idx.increment());
     }
 
     @Override
@@ -42,32 +39,23 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Score calculateScore(Score baseScore) {
+    public Score calculateScore(Score baseScore, Frames frames) {
         Score score = state.calculate(baseScore);
-        return calculate(score);
+        return calculate(score, frames);
     }
 
     @Override
-    public Score getScore() {
+    public Score getScore(Frames frames) {
         Score score = state.getScore();
-        return calculate(score);
+        return calculate(score, frames);
     }
 
-    private Score calculate(Score baseScore) {
+    private Score calculate(Score baseScore, Frames frames) {
         if (baseScore.isPending()) {
-            return nextFrame == null ? baseScore : nextFrame.calculateScore(baseScore);
+            Frame nextFrame = frames.getNextFrame(idx);
+            return nextFrame == null ? baseScore : nextFrame.calculateScore(baseScore, frames);
         }
         return baseScore;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return nextFrame != null;
-    }
-
-    @Override
-    public Frame next() {
-        return this.nextFrame;
     }
 
     @Override
@@ -86,12 +74,11 @@ public class NormalFrame implements Frame {
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame that = (NormalFrame) o;
         return Objects.equals(idx, that.idx) &&
-                Objects.equals(state, that.state) &&
-                Objects.equals(nextFrame, that.nextFrame);
+                Objects.equals(state, that.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idx, state, nextFrame);
+        return Objects.hash(idx, state);
     }
 }
