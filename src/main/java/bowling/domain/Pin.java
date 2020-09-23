@@ -44,7 +44,7 @@ public class Pin {
     }
 
     public boolean isEnd() {
-        return totalCount == MAX_PIN_COUNT;
+        return ScoreSymbol.tenScore.contains(this.symbol);
     }
 
     public String getSymbolValue() {
