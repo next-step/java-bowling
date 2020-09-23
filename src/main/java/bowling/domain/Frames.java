@@ -21,23 +21,25 @@ public class Frames {
             throw new GameOverException();
         }
 
+        this.makeFrame();
         Frame frame = findFrame();
         frame.pitch(count);
     }
 
-    private Frame findFrame() {
+    private void makeFrame() {
         if (frames.isEmpty()) {
-            NormalFrame frame = NormalFrame.firstFrame();
-            frames.add(frame);
-            return frame;
+            frames.add(NormalFrame.firstFrame());
+            return;
         }
 
-        if (getLastFrame().isEnd()) {
-            Frame frame = frames.size() == MAX_FRAME_COUNT - 1 ? new FinalFrame() : getLastFrame().next();
-            frames.add(frame);
-            return frame;
+        if (!getLastFrame().isEnd()) {
+            return;
         }
 
+        frames.add(frames.size() > NormalFrame.MAX_FRAME_INDEX ? new FinalFrame() : getLastFrame().next());
+    }
+
+    private Frame findFrame() {
         return getLastFrame();
     }
 

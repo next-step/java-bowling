@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    private static final int MAX_FRAME_INDEX = 8;
+    public static final int MAX_FRAME_INDEX = 8;
     private static final int MAX_PITCH_COUNT = 2;
 
     private final int index;
