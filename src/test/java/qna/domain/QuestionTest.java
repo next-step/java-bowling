@@ -17,7 +17,7 @@ public class QuestionTest {
         Question question = Q1;
 
         assertThatThrownBy(()->{
-            question.checkOwner(Q2.getWriter());
+            question.delete(Q2.getWriter());
         }).isInstanceOf(CannotDeleteException.class)
                 .hasMessageContaining("권한이 없습니다");
     }
@@ -28,7 +28,7 @@ public class QuestionTest {
         Q1.addAnswer(AnswerTest.A2);
 
         assertThatThrownBy(()->{
-            question.checkAnswerOwner(Q1.getWriter());
+            question.delete(Q1.getWriter());
 
         }).isInstanceOf(CannotDeleteException.class);
     }
@@ -39,7 +39,7 @@ public class QuestionTest {
         Q2.addAnswer(AnswerTest.A2);
         Q2.addAnswer(AnswerTest.A2);
 
-        List<DeleteHistory> deleteHistories = Q2.recordDeleteHistory(1);
+        List<DeleteHistory> deleteHistories = Q2.recordForDeletedQnAHistory(1);
 
         assertThat(deleteHistories.size()).isEqualTo(3);
 
