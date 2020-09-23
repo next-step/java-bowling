@@ -1,7 +1,6 @@
 package qna.domain;
 
 import org.hibernate.annotations.Where;
-import qna.CannotDeleteException;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -10,7 +9,7 @@ import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Embeddable
 public class Answers {
@@ -24,16 +23,20 @@ public class Answers {
     }
 
     public Answers(List<Answer> answers) {
-        this.answers = answers;
+        this.answers = new ArrayList<>(answers);
     }
 
-    public void add(Answer answer) {
-        answers.add(answer);
+    public Answers add(Answer answer) {
+        List<Answer> copies = new ArrayList<>(answers);
+        copies.add(answer);
+        return new Answers(copies);
     }
 
-    public void deleteAnswers(User loginUser) {
-        answers.stream()
-                .forEach(answer -> answer.deleteAnswer(loginUser));
+    public Answers deleteAnswers(User loginUser) {
+        List<Answer> copies = answers.stream()
+                .peek(answer -> answer.deleteAnswer(loginUser))
+                .collect(Collectors.toList());
+        return new Answers(copies);
     }
 
     public void addToDeleteHistory(DeleteHistories deleteHistories) {

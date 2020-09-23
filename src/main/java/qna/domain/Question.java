@@ -63,7 +63,7 @@ public class Question extends AbstractEntity {
 
     public void addAnswer(Answer answer) {
         answer.toQuestion(this);
-        answers.add(answer);
+        this.answers = answers.add(answer);
     }
 
     private boolean isOwner(User loginUser) {
@@ -73,7 +73,7 @@ public class Question extends AbstractEntity {
     public DeleteHistories deleteQuestion(User loginUser) {
         validateOwner(loginUser);
 
-        answers.deleteAnswers(loginUser);
+        this.answers = answers.deleteAnswers(loginUser);
         this.deleted = true;
 
         return loggingDelete();
