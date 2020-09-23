@@ -38,17 +38,19 @@ public class Frames {
 
     public List<String> getSwingHistory() {
 
-        Stream<String> framesStream = frames.stream()
-                                            .map(Frame::swingHistoryToString);
+        List<String> swingHistory = frames.stream()
+                                          .limit(FINAL_FRAME_NO)
+                                          .map(Frame::swingHistoryToString)
+                                          .collect(toList());
 
-        Stream<String> emptyStream = Stream.generate(() -> EMPTY_HISTORY)
-                                           .limit(FINAL_FRAME_NO - frames.size());
+        for (int i = frames.size(); i < FINAL_FRAME_NO; i++) {
+            swingHistory.add(EMPTY_HISTORY);
+        }
 
-        return Stream.concat(framesStream, emptyStream)
-                     .collect(toList());
+        return swingHistory;
     }
 
     public boolean isEnd() {
-        return frames.size() == FINAL_FRAME_NO && lastFrame().isEndedFrame();
+        return frames.size() > FINAL_FRAME_NO;
     }
 }

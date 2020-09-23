@@ -29,6 +29,6 @@ public class BowlingGame {
     }
 
     public boolean isBowlingGameRun() {
-        return frames.isEnd();
+        return !frames.isEnd();
     }
 }

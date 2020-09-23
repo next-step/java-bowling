@@ -17,19 +17,13 @@ public class NormalFrame extends Frame {
         verifyScoreRange(score);
         sumOfScores += score;
         swingCount++;
-        addHistory(score);
+        addHistory(score, sumOfScores);
         verifySumOfScore();
     }
 
     @Override
     boolean isEndedFrame() {
         return swingCount >= MAX_SWING_COUNT || sumOfScores == MAXIMUM_SCORE;
-    }
-
-    private void verifyScoreRange(int score) {
-        if (score < MINIMAL_SCORE || score > MAXIMUM_SCORE) {
-            throw new IllegalArgumentException(ERR_SCORE_RANGE);
-        }
     }
 
     private void verifySumOfScore() {
