@@ -8,6 +8,8 @@ import java.util.List;
 
 @Entity
 public class Question extends AbstractEntity {
+    private boolean deleted;
+    private Answers answers;
     @Column(length = 100, nullable = false)
     private String title;
 
@@ -18,52 +20,58 @@ public class Question extends AbstractEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "deleted = false")
-    @OrderBy("id ASC")
-    private List<Answer> answers = new ArrayList<>();
-
-    private boolean deleted = false;
-
+//    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+//    @Where(clause = "deleted = false")
+//    @OrderBy("id ASC")
     public Question() {
     }
 
-    public Question(String title, String contents) {
+    public Question(String title, String contents, User loginUser) {
         this.title = title;
         this.contents = contents;
+        this.answers = new Answers();
+        this.deleted = false;
+        this.writer = loginUser;
     }
 
-    public Question(long id, String title, String contents) {
+    public Question(long id, String title, String contents, User loginUser) {
         super(id);
         this.title = title;
         this.contents = contents;
+        this.answers = new Answers();
+        this.deleted = false;
+        this.writer = loginUser;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public Question setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public Question setContents(String contents) {
-        this.contents = contents;
-        return this;
+    public List<Answer> getAnswers() {
+        return answers.getAnswers();
     }
 
     public User getWriter() {
         return writer;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+
     public Question writeBy(User loginUser) {
         this.writer = loginUser;
         return this;
+    }
+
+    public boolean deleted(boolean bool) {
+        this.deleted = bool;
+        return deleted;
     }
 
     public void addAnswer(Answer answer) {
@@ -75,21 +83,10 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
-    public Question setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
-    }
 
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";
     }
+
 }

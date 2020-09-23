@@ -18,7 +18,7 @@ public class Answer extends AbstractEntity {
     @Lob
     private String contents;
 
-    private boolean deleted = false;
+    private boolean deleted;
 
     public Answer() {
     }
@@ -41,14 +41,15 @@ public class Answer extends AbstractEntity {
         this.writer = writer;
         this.question = question;
         this.contents = contents;
-    }
-
-    public Answer setDeleted(boolean deleted) {
-        this.deleted = deleted;
-        return this;
+        this.deleted = false;
     }
 
     public boolean isDeleted() {
+        return deleted;
+    }
+
+    public boolean deleted(boolean deleted) {
+        this.deleted = deleted;
         return deleted;
     }
 
@@ -72,4 +73,5 @@ public class Answer extends AbstractEntity {
     public String toString() {
         return "Answer [id=" + getId() + ", writer=" + writer + ", contents=" + contents + "]";
     }
+
 }

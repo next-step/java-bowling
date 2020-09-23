@@ -16,6 +16,10 @@ public class DeleteHistories {
         new ArrayList<DeleteHistory>();
     }
 
+    public List<DeleteHistory> getDeletehistories() {
+        return deletehistories;
+    }
+
     public void add(DeleteHistory deleteHistory) {
         deletehistories.add(deleteHistory);
     }
