@@ -11,18 +11,21 @@ import java.util.stream.Collectors;
 
 @Entity
 public class Question extends AbstractEntity {
+<<<<<<< HEAD
     private boolean deleted;
-
-    @Column(length = 100, nullable = false)
+=======
+    @Column(name = "title", length = 100, nullable = false)
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
     private String title;
 
-    @Lob
+    @Column(name = "contents")
     private String contents;
 
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+    @JoinColumn(name = "writer", foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
 
+<<<<<<< HEAD
 
 //    private Answers answers = new Answers();
 //@Resource(name = "answerRepository")
@@ -32,23 +35,37 @@ public class Question extends AbstractEntity {
 //    return answerRepository.findByQuestionAndDeletedFalse(question)
 //            .orElseThrow(NotFoundException::new);
 //}
+=======
+    @Column(name = "answers")
+    private Answers answers;
 
-    public Question() {
-    }
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
+
 
     public Question(String title, String contents, User writer) {
         this.title = title;
         this.contents = contents;
+<<<<<<< HEAD
         this.deleted = false;
         this.writer = writer;
+======
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
     }
 
     public Question(long id, String title, String contents, User writer) {
         super(id);
         this.title = title;
         this.contents = contents;
+<<<<<<< HEAD
         this.deleted = false;
         this.writer = writer;
+=======
+        this.writer = writer;
+        this.answers = answers;
+        this.deleted = false;
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
     }
 
     private Answers findAnswers() {
@@ -62,6 +79,7 @@ public class Question extends AbstractEntity {
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Answers::new));
     }
 
+<<<<<<< HEAD
     public void deleteBy(User loginUser) throws CannotDeleteException {
         Answers answers = findAnswers();
        // if (findAnswers().isEmpty() && loginUser != this.writer) {
@@ -91,15 +109,26 @@ public class Question extends AbstractEntity {
         return title;
     }
 
+=======
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
     public String getContents() {
         return contents;
     }
 
+<<<<<<< HEAD
     public boolean isDeleted() {
         return deleted;
+=======
+    public List<Answer> getAnswers() {
+        if (answers != null) {
+            return answers.getAnswers();
+        }
+        return null;
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
     }
 
 
+<<<<<<< HEAD
     public Question writeBy(User loginUser) {
         this.writer = loginUser;
         return this;
@@ -108,6 +137,12 @@ public class Question extends AbstractEntity {
     public boolean deleted(boolean bool) {
         this.deleted = bool;
         return deleted;
+=======
+    public void addAnswer(Answer answer) {
+        if (answers != null && answer != null) {
+            answers.addAnswer(answer);
+        }
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
     }
 
 //    public void addAnswer(Answer answer) {
@@ -119,6 +154,7 @@ public class Question extends AbstractEntity {
         return writer.equals(loginUser);
     }
 
+<<<<<<< HEAD
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -138,6 +174,18 @@ public class Question extends AbstractEntity {
     //  return Objects.hash(super.hashCode(), deleted, title, contents, writer, answers);
     }
 
+=======
+    public void delete() {
+        isDeleted();
+        //delete조건
+        this.deleted = true;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
     @Override
     public String toString() {
         return "Question [id=" + getId() + ", title=" + title + ", contents=" + contents + ", writer=" + writer + "]";

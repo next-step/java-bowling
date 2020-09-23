@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 public class QuestionTest {
+<<<<<<< HEAD
 //    public static final Question Q1 = new Question("title1", "contents1", UserTest.JAVAJIGI);
 //    public static final Question Q2 = new Question("title2", "contents2", UserTest.SANJIGI);
 
@@ -54,4 +55,8 @@ public class QuestionTest {
             Q1.deleteBy(UserTest.SANJIGI);
         }).isInstanceOf(CannotDeleteException.class);
     }
+=======
+    public static final Question Q1 = new Question("title1", "contents1", UserTest.JAVAJIGI);
+    public static final Question Q2 = new Question("title2", "contents2", UserTest.SANJIGI);
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
 }

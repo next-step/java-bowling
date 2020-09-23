@@ -35,10 +35,16 @@ public class QnaServiceTest {
 
     @Before
     public void setUp() throws Exception {
+<<<<<<< HEAD
         question = new Question(1L, "title1", "contents1",UserTest.JAVAJIGI);
         Question question2 = new Question("title1", "contents1", UserTest.JAVAJIGI);
         answer = new Answer(11L, UserTest.JAVAJIGI, question2, "Answers Contents1");
 //        question.addAnswer(answer);
+=======
+        question = new Question(1L, "title1", "contents1", UserTest.JAVAJIGI);
+        answer = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
+        question.addAnswer(answer);
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
     }
 
     @Test

@@ -10,17 +10,25 @@ import java.util.Objects;
 @Entity
 public class Answer extends AbstractEntity {
     @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_writer"))
+    @JoinColumn(name = "writer", foreignKey = @ForeignKey(name = "fk_answer_writer"))
     private User writer;
 
     @ManyToOne(optional = false)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
+    @JoinColumn(name = " question", foreignKey = @ForeignKey(name = "fk_answer_to_question"))
     private Question question;
 
-    @Lob
+    @Column(name = "contents")
     private String contents;
 
+<<<<<<< HEAD
     private boolean deleted;
+=======
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
+    public Answer() {
+    }
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
 
     public Answer(User writer, Question question, String contents) {
         this(null, writer, question, contents);
@@ -28,7 +36,6 @@ public class Answer extends AbstractEntity {
 
     public Answer(Long id, User writer, Question question, String contents) {
         super(id);
-
         if(writer == null) {
             throw new UnAuthorizedException();
         }
@@ -41,6 +48,7 @@ public class Answer extends AbstractEntity {
         this.question = question;
         this.contents = contents;
         this.deleted = false;
+<<<<<<< HEAD
     }
 
     public Question getQuestion() {
@@ -58,6 +66,8 @@ public class Answer extends AbstractEntity {
 
     public boolean isOwner(User writer) {
         return this.writer.equals(writer);
+=======
+>>>>>>> cb44143bd22b16010852420b4bf07972ed45c0c6
     }
 
     public User getWriter() {
@@ -71,6 +81,21 @@ public class Answer extends AbstractEntity {
     public void toQuestion(Question question) {
         this.question = question;
     }
+
+    public void delete() {
+        isDeleted();
+        //delete조건
+        this.deleted = true;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public boolean isOwner(User writer) {
+        return this.writer.equals(writer);
+    }
+
 
     @Override
     public boolean equals(Object o) {
