@@ -32,19 +32,11 @@ public class DeleteHistory {
     }
 
     public static DeleteHistory of(Question question) {
-        return of(question, LocalDateTime.now());
-    }
-
-    public static DeleteHistory of(Question question, LocalDateTime deleteTime) {
-        return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), deleteTime);
+        return new DeleteHistory(ContentType.QUESTION, question.getId(), question.getWriter(), LocalDateTime.now());
     }
 
     public static DeleteHistory of(Answer answer) {
-        return of(answer, LocalDateTime.now());
-    }
-
-    public static DeleteHistory of(Answer answer, LocalDateTime deleteTime) {
-        return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), deleteTime);
+        return new DeleteHistory(ContentType.ANSWER, answer.getId(), answer.getWriter(), LocalDateTime.now());
     }
 
 
