@@ -41,7 +41,7 @@ public class AnswersTest {
 
         // then
         Answer deleted = new Answer(11L, UserTest.JAVAJIGI, QuestionTest.Q1, "Answers Contents1");
-        deleted.setDeleted(true);
+        deleted.deleteAnswer(UserTest.JAVAJIGI);
 
         Answers expected = new Answers(Arrays.asList(deleted));
         assertEquals(expected, actual);
