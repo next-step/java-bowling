@@ -39,8 +39,10 @@ public class Answers {
         return new Answers(copies);
     }
 
-    public void addToDeleteHistory(DeleteHistories deleteHistories) {
-        deleteHistories.add(answers);
+    public List<DeleteHistory> loggingDelete() {
+        return answers.stream()
+                .map(DeleteHistory::of)
+                .collect(Collectors.toList());
     }
 
     @Override
