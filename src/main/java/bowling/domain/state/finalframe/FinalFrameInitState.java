@@ -1,6 +1,7 @@
 package bowling.domain.state.finalframe;
 
 import bowling.domain.DownedPinCount;
+import bowling.domain.score.Score;
 import bowling.domain.state.InitState;
 import bowling.domain.state.State;
 
@@ -15,7 +16,7 @@ public class FinalFrameInitState extends InitState {
 	}
 
 	@Override
-	public State roll(DownedPinCount downedPinCount) {
-		return new FinalFrameFirstState(downedPinCount);
+	public State roll(DownedPinCount downedPinCount, Score accumulated) {
+		return new FinalFrameFirstState(downedPinCount, accumulated);
 	}
 }

@@ -3,6 +3,7 @@ package bowling.domain.game;
 import bowling.domain.DownedPinCount;
 import bowling.domain.frame.Frame;
 import bowling.domain.player.Player;
+import bowling.domain.score.Score;
 import bowling.domain.state.State;
 
 import java.util.*;
@@ -33,9 +34,13 @@ public class Game {
 	}
 
 	public Map<Integer, State> getStateGroupedBy() {
-		Map<Integer, State> grouped = frames.stream()
-										.collect(Collectors.toMap(Frame::getFrameSequence, Frame::getState, (frame1, frame2) -> frame1, LinkedHashMap::new));
-		return Collections.unmodifiableMap(grouped);
+		return frames.stream()
+				.collect(Collectors.toUnmodifiableMap(Frame::getFrameSequence, Frame::getState));
+	}
+
+	public Map<Integer, Score> getScoreGroupedBy() {
+		return frames.stream()
+				.collect(Collectors.toUnmodifiableMap(Frame::getFrameSequence, Frame::getScore));
 	}
 
 	public boolean isGameFinished() {
