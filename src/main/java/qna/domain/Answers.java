@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Embeddable
 public class Answers {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Where(clause = "softDelete = false")
+    @Where(clause = "delete = false")
     @OrderBy("id ASC")
     private List<Answer> answers = new ArrayList<>();
 
