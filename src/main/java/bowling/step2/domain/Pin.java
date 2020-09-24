@@ -3,7 +3,7 @@ package bowling.step2.domain;
 public class Pin {
 	private static final int MIN_PIN = 0;
 	private static final int MAX_PIN = 10;
-	private int pin;
+	private final int pin;
 
 	public Pin(int pin) {
 		this.pin = pin;
@@ -24,11 +24,11 @@ public class Pin {
 		return this.pin == MAX_PIN;
 	}
 
-	public boolean isSpare(int secondPin) {
-		if (this.pin + secondPin > MAX_PIN) {
+	public boolean isSpare(Pin secondPin) {
+		if (this.pin + secondPin.pin > MAX_PIN) {
 			throw new IllegalArgumentException("쓰러트릴 수 있는 핀은 최대 " + MAX_PIN + "개 입니다.");
 		}
-		return this.pin + secondPin == MAX_PIN;
+		return this.pin + secondPin.pin == MAX_PIN;
 	}
 
 	public boolean isGutter() {
@@ -52,6 +52,12 @@ public class Pin {
 
 	@Override
 	public String toString() {
-		return this.isGutter() ? "-" : Integer.toString(pin);
+		if (this.isGutter()) {
+			return "-";
+		}
+		if (this.isStrike()) {
+			return "X";
+		}
+		return Integer.toString(pin);
 	}
 }

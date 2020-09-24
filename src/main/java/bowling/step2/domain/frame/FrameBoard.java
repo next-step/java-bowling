@@ -16,6 +16,6 @@ public class FrameBoard {
 	}
 
 	public List<String> getResults() {
-		return Collections.unmodifiableList(results);
+			return Collections.unmodifiableList(results);
 	}
 }

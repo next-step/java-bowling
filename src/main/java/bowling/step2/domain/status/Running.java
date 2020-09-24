@@ -6,13 +6,16 @@ public class Running implements Status {
 	private final Pin firstPin;
 
 	public Running(Pin pin) {
+		if (pin.isStrike()) {
+			throw new IllegalArgumentException("스트라이크는 Running 상태일 수 없습니다.");
+		}
 		this.firstPin = pin;
 	}
 
 	@Override
 	public Status bowling(int pin) {
 		Pin secondPin = Pin.bowlPin(pin);
-		if (firstPin.isSpare(pin)) {
+		if (firstPin.isSpare(secondPin)) {
 			return new Spare(firstPin);
 		}
 		return new Miss(firstPin, secondPin);

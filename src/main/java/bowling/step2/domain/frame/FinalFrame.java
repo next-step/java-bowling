@@ -41,8 +41,6 @@ public class FinalFrame implements Frame {
 	@Override
 	public void addFrameResult(FrameBoard board) {
 		board.add(status.getMark());
-
-
 	}
 
 	@Override
