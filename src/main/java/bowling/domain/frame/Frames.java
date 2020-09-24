@@ -22,15 +22,13 @@ public class Frames {
 
     public void bowl(Pin felledPin) {
         Frame currentFrame = frames.getLast().bowl(felledPin);
-        frames.add(currentFrame);
+        if(!currentFrame.equals(frames.getLast())) {
+            frames.add(currentFrame);
+        }
     }
 
     public boolean isGameOver() {
         return frames.getLast().isEnd();
-    }
-
-    public Frame getFirstFrame() {
-        return frames.getFirst();
     }
 
     public Index getLastIndex() {
