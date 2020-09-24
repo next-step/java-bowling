@@ -3,7 +3,7 @@ package bowling.step2.domain.status;
 import bowling.step2.domain.Pin;
 
 public class Running implements Status {
-	private Pin firstPin;
+	private final Pin firstPin;
 
 	public Running(Pin pin) {
 		this.firstPin = pin;
@@ -14,9 +14,6 @@ public class Running implements Status {
 		Pin secondPin = Pin.bowlPin(pin);
 		if (firstPin.isSpare(pin)) {
 			return new Spare(firstPin);
-		}
-		if (secondPin.isGutter()) {
-			return new Gutter();
 		}
 		return new Miss(firstPin, secondPin);
 	}

@@ -27,7 +27,7 @@ public class NormalFrame implements Frame {
 	}
 
 	private Frame createFrame() {
-		if (no <= MAX_NORMAL_FRAME) {
+		if (no < MAX_NORMAL_FRAME) {
 			nextFrame = new NormalFrame(no + 1);
 			return nextFrame;
 		}

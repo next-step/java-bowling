@@ -3,7 +3,7 @@ package bowling.step2.domain;
 public class Pin {
 	private static final int MIN_PIN = 0;
 	private static final int MAX_PIN = 10;
-	private int pin = MIN_PIN;
+	private int pin;
 
 	public Pin(int pin) {
 		this.pin = pin;
@@ -52,6 +52,6 @@ public class Pin {
 
 	@Override
 	public String toString() {
-		return Integer.toString(pin);
+		return this.isGutter() ? "-" : Integer.toString(pin);
 	}
 }
