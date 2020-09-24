@@ -27,11 +27,6 @@ public class Application {
         }
 
         @Override
-        public void printLine(String line) {
-            System.out.println(line);
-        }
-
-        @Override
         public void printRow(String tabName, List<String> cells) {
 
             System.out.print(PIPE);
