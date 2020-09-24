@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class EndFrameTest {
 
     @Test
-    @DisplayName("두번 SPARE 를 기록할 경우 보너스 1번의 투구 기회를 가지는 테스트")
+    @DisplayName("SPARE 를 기록할 경우 보너스 1번의 투구 기회를 가지는 테스트")
     void spare() {
         // given
         Frame frame = EndFrame.of();
@@ -24,7 +24,7 @@ public class EndFrameTest {
     }
 
     @Test
-    @DisplayName("두번 STRIKE 를 기록할 경우 보너스 1번의 투구 기회를 가지는 테스트")
+    @DisplayName("STRIKE 를 기록할 경우 보너스 1번의 투구 기회를 가지는 테스트")
     void strike() {
         // given
         Frame frame = EndFrame.of();
@@ -39,7 +39,7 @@ public class EndFrameTest {
     }
 
     @Test
-    @DisplayName("MISS 기록할 경우 최대 보너스 투구는 주어지지 않는 테스트")
+    @DisplayName("MISS 기록할 경우 보너스 투구는 주어지지 않는 테스트")
     void miss() {
         // given
         Frame frame = EndFrame.of();
