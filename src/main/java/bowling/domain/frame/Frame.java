@@ -16,9 +16,13 @@ public interface Frame {
 
     boolean isEnd();
 
-    Score calculateScore(Score baseScore, Frames frames);
+    Score calculateScore(Score baseScore);
 
-    Score getScore(Frames frames);
+    Score getScore();
+
+    boolean hasNext();
+
+    Frame next();
 
     Index getIndex();
 

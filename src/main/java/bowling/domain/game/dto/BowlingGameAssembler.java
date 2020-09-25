@@ -12,8 +12,9 @@ public class BowlingGameAssembler {
     }
 
     public static BowlingGameDTO assemble(BowlingGame game) {
-        return game.getGame().stream()
-                .map(scoreBoard -> ScoreBoardAssembler.assemble(scoreBoard))
+        return game.getGame()
+                .stream()
+                .map(ScoreBoardAssembler::assemble)
                 .collect(collectingAndThen(toList(), BowlingGameDTO::new));
     }
 }

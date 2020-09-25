@@ -6,19 +6,21 @@ import bowling.domain.user.User;
 public class ScoreBoard {
 
     private final User user;
-    private final Frames frames;
+    private final Frame firstFrame;
+    private Frame currentFrame;
 
-    private ScoreBoard(User user, Frames frames) {
+    private ScoreBoard(User user) {
         this.user = user;
-        this.frames = frames;
+        this.firstFrame = Frame.init();
+        this.currentFrame = firstFrame;
     }
 
-    public static ScoreBoard init(User user, Frames frames) {
-        return new ScoreBoard(user, frames);
+    public static ScoreBoard init(User user) {
+        return new ScoreBoard(user);
     }
 
     public void bowl(Pin felledPin) {
-        frames.bowl(felledPin);
+        currentFrame = currentFrame.bowl(felledPin);
     }
 
     public User getUser() {
@@ -26,15 +28,15 @@ public class ScoreBoard {
     }
 
     public boolean isGameOver() {
-        return frames.isGameOver();
+        return currentFrame.isEnd();
+    }
+
+    public Frame getFirstFrame() {
+        return firstFrame;
     }
 
     public Index getLastIndex() {
-        return frames.getLastIndex();
-    }
-
-    public Frames getFrames() {
-        return this.frames;
+        return currentFrame.getIndex();
     }
 
 }

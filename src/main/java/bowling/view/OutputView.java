@@ -40,7 +40,7 @@ public class OutputView {
 
     private static String[] toScoreArray(ScoreBoardDTO scoreBoardDTO) {
         List<String> result = new ArrayList<>(Arrays.asList(String.format(STRING_FORMAT, scoreBoardDTO.getUser().getName())));
-        scoreBoardDTO.getFrames().getFrames().stream()
+        scoreBoardDTO.getFrames().stream()
                 .map(OutputView::makeGameResult)
                 .map(gameResult -> String.format(STRING_FORMAT, gameResult))
                 .collect(Collectors.toCollection(() -> result));
@@ -60,7 +60,13 @@ public class OutputView {
     }
 
     private static String[] toTotalScoreArray(ScoreBoardDTO scoreBoardDTO) {
-        return collectedTotalScore(scoreBoardDTO.getFrames().getFrameScore()).stream()
+        List<Integer> result = scoreBoardDTO.getFrames().stream()
+                .map(frame -> frame.getScore())
+                .filter(score -> !score.isPending())
+                .map(Score::getScore)
+                .collect(toList());
+
+        return collectedTotalScore(result).stream()
                 .toArray(String[]::new);
     }
 

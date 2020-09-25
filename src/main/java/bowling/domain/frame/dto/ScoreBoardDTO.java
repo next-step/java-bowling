@@ -1,13 +1,15 @@
 package bowling.domain.frame.dto;
 
-import bowling.domain.frame.Frames;
+import bowling.domain.frame.Frame;
 import bowling.domain.user.dto.UserDTO;
+
+import java.util.List;
 
 public class ScoreBoardDTO {
     private final UserDTO user;
-    private final Frames frames;
+    private final List<Frame> frames;
 
-    public ScoreBoardDTO(UserDTO user, Frames frames) {
+    public ScoreBoardDTO(UserDTO user, List<Frame> frames) {
         this.user = user;
         this.frames = frames;
     }
@@ -16,7 +18,7 @@ public class ScoreBoardDTO {
         return user;
     }
 
-    public Frames getFrames() {
+    public List<Frame> getFrames() {
         return frames;
     }
 }

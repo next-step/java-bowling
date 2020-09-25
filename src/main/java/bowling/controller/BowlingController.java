@@ -1,12 +1,8 @@
 package bowling.controller;
 
-import bowling.domain.frame.Frames;
-import bowling.domain.frame.ScoreBoard;
-import bowling.domain.frame.dto.ScoreBoardAssembler;
 import bowling.domain.game.BowlingGame;
 import bowling.domain.game.dto.BowlingGameAssembler;
 import bowling.domain.pin.Pin;
-import bowling.domain.user.User;
 import bowling.domain.user.dto.UserAssembler;
 import bowling.view.InputView;
 import bowling.view.OutputView;
