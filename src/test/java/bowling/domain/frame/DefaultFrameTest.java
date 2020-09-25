@@ -25,7 +25,7 @@ class DefaultFrameTest {
         defaultFrame = DefaultFrame.firstFrame();
     }
 
-    @DisplayName("다음 프레임 생성 테스")
+    @DisplayName("다음 프레임 생성 테스트")
     @Test
     void createNextFrameTest() {
         defaultFrame.addScore(5);
@@ -95,7 +95,7 @@ class DefaultFrameTest {
         assertThat(defaultFrame.isPlayable()).isFalse();
     }
 
-    @DisplayName("볼링공을 던질수 없는 상태 - 2구 던졌을때")
+    @DisplayName("플레이 가능 여부 테스트 - 2구 던졌을때")
     @Test
     void isNotPlayableOnFinishTest() {
         defaultFrame.addScore(1);

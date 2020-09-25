@@ -10,7 +10,6 @@ import static bowling.domain.pin.Pin.STRIKE_PIN_COUNT;
 public class LastFrame implements Frame {
     private static final String LIMIT_SUM_PIN_MESSAGE = "1구와 2구 점수의 합은 10점을 넘을 수 없습니다.";
     private static final int FIRST_PLAY = 0;
-    private static final int SECOND_PLAY = 1;
 
     private final Scores scores;
     private final BonusScores bonusScores;
@@ -20,18 +19,26 @@ public class LastFrame implements Frame {
         this.bonusScores = bonusScores;
     }
 
+    private boolean isStrikeOrSpare() {
+        return scores.getScores().stream()
+                .anyMatch(Score::isClear);
+    }
+
+    private boolean isOverMaxCount(int pin) {
+        return scores.currentPinCount() + pin > STRIKE_PIN_COUNT;
+    }
+
     private void validateScore(int pin) {
         if (CollectionUtils.isEmpty(scores.getScores())) {
             return;
         }
-        if (scores.size() == SECOND_PLAY && !scores.isStrike(FIRST_PLAY) && scores.currentPinCount() + pin > STRIKE_PIN_COUNT) {
-            throw new IllegalArgumentException(LIMIT_SUM_PIN_MESSAGE);
-        }
+        validatePin(pin);
     }
 
-    private boolean isStrikeOrSpare() {
-        return scores.getScores().stream()
-                .anyMatch(Score::isClear);
+    private void validatePin(int pin) {
+        if (scores.isSecondPlay() && !scores.isStrike(FIRST_PLAY) && isOverMaxCount(pin)) {
+            throw new IllegalArgumentException(LIMIT_SUM_PIN_MESSAGE);
+        }
     }
 
     @Override
