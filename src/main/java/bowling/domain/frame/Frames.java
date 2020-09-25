@@ -28,7 +28,7 @@ public final class Frames {
             final Frame prevFrame = (0 == index) ? null : temp.get(index - 1);
             final Frame nextFrame = (MAX_FOUNDATION_FRAME_SIZE < index + 1) ? null : temp.get(index + 1);
             temp.get(index)
-                .score(prevFrame, nextFrame);
+                .link(prevFrame, nextFrame);
         }
         return Collections.unmodifiableList(temp);
     }
@@ -70,6 +70,7 @@ public final class Frames {
         int cursor = MAX_FOUNDATION_FRAME_SIZE > currentFrameIndex() ?
             currentFrameIndex() - 1 : MAX_FOUNDATION_FRAME_SIZE;
 
+        frames.stream().map(Frame::getScore).forEach(System.out::println);
         return frames.get(cursor)
                      .getScore();
     }

@@ -37,4 +37,15 @@ final class SpareAfterBonusBowl implements RolledResult{
     public String description() {
         return String.format("%s",gutterOrFallenPinValue(0));
     }
+
+    @Override
+    public Score getScore() {
+        return new Score(twoFallenPins().totalScore(),0);
+    }
+
+    @Override
+    public Score calculateScore(Score score) {
+        score.sum(firstFallenFallenPins.getPrimitive());
+        return score;
+    }
 }

@@ -1,6 +1,7 @@
 package bowling.domain.core;
 
 import bowling.domain.core.state.ImmutableTwoFallenPins;
+import bowling.domain.core.state.Score;
 
 import static bowling.domain.core.state.NotAtRolledResult.notAtRolledResult;
 
@@ -21,17 +22,6 @@ public interface RolledResult {
         return "";
     }
 
-    default int getRolledResultScore(){
-        if (isCompleteState()) {
-            return twoFallenPins().totalScore();
-        }
-        return 0;
-    }
-
-    default int getNextRolledResultMergeScore(RolledResult nextRolledResult){
-        return 0;
-    }
-
     default String gutterOrFallenPinValue(int rollingAttemptCount) {
         final ImmutableTwoFallenPins twoFallenPins = twoFallenPins();
         if (FallenPins.empty().equals(twoFallenPins.getPins(rollingAttemptCount))){
@@ -42,6 +32,10 @@ public interface RolledResult {
         }
         return String.valueOf(twoFallenPins.getFallenPins(rollingAttemptCount));
     }
+
+    Score getScore();
+
+    Score calculateScore(Score score);
 
     ImmutableTwoFallenPins twoFallenPins();
 

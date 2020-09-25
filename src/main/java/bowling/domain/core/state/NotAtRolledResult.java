@@ -24,6 +24,16 @@ public final class NotAtRolledResult implements RolledResult {
     }
 
     @Override
+    public Score getScore() {
+        return Score.empty();
+    }
+
+    @Override
+    public Score calculateScore(Score score) {
+        return score;
+    }
+
+    @Override
     public ImmutableTwoFallenPins twoFallenPins() {
         return gutterTwoFallenPins();
     }

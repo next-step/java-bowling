@@ -1,40 +1,36 @@
 package bowling.ui.result;
 
-import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 public final class DisplayBowlingBoard {
-    private final List<Display> boards;
+    private final Map<String, Display> boards;
 
-    private static final Display empty = new Display() {
-        @Override
-        public String getName() {
-            return "";
+    private static final List<DisplayRolledResult> empty = Stream.generate(()-> new DisplayRolledResult("", 0))
+                                                                 .limit(10)
+                                                                 .collect(toList());
+
+    public DisplayBowlingBoard(List<String> playerNames) {
+        boards = new LinkedHashMap<>();
+        boards.put("header", new DisplayBowlingHeader());
+        for (String playerName : playerNames) {
+            boards.put(playerName, new DisplayPlayerBowlingGrade(playerName, empty));
         }
-
-        @Override
-        public String toResults() {
-            return "";
-        }
-    };
-
-    public DisplayBowlingBoard() {
-        this.boards = Arrays.asList(
-            new DisplayBowlingHeader(),
-            empty
-        );
     }
 
-    public DisplayBowlingBoard updateDisplayPlayerBowlingGrade(DisplayPlayerBowlingGrade displayPlayerBowlingGrade){
-        boards.set(1, displayPlayerBowlingGrade);
+    public DisplayBowlingBoard updateDisplayPlayerBowlingGrade(String playerName, DisplayPlayerBowlingGrade displayPlayerBowlingGrade){
+        boards.put(playerName, displayPlayerBowlingGrade);
         return this;
     }
 
     @Override
     public String toString() {
-        return boards.stream()
+        return boards.values().stream()
                      .map(Display::toDisplay)
                      .collect(joining("\n"));
     }

@@ -1,23 +1,22 @@
 package bowling.domain.frame;
 
-import java.util.Objects;
-
 import bowling.domain.core.RolledResult;
+import bowling.domain.core.state.Score;
 import bowling.ui.result.DisplayRolledResult;
 
 import static bowling.domain.core.state.NotAtRolledResult.notAtRolledResult;
 
 final class FoundationFrame implements Frame {
     private RolledResult rolledResult;
-    private Score score;
+    private LinkedScoreCalculator linkedScoreCalculator;
 
     FoundationFrame() {
         this.rolledResult = notAtRolledResult();
     }
 
     @Override
-    public void score(Frame prevFrame, Frame nextFrame) {
-        score = new Score(prevFrame, nextFrame);
+    public void link(Frame prevFrame, Frame nextFrame) {
+        linkedScoreCalculator = new LinkedScoreCalculator(prevFrame, nextFrame);
     }
 
     @Override
@@ -27,17 +26,16 @@ final class FoundationFrame implements Frame {
 
     @Override
     public int getScore() {
-        return score.getScore(rolledResult);
-    }
-
-    @Override
-    public RolledResult getRolledResult() {
-        return rolledResult;
+        return linkedScoreCalculator.getScore(rolledResult);
     }
 
     @Override
     public DisplayRolledResult toDisplayRolledResult() {
-        return new DisplayRolledResult(rolledResult.description(), getScore());
+        if (rolledResult.isCompleteState()) {
+            return new DisplayRolledResult(rolledResult.description(), getScore());
+        }
+
+        return DisplayRolledResult.ofNotCalculated(rolledResult.description());
     }
 
     @Override
@@ -45,4 +43,8 @@ final class FoundationFrame implements Frame {
         return rolledResult.isCompleteState() ? 1 : 0;
     }
 
+    @Override
+    public Score calculateScore(Score score) {
+        return linkedScoreCalculator.calculateScore(rolledResult, score);
+    }
 }

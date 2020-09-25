@@ -39,6 +39,7 @@ public final class ImmutableTwoFallenPins extends AbstractTwoFallenPins {
 
     public int totalScore(){
         return twoFallenPins.stream()
+                            .filter(FallenPins::isNotEmpty)
                             .mapToInt(FallenPins::getPrimitive)
                             .sum();
     }

@@ -1,7 +1,5 @@
 package bowling.domain.core.state;
 
-import java.util.Objects;
-
 import bowling.domain.core.FallenPins;
 import bowling.domain.core.RolledResult;
 import bowling.domain.frame.TerminateFrame;
@@ -38,6 +36,22 @@ final class Miss implements RolledResult {
         return twoFallenPins.immutable();
     }
 
+    @Override
+    public Score getScore(){
+        return new Score(twoFallenPins().totalScore(), 0);
+    }
+
+    @Override
+    public Score calculateScore(Score score) {
+        final ImmutableTwoFallenPins immutableTwoFallenPins = twoFallenPins();
+        score = score.sum(immutableTwoFallenPins.firstFallenPinsValue());
+
+        if (score.hasNotAttemptLeft()){
+            return score;
+        }
+
+        return score.sum(immutableTwoFallenPins.secondFallenPinsValue());
+    }
 
     @Override
     public RolledResult nextRolledResult(int fallenPinsValue) {

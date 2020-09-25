@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bowling.domain.core.RolledResult;
+import bowling.domain.core.state.Score;
 
 import static bowling.domain.frame.TerminateFrame.MAX_TRY_COUNT_SIZE;
 import static java.util.stream.Collectors.joining;
 
-class TerminateRolledResult {
+final class TerminateRolledResults {
     private final List<RolledResult> rolledResults;
     private int tryCount;
 
-    TerminateRolledResult() {
+    TerminateRolledResults() {
         this.rolledResults = new ArrayList<>(MAX_TRY_COUNT_SIZE);
         tryCount = 0;
     }
@@ -41,9 +42,17 @@ class TerminateRolledResult {
         return 0;
     }
 
-    int totalScore(){
+    int getScore(){
         return rolledResults.stream()
-                     .mapToInt(RolledResult::getRolledResultScore)
+                            .map(RolledResult::getScore)
+                            .mapToInt(Score::getScore)
                      .sum();
+    }
+
+    Score calculateScore(Score score) {
+        for (RolledResult rolledResult : rolledResults) {
+            score = rolledResult.calculateScore(score);
+        }
+        return score;
     }
 }
