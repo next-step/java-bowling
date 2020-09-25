@@ -13,7 +13,7 @@ public class Application {
 
         BowlingController controller = new BowlingController(scanner::nextInt, new SystemOutput());
         controller.inputName(scanner.nextLine());
-        controller.gamePlay();
+        controller.playGame();
     }
 
     public static class SystemOutput implements Output {

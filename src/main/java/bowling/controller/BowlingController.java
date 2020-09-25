@@ -38,7 +38,7 @@ public class BowlingController {
         output.printRow(bowlingGame.getName(), bowlingGame.getSwingInfo());
     }
 
-    public void gamePlay() {
+    public void playGame() {
         while(bowlingGame.isBowlingGameRun()) {
             output.print(currentRoundInputMessage());
             bowlingGame.swing(input.nextInt());

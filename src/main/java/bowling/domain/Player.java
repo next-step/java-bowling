@@ -1,24 +1,24 @@
 package bowling.domain;
 
-public class Name {
+public class Player {
 
     private static final String REGEX = "[A-Z]{3}+";
     private static final String ERR_NAME = "이름은 영문 대문자로 3자만 입력할 수 있습니다.";
 
-    private final String value;
+    private final String name;
 
-    public Name(String name) {
-        value = name;
+    public Player(String name) {
+        this.name = name;
         verifyName();
     }
 
     public void verifyName() {
-        if (!value.matches(REGEX)) {
+        if (!name.matches(REGEX)) {
             throw new IllegalArgumentException(ERR_NAME);
         }
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 }

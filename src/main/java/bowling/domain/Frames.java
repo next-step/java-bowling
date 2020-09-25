@@ -7,6 +7,7 @@ import static java.util.stream.Collectors.toList;
 
 public class Frames {
 
+    private static final int LAST_INDEX_GAP = 1;
     private static final int FINAL_FRAME_NO = 10;
     private static final String EMPTY_HISTORY = "";
 
@@ -32,7 +33,7 @@ public class Frames {
     }
 
     private Frame lastFrame() {
-        return frames.get(frames.size() - 1);
+        return frames.get(frames.size() - LAST_INDEX_GAP);
     }
 
     public List<String> getSwingHistory() {

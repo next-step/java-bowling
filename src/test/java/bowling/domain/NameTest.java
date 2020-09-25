@@ -13,13 +13,13 @@ public class NameTest {
     @ValueSource(strings = {"ABC", "MDH", "QQQ", "ZZZ", "ASF"})
     @ParameterizedTest
     void validNameTest(String value) {
-        assertEquals(new Name(value).getValue(), value);
+        assertEquals(new Player(value).getName(), value);
     }
 
     @DisplayName("부적절한 이름 테스트")
     @ValueSource(strings = {"aBC", "AMDH", "1QQ", "ZZ", "AS&"})
     @ParameterizedTest
     void invalidNameTest(String value) {
-        assertThatIllegalArgumentException().isThrownBy(() -> new Name(value));
+        assertThatIllegalArgumentException().isThrownBy(() -> new Player(value));
     }
 }

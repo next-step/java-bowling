@@ -4,16 +4,16 @@ import java.util.List;
 
 public class BowlingGame {
 
-    private final Name name;
+    private final Player player;
     private final Frames frames;
 
     public BowlingGame(String name) {
-        this.name = new Name(name);
+        this.player = new Player(name);
         this.frames = new Frames();
     }
 
     public String getName() {
-        return name.getValue();
+        return player.getName();
     }
 
     public List<String> getSwingInfo() {
