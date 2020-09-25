@@ -1,5 +1,6 @@
 package bowling.domain.game;
 
+import bowling.domain.frame.Frames;
 import bowling.domain.frame.Index;
 import bowling.domain.frame.ScoreBoard;
 import bowling.domain.pin.Pin;
@@ -22,7 +23,7 @@ public class BowlingGame {
     public static BowlingGame of(List<String> users) {
         return users.stream()
                 .map(User::of)
-                .map(ScoreBoard::init)
+                .map(user -> ScoreBoard.init(user, Frames.init()))
                 .collect(collectingAndThen(toList(), BowlingGame::new));
     }
 

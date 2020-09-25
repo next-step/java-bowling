@@ -1,15 +1,16 @@
 package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
+import java.util.LinkedList;
 
 public class Frames {
 
-    private final Frame firstFrame;
-    private Frame currentFrame;
+    private LinkedList<Frame> frames;
 
     private Frames() {
-        this.firstFrame = Frame.init();
-        this.currentFrame = firstFrame;
+        Frame firstFrame = Frame.init();
+        this.frames = new LinkedList<>();
+        frames.add(firstFrame);
     }
 
     public static Frames init() {
@@ -17,18 +18,19 @@ public class Frames {
     }
 
     public void bowl(Pin felledPin) {
-        currentFrame = currentFrame.bowl(felledPin);
+        Frame currentFrame = frames.getLast().bowl(felledPin);
+        frames.add(currentFrame);
     }
 
     public boolean isGameOver() {
-        return currentFrame.isEnd();
+        return frames.getLast().isEnd();
     }
 
     public Frame getFirstFrame() {
-        return firstFrame;
+        return frames.getFirst();
     }
 
     public Index getLastIndex() {
-        return currentFrame.getIndex();
+        return frames.getLast().getIndex();
     }
 }
