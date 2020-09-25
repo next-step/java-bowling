@@ -2,6 +2,7 @@ package bowling.view;
 
 import bowling.domain.DownedPinCount;
 import bowling.domain.game.Game;
+import bowling.domain.game.Games;
 import bowling.domain.score.Score;
 import bowling.domain.state.State;
 
@@ -18,16 +19,22 @@ public class OutputView {
 	private static final int DOUBLE_DIGIT_START_VALUE = 10;
 	private static final String DOUBLE_DIGIT_FORMAT_PREFIX = "0";
 
-	public static void showInitializedGame(Game game) {
+	public static void showInitializedGame(Games games) {
 		System.out.println(getHeaderAreaText());
-		System.out.println(getInitValueAreaText(game));
-		System.out.println(getInitScoreAreaText());
+		games.getGames()
+				.forEach(game -> {
+					System.out.println(getInitValueAreaText(game));
+					System.out.println(getInitScoreAreaText());
+				});
 	}
 
-	public static void showDashBoard(Game game) {
+	public static void showDashBoard(Games games) {
 		System.out.println(getHeaderAreaText());
-		System.out.println(getCurrentValueAreaText(game));
-		System.out.println(getCurrentScoreAreaText(game));
+		games.getGames()
+				.forEach(game -> {
+					System.out.println(getCurrentValueAreaText(game));
+					System.out.println(getCurrentScoreAreaText(game));
+				});
 	}
 
 	private static String getHeaderAreaText() {
