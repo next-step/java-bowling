@@ -55,5 +55,4 @@ class ScoresTest {
         scores.add(Score.defaultScore(scores, 9));
         assertThat(scores.isSpare(1)).isTrue();
     }
-
 }
