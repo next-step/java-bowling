@@ -68,93 +68,83 @@ class NormalFrameTest {
     @DisplayName("일반 프레임에서 CONTINUE 이면 쓰러뜨린 핀의 점수와 1번 추가 횟수를 가진 상태를 리턴")
     void continue_calculate_score() {
         // given
-        Frames frames = Frames.init();
-        Frame frame = frames.getFrame(Index.of(1));
+        Frame frame = Frame.init();
 
         // when
         frame.bowl(Pin.of(8));
 
         // then
-        assertThat(frame.getScore(frames)).isEqualTo(Score.of(8, Remaining.CONTINUE));
+        assertThat(frame.getScore()).isEqualTo(Score.of(8, Remaining.CONTINUE));
     }
 
     @Test
     @DisplayName("일반 프레임에서 GUTTER 이면 바로 점수를 계산하는 테스트")
     void gutter_calculate_score() {
         // given
-        Frames frames = Frames.init();
-        Frame frame = frames.getFrame(Index.of(1));
+        Frame frame = Frame.init();
 
         // when
         frame.bowl(Pin.of(0));
         frame.bowl(Pin.of(0));
 
         // then
-        assertThat(frame.getScore(frames)).isEqualTo(Score.of(0, Remaining.of(0)));
+        assertThat(frame.getScore()).isEqualTo(Score.of(0, Remaining.of(0)));
     }
 
     @Test
     @DisplayName("일반 프레임에서 MISS 이면 바로 점수를 계산하는 테스트")
     void miss_calculate_score() {
         // given
-        Frames frames = Frames.init();
-        Frame frame = frames.getFrame(Index.of(1));
+        Frame frame = Frame.init();
 
         // when
         frame.bowl(Pin.of(3));
         frame.bowl(Pin.of(2));
 
         // then
-        assertThat(frame.getScore(frames)).isEqualTo(Score.of(5, Remaining.of(0)));
+        assertThat(frame.getScore()).isEqualTo(Score.of(5, Remaining.of(0)));
     }
 
     @Test
     @DisplayName("일반 프레임에서 SPARE 이면 추가 1번 보너스 투구로 점수 계산")
     void spare_calculate_score() {
         // given
-        Frames frames = Frames.init();
-        Frame frame = frames.getFrame(Index.of(1));
+        Frame frame = Frame.init();
         frame.bowl(Pin.of(8));
-        frame.bowl(Pin.of(2));
 
         // when
-        Frame normalFrame = NormalFrame.of(Index.of(2));
-        normalFrame.bowl(Pin.of(5));
-        frames.getFrames().add(normalFrame);
+        Frame current = frame.bowl(Pin.of(2));
+        current.bowl(Pin.of(5));
 
         // then
-        assertThat(frame.getScore(frames)).isEqualTo(Score.of(15, Remaining.of(0)));
+        assertThat(frame.getScore()).isEqualTo(Score.of(15, Remaining.of(0)));
     }
 
     @Test
     @DisplayName("일반 프레임에서 STRIKE 이면 추가 2번 보너스 투구로 점수 계산")
     void strike_calculate_score() {
         // given
-        Frames frames = Frames.init();
-        Frame frame = frames.getFrame(Index.of(1));
-        frame.bowl(Pin.of(10));
+        Frame frame = Frame.init();
+        Frame current = frame.bowl(Pin.of(10));
 
         // when
-        Frame normalFrame = NormalFrame.of(Index.of(2));
-        normalFrame.bowl(Pin.of(5));
-        normalFrame.bowl(Pin.of(1));
-        frames.getFrames().add(normalFrame);
+        current.bowl(Pin.of(5));
+        current.bowl(Pin.of(1));
 
         // then
-        assertThat(frame.getScore(frames)).isEqualTo(Score.of(16, Remaining.of(0)));
+        assertThat(frame.getScore()).isEqualTo(Score.of(16, Remaining.of(0)));
     }
 
     @Test
     @DisplayName("STRIKE 이면 추가 2번 보너스 투구 점수가 더해서 계산")
     void strike_calculateScore_test() {
         // given
-        Frames frames = Frames.init();
-        Frame frame = frames.getFrame(Index.of(1));
+        Frame frame = Frame.init();
         frame.bowl(Pin.of(3));
         frame.bowl(Pin.of(2));
 
         // when
-        Score score = frame.calculateScore(Strike.of().getScore(), frames);
+        Score score = frame.calculateScore(Strike.of().getScore());
 
         // then
         assertThat(score).isEqualTo(Score.of(15, Remaining.of(0)));
@@ -164,12 +154,11 @@ class NormalFrameTest {
     @DisplayName("SPARE 이면 추가 1번 보너스 투구 점수가 더해서 계산")
     void spare_calculateScore_test() {
         // given
-        Frames frames = Frames.init();
-        Frame frame = frames.getFrame(Index.of(1));
+        Frame frame = Frame.init();
         frame.bowl(Pin.of(8));
 
         // when
-        Score score = frame.calculateScore(Spare.of(Pin.of(6)).getScore(), frames);
+        Score score = frame.calculateScore(Spare.of(Pin.of(6)).getScore());
 
         // then
         assertThat(score).isEqualTo(Score.of(18, Remaining.of(0)));

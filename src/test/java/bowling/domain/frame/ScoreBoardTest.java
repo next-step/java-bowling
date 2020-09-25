@@ -13,22 +13,20 @@ class ScoreBoardTest {
     @DisplayName("프레임이 종료 되면 새로운 프레임을 생성 테스트")
     void generate_bowl_test() {
         // given
-        Frames frames = Frames.init();
-        ScoreBoard scoreBoard = ScoreBoard.init(User.of("YKJ"), frames);
+        ScoreBoard scoreBoard = ScoreBoard.init(User.of("YKJ"));
 
         // when
         scoreBoard.bowl(Pin.of(10));
 
         // then
-        assertThat(frames.getLastIndex()).isEqualTo(Index.of(2));
+        assertThat(scoreBoard.getLastIndex()).isEqualTo(Index.of(2));
     }
 
     @Test@DisplayName("모든 프레임이 종료 되면 게임이 종료되는 테스트")
     void isGameOver() {
 
         // given
-        Frames frames = Frames.init();
-        ScoreBoard board = ScoreBoard.init(User.of("YKJ"), frames);
+        ScoreBoard board = ScoreBoard.init(User.of("YKJ"));
 
         // when
         for (int i = 0; i < 12; i++) {
