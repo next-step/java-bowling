@@ -31,7 +31,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public int getTotal() {
-        return this.pins.getTotalPins();
+        return pins.getTotalPins();
     }
 
     @Override

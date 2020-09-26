@@ -25,23 +25,14 @@ public class Pins {
         this.pins = pins;
     }
 
-    public int getTotalPins() {
-        return this.pins.stream()
-                .map(Pin::getPin)
-                .mapToInt(Integer::intValue)
-                .sum();
-    }
-
-    public int getLeftPin() {
-        return PINS_LIMIT - getTotalPins();
-    }
-
-    public boolean isAlreadyStrike() {
-        return pins.size() == FIRST_ROLL && this.getTotalPins() == PINS_LIMIT;
-    }
-
-    private boolean isPinTotalOverTen(int pin) {
-        return this.getTotalPins() + pin > PINS_LIMIT;
+    public void addPins(Frame frame, int pin) {
+        if (frame instanceof NormalFrame && isPinTotalOverTen(pin)) {
+            throw new IllegalArgumentException(PIN_MAX_ERROR);
+        }
+        if (frame instanceof FinalFrame && isPinOverflowRolledOnce(pin)) {
+            throw new IllegalArgumentException(ROLL_COUNT_ERRORS);
+        }
+        this.pins.add(new Pin(pin));
     }
 
     public boolean isPinReady(Frame frame) {
@@ -54,20 +45,27 @@ public class Pins {
         return false;
     }
 
-    public void addPins(Frame frame, int pin) {
-        if (frame instanceof NormalFrame && isPinTotalOverTen(pin)) {
-            throw new IllegalArgumentException(PIN_MAX_ERROR);
-        }
-
-        if (frame instanceof FinalFrame && isPinOverflowRolledOnce(pin)) {
-            throw new IllegalArgumentException(ROLL_COUNT_ERRORS);
-        }
-
-        this.pins.add(new Pin(pin));
+    public int getTotalPins() {
+        return this.pins.stream()
+                .map(Pin::getPin)
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     private boolean isPinOverflowRolledOnce(int pin) {
         return isRolledOnce() && (isPinUnderTen()) && (getTotalPins() + pin) > PINS_LIMIT;
+    }
+
+    public int getLeftPin() {
+        return PINS_LIMIT - getTotalPins();
+    }
+
+    public boolean isAlreadyStrike() {
+        return pins.size() == FIRST_ROLL && this.getTotalPins() == PINS_LIMIT;
+    }
+
+    private boolean isPinTotalOverTen(int pin) {
+        return this.getTotalPins() + pin > PINS_LIMIT;
     }
 
     private boolean isRolledTwice() {
