@@ -20,7 +20,12 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    boolean isEndedFrame() {
+    public boolean isEndedFrame() {
         return swingCount >= MAX_SWING_COUNT || score.isFirstSwingStrike(swingCount);
+    }
+
+    @Override
+    public String getScore() {
+        return ""; // TODO 로직 작성
     }
 }

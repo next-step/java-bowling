@@ -25,6 +25,11 @@ public class FinalFrame extends Frame {
         return swingCount == MAX_SWING_COUNT || secondSwingCheck();
     }
 
+    @Override
+    public String getScore() {
+        return ""; // TODO 로직 작성
+    }
+
     private boolean secondSwingCheck() {
 
         if (swingCount < NORMAL_FRAME_MAX_SWING_COUNT) {

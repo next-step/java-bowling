@@ -38,26 +38,29 @@ public class Frames {
     }
 
     public List<String> getSwingHistories() {
+        return createStringList(frameStream().map(Frame::swingHistoryToString));
+    }
 
-        List<String> swingHistory = frames.stream()
-                                          .limit(FINAL_FRAME_NO)
-                                          .map(Frame::swingHistoryToString)
-                                          .collect(toList());
+    public List<String> getScores() {
+        return createStringList(frameStream().map(Frame::getScore));
+    }
 
+    private Stream<Frame> frameStream() {
+        return frames.stream().limit(FINAL_FRAME_NO);
+    }
+
+    private List<String> createStringList(Stream<String> stream) {
+        
+        List<String> list = stream.collect(toList());
+        
         for (int i = frames.size(); i < FINAL_FRAME_NO; i++) {
-            swingHistory.add(EMPTY_HISTORY);
+            list.add(EMPTY_HISTORY);
         }
-
-        return swingHistory;
+        
+        return list;
     }
 
     public boolean isEnd() {
         return frames.size() > FINAL_FRAME_NO;
-    }
-
-    public List<String> getScores() {
-        return Stream.generate(() -> "")
-                     .limit(10)
-                     .collect(toList());
     }
 }

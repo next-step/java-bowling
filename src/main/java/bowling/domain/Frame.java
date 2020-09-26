@@ -11,9 +11,11 @@ public abstract class Frame {
         swingHistory = new SwingHistory();
     }
 
-    abstract void swing(int score);
+    public abstract void swing(int score);
 
-    abstract boolean isEndedFrame();
+    public abstract boolean isEndedFrame();
+
+    public abstract String getScore();
 
     protected void addHistory(int score) {
         swingHistory.addHistory(score);

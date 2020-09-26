@@ -10,13 +10,18 @@ public class FrameTest {
     private Frame frame() {
         return new Frame() {
             @Override
-            void swing(int score) {
+            public void swing(int score) {
                 addHistory(score);
             }
 
             @Override
-            boolean isEndedFrame() {
+            public boolean isEndedFrame() {
                 return false;
+            }
+
+            @Override
+            public String getScore() {
+                return "";
             }
         };
     }
