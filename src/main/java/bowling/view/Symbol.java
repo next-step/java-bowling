@@ -17,14 +17,14 @@ public enum Symbol {
         public String getSymbol(State state) {
             String spareFirst = ((Spare) state).getFirstPin().toString();
             if(checkGutter(spareFirst))
-                spareFirst = GUTTER.toString();
+                spareFirst = GUTTER_SINGLE.toString();
             return spareFirst + SPARE.toString();
         }
     },
-    GUTTER("-") {
+    GUTTER_SINGLE("-") {
         @Override
         public String getSymbol(State state) {
-            return GUTTER.toString();
+            return GUTTER_SINGLE.toString();
         }
     },
     MISS("|") {
@@ -34,9 +34,9 @@ public enum Symbol {
             String missSecond = ((Miss) state).getSecondPin().toString();
 
             if(checkGutter(missFirst))
-                missFirst = GUTTER.toString();
+                missFirst = GUTTER_SINGLE.toString();
             if(checkGutter(missSecond))
-                missSecond = GUTTER.toString();
+                missSecond = GUTTER_SINGLE.toString();
 
             return missFirst + MISS.toString() + missSecond;
         }
@@ -53,15 +53,15 @@ public enum Symbol {
             String continueFirst = ((Continue) state).getFirstPin().toString();
 
             if(checkGutter(continueFirst))
-                continueFirst = Symbol.GUTTER.toString();
+                continueFirst = Symbol.GUTTER_SINGLE.toString();
 
             return continueFirst;
         }
     },
-    ALL_GUTTER("-|-") {
+    GUTTER("-|-") {
         @Override
         public String getSymbol(State state) {
-            return ALL_GUTTER.toString();
+            return GUTTER.toString();
         }
     };
 

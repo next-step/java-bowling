@@ -2,7 +2,9 @@ package bowling.view;
 
 import bowling.domain.frame.*;
 import bowling.domain.frame.dto.ScoreBoardDTO;
+import bowling.domain.game.dto.BowlingGameDTO;
 import bowling.domain.state.*;
+import bowling.domain.user.dto.UserDTO;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -14,19 +16,24 @@ import static java.util.stream.Collectors.toList;
 
 public class OutputView {
 
-    private static final String CURRENT_FRAME_TXT = "{0} 프레임 투구 : ";
+    private static final String CURRENT_USER_TXT = "{0}\''s turn: ";
     private static final String HEADER = "|  NAME  |   01   |   02   |   03   |   04   |   05   |   06   |   07   |   08   |   09   |   10   |";
     private static final String SCORE = "|{0}   |{1}   |{2}   |{3}   |{4}   |{5}   |{6}   |{7}   |{8}   |{9}   | {10}  |";
     private static final String TOTAL_SCORE= "|        |{0}   |{1}   |{2}   |{3}   |{4}   |{5}   |{6}   |{7}   |{8}   |{9}   |";
     private static final String EMPTY_STRING = "";
     private static final String STRING_FORMAT = "%5s";
-    public static final String SCORE_DELIMITER = "|";
+    public static final String SYMBOL_DELIMITER = "|";
+    public static final String SCORE_DELIMITER = SYMBOL_DELIMITER;
 
     private OutputView() {
     }
 
-    public static void print(ScoreBoardDTO scoreBoardDTO) {
+    public static void print(BowlingGameDTO bowlingGameDTO) {
         System.out.println(HEADER);
+        bowlingGameDTO.getScoreBoardDTOs().forEach(OutputView::printScoreBoard);
+    }
+
+    public static void printScoreBoard(ScoreBoardDTO scoreBoardDTO) {
         System.out.println(MessageFormat.format(SCORE, toScoreArray(scoreBoardDTO)));
         System.out.println(MessageFormat.format(TOTAL_SCORE, toTotalScoreArray(scoreBoardDTO)));
     }
@@ -48,9 +55,8 @@ public class OutputView {
         }
     }
 
-    public static void printCurrentFrame(Index size) {
-        System.out.println();
-        System.out.print(MessageFormat.format(CURRENT_FRAME_TXT, size.getIndex()));
+    public static void printCurrentUser(UserDTO userDTO) {
+        System.out.print(MessageFormat.format(CURRENT_USER_TXT, userDTO.getName()));
     }
 
     private static String[] toTotalScoreArray(ScoreBoardDTO scoreBoardDTO) {
@@ -82,35 +88,11 @@ public class OutputView {
                     .map(OutputView::makeSymbol)
                     .collect(Collectors.joining(SCORE_DELIMITER));
         }
-
         return makeSymbol(((NormalFrame) frame).getState());
     }
 
     private static String makeSymbol(State state) {
-
-        String stateSymbol = null;
         Symbol symbol = Symbol.valueOf(state.getClass().getSimpleName().toUpperCase());
-
-        switch (symbol) {
-            case STRIKE:
-                stateSymbol = Symbol.STRIKE.getSymbol(state);
-                break;
-            case SPARE:
-                stateSymbol = Symbol.SPARE.getSymbol(state);
-                break;
-            case MISS:
-                stateSymbol = Symbol.MISS.getSymbol(state);
-                break;
-            case GUTTER:
-                stateSymbol = Symbol.ALL_GUTTER.getSymbol(state);
-                break;
-            case READY:
-                stateSymbol = Symbol.READY.getSymbol(state);
-                break;
-            case CONTINUE:
-                stateSymbol = Symbol.CONTINUE.getSymbol(state);
-                break;
-        }
-        return stateSymbol;
+        return symbol.getSymbol(state);
     }
 }

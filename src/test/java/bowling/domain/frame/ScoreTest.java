@@ -51,7 +51,7 @@ public class ScoreTest {
     }
 
     @Test
-    @DisplayName("Score 덧셈 시 추가 횟수가 없는 경우 기존 값을 리턴")
+    @DisplayName("Score 덧셈시 추가 횟수가 없는 경우 기존 값을 리턴")
     void score_add_remaining_zero_test() {
         assertThat(Score.of(10, Remaining.of(0)).add(Score.of(5))).isEqualTo(Score.of(10));
     }

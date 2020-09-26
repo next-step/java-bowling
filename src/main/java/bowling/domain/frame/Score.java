@@ -14,33 +14,35 @@ public class Score {
         this.remaining = remaining;
     }
 
-    public static Score of(int score, Remaining remaining) {
-        return new Score(score, remaining);
-    }
-
     public static Score of(int score) {
         return new Score(score, Remaining.ZERO);
     }
 
+    public static Score of(int score, Remaining remaining) {
+        return new Score(score, remaining);
+    }
+
+
     public static Score ofReady() {
         return new Score(MIN_SCORE, Remaining.MAXIMUM);
-    }
-
-    public static Score ofGutter() {
-        return new Score(MIN_SCORE, Remaining.ZERO);
-    }
-
-    public static Score ofSpare() {
-        return new Score(MAX_SCORE, Remaining.SPARE);
     }
 
     public static Score ofStrike() {
         return new Score(MAX_SCORE, Remaining.STRIKE);
     }
 
+    public static Score ofSpare() {
+        return new Score(MAX_SCORE, Remaining.SPARE);
+    }
+
+    public static Score ofGutter() {
+        return new Score(MIN_SCORE, Remaining.ZERO);
+    }
+
     public static Score ofPending() {
         return new Score(MIN_SCORE, Remaining.MAXIMUM);
     }
+
 
     public Score add(Score score) {
         return remaining.isZero() ? this : of(this.score + score.score, remaining.decrement());

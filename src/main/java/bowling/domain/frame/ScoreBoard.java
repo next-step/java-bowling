@@ -29,4 +29,12 @@ public class ScoreBoard {
         return frames.isGameOver();
     }
 
+    public Index getLastIndex() {
+        return frames.getLastIndex();
+    }
+
+    public Frame getFirstFrame() {
+        return this.frames.getFirstFrame();
+    }
+
 }
