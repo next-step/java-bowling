@@ -4,31 +4,23 @@ public class NormalFrame extends Frame {
 
     private static final int MAX_SWING_COUNT = 2;
 
+    private final Score score;
     private int swingCount;
-    private int sumOfScores;
 
     public NormalFrame() {
+        this.score = new Score();
         this.swingCount = 0;
-        this.sumOfScores = 0;
     }
 
     @Override
     public void swing(int score) {
-        verifyScoreRange(score);
-        sumOfScores += score;
         swingCount++;
+        this.score.swing(score, swingCount);
         addHistory(score);
-        verifySumOfScore();
     }
 
     @Override
     boolean isEndedFrame() {
-        return swingCount >= MAX_SWING_COUNT || sumOfScores == MAXIMUM_SCORE;
-    }
-
-    private void verifySumOfScore() {
-        if (sumOfScores > MAXIMUM_SCORE) {
-            throw new IllegalArgumentException(ERR_SUM_OF_SCORE_VALUE);
-        }
+        return swingCount >= MAX_SWING_COUNT || score.isFirstSwingStrike(swingCount);
     }
 }

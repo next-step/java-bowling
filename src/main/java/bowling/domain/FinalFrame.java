@@ -6,22 +6,26 @@ public class FinalFrame extends Frame {
     private static final int NORMAL_FRAME_MAX_SWING_COUNT = 2;
 
     private int swingCount;
-    private int sumOfScores;
+    private final Score score;
+
+    public FinalFrame() {
+        this.swingCount = 0;
+        this.score = new Score();
+    }
 
     @Override
     public void swing(int score) {
-        verifyScoreRange(score);
-        sumOfScores += score;
         swingCount++;
+        this.score.swing(score, swingCount);
         addHistory(score);
     }
 
     @Override
     public boolean isEndedFrame() {
-        return swingCount == MAX_SWING_COUNT ||
-                secondSwingCheck();
+        return swingCount == MAX_SWING_COUNT || secondSwingCheck();
     }
 
+    // TODO 수정 필요
     private boolean secondSwingCheck() {
 
         if (swingCount < NORMAL_FRAME_MAX_SWING_COUNT) {
