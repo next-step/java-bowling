@@ -26,4 +26,13 @@ class SpareTest {
         State secondState = Spare.of(prevPin, nextPin);
         assertThat(secondState.toString()).isEqualTo("/");
     }
+
+    @Test
+    @DisplayName("첫번째 볼링결과가 거터, 두번째 볼링결과가 스페어라면..")
+    void resultIsGutterAndSpare() {
+        Pin prevPin = Pin.bowl("0");
+        Pin nextPin = Pin.bowl("10");
+        State state = Spare.of(prevPin, nextPin);
+        assertThat(state.toString()).isEqualTo("-|/");
+    }
 }

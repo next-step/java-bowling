@@ -23,6 +23,9 @@ public class Spare extends Done {
 
     @Override
     public String toString() {
+        if (previousPins.isGutter()) {
+            return "-|/";
+        }
         return "/";
     }
 }

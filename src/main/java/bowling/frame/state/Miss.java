@@ -23,6 +23,15 @@ public class Miss extends Done {
 
     @Override
     public String toString() {
-        return previousPins + "|" + currentPins;
+        if (previousPins.isGutter() && currentPins.isGutter()) {
+            return "-|-";
+        }
+        if (previousPins.isGutter()) {
+            return "-|" + currentPins;
+        }
+        if (currentPins.isGutter()) {
+            return previousPins.toString() + "|-";
+        }
+        return previousPins.toString() + "|" + currentPins;
     }
 }

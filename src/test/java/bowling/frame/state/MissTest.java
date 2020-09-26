@@ -17,4 +17,28 @@ class MissTest {
         State state = Miss.of(prevPins, nextPins);
         assertThat(state.toString()).isEqualTo("4|3");
     }
+
+    @Test
+    @DisplayName("이전 볼링의 결과가 거터라면..")
+    void prevBowlIsGutter() {
+        Pin firstPins = Pin.bowl("0");
+        State secondState = Next.bowl(firstPins).bowl("5");
+        assertThat(secondState.toString()).isEqualTo("-|5");
+    }
+
+    @Test
+    @DisplayName("현재 볼링의 결과가 거터라면..")
+    void prevBowlMark() {
+        Pin firstPins = Pin.bowl("5");
+        State secondState = Next.bowl(firstPins).bowl("0");
+        assertThat(secondState.toString()).isEqualTo("5|-");
+    }
+
+    @Test
+    @DisplayName("모둔 볼링의 결과가 거터라면..")
+    void allBowlMarkIsGutter() {
+        Pin firstPins = Pin.bowl("0");
+        State secondState = Next.bowl(firstPins).bowl("0");
+        assertThat(secondState.toString()).isEqualTo("-|-");
+    }
 }
