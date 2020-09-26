@@ -7,18 +7,18 @@ import java.util.Objects;
 
 import static bowling.global.utils.CommonConstant.NUMBER_THREE;
 
-public class Player {
+public class Bowler {
 
     private String name;
 
-    private Player(String name) {
+    private Bowler(String name) {
         validatePlayerNameisNull(name);
         validatePlayerNameLength(name);
         this.name = name.toUpperCase();
     }
 
-    public static Player of(String name) {
-        return new Player(name);
+    public static Bowler of(String name) {
+        return new Bowler(name);
     }
 
     public String getName() {
@@ -41,8 +41,8 @@ public class Player {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return Objects.equals(name, player.name);
+        Bowler bowler = (Bowler) o;
+        return Objects.equals(name, bowler.name);
     }
 
     @Override

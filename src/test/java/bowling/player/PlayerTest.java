@@ -11,9 +11,9 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-class PlayerTest {
+class BowlerTest {
 
-    private Player player;
+    private Bowler bowler;
     private Frames frames;
 
     @BeforeEach
@@ -24,8 +24,8 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어 입력")
     void createPlayer() {
-        player = Player.of("PJS");
-        assertThat(player.getName()).isEqualTo("PJS");
+        bowler = Bowler.of("PJS");
+        assertThat(bowler.getName()).isEqualTo("PJS");
     }
 
     @Test
@@ -33,7 +33,7 @@ class PlayerTest {
     void validatePlayerNameLength() {
         assertThatExceptionOfType(NotMatchingPlayerNameException.class)
                 .isThrownBy(() -> {
-                    player = Player.of("ABCD");
+                    bowler = Bowler.of("ABCD");
                 });
     }
 
@@ -43,7 +43,7 @@ class PlayerTest {
     void validatePlayerNameIsNull(String name) {
         assertThatExceptionOfType(NotMatchingPlayerNameException.class)
                 .isThrownBy(() -> {
-                    player = Player.of(name);
+                    bowler = Bowler.of(name);
                 });
     }
 
