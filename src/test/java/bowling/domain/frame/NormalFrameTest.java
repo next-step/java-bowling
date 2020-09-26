@@ -49,11 +49,26 @@ class NormalFrameTest {
 
     @Test
     void testNormalScore() {
-        NormalFrame normalFrame = NormalFrame.firstFrame();
-        normalFrame.roll(3);
-        normalFrame.roll(2);
+        NormalFrame firstFrame = NormalFrame.firstFrame();
+        firstFrame.roll(3);
+        firstFrame.roll(2);
 
-        assertThat(normalFrame.getScore()).isEqualTo(5);
+        NormalFrame secondFrame = new NormalFrame(2, firstFrame);
+        secondFrame.roll(3);
+
+        assertThat(secondFrame.getScore()).isEqualTo(8);
+    }
+
+    @Test
+    void testSpareScore() {
+        NormalFrame firstFrame = NormalFrame.firstFrame();
+        firstFrame.roll(5);
+        firstFrame.roll(5);
+
+        NormalFrame secondFrame = new NormalFrame(2, firstFrame);
+        secondFrame.roll(3);
+
+        assertThat(secondFrame.getScore()).isEqualTo(8);
     }
 
 }

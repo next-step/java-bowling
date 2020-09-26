@@ -37,7 +37,7 @@ public class Pins {
 
     public boolean isPinReady(Frame frame) {
         if (frame instanceof NormalFrame) {
-            return !isAlreadyStrike() && !isRolledTwice();
+            return !isStrike() && !isRolledTwice();
         }
         if (!isRolledTwice() || getTotalPins() >= PINS_LIMIT) {
             return pins.size() < FINAL_FRAME_CAN_ROLL;
@@ -60,7 +60,7 @@ public class Pins {
         return PINS_LIMIT - getTotalPins();
     }
 
-    public boolean isAlreadyStrike() {
+    public boolean isStrike() {
         return pins.size() == FIRST_ROLL && this.getTotalPins() == PINS_LIMIT;
     }
 
