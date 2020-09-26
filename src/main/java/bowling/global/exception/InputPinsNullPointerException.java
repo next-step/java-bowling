@@ -1,8 +1,8 @@
 package bowling.global.exception;
 
-public class InputScoreNullPointerException extends NullPointerException {
+public class InputPinsNullPointerException extends NullPointerException {
 
-    public InputScoreNullPointerException(String message) {
+    public InputPinsNullPointerException(String message) {
         super(message);
     }
 }

@@ -1,8 +1,8 @@
 package bowling.global.exception;
 
-public class NotMatchingPlayerNameException extends IllegalArgumentException {
+public class NotMatchingBowlerNameException extends IllegalArgumentException {
 
-    public NotMatchingPlayerNameException(String message) {
+    public NotMatchingBowlerNameException(String message) {
         super(message);
     }
 

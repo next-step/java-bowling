@@ -33,7 +33,8 @@ class PinTest {
     @DisplayName("스페어")
     void isSpare() {
         pin = Pin.bowl("8");
-        assertThat(pin.isSpare(2)).isTrue();
+        Pin nextPins = Pin.bowl("2");
+        assertThat(pin.isSpare(nextPins)).isTrue();
     }
 
     @Test

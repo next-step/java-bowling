@@ -17,7 +17,7 @@ public class Pin {
 
     private Pin(int falledPins) {
         this.falledPins = falledPins;
-        validateOutofPinsRange();
+        validateOutofPinsRange(falledPins);
     }
 
     public static Pin bowl(String falledPins) {
@@ -29,8 +29,9 @@ public class Pin {
         return this.falledPins == PINS_MAX_VALUE;
     }
 
-    public boolean isSpare(int falledPins) {
-        return this.falledPins + falledPins == PINS_MAX_VALUE;
+    public boolean isSpare(Pin falledPins) {
+        int nextPins = falledPins.getFalledPins();
+        return this.falledPins + nextPins == PINS_MAX_VALUE;
     }
 
     public boolean isGutter() {
@@ -47,7 +48,7 @@ public class Pin {
         }
     }
 
-    private void validateOutofPinsRange() {
+    private void validateOutofPinsRange(int falledPins) {
         if (falledPins < PINS_MIN_VALUE || falledPins > PINS_MAX_VALUE) {
             throw new OutOfPinsRangeException(ExceptionMessage.INVALID_PITCH_RANGE);
         }
@@ -64,5 +65,10 @@ public class Pin {
     @Override
     public int hashCode() {
         return Objects.hash(falledPins);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(falledPins);
     }
 }

@@ -1,8 +1,8 @@
 package bowling.global.exception;
 
-public class OutOfScoreRangeException extends IndexOutOfBoundsException {
+public class OutOfPinsRangeException extends IndexOutOfBoundsException {
 
-    public OutOfScoreRangeException(String message) {
+    public OutOfPinsRangeException(String message) {
         super(message);
     }
 
