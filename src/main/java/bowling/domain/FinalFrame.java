@@ -13,7 +13,7 @@ public class FinalFrame extends Frame {
         verifyScoreRange(score);
         sumOfScores += score;
         swingCount++;
-        addHistory(score, sumOfScores);
+        addHistory(score);
     }
 
     @Override

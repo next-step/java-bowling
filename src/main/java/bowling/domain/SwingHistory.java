@@ -9,20 +9,21 @@ public class SwingHistory {
     private static final String ZERO_SCORE = "-";
     private static final String STRIKE = "X";
     private static final String SPARE = "/";
-    private static final int INT_STRIKE = 10;
-    private static final int INT_ZERO_SCORE = 0;
 
-    private final List<String> swingHistory;
+    private final List<Integer> originalScores;
+    private final List<String> swingHistories;
 
     public SwingHistory() {
-        this.swingHistory = new ArrayList<>();
+        this.originalScores = new ArrayList<>();
+        this.swingHistories = new ArrayList<>();
     }
 
-    public void addHistory(int score, int sumOfScores) {
-        swingHistory.add(scoreToString(score, sumOfScores));
+    public void addHistory(int score) {
+        originalScores.add(score);
+        swingHistories.add(scoreToString(score));
     }
 
-    private String scoreToString(int score, int sumOfScores) {
+    private String scoreToString(int score) {
 
         if (score == Frame.MINIMAL_SCORE) {
             return ZERO_SCORE;
@@ -32,30 +33,25 @@ public class SwingHistory {
             return STRIKE;
         }
 
-        if (sumOfScores == Frame.MAXIMUM_SCORE) {
+        if (sumOfScores() == Frame.MAXIMUM_SCORE) {
             return SPARE;
         }
 
         return String.valueOf(score);
     }
 
+    private int sumOfScores() {
+        return originalScores.stream()
+                             .mapToInt(Integer::intValue)
+                             .sum();
+    }
+
     public int firstSwing() {
-
-        String swing = swingHistory.get(0);
-
-        if (swing.equals(STRIKE)) {
-            return INT_STRIKE;
-        }
-
-        if (swing.equals(ZERO_SCORE)) {
-            return INT_ZERO_SCORE;
-        }
-
-        return Integer.parseInt(swing);
+        return originalScores.get(0);
     }
 
     @Override
     public String toString() {
-        return String.join(DELIMITER, swingHistory);
+        return String.join(DELIMITER, swingHistories);
     }
 }

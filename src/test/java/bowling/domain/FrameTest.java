@@ -11,7 +11,7 @@ public class FrameTest {
         return new Frame() {
             @Override
             void swing(int score) {
-                addHistory(score, 0);
+                addHistory(score);
             }
 
             @Override

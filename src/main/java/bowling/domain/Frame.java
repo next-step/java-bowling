@@ -18,8 +18,8 @@ public abstract class Frame {
 
     abstract boolean isEndedFrame();
 
-    protected void addHistory(int score, int sumOfScores) {
-        swingHistory.addHistory(score, sumOfScores);
+    protected void addHistory(int score) {
+        swingHistory.addHistory(score);
     }
 
     public String swingHistoryToString() {

@@ -15,7 +15,7 @@ public class SwingHistoryTest {
     @ParameterizedTest
     void toStringTest(int score, String scoreStr) {
         SwingHistory swingHistory = new SwingHistory();
-        swingHistory.addHistory(score, 0);
+        swingHistory.addHistory(score);
 
         assertEquals(swingHistory.toString(), scoreStr);
     }
@@ -24,8 +24,8 @@ public class SwingHistoryTest {
     @Test
     void multiHistoryToStringTest() {
         SwingHistory swingHistory = new SwingHistory();
-        swingHistory.addHistory(0, 0);
-        swingHistory.addHistory(10, 0);
+        swingHistory.addHistory(0);
+        swingHistory.addHistory(10);
 
         String result = swingHistory.toString();
 
@@ -38,7 +38,7 @@ public class SwingHistoryTest {
     @ParameterizedTest
     void firstSwingTest(int score) {
         SwingHistory swingHistory = new SwingHistory();
-        swingHistory.addHistory(score, 0);
+        swingHistory.addHistory(score);
         assertEquals(swingHistory.firstSwing(), score);
     }
 }
