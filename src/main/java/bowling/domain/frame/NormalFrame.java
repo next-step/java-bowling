@@ -32,7 +32,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean canRoll() {
-        return pins.isPinReady();
+        return pins.isPinReady(this);
     }
 
     @Override
