@@ -13,10 +13,17 @@ public class NormalFrame implements Frame {
 
     private Pins pins;
     private int index;
+    private Frame previousFrame;
 
     public NormalFrame(final int index) {
         this.pins = new Pins();
         this.index = index;
+    }
+
+    public NormalFrame(final int index, final Frame frame) {
+        this.pins = new Pins();
+        this.index = index;
+        this.previousFrame = frame;
     }
 
     public static NormalFrame firstFrame() {
@@ -42,7 +49,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public int getTotal() {
-        return this.pins.getTotalPins();
+        return pins.getTotalPins();
     }
 
     @Override
@@ -75,8 +82,12 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public String getScore() {
+    public String getStringScore() {
         return ScoreConverter.convert(this);
+    }
+
+    public int getScore() {
+        return previousFrame == null ? getTotal() : getTotal() + previousFrame.getTotal();
     }
 
 }

@@ -18,7 +18,7 @@ public interface Frame {
 
     Pins getPins();
 
-    String getScore();
+    String getStringScore();
 
     boolean isGameOver();
 }

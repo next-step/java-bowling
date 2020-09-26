@@ -55,7 +55,7 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public String getScore() {
+    public String getStringScore() {
         return ScoreConverter.convert(this);
     }
 }

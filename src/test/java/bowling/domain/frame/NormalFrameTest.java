@@ -47,4 +47,13 @@ class NormalFrameTest {
 
     }
 
+    @Test
+    void testNormalScore() {
+        NormalFrame normalFrame = NormalFrame.firstFrame();
+        normalFrame.roll(3);
+        normalFrame.roll(2);
+
+        assertThat(normalFrame.getScore()).isEqualTo(5);
+    }
+
 }
