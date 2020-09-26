@@ -1,6 +1,6 @@
-package bowling.player;
+package bowling.bowler;
 
-import bowling.global.exception.NotMatchingPlayerNameException;
+import bowling.global.exception.NotMatchingBowlerNameException;
 import bowling.global.utils.ExceptionMessage;
 
 import java.util.Objects;
@@ -27,13 +27,13 @@ public class Bowler {
 
     private void validatePlayerNameisNull(String name) {
         if (name == null || name.trim().isEmpty()) {
-            throw new NotMatchingPlayerNameException(ExceptionMessage.INVALID_PLAYER_NAME_IS_NULL);
+            throw new NotMatchingBowlerNameException(ExceptionMessage.INVALID_PLAYER_NAME_IS_NULL);
         }
     }
 
     private void validatePlayerNameLength(String name) {
         if (name.length() > NUMBER_THREE) {
-            throw new NotMatchingPlayerNameException(ExceptionMessage.INVALID_PLAYER_NAME_LENGTH);
+            throw new NotMatchingBowlerNameException(ExceptionMessage.INVALID_PLAYER_NAME_LENGTH);
         }
     }
 

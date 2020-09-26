@@ -1,8 +1,6 @@
-package bowling.player;
+package bowling.bowler;
 
-import bowling.frame.Frames;
-import bowling.global.exception.NotMatchingPlayerNameException;
-import org.junit.jupiter.api.BeforeEach;
+import bowling.global.exception.NotMatchingBowlerNameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,24 +12,18 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class BowlerTest {
 
     private Bowler bowler;
-    private Frames frames;
-
-    @BeforeEach
-    void setUp() {
-        frames = Frames.init();
-    }
 
     @Test
     @DisplayName("플레이어 입력")
-    void createPlayer() {
+    void createBowler() {
         bowler = Bowler.of("PJS");
         assertThat(bowler.getName()).isEqualTo("PJS");
     }
 
     @Test
     @DisplayName("플레이어 이름이 3글자가 넘어가면 Exception 발생")
-    void validatePlayerNameLength() {
-        assertThatExceptionOfType(NotMatchingPlayerNameException.class)
+    void validateBowlerNameLength() {
+        assertThatExceptionOfType(NotMatchingBowlerNameException.class)
                 .isThrownBy(() -> {
                     bowler = Bowler.of("ABCD");
                 });
@@ -40,11 +32,9 @@ class BowlerTest {
     @ParameterizedTest
     @DisplayName("플레이어 이름이 null일 경우 Exception 발생")
     @NullAndEmptySource
-    void validatePlayerNameIsNull(String name) {
-        assertThatExceptionOfType(NotMatchingPlayerNameException.class)
-                .isThrownBy(() -> {
-                    bowler = Bowler.of(name);
-                });
+    void validateBowlerNameIsNull(String name) {
+        assertThatExceptionOfType(NotMatchingBowlerNameException.class)
+                .isThrownBy(() -> bowler = Bowler.of(name));
     }
 
 }
