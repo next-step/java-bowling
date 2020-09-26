@@ -16,8 +16,12 @@ public class BowlingGame {
         return player.getName();
     }
 
-    public List<String> getSwingInfo() {
-        return frames.getSwingHistory();
+    public List<String> getSwingHistories() {
+        return frames.getSwingHistories();
+    }
+
+    public List<String> getScores() {
+        return frames.getScores();
     }
 
     public void swing(int score) {

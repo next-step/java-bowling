@@ -49,13 +49,13 @@ public class FramesTest {
 
         Frames frames = new Frames();
 
-        List<String> swingHistory = frames.getSwingHistory();
+        List<String> swingHistory = frames.getSwingHistories();
         for (String history : swingHistory) {
             assertTrue(history.isEmpty());
         }
 
         frames.swing(10);
-        swingHistory = frames.getSwingHistory();
+        swingHistory = frames.getSwingHistories();
         assertEquals(swingHistory.get(0), "X");
         for (int i = 1; i < 10; i++) {
             assertTrue(swingHistory.get(i).isEmpty());

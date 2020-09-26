@@ -2,6 +2,7 @@ package bowling.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -36,7 +37,7 @@ public class Frames {
         return frames.get(frames.size() - LAST_INDEX_GAP);
     }
 
-    public List<String> getSwingHistory() {
+    public List<String> getSwingHistories() {
 
         List<String> swingHistory = frames.stream()
                                           .limit(FINAL_FRAME_NO)
@@ -52,5 +53,11 @@ public class Frames {
 
     public boolean isEnd() {
         return frames.size() > FINAL_FRAME_NO;
+    }
+
+    public List<String> getScores() {
+        return Stream.generate(() -> "")
+                     .limit(10)
+                     .collect(toList());
     }
 }

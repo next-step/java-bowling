@@ -16,6 +16,8 @@ public class BowlingController {
     private static final List<String> ROUND =
             Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10");
 
+    private static final String BLANK = "";
+
     private static final String REPLACE_TARGET = MSG_INPUT_SWING.substring(0, 2);
 
     private final Input input;
@@ -35,7 +37,8 @@ public class BowlingController {
 
     private void printBoard() {
         output.printRow(TAB_NAME, ROUND);
-        output.printRow(bowlingGame.getName(), bowlingGame.getSwingInfo());
+        output.printRow(bowlingGame.getName(), bowlingGame.getSwingHistories());
+        output.printRow(BLANK, bowlingGame.getScores());
     }
 
     public void playGame() {
