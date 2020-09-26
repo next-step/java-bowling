@@ -10,7 +10,7 @@ public class FinalFrame extends Frame {
 
     public FinalFrame() {
         this.swingCount = 0;
-        this.score = new Score();
+        this.score = new Score(false);
     }
 
     @Override
@@ -25,7 +25,6 @@ public class FinalFrame extends Frame {
         return swingCount == MAX_SWING_COUNT || secondSwingCheck();
     }
 
-    // TODO 수정 필요
     private boolean secondSwingCheck() {
 
         if (swingCount < NORMAL_FRAME_MAX_SWING_COUNT) {
@@ -40,10 +39,10 @@ public class FinalFrame extends Frame {
     }
 
     private boolean doubleStrike() {
-        return sumOfScores == MAXIMUM_SCORE * 2;
+        return score.isDoubleStrike(swingCount);
     }
 
     private boolean isSpare() {
-        return firstSwing() != MAXIMUM_SCORE && sumOfScores == MAXIMUM_SCORE;
+        return firstSwing() != MAXIMUM_SCORE && score.isSpare(swingCount);
     }
 }
