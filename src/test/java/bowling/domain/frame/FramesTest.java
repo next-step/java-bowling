@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,22 +44,34 @@ public class FramesTest {
         assertTrue(frames.isEnd());
     }
 
-    @DisplayName("getSwingHistory 값 테스트")
+    @DisplayName("getSwingRecords 값 테스트")
     @Test
-    void swingHistoryValueTest() {
+    void swingRecordsValueTest() {
 
         Frames frames = new Frames();
 
-        List<String> swingHistory = frames.getSwingHistories();
-        for (String history : swingHistory) {
-            assertTrue(history.isEmpty());
+        List<String> swingRecords = frames.getSwingRecords();
+        for (String record : swingRecords) {
+            assertTrue(record.isEmpty());
         }
 
         frames.swing(10);
-        swingHistory = frames.getSwingHistories();
-        assertEquals(swingHistory.get(0), "X");
+        swingRecords = frames.getSwingRecords();
+        assertEquals(swingRecords.get(0), "X");
         for (int i = 1; i < 10; i++) {
-            assertTrue(swingHistory.get(i).isEmpty());
+            assertTrue(swingRecords.get(i).isEmpty());
+        }
+    }
+
+    @DisplayName("getSwingRecords 값 테스트")
+    @Test
+    void scoresValueTest() {
+
+        Frames frames = new Frames();
+
+        List<String> swingRecords = frames.getScores();
+        for (String record : swingRecords) {
+            assertTrue(record.isEmpty());
         }
     }
 }

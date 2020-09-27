@@ -37,7 +37,7 @@ public class BowlingController {
 
     private void printBoard() {
         output.printRow(TAB_NAME, ROUND);
-        output.printRow(bowlingGame.getName(), bowlingGame.getSwingHistories());
+        output.printRow(bowlingGame.getName(), bowlingGame.getSwingRecords());
         output.printRow(BLANK, bowlingGame.getScores());
     }
 

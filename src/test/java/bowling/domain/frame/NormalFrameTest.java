@@ -1,5 +1,8 @@
-package bowling.domain;
+package bowling.domain.frame;
 
+import bowling.domain.frame.AbstractFrame;
+import bowling.domain.frame.FrameFactory;
+import bowling.domain.frame.NormalFrame;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +19,7 @@ public class NormalFrameTest {
     @Test
     void frameInstanceCreate() {
         NormalFrame frame = FrameFactory.first();
-        assertThat(FrameFactory.next(frame, 1)).isInstanceOf(Frame.class);
+        assertThat(FrameFactory.next(frame, 1)).isInstanceOf(AbstractFrame.class);
     }
 
     @DisplayName("투구 점수가 범위를 벗어난 경우")

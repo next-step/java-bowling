@@ -3,7 +3,7 @@ package bowling.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SwingHistory {
+public class SwingRecord {
 
     private static final String DELIMITER = "|";
     private static final String ZERO_SCORE = "-";
@@ -11,29 +11,29 @@ public class SwingHistory {
     private static final String SPARE = "/";
 
     private final List<Integer> originalScores;
-    private final List<String> swingHistories;
+    private final List<String> swingRecords;
 
-    public SwingHistory() {
+    public SwingRecord() {
         this.originalScores = new ArrayList<>();
-        this.swingHistories = new ArrayList<>();
+        this.swingRecords = new ArrayList<>();
     }
 
     public void addHistory(int score) {
         originalScores.add(score);
-        swingHistories.add(scoreToString(score));
+        swingRecords.add(scoreToString(score));
     }
 
     private String scoreToString(int score) {
 
-        if (score == Frame.MINIMAL_SCORE) {
+        if (score == Swing.MINIMAL_SCORE) {
             return ZERO_SCORE;
         }
 
-        if (score == Frame.MAXIMUM_SCORE) {
+        if (score == Swing.MAXIMUM_SCORE) {
             return STRIKE;
         }
 
-        if (sumOfScores() == Frame.MAXIMUM_SCORE) {
+        if (sumOfScores() == Swing.MAXIMUM_SCORE) {
             return SPARE;
         }
 
@@ -52,6 +52,6 @@ public class SwingHistory {
 
     @Override
     public String toString() {
-        return String.join(DELIMITER, swingHistories);
+        return String.join(DELIMITER, swingRecords);
     }
 }

@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ public class FrameFactoryTest {
     @Test
     void factoryTest() {
 
-        Frame first = FrameFactory.first();
+        AbstractFrame first = FrameFactory.first();
 
         assertThat(first).isInstanceOf(NormalFrame.class);
         assertThat(FrameFactory.last()).isInstanceOf(LastFrame.class);

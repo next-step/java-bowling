@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.frame.Frames;
+
 import java.util.List;
 
 public class BowlingGame {
@@ -16,8 +18,8 @@ public class BowlingGame {
         return player.getName();
     }
 
-    public List<String> getSwingHistories() {
-        return frames.getSwingHistories();
+    public List<String> getSwingRecords() {
+        return frames.getSwingRecords();
     }
 
     public List<String> getScores() {
