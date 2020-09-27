@@ -15,7 +15,13 @@ public abstract class Frame {
 
     public abstract boolean isEndedFrame();
 
-    public abstract String getScore();
+    public abstract int getScore();
+
+    public abstract boolean isSpare();
+
+    public abstract boolean isStrike();
+
+    public abstract boolean isNotSwing();
 
     protected void addHistory(int score) {
         swingHistory.addHistory(score);

@@ -1,6 +1,6 @@
 package bowling.domain;
 
-public class FinalFrame extends Frame {
+public class LastFrame extends Frame {
 
     private static final int MAX_SWING_COUNT = 3;
     private static final int NORMAL_FRAME_MAX_SWING_COUNT = 2;
@@ -8,7 +8,7 @@ public class FinalFrame extends Frame {
     private int swingCount;
     private final Score score;
 
-    public FinalFrame() {
+    public LastFrame() {
         this.swingCount = 0;
         this.score = new Score(false);
     }
@@ -26,8 +26,8 @@ public class FinalFrame extends Frame {
     }
 
     @Override
-    public String getScore() {
-        return ""; // TODO 로직 작성
+    public int getScore() {
+        return score.getValue();
     }
 
     private boolean secondSwingCheck() {
@@ -40,14 +40,29 @@ public class FinalFrame extends Frame {
             return false;
         }
 
-        return !isSpare();
+        return isNotSpare();
     }
 
     private boolean doubleStrike() {
         return score.isDoubleStrike(swingCount);
     }
 
-    private boolean isSpare() {
-        return firstSwing() != MAXIMUM_SCORE && score.isSpare(swingCount);
+    private boolean isNotSpare() {
+        return !(firstSwing() != MAXIMUM_SCORE && score.isSpare(swingCount));
+    }
+
+    @Override
+    public boolean isSpare() {
+        return false;
+    }
+
+    @Override
+    public boolean isStrike() {
+        return false;
+    }
+
+    @Override
+    public boolean isNotSwing() {
+        return swingCount == 0;
     }
 }

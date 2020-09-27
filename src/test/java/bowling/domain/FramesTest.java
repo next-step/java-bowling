@@ -21,6 +21,7 @@ public class FramesTest {
     @Test
     void strikeSwingCase() {
         Frames frames = new Frames();
+        assertEquals(frames.getRound(), 1);
         frames.swing(10);
         assertEquals(frames.getRound(), 2);
     }

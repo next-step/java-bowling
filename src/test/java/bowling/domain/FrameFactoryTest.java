@@ -12,12 +12,12 @@ public class FrameFactoryTest {
         Frame first = FrameFactory.first();
 
         assertThat(first).isInstanceOf(NormalFrame.class);
-        assertThat(FrameFactory.last()).isInstanceOf(FinalFrame.class);
+        assertThat(FrameFactory.last()).isInstanceOf(LastFrame.class);
 
         for (int i = 0; i < 9; i++) {
             assertThat(FrameFactory.next(first, i)).isInstanceOf(NormalFrame.class);
         }
 
-        assertThat(FrameFactory.next(first, 9)).isInstanceOf(FinalFrame.class);
+        assertThat(FrameFactory.next(first, 9)).isInstanceOf(LastFrame.class);
     }
 }

@@ -10,12 +10,12 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class FinalFrameTest {
+public class LastFrameTest {
 
     @DisplayName("초기 두 번이 strike면 3번 투구 가능")
     @Test
     void doubleStrikeCase() {
-        FinalFrame frame = new FinalFrame();
+        LastFrame frame = new LastFrame();
         frame.swing(10);
         frame.swing(10);
         assertFalse(frame.isEndedFrame());
@@ -25,7 +25,7 @@ public class FinalFrameTest {
     @CsvSource(value = {"1,9", "2,8", "3,7"})
     @ParameterizedTest
     void secondSwingIsSpareCase(int score1, int score2) {
-        FinalFrame frame = new FinalFrame();
+        LastFrame frame = new LastFrame();
         frame.swing(score1);
         frame.swing(score2);
         assertFalse(frame.isEndedFrame());
@@ -37,7 +37,7 @@ public class FinalFrameTest {
         Random random = new Random();
         int score = random.nextInt(10);
 
-        FinalFrame frame = new FinalFrame();
+        LastFrame frame = new LastFrame();
         frame.swing(score);
         assertFalse(frame.isEndedFrame());
     }

@@ -11,13 +11,13 @@ public class FrameFactory {
     public static Frame next(Frame frame, int currentRound) {
 
         if (currentRound == BEFORE_FINAL_FRAME) {
-            return new FinalFrame();
+            return new LastFrame();
         }
 
         return new NormalFrame();
     }
 
-    public static FinalFrame last() {
-        return new FinalFrame();
+    public static LastFrame last() {
+        return new LastFrame();
     }
 }

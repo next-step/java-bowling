@@ -9,8 +9,8 @@ public class Score {
     private static final int FIRST_SWING = 1;
     private static final int SECOND_SWING = 2;
 
-    protected static final String ERR_SCORE_RANGE = "0부터 10까지의 값만 입력할 수 있습니다.";
-    protected static final String ERR_SUM_OF_SCORE_VALUE = "한 프레임 당 투구 점수는 최대 10점입니다.";
+    private static final String ERR_SCORE_RANGE = "0부터 10까지의 값만 입력할 수 있습니다.";
+    private static final String ERR_SUM_OF_SCORE_VALUE = "한 프레임 당 투구 점수는 최대 10점입니다.";
 
     private int score;
     private final boolean isNormalFrame;

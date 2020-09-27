@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FrameTest {
 
-    private Frame frame() {
+    private Frame mockFrame() {
         return new Frame() {
             @Override
             public void swing(int score) {
@@ -20,15 +20,30 @@ public class FrameTest {
             }
 
             @Override
-            public String getScore() {
-                return "";
+            public int getScore() {
+                return 0;
+            }
+
+            @Override
+            public boolean isSpare() {
+                return false;
+            }
+
+            @Override
+            public boolean isStrike() {
+                return false;
+            }
+
+            @Override
+            public boolean isNotSwing() {
+                return false;
             }
         };
     }
 
     @Test
     void swingHistoryToStringTest() {
-        Frame frame = frame();
+        Frame frame = mockFrame();
         frame.swing(0);
         assertThat(frame.swingHistoryToString()).isInstanceOf(String.class);
         assertEquals(frame.firstSwing(), 0);

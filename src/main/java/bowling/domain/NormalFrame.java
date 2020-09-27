@@ -4,12 +4,12 @@ public class NormalFrame extends Frame {
 
     private static final int MAX_SWING_COUNT = 2;
 
-    private final Score score;
     private int swingCount;
+    private final Score score;
 
     public NormalFrame() {
-        this.score = new Score();
         this.swingCount = 0;
+        this.score = new Score();
     }
 
     @Override
@@ -25,7 +25,22 @@ public class NormalFrame extends Frame {
     }
 
     @Override
-    public String getScore() {
-        return ""; // TODO 로직 작성
+    public int getScore() {
+        return score.getValue();
+    }
+
+    @Override
+    public boolean isSpare() {
+        return score.isSpare(swingCount);
+    }
+
+    @Override
+    public boolean isStrike() {
+        return score.isFirstSwingStrike(swingCount);
+    }
+
+    @Override
+    public boolean isNotSwing() {
+        return swingCount == 0;
     }
 }
