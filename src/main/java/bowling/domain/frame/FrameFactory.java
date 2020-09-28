@@ -8,7 +8,7 @@ public class FrameFactory {
         return new NormalFrame();
     }
 
-    public static Frame next(Frame frame, int currentRound) {
+    public static Frame next(int currentRound) {
 
         if (currentRound == BEFORE_FINAL_FRAME) {
             return new LastFrame();

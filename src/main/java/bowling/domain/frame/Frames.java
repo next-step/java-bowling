@@ -36,7 +36,7 @@ public class Frames {
         checkFrameNeedUpdate(frame);
 
         if (frame.isEndedFrame() && frames.size() <= FINAL_FRAME_NO) {
-            frames.add(FrameFactory.next(frame, frames.size()));
+            frames.add(FrameFactory.next(frames.size()));
         }
     }
 
