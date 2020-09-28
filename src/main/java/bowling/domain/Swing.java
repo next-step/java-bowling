@@ -50,4 +50,8 @@ public class Swing {
     public boolean isLastFrameEnd() {
         return (swingCount == SECOND_SWING && score < MAXIMUM_SCORE) || swingCount >= THIRD_SWING;
     }
+
+    public void updateScore(int score) {
+        this.score += score;
+    }
 }

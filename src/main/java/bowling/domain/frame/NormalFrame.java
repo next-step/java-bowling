@@ -40,4 +40,13 @@ public class NormalFrame extends AbstractFrame {
 
         return Swing.DUMMY_SCORE;
     }
+
+    public boolean needUpdate() {
+        return state.needUpdate();
+    }
+
+    public void updateScore(int score) {
+        super.updateScore(score);
+        state = FrameState.afterUpdateState(state);
+    }
 }

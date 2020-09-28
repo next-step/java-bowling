@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.ScoreUpdater;
 import bowling.domain.Swing;
 
 import java.util.ArrayList;
@@ -15,10 +16,12 @@ public class Frames {
     private static final String BLANK = "";
 
     private final List<Frame> frames;
+    private final ScoreUpdater updater;
 
     public Frames() {
         frames = new ArrayList<>();
         frames.add(FrameFactory.first());
+        updater = new ScoreUpdater();
     }
 
     public int getRound() {
@@ -29,6 +32,8 @@ public class Frames {
 
         Frame frame = lastFrame();
         frame.swing(score);
+        updateFrameScore(score);
+        checkFrameNeedUpdate(frame);
 
         if (frame.isEndedFrame() && frames.size() <= FINAL_FRAME_NO) {
             frames.add(FrameFactory.next(frame, frames.size()));
@@ -37,6 +42,14 @@ public class Frames {
 
     private Frame lastFrame() {
         return frames.get(frames.size() - LAST_INDEX_GAP);
+    }
+
+    private void updateFrameScore(int score) {
+        updater.update(score);
+    }
+
+    private void checkFrameNeedUpdate(Frame frame) {
+        updater.checkFrameNeedUpdate(frame);
     }
 
     public List<String> getSwingRecords() {

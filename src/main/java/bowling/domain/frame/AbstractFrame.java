@@ -27,4 +27,8 @@ public abstract class AbstractFrame implements Frame {
     Swing getSwing() {
         return swing;
     }
+
+    void updateScore(int score) {
+        swing.updateScore(score);
+    }
 }

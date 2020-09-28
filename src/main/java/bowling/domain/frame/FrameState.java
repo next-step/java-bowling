@@ -5,9 +5,9 @@ import bowling.domain.Swing;
 public enum FrameState {
 
     RUNNING,
-    STRIKE,
+    END,
     SPARE,
-    END;
+    STRIKE;
 
     public static FrameState forNormalFrame(Swing swing) {
 
@@ -36,10 +36,23 @@ public enum FrameState {
     }
 
     public boolean isNormalFrameEndState() {
-        return this == FrameState.STRIKE || this == FrameState.SPARE || this == FrameState.END;
+        return this != FrameState.RUNNING;
     }
 
     public boolean isEndState() {
         return this == FrameState.END;
+    }
+
+    public boolean needUpdate() {
+        return this == FrameState.STRIKE || this == FrameState.SPARE;
+    }
+
+    public static FrameState afterUpdateState(FrameState state) {
+
+        if (state == FrameState.STRIKE) {
+            return FrameState.SPARE;
+        }
+
+        return FrameState.END;
     }
 }
