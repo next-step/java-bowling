@@ -63,15 +63,25 @@ public class FramesTest {
         }
     }
 
-    @DisplayName("getSwingRecords 값 테스트")
+    @DisplayName("score 값 테스트")
     @Test
     void scoresValueTest() {
 
         Frames frames = new Frames();
 
-        List<String> swingRecords = frames.getScores();
-        for (String record : swingRecords) {
-            assertTrue(record.isEmpty());
+        List<String> scores = frames.getScores();
+        for (String score : scores) {
+            assertEquals(score, "");
+        }
+
+        // 퍼펙트 게임 스코어
+        for (int i = 0; i < 12; i++) {
+            frames.swing(10);
+        }
+
+        scores = frames.getScores();
+        for (String score : scores) {
+            assertEquals(score, "30");
         }
     }
 }

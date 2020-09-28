@@ -20,15 +20,17 @@ public class ScoreUpdater {
             return;
         }
 
-        NormalFrame normalFrame = (NormalFrame) frame;
-
-        if (normalFrame.needUpdate()) {
-            queue.add(frame);
-        }
+        enqueue(frame);
     }
 
     private boolean isNotNormalFrame(Frame frame) {
         return !(frame instanceof NormalFrame);
+    }
+
+    private void enqueue(Frame frame) {
+        if (((NormalFrame) frame).needUpdate()) {
+            queue.add(frame);
+        }
     }
 
     public void update(int score) {
@@ -41,9 +43,13 @@ public class ScoreUpdater {
             NormalFrame frame = (NormalFrame) queue.poll();
             frame.updateScore(score);
 
-            if (frame.needUpdate()) {
-                queue.add(frame);
-            }
+            checkNeedMoreUpdateFrame(frame);
+        }
+    }
+
+    private void checkNeedMoreUpdateFrame(NormalFrame frame) {
+        if (frame.needUpdate()) {
+            queue.add(frame);
         }
     }
 }
