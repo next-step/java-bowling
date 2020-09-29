@@ -62,6 +62,15 @@ public class FinalFrame implements Frame {
         return this.score;
     }
 
+    public boolean hasScore() {
+        return isEnd();
+    }
+
+    @Override
+    public void calculateScore(int index, int count) {
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

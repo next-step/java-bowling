@@ -75,4 +75,27 @@ public class FinalFrameTest {
         assertThatThrownBy(() -> frame.pitch(10))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"10, 10, 10, 30, 0", "10, 0, 2, 12, 0"})
+    void getScore(int first, int second, int third, int expectScore, int expectRemain) {
+        FinalFrame frame = new FinalFrame();
+        frame.pitch(first);
+        frame.pitch(second);
+        frame.pitch(third);
+
+        assertThat(frame.getTotalScore()).isEqualTo(new Score(expectScore, expectRemain));
+        assertThat(frame.hasScore()).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"5, 5, 10, false", "1, 2, 3, true"})
+    void getScore_notEnd(int first, int second, int expectScore, boolean expectHasScore) {
+        FinalFrame frame = new FinalFrame();
+        frame.pitch(first);
+        frame.pitch(second);
+
+        assertThat(frame.getTotalScore()).isEqualTo(new Score(expectScore, 0));
+        assertThat(frame.hasScore()).isEqualTo(expectHasScore);
+    }
 }

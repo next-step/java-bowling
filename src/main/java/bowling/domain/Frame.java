@@ -13,4 +13,8 @@ public interface Frame {
     List<String> getScore();
 
     Score getTotalScore();
+
+    void calculateScore(int index, int count);
+
+    boolean hasScore();
 }

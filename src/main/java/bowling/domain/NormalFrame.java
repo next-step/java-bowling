@@ -54,10 +54,23 @@ public class NormalFrame implements Frame {
         }
 
         pins.pitch(count);
-        calculateScore();
+        createScore();
     }
 
-    private void calculateScore() {
+    @Override
+    public void calculateScore(int index, int count) {
+        if(this.index == index || score.isEndCalculate()) {
+            return;
+        }
+
+        score.addScore(count);
+    }
+
+    public boolean hasScore() {
+        return score.isEndCalculate();
+    }
+
+    private void createScore() {
         if (!this.isEnd()) {
             return;
         }

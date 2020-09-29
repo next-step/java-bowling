@@ -57,12 +57,12 @@ public class Pins {
     }
 
     public Score getTotalScore() {
-        if (getLastPin().getSymbol().equals(ScoreSymbol.STRIKE)) {
+        if (ScoreSymbol.STRIKE.equals(getLastPin().getSymbol())) {
             return new Score(10, 2);
         }
 
-        if (getLastPin().getSymbol().equals(ScoreSymbol.SPARE)) {
-            return new Score(10, 2);
+        if (ScoreSymbol.SPARE.equals(getLastPin().getSymbol())) {
+            return new Score(10, 1);
         }
 
         return new Score(getSum(), 0);

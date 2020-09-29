@@ -26,6 +26,13 @@ public class Frames {
         this.makeFrame();
         Frame frame = findFrame();
         frame.pitch(count);
+        calculateScore(count);
+    }
+
+    private void calculateScore(int count) {
+        for (Frame frame : frames) {
+            frame.calculateScore(frames.size() - 1, count);
+        }
     }
 
     private void makeFrame() {
@@ -75,6 +82,7 @@ public class Frames {
 
     public List<Integer> getScores() {
         return frames.stream()
+                .filter(Frame::hasScore)
                 .map(Frame::getTotalScore)
                 .map(Score::getScore)
                 .collect(Collectors.toList());

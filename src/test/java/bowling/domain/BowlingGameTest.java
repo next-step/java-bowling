@@ -50,11 +50,12 @@ public class BowlingGameTest {
 
     @Test
     void getScore() {
+        bowlingGame.pitch(10);
         bowlingGame.pitch(3);
         bowlingGame.pitch(2);
         bowlingGame.pitch(1);
         bowlingGame.pitch(1);
 
-        assertThat(bowlingGame.getScore()).containsExactly(5, 2);
+        assertThat(bowlingGame.getScore()).containsExactly(15, 5, 2);
     }
 }

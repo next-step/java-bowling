@@ -3,6 +3,8 @@ package bowling.domain;
 import bowling.exception.GameOverException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -83,13 +85,21 @@ public class NormalFrameTest {
                 .isInstanceOf(GameOverException.class);
     }
 
-    @Test
-    void getScore() {
+    @ParameterizedTest
+    @CsvSource(value = {"5, 5, 10, 1", "2, 1, 3, 0"})
+    void getScore(int first, int second, int expectScore, int expectRemain) {
         NormalFrame frame = NormalFrame.firstFrame();
-        frame.pitch(2);
-        frame.pitch(1);
+        frame.pitch(first);
+        frame.pitch(second);
 
-        assertThat(frame.getTotalScore()).isEqualTo(new Score(3, 0));
+        assertThat(frame.getTotalScore()).isEqualTo(new Score(expectScore, expectRemain));
+    }
 
+    @Test
+    void getScore_Strike() {
+        NormalFrame frame = NormalFrame.firstFrame();
+        frame.pitch(10);
+
+        assertThat(frame.getTotalScore()).isEqualTo(new Score(10, 2));
     }
 }

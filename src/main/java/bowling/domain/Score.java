@@ -11,8 +11,17 @@ public class Score {
         this.remain = remain;
     }
 
+    public void addScore(int count) {
+        this.remain--;
+        this.score += count;
+    }
+
     public int getScore() {
         return score;
+    }
+
+    public boolean isEndCalculate() {
+        return  remain == 0;
     }
 
     @Override
