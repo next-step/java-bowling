@@ -10,9 +10,9 @@ public interface Frame {
 
     Frame next();
 
-    List<String> getScore();
+    List<String> getFallenPins();
 
-    Score getTotalScore();
+    Score getScore();
 
     void calculateScore(int index, int count);
 

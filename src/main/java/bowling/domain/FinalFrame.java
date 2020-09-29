@@ -24,10 +24,10 @@ public class FinalFrame implements Frame {
         }
 
         pins.pitch(count);
-        calculateScore();
+        createScore();
     }
 
-    private void calculateScore() {
+    private void createScore() {
         this.score = new Score(pins.getSum(), 0);
     }
 
@@ -53,12 +53,12 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<String> getScore() {
-        return pins.getScore();
+    public List<String> getFallenPins() {
+        return pins.getFallenPins();
     }
 
     @Override
-    public Score getTotalScore() {
+    public Score getScore() {
         return this.score;
     }
 

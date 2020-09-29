@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Frames {
@@ -24,14 +23,14 @@ public class Frames {
         }
 
         this.makeFrame();
-        Frame frame = findFrame();
-        frame.pitch(count);
+        getLastFrame().pitch(count);
         calculateScore(count);
     }
 
     private void calculateScore(int count) {
         for (Frame frame : frames) {
-            frame.calculateScore(frames.size() - 1, count);
+            int index = frames.size() - 1;
+            frame.calculateScore(index, count);
         }
     }
 
@@ -48,9 +47,6 @@ public class Frames {
         frames.add(frames.size() > NormalFrame.MAX_FRAME_INDEX ? new FinalFrame() : getLastFrame().next());
     }
 
-    private Frame findFrame() {
-        return getLastFrame();
-    }
 
     private boolean isFinalFrame() {
         return frames.size() == MAX_FRAME_COUNT;
@@ -80,11 +76,10 @@ public class Frames {
         return frames.size();
     }
 
-    public List<Integer> getScores() {
+    public List<Score> getScores() {
         return frames.stream()
                 .filter(Frame::hasScore)
-                .map(Frame::getTotalScore)
-                .map(Score::getScore)
+                .map(Frame::getScore)
                 .collect(Collectors.toList());
     }
 

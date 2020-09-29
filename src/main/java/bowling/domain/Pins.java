@@ -42,7 +42,7 @@ public class Pins {
         return pins;
     }
 
-    public List<String> getScore() {
+    public List<String> getFallenPins() {
         return pins.stream()
                 .map(Pin::getSymbolValue)
                 .collect(Collectors.toList());

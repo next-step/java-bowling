@@ -34,6 +34,10 @@ public class BowlingGame {
         return frames.getIndex();
     }
 
+    public List<Score> getScore() {
+        return frames.getScores();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,9 +49,5 @@ public class BowlingGame {
     @Override
     public int hashCode() {
         return Objects.hash(player);
-    }
-
-    public List<Integer> getScore() {
-        return frames.getScores();
     }
 }

@@ -1,6 +1,8 @@
 package bowling.view;
 
 import bowling.domain.Frame;
+import bowling.domain.Score;
+import org.apache.logging.log4j.util.Strings;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,16 +20,23 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printScore(String playerName, List<Frame> frames) {
+    public static void printScore(String playerName, List<Frame> frames, List<Score> scores) {
         printScoreHeader();
+
         printNameSpace(playerName);
-        printScores(frames);
+        printFallenPin(frames);
         printEmptySpace(frames.size());
+
+        System.out.println();
+        printNameSpace(Strings.EMPTY);
+        printScores(scores);
+        printEmptySpace(scores.size());
+
         System.out.println(VERTICAL_SIGN);
     }
 
     public static void printEmptyScore(String playerName) {
-        printScore(playerName, Collections.emptyList());
+        printScore(playerName, Collections.emptyList(), Collections.emptyList());
     }
 
     public static void printScoreHeader() {
@@ -38,9 +47,9 @@ public class OutputView {
         System.out.print(String.format("%s%4s", VERTICAL_SIGN, playerName));
     }
 
-    private static void printScores(List<Frame> frames) {
+    private static void printFallenPin(List<Frame> frames) {
         for (Frame frame : frames) {
-            String score = String.join("|", frame.getScore());
+            String score = String.join("|", frame.getFallenPins());
 
             System.out.print(String.format("%s%-4s", VERTICAL_SIGN, score));
         }
@@ -49,6 +58,12 @@ public class OutputView {
     private static void printEmptySpace(int size) {
         for (int i = size; i < MAX_FRAME_COUNT; i++) {
             System.out.print(String.format("%s%s", VERTICAL_SIGN, EMPTY_SPACE));
+        }
+    }
+
+    private static void printScores(List<Score> scores) {
+        for (Score score : scores) {
+            System.out.print(String.format("%s%-4s", VERTICAL_SIGN, score.getScore()));
         }
     }
 }

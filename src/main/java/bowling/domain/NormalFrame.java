@@ -39,12 +39,12 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public List<String> getScore() {
-        return pins.getScore();
+    public List<String> getFallenPins() {
+        return this.pins.getFallenPins();
     }
 
     @Override
-    public Score getTotalScore() {
+    public Score getScore() {
         return this.score;
     }
 
@@ -59,7 +59,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public void calculateScore(int index, int count) {
-        if(this.index == index || score.isEndCalculate()) {
+        if (this.index == index || score.isEndCalculate()) {
             return;
         }
 
@@ -67,7 +67,7 @@ public class NormalFrame implements Frame {
     }
 
     public boolean hasScore() {
-        return score.isEndCalculate();
+        return Objects.nonNull(score) && score.isEndCalculate();
     }
 
     private void createScore() {

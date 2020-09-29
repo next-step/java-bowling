@@ -50,7 +50,7 @@ public class NormalFrameTest {
         frame.pitch(10);
 
         assertThat(frame.getPins()).containsExactly(new Pin(10));
-        assertThat(frame.getScore()).containsExactly("X");
+        assertThat(frame.getFallenPins()).containsExactly("X");
     }
 
     @DisplayName("NormalFrame 투구 - spare")
@@ -61,7 +61,7 @@ public class NormalFrameTest {
         frame.pitch(5);
 
         assertThat(frame.getPins()).containsExactly(new Pin(5), new Pin(5));
-        assertThat(frame.getScore()).containsExactly("5", "/");
+        assertThat(frame.getFallenPins()).containsExactly("5", "/");
     }
 
     @DisplayName("NormalFrame 투구 - 최대 투구 회수 초과 exception 발생")
@@ -92,7 +92,7 @@ public class NormalFrameTest {
         frame.pitch(first);
         frame.pitch(second);
 
-        assertThat(frame.getTotalScore()).isEqualTo(new Score(expectScore, expectRemain));
+        assertThat(frame.getScore()).isEqualTo(new Score(expectScore, expectRemain));
     }
 
     @Test
@@ -100,6 +100,6 @@ public class NormalFrameTest {
         NormalFrame frame = NormalFrame.firstFrame();
         frame.pitch(10);
 
-        assertThat(frame.getTotalScore()).isEqualTo(new Score(10, 2));
+        assertThat(frame.getScore()).isEqualTo(new Score(10, 2));
     }
 }

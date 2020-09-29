@@ -45,7 +45,7 @@ class FramesTest {
         frames.pitch(2);
         frames.pitch(2);
 
-        assertThat(frames.getScores()).containsExactly(7, 4);
+        assertThat(frames.getScores()).containsExactly(new Score(7, 0), new Score(4, 0));
     }
 
     @DisplayName("퍼펙트 게임 점수 계산")
@@ -56,6 +56,16 @@ class FramesTest {
             frames.pitch(10);
         }
 
-        assertThat(frames.getScores()).containsExactly(30, 30, 30, 30, 30, 30, 30, 30, 30, 30);
+        assertThat(frames.getScores()).containsExactly(
+                new Score(30, 0),
+                new Score(30, 0),
+                new Score(30, 0),
+                new Score(30, 0),
+                new Score(30, 0),
+                new Score(30, 0),
+                new Score(30, 0),
+                new Score(30, 0),
+                new Score(30, 0),
+                new Score(30, 0));
     }
 }
