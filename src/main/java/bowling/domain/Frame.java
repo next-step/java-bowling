@@ -12,7 +12,7 @@ public interface Frame {
 
     List<String> getFallenPins();
 
-    Score getScore();
+    int getScore();
 
     void calculateScore(int index, int count);
 

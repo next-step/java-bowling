@@ -58,8 +58,8 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public Score getScore() {
-        return this.score;
+    public int getScore() {
+        return this.score.getScore();
     }
 
     public boolean hasScore() {

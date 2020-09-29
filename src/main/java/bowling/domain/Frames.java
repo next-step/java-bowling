@@ -76,7 +76,7 @@ public class Frames {
         return frames.size();
     }
 
-    public List<Score> getScores() {
+    public List<Integer> getScores() {
         return frames.stream()
                 .filter(Frame::hasScore)
                 .map(Frame::getScore)

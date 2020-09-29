@@ -2,8 +2,10 @@ package bowling.domain;
 
 import bowling.exception.GameOverException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class BowlingGame {
     private final Player player;
@@ -34,8 +36,16 @@ public class BowlingGame {
         return frames.getIndex();
     }
 
-    public List<Score> getScore() {
-        return frames.getScores();
+    public List<Integer> getScore() {
+        List<Integer> totalScores = new ArrayList<>();
+        int totalScore = 0;
+
+        for (Integer score : frames.getScores()) {
+            totalScore += score;
+            totalScores.add(totalScore);
+        }
+
+        return totalScores;
     }
 
     @Override
