@@ -85,21 +85,25 @@ public class NormalFrameTest {
                 .isInstanceOf(GameOverException.class);
     }
 
+    @DisplayName("점수 계산")
     @ParameterizedTest
-    @CsvSource(value = {"5, 5, 10, 1", "2, 1, 3, 0"})
-    void getScore(int first, int second, int expectScore, int expectRemain) {
+    @CsvSource(value = {"5, 5, 10, false", "2, 1, 3, true"})
+    void getScore(int first, int second, int expectScore, boolean expectHasScore) {
         NormalFrame frame = NormalFrame.firstFrame();
         frame.pitch(first);
         frame.pitch(second);
 
-        assertThat(frame.getScore()).isEqualTo(new Score(expectScore, expectRemain));
+        assertThat(frame.getScore()).isEqualTo(expectScore);
+        assertThat(frame.hasScore()).isEqualTo(expectHasScore);
     }
 
+    @DisplayName("점수 계산 스트라이크 일때")
     @Test
     void getScore_Strike() {
         NormalFrame frame = NormalFrame.firstFrame();
         frame.pitch(10);
 
-        assertThat(frame.getScore()).isEqualTo(new Score(10, 2));
+        assertThat(frame.getScore()).isEqualTo(10);
+        assertThat(frame.hasScore()).isEqualTo(false);
     }
 }
