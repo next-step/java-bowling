@@ -57,6 +57,9 @@ public class Pin {
         return symbol;
     }
 
+    public int getCount() {
+        return count;
+    }
 
     @Override
     public boolean equals(Object o) {

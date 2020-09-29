@@ -46,4 +46,8 @@ public class BowlingGame {
     public int hashCode() {
         return Objects.hash(player);
     }
+
+    public List<Integer> getScore() {
+        return frames.getScores();
+    }
 }

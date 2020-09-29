@@ -11,6 +11,7 @@ public class NormalFrame implements Frame {
 
     private final int index;
     private final Pins pins;
+    private Score score;
 
     public NormalFrame(int index) {
         this.validate(index);
@@ -42,12 +43,26 @@ public class NormalFrame implements Frame {
         return pins.getScore();
     }
 
+    @Override
+    public Score getTotalScore() {
+        return this.score;
+    }
+
     public void pitch(int count) {
         if (this.isEnd()) {
             throw new GameOverException();
         }
 
         pins.pitch(count);
+        calculateScore();
+    }
+
+    private void calculateScore() {
+        if (!this.isEnd()) {
+            return;
+        }
+
+        this.score = pins.getTotalScore();
     }
 
     public boolean isEnd() {

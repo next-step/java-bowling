@@ -82,4 +82,14 @@ public class NormalFrameTest {
         assertThatThrownBy(() -> frame.pitch(2))
                 .isInstanceOf(GameOverException.class);
     }
+
+    @Test
+    void getScore() {
+        NormalFrame frame = NormalFrame.firstFrame();
+        frame.pitch(2);
+        frame.pitch(1);
+
+        assertThat(frame.getTotalScore()).isEqualTo(new Score(3, 0));
+
+    }
 }

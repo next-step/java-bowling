@@ -11,4 +11,6 @@ public interface Frame {
     Frame next();
 
     List<String> getScore();
+
+    Score getTotalScore();
 }

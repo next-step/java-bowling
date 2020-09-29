@@ -56,6 +56,22 @@ public class Pins {
         return pins.stream().anyMatch(Pin::isEnd);
     }
 
+    public Score getTotalScore() {
+        if (getLastPin().getSymbol().equals(ScoreSymbol.STRIKE)) {
+            return new Score(10, 2);
+        }
+
+        if (getLastPin().getSymbol().equals(ScoreSymbol.SPARE)) {
+            return new Score(10, 2);
+        }
+
+        return new Score(getSum(), 0);
+    }
+
+    public int getSum() {
+        return pins.stream().mapToInt(Pin::getCount).sum();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

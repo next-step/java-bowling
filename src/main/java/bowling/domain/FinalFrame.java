@@ -12,6 +12,7 @@ public class FinalFrame implements Frame {
     private static final int MAX_PITCH_COUNT = 3;
 
     private final Pins pins;
+    private Score score;
 
     public FinalFrame() {
         this.pins = new Pins();
@@ -23,6 +24,11 @@ public class FinalFrame implements Frame {
         }
 
         pins.pitch(count);
+        calculateScore();
+    }
+
+    private void calculateScore() {
+        this.score = new Score(pins.getSum(), 0);
     }
 
     public boolean isEnd() {
@@ -49,6 +55,11 @@ public class FinalFrame implements Frame {
     @Override
     public List<String> getScore() {
         return pins.getScore();
+    }
+
+    @Override
+    public Score getTotalScore() {
+        return this.score;
     }
 
     @Override

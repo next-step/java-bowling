@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Frames {
     public static final int MAX_FRAME_COUNT = 10;
@@ -69,6 +71,13 @@ public class Frames {
         }
 
         return frames.size();
+    }
+
+    public List<Integer> getScores() {
+        return frames.stream()
+                .map(Frame::getTotalScore)
+                .map(Score::getScore)
+                .collect(Collectors.toList());
     }
 
     @Override
