@@ -1,4 +1,4 @@
-package qna.repository;
+package qna.domain;
 
 import org.springframework.data.repository.CrudRepository;
 import qna.domain.DeleteHistory;

@@ -1,4 +1,4 @@
-package qna.repository;
+package qna.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import qna.domain.Answer;
