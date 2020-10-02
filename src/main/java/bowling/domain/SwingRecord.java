@@ -5,19 +5,23 @@ import java.util.List;
 
 public class SwingRecord {
 
-    private static final int EMPTY = 0;
     private static final String DELIMITER = "|";
     private static final String ZERO_SCORE = "-";
     private static final String STRIKE = "X";
     private static final String SPARE = "/";
 
+    private static final int SPARE_SIZE = 2;
+
+    private final List<Integer> originalScores;
     private final List<String> swingRecords;
 
     public SwingRecord() {
+        this.originalScores = new ArrayList<>();
         this.swingRecords = new ArrayList<>();
     }
 
     public void addHistory(int score) {
+        originalScores.add(score);
         swingRecords.add(scoreToString(score));
     }
 
@@ -27,20 +31,25 @@ public class SwingRecord {
             return ZERO_SCORE;
         }
 
+        if (isSpare()) {
+            return SPARE;
+        }
+
         if (score == Swing.MAXIMUM_SCORE) {
-            return strikeOrSpare();
+            return STRIKE;
         }
 
         return String.valueOf(score);
     }
 
-    private String strikeOrSpare() {
+    private boolean isSpare() {
+        return originalScores.size() == SPARE_SIZE && sumOfScores() == Swing.MAXIMUM_SCORE;
+    }
 
-        if (swingRecords.isEmpty()) {
-            return STRIKE;
-        }
-
-        return SPARE;
+    private int sumOfScores() {
+        return originalScores.stream()
+                             .mapToInt(Integer::intValue)
+                             .sum();
     }
 
     @Override

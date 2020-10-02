@@ -62,19 +62,18 @@ public class Frames {
         int sum = 0;
         List<String> scores = new ArrayList<>();
 
-        for (Frame frame : frames) {
-
-            int score = frame.getScore();
-
-            if (score == Swing.DUMMY_SCORE) {
-                break;
-            }
-
+        for (int i = 0; i < frames.size() && isNotDummyScore(i); i++) {
+            int score = frames.get(i).getScore();
             sum += score;
             scores.add(String.valueOf(sum));
         }
 
         return createFullFrameList(scores);
+    }
+
+    private boolean isNotDummyScore(int index) {
+        Frame frame = frames.get(index);
+        return frame.getScore() != Swing.DUMMY_SCORE;
     }
 
     private Stream<Frame> frameStream() {

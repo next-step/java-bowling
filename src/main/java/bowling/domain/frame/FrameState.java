@@ -4,10 +4,16 @@ import bowling.domain.Swing;
 
 public enum FrameState {
 
-    RUNNING,
-    END,
-    SPARE,
-    STRIKE;
+    RUNNING(0),
+    END(0),
+    SPARE(1),
+    STRIKE(2);
+
+    private final int updateNeedCount;
+
+    FrameState(int updateNeedCount) {
+        this.updateNeedCount = updateNeedCount;
+    }
 
     public static FrameState forNormalFrame(Swing swing) {
 
@@ -44,7 +50,7 @@ public enum FrameState {
     }
 
     public boolean needUpdate() {
-        return this == FrameState.STRIKE || this == FrameState.SPARE;
+        return updateNeedCount > 0;
     }
 
     public static FrameState afterUpdateState(FrameState state) {
