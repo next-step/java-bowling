@@ -1,15 +1,17 @@
 package bowling.domain.frame;
 
 import bowling.domain.Swing;
-import bowling.domain.frame.LastFrame;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -60,18 +62,33 @@ public class LastFrameTest {
     }
 
     @DisplayName("마지막 프레임 점수 계산")
-    @Test
-    void lastFrameScoreTest() {
-        LastFrame frame = new LastFrame();
-        Random r = new Random();
+    @MethodSource("scoreArguments")
+    @ParameterizedTest
+    void lastFrameScoreTest(int argumentsSum, String scoresStr) {
+
+        int[] scores = Arrays.stream(scoresStr.split(","))
+                             .mapToInt(Integer::valueOf)
+                             .toArray();
+
         int sum = 0;
 
-        while (!frame.isEndedFrame()) {
-            int next = r.nextInt(11);
-            sum += next;
-            frame.swing(next);
+        LastFrame frame = new LastFrame();
+
+        for (int i = 0; !frame.isEndedFrame(); i++) {
+            sum += scores[i];
+            frame.swing(scores[i]);
         }
 
-        assertEquals(frame.getScore(), sum);
+        assertEquals(sum, argumentsSum);
+    }
+
+    private static Stream<Arguments> scoreArguments() {
+        return Stream.of(
+                Arguments.of(20, "10,0,10"),
+                Arguments.of(30, "10,10,10"),
+                Arguments.of(20, "1,9,10"),
+                Arguments.of(15, "5,5,5"),
+                Arguments.of(6, "1,5")
+        );
     }
 }
