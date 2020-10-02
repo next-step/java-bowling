@@ -53,33 +53,41 @@ public class Frames {
     }
 
     public List<String> getSwingRecords() {
-        return createList(frameStream().map(Frame::swingRecordsToString));
+        return createFullFrameList(frameStream().map(Frame::swingRecordsToString)
+                                                .collect(toList()));
     }
 
     public List<String> getScores() {
-        return createList(frameStream().mapToInt(Frame::getScore)
-                                       .mapToObj(this::scoreToStringValue));
+
+        int sum = 0;
+        List<String> scores = new ArrayList<>();
+
+        for (Frame frame : frames) {
+
+            int score = frame.getScore();
+
+            if (score == Swing.DUMMY_SCORE) {
+                break;
+            }
+
+            sum += score;
+            scores.add(String.valueOf(sum));
+        }
+
+        return createFullFrameList(scores);
     }
 
     private Stream<Frame> frameStream() {
         return frames.stream().limit(FINAL_FRAME_NO);
     }
 
-    private List<String> createList(Stream<String> stream) {
-        List<String> list = stream.collect(toList());
-        for (int i = frames.size(); i < FINAL_FRAME_NO; i++) {
+    private List<String> createFullFrameList(List<String> list) {
+
+        for (int i = list.size(); i < FINAL_FRAME_NO; i++) {
             list.add(BLANK);
         }
+
         return list;
-    }
-
-    private String scoreToStringValue(int score) {
-
-        if (score == Swing.DUMMY_SCORE) {
-            return BLANK;
-        }
-
-        return String.valueOf(score);
     }
 
     public boolean isEnd() {

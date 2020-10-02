@@ -80,8 +80,8 @@ public class FramesTest {
         }
 
         scores = frames.getScores();
-        for (String score : scores) {
-            assertEquals(score, "30");
+        for (int i = 1; i <= 10; i++) {
+            assertEquals(scores.get(i - 1), String.valueOf(30 * i));
         }
     }
 }

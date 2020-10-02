@@ -30,15 +30,6 @@ public class SwingRecordTest {
         String result = swingRecord.toString();
 
         assertEquals(result.split("\\|").length, 2);
-        assertEquals(swingRecord.toString(), "-|X");
-    }
-
-    @DisplayName("toString 변환 테스트")
-    @ValueSource(ints = {0, 1, 2, 3, 4, 10})
-    @ParameterizedTest
-    void firstSwingTest(int score) {
-        SwingRecord swingRecord = new SwingRecord();
-        swingRecord.addHistory(score);
-        assertEquals(swingRecord.firstSwing(), score);
+        assertEquals(swingRecord.toString(), "-|/");
     }
 }
