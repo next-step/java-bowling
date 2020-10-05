@@ -1,6 +1,7 @@
 package bowling;
 
 import bowling.controller.BowlingController;
+import bowling.ui.Input;
 import bowling.ui.Output;
 
 import java.util.List;
@@ -9,11 +10,24 @@ import java.util.Scanner;
 public class Application {
     public static void main(String[] args) {
 
+        BowlingController controller = new BowlingController(new StandardInput(), new SystemOutput());
+        controller.inputNames();
+        controller.playGame();
+    }
+
+    public static class StandardInput implements Input {
+
         Scanner scanner = new Scanner(System.in);
 
-        BowlingController controller = new BowlingController(scanner::nextInt, new SystemOutput());
-        controller.inputName(scanner.nextLine());
-        controller.playGame();
+        @Override
+        public int nextInt() {
+            return scanner.nextInt();
+        }
+
+        @Override
+        public String nextLine() {
+            return scanner.nextLine();
+        }
     }
 
     public static class SystemOutput implements Output {

@@ -6,10 +6,15 @@ import bowling.ui.Output;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class BowlingController {
 
-    private static final String MSG_INPUT_NAME = "플레이어 이름은(3 english letters)?: ";
+    private static final String MSG_INPUT_PLAYER_COUNT = "How many people? ";
+    private static final String MSG_INPUT_NAME = "플레이어 %%의 이름은(3 english letters)?: ";
     private static final String MSG_INPUT_SWING = "%% 프레임 투구 : ";
 
     private static final String TAB_NAME = "NAME";
@@ -18,21 +23,35 @@ public class BowlingController {
 
     private static final String BLANK = "";
 
-    private static final String REPLACE_TARGET = MSG_INPUT_SWING.substring(0, 2);
+    private static final String REPLACE_TARGET = "%%";
 
     private final Input input;
     private final Output output;
+    private final int playerCount;
     private BowlingGame bowlingGame;
 
     public BowlingController(Input input, Output output) {
         this.input = input;
         this.output = output;
-        output.print(MSG_INPUT_NAME);
+
+        output.print(MSG_INPUT_PLAYER_COUNT);
+        playerCount = input.nextInt();
+        input.nextLine();
     }
 
-    public void inputName(String name) {
-        bowlingGame = new BowlingGame(name);
+    public void inputNames() {
+        bowlingGame = new BowlingGame(createNames(playerCount));
         printBoard();
+    }
+
+    private List<String> createNames(int playerCount) {
+        return Stream.iterate(1, i -> i + 1)
+                     .limit(playerCount)
+                     .map(playerNo -> {
+                         output.print(MSG_INPUT_NAME.replace(REPLACE_TARGET, String.valueOf(playerNo)));
+                         return input.nextLine();
+                     })
+                     .collect(toList());
     }
 
     private void printBoard() {

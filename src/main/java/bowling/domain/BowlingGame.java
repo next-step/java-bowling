@@ -9,8 +9,8 @@ public class BowlingGame {
     private final Player player;
     private final Frames frames;
 
-    public BowlingGame(String name) {
-        this.player = new Player(name);
+    public BowlingGame(List<String> name) {
+        this.player = new Player(name.get(0));
         this.frames = new Frames();
     }
 
