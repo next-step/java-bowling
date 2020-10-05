@@ -1,4 +1,4 @@
-package bowling.domain;
+package bowling.domain.frame;
 
 public class FrameFactory {
 
@@ -8,16 +8,16 @@ public class FrameFactory {
         return new NormalFrame();
     }
 
-    public static Frame next(Frame frame, int currentRound) {
+    public static Frame next(int currentRound) {
 
         if (currentRound == BEFORE_FINAL_FRAME) {
-            return new FinalFrame();
+            return new LastFrame();
         }
 
         return new NormalFrame();
     }
 
-    public static FinalFrame last() {
-        return new FinalFrame();
+    public static LastFrame last() {
+        return new LastFrame();
     }
 }

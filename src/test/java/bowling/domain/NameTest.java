@@ -10,16 +10,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class NameTest {
 
     @DisplayName("적절한 이름 테스트")
-    @ValueSource(strings = {"ABC", "MDH", "QQQ", "ZZZ", "ASF"})
+    @ValueSource(strings = {"ABC", "MDH", "QQQ", "ZZZ", "ASF", "aBc"})
     @ParameterizedTest
     void validNameTest(String value) {
-        assertEquals(new Name(value).getValue(), value);
+        assertEquals(new Player(value).getName(), value.toUpperCase());
     }
 
     @DisplayName("부적절한 이름 테스트")
-    @ValueSource(strings = {"aBC", "AMDH", "1QQ", "ZZ", "AS&"})
+    @ValueSource(strings = {"AMDH", "1QQ", "ZZ", "AS&"})
     @ParameterizedTest
     void invalidNameTest(String value) {
-        assertThatIllegalArgumentException().isThrownBy(() -> new Name(value));
+        assertThatIllegalArgumentException().isThrownBy(() -> new Player(value));
     }
 }
