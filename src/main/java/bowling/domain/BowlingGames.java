@@ -8,7 +8,6 @@ import static java.util.stream.Collectors.toList;
 public class BowlingGames {
 
     private static final int NEXT_INDEX = 1;
-    private static final int LAST_INDEX_GAP = 1;
 
     private final List<BowlingGame> games;
     private int currentPlayerIndex;
@@ -42,10 +41,6 @@ public class BowlingGames {
     public boolean isNotEnd() {
         return !games.stream()
                      .allMatch(BowlingGame::isEnd);
-    }
-
-    private BowlingGame lastGame() {
-        return games.get(games.size() - LAST_INDEX_GAP);
     }
 
     public BowlingGame getCurrentGame() {
