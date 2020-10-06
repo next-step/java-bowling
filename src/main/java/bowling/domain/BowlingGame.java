@@ -9,12 +9,12 @@ public class BowlingGame {
     private final Player player;
     private final Frames frames;
 
-    public BowlingGame(List<String> name) {
-        this.player = new Player(name.get(0));
+    public BowlingGame(String name) {
+        this.player = new Player(name);
         this.frames = new Frames();
     }
 
-    public String getName() {
+    public String getPlayerName() {
         return player.getName();
     }
 
@@ -26,15 +26,11 @@ public class BowlingGame {
         return frames.getScores();
     }
 
-    public void swing(int score) {
-        frames.swing(score);
+    public boolean swing(int score) {
+        return frames.swing(score);
     }
 
-    public int currentRound() {
-        return frames.getRound();
-    }
-
-    public boolean isBowlingGameRun() {
-        return !frames.isEnd();
+    public boolean isEnd() {
+        return frames.isEnd();
     }
 }

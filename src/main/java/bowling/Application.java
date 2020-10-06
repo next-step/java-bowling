@@ -9,10 +9,13 @@ import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
-
-        BowlingController controller = new BowlingController(new StandardInput(), new SystemOutput());
-        controller.inputNames();
-        controller.playGame();
+        BowlingController.builder()
+                         .input(new StandardInput())
+                         .output(new SystemOutput())
+                         .inputPlayerCount()
+                         .inputNames()
+                         .build()
+                         .playGame();
     }
 
     public static class StandardInput implements Input {
