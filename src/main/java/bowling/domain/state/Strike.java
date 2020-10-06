@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-public class Strike implements State {
+public class Strike extends Finished {
 
     @Override
     public String toString() {

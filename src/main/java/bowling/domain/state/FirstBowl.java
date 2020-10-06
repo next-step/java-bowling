@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import bowling.domain.Pin;
 
-public class FirstBowl implements State {
+public class FirstBowl extends Running {
     private final Pin firstPins;
 
     public FirstBowl(int firstPins) {

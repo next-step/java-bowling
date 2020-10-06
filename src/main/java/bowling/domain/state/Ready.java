@@ -1,6 +1,6 @@
 package bowling.domain.state;
 
-public class Ready implements State {
+public class Ready extends Running {
     @Override
     public State pitch(int fallenPins) {
         if (fallenPins == 10) {
