@@ -1,5 +1,7 @@
 package bowling.domain;
 
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 import bowling.exception.GameOverException;
 
 import java.util.List;
@@ -11,6 +13,7 @@ public class NormalFrame implements Frame {
 
     private final int index;
     private final Pins pins;
+    private State state;
     private Score score;
 
     public NormalFrame(int index) {
@@ -18,6 +21,7 @@ public class NormalFrame implements Frame {
 
         this.index = index;
         this.pins = new Pins();
+        this.state = new Ready();
     }
 
     private void validate(int index) {
@@ -38,23 +42,24 @@ public class NormalFrame implements Frame {
         return new NormalFrame(index + 1);
     }
 
-    @Override
-    public List<String> getFallenPins() {
-        return this.pins.getFallenPins();
-    }
-
-    @Override
-    public int getScore() {
-        return this.score.getScore();
-    }
-
     public void pitch(int count) {
         if (this.isEnd()) {
             throw new GameOverException();
         }
 
         pins.pitch(count);
+        this.state = state.pitch(count);
         createScore();
+    }
+
+    @Override
+    public String getFallenPins() {
+        return state.toString();
+    }
+
+    @Override
+    public int getScore() {
+        return this.score.getScore();
     }
 
     @Override
@@ -79,11 +84,7 @@ public class NormalFrame implements Frame {
     }
 
     public boolean isEnd() {
-        if (pins.isEmpty()) {
-            return false;
-        }
-
-        return pins.isEnd() || pins.overPitching(MAX_PITCH_COUNT);
+        return state.isFinish();
     }
 
     public List<Pin> getPins() {

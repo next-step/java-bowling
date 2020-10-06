@@ -26,21 +26,19 @@ public class FinalFrameTest {
         frame.pitch(1);
         frame.pitch(8);
 
-        assertThat(frame.getPins()).containsExactly(new Pin(1), new Pin(8));
-        assertThat(frame.getFallenPins()).containsExactly("1", "8");
+        assertThat(frame.getFallenPins()).isEqualTo("1|8");
     }
 
     @DisplayName("FinalFrame 투구 - 스트라이크/스페어시 3번 투구")
     @ParameterizedTest
-    @CsvSource(value = {"1, 9, 1, 1, /, 1", "10, 10, 10, X, X, X", "10, 1, 2, X, 1, 2"})
-    void pitch_third(int first, int second, int third, String expect, String expect2, String expect3) {
+    @CsvSource(value = {"1, 9, 1, 1|/|1", "10, 10, 10, X|X|X", "10, 1, 2, X|1|2"})
+    void pitch_third(int first, int second, int third, String expect) {
         FinalFrame frame = new FinalFrame();
         frame.pitch(first);
         frame.pitch(second);
         frame.pitch(third);
 
-        assertThat(frame.getPins()).containsExactly(new Pin(first), new Pin(second), new Pin(third));
-        assertThat(frame.getFallenPins()).containsExactly(expect, expect2, expect3);
+        assertThat(frame.getFallenPins()).isEqualTo(expect);
     }
 
     @DisplayName("FinalFrame 투구 - 스트라이크/스페어 실패 후 3번째 투구시 exception 발생")

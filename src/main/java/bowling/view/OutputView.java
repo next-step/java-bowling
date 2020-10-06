@@ -47,9 +47,7 @@ public class OutputView {
 
     private static void printFallenPin(List<Frame> frames) {
         for (Frame frame : frames) {
-            String score = String.join("|", frame.getFallenPins());
-
-            System.out.print(String.format("%-4s%s", score, VERTICAL_SIGN));
+            System.out.print(String.format("%-4s%s", frame.getFallenPins(), VERTICAL_SIGN));
         }
     }
 

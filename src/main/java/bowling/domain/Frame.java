@@ -1,7 +1,5 @@
 package bowling.domain;
 
-import java.util.List;
-
 public interface Frame {
 
     void pitch(int count);
@@ -10,7 +8,7 @@ public interface Frame {
 
     Frame next();
 
-    List<String> getFallenPins();
+    String getFallenPins();
 
     int getScore();
 

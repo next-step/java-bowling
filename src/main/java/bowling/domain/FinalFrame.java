@@ -1,10 +1,14 @@
 package bowling.domain;
 
+import bowling.domain.state.Ready;
+import bowling.domain.state.Spare;
+import bowling.domain.state.State;
+import bowling.domain.state.Strike;
 import bowling.exception.GameOverException;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
 
@@ -12,16 +16,28 @@ public class FinalFrame implements Frame {
     private static final int MAX_PITCH_COUNT = 3;
 
     private final Pins pins;
+    private LinkedList<State> states;
     private Score score;
 
     public FinalFrame() {
         this.pins = new Pins();
+
+        this.states = new LinkedList<>();
+        states.add(new Ready());
     }
 
     public void pitch(int count) {
         if (this.isEnd()) {
             throw new GameOverException();
         }
+
+        if (states.getLast().isFinish()) {
+            states.add(new Ready());
+        }
+
+        State state = states.getLast();
+        states.removeLast();
+        states.addLast(state.pitch(count));
 
         pins.pitch(count);
         createScore();
@@ -32,19 +48,25 @@ public class FinalFrame implements Frame {
     }
 
     public boolean isEnd() {
-        if (pins.isEmpty()) {
+        if (states.isEmpty()) {
             return false;
         }
 
-        if (pins.overPitching(MIN_PITCH_COUNT) && !pins.hasEndScore()) {
+        if (states.getLast().isFinish() && !hasBonusPitch()) {
             return true;
         }
 
-        return pins.overPitching(MAX_PITCH_COUNT);
+        return states.size() == MAX_PITCH_COUNT;
     }
 
-    public List<Pin> getPins() {
-        return Collections.unmodifiableList(pins.getPins());
+    private boolean hasBonusPitch() {
+        return states.stream()
+                .anyMatch(state -> state instanceof Strike || state instanceof Spare);
+    }
+
+    private boolean hasAllStrikesPitch() {
+        return states.stream()
+                .allMatch(state -> state instanceof Strike);
     }
 
     @Override
@@ -53,8 +75,10 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public List<String> getFallenPins() {
-        return pins.getFallenPins();
+    public String getFallenPins() {
+        return states.stream()
+                .map(State::toString)
+                .collect(Collectors.joining("|"));
     }
 
     @Override
@@ -63,7 +87,7 @@ public class FinalFrame implements Frame {
     }
 
     public boolean hasScore() {
-        return isEnd();
+        return isEnd() || states.getLast().isFinish();
     }
 
     @Override
