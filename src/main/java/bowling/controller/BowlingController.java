@@ -24,10 +24,12 @@ public class BowlingController {
     private final Output output;
     private final BowlingGames games;
 
-    public BowlingController(Input input, Output output, List<String> names) {
+    protected BowlingController(Input input, Output output, List<String> names) {
         this.input = input;
         this.output = output;
         this.games = new BowlingGames(names);
+
+        printBoard();
     }
 
     public static BowlingControllerBuilder builder() {
