@@ -1,19 +1,25 @@
 package bowling.domain.state;
 
+import bowling.domain.Pin;
+
 public class FirstBowl implements State {
-    private final int firstPis;
+    private final Pin firstPins;
 
     public FirstBowl(int firstPins) {
-        this.firstPis = firstPins;
+        this.firstPins = new Pin(firstPins);
     }
 
     @Override
     public State pitch(int fallenPins) {
-        return null;
+        if (firstPins.isSpare(new Pin(fallenPins))) {
+            return new Spare(firstPins, new Pin(fallenPins));
+        }
+
+        return new Miss(firstPins, new Pin(fallenPins));
     }
 
     @Override
     public String toString() {
-        return String.valueOf(firstPis);
+        return firstPins.toString();
     }
 }

@@ -6,15 +6,23 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class StrikeTest {
-    @DisplayName("Strike 상태 생성")
+public class MissTest {
+    @DisplayName("Miss 상태 생성")
     @Test
     void create() {
-        Strike strike = new Strike();
-        assertThat(strike).hasToString("X");
+        Miss miss = new Miss(1, 5);
+
+        assertThat(miss).hasToString("1|5");
     }
 
-    @DisplayName("Strike 상태 투구 시 exception 발생")
+    @DisplayName("Miss 유효하지 않은 생성")
+    @Test
+    void create_invalid() {
+        assertThatThrownBy(() -> new Miss(5, 6))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("Miss 상태에서 투구시 exception 발생")
     @Test
     void pitch() {
         Strike strike = new Strike();

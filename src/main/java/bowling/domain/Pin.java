@@ -61,6 +61,18 @@ public class Pin {
         return count;
     }
 
+    public boolean isSpare(Pin fallenPins) {
+        return this.count + fallenPins.getCount() == MAX_PIN_COUNT;
+    }
+
+    public boolean validate(Pin fallenPins) {
+        if (this.count + fallenPins.getCount() > MAX_PIN_COUNT) {
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,5 +84,10 @@ public class Pin {
     @Override
     public int hashCode() {
         return Objects.hash(count);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(count);
     }
 }
