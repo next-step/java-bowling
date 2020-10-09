@@ -19,6 +19,11 @@ public class FirstBowl extends Running {
     }
 
     @Override
+    public int getPitchCount() {
+        return 1;
+    }
+
+    @Override
     public String toString() {
         return firstPins.toString();
     }

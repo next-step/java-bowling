@@ -29,6 +29,11 @@ public class Spare extends Finished {
     }
 
     @Override
+    public int getPitchCount() {
+        return 2;
+    }
+
+    @Override
     public String toString() {
         return firstPins.toString() + "|/";
     }

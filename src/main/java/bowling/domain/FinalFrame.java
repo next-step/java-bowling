@@ -52,11 +52,11 @@ public class FinalFrame implements Frame {
             return false;
         }
 
-        if (states.getLast().isFinish() && !hasBonusPitch()) {
+        if (!hasBonusPitch() && this.sumAllPitchCount() == MIN_PITCH_COUNT) {
             return true;
         }
 
-        return states.size() == MAX_PITCH_COUNT;
+        return this.sumAllPitchCount() == MAX_PITCH_COUNT;
     }
 
     private boolean hasBonusPitch() {
@@ -64,9 +64,10 @@ public class FinalFrame implements Frame {
                 .anyMatch(state -> state instanceof Strike || state instanceof Spare);
     }
 
-    private boolean hasAllStrikesPitch() {
+    private int sumAllPitchCount() {
         return states.stream()
-                .allMatch(state -> state instanceof Strike);
+                .mapToInt(State::getPitchCount)
+                .sum();
     }
 
     @Override
@@ -87,7 +88,7 @@ public class FinalFrame implements Frame {
     }
 
     public boolean hasScore() {
-        return isEnd() || states.getLast().isFinish();
+        return isEnd();
     }
 
     @Override

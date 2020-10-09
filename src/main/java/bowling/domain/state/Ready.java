@@ -9,4 +9,9 @@ public class Ready extends Running {
 
         return new FirstBowl(fallenPins);
     }
+
+    @Override
+    public int getPitchCount() {
+        return 0;
+    }
 }
