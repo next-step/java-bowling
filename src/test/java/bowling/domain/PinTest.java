@@ -31,24 +31,6 @@ public class PinTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("Pin 생성 - 다음 핀")
-    @Test
-    void next() {
-        Pin pin = new Pin(9);
-        Pin nextPin = pin.next(1);
-
-        assertThat(nextPin).isEqualTo(new Pin(1));
-    }
-
-    @DisplayName("Pin 생성 - 유효하지 않은 개수")
-    @Test
-    void next_invalid() {
-        Pin pin = new Pin(9);
-        assertThatThrownBy(() -> pin.next(2))
-                .isInstanceOf(IllegalArgumentException.class);
-
-    }
-
     @DisplayName("게임 종료된 pin")
     @Test
     void isEnd() {

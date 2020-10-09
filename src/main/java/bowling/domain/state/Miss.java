@@ -25,11 +25,6 @@ public class Miss extends Finished {
     }
 
     @Override
-    public State pitch(int fallenPins) {
-        throw new UnsupportedOperationException("더이상 투구할 수 없습니다.");
-    }
-
-    @Override
     public int getPitchCount() {
         return 2;
     }
@@ -46,6 +41,8 @@ public class Miss extends Finished {
 
     @Override
     public String toString() {
-        return firstPin.toString() + "|" + secondPin.toString();
+        return firstPin.toString()
+                + "|"
+                + (firstPin.sum(secondPin) == 0 ? "-" : secondPin.toString());
     }
 }

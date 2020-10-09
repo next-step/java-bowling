@@ -25,11 +25,6 @@ public class Spare extends Finished {
     }
 
     @Override
-    public State pitch(int fallenPins) {
-        throw new UnsupportedOperationException("더이상 투구할 수 없습니다.");
-    }
-
-    @Override
     public int getPitchCount() {
         return 2;
     }
