@@ -10,15 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class FinalFrameTest {
-
-    @DisplayName("FinalFrame 생성")
-    @Test
-    void create() {
-        FinalFrame finalFrame = new FinalFrame();
-
-        assertThat(finalFrame).isEqualTo(new FinalFrame());
-    }
-
     @DisplayName("FinalFrame 투구 - 스트라이크/스페어처리 못한 경우")
     @Test
     void pitch() {

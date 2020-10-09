@@ -56,37 +56,4 @@ public class PinTest {
 
         assertThat(pin.isEnd()).isTrue();
     }
-
-    @DisplayName("pin 맞힌 개수로 score symbol 생성 - stike")
-    @Test
-    void getSymbol_strike() {
-        Pin pin = new Pin(10);
-        assertThat(pin.getSymbol()).isEqualTo(ScoreSymbol.STRIKE);
-    }
-
-    @DisplayName("pin 맞힌 개수로 score symbol 생성 - miss")
-    @Test
-    void getSymbol_miss() {
-        Pin pin = new Pin(0);
-        assertThat(pin.getSymbol()).isEqualTo(ScoreSymbol.MISS);
-    }
-
-    @DisplayName("pin 맞힌 개수로 score symbol 생성")
-    @ParameterizedTest
-    @MethodSource("parameters")
-    void getSymbol(int first, int second, ScoreSymbol expect) {
-        Pin pin = new Pin(first);
-        Pin nextPin = pin.next(second);
-
-        assertThat(nextPin.getSymbol()).isEqualTo(expect);
-    }
-
-    private static Stream<Arguments> parameters() {
-        return Stream.of(
-                Arguments.of(1, 9, ScoreSymbol.SPARE),
-                Arguments.of(5, 5, ScoreSymbol.SPARE),
-                Arguments.of(0, 0, ScoreSymbol.GUTTER),
-                Arguments.of(1, 2, ScoreSymbol.MISS)
-        );
-    }
 }

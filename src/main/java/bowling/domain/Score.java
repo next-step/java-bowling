@@ -3,12 +3,26 @@ package bowling.domain;
 import java.util.Objects;
 
 public class Score {
+    public static final int FULL_SCORE = 10;
+
     private int score;
     private int remain;
 
     public Score(int score, int remain) {
         this.score = score;
         this.remain = remain;
+    }
+
+    public static Score ofMiss(int score) {
+        return new Score(score, 0);
+    }
+
+    public static Score ofSpare() {
+        return new Score(FULL_SCORE, 1);
+    }
+
+    public static Score ofStrike() {
+        return new Score(FULL_SCORE, 2);
     }
 
     public void addScore(int count) {
@@ -21,7 +35,7 @@ public class Score {
     }
 
     public boolean isEndCalculate() {
-        return  remain == 0;
+        return remain == 0;
     }
 
     @Override

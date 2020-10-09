@@ -6,7 +6,6 @@ public class Pin {
     public static final int MAX_PIN_COUNT = 10;
 
     private final int count;
-    private final ScoreSymbol symbol;
 
     public Pin(int count) {
         this(count, count, true);
@@ -20,11 +19,6 @@ public class Pin {
         this.validate(count, totalCount);
 
         this.count = count;
-        this.symbol = initSymbol(totalCount, isFirst);
-    }
-
-    public ScoreSymbol initSymbol(int count, boolean isFirst) {
-        return ScoreSymbol.valueOf(count, isFirst);
     }
 
     private void validate(int count, int totalCount) {
@@ -42,19 +36,7 @@ public class Pin {
     }
 
     public boolean isEnd() {
-        return ScoreSymbol.tenScore.contains(this.symbol);
-    }
-
-    public String getSymbolValue() {
-        if (getSymbol().equals(ScoreSymbol.MISS)) {
-            return String.valueOf(count);
-        }
-
-        return symbol.getValue();
-    }
-
-    public ScoreSymbol getSymbol() {
-        return symbol;
+        return count == MAX_PIN_COUNT;
     }
 
     public int getCount() {
@@ -66,11 +48,11 @@ public class Pin {
     }
 
     public boolean validate(Pin fallenPins) {
-        if (this.count + fallenPins.getCount() > MAX_PIN_COUNT) {
-            return false;
-        }
+        return this.count + fallenPins.getCount() <= MAX_PIN_COUNT;
+    }
 
-        return true;
+    public int sum(Pin otherPins) {
+        return count + otherPins.count;
     }
 
     @Override

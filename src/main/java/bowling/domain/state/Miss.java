@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 
 public class Miss extends Finished {
     private final Pin firstPin;
@@ -31,6 +32,16 @@ public class Miss extends Finished {
     @Override
     public int getPitchCount() {
         return 2;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofMiss(firstPin.sum(secondPin));
+    }
+
+    @Override
+    public int getTotalCount() {
+        return firstPin.sum(secondPin);
     }
 
     @Override

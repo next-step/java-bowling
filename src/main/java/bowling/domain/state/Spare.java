@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pin;
+import bowling.domain.Score;
 
 public class Spare extends Finished {
     private final Pin firstPins;
@@ -31,6 +32,16 @@ public class Spare extends Finished {
     @Override
     public int getPitchCount() {
         return 2;
+    }
+
+    @Override
+    public Score getScore() {
+        return Score.ofSpare();
+    }
+
+    @Override
+    public int getTotalCount() {
+        return 10;
     }
 
     @Override

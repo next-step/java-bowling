@@ -4,15 +4,12 @@ import bowling.domain.state.Ready;
 import bowling.domain.state.State;
 import bowling.exception.GameOverException;
 
-import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
     public static final int MAX_FRAME_INDEX = 8;
-    private static final int MAX_PITCH_COUNT = 2;
 
     private final int index;
-    private final Pins pins;
     private State state;
     private Score score;
 
@@ -20,7 +17,6 @@ public class NormalFrame implements Frame {
         this.validate(index);
 
         this.index = index;
-        this.pins = new Pins();
         this.state = new Ready();
     }
 
@@ -47,7 +43,6 @@ public class NormalFrame implements Frame {
             throw new GameOverException();
         }
 
-        pins.pitch(count);
         this.state = state.pitch(count);
         createScore();
     }
@@ -76,19 +71,15 @@ public class NormalFrame implements Frame {
     }
 
     private void createScore() {
-        if (!this.isEnd()) {
+        if (!state.isFinish()) {
             return;
         }
 
-        this.score = pins.getTotalScore();
+        this.score = state.getScore();
     }
 
     public boolean isEnd() {
         return state.isFinish();
-    }
-
-    public List<Pin> getPins() {
-        return pins.getPins();
     }
 
     @Override
@@ -96,12 +87,11 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame frame = (NormalFrame) o;
-        return index == frame.index &&
-                Objects.equals(pins, frame.pins);
+        return index == frame.index;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(index, pins);
+        return Objects.hash(index);
     }
 }

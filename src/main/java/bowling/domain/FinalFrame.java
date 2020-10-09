@@ -7,7 +7,6 @@ import bowling.domain.state.Strike;
 import bowling.exception.GameOverException;
 
 import java.util.LinkedList;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class FinalFrame implements Frame {
@@ -15,13 +14,10 @@ public class FinalFrame implements Frame {
     private static final int MIN_PITCH_COUNT = 2;
     private static final int MAX_PITCH_COUNT = 3;
 
-    private final Pins pins;
     private LinkedList<State> states;
     private Score score;
 
     public FinalFrame() {
-        this.pins = new Pins();
-
         this.states = new LinkedList<>();
         states.add(new Ready());
     }
@@ -39,12 +35,11 @@ public class FinalFrame implements Frame {
         states.removeLast();
         states.addLast(state.pitch(count));
 
-        pins.pitch(count);
         createScore();
     }
 
     private void createScore() {
-        this.score = new Score(pins.getSum(), 0);
+        this.score = new Score(sumAllCount(), 0);
     }
 
     public boolean isEnd() {
@@ -67,6 +62,12 @@ public class FinalFrame implements Frame {
     private int sumAllPitchCount() {
         return states.stream()
                 .mapToInt(State::getPitchCount)
+                .sum();
+    }
+
+    private int sumAllCount() {
+        return states.stream()
+                .mapToInt(State::getTotalCount)
                 .sum();
     }
 
@@ -94,18 +95,5 @@ public class FinalFrame implements Frame {
     @Override
     public void calculateScore(int index, int count) {
 
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FinalFrame that = (FinalFrame) o;
-        return Objects.equals(pins, that.pins);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(pins);
     }
 }

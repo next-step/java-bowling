@@ -49,7 +49,6 @@ public class NormalFrameTest {
         NormalFrame frame = NormalFrame.firstFrame();
         frame.pitch(10);
 
-        assertThat(frame.getPins()).containsExactly(new Pin(10));
         assertThat(frame.getFallenPins()).isEqualTo("X");
     }
 
@@ -60,7 +59,6 @@ public class NormalFrameTest {
         frame.pitch(5);
         frame.pitch(5);
 
-        assertThat(frame.getPins()).containsExactly(new Pin(5), new Pin(5));
         assertThat(frame.getFallenPins()).isEqualTo("5|/");
     }
 
