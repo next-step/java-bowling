@@ -43,7 +43,7 @@ public class Answers {
                 .allMatch(answer -> answer.isOwner(writer));
     }
 
-    public void delete(User loginUser, List<DeleteHistory> deleteHistories) throws CannotDeleteException {
+    public void delete(User loginUser, DeleteHistories deleteHistories) throws CannotDeleteException {
         this.validateDeleteBy(loginUser);
 
         for (Answer answer : this.answers) {

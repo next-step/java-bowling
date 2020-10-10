@@ -4,9 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.exception.CannotDeleteException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -25,7 +23,10 @@ public class AnswersTest {
     void delete() throws CannotDeleteException {
         // given
         Answers answers = Answers.of(Arrays.asList(AnswerTest.A1, AnswerTest.A3));
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistories deleteHistories = new DeleteHistories();
+        for (Answer answer : answers.getAnswers()) {
+            deleteHistories.addDeleteHistoryByAnswer(answer);
+        }
 
         // when
         answers.delete(UserTest.JAVAJIGI, deleteHistories);
@@ -40,7 +41,10 @@ public class AnswersTest {
     @Test
     void shouldExceptionWriterNotEqualsLoginUser() {
         Answers answers = new Answers(Arrays.asList(AnswerTest.A1, AnswerTest.A2, AnswerTest.A3));
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistories deleteHistories = new DeleteHistories();
+        for (Answer answer : answers.getAnswers()) {
+            deleteHistories.addDeleteHistoryByAnswer(answer);
+        }
         assertThatExceptionOfType(CannotDeleteException.class)
                 .isThrownBy(() -> answers.delete(UserTest.JAVAJIGI, deleteHistories))
                 .withMessage("다른 사람이 쓴 답변이 있어 삭제할 수 없습니다.");

@@ -13,4 +13,4 @@
 [X] Question 삭제 가능 여부 로직 분리
 [X] Answer 삭제 가능 여부 로직 분리
 [X] Answers 일급 콜렉션 구현
-[ ] DeleteHistories 일급 콜렉션 구현
+[X] DeleteHistories 일급 콜렉션 구현

@@ -3,9 +3,6 @@ package qna.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AnswerTest {
@@ -17,7 +14,7 @@ public class AnswerTest {
     @DisplayName("답변 삭제 테스트")
     @Test
     void delete() {
-        List<DeleteHistory> deleteHistories = new ArrayList<>();
+        DeleteHistories deleteHistories = new DeleteHistories();
         A2.delete(deleteHistories);
         assertThat(A2.isDeleted()).isTrue();
         assertThat(A1.isDeleted()).isFalse();

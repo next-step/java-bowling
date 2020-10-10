@@ -70,9 +70,9 @@ public class Answer extends AbstractEntity {
         this.question = question;
     }
 
-    public void delete(List<DeleteHistory> deleteHistories) {
+    public void delete(DeleteHistories deleteHistories) {
         this.deleted = true;
-        deleteHistories.add(new DeleteHistory(ContentType.ANSWER, getId(), getWriter(), LocalDateTime.now()));
+        deleteHistories.addDeleteHistoryByAnswer(this);
     }
 
     @Override
