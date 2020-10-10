@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import qna.exception.CannotDeleteException;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -22,7 +24,8 @@ public class QuestionTest {
     @DisplayName("질문 삭제 테스트")
     @Test
     void delete() throws CannotDeleteException {
-        Q1.delete(UserTest.JAVAJIGI);
+        List<DeleteHistory> deleteHistories = Q1.delete(UserTest.JAVAJIGI);
         assertThat(Q1.isDeleted()).isTrue();
+        assertThat(deleteHistories.size()).isEqualTo(1);
     }
 }
