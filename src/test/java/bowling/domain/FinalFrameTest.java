@@ -10,15 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class FinalFrameTest {
-
-    @DisplayName("FinalFrame 생성")
-    @Test
-    void create() {
-        FinalFrame finalFrame = new FinalFrame();
-
-        assertThat(finalFrame).isEqualTo(new FinalFrame());
-    }
-
     @DisplayName("FinalFrame 투구 - 스트라이크/스페어처리 못한 경우")
     @Test
     void pitch() {
@@ -26,21 +17,19 @@ public class FinalFrameTest {
         frame.pitch(1);
         frame.pitch(8);
 
-        assertThat(frame.getPins()).containsExactly(new Pin(1), new Pin(8));
-        assertThat(frame.getScore()).containsExactly("1", "8");
+        assertThat(frame.getFallenPins()).isEqualTo("1|8");
     }
 
     @DisplayName("FinalFrame 투구 - 스트라이크/스페어시 3번 투구")
     @ParameterizedTest
-    @CsvSource(value = {"1, 9, 1, 1, /, 1", "10, 10, 10, X, X, X", "10, 1, 2, X, 1, 2"})
-    void pitch_third(int first, int second, int third, String expect, String expect2, String expect3) {
+    @CsvSource(value = {"1, 9, 1, 1|/|1", "10, 10, 10, X|X|X", "10, 1, 2, X|1|2"})
+    void pitch_third(int first, int second, int third, String expect) {
         FinalFrame frame = new FinalFrame();
         frame.pitch(first);
         frame.pitch(second);
         frame.pitch(third);
 
-        assertThat(frame.getPins()).containsExactly(new Pin(first), new Pin(second), new Pin(third));
-        assertThat(frame.getScore()).containsExactly(expect, expect2, expect3);
+        assertThat(frame.getFallenPins()).isEqualTo(expect);
     }
 
     @DisplayName("FinalFrame 투구 - 스트라이크/스페어 실패 후 3번째 투구시 exception 발생")
@@ -74,5 +63,30 @@ public class FinalFrameTest {
 
         assertThatThrownBy(() -> frame.pitch(10))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("점수 계산 - 3번 투구")
+    @ParameterizedTest
+    @CsvSource(value = {"10, 10, 10, 30", "10, 0, 2, 12"})
+    void getScore(int first, int second, int third, int expectScore) {
+        FinalFrame frame = new FinalFrame();
+        frame.pitch(first);
+        frame.pitch(second);
+        frame.pitch(third);
+
+        assertThat(frame.getScore()).isEqualTo(expectScore);
+        assertThat(frame.hasScore()).isTrue();
+    }
+
+    @DisplayName("점수 계산 - 2번 투구")
+    @ParameterizedTest
+    @CsvSource(value = {"5, 5, 10, false", "1, 2, 3, true"})
+    void getScore_notEnd(int first, int second, int expectScore, boolean expectHasScore) {
+        FinalFrame frame = new FinalFrame();
+        frame.pitch(first);
+        frame.pitch(second);
+
+        assertThat(frame.getScore()).isEqualTo(expectScore);
+        assertThat(frame.hasScore()).isEqualTo(expectHasScore);
     }
 }

@@ -36,4 +36,27 @@ class FramesTest {
 
         assertThat(frames.getFrames()).hasSize(10);
     }
+
+    @DisplayName("점수 계산")
+    @Test
+    void getScore() {
+        Frames frames = new Frames();
+        frames.pitch(5);
+        frames.pitch(2);
+        frames.pitch(2);
+        frames.pitch(2);
+
+        assertThat(frames.getScores()).containsExactly(7, 4);
+    }
+
+    @DisplayName("퍼펙트 게임 점수 계산")
+    @Test
+    void getScore_perfectGame() {
+        Frames frames = new Frames();
+        for (int i = 0; i < 12; i++) {
+            frames.pitch(10);
+        }
+
+        assertThat(frames.getScores()).containsExactly(30, 30, 30, 30, 30, 30, 30, 30, 30, 30);
+    }
 }

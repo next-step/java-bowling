@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Frames {
     public static final int MAX_FRAME_COUNT = 10;
@@ -21,25 +22,31 @@ public class Frames {
             throw new GameOverException();
         }
 
-        Frame frame = findFrame();
-        frame.pitch(count);
+        this.makeFrame();
+        getLastFrame().pitch(count);
+        calculateScore(count);
     }
 
-    private Frame findFrame() {
+    private void calculateScore(int count) {
+        for (Frame frame : frames) {
+            int index = frames.size() - 1;
+            frame.calculateScore(index, count);
+        }
+    }
+
+    private void makeFrame() {
         if (frames.isEmpty()) {
-            NormalFrame frame = NormalFrame.firstFrame();
-            frames.add(frame);
-            return frame;
+            frames.add(NormalFrame.firstFrame());
+            return;
         }
 
-        if (getLastFrame().isEnd()) {
-            Frame frame = frames.size() == MAX_FRAME_COUNT - 1 ? new FinalFrame() : getLastFrame().next();
-            frames.add(frame);
-            return frame;
+        if (!getLastFrame().isEnd()) {
+            return;
         }
 
-        return getLastFrame();
+        frames.add(frames.size() > NormalFrame.MAX_FRAME_INDEX ? new FinalFrame() : getLastFrame().next());
     }
+
 
     private boolean isFinalFrame() {
         return frames.size() == MAX_FRAME_COUNT;
@@ -67,6 +74,13 @@ public class Frames {
         }
 
         return frames.size();
+    }
+
+    public List<Integer> getScores() {
+        return frames.stream()
+                .filter(Frame::hasScore)
+                .map(Frame::getScore)
+                .collect(Collectors.toList());
     }
 
     @Override

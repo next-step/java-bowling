@@ -1,22 +1,23 @@
 package bowling.domain;
 
+import bowling.domain.state.Ready;
+import bowling.domain.state.State;
 import bowling.exception.GameOverException;
 
-import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    private static final int MAX_FRAME_INDEX = 8;
-    private static final int MAX_PITCH_COUNT = 2;
+    public static final int MAX_FRAME_INDEX = 8;
 
     private final int index;
-    private final Pins pins;
+    private State state;
+    private Score score;
 
     public NormalFrame(int index) {
         this.validate(index);
 
         this.index = index;
-        this.pins = new Pins();
+        this.state = new Ready();
     }
 
     private void validate(int index) {
@@ -37,33 +38,48 @@ public class NormalFrame implements Frame {
         return new NormalFrame(index + 1);
     }
 
-    @Override
-    public List<String> getScore() {
-        return pins.getScore();
-    }
-
     public void pitch(int count) {
         if (this.isEnd()) {
             throw new GameOverException();
         }
 
-        pins.pitch(count);
+        this.state = state.pitch(count);
+        createScore();
+    }
+
+    @Override
+    public String getFallenPins() {
+        return state.toString();
+    }
+
+    @Override
+    public int getScore() {
+        return this.score.getScore();
+    }
+
+    @Override
+    public void calculateScore(int index, int count) {
+        if (this.index == index || score.isEndCalculate()) {
+            return;
+        }
+
+        score.addScore(count);
+    }
+
+    public boolean hasScore() {
+        return Objects.nonNull(score) && score.isEndCalculate();
+    }
+
+    private void createScore() {
+        if (!state.isFinish()) {
+            return;
+        }
+
+        this.score = state.getScore();
     }
 
     public boolean isEnd() {
-        if (pins.isEmpty()) {
-            return false;
-        }
-
-        if (pins.isEnd()) {
-            return true;
-        }
-
-        return pins.overPitching(MAX_PITCH_COUNT);
-    }
-
-    public List<Pin> getPins() {
-        return pins.getPins();
+        return state.isFinish();
     }
 
     @Override
@@ -71,12 +87,11 @@ public class NormalFrame implements Frame {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NormalFrame frame = (NormalFrame) o;
-        return index == frame.index &&
-                Objects.equals(pins, frame.pins);
+        return index == frame.index;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(index, pins);
+        return Objects.hash(index);
     }
 }

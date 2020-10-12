@@ -3,6 +3,8 @@ package bowling.domain;
 import bowling.exception.GameOverException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -47,8 +49,7 @@ public class NormalFrameTest {
         NormalFrame frame = NormalFrame.firstFrame();
         frame.pitch(10);
 
-        assertThat(frame.getPins()).containsExactly(new Pin(10));
-        assertThat(frame.getScore()).containsExactly("X");
+        assertThat(frame.getFallenPins()).isEqualTo("X");
     }
 
     @DisplayName("NormalFrame 투구 - spare")
@@ -58,8 +59,7 @@ public class NormalFrameTest {
         frame.pitch(5);
         frame.pitch(5);
 
-        assertThat(frame.getPins()).containsExactly(new Pin(5), new Pin(5));
-        assertThat(frame.getScore()).containsExactly("5", "/");
+        assertThat(frame.getFallenPins()).isEqualTo("5|/");
     }
 
     @DisplayName("NormalFrame 투구 - 최대 투구 회수 초과 exception 발생")
@@ -81,5 +81,27 @@ public class NormalFrameTest {
 
         assertThatThrownBy(() -> frame.pitch(2))
                 .isInstanceOf(GameOverException.class);
+    }
+
+    @DisplayName("점수 계산")
+    @ParameterizedTest
+    @CsvSource(value = {"5, 5, 10, false", "2, 1, 3, true"})
+    void getScore(int first, int second, int expectScore, boolean expectHasScore) {
+        NormalFrame frame = NormalFrame.firstFrame();
+        frame.pitch(first);
+        frame.pitch(second);
+
+        assertThat(frame.getScore()).isEqualTo(expectScore);
+        assertThat(frame.hasScore()).isEqualTo(expectHasScore);
+    }
+
+    @DisplayName("점수 계산 스트라이크 일때")
+    @Test
+    void getScore_Strike() {
+        NormalFrame frame = NormalFrame.firstFrame();
+        frame.pitch(10);
+
+        assertThat(frame.getScore()).isEqualTo(10);
+        assertThat(frame.hasScore()).isEqualTo(false);
     }
 }

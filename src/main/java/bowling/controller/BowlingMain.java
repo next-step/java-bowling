@@ -14,7 +14,7 @@ public class BowlingMain {
         while (!game.isEnd()) {
             int count = InputView.inputFallCount(game.getFrameCount());
             game.pitch(count);
-            OutputView.printScore(playerName, game.getFrames());
+            OutputView.printScore(playerName, game.getFrames(), game.getScore());
         }
     }
 }
