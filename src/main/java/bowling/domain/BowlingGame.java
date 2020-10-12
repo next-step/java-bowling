@@ -14,7 +14,7 @@ public class BowlingGame {
         this.frames = new Frames();
     }
 
-    public String getName() {
+    public String getPlayerName() {
         return player.getName();
     }
 
@@ -26,15 +26,11 @@ public class BowlingGame {
         return frames.getScores();
     }
 
-    public void swing(int score) {
-        frames.swing(score);
+    public boolean swing(int score) {
+        return frames.swing(score);
     }
 
-    public int currentRound() {
-        return frames.getRound();
-    }
-
-    public boolean isBowlingGameRun() {
-        return !frames.isEnd();
+    public boolean isEnd() {
+        return frames.isEnd();
     }
 }

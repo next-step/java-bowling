@@ -28,7 +28,7 @@ public class Frames {
         return frames.size();
     }
 
-    public void swing(int score) {
+    public boolean swing(int score) {
 
         Frame frame = lastFrame();
         frame.swing(score);
@@ -37,7 +37,10 @@ public class Frames {
 
         if (frame.isEndedFrame() && frames.size() <= FINAL_FRAME_NO) {
             frames.add(FrameFactory.next(frames.size()));
+            return true;
         }
+
+        return false;
     }
 
     private Frame lastFrame() {
