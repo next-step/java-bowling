@@ -1,9 +1,11 @@
 package qna.domain;
 
-import qna.NotFoundException;
-import qna.UnAuthorizedException;
+import qna.exception.NotFoundException;
+import qna.exception.UnAuthorizedException;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Answer extends AbstractEntity {
@@ -66,6 +68,11 @@ public class Answer extends AbstractEntity {
 
     public void toQuestion(Question question) {
         this.question = question;
+    }
+
+    public void delete(DeleteHistories deleteHistories) {
+        this.deleted = true;
+        deleteHistories.addDeleteHistoryByAnswer(this);
     }
 
     @Override
