@@ -16,15 +16,15 @@ public class BowlingGame {
     }
 
     public void pitch(int count) {
-        if (isEnd()) {
+        if (isFinish()) {
             throw new GameOverException();
         }
 
         frames.pitch(count);
     }
 
-    public boolean isEnd() {
-        return frames.isEnd();
+    public boolean isFinish() {
+        return frames.isFinish();
     }
 
     public Frames getFrames() {

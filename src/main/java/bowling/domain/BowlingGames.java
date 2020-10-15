@@ -19,9 +19,9 @@ public class BowlingGames {
         findByPlayer(player).pitch(count);
     }
 
-    public boolean isEnd() {
+    public boolean isFinish() {
         return this.bowlingGames.stream()
-                .allMatch(BowlingGame::isEnd);
+                .allMatch(BowlingGame::isFinish);
     }
 
     public Frames getFrames(Player player) {

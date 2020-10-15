@@ -33,7 +33,7 @@ public class BowlingGamesTest {
             bowlingGames.pitch(player, 10);
         }
 
-        assertThat(bowlingGames.isEnd()).isFalse();
+        assertThat(bowlingGames.isFinish()).isFalse();
     }
 
     @Test
@@ -47,6 +47,6 @@ public class BowlingGamesTest {
             bowlingGames.pitch(player2, 10);
         }
 
-        assertThat(bowlingGames.isEnd()).isTrue();
+        assertThat(bowlingGames.isFinish()).isTrue();
     }
 }

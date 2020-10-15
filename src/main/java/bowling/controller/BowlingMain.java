@@ -20,7 +20,7 @@ public class BowlingMain {
         BowlingGames bowlingGames = new BowlingGames(playerNames);
         OutputView.printScore(bowlingGames);
 
-        while (!bowlingGames.isEnd()) {
+        while (!bowlingGames.isFinish()) {
             playBowlingGames(bowlingGames);
         }
     }

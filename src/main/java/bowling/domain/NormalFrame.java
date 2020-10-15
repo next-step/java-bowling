@@ -39,7 +39,7 @@ public class NormalFrame implements Frame {
     }
 
     public void pitch(int count) {
-        if (this.isEnd()) {
+        if (this.isFinish()) {
             throw new GameOverException();
         }
 
@@ -78,7 +78,7 @@ public class NormalFrame implements Frame {
         this.score = state.getScore();
     }
 
-    public boolean isEnd() {
+    public boolean isFinish() {
         return state.isFinish();
     }
 

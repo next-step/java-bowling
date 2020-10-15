@@ -18,7 +18,7 @@ public class Frames {
     }
 
     public void pitch(int count) {
-        if (isEnd()) {
+        if (isFinish()) {
             throw new GameOverException();
         }
 
@@ -40,7 +40,7 @@ public class Frames {
             return;
         }
 
-        if (!getLastFrame().isEnd()) {
+        if (!getLastFrame().isFinish()) {
             return;
         }
 
@@ -52,8 +52,8 @@ public class Frames {
         return frames.size() == MAX_FRAME_COUNT;
     }
 
-    public boolean isEnd() {
-        return isFinalFrame() && getLastFrame().isEnd();
+    public boolean isFinish() {
+        return isFinalFrame() && getLastFrame().isFinish();
     }
 
     private Frame getLastFrame() {
@@ -69,7 +69,7 @@ public class Frames {
     }
 
     public int getIndex() {
-        if (frames.isEmpty() || getLastFrame().isEnd()) {
+        if (frames.isEmpty() || getLastFrame().isFinish()) {
             return frames.size() + 1;
         }
 
