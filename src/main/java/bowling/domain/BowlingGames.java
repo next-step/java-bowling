@@ -19,11 +19,16 @@ public class BowlingGames {
         findByPlayer(player).pitch(count);
     }
 
+    public boolean isEnd() {
+        return this.bowlingGames.stream()
+                .allMatch(BowlingGame::isEnd);
+    }
+
     public Frames getFrames(Player player) {
         return findByPlayer(player).getFrames();
     }
 
-    public BowlingGame findByPlayer(Player player) {
+    private BowlingGame findByPlayer(Player player) {
         return bowlingGames.stream()
                 .filter(it -> it.equalPlayer(player))
                 .findFirst()
@@ -32,11 +37,6 @@ public class BowlingGames {
 
     public List<BowlingGame> getBowlingGames() {
         return bowlingGames;
-    }
-
-    public boolean isEnd() {
-        return this.bowlingGames.stream()
-                .allMatch(BowlingGame::isEnd);
     }
 
     @Override

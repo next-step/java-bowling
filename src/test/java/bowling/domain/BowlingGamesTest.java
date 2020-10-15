@@ -23,4 +23,30 @@ public class BowlingGamesTest {
 
         assertThat(bowlingGames.getFrames(player).size()).isEqualTo(1);
     }
+
+    @Test
+    void isEnd() {
+        BowlingGames bowlingGames = new BowlingGames(Arrays.asList("PJS", "KYJ"));
+        Player player = new Player("PJS");
+
+        for (int i = 0; i < 12; i++) {
+            bowlingGames.pitch(player, 10);
+        }
+
+        assertThat(bowlingGames.isEnd()).isFalse();
+    }
+
+    @Test
+    void isEnd_true() {
+        BowlingGames bowlingGames = new BowlingGames(Arrays.asList("PJS", "KYJ"));
+        Player player = new Player("PJS");
+        Player player2 = new Player("KYJ");
+
+        for (int i = 0; i < 12; i++) {
+            bowlingGames.pitch(player, 10);
+            bowlingGames.pitch(player2, 10);
+        }
+
+        assertThat(bowlingGames.isEnd()).isTrue();
+    }
 }

@@ -21,11 +21,23 @@ public class BowlingMain {
         OutputView.printScore(bowlingGames);
 
         while (!bowlingGames.isEnd()) {
-            for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
-                int count = InputView.inputFallCount(bowlingGame.getPlayer());
-                bowlingGame.pitch(count);
-                OutputView.printScore(bowlingGames);
-            }
+            playBowlingGames(bowlingGames);
+        }
+    }
+
+    private static void playBowlingGames(BowlingGames bowlingGames) {
+        for (BowlingGame bowlingGame : bowlingGames.getBowlingGames()) {
+            playFrame(bowlingGames, bowlingGame);
+        }
+    }
+
+    private static void playFrame(BowlingGames bowlingGames, BowlingGame bowlingGame) {
+        int currentFrame = bowlingGame.getFrameCount();
+
+        while (bowlingGame.isFrameCount(currentFrame)) {
+            int count = InputView.inputFallCount(bowlingGame.getPlayer());
+            bowlingGame.pitch(count);
+            OutputView.printScore(bowlingGames);
         }
     }
 }

@@ -51,6 +51,14 @@ public class BowlingGame {
         return player;
     }
 
+    public int getFrameCount() {
+        return frames.getIndex();
+    }
+
+    public boolean isFrameCount(int currentFrame) {
+        return getFrameCount() == currentFrame;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
