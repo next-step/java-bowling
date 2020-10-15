@@ -27,12 +27,8 @@ public class BowlingGame {
         return frames.isEnd();
     }
 
-    public List<Frame> getFrames() {
-        return frames.getFrames();
-    }
-
-    public int getFrameCount() {
-        return frames.getIndex();
+    public Frames getFrames() {
+        return this.frames;
     }
 
     public List<Integer> getScore() {
@@ -45,6 +41,14 @@ public class BowlingGame {
         }
 
         return totalScores;
+    }
+
+    public boolean equalPlayer(Player player) {
+        return this.player.equals(player);
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     @Override
