@@ -35,7 +35,7 @@ public class BowlingGameTest {
         bowlingGame.pitch(third);
         bowlingGame.pitch(fourth);
 
-        assertThat(bowlingGame.getFrames()).hasSize(expect);
+        assertThat(bowlingGame.getFrames().size()).isEqualTo(expect);
     }
 
     @DisplayName("유효하지 않은 게임 진행")

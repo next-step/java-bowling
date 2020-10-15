@@ -16,23 +16,19 @@ public class BowlingGame {
     }
 
     public void pitch(int count) {
-        if (isEnd()) {
+        if (isFinish()) {
             throw new GameOverException();
         }
 
         frames.pitch(count);
     }
 
-    public boolean isEnd() {
-        return frames.isEnd();
+    public boolean isFinish() {
+        return frames.isFinish();
     }
 
-    public List<Frame> getFrames() {
-        return frames.getFrames();
-    }
-
-    public int getFrameCount() {
-        return frames.getIndex();
+    public Frames getFrames() {
+        return this.frames;
     }
 
     public List<Integer> getScore() {
@@ -45,6 +41,22 @@ public class BowlingGame {
         }
 
         return totalScores;
+    }
+
+    public boolean equalPlayer(Player player) {
+        return this.player.equals(player);
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public int getFrameCount() {
+        return frames.getIndex();
+    }
+
+    public boolean isFrameCount(int currentFrame) {
+        return getFrameCount() == currentFrame;
     }
 
     @Override

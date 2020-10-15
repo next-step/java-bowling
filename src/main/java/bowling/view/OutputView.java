@@ -1,14 +1,12 @@
 package bowling.view;
 
+import bowling.domain.BowlingGame;
+import bowling.domain.BowlingGames;
 import bowling.domain.Frame;
-import bowling.domain.Score;
+import bowling.domain.Frames;
 import org.apache.logging.log4j.util.Strings;
 
-import java.util.Collections;
 import java.util.List;
-
-import static java.lang.String.join;
-import static java.util.stream.Collectors.joining;
 
 public class OutputView {
 
@@ -20,21 +18,16 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printScore(String playerName, List<Frame> frames, List<Integer> scores) {
+    public static void printScore(BowlingGames bowlingGames) {
         printScoreHeader();
 
-        printNameSpace(playerName);
-        printFallenPin(frames);
-        printEmptySpace(frames.size());
+        for (BowlingGame game : bowlingGames.getBowlingGames()) {
+            printNameSpace(game.getPlayer().toString());
+            printFallenPin(game.getFrames());
 
-        printNameSpace(Strings.EMPTY);
-        printScores(scores);
-        printEmptySpace(scores.size());
-
-    }
-
-    public static void printEmptyScore(String playerName) {
-        printScore(playerName, Collections.emptyList(), Collections.emptyList());
+            printNameSpace(Strings.EMPTY);
+            printScores(game.getScore());
+        }
     }
 
     public static void printScoreHeader() {
@@ -45,10 +38,12 @@ public class OutputView {
         System.out.print(String.format("%s%4s%s", VERTICAL_SIGN, playerName, VERTICAL_SIGN));
     }
 
-    private static void printFallenPin(List<Frame> frames) {
-        for (Frame frame : frames) {
+    private static void printFallenPin(Frames frames) {
+        for (Frame frame : frames.getFrames()) {
             System.out.print(String.format("%-4s%s", frame.getFallenPins(), VERTICAL_SIGN));
         }
+
+        printEmptySpace(frames.size());
     }
 
     private static void printEmptySpace(int size) {
@@ -62,5 +57,6 @@ public class OutputView {
         for (Integer score : scores) {
             System.out.print(String.format("%-4s%s", score, VERTICAL_SIGN));
         }
+        printEmptySpace(scores.size());
     }
 }

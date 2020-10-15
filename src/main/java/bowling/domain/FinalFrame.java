@@ -23,7 +23,7 @@ public class FinalFrame implements Frame {
     }
 
     public void pitch(int count) {
-        if (this.isEnd()) {
+        if (this.isFinish()) {
             throw new GameOverException();
         }
 
@@ -42,7 +42,7 @@ public class FinalFrame implements Frame {
         this.score = new Score(sumAllCount(), 0);
     }
 
-    public boolean isEnd() {
+    public boolean isFinish() {
         if (states.isEmpty()) {
             return false;
         }
@@ -89,7 +89,7 @@ public class FinalFrame implements Frame {
     }
 
     public boolean hasScore() {
-        return isEnd();
+        return isFinish();
     }
 
     @Override

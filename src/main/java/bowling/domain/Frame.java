@@ -4,7 +4,7 @@ public interface Frame {
 
     void pitch(int count);
 
-    boolean isEnd();
+    boolean isFinish();
 
     Frame next();
 
