@@ -9,7 +9,7 @@ import static bowling.global.utils.CommonConstant.NUMBER_THREE;
 
 public class Bowler {
 
-    private String name;
+    private final String name;
 
     private Bowler(String name) {
         validatePlayerNameisNull(name);

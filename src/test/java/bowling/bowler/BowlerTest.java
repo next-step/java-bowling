@@ -16,7 +16,7 @@ class BowlerTest {
     @Test
     @DisplayName("플레이어 입력")
     void createBowler() {
-        bowler = Bowler.of("PJS");
+        bowler = Bowler.of("pjs");
         assertThat(bowler.getName()).isEqualTo("PJS");
     }
 
@@ -24,9 +24,7 @@ class BowlerTest {
     @DisplayName("플레이어 이름이 3글자가 넘어가면 Exception 발생")
     void validateBowlerNameLength() {
         assertThatExceptionOfType(NotMatchingBowlerNameException.class)
-                .isThrownBy(() -> {
-                    bowler = Bowler.of("ABCD");
-                });
+                .isThrownBy(() -> bowler = Bowler.of("ABCD"));
     }
 
     @ParameterizedTest
