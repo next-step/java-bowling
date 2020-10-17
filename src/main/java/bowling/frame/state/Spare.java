@@ -17,7 +17,7 @@ public class Spare extends Done {
     }
 
     @Override
-    public State bowl(String falledPins) {
+    public State bowl(Pin fellPins) {
         throw new UnsupportedOperationException();
     }
 

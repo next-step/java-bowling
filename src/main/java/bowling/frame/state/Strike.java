@@ -14,8 +14,12 @@ public class Strike extends Done {
         return new Strike(currentPins);
     }
 
+    public Pin getCurrentPins() {
+        return currentPins;
+    }
+
     @Override
-    public State bowl(String falledPins) {
+    public State bowl(Pin fellPins) {
         throw new UnsupportedOperationException();
     }
 

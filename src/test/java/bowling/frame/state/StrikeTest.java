@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StrikeTest {
 
@@ -18,13 +17,19 @@ class StrikeTest {
     }
 
     @Test
-    @DisplayName("두번째 볼링 결과 - 스트라이크")
-    void result() {
+    @DisplayName("투구 종료 여부 확인 - 종료")
+    void isFinished() {
         assertThat(state.isFinish()).isTrue();
     }
 
     @Test
     @DisplayName("두번째 볼링 결과 - 스트라이크")
+    void result() {
+        assertThat(state instanceof Strike).isTrue();
+    }
+
+    @Test
+    @DisplayName("두번째 볼링 결과 마크 - 스트라이크")
     void resultMark() {
         assertThat(state.toString()).isEqualTo("X");
     }

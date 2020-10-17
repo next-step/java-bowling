@@ -16,7 +16,7 @@ class NextTest {
     @DisplayName("투구 종료 여부 확인 - 종료")
     void isFinished() {
         firstPins = Pin.bowl("3");
-        secondPins = Pin.bowl("7");
+        secondPins = Pin.bowl("1");
         secondState = Next.of(firstPins).bowl(secondPins);
         assertThat(secondState.isFinish()).isTrue();
     }
@@ -27,7 +27,7 @@ class NextTest {
         firstPins = Pin.bowl("3");
         secondPins = Pin.bowl("7");
         secondState = Next.of(firstPins).bowl(secondPins);
-        assertThat(secondState instanceof Spare);
+        assertThat(secondState instanceof Spare).isTrue();
     }
 
     @Test
@@ -36,7 +36,7 @@ class NextTest {
         firstPins = Pin.bowl("5");
         secondPins = Pin.bowl("2");
         secondState = Next.of(firstPins).bowl(secondPins);
-        assertThat(secondState instanceof Miss);
+        assertThat(secondState instanceof Miss).isTrue();
     }
 
 }

@@ -4,8 +4,8 @@ import bowling.score.Pin;
 
 public class Miss extends Done {
 
-    private Pin previousPins;
-    private Pin currentPins;
+    private final Pin previousPins;
+    private final Pin currentPins;
 
     private Miss(Pin previousPins, Pin currentPins) {
         this.previousPins = previousPins;
@@ -17,7 +17,7 @@ public class Miss extends Done {
     }
 
     @Override
-    public State bowl(String falledPins) {
+    public State bowl(Pin fellPins) {
         throw new UnsupportedOperationException();
     }
 
