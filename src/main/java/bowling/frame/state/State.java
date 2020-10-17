@@ -1,9 +1,11 @@
 package bowling.frame.state;
 
+import bowling.score.Pin;
+
 public abstract class State {
 
-    protected abstract State bowl(String falledPins);
+    public abstract State bowl(Pin fellPins);
 
-    protected abstract boolean isFinish();
+    public abstract boolean isFinish();
 
 }

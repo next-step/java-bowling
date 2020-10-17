@@ -10,16 +10,16 @@ public class Next extends Progress {
         this.previousPins = previousPins;
     }
 
-    public static Next bowl(Pin previousPins) {
+    public static Next of(Pin previousPins) {
         return new Next(previousPins);
     }
 
     @Override
-    public State bowl(String falledPins) {
-        Pin nextPins = Pin.bowl(falledPins);
+    public State bowl(Pin nextPins) {
         if (previousPins.isSpare(nextPins)) {
             return Spare.of(previousPins, nextPins);
         }
         return Miss.of(previousPins, nextPins);
     }
+
 }

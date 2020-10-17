@@ -13,33 +13,33 @@ public class Pin {
     private static final int PINS_MIN_VALUE = 0;
     private static final int PINS_MAX_VALUE = 10;
 
-    private int falledPins;
+    private final int fellPins;
 
-    private Pin(int falledPins) {
-        this.falledPins = falledPins;
-        validateOutofPinsRange(falledPins);
+    private Pin(int fellPins) {
+        this.fellPins = fellPins;
+        validateOutofPinsRange(fellPins);
     }
 
-    public static Pin bowl(String falledPins) {
-        validatePinsIsNull(falledPins);
-        return new Pin(new StringParser(falledPins).toInt());
+    public static Pin bowl(String fellPins) {
+        validatePinsIsNull(fellPins);
+        return new Pin(new StringParser(fellPins).toInt());
     }
 
     public boolean isStrike() {
-        return this.falledPins == PINS_MAX_VALUE;
+        return this.fellPins == PINS_MAX_VALUE;
     }
 
-    public boolean isSpare(Pin falledPins) {
-        int nextPins = falledPins.getFalledPins();
-        return this.falledPins + nextPins == PINS_MAX_VALUE;
+    public boolean isSpare(Pin fellPins) {
+        int nextPins = fellPins.getFellPins();
+        return this.fellPins + nextPins == PINS_MAX_VALUE;
     }
 
     public boolean isGutter() {
-        return this.falledPins == PINS_MIN_VALUE;
+        return this.fellPins == PINS_MIN_VALUE;
     }
 
-    public int getFalledPins() {
-        return falledPins;
+    public int getFellPins() {
+        return fellPins;
     }
 
     private static void validatePinsIsNull(String score) {
@@ -48,8 +48,8 @@ public class Pin {
         }
     }
 
-    private void validateOutofPinsRange(int falledPins) {
-        if (falledPins < PINS_MIN_VALUE || falledPins > PINS_MAX_VALUE) {
+    private void validateOutofPinsRange(int fellPins) {
+        if (fellPins < PINS_MIN_VALUE || fellPins > PINS_MAX_VALUE) {
             throw new OutOfPinsRangeException(ExceptionMessage.INVALID_PITCH_RANGE);
         }
     }
@@ -59,16 +59,16 @@ public class Pin {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pin pin = (Pin) o;
-        return falledPins == pin.falledPins;
+        return fellPins == pin.fellPins;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(falledPins);
+        return Objects.hash(fellPins);
     }
 
     @Override
     public String toString() {
-        return String.valueOf(falledPins);
+        return String.valueOf(fellPins);
     }
 }

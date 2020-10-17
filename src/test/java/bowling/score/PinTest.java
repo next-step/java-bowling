@@ -16,10 +16,10 @@ class PinTest {
     private Pin pin;
 
     @Test
-    @DisplayName("Pin을 몇개 쓰려트렸는지 확인")
-    void falledPins() {
+    @DisplayName("Pin 을 몇개 쓰려트렸는지 확인")
+    void fellPins() {
         pin = Pin.bowl("5");
-        assertThat(pin.getFalledPins()).isEqualTo(5);
+        assertThat(pin.getFellPins()).isEqualTo(5);
     }
 
     @Test
@@ -47,15 +47,15 @@ class PinTest {
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("입력값이 없을 경우 Exception 발생")
-    void validateFalledPinsIsNull(String falledPins) {
+    void validateFellPinsIsNull(String fellPins) {
         assertThatExceptionOfType(InputPinsNullPointerException.class)
-                .isThrownBy(() -> pin = Pin.bowl(falledPins)
+                .isThrownBy(() -> pin = Pin.bowl(fellPins)
                 ).withMessage(ExceptionMessage.INVALID_PITCH_BALL_IS_NULL);
     }
 
     @Test
     @DisplayName("입력값이 0 ~ 10의 범위를 벗어난 경우 Exception 발생")
-    void validateFalledPinsRange() {
+    void validateFellPinsRange() {
         assertThatExceptionOfType(OutOfPinsRangeException.class)
                 .isThrownBy(() -> pin = Pin.bowl("11")
                 ).withMessage(ExceptionMessage.INVALID_PITCH_RANGE);

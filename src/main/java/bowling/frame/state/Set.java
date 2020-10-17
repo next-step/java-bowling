@@ -4,12 +4,18 @@ import bowling.score.Pin;
 
 public class Set extends Progress {
 
+    private Set() {
+    }
+
+    public static Set init() {
+        return new Set();
+    }
+
     @Override
-    public State bowl(String falledPins) {
-        Pin pin = Pin.bowl(falledPins);
-        if (pin.isStrike()) {
-            return Strike.of(pin);
+    public State bowl(Pin fellPins) {
+        if (fellPins.isStrike()) {
+            return Strike.of(fellPins);
         }
-        return Next.bowl(pin);
+        return Next.of(fellPins);
     }
 }
