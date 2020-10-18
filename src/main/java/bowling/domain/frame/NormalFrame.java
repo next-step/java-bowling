@@ -2,6 +2,7 @@ package bowling.domain.frame;
 
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
+import bowling.domain.score.Score;
 import bowling.domain.score.ScoreConverter;
 
 import java.util.List;
@@ -10,20 +11,15 @@ import java.util.Objects;
 public class NormalFrame implements Frame {
     private static final int FIRST_FRAME = 1;
     private static final int FINAL_FRAME = 10;
+    private static final int MAXIMUM_ROLL_COUNT = 2;
 
     private Pins pins;
     private int index;
-    private Frame previousFrame;
+    private Score score;
 
     public NormalFrame(final int index) {
         this.pins = new Pins();
         this.index = index;
-    }
-
-    public NormalFrame(final int index, final Frame frame) {
-        this.pins = new Pins();
-        this.index = index;
-        this.previousFrame = frame;
     }
 
     public static NormalFrame firstFrame() {
@@ -86,8 +82,41 @@ public class NormalFrame implements Frame {
         return ScoreConverter.convert(this);
     }
 
-    public int getScore() {
-        return previousFrame == null ? getTotal() : getTotal() + previousFrame.getTotal();
+    public Integer getScore() {
+        try {
+            return score.getScore();
+        }catch (Exception e) {
+            return null;
+        }
     }
 
+    public void calculateScore(int point) {
+        if (score != null) {
+            this.score = score.calculate(point);
+        }
+    }
+
+    public boolean hasScore() {
+        if (score != null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void addScore() {
+        if (!canRoll()) {
+            this.score = makeScore();
+        }
+    }
+
+    private Score makeScore() {
+        if (pins.isStrike()) {
+            return Score.ofStrike();
+        }
+        if (pins.isSpare()) {
+            return Score.ofSpare();
+        }
+        return Score.ofMiss(pins.getTotalPins());
+    }
 }

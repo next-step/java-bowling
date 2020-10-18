@@ -1,5 +1,8 @@
 package bowling.domain.view;
 
+import bowling.domain.frame.Frame;
+import bowling.domain.pin.Pin;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -15,9 +18,12 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static int inputPinRoll(int frame) {
-        System.out.println(frame + CURRENT_FRAME);
-        return scanner.nextInt();
+    public static Pin inputPinRoll(int frameNumber, Frame frame) {
+//        System.out.println(frameNumber + CURRENT_FRAME);
+//        return scanner.nextInt();
+        int leftPoint = frame.getPins().getLeftPin();
+        System.out.println(frameNumber + CURRENT_FRAME);
+        return new Pin(scanner.nextInt());
     }
 
 

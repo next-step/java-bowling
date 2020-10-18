@@ -20,5 +20,11 @@ public interface Frame {
 
     String getStringScore();
 
+    void addScore();
+
     boolean isGameOver();
+
+    boolean hasScore();
+
+    void calculateScore(int pins);
 }

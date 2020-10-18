@@ -13,6 +13,7 @@ public class Pins {
     private static final int NORMAL_FRAME_CAN_ROLL = 2;
     private static final int FINAL_FRAME_CAN_ROLL = 3;
     private static final int FIRST_ROLL = 1;
+    private static final int SECOND_ROLL = 2;
     private static final int PINS_LIMIT = 10;
 
     private List<Pin> pins;
@@ -64,6 +65,10 @@ public class Pins {
         return pins.size() == FIRST_ROLL && this.getTotalPins() == PINS_LIMIT;
     }
 
+    public boolean isSpare() {
+        return pins.size() == SECOND_ROLL && getTotalPins() == PINS_LIMIT;
+    }
+
     private boolean isPinTotalOverTen(int pin) {
         return this.getTotalPins() + pin > PINS_LIMIT;
     }
@@ -84,8 +89,12 @@ public class Pins {
         return pins.get(index).getPin();
     }
 
+    public Pin getPin(int index) {
+        return pins.get(index);
+    }
+
     public int rollCount() {
-        return this.pins.size();
+        return pins.size();
     }
 
     private boolean isPinUnderTen() {

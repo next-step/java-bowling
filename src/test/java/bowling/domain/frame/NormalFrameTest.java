@@ -53,10 +53,8 @@ class NormalFrameTest {
         firstFrame.roll(3);
         firstFrame.roll(2);
 
-        NormalFrame secondFrame = new NormalFrame(2, firstFrame);
-        secondFrame.roll(3);
-
-        assertThat(secondFrame.getScore()).isEqualTo(8);
+        assertThat(firstFrame.getTotal()).isEqualTo(5);
+        System.out.println(firstFrame.getScore());
     }
 
     @Test
@@ -65,7 +63,7 @@ class NormalFrameTest {
         firstFrame.roll(5);
         firstFrame.roll(5);
 
-        NormalFrame secondFrame = new NormalFrame(2, firstFrame);
+        NormalFrame secondFrame = new NormalFrame(2);
         secondFrame.roll(3);
 
         assertThat(secondFrame.getScore()).isEqualTo(8);
