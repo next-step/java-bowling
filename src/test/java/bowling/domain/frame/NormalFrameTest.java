@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,11 +24,11 @@ class NormalFrameTest {
     void rollTest(int pin) {
         // given
         NormalFrame normalFrame = NormalFrame.firstFrame();
-        int hitedPins = pin + pin;
+        int hitedPins = new Pin(pin).getPin() + new Pin(pin).getPin();
 
         // when
-        normalFrame.roll(pin);
-        normalFrame.roll(pin);
+        normalFrame.roll(new Pin(pin));
+        normalFrame.roll(new Pin(pin));
 
         // then
         assertThat(hitedPins).isEqualTo(normalFrame.getTotal());
@@ -37,12 +38,12 @@ class NormalFrameTest {
     @Test
     void testRollThree() {
         NormalFrame normalFrame = NormalFrame.firstFrame();
-        normalFrame.roll(3);
-        normalFrame.roll(2);
+        normalFrame.roll(new Pin(3));
+        normalFrame.roll(new Pin(2));
 
         assertThat(normalFrame.canRoll()).isFalse();
 
-        normalFrame.roll(2);
+        normalFrame.roll(new Pin(2));
         assertThat(normalFrame.getTotal()).isEqualTo(5);
 
     }
@@ -50,23 +51,11 @@ class NormalFrameTest {
     @Test
     void testNormalScore() {
         NormalFrame firstFrame = NormalFrame.firstFrame();
-        firstFrame.roll(3);
-        firstFrame.roll(2);
+
+        firstFrame.roll(new Pin(3));
+        firstFrame.roll(new Pin(2));
 
         assertThat(firstFrame.getTotal()).isEqualTo(5);
-        System.out.println(firstFrame.getScore());
-    }
-
-    @Test
-    void testSpareScore() {
-        NormalFrame firstFrame = NormalFrame.firstFrame();
-        firstFrame.roll(5);
-        firstFrame.roll(5);
-
-        NormalFrame secondFrame = new NormalFrame(2);
-        secondFrame.roll(3);
-
-        assertThat(secondFrame.getScore()).isEqualTo(8);
     }
 
 }

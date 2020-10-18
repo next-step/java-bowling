@@ -27,9 +27,9 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public void roll(int pin) {
+    public void roll(Pin pin) {
         if (canRoll()) {
-            pins.addPins(this, pin);
+            pins.addPins(this, pin.getPin());
         }
     }
 
@@ -106,11 +106,11 @@ public class NormalFrame implements Frame {
     @Override
     public void addScore() {
         if (!canRoll()) {
-            this.score = makeScore();
+            this.score = convertScore();
         }
     }
 
-    private Score makeScore() {
+    private Score convertScore() {
         if (pins.isStrike()) {
             return Score.ofStrike();
         }

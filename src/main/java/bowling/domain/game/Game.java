@@ -17,7 +17,7 @@ public class Game {
     }
 
     public Frame roll(Frame frame, Pin pin) {
-        frame.roll(pin.getPin());
+        frame.roll(pin);
         frames.calculateScores(pin);
         frame.addScore();
         return frames.getNextFrame();

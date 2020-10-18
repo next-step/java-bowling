@@ -6,7 +6,7 @@ import bowling.domain.pin.Pins;
 import java.util.List;
 
 public interface Frame {
-    void roll(int pin);
+    void roll(Pin pin);
 
     int getTotal();
 

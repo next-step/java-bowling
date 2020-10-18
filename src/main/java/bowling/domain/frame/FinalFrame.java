@@ -22,9 +22,9 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public void roll(int pin) {
+    public void roll(Pin pin) {
         if (canRoll()) {
-            pins.addPins(this, pin);
+            pins.addPins(this, pin.getPin());
         }
     }
 

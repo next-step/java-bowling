@@ -1,5 +1,6 @@
 package bowling.domain.frame;
 
+import bowling.domain.pin.Pin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FinalFrameTest {
 
+    private static final int STRIKE = 10;
+
     @DisplayName("스트라이크일 경우 테스트")
     @Test
     void rollStrikeTest() {
@@ -15,9 +18,9 @@ class FinalFrameTest {
         FinalFrame finalFrame = new FinalFrame();
 
         // when
-        finalFrame.roll(10);
-        finalFrame.roll(3);
-        finalFrame.roll(3);
+        finalFrame.roll(new Pin(STRIKE));
+        finalFrame.roll(new Pin(3));
+        finalFrame.roll(new Pin(3));
 
         // then
         assertThat(finalFrame.getTotal()).isEqualTo(16);
@@ -30,9 +33,9 @@ class FinalFrameTest {
         FinalFrame finalFrame = new FinalFrame();
 
         // when
-        finalFrame.roll(7);
-        finalFrame.roll(3);
-        finalFrame.roll(3);
+        finalFrame.roll(new Pin(7));
+        finalFrame.roll(new Pin(3));
+        finalFrame.roll(new Pin(3));
 
         // then
         assertThat(finalFrame.getTotal()).isEqualTo(13);
@@ -43,12 +46,12 @@ class FinalFrameTest {
     void testRollThree() {
         FinalFrame finalFrame = new FinalFrame();
 
-        finalFrame.roll(3);
-        finalFrame.roll(2);
+        finalFrame.roll(new Pin(3));
+        finalFrame.roll(new Pin(2));
 
         assertThat(finalFrame.canRoll()).isFalse();
 
-        finalFrame.roll(2);
+        finalFrame.roll(new Pin(3));
         assertThat(finalFrame.getTotal()).isEqualTo(5);
 
     }
@@ -59,8 +62,8 @@ class FinalFrameTest {
         FinalFrame finalFrame = new FinalFrame();
 
         assertThatThrownBy(() -> {
-            finalFrame.roll(5);
-            finalFrame.roll(6);
+            finalFrame.roll(new Pin(5));
+            finalFrame.roll(new Pin(6));
 
         }).isInstanceOf(IllegalArgumentException.class);
     }
