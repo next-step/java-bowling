@@ -2,17 +2,11 @@ package bowling.domain.view;
 
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
-import bowling.domain.frame.NormalFrame;
 import bowling.domain.pin.Pin;
 import bowling.domain.pin.Pins;
 import bowling.domain.player.Player;
-import bowling.domain.score.ScoreConverter;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
-
-import static java.lang.System.lineSeparator;
 
 public class OutputView {
 
@@ -20,48 +14,26 @@ public class OutputView {
     private static final int MAX_NAME_LENGTH = 5;
     private static final String BOARD_TITLE = "| NAME |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |";
     private static final String BLANK_BLOCK = "|";
-    private static final String MARK_JOIN_DELIMETER = "|";
-    private static final String MARK_STRIKE = "X";
-    private static final String MARK_SPARE = "/";
-    private static final String MARK_GUTTER = "-";
-    private static final String MARK_NONE = "";
-    public static final int NAME_BLOCK = 0;
-    private static final int BOARD_BOX = 11;
-    private static Map<Integer, String> map = new HashMap<>();
-    private static String[] scores = new String[BOARD_BOX];
-
+    private static final String STRING_STRIKE = "X";
+    private static final String STRING_SPARE = "/";
+    private static final String STRING_GUTTER = "-";
+    private static final String STRING_NONE = "";
 
     private OutputView() {
     }
 
-    private static void printScore() {
-        for (int i = 0; i < scores.length; i++) {
-            System.out.print(makeSpaceName(scores[i]));
-        }
-        System.out.print(lineSeparator());
-    }
-
-    public static void getScoreBoard2(Player player,Frames frames) {
+    public static void getScoreBoard(Player player, Frames frames) {
         getBoardTitle();
-        viewFrames(frames, player);
-        viewScores(frames);
+        getFrames(frames, player);
+        getScores(frames);
     }
 
     private static void getBoardTitle() {
         System.out.println(BOARD_TITLE);
     }
 
-    private static void scoreAppend(Frame frame, Map map) {
-        for (int i = 1; i <= frame.getIndex(); i++) {
-            scores[i] = makeSpaceScore(String.valueOf(map.get(i)));
-        }
-    }
 
-    private static void viewFrameHead() {
-        System.out.println(BOARD_TITLE);
-    }
-
-    private static void viewScores(Frames frames) {
+    private static void getScores(Frames frames) {
         getPlayerName("");
         StringBuilder sb = new StringBuilder();
         Integer sumScore = 0;
@@ -81,10 +53,10 @@ public class OutputView {
 
     private static String getScores(Frame beforeFrame, Integer sumScore) {
         Integer score = beforeFrame.getTotal();
-        return makeSpaceScore2(String.valueOf(score + sumScore));
+        return makeBlockBlock(String.valueOf(score + sumScore));
     }
 
-    private static void viewFrames(Frames frames, Player player) {
+    private static void getFrames(Frames frames, Player player) {
         getPlayerName(player.getName());
         String frameViews = frames.getFrames().stream()
                 .map(frame -> viewFrame(frame))
@@ -93,45 +65,43 @@ public class OutputView {
     }
 
     private static void getPlayerName(String name) {
-        System.out.print("|" + makeSpaceName(name) + "|");
+        System.out.print(BLANK_BLOCK + makeSpaceName(name) + BLANK_BLOCK);
     }
 
     private static String viewFrame(Frame frame) {
         Pins points = frame.getPins();
-        return makeSpaceScore(getScoreMark(points));
+        return makeSpaceScore(convertScore(points));
     }
-    private static String getScoreMark(Pins pins) {
+    private static String convertScore(Pins pins) {
         if (pins.rollCount() == 1) {
-            return getMark(pins.getPin(0));
+            return convertStringScore(pins.getPin(0));
         }
         if (pins.rollCount() == 2) {
-            return getMark(pins.getPin(0), pins.getPin(1));
+            return convertScore(pins.getPin(0), pins.getPin(1));
         }
         if (pins.rollCount() == 3) {
-            return getMark(pins.getPin(0), pins.getPin(1)) + MARK_JOIN_DELIMETER + getMark(pins.getPin(2));
+            return convertScore(pins.getPin(0), pins.getPin(1)) + BLANK_BLOCK + convertStringScore(pins.getPin(2));
         }
-        return "";
+        return STRING_NONE;
     }
 
-    private static String getMark(Pin pin) {
+    private static String convertStringScore(Pin pin) {
         if (pin.getPin() == 10) {
-            return MARK_STRIKE;
+            return STRING_STRIKE;
         }
         if (pin.getPin() == 0) {
-            return MARK_GUTTER;
+            return STRING_GUTTER;
         }
         return String.valueOf(pin.getPin());
     }
 
-    private static String getMark(Pin point1, Pin point2) {
+    private static String convertScore(Pin point1, Pin point2) {
         int sumPoint = point1.getPin() + point2.getPin();
         if (sumPoint == 10) {
-            return getMark(point1) + MARK_JOIN_DELIMETER + MARK_SPARE;
+            return convertStringScore(point1) + BLANK_BLOCK + STRING_SPARE;
         }
-        return getMark(point1) + MARK_JOIN_DELIMETER + getMark(point2);
+        return convertStringScore(point1) + BLANK_BLOCK + convertStringScore(point2);
     }
-
-
 
     /**
      * 이름 출력시 5글자까지 반복하여 공백을 더해준다.
@@ -156,7 +126,7 @@ public class OutputView {
         return makeSpaceName(score);
     }
 
-    private static String makeSpaceScore2(String score) {
+    private static String makeBlockBlock(String score) {
         if (score.length() > MAX_NAME_LENGTH) {
             return "        |";
         }

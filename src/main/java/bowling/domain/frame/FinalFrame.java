@@ -6,19 +6,14 @@ import bowling.domain.score.Score;
 import bowling.domain.score.ScoreConverter;
 
 import java.util.List;
+import java.util.Objects;
 
 public class FinalFrame implements Frame {
-    private static final int FINAL_FRAME = 10;
-    private static final int MAXIMUM_BONUS_COUNT = 3;
-    private static final int MAXIMUM_NORMAL_COUNT = 2;
-
     private Pins pins;
-    private int index;
     private Score score;
 
     public FinalFrame() {
         this.pins = new Pins();
-        this.index = 10;
     }
 
     @Override
@@ -39,11 +34,6 @@ public class FinalFrame implements Frame {
     }
 
     @Override
-    public int getIndex() {
-        return index;
-    }
-
-    @Override
     public List<Pin> getPinInfo() {
         return pins.getPins();
     }
@@ -55,7 +45,10 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isGameOver() {
-        return index == FINAL_FRAME && canRoll();
+        if (this instanceof FinalFrame && !canRoll()) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -95,5 +88,19 @@ public class FinalFrame implements Frame {
             return Score.ofSpare();
         }
         return Score.ofMiss(pins.getTotalPins());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FinalFrame)) return false;
+        FinalFrame that = (FinalFrame) o;
+        return Objects.equals(getPins(), that.getPins()) &&
+                Objects.equals(getScore(), that.getScore());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPins(), getScore());
     }
 }

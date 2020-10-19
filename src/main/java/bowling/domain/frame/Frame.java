@@ -12,8 +12,6 @@ public interface Frame {
 
     boolean canRoll();
 
-    int getIndex();
-
     List<Pin> getPinInfo();
 
     Pins getPins();

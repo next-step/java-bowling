@@ -15,12 +15,14 @@ public class Main {
 
         Frames frames = game.getFrames();
         Frame frame = game.getFirstFrame();
+        int frameIndex = 0;
 
         while (frame.isGameOver()) {
-            Pin pin = InputView.inputPinRoll(frame.getIndex(), frame);
+            frameIndex = frames.getFrameIndex(frame);
+            Pin pin = InputView.inputPinRoll(frameIndex, frame);
             game.roll(frame, pin);
             frame = frames.getNextFrame();
-            OutputView.getScoreBoard2(player, frames);
+            OutputView.getScoreBoard(player, frames);
         }
     }
 }

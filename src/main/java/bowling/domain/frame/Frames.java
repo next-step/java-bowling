@@ -5,7 +5,7 @@ import bowling.domain.pin.Pin;
 import java.util.LinkedList;
 
 public class Frames {
-    private static final int FINAL_FRAME = 9;
+    private static final int FINAL_FRAME = 8;
     private LinkedList<Frame> frames = new LinkedList<>();
 
     public Frames() {
@@ -13,7 +13,7 @@ public class Frames {
     }
 
     private void startGame() {
-        for (int i = 1; i <= FINAL_FRAME; i++) {
+        for (int i = 0; i <= FINAL_FRAME; i++) {
             frames.add(new NormalFrame(i));
         }
         frames.add(new FinalFrame());
@@ -29,6 +29,16 @@ public class Frames {
 
     public LinkedList<Frame> getFrames() {
         return frames;
+    }
+
+    public int getFrameIndex(Frame frame) {
+        int frameIndex = 0;
+        Frame targetFrame = frames.get(frameIndex);
+        while (!frame.equals(targetFrame)) {
+            frameIndex++;
+            targetFrame = frames.get(frameIndex);
+        }
+        return frameIndex + 1;
     }
 
     public Frame getFrame(int index) {

@@ -10,14 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class NormalFrameTest {
 
-    @DisplayName("프레임생성 테스트")
-    @Test
-    void testCreate() {
-        NormalFrame normalFrame = NormalFrame.firstFrame();
-        assertThat(normalFrame.getIndex()).isEqualTo(1);
-    }
-
-
     @DisplayName("쓰러뜨린 핀 갯수 테스트")
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})

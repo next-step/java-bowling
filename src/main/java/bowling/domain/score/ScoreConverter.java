@@ -28,7 +28,7 @@ public class ScoreConverter {
     }
 
     public static String convert(Frame frame) {
-        if (frame.getIndex() < FINAL_FRAME) {
+        if (9 < FINAL_FRAME) {
             return normalFrameConvert(frame.getPins());
         }
         return finalFrameConvert(frame.getPins());
