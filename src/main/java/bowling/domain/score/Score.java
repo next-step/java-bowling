@@ -29,13 +29,13 @@ public class Score {
     }
 
     public int getScore() {
-        if (!canCalculateScore()) {
-            throw new IllegalArgumentException();
+        if (!canCalculate()) {
+            throw new IllegalArgumentException("점수를 계산할 수 없습니다.");
         }
         return this.score;
     }
 
-    public boolean canCalculateScore() {
+    public boolean canCalculate() {
         return leftCount == 0;
     }
 

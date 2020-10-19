@@ -14,12 +14,12 @@ public class NormalFrame implements Frame {
     private Pins pins;
     private Score score;
 
-    public NormalFrame(final int index) {
+    public NormalFrame() {
         this.pins = new Pins();
     }
 
     public static NormalFrame firstFrame() {
-        return new NormalFrame(FIRST_FRAME);
+        return new NormalFrame();
     }
 
     @Override
@@ -66,7 +66,7 @@ public class NormalFrame implements Frame {
     public Integer getScore() {
         try {
             return score.getScore();
-        }catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }

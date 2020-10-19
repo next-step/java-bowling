@@ -14,7 +14,7 @@ public class Frames {
 
     private void startGame() {
         for (int i = 0; i <= FINAL_FRAME; i++) {
-            frames.add(new NormalFrame(i));
+            frames.add(new NormalFrame());
         }
         frames.add(new FinalFrame());
     }
