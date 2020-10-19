@@ -19,7 +19,7 @@ class PinsTest {
     void addTest(int pin) {
         // given
         Pins pins = new Pins();
-        Frame frame = NormalFrame.firstFrame();
+        Frame frame = NormalFrame.generateNormalFrame();
         // when
         pins.addPins(frame, pin);
 
@@ -33,7 +33,7 @@ class PinsTest {
 
         assertThatThrownBy(() -> {
             Pins pins = new Pins();
-            Frame frame = NormalFrame.firstFrame();
+            Frame frame = NormalFrame.generateNormalFrame();
             // when
             pins.addPins(frame, 10);
             pins.addPins(frame, 5);

@@ -18,10 +18,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static Pin inputPinRoll(int frameNumber, Frame frame) {
-//        System.out.println(frameNumber + CURRENT_FRAME);
-//        return scanner.nextInt();
-        int leftPoint = frame.getPins().getLeftPin();
+    public static Pin inputPinRoll(int frameNumber) {
         System.out.println(frameNumber + CURRENT_FRAME);
         return new Pin(scanner.nextInt());
     }

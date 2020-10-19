@@ -18,7 +18,7 @@ public class NormalFrame implements Frame {
         this.pins = new Pins();
     }
 
-    public static NormalFrame firstFrame() {
+    public static NormalFrame generateNormalFrame() {
         return new NormalFrame();
     }
 

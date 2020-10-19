@@ -19,8 +19,8 @@ public class Main {
 
         while (frame.isGameOver()) {
             frameIndex = frames.getFrameIndex(frame);
-            Pin pin = InputView.inputPinRoll(frameIndex, frame);
-            game.roll(frame, pin);
+            Pin pin = InputView.inputPinRoll(frameIndex);
+            game.roll(pin);
             frame = frames.getNextFrame();
             OutputView.getScoreBoard(player, frames);
         }

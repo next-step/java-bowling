@@ -15,7 +15,7 @@ class NormalFrameTest {
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     void rollTest(int pin) {
         // given
-        NormalFrame normalFrame = NormalFrame.firstFrame();
+        NormalFrame normalFrame = NormalFrame.generateNormalFrame();
         int hitedPins = new Pin(pin).getPin() + new Pin(pin).getPin();
 
         // when
@@ -29,7 +29,7 @@ class NormalFrameTest {
     @DisplayName("두번 이상 던지기 테스트")
     @Test
     void testRollThree() {
-        NormalFrame normalFrame = NormalFrame.firstFrame();
+        NormalFrame normalFrame = NormalFrame.generateNormalFrame();
         normalFrame.roll(new Pin(3));
         normalFrame.roll(new Pin(2));
 
@@ -42,7 +42,7 @@ class NormalFrameTest {
 
     @Test
     void testNormalScore() {
-        NormalFrame firstFrame = NormalFrame.firstFrame();
+        NormalFrame firstFrame = NormalFrame.generateNormalFrame();
 
         firstFrame.roll(new Pin(3));
         firstFrame.roll(new Pin(2));

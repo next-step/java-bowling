@@ -16,7 +16,8 @@ public class Game {
         this.player = player;
     }
 
-    public Frame roll(Frame frame, Pin pin) {
+    public Frame roll(Pin pin) {
+        Frame frame = frames.getNextFrame();
         frame.roll(pin);
         frames.calculateScores(pin);
         frame.addScore();
@@ -29,6 +30,10 @@ public class Game {
 
     public Frame getFrame(int index) {
         return frames.getFrame(index);
+    }
+
+    public int getCurrentFrameIndex() {
+        return frames.getFrameIndex(frames.getNextFrame());
     }
 
     public Frames getFrames() {

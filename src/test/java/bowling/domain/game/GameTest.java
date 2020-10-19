@@ -29,7 +29,7 @@ class GameTest {
     @Test
     void secondFrameTest() {
         assertThat(
-                game.roll(frames.getFrame(0), new Pin(10))
+                game.roll(new Pin(10))
         ).isSameAs(frames.getFrame(1));
     }
 }
