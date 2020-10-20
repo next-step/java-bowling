@@ -69,16 +69,22 @@ public class Pins {
         return pins.size() == SECOND_ROLL && getTotalPins() == PINS_LIMIT;
     }
 
+    public boolean isFinalSpare() { return pins.size() == SECOND_ROLL && this.isSpare() && !this.isStrike();}
+
     private boolean isPinTotalOverTen(int pin) {
         return this.getTotalPins() + pin > PINS_LIMIT;
     }
 
-    private boolean isRolledTwice() {
+    public boolean isRolledOnce() {
+        return pins.size() < NORMAL_FRAME_CAN_ROLL;
+    }
+
+    public boolean isRolledTwice() {
         return pins.size() == NORMAL_FRAME_CAN_ROLL;
     }
 
-    private boolean isRolledOnce() {
-        return pins.size() < NORMAL_FRAME_CAN_ROLL;
+    public boolean isRolledThird() {
+        return pins.size() == FINAL_FRAME_CAN_ROLL;
     }
 
     public List<Pin> getPins() {
@@ -89,10 +95,6 @@ public class Pins {
         return pins.get(index).getPin();
     }
 
-    public Pin getPin(int index) {
-        return pins.get(index);
-    }
-
     public int rollCount() {
         return pins.size();
     }
@@ -101,5 +103,20 @@ public class Pins {
         return getTotalPins() < PINS_LIMIT;
     }
 
+    public Pin getPin(int index) {
+        return pins.get(index);
+    }
+
+    public Pin getFirstPin() {
+        return pins.get(0);
+    }
+
+    public Pin getSecondPin() {
+        return pins.get(1);
+    }
+
+    public Pin getThirdPin() {
+        return pins.get(2);
+    }
 
 }

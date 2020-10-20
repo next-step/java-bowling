@@ -33,6 +33,10 @@ public class Pin {
         return pins == MAXIMUM_PIN_NUMBER;
     }
 
+    public Boolean isNotHit() {
+        return pins == MINIMUM_PIN_NUMBER;
+    }
+
     public int getPin() {
         return pins;
     }

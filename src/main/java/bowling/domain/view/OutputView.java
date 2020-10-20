@@ -18,6 +18,7 @@ public class OutputView {
     private static final String STRING_SPARE = "/";
     private static final String STRING_GUTTER = "-";
     private static final String STRING_NONE = "";
+    private static final String MARGIN_BLOCK = "        |";
 
     private OutputView() {
     }
@@ -32,9 +33,8 @@ public class OutputView {
         System.out.println(BOARD_TITLE);
     }
 
-
     private static void getScores(Frames frames) {
-        getPlayerName("");
+        getPlayerName(STRING_NONE);
         StringBuilder sb = new StringBuilder();
         Integer sumScore = 0;
         for (int i = 0; i < frames.getFrames().size(); i++) {
@@ -73,23 +73,23 @@ public class OutputView {
         return makeSpaceScore(convertScore(points));
     }
     private static String convertScore(Pins pins) {
-        if (pins.rollCount() == 1) {
-            return convertStringScore(pins.getPin(0));
+        if (pins.isRolledOnce()) {
+            return convertStringScore(pins.getFirstPin());
         }
-        if (pins.rollCount() == 2) {
-            return convertScore(pins.getPin(0), pins.getPin(1));
+        if (pins.isRolledTwice()) {
+            return convertScore(pins.getSecondPin(), pins.getSecondPin());
         }
-        if (pins.rollCount() == 3) {
-            return convertScore(pins.getPin(0), pins.getPin(1)) + BLANK_BLOCK + convertStringScore(pins.getPin(2));
+        if (pins.isRolledThird()) {
+            return convertScore(pins.getFirstPin(), pins.getFirstPin()) + BLANK_BLOCK + convertStringScore(pins.getThirdPin());
         }
         return STRING_NONE;
     }
 
     private static String convertStringScore(Pin pin) {
-        if (pin.getPin() == 10) {
+        if (pin.isStrike()) {
             return STRING_STRIKE;
         }
-        if (pin.getPin() == 0) {
+        if (pin.isNotHit()) {
             return STRING_GUTTER;
         }
         return String.valueOf(pin.getPin());
@@ -128,8 +128,8 @@ public class OutputView {
 
     private static String makeBlockBlock(String score) {
         if (score.length() > MAX_NAME_LENGTH) {
-            return "        |";
+            return MARGIN_BLOCK;
         }
-        return makeSpaceName(score) + "|";
+        return makeSpaceName(score) + BLANK_BLOCK;
     }
 }

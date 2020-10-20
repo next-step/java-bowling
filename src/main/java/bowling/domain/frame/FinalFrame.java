@@ -84,7 +84,7 @@ public class FinalFrame implements Frame {
         if (pins.isStrike()) {
             return Score.ofStrike();
         }
-        if (pins.rollCount() == 2 && pins.isSpare() && !pins.isStrike()) {
+        if (pins.isFinalSpare()) {
             return Score.ofSpare();
         }
         return Score.ofMiss(pins.getTotalPins());
