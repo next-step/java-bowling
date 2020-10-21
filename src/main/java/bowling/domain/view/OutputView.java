@@ -19,6 +19,7 @@ public class OutputView {
     private static final String STRING_GUTTER = "-";
     private static final String STRING_NONE = "";
     private static final String MARGIN_BLOCK = "        |";
+    public static final int SPARE_PIN = 10;
 
     private OutputView() {
     }
@@ -77,10 +78,10 @@ public class OutputView {
             return convertStringScore(pins.getFirstPin());
         }
         if (pins.isRolledTwice()) {
-            return convertScore(pins.getSecondPin(), pins.getSecondPin());
+            return convertStringScore(pins.getSecondPin(), pins.getSecondPin());
         }
         if (pins.isRolledThird()) {
-            return convertScore(pins.getFirstPin(), pins.getFirstPin()) + BLANK_BLOCK + convertStringScore(pins.getThirdPin());
+            return convertStringScore(pins.getFirstPin(), pins.getFirstPin()) + BLANK_BLOCK + convertStringScore(pins.getThirdPin());
         }
         return STRING_NONE;
     }
@@ -95,12 +96,17 @@ public class OutputView {
         return String.valueOf(pin.getPin());
     }
 
-    private static String convertScore(Pin point1, Pin point2) {
-        int sumPoint = point1.getPin() + point2.getPin();
-        if (sumPoint == 10) {
-            return convertStringScore(point1) + BLANK_BLOCK + STRING_SPARE;
-        }
-        return convertStringScore(point1) + BLANK_BLOCK + convertStringScore(point2);
+    private static String convertStringScore(Pin pin1, Pin pin2) {
+        int totalPins = pin1.getPin() + pin2.getPin();
+        return totalPins == SPARE_PIN ? getScoreAndSpare(pin1) : getOnlyScore(pin1, pin2);
+    }
+
+    private static String getOnlyScore(Pin pin1, Pin pin2) {
+        return convertStringScore(pin1) + BLANK_BLOCK + convertStringScore(pin2);
+    }
+
+    private static String getScoreAndSpare(Pin pin1) {
+        return convertStringScore(pin1) + BLANK_BLOCK + STRING_SPARE;
     }
 
     /**
