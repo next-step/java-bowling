@@ -45,10 +45,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isGameOver() {
-        if (!canRoll()) {
-            return false;
-        }
-        return true;
+        return canRoll();
     }
 
     @Override

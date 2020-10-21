@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    private static final int FIRST_FRAME = 0;
-
     private Pins pins;
     private Score score;
 
@@ -36,17 +34,13 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isGameOver() {
-        if (!canRoll()) {
-            return false;
-        }
-        return true;
+        return canRoll();
     }
 
     @Override
     public int getTotal() {
         return pins.getTotalPins();
     }
-
 
     @Override
     public List<Pin> getPinInfo() {

@@ -3,7 +3,6 @@ package bowling;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.Frames;
 import bowling.domain.game.Game;
-import bowling.domain.pin.Pin;
 import bowling.domain.player.Player;
 import bowling.domain.view.InputView;
 import bowling.domain.view.OutputView;
