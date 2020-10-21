@@ -3,6 +3,7 @@ package bowling.domain.pin;
 import bowling.domain.frame.FinalFrame;
 import bowling.domain.frame.Frame;
 import bowling.domain.frame.NormalFrame;
+import bowling.domain.score.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +77,7 @@ public class Pins {
     }
 
     public boolean isRolledOnce() {
-        return pins.size() < NORMAL_FRAME_CAN_ROLL;
+        return pins.size() == FIRST_ROLL;
     }
 
     public boolean isRolledTwice() {
@@ -119,4 +120,13 @@ public class Pins {
         return pins.get(2);
     }
 
+    public Score convertScore() {
+        if (isStrike()) {
+            return Score.ofStrike();
+        }
+        if (isFinalSpare()) {
+            return Score.ofSpare();
+        }
+        return Score.ofMiss(getTotalPins());
+    }
 }

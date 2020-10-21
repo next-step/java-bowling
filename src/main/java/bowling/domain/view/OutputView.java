@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     private static int getSumScore(Integer score) {
-        if(score != null){
+        if (score != null) {
             return score;
         }
         return 0;
@@ -60,7 +60,7 @@ public class OutputView {
     private static void getFrames(Frames frames, Player player) {
         getPlayerName(player.getName());
         String frameViews = frames.getFrames().stream()
-                .map(frame -> viewFrame(frame))
+                .map(frame -> getFrame(frame))
                 .collect(Collectors.joining(BLANK_BLOCK));
         System.out.println(frameViews + BLANK_BLOCK);
     }
@@ -69,10 +69,11 @@ public class OutputView {
         System.out.print(BLANK_BLOCK + makeSpaceName(name) + BLANK_BLOCK);
     }
 
-    private static String viewFrame(Frame frame) {
-        Pins points = frame.getPins();
-        return makeSpaceScore(convertScore(points));
+    private static String getFrame(Frame frame) {
+        Pins pins = frame.getPins();
+        return makeSpaceScore(convertScore(pins));
     }
+
     private static String convertScore(Pins pins) {
         if (pins.isRolledOnce()) {
             return convertStringScore(pins.getFirstPin());

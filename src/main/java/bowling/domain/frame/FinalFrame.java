@@ -45,7 +45,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public boolean isGameOver() {
-        if (this instanceof FinalFrame && !canRoll()) {
+        if (!canRoll()) {
             return false;
         }
         return true;
@@ -67,27 +67,14 @@ public class FinalFrame implements Frame {
     }
 
     public boolean hasScore() {
-        if (score != null) {
-            return true;
-        }
-        return false;
+        return score != null;
     }
 
     @Override
     public void addScore() {
         if (pins.isStrike() || pins.isSpare()) {
-            this.score = convertScore();
+            this.score = pins.convertScore();
         }
-    }
-
-    private Score convertScore() {
-        if (pins.isStrike()) {
-            return Score.ofStrike();
-        }
-        if (pins.isFinalSpare()) {
-            return Score.ofSpare();
-        }
-        return Score.ofMiss(pins.getTotalPins());
     }
 
     @Override

@@ -12,16 +12,12 @@ public class Main {
     public static void main(String[] args) {
         Player player = new Player(InputView.inputPlayerName());
         Game game = new Game(player);
-
         Frames frames = game.getFrames();
         Frame frame = game.getFirstFrame();
-        int frameIndex = 0;
 
         while (frame.isGameOver()) {
-            frameIndex = frames.getFrameIndex(frame);
-            Pin pin = InputView.inputPinRoll(frameIndex);
-            game.roll(pin);
-            frame = frames.getNextFrame();
+            int frameIndex = frames.getFrameIndex(frame);
+            frame = game.roll(InputView.inputPinRoll(frameIndex));
             OutputView.getScoreBoard(player, frames);
         }
     }

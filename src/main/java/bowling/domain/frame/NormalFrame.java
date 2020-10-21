@@ -78,28 +78,16 @@ public class NormalFrame implements Frame {
     }
 
     public boolean hasScore() {
-        if (score != null) {
-            return true;
-        }
-        return false;
+        return score != null;
     }
 
     @Override
     public void addScore() {
         if (!canRoll()) {
-            this.score = convertScore();
+            this.score = pins.convertScore();
         }
     }
 
-    private Score convertScore() {
-        if (pins.isStrike()) {
-            return Score.ofStrike();
-        }
-        if (pins.isSpare()) {
-            return Score.ofSpare();
-        }
-        return Score.ofMiss(pins.getTotalPins());
-    }
 
     @Override
     public boolean equals(Object o) {
