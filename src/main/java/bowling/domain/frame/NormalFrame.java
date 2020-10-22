@@ -52,11 +52,6 @@ public class NormalFrame implements Frame {
         return pins;
     }
 
-    @Override
-    public String getStringScore() {
-        return ScoreConverter.convert(this);
-    }
-
     public Integer getScore() {
         try {
             return score.getScore();
@@ -82,6 +77,10 @@ public class NormalFrame implements Frame {
         }
     }
 
+    @Override
+    public boolean hasRolled() {
+        return pins.rollCount() > 0;
+    }
 
     @Override
     public boolean equals(Object o) {

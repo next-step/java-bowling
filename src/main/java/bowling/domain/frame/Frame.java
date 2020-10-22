@@ -16,13 +16,14 @@ public interface Frame {
 
     Pins getPins();
 
-    String getStringScore();
-
     void addScore();
 
     boolean isGameOver();
 
     boolean hasScore();
 
+    boolean hasRolled();
+
     void calculateScore(int pins);
+
 }

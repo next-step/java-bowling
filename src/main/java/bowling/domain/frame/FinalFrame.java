@@ -48,11 +48,6 @@ public class FinalFrame implements Frame {
         return canRoll();
     }
 
-    @Override
-    public String getStringScore() {
-        return ScoreConverter.convert(this);
-    }
-
     public Integer getScore() {
         return score.getScore();
     }
@@ -72,6 +67,11 @@ public class FinalFrame implements Frame {
         if (pins.isStrike() || pins.isSpare()) {
             this.score = pins.convertScore();
         }
+    }
+
+    @Override
+    public boolean hasRolled() {
+        return pins.rollCount() > 0;
     }
 
     @Override

@@ -19,7 +19,8 @@ public class OutputView {
     private static final String STRING_GUTTER = "-";
     private static final String STRING_NONE = "";
     private static final String MARGIN_BLOCK = "        |";
-    public static final int SPARE_PIN = 10;
+    private static final int SPARE_PIN = 10;
+    private static final int NO_HIT = 0;
 
     private OutputView() {
     }
@@ -38,7 +39,7 @@ public class OutputView {
         getPlayerName(STRING_NONE);
         StringBuilder sb = new StringBuilder();
         Integer sumScore = 0;
-        for (int i = 0; i < frames.getFrames().size(); i++) {
+        for (int i = 0; i < frames.getFrameSize(); i++) {
             sb.append(getScores(frames.getFrame(i), sumScore));
             sumScore += getSumScore(frames.getFrame(i).getTotal());
         }
@@ -52,9 +53,11 @@ public class OutputView {
         return 0;
     }
 
-    private static String getScores(Frame beforeFrame, Integer sumScore) {
-        Integer score = beforeFrame.getTotal();
-        return makeBlockBlock(String.valueOf(score + sumScore));
+    private static String getScores(Frame frame, Integer sumScore) {
+        if (frame.hasRolled()) {
+            return makeBlockSpace(String.valueOf(frame.getTotal() + sumScore));
+        }
+        return makeMargin(STRING_NONE) + BLANK_BLOCK;
     }
 
     private static void getFrames(Frames frames, Player player) {
@@ -66,7 +69,7 @@ public class OutputView {
     }
 
     private static void getPlayerName(String name) {
-        System.out.print(BLANK_BLOCK + makeSpaceName(name) + BLANK_BLOCK);
+        System.out.print(BLANK_BLOCK + makeMargin(name) + BLANK_BLOCK);
     }
 
     private static String getFrame(Frame frame) {
@@ -79,7 +82,7 @@ public class OutputView {
             return convertStringScore(pins.getFirstPin());
         }
         if (pins.isRolledTwice()) {
-            return convertStringScore(pins.getSecondPin(), pins.getSecondPin());
+            return convertStringScore(pins.getFirstPin(), pins.getSecondPin());
         }
         if (pins.isRolledThird()) {
             return convertStringScore(pins.getFirstPin(), pins.getFirstPin()) + BLANK_BLOCK + convertStringScore(pins.getThirdPin());
@@ -99,7 +102,10 @@ public class OutputView {
 
     private static String convertStringScore(Pin pin1, Pin pin2) {
         int totalPins = pin1.getPin() + pin2.getPin();
-        return totalPins == SPARE_PIN ? getScoreAndSpare(pin1) : getOnlyScore(pin1, pin2);
+        if (totalPins == SPARE_PIN) {
+            return getScoreAndSpare(pin1);
+        }
+        return getOnlyScore(pin1, pin2);
     }
 
     private static String getOnlyScore(Pin pin1, Pin pin2) {
@@ -113,30 +119,30 @@ public class OutputView {
     /**
      * 이름 출력시 5글자까지 반복하여 공백을 더해준다.
      *
-     * @param userName
+     * @param value
      * @return
      */
-    private static String makeSpaceName(String userName) {
-        if (userName.length() > MAX_NAME_LENGTH) {
-            return userName;
+    private static String makeMargin(String value) {
+        if (value.length() > MAX_NAME_LENGTH) {
+            return value;
         }
-        if (userName.length() % 2 == 1) {
-            return makeSpaceName(BLANK + userName);
+        if (value.length() % 2 == 1) {
+            return makeMargin(BLANK + value);
         }
-        return makeSpaceName(userName + BLANK);
+        return makeMargin(value + BLANK);
     }
 
     private static String makeSpaceScore(String score) {
         if (score.length() > MAX_NAME_LENGTH) {
             return score;
         }
-        return makeSpaceName(score);
+        return makeMargin(score);
     }
 
-    private static String makeBlockBlock(String score) {
+    private static String makeBlockSpace(String score) {
         if (score.length() > MAX_NAME_LENGTH) {
             return MARGIN_BLOCK;
         }
-        return makeSpaceName(score) + BLANK_BLOCK;
+        return makeMargin(score) + BLANK_BLOCK;
     }
 }

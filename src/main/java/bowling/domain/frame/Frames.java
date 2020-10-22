@@ -49,6 +49,10 @@ public class Frames {
         return frames.getFirst();
     }
 
+    public int getFrameSize() {
+        return frames.size();
+    }
+
     public Frame getNextFrame() {
         return frames.stream()
                 .filter(Frame::canRoll)
