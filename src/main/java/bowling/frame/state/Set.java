@@ -18,4 +18,9 @@ public class Set extends Progress {
         }
         return Next.of(fellPins);
     }
+
+    @Override
+    public String toString() {
+        return null;
+    }
 }

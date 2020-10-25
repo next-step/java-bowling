@@ -22,4 +22,11 @@ public class Next extends Progress {
         return Miss.of(previousPins, nextPins);
     }
 
+    @Override
+    public String toString() {
+        if (previousPins.isGutter()) {
+            return "-";
+        }
+        return String.valueOf(previousPins);
+    }
 }

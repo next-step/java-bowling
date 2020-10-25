@@ -3,6 +3,7 @@ package bowling.frame;
 import bowling.bowler.Bowler;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 import static bowling.frame.Frame.FINAL_FRAME_NUMBER;
 import static bowling.frame.Frame.INCREASE_FRAME_NUMBER;
@@ -75,5 +76,18 @@ public class BowlingBoard {
 
     public boolean isFinished() {
         return !canMoveNextFrame() && getLastFrame().isFinish();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BowlingBoard that = (BowlingBoard) o;
+        return Objects.equals(bowler, that.bowler);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bowler);
     }
 }

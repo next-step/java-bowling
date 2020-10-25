@@ -17,8 +17,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public static String inputScore(int frameNumber) {
-        System.out.print(String.format(PRINT_INPUT_FRAME_NUMBER_PITCH, frameNumber));
+    public static String inputPins(int frameNumber) {
+        System.out.printf(PRINT_INPUT_FRAME_NUMBER_PITCH, frameNumber);
         return scanner.nextLine();
     }
 

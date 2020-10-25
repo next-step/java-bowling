@@ -26,6 +26,6 @@ public class Spare extends Done {
         if (previousPins.isGutter()) {
             return "-|/";
         }
-        return "/";
+        return previousPins + "|/";
     }
 }
