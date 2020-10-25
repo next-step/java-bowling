@@ -44,6 +44,6 @@ class TryingTest {
     @DisplayName("핀을 하나도 넘어뜨리지 못했을 때 Gutter(-)를 출력한다.")
     void printGutter() {
         State gutter = new Trying(0);
-        assertThat(gutter.print()).isEqualTo("-");
+        assertThat(gutter.print()).isEqualTo("-  ");
     }
 }

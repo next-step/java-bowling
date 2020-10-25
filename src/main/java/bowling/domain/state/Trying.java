@@ -40,7 +40,7 @@ public class Trying implements State {
     @Override
     public String print() {
         if (firstFallenPinCount == 0) {
-            return "-";
+            return "-  ";
         }
         return String.valueOf(firstFallenPinCount);
     }
