@@ -21,19 +21,7 @@ public class NormalFrame extends Frame {
     protected Frame bowl(String fellPins) {
         Pin pin = Pin.bowl(fellPins);
         state = state.bowl(pin);
-        if (state.isFinish()) {
-            return next();
-        }
         return this;
-    }
-
-    @Override
-    protected Frame next() {
-        int nextFrameNumber = this.frameNumber + INCREASE_FRAME_NUMBER;
-        if (nextFrameNumber < FINAL_FRAME_NUMBER) {
-            return NormalFrame.create(nextFrameNumber);
-        }
-        return FinalFrame.create(FINAL_FRAME_NUMBER);
     }
 
     @Override

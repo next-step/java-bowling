@@ -14,21 +14,13 @@ class FinalFrameTest {
 
     @BeforeEach
     void setUp() {
-        frame = FinalFrame.init();
+        frame = FinalFrame.create();
     }
 
     @Test
     @DisplayName("마지막 프레임 생성")
     void create() {
-        frame = FinalFrame.create(10);
         assertThat(frame.getFrameNumber()).isEqualTo(10);
-    }
-
-    @Test
-    @DisplayName("프레임 번호가 11로 증가하면 게임 종료")
-    void finished() {
-        frame.bowl("10");
-        assertThat(frame.next().isFinish()).isTrue();
     }
 
     @Test
@@ -36,6 +28,7 @@ class FinalFrameTest {
     void miss() {
         frame.bowl("8");
         frame.bowl("1");
+        assertThat(frame.isFinish()).isTrue();
         assertThat(frame.getState() instanceof Miss).isTrue();
     }
 
@@ -43,6 +36,7 @@ class FinalFrameTest {
     @DisplayName("마지막 프레임에서 Strike")
     void strike() {
         frame.bowl("10");
+        assertThat(frame.isFinish()).isTrue();
         assertThat(frame.getState() instanceof Strike).isTrue();
     }
 
@@ -52,6 +46,7 @@ class FinalFrameTest {
         frame.bowl("10");
         frame.bowl("10");
         frame.bowl("10");
+        assertThat(frame.isFinish()).isTrue();
         assertThat(frame.getState() instanceof Strike).isTrue();
     }
 }

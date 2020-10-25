@@ -19,8 +19,6 @@ public abstract class Frame {
 
     protected abstract Frame bowl(String fellPins);
 
-    protected abstract Frame next();
-
     public abstract boolean isFinish();
 
     public int getFrameNumber() {
