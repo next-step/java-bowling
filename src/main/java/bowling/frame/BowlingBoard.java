@@ -4,10 +4,13 @@ import bowling.bowler.Bowler;
 
 import java.util.LinkedList;
 
+import static bowling.frame.Frame.FINAL_FRAME_NUMBER;
+import static bowling.frame.Frame.INCREASE_FRAME_NUMBER;
+
 public class BowlingBoard {
 
     private final Bowler bowler;
-    private LinkedList<Frame> frames;
+    private final LinkedList<Frame> frames;
 
     public BowlingBoard(Bowler bowler) {
         this.bowler = bowler;
@@ -19,29 +22,39 @@ public class BowlingBoard {
         return new BowlingBoard(bowler);
     }
 
-    public Frame next() {
-        return getLastFrame().next();
-    }
-
     public Frame bowl(String fellPins) {
         Frame frame = getLastFrame().bowl(fellPins);
 
-        if (getLastFrame().isFinish()) {
-            frames.add(next());
+        if (canMoveNextFrame() && getLastFrame().isFinish()) {
+            frames.add(next(getNextFrameNumber()));
         }
         return frame;
     }
 
-    public String getBowlerName() {
-        return bowler.getName();
+    public Frame next(int nextFrameNumber) {
+        validateNextFrame();
+        if (nextFrameNumber == FINAL_FRAME_NUMBER) {
+            return FinalFrame.create();
+        }
+        return NormalFrame.create(nextFrameNumber);
+    }
+
+    private void validateNextFrame() {
+        if (!canMoveNextFrame()) {
+            throw new RuntimeException("게임이 종료되었습니다.");
+        }
+    }
+
+    private boolean canMoveNextFrame() {
+        return getNextFrameNumber() <= FINAL_FRAME_NUMBER;
+    }
+
+    private int getNextFrameNumber() {
+        return getFrameNumber() + INCREASE_FRAME_NUMBER;
     }
 
     public int getFrameNumber() {
         return getLastFrame().getFrameNumber();
-    }
-
-    public boolean isFinished() {
-        return getLastFrame().isFinish();
     }
 
     public Frame getLastFrame() {
@@ -50,5 +63,17 @@ public class BowlingBoard {
 
     public LinkedList<Frame> getFrames() {
         return frames;
+    }
+
+    public int size() {
+        return frames.size();
+    }
+
+    public String getBowlerName() {
+        return bowler.getName();
+    }
+
+    public boolean isFinished() {
+        return !canMoveNextFrame() && getLastFrame().isFinish();
     }
 }
