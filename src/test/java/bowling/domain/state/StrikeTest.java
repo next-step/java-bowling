@@ -28,8 +28,8 @@ class StrikeTest {
     }
 
     @Test
-    @DisplayName("Strike 상태를 출력하면 X가 출력된다.")
+    @DisplayName("Strike 상태를 출력하면 X  가 출력된다.")
     void print() {
-        assertThat(strike.print()).isEqualTo("X");
+        assertThat(strike.print()).isEqualTo("X  ");
     }
 }
