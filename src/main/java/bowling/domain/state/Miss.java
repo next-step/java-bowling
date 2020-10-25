@@ -4,6 +4,8 @@ import static bowling.domain.BowlingGame.PIN_COUNT;
 
 public class Miss extends Finished {
     private static final String MISS = "%s|%s";
+    private static final int GUTTER_NUMBER = 0;
+    private static final String GUTTER_SYMBOL = "-";
     private final int firstFallenPinCount;
     private final int secondFallenPinCount;
 
@@ -32,6 +34,6 @@ public class Miss extends Finished {
     }
 
     private String convertGutter(final String sparePrint) {
-        return sparePrint.replaceAll("0", "-");
+        return sparePrint.replaceAll(String.valueOf(GUTTER_NUMBER), GUTTER_SYMBOL);
     }
 }
