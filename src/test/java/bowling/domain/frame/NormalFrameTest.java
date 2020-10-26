@@ -44,9 +44,9 @@ class NormalFrameTest {
     @DisplayName("NormalFrame bowl & print")
     void bowlAndPrint() {
         Frame frame = NormalFrame.init(1);
-        assertThat(frame.bowl(0).print()).isEqualTo("-  ");                // Gutter
-        assertThat(frame.bowl(10).print()).isEqualTo("X  ");               // Strike
-        assertThat(frame.bowl(5).print()).isEqualTo("5  ");                // Trying
+        assertThat(frame.bowl(0).print().trim()).isEqualTo("-");                // Gutter
+        assertThat(frame.bowl(10).print().trim()).isEqualTo("X");               // Strike
+        assertThat(frame.bowl(5).print().trim()).isEqualTo("5");                // Trying
         assertThat(frame.bowl(5).bowl(3).print()).isEqualTo("5|3");        // Miss
         assertThat(frame.bowl(5).bowl(5).print()).isEqualTo("5|/");        // Spare
         assertThat(frame.bowl(0).bowl(0).print()).isEqualTo("-|-");        // Gutter

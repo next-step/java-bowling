@@ -37,13 +37,13 @@ class TryingTest {
     @Test
     @DisplayName("핀을 하나 이상 넘어뜨렸을 시 넘어진 핀 수를 출력한다.")
     void printPinCount() {
-        assertThat(trying.print()).isEqualTo("7");
+        assertThat(trying.print().trim()).isEqualTo("7");
     }
 
     @Test
     @DisplayName("핀을 하나도 넘어뜨리지 못했을 때 Gutter(-)를 출력한다.")
     void printGutter() {
         State gutter = new Trying(0);
-        assertThat(gutter.print()).isEqualTo("-  ");
+        assertThat(gutter.print().trim()).isEqualTo("-");
     }
 }
