@@ -19,8 +19,8 @@ class ReadyTest {
 
     @Test
     @DisplayName("Ready 상태에서는 공을 굴릴 수 있다.")
-    void isBowl() {
-        assertThat(ready.isBowl()).isTrue();
+    void isFinish() {
+        assertThat(ready.isFinish()).isFalse();
     }
 
     @Test

@@ -29,8 +29,8 @@ class MissTest {
 
     @Test
     @DisplayName("Miss 상태에서는 공을 굴릴 수 없다.")
-    void isBowl() {
-        assertThat(miss.isBowl()).isFalse();
+    void isFinish() {
+        assertThat(miss.isFinish()).isTrue();
     }
 
     @Test

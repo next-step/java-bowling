@@ -2,8 +2,8 @@ package bowling.domain.state;
 
 public abstract class Finished implements State {
     @Override
-    public boolean isBowl() {
-        return false;
+    public boolean isFinish() {
+        return true;
     }
 
     @Override

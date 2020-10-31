@@ -1,7 +1,7 @@
 package bowling.domain.state;
 
 public interface State {
-    boolean isBowl();
+    boolean isFinish();
 
     State bowl(int fallenPinCount);
 

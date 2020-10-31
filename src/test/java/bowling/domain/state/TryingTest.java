@@ -16,8 +16,8 @@ class TryingTest {
 
     @Test
     @DisplayName("Trying 상태에서는 공을 굴릴 수 있다.")
-    void isBowl() {
-        assertThat(trying.isBowl()).isTrue();
+    void isFinish() {
+        assertThat(trying.isFinish()).isFalse();
     }
 
     @Test

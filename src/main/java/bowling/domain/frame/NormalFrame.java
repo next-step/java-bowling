@@ -27,15 +27,15 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        return !state.isBowl();
+        return state.isFinish();
     }
 
     @Override
     public Frame bowl(final int fallenPinCount) {
-        if (state.isBowl()) {
-            return new NormalFrame(frameNumber, state.bowl(fallenPinCount));
+        if (state.isFinish()) {
+            throw new IllegalStateException(String.format("이미 완료된 %d 프레임 입니다.", frameNumber));
         }
-        throw new IllegalStateException(String.format("이미 완료된 %d 프레임 입니다.", frameNumber));
+        return new NormalFrame(frameNumber, state.bowl(fallenPinCount));
     }
 
     @Override

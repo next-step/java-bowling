@@ -6,8 +6,8 @@ public class Ready implements State {
     private static final String READY = "";
 
     @Override
-    public boolean isBowl() {
-        return true;
+    public boolean isFinish() {
+        return false;
     }
 
     @Override

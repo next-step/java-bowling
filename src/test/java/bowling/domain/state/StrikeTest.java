@@ -17,8 +17,8 @@ class StrikeTest {
 
     @Test
     @DisplayName("Strike 상태에서는 공을 굴릴 수 없다.")
-    void isBowl() {
-        assertThat(strike.isBowl()).isFalse();
+    void isFinish() {
+        assertThat(strike.isFinish()).isTrue();
     }
 
     @Test

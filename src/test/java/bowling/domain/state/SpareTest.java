@@ -29,8 +29,8 @@ class SpareTest {
 
     @Test
     @DisplayName("Spare 상태에서는 공을 굴릴 수 없다.")
-    void isBowl() {
-        assertThat(spare.isBowl()).isFalse();
+    void isFinish() {
+        assertThat(spare.isFinish()).isTrue();
     }
 
     @Test

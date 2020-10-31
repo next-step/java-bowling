@@ -24,8 +24,8 @@ public class Trying implements State {
     }
 
     @Override
-    public boolean isBowl() {
-        return true;
+    public boolean isFinish() {
+        return false;
     }
 
     @Override
