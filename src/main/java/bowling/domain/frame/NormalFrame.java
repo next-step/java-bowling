@@ -27,7 +27,7 @@ public class NormalFrame implements Frame {
 
     @Override
     public boolean isFinished() {
-        return state.isBowl();
+        return !state.isBowl();
     }
 
     @Override

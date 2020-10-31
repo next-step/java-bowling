@@ -36,8 +36,8 @@ class NormalFrameTest {
             }
         });
 
-        assertThat(readyFrame.isFinished()).isTrue();
-        assertThat(finishedFrame.isFinished()).isFalse();
+        assertThat(readyFrame.isFinished()).isFalse();
+        assertThat(finishedFrame.isFinished()).isTrue();
     }
 
     @Test
