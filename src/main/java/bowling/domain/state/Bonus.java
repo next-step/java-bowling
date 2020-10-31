@@ -37,6 +37,15 @@ public class Bonus implements State {
         if (tryCount != TRY_COUNT_LIMIT) {
             return preState.print();
         }
+
+        if (fallenPinCount == 10) {
+            return preState.print() + "|X";
+        }
+
+        if (fallenPinCount == 0) {
+            return preState.print() + "|-";
+        }
+
         return preState.print() + "|" + fallenPinCount;
     }
 }

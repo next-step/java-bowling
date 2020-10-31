@@ -53,7 +53,7 @@ class NormalFrameTest {
     }
 
     @Test
-    @DisplayName("완료된 프레임에 볼을 굴릴 경우 예외 발")
+    @DisplayName("완료된 프레임에 볼을 굴릴 경우 예외 발생")
     void bowlException() {
         NormalFrame finishedFrame = new NormalFrame(1, new Finished() {
             @Override

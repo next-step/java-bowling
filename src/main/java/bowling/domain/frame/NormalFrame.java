@@ -6,7 +6,7 @@ import bowling.domain.state.State;
 import java.util.Objects;
 
 public class NormalFrame implements Frame {
-    private static final String FRAME = "%3s";
+    private static final String FRAME = "%-3s";
     private static final int START_FRAME_NUMBER = 1;
     private static final int END_FRAME_NUMBER = 9;
     private final int frameNumber;
