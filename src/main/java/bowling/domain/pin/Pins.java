@@ -4,5 +4,5 @@ package bowling.domain.pin;
 public interface Pins {
     int PIN_COUNT = 10;
 
-    int fallen();
+    int count();
 }

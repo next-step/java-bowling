@@ -32,7 +32,7 @@ public class Trying implements State {
 
     @Override
     public State bowl(final Pins pins) {
-        int secondFallen = pins.fallen();
+        int secondFallen = pins.count();
         if (firstFallen + secondFallen == PIN_COUNT) {
             return new Spare(firstFallen);
         }

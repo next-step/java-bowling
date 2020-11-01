@@ -14,7 +14,7 @@ public class Ready implements State {
 
     @Override
     public State bowl(final Pins pins) {
-        int fallenPinCount = pins.fallen();
+        int fallenPinCount = pins.count();
         if (fallenPinCount == PIN_COUNT) {
             return new Strike();
         }

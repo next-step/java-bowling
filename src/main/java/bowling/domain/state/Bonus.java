@@ -31,7 +31,7 @@ public class Bonus implements State {
         if (isFinish()) {
             throw new IllegalStateException("프레임이 완료되어 볼을 던질 수 없습니다.");
         }
-        return new Bonus(preState, tryCount + 1, pins.fallen());
+        return new Bonus(preState, tryCount + 1, pins.count());
     }
 
     @Override
